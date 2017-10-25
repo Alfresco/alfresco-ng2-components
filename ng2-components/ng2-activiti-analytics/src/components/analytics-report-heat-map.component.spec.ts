@@ -93,7 +93,7 @@ describe('AnalyticsReportHeatMapComponent', () => {
         it('should render the dropdown with the metric options', async(() => {
             component.report = { totalCountsPercentages: { 'sid-fake-id': 10, 'fake-start-event': 30 } };
 
-            component.onSuccess.subscribe(() => {
+            component.success.subscribe(() => {
                 fixture.whenStable().then(() => {
                     let dropDown: any = element.querySelector('#select-metrics');
                     expect(dropDown).toBeDefined();

@@ -32,7 +32,7 @@ export class RaphaelIconGoogleDrivePublishDirective extends RaphaelBase implemen
     text: string;
 
     @Output()
-    onError = new EventEmitter();
+    error = new EventEmitter();
 
     @Input()
     strokeWidth: number;

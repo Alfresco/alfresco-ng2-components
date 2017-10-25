@@ -17,7 +17,7 @@
                                 [appId]="appId"
                                 [hasIcon]="false"
                                 (filterClick)="onTaskFilterClick($event)"
-                                (onSuccess)="onSuccessTaskFilterList($event)"
+                                (success)="onSuccessTaskFilterList($event)"
                                 #activitifilter>
                             </adf-filters>
                         </adf-accordion-group>
@@ -37,7 +37,7 @@
                         [data]="dataTasks"
                         [landingTaskId]="currentTaskId"
                         (rowClick)="onTaskRowClick($event)"
-                        (onSuccess)="onSuccessTaskList($event)"
+                        (success)="onSuccessTaskList($event)"
                         (row-click)="onRowClick($event)"
                         (row-dblclick)="onTaskRowDblClick($event)"
                         #activititasklist>
@@ -123,7 +123,7 @@
                                 [filterParam]="{index: 0}"
                                 [appId]="appId"
                                 (filterClick)="onProcessFilterClick($event)"
-                                (onSuccess)="onSuccessProcessFilterList($event)">
+                                (success)="onSuccessProcessFilterList($event)">
                             </adf-process-instance-filters>
                         </adf-accordion-group>
                     </adf-accordion>
@@ -139,7 +139,7 @@
                         [data]="dataProcesses"
                         (rowClick)="onProcessRowClick($event)"
                         (row-dblclick)="onProcessRowDblClick($event)"
-                        (onSuccess)="onSuccessProcessList($event)">
+                        (success)="onSuccessProcessList($event)">
                         <!-- Custom column definition demo -->
 
                         <data-columns>

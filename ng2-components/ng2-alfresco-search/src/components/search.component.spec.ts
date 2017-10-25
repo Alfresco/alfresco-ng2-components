@@ -186,7 +186,6 @@ describe('SearchComponent', () => {
         });
 
         it('should display search results when a search term is provided', (done) => {
-
             let searchService = TestBed.get(SearchService);
             spyOn(searchService, 'getQueryNodesPromise').and.returnValue(Promise.resolve(result));
             component.searchTerm = '';

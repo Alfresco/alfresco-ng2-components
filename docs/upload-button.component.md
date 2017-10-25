@@ -24,7 +24,7 @@
     [multipleFiles]="false"
     [acceptedFilesType]=".jpg,.gif,.png,.svg"
     [versioning]="false"
-    (onSuccess)="customMethod($event)">
+    (success)="customMethod($event)">
 </adf-upload-button>
 <file-uploading-dialog></file-uploading-dialog>
 ```
@@ -50,7 +50,7 @@
 
 | Name | Description |
 | --- | --- |
-| onSuccess | Raised when the file is uploaded |
+| success | Raised when the file is uploaded |
 
 ## Details
 

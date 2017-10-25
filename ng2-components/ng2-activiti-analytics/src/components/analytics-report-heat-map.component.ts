@@ -29,10 +29,10 @@ export class AnalyticsReportHeatMapComponent implements  OnInit {
     report: any;
 
     @Output()
-    onSuccess = new EventEmitter();
+    success = new EventEmitter();
 
     @Output()
-    onError = new EventEmitter();
+    error = new EventEmitter();
 
     field: any = {};
 
@@ -53,7 +53,7 @@ export class AnalyticsReportHeatMapComponent implements  OnInit {
         this.analyticsService.getMetricValues().subscribe(
             (opts: any[]) => {
                 this.field.options = opts;
-                this.onSuccess.emit(opts);
+                this.success.emit(opts);
             }
         );
     }

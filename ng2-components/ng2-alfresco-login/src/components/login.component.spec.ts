@@ -41,8 +41,20 @@ describe('LoginComponent', () => {
 
     let usernameInput, passwordInput;
 
-    const getLoginErrorElement = () => element.querySelector('#login-error');
-    const getLoginErrorMessage = () => element.querySelector('#login-error .login-error-message').innerText;
+    const getLoginErrorElement = () => {
+        return element.querySelector('#login-error');
+    };
+
+    const getLoginErrorMessage = () => {
+        let errorMessage = undefined;
+        let errorElement = element.querySelector('#login-error .login-error-message');
+
+        if (errorElement) {
+            return errorElement.innerText;
+        }
+
+        return errorMessage;
+    };
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -55,8 +67,8 @@ describe('LoginComponent', () => {
                 LoginComponent
             ],
             providers: [
-                { provide: AlfrescoAuthenticationService, useClass: AuthenticationMock },
-                { provide: AlfrescoTranslationService, useClass: TranslationMock }
+                {provide: AlfrescoAuthenticationService, useClass: AuthenticationMock},
+                {provide: AlfrescoTranslationService, useClass: TranslationMock}
             ]
         }).compileComponents();
     }));
@@ -79,8 +91,8 @@ describe('LoginComponent', () => {
         fixture.detectChanges();
     });
 
-    function loginWithCredentials(username, password) {
-        component.providers = 'ECM';
+    function loginWithCredentials(username, password, providers: string = 'ECM') {
+        component.providers = providers;
         usernameInput.value = username;
         passwordInput.value = password;
 
@@ -111,7 +123,10 @@ describe('LoginComponent', () => {
         });
 
         it('should be changed to the "checking key" after a login attempt', () => {
-            spyOn(authService, 'login').and.returnValue({ subscribe: () => { } });
+            spyOn(authService, 'login').and.returnValue({
+                subscribe: () => {
+                }
+            });
 
             loginWithCredentials('fake-username', 'fake-password');
 
@@ -151,7 +166,10 @@ describe('LoginComponent', () => {
         });
 
         it('should be taken into consideration during login attempt', () => {
-            spyOn(authService, 'login').and.returnValue({ subscribe: () => { } });
+            spyOn(authService, 'login').and.returnValue({
+                subscribe: () => {
+                }
+            });
             component.rememberMe = false;
 
             loginWithCredentials('fake-username', 'fake-password');
@@ -345,217 +363,142 @@ describe('LoginComponent', () => {
         expect(element.querySelector('input[type="password"]').value).toEqual('fake-change-password');
     });
 
-    it('should return success true after the login have succeeded', () => {
+    it('should return success event after the login have succeeded', (done) => {
         component.providers = 'ECM';
-        expect(component.error).toBe(false);
-        expect(component.success).toBe(false);
+        expect(component.isError).toBe(false);
 
-        usernameInput.value = 'fake-username';
-        passwordInput.value = 'fake-password';
+        component.success.subscribe(() => {
+            fixture.detectChanges();
 
-        usernameInput.dispatchEvent(new Event('input'));
-        passwordInput.dispatchEvent(new Event('input'));
+            expect(component.isError).toBe(false);
+            done();
+        });
 
-        fixture.detectChanges();
+        loginWithCredentials('fake-username', 'fake-password');
 
-        element.querySelector('button').click();
-
-        fixture.detectChanges();
-
-        expect(component.error).toBe(false);
-        expect(component.success).toBe(true);
     });
 
-    it('should return error with a wrong username', () => {
+    it('should return error with a wrong username', (done) => {
         component.providers = 'ECM';
-        expect(component.error).toBe(false);
-        expect(component.success).toBe(false);
 
-        usernameInput.value = 'fake-wrong-username';
-        passwordInput.value = 'fake-password';
+        component.error.subscribe(() => {
+            fixture.detectChanges();
 
-        usernameInput.dispatchEvent(new Event('input'));
-        passwordInput.dispatchEvent(new Event('input'));
+            expect(getLoginErrorElement()).toBeDefined();
+            expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+            done();
+        });
 
-        fixture.detectChanges();
-
-        element.querySelector('button').click();
-
-        fixture.detectChanges();
-
-        expect(component.error).toBe(true);
-        expect(component.success).toBe(false);
-        expect(getLoginErrorElement()).toBeDefined();
-        expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+        loginWithCredentials('fake-wrong-username', 'fake-password');
     });
 
-    it('should return error with a wrong password', () => {
+    it('should return error with a wrong password', (done) => {
         component.providers = 'ECM';
-        expect(component.success).toBe(false);
-        expect(component.error).toBe(false);
 
-        usernameInput.value = 'fake-username';
-        passwordInput.value = 'fake-wrong-password';
+        component.error.subscribe(() => {
+            fixture.detectChanges();
 
-        usernameInput.dispatchEvent(new Event('input'));
-        passwordInput.dispatchEvent(new Event('input'));
+            expect(component.isError).toBe(true);
+            expect(getLoginErrorElement()).toBeDefined();
+            expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+            done();
+        });
 
-        fixture.detectChanges();
-
-        element.querySelector('button').click();
-
-        fixture.detectChanges();
-
-        expect(component.error).toBe(true);
-        expect(component.success).toBe(false);
-        expect(getLoginErrorElement()).toBeDefined();
-        expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+        loginWithCredentials('fake-username', 'fake-wrong-password');
     });
 
-    it('should return error with a wrong username and password', () => {
+    it('should return error with a wrong username and password', (done) => {
         component.providers = 'ECM';
-        expect(component.success).toBe(false);
-        expect(component.error).toBe(false);
 
-        usernameInput.value = 'fake-wrong-username';
-        passwordInput.value = 'fake-wrong-password';
+        component.error.subscribe(() => {
+            fixture.detectChanges();
 
-        usernameInput.dispatchEvent(new Event('input'));
-        passwordInput.dispatchEvent(new Event('input'));
+            expect(component.isError).toBe(true);
+            expect(getLoginErrorElement()).toBeDefined();
+            expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+            done();
+        });
 
-        fixture.detectChanges();
-
-        element.querySelector('button').click();
-
-        fixture.detectChanges();
-
-        expect(component.error).toBe(true);
-        expect(component.success).toBe(false);
-        expect(getLoginErrorElement()).toBeDefined();
-        expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+        loginWithCredentials('fake-wrong-username', 'fake-wrong-password');
     });
 
-    it('should return CORS error when server CORS error occurs', () => {
+    it('should return CORS error when server CORS error occurs', (done) => {
         component.providers = 'ECM';
-        expect(component.success).toBe(false);
-        expect(component.error).toBe(false);
 
-        usernameInput.value = 'fake-username-CORS-error';
-        passwordInput.value = 'fake-password';
+        component.error.subscribe(() => {
+            fixture.detectChanges();
 
-        usernameInput.dispatchEvent(new Event('input'));
-        passwordInput.dispatchEvent(new Event('input'));
+            expect(component.isError).toBe(true);
+            expect(getLoginErrorElement()).toBeDefined();
+            expect(getLoginErrorMessage()).toEqual('ERROR: the network is offline, Origin is not allowed by Access-Control-Allow-Origin');
+            done();
+        });
 
-        fixture.detectChanges();
-
-        element.querySelector('button').click();
-
-        fixture.detectChanges();
-
-        expect(component.error).toBe(true);
-        expect(component.success).toBe(false);
-        expect(getLoginErrorElement()).toBeDefined();
-        expect(getLoginErrorMessage()).toEqual('ERROR: the network is offline, Origin is not allowed by Access-Control-Allow-Origin');
+        loginWithCredentials('fake-username-CORS-error', 'fake-password');
     });
 
-    it('should return CSRF error when server CSRF error occurs', () => {
+    it('should return CSRF error when server CSRF error occurs', (done) => {
         component.providers = 'ECM';
-        expect(component.success).toBe(false);
-        expect(component.error).toBe(false);
 
-        usernameInput.value = 'fake-username-CSRF-error';
-        passwordInput.value = 'fake-password';
+        component.error.subscribe(() => {
+            fixture.detectChanges();
 
-        usernameInput.dispatchEvent(new Event('input'));
-        passwordInput.dispatchEvent(new Event('input'));
+            expect(component.isError).toBe(true);
+            expect(getLoginErrorElement()).toBeDefined();
+            expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CSRF');
+            done();
+        });
 
-        fixture.detectChanges();
-
-        element.querySelector('button').click();
-
-        fixture.detectChanges();
-
-        expect(component.error).toBe(true);
-        expect(component.success).toBe(false);
-        expect(getLoginErrorElement()).toBeDefined();
-        expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CSRF');
+        loginWithCredentials('fake-username-CSRF-error', 'fake-password');
     });
 
-    it('should return ECOM read-oly error when error occurs', () => {
+    it('should return ECOM read-oly error when error occurs', (done) => {
         component.providers = 'ECM';
-        expect(component.success).toBe(false);
-        expect(component.error).toBe(false);
 
-        usernameInput.value = 'fake-username-ECM-access-error';
-        passwordInput.value = 'fake-password';
+        component.error.subscribe(() => {
+            fixture.detectChanges();
 
-        usernameInput.dispatchEvent(new Event('input'));
-        passwordInput.dispatchEvent(new Event('input'));
+            expect(component.isError).toBe(true);
+            expect(getLoginErrorElement()).toBeDefined();
+            expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ECM-LICENSE');
+            done();
+        });
 
-        fixture.detectChanges();
-
-        element.querySelector('button').click();
-
-        fixture.detectChanges();
-
-        expect(component.error).toBe(true);
-        expect(component.success).toBe(false);
-        expect(getLoginErrorElement()).toBeDefined();
-        expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ECM-LICENSE');
+        loginWithCredentials('fake-username-ECM-access-error', 'fake-password');
     });
 
-    it('should emit onSuccess event after the login has succeeded', () => {
-        spyOn(component.onSuccess, 'emit');
+    it('should emit success event after the login has succeeded', (done) => {
         component.providers = 'ECM';
 
-        expect(component.error).toBe(false);
-        expect(component.success).toBe(false);
+        component.success.subscribe((event) => {
+            fixture.detectChanges();
 
-        usernameInput.value = 'fake-username';
-        passwordInput.value = 'fake-password';
+            expect(component.isError).toBe(false);
+            expect(event).toEqual(
+                new LoginSuccessEvent({type: 'type', ticket: 'ticket'}, 'fake-username', 'fake-password')
+            );
+            done();
+        });
 
-        usernameInput.dispatchEvent(new Event('input'));
-        passwordInput.dispatchEvent(new Event('input'));
-
-        fixture.detectChanges();
-
-        element.querySelector('button').click();
-
-        fixture.detectChanges();
-
-        expect(component.error).toBe(false);
-        expect(component.success).toBe(true);
-        expect(component.onSuccess.emit).toHaveBeenCalledWith(
-            new LoginSuccessEvent({ type: 'type', ticket: 'ticket' }, 'fake-username', 'fake-password')
-        );
+        loginWithCredentials('fake-username', 'fake-password');
     });
 
-    it('should emit onError event after the login has failed', () => {
-        spyOn(component.onError, 'emit');
-
+    it('should emit error event after the login has failed', (done) => {
         component.providers = 'ECM';
-        expect(component.success).toBe(false);
-        expect(component.error).toBe(false);
 
-        usernameInput.value = 'fake-username';
-        passwordInput.value = 'fake-wrong-password';
+        component.error.subscribe((error) => {
+            fixture.detectChanges();
 
-        usernameInput.dispatchEvent(new Event('input'));
-        passwordInput.dispatchEvent(new Event('input'));
+            expect(component.isError).toBe(true);
+            expect(getLoginErrorElement()).toBeDefined();
+            expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+            expect(error).toEqual(
+                new LoginErrorEvent('Fake server error')
+            );
+            done();
+        });
 
-        fixture.detectChanges();
-
-        element.querySelector('button').click();
-
-        fixture.detectChanges();
-
-        expect(component.error).toBe(true);
-        expect(component.success).toBe(false);
-        expect(getLoginErrorElement()).toBeDefined();
-        expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
-        expect(component.onError.emit).toHaveBeenCalledWith(
-            new LoginErrorEvent('Fake server error')
-        );
+        loginWithCredentials('fake-username', 'fake-wrong-password');
     });
 
     it('should render the password in clear when the toggleShowPassword is call', () => {
@@ -578,28 +521,17 @@ describe('LoginComponent', () => {
         expect(element.querySelector('#password').type).toEqual('password');
     });
 
-    it('should emit onError event when the providers is undefined', () => {
-        spyOn(component.onError, 'emit');
+    it('should emit error event when the providers is undefined', (done) => {
+        component.error.subscribe((error) => {
+            fixture.detectChanges();
 
-        expect(component.success).toBe(false);
-        expect(component.error).toBe(false);
+            expect(component.isError).toBe(true);
+            expect(getLoginErrorElement()).toBeDefined();
+            expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-PROVIDERS');
+            expect(error).toEqual(new LoginErrorEvent('LOGIN.MESSAGES.LOGIN-ERROR-PROVIDERS'));
+            done();
+        });
 
-        usernameInput.value = 'fake-username';
-        passwordInput.value = 'fake-password';
-
-        usernameInput.dispatchEvent(new Event('input'));
-        passwordInput.dispatchEvent(new Event('input'));
-
-        fixture.detectChanges();
-
-        element.querySelector('button').click();
-
-        fixture.detectChanges();
-
-        expect(component.error).toBe(true);
-        expect(component.success).toBe(false);
-        expect(getLoginErrorElement()).toBeDefined();
-        expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-PROVIDERS');
-        expect(component.onError.emit).toHaveBeenCalledWith(new LoginErrorEvent('LOGIN.MESSAGES.LOGIN-ERROR-PROVIDERS'));
+        loginWithCredentials('fake-username', 'fake-password', null);
     });
 });

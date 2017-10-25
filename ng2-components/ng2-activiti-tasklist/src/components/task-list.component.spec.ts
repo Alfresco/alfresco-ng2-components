@@ -155,7 +155,7 @@ describe('TaskListComponent', () => {
         let processDefinitionKey = new SimpleChange(null, null, true);
         let assignment = new SimpleChange(null, 'fake-assignee', true);
 
-        component.onSuccess.subscribe((res) => {
+        component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.data).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
@@ -199,7 +199,7 @@ describe('TaskListComponent', () => {
         let processDefinitionKey = new SimpleChange(null, 'fakeprocess', true);
         let assignment = new SimpleChange(null, 'fake-assignee', true);
 
-        component.onSuccess.subscribe((res) => {
+        component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.data).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
@@ -224,7 +224,7 @@ describe('TaskListComponent', () => {
         let processInstanceId = new SimpleChange(null, 'fakeprocessId', true);
         let assignment = new SimpleChange(null, 'fake-assignee', true);
 
-        component.onSuccess.subscribe((res) => {
+        component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.data).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
@@ -249,7 +249,7 @@ describe('TaskListComponent', () => {
         let state = new SimpleChange(null, 'all', true);
         let processInstanceId = new SimpleChange(null, 'fakeprocessId', true);
 
-        component.onSuccess.subscribe((res) => {
+        component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.data).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
@@ -282,7 +282,7 @@ describe('TaskListComponent', () => {
         let state = new SimpleChange(null, 'open', true);
         let assignment = new SimpleChange(null, 'fake-assignee', true);
 
-        component.onError.subscribe((err) => {
+        component.error.subscribe((err) => {
             expect(err).toBeDefined();
             expect(err.error).toBe('wrong request');
             done();
@@ -303,7 +303,7 @@ describe('TaskListComponent', () => {
         component.state = 'open';
         component.assignment = 'fake-assignee';
         component.ngAfterContentInit();
-        component.onSuccess.subscribe((res) => {
+        component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.data).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
@@ -386,7 +386,7 @@ describe('TaskListComponent', () => {
             const landingTaskId = '888';
             let change = new SimpleChange(null, landingTaskId, true);
 
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(component.data).toBeDefined();
                 expect(component.data.getRows().length).toEqual(2);
@@ -412,7 +412,7 @@ describe('TaskListComponent', () => {
             const appId = '1';
             let change = new SimpleChange(null, appId, true);
 
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
@@ -433,7 +433,7 @@ describe('TaskListComponent', () => {
             const processDefinitionKey = 'fakeprocess';
             let change = new SimpleChange(null, processDefinitionKey, true);
 
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
@@ -455,7 +455,7 @@ describe('TaskListComponent', () => {
             const state = 'open';
             let change = new SimpleChange(null, state, true);
 
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
@@ -477,7 +477,7 @@ describe('TaskListComponent', () => {
             const sort = 'desc';
             let change = new SimpleChange(null, sort, true);
 
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
@@ -499,7 +499,7 @@ describe('TaskListComponent', () => {
             const name = 'FakeTaskName';
             let change = new SimpleChange(null, name, true);
 
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
@@ -521,7 +521,7 @@ describe('TaskListComponent', () => {
             const assignment = 'assignee';
             let change = new SimpleChange(null, assignment, true);
 
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();

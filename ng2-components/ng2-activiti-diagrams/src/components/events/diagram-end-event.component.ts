@@ -29,7 +29,7 @@ export class DiagramEndEventComponent implements OnInit {
     data: any;
 
     @Output()
-    onError = new EventEmitter();
+    error = new EventEmitter();
 
     options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: '', radius: ''};
     iconFillColor: any;

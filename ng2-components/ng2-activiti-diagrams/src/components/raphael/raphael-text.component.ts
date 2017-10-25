@@ -35,7 +35,7 @@ export class RaphaelTextDirective extends RaphaelBase implements OnInit {
     text: string;
 
     @Output()
-    onError = new EventEmitter();
+    error = new EventEmitter();
 
     constructor(public elementRef: ElementRef,
                 raphaelService: RaphaelService) {

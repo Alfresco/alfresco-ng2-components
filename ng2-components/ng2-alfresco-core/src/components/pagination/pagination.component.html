@@ -26,7 +26,7 @@
         <button
             mat-menu-item
             *ngFor="let pageSize of supportedPageSizes"
-            (click)="changePageSize(pageSize)">
+            (click)="onChangePageSize(pageSize)">
             {{ pageSize }}
         </button>
     </mat-menu>
@@ -52,7 +52,7 @@
         <button
             mat-menu-item
             *ngFor="let pageNumber of pages"
-            (click)="changePageNumber(pageNumber)">
+            (click)="onChangePageNumber(pageNumber)">
             {{ pageNumber }}
         </button>
     </mat-menu>

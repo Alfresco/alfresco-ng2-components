@@ -32,7 +32,7 @@ export class RaphaelIconAlfrescoPublishDirective extends RaphaelBase implements 
     text: string;
 
     @Output()
-    onError = new EventEmitter();
+    error = new EventEmitter();
 
     @Input()
     strokeWidth: number;

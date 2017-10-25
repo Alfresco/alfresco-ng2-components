@@ -47,7 +47,7 @@ You can also hide chart parameters UI by setting the `hideParameters` to `true`:
 
 | Name | Description |
 | --- | --- |
-| onSuccess | The event is emitted when the report parameters are loaded |
-| onError | The event is emitted when an error occurs during the loading |
+| success | The event is emitted when the report parameters are loaded |
+| error | The event is emitted when an error occurs during the loading |
 | reportSaved | The event is emitted when a report is saved |
 | reportDeleted | The event is emitted when a report is deleted |

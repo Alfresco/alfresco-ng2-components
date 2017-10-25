@@ -53,8 +53,8 @@ Authenticates to Alfresco Content Services and Alfresco Process Services.
 
 | Name | Description |
 | --- | --- |
-| onSuccess | Raised when the login is done |
-| onError | Raised when the login fails |
+| success | Raised when the login is done |
+| error | Raised when the login fails |
 | executeSubmit | Raised when the form is submitted |
 
 ## Details
@@ -66,8 +66,8 @@ Authenticates to Alfresco Content Services and Alfresco Process Services.
 ```html
 <adf-login 
     providers="ALL"
-    (onSuccess)="mySuccessMethod($event)"
-    (onError)="myErrorMethod($event)">
+    (success)="mySuccessMethod($event)"
+    (error)="myErrorMethod($event)">
 </adf-login>
 ```
 

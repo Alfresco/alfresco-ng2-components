@@ -45,7 +45,7 @@ You can also use HTML-based schema declaration like shown below:
 
 | Name | Description |
 | --- | --- |
-| onSuccess | Raised when the task list is loaded |
+| success | Raised when the task list is loaded |
 | rowClick | Raised when the task in the list is clicked |
 | rowsSelected | Raised when the a row is selected/unselected | 
 

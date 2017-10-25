@@ -77,18 +77,17 @@ export class LoginComponent implements OnInit {
     successRoute: string = null;
 
     @Output()
-    onSuccess = new EventEmitter<LoginSuccessEvent>();
+    success = new EventEmitter<LoginSuccessEvent>();
 
     @Output()
-    onError = new EventEmitter<LoginErrorEvent>();
+    error = new EventEmitter<LoginErrorEvent>();
 
     @Output()
     executeSubmit = new EventEmitter<LoginSubmitEvent>();
 
     form: FormGroup;
-    error: boolean = false;
+    isError: boolean = false;
     errorMsg: string;
-    success: boolean = false;
     actualLoginStep: any = LoginSteps.Landing;
     LoginSteps: any = LoginSteps;
     rememberMe: boolean = true;
@@ -157,7 +156,6 @@ export class LoginComponent implements OnInit {
      * @param data
      */
     onValueChanged(data: any) {
-        this.success = false;
         this.disableError();
         for (let field in this.formError) {
             if (field) {
@@ -185,8 +183,7 @@ export class LoginComponent implements OnInit {
             .subscribe(
                 (token: any) => {
                     this.actualLoginStep = LoginSteps.Welcome;
-                    this.success = true;
-                    this.onSuccess.emit(new LoginSuccessEvent(token, values.username, values.password));
+                    this.success.emit(new LoginSuccessEvent(token, values.username, values.password));
                     if (this.successRoute) {
                         this.router.navigate([this.successRoute]);
                     }
@@ -195,7 +192,7 @@ export class LoginComponent implements OnInit {
                     this.actualLoginStep = LoginSteps.Landing;
                     this.displayErrorMessage(err);
                     this.enableError();
-                    this.onError.emit(new LoginErrorEvent(err));
+                    this.error.emit(new LoginErrorEvent(err));
                 },
                 () => this.logService.info('Login done')
             );
@@ -233,7 +230,7 @@ export class LoginComponent implements OnInit {
             this.enableError();
             let messageProviders: any;
             messageProviders = this.translateService.get(this.errorMsg);
-            this.onError.emit(new LoginErrorEvent(messageProviders.value));
+            this.error.emit(new LoginErrorEvent(messageProviders.value));
             return false;
         }
         return true;
@@ -337,7 +334,7 @@ export class LoginComponent implements OnInit {
      * Disable the error flag
      */
     private disableError() {
-        this.error = false;
+        this.isError = false;
         this.initFormError();
     }
 
@@ -345,7 +342,7 @@ export class LoginComponent implements OnInit {
      * Enable the error flag
      */
     private enableError() {
-        this.error = true;
+        this.isError = true;
     }
 
     private hasCustomFiledsValidation(): boolean {

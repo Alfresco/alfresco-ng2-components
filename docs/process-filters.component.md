@@ -41,8 +41,8 @@ If both `appId` and `appName` are specified then `appName` will take precedence 
 
 | Name | Description |
 | --- | --- |
-| onSuccess | Raised when the list of filters has been successfully loaded from the server |
-| onError | Raised when an error occurs |
+| success | Raised when the list of filters has been successfully loaded from the server |
+| error | Raised when an error occurs |
 | filterClick | Raised when the user selects a filter from the list |
 
 ## Details

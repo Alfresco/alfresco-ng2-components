@@ -81,17 +81,17 @@ describe('AnalyticsReportParametersComponent', () => {
 
         it('Should initialize the Report form with a Form Group ', (done) => {
             let fakeReportParam = new ReportParametersModel(analyticParamsMock.reportDefParamTask);
-            component.onSuccessReportParams.subscribe(() => {
+            component.successReportParams.subscribe(() => {
                 fixture.detectChanges();
                 expect(component.reportForm.get('taskGroup')).toBeDefined();
                 expect(component.reportForm.get('taskGroup').get('taskName')).toBeDefined();
                 done();
             });
-            component.onSuccessReportParams.emit(fakeReportParam);
+            component.successReportParams.emit(fakeReportParam);
         });
 
         it('Should render a dropdown with all the status when the definition parameter type is \'status\' ', (done) => {
-            component.onSuccessReportParams.subscribe(() => {
+            component.successReportParams.subscribe(() => {
                 fixture.detectChanges();
                 let dropDown: any = element.querySelector('#select-status');
                 expect(element.querySelector('h4').textContent.trim()).toEqual('Fake Task overview status');
@@ -116,7 +116,7 @@ describe('AnalyticsReportParametersComponent', () => {
         });
 
         it('Should render a number with the default value when the definition parameter type is \'integer\' ', (done) => {
-            component.onSuccessReportParams.subscribe(() => {
+            component.successReportParams.subscribe(() => {
                 fixture.detectChanges();
                 let numberElement: any = element.querySelector('#slowProcessInstanceInteger');
                 expect(numberElement.value).toEqual('10');
@@ -136,7 +136,7 @@ describe('AnalyticsReportParametersComponent', () => {
         });
 
         it('Should render a duration component when the definition parameter type is \'duration\' ', (done) => {
-            component.onSuccessReportParams.subscribe(() => {
+            component.successReportParams.subscribe(() => {
                 fixture.detectChanges();
                 let numberElement: any = element.querySelector('#duration');
                 expect(numberElement.value).toEqual('0');
@@ -163,7 +163,7 @@ describe('AnalyticsReportParametersComponent', () => {
         });
 
         it('Should save an Params object when the submit is performed', () => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 expect(res.dateRange.startDate).toEqual('2016-09-01T00:00:00.000Z');
                 expect(res.dateRange.endDate).toEqual('2016-10-05T00:00:00.000Z');
                 expect(res.status).toEqual('All');
@@ -206,7 +206,7 @@ describe('AnalyticsReportParametersComponent', () => {
         });
 
         it('Should render a checkbox with the value true when the definition parameter type is \'boolean\' ', (done) => {
-            component.onSuccessReportParams.subscribe(() => {
+            component.successReportParams.subscribe(() => {
                 fixture.detectChanges();
                 let checkElement: any = element.querySelector('#typeFiltering-input');
                 expect(checkElement.checked).toBeTruthy();
@@ -225,7 +225,7 @@ describe('AnalyticsReportParametersComponent', () => {
         });
 
         it('Should render a date range components when the definition parameter type is \'dateRange\' ', (done) => {
-            component.onSuccessReportParams.subscribe(() => {
+            component.successReportParams.subscribe(() => {
                 let dateElement: any = element.querySelector('adf-date-range-widget');
                 expect(dateElement).toBeDefined();
                 done();
@@ -244,7 +244,7 @@ describe('AnalyticsReportParametersComponent', () => {
         });
 
         it('Should render a dropdown with all the RangeInterval when the definition parameter type is \'dateRangeInterval\' ', (done) => {
-            component.onSuccessReportParams.subscribe(() => {
+            component.successReportParams.subscribe(() => {
                 fixture.detectChanges();
                 let dropDown: any = element.querySelector('#select-dateRangeInterval');
                 expect(dropDown).toBeDefined();
@@ -270,7 +270,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
         it('Should render a dropdown with all the process definition when the definition parameter type is \'processDefinition\' and the' +
             ' reportId change', (done) => {
-            component.onSuccessParamOpt.subscribe(() => {
+            component.successParamOpt.subscribe(() => {
                 fixture.detectChanges();
                 let dropDown: any = element.querySelector('#select-processDefinitionId');
                 expect(dropDown).toBeDefined();
@@ -303,7 +303,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
         it('Should render a dropdown with all the process definition when the definition parameter type is \'processDefinition\' and the' +
             ' appId change', (done) => {
-            component.onSuccessParamOpt.subscribe(() => {
+            component.successParamOpt.subscribe(() => {
                 fixture.detectChanges();
                 let dropDown: any = element.querySelector('#select-processDefinitionId');
                 expect(dropDown).toBeDefined();
@@ -336,7 +336,7 @@ describe('AnalyticsReportParametersComponent', () => {
         });
 
         it('Should create an empty valid form when there are no parameters definitions', () => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 expect(component.reportForm).toBeDefined();
                 expect(component.reportForm.valid).toEqual(true);
                 expect(component.reportForm.controls).toEqual({});
@@ -354,7 +354,7 @@ describe('AnalyticsReportParametersComponent', () => {
         });
 
         it('Should load the task list when a process definition is selected', () => {
-            component.onSuccessReportParams.subscribe((res) => {
+            component.successReportParams.subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(res.length).toEqual(2);
                 expect(res[0].id).toEqual('Fake task name 1');
@@ -375,7 +375,7 @@ describe('AnalyticsReportParametersComponent', () => {
         });
 
         it('Should emit an error with a 404 response when the options response is not found', (done) => {
-            component.onError.subscribe((err) => {
+            component.error.subscribe((err) => {
                 expect(err).toBeDefined();
                 done();
             });
@@ -399,7 +399,7 @@ describe('AnalyticsReportParametersComponent', () => {
         });
 
         it('Should emit an error with a 404 response when the report parameters response is not found', (done) => {
-            component.onError.subscribe((err) => {
+            component.error.subscribe((err) => {
                 expect(err).toBeDefined();
                 done();
             });

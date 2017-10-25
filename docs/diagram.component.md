@@ -45,5 +45,5 @@ The below component shows the diagram of a running process instance with the act
 
 | Name | Description |
 | --- | --- |
-| onSuccess | Raised when the diagrams elements are loaded |
-| onError | Raised when an error occurs during loading |
+| success | Raised when the diagrams elements are loaded |
+| error | Raised when an error occurs during loading |

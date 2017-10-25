@@ -190,7 +190,7 @@ describe('UploadDragAreaComponent', () => {
 
     it('should upload the list of files dropped', (done) => {
         component.currentFolderPath = '/root-fake-/sites-fake/folder-fake';
-        component.onSuccess = null;
+        component.success = null;
         component.showNotificationBar = false;
         uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
 
@@ -208,7 +208,7 @@ describe('UploadDragAreaComponent', () => {
 
     it('should show the loading messages in the notification bar when the files are dropped', () => {
         component.currentFolderPath = '/root-fake-/sites-fake/folder-fake';
-        component.onSuccess = null;
+        component.success = null;
         component.showNotificationBar = true;
         uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
         component.showUndoNotificationBar = jasmine.createSpy('_showUndoNotificationBar');
@@ -224,7 +224,7 @@ describe('UploadDragAreaComponent', () => {
 
     it('should upload a file when dropped', () => {
         component.currentFolderPath = '/root-fake-/sites-fake/document-library-fake';
-        component.onSuccess = null;
+        component.success = null;
 
         fixture.detectChanges();
         spyOn(uploadService, 'uploadFilesInTheQueue');
@@ -247,7 +247,7 @@ describe('UploadDragAreaComponent', () => {
     it('should upload a file with a custom root folder ID when dropped', () => {
         component.currentFolderPath = '/root-fake-/sites-fake/document-library-fake';
         component.rootFolderId = '-my-';
-        component.onSuccess = null;
+        component.success = null;
 
         fixture.detectChanges();
         spyOn(uploadService, 'uploadFilesInTheQueue');
@@ -285,7 +285,7 @@ describe('UploadDragAreaComponent', () => {
 
         fixture.detectChanges();
         spyOn(uploadService, 'uploadFilesInTheQueue').and.returnValue(Promise.resolve(fakeItem));
-        component.onSuccess.subscribe((val) => {
+        component.success.subscribe((val) => {
             expect(val).not.toBeNull();
         });
 
@@ -302,7 +302,7 @@ describe('UploadDragAreaComponent', () => {
     it('should show notification bar when a file is dropped', () => {
         component.currentFolderPath = '/root-fake-/sites-fake/document-library-fake';
         component.rootFolderId = '-my-';
-        component.onSuccess = null;
+        component.success = null;
 
         fixture.detectChanges();
         spyOn(uploadService, 'uploadFilesInTheQueue');

@@ -47,7 +47,7 @@ export class RaphaelRhombusDirective extends RaphaelBase implements OnInit {
     elementId: string;
 
     @Output()
-    onError = new EventEmitter();
+    error = new EventEmitter();
 
     constructor(public elementRef: ElementRef,
                 raphaelService: RaphaelService) {

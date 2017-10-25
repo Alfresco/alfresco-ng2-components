@@ -28,7 +28,7 @@ export class DiagramIconTimerComponent implements OnInit {
     data: any;
 
     @Output()
-    onError = new EventEmitter();
+    error = new EventEmitter();
 
     center: any = {};
     position: any;

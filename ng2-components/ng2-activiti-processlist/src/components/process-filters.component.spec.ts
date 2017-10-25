@@ -67,7 +67,7 @@ describe('ActivitiFilters', () => {
         let change = new SimpleChange(null, appId, true);
         filterList.ngOnChanges({ 'appId': change });
 
-        filterList.onSuccess.subscribe((res) => {
+        filterList.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(filterList.filters).toBeDefined();
             expect(filterList.filters.length).toEqual(3);
@@ -88,7 +88,7 @@ describe('ActivitiFilters', () => {
 
         expect(filterList.currentFilter).toBeUndefined();
 
-        filterList.onSuccess.subscribe((res) => {
+        filterList.success.subscribe((res) => {
             filterList.selectRunningFilter();
             expect(filterList.currentFilter.name).toEqual('Running');
             done();
@@ -109,7 +109,7 @@ describe('ActivitiFilters', () => {
         let change = new SimpleChange(null, 'test', true);
         filterList.ngOnChanges({ 'appName': change });
 
-        filterList.onSuccess.subscribe((res) => {
+        filterList.success.subscribe((res) => {
             let deployApp: any = appsProcessService.getDeployedApplicationsByName;
             expect(deployApp.calls.count()).toEqual(1);
             expect(res).toBeDefined();
@@ -126,7 +126,7 @@ describe('ActivitiFilters', () => {
         let change = new SimpleChange(null, appId, true);
         filterList.ngOnChanges({ 'appId': change });
 
-        filterList.onError.subscribe((err) => {
+        filterList.error.subscribe((err) => {
             expect(err).toBeDefined();
             done();
         });
@@ -141,7 +141,7 @@ describe('ActivitiFilters', () => {
         let change = new SimpleChange(null, appId, true);
         filterList.ngOnChanges({ 'appName': change });
 
-        filterList.onError.subscribe((err) => {
+        filterList.error.subscribe((err) => {
             expect(err).toBeDefined();
             done();
         });

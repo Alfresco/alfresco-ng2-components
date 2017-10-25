@@ -29,7 +29,7 @@ export class DiagramThrowEventComponent implements OnInit {
     data: any;
 
     @Output()
-    onError = new EventEmitter();
+    error = new EventEmitter();
 
     center: any = {};
     options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: 1};

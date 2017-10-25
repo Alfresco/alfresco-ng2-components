@@ -34,5 +34,5 @@ The component generates and shows the charts
 
 | Name | Description |
 | --- | --- |
-| onSuccess | Raised when the charts are loaded |
-| onError | Raised when an error occurs during the loading |
+| success | Raised when the charts are loaded |
+| error | Raised when an error occurs during the loading |

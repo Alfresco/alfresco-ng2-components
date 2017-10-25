@@ -173,7 +173,7 @@ describe('UploadButtonComponent', () => {
     it('should call uploadFile with the default root folder', () => {
         component.rootFolderId = '-root-';
         component.currentFolderPath = '/root-fake-/sites-fake/folder-fake';
-        component.onSuccess = null;
+        component.success = null;
 
         spyOn(component, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
 
@@ -189,7 +189,7 @@ describe('UploadButtonComponent', () => {
     it('should call uploadFile with a custom root folder', () => {
         component.currentFolderPath = '/root-fake-/sites-fake/folder-fake';
         component.rootFolderId = '-my-';
-        component.onSuccess = null;
+        component.success = null;
 
         spyOn(component, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
         component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
@@ -212,13 +212,13 @@ describe('UploadButtonComponent', () => {
         component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
         fixture.detectChanges();
 
-        component.onSuccess.subscribe(e => {
+        component.success.subscribe(e => {
             expect(e.value).toEqual('File uploaded');
             done();
         });
 
         spyOn(component, 'uploadFiles').and.callFake(() => {
-            component.onSuccess.emit({
+            component.success.emit({
                 value: 'File uploaded'
             });
         });

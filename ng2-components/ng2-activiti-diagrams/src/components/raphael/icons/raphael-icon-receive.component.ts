@@ -32,7 +32,7 @@ export class RaphaelIconReceiveDirective extends RaphaelBase implements OnInit {
     text: string;
 
     @Output()
-    onError = new EventEmitter();
+    error = new EventEmitter();
 
     @Input()
     strokeWidth: number;

@@ -95,7 +95,7 @@ describe('TaskFiltersComponent', () => {
         let change = new SimpleChange(null, appId, true);
         component.ngOnChanges({ 'appId': change });
 
-        component.onError.subscribe((err) => {
+        component.error.subscribe((err) => {
             expect(err).toBeDefined();
             done();
         });
@@ -108,7 +108,7 @@ describe('TaskFiltersComponent', () => {
         let change = new SimpleChange(null, appId, true);
         component.ngOnChanges({ 'appId': change });
 
-        component.onSuccess.subscribe((res) => {
+        component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.filters).toBeDefined();
             expect(component.filters.length).toEqual(3);
@@ -133,7 +133,7 @@ describe('TaskFiltersComponent', () => {
         let change = new SimpleChange(null, 'test', true);
         component.ngOnChanges({ 'appName': change });
 
-        component.onSuccess.subscribe((res) => {
+        component.success.subscribe((res) => {
             let deployApp: any = appsProcessService.getDeployedApplicationsByName;
             expect(deployApp.calls.count()).toEqual(1);
             expect(res).toBeDefined();
@@ -152,7 +152,7 @@ describe('TaskFiltersComponent', () => {
         fixture.detectChanges();
         component.ngOnChanges({ 'appId': change });
 
-        component.onSuccess.subscribe((res) => {
+        component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.currentFilter).toBeDefined();
             expect(component.currentFilter.name).toEqual('FakeInvolvedTasks');
@@ -171,7 +171,7 @@ describe('TaskFiltersComponent', () => {
         fixture.detectChanges();
         component.ngOnChanges({ 'appId': change });
 
-        component.onSuccess.subscribe((res) => {
+        component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.currentFilter).toBeDefined();
             expect(component.currentFilter.name).toEqual('FakeMyTasks1');
@@ -191,7 +191,7 @@ describe('TaskFiltersComponent', () => {
         fixture.detectChanges();
         component.ngOnChanges({ 'appId': change });
 
-        component.onSuccess.subscribe((res) => {
+        component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.currentFilter).toBeDefined();
             expect(component.currentFilter.name).toEqual('FakeInvolvedTasks');
@@ -211,7 +211,7 @@ describe('TaskFiltersComponent', () => {
         fixture.detectChanges();
         component.ngOnChanges({ 'appId': change });
 
-        component.onSuccess.subscribe((res) => {
+        component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.currentFilter).toBeDefined();
             expect(component.currentFilter.name).toEqual('FakeMyTasks2');
@@ -231,7 +231,7 @@ describe('TaskFiltersComponent', () => {
         fixture.detectChanges();
         component.ngOnChanges({ 'appId': change });
 
-        component.onSuccess.subscribe((res) => {
+        component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.currentFilter).toBeDefined();
             expect(component.currentFilter.name).toEqual('FakeInvolvedTasks');

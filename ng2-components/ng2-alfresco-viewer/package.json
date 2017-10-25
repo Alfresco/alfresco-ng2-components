@@ -63,7 +63,7 @@
     "@types/hammerjs": "2.0.35",
     "@types/jasmine": "2.5.35",
     "@types/node": "6.0.45",
-    "adf-tslint-rules": "0.0.3",
+    "adf-tslint-rules": "0.0.4",
     "angular2-template-loader": "0.6.2",
     "autoprefixer": "6.5.4",
     "codelyzer": "3.1.2",

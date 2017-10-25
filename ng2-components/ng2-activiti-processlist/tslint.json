@@ -152,6 +152,7 @@
         "templates-use-public": true,
         "invoke-injectable": true,
         "adf-file-name": true,
-        "adf-class-name": true
-    }
+        "adf-class-name": true,
+        "adf-prefix-name": true
+     }
 }

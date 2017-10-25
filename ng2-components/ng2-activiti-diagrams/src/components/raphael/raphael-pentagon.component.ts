@@ -41,7 +41,7 @@ export class RaphaelPentagonDirective extends RaphaelBase implements OnInit {
     strokeLinejoin: any;
 
     @Output()
-    onError = new EventEmitter();
+    error = new EventEmitter();
 
     constructor(public elementRef: ElementRef,
                 raphaelService: RaphaelService) {

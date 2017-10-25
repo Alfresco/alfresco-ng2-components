@@ -19,7 +19,7 @@ import {
     AfterContentInit, Component, ContentChild, ElementRef, EventEmitter, HostListener, Input, NgZone,
     OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild, ViewEncapsulation
 } from '@angular/core';
-import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, Pagination, PersonEntry } from 'alfresco-js-api';
+import { DeletedNodesPaging, MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, Pagination, PersonEntry } from 'alfresco-js-api';
 import { AlfrescoApiService, AppConfigService, DataColumnListComponent, UserPreferencesService } from 'ng2-alfresco-core';
 import { DataCellEvent, DataColumn, DataRowActionEvent, DataSorting, DataTableComponent, ObjectDataColumn } from 'ng2-alfresco-datatable';
 import { Observable, Subject } from 'rxjs/Rx';
@@ -485,7 +485,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             maxItems: this.pageSize,
             skipCount: this.skipCount
         };
-        this.apiService.nodesApi.getDeletedNodes(options).then((page: NodePaging) => {
+        this.apiService.nodesApi.getDeletedNodes(options).then((page: DeletedNodesPaging) => {
             this.onPageLoaded(page);
         });
     }

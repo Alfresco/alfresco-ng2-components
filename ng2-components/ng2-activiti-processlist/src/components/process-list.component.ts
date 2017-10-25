@@ -56,10 +56,10 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     rowClick: EventEmitter<string> = new EventEmitter<string>();
 
     @Output()
-    onSuccess: EventEmitter<ProcessInstance[]> = new EventEmitter<ProcessInstance[]>();
+    success: EventEmitter<ProcessInstance[]> = new EventEmitter<ProcessInstance[]>();
 
     @Output()
-    onError: EventEmitter<any> = new EventEmitter<any>();
+    error: EventEmitter<any> = new EventEmitter<any>();
 
     currentInstanceId: string;
     isLoading: boolean = true;
@@ -144,11 +144,11 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
                     let instancesRow = this.createDataRow(response);
                     this.renderInstances(instancesRow);
                     this.selectFirst();
-                    this.onSuccess.emit(response);
+                    this.success.emit(response);
                     this.isLoading = false;
                 },
                 error => {
-                    this.onError.emit(error);
+                    this.error.emit(error);
                     this.isLoading = false;
                 });
     }

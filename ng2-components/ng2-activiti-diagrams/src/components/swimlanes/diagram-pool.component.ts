@@ -28,7 +28,7 @@ export class DiagramPoolComponent implements OnInit {
     pool: any;
 
     @Output()
-    onError = new EventEmitter();
+    error = new EventEmitter();
 
     rectLeftCorner: any;
     width: any;

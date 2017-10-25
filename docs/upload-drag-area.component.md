@@ -17,7 +17,7 @@ Adds a drag and drop area to upload files to Alfresco.
 ## Basic Usage
 
 ```html
-<adf-upload-drag-area (onSuccess)="customMethod($event)">
+<adf-upload-drag-area (success)="onSuccess($event)">
     <div style="width: 200px; height: 100px; border: 1px solid #888888">
         DRAG HERE
     </div>
@@ -50,4 +50,4 @@ export class AppComponent {
 
 | Name | Description |
 | --- | --- |
-| onSuccess | Raised when the file is uploaded |
+| success | Raised when the file is uploaded |

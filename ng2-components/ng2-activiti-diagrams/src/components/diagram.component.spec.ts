@@ -80,7 +80,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         });
 
         it('Should render the Start Event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -101,7 +101,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Start Timer Event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
@@ -127,7 +127,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Start Signal Event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
@@ -152,7 +152,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Start Message Event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
@@ -177,7 +177,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Start Error Event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
@@ -202,7 +202,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the End Event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
@@ -223,7 +223,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the End Error Event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
@@ -260,7 +260,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         });
 
         it('Should render the User Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -289,7 +289,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Manual Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -318,7 +318,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Service Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -347,7 +347,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Service Mail Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(true).toBe(true);
@@ -363,7 +363,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Service Camel Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -392,7 +392,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Service Mule Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -417,7 +417,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Service Alfresco Publish Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -447,7 +447,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Service Google Drive Publish Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -477,7 +477,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Rest Call Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -507,7 +507,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Service Box Publish Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -537,7 +537,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Receive Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -566,7 +566,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Script Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -595,7 +595,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Business Rule Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -637,7 +637,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         });
 
         it('Should render the Exclusive Gateway', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -662,7 +662,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Inclusive Gateway', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -687,7 +687,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Parallel Gateway', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -712,7 +712,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Event Gateway', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -759,7 +759,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         });
 
         it('Should render the Intermediate catching time event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -792,7 +792,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Intermediate catching error event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -825,7 +825,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Intermediate catching signal event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -858,7 +858,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Intermediate catching signal message', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -903,7 +903,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         });
 
         it('Should render the Boundary time event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -936,7 +936,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Boundary error event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -969,7 +969,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Boundary signal event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -1002,7 +1002,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Boundary signal message', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -1035,7 +1035,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Boundary signal message', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -1080,7 +1080,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         });
 
         it('Should render the Throw time event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -1109,7 +1109,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Throw error event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -1142,7 +1142,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Throw signal event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -1175,7 +1175,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Throw signal message', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -1208,7 +1208,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Throw signal message', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -1253,7 +1253,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         });
 
         it('Should render the Subprocess', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -1275,7 +1275,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Event Subprocess', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -1309,7 +1309,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         });
 
         it('Should render the Pool', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -1331,7 +1331,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Pool with Lanes', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -1368,7 +1368,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         });
 
         it('Should render the flow', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -1403,7 +1403,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         });
 
         it('Should render the Start Event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -1424,7 +1424,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active Start Event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -1445,7 +1445,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Start Event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -1466,7 +1466,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Start Timer Event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
@@ -1492,7 +1492,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active Start Timer Event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
@@ -1518,7 +1518,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Start Timer Event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
@@ -1544,7 +1544,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Start Signal Event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
@@ -1569,7 +1569,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active Start Signal Event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
@@ -1594,7 +1594,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Start Signal Event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
@@ -1619,7 +1619,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Start Message Event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
@@ -1644,7 +1644,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active Start Message Event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
@@ -1669,7 +1669,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Start Message Event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
@@ -1694,7 +1694,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Start Error Event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
@@ -1719,7 +1719,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active Start Error Event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
@@ -1744,7 +1744,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Start Error Event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
@@ -1769,7 +1769,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the End Event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
@@ -1790,7 +1790,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active End Event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
@@ -1811,7 +1811,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed End Event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
@@ -1832,7 +1832,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the End Error Event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
@@ -1857,7 +1857,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active End Error Event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
@@ -1882,7 +1882,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed End Error Event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
@@ -1919,7 +1919,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         });
 
         it('Should render the User Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -1948,7 +1948,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active User Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -1977,7 +1977,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed User Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -2006,7 +2006,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Manual Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -2035,7 +2035,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active Manual Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -2064,7 +2064,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Manual Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -2093,7 +2093,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Service Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -2122,7 +2122,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active Service Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -2151,7 +2151,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Service Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -2180,7 +2180,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Service Mail Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(true).toBe(true);
@@ -2196,7 +2196,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Service Camel Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -2225,7 +2225,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active Service Camel Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -2254,7 +2254,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Service Camel Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -2283,7 +2283,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Service Mule Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -2308,7 +2308,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active Service Mule Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -2333,7 +2333,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Service Mule Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -2358,7 +2358,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Service Alfresco Publish Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -2388,7 +2388,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active Service Alfresco Publish Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -2418,7 +2418,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Service Alfresco Publish Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -2448,7 +2448,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Service Google Drive Publish Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -2478,7 +2478,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active Service Google Drive Publish Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -2508,7 +2508,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Service Google Drive Publish Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -2538,7 +2538,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Rest Call Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -2568,7 +2568,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active Rest Call Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -2598,7 +2598,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Rest Call Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -2628,7 +2628,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Service Box Publish Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -2658,7 +2658,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active Service Box Publish Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -2688,7 +2688,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Service Box Publish Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -2718,7 +2718,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Receive Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -2747,7 +2747,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active Receive Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -2776,7 +2776,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Receive Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -2805,7 +2805,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Script Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -2834,7 +2834,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active Script Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -2863,7 +2863,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Script Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -2892,7 +2892,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Business Rule Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -2921,7 +2921,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active Business Rule Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -2950,7 +2950,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Business Rule Task', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -2992,7 +2992,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         });
 
         it('Should render the Exclusive Gateway', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -3017,7 +3017,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active Exclusive Gateway', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -3042,7 +3042,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Exclusive Gateway', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -3067,7 +3067,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Inclusive Gateway', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -3092,7 +3092,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active Inclusive Gateway', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -3117,7 +3117,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Inclusive Gateway', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -3142,7 +3142,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Parallel Gateway', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -3167,7 +3167,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active Parallel Gateway', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -3192,7 +3192,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Parallel Gateway', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -3217,7 +3217,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Event Gateway', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -3252,7 +3252,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active Event Gateway', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -3287,7 +3287,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Event Gateway', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -3334,7 +3334,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         });
 
         it('Should render the Intermediate catching time event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -3367,7 +3367,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active Intermediate catching time event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -3404,7 +3404,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Intermediate catching time event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -3441,7 +3441,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Intermediate catching error event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -3474,7 +3474,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active Intermediate catching error event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -3511,7 +3511,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Intermediate catching error event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -3548,7 +3548,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Intermediate catching signal event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -3581,7 +3581,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Intermediate Active catching signal event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -3618,7 +3618,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Intermediate catching signal event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -3655,7 +3655,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Intermediate catching signal message', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -3688,7 +3688,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active Intermediate catching signal message', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -3725,7 +3725,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Intermediate catching signal message', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -3774,7 +3774,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         });
 
         it('Should render the Boundary time event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -3807,7 +3807,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active Boundary time event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -3844,7 +3844,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Boundary time event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -3881,7 +3881,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Boundary error event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -3914,7 +3914,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active Boundary error event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -3951,7 +3951,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Boundary error event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -3988,7 +3988,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Boundary signal event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -4021,7 +4021,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active Boundary signal event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -4058,7 +4058,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Boundary signal event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -4095,7 +4095,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Boundary signal message', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -4128,7 +4128,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active Boundary signal message', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -4165,7 +4165,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Boundary signal message', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -4202,7 +4202,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Boundary signal message', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -4235,7 +4235,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active Boundary signal message', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -4272,7 +4272,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Boundary signal message', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -4321,7 +4321,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         });
 
         it('Should render the Throw time event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -4350,7 +4350,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active Throw time event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -4383,7 +4383,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Throw time event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -4416,7 +4416,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Throw error event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -4449,7 +4449,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active Throw error event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -4486,7 +4486,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Throw error event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -4523,7 +4523,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Throw signal event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -4556,7 +4556,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active Throw signal event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -4593,7 +4593,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Throw signal event', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -4630,7 +4630,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Throw signal message', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -4663,7 +4663,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active Throw signal message', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -4700,7 +4700,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Throw signal message', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -4737,7 +4737,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Throw signal message', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -4770,7 +4770,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active Throw signal message', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -4807,7 +4807,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Throw signal message', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -4856,7 +4856,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         });
 
         it('Should render the Subprocess', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -4878,7 +4878,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active Subprocess', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -4900,7 +4900,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Subprocess', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -4922,7 +4922,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Event Subprocess', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -4944,7 +4944,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Active Event Subprocess', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -4966,7 +4966,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Completed Event Subprocess', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -5000,7 +5000,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         });
 
         it('Should render the Pool', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -5022,7 +5022,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         }));
 
         it('Should render the Pool with Lanes', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
@@ -5059,7 +5059,7 @@ describe('Test ng2-activiti-diagrams ', () => {
         });
 
         it('Should render the flow', async(() => {
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();

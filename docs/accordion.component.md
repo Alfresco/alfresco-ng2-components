@@ -75,7 +75,7 @@ the following example:
         <adf-process-instance-filters
             [appId]="appId"
             (filterClick)="onProcessFilterClick($event)"
-            (onSuccess)="onSuccessProcessFilterList($event)">
+            (success)="onSuccessProcessFilterList($event)">
         </adf-process-instance-filters>
     </adf-accordion-group>
 </adf-accordion>
