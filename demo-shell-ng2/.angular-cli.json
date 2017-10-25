@@ -112,18 +112,14 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.css",
         "../node_modules/ng2-alfresco-core/prebuilt-themes/adf-blue-orange.css",
-        "../node_modules/material-design-lite/dist/material.orange-blue.min.css",
-        "../node_modules/dialog-polyfill/dialog-polyfill.css",
+        "styles.css",
         "custom-style.scss"
       ],
       "scripts": [
-        "../node_modules/material-design-lite/material.min.js",
         "../node_modules/pdfjs-dist/build/pdf.js",
         "../node_modules/pdfjs-dist/web/compatibility.js",
         "../node_modules/pdfjs-dist/web/pdf_viewer.js",
-        "../node_modules/dialog-polyfill/dialog-polyfill.js",
         "../node_modules/raphael/raphael.min.js",
         "../node_modules/moment/min/moment.min.js",
         "../node_modules/three/build/three.min.js"
@@ -323,18 +319,14 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app-dev",
       "styles": [
-        "styles.css",
         "../node_modules/ng2-alfresco-core/prebuilt-themes/adf-blue-orange.css",
-        "../node_modules/material-design-lite/dist/material.orange-blue.min.css",
-        "../node_modules/dialog-polyfill/dialog-polyfill.css",
+        "styles.css",
         "custom-style.scss"
       ],
       "scripts": [
-        "../node_modules/material-design-lite/material.min.js",
         "../node_modules/pdfjs-dist/build/pdf.js",
         "../node_modules/pdfjs-dist/web/compatibility.js",
         "../node_modules/pdfjs-dist/web/pdf_viewer.js",
-        "../node_modules/dialog-polyfill/dialog-polyfill.js",
         "../node_modules/raphael/raphael.min.js",
         "../node_modules/moment/min/moment.min.js",
         "../node_modules/three/build/three.min.js"
