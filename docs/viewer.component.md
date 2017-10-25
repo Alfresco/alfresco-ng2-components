@@ -57,6 +57,15 @@ Using with file url:
 | allowInfoDrawer | boolean |false | Toogle info drawer feature |
 | showInfoDrawer | boolean | false | Toggles info drawer visibility. Requires `allowInfoDrawer` to be set to `true`. |
 
+## Events
+
+| Name | Argument Type | Cancellable | Description |
+| --- | --- | --- | --- |
+| goBack | any | Yes | Raised when user clicks the 'Back' button. |
+| download | any | Yes | Raised when user clicks the 'Download' button. |
+| print | any | Yes | Raised when user clicks the 'Print' button. |
+| share | any | Yes | Raised when user clicks the 'Share' button. |
+
 ## Details
 
 ### Supported file formats
