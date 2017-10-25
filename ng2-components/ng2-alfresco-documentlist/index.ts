@@ -18,8 +18,8 @@
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
-import { UploadModule } from 'ng2-alfresco-upload';
 import { DataTableModule } from 'ng2-alfresco-datatable';
+import { UploadModule } from 'ng2-alfresco-upload';
 
 import { BreadcrumbComponent } from './src/components/breadcrumb/breadcrumb.component';
 import { DropdownBreadcrumbComponent } from './src/components/breadcrumb/dropdown-breadcrumb.component';
@@ -31,8 +31,8 @@ import { ContentNodeSelectorComponent } from './src/components/content-node-sele
 import { DocumentListComponent } from './src/components/document-list.component';
 import { EmptyFolderContentDirective } from './src/components/empty-folder/empty-folder-content.directive';
 import { DropdownSitesComponent } from './src/components/site-dropdown/sites-dropdown.component';
-import { VersionManagerComponent } from './src/components/version-manager/version-manager.component';
 import { VersionListComponent } from './src/components/version-manager/version-list.component';
+import { VersionManagerComponent } from './src/components/version-manager/version-manager.component';
 import { VersionUploadComponent } from './src/components/version-manager/version-upload.component';
 import { MaterialModule } from './src/material.module';
 

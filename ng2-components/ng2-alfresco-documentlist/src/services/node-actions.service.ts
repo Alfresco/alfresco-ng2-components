@@ -22,7 +22,7 @@ import { AlfrescoContentService } from 'ng2-alfresco-core';
 import { DataColumn } from 'ng2-alfresco-datatable';
 import { Subject } from 'rxjs/Rx';
 import { ContentNodeSelectorComponent, ContentNodeSelectorComponentData } from '../components/content-node-selector/content-node-selector.component';
-import { ShareDataRow } from '../data/share-datatable-adapter';
+import { ShareDataRow } from '../data/share-data-row.model';
 import { DocumentListService } from './document-list.service';
 
 @Injectable()

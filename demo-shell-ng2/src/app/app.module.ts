@@ -35,6 +35,7 @@ import { FileViewComponent } from './components/file-view/file-view.component';
 import { WebscriptComponent } from './components/webscript/webscript.component';
 import { TagComponent } from './components/tag/tag.component';
 import { SocialComponent } from './components/social/social.component';
+import { VersionManagerDialogAdapterComponent } from './components/files/version-manager-dialog-adapter.component';
 
 import { ThemePickerModule } from './components/theme-picker/theme-picker';
 import { DebugAppConfigService } from './services/debug-app-config.service';
@@ -67,7 +68,8 @@ import { routing } from './app.routes';
     WebscriptComponent,
     TagComponent,
     SocialComponent,
-    CustomSourcesComponent
+    CustomSourcesComponent,
+    VersionManagerDialogAdapterComponent
   ],
   imports: [
     BrowserModule,
@@ -92,6 +94,9 @@ import { routing } from './app.routes';
         source: 'resources'
       }
     }
+  ],
+  entryComponents: [
+    VersionManagerDialogAdapterComponent
   ],
   bootstrap: [AppComponent]
 })

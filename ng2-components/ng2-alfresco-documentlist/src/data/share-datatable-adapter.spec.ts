@@ -20,8 +20,8 @@ import { CoreModule } from 'ng2-alfresco-core';
 import { DataColumn, DataRow, DataSorting } from 'ng2-alfresco-datatable';
 import { FileNode, FolderNode } from './../assets/document-library.model.mock';
 import { DocumentListService } from './../services/document-list.service';
-import { ShareDataTableAdapter } from './share-datatable-adapter';
 import { ShareDataRow } from './share-data-row.model';
+import { ShareDataTableAdapter } from './share-datatable-adapter';
 
 describe('ShareDataTableAdapter', () => {
 

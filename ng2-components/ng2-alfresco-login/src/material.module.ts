@@ -18,13 +18,13 @@
 import { NgModule } from '@angular/core';
 import {
     MatCheckboxModule,
+    MatDialogModule,
     MatIconModule,
     MatInputModule,
-    MatProgressSpinnerModule
     MatListModule,
     MatProgressBarModule,
+    MatProgressSpinnerModule,
     MatSelectModule,
-    MatDialogModule,
     MatSidenavModule,
     MatSlideToggleModule
 } from '@angular/material';

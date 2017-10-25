@@ -27,5 +27,5 @@ import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 export class VersionManagerComponent {
 
     @Input()
-    node: MinimalNodeEntryEntity
+    node: MinimalNodeEntryEntity;
 }
