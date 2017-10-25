@@ -66,10 +66,16 @@ export class FilesComponent implements OnInit {
     acceptedFilesTypeShow: boolean = false;
 
     @Input()
+    maxSizeShow: boolean = false;
+
+    @Input()
     versioning: boolean = false;
 
     @Input()
     acceptedFilesType: string = '.jpg,.pdf,.js';
+
+    @Input()
+    maxFilesSize: number = null;
 
     @Input()
     enableUpload: boolean = true;

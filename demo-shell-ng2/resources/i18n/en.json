@@ -22,6 +22,7 @@
         "MULTIPLE_FILE_UPLOAD" :"Multiple File Upload",
         "FOLDER_UPLOAD" :"Folder upload",
         "CUSTOM_FILTER" :"Custom extensions filter",
+        "MAX_SIZE" : "Max size filter",
         "ENABLE_VERSIONING" :"Enable versioning",
         "DESCRIPTION_UPLOAD" : "Enable upload (demoing enabled/disabled state only if the permission are not checked dynamically)",
         "MULTISELECT_DESCRIPTION" : "For 'Multiple' selection mode use Cmd (macOS) or Ctrl (Win) to toggle selection of multiple items.",
