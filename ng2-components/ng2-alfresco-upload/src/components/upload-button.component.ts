@@ -15,7 +15,17 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, forwardRef, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    forwardRef,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    SimpleChanges,
+    ViewEncapsulation
+} from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import {
     AlfrescoApiService,
@@ -36,7 +46,7 @@ import { PermissionModel } from '../models/permissions.model';
     templateUrl: './upload-button.component.html',
     styleUrls: ['./upload-button.component.scss'],
     providers: [
-        { provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadButtonComponent)}
+        {provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadButtonComponent)}
     ],
     encapsulation: ViewEncapsulation.None
 })
@@ -68,6 +78,9 @@ export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionS
 
     @Input()
     acceptedFilesType: string = '*';
+
+    @Input()
+    maxFilesSize: number;
 
     @Input()
     staticTitle: string;
@@ -158,7 +171,8 @@ export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionS
     uploadFiles(files: File[]): void {
         const latestFilesAdded: FileModel[] = files
             .map<FileModel>(this.createFileModel.bind(this))
-            .filter(this.isFileAcceptable.bind(this));
+            .filter(this.isFileAcceptable.bind(this))
+            .filter(this.isFileSizeAcceptable.bind(this));
 
         if (latestFilesAdded.length > 0) {
             this.uploadService.addToQueue(...latestFilesAdded);
@@ -201,6 +215,15 @@ export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionS
         }
 
         return false;
+    }
+
+    /**
+     * Checks if the given file is an acceptable size
+     *
+     * @param file FileModel
+     */
+    private isFileSizeAcceptable(file: FileModel): boolean {
+        return this.maxFilesSize ? file.size <= this.maxFilesSize : true;
     }
 
     /**
