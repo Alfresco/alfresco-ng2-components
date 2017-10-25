@@ -337,12 +337,12 @@ for more information about installing and using the source code.
 
 ### Pipes
 
+- [File size pipe](file-size.pipe.md)
 - [Mime type icon pipe](mime-type-icon.pipe.md)
 - [Node name tooltip pipe](node-name-tooltip.pipe.md)
 - [Text highlight pipe](text-highlight.pipe.md)
-- [*File size pipe](../ng2-components/ng2-alfresco-core/src/pipes/file-size.pipe.ts)
-- [*Time ago pipe](../ng2-components/ng2-alfresco-core/src/pipes/time-ago.pipe.ts)
-- [*User initial pipe](../ng2-components/ng2-alfresco-core/src/pipes/user-initial.pipe.ts)
+- [Time ago pipe](time-ago.pipe.md)
+- [User initial pipe](user-initial.pipe.md)
 
 ### Services
 
@@ -350,8 +350,10 @@ for more information about installing and using the source code.
 - [App config service](app-config.service.md)
 - [Authentication service](authentication.service.md)
 - [Card view update service](card-view-update.service.md)
+- [Deleted nodes api service](deleted-nodes-api.service.md)
 - [Highlight transform service](highlight-transform.service.md)
 - [Log service](log.service.md)
+- [Nodes api service](nodes-api.service.md)
 - [Notification service](notification.service.md)
 - [Renditions service](renditions.service.md)
 - [Thumbnail service](thumbnail.service.md)
@@ -368,10 +370,8 @@ for more information about installing and using the source code.
 - [*Comment process service](../ng2-components/ng2-alfresco-core/src/services/comment-process.service.ts)
 - [*Content service](../ng2-components/ng2-alfresco-core/src/services/content.service.ts)
 - [*Cookie service](../ng2-components/ng2-alfresco-core/src/services/cookie.service.ts)
-- [*Deleted nodes api service](../ng2-components/ng2-alfresco-core/src/services/deleted-nodes-api.service.ts)
 - [*Discovery api service](../ng2-components/ng2-alfresco-core/src/services/discovery-api.service.ts)
 - [*Favorites api service](../ng2-components/ng2-alfresco-core/src/services/favorites-api.service.ts)
-- [*Nodes api service](../ng2-components/ng2-alfresco-core/src/services/nodes-api.service.ts)
 - [*Page title service](../ng2-components/ng2-alfresco-core/src/services/page-title.service.ts)
 - [*People content service](../ng2-components/ng2-alfresco-core/src/services/people-content.service.ts)
 - [*People process service](../ng2-components/ng2-alfresco-core/src/services/people-process.service.ts)
@@ -425,6 +425,7 @@ for more information about installing and using the source code.
 
 ### Models
 
+- [Document library model](document-library.model.md)
 - [Permissions style model](permissions-style.model.md)
 
 ### Services
