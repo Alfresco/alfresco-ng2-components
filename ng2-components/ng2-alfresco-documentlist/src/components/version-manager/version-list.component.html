@@ -6,6 +6,7 @@
             <span class="adf-version-list-item-version">{{version.entry.id}}</span> -
             <span class="adf-version-list-item-date">{{version.entry.modifiedAt | date}}</span>
         </p>
+        <p mat-line class="adf-version-list-item-comment">{{version.entry.versionComment}}</p>
 
         <mat-menu #versionMenu="matMenu" yPosition="below" xPosition="before">
             <button mat-menu-item (click)="restore(version.entry.id)"> Restore </button>
