@@ -92,6 +92,15 @@ export class ViewerComponent implements OnDestroy, OnChanges {
     goBack = new EventEmitter<BaseEvent<any>>();
 
     @Output()
+    download = new EventEmitter<BaseEvent<any>>();
+
+    @Output()
+    print = new EventEmitter<BaseEvent<any>>();
+
+    @Output()
+    share = new EventEmitter<BaseEvent<any>>();
+
+    @Output()
     showViewerChange = new EventEmitter<boolean>();
 
     @Output()
@@ -352,17 +361,36 @@ export class ViewerComponent implements OnDestroy, OnChanges {
         }
     }
 
-    download() {
+    downloadContent() {
         if (this.allowDownload && this.downloadUrl && this.fileName) {
-            const link = document.createElement('a');
+            const args = new BaseEvent();
+            this.download.next(args);
 
-            link.style.display = 'none';
-            link.download = this.fileName;
-            link.href = this.downloadUrl;
+            if (!args.defaultPrevented) {
+                const link = document.createElement('a');
 
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+                link.style.display = 'none';
+                link.download = this.fileName;
+                link.href = this.downloadUrl;
+
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+    }
+
+    printContent() {
+        if (this.allowPrint) {
+            const args = new BaseEvent();
+            this.print.next(args);
+        }
+    }
+
+    shareContent() {
+        if (this.allowShare) {
+            const args = new BaseEvent();
+            this.share.next(args);
         }
     }
 

@@ -196,6 +196,127 @@ describe('ViewerComponent', () => {
         expect(customElement.querySelector('.adf-viewer-container-more-actions')).toBeDefined();
     });
 
+    describe('Toolbar', () => {
+
+        it('should render default download button', () => {
+            component.allowDownload = true;
+            fixture.detectChanges();
+
+            expect(element.querySelector('[data-automation-id="toolbar-download"]')).toBeDefined();
+        });
+
+        it('should not render default download button', () => {
+            component.allowDownload = false;
+            fixture.detectChanges();
+
+            expect(element.querySelector('[data-automation-id="toolbar-download"]')).toBeNull();
+        });
+
+        it('should invoke download action with the toolbar button', () => {
+            component.allowDownload = true;
+            fixture.detectChanges();
+
+            spyOn(component, 'downloadContent').and.stub();
+
+            const button: HTMLButtonElement = element.querySelector('[data-automation-id="toolbar-download"]') as HTMLButtonElement;
+            button.click();
+
+            expect(component.downloadContent).toHaveBeenCalled();
+        });
+
+        it('should raise download event with the toolbar button', (done) => {
+            component.allowDownload = true;
+            fixture.detectChanges();
+
+            component.download.subscribe(e => {
+                e.preventDefault();
+                done();
+            });
+
+            const button: HTMLButtonElement = element.querySelector('[data-automation-id="toolbar-download"]') as HTMLButtonElement;
+            button.click();
+        });
+
+        it('should render default print button', () => {
+            component.allowPrint = true;
+            fixture.detectChanges();
+
+            expect(element.querySelector('[data-automation-id="toolbar-print"]')).toBeDefined();
+        });
+
+        it('should not render default print button', () => {
+            component.allowPrint = false;
+            fixture.detectChanges();
+
+            expect(element.querySelector('[data-automation-id="toolbar-print"]')).toBeNull();
+        });
+
+        it('should invoke print action with the toolbar button', () => {
+            component.allowPrint = true;
+            fixture.detectChanges();
+
+            spyOn(component, 'printContent').and.stub();
+
+            const button: HTMLButtonElement = element.querySelector('[data-automation-id="toolbar-print"]') as HTMLButtonElement;
+            button.click();
+
+            expect(component.printContent).toHaveBeenCalled();
+        });
+
+        it('should raise the print event with the toolbar button', (done) => {
+            component.allowPrint = true;
+            fixture.detectChanges();
+
+            component.print.subscribe(e => {
+                e.preventDefault();
+                done();
+            });
+
+            const button: HTMLButtonElement = element.querySelector('[data-automation-id="toolbar-print"]') as HTMLButtonElement;
+            button.click();
+        });
+
+        it('should render default share button', () => {
+            component.allowShare = true;
+            fixture.detectChanges();
+
+            expect(element.querySelector('[data-automation-id="toolbar-share"]')).toBeDefined();
+        });
+
+        it('should not render default share button', () => {
+            component.allowShare = false;
+            fixture.detectChanges();
+
+            expect(element.querySelector('[data-automation-id="toolbar-share"]')).toBeNull();
+        });
+
+        it('should invoke share action with the toolbar button', () => {
+            component.allowShare = true;
+            fixture.detectChanges();
+
+            spyOn(component, 'shareContent').and.stub();
+
+            const button: HTMLButtonElement = element.querySelector('[data-automation-id="toolbar-share"]') as HTMLButtonElement;
+            button.click();
+
+            expect(component.shareContent).toHaveBeenCalled();
+        });
+
+        it('should raise share event iwth the toolbar button', (done) => {
+            component.allowShare = true;
+            fixture.detectChanges();
+
+            component.share.subscribe(e => {
+                e.preventDefault();
+                done();
+            });
+
+            const button: HTMLButtonElement = element.querySelector('[data-automation-id="toolbar-share"]') as HTMLButtonElement;
+            button.click();
+        });
+
+    });
+
     describe('View', () => {
 
         describe('Overlay mode true', () => {
