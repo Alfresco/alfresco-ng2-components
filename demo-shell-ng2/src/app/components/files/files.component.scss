@@ -78,7 +78,8 @@ adf-document-list ::ng-deep adf-datatable tr.is-selected .image-table-cell::befo
     width: 300px;
     color: rgba(0, 0, 0, 0.87);
 
-    .adf-manage-versions-empty {
+    .adf-manage-versions-empty,
+    .adf-manage-versions-no-permission {
         margin: 24px;
         color: grey;
         text-align: justify;

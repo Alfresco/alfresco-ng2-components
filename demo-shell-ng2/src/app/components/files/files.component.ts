@@ -242,6 +242,11 @@ export class FilesComponent implements OnInit {
         return hasOneFileSelected;
     }
 
+    userHasPermissionToManageVersions(): boolean {
+        const selection: Array<MinimalNodeEntity> = this.documentList.selection;
+        return this.contentService.hasPermission(selection[0].entry, 'update');
+    }
+
     downloadNodes(selection: Array<MinimalNodeEntity>) {
         if (!selection || selection.length === 0) {
             return;

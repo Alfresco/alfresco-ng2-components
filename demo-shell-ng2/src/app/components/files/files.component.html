@@ -242,14 +242,22 @@
         <adf-info-drawer-layout *ngIf="showVersions" class="adf-manage-versions-sidebar" fxFlex="0 0 auto">
             <div info-drawer-content>
                 <ng-container *ngIf="hasOneFileSelected();else choose_document_template">
-                    <adf-version-manager
-                        [node]="documentList.selection[0].entry">
-                    </adf-version-manager>
+                    <ng-container *ngIf="userHasPermissionToManageVersions(); else no_permission_to_versions">
+                        <adf-version-manager
+                            [node]="documentList.selection[0].entry">
+                        </adf-version-manager>
+                    </ng-container>
                 </ng-container>
                 <ng-template #choose_document_template>
                     <div class="adf-manage-versions-empty">
                         <mat-icon class="adf-manage-versions-empty-icon">face</mat-icon>
                         Please choose a document to see the versions of it.
+                    </div>
+                </ng-template>
+                <ng-template #no_permission_to_versions>
+                    <div class="adf-manage-versions-no-permission">
+                        <mat-icon class="adf-manage-versions-no-permission-icon">warning</mat-icon>
+                        You don't have permission to manage the versions of this content.
                     </div>
                 </ng-template>
             </div>
