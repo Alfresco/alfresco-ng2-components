@@ -19,13 +19,15 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 
 @Component({
-    selector: 'adf-version-manager',
-    templateUrl: './version-manager.component.html',
-    styleUrls: ['./version-manager.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    selector: 'adf-version-upload',
+    templateUrl: './version-upload.component.html',
+    encapsulation: ViewEncapsulation.None,
+    host: {
+        'class': 'adf-version-upload'
+    }
 })
-export class VersionManagerComponent {
+export class VersionUploadComponent {
 
     @Input()
-    node: MinimalNodeEntryEntity
+    node: MinimalNodeEntryEntity;
 }

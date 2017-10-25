@@ -2,4 +2,12 @@
     .mat-list-item {
         border-bottom:1px solid #d8d8d8;
     }
+
+    &-item-version {
+        font-weight: bold;
+    }
+
+    &-item-date {
+        opacity: 0.6;
+    }
 }

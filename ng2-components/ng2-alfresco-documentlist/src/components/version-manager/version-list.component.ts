@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
+import { AlfrescoApiService } from 'ng2-alfresco-core';
+import { VersionsApi } from 'alfresco-js-api';
 
 @Component({
     selector: 'adf-version-list',
@@ -27,30 +28,34 @@ import { MinimalNodeEntryEntity } from 'alfresco-js-api';
         'class': 'adf-version-list'
     }
 })
-export class VersionListComponent implements OnInit {
+export class VersionListComponent implements OnChanges {
+
+    private versionsApi: VersionsApi;
+    private versions: any = [];
+    isLoading: boolean = true;
 
     @Input()
-    id: string
+    id: string;
 
-    folders = [
-        {
-          name: 'Photos',
-          updated: new Date('1/1/16')
-        },
-        {
-          name: 'Recipes',
-          updated: new Date('1/17/16')
-        },
-        {
-          name: 'Work',
-          updated: new Date('1/28/16')
-        }
-    ];
-
-    constructor() {
+    constructor(private alfrescoApi: AlfrescoApiService) {
+        this.versionsApi = this.alfrescoApi.versionsApi;
     }
 
-    ngOnInit() {
-        console.log('retek: ', this.id);
+    ngOnChanges() {
+        this.loadVersionHistory();
+    }
+
+    restore(versionId) {
+        this.versionsApi
+            .revertVersion(this.id, versionId, { majorVersion: true, comment: ''})
+            .then(this.loadVersionHistory.bind(this));
+    }
+
+    private loadVersionHistory() {
+        this.isLoading = true;
+        this.versionsApi.listVersionHistory(this.id).then((data) => {
+            this.versions = data.list.entries;
+            this.isLoading = false;
+        });
     }
 }

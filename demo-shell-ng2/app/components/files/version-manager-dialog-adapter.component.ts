@@ -21,12 +21,11 @@ import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 
 @Component({
     templateUrl: './version-manager-dialog-adapter.component.html',
-    styleUrls: ['./version-manager-dialog-adapter.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class VersionManagerDialogAdapterComponent {
 
-    private contentEntry: MinimalNodeEntryEntity;
+    public contentEntry: MinimalNodeEntryEntity;
 
     constructor(@Inject(MAT_DIALOG_DATA) data: any,
                 private containingDialog?: MatDialogRef<VersionManagerDialogAdapterComponent>) {

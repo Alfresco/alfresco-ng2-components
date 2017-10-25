@@ -26,6 +26,7 @@ import {
 } from 'ng2-alfresco-core';
 import { DataColumn, DataRow } from 'ng2-alfresco-datatable';
 import { DocumentListComponent, PermissionStyleModel } from 'ng2-alfresco-documentlist';
+import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-adapter.component';
 
 const DEFAULT_FOLDER_TO_SHOW = '-my-';
 
@@ -210,6 +211,17 @@ export class FilesComponent implements OnInit {
                 );
             }
         });
+    }
+
+    onManageVersions(event) {
+        const contentEntry = event.value.entry;
+
+        if (this.contentService.hasPermission(contentEntry, 'update')) {
+            this.dialog.open(VersionManagerDialogAdapterComponent, { data: { contentEntry }, panelClass: 'adf-version-manager-dialog', width: '630px' });
+        } else {
+            const translatedErrorMessage: any = this.translateService.get('OPERATION.ERROR.PERMISSION');
+            this.notificationService.openSnackMessage(translatedErrorMessage.value, 4000);
+        }
     }
 
     getSiteContent(site: SiteModel) {

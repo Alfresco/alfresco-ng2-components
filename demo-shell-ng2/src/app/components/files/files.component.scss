@@ -97,8 +97,13 @@ adf-document-list ::ng-deep adf-datatable tr.is-selected .image-table-cell::befo
     & ::ng-deep .adf-info-drawer-layout-content {
         padding: 0;
 
-        .adf-upload-new-version {
+        .adf-version-upload,
+        .adf-new-version-file-upload {
             width: 100%;
+
+            & .mat-raised-button {
+                width: 100%;
+            }
         }
 
         .adf-new-version-uploader-container {
