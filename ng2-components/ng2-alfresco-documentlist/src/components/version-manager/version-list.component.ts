@@ -16,8 +16,8 @@
  */
 
 import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
-import { AlfrescoApiService } from 'ng2-alfresco-core';
 import { VersionsApi } from 'alfresco-js-api';
+import { AlfrescoApiService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'adf-version-list',
@@ -31,7 +31,7 @@ import { VersionsApi } from 'alfresco-js-api';
 export class VersionListComponent implements OnChanges {
 
     private versionsApi: VersionsApi;
-    private versions: any = [];
+    versions: any = [];
     isLoading: boolean = true;
 
     @Input()
