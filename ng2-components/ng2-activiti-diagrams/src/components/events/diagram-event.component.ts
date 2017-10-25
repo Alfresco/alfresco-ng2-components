@@ -34,7 +34,7 @@ export class DiagramEventComponent implements OnInit {
     iconFillColor: any;
 
     @Output()
-    onError = new EventEmitter();
+    error = new EventEmitter();
 
     center: any = {};
 

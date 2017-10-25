@@ -40,8 +40,8 @@ If both `appId` and `appName` are specified then `appName` will take precedence 
 | Name | Description |
 | --- | --- |
 | filterClick | Raised when the filter in the list is clicked  |
-| onSuccess | Raised when the list is loaded  |
-| onError | Raised if there is an error during the loading  |
+| success | Raised when the list is loaded  |
+| error | Raised if there is an error during the loading  |
 
 ## Details
 

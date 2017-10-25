@@ -38,9 +38,14 @@ This component renders a list containing all the process instances matched by th
 
 ### Events
 
-- **rowClick**: Emitted when a row in the process list is clicked
-- **onSuccess**: Emitted when the list of process instances has been loaded successfully from the server
-- **onError**: Emitted when an error is encountered loading the list of process instances from the server
+| Name | Description |
+| --- | --- |
+| rowClick | Emitted when a row in the process list is clicked |
+| success | Emitted when the list of process instances has been loaded successfully from the server |
+| error | Emitted when an error is encountered loading the list of process instances from the server |
+
+
+
 
 ## Details
 

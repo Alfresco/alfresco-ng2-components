@@ -113,7 +113,7 @@ describe('AnalyticsReportListComponent', () => {
                 responseText: reportList
             });
 
-            component.onSuccess.subscribe(() => {
+            component.success.subscribe(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('#report-list-0 .activiti-filters__entry-icon').innerHTML).toBe('assignment');
                 expect(element.querySelector('#report-list-0 > span').innerHTML).toBe('Fake Test Process definition heat map');
@@ -124,13 +124,12 @@ describe('AnalyticsReportListComponent', () => {
                 expect(component.isReportsEmpty()).toBeFalsy();
                 done();
             });
-
         });
 
         it('Report render the report list relative to a single app', (done) => {
             fixture.detectChanges();
 
-            component.onSuccess.subscribe(() => {
+            component.success.subscribe(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('#report-list-0 .activiti-filters__entry-icon').innerHTML).toBe('assignment');
                 expect(element.querySelector('#report-list-0 > span').innerHTML).toBe('Fake Test Process definition heat map');
@@ -152,7 +151,7 @@ describe('AnalyticsReportListComponent', () => {
         it('Report emit an error with a empty response', (done) => {
             fixture.detectChanges();
 
-            component.onError.subscribe((err) => {
+            component.error.subscribe((err) => {
                 expect(err).toBeDefined();
                 done();
             });
@@ -190,7 +189,7 @@ describe('AnalyticsReportListComponent', () => {
             expect(component.reports.length).toEqual(1);
             component.reload();
 
-            component.onSuccess.subscribe(() => {
+            component.success.subscribe(() => {
                 expect(component.reports.length).toEqual(5);
                 done();
             });
@@ -208,7 +207,7 @@ describe('AnalyticsReportListComponent', () => {
 
             component.reload(2002);
 
-            component.onSuccess.subscribe(() => {
+            component.success.subscribe(() => {
                 expect(component.reports.length).toEqual(5);
                 expect(component.currentReport).toBeDefined();
                 expect(component.currentReport).not.toBeNull();

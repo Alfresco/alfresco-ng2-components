@@ -1,11 +1,11 @@
 <div class="adf-analytics-container">
     <analytics-report-parameters [appId]="appId" [reportId]="reportId"
                                  [hideComponent]="hideParameters"
-                                 (onFormValueChanged)="reset()"
-                                 (onSuccess)="showReport($event)"
+                                 (formValueChanged)="reset()"
+                                 (success)="showReport($event)"
                                  (saveReportSuccess)="onSaveReportSuccess($event)"
                                  (deleteReportSuccess)="onDeleteReportSuccess()"
-                                 (onEdit)="onEditReport($event)">
+                                 (edit)="onEditReport($event)">
     </analytics-report-parameters>
 
     <adf-analytics-generator [reportId]="reportId"

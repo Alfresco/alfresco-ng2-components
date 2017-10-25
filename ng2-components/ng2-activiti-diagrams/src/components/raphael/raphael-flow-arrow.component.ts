@@ -31,7 +31,7 @@ export class RaphaelFlowArrowDirective extends RaphaelBase implements OnInit {
     flow: any;
 
     @Output()
-    onError = new EventEmitter();
+    error = new EventEmitter();
 
     ARROW_WIDTH = 4;
     SEQUENCEFLOW_STROKE = 1.5;

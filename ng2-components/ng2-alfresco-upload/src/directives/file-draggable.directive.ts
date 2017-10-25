@@ -29,13 +29,13 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
     enabled: boolean = true;
 
     @Output()
-    onFilesDropped: EventEmitter<File[]> = new EventEmitter<File[]>();
+    filesDropped: EventEmitter<File[]> = new EventEmitter<File[]>();
 
     @Output()
-    onFilesEntityDropped: EventEmitter<any> = new EventEmitter();
+    filesEntityDropped: EventEmitter<any> = new EventEmitter();
 
     @Output()
-    onFolderEntityDropped: EventEmitter<any> = new EventEmitter();
+    folderEntityDropped: EventEmitter<any> = new EventEmitter();
 
     private cssClassName: string = 'file-draggable__input-focus';
     private element: HTMLElement;
@@ -75,20 +75,20 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
                         let item = items[i].webkitGetAsEntry();
                         if (item) {
                             if (item.isFile) {
-                                this.onFilesEntityDropped.emit(item);
+                                this.filesEntityDropped.emit(item);
                             } else if (item.isDirectory) {
-                                this.onFolderEntityDropped.emit(item);
+                                this.folderEntityDropped.emit(item);
                             }
                         }
                     } else {
                         let files = FileUtils.toFileArray(event.dataTransfer.files);
-                        this.onFilesDropped.emit(files);
+                        this.filesDropped.emit(files);
                     }
                 }
             } else {
                 // safari or FF
                 let files = FileUtils.toFileArray(event.dataTransfer.files);
-                this.onFilesDropped.emit(files);
+                this.filesDropped.emit(files);
             }
 
             this.element.classList.remove(this.cssClassName);

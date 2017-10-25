@@ -75,10 +75,10 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
     rowsSelected: EventEmitter<any[]> = new EventEmitter<any[]>();
 
     @Output()
-    onSuccess: EventEmitter<any> = new EventEmitter<any>();
+    success: EventEmitter<any> = new EventEmitter<any>();
 
     @Output()
-    onError: EventEmitter<any> = new EventEmitter<any>();
+    error: EventEmitter<any> = new EventEmitter<any>();
 
     currentInstanceId: string;
     selectedInstances: any[];
@@ -118,10 +118,10 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
                     let instancesRow = this.createDataRow(tasks.data);
                     this.renderInstances(instancesRow);
                     this.selectTask(this.landingTaskId);
-                    this.onSuccess.emit(tasks);
+                    this.success.emit(tasks);
                     this.isLoading = false;
                 }, (error) => {
-                    this.onError.emit(error);
+                    this.error.emit(error);
                     this.isLoading = false;
                 });
         }

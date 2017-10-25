@@ -17,7 +17,7 @@
 
 import { Directive, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { DeletedNodeEntry, PathInfoEntity } from 'alfresco-js-api';
+import { DeletedNodeEntry, DeletedNodesPaging, PathInfoEntity } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Rx';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { NotificationService } from '../services/notification.service';
@@ -97,7 +97,7 @@ export class NodeRestoreDirective {
         return selection.filter((node) => node.entry.path);
     }
 
-    private getDeletedNodes(): Observable<DeletedNodeEntry> {
+    private getDeletedNodes(): Observable<DeletedNodesPaging> {
         const promise = this.alfrescoApiService.getInstance()
             .core.nodesApi.getDeletedNodes({ include: [ 'path' ] });
 

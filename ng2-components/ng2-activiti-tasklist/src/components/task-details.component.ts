@@ -120,7 +120,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     taskDeleted: EventEmitter<string> = new EventEmitter<string>();
 
     @Output()
-    onError: EventEmitter<any> = new EventEmitter<any>();
+    error: EventEmitter<any> = new EventEmitter<any>();
 
     @Output()
     executeOutcome: EventEmitter<FormOutcomeEvent> = new EventEmitter<FormOutcomeEvent>();
@@ -269,7 +269,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
                     this.reset();
                 }
             }, (error) => {
-                this.onError.emit(error);
+                this.error.emit(error);
             });
     }
 
@@ -312,7 +312,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
     onFormError(error: any): void {
         this.errorDialogRef = this.dialog.open(this.errorDialog, {width: '500px'});
-        this.onError.emit(error);
+        this.error.emit(error);
     }
 
     onFormExecuteOutcome(event: FormOutcomeEvent): void {

@@ -52,7 +52,7 @@ Shows the details of the task id passed in input
 | formCompleted | Raised when form is submitted with `Complete` outcome.  |
 | taskCreated | Raised when a checklist task is created.  |
 | executeOutcome | Raised when any outcome is executed, default behaviour can be prevented via `event.preventDefault()` |
-| onError | Raised at any error |
+| error | Raised at any error |
 
 ## Details
 

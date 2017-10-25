@@ -32,7 +32,7 @@ export class RaphaelIconBoxPublishDirective extends RaphaelBase implements OnIni
     text: string;
 
     @Output()
-    onError = new EventEmitter();
+    error = new EventEmitter();
 
     @Input()
     strokeWidth: number;

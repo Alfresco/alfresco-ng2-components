@@ -141,7 +141,7 @@ and store the form field as metadata. The param nameNode is optional.
 | formCompleted | [FormModel](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-activiti-form/src/components/widgets/core/form.model.ts)  | Invoked when form is submitted with `Complete` outcome.  |
 | formDataRefreshed | [FormModel](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-activiti-form/src/components/widgets/core/form.model.ts) | Invoked when form values are refreshed due to a data property change  |
 | executeOutcome | [FormOutcomeEvent](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-activiti-form/src/components/widgets/core/form-outcome-event.model.ts) | Invoked when any outcome is executed, default behaviour can be prevented via `event.preventDefault()` |
-| onError | any | Invoked at any error |
+| error | any | Invoked at any error |
 
 ## Details
 

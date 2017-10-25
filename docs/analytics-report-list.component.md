@@ -34,6 +34,6 @@ The component shows the list of all the available reports
 
 | Name | Description |
 | --- | --- |
-| onSuccess | The event is emitted when the report list is loaded |
-| onError | The event is emitted when an error occurs during the loading |
+| success | The event is emitted when the report list is loaded |
+| error | The event is emitted when an error occurs during the loading |
 | reportClick | The event is emitted when the report in the list is selected |

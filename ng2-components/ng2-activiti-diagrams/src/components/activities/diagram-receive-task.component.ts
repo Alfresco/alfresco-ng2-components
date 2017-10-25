@@ -28,7 +28,7 @@ export class DiagramReceiveTaskComponent {
     data: any;
 
     @Output()
-    onError = new EventEmitter();
+    error = new EventEmitter();
 
     constructor(public elementRef: ElementRef) {}
 }

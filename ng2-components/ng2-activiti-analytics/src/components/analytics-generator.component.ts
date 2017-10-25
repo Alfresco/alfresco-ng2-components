@@ -35,10 +35,10 @@ export class AnalyticsGeneratorComponent implements OnChanges {
     reportParamQuery: ReportQuery = undefined;
 
     @Output()
-    onSuccess = new EventEmitter();
+    success = new EventEmitter();
 
     @Output()
-    onError = new EventEmitter();
+    error = new EventEmitter();
 
     reports: Chart[];
 
@@ -83,10 +83,10 @@ export class AnalyticsGeneratorComponent implements OnChanges {
                 if (this.reports) {
                     this.selectFirstReport();
                 }
-                this.onSuccess.emit(res);
+                this.success.emit(res);
             },
             (err: any) => {
-                this.onError.emit(err);
+                this.error.emit(err);
             }
         );
     }

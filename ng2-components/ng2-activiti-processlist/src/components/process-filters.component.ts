@@ -36,10 +36,10 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
     filterClick: EventEmitter<ProcessInstanceFilterRepresentation> = new EventEmitter<ProcessInstanceFilterRepresentation>();
 
     @Output()
-    onSuccess: EventEmitter<ProcessInstanceFilterRepresentation[]> = new EventEmitter<ProcessInstanceFilterRepresentation[]>();
+    success: EventEmitter<ProcessInstanceFilterRepresentation[]> = new EventEmitter<ProcessInstanceFilterRepresentation[]>();
 
     @Output()
-    onError: EventEmitter<any> = new EventEmitter<any>();
+    error: EventEmitter<any> = new EventEmitter<any>();
 
     @Input()
     appId: number;
@@ -96,10 +96,10 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
                             });
 
                             this.selectProcessFilter(this.filterParam);
-                            this.onSuccess.emit(resDefault);
+                            this.success.emit(resDefault);
                         },
                         (errDefault: any) => {
-                            this.onError.emit(errDefault);
+                            this.error.emit(errDefault);
                         }
                     );
                 } else {
@@ -109,11 +109,11 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
                     });
 
                     this.selectProcessFilter(this.filterParam);
-                    this.onSuccess.emit(res);
+                    this.success.emit(res);
                 }
             },
             (err: any) => {
-                this.onError.emit(err);
+                this.error.emit(err);
             }
         );
     }
@@ -129,7 +129,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
                 this.selectProcessFilter(this.filterParam);
             },
             (err) => {
-                this.onError.emit(err);
+                this.error.emit(err);
             });
     }
 

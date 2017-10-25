@@ -73,7 +73,7 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
     parentId: string;
 
     @Output()
-    onSuccess = new EventEmitter();
+    success = new EventEmitter();
 
     constructor(private uploadService: UploadService,
                 private translateService: AlfrescoTranslationService,
@@ -93,7 +93,7 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
                 parentId: this.parentId || this.rootFolderId
             }));
             this.uploadService.addToQueue(...fileModels);
-            this.uploadService.uploadFilesInTheQueue(this.onSuccess);
+            this.uploadService.uploadFilesInTheQueue(this.success);
             let latestFilesAdded = this.uploadService.getQueue();
             if (this.showNotificationBar) {
                 this.showUndoNotificationBar(latestFilesAdded);
@@ -115,7 +115,7 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
                     path: item.fullPath.replace(item.name, '')
                 });
                 this.uploadService.addToQueue(fileModel);
-                this.uploadService.uploadFilesInTheQueue(this.onSuccess);
+                this.uploadService.uploadFilesInTheQueue(this.success);
             });
             if (this.showNotificationBar) {
                 this.showUndoNotificationBar(item);
@@ -144,7 +144,7 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
                     let latestFilesAdded = this.uploadService.getQueue();
                     this.showUndoNotificationBar(latestFilesAdded);
                 }
-                this.uploadService.uploadFilesInTheQueue(this.onSuccess);
+                this.uploadService.uploadFilesInTheQueue(this.success);
             });
         }
     }
@@ -213,7 +213,7 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
     private uploadFiles(files: FileModel[]): void {
         if (files.length) {
             this.uploadService.addToQueue(...files);
-            this.uploadService.uploadFilesInTheQueue(this.onSuccess);
+            this.uploadService.uploadFilesInTheQueue(this.success);
             let latestFilesAdded = this.uploadService.getQueue();
             if (this.showNotificationBar) {
                 this.showUndoNotificationBar(latestFilesAdded);

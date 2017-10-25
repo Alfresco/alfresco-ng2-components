@@ -21,7 +21,7 @@
 
                 <!--ERRORS AREA-->
                 <div class="adf-error-container">
-                    <div *ngIf="error" id="login-error" data-automation-id="login-error"
+                    <div *ngIf="isError" id="login-error" data-automation-id="login-error"
                          class="error  adf-error-message">
                         <mat-icon class="error-icon">warning</mat-icon>
                         <span class="login-error-message">{{errorMsg | translate }}</span>

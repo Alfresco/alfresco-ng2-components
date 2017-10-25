@@ -44,10 +44,10 @@ export class AnalyticsReportListComponent implements OnInit {
     reportClick: EventEmitter<ReportParametersModel> = new EventEmitter<ReportParametersModel>();
 
     @Output()
-    onSuccess = new EventEmitter();
+    success = new EventEmitter();
 
     @Output()
-    onError = new EventEmitter();
+    error = new EventEmitter();
 
     private reportObserver: Observer<any>;
     report$: Observable<any>;
@@ -98,11 +98,11 @@ export class AnalyticsReportListComponent implements OnInit {
                     if (this.selectFirst) {
                         this.selectFirstReport();
                     }
-                    this.onSuccess.emit(res);
+                    this.success.emit(res);
                 }
             },
             (err: any) => {
-                this.onError.emit(err);
+                this.error.emit(err);
             }
         );
     }
@@ -118,7 +118,7 @@ export class AnalyticsReportListComponent implements OnInit {
                         response.forEach((report) => {
                             this.reportObserver.next(report);
                         });
-                        this.onSuccess.emit(response);
+                        this.success.emit(response);
                     }
                 );
             }

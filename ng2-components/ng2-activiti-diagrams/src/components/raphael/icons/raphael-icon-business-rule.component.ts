@@ -32,7 +32,7 @@ export class RaphaelIconBusinessRuleDirective extends RaphaelBase implements OnI
     text: string;
 
     @Output()
-    onError = new EventEmitter();
+    error = new EventEmitter();
 
     @Input()
     strokeWidth: number;

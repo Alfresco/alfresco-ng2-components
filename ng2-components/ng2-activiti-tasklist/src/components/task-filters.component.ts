@@ -35,10 +35,10 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
     filterClick: EventEmitter<FilterRepresentationModel> = new EventEmitter<FilterRepresentationModel>();
 
     @Output()
-    onSuccess: EventEmitter<any> = new EventEmitter<any>();
+    success: EventEmitter<any> = new EventEmitter<any>();
 
     @Output()
-    onError: EventEmitter<any> = new EventEmitter<any>();
+    error: EventEmitter<any> = new EventEmitter<any>();
 
     @Input()
     appId: number;
@@ -110,10 +110,10 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
                             });
 
                             this.selectTaskFilter(this.filterParam, this.filters);
-                            this.onSuccess.emit(resDefault);
+                            this.success.emit(resDefault);
                         },
                         (errDefault: any) => {
-                            this.onError.emit(errDefault);
+                            this.error.emit(errDefault);
                         }
                     );
                 } else {
@@ -123,11 +123,11 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
                     });
 
                     this.selectTaskFilter(this.filterParam, this.filters);
-                    this.onSuccess.emit(res);
+                    this.success.emit(res);
                 }
             },
             (err: any) => {
-                this.onError.emit(err);
+                this.error.emit(err);
             }
         );
     }
@@ -143,7 +143,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
                 this.selectTaskFilter(this.filterParam, this.filters);
             },
             (err) => {
-                this.onError.emit(err);
+                this.error.emit(err);
             });
     }
 
@@ -163,7 +163,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
                 filteredFilterList.push(filter);
             },
             (err) => {
-                this.onError.emit(err);
+                this.error.emit(err);
             },
             () => {
                 if (filteredFilterList.length > 0) {

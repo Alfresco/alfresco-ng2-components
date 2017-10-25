@@ -83,7 +83,7 @@ describe('ProcessInstanceListComponent', () => {
     });
 
     it('should emit onSuccess event when process instances loaded', fakeAsync(() => {
-        let emitSpy = spyOn(component.onSuccess, 'emit');
+        let emitSpy = spyOn(component.success, 'emit');
         component.appId = 1;
         component.state = 'open';
         component.processDefinitionKey = null;
@@ -102,7 +102,7 @@ describe('ProcessInstanceListComponent', () => {
         component.appId = 1;
         component.state = 'open';
         component.processDefinitionKey = null;
-        component.onSuccess.subscribe((res) => {
+        component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.data).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
@@ -118,7 +118,7 @@ describe('ProcessInstanceListComponent', () => {
         component.appId = 1;
         component.state = 'open';
         component.processDefinitionKey = null;
-        component.onSuccess.subscribe((res) => {
+        component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.data).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
@@ -135,7 +135,7 @@ describe('ProcessInstanceListComponent', () => {
         component.state = 'open';
         component.processDefinitionKey = null;
         component.sort = 'name-desc';
-        component.onSuccess.subscribe((res) => {
+        component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.data).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
@@ -152,7 +152,7 @@ describe('ProcessInstanceListComponent', () => {
         component.state = 'open';
         component.processDefinitionKey = null;
         component.sort = 'started-asc';
-        component.onSuccess.subscribe((res) => {
+        component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.data).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
@@ -169,7 +169,7 @@ describe('ProcessInstanceListComponent', () => {
         component.state = 'open';
         component.processDefinitionKey = null;
         component.sort = 'started-desc';
-        component.onSuccess.subscribe((res) => {
+        component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.data).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
@@ -186,7 +186,7 @@ describe('ProcessInstanceListComponent', () => {
         component.appId = 1;
         component.state = 'open';
         component.processDefinitionKey = 'fakeprocess';
-        component.onSuccess.subscribe( (res) => {
+        component.success.subscribe( (res) => {
             expect(component.data.getRows()[0].getValue('name')).toEqual('Fake Process Name - Nov 9, 2017, 12:36:14 PM');
             expect(component.data.getRows()[1].getValue('name')).toEqual('Fake Process Name - Nov 9, 2017, 12:37:25 PM');
             done();
@@ -200,7 +200,7 @@ describe('ProcessInstanceListComponent', () => {
     });
 
     it('should throw an exception when the response is wrong', fakeAsync(() => {
-        let emitSpy: jasmine.Spy = spyOn(component.onError, 'emit');
+        let emitSpy: jasmine.Spy = spyOn(component.error, 'emit');
         let fakeError = 'Fake server error';
         getProcessInstancesSpy.and.returnValue(Observable.throw(fakeError));
         component.appId = 1;
@@ -216,7 +216,7 @@ describe('ProcessInstanceListComponent', () => {
         component.processDefinitionKey = null;
         fixture.detectChanges();
         tick();
-        let emitSpy = spyOn(component.onSuccess, 'emit');
+        let emitSpy = spyOn(component.success, 'emit');
         component.reload();
         tick();
         expect(emitSpy).toHaveBeenCalledWith(fakeProcessInstances);
@@ -230,7 +230,7 @@ describe('ProcessInstanceListComponent', () => {
             ]
         );
         component.state = 'open';
-        component.onSuccess.subscribe( (res) => {
+        component.success.subscribe( (res) => {
             expect(res).toBeDefined();
             expect(component.data).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
@@ -311,7 +311,7 @@ describe('ProcessInstanceListComponent', () => {
             const appId = '1';
             let change = new SimpleChange(null, appId, true);
 
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
@@ -327,7 +327,7 @@ describe('ProcessInstanceListComponent', () => {
             const processDefinitionKey = 'fakeprocess';
             let change = new SimpleChange(null, processDefinitionKey, true);
 
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
@@ -343,7 +343,7 @@ describe('ProcessInstanceListComponent', () => {
             const state = 'open';
             let change = new SimpleChange(null, state, true);
 
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
@@ -359,7 +359,7 @@ describe('ProcessInstanceListComponent', () => {
             const sort = 'created-desc';
             let change = new SimpleChange(null, sort, true);
 
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
@@ -376,7 +376,7 @@ describe('ProcessInstanceListComponent', () => {
             let change = new SimpleChange(null, sort, true);
             let sortSpy = spyOn(component.data, 'setSorting');
 
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(sortSpy).toHaveBeenCalledWith(new DataSorting('started', 'asc'));
                 done();
@@ -390,7 +390,7 @@ describe('ProcessInstanceListComponent', () => {
             const name = 'FakeTaskName';
             let change = new SimpleChange(null, name, true);
 
-            component.onSuccess.subscribe((res) => {
+            component.success.subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();

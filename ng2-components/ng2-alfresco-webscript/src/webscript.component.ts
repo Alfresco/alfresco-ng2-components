@@ -25,7 +25,7 @@ import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
  *                         [contextRoot]="string"
  *                         [servicePath]="string"
  *                         [contentType]="JSON|HTML|DATATABLE"
- *                         (onSuccess)="customMethod($event)>
+ *                         (success)="customMethod($event)>
  * </adf-webscript-get>
  *
  * This component, provide a get webscript viewer
@@ -36,7 +36,7 @@ import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
  * @InputParam {string} servicePath path where Web Script service is mapped default value 'service'
  * @InputParam {string} contentType JSON | HTML | DATATABLE | TEXT
  *
- * @Output - onSuccess - The event is emitted when the data are recived
+ * @Output - success - The event is emitted when the data are recived
  *
  * @returns {WebscriptComponent} .
  */
@@ -65,7 +65,7 @@ export class WebscriptComponent implements OnChanges {
     contentType: string = 'TEXT';
 
     @Output()
-    onSuccess = new EventEmitter();
+    success = new EventEmitter();
 
     data: any = undefined;
     showError: boolean = false;
@@ -90,7 +90,7 @@ export class WebscriptComponent implements OnChanges {
                     }
                 }
 
-                this.onSuccess.emit(this.data);
+                this.success.emit(this.data);
 
                 resolve();
             }, (error) => {

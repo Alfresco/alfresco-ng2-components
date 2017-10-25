@@ -31,7 +31,7 @@ export class DiagramIconSignalComponent implements OnInit {
     fillColor: string;
 
     @Output()
-    onError = new EventEmitter();
+    error = new EventEmitter();
 
     position: any;
 

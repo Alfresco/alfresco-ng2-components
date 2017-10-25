@@ -49,10 +49,10 @@ export class DiagramComponent implements OnChanges {
     height: number = 500;
 
     @Output()
-    onSuccess = new EventEmitter();
+    success = new EventEmitter();
 
     @Output()
-    onError = new EventEmitter();
+    error = new EventEmitter();
 
     PADDING_WIDTH: number = 60;
     PADDING_HEIGHT: number = 60;
@@ -81,10 +81,10 @@ export class DiagramComponent implements OnChanges {
                 this.raphaelService.setting(this.diagram.diagramWidth + this.PADDING_WIDTH,
                                             this.diagram.diagramHeight + this.PADDING_HEIGHT);
                 this.setMetricValueToDiagramElement(this.diagram, this.metricPercentages, this.metricType);
-                this.onSuccess.emit(res);
+                this.success.emit(res);
             },
             (err: any) => {
-                this.onError.emit(err);
+                this.error.emit(err);
             }
         );
     }
@@ -96,10 +96,10 @@ export class DiagramComponent implements OnChanges {
                 this.raphaelService.setting(this.diagram.diagramWidth + this.PADDING_WIDTH,
                                             this.diagram.diagramHeight + this.PADDING_HEIGHT);
                 this.setMetricValueToDiagramElement(this.diagram, this.metricPercentages, this.metricType);
-                this.onSuccess.emit(res);
+                this.success.emit(res);
             },
             (err: any) => {
-                this.onError.emit(err);
+                this.error.emit(err);
             }
         );
     }

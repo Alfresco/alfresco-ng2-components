@@ -83,10 +83,10 @@ describe('PaginationComponent', () => {
                     .createSpy('ngAfterViewInit').and
                     .callThrough();
 
-                spyOn(component.onChangePageNumber, 'emit');
-                spyOn(component.onChangePageSize, 'emit');
-                spyOn(component.onNextPage, 'emit');
-                spyOn(component.onPrevPage, 'emit');
+                spyOn(component.changePageNumber, 'emit');
+                spyOn(component.changePageSize, 'emit');
+                spyOn(component.nextPage, 'emit');
+                spyOn(component.prevPage, 'emit');
 
                 this.fixture = fixture;
                 this.component = component;
@@ -172,7 +172,7 @@ describe('PaginationComponent', () => {
 
             component.goNext();
 
-            const { emit: { calls } } = component.onNextPage;
+            const { emit: { calls } } = component.nextPage;
             const { skipCount } = calls.mostRecent().args[0];
 
             expect(skipCount).toBe(75);
@@ -183,7 +183,7 @@ describe('PaginationComponent', () => {
 
             component.goPrevious();
 
-            const { emit: { calls } } = component.onPrevPage;
+            const { emit: { calls } } = component.prevPage;
             const { skipCount } = calls.mostRecent().args[0];
 
             expect(skipCount).toBe(25);
@@ -191,9 +191,9 @@ describe('PaginationComponent', () => {
 
         it('changes page size', () => {
             const { component } = this;
-            component.changePageSize(50);
+            component.onChangePageSize(50);
 
-            const { emit: { calls } } = component.onChangePageSize;
+            const { emit: { calls } } = component.changePageSize;
             const { maxItems } = calls.mostRecent().args[0];
 
             expect(maxItems).toBe(50);
@@ -202,9 +202,9 @@ describe('PaginationComponent', () => {
         it('changes page number', () => {
             const { component } = this;
 
-            component.changePageNumber(5);
+            component.onChangePageNumber(5);
 
-            const { emit: { calls } } = component.onChangePageNumber;
+            const { emit: { calls } } = component.changePageNumber;
             const { skipCount } = calls.mostRecent().args[0];
 
             expect(skipCount).toBe(100);

@@ -55,16 +55,16 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     hideComponent: boolean = false;
 
     @Output()
-    onSuccess = new EventEmitter();
+    success = new EventEmitter();
 
     @Output()
-    onError = new EventEmitter();
+    error = new EventEmitter();
 
     @Output()
-    onEdit = new EventEmitter();
+    edit = new EventEmitter();
 
     @Output()
-    onFormValueChanged = new EventEmitter();
+    formValueChanged = new EventEmitter();
 
     @Output()
     saveReportSuccess = new EventEmitter();
@@ -77,9 +77,9 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
 
     onDropdownChanged = new EventEmitter();
 
-    onSuccessReportParams = new EventEmitter();
+    successReportParams = new EventEmitter();
 
-    onSuccessParamOpt = new EventEmitter();
+    successParamOpt = new EventEmitter();
 
     reportParameters: ReportParametersModel;
 
@@ -113,7 +113,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
             }
         });
 
-        this.paramOpts = this.onSuccessReportParams.subscribe((report: ReportParametersModel) => {
+        this.paramOpts = this.successReportParams.subscribe((report: ReportParametersModel) => {
             if (report.hasParameters()) {
                 this.retrieveParameterOptions(report.definition.parameters, this.appId);
                 this.generateFormGroupFromParameter(report.definition.parameters);
@@ -193,14 +193,14 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
             (res: ReportParametersModel) => {
                 this.reportParameters = res;
                 if (this.reportParameters.hasParameters()) {
-                    this.onSuccessReportParams.emit(res);
+                    this.successReportParams.emit(res);
                 } else {
                     this.reportForm = this.formBuilder.group({});
-                    this.onSuccess.emit();
+                    this.success.emit();
                 }
             },
             (err: any) => {
-                this.onError.emit(err);
+                this.error.emit(err);
             }
         );
     }
@@ -210,10 +210,10 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
             this.analyticsService.getParamValuesByType(param.type, appId, reportId, processDefinitionId).subscribe(
                 (opts: ParameterValueModel[]) => {
                     param.options = opts;
-                    this.onSuccessParamOpt.emit(opts);
+                    this.successParamOpt.emit(opts);
                 },
                 (err: any) => {
-                    this.onError.emit(err);
+                    this.error.emit(err);
                 }
             );
         });
@@ -227,11 +227,11 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
 
     public submit(values: any) {
         this.reportParamQuery = this.convertFormValuesToReportParamQuery(values);
-        this.onSuccess.emit(this.reportParamQuery);
+        this.success.emit(this.reportParamQuery);
     }
 
     onValueChanged(values: any) {
-        this.onFormValueChanged.emit(values);
+        this.formValueChanged.emit(values);
         if (this.reportForm && this.reportForm.valid) {
             this.submit(values);
         }
@@ -306,10 +306,10 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         this.reportParamsSub = this.analyticsService.updateReport(this.reportParameters.id, this.reportParameters.name).subscribe(
             (res: ReportParametersModel) => {
                 this.editDisable();
-                this.onEdit.emit(this.reportParameters.name);
+                this.edit.emit(this.reportParameters.name);
             },
             (err: any) => {
-                this.onError.emit(err);
+                this.error.emit(err);
             }
         );
     }

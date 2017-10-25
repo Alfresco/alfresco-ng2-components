@@ -28,7 +28,7 @@ export class DiagramIconMessageComponent implements OnInit {
     data: any;
 
     @Output()
-    onError = new EventEmitter();
+    error = new EventEmitter();
 
     position: any;
 

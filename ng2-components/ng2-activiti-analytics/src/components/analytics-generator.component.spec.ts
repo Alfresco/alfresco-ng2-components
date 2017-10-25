@@ -92,7 +92,7 @@ describe('AnalyticsGeneratorComponent', () => {
     });
 
     it('Should render the Process definition overview report ', (done) => {
-        component.onSuccess.subscribe((res) => {
+        component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(res.length).toEqual(3);
 
@@ -134,7 +134,7 @@ describe('AnalyticsGeneratorComponent', () => {
     });
 
     it('Should render the Process definition overview report when onchanges is called ', (done) => {
-        component.onSuccess.subscribe((res) => {
+        component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(res.length).toEqual(3);
 
@@ -176,7 +176,7 @@ describe('AnalyticsGeneratorComponent', () => {
     });
 
     it('Should render the Task overview report ', (done) => {
-        component.onSuccess.subscribe((res) => {
+        component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(res.length).toEqual(3);
 
@@ -260,7 +260,7 @@ describe('AnalyticsGeneratorComponent', () => {
     });
 
     it('Should emit onError event with a 404 response ', (done) => {
-        component.onError.subscribe((err) => {
+        component.error.subscribe((err) => {
             expect(err).toBeDefined();
             done();
         });

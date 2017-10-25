@@ -53,8 +53,8 @@
     [showLoginActions]="showFooter"
     [showRememberMe]="showFooter"
     copyrightText="© 2016 Alfresco Software, Inc. All Rights Reserved. (customised text)"
-    (onSuccess)="onLogin($event)"
-    (onError)="onError($event)">
+    (success)="onLogin($event)"
+    (error)="onError($event)">
     <div class="mobile-settings">
         <p>
             <mat-slide-toggle

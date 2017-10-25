@@ -39,7 +39,7 @@ export class RaphaelMultilineTextDirective extends RaphaelBase implements OnInit
     elementWidth: number;
 
     @Output()
-    onError = new EventEmitter();
+    error = new EventEmitter();
 
     TEXT_PADDING = 3;
 

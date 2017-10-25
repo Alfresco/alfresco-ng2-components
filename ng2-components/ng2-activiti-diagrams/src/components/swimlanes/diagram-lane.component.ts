@@ -28,7 +28,7 @@ export class DiagramLaneComponent implements OnInit {
     lane: any;
 
     @Output()
-    onError = new EventEmitter();
+    error = new EventEmitter();
 
     rectLeftCorner: any;
     width: any;

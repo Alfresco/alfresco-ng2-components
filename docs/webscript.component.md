@@ -25,7 +25,7 @@
     [servicePath]="string"
     [showData]="boolean"
     [contentType]="JSON | HTML | DATATABLE | TEXT"
-    (onSuccess)= "logData($event)">
+    (success)= "logData($event)">
  </adf-webscript-get>
 ```
 
@@ -63,8 +63,14 @@ export class AppComponent {
 | scriptPath | string | alfresco |  path to Web Script (as defined by Web Script) | 
 | contentType | string | service | path where Web Script service is mapped default value | 
 | contentType | string | TEXT | how to handle the data received from the web script JSON , HTML , DATATABLE or TEXT |
-| onSuccess | event | |  You can get the plain data from the webscript through the **onSuccess** event parameter and use it as you need in your application |
-| showData | booleann | true | render the webscript data |
+| showData | boolean | true | render the webscript data |
+
+
+### Events
+
+| Name | Description |
+| --- | --- |
+| success | You can get the plain data from the webscript through the **success** event parameter and use it as you need in your application |
 
 **contentType** {string}  
 ***data***      {string}  data containing the plain value you get from the webscipt as an output parameter
@@ -162,11 +168,11 @@ This sample Web Scripts reside in your Alfresco Server. You can access the folde
     [scriptPath]="'Sample/folder/JSON_EXAMPLE'"
     [contentType]="'HTML'"
     [showData]="false"
-    (onSuccess)="logDataExample($event)">
+    (success)="logDataExample($event)">
 </adf-webscript-get>
 ``` 
 
-You can get the plain data from the webscript through the **onSuccess** event parameter and use it as you need in your application
+You can get the plain data from the webscript through the **success** event parameter and use it as you need in your application
 
 ```ts
 logDataExample(data) {

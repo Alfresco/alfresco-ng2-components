@@ -64,20 +64,20 @@ export class PaginationComponent implements OnInit {
     @Input()
     pagination: Pagination;
 
-    @Output('change')
-    onChange: EventEmitter<PaginationQueryParams> = new EventEmitter<PaginationQueryParams>();
+    @Output()
+    change: EventEmitter<PaginationQueryParams> = new EventEmitter<PaginationQueryParams>();
 
-    @Output('changePageNumber')
-    onChangePageNumber: EventEmitter<Pagination> = new EventEmitter<Pagination>();
+    @Output()
+    changePageNumber: EventEmitter<Pagination> = new EventEmitter<Pagination>();
 
-    @Output('changePageSize')
-    onChangePageSize: EventEmitter<Pagination> = new EventEmitter<Pagination>();
+    @Output()
+    changePageSize: EventEmitter<Pagination> = new EventEmitter<Pagination>();
 
-    @Output('nextPage')
-    onNextPage: EventEmitter<Pagination> = new EventEmitter<Pagination>();
+    @Output()
+    nextPage: EventEmitter<Pagination> = new EventEmitter<Pagination>();
 
-    @Output('prevPage')
-    onPrevPage: EventEmitter<Pagination> = new EventEmitter<Pagination>();
+    @Output()
+    prevPage: EventEmitter<Pagination> = new EventEmitter<Pagination>();
 
     ngOnInit() {
         if (!this.pagination) {
@@ -154,7 +154,7 @@ export class PaginationComponent implements OnInit {
         });
     }
 
-    changePageNumber(pageNumber: number) {
+    onChangePageNumber(pageNumber: number) {
         const { pagination: { maxItems } } = this;
 
         this.handlePaginationEvent(PaginationComponent.ACTIONS.CHANGE_PAGE_NUMBER, {
@@ -163,7 +163,7 @@ export class PaginationComponent implements OnInit {
         });
     }
 
-    changePageSize(maxItems: number) {
+    onChangePageSize(maxItems: number) {
         this.handlePaginationEvent(PaginationComponent.ACTIONS.CHANGE_PAGE_SIZE, {
             skipCount: 0,
             maxItems
@@ -179,32 +179,32 @@ export class PaginationComponent implements OnInit {
         } = PaginationComponent.ACTIONS;
 
         const {
-            onChange,
-            onChangePageNumber,
-            onChangePageSize,
-            onNextPage,
-            onPrevPage,
+            change,
+            changePageNumber,
+            changePageSize,
+            nextPage,
+            prevPage,
             pagination
         } = this;
 
         const data = Object.assign({}, pagination, params);
 
         if (action === NEXT_PAGE) {
-            onNextPage.emit(data);
+            nextPage.emit(data);
         }
 
         if (action === PREV_PAGE) {
-            onPrevPage.emit(data);
+            prevPage.emit(data);
         }
 
         if (action === CHANGE_PAGE_NUMBER) {
-            onChangePageNumber.emit(data);
+            changePageNumber.emit(data);
         }
 
         if (action === CHANGE_PAGE_SIZE) {
-            onChangePageSize.emit(data);
+            changePageSize.emit(data);
         }
 
-        onChange.emit(params);
+        change.emit(params);
     }
 }

@@ -79,10 +79,10 @@ export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionS
     rootFolderId: string = '-root-';
 
     @Output()
-    onSuccess = new EventEmitter();
+    success = new EventEmitter();
 
     @Output()
-    onError = new EventEmitter();
+    error = new EventEmitter();
 
     @Output()
     createFolder = new EventEmitter();
@@ -162,7 +162,7 @@ export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionS
 
         if (latestFilesAdded.length > 0) {
             this.uploadService.addToQueue(...latestFilesAdded);
-            this.uploadService.uploadFilesInTheQueue(this.onSuccess);
+            this.uploadService.uploadFilesInTheQueue(this.success);
             if (this.showNotificationBar) {
                 this.showUndoNotificationBar(latestFilesAdded);
             }
@@ -222,7 +222,7 @@ export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionS
         if (this.rootFolderId) {
             this.getFolderNode(this.rootFolderId).subscribe(
                 res => this.permissionValue.next(this.hasCreatePermission(res)),
-                error => this.onError.emit(error)
+                error => this.error.emit(error)
             );
         }
     }

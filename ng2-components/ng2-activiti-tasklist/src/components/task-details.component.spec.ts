@@ -221,7 +221,7 @@ describe('TaskDetailsComponent', () => {
         });
 
         it('should emit an error event if an error occurs fetching the next task', () => {
-            let emitSpy: jasmine.Spy = spyOn(component.onError, 'emit');
+            let emitSpy: jasmine.Spy = spyOn(component.error, 'emit');
             getTasksSpy.and.returnValue(Observable.throw({}));
             component.onComplete();
             expect(emitSpy).toHaveBeenCalled();
@@ -256,7 +256,7 @@ describe('TaskDetailsComponent', () => {
         });
 
         it('should emit an error event when form error occurs', () => {
-            let emitSpy: jasmine.Spy = spyOn(component.onError, 'emit');
+            let emitSpy: jasmine.Spy = spyOn(component.error, 'emit');
             component.onFormError({});
             expect(emitSpy).toHaveBeenCalled();
         });
