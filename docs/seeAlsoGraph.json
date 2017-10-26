@@ -38,6 +38,7 @@
         "nodes-api.service"
     ],
     "dropdown-breadcrumb.component": ["document-list.component", "breadcrumb.component"],
+    "version-manager": ["document-list.component"],
     "extensibility": [],
     "file-uploading-dialog.component": [],
     "folder-actions.service": ["document-actions.service"],

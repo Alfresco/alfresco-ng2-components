@@ -26,6 +26,7 @@ import {
 } from 'ng2-alfresco-core';
 import { DataColumn, DataRow } from 'ng2-alfresco-datatable';
 import { DocumentListComponent, PermissionStyleModel } from 'ng2-alfresco-documentlist';
+import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-adapter.component';
 
 const DEFAULT_FOLDER_TO_SHOW = '-my-';
 
@@ -41,6 +42,7 @@ export class FilesComponent implements OnInit {
     errorMessage: string = null;
     fileNodeId: any;
     showViewer: boolean = false;
+    showVersions: boolean = false;
 
     toolbarColor = 'default';
 
@@ -211,6 +213,17 @@ export class FilesComponent implements OnInit {
         });
     }
 
+    onManageVersions(event) {
+        const contentEntry = event.value.entry;
+
+        if (this.contentService.hasPermission(contentEntry, 'update')) {
+            this.dialog.open(VersionManagerDialogAdapterComponent, { data: { contentEntry }, panelClass: 'adf-version-manager-dialog', width: '630px' });
+        } else {
+            const translatedErrorMessage: any = this.translateService.get('OPERATION.ERROR.PERMISSION');
+            this.notificationService.openSnackMessage(translatedErrorMessage.value, 4000);
+        }
+    }
+
     getSiteContent(site: SiteModel) {
         this.currentFolderId = site && site.guid ? site.guid : DEFAULT_FOLDER_TO_SHOW;
     }
@@ -221,6 +234,17 @@ export class FilesComponent implements OnInit {
 
     hasSelection(selection: Array<MinimalNodeEntity>): boolean {
         return selection && selection.length > 0;
+    }
+
+    hasOneFileSelected(): boolean {
+        const selection: Array<MinimalNodeEntity> = this.documentList.selection;
+        const hasOneFileSelected = selection && selection.length === 1 && selection[0].entry.isFile;
+        return hasOneFileSelected;
+    }
+
+    userHasPermissionToManageVersions(): boolean {
+        const selection: Array<MinimalNodeEntity> = this.documentList.selection;
+        return this.contentService.hasPermission(selection[0].entry, 'update');
     }
 
     downloadNodes(selection: Array<MinimalNodeEntity>) {

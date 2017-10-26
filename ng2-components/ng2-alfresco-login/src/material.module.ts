@@ -18,9 +18,15 @@
 import { NgModule } from '@angular/core';
 import {
     MatCheckboxModule,
+    MatDialogModule,
     MatIconModule,
     MatInputModule,
-    MatProgressSpinnerModule
+    MatListModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
+    MatSelectModule,
+    MatSidenavModule,
+    MatSlideToggleModule
 } from '@angular/material';
 
 export function modules() {
@@ -28,7 +34,14 @@ export function modules() {
         MatCheckboxModule,
         MatIconModule,
         MatInputModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatSlideToggleModule,
+        MatInputModule,
+        MatSelectModule,
+        MatListModule,
+        MatDialogModule,
+        MatSidenavModule,
+        MatProgressBarModule
     ];
 }
 

@@ -35,7 +35,6 @@ import { NodeMinimal, NodeMinimalEntry, NodePaging } from '../models/document-li
 import { ImageResolver } from './../data/image-resolver.model';
 import { RowFilter } from './../data/row-filter.model';
 
-
 import { DocumentListService } from './../services/document-list.service';
 import { DocumentListComponent } from './document-list.component';
 

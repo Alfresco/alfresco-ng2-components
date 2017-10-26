@@ -18,7 +18,8 @@
 import { Injectable } from '@angular/core';
 import {
     AlfrescoApi, ContentApi, FavoritesApi, NodesApi,
-    PeopleApi, RenditionsApi, SharedlinksApi, SitesApi
+    PeopleApi, RenditionsApi, SharedlinksApi, SitesApi,
+    VersionsApi
 } from 'alfresco-js-api';
 import * as alfrescoApi from 'alfresco-js-api';
 import { AppConfigService } from './app-config.service';
@@ -63,6 +64,10 @@ export class AlfrescoApiService {
 
     get searchApi() {
         return this.getInstance().search.searchApi;
+    }
+
+    get versionsApi(): VersionsApi {
+        return this.getInstance().core.versionsApi;
     }
 
     constructor(private appConfig: AppConfigService,

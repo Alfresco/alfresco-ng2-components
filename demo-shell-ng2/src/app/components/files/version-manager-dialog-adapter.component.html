@@ -1,0 +1,7 @@
+<header mat-dialog-title>Manage versions</header>
+<section mat-dialog-content>
+    <adf-version-manager [node]="contentEntry"></adf-version-manager>
+</section>
+<footer mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+    <button mat-button (click)="close($event)">Close</button>
+</footer>
