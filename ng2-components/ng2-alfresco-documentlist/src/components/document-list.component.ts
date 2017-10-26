@@ -420,6 +420,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             this.loadSharedLinks();
         } else if (nodeId === '-sites-') {
             this.loadSites();
+        } else if (nodeId === '-mysites-') {
+            this.loadMemberSites();
         } else if (nodeId === '-favorites-') {
             this.loadFavorites();
         } else if (nodeId === '-recent-') {
@@ -509,6 +511,29 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         };
 
         this.apiService.sitesApi.getSites(options).then((page: NodePaging) => {
+            this.onPageLoaded(page);
+        });
+    }
+
+    private loadMemberSites(): void {
+        const options = {
+            include: [ 'properties' ],
+            maxItems: this.pageSize,
+            skipCount: this.skipCount
+        };
+
+        // TODO: Change `result` type once ADF-1829 gets sorted out
+        this.apiService.peopleApi.getSiteMembership('-me-', options).then((result: any) => {
+            let page: NodePaging = {
+                list: {
+                    entries: result.list.entries
+                        .map(({ entry: { site }}: any) => ({
+                            entry: site
+                        })),
+                    pagination: result.list.pagination
+                }
+            };
+
             this.onPageLoaded(page);
         });
     }
@@ -773,7 +798,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     isCustomSource(folderId: string): boolean {
-        const sources = ['-trashcan-', '-sharedlinks-', '-sites-', '-favorites-', '-recent-'];
+        const sources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-'];
 
         if (sources.indexOf(folderId) > -1) {
             return true;
