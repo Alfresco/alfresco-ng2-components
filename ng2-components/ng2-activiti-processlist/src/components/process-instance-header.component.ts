@@ -61,6 +61,13 @@ export class ProcessInstanceHeaderComponent implements OnChanges {
                     }),
                 new CardViewTextItemModel(
                     {
+                        label: 'ADF_PROCESS_LIST.PROPERTIES.BUSINESS_KEY',
+                        value: this.processInstance.businessKey,
+                        key: 'businessKey',
+                        default: 'ADF_PROCESS_LIST.PROPERTIES.BUSINESS_KEY_DEFAULT'
+                    }),
+                new CardViewTextItemModel(
+                    {
                         label: 'ADF_PROCESS_LIST.PROPERTIES.CREATED_BY',
                         value: this.getStartedByFullName(),
                         key: 'assignee',

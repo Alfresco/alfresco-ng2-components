@@ -21,6 +21,8 @@
             "CREATED_BY": "Created By",
             "CREATED_BY_DEFAULT": "No assignee",
             "CREATED": "Created",
+            "BUSINESS_KEY": "Business key",
+            "BUSINESS_KEY_DEFAULT": "None",
             "DESCRIPTION": "Description",
             "DESCRIPTION_DEFAULT": "No description",
             "ID": "Id"
