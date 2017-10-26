@@ -24,14 +24,18 @@
         "pagination.component"
     ],
     "DataTableAdapter": ["datatable.component", "task-list.component"],
+    "deleted-nodes-api.service": [],
     "diagram.component": [],
     "document-actions.service": [],
+    "document-library.model": [],
     "document-list.component": [
         "datatable.component",
         "data-column.component",
         "pagination.component",
         "sites-dropdown.component",
-        "metadata-indicators"
+        "metadata-indicators",
+        "document-library.model",
+        "nodes-api.service"
     ],
     "dropdown-breadcrumb.component": ["document-list.component", "breadcrumb.component"],
     "extensibility": [],
@@ -59,6 +63,7 @@
     "metadata-indicators": [],
     "mime-type-icon.pipe": [],
     "node-permission.directive": [],
+    "nodes-api.service": ["document-library.model", "deleted-nodes-api.service"],
     "notification.service": [],
     "pagination.component": [],
     "permissions-style.model": ["document-list.component"],

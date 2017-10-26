@@ -721,6 +721,8 @@ That will give the following output:
 - [Pagination component](pagination.component.md)
 - [Sites dropdown component](sites-dropdown.component.md)
 - [Metadata indicators](metadata-indicators.md)
+- [Document library model](document-library.model.md)
+- [Nodes api service](nodes-api.service.md)
 - [Breadcrumb component](breadcrumb.component.md)
 - [Content action component](content-action.component.md)
 - [Dropdown breadcrumb component](dropdown-breadcrumb.component.md)
