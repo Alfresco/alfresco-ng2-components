@@ -122,7 +122,6 @@
       },
       "scripts": [
         "../node_modules/pdfjs-dist/build/pdf.js",
-        "../node_modules/pdfjs-dist/web/compatibility.js",
         "../node_modules/pdfjs-dist/web/pdf_viewer.js",
         "../node_modules/raphael/raphael.min.js",
         "../node_modules/moment/min/moment.min.js",
@@ -333,7 +332,6 @@
       },
       "scripts": [
         "../node_modules/pdfjs-dist/build/pdf.js",
-        "../node_modules/pdfjs-dist/web/compatibility.js",
         "../node_modules/pdfjs-dist/web/pdf_viewer.js",
         "../node_modules/raphael/raphael.min.js",
         "../node_modules/moment/min/moment.min.js",
