@@ -422,6 +422,7 @@ for more information about installing and using the source code.
 - [Document list component](document-list.component.md)
 - [Sites dropdown component](sites-dropdown.component.md)
 - [*Content node selector component](../ng2-components/ng2-alfresco-documentlist/src/components/content-node-selector/content-node-selector.component.ts)
+- [Version Manager Component](version-manager.component.md)
 
 ### Models
 
