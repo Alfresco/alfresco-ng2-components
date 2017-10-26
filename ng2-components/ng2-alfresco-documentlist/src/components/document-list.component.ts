@@ -19,7 +19,7 @@ import {
     AfterContentInit, Component, ContentChild, ElementRef, EventEmitter, HostListener, Input, NgZone,
     OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild, ViewEncapsulation
 } from '@angular/core';
-import { DeletedNodesPaging, MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, Pagination, PersonEntry } from 'alfresco-js-api';
+import { DeletedNodesPaging, MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, Pagination, PersonEntry, SitePaging } from 'alfresco-js-api';
 import { AlfrescoApiService, AppConfigService, DataColumnListComponent, UserPreferencesService } from 'ng2-alfresco-core';
 import { DataCellEvent, DataColumn, DataRowActionEvent, DataSorting, DataTableComponent, ObjectDataColumn } from 'ng2-alfresco-datatable';
 import { Observable, Subject } from 'rxjs/Rx';
@@ -522,8 +522,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             skipCount: this.skipCount
         };
 
-        // TODO: Change `result` type once ADF-1829 gets sorted out
-        this.apiService.peopleApi.getSiteMembership('-me-', options).then((result: any) => {
+        this.apiService.peopleApi.getSiteMembership('-me-', options).then((result: SitePaging) => {
             let page: NodePaging = {
                 list: {
                     entries: result.list.entries
