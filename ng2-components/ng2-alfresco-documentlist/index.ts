@@ -16,10 +16,10 @@
  */
 
 import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { UploadModule } from 'ng2-alfresco-upload';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { BreadcrumbComponent } from './src/components/breadcrumb/breadcrumb.component';
 import { DropdownBreadcrumbComponent } from './src/components/breadcrumb/dropdown-breadcrumb.component';
@@ -99,8 +99,8 @@ export const DOCUMENT_LIST_PROVIDERS: any[] = [
         CoreModule,
         UploadModule,
         DataTableModule,
-        MaterialModule,
-        FlexLayoutModule
+        FlexLayoutModule,
+        MaterialModule
     ],
     declarations: [
         ...DOCUMENT_LIST_DIRECTIVES
