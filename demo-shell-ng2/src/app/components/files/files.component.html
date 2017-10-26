@@ -270,6 +270,12 @@
         </section>
 
         <section>
+          <mat-slide-toggle [color]="'primary'" [(ngModel)]="maxSizeShow">{{'DOCUMENT_LIST.MAX_SIZE' |
+            translate}}
+          </mat-slide-toggle>
+        </section>
+
+        <section>
             <mat-slide-toggle [color]="'primary'" [(ngModel)]="versioning">{{'DOCUMENT_LIST.ENABLE_VERSIONING' |
                 translate}}
             </mat-slide-toggle>
@@ -282,6 +288,12 @@
                        data-automation-id="accepted-files-type">
             </mat-form-field>
         </section>
+        <section *ngIf="maxSizeShow">
+            <mat-form-field>
+                <input matInput type="number"  placeholder="Max file size" [(ngModel)]="maxFilesSize"
+                       data-automation-id="max-files-size">
+            </mat-form-field>
+        </section>
         <div *ngIf="!acceptedFilesTypeShow">
             <adf-upload-button
                 #uploadButton
@@ -291,6 +303,7 @@
                 [rootFolderId]="documentList.currentFolderId"
                 [multipleFiles]="multipleFileUpload"
                 [uploadFolders]="folderUpload"
+                [maxFilesSize]="maxFilesSize"
                 [versioning]="versioning"
                 [adf-node-permission]="'create'"
                 [adf-nodes]="getCurrentDocumentListNode()"

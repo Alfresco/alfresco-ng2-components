@@ -38,6 +38,7 @@
 | uploadFolders | boolean | false | Allow/disallow upload folders (only for Chrome) |
 | multipleFiles | boolean | false | Allow/disallow multiple files |
 | acceptedFilesType | string | * |  array of allowed file extensions , example: ".jpg,.gif,.png,.svg" |
+| maxFilesSize | number |  |  if defined allow to upload files only with this max file size. the size of a file is in bytes  |
 | **(deprecated)** currentFolderPath | string | '/Sites/swsdp/documentLibrary' | define the path where the files are uploaded. **Deprecated in 1.6.0: use rootFolderId instead.** |
 | **(deprecated)** rootFolderId | string | '-root-' | The ID of the root folder node. **Deprecated in 1.6.2: use parentId instead.** |
 | parentId | string | empty | The ID of the root. It can be the nodeId if you are using the upload for the Content Service or taskId/processId for the Process Service. |

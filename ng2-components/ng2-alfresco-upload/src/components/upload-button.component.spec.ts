@@ -118,7 +118,7 @@ describe('UploadButtonComponent', () => {
 
         fixture.detectChanges();
 
-        component.permissionEvent.subscribe( permission => {
+        component.permissionEvent.subscribe(permission => {
             expect(permission).toBeDefined();
             expect(permission.type).toEqual('content');
             expect(permission.action).toEqual('upload');
@@ -148,7 +148,7 @@ describe('UploadButtonComponent', () => {
 
         spyOn(component, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
 
-        component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
+        component.ngOnChanges({rootFolderId: new SimpleChange(null, component.rootFolderId, true)});
         component.onFilesAdded(fakeEvent);
         let compiled = fixture.debugElement.nativeElement;
         fixture.detectChanges();
@@ -162,7 +162,7 @@ describe('UploadButtonComponent', () => {
 
         spyOn(component, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
 
-        component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
+        component.ngOnChanges({rootFolderId: new SimpleChange(null, component.rootFolderId, true)});
         component.onFilesAdded(fakeEvent);
         let compiled = fixture.debugElement.nativeElement;
         fixture.detectChanges();
@@ -177,7 +177,7 @@ describe('UploadButtonComponent', () => {
 
         spyOn(component, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
 
-        component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
+        component.ngOnChanges({rootFolderId: new SimpleChange(null, component.rootFolderId, true)});
         uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
 
         fixture.detectChanges();
@@ -192,7 +192,7 @@ describe('UploadButtonComponent', () => {
         component.success = null;
 
         spyOn(component, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
-        component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
+        component.ngOnChanges({rootFolderId: new SimpleChange(null, component.rootFolderId, true)});
 
         uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
 
@@ -209,7 +209,7 @@ describe('UploadButtonComponent', () => {
         spyOn(contentService, 'createFolder').and.returnValue(Observable.of(true));
         spyOn(component, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
 
-        component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
+        component.ngOnChanges({rootFolderId: new SimpleChange(null, component.rootFolderId, true)});
         fixture.detectChanges();
 
         component.success.subscribe(e => {
@@ -260,12 +260,45 @@ describe('UploadButtonComponent', () => {
         expect(compiled.querySelector('#uploadFolder-label-static').textContent).toEqual('test-text');
     });
 
+    describe('filesize', () => {
+
+        const files: File[] = [
+            <File> {name: 'bigFile.png', size: 1000},
+            <File> {name: 'smallFile.png', size: 10}
+        ];
+
+        let addToQueueSpy;
+
+        beforeEach(() => {
+            addToQueueSpy = spyOn(uploadService, 'addToQueue');
+        });
+
+        it('should filter out file, which are too big if max file size is set', () => {
+            component.maxFilesSize = 100;
+
+            component.uploadFiles(files);
+
+            const filesCalledWith = addToQueueSpy.calls.mostRecent().args;
+            expect(filesCalledWith.length).toBe(1);
+            expect(filesCalledWith[0].name).toBe('smallFile.png');
+        });
+
+        it('should not filter out files if max file size is not set', () => {
+            component.maxFilesSize = null;
+
+            component.uploadFiles(files);
+
+            const filesCalledWith = addToQueueSpy.calls.mostRecent().args;
+            expect(filesCalledWith.length).toBe(2);
+        });
+    });
+
     describe('uploadFiles', () => {
 
         const files: File[] = [
-            <File> { name: 'phobos.jpg' },
-            <File> { name: 'deimos.png' },
-            <File> { name: 'ganymede.bmp' }
+            <File> {name: 'phobos.jpg'},
+            <File> {name: 'deimos.png'},
+            <File> {name: 'ganymede.bmp'}
         ];
 
         let addToQueueSpy;
