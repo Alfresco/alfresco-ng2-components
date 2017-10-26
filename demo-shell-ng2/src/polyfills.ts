@@ -66,3 +66,9 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
  * Needed for: All but Chrome, Firefox, Edge, IE11 and Safari 10
  */
 import 'intl';  // Run `npm install --save intl`.
+
+/**
+ * Support custom event in IE11
+ *
+ * */
+import 'custom-event-polyfill/custom-event-polyfill'  // Run `npm install --save custom-event-polyfill`.
