@@ -1,5 +1,5 @@
 
-@mixin mat-pagination-theme($theme) {
+@mixin adf-pagination-theme($theme) {
     $foreground: map-get($theme, foreground);
 
     $adf-pagination--height: 48px;

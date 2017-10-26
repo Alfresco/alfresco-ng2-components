@@ -1,5 +1,5 @@
 
-@mixin mat-container-widget-theme($theme) {
+@mixin adf-container-widget-theme($theme) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
     $warn: map-get($theme, warn);

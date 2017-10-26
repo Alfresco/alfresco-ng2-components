@@ -26,11 +26,11 @@
     <mat-menu #menu="matMenu" id="user-profile-lists" [xPosition]="menuPositionX" [yPosition]="menuPositionY" [overlapTrigger]="false" class="adf-userinfo-menu">
         <mat-tab-group id="tab-group-env" (click)="stopClosing($event)"
             class="adf-userinfo-tab" [class.adf-hide-tab]="!bpmUser || !ecmUser">
-            <mat-tab id="ecm-panel" label="Content Services" *ngIf="ecmUser">
+            <mat-tab id="ecm-panel" label="{{ 'USER_PROFILE.TAB.CS' | translate }}" *ngIf="ecmUser">
                 <mat-card class="adf-userinfo-card">
                     <mat-card-header class="adf-userinfo-card-header" [style.background-image]="'url(' + ecmBackgroundImage + ')'">
-                        <div [outerHTML]="ecmUser | usernameInitials:'adf-userinfo-profile-initials'"></div>
-                        <div *ngIf="ecmUser.avatarId" class="adf-userinfo-profile-container">
+                        <div [outerHTML]="ecmUser | usernameInitials:'adf-userinfo-profile-initials adf-hide-small'"></div>
+                        <div  *ngIf="ecmUser.avatarId" class="adf-userinfo-profile-container adf-hide-small">
                             <img class="adf-userinfo-profile-picture" id="ecm-user-detail-image"
                                 alt="ecm-profile-image" [src]="ecmUserImage" />
                         </div>
@@ -52,11 +52,11 @@
                     </mat-card-content>
                 </mat-card>
             </mat-tab>
-            <mat-tab label="Process Services" id="bpm-panel" *ngIf="bpmUser">
+            <mat-tab id="bpm-panel" label="{{ 'USER_PROFILE.TAB.PS' | translate }}" *ngIf="bpmUser">
             <mat-card class="adf-userinfo-card">
                 <mat-card-header class="adf-userinfo-card-header" [style.background-image]="'url(' + bpmBackgroundImage + ')'">
-                    <div [outerHTML]="bpmUser | usernameInitials:'adf-userinfo-profile-initials'"></div>
-                        <img *ngIf="bpmUser.pictureId" class="adf-userinfo-profile-picture" id="bpm-user-detail-image"
+                    <div [outerHTML]="bpmUser | usernameInitials:'adf-userinfo-profile-initials adf-hide-small'"></div>
+                    <img *ngIf="bpmUser.pictureId" class="adf-userinfo-profile-picture adf-hide-small" id="bpm-user-detail-image"
                             alt="bpm-profile-image" [src]="bpmUserImage"/>
                    <div class="adf-userinfo-title" id="bpm-username">{{bpmUser.fullNameDisplay}}</div>
                 </mat-card-header>

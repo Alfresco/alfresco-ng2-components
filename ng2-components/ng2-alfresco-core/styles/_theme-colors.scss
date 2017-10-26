@@ -1,4 +1,4 @@
-@mixin mat-colors-theme($theme) {
+@mixin adf-colors-theme($theme) {
 
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
@@ -18,7 +18,7 @@
         color: mat-color($warn) !important;
     }
 
-    .adf-background-color {
+    .adf-dialog-background-color {
         background: mat-color($background, dialog) !important;
     }
 

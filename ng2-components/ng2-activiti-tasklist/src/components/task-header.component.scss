@@ -1,4 +1,4 @@
-@mixin mat-header-theme($theme) {
+@mixin adf-header-theme($theme) {
     $primary: map-get($theme, primary);
 
     .adf {

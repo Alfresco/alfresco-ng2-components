@@ -107,3 +107,18 @@ $dark-theme:   mat-dark-theme($primary, $accent, $warn);
 }
 ```
 Any component with the  `add-dark-theme` class will use the dark theme, while other components will fall back to the default.
+
+
+## Default reusable class
+
+.adf-hide-small                 // Display none vieweport <960px
+.adf-hide-xsmall                // Display none vieweport <600px
+
+.adf-primary-color               // Primary color
+.adf-accent-color                // Accent color
+.adf-warn-color                  // Warn color
+.adf-primary-contrast-text-color // Default contrast color for primary color
+.adf-accent-contrast-text-color  // Default contrast color for accent color
+.adf-background-color            // Dialog background color
+.adf-primary-background-color    // Primary background color
+.adf-accent-background-color     // Default background color for accent

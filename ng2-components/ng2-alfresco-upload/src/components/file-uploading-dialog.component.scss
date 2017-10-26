@@ -1,5 +1,5 @@
 
-@mixin mat-upload-dialog-theme($theme) {
+@mixin adf-upload-dialog-theme($theme) {
     $foreground: map-get($theme, foreground);
     $background: map-get($theme, background);
 

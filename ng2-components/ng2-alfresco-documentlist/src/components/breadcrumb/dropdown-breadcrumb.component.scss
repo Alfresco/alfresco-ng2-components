@@ -1,5 +1,5 @@
 
-@mixin mat-breadcrumb-dropdown-theme($theme) {
+@mixin adf-breadcrumb-dropdown-theme($theme) {
     $primary: map-get($theme, primary);
     $dropdownHorizontalOffset: 30px;
 

@@ -1,4 +1,4 @@
-@mixin mat-people-theme($theme) {
+@mixin adf-people-theme($theme) {
     $primary: map-get($theme, primary);
 
     .assignment-header {

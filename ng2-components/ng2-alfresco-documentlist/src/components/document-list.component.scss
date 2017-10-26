@@ -1,4 +1,4 @@
-@mixin mat-document-list-theme($theme) {
+@mixin adf-document-list-theme($theme) {
     $foreground: map-get($theme, foreground);
 
     .document-list_empty_template {

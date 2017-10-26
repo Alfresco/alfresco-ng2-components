@@ -4,8 +4,8 @@
 @import '../src/components/document-list.component';
 
 @mixin alfresco-documentlist-theme($theme) {
-    @include mat-breadcrumb-theme($theme);
-    @include mat-breadcrumb-dropdown-theme($theme);
-    @include mat-content-node-selector-theme($theme) ;
-    @include mat-document-list-theme($theme) ;
+    @include adf-breadcrumb-theme($theme);
+    @include adf-breadcrumb-dropdown-theme($theme);
+    @include adf-content-node-selector-theme($theme) ;
+    @include adf-document-list-theme($theme) ;
 }
