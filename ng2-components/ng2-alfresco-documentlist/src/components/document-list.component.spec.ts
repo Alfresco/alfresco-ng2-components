@@ -892,7 +892,7 @@ describe('DocumentList', () => {
     });
 
     it('should not perform navigation for virtual sources', () => {
-        const sources = ['-trashcan-', '-sharedlinks-', '-sites-', '-favorites-', '-recent-'];
+        const sources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-'];
         const node = new FolderNode('folder');
 
         documentList.currentFolderId = 'node-id';
@@ -925,6 +925,14 @@ describe('DocumentList', () => {
 
         documentList.loadFolderByNodeId('-sites-');
         expect(sitesApi.getSites).toHaveBeenCalled();
+    });
+
+    it('should fetch user membership sites', () => {
+        const peopleApi = apiService.getInstance().core.peopleApi;
+        spyOn(peopleApi, 'getSiteMembership').and.returnValue(Promise.resolve());
+
+        documentList.loadFolderByNodeId('-mysites-');
+        expect(peopleApi.getSiteMembership).toHaveBeenCalled();
     });
 
     it('should fetch favorites', () => {

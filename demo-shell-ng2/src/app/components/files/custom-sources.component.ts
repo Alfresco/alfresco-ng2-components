@@ -35,6 +35,7 @@ export class CustomSourcesComponent {
         { title: 'Recent', value: '-recent-' },
         { title: 'Shared Links', value: '-sharedlinks-' },
         { title: 'Sites', value: '-sites-' },
+        { title: 'My Sites', value: '-mysites-' },
         { title: 'Trashcan', value: '-trashcan-' },
         { title: 'Root', value: '-root-' },
         { title: 'My', value: '-my-' },

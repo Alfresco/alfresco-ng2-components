@@ -157,6 +157,7 @@ The DocumentList component also provides support for the following reserved alia
 - `-trashcan-`,
 - `-sharedlinks-`
 - `-sites-`
+- `-mysites-`
 - `-favorites-`
 - `-recent-`
 
@@ -221,6 +222,20 @@ __Sites__
 ```html
 <adf-document-list
     currentFolderId="-sites-">
+</adf-document-list>
+```
+
+Default layout:
+
+- Icon
+- Title
+- Status
+
+__My Sites__
+
+```html
+<adf-document-list
+    currentFolderId="-mysites-">
 </adf-document-list>
 ```
 
@@ -495,6 +510,7 @@ This column is used to display a clickable location link pointing to the parent 
 You are going to use it with custom navigation or when displaying content from the sources like:
 
 - Sites
+- My Sites
 - Shared Links
 - Recent Files
 - Favorites

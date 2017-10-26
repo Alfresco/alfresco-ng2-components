@@ -19,7 +19,7 @@ import {
     AfterContentInit, Component, ContentChild, ElementRef, EventEmitter, HostListener, Input, NgZone,
     OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild, ViewEncapsulation
 } from '@angular/core';
-import { DeletedNodesPaging, MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, Pagination, PersonEntry } from 'alfresco-js-api';
+import { DeletedNodesPaging, MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, Pagination, PersonEntry, SitePaging } from 'alfresco-js-api';
 import { AlfrescoApiService, AppConfigService, DataColumnListComponent, UserPreferencesService } from 'ng2-alfresco-core';
 import { DataCellEvent, DataColumn, DataRowActionEvent, DataSorting, DataTableComponent, ObjectDataColumn } from 'ng2-alfresco-datatable';
 import { Observable, Subject } from 'rxjs/Rx';
@@ -420,6 +420,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             this.loadSharedLinks();
         } else if (nodeId === '-sites-') {
             this.loadSites();
+        } else if (nodeId === '-mysites-') {
+            this.loadMemberSites();
         } else if (nodeId === '-favorites-') {
             this.loadFavorites();
         } else if (nodeId === '-recent-') {
@@ -509,6 +511,28 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         };
 
         this.apiService.sitesApi.getSites(options).then((page: NodePaging) => {
+            this.onPageLoaded(page);
+        });
+    }
+
+    private loadMemberSites(): void {
+        const options = {
+            include: [ 'properties' ],
+            maxItems: this.pageSize,
+            skipCount: this.skipCount
+        };
+
+        this.apiService.peopleApi.getSiteMembership('-me-', options).then((result: SitePaging) => {
+            let page: NodePaging = {
+                list: {
+                    entries: result.list.entries
+                        .map(({ entry: { site }}: any) => ({
+                            entry: site
+                        })),
+                    pagination: result.list.pagination
+                }
+            };
+
             this.onPageLoaded(page);
         });
     }
@@ -773,7 +797,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     isCustomSource(folderId: string): boolean {
-        const sources = ['-trashcan-', '-sharedlinks-', '-sites-', '-favorites-', '-recent-'];
+        const sources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-'];
 
         if (sources.indexOf(folderId) > -1) {
             return true;
