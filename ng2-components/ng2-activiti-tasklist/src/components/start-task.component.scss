@@ -1,4 +1,4 @@
-@mixin mat-start-task-theme($theme) {
+@mixin adf-start-task-theme($theme) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
     $warn: map-get($theme, warn);
@@ -45,18 +45,18 @@
 
     adf-start-task {
         .adf {
-    
+
             &-start-task-input-container .mat-input-wrapper {
                 padding-top: 8px;
             }
-    
+
             &-error-text-container {
                 position: absolute;
                 width: 81%;
                 height: 20px;
                 margin-top: 30px;
             }
-    
+
             &-error-text {
                 padding: 1px;
                 height: 16px;
@@ -65,35 +65,35 @@
                 float: left;
                 color: mat-color($warn);
             }
-    
+
             &-error-icon {
                 float: right;
                 font-size: 17px;
                 color: mat-color($warn);
             }
-    
+
             &-label {
                 color: rgb(186, 186, 186);;
             }
-    
+
             &-invalid {
-    
+
                 .mat-input-underline {
                     background-color: #f44336 !important;
                 }
-    
+
                 .adf-file {
                     border-color: mat-color($warn);
                 }
-    
+
                 .mat-input-prefix {
                     color: mat-color($warn);
                 }
-    
+
                 .adf-input {
                     border-color: mat-color($warn);
                 }
-    
+
                 .adf-label {
                     color: mat-color($warn);
                     &:after {
@@ -101,6 +101,6 @@
                     }
                 }
             }
-        }            
+        }
     }
 }

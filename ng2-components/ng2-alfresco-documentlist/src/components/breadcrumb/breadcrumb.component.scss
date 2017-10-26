@@ -1,6 +1,6 @@
 $breadcrumb-chevron-spacer: 2px;
 
-@mixin mat-breadcrumb-theme($theme) {
+@mixin adf-breadcrumb-theme($theme) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
     $warn: map-get($theme, warn);

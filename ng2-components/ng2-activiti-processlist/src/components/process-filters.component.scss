@@ -1,4 +1,4 @@
-@mixin mat-filters-process-theme($theme) {
+@mixin adf-filters-process-theme($theme) {
     $primary: map-get($theme, primary);
 
     .adf {

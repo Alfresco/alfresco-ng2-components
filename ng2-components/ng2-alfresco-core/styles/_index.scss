@@ -1,4 +1,5 @@
 @import './theme-colors';
+@import './default-class';
 @import '../src/components/collapsable/accordion-group.component';
 @import '../src/components/view/card-view-textitem.component';
 @import '../src/components/view/card-view-dateitem.component';
@@ -8,12 +9,13 @@
 @import '../src/components/info-drawer/info-drawer-layout.component';
 
 @mixin alfresco-core-theme($theme) {
-    @include mat-accordion-theme($theme);
-    @include mat-card-view-textitem-theme($theme);
-    @include mat-card-view-dateitem-theme($theme);
-    @include mat-card-view-theme($theme);
-    @include mat-adf-toolbar-theme($theme);
-    @include mat-info-drawer-theme($theme);
-    @include mat-pagination-theme($theme);
-    @include mat-colors-theme($theme);
+    @include adf-accordion-theme($theme);
+    @include adf-card-view-textitem-theme($theme);
+    @include adf-card-view-dateitem-theme($theme);
+    @include adf-card-view-theme($theme);
+    @include adf-adf-toolbar-theme($theme);
+    @include adf-info-drawer-theme($theme);
+    @include adf-pagination-theme($theme);
+    @include adf-colors-theme($theme);
+    @include adf-default-class($theme);
 }

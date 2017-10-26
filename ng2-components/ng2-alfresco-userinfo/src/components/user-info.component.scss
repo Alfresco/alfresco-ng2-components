@@ -1,4 +1,4 @@
-@mixin mat-userinfo-theme($theme) {
+@mixin adf-userinfo-theme($theme) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
     $warn: map-get($theme, warn);
@@ -145,6 +145,7 @@
         }
 
         &-userinfo-profile-initials {
+            text-transform: uppercase;
             background-size: cover;
             background: mat-color($primary, 300);
             border-radius: 50%;
@@ -180,6 +181,7 @@
     @media only screen and (min-device-width: 480px) {
         .mat-menu-panel.adf-userinfo-menu {
             max-height: 450px;
+            min-width: 4500px;
             min-width: 450px;
             overflow: auto;
             padding: 0;

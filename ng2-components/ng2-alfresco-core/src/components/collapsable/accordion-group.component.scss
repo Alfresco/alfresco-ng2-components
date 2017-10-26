@@ -1,4 +1,4 @@
-@mixin mat-accordion-theme($theme) {
+@mixin adf-accordion-theme($theme) {
     $primary: map-get($theme, primary);
 
     .adf-panel-heading {
@@ -23,9 +23,9 @@
     }
 
     .adf-panel-collapse {
-        display: inline-block;            
+        display: inline-block;
     }
-    
+
     .adf-panel-heading-text {
         float: left;
         padding-left: 20px;

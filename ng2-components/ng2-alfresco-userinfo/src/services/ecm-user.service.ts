@@ -39,17 +39,13 @@ export class EcmUserService {
      * @param userName - the user name
      */
     getUserInfo(userName: string): Observable<EcmUserModel> {
-        return Observable.fromPromise(this.callApiGetPersonInfo(userName))
+        return Observable.fromPromise(this.apiService.getInstance().core.peopleApi.getPerson(userName))
             .map(data => <EcmUserModel> data['entry'])
             .catch(err => this.handleError(err));
     }
 
     getCurrentUserInfo() {
         return this.getUserInfo('-me-');
-    }
-
-    private callApiGetPersonInfo(userName: string, opts?: any) {
-        return this.apiService.getInstance().core.peopleApi.getPerson(userName, opts);
     }
 
     getUserProfileImage(avatarId: string) {

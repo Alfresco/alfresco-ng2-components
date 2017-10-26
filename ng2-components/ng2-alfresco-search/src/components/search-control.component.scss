@@ -1,4 +1,4 @@
-@mixin mat-search-control-theme($theme) {
+@mixin adf-search-control-theme($theme) {
     $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);
 

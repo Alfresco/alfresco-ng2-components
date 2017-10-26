@@ -52,7 +52,9 @@ app/**/*.d.ts
 
 !app/js/Polyline.js
 .idea
-src/versions.json
+**/versions.json
+
+
 dist/
 coverage/
 

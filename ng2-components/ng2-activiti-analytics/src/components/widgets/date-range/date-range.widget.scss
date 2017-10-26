@@ -1,4 +1,4 @@
-@mixin mat-analytics-date-range-widget-theme($theme) {
+@mixin adf-analytics-date-range-widget-theme($theme) {
     $warn: map-get($theme, warn);
 
     .adf-date-range-analytics-text-danger {

@@ -1,4 +1,4 @@
-@mixin mat-analytics-report-list-theme($theme) {
+@mixin adf-analytics-report-list-theme($theme) {
     $primary: map-get($theme, primary);
 
     .adf-analytics-report-list {

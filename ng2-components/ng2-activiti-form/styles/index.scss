@@ -3,8 +3,8 @@
 @import '../src/components/widgets/people/people.widget';
 
 @mixin alfresco-activity-form-theme($theme) {
-    @include mat-form-theme($theme);
-    @include mat-container-widget-theme($theme);
-    @include mat-people-widget-theme($theme);
+    @include adf-form-theme($theme);
+    @include adf-container-widget-theme($theme);
+    @include adf-people-widget-theme($theme);
 
 }

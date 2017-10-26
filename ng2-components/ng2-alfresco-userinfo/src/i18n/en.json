@@ -7,6 +7,10 @@
             "BPM": {
                 "TENANT": "Tenant"
             }
+        },
+        "TAB" : {
+            "CS": "Content Services",
+            "PS": "Process Services"
         }
     }
 }

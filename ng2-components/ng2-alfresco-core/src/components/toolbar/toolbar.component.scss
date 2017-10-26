@@ -1,5 +1,5 @@
 
-@mixin mat-adf-toolbar-theme($theme) {
+@mixin adf-adf-toolbar-theme($theme) {
     $foreground: map-get($theme, foreground);
     $adf-toolbar-height: 48px;
     $adf-toolbar-font-size: 14px;

@@ -59,9 +59,6 @@ export class UserInfoComponent implements OnInit {
     constructor(private ecmUserService: EcmUserService,
                 private bpmUserService: BpmUserService,
                 private authService: AlfrescoAuthenticationService) {
-        authService.onLogin.subscribe((response) => {
-            this.getUserInfo();
-        });
     }
 
     ngOnInit() {
@@ -69,15 +66,15 @@ export class UserInfoComponent implements OnInit {
     }
 
     getUserInfo() {
-        this.getEcmUserInfo();
-        this.getBpmUserInfo();
+        this.loadEcmUserInfo();
+        this.loadBpmUserInfo();
     }
 
     isLoggedIn() {
         return this.authService.isLoggedIn();
     }
 
-    getEcmUserInfo(): void {
+    loadEcmUserInfo(): void {
         if (this.authService.isEcmLoggedIn()) {
             this.ecmUserService.getCurrentUserInfo()
                 .subscribe((res) => {
@@ -91,7 +88,7 @@ export class UserInfoComponent implements OnInit {
         }
     }
 
-    getBpmUserInfo(): void {
+    loadBpmUserInfo(): void {
         if (this.authService.isBpmLoggedIn()) {
             this.bpmUserService.getCurrentUserInfo()
                 .subscribe((res) => {

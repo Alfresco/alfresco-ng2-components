@@ -6,10 +6,10 @@
 @import '../src/components/task-header.component';
 
 @mixin alfresco-activity-tasklist-theme($theme) {
-    @include mat-comment-list-theme($theme);
-    @include mat-start-task-theme($theme);
-    @include mat-people-search-theme($theme);
-    @include mat-people-theme($theme);
-    @include mat-filters-task-theme($theme);
-    @include mat-header-theme($theme);
+    @include adf-comment-list-theme($theme);
+    @include adf-start-task-theme($theme);
+    @include adf-people-search-theme($theme);
+    @include adf-people-theme($theme);
+    @include adf-filters-task-theme($theme);
+    @include adf-header-theme($theme);
 }

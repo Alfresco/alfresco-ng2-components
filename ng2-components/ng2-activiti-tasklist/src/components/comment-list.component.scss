@@ -1,4 +1,4 @@
-@mixin mat-comment-list-theme($theme) {
+@mixin adf-comment-list-theme($theme) {
     $primary: map-get($theme, primary);
 
     .adf {

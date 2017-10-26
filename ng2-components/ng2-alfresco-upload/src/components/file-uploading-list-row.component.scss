@@ -1,5 +1,5 @@
 
-@mixin mat-file-uploading-row-theme($theme) {
+@mixin adf-file-uploading-row-theme($theme) {
     $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);
     $primary: map-get($theme, primary);
