@@ -6,7 +6,13 @@
     $foreground: map-get($theme, foreground);
     $text-color-primary: mat-color($foreground, text);
 
+    .ie11FlexCenterAlignFix {
+        height: 100%;
+    }
+
     .adf-login-content {
+        @extend .ie11FlexCenterAlignFix;
+        min-height: 100%;
         display: -webkit-flex;
         display: -ms-flexbox;
         display: flex;
@@ -24,7 +30,6 @@
         flex-flow: row wrap;
         background-size: cover;
         background-position: center;
-        min-height: 100%;
         padding: 0;
         -webkit-box-orient: vertical;
         -moz-box-orient: vertical;
