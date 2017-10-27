@@ -68,7 +68,7 @@ export class ViewerComponent implements OnDestroy, OnChanges {
     showToolbar = true;
 
     @Input()
-    displayName = 'Unknown';
+    displayName: string;
 
     @Input()
     allowGoBack = true;
@@ -144,8 +144,8 @@ export class ViewerComponent implements OnDestroy, OnChanges {
 
             return new Promise((resolve, reject) => {
                 if (this.blobFile) {
+                    this.displayName = this.getDisplayName('Unknown');
                     this.isLoading = true;
-
                     this.mimeType = this.blobFile.type;
                     this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
 
@@ -159,7 +159,7 @@ export class ViewerComponent implements OnDestroy, OnChanges {
                 } else if (this.urlFile) {
                     this.isLoading = true;
                     let filenameFromUrl = this.getFilenameFromUrl(this.urlFile);
-                    this.displayName = filenameFromUrl || 'Unknown';
+                    this.displayName = this.getDisplayName(filenameFromUrl);
                     this.extension = this.getFileExtension(filenameFromUrl);
                     this.urlFileContent = this.urlFile;
 
@@ -180,7 +180,7 @@ export class ViewerComponent implements OnDestroy, OnChanges {
                     this.apiService.getInstance().nodes.getNodeInfo(this.fileNodeId).then(
                         (data: MinimalNodeEntryEntity) => {
                             this.mimeType = data.content.mimeType;
-                            this.displayName = data.name;
+                            this.displayName = this.getDisplayName( data.name);
                             this.urlFileContent = this.apiService.getInstance().content.getContentUrl(data.id);
                             this.extension = this.getFileExtension(data.name);
 
@@ -211,6 +211,10 @@ export class ViewerComponent implements OnDestroy, OnChanges {
                 }
             });
         }
+    }
+
+    private getDisplayName(name) {
+        return this.displayName || name;
     }
 
     scrollTop() {

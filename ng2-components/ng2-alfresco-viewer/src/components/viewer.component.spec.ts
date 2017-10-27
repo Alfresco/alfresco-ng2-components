@@ -582,4 +582,73 @@ describe('ViewerComponent', () => {
             component.ngOnChanges(null);
         });
     });
+
+    describe('displayName', () => {
+
+        it('should displayName override the default name if is present and urlFile is set' , (done) => {
+            component.urlFile = 'base/src/assets/fake-test-file.pdf';
+            component.displayName = 'test name';
+
+            component.ngOnChanges(null).then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual('test name');
+                done();
+            });
+        });
+
+        it('should use the urlFile name if displayName is not set and urlFile is set' , (done) => {
+            component.urlFile = 'base/src/assets/fake-test-file.pdf';
+            component.displayName = null;
+
+            component.ngOnChanges(null).then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual('fake-test-file.pdf');
+                done();
+            });
+        });
+
+        it('should displayName override the name if is present and blobFile is set' , (done) => {
+            component.displayName = 'blob file display name';
+            component.blobFile = new Blob(['This is my blob content'], {type : 'text/plain'});
+
+            component.ngOnChanges(null).then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual('blob file display name');
+                done();
+            });
+        });
+
+        it('should show uknownn name if displayName is not set and blobFile is set' , (done) => {
+            component.displayName = null;
+            component.blobFile = new Blob(['This is my blob content'], {type : 'text/plain'});
+
+            component.ngOnChanges(null).then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual('Unknown');
+                done();
+            });
+        });
+
+        it('should displayName override the default name if is present and fileNodeId is set' , (done) => {
+            component.displayName = 'node file name';
+            component.fileNodeId = 'fileNodeId';
+
+            component.ngOnChanges(null).then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual(component.displayName);
+                done();
+            });
+        });
+
+        it('should use the node name if displayName is not set and fileNodeId is set' , (done) => {
+            component.displayName = null;
+            component.fileNodeId = 'fileNodeId';
+
+            component.ngOnChanges(null).then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual(component.fileName);
+                done();
+            });
+        });
+    });
 });
