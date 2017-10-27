@@ -21,7 +21,8 @@ module.exports = {
         alias: {
             "ng2-alfresco-core$": helpers.root('../ng2-alfresco-core/index.ts'),
             "ng2-alfresco-core": helpers.root('../ng2-alfresco-core'),
-            "ng2-alfresco-datatable": helpers.root('../ng2-alfresco-datatable/index.ts')
+            "ng2-alfresco-datatable": helpers.root('../ng2-alfresco-datatable/index.ts'),
+            "ng2-alfresco-upload": helpers.root('../ng2-alfresco-upload/index.ts')
         },
         extensions: ['.ts', '.js'],
         symlinks: false,
