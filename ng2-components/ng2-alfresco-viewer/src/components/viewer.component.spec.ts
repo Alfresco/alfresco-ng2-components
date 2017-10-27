@@ -30,9 +30,9 @@ import { MediaPlayerComponent } from './mediaPlayer.component';
 import { PdfViewerComponent } from './pdfViewer.component';
 import { TxtViewerComponent } from './txtViewer.component';
 import { UnknownFormatComponent } from './unknown-format/unknown-format.component';
-import { ViewerInfoDrawerComponent } from './viewer-info-drawer.component';
 import { ViewerMoreActionsComponent } from './viewer-more-actions.component';
 import { ViewerOpenWithComponent } from './viewer-open-with.component';
+import { ViewerSidebarComponent } from './viewer-sidebar.component';
 import { ViewerToolbarComponent } from './viewer-toolbar.component';
 import { ViewerComponent } from './viewer.component';
 
@@ -51,16 +51,16 @@ declare let jasmine: any;
 class ViewerWithCustomToolbarComponent {}
 
 @Component({
-    selector: 'adf-viewer-container-info-drawer',
+    selector: 'adf-viewer-container-sidebar',
     template: `
         <adf-viewer>
-            <adf-viewer-info-drawer>
-                <div class="custom-info-drawer-element"></div>
-            </adf-viewer-info-drawer>
+            <adf-viewer-sidebar>
+                <div class="custom-sidebar"></div>
+            </adf-viewer-sidebar>
         </adf-viewer>
     `
 })
-class ViewerWithCustomInfoDrawerComponent {}
+class ViewerWithCustomSidebarComponent {}
 
 @Component({
     selector: 'adf-viewer-container-open-with',
@@ -128,12 +128,12 @@ describe('ViewerComponent', () => {
                 MediaPlayerComponent,
                 ImgViewerComponent,
                 UnknownFormatComponent,
-                ViewerInfoDrawerComponent,
+                ViewerSidebarComponent,
                 ViewerToolbarComponent,
                 ViewerOpenWithComponent,
                 ViewerMoreActionsComponent,
                 ViewerWithCustomToolbarComponent,
-                ViewerWithCustomInfoDrawerComponent,
+                ViewerWithCustomSidebarComponent,
                 ViewerWithCustomOpenWithComponent,
                 ViewerWithCustomMoreActionsComponent
             ],
@@ -173,7 +173,7 @@ describe('ViewerComponent', () => {
     });
 
     it('should use custom info drawer', () => {
-        let customFixture = TestBed.createComponent(ViewerWithCustomInfoDrawerComponent);
+        let customFixture = TestBed.createComponent(ViewerWithCustomSidebarComponent);
         let customElement: HTMLElement = customFixture.nativeElement;
 
         customFixture.detectChanges();

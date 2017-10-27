@@ -18,11 +18,11 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
-    selector: 'adf-viewer-info-drawer',
+    selector: 'adf-viewer-sidebar',
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    host: { class: 'adf-viewer-info-drawer' },
+    host: { class: 'adf-viewer-sidebar' },
     template: `<ng-content></ng-content>`
 })
-export class ViewerInfoDrawerComponent {
+export class ViewerSidebarComponent {
 }

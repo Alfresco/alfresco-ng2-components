@@ -68,12 +68,12 @@
                     </mat-menu>
                 </ng-container>
 
-                <ng-container *ngIf="allowInfoDrawer">
+                <ng-container *ngIf="allowSidebar">
                     <adf-toolbar-divider></adf-toolbar-divider>
 
                     <button mat-icon-button matTooltip="{{ 'ADF_VIEWER.ACTIONS.INFO' | translate }}"
-                        [color]="showInfoDrawer ? 'accent' : 'default'"
-                        (click)="showInfoDrawer = !showInfoDrawer">
+                        [color]="showSidebar ? 'accent' : 'default'"
+                        (click)="showSidebar = !showSidebar">
                         <mat-icon>info_outline</mat-icon>
                     </button>
                 </ng-container>
@@ -127,10 +127,10 @@
                 </div>
             </div>
 
-            <ng-container *ngIf="showInfoDrawer">
-                <div class="adf-viewer__info-drawer">
-                    <ng-content select="adf-viewer-info-drawer"></ng-content>
-                    <ng-container *ngIf="!infoDrawer">
+            <ng-container *ngIf="showSidebar">
+                <div class="adf-viewer__sidebar">
+                    <ng-content select="adf-viewer-sidebar"></ng-content>
+                    <ng-container *ngIf="!sidebar">
                         <!-- todo: default info drawer -->
                     </ng-container>
                 </div>
