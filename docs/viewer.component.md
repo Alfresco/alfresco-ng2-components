@@ -54,8 +54,8 @@ Using with file url:
 | allowDownload | boolean | true | Toggle download feature |
 | allowPrint | boolean | false | Toggle printing feature |
 | allowShare | boolean | false | Toggle sharing feature |
-| allowInfoDrawer | boolean |false | Toogle info drawer feature |
-| showInfoDrawer | boolean | false | Toggles info drawer visibility. Requires `allowInfoDrawer` to be set to `true`. |
+| allowSidebar | boolean |false | Toogle sidebar feature |
+| showSidebar | boolean | false | Toggles sidebar visibility. Requires `allowSidebar` to be set to `true`. |
 
 ## Events
 
@@ -131,20 +131,20 @@ You can replace standard viewer toolbar with your custom implementation.
 
 Everything you put inside the "adf-viewer-toolbar" tags is going to be rendered instead of the toolbar.
 
-### Custom info drawer
+### Custom sidebar
 
-The Viewer component also suports custom Info Drawer components and layouts.
-The `allowInfoDrawer` property should be set to `true` to enable Info Drawer feature.
+The Viewer component also suports custom sidebar components and layouts.
+The `allowSidebar` property should be set to `true` to enable this feature.
 
 ```html
-<adf-viewer [allowInfoDrawer]="true">
-    <adf-viewer-info-drawer>
+<adf-viewer [allowSidebar]="true">
+    <adf-viewer-sidebar>
         <h1>My info</h1>
-    </adf-viewer-info-drawer>
+    </adf-viewer-sidebar>
 </adf-viewer>
 ```
 
-Everything you put inside the "adf-viewer-info-drawer" tags is going to be rendered instead of the default info drawer.
+Everything you put inside the "adf-viewer-sidebar" tags is going to be rendered instead of the default sidebar.
 
 ### Custom "Open With" menu
 

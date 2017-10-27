@@ -23,9 +23,9 @@ import {
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AlfrescoApiService, BaseEvent, LogService, RenditionsService } from 'ng2-alfresco-core';
 
-import { ViewerInfoDrawerComponent } from './viewer-info-drawer.component';
 import { ViewerMoreActionsComponent } from './viewer-more-actions.component';
 import { ViewerOpenWithComponent } from './viewer-open-with.component';
+import { ViewerSidebarComponent } from './viewer-sidebar.component';
 import { ViewerToolbarComponent  } from './viewer-toolbar.component';
 
 @Component({
@@ -40,8 +40,8 @@ export class ViewerComponent implements OnDestroy, OnChanges {
     @ContentChild(ViewerToolbarComponent)
     toolbar: ViewerToolbarComponent;
 
-    @ContentChild(ViewerInfoDrawerComponent)
-    infoDrawer: ViewerInfoDrawerComponent;
+    @ContentChild(ViewerSidebarComponent)
+    sidebar: ViewerSidebarComponent;
 
     @ContentChild(ViewerOpenWithComponent)
     mnuOpenWith: ViewerOpenWithComponent;
@@ -83,10 +83,10 @@ export class ViewerComponent implements OnDestroy, OnChanges {
     allowShare = false;
 
     @Input()
-    allowInfoDrawer = false;
+    allowSidebar = false;
 
     @Input()
-    showInfoDrawer = false;
+    showSidebar = false;
 
     @Output()
     goBack = new EventEmitter<BaseEvent<any>>();
