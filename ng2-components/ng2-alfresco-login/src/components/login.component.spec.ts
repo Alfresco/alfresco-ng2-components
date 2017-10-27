@@ -22,7 +22,7 @@ import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AlfrescoAuthenticationService, CoreModule } from 'ng2-alfresco-core';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, UserPreferencesService } from 'ng2-alfresco-core';
 
 import { MaterialModule } from '../material.module';
 import { LoginErrorEvent } from '../models/login-error.event';
@@ -38,6 +38,7 @@ describe('LoginComponent', () => {
     let element: any;
     let authService: AlfrescoAuthenticationService;
     let router: Router;
+    let userPreferences: UserPreferencesService;
 
     let usernameInput, passwordInput;
 
@@ -87,6 +88,7 @@ describe('LoginComponent', () => {
 
         authService = TestBed.get(AlfrescoAuthenticationService);
         router = TestBed.get(Router);
+        userPreferences = TestBed.get(UserPreferencesService);
 
         fixture.detectChanges();
     });
@@ -110,6 +112,17 @@ describe('LoginComponent', () => {
         spyOn(router, 'navigate');
         loginWithCredentials('fake-username', 'fake-password');
         expect(router.navigate).toHaveBeenCalledWith([redirect]);
+    });
+
+    it('should update user preferences upon login', (done) => {
+        spyOn(userPreferences, 'setStoragePrefix').and.callThrough();
+
+        component.success.subscribe(() => {
+            expect(userPreferences.setStoragePrefix).toHaveBeenCalledWith('fake-username');
+            done();
+        });
+
+        loginWithCredentials('fake-username', 'fake-password');
     });
 
     describe('Login button', () => {
