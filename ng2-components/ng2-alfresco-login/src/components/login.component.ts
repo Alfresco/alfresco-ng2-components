@@ -18,7 +18,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoTranslationService, LogService, UserPreferencesService } from 'ng2-alfresco-core';
 
 import { LoginErrorEvent } from '../models/login-error.event';
 import { LoginSubmitEvent } from '../models/login-submit.event';
@@ -112,7 +112,8 @@ export class LoginComponent implements OnInit {
                 private translateService: AlfrescoTranslationService,
                 private logService: LogService,
                 private elementRef: ElementRef,
-                private router: Router) {
+                private router: Router,
+                private userPreferences: UserPreferencesService) {
         this.initFormError();
         this.initFormFieldsMessages();
     }
@@ -183,6 +184,7 @@ export class LoginComponent implements OnInit {
             .subscribe(
                 (token: any) => {
                     this.actualLoginStep = LoginSteps.Welcome;
+                    this.userPreferences.setStoragePrefix(values.username);
                     this.success.emit(new LoginSuccessEvent(token, values.username, values.password));
                     if (this.successRoute) {
                         this.router.navigate([this.successRoute]);
