@@ -8,6 +8,7 @@ eval DIFFERENT_JS_API=false
 
 eval projects=( "ng2-alfresco-core"
     "ng2-alfresco-datatable"
+    "ng2-alfresco-upload"
     "ng2-activiti-diagrams"
     "ng2-activiti-analytics"
     "ng2-activiti-form"
@@ -18,7 +19,6 @@ eval projects=( "ng2-alfresco-core"
     "ng2-alfresco-search"
     "ng2-alfresco-social"
     "ng2-alfresco-tag"
-    "ng2-alfresco-upload"
     "ng2-alfresco-viewer"
     "ng2-alfresco-webscript"
     "ng2-alfresco-userinfo" )
