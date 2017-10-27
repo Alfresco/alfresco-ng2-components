@@ -41,7 +41,8 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
 })
 export class InputMaskDirective implements OnChanges, ControlValueAccessor {
 
-    @Input('textMask') inputMask: {
+    @Input()
+    textMask: {
         mask: '',
         isReversed: false
     };
@@ -69,17 +70,17 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
 
     @HostListener('input', ['$event'])
     @HostListener('keyup', ['$event']) onTextInput(event: KeyboardEvent) {
-        if (this.inputMask && this.inputMask.mask) {
+        if (this.textMask && this.textMask.mask) {
             this.maskValue(this.el.nativeElement.value, this.el.nativeElement.selectionStart,
-                this.inputMask.mask, this.inputMask.isReversed, event.keyCode);
+                this.textMask.mask, this.textMask.isReversed, event.keyCode);
         } else {
             this._onChange(this.el.nativeElement.value);
         }
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['inputMask'] && changes['inputMask'].currentValue['mask']) {
-            this.inputMask = changes['inputMask'].currentValue;
+        if (changes['textMask'] && changes['textMask'].currentValue['mask']) {
+            this.textMask = changes['textMask'].currentValue;
         }
     }
 

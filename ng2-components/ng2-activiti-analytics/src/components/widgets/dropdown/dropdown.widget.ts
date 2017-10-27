@@ -33,10 +33,10 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
     @Input()
     field: any;
 
-    @Input('group')
+    @Input()
     public formGroup: FormGroup;
 
-    @Input('controllerName')
+    @Input()
     public controllerName: string;
 
     @Output()

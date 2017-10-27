@@ -50,8 +50,8 @@ export class InfinitePaginationComponent implements OnInit {
     @Input()
     pageSize: number = InfinitePaginationComponent.DEFAULT_PAGE_SIZE;
 
-    @Input('loading')
-    isLoading: boolean = false;
+    @Input()
+    loading: boolean = false;
 
     @Output()
     loadMore: EventEmitter<Pagination> = new EventEmitter<Pagination>();

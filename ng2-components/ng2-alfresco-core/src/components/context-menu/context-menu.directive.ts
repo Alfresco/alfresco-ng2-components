@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/* tslint:disable:no-input-rename */
+
 import { Directive, HostListener, Input } from '@angular/core';
 import { ContextMenuService } from './context-menu.service';
 
@@ -22,6 +24,7 @@ import { ContextMenuService } from './context-menu.service';
     selector: '[adf-context-menu], [context-menu]'
 })
 export class ContextMenuDirective {
+
     @Input('context-menu')
     links: any[];
 

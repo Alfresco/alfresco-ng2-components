@@ -31,7 +31,7 @@ const PDF_FORMAT: string = 'pdf';
 })
 export class ProcessAuditDirective implements OnChanges {
 
-    @Input('process-id')
+    @Input()
     processId: string;
 
     @Input()

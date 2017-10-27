@@ -21,7 +21,7 @@ Provides a way to fetch the Task Audit information in the pdf or json format.
 ```html
 <button
     adf-task-audit
-    [task-id]="taskId"
+    [taskId]="taskId"
     [download]="download"
     md-icon-button (clicked)="onAuditClick($event)" (error)="onAuditError($event)" >
     <md-icon>assignment_ind</md-icon>

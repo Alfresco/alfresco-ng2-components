@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+ /* tslint:disable:component-selector no-input-rename  */
 
 import { Component, ContentChild, Input, OnInit, TemplateRef } from '@angular/core';
 
