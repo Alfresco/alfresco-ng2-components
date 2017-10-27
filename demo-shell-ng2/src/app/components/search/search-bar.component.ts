@@ -48,9 +48,10 @@ export class SearchBarComponent {
      *
      * @param event Parameters relating to the search
      */
-    onSearchSubmit(event) {
+    onSearchSubmit(event: KeyboardEvent) {
+        let value = (event.target as HTMLInputElement).value;
         this.router.navigate(['/search', {
-            q: event.value
+            q: value
         }]);
     }
 

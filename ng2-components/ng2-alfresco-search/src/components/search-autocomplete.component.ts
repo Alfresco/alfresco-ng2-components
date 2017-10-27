@@ -1,61 +1,44 @@
-/*!
- * @license
- * Copyright 2016 Alfresco Software, Ltd.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-import { animate, AnimationEvent, state, style, transition, trigger } from '@angular/animations';
-import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MinimalNodeEntity } from 'alfresco-js-api';
+import {
+    AfterContentInit,
+    Component,
+    OnChanges,
+    ElementRef,
+    TemplateRef,
+    Input,
+    ViewChild,
+    ContentChild,
+    ViewEncapsulation,
+    ChangeDetectorRef,
+    ChangeDetectionStrategy
+} from '@angular/core';
 import { SearchOptions, SearchService } from 'ng2-alfresco-core';
-import { ThumbnailService } from 'ng2-alfresco-core';
+import { Subject } from 'rxjs/Subject';
+
+let _uniqueAutocompleteIdCounter = 0;
 
 @Component({
+    moduleId: module.id,
     selector: 'adf-search-autocomplete',
     templateUrl: './search-autocomplete.component.html',
     styleUrls: ['./search-autocomplete.component.scss'],
-    animations: [
-        trigger('transformAutocomplete', [
-            state('void', style({
-                opacity: 0,
-                transform: 'scale(0.01, 0.01)'
-            })),
-            state('enter-start', style({
-                opacity: 1,
-                transform: 'scale(1, 0.5)'
-            })),
-            state('enter', style({
-                transform: 'scale(1, 1)'
-            })),
-            transition('void => enter-start', animate('100ms linear')),
-            transition('enter-start => enter', animate('300ms cubic-bezier(0.25, 0.8, 0.25, 1)')),
-            transition('* => void', animate('150ms 50ms linear', style({opacity: 0})))
-        ])
-    ],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    preserveWhitespaces: false,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    exportAs: 'adfSearchAutocomplete',
+    host: {
+        'class': 'adf-search-autocomplete'
+    }
 })
-export class SearchAutocompleteComponent implements OnChanges {
+export class SearchAutocompleteComponent implements AfterContentInit, OnChanges {
+
+    @ViewChild('panel')
+    panel: ElementRef;
+
+    @ContentChild(TemplateRef)
+    template: TemplateRef<any>;
 
     @Input()
-    searchTerm: string = '';
-
-    results: any = null;
-
-    errorMessage: string = null;
-
-    @Input()
-    ngClass: any;
+    displayWith: ((value: any) => string) | null = null;
 
     @Input()
     maxResults: number = 5;
@@ -64,49 +47,66 @@ export class SearchAutocompleteComponent implements OnChanges {
     resultSort: string = null;
 
     @Input()
-    rootNodeId: string = '-root';
+    rootNodeId: string = '-root-';
 
     @Input()
     resultType: string = null;
 
     @Input()
-    highlight: boolean = false;
+    searchTerm: string = '';
 
-    @Output()
-    fileSelect: EventEmitter<any> = new EventEmitter();
+    @Input('class')
+    set classList(classList: string) {
+        if (classList && classList.length) {
+            classList.split(' ').forEach(className => this._classList[className.trim()] = true);
+            this._elementRef.nativeElement.className = '';
+        }
+    }
 
-    @Output()
-    searchFocus: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
+    showPanel: boolean = false;
+    results: any[] = [];
 
-    @Output()
-    cancel = new EventEmitter();
+    get isOpen(): boolean {
+      return this._isOpen && this.showPanel;
+    }
 
-    @Output()
-    resultsLoad = new EventEmitter();
+    set isOpen(value: boolean) {
+        this._isOpen = value;
+    }
 
-    @Output()
-    scrollBack = new EventEmitter();
+    _isOpen: boolean = false;
 
-    @ViewChild('resultsTableBody', {}) resultsTableBody: ElementRef;
+    keyPressedStream: Subject<string> = new Subject();
 
-    panelAnimationState: 'void' | 'enter-start' | 'enter' = 'void';
+    _classList: { [key: string]: boolean } = {};
 
-    constructor(private searchService: SearchService,
-                private thumbnailService: ThumbnailService) {
+    id: string = `search-autocomplete-${_uniqueAutocompleteIdCounter++}`;
+
+    constructor(
+        private searchService: SearchService,
+        private changeDetectorRef: ChangeDetectorRef,
+        private _elementRef: ElementRef) {
+            this.keyPressedStream.subscribe((searchedWord: string) => {
+                this.displaySearchResults(searchedWord);
+            });
+        }
+
+    ngAfterContentInit() {
+        this.setVisibility();
     }
 
     ngOnChanges(changes) {
         if (changes.searchTerm) {
-            this.results = null;
-            this.errorMessage = null;
+            this.results = [];
             this.displaySearchResults(changes.searchTerm.currentValue);
         }
     }
 
-    /**
-     * Loads and displays search results
-     * @param searchTerm Search query entered by user
-     */
+    resetResults() {
+        this.results = [];
+        this.setVisibility();
+    }
+
     private displaySearchResults(searchTerm) {
         let searchOpts: SearchOptions = {
             include: ['path'],
@@ -122,108 +122,38 @@ export class SearchAutocompleteComponent implements OnChanges {
                 .subscribe(
                     results => {
                         this.results = results.list.entries.slice(0, this.maxResults);
-
-                        if (results && results.list) {
-                            this.startAnimation();
-                        }
-
-                        this.errorMessage = null;
-                        this.resultsLoad.emit(this.results);
+                        this.setVisibility();
                     },
                     error => {
                         this.results = null;
-                        this.errorMessage = <any> error;
-                        this.resultsLoad.error(error);
                     }
                 );
         }
     }
 
-    /**
-     * Gets thumbnail URL for the given document node.
-     * @param node Node to get URL for.
-     * @returns {string} URL address.
-     */
-    getMimeTypeIcon(node: MinimalNodeEntity): string {
-        let mimeType;
-
-        if (node.entry.content && node.entry.content.mimeType) {
-            mimeType = node.entry.content.mimeType;
-        }
-        if (node.entry.isFolder) {
-            mimeType = 'folder';
-        }
-
-        return this.thumbnailService.getMimeTypeIcon(mimeType);
-    }
-
-    focusResult(): void {
-        let firstResult: any = this.resultsTableBody.nativeElement.querySelector('tr');
-        firstResult.focus();
-    }
-
-    private getNextElementSibling(node: Element): Element {
-        return node.nextElementSibling;
-    }
-
-    private getPreviousElementSibling(node: Element): Element {
-        return node.previousElementSibling;
-    }
-
-    onItemClick(node: MinimalNodeEntity): void {
-        if (node && node.entry) {
-            this.fileSelect.emit(node);
+    _setScrollTop(scrollTop: number): void {
+        if (this.panel) {
+            this.panel.nativeElement.scrollTop = scrollTop;
         }
     }
 
-    onRowFocus($event: FocusEvent): void {
-        this.searchFocus.emit($event);
+    _getScrollTop(): number {
+        return this.panel ? this.panel.nativeElement.scrollTop : 0;
     }
 
-    onRowBlur($event: FocusEvent): void {
-        this.searchFocus.emit($event);
-    }
-
-    onRowEnter(node: MinimalNodeEntity): void {
-        if (node && node.entry) {
-            if (node.entry.isFile) {
-                this.fileSelect.emit(node);
-            }
+    hidePanel() {
+        if( this.isOpen ) {
+            this._classList['adf-search-show'] = false;
+            this._classList['adf-search-hide'] = true;
+            this.isOpen = false;
+            this.changeDetectorRef.markForCheck();
         }
     }
 
-    onRowArrowDown($event: KeyboardEvent): void {
-        let nextElement: any = this.getNextElementSibling(<Element> $event.target);
-        if (nextElement) {
-            nextElement.focus();
-        }
+    setVisibility() {
+        this.showPanel = !!this.results && !!this.results.length;
+        this._classList['adf-search-show'] = this.showPanel;
+        this._classList['adf-search-hide'] = !this.showPanel;
+        this.changeDetectorRef.markForCheck();
     }
-
-    onRowArrowUp($event: KeyboardEvent): void {
-        let previousElement: any = this.getPreviousElementSibling(<Element> $event.target);
-        if (previousElement) {
-            previousElement.focus();
-        } else {
-            this.scrollBack.emit($event);
-        }
-    }
-
-    onRowEscape($event: KeyboardEvent): void {
-        this.cancel.emit($event);
-    }
-
-    startAnimation() {
-        this.panelAnimationState = 'enter-start';
-    }
-
-    resetAnimation() {
-        this.panelAnimationState = 'void';
-    }
-
-    onAnimationDone(event: AnimationEvent) {
-        if (event.toState === 'enter-start') {
-            this.panelAnimationState = 'enter';
-        }
-    }
-
 }

@@ -1,3 +1,39 @@
+@mixin alfresco-search-theme($theme) {
+
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+
+  .adf {
+
+    &-search-field {
+      max-width: 260px;
+      padding-top: 6px;
+
+      .mat-form-field {
+          width: 100%;
+      }
+
+      .mat-input-underline .mat-input-ripple {
+          background-color: mat-color($background, card);
+      }
+
+      .mat-form-field-underline {
+          background-color: mat-color($background, card);
+      }
+
+      .mat-input-element {
+          font-size: 16px;
+          line-height: normal;
+          padding-bottom: 2px;
+      }
+    }
+
+    &-search-field .mat-input-infix {
+      padding: 0;
+    }
+  }
+}
+
 .adf-search-elements {
   display: flex;
   align-items: center;

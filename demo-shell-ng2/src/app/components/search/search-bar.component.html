@@ -1,18 +1,28 @@
-<input type="text" matInput aria-label="Assignee" [adfSearchAutocomplete]="auto">
+<div class="adf-search-container">
+  <a mat-icon-button
+      id="adf-search-button"
+      class="adf-search-button">
+      <mat-icon aria-label="search button">search</mat-icon>
+  </a>
+  <mat-form-field class="example-full-width">
+    <input matInput class="adf-search-field" type="text"
+      [adfSearchAutocomplete]="auto" (enterKeyPressed)="onSearchSubmit($event)">
+  </mat-form-field>
+</div>
 
-<adf-search-autocomplete #auto="adfSearchAutocomplete" >
-      <ng-template let-result="$implicit">
-            <mat-option *ngIf="result">
-              <div class="adf-search-elements">
-                  <mat-icon *ngIf="result"><img [src]="getMimeTypeIcon(result)"/></mat-icon>
-                  <span>{{ result?.entry.name }}</span>
-              </div>
-            </mat-option>
-      </ng-template>
+<adf-search-autocomplete #auto="adfSearchAutocomplete">
+  <ng-template let-result="$implicit">
+    <mat-option *ngIf="result">
+      <div class="adf-search-elements">
+        <mat-icon *ngIf="result">
+          <img [src]="getMimeTypeIcon(result)" />
+        </mat-icon>
+        <span>{{ result?.entry.name }}</span>
+      </div>
+    </mat-option>
+  </ng-template>
 </adf-search-autocomplete>
 
-<adf-viewer *ngIf="fileShowed" [(showViewer)]="fileShowed"
-                 [fileNodeId]="fileNodeId"
-                 [overlayMode]="true">
-    <mat-spinner></mat-spinner>
+<adf-viewer *ngIf="fileShowed" [(showViewer)]="fileShowed" [fileNodeId]="fileNodeId" [overlayMode]="true">
+  <mat-spinner></mat-spinner>
 </adf-viewer>
