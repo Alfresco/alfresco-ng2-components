@@ -8,6 +8,8 @@ dist/
 node_modules
 typings/
 fonts/
+src/
+config/
 
 /.editorconfig
 /.travis.yml
@@ -17,3 +19,4 @@ fonts/
 /gulpfile.ts
 /.npmignore
 /.happypack
+
