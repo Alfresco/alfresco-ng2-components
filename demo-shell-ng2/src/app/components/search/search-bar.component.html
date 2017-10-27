@@ -1,11 +1,15 @@
-<adf-search-control *ngIf="isLoggedIn()"
-                         [searchTerm]="searchTerm"
-                         [autocomplete]="false"
-                         [highlight]="true"
-                         (searchSubmit)="onSearchSubmit($event);"
-                         (searchChange)="onSearchTermChange($event);"
-                         (fileSelect)="onItemClicked($event)">
-</adf-search-control>
+<input type="text" matInput aria-label="Assignee" [adfSearchAutocomplete]="auto">
+
+<adf-search-autocomplete #auto="adfSearchAutocomplete" >
+      <ng-template let-result="$implicit">
+            <mat-option *ngIf="result">
+              <div class="adf-search-elements">
+                  <mat-icon *ngIf="result"><img [src]="getMimeTypeIcon(result)"/></mat-icon>
+                  <span>{{ result?.entry.name }}</span>
+              </div>
+            </mat-option>
+      </ng-template>
+</adf-search-autocomplete>
 
 <adf-viewer *ngIf="fileShowed" [(showViewer)]="fileShowed"
                  [fileNodeId]="fileNodeId"

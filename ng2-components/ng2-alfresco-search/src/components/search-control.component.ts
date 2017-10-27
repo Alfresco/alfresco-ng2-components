@@ -184,7 +184,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
 
     hideAutocomplete(): void {
         if (this.liveSearchComponent) {
-            this.liveSearchComponent.resetAnimation();
+            // this.liveSearchComponent.resetAnimation();
         }
     }
 
@@ -214,7 +214,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     }
 
     onArrowDown(): void {
-        this.liveSearchComponent.focusResult();
+        // this.liveSearchComponent.focusResult();
     }
 
     onAutoCompleteFocus($event): void {

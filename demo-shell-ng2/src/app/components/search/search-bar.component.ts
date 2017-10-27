@@ -18,11 +18,12 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { MinimalNodeEntity } from 'alfresco-js-api';
-import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, ThumbnailService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'search-bar',
-    templateUrl: './search-bar.component.html'
+    templateUrl: './search-bar.component.html',
+    styleUrls: ['./search-bar.component.scss']
 })
 export class SearchBarComponent {
 
@@ -34,7 +35,8 @@ export class SearchBarComponent {
     expand = new EventEmitter();
 
     constructor(public router: Router,
-                public authService: AlfrescoAuthenticationService) {
+                public authService: AlfrescoAuthenticationService,
+              private thumbnailService: ThumbnailService) {
     }
 
     isLoggedIn(): boolean {
@@ -64,4 +66,17 @@ export class SearchBarComponent {
     onSearchTermChange(event) {
         this.searchTerm = event.value;
     }
+
+    getMimeTypeIcon(node: MinimalNodeEntity): string {
+      let mimeType;
+
+      if (node.entry.content && node.entry.content.mimeType) {
+          mimeType = node.entry.content.mimeType;
+      }
+      if (node.entry.isFolder) {
+          mimeType = 'folder';
+      }
+
+      return this.thumbnailService.getMimeTypeIcon(mimeType);
+  }
 }

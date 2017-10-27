@@ -8,6 +8,14 @@
 
     .adf {
 
+        &-search-hide {
+            display: none;
+        }
+
+        &-search-show {
+            display: block;
+        }
+
         &--search-result-container{
             z-index: 5;
         }
@@ -19,7 +27,7 @@
             z-index: 5;
             color: mat-color($foreground, text);
             background-color: mat-color($background, card);
-            margin: -21px 0 0 0;
+            margin: -20px 0 0 0;
             border-radius: $mat-menu-border-radius;
             border-collapse: collapse;
             white-space: nowrap;

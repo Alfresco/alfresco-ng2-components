@@ -38,11 +38,15 @@ export { SearchService as AlfrescoSearchService } from 'ng2-alfresco-core';
 export { SearchComponent as AlfrescoSearchComponent } from './src/components/search.component';
 export { SearchControlComponent as AlfrescoSearchControlComponent } from './src/components/search-control.component';
 export { SearchAutocompleteComponent as AlfrescoSearchAutocompleteComponent } from './src/components/search-autocomplete.component';
+import {
+    AdfAutocompleteTriggerDirective
+  } from './src/components/search-trigger.component';
 
 export const ALFRESCO_SEARCH_DIRECTIVES: [any] = [
     SearchComponent,
     SearchControlComponent,
     SearchAutocompleteComponent,
+    AdfAutocompleteTriggerDirective,
 
     // Old Deprecated export
     AlfrescoSearchComponent,
@@ -65,7 +69,8 @@ export const ALFRESCO_SEARCH_PROVIDERS: [any] = [
         ReactiveFormsModule
     ],
     declarations: [
-        ...ALFRESCO_SEARCH_DIRECTIVES
+        ...ALFRESCO_SEARCH_DIRECTIVES,
+        AdfAutocompleteTriggerDirective
     ],
     providers: [
         ...ALFRESCO_SEARCH_PROVIDERS,

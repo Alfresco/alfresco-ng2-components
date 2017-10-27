@@ -129,7 +129,7 @@ export class SearchComponent implements OnChanges, OnInit {
                 .getNodeQueryResults(searchTerm, searchOpts)
                 .subscribe(
                     results => {
-                        this.nodeResults = results;
+                        this.nodeResults = <NodePaging> results;
                         this.pagination = results.list.pagination;
                         this.resultsLoad.emit(results.list.entries);
                         this.errorMessage = null;

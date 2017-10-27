@@ -27,17 +27,4 @@
         </div>
     </div>
 </form>
-<adf-search-autocomplete
-    #autocomplete
-    *ngIf="liveSearchEnabled"
-    [searchTerm]="liveSearchTerm"
-    [rootNodeId]="liveSearchRoot"
-    [resultType]="liveSearchResultType"
-    [resultSort]="liveSearchResultSort"
-    [maxResults]="liveSearchMaxResults"
-    [highlight]="highlight"
-    (fileSelect)="onFileClicked($event)"
-    (searchFocus)="onAutoCompleteFocus($event)"
-    (scrollBack)="onAutoCompleteReturn($event)"
-    (cancel)="onAutoCompleteCancel($event)">
-</adf-search-autocomplete>
+
