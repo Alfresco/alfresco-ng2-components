@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output } from '@angular/core';
 import { MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Rx';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
@@ -30,38 +30,56 @@ interface ProcessedNodeData {
 interface ProcessStatus {
     success: ProcessedNodeData[];
     failed: ProcessedNodeData[];
+
     someFailed();
+
     someSucceeded();
+
     oneFailed();
+
     oneSucceeded();
+
     allSucceeded();
+
     allFailed();
 }
 
 @Directive({
     selector: '[adf-delete]'
 })
-export class NodeDeleteDirective {
-    private nodesApi;
-
+export class NodeDeleteDirective implements OnChanges {
     @Input('adf-delete')
     selection: MinimalNodeEntity[];
 
-    @Input() permanent: boolean = false;
+    @Input()
+    permanent: boolean = false;
 
-    @Output() delete: EventEmitter<any> = new EventEmitter();
+    @Output()
+    delete: EventEmitter<any> = new EventEmitter();
 
     @HostListener('click')
     onClick() {
         this.process(this.selection);
     }
 
-    constructor(
-        private notification: NotificationService,
-        private alfrescoApiService: AlfrescoApiService,
-        private translation: TranslationService
-    ) {
-        this.nodesApi = this.alfrescoApiService.getInstance().nodes;
+    constructor(private notification: NotificationService,
+                private alfrescoApiService: AlfrescoApiService,
+                private translation: TranslationService,
+                private elementRef: ElementRef) {
+    }
+
+    ngOnChanges() {
+        if (!this.selection || (this.selection && this.selection.length === 0)) {
+            this.setDisableAttribute(true);
+        } else {
+            if (!this.elementRef.nativeElement.hasAttribute('adf-node-permission')) {
+                this.setDisableAttribute(false);
+            }
+        }
+    }
+
+    private setDisableAttribute(disable: boolean) {
+        this.elementRef.nativeElement.disabled = disable;
     }
 
     private process(selection: MinimalNodeEntity[]) {
@@ -88,10 +106,9 @@ export class NodeDeleteDirective {
     }
 
     private deleteNode(node: MinimalNodeEntity): Observable<ProcessedNodeData> {
-        // shared nodes support
         const id = (<any> node.entry).nodeId || node.entry.id;
 
-        const promise = this.nodesApi.deleteNode(id, { permanent: this.permanent });
+        const promise = this.alfrescoApiService.getInstance().nodes.deleteNode(id, {permanent: this.permanent});
 
         return Observable.fromPromise(promise)
             .map(() => ({
@@ -152,14 +169,14 @@ export class NodeDeleteDirective {
         if (status.allFailed && !status.oneFailed) {
             return this.translation.get(
                 'CORE.DELETE_NODE.ERROR_PLURAL',
-                { number: status.failed.length }
+                {number: status.failed.length}
             );
         }
 
         if (status.allSucceeded && !status.oneSucceeded) {
             return this.translation.get(
                 'CORE.DELETE_NODE.PLURAL',
-                { number: status.success.length  }
+                {number: status.success.length}
             );
         }
 
@@ -186,14 +203,14 @@ export class NodeDeleteDirective {
         if (status.oneFailed && !status.someSucceeded) {
             return this.translation.get(
                 'CORE.DELETE_NODE.ERROR_SINGULAR',
-                { name: status.failed[0].entry.name }
+                {name: status.failed[0].entry.name}
             );
         }
 
         if (status.oneSucceeded && !status.someFailed) {
             return this.translation.get(
                 'CORE.DELETE_NODE.SINGULAR',
-                { name: status.success[0].entry.name }
+                {name: status.success[0].entry.name}
             );
         }
     }
