@@ -137,7 +137,7 @@ export class FilesComponent implements OnInit {
 
     getCurrentDocumentListNode(): MinimalNodeEntity[] {
         if (this.documentList.folderNode) {
-            return [ { entry: this.documentList.folderNode } ];
+            return [{ entry: this.documentList.folderNode }];
         } else {
             return [];
         }
@@ -168,8 +168,21 @@ export class FilesComponent implements OnInit {
     }
 
     handlePermissionError(event: any) {
+        this.translateService.get('OPERATION.ERROR.NO_PERMISSION_EVENT', {
+            permission: event.permission,
+            action: event.action,
+            type: event.type
+        }).subscribe((message) => {
+            this.notificationService.openSnackMessage(
+                message,
+                4000
+            );
+        })
+    }
+
+    handleUploadError(event: any) {
         this.notificationService.openSnackMessage(
-            `You don't have the ${event.permission} permission to ${event.action} the ${event.type} `,
+            event,
             4000
         );
     }
@@ -217,7 +230,11 @@ export class FilesComponent implements OnInit {
         const contentEntry = event.value.entry;
 
         if (this.contentService.hasPermission(contentEntry, 'update')) {
-            this.dialog.open(VersionManagerDialogAdapterComponent, { data: { contentEntry }, panelClass: 'adf-version-manager-dialog', width: '630px' });
+            this.dialog.open(VersionManagerDialogAdapterComponent, {
+                data: { contentEntry },
+                panelClass: 'adf-version-manager-dialog',
+                width: '630px'
+            });
         } else {
             const translatedErrorMessage: any = this.translateService.get('OPERATION.ERROR.PERMISSION');
             this.notificationService.openSnackMessage(translatedErrorMessage.value, 4000);

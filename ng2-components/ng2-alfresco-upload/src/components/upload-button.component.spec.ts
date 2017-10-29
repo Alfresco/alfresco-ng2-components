@@ -283,6 +283,16 @@ describe('UploadButtonComponent', () => {
             expect(filesCalledWith[0].name).toBe('smallFile.png');
         });
 
+        it('should output an error when you try to upload a file too big', (done) => {
+            component.maxFilesSize = 100;
+
+            component.error.subscribe(() => {
+                done();
+            });
+
+            component.uploadFiles(files);
+        });
+
         it('should not filter out files if max file size is not set', () => {
             component.maxFilesSize = null;
 

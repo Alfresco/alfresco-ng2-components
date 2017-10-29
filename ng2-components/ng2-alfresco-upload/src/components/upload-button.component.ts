@@ -223,7 +223,17 @@ export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionS
      * @param file FileModel
      */
     private isFileSizeAcceptable(file: FileModel): boolean {
-        return this.maxFilesSize ? file.size <= this.maxFilesSize : true;
+        let accetableSize = true;
+
+        if (this.maxFilesSize && file.size > this.maxFilesSize) {
+            accetableSize = false;
+
+            this.translateService.get('FILE_UPLOAD.MESSAGES.EXCEED_MAX_FILE_SIZE', {fileName: file.name}).subscribe((message: string) => {
+                this.error.emit(message);
+            })
+        }
+
+        return accetableSize;
     }
 
     /**
@@ -270,7 +280,7 @@ export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionS
 
     private hasCreatePermission(node: any): boolean {
         if (node && node.allowableOperations) {
-            return node.allowableOperations.find(permision => permision === 'create') ? true : false;
+            return node.allowableOperations.find(permission => permission === 'create') ? true : false;
         }
         return false;
     }
