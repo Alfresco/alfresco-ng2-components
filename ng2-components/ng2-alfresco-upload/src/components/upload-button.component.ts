@@ -223,17 +223,17 @@ export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionS
      * @param file FileModel
      */
     private isFileSizeAcceptable(file: FileModel): boolean {
-        let accetableSize = true;
+        let acceptableSize = true;
 
         if (this.maxFilesSize && file.size > this.maxFilesSize) {
-            accetableSize = false;
+            acceptableSize = false;
 
             this.translateService.get('FILE_UPLOAD.MESSAGES.EXCEED_MAX_FILE_SIZE', {fileName: file.name}).subscribe((message: string) => {
                 this.error.emit(message);
             })
         }
 
-        return accetableSize;
+        return acceptableSize;
     }
 
     /**
