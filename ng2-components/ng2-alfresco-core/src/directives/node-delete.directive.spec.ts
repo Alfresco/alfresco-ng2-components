@@ -18,8 +18,6 @@
 import { Component, DebugElement } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Observable } from 'rxjs/Rx';
-import { AlfrescoTranslationService } from '../../index';
 import { CoreModule } from '../../index';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { NotificationService } from '../services/notification.service';
@@ -37,12 +35,26 @@ class TestComponent {
     done = jasmine.createSpy('done');
 }
 
+@Component({
+    template: `
+        <div [adf-node-permission]="selection" [adf-delete]="selection"
+             (delete)="done()">
+        </div>`
+})
+class TestWithPermissionsComponent {
+    selection = [];
+
+    done = jasmine.createSpy('done');
+}
+
 describe('NodeDeleteDirective', () => {
     let fixture: ComponentFixture<TestComponent>;
+    let fixtureWithPermissions: ComponentFixture<TestWithPermissionsComponent>;
     let element: DebugElement;
+    let elementWithPermissions: DebugElement;
     let component: TestComponent;
+    let componentWithPermissions: TestWithPermissionsComponent;
     let alfrescoApi: AlfrescoApiService;
-    let translation: AlfrescoTranslationService;
     let notification: NotificationService;
     let nodeApi;
 
@@ -52,27 +64,24 @@ describe('NodeDeleteDirective', () => {
                 CoreModule
             ],
             declarations: [
-                TestComponent
+                TestComponent,
+                TestWithPermissionsComponent
             ]
         })
-        .compileComponents()
-        .then(() => {
-            fixture = TestBed.createComponent(TestComponent);
-            component = fixture.componentInstance;
-            element = fixture.debugElement.query(By.directive(NodeDeleteDirective));
+            .compileComponents()
+            .then(() => {
+                fixture = TestBed.createComponent(TestComponent);
+                fixtureWithPermissions = TestBed.createComponent(TestWithPermissionsComponent);
+                component = fixture.componentInstance;
+                componentWithPermissions = fixtureWithPermissions.componentInstance;
+                element = fixture.debugElement.query(By.directive(NodeDeleteDirective));
+                elementWithPermissions = fixtureWithPermissions.debugElement.query(By.directive(NodeDeleteDirective));
 
-            alfrescoApi = TestBed.get(AlfrescoApiService);
-            nodeApi = alfrescoApi.getInstance().nodes;
-            translation = TestBed.get(AlfrescoTranslationService);
-            notification = TestBed.get(NotificationService);
-        });
+                alfrescoApi = TestBed.get(AlfrescoApiService);
+                nodeApi = alfrescoApi.getInstance().nodes;
+                notification = TestBed.get(NotificationService);
+            });
     }));
-
-    beforeEach(() => {
-        spyOn(translation, 'get').and.callFake((key) => {
-            return Observable.of(key);
-        });
-    });
 
     describe('Delete', () => {
         beforeEach(() => {
@@ -216,5 +225,51 @@ describe('NodeDeleteDirective', () => {
 
             expect(component.done).toHaveBeenCalled();
         }));
+
+        it('should disable the button if no node are selected', fakeAsync(() => {
+            component.selection = [];
+
+            fixture.detectChanges();
+
+            expect(element.nativeElement.disabled).toEqual(true);
+        }));
+
+        it('should disable the button if selected node is null', fakeAsync(() => {
+            component.selection = null;
+
+            fixture.detectChanges();
+
+            expect(element.nativeElement.disabled).toEqual(true);
+        }));
+
+        it('should enable the button if nodes are selected', fakeAsync(() => {
+            component.selection = [
+                { entry: { id: '1', name: 'name1' } },
+                { entry: { id: '2', name: 'name2' } },
+                { entry: { id: '3', name: 'name3' } }
+            ];
+
+            fixture.detectChanges();
+
+            expect(element.nativeElement.disabled).toEqual(false);
+        }));
+
+        it('should not enable the button if adf-node-permission is present', fakeAsync(() => {
+            elementWithPermissions.nativeElement.disabled = false;
+            componentWithPermissions.selection = [];
+
+            fixtureWithPermissions.detectChanges();
+
+            componentWithPermissions.selection = [
+                { entry: { id: '1', name: 'name1' } },
+                { entry: { id: '2', name: 'name2' } },
+                { entry: { id: '3', name: 'name3' } }
+            ];
+
+            fixtureWithPermissions.detectChanges();
+
+            expect(elementWithPermissions.nativeElement.disabled).toEqual(false);
+        }));
+
     });
 });

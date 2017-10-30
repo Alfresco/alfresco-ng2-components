@@ -32,9 +32,11 @@ export class NodeRestoreDirective {
     @Input('adf-restore')
     selection: DeletedNodeEntry[];
 
-    @Input() location: string = '';
+    @Input()
+    location: string = '';
 
-    @Output() restore: EventEmitter<any> = new EventEmitter();
+    @Output()
+    restore: EventEmitter<any> = new EventEmitter();
 
     @HostListener('click')
     onClick() {
