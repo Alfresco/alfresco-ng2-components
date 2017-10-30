@@ -21,7 +21,7 @@ import { Chart } from 'ng2-activiti-diagrams';
 import { AnalyticsService } from '../services/analytics.service';
 
 @Component({
-    selector: 'adf-analytics-generator, activiti-analytics-generator',
+    selector: 'adf-analytics-generator',
     templateUrl: './analytics-generator.component.html',
     styleUrls: ['./analytics-generator.component.scss'],
     encapsulation: ViewEncapsulation.None

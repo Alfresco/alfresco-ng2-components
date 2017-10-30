@@ -23,7 +23,7 @@ import { ProcessInstance } from './../models/process-instance.model';
 import { ProcessService } from './../services/process.service';
 
 @Component({
-    selector: 'adf-start-process, activiti-start-process',
+    selector: 'adf-start-process',
     templateUrl: './start-process.component.html',
     styleUrls: ['./start-process.component.scss'],
     encapsulation: ViewEncapsulation.None

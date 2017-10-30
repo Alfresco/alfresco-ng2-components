@@ -16,13 +16,13 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <activiti-start-form *ngIf="hasStartForm()"
+        <adf-start-form *ngIf="hasStartForm()"
             [disableStartProcessButton]="!hasProcessName()"
 			[processDefinitionId]="currentProcessDef.id"
 			(outcomeClick)="onOutcomeClick($event)"
 		    [showRefreshButton]="false">
 		<button form-custom-button mat-button (click)="cancelStartProcess()" id="cancle_process" class=""> {{'ADF_PROCESS_LIST.START_PROCESS.FORM.ACTION.CANCEL'| translate}} </button>
-		</activiti-start-form>
+		</adf-start-form>
 	</mat-card-content>
 	<mat-card-content *ngIf="hasErrorMessage()">
 		<mat-card-subtitle class="error-message" id="no-process-message">

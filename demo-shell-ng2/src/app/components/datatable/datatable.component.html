@@ -1,5 +1,5 @@
 <div class="p-10">
-    <alfresco-datatable
+    <adf-datatable
         [data]="data"
         [selectionMode]="selectionMode"
         [multiselect]="multiselect"
@@ -19,7 +19,7 @@
             <data-column key="createdBy.name" title="Created By"></data-column>
         </data-columns>
         -->
-    </alfresco-datatable>
+    </adf-datatable>
 </div>
 <div class="p-10" data-automation-id="multiselect">
     <mat-checkbox [(ngModel)]="multiselect">{{ 'DATATABLE.MULTISELECT'| translate }}</mat-checkbox>

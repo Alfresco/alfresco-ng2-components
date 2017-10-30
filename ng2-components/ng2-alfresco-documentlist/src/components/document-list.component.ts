@@ -42,7 +42,7 @@ export enum PaginationStrategy {
 }
 
 @Component({
-    selector: 'adf-document-list, alfresco-document-list',
+    selector: 'adf-document-list,
     styleUrls: ['./document-list.component.scss'],
     templateUrl: './document-list.component.html',
     encapsulation: ViewEncapsulation.None

@@ -24,7 +24,7 @@ import { PermissionModel } from 'ng2-alfresco-documentlist';
 declare var require: any;
 
 @Component({
-    selector: 'adf-search, alfresco-search',
+    selector: 'adf-search',
     styleUrls: ['./search.component.scss'],
     templateUrl: './search.component.html',
     encapsulation: ViewEncapsulation.None

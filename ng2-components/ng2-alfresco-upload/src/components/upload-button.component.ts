@@ -42,7 +42,7 @@ import { Observable, Subject } from 'rxjs/Rx';
 import { PermissionModel } from '../models/permissions.model';
 
 @Component({
-    selector: 'adf-upload-button, alfresco-upload-button',
+    selector: 'adf-upload-button',
     templateUrl: './upload-button.component.html',
     styleUrls: ['./upload-button.component.scss'],
     providers: [

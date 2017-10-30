@@ -38,7 +38,7 @@ import { CommentsComponent } from './comments.component';
 declare var require: any;
 
 @Component({
-    selector: 'adf-task-details, activiti-task-details',
+    selector: 'adf-task-details',
     templateUrl: './task-details.component.html',
     styleUrls: ['./task-details.component.scss'],
     providers: [

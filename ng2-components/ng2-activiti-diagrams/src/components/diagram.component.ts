@@ -22,7 +22,7 @@ import { DiagramsService } from '../services/diagrams.service';
 import { RaphaelService } from './raphael/raphael.service';
 
 @Component({
-    selector: 'adf-diagram, activiti-diagram',
+    selector: 'adf-diagram',
     styleUrls: ['./diagram.component.css'],
     templateUrl: './diagram.component.html'
 })

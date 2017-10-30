@@ -20,7 +20,7 @@ import { CommentProcessModel, CommentProcessService } from 'ng2-alfresco-core';
 import { Observable, Observer } from 'rxjs/Rx';
 
 @Component({
-    selector: 'adf-process-instance-comments, activiti-process-instance-comments',
+    selector: 'adf-process-instance-comments',
     templateUrl: './process-comments.component.html',
     styleUrls: ['./process-comments.component.css']
 })

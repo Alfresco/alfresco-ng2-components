@@ -22,7 +22,7 @@ import { SearchOptions, SearchService } from 'ng2-alfresco-core';
 import { ThumbnailService } from 'ng2-alfresco-core';
 
 @Component({
-    selector: 'adf-search-autocomplete, alfresco-search-autocomplete',
+    selector: 'adf-search-autocomplete',
     templateUrl: './search-autocomplete.component.html',
     styleUrls: ['./search-autocomplete.component.scss'],
     animations: [

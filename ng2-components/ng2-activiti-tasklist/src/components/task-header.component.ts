@@ -21,7 +21,7 @@ import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 
 @Component({
-    selector: 'adf-task-header, activiti-task-header',
+    selector: 'adf-task-header',
     templateUrl: './task-header.component.html',
     styleUrls: ['./task-header.component.scss']
 })

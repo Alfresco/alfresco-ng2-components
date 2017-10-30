@@ -21,7 +21,7 @@ import { PeopleProcessService, UserProcessModel } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
-    selector: 'adf-people-search, activiti-people-search',
+    selector: 'adf-people-search',
     templateUrl: './people-search.component.html',
     styleUrls: ['./people-search.component.scss'],
     host: {
