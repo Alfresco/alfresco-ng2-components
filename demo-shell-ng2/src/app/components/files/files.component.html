@@ -251,13 +251,13 @@
                 <ng-template #choose_document_template>
                     <div class="adf-manage-versions-empty">
                         <mat-icon class="adf-manage-versions-empty-icon">face</mat-icon>
-                        Please choose a document to see the versions of it.
+                      {{'VERSION.CHOOSE_FILE' | translate}}
                     </div>
                 </ng-template>
                 <ng-template #no_permission_to_versions>
                     <div class="adf-manage-versions-no-permission">
                         <mat-icon class="adf-manage-versions-no-permission-icon">warning</mat-icon>
-                        You don't have permission to manage the versions of this content.
+                      {{'VERSION.NO_PERMISSION' | translate}}
                     </div>
                 </ng-template>
             </div>
@@ -340,6 +340,7 @@
                 [multipleFiles]="multipleFileUpload"
                 [uploadFolders]="folderUpload"
                 [maxFilesSize]="maxFilesSize"
+                (error)="handleUploadError($event)"
                 [versioning]="versioning"
                 [adf-node-permission]="'create'"
                 [adf-nodes]="getCurrentDocumentListNode()"
@@ -357,6 +358,7 @@
                 [multipleFiles]="multipleFileUpload"
                 [uploadFolders]="folderUpload"
                 [versioning]="versioning"
+                (error)="handleUploadError($event)"
                 [adf-node-permission]="'create'"
                 [adf-nodes]="getCurrentDocumentListNode()"
                 (permissionEvent)="handlePermissionError($event)">
