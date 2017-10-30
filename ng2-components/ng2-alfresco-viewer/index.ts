@@ -29,7 +29,7 @@ import { ViewerOpenWithComponent } from './src/components/viewer-open-with.compo
 import { ViewerSidebarComponent } from './src/components/viewer-sidebar.component';
 import { ViewerToolbarComponent } from './src/components/viewer-toolbar.component';
 import { ViewerComponent } from './src/components/viewer.component';
-import { ExtensionViewerDirective } from './src/directives/extension-viewer.directive';
+import { ViewerExtensionDirective } from './src/directives/viewer-extension.directive';
 import { RenderingQueueServices } from './src/services/rendering-queue.services';
 
 export { ViewerComponent } from './src/components/viewer.component';
@@ -41,7 +41,7 @@ export function declarations() {
         TxtViewerComponent,
         MediaPlayerComponent,
         PdfViewerComponent,
-        ExtensionViewerDirective,
+        ViewerExtensionDirective,
         UnknownFormatComponent,
         ViewerToolbarComponent,
         ViewerSidebarComponent,

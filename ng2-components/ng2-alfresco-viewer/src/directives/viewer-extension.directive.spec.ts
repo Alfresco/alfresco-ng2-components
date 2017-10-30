@@ -22,7 +22,7 @@ import { Injector } from '@angular/core';
 import { async, getTestBed, TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
 import { ViewerComponent } from '../components/viewer.component';
-import { ExtensionViewerDirective } from './extension-viewer.directive';
+import { ViewerExtensionDirective } from './viewer-extension.directive';
 
 export class MockElementRef extends ElementRef {
     constructor() {
@@ -32,7 +32,7 @@ export class MockElementRef extends ElementRef {
 
 describe('ExtensionViewerDirective', () => {
     let injector: Injector;
-    let extensionViewerDirective: ExtensionViewerDirective;
+    let extensionViewerDirective: ViewerExtensionDirective;
     let viewerComponent: ViewerComponent;
 
     beforeEach(async(() => {
@@ -40,13 +40,13 @@ describe('ExtensionViewerDirective', () => {
             imports: [CoreModule],
             providers: [
                 { provide: Location, useClass: SpyLocation },
-                ExtensionViewerDirective,
+                ViewerExtensionDirective,
                 {provide: ElementRef, useClass: MockElementRef},
                 ViewerComponent
             ]
         });
         injector = getTestBed();
-        extensionViewerDirective = injector.get(ExtensionViewerDirective);
+        extensionViewerDirective = injector.get(ViewerExtensionDirective);
         viewerComponent = injector.get(ViewerComponent);
         extensionViewerDirective.templateModel = {template: '', isVisible: false};
     }));

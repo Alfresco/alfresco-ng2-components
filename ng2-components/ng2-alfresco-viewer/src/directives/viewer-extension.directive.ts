@@ -15,19 +15,13 @@
  * limitations under the License.
  */
 
-import {
-    AfterContentInit,
-    ContentChild,
-    Directive,
-    Input,
-    TemplateRef
-} from '@angular/core';
+import { AfterContentInit, ContentChild, Directive, Input, TemplateRef } from '@angular/core';
 import { ViewerComponent } from '../components/viewer.component';
 
 @Directive({
-    selector: 'extension-viewer'
+    selector: 'adf-viewer-extension'
 })
-export class ExtensionViewerDirective implements AfterContentInit {
+export class ViewerExtensionDirective implements AfterContentInit {
 
     @ContentChild(TemplateRef)
     template: any;

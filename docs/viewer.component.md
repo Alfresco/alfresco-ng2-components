@@ -48,18 +48,18 @@ Using with file url:
 | urlBlob | Blob | | If you want to load a Blob File |
 | overlayMode | boolean | false | If `true` show the Viewer full page over the present content otherwise will fit the parent div |
 | showViewer | boolean | true | Hide or show the viewer |
-| showToolbar | boolean | true | Hide or show the toolbars |
+| showToolbar | boolean | true | Hide or show the toolbar |
 | displayName | string | | You can specify the name of the file |
 | allowGoBack | boolean | true | Allow `back` navigation |
 | allowDownload | boolean | true | Toggle download feature |
 | allowPrint | boolean | false | Toggle printing feature |
 | allowShare | boolean | false | Toggle sharing feature |
-| allowSidebar | boolean |false | Toogle sidebar feature |
+| allowSidebar | boolean |false | Toggle sidebar feature |
 | showSidebar | boolean | false | Toggles sidebar visibility. Requires `allowSidebar` to be set to `true`. |
 
 ## Events
 
-| Name | Argument Type | Cancellable | Description |
+| Name | Argument Type | Cancelable | Description |
 | --- | --- | --- | --- |
 | goBack | any | Yes | Raised when user clicks the 'Back' button. |
 | download | any | Yes | Raised when user clicks the 'Download' button. |
@@ -133,7 +133,7 @@ Everything you put inside the "adf-viewer-toolbar" tags is going to be rendered 
 
 ### Custom sidebar
 
-The Viewer component also suports custom sidebar components and layouts.
+The Viewer component also supports custom sidebar components and layouts.
 The `allowSidebar` property should be set to `true` to enable this feature.
 
 ```html
@@ -175,7 +175,7 @@ You can enable custom "Open With" menu by providing at least one action inside t
 
 ### Custom "More actions" menu
 
-You can enable custom "More actions" menu by providing at least one action indide the "adf-viewer-more-actions" tag:
+You can enable custom "More actions" menu by providing at least one action inside the "adf-viewer-more-actions" tag:
 
 ```html
 <adf-viewer [fileNodeId]="nodeId">
@@ -200,54 +200,49 @@ You can enable custom "More actions" menu by providing at least one action indid
 
 ![More actions](docassets/images/viewer-more-actions.png)
 
-### Custom extension handler
+### Extending the Viewer
 
-If you want to handle other file formats that are not yet supported by the ng2-alfresco-viewer you can define your own custom handler.
+If you want to handle other file formats that are not yet supported by the Viewer component,
+you can define your own custom handler.
 
-Below you can find an example with the use of `extension-viewer` if you can handle 3d files
+Below you can find an example with the use of `adf-viewer-extension` if you can handle 3d files
 
 ```html
-<adf-viewer 
-    [(showViewer)]="fileShowed"
-    [fileNodeId]="fileNodeId"
-    [overlayMode]="true">
+<adf-viewer [fileNodeId]="fileNodeId">
     
-    <extension-viewer [supportedExtensions]="['obj','3ds']" #extension>
+    <adf-viewer-extension [supportedExtensions]="['obj','3ds']" #extension>
         <ng-template let-urlFileContent="urlFileContent" let-extension="extension">
             <threed-viewer 
                 [urlFile]="urlFileContent" 
                 [extension]="extension">
             </threed-viewer>
         </ng-template>
-    </extension-viewer>
+    </adf-viewer-extension>
 
 </adf-viewer> 
 ```
 
 Note: you need adding `ng2-3d-editor` dependency to your `package.json` file to make the example above work.
 
-It is possible to define multiple `extension-viewer` templates:
+It is possible to define multiple `adf-viewer-extension` templates:
 
 ```html
-<adf-viewer 
-    [(showViewer)]="fileShowed"
-    [fileNodeId]="fileNodeId"
-    [overlayMode]="true">
+<adf-viewer [fileNodeId]="fileNodeId">
 
-    <extension-viewer [supportedExtensions]="['xls','xlsx']" #extension>
-        <ng-template let-urlFileContent="urlFileContent"  >
+    <adf-viewer-extension [supportedExtensions]="['xls','xlsx']" #extension>
+        <ng-template let-urlFileContent="urlFileContent">
             <my-custom-xls-component 
                 urlFileContent="urlFileContent">
             </my-custom-xls-component>
         </ng-template>
-    </extension-viewer>
+    </adf-viewer-extension>
 
-    <extension-viewer [supportedExtensions]="['txt']" #extension>
-        <ng-template  let-urlFileContent="urlFileContent" >               
+    <adf-viewer-extension [supportedExtensions]="['txt']" #extension>
+        <ng-template let-urlFileContent="urlFileContent" >               
             <my-custom-txt-component 
                 urlFileContent="urlFileContent">
             </my-custom-txt-component>
         </ng-template>
-    </extension-viewer>
+    </adf-viewer-extension>
 </adf-viewer> 
 ```
