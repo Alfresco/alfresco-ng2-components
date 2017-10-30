@@ -73,7 +73,7 @@ describe('NodeDeleteDirective', () => {
                 fixture = TestBed.createComponent(TestComponent);
                 fixtureWithPermissions = TestBed.createComponent(TestWithPermissionsComponent);
                 component = fixture.componentInstance;
-                componentWithPermissions  = fixtureWithPermissions.componentInstance;
+                componentWithPermissions = fixtureWithPermissions.componentInstance;
                 element = fixture.debugElement.query(By.directive(NodeDeleteDirective));
                 elementWithPermissions = fixtureWithPermissions.debugElement.query(By.directive(NodeDeleteDirective));
 
@@ -101,7 +101,7 @@ describe('NodeDeleteDirective', () => {
         it('should process node successfully', fakeAsync(() => {
             spyOn(nodeApi, 'deleteNode').and.returnValue(Promise.resolve());
 
-            component.selection = <any> [{entry: {id: '1', name: 'name1'}}];
+            component.selection = <any> [{ entry: { id: '1', name: 'name1' } }];
 
             fixture.detectChanges();
             element.triggerEventHandler('click', null);
@@ -115,7 +115,7 @@ describe('NodeDeleteDirective', () => {
         it('should notify failed node deletion', fakeAsync(() => {
             spyOn(nodeApi, 'deleteNode').and.returnValue(Promise.reject('error'));
 
-            component.selection = [{entry: {id: '1', name: 'name1'}}];
+            component.selection = [{ entry: { id: '1', name: 'name1' } }];
 
             fixture.detectChanges();
             element.triggerEventHandler('click', null);
@@ -130,8 +130,8 @@ describe('NodeDeleteDirective', () => {
             spyOn(nodeApi, 'deleteNode').and.returnValue(Promise.resolve());
 
             component.selection = [
-                {entry: {id: '1', name: 'name1'}},
-                {entry: {id: '2', name: 'name2'}}
+                { entry: { id: '1', name: 'name1' } },
+                { entry: { id: '2', name: 'name2' } }
             ];
 
             fixture.detectChanges();
@@ -147,8 +147,8 @@ describe('NodeDeleteDirective', () => {
             spyOn(nodeApi, 'deleteNode').and.returnValue(Promise.reject('error'));
 
             component.selection = [
-                {entry: {id: '1', name: 'name1'}},
-                {entry: {id: '2', name: 'name2'}}
+                { entry: { id: '1', name: 'name1' } },
+                { entry: { id: '2', name: 'name2' } }
             ];
 
             fixture.detectChanges();
@@ -170,8 +170,8 @@ describe('NodeDeleteDirective', () => {
             });
 
             component.selection = [
-                {entry: {id: '1', name: 'name1'}},
-                {entry: {id: '2', name: 'name2'}}
+                { entry: { id: '1', name: 'name1' } },
+                { entry: { id: '2', name: 'name2' } }
             ];
 
             fixture.detectChanges();
@@ -199,9 +199,9 @@ describe('NodeDeleteDirective', () => {
             });
 
             component.selection = [
-                {entry: {id: '1', name: 'name1'}},
-                {entry: {id: '2', name: 'name2'}},
-                {entry: {id: '3', name: 'name3'}}
+                { entry: { id: '1', name: 'name1' } },
+                { entry: { id: '2', name: 'name2' } },
+                { entry: { id: '3', name: 'name3' } }
             ];
 
             fixture.detectChanges();
@@ -217,7 +217,7 @@ describe('NodeDeleteDirective', () => {
             component.done.calls.reset();
             spyOn(nodeApi, 'deleteNode').and.returnValue(Promise.resolve());
 
-            component.selection = <any> [{entry: {id: '1', name: 'name1'}}];
+            component.selection = <any> [{ entry: { id: '1', name: 'name1' } }];
 
             fixture.detectChanges();
             element.triggerEventHandler('click', null);
@@ -244,9 +244,9 @@ describe('NodeDeleteDirective', () => {
 
         it('should enable the button if nodes are selected', fakeAsync(() => {
             component.selection = [
-                {entry: {id: '1', name: 'name1'}},
-                {entry: {id: '2', name: 'name2'}},
-                {entry: {id: '3', name: 'name3'}}
+                { entry: { id: '1', name: 'name1' } },
+                { entry: { id: '2', name: 'name2' } },
+                { entry: { id: '3', name: 'name3' } }
             ];
 
             fixture.detectChanges();
@@ -261,9 +261,9 @@ describe('NodeDeleteDirective', () => {
             fixtureWithPermissions.detectChanges();
 
             componentWithPermissions.selection = [
-                {entry: {id: '1', name: 'name1'}},
-                {entry: {id: '2', name: 'name2'}},
-                {entry: {id: '3', name: 'name3'}}
+                { entry: { id: '1', name: 'name1' } },
+                { entry: { id: '2', name: 'name2' } },
+                { entry: { id: '3', name: 'name3' } }
             ];
 
             fixtureWithPermissions.detectChanges();
