@@ -20,9 +20,11 @@ import { SpyLocation } from '@angular/common/testing';
 import { Component, DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule, RenditionsService } from 'ng2-alfresco-core';
 import { MaterialModule } from './../material.module';
 
+import { AlfrescoApiService } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Rx';
 import { EventMock } from '../assets/event.mock';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { ImgViewerComponent } from './imgViewer.component';
@@ -113,6 +115,7 @@ describe('ViewerComponent', () => {
     let component: ViewerComponent;
     let fixture: ComponentFixture<ViewerComponent>;
     let debug: DebugElement;
+    let alfrescoApiService: AlfrescoApiService;
     let element: HTMLElement;
 
     beforeEach(async(() => {
@@ -138,6 +141,12 @@ describe('ViewerComponent', () => {
                 ViewerWithCustomMoreActionsComponent
             ],
             providers: [
+                {provide: RenditionsService, useValue: {
+                    getRendition: () => {
+                        return Observable.throw('throwed');
+                    }
+                }},
+                AlfrescoApiService,
                 RenderingQueueServices,
                 { provide: Location, useClass: SpyLocation }
             ]
@@ -152,6 +161,8 @@ describe('ViewerComponent', () => {
         component = fixture.componentInstance;
 
         jasmine.Ajax.install();
+
+        alfrescoApiService = TestBed.get(AlfrescoApiService);
 
         component.showToolbar = true;
         component.urlFile = 'base/src/assets/fake-test-file.pdf';
@@ -583,8 +594,7 @@ describe('ViewerComponent', () => {
         });
     });
 
-    describe('displayName', () => {
-
+    describe('display name property override by urlFile', () => {
         it('should displayName override the default name if is present and urlFile is set' , (done) => {
             component.urlFile = 'base/src/assets/fake-test-file.pdf';
             component.displayName = 'test name';
@@ -596,7 +606,7 @@ describe('ViewerComponent', () => {
             });
         });
 
-        it('should use the urlFile name if displayName is not set and urlFile is set' , (done) => {
+        it('should use the urlFile name if displayName is NOT set and urlFile is set' , (done) => {
             component.urlFile = 'base/src/assets/fake-test-file.pdf';
             component.displayName = null;
 
@@ -606,7 +616,9 @@ describe('ViewerComponent', () => {
                 done();
             });
         });
+    });
 
+    describe('display name property override by blobFile', () => {
         it('should displayName override the name if is present and blobFile is set' , (done) => {
             component.displayName = 'blob file display name';
             component.blobFile = new Blob(['This is my blob content'], {type : 'text/plain'});
@@ -618,7 +630,7 @@ describe('ViewerComponent', () => {
             });
         });
 
-        it('should show uknownn name if displayName is not set and blobFile is set' , (done) => {
+        it('should show uknownn name if displayName is NOT set and blobFile is set' , (done) => {
             component.displayName = null;
             component.blobFile = new Blob(['This is my blob content'], {type : 'text/plain'});
 
@@ -628,25 +640,40 @@ describe('ViewerComponent', () => {
                 done();
             });
         });
+    });
 
-        it('should displayName override the default name if is present and fileNodeId is set' , (done) => {
-            component.displayName = 'node file name';
-            component.fileNodeId = 'fileNodeId';
+    describe('display name property override by nodeId', () => {
+        const displayName = 'the-name';
+        const nodeDetails = { name: displayName, id: '12', content: { mimeType: 'txt' }};
+        const contentUrl = '/content/url/path';
+        const alfrescoApiInstanceMock = {
+            nodes: { getNodeInfo: () => Promise.resolve(nodeDetails) },
+            content: { getContentUrl: () => contentUrl }
+        };
 
+        it('should use the displayName if displayName is set and fileNodeId is set' , (done) => {
+            const userDefinedDisplayName = 'user defined display name';
+            component.fileNodeId = '12';
+            component.urlFile = null;
+            component.displayName = userDefinedDisplayName;
+
+            spyOn(alfrescoApiService, 'getInstance').and.returnValue(alfrescoApiInstanceMock);
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
-                expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual(component.displayName);
+                expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual(userDefinedDisplayName);
                 done();
             });
         });
 
-        it('should use the node name if displayName is not set and fileNodeId is set' , (done) => {
+        it('should use the node name if displayName is NOT set and fileNodeId is set' , (done) => {
+            component.fileNodeId = '12';
+            component.urlFile = null;
             component.displayName = null;
-            component.fileNodeId = 'fileNodeId';
 
+            spyOn(alfrescoApiService, 'getInstance').and.returnValue(alfrescoApiInstanceMock);
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
-                expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual(component.fileName);
+                expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual(displayName);
                 done();
             });
         });
