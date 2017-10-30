@@ -1,5 +1,10 @@
 {
     "title": "Welcome",
+    "VERSION": {
+      "NO_PERMISSION": "You don't have permission to manage the versions of this content",
+      "NO_PERMISSION_EVENT": "You don't have the ${event.permission} permission to ${event.action} the ${event.type}",
+      "CHOOSE_FILE": "Please choose a document to see the versions of it"
+    },
     "APP_LAYOUT": {
         "APP_NAME": "ADF Demo Application",
         "HOME": "Home",
