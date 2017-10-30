@@ -5,6 +5,7 @@
     "analytics-generator.component": [],
     "analytics-report-list.component": [],
     "analytics.component": [],
+    "angular-material-design": ["theming"],
     "app-config.service": [],
     "apps-list.component": [],
     "authentication.service": [],
@@ -38,7 +39,6 @@
         "nodes-api.service"
     ],
     "dropdown-breadcrumb.component": ["document-list.component", "breadcrumb.component"],
-    "version-manager": ["document-list.component"],
     "extensibility": [],
     "file-uploading-dialog.component": [],
     "folder-actions.service": ["document-actions.service"],
@@ -109,6 +109,8 @@
     "upload.service": [],
     "user-info.component": [],
     "user-preferences.service": [],
+    "version-manager.component": ["version-list.component", "document-list.component"],
+    "version-list.component": [],
     "viewer.component": [],
     "webscript.component": [],
     "widget.component": ["extensibility"]
