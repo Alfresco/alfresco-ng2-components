@@ -57,7 +57,7 @@ The properties currentFolderId, folderNode and node are the entry initialization
 | rowStyleClass | string | | The CSS class to apply to every row |
 | currentFolderId | string | null | The ID of the folder node to display or a reserved string alias for special sources (see **Data Sources**) |
 | folderNode | [MinimalNodeEntryEntity](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md) | null | Currently displayed folder node | 
-| permissionsStyle | [PermissionStyleModel[]](permission-style.model.md) | null | Define a set of CSS styles styles to apply depending on the permission of the user on that node. See the [Permission Style model](permission-style.model.md) page for further details and examples. | 
+| permissionsStyle | [PermissionStyleModel[]](permissions-style.model.md) | null | Define a set of CSS styles styles to apply depending on the permission of the user on that node. See the [Permission Style model](permissions-style.model.md) page for further details and examples. | 
 | paginationStrategy | PaginationStrategy | PaginationStrategy.Finite | The pagination type to be shown, can be Finite or Infinite |
 | node | [NodePaging](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodePaging.md) | null | Document list will show all the nodes contained in the NodePaging entity  | 
 | navigate | boolean | true | Toggles navigation to folder content or file preview |
@@ -743,4 +743,5 @@ That will give the following output:
 - [Content action component](content-action.component.md)
 - [Dropdown breadcrumb component](dropdown-breadcrumb.component.md)
 - [Permissions style model](permissions-style.model.md)
+- [Version manager component](version-manager.component.md)
 <!-- seealso end -->

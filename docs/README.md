@@ -30,6 +30,7 @@ to the appropriate source file.
 <!-- guide start -->
 - [Form Extensibility and Customisation](extensibility.md)
 - [Form Stencils with Angular 2](stencils.md)
+- [Angular Material Design](angular-material-design.md)
 - [Theming](theming.md)
 - [Walkthrough: adding indicators to highlight information about a node](metadata-indicators.md)
 
@@ -421,8 +422,10 @@ for more information about installing and using the source code.
 - [Content action component](content-action.component.md)
 - [Document list component](document-list.component.md)
 - [Sites dropdown component](sites-dropdown.component.md)
+- [Version list component](version-list.component.md)
+- [Version manager component](version-manager.component.md)
 - [*Content node selector component](../ng2-components/ng2-alfresco-documentlist/src/components/content-node-selector/content-node-selector.component.ts)
-- [Version Manager Component](version-manager.component.md)
+- [*Version upload component](../ng2-components/ng2-alfresco-documentlist/src/components/version-manager/version-upload.component.ts)
 
 ### Models
 
@@ -565,9 +568,9 @@ for more information about installing and using the source code.
 - [*PdfViewer component](../ng2-components/ng2-alfresco-viewer/src/components/pdfViewer.component.ts)
 - [*TxtViewer component](../ng2-components/ng2-alfresco-viewer/src/components/txtViewer.component.ts)
 - [*Unknown format component](../ng2-components/ng2-alfresco-viewer/src/components/unknown-format/unknown-format.component.ts)
-- [*Viewer info drawer component](../ng2-components/ng2-alfresco-viewer/src/components/viewer-info-drawer.component.ts)
 - [*Viewer more actions component](../ng2-components/ng2-alfresco-viewer/src/components/viewer-more-actions.component.ts)
 - [*Viewer open with component](../ng2-components/ng2-alfresco-viewer/src/components/viewer-open-with.component.ts)
+- [*Viewer sidebar component](../ng2-components/ng2-alfresco-viewer/src/components/viewer-sidebar.component.ts)
 - [*Viewer toolbar component](../ng2-components/ng2-alfresco-viewer/src/components/viewer-toolbar.component.ts)
 
 ### Directives
