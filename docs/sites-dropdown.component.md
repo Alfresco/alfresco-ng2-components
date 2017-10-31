@@ -9,6 +9,7 @@ Displays a dropdown menu to show and interact with the sites of the current user
 <!-- toc -->
 
 - [Basic Usage](#basic-usage)
+  * [Properties](#properties)
   * [Events](#events)
 
 <!-- tocstop -->
@@ -22,6 +23,12 @@ Displays a dropdown menu to show and interact with the sites of the current user
   (change)="getSiteContent($event)">
  </adf-sites-dropdown>
 ```
+
+### Properties
+
+| Attribute | Type | Default | Description |
+| --- | --- | --- | --- |
+| hideMyFiles | boolean | false | Hide the "My Files" option added to the list by default |
 
 ### Events
 

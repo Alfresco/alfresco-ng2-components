@@ -26,7 +26,7 @@ import { SiteModel, SitesApiService } from 'ng2-alfresco-core';
 export class DropdownSitesComponent implements OnInit {
 
     @Input()
-    hideDefault: boolean = false;
+    hideMyFiles: boolean = false;
 
     @Output()
     change: EventEmitter<SiteModel> = new EventEmitter();
