@@ -15,21 +15,47 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { Component, OnInit, Optional } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import { NodePaging } from 'alfresco-js-api';
 
 @Component({
     selector: 'search-component',
     templateUrl: './search.component.html',
-    styleUrls: ['./search.component.scss']
+    styleUrls: ['./search.component.scss'],
+    animations: [
+    trigger('transitionMessages', [
+        state('active', style({transform: 'translateX(0%)'})),
+        state('inactive', style({transform: 'translateX(83%)'})),
+        state('no-animation', style({transform: 'translateX(0%)', width: '100%'})),
+        transition('inactive => active',
+            animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)')),
+        transition('active => inactive',
+            animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)'))
+    ])
+]
 })
-export class SearchComponent {
+export class SearchComponent implements OnInit{
 
     fileNodeId: string;
+    queryParamName= 'q';
+    searchedWord: string = '';
     fileShowed: boolean = false;
+    navigationMode: string = 'dblclick';
+    resultNodePageList: NodePaging;
 
-    constructor(public router: Router) {
+    constructor(public router: Router,
+                @Optional() private route: ActivatedRoute) {
     }
+
+    ngOnInit() {
+      if (this.route) {
+          this.route.params.forEach((params: Params) => {
+              this.searchedWord = params.hasOwnProperty(this.queryParamName) ? params[this.queryParamName] : null;
+          });
+      }
+  }
 
     nodeDbClick($event: any) {
         if ($event.value.entry.isFolder) {
@@ -46,5 +72,9 @@ export class SearchComponent {
         } else {
             this.fileShowed = false;
         }
+    }
+
+    showSearchResult(event: NodePaging) {
+      this.resultNodePageList = event;
     }
 }

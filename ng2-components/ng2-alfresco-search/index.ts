@@ -19,7 +19,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule, SearchService, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { DocumentListModule } from 'ng2-alfresco-documentlist';
-import { SearchAutocompleteComponent } from './src/components/search-autocomplete.component';
 import { SearchControlComponent } from './src/components/search-control.component';
 import { SearchComponent } from './src/components/search.component';
 
@@ -27,17 +26,15 @@ import { SearchComponent } from './src/components/search.component';
 export { SearchOptions, SearchService } from 'ng2-alfresco-core';
 export * from './src/components/search.component';
 export * from './src/components/search-control.component';
-export * from './src/components/search-autocomplete.component';
 
 // Old Deprecated export
 import { SearchService as AlfrescoSearchService } from 'ng2-alfresco-core';
-import { SearchAutocompleteComponent as AlfrescoSearchAutocompleteComponent } from './src/components/search-autocomplete.component';
 import { SearchControlComponent as AlfrescoSearchControlComponent } from './src/components/search-control.component';
 import { SearchComponent as AlfrescoSearchComponent } from './src/components/search.component';
 export { SearchService as AlfrescoSearchService } from 'ng2-alfresco-core';
 export { SearchComponent as AlfrescoSearchComponent } from './src/components/search.component';
 export { SearchControlComponent as AlfrescoSearchControlComponent } from './src/components/search-control.component';
-export { SearchAutocompleteComponent as AlfrescoSearchAutocompleteComponent } from './src/components/search-autocomplete.component';
+
 import {
     AdfAutocompleteTriggerDirective
   } from './src/components/search-trigger.component';
@@ -45,13 +42,11 @@ import {
 export const ALFRESCO_SEARCH_DIRECTIVES: [any] = [
     SearchComponent,
     SearchControlComponent,
-    SearchAutocompleteComponent,
     AdfAutocompleteTriggerDirective,
 
     // Old Deprecated export
     AlfrescoSearchComponent,
-    AlfrescoSearchControlComponent,
-    AlfrescoSearchAutocompleteComponent
+    AlfrescoSearchControlComponent
 ];
 
 export const ALFRESCO_SEARCH_PROVIDERS: [any] = [

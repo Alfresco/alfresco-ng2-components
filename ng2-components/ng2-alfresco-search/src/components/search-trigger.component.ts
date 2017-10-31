@@ -20,23 +20,23 @@ import {
     ChangeDetectorRef,
     Directive,
     ElementRef,
+    EventEmitter,
     forwardRef,
     Inject,
     Input,
     NgZone,
     OnDestroy,
     Optional,
-    Output,
-    EventEmitter
+    Output
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DOCUMENT } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { merge } from 'rxjs/observable/merge';
+import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
-import { SearchAutocompleteComponent } from './search-autocomplete.component';
+import { SearchComponent } from './search.component';
 
 export const AUTOCOMPLETE_OPTION_HEIGHT = 48;
 
@@ -72,7 +72,7 @@ export function getAutocompleteMissingPanelError(): Error {
 export class AdfAutocompleteTriggerDirective implements ControlValueAccessor, OnDestroy {
 
     @Input('adfSearchAutocomplete')
-    autocomplete: SearchAutocompleteComponent;
+    searchPanel: SearchComponent;
 
     @Output()
     enterKeyPressed: EventEmitter<KeyboardEvent> = new EventEmitter();
@@ -85,22 +85,21 @@ export class AdfAutocompleteTriggerDirective implements ControlValueAccessor, On
 
     onTouched = () => { };
 
-
     constructor(private element: ElementRef,
-        private ngZone: NgZone,
-        private changeDetectorRef: ChangeDetectorRef,
-        @Optional() @Inject(DOCUMENT) private document: any) { }
+                private ngZone: NgZone,
+                private changeDetectorRef: ChangeDetectorRef,
+                @Optional() @Inject(DOCUMENT) private document: any) { }
 
     ngOnDestroy() {
         this.escapeEventStream.complete();
     }
 
     get panelOpen(): boolean {
-        return this._panelOpen && this.autocomplete.showPanel;
+        return this._panelOpen && this.searchPanel.showPanel;
     }
 
     openPanel(): void {
-        this.autocomplete.isOpen = this._panelOpen = true;
+        this.searchPanel.isOpen = this._panelOpen = true;
         this.closingActionsSubscription = this.subscribeToClosingActions();
     }
 
@@ -108,7 +107,7 @@ export class AdfAutocompleteTriggerDirective implements ControlValueAccessor, On
         if (this._panelOpen) {
             this.closingActionsSubscription.unsubscribe();
             this._panelOpen = false;
-            this.autocomplete.hidePanel();
+            this.searchPanel.hidePanel();
             this.changeDetectorRef.detectChanges();
         }
     }
@@ -156,9 +155,7 @@ export class AdfAutocompleteTriggerDirective implements ControlValueAccessor, On
             event.stopPropagation();
         } else if (keyCode === ENTER) {
             this.enterKeyPressed.next(event);
-            if (this.panelOpen) {
-                this.closePanel();
-            }
+            this.setValueAndClose(event);
             event.preventDefault();
         }
     }
@@ -168,27 +165,27 @@ export class AdfAutocompleteTriggerDirective implements ControlValueAccessor, On
             let inputValue: string = (event.target as HTMLInputElement).value;
             this.onChange(inputValue);
             if (inputValue.length >= 3) {
-                this.autocomplete.keyPressedStream.next(inputValue);
+                this.searchPanel.keyPressedStream.next(inputValue);
                 this.openPanel();
             } else {
-                this.autocomplete.resetResults();
+                this.searchPanel.resetResults();
             }
         }
     }
 
     private isPanelOptionClicked(event: MouseEvent) {
         let clickTarget = event.target as HTMLElement;
-        return !!this.autocomplete.panel &&
-            !!this.autocomplete.panel.nativeElement.contains(clickTarget);
+        return !!this.searchPanel.panel &&
+            !!this.searchPanel.panel.nativeElement.contains(clickTarget);
     }
 
     private subscribeToClosingActions(): Subscription {
         const firstStable = this.ngZone.onStable.asObservable();
-        const optionChanges = this.autocomplete.keyPressedStream.asObservable();
+        const optionChanges = this.searchPanel.keyPressedStream.asObservable();
 
         return merge(firstStable, optionChanges)
             .switchMap(() => {
-                this.autocomplete.setVisibility();
+                this.searchPanel.setVisibility();
                 return this.panelClosingActions;
             })
             .first()
@@ -196,8 +193,8 @@ export class AdfAutocompleteTriggerDirective implements ControlValueAccessor, On
     }
 
     private setTriggerValue(value: any): void {
-        const toDisplay = this.autocomplete && this.autocomplete.displayWith ?
-            this.autocomplete.displayWith(value) : value;
+        const toDisplay = this.searchPanel && this.searchPanel.displayWith ?
+            this.searchPanel.displayWith(value) : value;
         const inputValue = toDisplay != null ? toDisplay : '';
         this.element.nativeElement.value = inputValue;
     }

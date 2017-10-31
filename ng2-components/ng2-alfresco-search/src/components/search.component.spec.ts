@@ -15,13 +15,19 @@
  * limitations under the License.
  */
 
-import { DebugElement, ReflectiveInjector, SimpleChange } from '@angular/core';
+ /*
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
-import { AlfrescoTranslationService, CoreModule, NotificationService, SearchService } from 'ng2-alfresco-core';
-import { DocumentListModule } from 'ng2-alfresco-documentlist';
-import { PermissionModel } from 'ng2-alfresco-documentlist';
-import { Observable } from 'rxjs/Rx';
+import { ThumbnailService } from 'ng2-alfresco-core';
+import {
+    AlfrescoApiService,
+    AlfrescoAuthenticationService,
+    AlfrescoContentService,
+    AlfrescoSettingsService,
+    AlfrescoTranslationService,
+    CoreModule,
+    SearchService
+} from 'ng2-alfresco-core';
+import { errorJson, folderResult, noResult, result, results } from './../assets/search.component.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
 import { SearchComponent } from './search.component';
 
@@ -30,95 +36,26 @@ describe('SearchComponent', () => {
     let fixture: ComponentFixture<SearchComponent>, element: HTMLElement;
     let component: SearchComponent;
 
-    let result = {
-        list: {
-            pagination: {
-                hasMoreItems: false,
-                maxItems: 25,
-                skipCount: 0,
-                totalItems: 1
-            },
-            entries: [
-                {
-                    entry: {
-                        id: '123',
-                        name: 'MyDoc',
-                        isFile: true,
-                        content: {
-                            mimeType: 'text/plain'
-                        },
-                        createdByUser: {
-                            displayName: 'John Doe'
-                        },
-                        modifiedByUser: {
-                            displayName: 'John Doe'
-                        }
-                    }
-                }
-            ]
-        }
-    };
-
-    let folderResult = {
-        list: {
-            pagination: {
-                hasMoreItems: false,
-                maxItems: 25,
-                skipCount: 0,
-                totalItems: 1
-            },
-            entries: [
-                {
-                    entry: {
-                        id: '123',
-                        name: 'MyFolder',
-                        isFile: false,
-                        isFolder: true,
-                        createdByUser: {
-                            displayName: 'John Doe'
-                        },
-                        modifiedByUser: {
-                            displayName: 'John Doe'
-                        }
-                    }
-                }
-            ]
-        }
-    };
-
-    let noResult = {
-        list: {
-            pagination: {
-                hasMoreItems: false,
-                maxItems: 25,
-                skipCount: 0,
-                totalItems: 0
-            },
-            entries: []
-        }
-    };
-
-    let errorJson = {
-        error: {
-            errorKey: 'Search failed',
-            statusCode: 400,
-            briefSummary: '08220082 search failed',
-            stackTrace: 'For security reasons the stack trace is no longer displayed, but the property is kept for previous versions.',
-            descriptionURL: 'https://api-explorer.alfresco.com'
-        }
+    let updateSearchTerm = (newSearchTerm: string): void => {
+        let oldSearchTerm = component.searchTerm;
+        component.searchTerm = newSearchTerm;
+        component.ngOnChanges({searchTerm: { currentValue: newSearchTerm, previousValue: oldSearchTerm}});
     };
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
-                DocumentListModule
+                CoreModule
             ],
-            declarations: [SearchComponent],
+            declarations: [ SearchComponent ], // declare the test component
             providers: [
-                SearchService,
                 {provide: AlfrescoTranslationService, useClass: TranslationMock},
-                {provide: NotificationService, useClass: NotificationService}
+                ThumbnailService,
+                AlfrescoSettingsService,
+                AlfrescoApiService,
+                AlfrescoAuthenticationService,
+                AlfrescoContentService,
+                SearchService
             ]
         }).compileComponents().then(() => {
             fixture = TestBed.createComponent(SearchComponent);
@@ -127,265 +64,367 @@ describe('SearchComponent', () => {
         });
     }));
 
-    afterEach(() => {
-        fixture.detectChanges();
-    });
+    describe('search results', () => {
 
-    it('should not have a search term by default', () => {
-        expect(component.searchTerm).toBe('');
-    });
+        let searchService;
 
-    it('should take the provided search term from query param provided via RouteParams', () => {
-        let injector = ReflectiveInjector.resolveAndCreate([
-            {provide: ActivatedRoute, useValue: {params: Observable.from([{q: 'exampleTerm692'}])}}
-        ]);
+        beforeEach(() => {
+            searchService = fixture.debugElement.injector.get(SearchService);
+        });
 
-        let search = new SearchComponent(null, null, null, injector.get(ActivatedRoute));
+        it('should clear results straight away when a new search term is entered', async(() => {
 
-        search.ngOnInit();
-
-        expect(search.searchTerm).toBe('exampleTerm692');
-    });
-
-    it('should show the Notification snackbar on permission error', () => {
-        const notoficationService = TestBed.get(NotificationService);
-        spyOn(notoficationService, 'openSnackMessage');
-
-        component.handlePermission(new PermissionModel());
-
-        expect(notoficationService.openSnackMessage).toHaveBeenCalledWith('PERMISSON.LACKOF', 3000);
-    });
-
-    describe('Search results', () => {
-
-        it('should add wildcard in the search parameters', (done) => {
-            let searchTerm = 'searchTerm6368';
-            let searchTermOut = 'searchTerm6368*';
-            let options = {
-                include: ['path', 'allowableOperations'],
-                skipCount: 0,
-                rootNodeId: '-my-',
-                nodeType: 'my:type',
-                maxItems: 20,
-                orderBy: null
-            };
-
-            component.searchTerm = searchTerm;
-            component.rootNodeId = '-my-';
-            component.resultType = 'my:type';
-            let searchService = fixture.debugElement.injector.get(SearchService);
             spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(result));
-            fixture.detectChanges();
+
+            component.searchTerm = 'searchTerm';
+            component.ngOnChanges({searchTerm: { currentValue: 'searchTerm', previousValue: ''} });
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                component.searchTerm = 'searchTerm2';
+                component.ngOnChanges({searchTerm: { currentValue: 'searchTerm2', previousValue: 'searchTerm'} });
+                fixture.detectChanges();
+                expect(element.querySelectorAll('tbody[data-automation-id="autocomplete_results"] tr').length).toBe(0);
+            });
+        }));
+
+        it('should display the returned search results', (done) => {
+
+            spyOn(searchService, 'getQueryNodesPromise')
+                .and.returnValue(Promise.resolve(result));
 
             component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
-                expect(searchService.getQueryNodesPromise).toHaveBeenCalledWith(searchTermOut, options);
+                expect( element.querySelector('#result_user_0').innerHTML).toBe('John Doe');
+                expect( element.querySelector('#result_name_0').innerHTML).toContain('MyDoc');
                 done();
             });
+
+            updateSearchTerm('searchTerm');
         });
 
-        it('should display search results when a search term is provided', (done) => {
-            let searchService = TestBed.get(SearchService);
-            spyOn(searchService, 'getQueryNodesPromise').and.returnValue(Promise.resolve(result));
-            component.searchTerm = '';
+        it('should highlight the searched word', (done) => {
+            component.highlight = true;
+            spyOn(searchService, 'getQueryNodesPromise')
+                .and.returnValue(Promise.resolve(results));
 
-            fixture.detectChanges();
-
-            fixture.whenStable().then(() => {
-                component.resultsLoad.subscribe(() => {
-                    fixture.detectChanges();
-                    let resultsEl = element.querySelector('[data-automation-id="text_MyDoc"]');
-                    expect(resultsEl).not.toBeNull();
-                    expect(resultsEl.innerHTML.trim()).toContain('MyDoc');
-                    done();
-                });
-
-                component.ngOnChanges({searchTerm: new SimpleChange('', 'searchTerm', true)});
+            component.resultsLoad.subscribe(() => {
+                fixture.detectChanges();
+                let el: any = element.querySelectorAll('tbody[data-automation-id="autocomplete_results"] tr')[1].children[1].children[0];
+                expect(el.innerText).toEqual('MyDoc');
+                let spanHighlight = el.children[0];
+                expect(spanHighlight.classList[0]).toEqual('highlight');
+                expect(spanHighlight.innerText).toEqual('My');
+                done();
             });
+
+            updateSearchTerm('My');
+
+        });
+
+        it('should limit the number of returned search results to the configured maximum', (done) => {
+
+            spyOn(searchService, 'getQueryNodesPromise')
+                .and.returnValue(Promise.resolve(results));
+
+            component.resultsLoad.subscribe(() => {
+                fixture.detectChanges();
+                expect(element.querySelectorAll('tbody[data-automation-id="autocomplete_results"] tr').length).toBe(2);
+                done();
+            });
+
+            component.maxResults = 2;
+            updateSearchTerm('searchTerm');
+        });
+
+        it('should display the correct thumbnail for result items', (done) => {
+
+            spyOn(searchService, 'getQueryNodesPromise')
+                .and.returnValue(Promise.resolve(result));
+
+            let thumbnailService = fixture.debugElement.injector.get(ThumbnailService);
+            spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue('fake-type-icon.svg');
+
+            component.resultsLoad.subscribe(() => {
+                fixture.detectChanges();
+                let imgEl = <any> element.querySelector('#result_row_0 img');
+                expect(imgEl).not.toBeNull();
+                expect(imgEl.src).toContain('fake-type-icon.svg');
+                done();
+            });
+
+            updateSearchTerm('searchTerm');
         });
 
         it('should display no result if no result are returned', (done) => {
 
-            let searchService = TestBed.get(SearchService);
             spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(noResult));
 
-            component.searchTerm = '';
-
-            fixture.detectChanges();
-
-            fixture.whenStable().then(() => {
-
-                component.resultsLoad.subscribe(() => {
-                    fixture.detectChanges();
-                    expect(element.querySelector('.no-result-message')).not.toBeNull();
-                    done();
-                });
-
-                component.ngOnChanges({searchTerm: new SimpleChange('', 'searchTerm', true)});
+            component.resultsLoad.subscribe(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#search_no_result')).not.toBeNull();
+                done();
             });
+
+            updateSearchTerm('searchTerm');
+        });
+
+    });
+
+    describe('errors', () => {
+
+        let searchService;
+
+        beforeEach(() => {
+            searchService = fixture.debugElement.injector.get(SearchService);
+            spyOn(searchService, 'getQueryNodesPromise')
+                .and.returnValue(Promise.reject(errorJson));
         });
 
         it('should display an error if an error is encountered running the search', (done) => {
 
-            let searchService = TestBed.get(SearchService);
-            spyOn(searchService, 'getQueryNodesPromise')
-                .and.returnValue(Promise.reject(errorJson));
-
-            component.searchTerm = '';
-
-            fixture.detectChanges();
-
-            fixture.whenStable().then(() => {
-
-                component.resultsLoad.subscribe(() => {
-                }, () => {
-                    fixture.detectChanges();
-                    let errorEl = element.querySelector('[data-automation-id="search_error_message"]');
-                    expect(errorEl).not.toBeNull();
-                    expect((<any> errorEl).innerText).toBe('SEARCH.RESULTS.ERROR');
-                    done();
-                });
-
-                component.ngOnChanges({searchTerm: new SimpleChange('', 'searchTerm', true)});
+            component.resultsLoad.subscribe(() => {}, () => {
+                fixture.detectChanges();
+                let resultsEl = element.querySelector('[data-automation-id="autocomplete_results"]');
+                let errorEl = <any> element.querySelector('[data-automation-id="autocomplete_error_message"]');
+                expect(resultsEl).toBeNull();
+                expect(errorEl).not.toBeNull();
+                expect(errorEl.innerText.trim()).toBe('SEARCH.RESULTS.ERROR');
+                done();
             });
+
+            updateSearchTerm('searchTerm');
         });
 
-        it('should update search results when the search term input is changed', (done) => {
+        it('should clear errors straight away when a new search is performed', async(() => {
 
-            let searchService = TestBed.get(SearchService);
+            updateSearchTerm('searchTerm');
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                component.searchTerm = 'searchTerm2';
+                component.ngOnChanges({searchTerm: { currentValue: 'searchTerm2', previousValue: 'searchTerm'} });
+                fixture.detectChanges();
+                let errorEl = <any> element.querySelector('[data-automation-id="autocomplete_error_message"]');
+                expect(errorEl).toBeNull();
+            });
+        }));
+
+    });
+
+    describe('mouse interactions', () => {
+
+        let searchService;
+
+        beforeEach(() => {
+            searchService = fixture.debugElement.injector.get(SearchService);
+        });
+
+        it('should emit fileSelect event when file item clicked', (done) => {
+
             spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(result));
 
-            component.searchTerm = '';
+            component.resultsLoad.subscribe(() => {
+                fixture.detectChanges();
+                (<any> element.querySelector('#result_row_0')).click();
+            });
 
-            fixture.detectChanges();
+            updateSearchTerm('searchTerm');
 
-            fixture.whenStable().then(() => {
-                component.resultsLoad.subscribe(() => {
-                    fixture.detectChanges();
-                    expect(searchService.getQueryNodesPromise).toHaveBeenCalled();
-                    let resultsEl = element.querySelector('[data-automation-id="text_MyDoc"]');
-                    expect(resultsEl).not.toBeNull();
-                    expect(resultsEl.innerHTML.trim()).toContain('MyDoc');
-                    done();
-                });
-
-                component.ngOnChanges({searchTerm: new SimpleChange('', 'searchTerm2', true)});
+            component.fileSelect.subscribe(() => {
+                done();
             });
         });
+
+        it('should emit fileSelect event if when folder item clicked', (done) => {
+
+            spyOn(searchService, 'getQueryNodesPromise').and.returnValue(Promise.resolve(folderResult));
+
+            spyOn(component.fileSelect, 'emit');
+            component.resultsLoad.subscribe(() => {
+                fixture.detectChanges();
+                (<any> element.querySelector('#result_row_0')).click();
+                expect(component.fileSelect.emit).toHaveBeenCalled();
+                done();
+            });
+
+            updateSearchTerm('searchTerm');
+        });
+
     });
 
-    describe('search result interactions', () => {
+    describe('keyboard interactions', () => {
 
-        let debugElement: DebugElement;
-        let searchService: SearchService;
-        let querySpy: jasmine.Spy;
-        let emitSpy: jasmine.Spy;
+        let searchService;
 
         beforeEach(() => {
-            debugElement = fixture.debugElement;
-            searchService = TestBed.get(SearchService);
-            querySpy = spyOn(searchService, 'getQueryNodesPromise').and.returnValue(Promise.resolve(result));
-            emitSpy = spyOn(component.preview, 'emit');
+            searchService = fixture.debugElement.injector.get(SearchService);
+            spyOn(searchService, 'getQueryNodesPromise')
+                .and.returnValue(Promise.resolve(results));
         });
 
-        describe('click results', () => {
+        it('should emit file select when enter key pressed when a file item is in focus', (done) => {
 
-            beforeEach(() => {
-                component.navigationMode = SearchComponent.SINGLE_CLICK_NAVIGATION;
+            component.resultsLoad.subscribe(() => {
+                fixture.detectChanges();
+                (<any> element.querySelector('#result_row_0')).dispatchEvent(new KeyboardEvent('keyup', {
+                    key: 'Enter'
+                }));
             });
 
-            it('should emit preview event when file item clicked', (done) => {
+            updateSearchTerm('searchTerm');
 
-                component.searchTerm = '';
-
-                fixture.detectChanges();
-
-                fixture.whenStable().then(() => {
-                    component.resultsLoad.subscribe(() => {
-                        fixture.detectChanges();
-
-                        let resultsEl = element.querySelector('[data-automation-id="text_MyDoc"]');
-                        resultsEl.dispatchEvent(new Event('click'));
-
-                        done();
-                    });
-
-                    component.ngOnChanges({searchTerm: new SimpleChange('', 'searchTerm', true)});
-                });
-            });
-
-            it('should emit preview event when non-file item is clicked', (done) => {
-                querySpy.and.returnValue(Promise.resolve(folderResult));
-
-                component.searchTerm = '';
-
-                fixture.detectChanges();
-
-                fixture.whenStable().then(() => {
-                    component.resultsLoad.subscribe(() => {
-                        fixture.detectChanges();
-
-                        let resultsEl = element.querySelector('[data-automation-id="text_MyFolder"]');
-                        resultsEl.dispatchEvent(new Event('click'));
-
-                        done();
-                    });
-
-                    component.ngOnChanges({searchTerm: new SimpleChange('', 'searchTerm', true)});
-                });
+            component.fileSelect.subscribe(() => {
+                done();
             });
         });
 
-        describe('double click results', () => {
+        it('should emit cancel event when escape key pressed when a result is in focus', (done) => {
 
-            beforeEach(() => {
-                component.navigationMode = SearchComponent.DOUBLE_CLICK_NAVIGATION;
+            component.resultsLoad.subscribe(() => {
+                fixture.detectChanges();
+                (<any> element.querySelector('#result_row_0')).dispatchEvent(new KeyboardEvent('keyup', {
+                    key: 'Escape'
+                }));
             });
 
-            it('should emit preview event when file item clicked', (done) => {
-                component.searchTerm = '';
+            updateSearchTerm('searchTerm');
 
-                fixture.detectChanges();
-
-                fixture.whenStable().then(() => {
-                    component.resultsLoad.subscribe(() => {
-                        fixture.detectChanges();
-
-                        let resultsEl = element.querySelector('[data-automation-id="text_MyDoc"]');
-                        resultsEl.dispatchEvent(new Event('dblclick'));
-
-                        done();
-                    });
-
-                    component.ngOnChanges({searchTerm: new SimpleChange('', 'searchTerm', true)});
-                });
-            });
-
-            it('should emit preview event when non-file item is clicked', (done) => {
-
-                querySpy.and.returnValue(Promise.resolve(folderResult));
-
-                component.searchTerm = '';
-
-                fixture.detectChanges();
-
-                fixture.whenStable().then(() => {
-
-                    component.resultsLoad.subscribe(() => {
-                        fixture.detectChanges();
-
-                        let resultsEl = element.querySelector('[data-automation-id="text_MyFolder"]');
-                        resultsEl.dispatchEvent(new Event('dblclick'));
-
-                        done();
-                    });
-
-                    component.ngOnChanges({searchTerm: new SimpleChange('', 'searchTerm', true)});
-                });
+            component.cancel.subscribe(() => {
+                done();
             });
         });
+
+        it('should focus the next result when down arrow key pressed when a result is in focus', (done) => {
+
+            component.resultsLoad.subscribe(() => {
+                fixture.detectChanges();
+                let firstResult: any = element.querySelector('#result_row_0');
+                let secondResult: any = element.querySelector('#result_row_1');
+                spyOn(secondResult, 'focus');
+                firstResult.focus();
+                firstResult.dispatchEvent(new KeyboardEvent('keyup', {
+                    key: 'ArrowDown'
+                }));
+                expect(secondResult.focus).toHaveBeenCalled();
+                done();
+            });
+
+            updateSearchTerm('searchTerm');
+        });
+
+        it('should do nothing when down arrow key pressed when the last result is in focus', (done) => {
+
+            component.resultsLoad.subscribe(() => {
+                fixture.detectChanges();
+                let lastResult: any = element.querySelector('#result_row_2');
+                lastResult.focus();
+                lastResult.dispatchEvent(new KeyboardEvent('keyup', {
+                    key: 'ArrowDown'
+                }));
+                done();
+            });
+
+            updateSearchTerm('searchTerm');
+        });
+
+        it('should focus the previous result when up arrow key pressed when a result is in focus', (done) => {
+
+            component.resultsLoad.subscribe(() => {
+                fixture.detectChanges();
+                let firstResult: any = element.querySelector('#result_row_0');
+                let secondResult: any = element.querySelector('#result_row_1');
+                spyOn(firstResult, 'focus');
+                secondResult.focus();
+                secondResult.dispatchEvent(new KeyboardEvent('keyup', {
+                    key: 'ArrowUp'
+                }));
+                expect(firstResult.focus).toHaveBeenCalled();
+                done();
+            });
+
+            updateSearchTerm('searchTerm');
+        });
+
+        it('should emit scroll back event when up arrow key pressed and the first result is in focus', (done) => {
+
+            component.resultsLoad.subscribe(() => {
+                fixture.detectChanges();
+                let firstResult: any = element.querySelector('#result_row_0');
+                firstResult.dispatchEvent(new KeyboardEvent('keyup', {
+                    key: 'ArrowUp'
+                }));
+            });
+
+            component.scrollBack.subscribe(() => {
+                done();
+            });
+
+            updateSearchTerm('searchTerm');
+        });
+
     });
+
+    describe('changing focus', () => {
+
+        let searchService;
+
+        beforeEach(() => {
+            searchService = fixture.debugElement.injector.get(SearchService);
+            spyOn(searchService, 'getQueryNodesPromise')
+                .and.returnValue(Promise.resolve(result));
+        });
+
+        it('should emit a focus event when a result comes into focus', (done) => {
+
+            component.resultsLoad.subscribe(() => {
+                fixture.detectChanges();
+                (<any> element.querySelector('#result_row_0')).dispatchEvent(new FocusEvent('focus'));
+            });
+
+            updateSearchTerm('searchTerm');
+
+            component.searchFocus.subscribe((e: FocusEvent) => {
+                expect(e).not.toBeNull();
+                expect(e.type).toBe('focus');
+                done();
+            });
+        });
+
+        it('should emit a focus event when a result loses focus', (done) => {
+
+            component.resultsLoad.subscribe(() => {
+                fixture.detectChanges();
+                (<any> element.querySelector('#result_row_0')).dispatchEvent(new FocusEvent('blur'));
+            });
+
+            updateSearchTerm('searchTerm');
+
+            component.searchFocus.subscribe((e: FocusEvent) => {
+                expect(e).not.toBeNull();
+                expect(e.type).toBe('blur');
+                done();
+            });
+        });
+
+        it('should give focus to the first result when focusResult() is called externally', (done) => {
+
+            component.resultsLoad.subscribe(() => {
+                fixture.detectChanges();
+                let firstResult: any = element.querySelector('#result_row_0');
+                spyOn(firstResult, 'focus');
+                component.focusResult();
+                expect(firstResult.focus).toHaveBeenCalled();
+                done();
+            });
+
+            updateSearchTerm('searchTerm');
+        });
+
+    });
+
 });
+*/

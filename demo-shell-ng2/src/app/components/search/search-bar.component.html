@@ -10,18 +10,20 @@
   </mat-form-field>
 </div>
 
-<adf-search-autocomplete #auto="adfSearchAutocomplete">
-  <ng-template let-result="$implicit">
-    <mat-option *ngIf="result">
-      <div class="adf-search-elements">
-        <mat-icon *ngIf="result">
-          <img [src]="getMimeTypeIcon(result)" />
-        </mat-icon>
-        <span>{{ result?.entry.name }}</span>
-      </div>
-    </mat-option>
+<adf-search #auto="adfSearchAutocomplete" class="adf-search-result-autocomplete">
+  <ng-template let-data>
+      <mat-list>
+        <mat-option *ngFor="let item of data?.list?.entries">
+          <div class="adf-search-elements">
+            <mat-icon *ngIf="item">
+              <img [src]="getMimeTypeIcon(item)" />
+            </mat-icon>
+            <span>{{ item?.entry.name }}</span>
+          </div>
+        </mat-option>
+      </mat-list>
   </ng-template>
-</adf-search-autocomplete>
+</adf-search>
 
 <adf-viewer *ngIf="fileShowed" [(showViewer)]="fileShowed" [fileNodeId]="fileNodeId" [overlayMode]="true">
   <mat-spinner></mat-spinner>

@@ -15,30 +15,53 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, OnInit, Optional, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { NodePaging, Pagination } from 'alfresco-js-api';
-import { AlfrescoTranslationService, NotificationService, SearchOptions, SearchService } from 'ng2-alfresco-core';
-import { PermissionModel } from 'ng2-alfresco-documentlist';
+import {
+    AfterContentInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ContentChild,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnChanges,
+    Output,
+    TemplateRef,
+    ViewChild,
+    ViewEncapsulation
+} from '@angular/core';
+import { NodePaging } from 'alfresco-js-api';
+import { SearchOptions, SearchService } from 'ng2-alfresco-core';
+import { Subject } from 'rxjs/Subject';
 
-declare var require: any;
+let _uniqueAutocompleteIdCounter = 0;
 
 @Component({
+    moduleId: module.id,
     selector: 'adf-search',
-    styleUrls: ['./search.component.scss'],
     templateUrl: './search.component.html',
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./search.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    preserveWhitespaces: false,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    exportAs: 'adfSearchAutocomplete',
+    host: {
+        'class': 'adf-search'
+    }
 })
-export class SearchComponent implements OnChanges, OnInit {
+export class SearchComponent implements AfterContentInit, OnChanges {
 
-    static SINGLE_CLICK_NAVIGATION: string = 'click';
-    static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
+    @ViewChild('panel')
+    panel: ElementRef;
+
+    @ContentChild(TemplateRef)
+    template: TemplateRef<any>;
 
     @Input()
-    searchTerm: string = '';
+    displayWith: ((value: any) => string) | null = null;
 
     @Input()
-    maxResults: number = 20;
+    maxResults: number = 5;
 
     @Input()
     resultSort: string = null;
@@ -50,121 +73,122 @@ export class SearchComponent implements OnChanges, OnInit {
     resultType: string = null;
 
     @Input()
-    navigationMode: string = SearchComponent.DOUBLE_CLICK_NAVIGATION; // click|dblclick
+    searchTerm: string = '';
 
-    @Input()
-    navigate: boolean = true;
-
-    @Input()
-    emptyFolderImageUrl: string = require('../assets/images/empty_doc_lib.svg');
-
-    @Output()
-    resultsLoad = new EventEmitter();
-
-    @Output()
-    preview: EventEmitter<any> = new EventEmitter<any>();
-
-    @Output()
-    nodeDbClick: EventEmitter<any> = new EventEmitter<any>();
-
-    pagination: Pagination;
-    errorMessage;
-    queryParamName = 'q';
-    skipCount: number = 0;
-    nodeResults: NodePaging;
-
-    constructor(private searchService: SearchService,
-                private translateService: AlfrescoTranslationService,
-                private notificationService: NotificationService,
-                @Optional() private route: ActivatedRoute) {
+    @Input('class')
+    set classList(classList: string) {
+        if (classList && classList.length) {
+            classList.split(' ').forEach(className => this._classList[className.trim()] = true);
+            this._elementRef.nativeElement.className = '';
+        }
     }
 
-    ngOnInit() {
-        if (this.route) {
-            this.route.params.forEach((params: Params) => {
-                this.searchTerm = params.hasOwnProperty(this.queryParamName) ? params[this.queryParamName] : null;
-                this.displaySearchResults(this.searchTerm);
+    @Output()
+    success: EventEmitter<NodePaging> = new EventEmitter();
+
+    showPanel: boolean = false;
+    results: NodePaging;
+
+    get isOpen(): boolean {
+        return this._isOpen && this.showPanel;
+    }
+
+    set isOpen(value: boolean) {
+        this._isOpen = value;
+    }
+
+    _isOpen: boolean = false;
+
+    keyPressedStream: Subject<string> = new Subject();
+
+    _classList: { [key: string]: boolean } = {};
+
+    id: string = `search-${_uniqueAutocompleteIdCounter++}`;
+
+    constructor(
+        private searchService: SearchService,
+        private changeDetectorRef: ChangeDetectorRef,
+        private _elementRef: ElementRef) {
+        this.keyPressedStream.asObservable()
+            .debounceTime(200)
+            .distinctUntilChanged()
+            .subscribe((searchedWord: string) => {
+                this.displaySearchResults(searchedWord);
             });
-        } else {
-            this.displaySearchResults(this.searchTerm);
+    }
+
+    ngAfterContentInit() {
+        this.setVisibility();
+    }
+
+    ngOnChanges(changes) {
+        if (changes.searchTerm) {
+            this.cleanResults();
+            this.displaySearchResults(changes.searchTerm.currentValue);
         }
     }
 
-    ngOnChanges(changes: SimpleChanges) {
-        if (changes['searchTerm']) {
-            this.searchTerm = changes['searchTerm'].currentValue;
-            this.skipCount = 0;
-            this.displaySearchResults(this.searchTerm);
+    resetResults() {
+        this.cleanResults();
+        this.setVisibility();
+    }
+
+    private cleanResults() {
+        if (this.results) {
+            this.results = {};
         }
     }
 
-    onDoubleClick($event: any) {
-        if (!this.navigate && $event.value) {
-            this.nodeDbClick.emit({ value: $event.value });
-        }
-    }
-
-    onPreviewFile(event: any) {
-        if (event.value) {
-            this.preview.emit({ value: event.value });
-        }
-    }
-
-    /**
-     * Loads and displays search results
-     * @param searchTerm Search query entered by user
-     */
     private displaySearchResults(searchTerm) {
-        if (searchTerm && this.searchService) {
+        let searchOpts: SearchOptions = {
+            include: ['path'],
+            rootNodeId: this.rootNodeId,
+            nodeType: this.resultType,
+            maxItems: this.maxResults,
+            orderBy: this.resultSort
+        };
+        if (searchTerm !== null && searchTerm !== '') {
             searchTerm = searchTerm + '*';
-            let searchOpts: SearchOptions = {
-                include: ['path', 'allowableOperations'],
-                skipCount: this.skipCount,
-                rootNodeId: this.rootNodeId,
-                nodeType: this.resultType,
-                maxItems: this.maxResults,
-                orderBy: this.resultSort
-            };
             this.searchService
                 .getNodeQueryResults(searchTerm, searchOpts)
                 .subscribe(
-                    results => {
-                        this.nodeResults = <NodePaging> results;
-                        this.pagination = results.list.pagination;
-                        this.resultsLoad.emit(results.list.entries);
-                        this.errorMessage = null;
-                    },
-                    error => {
-                        if (error.status !== 400) {
-                            this.errorMessage = <any> error;
-                            this.resultsLoad.error(error);
-                        }
-                    }
+                results => {
+                    this.results = <NodePaging>results;
+                    this.success.emit(this.results);
+                    this.setVisibility();
+                },
+                error => {
+                    this.results = null;
+                }
                 );
         }
     }
 
-    public onChangePageSize(event: Pagination): void {
-        this.maxResults = event.maxItems;
-        this.displaySearchResults(this.searchTerm);
+    _setScrollTop(scrollTop: number): void {
+        if (this.panel) {
+            this.panel.nativeElement.scrollTop = scrollTop;
+        }
     }
 
-    public onNextPage(event: Pagination): void {
-        this.skipCount = event.skipCount;
-        this.displaySearchResults(this.searchTerm);
+    _getScrollTop(): number {
+        return this.panel ? this.panel.nativeElement.scrollTop : 0;
     }
 
-    public onPrevPage(event: Pagination): void {
-        this.skipCount = event.skipCount;
-        this.displaySearchResults(this.searchTerm);
+    hidePanel() {
+        if (this.isOpen) {
+            this._classList['adf-search-show'] = false;
+            this._classList['adf-search-hide'] = true;
+            this.isOpen = false;
+            this.changeDetectorRef.markForCheck();
+        }
     }
 
-    public onContentDelete(entry: any) {
-        this.displaySearchResults(this.searchTerm);
-    }
-
-    public handlePermission(permission: PermissionModel): void {
-        let permissionErrorMessage: any = this.translateService.get('PERMISSON.LACKOF', permission);
-        this.notificationService.openSnackMessage(permissionErrorMessage.value, 3000);
+    setVisibility() {
+        this.showPanel = !!this.results &&
+                         !!this.results.list &&
+                         !!this.results.list.entries.length;
+        this._classList['adf-search-show'] = this.showPanel;
+        this._classList['adf-search-hide'] = !this.showPanel;
+        this.changeDetectorRef.markForCheck();
     }
 }

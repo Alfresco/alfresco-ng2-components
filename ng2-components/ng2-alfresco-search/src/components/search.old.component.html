@@ -1,0 +1,81 @@
+<div data-automation-id="search_result_table"
+     class="adf-data-table full-width">
+    <p data-automation-id="search_error_message" *ngIf="errorMessage">{{ 'SEARCH.RESULTS.ERROR' | translate:{errorMessage: errorMessage} }}</p>
+    <div class="container">
+        <adf-document-list
+            [node]="nodeResults"
+            [contextMenuActions]="true"
+            [contentActions]="true"
+            [navigationMode]="navigationMode"
+            [navigate]="navigate"
+            [enablePagination]="false"
+            (nodeDblClick)="onDoubleClick($event)"
+            (preview)="onPreviewFile($event)">
+            <empty-folder-content>
+                <ng-template>
+                    <div class="empty_template">
+                        <div class="no-result-message">{{ 'SEARCH.RESULTS.NONE' | translate:{searchTerm: searchTerm} }}</div>
+                        <img [src]="emptyFolderImageUrl" class="no-result__empty_doc_lib">
+                    </div>
+                </ng-template>
+            </empty-folder-content>
+            <data-columns>
+                <data-column key="$thumbnail" type="image"></data-column>
+                <data-column
+                    title="{{'SEARCH.DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
+                    key="name"
+                    sortable="true"
+                    class="full-width ellipsis-cell">
+                </data-column>
+                <data-column
+                    title="{{'SEARCH.DOCUMENT_LIST.COLUMNS.CREATED_BY' | translate}}"
+                    key="createdByUser.displayName"
+                    sortable="true"
+                    class="desktop-only">
+                </data-column>
+                <data-column
+                    title="{{'SEARCH.DOCUMENT_LIST.COLUMNS.CREATED_ON' | translate}}"
+                    key="createdAt"
+                    type="date"
+                    format="medium"
+                    sortable="true"
+                    class="desktop-only">
+                </data-column>
+            </data-columns>
+
+            <content-actions>
+                <!-- folder actions -->
+                <content-action
+                    target="folder"
+                    title="{{'SEARCH.DOCUMENT_LIST.ACTIONS.FOLDER.DELETE' | translate}}"
+                    permission="delete"
+                    handler="delete"
+                    (permissionEvent)="handlePermission($event)">
+                </content-action>
+                <!-- document actions -->
+                <content-action
+                    target="document"
+                    title="{{'SEARCH.DOCUMENT_LIST.ACTIONS.DOCUMENT.DOWNLOAD' | translate}}"
+                    handler="download">
+                </content-action>
+                <content-action
+                    target="document"
+                    title="{{'SEARCH.DOCUMENT_LIST.ACTIONS.DOCUMENT.DELETE' | translate}}"
+                    permission="delete"
+                    handler="delete"
+                    (execute)="onContentDelete($event)"
+                    (permissionEvent)="handlePermission($event)">
+                </content-action>
+            </content-actions>
+        </adf-document-list>
+
+        <adf-pagination
+            (changePageSize)="onChangePageSize($event)"
+            (nextPage)="onNextPage($event)"
+            (prevPage)="onPrevPage($event)"
+            [pagination]="pagination"
+            [maxItems]="maxResults"
+            [supportedPageSizes]="[5, 10, 15, 20]">
+        </adf-pagination>
+    </div>
+</div>

@@ -33,7 +33,7 @@ import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { SearchTermValidator } from './../forms/search-term-validator';
-import { SearchAutocompleteComponent } from './search-autocomplete.component';
+import { SearchComponent } from './search.component';
 
 @Component({
     selector: 'adf-search-control',
@@ -83,8 +83,8 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     @ViewChild('searchInput', {})
     searchInput: ElementRef;
 
-    @ViewChild(SearchAutocompleteComponent)
-    liveSearchComponent: SearchAutocompleteComponent;
+    @ViewChild(SearchComponent )
+    liveSearchComponent: SearchComponent;
 
     @Input()
     liveSearchEnabled: boolean = true;

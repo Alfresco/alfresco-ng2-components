@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { MinimalNodeEntity } from 'alfresco-js-api';
@@ -23,7 +24,18 @@ import { AlfrescoAuthenticationService, ThumbnailService } from 'ng2-alfresco-co
 @Component({
     selector: 'search-bar',
     templateUrl: './search-bar.component.html',
-    styleUrls: ['./search-bar.component.scss']
+    styleUrls: ['./search-bar.component.scss'],
+    animations: [
+        trigger('transitionMessages', [
+            state('active', style({transform: 'translateX(0%)'})),
+            state('inactive', style({transform: 'translateX(83%)'})),
+            state('no-animation', style({transform: 'translateX(0%)', width: '100%'})),
+            transition('inactive => active',
+                animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)')),
+            transition('active => inactive',
+                animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)'))
+        ])
+    ]
 })
 export class SearchBarComponent {
 
