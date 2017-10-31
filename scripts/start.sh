@@ -75,7 +75,7 @@ enable_test() {
 }
 
 enable_js_api_git_link() {
-    GIT_ISH='git://github.com/Alfresco/alfresco-js-api.git#'$1
+    GIT_ISH='git+https://github.com/Alfresco/alfresco-js-api.git#'$1
     EXEC_GIT_NPM_INSTALL_JSAPI=true
 }
 
