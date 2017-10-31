@@ -26,7 +26,7 @@ import { ProcessInstanceHeaderComponent } from './process-instance-header.compon
 import { ProcessInstanceTasksComponent } from './process-instance-tasks.component';
 
 @Component({
-    selector: 'adf-process-instance-details, activiti-process-instance-details',
+    selector: 'adf-process-instance-details',
     templateUrl: './process-instance-details.component.html',
     styleUrls: ['./process-instance-details.component.css']
 })

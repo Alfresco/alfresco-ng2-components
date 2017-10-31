@@ -41,7 +41,7 @@ import { FormOutcomeModel } from './widgets/core/index';
  * @returns {FormComponent} .
  */
 @Component({
-    selector: 'adf-start-form, activiti-start-form',
+    selector: 'adf-start-form',
     templateUrl: './start-form.component.html',
     styleUrls: ['./form.component.scss'],
     encapsulation: ViewEncapsulation.None

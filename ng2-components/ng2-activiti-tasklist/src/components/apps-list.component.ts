@@ -24,7 +24,7 @@ import { IconModel } from '../models/icon.model';
 import { TaskListService } from './../services/tasklist.service';
 
 @Component({
-    selector: 'adf-apps, activiti-apps',
+    selector: 'adf-apps',
     templateUrl: 'apps-list.component.html',
     styleUrls: ['./apps-list.component.scss', './apps-grid.component.scss'],
     providers: [TaskListService]

@@ -27,7 +27,7 @@ import { Observable } from 'rxjs/Rx';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
 
 @Component({
-    selector: 'adf-form, activiti-form',
+    selector: 'adf-form',
     templateUrl: './form.component.html',
     styleUrls: ['./form.component.scss'],
     encapsulation: ViewEncapsulation.None

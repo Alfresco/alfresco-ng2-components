@@ -33,7 +33,7 @@ import { DataCellEvent } from './data-cell.event';
 import { DataRowActionEvent } from './data-row-action.event';
 
 @Component({
-    selector: 'adf-datatable, alfresco-datatable',
+    selector: 'adf-datatable',
     styleUrls: ['./datatable.component.scss'],
     templateUrl: './datatable.component.html'
 })

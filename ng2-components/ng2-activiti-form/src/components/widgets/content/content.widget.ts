@@ -23,7 +23,7 @@ import { ContentLinkModel } from '../core/content-link.model';
 import { FormService } from './../../../services/form.service';
 
 @Component({
-    selector: 'adf-content, activiti-content',
+    selector: 'adf-content',
     templateUrl: './content.widget.html',
     styleUrls: ['./content.widget.scss'],
     encapsulation: ViewEncapsulation.None

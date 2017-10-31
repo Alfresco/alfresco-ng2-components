@@ -20,7 +20,7 @@ import { ReportQuery } from 'ng2-activiti-diagrams';
 import { AnalyticsGeneratorComponent } from './analytics-generator.component';
 
 @Component({
-    selector: 'adf-analytics, activiti-analytics',
+    selector: 'adf-analytics',
     templateUrl: './analytics.component.html',
     styleUrls: ['./analytics.component.scss'],
     encapsulation: ViewEncapsulation.None
