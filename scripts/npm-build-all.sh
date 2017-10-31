@@ -3,6 +3,7 @@ set -f
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 eval RUN_TEST=false
+eval RUN_TESTBROWSER=false
 eval EXEC_FAST_TEST=false
 eval EXEC_CLEAN=false
 eval EXEC_BUILD=true
@@ -34,13 +35,14 @@ eval projects=( "ng2-alfresco-core"
 show_help() {
     echo "Usage: npm-build-all.sh"
     echo ""
-    echo "-t or -test build all your local component and run also the test on them , this parameter accept also a wildecard to execute test for example -t "ng2-alfresco-core" "
-    echo "-c or -clean the node_modules folder before to start the build"
-    echo "-si or -skipinstall skip the install node_modules folder before to start the build"
-    echo "-sb or skip build"
-    echo "-ft or -fast test build all your local component and run also the test in one single karma-test-shim (high memory consuming and less details)"
-    echo "-gitjsapi to build all the components against a commit-ish version of the JS-API"
-    echo "-vjsapi install different version from npm of JS-API defined in the package.json"
+    echo "-t or --test <pkg>        Build your local components and run their tests, this parameter also accept a wildecard to execute test e.g: -t "ng2-alfresco-core"."
+    echo "-d or --debug <pkg>       Build your local components and run their tests IN THE BROWSER, this parameter also accept a wildecard to execute test e.g: -t "ng2-alfresco-core"."
+    echo "-c or --clean             Clean the node_modules before starting the build."
+    echo "-si or --skipinstall      Skip the install of node_modules before starting the build."
+    echo "-sb or --skipbuild        Skip the build of ng-components."
+    echo "-ft or --fasttest         Build all your local component and run also the test in one single karma-test-shim (high memory consuming and less details)"
+    echo "-gitjsapi <commit-ish>    Build all the components against a commit-ish version of the JS-API"
+    echo "-vjsapi <commit-ish>      Install different version from npm of JS-API defined in the package.json"
 }
 
 enable_test(){
@@ -53,9 +55,23 @@ enable_test(){
     RUN_TEST=true
 }
 
+enable_testbrowser(){
+    if [[ ! -z $1 ]]; then
+        if [[  $1 != "-"* ]]; then
+            SINGLE_TEST=$1
+        fi
+    fi
+    RUN_TESTBROWSER=true
+}
+
 test_project() {
     echo "====== test project: $1 ====="
     npm run test -- --component $1 || exit 1
+}
+
+debug_project() {
+    echo "====== debug project: $1 ====="
+    npm run test-browser -- --component $1 || exit 1
 }
 
 enable_fast_test() {
@@ -100,6 +116,7 @@ while [[ $1 == -* ]]; do
                         shift;
                        fi
                        ;;
+      -d|--debug)  enable_testbrowser $2; shift; shift;;
       -ft|--fasttest)  enable_fast_test; shift;;
       -gitjsapi)  enable_js_api_git_link $2; shift 2;;
       -vjsapi)  version_js_api $2; shift 2;;
@@ -165,4 +182,14 @@ if $RUN_TEST == true; then
     done
 fi
 
+if $RUN_TESTBROWSER == true; then
+    for PACKAGE in ${projects[@]}
+    do
+        DESTDIR="$DIR/../ng2-components/"
+        cd $DESTDIR
+        if [[ $PACKAGE == $SINGLE_TEST ]]; then
+            debug_project $PACKAGE
+        fi
+    done
+fi
 
