@@ -5,6 +5,13 @@
       "ITEMS_PER_PAGE": "每页的项目",
       "CURRENT_PAGE": "第 {{number}} 页",
       "TOTAL_PAGES": "/共 {{total}} 页"
+    },
+    "HOST_SETTINGS": {
+      "TITLE": "设置",
+      "CS-HOST": "Content Services 主机 URL 配置",
+      "BP-HOST": "流程服务主机 URL 配置",
+      "BACK": "返回",
+      "APPLY": "应用"
     }
   }
 }

@@ -5,6 +5,13 @@
       "ITEMS_PER_PAGE": "Elementer per side",
       "CURRENT_PAGE": "Side {{ number }}",
       "TOTAL_PAGES": "av {{ total }}"
+    },
+    "HOST_SETTINGS": {
+      "TITLE": "Innstillinger",
+      "CS-HOST": "Innholdstjenestevert URL-konfigurasjon",
+      "BP-HOST": "Prosesstjenestevert URL-konfigurasjon",
+      "BACK": "Tilbake",
+      "APPLY": "BRUK"
     }
   }
 }

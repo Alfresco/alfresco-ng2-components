@@ -72,14 +72,6 @@
         "START-PROCESS": "Start process",
         "AUDIT-LOG": "Process Audit log"
     },
-    "SETTINGS": {
-        "TITLE": "Settings",
-        "CS-HOST": "Content Services host URL configuration",
-        "BP-HOST": "Process Services host URL configuration",
-        "BACK": "Back",
-        "APPLY": "APPLY",
-        "NOT_VALID": "Host not valid! http(s)://host|ip:port(/path)"
-    },
     "FORM-LIST": {
         "STORE": "Store",
         "RESTORE": "Restore"

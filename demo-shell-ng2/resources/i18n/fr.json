@@ -32,14 +32,7 @@
     "START-TASK": "Démarrer la tâche",
     "START-PROCESS": "Démarrer le processus",
     "AUDIT-LOG": "Journal d'audit des processus"
-  },
-  "SETTINGS": {
-    "TITLE": "Paramètres",
-    "CS-HOST": "Configuration de l'URL de l'hôte de Content Services",
-    "BP-HOST": "Configuration de l'URL de l'hôte de Process Services",
-    "BACK": "Retour",
-    "APPLY": "APPLIQUER"
-  },
+  }
   "FORM-LIST": {
     "STORE": "Stocker",
     "RESTORE": "Restaurer"

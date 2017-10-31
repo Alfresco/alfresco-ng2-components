@@ -92,6 +92,7 @@
     "ng2-activiti-form": "1.9.0",
     "ng2-alfresco-datatable": "1.9.0",
     "ng2-activiti-tasklist": "1.9.0",
+    "ng2-alfresco-upload": "1.9.0",
     "ng2-alfresco-documentlist": "1.9.0",
     "minimatch": "3.0.4",
     "pdfjs-dist": "1.5.404"

@@ -33,13 +33,6 @@
     "START-PROCESS": "Avvia processo",
     "AUDIT-LOG": "Log di audit processo"
   },
-  "SETTINGS": {
-    "TITLE": "Impostazioni",
-    "CS-HOST": "Configurazione URL host Content Services",
-    "BP-HOST": "Configurazione URL host Process Services",
-    "BACK": "Indietro",
-    "APPLY": "APPLICA"
-  },
   "FORM-LIST": {
     "STORE": "Memorizza",
     "RESTORE": "Ripristina"
