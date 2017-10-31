@@ -84,9 +84,9 @@
                     </div>
                     <mat-card>
                         <mat-card-content>
-                            <adf-task-attachments
+                            <adf-task-attachment-list
                                 [taskId]="currentTaskId">
-                            </adf-task-attachments>
+                            </adf-task-attachment-list>
                         </mat-card-content>
                     </mat-card>
                 </div>
@@ -170,10 +170,11 @@
                         <hr>
                     </div>
                     <mat-card>
+
                         <mat-card-content>
-                            <adf-process-attachments
-                                [processId]="currentProcessInstanceId">
-                            </adf-process-attachments>
+                            <adf-process-attachment-list
+                                []="currentProcessInstanceId">
+                            </adf-process-attachment-list>
                         </mat-card-content>
                     </mat-card>
                 </div>

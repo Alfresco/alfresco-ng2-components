@@ -28,7 +28,7 @@ import { ActivitiProcessAttachmentsComponent } from './components/activiti/activ
 import { ActivitiShowDiagramComponent } from './components/activiti/activiti-show-diagram.component';
 import { FormViewerComponent } from './components/activiti/form-viewer.component';
 import { FormNodeViewerComponent } from './components/activiti/form-node-viewer.component';
-import { ActivitiAppsViewComponent } from './components/activiti/apps.view';
+import { ActivitiAppsViewComponent } from './components/activiti/apps-view.component';
 import { DataTableComponent } from './components/datatable/datatable.component';
 import { FilesComponent } from './components/files/files.component';
 import { FileViewComponent } from './components/file-view/file-view.component';
