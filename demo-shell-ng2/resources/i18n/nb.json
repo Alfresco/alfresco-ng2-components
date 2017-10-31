@@ -33,13 +33,6 @@
     "START-PROCESS": "Start prosess",
     "AUDIT-LOG": "Behandle revisjonslogg"
   },
-  "SETTINGS": {
-    "TITLE": "Innstillinger",
-    "CS-HOST": "Innholdstjenestevert URL-konfigurasjon",
-    "BP-HOST": "Prosesstjenestevert URL-konfigurasjon",
-    "BACK": "Tilbake",
-    "APPLY": "BRUK"
-  },
   "FORM-LIST": {
     "STORE": "Lagre",
     "RESTORE": "Gjenopprett"

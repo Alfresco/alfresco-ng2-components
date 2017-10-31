@@ -5,6 +5,13 @@
       "ITEMS_PER_PAGE": "Items per pagina",
       "CURRENT_PAGE": "Pagina {{ number }}",
       "TOTAL_PAGES": "van {{ total }}"
+    },
+    "HOST_SETTINGS": {
+      "TITLE": "Instellingen",
+      "CS-HOST": "URL-configuratie Content Services-host",
+      "BP-HOST": "URL-configuratie Process Services-host",
+      "BACK": "Terug",
+      "APPLY": "TOEPASSEN"
     }
   }
 }

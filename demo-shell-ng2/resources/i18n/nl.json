@@ -33,13 +33,6 @@
     "START-PROCESS": "Proces starten",
     "AUDIT-LOG": "Auditlog van proces"
   },
-  "SETTINGS": {
-    "TITLE": "Instellingen",
-    "CS-HOST": "URL-configuratie Content Services-host",
-    "BP-HOST": "URL-configuratie Process Services-host",
-    "BACK": "Terug",
-    "APPLY": "TOEPASSEN"
-  },
   "FORM-LIST": {
     "STORE": "Opslaan",
     "RESTORE": "Herstellen"

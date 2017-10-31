@@ -5,6 +5,13 @@
       "ITEMS_PER_PAGE": "Элементов на странице",
       "CURRENT_PAGE": "Страница {{ number }}",
       "TOTAL_PAGES": "из {{ total }}"
+    },
+    "HOST_SETTINGS": {
+      "TITLE": "Параметры",
+      "CS-HOST": "Конфигурация URL-адреса хоста Content Services",
+      "BP-HOST": "Конфигурация URL-адреса хоста Process Services",
+      "BACK": "Назад",
+      "APPLY": "ПРИМЕНИТЬ"
     }
   }
 }

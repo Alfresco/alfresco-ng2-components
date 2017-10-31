@@ -30,6 +30,16 @@
             "PARTIAL_PLURAL": "Deleted {{ success }} items, {{ failed }} couldn't be deleted",
             "ERROR_SINGULAR": "{{ name }} couldn't be deleted",
             "ERROR_PLURAL": "{{ number }} items couldn't be deleted"
+        },
+        "HOST_SETTINGS" : {
+            "CS_URL_ERROR":"Content service address does not match the pattern",
+            "PS_URL_ERROR":"Process service address does not match the pattern",
+            "TITLE": "Settings",
+            "CS-HOST": "Content Services host URL configuration",
+            "BP-HOST": "Process Services host URL configuration",
+            "BACK": "Back",
+            "APPLY": "APPLY",
+            "NOT_VALID": "Host not valid! http(s)://host|ip:port(/path)"
         }
     }
 }

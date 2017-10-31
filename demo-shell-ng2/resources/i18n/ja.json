@@ -33,13 +33,6 @@
     "START-PROCESS": "プロセスの開始",
     "AUDIT-LOG": "プロセスの監査ログ"
   },
-  "SETTINGS": {
-    "TITLE": "設定",
-    "CS-HOST": "Content Services ホストの URL の設定",
-    "BP-HOST": "Process Services ホストの URL の設定",
-    "BACK": "戻る",
-    "APPLY": "適用"
-  },
   "FORM-LIST": {
     "STORE": "保存",
     "RESTORE": "復元"
