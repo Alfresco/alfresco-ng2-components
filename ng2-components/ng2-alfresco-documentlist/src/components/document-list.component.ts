@@ -167,6 +167,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     private layoutPresets = {};
     private currentNodeAllowableOperations: string[] = [];
     private CREATE_PERMISSION = 'create';
+    private defaultPageSizes = [5, 10, 15, 20];
 
     constructor(private documentListService: DocumentListService,
                 private ngZone: NgZone,
@@ -174,7 +175,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                 private apiService: AlfrescoApiService,
                 private appConfig: AppConfigService,
                 private preferences: UserPreferencesService) {
-        this.supportedPageSizes = appConfig.get('document-list.supportedPageSizes', [5, 10, 15, 20]);
+        this.supportedPageSizes = appConfig.get('document-list.supportedPageSizes', this.defaultPageSizes);
     }
 
     getContextActions(node: MinimalNodeEntity) {
@@ -203,8 +204,19 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         return this.columnList && this.columnList.columns && this.columnList.columns.length > 0;
     }
 
+    getDefaultPageSize(): number {
+        let result = this.preferences.paginationSize;
+
+        const pageSizes = this.supportedPageSizes || this.defaultPageSizes;
+        if (pageSizes && pageSizes.length > 0 && pageSizes.indexOf(result) < 0) {
+            result = pageSizes[0];
+        }
+
+        return result;
+    }
+
     ngOnInit() {
-        this.pageSize = this.preferences.paginationSize;
+        this.pageSize = this.getDefaultPageSize();
         this.loadLayoutPresets();
         this.data = new ShareDataTableAdapter(this.documentListService, null, this.getDefaultSorting());
         this.data.thumbnails = this.thumbnails;
