@@ -13,7 +13,7 @@
                     fxLayout="column"
                     role="button"
                     class="adf-app-listgrid-item-card"
-                    title="{{app.name}}"
+                    title="{{app.name | translate}}"
                     [ngClass]="[getTheme(app)]"
                     (click)="selectApp(app)"
                     (keyup.enter)="selectApp(app)">
