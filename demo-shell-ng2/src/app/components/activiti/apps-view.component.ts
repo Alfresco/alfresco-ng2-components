@@ -21,9 +21,7 @@ import { AppDefinitionRepresentationModel } from 'ng2-activiti-tasklist';
 
 @Component({
     selector: 'activiti-apps-view',
-    template: `
-        <activiti-apps (appClick)="onAppClicked($event)"></activiti-apps>
-    `
+    templateUrl: './apps-view.component.html'
 })
 export class ActivitiAppsViewComponent {
 
