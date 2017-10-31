@@ -23,7 +23,7 @@ import { FilterProcessRepresentationModel } from '../models/filter-process.model
 import { ProcessService } from './../services/process.service';
 
 @Component({
-    selector: 'adf-process-instance-filters, activiti-process-instance-filters',
+    selector: 'adf-process-instance-filters',
     templateUrl: './process-filters.component.html',
     styleUrls: ['process-filters.component.scss']
 })

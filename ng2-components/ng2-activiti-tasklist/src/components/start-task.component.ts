@@ -28,7 +28,7 @@ import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 
 @Component({
-    selector: 'adf-start-task, activiti-start-task',
+    selector: 'adf-start-task',
     templateUrl: './start-task.component.html',
     styleUrls: ['./start-task.component.scss'],
     providers: [

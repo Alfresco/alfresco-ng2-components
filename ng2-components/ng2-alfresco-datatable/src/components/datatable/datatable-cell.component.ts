@@ -21,7 +21,7 @@ import { DataRow } from '../../data/data-row.model';
 import { DataTableAdapter } from '../../data/datatable-adapter';
 
 @Component({
-    selector: 'adf-datatable-cell, alfresco-datatable-cell',
+    selector: 'adf-datatable-cell',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <ng-container>

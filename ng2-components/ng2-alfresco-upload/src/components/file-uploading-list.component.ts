@@ -20,7 +20,7 @@ import { AlfrescoTranslationService, FileModel, FileUploadStatus, NodesApiServic
 import { Observable } from 'rxjs/Rx';
 
 @Component({
-    selector: 'adf-file-uploading-list, alfresco-file-uploading-list',
+    selector: 'adf-file-uploading-list',
     templateUrl: './file-uploading-list.component.html',
     styleUrls: ['./file-uploading-list.component.scss']
 })

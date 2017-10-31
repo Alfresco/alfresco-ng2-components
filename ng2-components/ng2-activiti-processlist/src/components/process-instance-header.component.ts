@@ -20,7 +20,7 @@ import { CardViewDateItemModel, CardViewItem, CardViewTextItemModel } from 'ng2-
 import { ProcessInstance } from '../models/process-instance.model';
 
 @Component({
-    selector: 'adf-process-instance-header, activiti-process-instance-header',
+    selector: 'adf-process-instance-header',
     templateUrl: './process-instance-header.component.html',
     styleUrls: ['./process-instance-header.component.css']
 })

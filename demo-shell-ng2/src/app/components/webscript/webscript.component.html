@@ -4,11 +4,11 @@
 <input id="context-root" type="text" size="48" [(ngModel)]="contextRoot"><br>
 <label for="service-path"><b>Insert a servicePath</b></label><br>
 <input id="service-path" type="text" size="48" [(ngModel)]="servicePath"><br>
-<alfresco-webscript-get
+<adf-webscript-get
     [scriptPath]="scriptPath"
     [scriptArgs]="scriptArgs"
     [contextRoot]="contextRoot"
     [servicePath]="servicePath"
     [contentType]="'HTML'"
     (success)= "logData($event)">
-</alfresco-webscript-get>
+</adf-webscript-get>

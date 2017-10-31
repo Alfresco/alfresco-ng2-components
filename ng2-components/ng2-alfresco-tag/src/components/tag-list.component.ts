@@ -26,7 +26,7 @@ import { TagService } from '../services/tag.service';
  */
 
 @Component({
-    selector: 'adf-tag-list, alfresco-tag-list',
+    selector: 'adf-tag-list',
     templateUrl: './tag-list.component.html',
     styleUrls: ['./tag-list.component.scss'],
     encapsulation: ViewEncapsulation.None

@@ -22,7 +22,7 @@ import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 
 @Component({
-    selector: 'adf-checklist, activiti-checklist',
+    selector: 'adf-checklist',
     templateUrl: './checklist.component.html',
     styleUrls: ['./checklist.component.scss'],
     providers: [TaskListService]

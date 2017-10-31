@@ -41,7 +41,7 @@ import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
  * @returns {WebscriptComponent} .
  */
 @Component({
-    selector: 'adf-webscript-get, alfresco-webscript-get',
+    selector: 'adf-webscript-get',
     templateUrl: 'webscript.component.html'
 })
 export class WebscriptComponent implements OnChanges {

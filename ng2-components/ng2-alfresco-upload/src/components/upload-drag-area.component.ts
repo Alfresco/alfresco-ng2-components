@@ -28,7 +28,7 @@ import {
 } from 'ng2-alfresco-core';
 
 @Component({
-    selector: 'adf-upload-drag-area, alfresco-upload-drag-area',
+    selector: 'adf-upload-drag-area',
     templateUrl: './upload-drag-area.component.html',
     styleUrls: ['./upload-drag-area.component.css'],
     providers: [

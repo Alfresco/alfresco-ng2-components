@@ -25,7 +25,7 @@ import { PeopleSearchComponent } from './people-search.component';
 declare var require: any;
 
 @Component({
-    selector: 'adf-people, activiti-people',
+    selector: 'adf-people',
     templateUrl: './people.component.html',
     styleUrls: ['./people.component.scss']
 })
