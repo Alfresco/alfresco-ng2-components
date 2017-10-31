@@ -28,7 +28,7 @@ export class DropdownSitesComponent implements OnInit {
     @Output()
     change: EventEmitter<SiteModel> = new EventEmitter();
 
-    public DEFAULT_VALUE = 'default';
+    public MY_FILES_VALUE = 'default';
 
     siteList = [];
 
@@ -45,7 +45,7 @@ export class DropdownSitesComponent implements OnInit {
 
     selectedSite() {
         let siteFound;
-        if (this.siteSelected === this.DEFAULT_VALUE) {
+        if (this.siteSelected === this.MY_FILES_VALUE) {
             siteFound = new SiteModel();
         }else {
            siteFound = this.siteList.find( site => site.guid === this.siteSelected);

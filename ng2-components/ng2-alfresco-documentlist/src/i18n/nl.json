@@ -27,7 +27,7 @@
   },
   "DROPDOWN": {
     "PLACEHOLDER_LABEL": "Lijst met sites",
-    "DEFAULT_OPTION": "Standaard"
+    "MY_FILES_OPTION": ""
   },
   "NODE_SELECTOR": {
     "CANCEL": "Annuleren",

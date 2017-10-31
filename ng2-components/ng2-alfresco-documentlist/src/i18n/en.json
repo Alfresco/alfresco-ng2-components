@@ -33,7 +33,7 @@
     },
     "DROPDOWN": {
         "PLACEHOLDER_LABEL": "Site List",
-        "DEFAULT_OPTION": "Default"
+        "MY_FILES_OPTION": "My files"
     },
     "NODE_SELECTOR": {
         "CANCEL": "Cancel",

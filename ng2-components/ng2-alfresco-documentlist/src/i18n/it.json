@@ -27,7 +27,7 @@
   },
   "DROPDOWN": {
     "PLACEHOLDER_LABEL": "Elenco sito",
-    "DEFAULT_OPTION": "Predefinito"
+    "MY_FILES_OPTION": ""
   },
   "NODE_SELECTOR": {
     "CANCEL": "Annulla",

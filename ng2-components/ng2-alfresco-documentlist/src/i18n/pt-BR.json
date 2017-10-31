@@ -27,7 +27,7 @@
   },
   "DROPDOWN": {
     "PLACEHOLDER_LABEL": "Lista do Site",
-    "DEFAULT_OPTION": "Padrão"
+    "MY_FILES_OPTION": ""
   },
   "NODE_SELECTOR": {
     "CANCEL": "Cancelar",

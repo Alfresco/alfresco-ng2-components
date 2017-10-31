@@ -27,7 +27,7 @@
   },
   "DROPDOWN": {
     "PLACEHOLDER_LABEL": "サイトリスト",
-    "DEFAULT_OPTION": "デフォルト"
+    "MY_FILES_OPTION": ""
   },
   "NODE_SELECTOR": {
     "CANCEL": "キャンセル",
