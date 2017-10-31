@@ -152,7 +152,7 @@
                 <div class="adf-viewer__sidebar adf-viewer__sidebar-right">
                     <ng-content select="adf-viewer-sidebar"></ng-content>
                     <ng-container *ngIf="!sidebar">
-                        <!-- todo: default info drawer -->
+                        <adf-viewer-default-sidebar [node]="node"></adf-viewer-default-sidebar>
                     </ng-container>
                 </div>
             </ng-container>

@@ -71,6 +71,20 @@
       "BACK": "Back",
       "APPLY": "APPLY",
       "NOT_VALID": "http(s)://host|ip:port(/path) not recognized, try a different URL."
+    },
+    "METADATA": {
+      "BASIC": {
+          "NAME": "Name",
+          "TITLE": "Title",
+          "DESCRIPTION": "Description",
+          "AUTHOR": "Author",
+          "MIMETYPE": "Mimetype",
+          "SIZE": "Size",
+          "CREATOR": "Creator",
+          "CREATED_DATE": "Created Date",
+          "MODIFIER": "Modifier",
+          "MODIFIED_DATE": "Modified Date"
+      }
     }
   },
   "LOGIN": {

@@ -23,7 +23,6 @@ import {
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { BaseEvent } from '../../events';
 import { AlfrescoApiService, LogService, RenditionsService } from '../../services';
-
 import { ViewerMoreActionsComponent } from './viewer-more-actions.component';
 import { ViewerOpenWithComponent } from './viewer-open-with.component';
 import { ViewerSidebarComponent } from './viewer-sidebar.component';
@@ -114,6 +113,7 @@ export class ViewerComponent implements OnDestroy, OnChanges {
     downloadUrl: string = null;
     fileName = 'document';
     isLoading = false;
+    node: MinimalNodeEntryEntity;
 
     extensionTemplates: { template: TemplateRef<any>, isVisible: boolean }[] = [];
     externalExtensions: string[] = [];
@@ -203,6 +203,7 @@ export class ViewerComponent implements OnDestroy, OnChanges {
                             }
 
                             this.extensionChange.emit(this.extension);
+                            this.node = data;
                             this.scrollTop();
                             resolve();
                         },

@@ -1,0 +1,29 @@
+@mixin adf-content-metadata-theme($theme) {
+    $primary: map-get($theme, primary);
+    $background: map-get($theme, background);
+    $foreground: map-get($theme, foreground);
+
+    .adf {
+        &-metadata-properties {
+
+            .adf-property {
+                display: block;
+                margin-bottom: 20px;
+
+                .adf-property-label {
+                    display: block;
+                    padding: 0;
+                    font-size: 12px;
+                    color: mat-color($foreground, text, 0.4);
+                }
+
+                .adf-property-value {
+                    display: block;
+                    padding: 0;
+                    font-size: 14px;
+                    color: mat-color($foreground, text, 0.87);
+                }
+            }
+        }
+    }
+}

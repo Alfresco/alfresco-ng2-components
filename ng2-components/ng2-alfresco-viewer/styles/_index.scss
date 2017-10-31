@@ -1,0 +1,5 @@
+@import '../src/components/viewer.component';
+
+@mixin alfresco-viewer-theme($theme) {
+    @include adf-viewer-theme($theme);
+}
