@@ -130,6 +130,7 @@ import { UploadDirective } from './src/directives/upload.directive';
 
 import { InfinitePaginationComponent } from './src/components/pagination/infinite-pagination.component';
 import { PaginationComponent } from './src/components/pagination/pagination.component';
+import { HostSettingsComponent } from './src/components/settings/host-settings.component';
 import { FileSizePipe } from './src/pipes/file-size.pipe';
 import { MimeTypeIconPipe } from './src/pipes/mime-type-icon.pipe';
 import { NodeNameTooltipPipe } from './src/pipes/node-name-tooltip.pipe';
@@ -139,6 +140,7 @@ import { InitialUsernamePipe } from './src/pipes/user-initial.pipe';
 
 export { InfinitePaginationComponent } from './src/components/pagination/infinite-pagination.component';
 export { PaginationComponent } from './src/components/pagination/pagination.component';
+export { HostSettingsComponent } from './src/components/settings/host-settings.component';
 export { ContextMenuModule } from './src/components/context-menu/context-menu.module';
 export { CardViewModule } from './src/components/view/card-view.module';
 export { CollapsableModule } from './src/components/collapsable/collapsable.module';
@@ -278,6 +280,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         InfoDrawerButtonsDirective,
         InfoDrawerContentDirective,
         LanguageMenuComponent,
+        HostSettingsComponent,
         CreateFolderDialogComponent,
         DownloadZipDialogComponent,
         InfinitePaginationComponent,
@@ -316,6 +319,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         NodeFavoriteDirective,
         NodeDeleteDirective,
         HighlightDirective,
+        HostSettingsComponent,
         DataColumnComponent,
         DataColumnListComponent,
         CreateFolderDialogComponent,

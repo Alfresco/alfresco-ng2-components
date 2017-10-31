@@ -32,14 +32,7 @@
     "START-TASK": "Iniciar tarea",
     "START-PROCESS": "Iniciar proceso",
     "AUDIT-LOG": "Procesar registro de auditorías"
-  },
-  "SETTINGS": {
-    "TITLE": "Configuración",
-    "CS-HOST": "Configuración de URL de host de Content Services",
-    "BP-HOST": "Configuración de URL de host de Process Services",
-    "BACK": "Volver",
-    "APPLY": "APLICAR"
-  },
+  }
   "FORM-LIST": {
     "STORE": "Almacenar",
     "RESTORE": "Restaurar"

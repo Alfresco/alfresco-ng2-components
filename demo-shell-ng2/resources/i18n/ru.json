@@ -33,13 +33,6 @@
     "START-PROCESS": "Начать процесс",
     "AUDIT-LOG": "Журнал аудита процессов"
   },
-  "SETTINGS": {
-    "TITLE": "Параметры",
-    "CS-HOST": "Конфигурация URL-адреса хоста Content Services",
-    "BP-HOST": "Конфигурация URL-адреса хоста Process Services",
-    "BACK": "Назад",
-    "APPLY": "ПРИМЕНИТЬ"
-  },
   "FORM-LIST": {
     "STORE": "Хранилище",
     "RESTORE": "Восстановить"

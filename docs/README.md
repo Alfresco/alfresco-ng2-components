@@ -323,6 +323,7 @@ for more information about installing and using the source code.
 - [Toolbar title component](toolbar-title.component.md)
 - [Toolbar component](toolbar.component.md)
 - [Card view component](card-view.component.md)
+- [Host settings component](host-settings.component.md)
 - [*Infinite pagination component](../ng2-components/ng2-alfresco-core/src/components/pagination/infinite-pagination.component.ts)
 
 ### Directives

@@ -5,6 +5,13 @@
       "ITEMS_PER_PAGE": "1 ページのアイテム数",
       "CURRENT_PAGE": "ページ: {{ number }}",
       "TOTAL_PAGES": "/ {{ total }}"
+    },
+    "HOST_SETTINGS": {
+      "TITLE": "設定",
+      "CS-HOST": "Content Services ホストの URL の設定",
+      "BP-HOST": "Process Services ホストの URL の設定",
+      "BACK": "戻る",
+      "APPLY": "適用"
     }
   }
 }

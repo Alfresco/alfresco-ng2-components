@@ -5,6 +5,13 @@
       "ITEMS_PER_PAGE": "Elementos por página",
       "CURRENT_PAGE": "Página {{ number }}",
       "TOTAL_PAGES": "de {{ total }}"
+    },
+    "HOST_SETTINGS": {
+      "TITLE": "Configuración",
+      "CS-HOST": "Configuración de URL de host de Content Services",
+      "BP-HOST": "Configuración de URL de host de Process Services",
+      "BACK": "Volver",
+      "APPLY": "APLICAR"
     }
   }
 }

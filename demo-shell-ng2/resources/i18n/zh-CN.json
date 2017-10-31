@@ -33,13 +33,6 @@
     "START-PROCESS": "启动流程",
     "AUDIT-LOG": "流程审计记录"
   },
-  "SETTINGS": {
-    "TITLE": "设置",
-    "CS-HOST": "Content Services 主机 URL 配置",
-    "BP-HOST": "流程服务主机 URL 配置",
-    "BACK": "返回",
-    "APPLY": "应用"
-  },
   "FORM-LIST": {
     "STORE": "存储",
     "RESTORE": "恢复"
