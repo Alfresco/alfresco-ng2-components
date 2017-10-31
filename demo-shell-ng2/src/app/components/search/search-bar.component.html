@@ -1,29 +1,5 @@
-<div class="adf-search-container">
-  <a mat-icon-button
-      id="adf-search-button"
-      class="adf-search-button">
-      <mat-icon aria-label="search button">search</mat-icon>
-  </a>
-  <mat-form-field class="example-full-width">
-    <input matInput class="adf-search-field" type="text"
-      [adfSearchAutocomplete]="auto" (enterKeyPressed)="onSearchSubmit($event)">
-  </mat-form-field>
-</div>
-
-<adf-search #auto="adfSearchAutocomplete" class="adf-search-result-autocomplete">
-  <ng-template let-data>
-      <mat-list>
-        <mat-option *ngFor="let item of data?.list?.entries">
-          <div class="adf-search-elements">
-            <mat-icon *ngIf="item">
-              <img [src]="getMimeTypeIcon(item)" />
-            </mat-icon>
-            <span>{{ item?.entry.name }}</span>
-          </div>
-        </mat-option>
-      </mat-list>
-  </ng-template>
-</adf-search>
+<adf-search-control [highlight]="true" (submit)="onSearchSubmit($event)">
+</adf-search-control>
 
 <adf-viewer *ngIf="fileShowed" [(showViewer)]="fileShowed" [fileNodeId]="fileNodeId" [overlayMode]="true">
   <mat-spinner></mat-spinner>

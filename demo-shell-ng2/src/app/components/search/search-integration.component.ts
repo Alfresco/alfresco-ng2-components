@@ -15,28 +15,16 @@
  * limitations under the License.
  */
 
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit, Optional } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { NodePaging } from 'alfresco-js-api';
 
 @Component({
-    selector: 'search-component',
-    templateUrl: './search.component.html',
-    styleUrls: ['./search.component.scss'],
-    animations: [
-    trigger('transitionMessages', [
-        state('active', style({transform: 'translateX(0%)'})),
-        state('inactive', style({transform: 'translateX(83%)'})),
-        state('no-animation', style({transform: 'translateX(0%)', width: '100%'})),
-        transition('inactive => active',
-            animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)')),
-        transition('active => inactive',
-            animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)'))
-    ])
-]
+    selector: 'search-integration-component',
+    templateUrl: './search-integration.component.html',
+    styleUrls: ['./search-integration.component.scss']
 })
-export class SearchComponent implements OnInit{
+export class SearchIntegrationComponent implements OnInit{
 
     fileNodeId: string;
     queryParamName= 'q';

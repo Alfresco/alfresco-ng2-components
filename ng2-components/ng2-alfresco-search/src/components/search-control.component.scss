@@ -4,6 +4,13 @@
 
     .adf {
 
+        .truncate {
+            width: 240px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
         &-search-button.mat-icon-button {
             margin-right: 5px;
         }
@@ -39,13 +46,6 @@
                 padding: 0;
             }
 
-        }
-
-        &-search-form{
-            overflow: hidden;
-        }
-
-        &-valid-search {
         }
     }
 }

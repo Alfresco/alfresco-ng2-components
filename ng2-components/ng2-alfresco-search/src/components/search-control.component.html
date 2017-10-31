@@ -1,30 +1,40 @@
-<form #f="ngForm" (ngSubmit)="onSearch()" class="adf-search-form">
-    <div class="adf-search-container"
-        [@transitionMessages]="subscriptAnimationState">
-        <a mat-icon-button
-                *ngIf="expandable"
-                id="adf-search-button"
-            (click)="toggleSearchBar()"
-            class="adf-search-button">
-            <mat-icon aria-label="search button">search</mat-icon>
-        </a>
-        <div class="adf-search-field">
-            <mat-form-field>
-                <input
-                    matInput
-                    [type]="inputType"
-                    [autocomplete]="getAutoComplete()"
-                    data-automation-id="search_input"
-                    #searchInput
-                    id="searchControl"
-                    [formControl]="searchControl"
-                    [(ngModel)]="searchTerm"
-                    (focus)="onFocus($event)"
-                    (blur)="onBlur($event)"
-                    (keyup.escape)="onEscape()"
-                    (keyup.arrowdown)="onArrowDown()">
-            </mat-form-field>
-        </div>
-    </div>
-</form>
+<div class="adf-search-container"
+[@transitionMessages]="subscriptAnimationState">
+<a mat-icon-button
+    *ngIf="expandable"
+    id="adf-search-button"
+    class="adf-search-button"
+    (click)="toggleSearchBar()">
+    <mat-icon aria-label="search button">search</mat-icon>
+</a>
+<mat-form-field class="example-full-width">
+  <input matInput class="adf-search-field"
+         type="text"
+         [(ngModel)]="searchTerm"
+         [adfSearchAutocomplete]="auto"
+         (enterKeyPressed)="onSearchSubmit($event)">
+</mat-form-field>
+</div>
 
+<adf-search #auto="adfSearchAutocomplete" class="adf-search-result-autocomplete truncate">
+    <ng-template let-data>
+        <mat-list *ngIf="isSearchBarActive()">
+            <mat-option *ngFor="let item of data?.list?.entries; let idx = index">
+                <div id="result_option_{{idx}}" class="adf-search-elements">
+                    <mat-icon *ngIf="item">
+                        <img [src]="getMimeTypeIcon(item)" />
+                    </mat-icon>
+                    <span id="result_name_{{idx}}"
+                        *ngIf="highlight; else elseBlock"
+                        [innerHtml]="item.entry.name | highlight: searchTerm"
+                        class="truncate">
+                        {{ item?.entry.name }}</span>
+                    <ng-template #elseBlock>
+                        <span id="result_name_{{idx}}" class="truncate" [innerHtml]="item.entry.name"></span>
+                    </ng-template>
+                    <!--span> {{item?.entry.createdByUser.displayName}} </span-->
+                </div>
+            </mat-option>
+        </mat-list>
+    </ng-template>
+</adf-search>

@@ -14,7 +14,7 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { AppLayoutComponent } from './components/app-layout/app-layout.component';
 import { HomeComponent } from './components/home/home.component';
 import { SearchBarComponent } from './components/search/search-bar.component';
-import { SearchComponent } from './components/search/search.component';
+import { SearchIntegrationComponent } from './components/search/search-integration.component';
 import { AboutComponent } from './components/about/about.component';
 import { FormComponent } from './components/form/form.component';
 import { FormListComponent } from './components/form/form-list.component';
@@ -49,7 +49,7 @@ import { routing } from './app.routes';
     AppLayoutComponent,
     HomeComponent,
     SearchBarComponent,
-    SearchComponent,
+    SearchIntegrationComponent,
     AboutComponent,
     ActivitiComponent,
     ActivitiTaskAttachmentsComponent,
