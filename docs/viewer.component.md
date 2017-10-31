@@ -56,6 +56,7 @@ Using with file url:
 | allowShare | boolean | false | Toggle sharing feature |
 | allowSidebar | boolean |false | Toggle sidebar feature |
 | showSidebar | boolean | false | Toggles sidebar visibility. Requires `allowSidebar` to be set to `true`. |
+| sidebarPosition | string | right | The position of the sidebar. Can be `left` or `right`. |
 
 ## Events
 

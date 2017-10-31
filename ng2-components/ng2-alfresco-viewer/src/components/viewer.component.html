@@ -91,6 +91,16 @@
         </ng-container>
 
         <div *ngIf="!isLoading" class="adf-viewer-layout">
+
+            <ng-container *ngIf="showSidebar && sidebarPosition === 'left'">
+                <div class="adf-viewer__sidebar adf-viewer__sidebar-left">
+                    <ng-content select="adf-viewer-sidebar"></ng-content>
+                    <ng-container *ngIf="!sidebar">
+                        <!-- todo: default info drawer -->
+                    </ng-container>
+                </div>
+            </ng-container>
+
             <div class="adf-viewer-layout-content">
                 <div class="adf-viewer-content-container" [ngSwitch]="viewerType">
 
@@ -127,8 +137,8 @@
                 </div>
             </div>
 
-            <ng-container *ngIf="showSidebar">
-                <div class="adf-viewer__sidebar">
+            <ng-container *ngIf="showSidebar && sidebarPosition !== 'left'">
+                <div class="adf-viewer__sidebar adf-viewer__sidebar-right">
                     <ng-content select="adf-viewer-sidebar"></ng-content>
                     <ng-container *ngIf="!sidebar">
                         <!-- todo: default info drawer -->
