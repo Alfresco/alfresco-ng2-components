@@ -16,8 +16,8 @@
                 margin: 0;
             }
 
-            &-title {
-                text-transform: capitalize;
+            &-title::first-letter {
+                text-transform: uppercase;
             }
 
             &-content {
