@@ -92,6 +92,25 @@ describe('NodeFavoriteDirective', () => {
 
             expect(directiveInstance.markFavoritesNodes).toHaveBeenCalledWith(component.selection);
         });
+
+        it('should reset favorites if selection is empty', fakeAsync(() => {
+            spyOn(favoritesApi, 'getFavorite').and.returnValue(Promise.resolve());
+
+            component.selection = [
+                { entry: { id: '1', name: 'name1' } }
+            ];
+
+            fixture.detectChanges();
+            tick();
+
+            expect(directiveInstance.hasFavorites()).toBe(true);
+
+            component.selection = [];
+            fixture.detectChanges();
+            tick();
+
+            expect(directiveInstance.hasFavorites()).toBe(false);
+        }));
     });
 
     describe('markFavoritesNodes()', () => {
@@ -267,6 +286,32 @@ describe('NodeFavoriteDirective', () => {
 
             expect(component.done).toHaveBeenCalled();
         }));
+
+        it('should set isFavorites items to false', fakeAsync(() => {
+            removeFavoriteSpy.and.returnValue(Promise.resolve());
+
+            directiveInstance.favorites = [
+                { entry: { id: '1', name: 'name1', isFavorite: true } }
+            ];
+
+            element.triggerEventHandler('click', null);
+            tick();
+
+            expect(directiveInstance.hasFavorites()).toBe(false);
+        }));
+
+        it('should set isFavorites items to true', fakeAsync(() => {
+            addFavoriteSpy.and.returnValue(Promise.resolve());
+
+            directiveInstance.favorites = [
+                { entry: { id: '1', name: 'name1', isFavorite: false } }
+            ];
+
+            element.triggerEventHandler('click', null);
+            tick();
+
+            expect(directiveInstance.hasFavorites()).toBe(true);
+        }));
     });
 
     describe('getFavorite()', () => {
@@ -294,35 +339,6 @@ describe('NodeFavoriteDirective', () => {
             tick();
 
             expect(directiveInstance.favorites[0].entry.isFavorite).toBe(false);
-        }));
-    });
-
-    describe('reset()', () => {
-        beforeEach(() => {
-            spyOn(favoritesApi, 'removeFavoriteSite').and.returnValue(Promise.resolve());
-            spyOn(favoritesApi, 'addFavorite').and.returnValue(Promise.resolve());
-        });
-
-        it('should reset favorite collection after removeFavoriteSite()', fakeAsync(() => {
-            directiveInstance.favorites = [
-                { entry: { id: '1', name: 'name1', isFavorite: true } }
-            ];
-
-            element.triggerEventHandler('click', null);
-            tick();
-
-            expect(directiveInstance.favorites.length).toBe(0);
-        }));
-
-        it('should reset favorite collection after addFavorite()', fakeAsync(() => {
-            directiveInstance.favorites = [
-                { entry: { id: '1', name: 'name1', isFavorite: false } }
-            ];
-
-            element.triggerEventHandler('click', null);
-            tick();
-
-            expect(directiveInstance.favorites.length).toBe(0);
         }));
     });
 
