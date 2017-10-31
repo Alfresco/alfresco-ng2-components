@@ -24,11 +24,11 @@ Simple container for headers, titles, actions and breadcrumbs.
 
 ```html
 <adf-toolbar title="Toolbar">
-    <button md-icon-button>
-        <md-icon>create_new_folder</md-icon>
+    <button mat-icon-button>
+        <mat-icon>create_new_folder</mat-icon>
     </button>
-    <button md-icon-button>
-        <md-icon>delete</md-icon>
+    <button mat-icon-button>
+        <mat-icon>delete</mat-icon>
     </button>
 </adf-toolbar>
 ```
@@ -80,27 +80,27 @@ You can use the following example to create a dropdown menu:
 <adf-toolbar title="Toolbar">
     ...
 
-    <button md-icon-button [mdMenuTriggerFor]="menu">
-        <md-icon>more_vert</md-icon>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
     </button>
-    <md-menu #menu="mdMenu">
-        <button md-menu-item>
-            <md-icon>dialpad</md-icon>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+            <mat-icon>dialpad</mat-icon>
             <span>Redial</span>
         </button>
-        <button md-menu-item disabled>
-            <md-icon>voicemail</md-icon>
+        <button mat-menu-item disabled>
+            <mat-icon>voicemail</mat-icon>
             <span>Check voicemail</span>
         </button>
-        <button md-menu-item>
-            <md-icon>notifications_off</md-icon>
+        <button mat-menu-item>
+            <mat-icon>notifications_off</mat-icon>
             <span>Disable alerts</span>
         </button>
-    </md-menu>
+    </mat-menu>
 </adf-toolbar>
 ```
 
-The code above is based on the `<md-menu>` component from the `@angular/material` library. You can use any custom menu component as well.
+The code above is based on the `<mat-menu>` component from the `@angular/material` library. You can use any custom menu component as well.
 
 ![](docassets/images/adf-toolbar-03.png)
 

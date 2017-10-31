@@ -22,7 +22,7 @@ Displays a sidebar-style information panel with tabs.
 ```html
 <adf-info-drawer title="Activities" (currentTab)="getActiveTab($event)">
     <div info-drawer-buttons>
-        <md-icon (click)="close()">clear</md-icon>
+        <mat-icon (click)="close()">clear</mat-icon>
     </div>
 
     <adf-info-drawer-tab label="Activity">

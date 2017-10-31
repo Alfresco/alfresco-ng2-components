@@ -278,11 +278,11 @@ You can add a template that will be shown during the loading of your data:
         <loading-content-template>
             <ng-template>
                <!--Add your custom loading template here-->
-                <md-progress-spinner
+                <mat-progress-spinner
                     class="adf-document-list-loading-margin"
                     [color]="'primary'"
                     [mode]="'indeterminate'">
-                </md-progress-spinner>
+                </mat-progress-spinner>
             </ng-template>
         </loading-content-template>
         

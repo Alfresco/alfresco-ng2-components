@@ -1,20 +1,8 @@
 # Language Menu component
 
-Displays all the languages that are present in the "app.config.json" or the defaul one (EN).
+Displays all the languages that are present in the "app.config.json" or the default one (EN).
 
 ![Language Menu screenshot](docassets/images/languages-menu.png)
-
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic usage](#basic-usage)
-- [Details](#details)
-- [Nested menu language](#nested-menu-language)
-- [Nested menu details](#nested-menu-details)
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
 
 ## Basic usage
 
@@ -53,29 +41,29 @@ This is how the configuration looks like in the the "app.config.json"
 ```
 In case no setting is provided, the component shows only the English language.
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
-
-## Nested Menu language
+### Nested Menu language
 
 How to attach an ADF Language Menu as nested menu
 
 ```html
-<button md-icon-button class="dw-profile-menu" [mdMenuTriggerFor]="profileMenu">
-    <md-icon>more_vert</md-icon>
+<button mat-icon-button class="dw-profile-menu" [matMenuTriggerFor]="profileMenu">
+    <mat-icon>more_vert</mat-icon>
 </button>
-<md-menu #profileMenu="mdMenu">
-    <button md-menu-item>profile-settings</button>
-    <button md-menu-item [matMenuTriggerFor]="langMenu">Languages</button>
-    <button md-menu-item>sign-out</button>
-</md-menu>
-<md-menu #langMenu="mdMenu">
+<mat-menu #profileMenu="matMenu">
+    <button mat-menu-item>profile-settings</button>
+    <button mat-menu-item [matMenuTriggerFor]="langMenu">Languages</button>
+    <button mat-menu-item>sign-out</button>
+</mat-menu>
+<mat-menu #langMenu="matMenu">
     <adf-language-menu></adf-language-menu>
-</md-menu>
+</mat-menu>
 ```
 ![Nested Language Menu screenshot](docassets/images/languages-menu-nested.png)
 
-## Nested menu details
+### Nested menu details
 
 In the previous example we are using the ADF Language Menu as nested menu.
+
+<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
+<!-- seealso start -->
 <!-- seealso end -->
