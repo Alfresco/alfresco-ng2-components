@@ -88,6 +88,9 @@ export class ViewerComponent implements OnDestroy, OnChanges {
     @Input()
     showSidebar = false;
 
+    @Input()
+    sidebarPosition = 'right';
+
     @Output()
     goBack = new EventEmitter<BaseEvent<any>>();
 

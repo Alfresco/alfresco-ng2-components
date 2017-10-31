@@ -207,6 +207,24 @@ describe('ViewerComponent', () => {
         expect(customElement.querySelector('.adf-viewer-container-more-actions')).toBeDefined();
     });
 
+    it('should display left sidebar', () => {
+        component.sidebarPosition = 'left';
+        fixture.detectChanges();
+        expect(element.querySelector('.adf-viewer__sidebar-left')).toBeDefined();
+    });
+
+    it('should display right sidebar', () => {
+        component.sidebarPosition = 'right';
+        fixture.detectChanges();
+        expect(element.querySelector('.adf-viewer__sidebar-right')).toBeDefined();
+    });
+
+    it('should display right sidebar as fallback', () => {
+        component.sidebarPosition = 'unknown-value';
+        fixture.detectChanges();
+        expect(element.querySelector('.adf-viewer__sidebar-right')).toBeDefined();
+    });
+
     describe('Toolbar', () => {
 
         it('should render default download button', () => {
