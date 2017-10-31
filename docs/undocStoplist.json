@@ -13,5 +13,7 @@
     "card-view-content-proxy",
     "login-footer.directive",
     "login-header.directive",
-    "no-task-detail-template"
+    "no-task-detail-template",
+    "diagram",
+    "raphael"
 ]
