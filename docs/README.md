@@ -336,6 +336,10 @@ for more information about installing and using the source code.
 - [Node restore directive](node-restore.directive.md)
 - [Upload directive](upload.directive.md)
 
+### Models
+
+- [Site model](site.model.md)
+
 ### Pipes
 
 - [File size pipe](file-size.pipe.md)
@@ -357,6 +361,7 @@ for more information about installing and using the source code.
 - [Nodes api service](nodes-api.service.md)
 - [Notification service](notification.service.md)
 - [Renditions service](renditions.service.md)
+- [Sites api service](sites-api.service.md)
 - [Thumbnail service](thumbnail.service.md)
 - [Translation service](translation.service.md)
 - [Upload service](upload.service.md)
@@ -379,7 +384,6 @@ for more information about installing and using the source code.
 - [*Search api service](../ng2-components/ng2-alfresco-core/src/services/search-api.service.ts)
 - [*Search service](../ng2-components/ng2-alfresco-core/src/services/search.service.ts)
 - [*Shared links api service](../ng2-components/ng2-alfresco-core/src/services/shared-links-api.service.ts)
-- [*Sites api service](../ng2-components/ng2-alfresco-core/src/services/sites-api.service.ts)
 - [*Storage service](../ng2-components/ng2-alfresco-core/src/services/storage.service.ts)
 - [*Translate loader service](../ng2-components/ng2-alfresco-core/src/services/translate-loader.service.ts)
 <!-- ng2-alfresco-core end -->  
@@ -575,7 +579,7 @@ for more information about installing and using the source code.
 
 ### Directives
 
-- [*Extension viewer directive](../ng2-components/ng2-alfresco-viewer/src/directives/extension-viewer.directive.ts)
+- [*Viewer extension directive](../ng2-components/ng2-alfresco-viewer/src/directives/viewer-extension.directive.ts)
 <!-- ng2-alfresco-viewer end -->
 
 [(Back to Contents)](#contents)
