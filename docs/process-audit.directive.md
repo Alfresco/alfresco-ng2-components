@@ -1,20 +1,8 @@
 # Process Audit Directive
 
-Provide a way to fetch the Process Audit information in the pdf or json format.
+Fetches the Process Audit information in the pdf or json format.
 
 ![adf-process-audit-directive](docassets/images/adf-process-audit-directive.png)
-
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-  * [Properties](#properties)
-  * [Events](#events)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
 
 ## Basic Usage
 
@@ -24,8 +12,8 @@ Provide a way to fetch the Process Audit information in the pdf or json format.
     [process-id]="processId"
     [format]="'pdf'"
     [download]="true"
-    md-icon-button (clicked)="onAuditClick($event)" (error)="onAuditError($event)" >
-    <md-icon>assignment_ind</md-icon>
+    mat-icon-button (clicked)="onAuditClick($event)" (error)="onAuditError($event)" >
+    <mat-icon>assignment_ind</mat-icon>
 </button>
 ```
 

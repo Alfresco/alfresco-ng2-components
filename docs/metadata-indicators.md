@@ -72,9 +72,9 @@ For demonstration purposes we are going to display several icons if underlying n
 ```html
 <div *ngIf="metadata">
     <ng-container *ngIf="metadata['cm:versionLabel'] === '2.0'">
-        <md-icon>portrait</md-icon>
-        <md-icon>photo_filter</md-icon>
-        <md-icon>rotate_90_degrees_ccw</md-icon>
+        <mat-icon>portrait</mat-icon>
+        <mat-icon>photo_filter</mat-icon>
+        <mat-icon>rotate_90_degrees_ccw</mat-icon>
     </ng-container>
     <div *ngIf="metadata['cm:versionLabel'] !== '2.0'">
         {{metadata['cm:versionLabel']}}
@@ -82,7 +82,7 @@ For demonstration purposes we are going to display several icons if underlying n
 </div>
 ```
 
-Note: For a list of the icons that can be used with `<md-icon>` component please refer to this resource: [material.io/icons](https://material.io/icons/)
+Note: For a list of the icons that can be used with `<mat-icon>` component please refer to this resource: [material.io/icons](https://material.io/icons/)
 
 ## Testing component
 
@@ -111,9 +111,9 @@ import { Component, Input } from '@angular/core';
     template: `
         <div *ngIf="metadata">
             <ng-container *ngIf="metadata['cm:versionLabel'] === '2.0'">
-                <md-icon>portrait</md-icon>
-                <md-icon>photo_filter</md-icon>
-                <md-icon>rotate_90_degrees_ccw</md-icon>
+                <mat-icon>portrait</mat-icon>
+                <mat-icon>photo_filter</mat-icon>
+                <mat-icon>rotate_90_degrees_ccw</mat-icon>
             </ng-container>
             <div *ngIf="metadata['cm:versionLabel'] !== '2.0'">
                 {{metadata['cm:versionLabel']}}

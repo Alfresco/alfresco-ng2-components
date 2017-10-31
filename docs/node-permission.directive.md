@@ -45,10 +45,10 @@ For example the "Delete" button should be disabled if no selection is present or
 
 ```html
 <adf-toolbar title="toolbar example">
-    <button md-icon-button
+    <button mat-icon-button
             adf-node-permission="delete"
             [adf-nodes]="documentList.selection">
-        <md-icon>delete</md-icon>
+        <mat-icon>delete</mat-icon>
     </button>
 </adf-toolbar>
 

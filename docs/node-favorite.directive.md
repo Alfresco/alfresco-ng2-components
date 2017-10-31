@@ -1,25 +1,12 @@
 # Node Favorite directive
 
-Selectively toggle nodes as favorite
-
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-  * [Properties](#properties)
-  * [Events](#events)
-- [Details](#details)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
+Selectively toggles nodes as favorite
 
 ## Basic Usage
 
 ```html
 <adf-toolbar>
-    <button md-icon-button
+    <button mat-icon-button
             (toggle)="done()"
             [adf-node-favorite]="documentList.selection">
     </button>
@@ -62,13 +49,13 @@ wich provides a method to help further style the element.
 
 ```html
 <button
-    md-menu-item
+    mat-menu-item
     #selection="adfFavorite"
     [ngClass]="{ 'icon-highlight': selection.hasFavorites() }"
     [adf-node-favorite]="documentList.selection">
-    <md-icon [ngClass]="{ 'icon-highlight': selection.hasFavorites() }">
+    <mat-icon [ngClass]="{ 'icon-highlight': selection.hasFavorites() }">
         {{ selection.hasFavorites() ? 'star' : 'star_border' }}
-    </md-icon>
+    </mat-icon>
 </button>
 ```
 

@@ -1,20 +1,8 @@
 # Task Audit Directive
 
-Provides a way to fetch the Task Audit information in the pdf or json format.
+Fetches the Task Audit information in the pdf or json format.
 
 ![adf-task-audit-directive](docassets/images/adf-task-audit-directive.png)
-
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-  * [Properties](#properties)
-  * [Events](#events)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
 
 ## Basic Usage
 
@@ -23,8 +11,8 @@ Provides a way to fetch the Task Audit information in the pdf or json format.
     adf-task-audit
     [task-id]="taskId"
     [download]="download"
-    md-icon-button (clicked)="onAuditClick($event)" (error)="onAuditError($event)" >
-    <md-icon>assignment_ind</md-icon>
+    mat-icon-button (clicked)="onAuditClick($event)" (error)="onAuditError($event)" >
+    <mat-icon>assignment_ind</mat-icon>
 </button>
 ```
 
