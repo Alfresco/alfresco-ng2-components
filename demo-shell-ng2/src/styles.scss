@@ -1,12 +1,10 @@
-.mat-form-field input.mat-input-element {
-  line-height: normal;
-}
+@import '~@angular/material/theming';
+@import './custom-style.scss';
 
 body, html {
-  height: 100%;
-  font-family: 'Muli', "Helvetica", "Arial", sans-serif !important;
-}
-
-body {
-  margin: 0;
+    margin: 0;
+    height: 100%;
+    font-size: mat-font-size($alfresco-typography, body-1);
+    font-family: mat-font-family($alfresco-typography);
+    line-height: mat-line-height($alfresco-typography, body-1);
 }

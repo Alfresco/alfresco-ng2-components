@@ -16,12 +16,7 @@
 
 @import '~@angular/material/theming';
 
-@include mat-core();
-
-$custom-typography: mat-typography-config(
-  $font-family: 'Muli, Roboto, "Helvetica Neue", sans-serif'
-);
-@include angular-material-typography($custom-typography);
+@include mat-core($alfresco-typography);
 
 $primary: mat-palette($alfresco-accent-orange);
 $accent:  mat-palette($alfresco-accent-purple);
