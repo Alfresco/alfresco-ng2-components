@@ -18,7 +18,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgZone, SimpleChange, TemplateRef } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Pagination } from 'alfresco-js-api';
-import { AlfrescoApiService, AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { AlfrescoApiService, AlfrescoTranslationService, AppConfigService, CoreModule, UserPreferencesService } from 'ng2-alfresco-core';
 import { DataColumn, DataTableComponent } from 'ng2-alfresco-datatable';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { Observable, Subject } from 'rxjs/Rx';
@@ -48,6 +48,8 @@ describe('DocumentList', () => {
     let fixture: ComponentFixture<DocumentListComponent>;
     let element: HTMLElement;
     let eventMock: any;
+    let appConfig: AppConfigService;
+    let userPreferences: UserPreferencesService;
 
     beforeEach(async(() => {
         let zone = new NgZone({enableLongStackTrace: false});
@@ -86,6 +88,9 @@ describe('DocumentList', () => {
         documentList = fixture.componentInstance;
         documentListService = TestBed.get(DocumentListService);
         apiService = TestBed.get(AlfrescoApiService);
+        userPreferences = TestBed.get(UserPreferencesService);
+        appConfig = TestBed.get(AppConfigService);
+
         fixture.detectChanges();
     });
 
@@ -995,5 +1000,22 @@ describe('DocumentList', () => {
         documentList.ngOnChanges({currentFolderId: new SimpleChange(null, '-sites-', false)});
 
         expect(documentList.folderNode).toBeNull();
+    });
+
+    it('should fallback to first page size supported', () => {
+        userPreferences.paginationSize = 10;
+        appConfig.config = Object.assign(appConfig.config, {
+            'document-list': {
+                supportedPageSizes: [20, 30, 40]
+            }
+        });
+
+        let customFixture =  TestBed.createComponent<DocumentListComponent>(DocumentListComponent);
+        let component: DocumentListComponent = customFixture.componentInstance;
+
+        customFixture.detectChanges();
+
+        expect(component.supportedPageSizes).toEqual([20, 30, 40]);
+        expect(component.pageSize).toBe(20);
     });
 });
