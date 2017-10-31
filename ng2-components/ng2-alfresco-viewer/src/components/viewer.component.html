@@ -17,7 +17,7 @@
                         <mat-icon>arrow_back</mat-icon>
                     </button>
                     <img class="adf-viewer__mimeicon" [src]="mimeType | adfMimeTypeIcon">
-                    <span>{{ displayName }}</span>
+                    <span id="adf-viewer-display-name">{{ displayName }}</span>
                 </adf-toolbar-title>
 
                 <ng-container *ngIf="mnuOpenWith">
