@@ -1,12 +1,7 @@
 @import '../theming';
 @import './all-theme';
 
-$custom-typography: mat-typography-config(
-    $font-family: 'Muli, Roboto, "Helvetica Neue", sans-serif'
-);
-@include angular-material-typography($custom-typography);
-
-@include mat-core();
+@include mat-core($alfresco-typography);
 
 $primary: mat-palette($mat-purple, 700, 500, 800);
 $accent:  mat-palette($mat-green, A200, A100, A400);
