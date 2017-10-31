@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SiteModel, SitesApiService } from 'ng2-alfresco-core';
 
 @Component({
@@ -24,6 +24,9 @@ import { SiteModel, SitesApiService } from 'ng2-alfresco-core';
     templateUrl: './sites-dropdown.component.html'
 })
 export class DropdownSitesComponent implements OnInit {
+
+    @Input()
+    hideDefault: boolean = false;
 
     @Output()
     change: EventEmitter<SiteModel> = new EventEmitter();
@@ -34,8 +37,7 @@ export class DropdownSitesComponent implements OnInit {
 
     public siteSelected: string;
 
-    constructor(private sitesService: SitesApiService) {
-    }
+    constructor(private sitesService: SitesApiService) {}
 
     ngOnInit() {
         this.sitesService.getSites().subscribe((result) => {
