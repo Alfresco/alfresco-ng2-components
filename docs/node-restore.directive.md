@@ -1,27 +1,14 @@
 # Node Restore directive
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-  * [Properties](#properties)
-  * [Events](#events)
-- [Details](#details)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
-
 ## Basic Usage
 
 ```html
 <adf-toolbar title="toolbar example">
-    <button md-icon-button
+    <button mat-icon-button
         location="/files"
         [adf-restore]="documentList.selection"
         (restore)="documentList.reload()">
-        <md-icon>restore</md-icon>
+        <mat-icon>restore</mat-icon>
     </button>
 </adf-toolbar>
 
