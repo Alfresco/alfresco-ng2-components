@@ -129,9 +129,9 @@ describe('AppsListComponent', () => {
         expect(emitSpy).toHaveBeenCalled();
     });
 
-    describe('intenationalization', () => {
+    describe('internationalization', () => {
 
-        fit('should provide a translation for the default application name, when app name is not provided', () => {
+        it('should provide a translation for the default application name, when app name is not provided', () => {
             const appDataMock = {
                 defaultAppId: 'tasks',
                 name: null
@@ -141,7 +141,7 @@ describe('AppsListComponent', () => {
             });
         });
 
-        fit('should provide the application name, when it exists', () => {
+        it('should provide the application name, when it exists', () => {
             const appDataMock = {
                 defaultAppId: 'uiu',
                 name: 'the-name'
