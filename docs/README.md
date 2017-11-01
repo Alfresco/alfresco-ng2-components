@@ -236,11 +236,11 @@ for more information about installing and using the source code.
 - [Info drawer component](info-drawer.component.md)
 - [Language menu component](language-menu.component.md)
 - [Pagination component](pagination.component.md)
+- [Host settings component](host-settings.component.md)
 - [Toolbar divider component](toolbar-divider.component.md)
 - [Toolbar title component](toolbar-title.component.md)
 - [Toolbar component](toolbar.component.md)
 - [Card view component](card-view.component.md)
-- [Host settings component](host-settings.component.md)
 - [*Infinite pagination component](../ng2-components/ng2-alfresco-core/src/components/pagination/infinite-pagination.component.ts)
 
 ### Directives
@@ -256,6 +256,8 @@ for more information about installing and using the source code.
 
 ### Models
 
+- [Comment process model](comment-process.model.md)
+- [Product version model](product-version.model.md)
 - [Site model](site.model.md)
 
 ### Pipes
@@ -274,8 +276,10 @@ for more information about installing and using the source code.
 - [Apps process service](apps-process.service.md)
 - [Authentication service](authentication.service.md)
 - [Card view update service](card-view-update.service.md)
+- [Comment process service](comment-process.service.md)
 - [Cookie service](cookie.service.md)
 - [Deleted nodes api service](deleted-nodes-api.service.md)
+- [Discovery api service](discovery-api.service.md)
 - [Highlight transform service](highlight-transform.service.md)
 - [Log service](log.service.md)
 - [Nodes api service](nodes-api.service.md)
@@ -288,15 +292,11 @@ for more information about installing and using the source code.
 - [Translation service](translation.service.md)
 - [Upload service](upload.service.md)
 - [User preferences service](user-preferences.service.md)
-- [*Context menu service](../ng2-components/ng2-alfresco-core/src/components/context-menu/context-menu.service.ts)
 - [*Alfresco content service](../ng2-components/ng2-alfresco-core/src/services/alfresco-content.service.ts)
-- [*Alfresco settings service](../ng2-components/ng2-alfresco-core/src/services/alfresco-settings.service.ts)
 - [*Auth guard bpm service](../ng2-components/ng2-alfresco-core/src/services/auth-guard-bpm.service.ts)
 - [*Auth guard ecm service](../ng2-components/ng2-alfresco-core/src/services/auth-guard-ecm.service.ts)
 - [*Auth guard service](../ng2-components/ng2-alfresco-core/src/services/auth-guard.service.ts)
-- [*Comment process service](../ng2-components/ng2-alfresco-core/src/services/comment-process.service.ts)
 - [*Content service](../ng2-components/ng2-alfresco-core/src/services/content.service.ts)
-- [*Discovery api service](../ng2-components/ng2-alfresco-core/src/services/discovery-api.service.ts)
 - [*Favorites api service](../ng2-components/ng2-alfresco-core/src/services/favorites-api.service.ts)
 - [*People content service](../ng2-components/ng2-alfresco-core/src/services/people-content.service.ts)
 - [*People process service](../ng2-components/ng2-alfresco-core/src/services/people-process.service.ts)
