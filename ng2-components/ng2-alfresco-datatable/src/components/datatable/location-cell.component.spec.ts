@@ -99,4 +99,36 @@ describe('LocationCellComponent', () => {
         expect(component.tooltip).toBeUndefined();
         expect(component.link).toEqual([]);
     });
+
+    it('should not setup cell when path is missing required properties', () => {
+        rowData.path = { someProp: '' };
+
+        fixture.detectChanges();
+
+        expect(component.displayText).toBe('');
+        expect(component.tooltip).toBeUndefined();
+        expect(component.link).toEqual([]);
+    });
+
+    it('should not setup cell when path data is missing one of the property', () => {
+        rowData.path = {
+            name: 'some-name'
+        };
+
+        fixture.detectChanges();
+
+        expect(component.displayText).toBe('');
+        expect(component.tooltip).toBeUndefined();
+        expect(component.link).toEqual([]);
+
+        rowData.path = {
+            elements: []
+        };
+
+        fixture.detectChanges();
+
+        expect(component.displayText).toBe('');
+        expect(component.tooltip).toBeUndefined();
+        expect(component.link).toEqual([]);
+    });
 });
