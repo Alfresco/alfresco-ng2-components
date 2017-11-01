@@ -1,11 +1,14 @@
 <div id="site-dropdown-container" class="adf-site-dropdown-container">
     <mat-form-field>
-        <mat-select class="adf-site-dropdown-list-element" id="site-dropdown"
+        <mat-select
+            class="adf-site-dropdown-list-element"
+            id="site-dropdown"
             placeholder="{{'DROPDOWN.PLACEHOLDER_LABEL' | translate}}"
             floatPlaceholder="never"
+            data-automation-id="site-my-files-select"
             [(ngModel)]="siteSelected"
             (ngModelChange)="selectedSite()">
-            <mat-option id="default_site_option" [value]="DEFAULT_VALUE">{{'DROPDOWN.DEFAULT_OPTION' | translate}}</mat-option>
+            <mat-option *ngIf="!hideMyFiles" data-automation-id="site-my-files-option" id="default_site_option" [value]="MY_FILES_VALUE">{{'DROPDOWN.MY_FILES_OPTION' | translate}}</mat-option>
             <mat-option *ngFor="let site of siteList" [value]="site.guid">
                 {{ site.title }}
             </mat-option>

@@ -1,6 +1,6 @@
 <div class="container">
     <div class="adf-site-container-style" id="site-container">
-        <adf-sites-dropdown (change)="getSiteContent($event)">
+        <adf-sites-dropdown (change)="getSiteContent($event)" [hideMyFiles]="false">
         </adf-sites-dropdown>
     </div>
     <div class="document-list-container" fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="16px">

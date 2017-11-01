@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SiteModel, SitesApiService } from 'ng2-alfresco-core';
 
 @Component({
@@ -25,17 +25,19 @@ import { SiteModel, SitesApiService } from 'ng2-alfresco-core';
 })
 export class DropdownSitesComponent implements OnInit {
 
+    @Input()
+    hideMyFiles: boolean = false;
+
     @Output()
     change: EventEmitter<SiteModel> = new EventEmitter();
 
-    public DEFAULT_VALUE = 'default';
+    public MY_FILES_VALUE = 'default';
 
     siteList = [];
 
     public siteSelected: string;
 
-    constructor(private sitesService: SitesApiService) {
-    }
+    constructor(private sitesService: SitesApiService) {}
 
     ngOnInit() {
         this.sitesService.getSites().subscribe((result) => {
@@ -45,7 +47,7 @@ export class DropdownSitesComponent implements OnInit {
 
     selectedSite() {
         let siteFound;
-        if (this.siteSelected === this.DEFAULT_VALUE) {
+        if (this.siteSelected === this.MY_FILES_VALUE) {
             siteFound = new SiteModel();
         }else {
            siteFound = this.siteList.find( site => site.guid === this.siteSelected);
