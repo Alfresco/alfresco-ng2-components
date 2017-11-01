@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AppsProcessService } from 'ng2-alfresco-core';
+import { AppsProcessService, TranslationService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { AppDefinitionRepresentationModel } from '../models/filter.model';
@@ -60,8 +60,10 @@ export class AppsListComponent implements OnInit {
 
     private iconsMDL: IconModel;
 
-    constructor(private appsProcessService: AppsProcessService) {
-        this.apps$ = new Observable<AppDefinitionRepresentationModel>(observer => this.appsObserver = observer).share();
+    constructor(
+        private appsProcessService: AppsProcessService,
+        private translationService: TranslationService) {
+            this.apps$ = new Observable<AppDefinitionRepresentationModel>(observer => this.appsObserver = observer).share();
     }
 
     ngOnInit() {
@@ -77,11 +79,11 @@ export class AppsListComponent implements OnInit {
     }
 
     private load() {
-        this.appsProcessService.getDeployedApplications().subscribe(
+        this.appsProcessService.getDeployedApplications()
+        .subscribe(
             (res: AppDefinitionRepresentationModel[]) => {
                 this.filterApps(res).forEach((app: AppDefinitionRepresentationModel) => {
-                    if (app.defaultAppId === AppsListComponent.DEFAULT_TASKS_APP) {
-                        app.name = AppsListComponent.DEFAULT_TASKS_APP_NAME;
+                    if (this.isDefaultApp(app)) {
                         app.theme = AppsListComponent.DEFAULT_TASKS_APP_THEME;
                         app.icon = AppsListComponent.DEFAULT_TASKS_APP_ICON;
                         this.appsObserver.next(app);
@@ -94,6 +96,16 @@ export class AppsListComponent implements OnInit {
                 this.error.emit(err);
             }
         );
+    }
+
+    isDefaultApp(app) {
+        return app.defaultAppId === AppsListComponent.DEFAULT_TASKS_APP;
+    }
+
+    getAppName(app) {
+        return this.isDefaultApp(app)
+            ? this.translationService.get(AppsListComponent.DEFAULT_TASKS_APP_NAME)
+            : Observable.of(app.name);
     }
 
     /**
