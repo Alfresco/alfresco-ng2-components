@@ -41,6 +41,8 @@ export class NodeFavoriteDirective implements OnChanges {
 
     ngOnChanges(changes) {
         if (!changes.selection.currentValue.length) {
+            this.favorites = [];
+
             return;
         }
 
@@ -63,7 +65,7 @@ export class NodeFavoriteDirective implements OnChanges {
             });
 
             Observable.forkJoin(batch).subscribe(() => {
-                this.reset();
+                this.favorites.map(selected => selected.entry.isFavorite = false);
                 this.toggle.emit();
             });
         }
@@ -74,14 +76,14 @@ export class NodeFavoriteDirective implements OnChanges {
 
             Observable.fromPromise(this.alfrescoApiService.getInstance().core.favoritesApi.addFavorite('-me-', <any> body))
                 .subscribe(() => {
-                    this.reset();
+                    notFavorite.map(selected => selected.entry.isFavorite = true);
                     this.toggle.emit();
                 });
         }
     }
 
     markFavoritesNodes(selection: MinimalNodeEntity[]) {
-        if (selection.length < this.favorites.length) {
+        if (selection.length <= this.favorites.length) {
             const newFavorites = this.reduce(this.favorites, selection);
             this.favorites = newFavorites;
         }
@@ -98,10 +100,6 @@ export class NodeFavoriteDirective implements OnChanges {
         }
 
         return this.favorites.every((selected) => selected.entry.isFavorite);
-    }
-
-    private reset() {
-        this.favorites = [];
     }
 
     private getProcessBatch(selection): any[] {
