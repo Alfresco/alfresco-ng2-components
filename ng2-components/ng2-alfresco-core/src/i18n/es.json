@@ -1,42 +1,41 @@
 {
-    "CORE": {
-        "PAGINATION": {
-            "ITEMS_RANGE": "Mostrando {{ range }} de {{ total }}",
-            "ITEMS_PER_PAGE": "Elementos por página",
-            "CURRENT_PAGE": "Página {{ number }}",
-            "TOTAL_PAGES": "de {{ total }}"
-        },
-        "FOLDER_DIALOG": {
-            "CREATE_FOLDER_TITLE": "Crear nueva carpeta",
-            "EDIT_FOLDER_TITLE": "Editar carpeta",
-            "FOLDER_NAME": {
-                "LABEL": "Nombre",
-                "ERRORS": {
-                    "REQUIRED": "Se necesita un nombre de carpeta",
-                    "SPECIAL_CHARACTERS": "El nombre de la carpeta no puede tener los caracteres * \" < > \\ / ? : |",
-                    "ENDING_DOT": "El nombre de la carpeta no puede terminar en punto .",
-                    "ONLY_SPACES": "El nombre de la carpeta no puede tener solo espacios"
-                }
-            },
-            "FOLDER_DESCRIPTION": {
-                "LABEL": "Descripción"
-            },
-            "CREATE_BUTTON": {
-                "LABEL": "Crear"
-            },
-            "UPDATE_BUTTON": {
-                "LABEL": "Actualizar"
-            },
-            "CANCEL_BUTTON": {
-                "LABEL": "Cancelar"
-            }
-        },
-        "MESSAGES": {
-            "ERRORS": {
-                "GENERIC": "La acción no ha sido satisfactoria. Vuelva a intentarlo o póngase en contacto con el equipo de TI.",
-                "EXISTENT_FOLDER": "Ya existe una carpeta con este nombre. Pruebe un nombre diferente."
-            }
+  "CORE": {
+    "PAGINATION": {
+      "ITEMS_RANGE": "Mostrando {{ range }} de {{ total }}",
+      "ITEMS_PER_PAGE": "Elementos por página",
+      "CURRENT_PAGE": "Página {{ number }}",
+      "TOTAL_PAGES": "de {{ total }}"
+    },
+    "FOLDER_DIALOG": {
+      "CREATE_FOLDER_TITLE": "Crear nueva carpeta",
+      "EDIT_FOLDER_TITLE": "Editar carpeta",
+      "FOLDER_NAME": {
+        "LABEL": "Nombre",
+        "ERRORS": {
+          "REQUIRED": "Se necesita un nombre de carpeta",
+          "SPECIAL_CHARACTERS": "El nombre de la carpeta no puede tener los caracteres * \" < > \\ / ? : |",
+          "ENDING_DOT": "El nombre de la carpeta no puede terminar en punto .",
+          "ONLY_SPACES": "El nombre de la carpeta no puede tener solo espacios"
         }
+      },
+      "FOLDER_DESCRIPTION": {
+        "LABEL": "Descripción"
+      },
+      "CREATE_BUTTON": {
+        "LABEL": "Crear"
+      },
+      "UPDATE_BUTTON": {
+        "LABEL": "Actualizar"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "Cancelar"
+      }
+    },
+    "MESSAGES": {
+      "ERRORS": {
+        "GENERIC": "La acción no ha sido satisfactoria. Vuelva a intentarlo o póngase en contacto con el equipo de TI.",
+        "EXISTENT_FOLDER": "Ya existe una carpeta con este nombre. Pruebe un nombre diferente."
+      }
     },
     "HOST_SETTINGS": {
       "TITLE": "Configuración",
@@ -45,4 +44,5 @@
       "BACK": "Volver",
       "APPLY": "APLICAR"
     }
+  }
 }

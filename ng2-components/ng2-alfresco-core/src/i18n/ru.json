@@ -1,42 +1,41 @@
 {
-    "CORE": {
-        "PAGINATION": {
-            "ITEMS_RANGE": "Отображается {{ range }} из {{ total }}",
-            "ITEMS_PER_PAGE": "Элементов на странице",
-            "CURRENT_PAGE": "Страница {{ number }}",
-            "TOTAL_PAGES": "из {{ total }}"
-        },
-        "FOLDER_DIALOG": {
-            "CREATE_FOLDER_TITLE": "Создать новую папку",
-            "EDIT_FOLDER_TITLE": "Редактировать папку",
-            "FOLDER_NAME": {
-                "LABEL": "Имя",
-                "ERRORS": {
-                    "REQUIRED": "Имя папки является обязательным",
-                    "SPECIAL_CHARACTERS": "Имя папки не может содержать следующие символы * \" < > \\ / ? : |",
-                    "ENDING_DOT": "Имя папки не может заканчиваться точкой .",
-                    "ONLY_SPACES": "Имя папки не может состоять только из пробелов"
-                }
-            },
-            "FOLDER_DESCRIPTION": {
-                "LABEL": "Описание"
-            },
-            "CREATE_BUTTON": {
-                "LABEL": "Создать"
-            },
-            "UPDATE_BUTTON": {
-                "LABEL": "Обновить"
-            },
-            "CANCEL_BUTTON": {
-                "LABEL": "Отмена"
-            }
-        },
-        "MESSAGES": {
-            "ERRORS": {
-                "GENERIC": "Действие не выполнено. Повторите попытку или обратитесь к IT-специалистам.",
-                "EXISTENT_FOLDER": "Папка с таким же именем уже существует. Используйте другое имя."
-            }
+  "CORE": {
+    "PAGINATION": {
+      "ITEMS_RANGE": "Отображается {{ range }} из {{ total }}",
+      "ITEMS_PER_PAGE": "Элементов на странице",
+      "CURRENT_PAGE": "Страница {{ number }}",
+      "TOTAL_PAGES": "из {{ total }}"
+    },
+    "FOLDER_DIALOG": {
+      "CREATE_FOLDER_TITLE": "Создать новую папку",
+      "EDIT_FOLDER_TITLE": "Редактировать папку",
+      "FOLDER_NAME": {
+        "LABEL": "Имя",
+        "ERRORS": {
+          "REQUIRED": "Имя папки является обязательным",
+          "SPECIAL_CHARACTERS": "Имя папки не может содержать следующие символы * \" < > \\ / ? : |",
+          "ENDING_DOT": "Имя папки не может заканчиваться точкой .",
+          "ONLY_SPACES": "Имя папки не может состоять только из пробелов"
         }
+      },
+      "FOLDER_DESCRIPTION": {
+        "LABEL": "Описание"
+      },
+      "CREATE_BUTTON": {
+        "LABEL": "Создать"
+      },
+      "UPDATE_BUTTON": {
+        "LABEL": "Обновить"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "Отмена"
+      }
+    },
+    "MESSAGES": {
+      "ERRORS": {
+        "GENERIC": "Действие не выполнено. Повторите попытку или обратитесь к IT-специалистам.",
+        "EXISTENT_FOLDER": "Папка с таким же именем уже существует. Используйте другое имя."
+      }
     },
     "HOST_SETTINGS": {
       "TITLE": "Параметры",
@@ -45,4 +44,5 @@
       "BACK": "Назад",
       "APPLY": "ПРИМЕНИТЬ"
     }
+  }
 }
