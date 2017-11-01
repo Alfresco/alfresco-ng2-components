@@ -51,8 +51,8 @@
                         <mat-icon>delete</mat-icon>
                     </button>
                     <button mat-icon-button
+                            [disabled]="!documentList.selection.length"
                             #favorite="adfFavorite"
-                            (toggle)="documentList.reload()"
                             [adf-node-favorite]="documentList.selection">
                         <mat-icon>
                             {{ favorite.hasFavorites() ? 'star' :'star_border' }}
