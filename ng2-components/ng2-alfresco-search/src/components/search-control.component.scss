@@ -1,6 +1,7 @@
 @mixin adf-search-control-theme($theme) {
     $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);
+    $primary: map-get($theme, primary);
 
     .adf {
 
@@ -13,6 +14,13 @@
 
         &-search-button.mat-icon-button {
             margin-right: 5px;
+        }
+
+        &-search-elements{
+            :focus {
+                border: 1;
+                border-color: mat-color($primary);
+            }
         }
 
         &-search-container {

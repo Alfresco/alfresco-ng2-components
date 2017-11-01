@@ -9,17 +9,20 @@
 </a>
 <mat-form-field class="example-full-width">
   <input matInput class="adf-search-field"
-         type="text"
+         [type]="inputType"
+         [autocomplete]="getAutoComplete()"
+         id="adf-control-input"
          [(ngModel)]="searchTerm"
+         (ngModelChange)="inputChange($event)"
          [adfSearchAutocomplete]="auto"
-         (enterKeyPressed)="onSearchSubmit($event)">
+         (enterKeyPressed)="searchSubmit($event)">
 </mat-form-field>
 </div>
 
 <adf-search #auto="adfSearchAutocomplete" class="adf-search-result-autocomplete truncate">
     <ng-template let-data>
-        <mat-list *ngIf="isSearchBarActive()">
-            <mat-option *ngFor="let item of data?.list?.entries; let idx = index">
+        <mat-list *ngIf="isSearchBarActive()" id="autocomplete-search-result-list">
+            <mat-option *ngFor="let item of data?.list?.entries; let idx = index" (click)="elementClicked(item)">
                 <div id="result_option_{{idx}}" class="adf-search-elements">
                     <mat-icon *ngIf="item">
                         <img [src]="getMimeTypeIcon(item)" />
@@ -34,6 +37,9 @@
                     </ng-template>
                     <!--span> {{item?.entry.createdByUser.displayName}} </span-->
                 </div>
+            </mat-option>
+            <mat-option id="search_no_result" data-automation-id="search_no_result_found" *ngIf="data?.list?.entries.length === 0">
+                <span class="truncate"><b> {{ 'SEARCH.RESULTS.NONE' | translate:{searchTerm: searchTerm} }}</b></span>
             </mat-option>
         </mat-list>
     </ng-template>

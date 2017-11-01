@@ -16,7 +16,7 @@
  */
 
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, EventEmitter, Output, Input } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
 import { AlfrescoAuthenticationService, ThumbnailService } from 'ng2-alfresco-core';
 import { Subject } from 'rxjs/Subject';
@@ -37,7 +37,7 @@ import { Subject } from 'rxjs/Subject';
         ])
     ]
 })
-export class SearchControlComponent {
+export class SearchControlComponent implements OnInit {
 
     @Input()
     expandable: boolean = true;
@@ -45,13 +45,28 @@ export class SearchControlComponent {
     @Input()
     highlight: boolean = false;
 
+    @Input()
+    inputType: string = 'text';
+
+    @Input()
+    autocomplete: boolean = false;
+
+    @Input()
+    liveSearchEnabled: boolean = true;
+
     @Output()
-    submit = new EventEmitter();
+    submit: EventEmitter<any> = new EventEmitter();
+
+    @Output()
+    searchChange: EventEmitter<string> = new EventEmitter();
+
+    @Output()
+    optionClicked: EventEmitter<any> = new EventEmitter();
 
     fileNodeId: string;
     fileShowed: boolean = false;
     searchTerm: string = '';
-    subscriptAnimationState: string = 'inactive';
+    subscriptAnimationState: string;
 
     private toggleSearch = new Subject<any>();
 
@@ -69,12 +84,24 @@ export class SearchControlComponent {
               });
     }
 
+    ngOnInit() {
+        this.subscriptAnimationState = this.expandable ? 'inactive' : 'no-animation';
+    }
+
     isLoggedIn(): boolean {
         return this.authService.isLoggedIn();
     }
 
-    onSearchSubmit(event: any) {
+    searchSubmit(event: any) {
         this.submit.emit(event);
+    }
+
+    inputChange(event: any) {
+        this.searchChange.emit(event);
+    }
+
+    getAutoComplete(): string {
+        return this.autocomplete ? 'on' : 'off';
     }
 
     getMimeTypeIcon(node: MinimalNodeEntity): string {
@@ -91,11 +118,16 @@ export class SearchControlComponent {
   }
 
   isSearchBarActive() {
-      return this.subscriptAnimationState === 'active';
+      return this.subscriptAnimationState === 'active' && this.liveSearchEnabled;
   }
 
   toggleSearchBar() {
     this.toggleSearch.next();
+  }
+
+  elementClicked(item: any) {
+    this.optionClicked.next(item);
+    this.toggleSearchBar();
   }
 
 }

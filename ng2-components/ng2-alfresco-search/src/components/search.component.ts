@@ -37,7 +37,6 @@ import { Subject } from 'rxjs/Subject';
 let _uniqueAutocompleteIdCounter = 0;
 
 @Component({
-    moduleId: module.id,
     selector: 'adf-search',
     templateUrl: './search.component.html',
     styleUrls: ['./search.component.scss'],
@@ -153,14 +152,13 @@ export class SearchComponent implements AfterContentInit, OnChanges {
                 .getNodeQueryResults(searchTerm, searchOpts)
                 .subscribe(
                 results => {
-                    this.results = <NodePaging>results;
+                    this.results = <NodePaging> results;
                     this.success.emit(this.results);
                     this.setVisibility();
                 },
                 error => {
                     this.results = null;
-                }
-                );
+                });
         }
     }
 
@@ -185,8 +183,7 @@ export class SearchComponent implements AfterContentInit, OnChanges {
 
     setVisibility() {
         this.showPanel = !!this.results &&
-                         !!this.results.list &&
-                         !!this.results.list.entries.length;
+                         !!this.results.list;
         this._classList['adf-search-show'] = this.showPanel;
         this._classList['adf-search-hide'] = !this.showPanel;
         this.changeDetectorRef.markForCheck();

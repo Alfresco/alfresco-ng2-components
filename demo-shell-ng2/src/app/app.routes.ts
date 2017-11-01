@@ -27,7 +27,7 @@ import { ActivitiComponent } from './components/activiti/activiti.component';
 import { ActivitiShowDiagramComponent } from './components/activiti/activiti-show-diagram.component';
 import { FormViewerComponent } from './components/activiti/form-viewer.component';
 import { FormNodeViewerComponent } from './components/activiti/form-node-viewer.component';
-import { ActivitiAppsViewComponent } from './components/activiti/apps.view';
+import { ActivitiAppsViewComponent } from './components/activiti/apps-view.component';
 import { SearchIntegrationComponent } from './components/search/search-integration.component';
 
 import { DataTableComponent } from './components/datatable/datatable.component';

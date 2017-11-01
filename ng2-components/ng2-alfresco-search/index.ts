@@ -18,7 +18,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule, SearchService, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
-import { DocumentListModule } from 'ng2-alfresco-documentlist';
 import { SearchControlComponent } from './src/components/search-control.component';
 import { SearchComponent } from './src/components/search.component';
 
@@ -58,7 +57,6 @@ export const ALFRESCO_SEARCH_PROVIDERS: [any] = [
 
 @NgModule({
     imports: [
-        DocumentListModule,
         CoreModule,
         FormsModule,
         ReactiveFormsModule

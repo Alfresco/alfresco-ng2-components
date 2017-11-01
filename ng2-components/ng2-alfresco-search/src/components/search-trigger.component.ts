@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ENTER, ESCAPE } from '@angular/cdk/keycodes';
+import { DOWN_ARROW, ENTER, ESCAPE, UP_ARROW } from '@angular/cdk/keycodes';
 import {
     ChangeDetectorRef,
     Directive,
@@ -77,9 +77,13 @@ export class AdfAutocompleteTriggerDirective implements ControlValueAccessor, On
     @Output()
     enterKeyPressed: EventEmitter<KeyboardEvent> = new EventEmitter();
 
+    @Output()
+    shortWordError: EventEmitter<string> = new EventEmitter();
+
     private _panelOpen: boolean = false;
     private closingActionsSubscription: Subscription;
     private escapeEventStream = new Subject<void>();
+    // private focusedChild: number = 0;
 
     onChange: (value: any) => void = () => { };
 
@@ -157,6 +161,13 @@ export class AdfAutocompleteTriggerDirective implements ControlValueAccessor, On
             this.enterKeyPressed.next(event);
             this.setValueAndClose(event);
             event.preventDefault();
+        }else {
+            let isArrowKey = keyCode === UP_ARROW || keyCode === DOWN_ARROW;
+            if ( isArrowKey ) {
+                if ( !this.panelOpen ) {
+                    this.openPanel();
+                }
+            }
         }
     }
 
@@ -168,6 +179,7 @@ export class AdfAutocompleteTriggerDirective implements ControlValueAccessor, On
                 this.searchPanel.keyPressedStream.next(inputValue);
                 this.openPanel();
             } else {
+                this.shortWordError.next();
                 this.searchPanel.resetResults();
             }
         }

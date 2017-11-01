@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ThumbnailService } from 'ng2-alfresco-core';
 import {
