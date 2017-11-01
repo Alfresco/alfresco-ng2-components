@@ -129,6 +129,30 @@ describe('AppsListComponent', () => {
         expect(emitSpy).toHaveBeenCalled();
     });
 
+    describe('intenationalization', () => {
+
+        fit('should provide a translation for the default application name, when app name is not provided', () => {
+            const appDataMock = {
+                defaultAppId: 'tasks',
+                name: null
+            };
+            component.getAppName(appDataMock).subscribe((name) => {
+                expect(name).toBe('ADF_TASK_LIST.APPS.TASK_APP_NAME');
+            });
+        });
+
+        fit('should provide the application name, when it exists', () => {
+            const appDataMock = {
+                defaultAppId: 'uiu',
+                name: 'the-name'
+            };
+
+            component.getAppName(appDataMock).subscribe((name) => {
+                expect(name).toBe(appDataMock.name);
+            });
+        });
+    });
+
     describe('layout', () => {
 
         it('should display a grid by default', () => {

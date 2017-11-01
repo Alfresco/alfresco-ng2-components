@@ -2,7 +2,7 @@
     <mat-list *ngIf="isList()" class="adf-app-list">
         <mat-list-item class="adf-app-list-item" (click)="selectApp(app)" (keyup.enter)="selectApp(app)" *ngFor="let app of appList" tabindex="0" role="button" title="{{app.name}}">
             <mat-icon matListIcon>touch_app</mat-icon>
-            <span matLine>{{app.name}}</span>
+            <span matLine>{{getAppName(app) | async}}</span>
         </mat-list-item>
     </mat-list>
     <div fxLayout="row wrap" *ngIf="isGrid()" class="adf-app-listgrid">
@@ -13,7 +13,7 @@
                     fxLayout="column"
                     role="button"
                     class="adf-app-listgrid-item-card"
-                    title="{{app.name}}"
+                    title="{{getAppName(app) | async}}"
                     [ngClass]="[getTheme(app)]"
                     (click)="selectApp(app)"
                     (keyup.enter)="selectApp(app)">
@@ -21,7 +21,7 @@
                             <mat-icon class="adf-app-listgrid-item-card-logo-icon">{{getBackgroundIcon(app)}}</mat-icon>
                         </div>
                         <div mat-card-title class="adf-app-listgrid-item-card-title">
-                            <h1>{{app.name | translate}}</h1>
+                            <h1>{{getAppName(app) | async}}</h1>
                         </div>
                         <div mat-card-subtitle class="adf-app-listgrid-item-card-subtitle" fxFlex="1 0 auto">
                             <p>{{app.description}}</p>
