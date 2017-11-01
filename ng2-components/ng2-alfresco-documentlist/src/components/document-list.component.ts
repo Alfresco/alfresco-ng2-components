@@ -499,9 +499,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             maxItems: this.pageSize,
             skipCount: this.skipCount
         };
-        this.apiService.nodesApi.getDeletedNodes(options).then((page: DeletedNodesPaging) => {
-            this.onPageLoaded(page);
-        });
+        this.apiService.nodesApi.getDeletedNodes(options)
+            .then((page: DeletedNodesPaging) => this.onPageLoaded(page))
+            .catch(error => this.error.emit(error));
     }
 
     private loadSharedLinks(): void {
@@ -510,9 +510,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             maxItems: this.pageSize,
             skipCount: this.skipCount
         };
-        this.apiService.sharedLinksApi.findSharedLinks(options).then((page: NodePaging) => {
-           this.onPageLoaded(page);
-        });
+        this.apiService.sharedLinksApi.findSharedLinks(options)
+            .then((page: NodePaging) => this.onPageLoaded(page))
+            .catch(error => this.error.emit(error));
     }
 
     private loadSites(): void {
@@ -522,9 +522,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             skipCount: this.skipCount
         };
 
-        this.apiService.sitesApi.getSites(options).then((page: NodePaging) => {
-            this.onPageLoaded(page);
-        });
+        this.apiService.sitesApi.getSites(options)
+            .then((page: NodePaging) => this.onPageLoaded(page))
+            .catch(error => this.error.emit(error));
     }
 
     private loadMemberSites(): void {
@@ -534,19 +534,21 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             skipCount: this.skipCount
         };
 
-        this.apiService.peopleApi.getSiteMembership('-me-', options).then((result: SitePaging) => {
-            let page: NodePaging = {
-                list: {
-                    entries: result.list.entries
-                        .map(({ entry: { site }}: any) => ({
-                            entry: site
-                        })),
-                    pagination: result.list.pagination
-                }
-            };
+        this.apiService.peopleApi.getSiteMembership('-me-', options)
+            .then((result: SitePaging) => {
+                let page: NodePaging = {
+                    list: {
+                        entries: result.list.entries
+                            .map(({ entry: { site }}: any) => ({
+                                entry: site
+                            })),
+                        pagination: result.list.pagination
+                    }
+                };
 
-            this.onPageLoaded(page);
-        });
+                this.onPageLoaded(page);
+            })
+            .catch(error => this.error.emit(error));
     }
 
     private loadFavorites(): void {
@@ -557,54 +559,59 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             include: [ 'properties', 'allowableOperations', 'path' ]
         };
 
-        this.apiService.favoritesApi.getFavorites('-me-', options).then((result: NodePaging) => {
-            let page: NodePaging = {
-                list: {
-                    entries: result.list.entries
-                        .map(({ entry: { target }}: any) => ({
-                            entry: target.file || target.folder
-                        }))
-                        .map(({ entry }: any) => {
-                            entry.properties = {
-                                'cm:title': entry.title,
-                                'cm:description': entry.description
-                            };
-                            return { entry };
-                        }),
-                    pagination: result.list.pagination
-                }
-            };
-            this.onPageLoaded(page);
-        });
+        this.apiService.favoritesApi.getFavorites('-me-', options)
+            .then((result: NodePaging) => {
+                let page: NodePaging = {
+                    list: {
+                        entries: result.list.entries
+                            .map(({ entry: { target }}: any) => ({
+                                entry: target.file || target.folder
+                            }))
+                            .map(({ entry }: any) => {
+                                entry.properties = {
+                                    'cm:title': entry.title,
+                                    'cm:description': entry.description
+                                };
+                                return { entry };
+                            }),
+                        pagination: result.list.pagination
+                    }
+                };
+                this.onPageLoaded(page);
+            })
+            .catch(error => this.error.emit(error));
     }
 
     private loadRecent(): void {
-        this.apiService.peopleApi.getPerson('-me-').then((person: PersonEntry) => {
-            const username = person.entry.id;
-            const query = {
-                query: {
-                    query: '*',
-                    language: 'afts'
-                },
-                filterQueries: [
-                    { query: `cm:modified:[NOW/DAY-30DAYS TO NOW/DAY+1DAY]` },
-                    { query: `cm:modifier:${username} OR cm:creator:${username}` },
-                    { query: `TYPE:"content" AND -TYPE:"app:filelink" AND -TYPE:"fm:post"` }
-                ],
-                include: [ 'path', 'properties', 'allowableOperations' ],
-                sort: [{
-                    type: 'FIELD',
-                    field: 'cm:modified',
-                    ascending: false
-                }],
-                paging: {
-                    maxItems: this.pageSize,
-                    skipCount: this.skipCount
-                }
-            };
+        this.apiService.peopleApi.getPerson('-me-')
+            .then((person: PersonEntry) => {
+                const username = person.entry.id;
+                const query = {
+                    query: {
+                        query: '*',
+                        language: 'afts'
+                    },
+                    filterQueries: [
+                        { query: `cm:modified:[NOW/DAY-30DAYS TO NOW/DAY+1DAY]` },
+                        { query: `cm:modifier:${username} OR cm:creator:${username}` },
+                        { query: `TYPE:"content" AND -TYPE:"app:filelink" AND -TYPE:"fm:post"` }
+                    ],
+                    include: [ 'path', 'properties', 'allowableOperations' ],
+                    sort: [{
+                        type: 'FIELD',
+                        field: 'cm:modified',
+                        ascending: false
+                    }],
+                    paging: {
+                        maxItems: this.pageSize,
+                        skipCount: this.skipCount
+                    }
+                };
 
-            this.apiService.searchApi.search(query).then(page => this.onPageLoaded(page));
-        });
+                return this.apiService.searchApi.search(query);
+            })
+            .then((page: NodePaging) => this.onPageLoaded(page))
+            .catch(error => this.error.emit(error));
     }
 
     private onPageLoaded(page: NodePaging) {
