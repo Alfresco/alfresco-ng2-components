@@ -86,12 +86,13 @@ The properties currentFolderId, folderNode and node are the entry initialization
 | preview | emitted when user acts upon files with either single or double click (depends on `navigation-mode`), recommended for Viewer components integration  |
 | permissionError | emitted when user is attempting to create a folder via action menu without having the permission to do it |
 | ready | emitted when the documentList is ready and loads all the elements|
+| error | emitted when API fails to get documentList data|
 
 ## Details
 
 ### DOM Events
 
-Below are the DOM events the DocumentList component emits. 
+Below are the DOM events the DocumentList component emits.
 All of them are `bubbling`, meaning you can handle them in any component up the parent hierarchy, even if DocumentList is wrapped by another component(s).
 
 | Name | Description |
