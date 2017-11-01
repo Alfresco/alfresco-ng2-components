@@ -15,5 +15,7 @@
     "login-header.directive",
     "no-task-detail-template",
     "diagram",
-    "raphael"
+    "raphael",
+    "context-menu",
+    "alfresco-settings"
 ]
