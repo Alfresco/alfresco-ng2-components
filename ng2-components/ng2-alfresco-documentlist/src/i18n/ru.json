@@ -27,7 +27,7 @@
   },
   "DROPDOWN": {
     "PLACEHOLDER_LABEL": "Список сайтов",
-    "DEFAULT_OPTION": "По умолчанию"
+    "MY_FILES_OPTION": ""
   },
   "NODE_SELECTOR": {
     "CANCEL": "Отмена",

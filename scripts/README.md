@@ -145,6 +145,7 @@ The default behaviour of the ***npm-build-all.sh*** install node_modules and bui
 | --- | --- |
 | -h or --help    | show the help  |
 | -t or --test    | Run the tests, this parameter accepts also a wildcard to execute tests for example -t "ng2-alfresco-core" |
+| -d or --debug    | Run the tests **in browser**, this parameter accepts also a wildcard to execute tests for example -d "ng2-alfresco-core" |
 | -c or --clean   | clean the ng2_components folders before start from all the temp builds files as node_modules  |
 | -gitjsapi   | start the demo shell using an alfresco-js-api referenced by commit-ish version of the JS-API |
 | -si or --skipinstall    | skip the installation of the node_modules  |
@@ -160,7 +161,13 @@ The default behaviour of the ***npm-build-all.sh*** install node_modules and bui
 * Build all your local components and run the tests:
 
 ```sh
-./npm-build-all.sh -t or -test
+./npm-build-all.sh -t
+```
+
+* Build all your local components and run the tests **in BROWSER**:
+
+```sh
+./npm-build-all.sh -d
 ```
 
 * Clean the ng2-components folder node_modules before build

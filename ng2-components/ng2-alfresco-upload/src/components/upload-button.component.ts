@@ -230,7 +230,7 @@ export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionS
 
             this.translateService.get('FILE_UPLOAD.MESSAGES.EXCEED_MAX_FILE_SIZE', {fileName: file.name}).subscribe((message: string) => {
                 this.error.emit(message);
-            })
+            });
         }
 
         return acceptableSize;

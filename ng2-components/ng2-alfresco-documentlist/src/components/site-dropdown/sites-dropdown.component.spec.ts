@@ -89,6 +89,11 @@ describe('DropdownSitesComponent', () => {
 
     describe('Rendering tests', () => {
 
+        function openSelectbox() {
+            const selectBox = debug.query(By.css(('[data-automation-id="site-my-files-select"] .mat-select-trigger')));
+            selectBox.triggerEventHandler('click', null);
+        }
+
         beforeEach(() => {
             jasmine.Ajax.install();
         });
@@ -96,6 +101,7 @@ describe('DropdownSitesComponent', () => {
         afterEach(() => {
             jasmine.Ajax.uninstall();
             fixture.destroy();
+            TestBed.resetTestingModule();
         });
 
         it('Dropdown sites should be renedered', async(() => {
@@ -112,6 +118,31 @@ describe('DropdownSitesComponent', () => {
                 status: 200,
                 contentType: 'json',
                 responseText: sitesList
+            });
+        }));
+
+        it('should show the "My files" option by default', async(() => {
+            fixture.detectChanges();
+            jasmine.Ajax.requests.mostRecent().respondWith({ status: 200, contentType: 'json', responseText: sitesList });
+
+            openSelectbox();
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(window.document.querySelector('[data-automation-id="site-my-files-option"]')).not.toBeNull();
+            });
+        }));
+
+        it('should hide the "My files" option if the developer desires that way', async(() => {
+            component.hideMyFiles = true;
+            fixture.detectChanges();
+            jasmine.Ajax.requests.mostRecent().respondWith({ status: 200, contentType: 'json', responseText: sitesList });
+
+            openSelectbox();
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(window.document.querySelector('[data-automation-id="site-my-files-option"]')).toBeNull();
             });
         }));
 
