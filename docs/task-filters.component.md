@@ -2,22 +2,6 @@
 
 Shows all available filters.
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-  * [Properties](#properties)
-  * [Events](#events)
-- [Details](#details)
-  * [How filter the activiti task filters](#how-filter-the-activiti-task-filters)
-  * [FilterParamsModel](#filterparamsmodel)
-  * [How to create an accordion menu with the task filter](#how-to-create-an-accordion-menu-with-the-task-filter)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
-
 ## Basic Usage
 
 ```html
@@ -76,3 +60,10 @@ You can use inside the filterParam one of the properties from [FilterParamsModel
 
 The task filter often works well as an item in an accordion menu. See the [Accordion component](accordion.component.md)
 page for an example of how to do set this up.
+
+<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
+<!-- seealso start -->
+## See also
+
+- [Filter model](filter.model.md)
+<!-- seealso end -->
