@@ -14,6 +14,37 @@
                 "TITLE": "Adding files to zip, this could take a few minutes"
             }
         },
+        "FOLDER_DIALOG": {
+            "CREATE_FOLDER_TITLE": "Create new folder",
+            "EDIT_FOLDER_TITLE": "Edit folder",
+            "FOLDER_NAME": {
+                "LABEL": "Name",
+                "ERRORS": {
+                    "REQUIRED": "Folder name is required",
+                    "SPECIAL_CHARACTERS": "Folder name can't contain these characters * \" < > \\ / ? : |",
+                    "ENDING_DOT": "Folder name can't end with a period .",
+                    "ONLY_SPACES": "Folder name can't contain only spaces"
+                }
+            },
+            "FOLDER_DESCRIPTION": {
+                "LABEL": "Description"
+            },
+            "CREATE_BUTTON": {
+                "LABEL": "Create"
+            },
+            "UPDATE_BUTTON": {
+                "LABEL": "Update"
+            },
+            "CANCEL_BUTTON": {
+                "LABEL": "Cancel"
+            }
+        },
+        "MESSAGES": {
+          "ERRORS": {
+            "GENERIC": "The action was unsuccessful. Try again or contact your IT Team.",
+            "EXISTENT_FOLDER": "There's already a folder with this name. Try a different name."
+          }
+        },
         "RESTORE_NODE": {
             "VIEW": "View",
             "PARTIAL_PLURAL": "{{ number }} items not restored because of issues with the restore location",
