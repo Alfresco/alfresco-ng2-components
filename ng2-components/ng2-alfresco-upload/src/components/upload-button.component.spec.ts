@@ -283,6 +283,22 @@ describe('UploadButtonComponent', () => {
             expect(filesCalledWith[0].name).toBe('smallFile.png');
         });
 
+        it('should filter out all files if maxFilesSize is 0', () => {
+            component.maxFilesSize = 0;
+
+            component.uploadFiles(files);
+
+            expect(addToQueueSpy.calls.mostRecent()).toBeUndefined();
+        });
+
+        it('should filter out all files if maxFilesSize is <0', () => {
+            component.maxFilesSize = -2;
+
+            component.uploadFiles(files);
+
+            expect(addToQueueSpy.calls.mostRecent()).toBeUndefined();
+        });
+
         it('should output an error when you try to upload a file too big', (done) => {
             component.maxFilesSize = 100;
 
