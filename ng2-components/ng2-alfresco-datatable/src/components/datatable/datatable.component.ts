@@ -17,7 +17,7 @@
 
 import {
     AfterContentInit, Component, ContentChild, DoCheck, ElementRef, EventEmitter, Input,
-    IterableDiffers, OnChanges, Output, SimpleChange, SimpleChanges, TemplateRef
+    IterableDiffers, OnChanges, Output, SimpleChange, SimpleChanges, TemplateRef, ViewEncapsulation
 } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material';
 import { DataColumnListComponent } from 'ng2-alfresco-core';
@@ -35,7 +35,8 @@ import { DataRowActionEvent } from './data-row-action.event';
 @Component({
     selector: 'adf-datatable',
     styleUrls: ['./datatable.component.scss'],
-    templateUrl: './datatable.component.html'
+    templateUrl: './datatable.component.html',
+    encapsulation: ViewEncapsulation.None
 })
 export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck {
 
@@ -386,7 +387,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     }
 
     iconAltTextKey(value: string): string {
-        return 'ICONS.' + value.substring(value.lastIndexOf('/') + 1).replace(/\.[a-z]+/, '');
+        return value ? 'ICONS.' + value.substring(value.lastIndexOf('/') + 1).replace(/\.[a-z]+/, '') : '';
     }
 
     isColumnSorted(col: DataColumn, direction: string): boolean {

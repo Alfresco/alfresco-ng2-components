@@ -83,13 +83,37 @@ export class ShareDataTableAdapter implements DataTableAdapter {
 
         if (col.type === 'date') {
             try {
-                const result =  this.formatDate(col, value);
+                const result = this.formatDate(col, value);
                 return dataRow.cacheValue(col.key, result);
             } catch (err) {
                 console.error(`Error parsing date ${value} to format ${col.format}`);
                 return 'Error';
             }
         }
+
+        if (col.key === '$thumbnail') {
+            const node = (<ShareDataRow> row).node;
+
+            if (node.entry.isFolder) {
+                return this.documentListService.getMimeTypeIcon('folder');
+            }
+
+            if (node.entry.isFile) {
+                if (this.thumbnails) {
+                    return this.documentListService.getDocumentThumbnailUrl(node);
+                }
+            }
+
+            if (node.entry.content) {
+                const mimeType = node.entry.content.mimeType;
+                if (mimeType) {
+                    return this.documentListService.getMimeTypeIcon(mimeType);
+                }
+            }
+
+            return this.documentListService.getDefaultMimeTypeIcon();
+        }
+
 
         if (col.type === 'image') {
 
@@ -99,30 +123,6 @@ export class ShareDataTableAdapter implements DataTableAdapter {
                     return resolved;
                 }
             }
-
-            if (col.key === '$thumbnail') {
-                const node = (<ShareDataRow> row).node;
-
-                if (node.entry.isFolder) {
-                    return this.documentListService.getMimeTypeIcon('folder');
-                }
-
-                if (node.entry.isFile) {
-                    if (this.thumbnails) {
-                        return this.documentListService.getDocumentThumbnailUrl(node);
-                    }
-                }
-
-                if (node.entry.content) {
-                    const mimeType = node.entry.content.mimeType;
-                    if (mimeType) {
-                        return this.documentListService.getMimeTypeIcon(mimeType);
-                    }
-                }
-
-                return this.documentListService.getDefaultMimeTypeIcon();
-            }
-
         }
 
         return dataRow.cacheValue(col.key, value);
@@ -153,7 +153,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         this.sorting = sorting;
 
         if (sorting.key && sorting.key.includes('sizeInBytes')) {
-            options.numeric =  true;
+            options.numeric = true;
         }
 
         this.sortRows(this.rows, this.sorting);
@@ -182,7 +182,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         if (sorting && sorting.key && rows && rows.length > 0) {
 
             if (sorting.key.includes('sizeInBytes') || sorting.key === 'name') {
-                options.numeric =  true;
+                options.numeric = true;
             }
 
             rows.sort((a: ShareDataRow, b: ShareDataRow) => {

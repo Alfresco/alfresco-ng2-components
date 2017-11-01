@@ -1,5 +1,14 @@
 @mixin adf-document-list-theme($theme) {
     $foreground: map-get($theme, foreground);
+    $accent: map-get($theme, accent);
+
+    adf-datatable > table > tbody > tr.is-selected > td.adf-data-table-cell.adf-data-table-cell--image.image-table-cell > div > div > mat-icon > svg {
+        fill: mat-color($accent);
+        margin-top: -4px;
+        margin-left: -4px;
+        width: 32px;
+        height: 32px;
+    }
 
     .document-list_empty_template {
         text-align: center;
@@ -49,13 +58,7 @@
 
     .adf-document-list-loading-container {
         min-height: 300px;
-        display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */
-        display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */
-        display: -webkit-flex; /* NEW - Chrome */
-        display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
-        -webkit-box-flex-direction: row;
-        -moz-box-flex-direction: row;
-        -webkit-flex-direction: row;
+        display: flex;
         flex-direction: row;
         height: 100%;
     }

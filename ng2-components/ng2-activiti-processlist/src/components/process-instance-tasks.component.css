@@ -28,10 +28,6 @@
     top: -2px;
 }
 
-.material-icons:hover {
-    color: rgb(255, 152, 0);
-}
-
 .task-details-dialog {
     position: fixed;
     top: 50%;
