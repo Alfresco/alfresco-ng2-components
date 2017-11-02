@@ -1,0 +1,75 @@
+# ADF Typography
+
+## What is typography?
+
+Typography configuration let you change the style of the text in your ADF app
+
+## Customization
+
+To get started you need to include your custom font in the `/src/index.html` header:
+
+```html
+  <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+```
+
+After you need to change your `/src/custom-style.scss` to include the new font:
+
+```scss
+/*
+ *  Include only packages what you are using (and core by default)
+ */
+@import '~@angular/material/theming';
+@import '~ng2-alfresco-core/styles/theming';
+@import '~ng2-alfresco-core/styles/index';
+@import '~ng2-activiti-analytics/styles/index';
+@import '~ng2-activiti-diagrams/styles/index';
+@import '~ng2-activiti-form/styles/index';
+@import '~ng2-activiti-processlist/styles/index';
+@import '~ng2-activiti-tasklist/styles/index';
+@import '~ng2-alfresco-datatable/styles/index';
+@import '~ng2-alfresco-documentlist/styles/index';
+@import '~ng2-alfresco-login/styles/index';
+@import '~ng2-alfresco-upload/styles/index';
+@import '~ng2-alfresco-userinfo/styles/index';
+
+$custom-typography: mat-typography-config(
+    $font-family: 'Muli, Roboto, "Helvetica Neue", sans-serif',
+    $display-4:     mat-typography-level(112px, 112px, 300),
+    $display-3:     mat-typography-level(56px, 56px, 400),
+    $display-2:     mat-typography-level(45px, 48px, 400),
+    $display-1:     mat-typography-level(34px, 40px, 400),
+    $headline:      mat-typography-level(24px, 32px, 400),
+    $title:         mat-typography-level(20px, 32px, 500),
+    $subheading-2:  mat-typography-level(16px, 28px, 400),
+    $subheading-1:  mat-typography-level(15px, 24px, 400),
+    $body-2:        mat-typography-level(14px, 24px, 500),
+    $body-1:        mat-typography-level(14px, 20px, 400),
+    $caption:       mat-typography-level(12px, 20px, 400),
+    $button:        mat-typography-level(14px, 14px, 500),
+    $input:         mat-typography-level(16px, 1.25, 400)
+);
+
+@include mat-core($custom-typography);
+
+$primary: mat-palette($alfresco-accent-orange);
+$accent:  mat-palette($alfresco-accent-purple);
+$warn:    mat-palette($alfresco-warn);
+$theme:   mat-light-theme($primary, $accent, $warn);
+
+@include angular-material-theme($theme);
+
+@include alfresco-core-theme($theme);
+@include alfresco-activity-analytics-theme($theme);
+@include alfresco-activity-diagrams-theme($theme);
+@include alfresco-activity-form-theme($theme);
+@include alfresco-activity-processlist-theme($theme);
+@include alfresco-activity-tasklist-theme($theme);
+@include alfresco-datatable-theme($theme);
+@include alfresco-documentlist-theme($theme);
+@include alfresco-login-theme($theme);
+@include alfresco-upload-theme($theme);
+@include alfresco-userinfo-theme($theme);
+
+```
+
+for more details about typografy refer to [Material 2 documentation](https://github.com/angular/material2/blob/master/guides/typography.md)

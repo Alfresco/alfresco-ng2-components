@@ -32,6 +32,7 @@ to the appropriate source file.
 - [Form Stencils with Angular 2](stencils.md)
 - [Angular Material Design](angular-material-design.md)
 - [Theming](theming.md)
+- [Typography](typography.md)
 - [Walkthrough: adding indicators to highlight information about a node](metadata-indicators.md)
 
 <!-- guide end -->
