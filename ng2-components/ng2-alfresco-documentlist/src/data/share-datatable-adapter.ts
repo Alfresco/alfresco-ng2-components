@@ -148,13 +148,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     }
 
     setSorting(sorting: DataSorting): void {
-        const options: Intl.CollatorOptions = {};
-
         this.sorting = sorting;
-
-        if (sorting.key && sorting.key.includes('sizeInBytes')) {
-            options.numeric = true;
-        }
 
         this.sortRows(this.rows, this.sorting);
     }
