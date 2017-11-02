@@ -234,6 +234,7 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
             if (rows.length > 0) {
                 let dataRow = rows.find(row => row.getValue('id') === taskIdToSelect) || rows[0];
                 this.data.selectedRow = dataRow;
+                dataRow.isSelected = true;
                 this.currentInstanceId = dataRow.getValue('id');
             }
         } else {
