@@ -55,7 +55,8 @@ export * from './src/components/breadcrumb/breadcrumb.component';
 export * from './src/components/site-dropdown/sites-dropdown.component';
 
 // data
-export * from './src/data/share-datatable-adapter';
+export { ShareDataTableAdapter } from './src/data/share-datatable-adapter';
+export { ShareDataRow } from './src/data/share-data-row.model';
 
 // services
 export * from './src/services/folder-actions.service';
@@ -68,7 +69,7 @@ export * from './src/models/content-action.model';
 export * from './src/models/document-library.model';
 export * from './src/models/permissions.model';
 export * from './src/models/permissions-style.model';
-export * from './src/models/permissions-style.model';
+
 
 export const DOCUMENT_LIST_DIRECTIVES: any[] = [
     DocumentListComponent,
