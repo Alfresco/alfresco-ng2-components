@@ -916,12 +916,35 @@ describe('DocumentList', () => {
         expect(apiService.nodesApi.getDeletedNodes).toHaveBeenCalled();
     });
 
+    it('should emit error when fetch trashcan fails', (done) => {
+        spyOn(apiService.nodesApi, 'getDeletedNodes').and.returnValue(Promise.reject('error'));
+
+        documentList.error.subscribe(val => {
+            expect(val).toBe('error');
+            done();
+        });
+
+        documentList.loadFolderByNodeId('-trashcan-');
+    });
+
     it('should fetch shared links', () => {
         const sharedlinksApi = apiService.getInstance().core.sharedlinksApi;
         spyOn(sharedlinksApi, 'findSharedLinks').and.returnValue(Promise.resolve(null));
 
         documentList.loadFolderByNodeId('-sharedlinks-');
         expect(sharedlinksApi.findSharedLinks).toHaveBeenCalled();
+    });
+
+    it('should emit error when fetch shared links fails', (done) => {
+        spyOn(apiService.getInstance().core.sharedlinksApi, 'findSharedLinks')
+            .and.returnValue(Promise.reject('error'));
+
+        documentList.error.subscribe(val => {
+            expect(val).toBe('error');
+            done();
+        });
+
+        documentList.loadFolderByNodeId('-sharedlinks-');
     });
 
     it('should fetch sites', () => {
@@ -932,6 +955,18 @@ describe('DocumentList', () => {
         expect(sitesApi.getSites).toHaveBeenCalled();
     });
 
+    it('should emit error when fetch sites fails', (done) => {
+        spyOn(apiService.getInstance().core.sitesApi, 'getSites')
+            .and.returnValue(Promise.reject('error'));
+
+        documentList.error.subscribe(val => {
+            expect(val).toBe('error');
+            done();
+        });
+
+        documentList.loadFolderByNodeId('-sites-');
+    });
+
     it('should fetch user membership sites', () => {
         const peopleApi = apiService.getInstance().core.peopleApi;
         spyOn(peopleApi, 'getSiteMembership').and.returnValue(Promise.resolve());
@@ -940,12 +975,36 @@ describe('DocumentList', () => {
         expect(peopleApi.getSiteMembership).toHaveBeenCalled();
     });
 
+    it('should emit error when fetch membership sites fails', (done) => {
+        spyOn(apiService.getInstance().core.peopleApi, 'getSiteMembership')
+            .and.returnValue(Promise.reject('error'));
+
+        documentList.error.subscribe(val => {
+            expect(val).toBe('error');
+            done();
+        });
+
+        documentList.loadFolderByNodeId('-mysites-');
+    });
+
     it('should fetch favorites', () => {
         const favoritesApi = apiService.getInstance().core.favoritesApi;
         spyOn(favoritesApi, 'getFavorites').and.returnValue(Promise.resolve(null));
 
         documentList.loadFolderByNodeId('-favorites-');
         expect(favoritesApi.getFavorites).toHaveBeenCalled();
+    });
+
+    it('should emit error when fetch favorites fails', (done) => {
+        spyOn(apiService.getInstance().core.favoritesApi, 'getFavorites')
+            .and.returnValue(Promise.reject('error'));
+
+        documentList.error.subscribe(val => {
+            expect(val).toBe('error');
+            done();
+        });
+
+        documentList.loadFolderByNodeId('-favorites-');
     });
 
     it('should fetch recent', (done) => {
@@ -961,6 +1020,30 @@ describe('DocumentList', () => {
             expect(apiService.searchApi.search).toHaveBeenCalled();
             done();
         }, 100);
+    });
+
+    it('should emit error when fetch recent fails on getPerson call', (done) => {
+        spyOn(apiService.peopleApi, 'getPerson').and.returnValue(Promise.reject('error'));
+
+        documentList.error.subscribe(val => {
+            expect(val).toBe('error');
+            done();
+        });
+
+        documentList.loadFolderByNodeId('-recent-');
+    });
+
+    it('should emit error when fetch recent fails on search call', (done) => {
+        const person = { entry: { id: 'person '} };
+        spyOn(apiService.peopleApi, 'getPerson').and.returnValue(Promise.resolve(person));
+        spyOn(apiService.searchApi, 'search').and.returnValue(Promise.reject('error'));
+
+        documentList.error.subscribe(val => {
+            expect(val).toBe('error');
+            done();
+        });
+
+        documentList.loadFolderByNodeId('-recent-');
     });
 
     it('should switch to another page', () => {
