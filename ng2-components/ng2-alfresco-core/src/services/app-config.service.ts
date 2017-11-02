@@ -16,7 +16,7 @@
  */
 
 import { APP_INITIALIZER, Injectable, NgModule } from '@angular/core';
-import { Http, HttpModule } from '@angular/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { ObjectUtils } from '../utils/object-utils';
 
 @Injectable()
@@ -32,7 +32,8 @@ export class AppConfigService {
         bpmHost: 'http://{hostname}{:port}/bpm'
     };
 
-    constructor(private http: Http) {}
+    constructor(private http: HttpClient) {
+    }
 
     get<T>(key: string, defaultValue?: T): T {
         let result: any = ObjectUtils.getValue(this.config, key);
@@ -60,8 +61,8 @@ export class AppConfigService {
     load(): Promise<any> {
         return new Promise(resolve => {
             this.http.get('app.config.json').subscribe(
-                data => {
-                    this.config = Object.assign({}, this.config, data.json() || {});
+                (data: any) => {
+                    this.config = Object.assign({}, this.config, data || {});
                     resolve(this.config);
                 },
                 () => {
@@ -89,7 +90,7 @@ export function startupServiceFactory(configService: AppConfigService): Function
 
 @NgModule({
     imports: [
-        HttpModule
+        HttpClientModule
     ],
     providers: [
         AppConfigService,
@@ -103,4 +104,5 @@ export function startupServiceFactory(configService: AppConfigService): Function
         }
     ]
 })
-export class AppConfigModule {}
+export class AppConfigModule {
+}

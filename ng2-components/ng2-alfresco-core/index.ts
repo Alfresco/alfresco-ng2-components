@@ -71,6 +71,7 @@ import { SearchService } from './src/services/search.service';
 import { SharedLinksApiService } from './src/services/shared-links-api.service';
 import { SitesApiService } from './src/services/sites-api.service';
 import { UserPreferencesService } from './src/services/user-preferences.service';
+import { AppConfigService } from './src/services/app-config.service';
 
 export { MomentDateAdapter, MOMENT_DATE_FORMATS } from './src/utils/momentDateAdapter';
 import { MomentDateAdapter } from './src/utils/momentDateAdapter';
@@ -217,7 +218,8 @@ export function providers() {
         MomentDateAdapter,
         PeopleProcessService,
         AppsProcessService,
-        CommentProcessService
+        CommentProcessService,
+        AppConfigService
     ];
 }
 

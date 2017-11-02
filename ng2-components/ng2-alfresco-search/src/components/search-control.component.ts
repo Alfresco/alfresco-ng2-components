@@ -16,7 +16,17 @@
  */
 
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnDestroy,
+    OnInit,
+    Output,
+    ViewChild,
+    ViewEncapsulation
+} from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Observable, Subject } from 'rxjs/Rx';
 import { SearchTermValidator } from './../forms/search-term-validator';
@@ -28,9 +38,9 @@ import { SearchAutocompleteComponent } from './search-autocomplete.component';
     styleUrls: ['./search-control.component.scss'],
     animations: [
         trigger('transitionMessages', [
-            state('active', style({transform: 'translateX(0%)'})),
-            state('inactive', style({transform: 'translateX(83%)'})),
-            state('no-animation', style({transform: 'translateX(0%)', width: '100%'})),
+            state('active', style({ transform: 'translateX(0%)' })),
+            state('inactive', style({ transform: 'translateX(83%)' })),
+            state('no-animation', style({ transform: 'translateX(0%)', width: '100%' })),
             transition('inactive => active',
                 animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)')),
             transition('active => inactive',
@@ -113,17 +123,14 @@ export class SearchControlComponent implements OnInit, OnDestroy {
                 }
             }
         });
+
+        this.searchControl.valueChanges.forEach((value: string) => {
+            this.onSearchTermChange(value);
+        });
     }
 
     ngOnInit(): void {
         this.subscriptAnimationState = this.expandable ? 'inactive' : 'no-animation';
-
-        this.searchControl.valueChanges.debounceTime(400).distinctUntilChanged()
-            .subscribe((value: string) => {
-                    this.onSearchTermChange(value);
-                }
-            );
-
         this.setupFocusEventHandlers();
     }
 

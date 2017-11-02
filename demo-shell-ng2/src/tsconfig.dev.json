@@ -57,9 +57,8 @@
         "../../ng2-components/ng2-activiti-tasklist"
       ],
 //      "alfresco-js-api": [
-//        "../../../alfresco-js-api/dist/alfresco-js-api.js"
+//        "node_modules/alfresco-js-api/dist/alfresco-js-api.js"
 //      ],
-
       "rxjs/*": [
         "../node_modules/rxjs/*"
       ],

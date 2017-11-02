@@ -51,7 +51,7 @@ export class TagService {
 
         promiseAdd.subscribe((data) => {
             this.refresh.emit(data);
-        },                   (err) => {
+        }, (err) => {
             this.handleError(err);
         });
 
@@ -63,7 +63,7 @@ export class TagService {
 
         promiseRemove.subscribe((data) => {
             this.refresh.emit(data);
-        },                      (err) => {
+        }, (err) => {
             this.handleError(err);
         });
 

@@ -18,7 +18,7 @@ import { HomeComponent } from './components/home/home.component';
 import { SearchBarComponent } from './components/search/search-bar.component';
 import { SearchComponent } from './components/search/search.component';
 import { AboutComponent } from './components/about/about.component';
-import { FormComponent } from './components/form/form.component';
+// import { FormComponent } from './components/form/form.component';
 import { FormListComponent } from './components/form/form-list.component';
 import { CustomSourcesComponent } from './components/files/custom-sources.component';
 
@@ -63,7 +63,7 @@ import { routing } from './app.routes';
     DataTableComponent,
     FilesComponent,
     FileViewComponent,
-    FormComponent,
+    // FormComponent,
     FormListComponent,
     WebscriptComponent,
     TagComponent,
