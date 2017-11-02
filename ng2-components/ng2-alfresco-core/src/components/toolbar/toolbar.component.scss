@@ -1,6 +1,8 @@
 
 @mixin adf-toolbar-theme($theme) {
     $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
+    $adf-toolbar-background-color: mat-color($background, background) !default;
     $adf-toolbar-height: 48px;
     $adf-toolbar-font-size: 14px;
 
@@ -13,6 +15,7 @@
         .mat-toolbar {
             min-height: $adf-toolbar-height;
             border: 1px solid mat-color($foreground, text, .07);
+            background-color: $adf-toolbar-background-color;
         }
 
         .mat-toolbar-row {
