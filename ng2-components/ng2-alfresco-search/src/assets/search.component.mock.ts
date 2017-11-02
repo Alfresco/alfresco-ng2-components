@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { Component } from '@angular/core';
+
 const entryItem = {
     entry: {
         id: '123',
@@ -32,10 +34,35 @@ const entryItem = {
     }
 };
 
+const entryDifferentItem = {
+    entry: {
+        id: '999',
+        name: 'TEST_DOC',
+        isFile : true,
+        content: {
+            mimeType: 'text/plain'
+        },
+        createdByUser: {
+            displayName: 'John TEST'
+        },
+        modifiedByUser: {
+            displayName: 'John TEST'
+        }
+    }
+};
+
 export let result = {
     list: {
         entries: [
             entryItem
+        ]
+    }
+};
+
+export let differentResult = {
+    list: {
+        entries: [
+            entryDifferentItem
         ]
     }
 };
@@ -86,3 +113,49 @@ export let errorJson = {
         descriptionURL: 'https://api-explorer.alfresco.com'
     }
 };
+
+@Component({
+    template: `
+    <adf-search [searchTerm]="searchedWord" [maxResults]="maxResults"
+        (error)="showSearchResult('ERROR')"
+        (success)="showSearchResult('success')">
+       <ng-template let-data>
+            <mat-list id="autocomplete-search-result-list">
+                <mat-option *ngFor="let item of data?.list?.entries; let idx = index" (click)="elementClicked(item)">
+                    <div id="result_option_{{idx}}">
+                        <span>{{ item?.entry.name }}</span>
+                    </div>
+                </mat-option>
+            </mat-list>
+        </ng-template>
+    </adf-search>
+    <span id="component-result-message">{{message}}</span>
+    `
+  })
+
+  export class SimpleSearchTestComponent {
+
+    message: string = '';
+    searchedWord= '';
+    maxResults: number = 5;
+
+    constructor() {
+    }
+
+    showSearchResult(event: any) {
+        this.message = event;
+    }
+
+    elementClicked(event: any) {
+        this.message = 'element clicked';
+    }
+
+    setSearchWordTo(str: string) {
+        this.searchedWord = str;
+    }
+
+    changeMaxResultTo(newMax: number) {
+        this.maxResults = newMax;
+    }
+
+  }

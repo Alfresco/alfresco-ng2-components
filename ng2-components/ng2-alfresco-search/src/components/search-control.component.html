@@ -1,4 +1,4 @@
-<div class="adf-search-container"
+<div class="adf-search-container" *ngIf="isLoggedIn()"
 [@transitionMessages]="subscriptAnimationState">
 <a mat-icon-button
     *ngIf="expandable"

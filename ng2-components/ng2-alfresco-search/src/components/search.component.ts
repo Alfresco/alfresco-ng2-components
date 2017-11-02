@@ -25,6 +25,7 @@ import {
     EventEmitter,
     Input,
     OnChanges,
+    OnDestroy,
     Output,
     TemplateRef,
     ViewChild,
@@ -48,7 +49,7 @@ let _uniqueAutocompleteIdCounter = 0;
         'class': 'adf-search'
     }
 })
-export class SearchComponent implements AfterContentInit, OnChanges {
+export class SearchComponent implements AfterContentInit, OnChanges, OnDestroy {
 
     @ViewChild('panel')
     panel: ElementRef;
@@ -84,6 +85,9 @@ export class SearchComponent implements AfterContentInit, OnChanges {
 
     @Output()
     success: EventEmitter<NodePaging> = new EventEmitter();
+
+    @Output()
+    error: EventEmitter<any> = new EventEmitter();
 
     showPanel: boolean = false;
     results: NodePaging;
@@ -122,9 +126,13 @@ export class SearchComponent implements AfterContentInit, OnChanges {
 
     ngOnChanges(changes) {
         if (changes.searchTerm) {
-            this.cleanResults();
+            this.resetResults();
             this.displaySearchResults(changes.searchTerm.currentValue);
         }
+    }
+
+    ngOnDestroy() {
+        // this.changeDetectorRef.detach();
     }
 
     resetResults() {
@@ -157,19 +165,11 @@ export class SearchComponent implements AfterContentInit, OnChanges {
                     this.setVisibility();
                 },
                 error => {
-                    this.results = null;
+                    if (error.status !== 400) {
+                        this.error.emit(error);
+                    }
                 });
         }
-    }
-
-    _setScrollTop(scrollTop: number): void {
-        if (this.panel) {
-            this.panel.nativeElement.scrollTop = scrollTop;
-        }
-    }
-
-    _getScrollTop(): number {
-        return this.panel ? this.panel.nativeElement.scrollTop : 0;
     }
 
     hidePanel() {
