@@ -123,6 +123,7 @@ export class ActivitiComponent implements AfterViewInit, OnDestroy, OnInit {
 
     dataTasks: ObjectDataTableAdapter;
     dataProcesses: ObjectDataTableAdapter;
+    presetColoum: string = 'default';
 
     fieldValidators = [
         ...FORM_FIELD_VALIDATORS,

@@ -27,6 +27,7 @@
                      *ngIf="taskFilter && !isStartTaskMode()">
                     <adf-tasklist
                         [appId]="taskFilter?.appId"
+                        [presetColumn]="presetColoum"
                         [page]="taskPage"
                         [size]="taskPagination.maxItems"
                         [processDefinitionKey]="taskFilter?.filter?.processDefinitionKey"
@@ -43,10 +44,10 @@
                         #activititasklist>
                         <!-- Custom column definition demo -->
 
-                        <data-columns>
+                        <!-- <data-columns>
                             <data-column key="name" title="{{'ADF_TASK_LIST.PROPERTIES.NAME' | translate}}" class="full-width name-column"></data-column>
                             <data-column key="created" title="{{'ADF_TASK_LIST.PROPERTIES.CREATED' | translate}}" class="hidden"></data-column>
-                        </data-columns>
+                        </data-columns> -->
 
                     </adf-tasklist>
 
@@ -134,6 +135,7 @@
                         *ngIf="processFilter?.hasFilter()" [appId]="processFilter.appId"
                         [processDefinitionKey]="processFilter.filter.processDefinitionKey"
                         [name]="processFilter.filter.name"
+                        [presetColumn]="presetColoum"
                         [state]="processFilter.filter.state"
                         [sort]="processFilter.filter.sort"
                         [data]="dataProcesses"
@@ -142,11 +144,11 @@
                         (success)="onSuccessProcessList($event)">
                         <!-- Custom column definition demo -->
 
-                        <data-columns>
+                        <!-- <data-columns>
                             <data-column key="name" title="ADF_PROCESS_LIST.PROPERTIES.NAME" class="full-width name-column"></data-column>
                             <data-column key="created" title="ADF_PROCESS_LIST.PROPERTIES.CREATED" class="hidden"></data-column>
-                        </data-columns>
-
+                        </data-columns> -->
+                        
                     </adf-process-instance-list>
                 </div>
                 <div class="activiti-grid-item activiti-processes-details" *ngIf="!isStartProcessMode()" fxFlex.gt-md="1 1 auto">

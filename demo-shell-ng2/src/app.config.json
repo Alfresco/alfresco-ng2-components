@@ -54,9 +54,9 @@
         "size": 25
     },
     "files": {
-            "excluded": [".DS_Store", "desktop.ini", ".git"]
+        "excluded": [".DS_Store", "desktop.ini", ".git"]
     },
-    "logLevel" : "trace",
+    "logLevel": "trace",
     "activiti": {
         "rest": {
             "fields": [
@@ -65,16 +65,25 @@
                     "taskId": "7501",
                     "fieldId": "label10",
                     "values": [
-                        { "id": "f1", "name": "Field 1" },
-                        { "id": "f2", "name": "Field 2" },
-                        { "id": "f3", "name": "Field 3" }
+                        {
+                            "id": "f1",
+                            "name": "Field 1"
+                        },
+                        {
+                            "id": "f2",
+                            "name": "Field 2"
+                        },
+                        {
+                            "id": "f3",
+                            "name": "Field 3"
+                        }
                     ]
                 }
             ]
         }
     },
     "document-list": {
-        "supportedPageSizes": [5, 10, 15, 20],
+        "supportedPageSizes": [ 5, 10, 15, 20 ],
         "presets": {
             "-trashcan-": [
                 {
@@ -315,6 +324,80 @@
                     "key": "modifiedByUser.displayName",
                     "type": "text",
                     "title": "ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_BY",
+                    "sortable": true
+                }
+            ]
+        }
+    },
+    "adf-task-list": {
+        "supportedPageSizes": [ 5, 10, 15, 20 ],
+        "presets": {
+            "default": [
+                {
+                    "key": "name",
+                    "type": "text",
+                    "title": "ADF_TASK_LIST.PROPERTIES.NAME",
+                    "sortable": true
+                },
+                {
+                    "key": "noassignee",
+                    "type": "text",
+                    "title": "ADF_TASK_LIST.PROPERTIES.ASSIGNEE_DEFAULT",
+                    "cssClass": "hidden",
+                    "sortable": true
+                },
+                {
+                    "key": "nodueDate",
+                    "type": "text",
+                    "title": "ADF_TASK_LIST.PROPERTIES.DUE_DATE_DEFAULT",
+                    "cssClass": "hidden",
+                    "sortable": true
+                },
+                {
+                    "key": "nocategory",
+                    "type": "text",
+                    "title": "ADF_TASK_LIST.PROPERTIES.CATEGORY_DEFAULT",
+                    "cssClass": "hidden",
+                    "sortable": true
+                },
+                {
+                    "key": "noparentname",
+                    "type": "text",
+                    "title": "ADF_TASK_LIST.PROPERTIES.PARENT_NAME_DEFAULT",
+                    "cssClass": "hidden",
+                    "sortable": true
+                },
+                {
+                    "key": "nodescription",
+                    "type": "date",
+                    "title": "ADF_TASK_LIST.PROPERTIES.DESCRIPTION_DEFAULT",
+                    "cssClass": "hidden",
+                    "sortable": true
+                },
+                {
+                    "key": "noformName",
+                    "type": "date",
+                    "title": "ADF_TASK_LIST.PROPERTIES.FORM_NAME_DEFAULT",
+                    "cssClass": "hidden",
+                    "sortable": true
+                }
+            ]
+        }
+    },
+    "adf-process-list": {
+        "presets": {
+            "default": [
+                {
+                    "key": "name",
+                    "type": "text",
+                    "title": "ADF_PROCESS_LIST.PROPERTIES.NAME",
+                    "sortable": true
+                },
+                {
+                    "key": "created",
+                    "type": "text",
+                    "title": "ADF_PROCESS_LIST.PROPERTIES.CREATED",
+                    "cssClass": "hidden",
                     "sortable": true
                 }
             ]

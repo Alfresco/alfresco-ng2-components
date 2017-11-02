@@ -16,11 +16,12 @@
  */
 
 import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { DataColumnListComponent } from 'ng2-alfresco-core';
-import { DataColumn, DataRowEvent, DataTableAdapter, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
+import { AppConfigService, DataColumnListComponent } from 'ng2-alfresco-core';
+import { DataColumn, DataRowEvent, DataTableAdapter, ObjectDataRow, ObjectDataTableAdapter, ObjectDataColumn } from 'ng2-alfresco-datatable';
 import { Observable } from 'rxjs/Rx';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskListModel } from '../models/task-list.model';
+import { taskPresetsDefaultModel } from '../models/task-preset.model';
 import { TaskListService } from './../services/tasklist.service';
 
 const DEFAULT_SIZE = 5;
@@ -66,6 +67,9 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
     selectionMode: string = 'none'; // none|single|multiple
 
     @Input()
+    presetColumn: string;
+
+    @Input()
     multiselect: boolean = false;
 
     @Output()
@@ -82,6 +86,7 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
 
     currentInstanceId: string;
     selectedInstances: any[];
+    private layoutPresets = {};
 
     @Input()
     page: number = 0;
@@ -102,12 +107,8 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
     hasCustomDataSource: boolean = false;
     isStreamLoaded = false;
 
-    private defaultSchemaColumn: DataColumn[] = [
-        { type: 'text', key: 'name', title: 'ADF_TASK_LIST.PROPERTIES.NAME', cssClass: 'full-width name-column', sortable: true },
-        { type: 'text', key: 'created', title: 'ADF_TASK_LIST.PROPERTIES.CREATED', cssClass: 'hidden', sortable: true }
-    ];
-
-    constructor(private taskListService: TaskListService) {
+    constructor(private taskListService: TaskListService,
+                private appConfig: AppConfigService) {
     }
 
     initStream() {
@@ -150,12 +151,13 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
         }
 
         if (!this.data) {
-            this.data = new ObjectDataTableAdapter([], schema.length > 0 ? schema : this.defaultSchemaColumn);
+            this.data = new ObjectDataTableAdapter([], schema.length > 0 ? schema :  this.presetColumn  ? this.getLayoutPreset(this.presetColumn) : this.getLayoutPreset());
+
         } else {
             if (schema && schema.length > 0) {
                 this.data.setColumns(schema);
             } else if (this.data.getColumns().length === 0) {
-                this.data.setColumns(this.defaultSchemaColumn);
+                this.presetColumn ? this.setupDefaultColumns(this.presetColumn) : this.setupDefaultColumns();
             }
         }
     }
@@ -164,6 +166,7 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
         this.initStream();
         if (this.isPropertyChanged(changes)) {
             this.reload();
+            this.loadLayoutPresets();
         }
     }
 
@@ -323,5 +326,27 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
             start: 0
         };
         return new TaskQueryRequestRepresentationModel(requestNode);
+    }
+
+    setupDefaultColumns(preset: string = 'default'): void {
+        if (this.data) {
+            const columns = this.getLayoutPreset(preset);
+            this.data.setColumns(columns);
+        }
+    }
+
+    private loadLayoutPresets(): void {
+        const externalSettings = this.appConfig.get('adf-task-list.presets', null);
+
+        if (externalSettings) {
+            this.layoutPresets = Object.assign({}, taskPresetsDefaultModel, externalSettings);
+        } else {
+            this.layoutPresets = taskPresetsDefaultModel;
+        }
+
+    }
+
+    private getLayoutPreset(name: string = 'default'): DataColumn[] {
+        return (this.layoutPresets[name] || this.layoutPresets['default']).map(col => new ObjectDataColumn(col));
     }
 }
