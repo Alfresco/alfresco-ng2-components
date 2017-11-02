@@ -7,7 +7,7 @@
         data-automation-id="dropdown-breadcrumb-trigger">
         <mat-icon [class.isRoot]="!hasPreviousNodes()">folder</mat-icon>
     </button>
-    <i class="material-icons adf-dropddown-breadcrumb-item-chevron">chevron_right</i>
+    <mat-icon class="adf-dropddown-breadcrumb-item-chevron">chevron_right</mat-icon>
 
     <mat-select
         *ngIf="hasPreviousNodes()"

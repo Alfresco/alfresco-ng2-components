@@ -23,7 +23,7 @@ import { Observable } from 'rxjs/Rx';
 @Component({
     selector: 'datatable',
     templateUrl: './datatable.component.html',
-    styleUrls: ['./datatable.component.css']
+    styleUrls: ['./datatable.component.scss']
 })
 export class DataTableComponent {
 

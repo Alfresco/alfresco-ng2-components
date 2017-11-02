@@ -75,18 +75,20 @@
                 <div *ngIf="!col.template" class="cell-container">
                     <ng-container [ngSwitch]="col.type">
                         <div *ngSwitchCase="'image'" class="cell-value">
-                            <i *ngIf="isIconValue(row, col)" class="material-icons">{{ asIconValue(row, col) }}</i>
-                            <img *ngIf="!isIconValue(row, col)"
+                            <mat-icon *ngIf="isIconValue(row, col)">{{ asIconValue(row, col) }}</mat-icon>
+                            <mat-icon *ngIf="!isIconValue(row, col) && row.isSelected" svgIcon="selected" >
+                            </mat-icon>
+
+                            <img *ngIf="!isIconValue(row, col) && !row.isSelected"
                                  alt="{{ iconAltTextKey(data.getValue(row, col)) | translate }}"
                                  src="{{ data.getValue(row, col) }}"
                                  (error)="onImageLoadingError($event)">
                         </div>
-                        <div *ngSwitchCase="'icon'" class="cell-value">
-                            <img alt="{{ iconAltTextKey(data.getValue(row, col)) | translate }}"
-                                 src="{{ data.getValue(row, col) }}"
-                                 (error)="onImageLoadingError($event)">
+                        <div *ngSwitchCase="'icon'"  class="cell-value">
+                            <span class="sr-only">{{ iconAltTextKey(data.getValue(row, col)) | translate }}</span>
+                            <mat-icon>{{ data.getValue(row, col) }}</mat-icon>
                         </div>
-                        <div *ngSwitchCase="'date'" class="cell-value"
+                        <div *ngSwitchCase="'date'"  class="cell-value"
                             [attr.data-automation-id]="'date_' + data.getValue(row, col)">
                             <adf-date-cell
                                 [data]="data"

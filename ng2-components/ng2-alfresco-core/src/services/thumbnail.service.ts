@@ -16,6 +16,8 @@
  */
 
 import { Injectable } from '@angular/core';
+import { MatIconRegistry } from '@angular/material';
+import { DomSanitizer } from '@angular/platform-browser';
 import { AlfrescoContentService } from './alfresco-content.service';
 
 declare var require: any;
@@ -53,10 +55,71 @@ export class ThumbnailService {
         'application/vnd.apple.pages': require('../assets/images/ft_ic_document.svg'),
         'application/vnd.apple.numbers': require('../assets/images/ft_ic_spreadsheet.svg'),
         'folder': require('../assets/images/ft_ic_folder.svg'),
-        'disable/folder': require('../assets/images/ft_ic_folder_disable.svg')
+        'disable/folder': require('../assets/images/ft_ic_folder_disable.svg'),
+        'selected': require('../assets/images/ft_ic_selected.svg')
     };
 
-    constructor(public contentService: AlfrescoContentService) {
+    constructor(public contentService: AlfrescoContentService, matIconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+        matIconRegistry.addSvgIcon('image/png',
+            sanitizer.bypassSecurityTrustResourceUrl(require('../assets/images/ft_ic_raster_image.svg')));
+        matIconRegistry.addSvgIcon('image/jpeg',
+            sanitizer.bypassSecurityTrustResourceUrl(require('../assets/images/ft_ic_raster_image.svg')));
+        matIconRegistry.addSvgIcon('image/gif',
+            sanitizer.bypassSecurityTrustResourceUrl(require('../assets/images/ft_ic_raster_image.svg')));
+        matIconRegistry.addSvgIcon('application/pdf',
+            sanitizer.bypassSecurityTrustResourceUrl(require('../assets/images/ft_ic_pdf.svg')));
+        matIconRegistry.addSvgIcon('application/vnd.ms-excel',
+            sanitizer.bypassSecurityTrustResourceUrl(require('../assets/images/ft_ic_ms_excel.svg')));
+        matIconRegistry.addSvgIcon('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            sanitizer.bypassSecurityTrustResourceUrl(require('../assets/images/ft_ic_ms_excel.svg')));
+        matIconRegistry.addSvgIcon('application/vnd.openxmlformats-officedocument.spreadsheetml.template',
+            sanitizer.bypassSecurityTrustResourceUrl(require('../assets/images/ft_ic_ms_excel.svg')));
+        matIconRegistry.addSvgIcon('application/msword',
+            sanitizer.bypassSecurityTrustResourceUrl(require('../assets/images/ft_ic_ms_word.svg')));
+        matIconRegistry.addSvgIcon('application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            sanitizer.bypassSecurityTrustResourceUrl(require('../assets/images/ft_ic_ms_word.svg')));
+        matIconRegistry.addSvgIcon('application/vnd.openxmlformats-officedocument.wordprocessingml.template',
+            sanitizer.bypassSecurityTrustResourceUrl(require('../assets/images/ft_ic_ms_word.svg')));
+        matIconRegistry.addSvgIcon('application/vnd.ms-powerpoint',
+            sanitizer.bypassSecurityTrustResourceUrl(require('../assets/images/ft_ic_ms_powerpoint.svg')));
+        matIconRegistry.addSvgIcon('application/vnd.openxmlformats-officedocument.presentationml.presentation',
+            sanitizer.bypassSecurityTrustResourceUrl(require('../assets/images/ft_ic_ms_powerpoint.svg')));
+        matIconRegistry.addSvgIcon('application/vnd.openxmlformats-officedocument.presentationml.template',
+            sanitizer.bypassSecurityTrustResourceUrl(require('../assets/images/ft_ic_ms_powerpoint.svg')));
+        matIconRegistry.addSvgIcon('application/vnd.openxmlformats-officedocument.presentationml.slideshow',
+            sanitizer.bypassSecurityTrustResourceUrl(require('../assets/images/ft_ic_ms_powerpoint.svg')));
+        matIconRegistry.addSvgIcon('video/mp4',
+            sanitizer.bypassSecurityTrustResourceUrl(require('../assets/images/ft_ic_video.svg')));
+        matIconRegistry.addSvgIcon('text/plain',
+            sanitizer.bypassSecurityTrustResourceUrl(require('../assets/images/ft_ic_document.svg')));
+        matIconRegistry.addSvgIcon('application/x-javascript',
+            sanitizer.bypassSecurityTrustResourceUrl(require('../assets/images/ft_ic_document.svg')));
+        matIconRegistry.addSvgIcon('application/json',
+            sanitizer.bypassSecurityTrustResourceUrl(require('../assets/images/ft_ic_document.svg')));
+        matIconRegistry.addSvgIcon('image/svg+xml',
+            sanitizer.bypassSecurityTrustResourceUrl(require('../assets/images/ft_ic_vector_image.svg')));
+        matIconRegistry.addSvgIcon('text/html',
+            sanitizer.bypassSecurityTrustResourceUrl(require('../assets/images/ft_ic_website.svg')));
+        matIconRegistry.addSvgIcon('application/x-compressed',
+            sanitizer.bypassSecurityTrustResourceUrl(require('../assets/images/ft_ic_archive.svg')));
+        matIconRegistry.addSvgIcon('application/x-zip-compressed',
+            sanitizer.bypassSecurityTrustResourceUrl(require('../assets/images/ft_ic_archive.svg')));
+        matIconRegistry.addSvgIcon('application/zip',
+            sanitizer.bypassSecurityTrustResourceUrl(require('../assets/images/ft_ic_archive.svg')));
+        matIconRegistry.addSvgIcon('application/vnd.apple.keynote',
+            sanitizer.bypassSecurityTrustResourceUrl(require('../assets/images/ft_ic_presentation.svg')));
+        matIconRegistry.addSvgIcon('application/vnd.apple.pages',
+            sanitizer.bypassSecurityTrustResourceUrl(require('../assets/images/ft_ic_document.svg')));
+        matIconRegistry.addSvgIcon('application/vnd.apple.numbers',
+            sanitizer.bypassSecurityTrustResourceUrl(require('../assets/images/ft_ic_spreadsheet.svg')));
+        matIconRegistry.addSvgIcon('folder',
+            sanitizer.bypassSecurityTrustResourceUrl(require('../assets/images/ft_ic_folder.svg')));
+        matIconRegistry.addSvgIcon('disable/folder',
+            sanitizer.bypassSecurityTrustResourceUrl(require('../assets/images/ft_ic_folder_disable.svg')));
+        matIconRegistry.addSvgIcon('selected',
+            sanitizer.bypassSecurityTrustResourceUrl(require('../assets/images/ft_ic_selected.svg')));
+        matIconRegistry.addSvgIcon('default',
+            sanitizer.bypassSecurityTrustResourceUrl(require('../assets/images/ft_ic_miscellaneous.svg')));
     }
 
     /**

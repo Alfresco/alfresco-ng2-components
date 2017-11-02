@@ -11,34 +11,29 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <style>
-    body, html {
-      height: 100%;
-    }
+      body, html {
+          height: 100%;
+      }
 
-    .loader-container {
-      display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
-      display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
-      display: -webkit-flex;     /* NEW - Chrome */
-      display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
-      -webkit-box-flex-direction: row;
-      -moz-box-flex-direction: row;
-      -webkit-flex-direction: row;
-      flex-direction: row;
-      height:100%;
-    }
+      .loader-container {
+          display: flex;
+          flex-direction: row;
+          height:100%;
 
-    .loader-item {
-      margin: auto;
-      max-height:100px;
-      max-width:300px;
-    }
+          align-items: center;
+          justify-content: center;
+      }
 
-    .loader-text{
-      white-space: nowrap;
-      text-align: center;
-      position: relative;
-    }
+      .loader-item {
+          max-height:100px;
+          max-width:300px;
+      }
 
+      .loader-text{
+          white-space: nowrap;
+          text-align: center;
+          position: relative;
+      }
   </style>
 </head>
 <body class="adf-background-color">

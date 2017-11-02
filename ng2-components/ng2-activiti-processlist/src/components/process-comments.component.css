@@ -12,10 +12,6 @@
     top: -2px;
 }
 
-.material-icons {
-    cursor: pointer;
-}
-
 .list-wrap {
     word-wrap: break-word;
     word-break: break-all;

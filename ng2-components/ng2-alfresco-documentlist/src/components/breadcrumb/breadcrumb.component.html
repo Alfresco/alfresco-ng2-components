@@ -15,9 +15,9 @@
             {{ item.name | translate }}
         </div>
 
-        <i class="material-icons adf-breadcrumb-item-chevron" *ngIf="!last">
+        <mat-icon class="adf-breadcrumb-item-chevron" *ngIf="!last">
             chevron_right
-        </i>
+        </mat-icon>
     </li>
 </div>
 <div *ngIf="!folderNode && hasRoot">
