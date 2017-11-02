@@ -17,7 +17,8 @@
 
 import { Injector } from '@angular/core';
 import { getTestBed, TestBed } from '@angular/core/testing';
-import { HttpModule, Response, ResponseOptions, XHRBackend } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
+import { Response, ResponseOptions, XHRBackend } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { AppConfigService } from './app-config.service';
@@ -45,7 +46,7 @@ describe('TranslateLoader', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                HttpModule,
+                HttpClientModule,
                 TranslateModule.forRoot({
                     loader: {
                         provide: TranslateLoader,

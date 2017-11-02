@@ -16,7 +16,8 @@
  */
 
 import { inject, TestBed } from '@angular/core/testing';
-import { HttpModule, Response, ResponseOptions, XHRBackend } from '@angular/http';
+import { HttpClientModule }from '@angular/common/http';
+import { Response, ResponseOptions, XHRBackend } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { AppConfigModule, AppConfigService } from './app-config.service';
 
@@ -37,7 +38,7 @@ describe('AppConfigService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                HttpModule,
+                HttpClientModule,
                 AppConfigModule
             ],
             providers: [

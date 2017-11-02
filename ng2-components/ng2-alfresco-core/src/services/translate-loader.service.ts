@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Response } from '@angular/http';
 import { TranslateLoader } from '@ngx-translate/core';
 import { Observable } from 'rxjs/Rx';
 import { ComponentTranslationModel } from '../models/component.model';
@@ -31,7 +32,7 @@ export class AlfrescoTranslateLoader implements TranslateLoader {
     private providers: ComponentTranslationModel[] = [];
     private queue: string [][] = [];
 
-    constructor(private http: Http,
+    constructor(private http: HttpClient,
                 private logService: LogService) {
     }
 

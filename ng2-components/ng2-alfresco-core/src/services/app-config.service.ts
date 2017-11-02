@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, Injectable, NgModule } from '@angular/core';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { ObjectUtils } from '../utils/object-utils';
 
 @Injectable()

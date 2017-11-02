@@ -18,7 +18,7 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { MatDatepickerModule, MatIconModule, MatInputModule, MatNativeDateModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -42,7 +42,7 @@ describe('CardViewMapItemComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                HttpModule,
+                HttpClientModule,
                 FormsModule,
                 NoopAnimationsModule,
                 MatDatepickerModule,

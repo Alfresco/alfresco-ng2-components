@@ -16,9 +16,9 @@
  */
 
 import { CommonModule } from '@angular/common';
+import { HttpClient , HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Http, HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
@@ -58,6 +58,7 @@ import { HighlightDirective } from './src/directives/highlight.directive';
 import { LogoutDirective } from './src/directives/logout.directive';
 import { NodeDeleteDirective } from './src/directives/node-delete.directive';
 import { NodeFavoriteDirective } from './src/directives/node-favorite.directive';
+import { AppConfigService } from './src/services/app-config.service';
 import { AppsProcessService } from './src/services/apps-process.service';
 import { DeletedNodesApiService } from './src/services/deleted-nodes-api.service';
 import { DiscoveryApiService } from './src/services/discovery-api.service';
@@ -71,7 +72,6 @@ import { SearchService } from './src/services/search.service';
 import { SharedLinksApiService } from './src/services/shared-links-api.service';
 import { SitesApiService } from './src/services/sites-api.service';
 import { UserPreferencesService } from './src/services/user-preferences.service';
-import { AppConfigService } from './src/services/app-config.service';
 
 export { MomentDateAdapter, MOMENT_DATE_FORMATS } from './src/utils/momentDateAdapter';
 import { MomentDateAdapter } from './src/utils/momentDateAdapter';
@@ -241,7 +241,7 @@ export function pipes() {
     ];
 }
 
-export function createTranslateLoader(http: Http, logService: LogService) {
+export function createTranslateLoader(http: HttpClient, logService: LogService) {
     return new AlfrescoTranslateLoader(http, logService);
 }
 
@@ -250,13 +250,13 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        HttpModule,
+        HttpClientModule,
         BrowserAnimationsModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
                 useFactory: (createTranslateLoader),
-                deps: [Http, LogService]
+                deps: [HttpClient, LogService]
             }
         }),
         MaterialModule,
@@ -310,7 +310,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        HttpModule,
+        HttpClientModule,
         TranslateModule,
         MaterialModule,
         ContextMenuModule,

@@ -17,7 +17,7 @@
 
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../../material.module';
 import { AppConfigService } from '../../services/app-config.service';
@@ -56,7 +56,7 @@ describe('PaginationComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                HttpModule,
+                HttpClientModule,
                 MaterialModule,
                 TranslateModule.forRoot({
                     loader: {

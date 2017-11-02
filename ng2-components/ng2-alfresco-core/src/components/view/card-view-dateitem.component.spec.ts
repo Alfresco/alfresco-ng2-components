@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -36,7 +36,7 @@ describe('CardViewDateItemComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                HttpModule,
+                HttpClientModule,
                 MatDatepickerModule,
                 MatInputModule,
                 MatNativeDateModule,

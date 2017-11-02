@@ -17,7 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from '../../../index';
 import { MaterialModule } from '../../material.module';
 import { HostSettingsComponent } from './host-settings.component';
@@ -33,7 +33,7 @@ describe('HostSettingsComponent', () => {
                 FormsModule,
                 ReactiveFormsModule,
                 MaterialModule,
-                HttpModule,
+                HttpClientModule,
                 CoreModule
             ]
         }).compileComponents();

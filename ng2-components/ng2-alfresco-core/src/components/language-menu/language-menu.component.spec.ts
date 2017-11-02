@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { providers } from '../../../index';
 import { MaterialModule } from '../../material.module';
@@ -37,7 +37,7 @@ describe('LanguageMenuComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                HttpModule,
+                HttpClientModule,
                 TranslateModule.forRoot({
                     loader: {
                         provide: TranslateLoader,
