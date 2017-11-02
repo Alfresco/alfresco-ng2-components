@@ -508,6 +508,10 @@ That triggers the date values to be rendered using popular ["Time from now"](htt
 
 This column is used to display a clickable location link pointing to the parent path of the node.
 
+**Important note**:
+
+_For granular permissions, the Location Column may or may not render link location_
+
 You are going to use it with custom navigation or when displaying content from the sources like:
 
 - Sites

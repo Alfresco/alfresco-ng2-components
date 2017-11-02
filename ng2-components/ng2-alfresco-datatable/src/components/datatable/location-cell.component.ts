@@ -44,7 +44,8 @@ export class LocationCellComponent extends DataTableCellComponent implements OnI
     ngOnInit() {
         if (!this.value && this.column && this.column.key && this.row && this.data) {
             const path: PathInfoEntity = this.data.getValue(this.row, this.column);
-            if (path) {
+
+            if (path && path.name && path.elements) {
                 this.value = path;
                 this.displayText = path.name.split('/').pop();
 
