@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, Directive } from '@angular/core';
+import { Component, Directive, ViewEncapsulation } from '@angular/core';
 
 @Component({
     selector: 'adf-empty-list',
     styleUrls: ['./empty-list.component.scss'],
-    templateUrl: './empty-list.component.html'
+    templateUrl: './empty-list.component.html',
+    encapsulation: ViewEncapsulation.None
 })
 export class EmptyListComponent {}
 

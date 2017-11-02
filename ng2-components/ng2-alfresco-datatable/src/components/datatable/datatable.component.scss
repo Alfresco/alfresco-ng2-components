@@ -152,6 +152,7 @@
 
         .adf-data-table-cell {
             text-align: left;
+            height: 100%;
 
             &--text {
                 text-align: left;
@@ -166,11 +167,15 @@
             }
 
             &--image {
+
+                .cell-value {
+                    height: 24px;
+                }
+
                 text-align: left;
 
                 img {
-                    width: 24px;
-                    height: 24px;
+                    height: 100%;
                 }
             }
         }
@@ -199,7 +204,7 @@
 
         .ellipsis-cell {
             .cell-container {
-                height: 1em;
+                height: 100%;
             }
 
             .cell-container > * {
@@ -215,7 +220,7 @@
             /* visible content */
             .cell-value {
                 display: block;
-                position: absolute;
+                position: relative;
                 max-width: calc(100% - 2em);
                 white-space: nowrap;
                 overflow: hidden;

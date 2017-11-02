@@ -204,26 +204,8 @@ Let's start by assigning an "image-table-cell" class to the thumbnail column:
 Now your application can define styles to change the content of the column based on conditions such as the selection state:
 
 ```css
-adf-document-list ::ng-deep adf-datatable tr.is-selected .image-table-cell {
-    position: relative;
-}
-
-adf-document-list ::ng-deep adf-datatable tr.is-selected .image-table-cell::before {
-    content: "\E876"; /* "done" */
-    font-family: "Material Icons";
-    font-size: 24px;
-    line-height: 32px;
-    text-align: center;
-    color: white;
-    position: absolute;
-    width: 32px;
-    height: 32px;
-    top: 50%;
-    left: 50%;
-    margin-top: -16px;
-    margin-left: -14px;
-    border-radius: 100%;
-    background: #00bcd4;
+adf-document-list ::ng-deep adf-datatable > table > tbody > tr.is-selected > td.adf-data-table-cell.adf-data-table-cell--image.image-table-cell > div > div > mat-icon > svg {
+    fill: #00bcd4;
 }
 ```
 
