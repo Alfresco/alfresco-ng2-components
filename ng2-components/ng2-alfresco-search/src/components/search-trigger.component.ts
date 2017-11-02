@@ -160,7 +160,7 @@ export class AdfAutocompleteTriggerDirective implements ControlValueAccessor, On
             event.stopPropagation();
         } else if (keyCode === ENTER) {
             this.enterKeyPressed.next(event);
-            this.setValueAndClose(event);
+            this.searchPanel.hidePanel();
             event.preventDefault();
         }else {
             let isArrowKey = keyCode === UP_ARROW || keyCode === DOWN_ARROW;

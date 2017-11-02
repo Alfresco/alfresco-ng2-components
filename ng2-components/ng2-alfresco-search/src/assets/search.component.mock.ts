@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { SearchComponent } from '../components/search.component';
 
 const entryItem = {
     entry: {
@@ -118,7 +119,7 @@ export let errorJson = {
     template: `
     <adf-search [searchTerm]="searchedWord" [maxResults]="maxResults"
         (error)="showSearchResult('ERROR')"
-        (success)="showSearchResult('success')">
+        (success)="showSearchResult('success')" #search>
        <ng-template let-data>
             <mat-list id="autocomplete-search-result-list">
                 <mat-option *ngFor="let item of data?.list?.entries; let idx = index" (click)="elementClicked(item)">
@@ -134,6 +135,9 @@ export let errorJson = {
   })
 
   export class SimpleSearchTestComponent {
+
+    @ViewChild('search')
+    search: SearchComponent;
 
     message: string = '';
     searchedWord= '';
@@ -156,6 +160,10 @@ export let errorJson = {
 
     changeMaxResultTo(newMax: number) {
         this.maxResults = newMax;
+    }
+
+    forceHidePanel() {
+        this.search.hidePanel();
     }
 
   }

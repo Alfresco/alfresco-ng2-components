@@ -91,5 +91,25 @@ describe('SearchComponent', () => {
                 expect(message.textContent).toBe('ERROR');
             });
         }));
+
+        it('should be able to hide the result panel', async(() => {
+            spyOn(searchService, 'getQueryNodesPromise')
+                .and.returnValues(Promise.resolve(result), Promise.resolve(differentResult));
+
+            component.setSearchWordTo('searchTerm');
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                let optionShowed = element.querySelectorAll('#autocomplete-search-result-list');
+                expect(optionShowed).not.toBeNull();
+                component.forceHidePanel();
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    let elementList = element.querySelector('#adf-search-results-content');
+                    expect(elementList.classList).toContain('adf-search-hide');
+                });
+            });
+        }));
     });
 });

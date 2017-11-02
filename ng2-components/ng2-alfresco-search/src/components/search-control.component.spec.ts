@@ -317,6 +317,27 @@ describe('SearchControlComponent', () => {
             });
         }));
 
+        it('should close the list when user click outside the elements on the list', async(() => {
+            spyOn(searchService, 'getNodeQueryResults').and.returnValue(Observable.of(results));
+            spyOn(component, 'isSearchBarActive').and.returnValue(true);
+            fixture.detectChanges();
+
+            let inputDebugElement = fixture.debugElement.query(By.css('#adf-control-input'));
+            inputDebugElement.nativeElement.value = 'TEST';
+            inputDebugElement.nativeElement.focus();
+            inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#autocomplete-search-result-list') ).not.toBeNull();
+                fixture.debugElement.triggerEventHandler('click', new Event('click'));
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    expect(element.querySelector('#adf-search-results-content') ).toBeNull();
+                });
+            });
+        }));
+
     });
 
     describe('search button', () => {

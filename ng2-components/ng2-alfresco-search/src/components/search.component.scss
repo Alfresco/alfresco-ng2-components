@@ -15,34 +15,5 @@
         &-search-show {
             visibility: visible;
         }
-
-        &-search-result-autocomplete {
-            @include mat-menu-base(2);
-            transform-origin: top left;
-            position: absolute;
-            overflow: inherit;
-            max-width: 300px;
-            z-index: 5;
-            color: mat-color($foreground, text);
-            background-color: mat-color($background, card);
-            margin: -14px 0 0 14px;
-            border-radius: $mat-menu-border-radius;
-            border-collapse: collapse;
-            white-space: nowrap;
-            font-size: 14px;
-            a {
-              color: mat-color($foreground, text);
-              text-decoration: none;
-            }
-            .highlight {
-              color: mat-color($primary, 900);
-            }
-
-            @media screen and (max-width: 400px) {
-                width: 200px;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-            }
-          }
     }
 }

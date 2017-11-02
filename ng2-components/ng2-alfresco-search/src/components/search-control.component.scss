@@ -2,58 +2,61 @@
     $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);
     $primary: map-get($theme, primary);
+    $mat-menu-border-radius: 2px !default;
 
     .adf {
 
-        .truncate {
-            width: 240px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        &-search-button.mat-icon-button {
-            margin-right: 5px;
-        }
-
-        &-search-elements{
-            :focus {
-                border: 1;
-                border-color: mat-color($primary);
-            }
-        }
-
-        &-search-container {
+        &-list-flex {
             display: flex;
+            box-sizing: border-box;
+            flex-flow: row wrap;
             align-items: center;
-
-            .adf-search-field {
-                max-width: 260px;
-                padding-top: 6px;
-
-                .mat-form-field {
-                    width: 100%;
-                }
-
-                .mat-input-underline .mat-input-ripple {
-                    background-color: mat-color($background, card);
-                }
-
-                .mat-form-field-underline {
-                    background-color: mat-color($background, card);
-                }
-
-                .mat-input-element {
-                    font-size: 16px;
-                    line-height: normal;
-                    padding-bottom: 2px;
-                }
-            }
-
-            .adf-search-field .mat-input-infix {
-                padding: 0;
-            }
-
         }
+
+        &-list-item {
+            display: flex;
+            flex-flow: column wrap;
+        }
+
+        &-no-result-item {
+            padding: 10px;
+        }
+
+        &-list-flex-item {
+            display: flex;
+            box-sizing: border-box;
+            align-items: center;
+            padding-right: 10px;
+            width: 100%;
+
+            &:hover {
+                background-color: mat-color($background, hover);
+            }
+        }
+
+        &-item-flex-icon {
+            flex: 1 percentage(2/4);
+        }
+
+        &-search-result-autocomplete {
+            @include mat-menu-base(2);
+            transform-origin: top left;
+            position: absolute;
+            max-width: 200px;
+            max-height: 400px;
+            margin-left: 45px;
+            margin-top: -22px;
+            font-size: 15px;
+            z-index: 5;
+            color: mat-color($foreground, text);
+            background-color: mat-color($background, card);
+            border-radius: $mat-menu-border-radius;
+
+            @media screen and (max-width: 400px) {
+                width: 200px;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+          }
     }
 }

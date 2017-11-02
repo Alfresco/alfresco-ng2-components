@@ -25,7 +25,6 @@ import {
     EventEmitter,
     Input,
     OnChanges,
-    OnDestroy,
     Output,
     TemplateRef,
     ViewChild,
@@ -34,8 +33,6 @@ import {
 import { NodePaging } from 'alfresco-js-api';
 import { SearchOptions, SearchService } from 'ng2-alfresco-core';
 import { Subject } from 'rxjs/Subject';
-
-let _uniqueAutocompleteIdCounter = 0;
 
 @Component({
     selector: 'adf-search',
@@ -49,7 +46,7 @@ let _uniqueAutocompleteIdCounter = 0;
         'class': 'adf-search'
     }
 })
-export class SearchComponent implements AfterContentInit, OnChanges, OnDestroy {
+export class SearchComponent implements AfterContentInit, OnChanges {
 
     @ViewChild('panel')
     panel: ElementRef;
@@ -106,7 +103,7 @@ export class SearchComponent implements AfterContentInit, OnChanges, OnDestroy {
 
     _classList: { [key: string]: boolean } = {};
 
-    id: string = `search-${_uniqueAutocompleteIdCounter++}`;
+    preventVisibilityCheck: boolean = true;
 
     constructor(
         private searchService: SearchService,
@@ -114,7 +111,6 @@ export class SearchComponent implements AfterContentInit, OnChanges, OnDestroy {
         private _elementRef: ElementRef) {
         this.keyPressedStream.asObservable()
             .debounceTime(200)
-            .distinctUntilChanged()
             .subscribe((searchedWord: string) => {
                 this.displaySearchResults(searchedWord);
             });
@@ -129,10 +125,6 @@ export class SearchComponent implements AfterContentInit, OnChanges, OnDestroy {
             this.resetResults();
             this.displaySearchResults(changes.searchTerm.currentValue);
         }
-    }
-
-    ngOnDestroy() {
-        // this.changeDetectorRef.detach();
     }
 
     resetResults() {
@@ -156,12 +148,14 @@ export class SearchComponent implements AfterContentInit, OnChanges, OnDestroy {
         };
         if (searchTerm !== null && searchTerm !== '') {
             searchTerm = searchTerm + '*';
+            this.preventVisibilityCheck = false;
             this.searchService
                 .getNodeQueryResults(searchTerm, searchOpts)
                 .subscribe(
                 results => {
                     this.results = <NodePaging> results;
                     this.success.emit(this.results);
+                    this.isOpen = true;
                     this.setVisibility();
                 },
                 error => {
@@ -178,12 +172,12 @@ export class SearchComponent implements AfterContentInit, OnChanges, OnDestroy {
             this._classList['adf-search-hide'] = true;
             this.isOpen = false;
             this.changeDetectorRef.markForCheck();
+            this.preventVisibilityCheck = true;
         }
     }
 
     setVisibility() {
-        this.showPanel = !!this.results &&
-                         !!this.results.list;
+        this.showPanel = !this.preventVisibilityCheck && !!this.results && !!this.results.list;
         this._classList['adf-search-show'] = this.showPanel;
         this._classList['adf-search-hide'] = !this.showPanel;
         this.changeDetectorRef.markForCheck();

@@ -1,4 +1,6 @@
-<adf-search-control [highlight]="true" (submit)="onSearchSubmit($event)">
+<adf-search-control [highlight]="true"
+    (optionClicked)="onItemClicked($event)"
+    (submit)="onSearchSubmit($event)">
 </adf-search-control>
 
 <adf-viewer *ngIf="fileShowed" [(showViewer)]="fileShowed" [fileNodeId]="fileNodeId" [overlayMode]="true">
