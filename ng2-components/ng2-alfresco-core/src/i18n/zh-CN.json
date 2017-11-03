@@ -6,6 +6,37 @@
       "CURRENT_PAGE": "第 {{number}} 页",
       "TOTAL_PAGES": "/共 {{total}} 页"
     },
+    "FOLDER_DIALOG": {
+      "CREATE_FOLDER_TITLE": "新建文件夹",
+      "EDIT_FOLDER_TITLE": "编辑文件夹",
+      "FOLDER_NAME": {
+        "LABEL": "名称",
+        "ERRORS": {
+          "REQUIRED": "需要文件夹名称",
+          "SPECIAL_CHARACTERS": "文件夹名称不能包含 * \" < > \\ / ? : | 字符",
+          "ENDING_DOT": "文件夹名称不能以句点结尾。",
+          "ONLY_SPACES": "文件夹名称不能只包含空格"
+        }
+      },
+      "FOLDER_DESCRIPTION": {
+        "LABEL": "说明"
+      },
+      "CREATE_BUTTON": {
+        "LABEL": "创建"
+      },
+      "UPDATE_BUTTON": {
+        "LABEL": "更新"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "取消"
+      }
+    },
+    "MESSAGES": {
+      "ERRORS": {
+        "GENERIC": "此操作未成功，请重试或联系您的 IT 团队.",
+        "EXISTENT_FOLDER": "存在使用此名称的文件夹。请尝试使用其他名称。"
+      }
+    },
     "HOST_SETTINGS": {
       "TITLE": "设置",
       "CS-HOST": "Content Services 主机 URL 配置",

@@ -15,18 +15,19 @@
  * limitations under the License.
  */
 
-import { ChangeDetectorRef, Component, Input, OnInit, Optional, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, OnDestroy, Optional, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MinimalNodeEntity } from 'alfresco-js-api';
 import {
-    AlfrescoApiService, AlfrescoContentService, AlfrescoTranslationService, CreateFolderDialogComponent,
+    AlfrescoApiService, AlfrescoContentService, AlfrescoTranslationService,
     DownloadZipDialogComponent, FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
     SiteModel, UploadService
 } from 'ng2-alfresco-core';
 import { DataColumn, DataRow } from 'ng2-alfresco-datatable';
 import { DocumentListComponent, PermissionStyleModel } from 'ng2-alfresco-documentlist';
 import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-adapter.component';
+import { Subscription } from 'rxjs/Rx';
 
 const DEFAULT_FOLDER_TO_SHOW = '-my-';
 
@@ -35,7 +36,7 @@ const DEFAULT_FOLDER_TO_SHOW = '-my-';
     templateUrl: './files.component.html',
     styleUrls: ['./files.component.scss']
 })
-export class FilesComponent implements OnInit {
+export class FilesComponent implements OnInit, OnDestroy {
     // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
     currentFolderId: string = DEFAULT_FOLDER_TO_SHOW;
 
@@ -87,6 +88,9 @@ export class FilesComponent implements OnInit {
 
     permissionsStyle: PermissionStyleModel[] = [];
 
+    private onCreateFolder: Subscription;
+    private onEditFolder: Subscription;
+
     constructor(private changeDetector: ChangeDetectorRef,
                 private apiService: AlfrescoApiService,
                 private notificationService: NotificationService,
@@ -130,9 +134,16 @@ export class FilesComponent implements OnInit {
         this.uploadService.fileUploadComplete.asObservable().debounceTime(300).subscribe(value => this.onFileUploadEvent(value));
         this.uploadService.fileUploadDeleted.subscribe((value) => this.onFileUploadEvent(value));
         this.contentService.folderCreated.subscribe(value => this.onFolderCreated(value));
+        this.onCreateFolder = this.contentService.folderCreate.subscribe(value => this.onFolderAction(value));
+        this.onEditFolder = this.contentService.folderEdit.subscribe(value => this.onFolderAction(value));
 
         // this.permissionsStyle.push(new PermissionStyleModel('document-list__create', PermissionsEnum.CREATE));
         // this.permissionsStyle.push(new PermissionStyleModel('document-list__disable', PermissionsEnum.NOT_CREATE, false, true));
+    }
+
+    ngOnDestroy() {
+        this.onCreateFolder.unsubscribe();
+        this.onEditFolder.unsubscribe();
     }
 
     getCurrentDocumentListNode(): MinimalNodeEntity[] {
@@ -163,6 +174,13 @@ export class FilesComponent implements OnInit {
         this.logService.log('FOLDER CREATED');
         this.logService.log(event);
         if (event && event.parentId === this.documentList.currentFolderId) {
+            this.documentList.reload();
+        }
+    }
+
+    onFolderAction(node) {
+        this.logService.log(node);
+        if (node && node.parentId === this.documentList.currentFolderId) {
             this.documentList.reload();
         }
     }
@@ -212,18 +230,6 @@ export class FilesComponent implements OnInit {
 
     onDeleteActionSuccess(message) {
         this.uploadService.fileDeleted.next(message);
-    }
-
-    onCreateFolderClicked(event: Event) {
-        let dialogRef = this.dialog.open(CreateFolderDialogComponent);
-        dialogRef.afterClosed().subscribe(folderName => {
-            if (folderName) {
-                this.contentService.createFolder('', folderName, this.documentList.currentFolderId).subscribe(
-                    node => this.logService.log(node),
-                    err => this.logService.log(err)
-                );
-            }
-        });
     }
 
     onManageVersions(event) {
@@ -336,5 +342,16 @@ export class FilesComponent implements OnInit {
             return row.getValue('name');
         }
         return null;
+    }
+
+    canEditFolder(selection: Array<MinimalNodeEntity>): boolean {
+        if (selection && selection.length === 1) {
+            const entry = selection[0].entry;
+
+            if (entry && entry.isFolder) {
+                return this.contentService.hasPermission(entry, 'update');
+            }
+        }
+        return false;
     }
 }

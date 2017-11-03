@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { ContentApi } from 'alfresco-js-api';
+import { ContentApi, MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { Observable, Subject } from 'rxjs/Rx';
 import { FolderCreatedEvent } from '../events/folder-created.event';
 import { PermissionsEnum } from '../models/permissions.enum';
@@ -28,6 +28,8 @@ import { LogService } from './log.service';
 export class AlfrescoContentService {
 
     folderCreated: Subject<FolderCreatedEvent> = new Subject<FolderCreatedEvent>();
+    folderCreate: Subject<MinimalNodeEntryEntity> = new Subject<MinimalNodeEntryEntity>();
+    folderEdit: Subject<MinimalNodeEntryEntity> = new Subject<MinimalNodeEntryEntity>();
 
     constructor(public authService: AuthenticationService,
                 public apiService: AlfrescoApiService,

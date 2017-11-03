@@ -4,14 +4,45 @@
       "ITEMS_RANGE": "Angezeigt werden {{ range }} von {{ total }}",
       "ITEMS_PER_PAGE": "Elemente pro Seite",
       "CURRENT_PAGE": "Seite {{ number }}",
-      "TOTAL_PAGES": "von {{ total }}",
-      "HOST_SETTINGS": {
-        "TITLE": "Einstellungen",
-        "CS-HOST": "Konfiguration der Host-URL für Content Services",
-        "BP-HOST": "Konfiguration der Host-URL für Process Services",
-        "BACK": "Zurück",
-        "APPLY": "ANWENDEN"
+      "TOTAL_PAGES": "von {{ total }}"
+    },
+    "FOLDER_DIALOG": {
+      "CREATE_FOLDER_TITLE": "Neuen Ordner erstellen",
+      "EDIT_FOLDER_TITLE": "Ordner bearbeiten",
+      "FOLDER_NAME": {
+        "LABEL": "Name",
+        "ERRORS": {
+          "REQUIRED": "Ordnername ist erforderlich",
+          "SPECIAL_CHARACTERS": "Ordnername darf die folgenden Zeichen nicht enthalten: * \" < > \\ / ? : |",
+          "ENDING_DOT": "Ordnername darf nicht mit einem Punkt enden.",
+          "ONLY_SPACES": "Ordnername darf nicht nur aus Leerzeichen bestehen."
+        }
+      },
+      "FOLDER_DESCRIPTION": {
+        "LABEL": "Beschreibung"
+      },
+      "CREATE_BUTTON": {
+        "LABEL": "Erstellen"
+      },
+      "UPDATE_BUTTON": {
+        "LABEL": "Aktualisieren"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "Abbrechen"
       }
+    },
+    "MESSAGES": {
+      "ERRORS": {
+        "GENERIC": "Die Aktion war nicht erfolgreich. Versuchen Sie es noch einmal oder wenden Sie sich an Ihr IT-Team.",
+        "EXISTENT_FOLDER": "Es gibt bereits einen Ordner mit diesem Namen. Probieren Sie es mit einem anderen Namen."
+      }
+    },
+    "HOST_SETTINGS": {
+      "TITLE": "Einstellungen",
+      "CS-HOST": "Konfiguration der Host-URL für Content Services",
+      "BP-HOST": "Konfiguration der Host-URL für Process Services",
+      "BACK": "Zurück",
+      "APPLY": "ANWENDEN"
     }
   }
 }
