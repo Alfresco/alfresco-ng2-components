@@ -1,0 +1,64 @@
+<h2 mat-dialog-title>
+    {{
+        (editing
+            ? 'CORE.FOLDER_DIALOG.EDIT_FOLDER_TITLE'
+            : 'CORE.FOLDER_DIALOG.CREATE_FOLDER_TITLE'
+        ) | translate
+    }}
+</h2>
+
+<mat-dialog-content>
+    <form [formGroup]="form" (submit)="submit()">
+        <mat-input-container class="adf-full-width">
+            <input
+                placeholder="{{ 'CORE.FOLDER_DIALOG.FOLDER_NAME.LABEL' | translate }}"
+                matInput
+                required
+                [formControl]="form.controls['name']"
+            />
+
+            <mat-hint *ngIf="form.controls['name'].dirty">
+                <span *ngIf="form.controls['name'].errors?.required">
+                    {{ 'CORE.FOLDER_DIALOG.FOLDER_NAME.ERRORS.REQUIRED' | translate }}
+                </span>
+
+                <span *ngIf="!form.controls['name'].errors?.required && form.controls['name'].errors?.message">
+                    {{ form.controls['name'].errors?.message | translate }}
+                </span>
+            </mat-hint>
+        </mat-input-container>
+
+        <br />
+        <br />
+
+        <mat-input-container class="adf-full-width">
+            <textarea
+                matInput
+                placeholder="{{ 'CORE.FOLDER_DIALOG.FOLDER_DESCRIPTION.LABEL' | translate }}"
+                rows="4"
+                [formControl]="form.controls['description']"></textarea>
+        </mat-input-container>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <span class="adf-fill-remaining-space"></span>
+
+    <button
+        mat-button
+        mat-dialog-close>
+        {{ 'CORE.FOLDER_DIALOG.CANCEL_BUTTON.LABEL' | translate }}
+    </button>
+
+    <button
+        mat-button
+        (click)="submit()"
+        [disabled]="!form.valid">
+        {{
+            (editing
+                ? 'CORE.FOLDER_DIALOG.UPDATE_BUTTON.LABEL'
+                : 'CORE.FOLDER_DIALOG.CREATE_BUTTON.LABEL'
+            ) | translate
+        }}
+    </button>
+</mat-dialog-actions>

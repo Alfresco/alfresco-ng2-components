@@ -29,8 +29,8 @@ import { CardViewModule } from './src/components/view/card-view.module';
 import { MaterialModule } from './src/material.module';
 import { AppConfigModule } from './src/services/app-config.service';
 
-import { CreateFolderDialogComponent } from './src/dialogs/create-folder.dialog';
 import { DownloadZipDialogComponent } from './src/dialogs/download-zip.dialog';
+import { FolderDialogComponent } from './src/dialogs/folder.dialog';
 
 import { AlfrescoApiService } from './src/services/alfresco-api.service';
 import { AlfrescoContentService } from './src/services/alfresco-content.service';
@@ -52,6 +52,8 @@ import { AlfrescoTranslateLoader } from './src/services/translate-loader.service
 import { TRANSLATION_PROVIDER, TranslationService } from './src/services/translation.service';
 import { UploadService } from './src/services/upload.service';
 
+import { FolderCreateDirective } from './src/directives/folder-create.directive';
+import { FolderEditDirective } from './src/directives/folder-edit.directive';
 import { HighlightDirective } from './src/directives/highlight.directive';
 import { LogoutDirective } from './src/directives/logout.directive';
 import { NodeDeleteDirective } from './src/directives/node-delete.directive';
@@ -73,8 +75,8 @@ import { UserPreferencesService } from './src/services/user-preferences.service'
 export { MomentDateAdapter, MOMENT_DATE_FORMATS } from './src/utils/momentDateAdapter';
 import { MomentDateAdapter } from './src/utils/momentDateAdapter';
 
-export { CreateFolderDialogComponent } from './src/dialogs/create-folder.dialog';
 export { DownloadZipDialogComponent } from './src/dialogs/download-zip.dialog';
+export { FolderDialogComponent } from './src/dialogs/folder.dialog';
 
 export { PageTitleService } from './src/services/page-title.service';
 export { ContentService } from './src/services/content.service';
@@ -264,6 +266,8 @@ export function createTranslateLoader(http: Http, logService: LogService) {
     ],
     declarations: [
         ...pipes(),
+        FolderCreateDirective,
+        FolderEditDirective,
         LogoutDirective,
         UploadDirective,
         NodeRestoreDirective,
@@ -281,8 +285,8 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         InfoDrawerContentDirective,
         LanguageMenuComponent,
         HostSettingsComponent,
-        CreateFolderDialogComponent,
         DownloadZipDialogComponent,
+        FolderDialogComponent,
         InfinitePaginationComponent,
         PaginationComponent
     ],
@@ -312,6 +316,8 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         CollapsableModule,
         ToolbarModule,
         ...pipes(),
+        FolderCreateDirective,
+        FolderEditDirective,
         LogoutDirective,
         UploadDirective,
         NodeRestoreDirective,
@@ -322,8 +328,8 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         HostSettingsComponent,
         DataColumnComponent,
         DataColumnListComponent,
-        CreateFolderDialogComponent,
         DownloadZipDialogComponent,
+        FolderDialogComponent,
         InfoDrawerComponent,
         InfoDrawerTabComponent,
         InfoDrawerLayoutComponent,
@@ -335,8 +341,8 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         PaginationComponent
     ],
     entryComponents: [
-        CreateFolderDialogComponent,
-        DownloadZipDialogComponent
+        DownloadZipDialogComponent,
+        FolderDialogComponent
     ]
 })
 export class CoreModule {}

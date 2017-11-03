@@ -34,8 +34,13 @@
 
                 <div fxFlex="0 0 auto" class="adf-document-action-buttons" fxShow fxHide.lt-sm="true">
                     <button mat-icon-button
-                            (click)="onCreateFolderClicked($event)">
+                            [adf-create-folder]="getDocumentListCurrentFolderId()">
                         <mat-icon>create_new_folder</mat-icon>
+                    </button>
+                    <button mat-icon-button
+                            [disabled]="!canEditFolder(documentList.selection)"
+                            [adf-edit-folder]="documentList.selection[0]?.entry">
+                        <mat-icon>create</mat-icon>
                     </button>
                     <button mat-icon-button
                             [disabled]="!hasSelection(documentList.selection)"
@@ -83,9 +88,15 @@
                 </button>
                 <mat-menu #menu="matMenu">
                     <button mat-menu-item
-                            (click)="onCreateFolderClicked($event)">
+                            [adf-create-folder]="getDocumentListCurrentFolderId()">
                         <mat-icon>create_new_folder</mat-icon>
                         <span>New folder</span>
+                    </button>
+                    <button mat-menu-item
+                            [disabled]="!canEditFolder(documentList.selection)"
+                            [adf-edit-folder]="documentList.selection[0]?.entry">
+                        <mat-icon>create</mat-icon>
+                        <span>Edit folder</span>
                     </button>
                     <button mat-menu-item
                             [disabled]="!hasSelection(documentList.selection)"
