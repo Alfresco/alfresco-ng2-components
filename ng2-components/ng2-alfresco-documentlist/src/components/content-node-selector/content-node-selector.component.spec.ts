@@ -231,7 +231,7 @@ describe('ContentNodeSelectorComponent', () => {
             });
         });
 
-        describe('Breadcrumbs', () => {
+        xdescribe('Breadcrumbs', () => {
 
             let documentListService,
                 expectedDefaultFolderNode;
