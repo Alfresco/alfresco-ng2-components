@@ -54,7 +54,8 @@ export class FolderDialogComponent implements OnInit {
 
     ngOnInit() {
         const { folder } = this.data;
-        let name = '', description = '';
+        let name = '';
+        let description = '';
 
         if (folder) {
             const { properties } = folder;

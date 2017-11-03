@@ -9,7 +9,7 @@
 
 <mat-dialog-content>
     <form [formGroup]="form" (submit)="submit()">
-        <mat-input-container style="width: 100%">
+        <mat-input-container class="adf-full-width">
             <input
                 placeholder="{{ 'CORE.FOLDER_DIALOG.FOLDER_NAME.LABEL' | translate }}"
                 matInput
@@ -31,7 +31,7 @@
         <br />
         <br />
 
-        <mat-input-container style="width: 100%">
+        <mat-input-container class="adf-full-width">
             <textarea
                 matInput
                 placeholder="{{ 'CORE.FOLDER_DIALOG.FOLDER_DESCRIPTION.LABEL' | translate }}"

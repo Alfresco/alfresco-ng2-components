@@ -336,6 +336,8 @@ for more information about installing and using the source code.
 - [Node permission directive](node-permission.directive.md)
 - [Node restore directive](node-restore.directive.md)
 - [Upload directive](upload.directive.md)
+- [Folder create directive](folder-create.directive.md)
+- [Folder edit directive](folder-edit.directive.md)
 
 ### Models
 

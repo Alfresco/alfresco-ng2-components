@@ -18,7 +18,6 @@
 ```html
 <adf-toolbar title="toolbar example">
     <button mat-icon-button
-            [disabled]="!documentList.selection || !documentList.selection.length || !documentList.selection[0].entry.isFolder"
             [adf-edit-folder]="documentList.selection[0]?.entry">
         <mat-icon>create</mat-icon>
     </button>
@@ -37,5 +36,5 @@
 
 ## Details
 
-'FolderEditDirective' directive takes a selection folder entry of #documentList and opens the folder dialog component to edit the name and description properties of that selected folder.
+'FolderEditDirective' directive needs a selection folder entry of #documentList to open the folder dialog component to edit the name and description properties of that selected folder.
 If data is valid, on dialog close, it emits folderEdit event.

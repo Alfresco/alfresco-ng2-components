@@ -92,7 +92,7 @@ describe('FolderCreateDirective', () => {
         spyOn(dialog, 'open').and.returnValue(dialogRefMock);
     });
 
-    it('emits folderCreate event when input value is not undefined', () => {
+    it('should emit folderCreate event when input value is not undefined', () => {
         spyOn(dialogRefMock, 'afterClosed').and.returnValue(Observable.of(node));
 
         contentService.folderCreate.subscribe((val) => {
@@ -103,7 +103,7 @@ describe('FolderCreateDirective', () => {
         fixture.detectChanges();
     });
 
-    it('does not emits folderCreate event when input value is undefined', () => {
+    it('should not emit folderCreate event when input value is undefined', () => {
         spyOn(dialogRefMock, 'afterClosed').and.returnValue(Observable.of(null));
         spyOn(contentService.folderCreate, 'next');
 

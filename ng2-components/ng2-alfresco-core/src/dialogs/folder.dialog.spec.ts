@@ -89,7 +89,7 @@ describe('FolderDialogComponent', () => {
                     }
                 }
             };
-            component.ngOnInit();
+            fixture.detectChanges();
         });
 
         it('should init form with folder name and description', () => {
@@ -166,7 +166,7 @@ describe('FolderDialogComponent', () => {
                 parentNodeId: 'parentNodeId',
                 folder: null
             };
-            component.ngOnInit();
+            fixture.detectChanges();
         });
 
         it('should init form with empty inputs', () => {

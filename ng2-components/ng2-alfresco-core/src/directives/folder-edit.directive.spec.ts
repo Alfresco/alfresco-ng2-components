@@ -94,7 +94,7 @@ describe('FolderEditDirective', () => {
         spyOn(dialog, 'open').and.returnValue(dialogRefMock);
     });
 
-    it('emits folderEdit event when input value is not undefined', () => {
+    it('should emit folderEdit event when input value is not undefined', () => {
         spyOn(dialogRefMock, 'afterClosed').and.returnValue(Observable.of(node));
 
         contentService.folderEdit.subscribe((val) => {
@@ -105,7 +105,7 @@ describe('FolderEditDirective', () => {
         fixture.detectChanges();
     });
 
-    it('does not emits folderEdit event when input value is undefined', () => {
+    it('should not emit folderEdit event when input value is undefined', () => {
         spyOn(dialogRefMock, 'afterClosed').and.returnValue(Observable.of(null));
         spyOn(contentService.folderEdit, 'next');
 
