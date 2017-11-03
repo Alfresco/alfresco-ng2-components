@@ -198,6 +198,7 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     selectFirst() {
         if (!this.isListEmpty()) {
             let row = this.data.getRows()[0];
+            row.isSelected = true;
             this.data.selectedRow = row;
             this.currentInstanceId = row.getValue('id');
         } else {
