@@ -16,56 +16,28 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Headers, Http, RequestOptions, Response } from '@angular/http';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 
 @Injectable()
 export class DiagramsService {
 
-    constructor(private authService: AlfrescoAuthenticationService,
-                private http: Http,
-                private settingsService: AlfrescoSettingsService,
+    constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
     }
 
     getProcessDefinitionModel(processDefinitionId: string): Observable<any> {
-        let url = `${this.settingsService.bpmHost}/activiti-app/app/rest/process-definitions/${processDefinitionId}/model-json`;
-        let options = this.getRequestOptions();
-        return this.http
-            .get(url, options)
-            .map((res: any) => {
-                let body = res.json();
-                return body;
-            }).catch(err => this.handleError(err));
+        return Observable.fromPromise(this.apiService.getInstance().
+        activiti.modelJsonBpmnApi.getModelJSON(processDefinitionId)).catch(err => this.handleError(err));
     }
 
     getRunningProcessDefinitionModel(processInstanceId: string): Observable<any> {
-        let url = `${this.settingsService.bpmHost}/activiti-app/app/rest/process-instances/${processInstanceId}/model-json`;
-        let options = this.getRequestOptions();
-        return this.http
-            .get(url, options)
-            .map((res: any) => {
-                let body = res.json();
-                return body;
-            }).catch(err => this.handleError(err));
+        return Observable.fromPromise(this.apiService.getInstance().
+        activiti.modelJsonBpmnApi.getModelJSONForProcessDefinition(processInstanceId)).catch(err => this.handleError(err));
     }
 
-    public getHeaders(): Headers {
-        return new Headers({
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': this.authService.getTicketBpm()
-        });
-    }
-
-    public getRequestOptions(param?: any): RequestOptions {
-        let headers = this.getHeaders();
-        return new RequestOptions({headers: headers, withCredentials: true, search: param});
-    }
-
-    private handleError(error: Response) {
+    private handleError(error: any) {
         this.logService.error(error);
-        return Observable.throw(error.json().error || 'Server error');
+        return Observable.throw(error || 'Server error');
     }
 }
