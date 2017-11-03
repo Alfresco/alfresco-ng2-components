@@ -26,7 +26,7 @@ import { Observable } from 'rxjs/Rx';
 export class TagService {
 
     @Output()
-    refresh = new EventEmitter();
+    refresh: EventEmitter<any> = new EventEmitter();
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
@@ -49,11 +49,14 @@ export class TagService {
 
         let promiseAdd = Observable.fromPromise(this.apiService.getInstance().core.tagsApi.addTag(nodeId, tagBody));
 
-        promiseAdd.subscribe((data) => {
-            this.refresh.emit(data);
-        },                   (err) => {
-            this.handleError(err);
-        });
+        promiseAdd.subscribe(
+            (data) => {
+                this.refresh.emit(data);
+            },
+            (err) => {
+                this.handleError(err);
+            }
+        );
 
         return promiseAdd;
     }

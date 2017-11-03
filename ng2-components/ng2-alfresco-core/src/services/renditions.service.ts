@@ -77,7 +77,7 @@ export class RenditionsService {
         return Observable.fromPromise(this.apiService.renditionsApi.getRenditions(nodeId));
     }
 
-    createRendition(nodeId: string, encoding: string): Observable<{}> {
+    createRendition(nodeId: string, encoding: string): Observable<void> {
         return Observable.fromPromise(this.apiService.renditionsApi.createRendition(nodeId, {id: encoding}));
     }
 

@@ -18,6 +18,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlfrescoApiService } from 'ng2-alfresco-core';
+import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 
 @Component({
     selector: 'adf-file-view',
@@ -37,7 +38,7 @@ export class FileViewComponent implements OnInit {
             const id = params.nodeId;
             if (id) {
                 this.apiService.getInstance().nodes.getNodeInfo(id).then(
-                    (node) => {
+                    (node: MinimalNodeEntryEntity) => {
                         if (node && node.isFile) {
                             this.nodeId = id;
                             return;
