@@ -1,8 +1,17 @@
-<adf-info-drawer-layout>
-    <div info-drawer-title>Metadata</div>
-    <div info-drawer-content>
+<adf-info-drawer title="Details">
+    <adf-info-drawer-tab label="Properties">
         <mat-card>
-            <adf-content-metadata [node]="node"></adf-content-metadata>
+            <mat-card-content>
+                <adf-content-metadata [node]="node"></adf-content-metadata>
+            </mat-card-content>
         </mat-card>
-    </div>
-</adf-info-drawer-layout>
+    </adf-info-drawer-tab>
+
+    <adf-info-drawer-tab label="Versions">
+        <mat-card>
+            <mat-card-content>
+                Versions go here...
+            </mat-card-content>
+        </mat-card>
+    </adf-info-drawer-tab>
+</adf-info-drawer>
