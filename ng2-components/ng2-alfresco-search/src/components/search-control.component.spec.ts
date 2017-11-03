@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DebugElement, DebugNode } from '@angular/core';
+import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AlfrescoAuthenticationService, AlfrescoTranslationService, CoreModule, SearchService } from 'ng2-alfresco-core';
