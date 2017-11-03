@@ -69,7 +69,7 @@
     "@angular/platform-browser": "4.4.5",
     "@angular/platform-browser-dynamic": "4.4.5",
     "@angular/router": "4.4.5",
-    "@ngx-translate/core": "7.0.0",
+    "@ngx-translate/core": "8.0.0",
     "alfresco-js-api": "1.9.0",
     "chart.js": "2.5.0",
     "classlist.js": "1.1.20150312",
