@@ -52,7 +52,10 @@ import { CardViewComponent } from './card-view.component';
         CardViewDateItemComponent
     ],
     exports: [
-        CardViewComponent
+        CardViewComponent,
+        CardViewTextItemComponent,
+        CardViewMapItemComponent,
+        CardViewDateItemComponent
     ]
 })
 export class CardViewModule {}
