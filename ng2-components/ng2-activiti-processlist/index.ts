@@ -16,6 +16,7 @@
  */
 
 import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import {
     MatButtonModule,
     MatCardModule,
@@ -127,7 +128,8 @@ export const ACTIVITI_PROCESSLIST_PROVIDERS: [any] = [
         MatCardModule,
         MatInputModule,
         MatChipsModule,
-        MatSelectModule
+        MatSelectModule,
+        FlexLayoutModule
     ],
     declarations: [
         ...ACTIVITI_PROCESSLIST_DIRECTIVES
