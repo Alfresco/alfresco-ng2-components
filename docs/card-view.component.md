@@ -129,6 +129,26 @@ const textItemProperty = new CardViewTextItemModel(options);
 | editable | boolean | false | Whether the property editable or not |
 | clickable | boolean | false | Whether the property clickable or not |
 | multiline | string | false | Single or multiline text |
+| pipes | CardViewTextItemPipeProperty[] | [] | Pipes to be applied on the displayValue |
+
+##### Using pipes in Card Text Item
+
+You can use pipes for text items almost the same way as you would do it in your template. You can provide an array of pipes with additional pipeParameters like this:
+
+```js
+const myWonderfulPipe1: PipeTransform = <whatever PipeTransform implmentation>;
+const myWonderfulPipe2: PipeTransform = <whatever PipeTransform implmentation>;
+
+new CardViewTextItemModel({
+    label: 'some label',
+    value: someValue,
+    key: 'some-key',
+    pipes: [
+	{ pipe: myWonderfulPipe1, params: ['first-param', 'second-param'] },
+	{ pipe: myWonderfulPipe2, params: ['first-param', 'second-param'] }
+    ]
+});
+```
 
 #### Card Map Item
 

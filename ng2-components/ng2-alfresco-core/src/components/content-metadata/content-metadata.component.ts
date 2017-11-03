@@ -20,13 +20,15 @@ import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { CardViewItem } from '../../interface/card-view-item.interface';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
+import { FileSizePipe } from '../../pipes/file-size.pipe';
 
 @Component({
     selector: 'adf-content-metadata',
     templateUrl: './content-metadata.component.html',
     styleUrls: ['./content-metadata.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    host: { 'class': 'adf-content-metadata' }
+    host: { 'class': 'adf-content-metadata' },
+    providers: [ FileSizePipe ]
 })
 export class ContentMetadataComponent implements OnChanges {
 
@@ -34,6 +36,8 @@ export class ContentMetadataComponent implements OnChanges {
 
     @Input()
     node: MinimalNodeEntryEntity;
+
+    constructor(private fileSizePipe: FileSizePipe) {}
 
     ngOnChanges() {
         this.recalculateProperties();
@@ -92,6 +96,7 @@ export class ContentMetadataComponent implements OnChanges {
             label: 'CORE.METADATA.BASIC.SIZE',
             value: this.node.content.sizeInBytes,
             key: 'content.sizeInBytes',
+            pipes: [ { pipe: this.fileSizePipe } ],
             editable: false
         }));
 

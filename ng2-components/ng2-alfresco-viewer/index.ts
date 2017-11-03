@@ -24,13 +24,13 @@ import { MediaPlayerComponent } from './src/components/mediaPlayer.component';
 import { PdfViewerComponent } from './src/components/pdfViewer.component';
 import { TxtViewerComponent } from './src/components/txtViewer.component';
 import { UnknownFormatComponent } from './src/components/unknown-format/unknown-format.component';
+import { ViewerDefaultSidebarComponent } from './src/components/viewer-default-sidebar.component';
 import { ViewerMoreActionsComponent } from './src/components/viewer-more-actions.component';
 import { ViewerOpenWithComponent } from './src/components/viewer-open-with.component';
 import { ViewerSidebarComponent } from './src/components/viewer-sidebar.component';
 import { ViewerToolbarComponent } from './src/components/viewer-toolbar.component';
 import { ViewerComponent } from './src/components/viewer.component';
 import { ViewerExtensionDirective } from './src/directives/viewer-extension.directive';
-import { ViewerDefaultSidebarComponent } from './src/components/viewer-default-sidebar.component';
 import { RenderingQueueServices } from './src/services/rendering-queue.services';
 
 export { ViewerComponent } from './src/components/viewer.component';

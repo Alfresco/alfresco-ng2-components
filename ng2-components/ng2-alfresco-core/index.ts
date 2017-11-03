@@ -120,6 +120,7 @@ export { SitesApiService } from './src/services/sites-api.service';
 export { DiscoveryApiService } from './src/services/discovery-api.service';
 export { CommentProcessService } from './src/services/comment-process.service';
 
+import { ContentMetadataComponent } from './src/components/content-metadata/content-metadata.component';
 import { DataColumnListComponent } from './src/components/data-column/data-column-list.component';
 import { DataColumnComponent } from './src/components/data-column/data-column.component';
 import {
@@ -129,7 +130,6 @@ import {
     InfoDrawerTitleDirective
 } from './src/components/info-drawer/info-drawer-layout.component';
 import { InfoDrawerComponent, InfoDrawerTabComponent } from './src/components/info-drawer/info-drawer.component';
-import { ContentMetadataComponent } from './src/components/content-metadata/content-metadata.component';
 import { LanguageMenuComponent } from './src/components/language-menu/language-menu.component';
 import { NodePermissionDirective } from './src/directives/node-permission.directive';
 import { NodeRestoreDirective } from './src/directives/node-restore.directive';
