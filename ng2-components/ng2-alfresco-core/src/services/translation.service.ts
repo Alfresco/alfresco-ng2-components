@@ -39,19 +39,19 @@ export class TranslationService {
                 @Inject(TRANSLATION_PROVIDER) providers: TranslationProvider[]) {
         this.customLoader = <AlfrescoTranslateLoader> this.translate.currentLoader;
 
-        this.defaultLang = this.userPreference.getDefaultLocale();
+        this.defaultLang = 'en';
         translate.setDefaultLang(this.defaultLang);
-
-        this.userPreference.locale$.subscribe( (locale) => {
-            this.userLang = locale;
-            this.use(this.userLang);
-        });
 
         if (providers && providers.length > 0) {
             for (let provider of providers) {
                 this.addTranslationFolder(provider.name, provider.source);
             }
         }
+
+        this.userPreference.locale$.subscribe( (locale) => {
+            this.userLang = locale;
+            this.use(this.userLang);
+        });
     }
 
     addTranslationFolder(name: string = '', path: string = '') {
