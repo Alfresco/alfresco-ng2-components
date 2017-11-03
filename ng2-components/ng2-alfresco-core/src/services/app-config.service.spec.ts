@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
+import { HttpClientModule, MockBackend } from '@angular/common/http';
 import { inject, TestBed } from '@angular/core/testing';
-import { HttpClientModule }from '@angular/common/http';
 import { Response, ResponseOptions, XHRBackend } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { AppConfigModule, AppConfigService } from './app-config.service';
@@ -50,6 +50,7 @@ describe('AppConfigService', () => {
     beforeEach(
         inject([AppConfigService, XHRBackend], (appConfig: AppConfigService, mockBackend) => {
             appConfigService = appConfig;
+
             mockBackend.connections.subscribe((connection: MockConnection) => {
                 connection.mockRespond(new Response(new ResponseOptions({
                     body: JSON.stringify(mockResponse)

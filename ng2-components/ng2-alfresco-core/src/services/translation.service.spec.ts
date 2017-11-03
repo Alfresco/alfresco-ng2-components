@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
+import { HttpClientModule } from '@angular/common/http';
 import { Injector } from '@angular/core';
 import { getTestBed, TestBed } from '@angular/core/testing';
-import { HttpClientModule } from '@angular/common/http';
 import { Response, ResponseOptions, XHRBackend } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';

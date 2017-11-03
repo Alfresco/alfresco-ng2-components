@@ -41,7 +41,7 @@ export class AlfrescoTranslateLoader implements TranslateLoader {
         if (registered) {
             registered.path = path;
         } else {
-            this.providers.push(new ComponentTranslationModel({name: name, path: path}));
+            this.providers.push(new ComponentTranslationModel({ name: name, path: path }));
         }
     }
 
@@ -59,7 +59,7 @@ export class AlfrescoTranslateLoader implements TranslateLoader {
                 this.queue[lang].push(component.name);
                 observableBatch.push(this.http.get(`${component.path}/${this.prefix}/${lang}${this.suffix}`)
                     .map((res: Response) => {
-                        component.json[lang] = res.json();
+                        component.json[lang] = res;
                     }));
             }
         });

@@ -59,7 +59,7 @@ describe('ThumbnailService', () => {
                 AlfrescoApiService,
                 AlfrescoSettingsService,
                 StorageService,
-                LogService,
+                LogService
                 DomSanitizer,
                 MatIconRegistry
             ]
