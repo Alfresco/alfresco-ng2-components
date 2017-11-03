@@ -24,6 +24,7 @@
         <mat-list *ngIf="isSearchBarActive()" id="autocomplete-search-result-list" class="adf-list-flex">
             <mat-list-item class="adf-list-flex-item"
                 *ngFor="let item of data?.list?.entries; let idx = index"
+                id="result_option_{{idx}}"
                 (click)="elementClicked(item)">
                     <mat-icon mat-list-icon *ngIf="item" class="adf-item-flex-icon">
                         <img [src]="getMimeTypeIcon(item)" />
