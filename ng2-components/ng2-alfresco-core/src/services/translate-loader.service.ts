@@ -60,6 +60,10 @@ export class AlfrescoTranslateLoader implements TranslateLoader {
                 observableBatch.push(this.http.get(`${component.path}/${this.prefix}/${lang}${this.suffix}`)
                     .map((res: Response) => {
                         component.json[lang] = res;
+                    })
+                    .catch(() => {
+                        // Empty Observable just to go ahead
+                        return Observable.of('');
                     }));
             }
         });

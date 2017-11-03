@@ -15,15 +15,16 @@
  * limitations under the License.
  */
 
-import { HttpClientModule, MockBackend } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { inject, TestBed } from '@angular/core/testing';
-import { Response, ResponseOptions, XHRBackend } from '@angular/http';
-import { MockBackend, MockConnection } from '@angular/http/testing';
 import { AppConfigModule, AppConfigService } from './app-config.service';
+
+declare let jasmine: any;
 
 describe('AppConfigService', () => {
 
     let appConfigService: AppConfigService;
+
     const mockResponse = {
         ecmHost: 'http://localhost:4000/ecm',
         bpmHost: 'http://localhost:4000/ecm',
@@ -42,26 +43,30 @@ describe('AppConfigService', () => {
                 AppConfigModule
             ],
             providers: [
-                { provide: XHRBackend, useClass: MockBackend }
             ]
         });
+
+        jasmine.Ajax.install();
     });
 
     beforeEach(
-        inject([AppConfigService, XHRBackend], (appConfig: AppConfigService, mockBackend) => {
+        inject([AppConfigService], (appConfig: AppConfigService) => {
             appConfigService = appConfig;
 
-            mockBackend.connections.subscribe((connection: MockConnection) => {
-                connection.mockRespond(new Response(new ResponseOptions({
-                    body: JSON.stringify(mockResponse)
-                })));
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 200,
+                contentType: 'application/json',
+                responseText: JSON.stringify(mockResponse)
             });
         })
     );
 
+    afterEach(() => {
+        jasmine.Ajax.uninstall();
+    });
+
     it('should export service in the module', () => {
-        const service = TestBed.get(AppConfigService);
-        expect(service).toBeDefined();
+        expect(appConfigService).toBeDefined();
     });
 
     it('should skip the optional port number', () => {

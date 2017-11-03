@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
+import { async, TestBed } from '@angular/core/testing';
 import { MatIconRegistry } from '@angular/material';
-import { DomSanitizer } from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { CookieServiceMock } from './../assets/cookie.service.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
@@ -40,6 +40,7 @@ describe('ThumbnailService', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+                BrowserModule,
                 HttpClientModule,
                 TranslateModule.forRoot({
                     loader: {
@@ -59,11 +60,11 @@ describe('ThumbnailService', () => {
                 AlfrescoApiService,
                 AlfrescoSettingsService,
                 StorageService,
-                LogService
-                DomSanitizer,
+                LogService,
                 MatIconRegistry
             ]
         }).compileComponents();
+
     }));
 
     beforeEach(() => {
