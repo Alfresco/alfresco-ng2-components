@@ -124,9 +124,11 @@ export class SearchControlComponent implements OnInit, OnDestroy {
             }
         });
 
-        this.searchControl.valueChanges.forEach((value: string) => {
-            this.onSearchTermChange(value);
-        });
+        this.searchControl.valueChanges.debounceTime(400).distinctUntilChanged()
+            .subscribe((value: string) => {
+                    this.onSearchTermChange(value);
+                }
+            );
     }
 
     ngOnInit(): void {
