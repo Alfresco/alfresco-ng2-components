@@ -28,9 +28,12 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { Observable, Subject } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import { SearchTermValidator } from './../forms/search-term-validator';
 import { SearchAutocompleteComponent } from './search-autocomplete.component';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/map';
 
 @Component({
     selector: 'adf-search-control',
@@ -124,8 +127,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
             }
         });
 
-        this.searchControl.valueChanges.debounceTime(400).distinctUntilChanged()
-            .subscribe((value: string) => {
+        this.searchControl.valueChanges.subscribe((value: string) => {
                     this.onSearchTermChange(value);
                 }
             );
@@ -143,7 +145,6 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     private onSearchTermChange(value: string): void {
         this.searchValid = this.searchControl.valid;
         this.liveSearchTerm = this.searchValid ? value : '';
-        this.searchControl.setValue(value);
         this.searchChange.emit({
             value: value,
             valid: this.searchValid
