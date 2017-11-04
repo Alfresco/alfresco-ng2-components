@@ -58,15 +58,20 @@ export class AlfrescoTranslateLoader implements TranslateLoader {
             if (!this.isComponentInQueue(lang, component.name)) {
                 this.queue[lang].push(component.name);
 
-                let httpObservable = this.http.get(`${component.path}/${this.prefix}/${lang}${this.suffix}`);
+                let currentObserv = Observable.create(observer => {
+                    this.http.get(`${component.path}/${this.prefix}/${lang}${this.suffix}`)
+                        .map((res: Response) => {
+                            component.json[lang] = res;
+                        }).subscribe((result) => {
+                        observer.next(result);
+                        observer.complete();
+                    }, () => {
+                        observer.next('');
+                        observer.complete();
+                    });
+                });
 
-                observableBatch.push(httpObservable);
-
-                httpObservable.subscribe((res: Response) => {
-                    component.json[lang] = res;
-                },() => {
-                    return Observable.of('');
-                })
+                observableBatch.push(currentObserv);
             }
         });
 
