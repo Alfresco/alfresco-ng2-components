@@ -34,10 +34,10 @@ export class DurationWidgetComponent extends NumberWidgetComponent implements On
     @Input()
     field: any;
 
-    @Input('group')
+    @Input()
     public formGroup: FormGroup;
 
-    @Input('controllerName')
+    @Input()
     public controllerName: string;
 
     @Input()

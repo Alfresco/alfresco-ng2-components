@@ -152,6 +152,8 @@
         "no-access-missing-member": false,
         "templates-use-public": true,
         "invoke-injectable": true,
+        "no-input-rename": true,
+        "no-output-rename": true,
         "adf-file-name": true,
         "adf-class-name": true,
         "adf-prefix-name": true

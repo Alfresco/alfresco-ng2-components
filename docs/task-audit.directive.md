@@ -9,7 +9,7 @@ Fetches the Task Audit information in the pdf or json format.
 ```html
 <button
     adf-task-audit
-    [task-id]="taskId"
+    [taskId]="taskId"
     [download]="download"
     mat-icon-button (clicked)="onAuditClick($event)" (error)="onAuditError($event)" >
     <mat-icon>assignment_ind</mat-icon>

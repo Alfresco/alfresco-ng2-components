@@ -33,10 +33,10 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
     @Input()
     field: any;
 
-    @Input('group')
-    public formGroup: FormGroup;
+    @Input()
+    public group: FormGroup;
 
-    @Input('controllerName')
+    @Input()
     public controllerName: string;
 
     @Output()
@@ -57,7 +57,7 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
 
     ngOnInit() {
         if (this.required) {
-            this.formGroup.get(this.controllerName).setValidators(Validators.compose(this.buildValidatorList()));
+            this.group.get(this.controllerName).setValidators(Validators.compose(this.buildValidatorList()));
         }
     }
 

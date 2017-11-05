@@ -75,7 +75,7 @@
                         {{'PS-TAB.AUDIT-LOG' | translate}}
                         <button
                             adf-task-audit
-                            [task-id]="currentTaskId"
+                            [taskId]="currentTaskId"
                             [download]="true"
                             mat-icon-button (clicked)="onAuditClick($event)" (error)="onAuditError($event)">
                             <mat-icon>assignment_ind</mat-icon>
@@ -160,7 +160,7 @@
                     <div *ngIf="currentProcessInstanceId">
                         {{'PS-TAB.AUDIT-LOG' | translate}}
                         <button adf-process-audit
-                                [process-id]="currentProcessInstanceId"
+                                [processId]="currentProcessInstanceId"
                                 [download]="true" mat-icon-button
                                 [format]="'pdf'"
                                 (clicked)="onAuditClick($event)"

@@ -31,7 +31,7 @@ const PDF_FORMAT: string = 'pdf';
 })
 export class TaskAuditDirective implements OnChanges {
 
-    @Input('task-id')
+    @Input()
     taskId: string;
 
     @Input()

@@ -33,10 +33,10 @@ export class NumberWidgetComponent extends WidgetComponent implements OnInit {
     @Input()
     field: any;
 
-    @Input('group')
-    public formGroup: FormGroup;
+    @Input()
+    public group: FormGroup;
 
-    @Input('controllerName')
+    @Input()
     public controllerName: string;
 
     @Input()
@@ -48,7 +48,7 @@ export class NumberWidgetComponent extends WidgetComponent implements OnInit {
 
     ngOnInit() {
         if (this.required) {
-            this.formGroup.get(this.controllerName).setValidators(Validators.required);
+            this.group.get(this.controllerName).setValidators(Validators.required);
         }
     }
 }

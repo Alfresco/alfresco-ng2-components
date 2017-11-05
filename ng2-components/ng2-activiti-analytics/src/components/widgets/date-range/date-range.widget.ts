@@ -36,7 +36,7 @@ export class DateRangeWidgetComponent implements OnInit {
     public FORMAT_DATE_ACTIVITI: string = 'YYYY-MM-DD';
     public SHOW_FORMAT: string = 'DD/MM/YYYY';
 
-    @Input('group')
+    @Input()
     public dateRange: FormGroup;
 
     @Input()

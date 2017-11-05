@@ -32,8 +32,8 @@ export class CheckboxWidgetComponent extends WidgetComponent {
     @Input()
     field: any;
 
-    @Input('group')
-    public formGroup: FormGroup;
+    @Input()
+    public group: FormGroup;
 
     @Input('controllerName')
     public controllerName: string;

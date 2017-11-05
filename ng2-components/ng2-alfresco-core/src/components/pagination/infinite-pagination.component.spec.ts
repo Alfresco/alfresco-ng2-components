@@ -61,7 +61,7 @@ describe('InfinitePaginationComponent', () => {
     it('should show the loading spinner if loading', () => {
         pagination.hasMoreItems = true;
         component.pagination = pagination;
-        component.isLoading = true;
+        component.loading = true;
         fixture.detectChanges();
 
         let loadingSpinner = fixture.debugElement.query(By.css('[data-automation-id="adf-infinite-pagination-spinner"]'));
@@ -71,7 +71,7 @@ describe('InfinitePaginationComponent', () => {
     it('should NOT show the loading spinner if NOT loading', () => {
         pagination.hasMoreItems = true;
         component.pagination = pagination;
-        component.isLoading = false;
+        component.loading = false;
         fixture.detectChanges();
 
         let loadingSpinner = fixture.debugElement.query(By.css('[data-automation-id="adf-infinite-pagination-spinner"]'));
@@ -81,7 +81,7 @@ describe('InfinitePaginationComponent', () => {
     it('should show the load more button if NOT loading and has more items', () => {
         pagination.hasMoreItems = true;
         component.pagination = pagination;
-        component.isLoading = false;
+        component.loading = false;
         fixture.detectChanges();
 
         let loadMoreButton = fixture.debugElement.query(By.css('[data-automation-id="adf-infinite-pagination-button"]'));
@@ -103,7 +103,7 @@ describe('InfinitePaginationComponent', () => {
         pagination.hasMoreItems = true;
         pagination.skipCount = 5;
         component.pagination = pagination;
-        component.isLoading = false;
+        component.loading = false;
         component.pageSize = 5;
         fixture.detectChanges();
 
