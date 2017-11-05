@@ -20,7 +20,7 @@ Available pre-built themes:
 * `adf-pink-bluegrey.css`
 * `adf-purple-green.css`
 
-If you're using Angular CLI you can include one of the prebuilt theme in yours `styles.scss` file:
+If you're using Angular CLI you can include one of the prebuilt theme in your `styles.scss` file:
 ```css
 @import '~ng2-alfresco-core/prebuilt-themes/adf-blue-orange.css';
 ```
@@ -36,7 +36,7 @@ When you want more customization than a pre-built theme offers, you can create y
 
 ```scss
 /*
- *  Include only packages what you are using (and core by default)
+ *  Include only packages that you are using (and core by default)
  */
 @import '~@angular/material/theming';
 @import '~ng2-alfresco-core/styles/theming';

@@ -2,7 +2,7 @@
 
 ## What is typography?
 
-Typography configuration let you change the style of the text in your ADF app
+Typography configuration lets you change the style of the text in your ADF app
 
 ## Customization
 
@@ -16,7 +16,7 @@ After you need to change your `/src/custom-style.scss` to include the new font:
 
 ```scss
 /*
- *  Include only packages what you are using (and core by default)
+ *  Include only packages that you are using (and core by default)
  */
 @import '~@angular/material/theming';
 @import '~ng2-alfresco-core/styles/theming';
@@ -72,4 +72,4 @@ $theme:   mat-light-theme($primary, $accent, $warn);
 
 ```
 
-for more details about typografy refer to [Material 2 documentation](https://github.com/angular/material2/blob/master/guides/typography.md)
+for more details about typography refer to [Material 2 documentation](https://github.com/angular/material2/blob/master/guides/typography.md)
