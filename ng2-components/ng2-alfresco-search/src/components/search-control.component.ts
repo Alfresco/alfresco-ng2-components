@@ -28,12 +28,12 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { SearchTermValidator } from './../forms/search-term-validator';
 import { SearchAutocompleteComponent } from './search-autocomplete.component';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/map';
 
 @Component({
     selector: 'adf-search-control',
@@ -128,7 +128,9 @@ export class SearchControlComponent implements OnInit, OnDestroy {
         });
 
         this.searchControl.valueChanges.subscribe((value: string) => {
-                    this.onSearchTermChange(value);
+                    if (value) {
+                        this.onSearchTermChange(value);
+                    }
                 }
             );
     }
