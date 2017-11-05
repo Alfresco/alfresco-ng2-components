@@ -35,7 +35,7 @@ import { WebscriptComponent } from './components/webscript/webscript.component';
 import { TagComponent } from './components/tag/tag.component';
 import { SocialComponent } from './components/social/social.component';
 import { FilesComponent } from './components/files/files.component';
-// import { FormComponent } from './components/form/form.component';
+import { FormComponent } from './components/form/form.component';
 
 import { UploadButtonComponent } from 'ng2-alfresco-upload';
 import { FileViewComponent } from './components/file-view/file-view.component';
@@ -148,7 +148,7 @@ export const appRoutes: Routes = [
                 canActivate: [AuthGuardEcm]
             },
             { path: 'about', component: AboutComponent },
-            // { path: 'form', component: FormComponent },
+            { path: 'form', component: FormComponent },
             { path: 'form-list', component: FormListComponent }
         ]
     }
