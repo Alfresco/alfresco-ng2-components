@@ -1,5 +1,6 @@
 <div class="adf-search-container" *ngIf="isLoggedIn()"
-[@transitionMessages]="subscriptAnimationState">
+[@transitionMessages]="subscriptAnimationState"
+(@transitionMessages.done)="onAnimationDone($event)">
 <a mat-icon-button
     *ngIf="expandable"
     id="adf-search-button"
@@ -13,19 +14,25 @@
         [autocomplete]="getAutoComplete()"
         id="adf-control-input"
         [(ngModel)]="searchTerm"
+        (focus)="onFocus($event)"
+        (blur)="onBlur($event)"
+        (keyup.escape)="toggleSearchBar()"
         (ngModelChange)="inputChange($event)"
         [adfSearchAutocomplete]="auto"
-        (enterKeyPressed)="searchSubmit($event)">
+        (enterKeyPressed)="searchSubmit($event)"
+        #searchInput>
 </mat-form-field>
 </div>
 
-<adf-search #auto="adfSearchAutocomplete" class="adf-search-result-autocomplete" (panelClose)="panelClosed($event)">
+<adf-search #auto="adfSearchAutocomplete" class="adf-search-result-autocomplete">
     <ng-template let-data>
         <mat-list *ngIf="isSearchBarActive()" id="autocomplete-search-result-list">
             <mat-list-item
                 *ngFor="let item of data?.list?.entries; let idx = index"
                 id="result_option_{{idx}}"
                 [tabindex]="0"
+                (focus)="onFocus($event)"
+                (blur)="onBlur($event)"
                 class="adf-search-autocomplete-item"
                 (click)="elementClicked(item)">
                 <mat-icon mat-list-icon>

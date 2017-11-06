@@ -49,7 +49,7 @@ export const SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR: any = {
 };
 
 @Directive({
-    selector: `input[adfSearchAutocomplete]`,
+    selector: `input[adfSearchAutocomplete], textarea[adfSearchAutocomplete]`,
     host: {
         'role': 'combobox',
         'autocomplete': 'off',
@@ -74,6 +74,12 @@ export class AdfAutocompleteTriggerDirective implements ControlValueAccessor, On
     @Output()
     shortWordError: EventEmitter<string> = new EventEmitter();
 
+    @Output()
+    panelClosed: EventEmitter<any> = new EventEmitter();
+
+    @Output()
+    panelOpened: EventEmitter<any> = new EventEmitter();
+
     private _panelOpen: boolean = false;
     private closingActionsSubscription: Subscription;
     private escapeEventStream = new Subject<void>();
@@ -90,6 +96,8 @@ export class AdfAutocompleteTriggerDirective implements ControlValueAccessor, On
 
     ngOnDestroy() {
         this.escapeEventStream.complete();
+        this.panelClosed.unsubscribe();
+        this.panelOpened.unsubscribe();
     }
 
     get panelOpen(): boolean {
@@ -99,6 +107,7 @@ export class AdfAutocompleteTriggerDirective implements ControlValueAccessor, On
     openPanel(): void {
         this.searchPanel.isOpen = this._panelOpen = true;
         this.closingActionsSubscription = this.subscribeToClosingActions();
+        this.panelOpened.emit();
     }
 
     closePanel(): void {
@@ -221,5 +230,6 @@ export class AdfAutocompleteTriggerDirective implements ControlValueAccessor, On
             this.element.nativeElement.focus();
         }
         this.closePanel();
+        this.panelClosed.next();
     }
 }

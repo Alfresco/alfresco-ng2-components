@@ -86,9 +86,6 @@ export class SearchComponent implements AfterContentInit, OnChanges {
     @Output()
     error: EventEmitter<any> = new EventEmitter();
 
-    @Output()
-    panelClosed: EventEmitter<NodePaging> = new EventEmitter();
-
     showPanel: boolean = false;
     results: NodePaging;
 
@@ -175,7 +172,6 @@ export class SearchComponent implements AfterContentInit, OnChanges {
             this._classList['adf-search-show'] = false;
             this._classList['adf-search-hide'] = true;
             this.isOpen = false;
-            this.panelClosed.emit();
             this.changeDetectorRef.markForCheck();
         }
     }

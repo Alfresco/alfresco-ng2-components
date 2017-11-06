@@ -16,10 +16,11 @@
  */
 
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
 import { AlfrescoAuthenticationService, ThumbnailService } from 'ng2-alfresco-core';
 import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
     selector: 'adf-search-control',
@@ -37,7 +38,7 @@ import { Subject } from 'rxjs/Subject';
         ])
     ]
 })
-export class SearchControlComponent implements OnInit {
+export class SearchControlComponent implements OnInit, OnDestroy {
 
     @Input()
     expandable: boolean = true;
@@ -63,29 +64,37 @@ export class SearchControlComponent implements OnInit {
     @Output()
     optionClicked: EventEmitter<any> = new EventEmitter();
 
-    fileNodeId: string;
-    fileShowed: boolean = false;
+    @ViewChild('searchInput')
+    searchInput: ElementRef;
+
     searchTerm: string = '';
     subscriptAnimationState: string;
 
     private toggleSearch = new Subject<any>();
+    private focusSubject = new Subject<FocusEvent>();
 
     constructor(public authService: AlfrescoAuthenticationService,
                 private thumbnailService: ThumbnailService) {
 
-                this.toggleSearch.asObservable().debounceTime(100).subscribe(() => {
-                  if (this.expandable) {
-                      this.subscriptAnimationState = this.subscriptAnimationState === 'inactive' ? 'active' : 'inactive';
+        this.toggleSearch.asObservable().debounceTime(100).subscribe(() => {
+            if (this.expandable) {
+                this.subscriptAnimationState = this.subscriptAnimationState === 'inactive' ? 'active' : 'inactive';
 
-                      if (this.subscriptAnimationState === 'inactive') {
-                          this.searchTerm = '';
-                      }
-                  }
-              });
+                if (this.subscriptAnimationState === 'inactive') {
+                    this.searchTerm = '';
+                }
+            }
+        });
     }
 
     ngOnInit() {
         this.subscriptAnimationState = this.expandable ? 'inactive' : 'no-animation';
+        this.setupFocusEventHandlers();
+    }
+
+    ngOnDestroy(): void {
+        this.focusSubject.unsubscribe();
+        this.toggleSearch.unsubscribe();
     }
 
     isLoggedIn(): boolean {
@@ -133,12 +142,32 @@ export class SearchControlComponent implements OnInit {
       }
   }
 
-  panelClosed(event: any) {
+  onAnimationDone(event: any) {
+      if ( this.subscriptAnimationState === 'active') {
+          this.searchInput.nativeElement.focus();
+      }
+  }
+
+  onSearchBlur(): void {
       this.toggleSearchBar();
   }
 
-  closeSearchWhenNoPanel(event: any) {
-    this.toggleSearchBar();
+  onFocus($event): void {
+      this.focusSubject.next($event);
+  }
+
+  onBlur($event): void {
+      this.focusSubject.next($event);
+  }
+
+  private setupFocusEventHandlers() {
+      let focusEvents: Observable<FocusEvent> = this.focusSubject.asObservable().debounceTime(50);
+
+      focusEvents.filter(($event: any) => {
+          return $event.type === 'focusout' || $event.type === 'blur';
+      }).subscribe(() => {
+          this.onSearchBlur();
+      });
   }
 
 }
