@@ -20,7 +20,7 @@ Available pre-built themes:
 * `adf-pink-bluegrey.css`
 * `adf-purple-green.css`
 
-If you're using Angular CLI you can include one of the prebuilt theme in yours `styles.css` file:
+If you're using Angular CLI you can include one of the prebuilt theme in your `styles.scss` file:
 ```css
 @import '~ng2-alfresco-core/prebuilt-themes/adf-blue-orange.css';
 ```
@@ -36,7 +36,7 @@ When you want more customization than a pre-built theme offers, you can create y
 
 ```scss
 /*
- *  Include only packages what you are using (and core by default)
+ *  Include only packages that you are using (and core by default)
  */
 @import '~@angular/material/theming';
 @import '~ng2-alfresco-core/styles/theming';
@@ -75,7 +75,7 @@ $theme:   mat-light-theme($primary, $accent, $warn);
 
 ```
 
-Notes: if you are using the Generator or the demo shell you need only to change the`/app/theme.scss` with your set of colors
+Notes: if you are using the Generator or the demo shell you need only to change the`/src/custom-style.scss` with your set of colors
 
 ### Multiple themes
 
@@ -111,14 +111,16 @@ Any component with the  `add-dark-theme` class will use the dark theme, while ot
 
 ## Default reusable class
 
+```css
 .adf-hide-small                 // Display none vieweport <960px
 .adf-hide-xsmall                // Display none vieweport <600px
 
 .adf-primary-color               // Primary color
-.adf-accent-color                // Accent color
-.adf-warn-color                  // Warn color
-.adf-primary-contrast-text-color // Default contrast color for primary color
-.adf-accent-contrast-text-color  // Default contrast color for accent color
-.adf-background-color            // Dialog background color
-.adf-primary-background-color    // Primary background color
-.adf-accent-background-color     // Default background color for accent
+.accent-color                // Accent color
+.warn-color                  // Warn color
+.primary-contrast-text-color // Default contrast color for primary color
+.accent-contrast-text-color  // Default contrast color for accent color
+.background-color            // Dialog background color
+.primary-background-color    // Primary background color
+.accent-background-color     // Default background color for accent
+```
