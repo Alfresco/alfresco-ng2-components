@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-        Component, Input, OnInit, OnChanges,
+import { Component, Input, OnInit, OnChanges, OnDestroy, ChangeDetectorRef,
         EventEmitter, Optional, ViewChild, SimpleChanges, Output } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -37,7 +37,7 @@ const DEFAULT_FOLDER_TO_SHOW = '-my-';
     templateUrl: './files.component.html',
     styleUrls: ['./files.component.scss']
 })
-export class FilesComponent implements OnInit, OnDestroy {
+export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     errorMessage: string = null;
     fileNodeId: any;
