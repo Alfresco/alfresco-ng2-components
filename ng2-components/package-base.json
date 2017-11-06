@@ -61,19 +61,19 @@
     },
     {
       "path": "./ng2-alfresco-login/bundles/ng2-alfresco-login.js",
-      "maxSize": "6 kB"
+      "maxSize": "10 kb"
     },
     {
       "path": "./ng2-alfresco-search/bundles/ng2-alfresco-search.js",
-      "maxSize": "6 kB"
+      "maxSize": "10 kb"
     },
     {
       "path": "./ng2-alfresco-social/bundles/ng2-alfresco-social.js",
-      "maxSize": "6 kB"
+      "maxSize": "10 kb"
     },
     {
       "path": "./ng2-alfresco-tag/bundles/ng2-alfresco-tag.js",
-      "maxSize": "6 kB"
+      "maxSize": "10 kb"
     },
     {
       "path": "./ng2-alfresco-upload/bundles/ng2-alfresco-upload.js",
@@ -81,7 +81,7 @@
     },
     {
       "path": "./ng2-alfresco-userinfo/bundles/ng2-alfresco-userinfo.js",
-      "maxSize": "6 kB"
+      "maxSize": "10 kb"
     },
     {
       "path": "./ng2-alfresco-viewer/bundles/ng2-alfresco-viewer.js",
@@ -89,7 +89,7 @@
     },
     {
       "path": "./ng2-alfresco-webscript/bundles/ng2-alfresco-webscript.js",
-      "maxSize": "6 kB"
+      "maxSize": "10 kb"
     }
   ],
   "main": "./index.js",
