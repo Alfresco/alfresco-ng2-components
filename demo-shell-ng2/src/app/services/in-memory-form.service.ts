@@ -34,7 +34,7 @@ interface ActivitiData {
         }>
     };
 }
-
+//
 @Injectable()
 export class InMemoryFormService extends FormService {
 
@@ -43,20 +43,20 @@ export class InMemoryFormService extends FormService {
     constructor(appConfig: AppConfigService,
                 ecmModelService: EcmModelService,
                 apiService: AlfrescoApiService,
-                public logService: LogService) {
+                protected logService: LogService) {
         super(ecmModelService, apiService, logService);
         this.data = appConfig.get<ActivitiData>('activiti');
     }
 
     /** @override */
-    getRestFieldValues(taskId: string, fieldId: string): Observable<FormFieldOption[]> {
+    getRestFieldValues(taskId: string, field: string): Observable<any> {
         // Uncomment this to use original call
         // return super.getRestFieldValues(taskId, fieldId);
 
-        this.logService.log(`getRestFieldValues: ${taskId} => ${fieldId}`);
+        this.logService.log(`getRestFieldValues: ${taskId} => ${field}`);
         return new Observable<FormFieldOption[]>(observer => {
             let field = this.data.rest.fields.find(
-                f => f.taskId === taskId && f.fieldId === fieldId
+                f => f.taskId === taskId && f.fieldId === field
             );
             let values: FormFieldOption[] = field.values || [];
             this.logService.log(values);
@@ -66,8 +66,8 @@ export class InMemoryFormService extends FormService {
 
     /** @override */
     getRestFieldValuesByProcessId(processDefinitionId: string, fieldId: string): Observable<any> {
-        // Uncomment this to use original call
-        // return super.getRestFieldValuesByProcessId(processDefinitionId, fieldId);
+        //  Uncomment this to use original call
+        //  return super.getRestFieldValuesByProcessId(processDefinitionId, fieldId);
 
         this.logService.log(`getRestFieldValuesByProcessId: ${processDefinitionId} => ${fieldId}`);
         return new Observable<FormFieldOption[]>(observer => {
@@ -79,5 +79,4 @@ export class InMemoryFormService extends FormService {
             observer.next(values);
         });
     }
-
 }

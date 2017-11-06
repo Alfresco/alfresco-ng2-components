@@ -17,9 +17,7 @@
 
 import { Directive, HostListener, Input } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
-
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-
 import { FolderDialogComponent } from '../dialogs/folder.dialog';
 import { AlfrescoContentService } from '../services/alfresco-content.service';
 
