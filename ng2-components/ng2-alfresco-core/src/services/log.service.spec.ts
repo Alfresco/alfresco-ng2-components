@@ -78,6 +78,26 @@ describe('Log Service', () => {
         expect(console.trace).not.toHaveBeenCalled();
     });
 
+    it('should log only warning and errors if is warning level', () => {
+        appConfigService.config['logLevel'] = 'WARN';
+        providesLogComponent = TestBed.createComponent(ProvidesLogComponent);
+
+        spyOn(console, 'log');
+        spyOn(console, 'error');
+        spyOn(console, 'trace');
+        spyOn(console, 'warn');
+
+        providesLogComponent.componentInstance.log();
+        providesLogComponent.componentInstance.error();
+        providesLogComponent.componentInstance.trace();
+        providesLogComponent.componentInstance.warn();
+
+        expect(console.log).not.toHaveBeenCalled();
+        expect(console.error).toHaveBeenCalled();
+        expect(console.warn).toHaveBeenCalled();
+        expect(console.trace).not.toHaveBeenCalled();
+    });
+
 });
 
 @Component({
