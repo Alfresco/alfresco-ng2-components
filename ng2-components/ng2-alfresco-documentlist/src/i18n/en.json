@@ -3,6 +3,7 @@
         "EMPTY": {
             "HEADER": "This folder is empty"
         },
+        "NO_PERMISSION": "You don't have permission to view this file or folder.",
         "LAYOUT": {
             "CREATED": "Created",
             "THUMBNAIL": "Thumbnail",

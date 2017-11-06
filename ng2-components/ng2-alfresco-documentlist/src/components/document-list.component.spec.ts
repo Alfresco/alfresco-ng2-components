@@ -741,6 +741,25 @@ describe('DocumentList', () => {
         expect(documentList.isEmptyTemplateDefined()).toBeFalsy();
     });
 
+    it('should require dataTable to check no permission template', () => {
+        documentList.dataTable = null;
+        expect(documentList.isNoPermissionTemplateDefined()).toBe(false);
+    });
+
+    it('should return true if custom permission template is provided', () => {
+        documentList.noPermissionTemplate = <TemplateRef<any>> {};
+        documentList.dataTable = new DataTableComponent(null, null);
+
+        expect(documentList.isNoPermissionTemplateDefined()).toBe(true);
+    });
+
+    it('should return false if no custom permission template is provided', () => {
+        documentList.noPermissionTemplate = null;
+        documentList.dataTable = new DataTableComponent(null, null);
+
+        expect(documentList.isNoPermissionTemplateDefined()).toBe(false);
+    });
+
     it('should empty folder NOT show the pagination', () => {
         documentList.emptyFolderTemplate = <TemplateRef<any>> {};
         documentList.dataTable = new DataTableComponent(null, null);
@@ -822,6 +841,44 @@ describe('DocumentList', () => {
         spyOn(documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.resolve());
         documentList.ngOnChanges({folderNode: new SimpleChange(null, documentList.currentFolderId, true)});
         expect(documentList.loadFolderNodesByFolderNodeId).toHaveBeenCalled();
+    });
+
+    it('should emit error when getFolderNode fails', (done) => {
+        const error = { message: '{ "error": { "statusCode": 501 } }' } ;
+        spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.reject(error));
+
+        documentList.error.subscribe(val => {
+            expect(val).toBe(error);
+            done();
+        });
+
+        documentList.loadFolderByNodeId('123');
+    });
+
+    it('should emit error when loadFolderNodesByFolderNodeId fails', (done) => {
+        const error = { message: '{ "error": { "statusCode": 501 } }' } ;
+        spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.resolve(fakeNodeWithCreatePermission));
+        spyOn(documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.reject(error));
+
+        documentList.error.subscribe(val => {
+            expect(val).toBe(error);
+            done();
+        });
+
+        documentList.loadFolderByNodeId('123');
+    });
+
+    it('should set no permision when getFolderNode fails with 403', (done) => {
+        const error = { message: '{ "error": { "statusCode": 403 } }' } ;
+        spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.reject(error));
+
+        documentList.error.subscribe(val => {
+            expect(val).toBe(error);
+            expect(documentList.noPermission).toBe(true);
+            done();
+        });
+
+        documentList.loadFolderByNodeId('123');
     });
 
     xit('should load previous page if there are no other elements in multi page table', (done) => {

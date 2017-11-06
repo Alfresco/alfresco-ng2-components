@@ -246,6 +246,7 @@ describe('ContentNodeSelectorComponent', () => {
                 spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.resolve(expectedDefaultFolderNode));
                 spyOn(documentListService, 'getFolder').and.returnValue(Observable.throw('No results for test'));
                 spyOn(sitesApiService, 'getSites').and.returnValue(Observable.of([]));
+                spyOn(component.documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.resolve());
                 component.currentFolderId = 'cat-girl-nuku-nuku';
                 fixture.detectChanges();
             });
@@ -347,6 +348,12 @@ describe('ContentNodeSelectorComponent', () => {
             }
 
             beforeEach(() => {
+                const documentListService = TestBed.get(DocumentListService);
+                const expectedDefaultFolderNode = <MinimalNodeEntryEntity> { path: { elements: [] } };
+
+                spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.resolve(expectedDefaultFolderNode));
+                spyOn(component.documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.resolve());
+
                 component.currentFolderId = 'cat-girl-nuku-nuku';
                 fixture.detectChanges();
             });
@@ -458,7 +465,7 @@ describe('ContentNodeSelectorComponent', () => {
                     fixture.detectChanges();
                     let documentList = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-document-list"]'));
                     expect(documentList).not.toBeNull('Document list should be shown');
-                    expect(documentList.componentInstance.currentFolderId).toBeNull();
+                    expect(documentList.componentInstance.currentFolderId).toBeUndefined();
                 });
             }));
 

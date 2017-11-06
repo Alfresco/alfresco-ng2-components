@@ -202,6 +202,17 @@
             }
         }
 
+        .adf-no-permission {
+            &__row:hover {
+                cursor: default;
+                background-color: inherit;
+            }
+
+            &__cell {
+                padding: 0 !important;
+            }
+        }
+
         .ellipsis-cell {
             .cell-container {
                 height: 100%;

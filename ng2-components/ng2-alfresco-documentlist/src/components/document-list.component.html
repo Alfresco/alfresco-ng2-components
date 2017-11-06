@@ -9,6 +9,7 @@
     [rowStyle]="rowStyle"
     [rowStyleClass]="rowStyleClass"
     [loading]="loading"
+    [noPermission]="noPermission"
     [showHeader]="!isEmpty()"
     (showRowContextMenu)="onShowRowContextMenu($event)"
     (showRowActionsMenu)="onShowRowActionsMenu($event)"
@@ -32,6 +33,17 @@
                 </adf-empty-list>
             </ng-template>
         </no-content-template>
+    </div>
+
+    <div *ngIf="!isNoPermissionTemplateDefined()">
+        <no-permission-template>
+            <ng-template>
+                <div class="adf-no-permission__template">
+                    <mat-icon>ic_error</mat-icon>
+                    <p class="adf-no-permission__template--text">{{ 'ADF-DOCUMENT-LIST.NO_PERMISSION' | translate }}</p>
+                </div>
+            </ng-template>
+        </no-permission-template>
     </div>
 
     <div>

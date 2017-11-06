@@ -116,6 +116,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     supportedPageSizes: number[];
 
     infiniteLoading: boolean = false;
+    noPermission: boolean = false;
 
     selection = new Array<MinimalNodeEntity>();
     skipCount: number = 0;
@@ -161,6 +162,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     errorMessage;
     actions: ContentActionModel[] = [];
     emptyFolderTemplate: TemplateRef<any>;
+    noPermissionTemplate: TemplateRef<any>;
     contextActionHandler: Subject<any> = new Subject();
     data: ShareDataTableAdapter;
 
@@ -305,6 +307,15 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         return false;
     }
 
+    isNoPermissionTemplateDefined(): boolean {
+        if (this.dataTable) {
+            if (this.noPermissionTemplate) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     isMobile(): boolean {
         return !!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
@@ -440,14 +451,21 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             this.loadRecent();
         } else {
             this.documentListService
-                .getFolderNode(nodeId).then(node => {
+                .getFolderNode(nodeId)
+                .then(node => {
                     this.folderNode = node;
                     this.currentFolderId = node.id;
                     this.skipCount = 0;
                     this.currentNodeAllowableOperations = node['allowableOperations'] ? node['allowableOperations'] : [];
-                    this.loadFolderNodesByFolderNodeId(node.id, this.pageSize, this.skipCount).catch(err => this.error.emit(err));
+                    return this.loadFolderNodesByFolderNodeId(node.id, this.pageSize, this.skipCount);
                 })
-                .catch(err => this.error.emit(err));
+                .catch(err => {
+                    if (JSON.parse(err.message).error.statusCode === 403) {
+                        this.loading = false;
+                        this.noPermission = true;
+                    }
+                    this.error.emit(err);
+                });
         }
     }
 

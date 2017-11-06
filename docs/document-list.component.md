@@ -733,8 +733,30 @@ That will give the following output:
 
 ![Custom empty folder](docassets/images/empty-folder-template-custom.png)
 
+### Custom 'permission denied' template
+
+By default DocumentList provides the following content for permission denied:
+
+![Default no permission](docassets/images/no-permission-default.png)
+
+This can be changed by means of the custom html template:
+
+```html
+<adf-document-list ...>
+    <no-permission-content>
+        <ng-template>
+            <h1>You don't have permissions</h1>
+        </ng-template>
+    </no-permission-content>
+</adf-document-list>
+```
+
+That will give the following output:
+
+![Custom no permission](docassets/images/no-permission-custom.png)
 <!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
 <!-- seealso start -->
+
 ## See also
 
 - [Datatable component](datatable.component.md)
