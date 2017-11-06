@@ -7,7 +7,7 @@
     "clean": "rimraf node_modules",
     "clean-lock": "rimraf package-lock.json",
     "rimraf": "rimraf",
-    "build": "npm run pkg-build && npm run toc && npm run markdownlint && npm run webpack -- --config config/webpack.build.js --progress --profile --bail && npm run build-style && npm run bundlesize",
+    "build": "npm run pkg-build && npm run toc && npm run markdownlint && npm run webpack -- --config config/webpack.build.js --progress --profile --bail && npm run build-style && npm run bundlesize-check",
     "test": "node node_modules/karma/bin/karma start --reporters mocha,coverage --single-run --component .",
     "build-style": "npm run webpack -- --config config/webpack.style.js --progress --profile --bail",
     "test-browser": "node node_modules/karma/bin/karma start karma.conf.js --reporters kjhtml",

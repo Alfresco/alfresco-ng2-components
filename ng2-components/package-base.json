@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rimraf node_modules",
     "clean-lock": "rimraf package-lock.json",
-    "build": "npm run pkg-build && npm run toc && npm run markdownlint && npm run webpack -- --config config/webpack.build.js --progress --profile --bail && npm run build-style",
+    "build": "npm run pkg-build && npm run toc && npm run markdownlint && npm run webpack -- --config config/webpack.build.js --progress --profile --bail && npm run build-style && npm run bundlesize-check",
     "build-style": "npm run webpack -- --config config/webpack.style.js --progress --profile --bail",
     "bundlesize-map": "npm run webpack -- --config config/webpack.bundle-check.js --progress --profile --bail",
     "bundlesize-check": "bundlesize",
