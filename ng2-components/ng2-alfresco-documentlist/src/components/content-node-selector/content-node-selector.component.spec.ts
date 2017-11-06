@@ -20,8 +20,9 @@ import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { AlfrescoContentService, AlfrescoTranslationService, CoreModule, SearchService, SiteModel } from 'ng2-alfresco-core';
+import { AlfrescoContentService, AlfrescoTranslationService, CoreModule, SearchService, SiteModel, SitesApiService } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
+import { Observable } from 'rxjs/Rx';
 import { MaterialModule } from '../../material.module';
 import { DocumentListService } from '../../services/document-list.service';
 import { DropdownBreadcrumbComponent } from '../breadcrumb/dropdown-breadcrumb.component';
@@ -86,6 +87,7 @@ describe('ContentNodeSelectorComponent', () => {
             ],
             providers: [
                 AlfrescoContentService,
+                SitesApiService,
                 AlfrescoTranslationService,
                 DocumentListService,
                 SearchService,
@@ -234,12 +236,16 @@ describe('ContentNodeSelectorComponent', () => {
         describe('Breadcrumbs', () => {
 
             let documentListService,
+                sitesApiService,
                 expectedDefaultFolderNode;
 
             beforeEach(() => {
                 expectedDefaultFolderNode = <MinimalNodeEntryEntity> { path: { elements: [] } };
                 documentListService = TestBed.get(DocumentListService);
+                sitesApiService = TestBed.get(SitesApiService);
                 spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.resolve(expectedDefaultFolderNode));
+                spyOn(documentListService, 'getFolder').and.returnValue(Observable.throw('No results for test'));
+                spyOn(sitesApiService, 'getSites').and.returnValue(Observable.of([]));
                 component.currentFolderId = 'cat-girl-nuku-nuku';
                 fixture.detectChanges();
             });

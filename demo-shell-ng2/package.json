@@ -6,7 +6,7 @@
   "scripts": {
     "ng": "ng",
     "start": "npm run server-versions && rimraf dist && ng serve --host 0.0.0.0 --app=0 --open --aot=true",
-    "start:dev": "npm run style:dev & npm run clean-ng2-component-angular && npm run server-versions && rimraf dist && ng serve --host 0.0.0.0 --app=1 pp-dev --proxy-config proxy.conf.js --open",
+    "start:dev": "npm run style:dev & npm run clean-ng2-component-angular && npm run server-versions && rimraf dist && ng serve --host 0.0.0.0 --disable-host-check --app=1 pp-dev --proxy-config proxy.conf.js --open",
     "start:dist": "npm run server-versions && rimraf dist && ng serve --host 0.0.0.0 --disable-host-check --aot=false --prod --app=0",
     "build": "npm run server-versions && rimraf dist && ng build  -app=0",
     "build:dev": "npm run style:dev & npm run server-versions && rimraf dist && ng build -app=1",
