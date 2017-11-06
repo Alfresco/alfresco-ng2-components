@@ -8,15 +8,14 @@
     (click)="toggleSearchBar($event)">
     <mat-icon aria-label="search button">search</mat-icon>
 </a>
-<mat-form-field [color]="'primary'" class="adf-input-form-field-divider">
+<mat-form-field class="adf-input-form-field-divider">
     <input matInput
         [type]="inputType"
         [autocomplete]="getAutoComplete()"
         id="adf-control-input"
         [(ngModel)]="searchTerm"
-        (focus)="onFocus($event)"
         (blur)="onBlur($event)"
-        (keyup.escape)="toggleSearchBar()"
+        (keyup.escape)="deactivateSearchBar()"
         (ngModelChange)="inputChange($event)"
         [adfSearchAutocomplete]="auto"
         (enterKeyPressed)="searchSubmit($event)"
