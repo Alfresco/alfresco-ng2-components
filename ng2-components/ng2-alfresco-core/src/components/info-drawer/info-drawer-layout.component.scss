@@ -17,6 +17,7 @@
                 font-weight: bold;
                 text-align: left;
                 color: mat-color($primary);
+                text-transform: uppercase;
             }
 
             &-header {
@@ -26,6 +27,7 @@
                 margin-bottom: 40px;
 
                 &-buttons {
+                    padding-right:18px; 
                     mat-icon {
                         cursor: pointer;
                     }
