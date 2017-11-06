@@ -11,11 +11,11 @@
             line-height: normal;
         }
 
-        // &-input-form-field-divider {
-        //     .mat-form-field-underline {
-        //         background-color: mat-color($primary, 900);
-        //     }
-        // }
+        &-input-form-field-divider {
+            .mat-form-field-underline {
+                background-color: mat-color($primary, 900);
+            }
+        }
 
         &-search-result-autocomplete {
             @include mat-menu-base(2);
@@ -32,8 +32,8 @@
             border-radius: $mat-menu-border-radius;
 
 
-            @media screen and (max-width: 400px) {
-                width: 200px;
+            @media screen and ($mat-small) {
+                width: 160px;
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 overflow: hidden;
