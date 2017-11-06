@@ -28,6 +28,7 @@ const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30 ;
 
 @Injectable()
 export class AuthenticationService {
+    private redirectUrl: string = '';
 
     onLogin: Subject<any> = new Subject<any>();
     onLogout: Subject<any> = new Subject<any>();
@@ -226,6 +227,14 @@ export class AuthenticationService {
      */
     getBpmUsername(): string {
         return this.alfrescoApi.getInstance().bpmAuth.username;
+    }
+
+    setRedirectUrl(url: string) {
+        this.redirectUrl = url;
+    }
+
+    getRedirectUrl(): string {
+        return this.redirectUrl;
     }
 
     /**

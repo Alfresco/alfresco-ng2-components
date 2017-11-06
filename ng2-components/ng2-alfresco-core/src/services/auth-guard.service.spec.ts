@@ -33,6 +33,7 @@ import { AlfrescoTranslateLoader } from './translate-loader.service';
 import { UserPreferencesService } from './user-preferences.service';
 
 describe('AuthGuardService', () => {
+    let state;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -59,6 +60,10 @@ describe('AuthGuardService', () => {
         }).compileComponents();
     }));
 
+    beforeEach(() => {
+        state = { url: '' };
+    });
+
     it('if the alfresco js api is logged in should canActivate be true',
         async(inject([AuthGuard, Router, AlfrescoSettingsService, StorageService, AuthenticationService], (auth, router, settingsService, storage, authService) => {
             spyOn(router, 'navigate');
@@ -67,7 +72,7 @@ describe('AuthGuardService', () => {
                 return true;
             };
 
-            expect(auth.canActivate()).toBeTruthy();
+            expect(auth.canActivate(null, state)).toBeTruthy();
             expect(router.navigate).not.toHaveBeenCalled();
         }))
     );
@@ -81,9 +86,21 @@ describe('AuthGuardService', () => {
                 return false;
             };
 
-            expect(auth.canActivate()).toBeFalsy();
+            expect(auth.canActivate(null, state)).toBeFalsy();
             expect(router.navigate).toHaveBeenCalled();
         }))
     );
 
+    it('should set redirect url',
+        async(inject([AuthGuard, Router, AuthenticationService], (auth, router, authService) => {
+            state.url = 'some-url';
+
+            spyOn(router, 'navigate');
+            spyOn(authService, 'setRedirectUrl');
+
+            auth.canActivate(null , state);
+
+            expect(authService.setRedirectUrl).toHaveBeenCalledWith(state.url);
+        }))
+    );
 });

@@ -183,9 +183,18 @@ export class LoginComponent implements OnInit {
         this.authService.login(values.username, values.password, this.rememberMe)
             .subscribe(
                 (token: any) => {
+                    const redirectUrl = this.authService.getRedirectUrl();
+
                     this.actualLoginStep = LoginSteps.Welcome;
                     this.userPreferences.setStoragePrefix(values.username);
                     this.success.emit(new LoginSuccessEvent(token, values.username, values.password));
+
+                    if (redirectUrl) {
+                        this.authService.setRedirectUrl(null);
+                        this.router.navigate([redirectUrl]);
+                        return false;
+                    }
+
                     if (this.successRoute) {
                         this.router.navigate([this.successRoute]);
                     }
