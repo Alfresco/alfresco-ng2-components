@@ -464,4 +464,10 @@ describe('AuthenticationService', () => {
             });
         });
     });
+
+    it('should set/get redirectUrl', () => {
+        authService.setRedirectUrl('some-url');
+
+        expect(authService.getRedirectUrl()).toBe('some-url');
+    });
 });

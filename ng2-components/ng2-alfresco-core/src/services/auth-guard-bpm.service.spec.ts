@@ -66,7 +66,7 @@ describe('AuthGuardService BPM', () => {
                 return true;
             };
 
-            expect(auth.canActivate()).toBeTruthy();
+            expect(auth.canActivate(null, { url: '' })).toBeTruthy();
             expect(router.navigate).not.toHaveBeenCalled();
         }))
     );
@@ -80,9 +80,21 @@ describe('AuthGuardService BPM', () => {
                 return false;
             };
 
-            expect(auth.canActivate()).toBeFalsy();
+            expect(auth.canActivate(null, { url: '' })).toBeFalsy();
             expect(router.navigate).toHaveBeenCalled();
         }))
     );
 
+    it('should set redirect url',
+        async(inject([AuthGuardBpm, Router, AuthenticationService], (auth, router, authService) => {
+            const state = { url: 'some-url' };
+
+            spyOn(router, 'navigate');
+            spyOn(authService, 'setRedirectUrl');
+
+            auth.canActivate(null , state);
+
+            expect(authService.setRedirectUrl).toHaveBeenCalledWith(state.url);
+        }))
+    );
 });
