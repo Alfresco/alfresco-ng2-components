@@ -114,6 +114,23 @@ describe('TaskListComponent', () => {
         component = fixture.componentInstance;
 
         taskListService = TestBed.get(TaskListService);
+        component.layoutPresets = {
+            'default': [
+                {
+                    'key': 'name',
+                    'type': 'text',
+                    'title': 'ADF_TASK_LIST.PROPERTIES.NAME',
+                    'sortable': true
+                },
+                {
+                    'key': 'created',
+                    'type': 'text',
+                    'title': 'ADF_TASK_LIST.PROPERTIES.CREATED',
+                    'cssClass': 'hidden',
+                    'sortable': true
+                }
+            ]
+        };
 
     });
 

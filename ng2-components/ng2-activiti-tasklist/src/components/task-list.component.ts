@@ -17,7 +17,7 @@
 
 import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { AppConfigService, DataColumnListComponent } from 'ng2-alfresco-core';
-import { DataColumn, DataRowEvent, DataTableAdapter, ObjectDataRow, ObjectDataTableAdapter, ObjectDataColumn } from 'ng2-alfresco-datatable';
+import { DataColumn, DataRowEvent, DataTableAdapter, ObjectDataColumn, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 import { Observable } from 'rxjs/Rx';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskListModel } from '../models/task-list.model';
@@ -86,7 +86,7 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
 
     currentInstanceId: string;
     selectedInstances: any[];
-    private layoutPresets = {};
+    layoutPresets = {};
 
     @Input()
     page: number = 0;
@@ -129,6 +129,7 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
     }
 
     ngOnInit() {
+        this.loadLayoutPresets();
         if (this.data === undefined) {
             this.data = new ObjectDataTableAdapter();
         }
@@ -166,7 +167,6 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
         this.initStream();
         if (this.isPropertyChanged(changes)) {
             this.reload();
-            this.loadLayoutPresets();
         }
     }
 

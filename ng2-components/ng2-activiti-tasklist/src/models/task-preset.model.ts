@@ -20,7 +20,7 @@ export let taskPresetsDefaultModel = {
         {
             'key': 'name',
             'type': 'text',
-            'title': 'ADF_TASK_LIST.PROPERTIES.NAM',
+            'title': 'ADF_TASK_LIST.PROPERTIES.NAME',
             'sortable': true
         },
         {
