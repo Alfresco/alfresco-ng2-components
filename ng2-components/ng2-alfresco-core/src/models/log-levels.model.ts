@@ -28,6 +28,7 @@ export let logLevels: any[] = [
     {level: LogLevelsEnum.TRACE, name: 'TRACE'},
     {level: LogLevelsEnum.DEBUG, name: 'DEBUG'},
     {level: LogLevelsEnum.INFO, name: 'INFO'},
+    {level: LogLevelsEnum.WARN, name: 'WARN'},
     {level: LogLevelsEnum.ERROR, name: 'ERROR'},
     {level: LogLevelsEnum.SILENT, name: 'SILENT'}
 ];
