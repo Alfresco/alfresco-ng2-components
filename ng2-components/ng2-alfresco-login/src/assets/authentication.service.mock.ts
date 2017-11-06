@@ -19,6 +19,15 @@ import { Observable } from 'rxjs/Rx';
 
 // TODO: should be extending AlfrescoAuthenticationService
 export class AuthenticationMock /*extends AlfrescoAuthenticationService*/ {
+    private redirectUrl: string = '';
+
+    setRedirectUrl(url: string) {
+        this.redirectUrl = url;
+    }
+
+    getRedirectUrl(): string {
+        return this.redirectUrl;
+    }
 
     // TODO: real auth service returns Observable<string>
     login(username: string, password: string): Observable<{ type: string, ticket: any }> {

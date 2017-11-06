@@ -29,24 +29,20 @@ export class AuthGuardBpm implements CanActivate, CanActivateChild {
     constructor(private authService: AuthenticationService, private router: Router) {}
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        // let url: string = state.url;
-
-        return this.checkLogin();
+        return this.checkLogin(state.url);
     }
 
     canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         return this.canActivate(route, state);
     }
 
-    checkLogin(): boolean {
+    checkLogin(redirectUrl: string): boolean {
         if (this.authService.isBpmLoggedIn()) {
             return true;
         }
 
-        // Store the attempted URL for redirecting
-        // this.authService.redirectUrl = url;
+        this.authService.setRedirectUrl(redirectUrl);
 
-        // Navigate to the login page with extras
         this.router.navigate(['/login']);
         return false;
     }
