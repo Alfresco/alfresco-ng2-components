@@ -29,7 +29,7 @@ const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
 
 module.exports = {
 
-    devtool: 'cheap-module-source-map',
+    devtool: 'source-map',
 
     resolveLoader: {
         alias: {

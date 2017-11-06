@@ -56,14 +56,14 @@ module.exports = webpackMerge(commonConfig, {
     plugins: [
 
         new UglifyJSPlugin({
+            sourceMap: true,
             uglifyOptions: {
                 ie8: false,
-                ecma: 8,
+                ecma: 6,
                 output: {
                     comments: false,
                     beautify: false
                 },
-                compress: true,
                 warnings: false
             }
         }),
