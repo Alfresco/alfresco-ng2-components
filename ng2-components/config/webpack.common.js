@@ -29,7 +29,7 @@ const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
 
 module.exports = {
 
-    devtool: 'cheap-module-source-map',
+    devtool: 'source-map',
 
     resolveLoader: {
         alias: {
@@ -176,8 +176,6 @@ module.exports = {
         ]),
 
         new webpack.NoEmitOnErrorsPlugin(),
-
-        new webpack.BannerPlugin(fs.readFileSync(path.resolve(__dirname, './assets/license_header_add.txt'), 'utf8')),
 
         new webpack.ContextReplacementPlugin(
             /angular(\\|\/)core(\\|\/)@angular/,
