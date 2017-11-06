@@ -20,6 +20,7 @@
         (ngModelChange)="inputChange($event)"
         [adfSearchAutocomplete]="auto"
         (enterKeyPressed)="searchSubmit($event)"
+        (panelClosed)="deactivateSearchBar()"
         #searchInput>
 </mat-form-field>
 </div>
