@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Optional } from '@angular/core';
+import { Component, OnInit, Optional, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { NodePaging } from 'alfresco-js-api';
+import { SearchComponent } from 'ng2-alfresco-search';
 
 @Component({
     selector: 'search-integration-component',
@@ -25,6 +26,9 @@ import { NodePaging } from 'alfresco-js-api';
     styleUrls: ['./search-integration.component.scss']
 })
 export class SearchIntegrationComponent implements OnInit{
+
+    @ViewChild('search')
+    search: SearchComponent;
 
     fileNodeId: string;
     queryParamName= 'q';
@@ -64,5 +68,18 @@ export class SearchIntegrationComponent implements OnInit{
 
     showSearchResult(event: NodePaging) {
       this.resultNodePageList = event;
+    }
+
+    onItemClicked(event: any) {
+        if (event.value.entry.isFile) {
+            this.fileNodeId = event.value.entry.id;
+            this.fileShowed = true;
+        } else if (event.value.entry.isFolder) {
+            this.router.navigate(['/files', event.value.entry.id]);
+        }
+    }
+
+    refreshResults(event: any) {
+        this.search.reload();
     }
 }

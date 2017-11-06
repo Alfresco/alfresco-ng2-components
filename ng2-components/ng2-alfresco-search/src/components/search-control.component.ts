@@ -73,7 +73,7 @@ export class SearchControlComponent implements OnInit {
     constructor(public authService: AlfrescoAuthenticationService,
                 private thumbnailService: ThumbnailService) {
 
-                this.toggleSearch.asObservable().debounceTime(200).subscribe(() => {
+                this.toggleSearch.asObservable().debounceTime(100).subscribe(() => {
                   if (this.expandable) {
                       this.subscriptAnimationState = this.subscriptAnimationState === 'inactive' ? 'active' : 'inactive';
 
@@ -94,6 +94,7 @@ export class SearchControlComponent implements OnInit {
 
     searchSubmit(event: any) {
         this.submit.emit(event);
+        this.toggleSearchBar();
     }
 
     inputChange(event: any) {
@@ -126,7 +127,17 @@ export class SearchControlComponent implements OnInit {
   }
 
   elementClicked(item: any) {
-    this.optionClicked.next(item);
+      if (item.entry) {
+          this.optionClicked.next(item);
+          this.toggleSearchBar();
+      }
+  }
+
+  panelClosed(event: any) {
+      this.toggleSearchBar();
+  }
+
+  closeSearchWhenNoPanel(event: any) {
     this.toggleSearchBar();
   }
 

@@ -26,6 +26,8 @@ export { SearchOptions, SearchService } from 'ng2-alfresco-core';
 export * from './src/components/search.component';
 export * from './src/components/search-control.component';
 
+import { MatInputModule, MatListModule } from '@angular/material';
+
 // Old Deprecated export
 import { SearchService as AlfrescoSearchService } from 'ng2-alfresco-core';
 import { SearchControlComponent as AlfrescoSearchControlComponent } from './src/components/search-control.component';
@@ -59,7 +61,9 @@ export const ALFRESCO_SEARCH_PROVIDERS: [any] = [
     imports: [
         CoreModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatListModule,
+        MatInputModule
     ],
     declarations: [
         ...ALFRESCO_SEARCH_DIRECTIVES,

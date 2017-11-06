@@ -48,12 +48,6 @@ export const SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR: any = {
     multi: true
 };
 
-export function getAutocompleteMissingPanelError(): Error {
-    return Error('Attempting to open an undefined instance of `mat-autocomplete`. ' +
-        'Make sure that the id passed to the `matAutocomplete` is correct and that ' +
-        'you\'re attempting to open it after the ngAfterContentInit hook.');
-}
-
 @Directive({
     selector: `input[adfSearchAutocomplete]`,
     host: {
@@ -96,7 +90,6 @@ export class AdfAutocompleteTriggerDirective implements ControlValueAccessor, On
 
     ngOnDestroy() {
         this.escapeEventStream.complete();
-        // this.changeDetectorRef.detach();
     }
 
     get panelOpen(): boolean {
@@ -112,6 +105,7 @@ export class AdfAutocompleteTriggerDirective implements ControlValueAccessor, On
         if (this._panelOpen) {
             this.closingActionsSubscription.unsubscribe();
             this._panelOpen = false;
+            this.searchPanel.resetResults();
             this.searchPanel.hidePanel();
             this.changeDetectorRef.detectChanges();
         }
@@ -124,7 +118,6 @@ export class AdfAutocompleteTriggerDirective implements ControlValueAccessor, On
         );
     }
 
-    /** Stream of clicks outside of the autocomplete panel. */
     private get outsideClickStream(): Observable<any> {
         if (!this.document) {
             return Observable.of(null);
@@ -187,9 +180,18 @@ export class AdfAutocompleteTriggerDirective implements ControlValueAccessor, On
     }
 
     private isPanelOptionClicked(event: MouseEvent) {
-        let clickTarget = event.target as HTMLElement;
-        return !!this.searchPanel.panel &&
-            !!this.searchPanel.panel.nativeElement.contains(clickTarget);
+        let isPanelOption: boolean = false;
+        if ( event ) {
+            let clickTarget = event.target as HTMLElement;
+            isPanelOption = !this.isNoResultOption(event) &&
+                            !!this.searchPanel.panel &&
+                            !!this.searchPanel.panel.nativeElement.contains(clickTarget);
+        }
+        return isPanelOption;
+    }
+
+    private isNoResultOption(event: MouseEvent) {
+        return this.searchPanel.results.list ? this.searchPanel.results.list.entries.length === 0 : true;
     }
 
     private subscribeToClosingActions(): Subscription {

@@ -4,48 +4,48 @@
     *ngIf="expandable"
     id="adf-search-button"
     class="adf-search-button"
-    (click)="toggleSearchBar()">
+    (click)="toggleSearchBar($event)">
     <mat-icon aria-label="search button">search</mat-icon>
 </a>
-<mat-form-field class="example-full-width">
-  <input matInput class="adf-search-field"
-         [type]="inputType"
-         [autocomplete]="getAutoComplete()"
-         id="adf-control-input"
-         [(ngModel)]="searchTerm"
-         (ngModelChange)="inputChange($event)"
-         [adfSearchAutocomplete]="auto"
-         (enterKeyPressed)="searchSubmit($event)">
+<mat-form-field [color]="'primary'" class="adf-input-form-field-divider">
+    <input matInput
+        [type]="inputType"
+        [autocomplete]="getAutoComplete()"
+        id="adf-control-input"
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="inputChange($event)"
+        [adfSearchAutocomplete]="auto"
+        (enterKeyPressed)="searchSubmit($event)">
 </mat-form-field>
 </div>
 
-<adf-search #auto="adfSearchAutocomplete" class="adf-search-result-autocomplete truncate">
+<adf-search #auto="adfSearchAutocomplete" class="adf-search-result-autocomplete" (panelClose)="panelClosed($event)">
     <ng-template let-data>
-        <mat-list *ngIf="isSearchBarActive()" id="autocomplete-search-result-list" class="adf-list-flex">
-            <mat-list-item class="adf-list-flex-item"
+        <mat-list *ngIf="isSearchBarActive()" id="autocomplete-search-result-list">
+            <mat-list-item
                 *ngFor="let item of data?.list?.entries; let idx = index"
                 id="result_option_{{idx}}"
+                [tabindex]="0"
+                class="adf-search-autocomplete-item"
                 (click)="elementClicked(item)">
-                    <mat-icon mat-list-icon *ngIf="item" class="adf-item-flex-icon">
-                        <img [src]="getMimeTypeIcon(item)" />
-                    </mat-icon>
-                    <div class="adf-list-item">
-                        <span mat-line id="result_name_{{idx}}"
-                            *ngIf="highlight; else elseBlock"
-                            [innerHtml]="item.entry.name | highlight: searchTerm"
-                            class="truncate">
-                            {{ item?.entry.name }}</span>
-                        <ng-template #elseBlock>
-                            <span mat-line id="result_name_{{idx}}" class="truncate" [innerHtml]="item.entry.name"></span>
-                        </ng-template>
-                        <span mat-line> {{item?.entry.createdByUser.displayName}} </span>
-                    </div>
+                <mat-icon mat-list-icon>
+                    <img [src]="getMimeTypeIcon(item)" />
+                </mat-icon>
+                    <h4 mat-line id="result_name_{{idx}}"
+                        *ngIf="highlight; else elseBlock"
+                        class="adf-search-fixed-text"
+                        [innerHtml]="item.entry.name | highlight: searchTerm">
+                        {{ item?.entry.name }}</h4>
+                    <ng-template #elseBlock>
+                        <h4 class="adf-search-fixed-text" mat-line id="result_name_{{idx}}" [innerHtml]="item.entry.name"></h4>
+                    </ng-template>
+                    <p mat-line class="adf-search-fixed-text"> {{item?.entry.createdByUser.displayName}} </p>
             </mat-list-item>
-            <mat-list-item class="adf-no-result-item"
+            <mat-list-item
                 id="search_no_result"
                 data-automation-id="search_no_result_found"
                 *ngIf="data?.list?.entries.length === 0">
-                <span class="truncate"><b> {{ 'SEARCH.RESULTS.NONE' | translate:{searchTerm: searchTerm} }}</b></span>
+                <p mat-line class="adf-search-fixed-text">{{ 'SEARCH.RESULTS.NONE' | translate:{searchTerm: searchTerm} }}</p>
             </mat-list-item>
         </mat-list>
     </ng-template>

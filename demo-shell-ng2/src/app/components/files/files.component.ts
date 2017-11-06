@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-import { ChangeDetectorRef, Component, Input, OnInit, OnDestroy, Optional, ViewChild } from '@angular/core';
+        Component, Input, OnInit, OnChanges,
+        EventEmitter, Optional, ViewChild, SimpleChanges, Output } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { MinimalNodeEntity } from 'alfresco-js-api';
+import { MinimalNodeEntity, NodePaging } from 'alfresco-js-api';
 import {
     AlfrescoApiService, AlfrescoContentService, AlfrescoTranslationService,
     DownloadZipDialogComponent, FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
@@ -37,8 +38,6 @@ const DEFAULT_FOLDER_TO_SHOW = '-my-';
     styleUrls: ['./files.component.scss']
 })
 export class FilesComponent implements OnInit, OnDestroy {
-    // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
-    currentFolderId: string = DEFAULT_FOLDER_TO_SHOW;
 
     errorMessage: string = null;
     fileNodeId: any;
@@ -52,6 +51,10 @@ export class FilesComponent implements OnInit, OnDestroy {
         { value: 'single', viewValue: 'Single' },
         { value: 'multiple', viewValue: 'Multiple' }
     ];
+
+    @Input()
+    // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
+    currentFolderId: string = DEFAULT_FOLDER_TO_SHOW;
 
     @Input()
     selectionMode = 'multiple';
@@ -82,6 +85,12 @@ export class FilesComponent implements OnInit, OnDestroy {
 
     @Input()
     enableUpload: boolean = true;
+
+    @Input()
+    nodeResult: NodePaging;
+
+    @Output()
+    documentListReady: EventEmitter<any> = new EventEmitter();
 
     @ViewChild(DocumentListComponent)
     documentList: DocumentListComponent;
@@ -146,6 +155,12 @@ export class FilesComponent implements OnInit, OnDestroy {
         this.onEditFolder.unsubscribe();
     }
 
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.nodeResult && changes.nodeResult.currentValue) {
+            this.nodeResult = <NodePaging> changes.nodeResult.currentValue;
+        }
+    }
+
     getCurrentDocumentListNode(): MinimalNodeEntity[] {
         if (this.documentList.folderNode) {
             return [{ entry: this.documentList.folderNode }];
@@ -203,6 +218,10 @@ export class FilesComponent implements OnInit, OnDestroy {
             event,
             4000
         );
+    }
+
+    emitReadyEvent(event: any) {
+        this.documentListReady.emit(event);
     }
 
     onContentActionError(errors) {

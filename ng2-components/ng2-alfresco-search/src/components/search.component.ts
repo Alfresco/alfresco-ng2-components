@@ -81,10 +81,13 @@ export class SearchComponent implements AfterContentInit, OnChanges {
     }
 
     @Output()
-    success: EventEmitter<NodePaging> = new EventEmitter();
+    resultLoaded: EventEmitter<NodePaging> = new EventEmitter();
 
     @Output()
     error: EventEmitter<any> = new EventEmitter();
+
+    @Output()
+    panelClosed: EventEmitter<NodePaging> = new EventEmitter();
 
     showPanel: boolean = false;
     results: NodePaging;
@@ -102,8 +105,6 @@ export class SearchComponent implements AfterContentInit, OnChanges {
     keyPressedStream: Subject<string> = new Subject();
 
     _classList: { [key: string]: boolean } = {};
-
-    preventVisibilityCheck: boolean = true;
 
     constructor(
         private searchService: SearchService,
@@ -132,6 +133,10 @@ export class SearchComponent implements AfterContentInit, OnChanges {
         this.setVisibility();
     }
 
+    reload() {
+        this.displaySearchResults(this.searchTerm);
+    }
+
     private cleanResults() {
         if (this.results) {
             this.results = {};
@@ -140,7 +145,7 @@ export class SearchComponent implements AfterContentInit, OnChanges {
 
     private displaySearchResults(searchTerm) {
         let searchOpts: SearchOptions = {
-            include: ['path'],
+            include: ['path', 'allowableOperations'],
             rootNodeId: this.rootNodeId,
             nodeType: this.resultType,
             maxItems: this.maxResults,
@@ -148,13 +153,12 @@ export class SearchComponent implements AfterContentInit, OnChanges {
         };
         if (searchTerm !== null && searchTerm !== '') {
             searchTerm = searchTerm + '*';
-            this.preventVisibilityCheck = false;
             this.searchService
                 .getNodeQueryResults(searchTerm, searchOpts)
                 .subscribe(
                 results => {
                     this.results = <NodePaging> results;
-                    this.success.emit(this.results);
+                    this.resultLoaded.emit(this.results);
                     this.isOpen = true;
                     this.setVisibility();
                 },
@@ -171,13 +175,13 @@ export class SearchComponent implements AfterContentInit, OnChanges {
             this._classList['adf-search-show'] = false;
             this._classList['adf-search-hide'] = true;
             this.isOpen = false;
+            this.panelClosed.emit();
             this.changeDetectorRef.markForCheck();
-            this.preventVisibilityCheck = true;
         }
     }
 
     setVisibility() {
-        this.showPanel = !this.preventVisibilityCheck && !!this.results && !!this.results.list;
+        this.showPanel = !!this.results && !!this.results.list;
         this._classList['adf-search-show'] = this.showPanel;
         this._classList['adf-search-hide'] = !this.showPanel;
         this.changeDetectorRef.markForCheck();

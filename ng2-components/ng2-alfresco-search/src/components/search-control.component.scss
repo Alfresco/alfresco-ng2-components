@@ -2,41 +2,20 @@
     $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);
     $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
     $mat-menu-border-radius: 2px !default;
 
     .adf {
 
-        &-list-flex {
-            display: flex;
-            box-sizing: border-box;
-            flex-flow: row wrap;
-            align-items: center;
+        &-search-fixed-text {
+            line-height: normal;
         }
 
-        &-list-item {
-            display: flex;
-            flex-flow: column wrap;
-        }
-
-        &-no-result-item {
-            padding: 10px;
-        }
-
-        &-list-flex-item {
-            display: flex;
-            box-sizing: border-box;
-            align-items: center;
-            padding-right: 10px;
-            width: 100%;
-
-            &:hover {
-                background-color: mat-color($background, hover);
-            }
-        }
-
-        &-item-flex-icon {
-            flex: 1 percentage(2/4);
-        }
+        // &-input-form-field-divider {
+        //     .mat-form-field-underline {
+        //         background-color: mat-color($primary, 900);
+        //     }
+        // }
 
         &-search-result-autocomplete {
             @include mat-menu-base(2);
@@ -52,11 +31,24 @@
             background-color: mat-color($background, card);
             border-radius: $mat-menu-border-radius;
 
+
             @media screen and (max-width: 400px) {
                 width: 200px;
                 white-space: nowrap;
                 text-overflow: ellipsis;
+                overflow: hidden;
             }
-          }
+        }
+
+        &-search-autocomplete-item {
+            &:hover {
+                background-color: mat-color($background, 'hover');
+                opacity: 1;
+            }
+        }
+    }
+
+    .highlight {
+        color: mat-color($primary, 900);
     }
 }
