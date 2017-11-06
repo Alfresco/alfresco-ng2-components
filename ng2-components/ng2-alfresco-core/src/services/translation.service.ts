@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { Inject, Injectable, OpaqueToken } from '@angular/core';
+import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs/Rx';
 import { AlfrescoTranslateLoader } from './translate-loader.service';
 import { UserPreferencesService } from './user-preferences.service';
 
-export const TRANSLATION_PROVIDER = new OpaqueToken('Injection token for translation providers.');
+export const TRANSLATION_PROVIDER = new InjectionToken('Injection token for translation providers.');
 
 export interface TranslationProvider {
     name: string;

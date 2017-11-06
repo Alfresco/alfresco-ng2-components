@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Response } from '@angular/http';
 import { TranslateLoader } from '@ngx-translate/core';
 import { Observable } from 'rxjs/Rx';
 import { ComponentTranslationModel } from '../models/component.model';
@@ -31,7 +32,7 @@ export class AlfrescoTranslateLoader implements TranslateLoader {
     private providers: ComponentTranslationModel[] = [];
     private queue: string [][] = [];
 
-    constructor(private http: Http,
+    constructor(private http: HttpClient,
                 private logService: LogService) {
     }
 
@@ -40,7 +41,7 @@ export class AlfrescoTranslateLoader implements TranslateLoader {
         if (registered) {
             registered.path = path;
         } else {
-            this.providers.push(new ComponentTranslationModel({name: name, path: path}));
+            this.providers.push(new ComponentTranslationModel({ name: name, path: path }));
         }
     }
 
@@ -56,16 +57,24 @@ export class AlfrescoTranslateLoader implements TranslateLoader {
         this.providers.forEach((component) => {
             if (!this.isComponentInQueue(lang, component.name)) {
                 this.queue[lang].push(component.name);
-                observableBatch.push(this.http.get(`${component.path}/${this.prefix}/${lang}${this.suffix}`)
-                    .map((res: Response) => {
-                        component.json[lang] = res.json();
-                    })
-                    .catch(() => {
-                        // Empty Observable just to go ahead
-                        return Observable.of('');
-                    }));
+
+                let currentObserv = Observable.create(observer => {
+                    this.http.get(`${component.path}/${this.prefix}/${lang}${this.suffix}`)
+                        .map((res: Response) => {
+                            component.json[lang] = res;
+                        }).subscribe((result) => {
+                        observer.next(result);
+                        observer.complete();
+                    }, () => {
+                        observer.next('');
+                        observer.complete();
+                    });
+                });
+
+                observableBatch.push(currentObserv);
             }
         });
+
         return observableBatch;
     }
 

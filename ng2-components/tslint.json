@@ -150,8 +150,6 @@
         "component-class-suffix": true,
         "directive-class-suffix": true,
         "no-access-missing-member": false,
-        "templates-use-public": true,
-        "invoke-injectable": true,
         "adf-file-name": true,
         "adf-class-name": true,
         "adf-prefix-name": true
