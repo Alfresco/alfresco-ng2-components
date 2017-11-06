@@ -1,8 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { MatInputModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 // import { Editor3DModule } from 'ng2-3d-editor';
 import { ChartsModule } from 'ng2-charts';
@@ -75,8 +73,6 @@ import { routing } from './app.routes';
     BrowserModule,
     routing,
     FormsModule,
-    HttpModule,
-    MatInputModule,
     AdfModule,
     MaterialModule,
     ThemePickerModule,
