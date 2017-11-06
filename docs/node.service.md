@@ -140,5 +140,8 @@ export class SomePageComponent implements OnInit {
 See the `createNode` method for information about the response object.
  
 <!-- seealso start -->
+## See also
 
+- [Nodes api service](nodes-api.service.md)
+- [Deleted nodes api service](deleted-nodes-api.service.md)
 <!-- seealso end -->

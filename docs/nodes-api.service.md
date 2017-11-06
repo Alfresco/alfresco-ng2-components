@@ -175,4 +175,5 @@ pages in the Alfresco JS API for further details and options. Note that you can 
 - [Document library model](document-library.model.md)
 - [Deleted nodes api service](deleted-nodes-api.service.md)
 - [Document list component](document-list.component.md)
+- [Node service](node.service.md)
 <!-- seealso end -->
