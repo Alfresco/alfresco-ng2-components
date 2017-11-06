@@ -3,7 +3,7 @@ const helpers = require('./helpers');
 
 module.exports = function (config) {
     var _config = {
-        basePath: '../ng2-components',
+        basePath: './',
 
         frameworks: ['jasmine-ajax', 'jasmine'],
 
@@ -20,8 +20,6 @@ module.exports = function (config) {
             {pattern: './node_modules/alfresco-js-api/dist/alfresco-js-api.min.js', included: true, watched: false},
             {pattern: './node_modules/raphael/raphael.min.js', included: true, watched: false},
             {pattern: './node_modules/moment/min/moment.min.js', included: true, watched: false},
-
-            {pattern: './node_modules/ng2-translate/ng2-translate.js', included: false, watched: false},
             {
                 pattern: './node_modules/ng2-charts/bundles/ng2-charts.umd.js',
                 included: false,
@@ -35,7 +33,7 @@ module.exports = function (config) {
             {pattern: './node_modules/pdfjs-dist/web/pdf_viewer.js', included: true, watched: false},
 
             {pattern: config.component + '/karma-test-shim.js', watched: false},
-            {pattern: './ng2-**/src/assets/**/*.*', included: false, served: true, watched: false},
+            {pattern: './ng2-**/src/assets/**/*.en.json', included: false, served: true, watched: false},
             {pattern: './ng2-**/src/**/*.ts', included: false, served: true, watched: false},
             {pattern: './config/app.config.json', included: false, served: true, watched: false}
         ],
@@ -57,7 +55,7 @@ module.exports = function (config) {
 
         // level of logging
         // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-        logLevel: config.LOG_INFO,
+        logLevel: config.LOG_DISABLE,
 
         colors: true,
 

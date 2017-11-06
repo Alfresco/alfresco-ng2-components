@@ -132,7 +132,7 @@
                 <div *ngIf="col.template" class="cell-container">
                     <ng-container
                         [ngTemplateOutlet]="col.template"
-                        [ngOutletContext]="{ $implicit: { data: data, row: row, col: col }, value: data.getValue(row, col) }">
+                        [ngTemplateOutletContext]="{ $implicit: { data: data, row: row, col: col }, value: data.getValue(row, col) }">
                     </ng-container>
                 </div>
             </td>

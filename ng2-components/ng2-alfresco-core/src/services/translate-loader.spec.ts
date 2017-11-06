@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
+import { HttpClientModule } from '@angular/common/http';
 import { Injector } from '@angular/core';
 import { getTestBed, TestBed } from '@angular/core/testing';
-import { HttpModule, Response, ResponseOptions, XHRBackend } from '@angular/http';
-import { MockBackend, MockConnection } from '@angular/http/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { AppConfigService } from './app-config.service';
 
@@ -31,21 +30,17 @@ import { UserPreferencesService } from './user-preferences.service';
 
 let componentJson1 = ' {"TEST": "This is a test", "TEST2": "This is another test"} ' ;
 
-const mockBackendResponse = (connection: MockConnection, response: string) => {
-    connection.mockRespond(new Response(new ResponseOptions({body: response})));
-};
+declare let jasmine: any;
 
 describe('TranslateLoader', () => {
     let injector: Injector;
-    let backend: any;
     let translationService: TranslationService;
-    let connection: MockConnection; // this will be set when a new connection is emitted from the backend.
     let customLoader: AlfrescoTranslateLoader;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                HttpModule,
+                HttpClientModule,
                 TranslateModule.forRoot({
                     loader: {
                         provide: TranslateLoader,
@@ -60,7 +55,6 @@ describe('TranslateLoader', () => {
                 StorageService,
                 UserPreferencesService,
                 AppConfigService,
-                { provide: XHRBackend, useClass: MockBackend },
                 {
                     provide: TRANSLATION_PROVIDER,
                     multi: true,
@@ -72,10 +66,14 @@ describe('TranslateLoader', () => {
             ]
         });
         injector = getTestBed();
-        backend = injector.get(XHRBackend);
         translationService = injector.get(TranslationService);
-        backend.connections.subscribe((c: MockConnection) => connection = c);
         customLoader = <AlfrescoTranslateLoader> translationService.translate.currentLoader;
+
+        jasmine.Ajax.install();
+    });
+
+    afterEach(() => {
+        jasmine.Ajax.uninstall();
     });
 
     it('should be able to provide any TranslateLoader', () => {
@@ -98,7 +96,11 @@ describe('TranslateLoader', () => {
             }
         );
 
-        mockBackendResponse(connection, componentJson1);
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: componentJson1
+        });
     });
 
 });

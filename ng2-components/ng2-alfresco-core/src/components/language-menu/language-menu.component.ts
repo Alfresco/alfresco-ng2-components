@@ -21,9 +21,7 @@ import { UserPreferencesService } from '../../services/user-preferences.service'
 
 @Component({
     selector: 'adf-language-menu',
-    template: `
-            <button mat-menu-item *ngFor="let language of languages" (click)="changeLanguage(language.key)">{{language.label}}</button>
-    `
+    templateUrl: 'language-menu.component.html'
 })
 export class LanguageMenuComponent implements OnInit {
 

@@ -114,7 +114,6 @@ export class ShareDataTableAdapter implements DataTableAdapter {
             return this.documentListService.getDefaultMimeTypeIcon();
         }
 
-
         if (col.type === 'image') {
 
             if (this.imageResolver) {

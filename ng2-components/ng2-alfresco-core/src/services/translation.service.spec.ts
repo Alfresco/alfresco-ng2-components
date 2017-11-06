@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
+import { HttpClientModule } from '@angular/common/http';
 import { Injector } from '@angular/core';
 import { getTestBed, TestBed } from '@angular/core/testing';
-import { HttpModule, Response, ResponseOptions, XHRBackend } from '@angular/http';
-import { MockBackend, MockConnection } from '@angular/http/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { AlfrescoApiService } from '../services/alfresco-api.service';
@@ -29,20 +28,16 @@ import { AlfrescoTranslateLoader } from './translate-loader.service';
 import { TRANSLATION_PROVIDER, TranslationService } from './translation.service';
 import { UserPreferencesService } from './user-preferences.service';
 
-const mockBackendResponse = (connection: MockConnection, response: string) => {
-    connection.mockRespond(new Response(new ResponseOptions({body: response})));
-};
+declare let jasmine: any;
 
 describe('TranslationService', () => {
     let injector: Injector;
-    let backend: any;
     let translationService: TranslationService;
-    let connection: MockConnection; // this will be set when a new connection is emitted from the backend.
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                HttpModule,
+                HttpClientModule,
                 TranslateModule.forRoot({
                     loader: {
                         provide: TranslateLoader,
@@ -57,7 +52,6 @@ describe('TranslationService', () => {
                 StorageService,
                 UserPreferencesService,
                 AppConfigService,
-                { provide: XHRBackend, useClass: MockBackend },
                 {
                     provide: TRANSLATION_PROVIDER,
                     multi: true,
@@ -68,11 +62,16 @@ describe('TranslationService', () => {
                 }
             ]
         });
+
+        jasmine.Ajax.install();
+
         injector = getTestBed();
-        backend = injector.get(XHRBackend);
         translationService = injector.get(TranslationService);
-        backend.connections.subscribe((c: MockConnection) => connection = c);
         translationService.addTranslationFolder('fake-name', 'fake-path');
+    });
+
+    afterEach(() => {
+        jasmine.Ajax.uninstall();
     });
 
     it('is defined', () => {
@@ -85,7 +84,11 @@ describe('TranslationService', () => {
             expect(res).toEqual('This is a test');
         });
 
-        mockBackendResponse(connection, '{"TEST": "This is a test", "TEST2": "This is another test"}');
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify({'TEST': 'This is a test', 'TEST2': 'This is another test'})
+        });
     });
 
     it('should be able to get translations of the KEY: TEST2', () => {
@@ -93,7 +96,11 @@ describe('TranslationService', () => {
             expect(res).toEqual('This is another test');
         });
 
-        mockBackendResponse(connection, '{"TEST": "This is a test", "TEST2": "This is another test"}');
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify({'TEST': 'This is a test', 'TEST2': 'This is another test'})
+        });
     });
 
 });

@@ -298,7 +298,7 @@ describe('TaskListComponent', () => {
         expect(dataRow[1].isSelected).toEqual(true);
     });
 
-    it('should throw an exception when the response is wrong', (done) => {
+    xit('should throw an exception when the response is wrong', (done) => {
         let state = new SimpleChange(null, 'open', true);
         let assignment = new SimpleChange(null, 'fake-assignee', true);
 

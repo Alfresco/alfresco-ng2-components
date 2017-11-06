@@ -136,7 +136,7 @@
                             <ng-template
                                 *ngIf="extensionTemplate.isVisible"
                                 [ngTemplateOutlet]="extensionTemplate.template"
-                                [ngOutletContext]="{ urlFileContent: urlFileContent, extension:extension }">
+                                [ngTemplateOutletContext]="{ urlFileContent: urlFileContent, extension:extension }">
                             </ng-template>
                         </span>
                     </ng-container>

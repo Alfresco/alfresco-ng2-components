@@ -16,13 +16,13 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { AppConfigService, StorageService } from 'ng2-alfresco-core';
 
 @Injectable()
 export class DebugAppConfigService extends AppConfigService {
 
-    constructor(private storage: StorageService, http: Http) {
+    constructor(private storage: StorageService, http: HttpClient) {
         super(http);
     }
 
