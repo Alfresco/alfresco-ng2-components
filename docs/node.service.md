@@ -13,13 +13,12 @@ import { NodeService } from 'ng2-activiti-form';
 
 export class SomePageComponent implements OnInit {
 
-  constructor(private activatedRoute: ActivatedRoute,
-              private nodeService: NodeService) {
+  constructor(private nodeService: NodeService) {
   }
 
   ngOnInit() {
-    // Get the node reference from somewhere, such as the URL
-    const nodeId = this.activatedRoute.snapshot.params['node-id'];
+    // Get the node reference from somewhere...
+    const nodeId = '3062d73b-fe47-4040-89d2-79efae63869c';
 
     this.nodeService.getNodeMetadata(nodeId).subscribe(data => {
         const nodeMetadata = data.metadata;
@@ -61,8 +60,7 @@ import { NodeService } from 'ng2-activiti-form';
 
 export class SomePageComponent implements OnInit {
 
-  constructor(private activatedRoute: ActivatedRoute,
-              private nodeService: NodeService) {
+  constructor(private nodeService: NodeService) {
   }
 
   ngOnInit() {
@@ -113,8 +111,7 @@ import { NodeService } from 'ng2-activiti-form';
 
 export class SomePageComponent implements OnInit {
 
-  constructor(private activatedRoute: ActivatedRoute,
-              private nodeService: NodeService) {
+  constructor(private nodeService: NodeService) {
   }
 
   ngOnInit() {
