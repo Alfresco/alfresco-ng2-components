@@ -4,13 +4,13 @@
     *ngIf="expandable"
     id="adf-search-button"
     class="adf-search-button"
-    (click)="toggleSearchBar($event)">
+    (click)="toggleSearchBar($event)"
+    (keyup.enter)="toggleSearchBar($event)">
     <mat-icon aria-label="search button">search</mat-icon>
 </a>
 <mat-form-field class="adf-input-form-field-divider">
     <input matInput
         [type]="inputType"
-        [tabindex]="-1"
         [autocomplete]="getAutoComplete()"
         id="adf-control-input"
         [(ngModel)]="searchTerm"
