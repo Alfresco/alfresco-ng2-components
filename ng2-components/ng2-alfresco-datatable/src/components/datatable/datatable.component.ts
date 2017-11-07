@@ -96,7 +96,11 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     @Input()
     loading: boolean = false;
 
+    @Input()
+    noPermission: boolean = false;
+
     noContentTemplate: TemplateRef<any>;
+    noPermissionTemplate: TemplateRef<any>;
     loadingTemplate: TemplateRef<any>;
 
     isSelectAllChecked: boolean = false;

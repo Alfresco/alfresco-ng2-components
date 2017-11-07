@@ -30,6 +30,7 @@ import { ContentColumnComponent } from './src/components/content-column/content-
 import { ContentNodeSelectorComponent } from './src/components/content-node-selector/content-node-selector.component';
 import { DocumentListComponent } from './src/components/document-list.component';
 import { EmptyFolderContentDirective } from './src/components/empty-folder/empty-folder-content.directive';
+import { NoPermissionContentDirective } from './src/components/no-permission/no-permission-content.directive';
 import { DropdownSitesComponent } from './src/components/site-dropdown/sites-dropdown.component';
 import { VersionListComponent } from './src/components/version-manager/version-list.component';
 import { VersionManagerComponent } from './src/components/version-manager/version-manager.component';
@@ -51,6 +52,7 @@ export * from './src/components/content-action/content-action.component';
 export * from './src/components/content-action/content-action-list.component';
 export * from './src/components/content-node-selector/content-node-selector.component';
 export * from './src/components/empty-folder/empty-folder-content.directive';
+export * from './src/components/no-permission/no-permission-content.directive';
 export * from './src/components/breadcrumb/breadcrumb.component';
 export * from './src/components/site-dropdown/sites-dropdown.component';
 
@@ -77,6 +79,7 @@ export const DOCUMENT_LIST_DIRECTIVES: any[] = [
     ContentActionComponent,
     ContentActionListComponent,
     EmptyFolderContentDirective,
+    NoPermissionContentDirective,
     BreadcrumbComponent,
     DropdownSitesComponent,
     DropdownBreadcrumbComponent,
