@@ -51,6 +51,25 @@ export let taskDetailsMock = new TaskDetailsModel({
     'memberOfCandidateGroup': false
 });
 
+export let completedTaskDetailsMock = new TaskDetailsModel({
+    'id': '91',
+    'name': 'Request translation',
+    'description': null,
+    'category': null,
+    'assignee': {},
+    'created': '2016-11-03T15:25:42.749+0000',
+    'dueDate': null,
+    'endDate': '2016-11-03T15:25:42.749+0000',
+    'duration': null,
+    'priority': 50,
+    'parentTaskId': null,
+    'parentTaskName': null,
+    'processInstanceId': '86',
+    'processInstanceName': null,
+    'processDefinitionId': 'TranslationProcess:2:8',
+    'processDefinitionName': 'Translation Process'
+});
+
 export let taskFormMock = new TaskDetailsModel({
     'id': 4,
     'name': 'Translation request',

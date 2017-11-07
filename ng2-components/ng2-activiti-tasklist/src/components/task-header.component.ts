@@ -17,6 +17,7 @@
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { CardViewDateItemModel, CardViewItem, CardViewMapItemModel, CardViewTextItemModel, LogService } from 'ng2-alfresco-core';
+import { BpmUserModel, BpmUserService } from 'ng2-alfresco-userinfo';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 
@@ -40,13 +41,16 @@ export class TaskHeaderComponent implements OnChanges {
     unclaim: EventEmitter<any> = new EventEmitter<any>();
 
     properties: CardViewItem [];
+    bpmUser: BpmUserModel;
     inEdit: boolean = false;
 
     constructor(private activitiTaskService: TaskListService,
+                private bpmUserService: BpmUserService,
                 private logService: LogService) {
     }
 
     ngOnChanges(changes: SimpleChanges) {
+        this.loadBpmUserInfo();
         this.refreshData();
     }
 
@@ -149,6 +153,15 @@ export class TaskHeaderComponent implements OnChanges {
     }
 
     /**
+     * Return the bpmUser
+     */
+    loadBpmUserInfo(): any {
+        this.bpmUserService.getCurrentUserInfo().subscribe((res) => {
+            this.bpmUser = res;
+        });
+    }
+
+    /**
      * Return the process parent information
      */
     getParentInfo() {
@@ -161,14 +174,21 @@ export class TaskHeaderComponent implements OnChanges {
      * Does the task have an assignee
      */
     public hasAssignee(): boolean {
-        return (this.taskDetails && this.taskDetails.assignee) ? true : false;
+        return (this.taskDetails && this.taskDetails.assignee) ? false : true;
     }
+
+    /**
+     * Returns true if the task is completed
+     */
+    isCurrentUser(): boolean {
+        return this.taskDetails.assignee ? this.bpmUser.firstName === this.taskDetails.assignee.firstName : false;
+     }
 
     /**
      * Is the task assigned to the currently loggedin user
      */
     isAssignedToMe(): boolean {
-        return this.taskDetails.assignee ? true : false;
+        return this.taskDetails.assignee ? this.isCurrentUser() : false;
     }
 
     /**
@@ -207,7 +227,7 @@ export class TaskHeaderComponent implements OnChanges {
     /**
      * Returns true if the task is completed
      */
-    isCompleted() {
+    isCompleted(): boolean {
         return !!this.taskDetails.endDate;
     }
 }

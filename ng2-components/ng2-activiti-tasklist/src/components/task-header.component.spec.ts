@@ -19,12 +19,13 @@ import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AppConfigService, CardViewUpdateService, CoreModule, TranslationService, UserProcessModel } from 'ng2-alfresco-core';
+import { BpmUserService } from 'ng2-alfresco-userinfo';
 import { Observable } from 'rxjs/Rx';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
 
 import { TaskDetailsModel } from '../models/task-details.model';
-import { taskDetailsMock } from './../assets/task-details.mock';
+import { completedTaskDetailsMock, taskDetailsMock, taskDetailsWithOutAssigneeMock } from './../assets/task-details.mock';
 import { TaskListService } from './../services/tasklist.service';
 import { TaskHeaderComponent } from './task-header.component';
 
@@ -34,6 +35,22 @@ describe('TaskHeaderComponent', () => {
     let component: TaskHeaderComponent;
     let fixture: ComponentFixture<TaskHeaderComponent>;
     let debugElement: DebugElement;
+    let userBpmService: BpmUserService;
+    let getCurrentUserInfoSpy: jasmine.Spy;
+
+    let fakeBpmAssignedUser = {
+        id: 1001,
+        apps: [],
+        capabilities: 'fake-capability',
+        company: 'fake-company',
+        created: 'fake-create-date',
+        email: 'fakeBpm@fake.com',
+        externalId: 'fake-external-id',
+        firstName: 'fake-first-name',
+        lastName: 'fake-last-name',
+        fullname: 'fake-full-name',
+        groups: []
+    };
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -45,20 +62,21 @@ describe('TaskHeaderComponent', () => {
             ],
             providers: [
                 TaskListService,
+                BpmUserService,
                 CardViewUpdateService,
                 { provide: AppConfigService, useClass: AppConfigServiceMock },
                 { provide: TranslationService, useClass: TranslationMock }
             ]
         }).compileComponents();
-
     }));
 
     beforeEach(() => {
         fixture = TestBed.createComponent(TaskHeaderComponent);
         component = fixture.componentInstance;
         service = TestBed.get(TaskListService);
+        userBpmService = TestBed.get(BpmUserService);
         debugElement = fixture.debugElement;
-
+        getCurrentUserInfoSpy = spyOn(userBpmService, 'getCurrentUserInfo').and.returnValue(Observable.of(fakeBpmAssignedUser));
         component.taskDetails = new TaskDetailsModel(taskDetailsMock);
     });
 
@@ -121,42 +139,52 @@ describe('TaskHeaderComponent', () => {
         });
     });
 
-    describe('Unclaim', () => {
+    it('should display the requeue button if task is assigned to a current logged-in user ', () => {
+        component.ngOnChanges({});
+        fixture.detectChanges();
+        let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
+        expect(unclaimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.UNCLAIM');
+    });
 
+    it('should not display the requeue button if the task is assigned to others', () => {
         const batman = new UserProcessModel({ id : 1, email: 'bruce.wayne@gotham.com', firstName: 'Bruce', lastName: 'Wayne', userImage: 'batman.jpg' });
-        let taskListService;
+        component.taskDetails.assignee = batman;
+        component.ngOnChanges({});
+        fixture.detectChanges();
+        let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
+        expect(unclaimButton).toBeNull();
+    });
 
-        beforeEach(() => {
-            taskListService = TestBed.get(TaskListService);
-            component.taskDetails.assignee = batman;
-            component.taskDetails.id = 'repair-batmobile';
-            fixture.detectChanges();
-        });
+    it('should not display the requeue button if the task is completed', () => {
+        component.taskDetails = new TaskDetailsModel(completedTaskDetailsMock);
+        component.ngOnChanges({});
+        fixture.detectChanges();
+        let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
+        expect(unclaimButton).toBeNull();
+    });
 
-        it('should display the requeue button if there is assignee', () => {
-            let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
-            expect(unclaimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.UNCLAIM');
-        });
+    it('should call the service\'s unclaim method on unclaiming', () => {
+        spyOn(service, 'unclaimTask');
+        component.ngOnChanges({});
+        fixture.detectChanges();
 
-        it('should call the service\'s unclaim method on unclaiming' , () => {
-            spyOn(taskListService, 'unclaimTask');
+        let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
+        unclaimButton.triggerEventHandler('click', {});
 
-            let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
-            unclaimButton.triggerEventHandler('click', {});
+        expect(service.unclaimTask).toHaveBeenCalledWith('91');
+    });
 
-            expect(taskListService.unclaimTask).toHaveBeenCalledWith('repair-batmobile');
-        });
+    it('should trigger the unclaim event on successfull unclaiming', () => {
+        let unclaimed: boolean = false;
+        spyOn(service, 'unclaimTask').and.returnValue(Observable.of(true));
+        component.ngOnChanges({});
+        fixture.detectChanges();
+        component.unclaim.subscribe(() => { unclaimed = true; });
 
-        it('should trigger the unclaim event on successfull unclaiming', () => {
-            let unclaimed: boolean = false;
-            component.unclaim.subscribe(() => { unclaimed = true; });
-            spyOn(taskListService, 'unclaimTask').and.returnValue(Observable.of(true));
+        let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
+        unclaimButton.triggerEventHandler('click', {});
 
-            let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
-            unclaimButton.triggerEventHandler('click', {});
-
-            expect(unclaimed).toBeTruthy();
-        });
+        expect(unclaimed).toBeTruthy();
     });
 
     it('should display due date', () => {
