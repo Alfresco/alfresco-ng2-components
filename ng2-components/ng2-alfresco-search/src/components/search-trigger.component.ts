@@ -230,6 +230,6 @@ export class AdfAutocompleteTriggerDirective implements ControlValueAccessor, On
             this.element.nativeElement.focus();
         }
         this.closePanel();
-        this.panelClosed.next();
+        this.panelClosed.next(event);
     }
 }

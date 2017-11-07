@@ -103,6 +103,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
 
     searchSubmit(event: any) {
         this.submit.emit(event);
+        this.toggleSearchBar();
     }
 
     inputChange(event: any) {
@@ -152,22 +153,16 @@ export class SearchControlComponent implements OnInit, OnDestroy {
   }
 
   onBlur($event): void {
-      this.focusSubject.next($event);
-  }
-
-  deactivateSearchBar() {
-    this.subscriptAnimationState = 'inactive';
-    this.searchTerm = '';
+     this.focusSubject.next($event);
   }
 
   private setupFocusEventHandlers() {
       let focusEvents: Observable<FocusEvent> = this.focusSubject.asObservable()
-                                                .debounceTime(50).distinctUntilChanged();
-
+                                                        .distinctUntilChanged().debounceTime(50);
       focusEvents.filter(($event: any) => {
-          return $event.type === 'focusout' || $event.type === 'blur';
+          return this.isSearchBarActive() && $event.type === 'blur';
       }).subscribe(() => {
-          this.deactivateSearchBar();
+        this.toggleSearchBar();
       });
   }
 
