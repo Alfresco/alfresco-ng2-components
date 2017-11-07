@@ -214,4 +214,7 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
         return this.isValid(d) ? d : null;
     }
 
+    invalid(): Moment {
+        return moment.invalid();
+    }
 }
