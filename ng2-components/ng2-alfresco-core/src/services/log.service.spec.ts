@@ -49,16 +49,25 @@ describe('Log Service', () => {
         providesLogComponent = TestBed.createComponent(ProvidesLogComponent);
 
         spyOn(console, 'log');
-        spyOn(console, 'error');
         spyOn(console, 'trace');
+        spyOn(console, 'debug');
+        spyOn(console, 'info');
+        spyOn(console, 'warn');
+        spyOn(console, 'error');
 
         providesLogComponent.componentInstance.log();
-        providesLogComponent.componentInstance.error();
         providesLogComponent.componentInstance.trace();
+        providesLogComponent.componentInstance.debug();
+        providesLogComponent.componentInstance.info();
+        providesLogComponent.componentInstance.warn();
+        providesLogComponent.componentInstance.error();
 
         expect(console.log).toHaveBeenCalled();
-        expect(console.error).toHaveBeenCalled();
         expect(console.trace).toHaveBeenCalled();
+        expect(console.debug).toHaveBeenCalled();
+        expect(console.info).toHaveBeenCalled();
+        expect(console.warn).toHaveBeenCalled();
+        expect(console.error).toHaveBeenCalled();
     });
 
     it('should not log anything if is silent', () => {
@@ -66,16 +75,25 @@ describe('Log Service', () => {
         providesLogComponent = TestBed.createComponent(ProvidesLogComponent);
 
         spyOn(console, 'log');
-        spyOn(console, 'error');
         spyOn(console, 'trace');
+        spyOn(console, 'debug');
+        spyOn(console, 'info');
+        spyOn(console, 'warn');
+        spyOn(console, 'error');
 
         providesLogComponent.componentInstance.log();
-        providesLogComponent.componentInstance.error();
         providesLogComponent.componentInstance.trace();
+        providesLogComponent.componentInstance.debug();
+        providesLogComponent.componentInstance.info();
+        providesLogComponent.componentInstance.warn();
+        providesLogComponent.componentInstance.error();
 
         expect(console.log).not.toHaveBeenCalled();
-        expect(console.error).not.toHaveBeenCalled();
         expect(console.trace).not.toHaveBeenCalled();
+        expect(console.debug).not.toHaveBeenCalled();
+        expect(console.info).not.toHaveBeenCalled();
+        expect(console.warn).not.toHaveBeenCalled();
+        expect(console.error).not.toHaveBeenCalled();
     });
 
     it('should log only warning and errors if is warning level', () => {
@@ -96,6 +114,58 @@ describe('Log Service', () => {
         expect(console.error).toHaveBeenCalled();
         expect(console.warn).toHaveBeenCalled();
         expect(console.trace).not.toHaveBeenCalled();
+    });
+
+    it('should debug level not log trace and log', () => {
+        appConfigService.config['logLevel'] = 'debug';
+        providesLogComponent = TestBed.createComponent(ProvidesLogComponent);
+
+        spyOn(console, 'log');
+        spyOn(console, 'trace');
+        spyOn(console, 'debug');
+        spyOn(console, 'info');
+        spyOn(console, 'warn');
+        spyOn(console, 'error');
+
+        providesLogComponent.componentInstance.log();
+        providesLogComponent.componentInstance.trace();
+        providesLogComponent.componentInstance.debug();
+        providesLogComponent.componentInstance.info();
+        providesLogComponent.componentInstance.warn();
+        providesLogComponent.componentInstance.error();
+
+        expect(console.log).not.toHaveBeenCalled();
+        expect(console.trace).not.toHaveBeenCalled();
+        expect(console.debug).toHaveBeenCalled();
+        expect(console.info).toHaveBeenCalled();
+        expect(console.warn).toHaveBeenCalled();
+        expect(console.error).toHaveBeenCalled();
+    });
+
+    it('should trace level log all', () => {
+        appConfigService.config['logLevel'] = 'trace';
+        providesLogComponent = TestBed.createComponent(ProvidesLogComponent);
+
+        spyOn(console, 'log');
+        spyOn(console, 'trace');
+        spyOn(console, 'debug');
+        spyOn(console, 'info');
+        spyOn(console, 'warn');
+        spyOn(console, 'error');
+
+        providesLogComponent.componentInstance.log();
+        providesLogComponent.componentInstance.trace();
+        providesLogComponent.componentInstance.debug();
+        providesLogComponent.componentInstance.info();
+        providesLogComponent.componentInstance.warn();
+        providesLogComponent.componentInstance.error();
+
+        expect(console.log).toHaveBeenCalled();
+        expect(console.trace).toHaveBeenCalled();
+        expect(console.debug).toHaveBeenCalled();
+        expect(console.info).toHaveBeenCalled();
+        expect(console.warn).toHaveBeenCalled();
+        expect(console.error).toHaveBeenCalled();
     });
 
 });
@@ -123,6 +193,10 @@ class ProvidesLogComponent {
 
     log() {
         this.logService.log('Test message');
+    }
+
+    debug() {
+        this.logService.debug('Test message');
     }
 
     trace() {
