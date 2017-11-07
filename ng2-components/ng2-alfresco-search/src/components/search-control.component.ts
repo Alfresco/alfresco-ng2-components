@@ -156,11 +156,17 @@ export class SearchControlComponent implements OnInit, OnDestroy {
      this.focusSubject.next($event);
   }
 
+  activateToolbar($event) {
+      if ( !this.isSearchBarActive() ) {
+          this.toggleSearchBar();
+      }
+  }
+
   private setupFocusEventHandlers() {
       let focusEvents: Observable<FocusEvent> = this.focusSubject.asObservable()
-                                                        .distinctUntilChanged().debounceTime(50);
+                                                    .distinctUntilChanged().debounceTime(50);
       focusEvents.filter(($event: any) => {
-          return this.isSearchBarActive() && $event.type === 'blur';
+          return this.isSearchBarActive() && ($event.type === 'blur' ||  $event.type === 'focusout');
       }).subscribe(() => {
         this.toggleSearchBar();
       });

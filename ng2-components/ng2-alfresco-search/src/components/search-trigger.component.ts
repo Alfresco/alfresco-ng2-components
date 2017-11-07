@@ -83,7 +83,6 @@ export class AdfAutocompleteTriggerDirective implements ControlValueAccessor, On
     private _panelOpen: boolean = false;
     private closingActionsSubscription: Subscription;
     private escapeEventStream = new Subject<void>();
-    // private focusedChild: number = 0;
 
     onChange: (value: any) => void = () => { };
 
