@@ -17,10 +17,11 @@
 
 import { DatePipe } from '@angular/common';
 import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { DataColumnListComponent } from 'ng2-alfresco-core';
-import { DataColumn, DataRowEvent, DataSorting, DataTableAdapter, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
+import { AppConfigService, DataColumnListComponent } from 'ng2-alfresco-core';
+import { DataColumn, DataRowEvent, DataSorting, DataTableAdapter, ObjectDataColumn, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 import { ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
 import { ProcessInstance } from '../models/process-instance.model';
+import { processPresetsDefaultModel } from '../models/process-preset.model';
 import { ProcessService } from '../services/process.service';
 
 @Component({
@@ -47,6 +48,9 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     @Input()
     name: string;
 
+    @Input()
+    presetColumn: string;
+
     requestNode: ProcessFilterParamRepresentationModel;
 
     @Input()
@@ -63,16 +67,14 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
 
     currentInstanceId: string;
     isLoading: boolean = true;
+    layoutPresets = {};
 
-    private defaultSchema: DataColumn[] = [
-        { type: 'text', key: 'name', title: 'ADF_PROCESS_LIST.PROPERTIES.NAME', cssClass: 'full-width name-column', sortable: true },
-        { type: 'text', key: 'created', title: 'ADF_PROCESS_LIST.PROPERTIES.CREATED', cssClass: 'hidden', sortable: true }
-    ];
-
-    constructor(private processService: ProcessService) {
+    constructor(private processService: ProcessService,
+                private appConfig: AppConfigService) {
     }
 
     ngAfterContentInit() {
+        this.loadLayoutPresets();
         this.setupSchema();
 
         if (this.appId) {
@@ -92,12 +94,12 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
         }
 
         if (!this.data) {
-            this.data = new ObjectDataTableAdapter([], schema.length > 0 ? schema : this.defaultSchema);
+            this.data = new ObjectDataTableAdapter([], schema.length > 0 ? schema : this.getLayoutPreset(this.presetColumn));
         } else {
             if (schema && schema.length > 0) {
                 this.data.setColumns(schema);
             } else if (this.data.getColumns().length === 0) {
-                this.data.setColumns(this.defaultSchema);
+                this.presetColumn ? this.setupDefaultColumns(this.presetColumn) : this.setupDefaultColumns();
             }
         }
     }
@@ -286,5 +288,27 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
             sort: this.sort
         };
         return new ProcessFilterParamRepresentationModel(requestNode);
+    }
+
+    setupDefaultColumns(preset: string = 'default'): void {
+        if (this.data) {
+            const columns = this.getLayoutPreset(preset);
+            this.data.setColumns(columns);
+        }
+    }
+
+    private loadLayoutPresets(): void {
+        const externalSettings = this.appConfig.get('adf-process-list.presets', null);
+
+        if (externalSettings) {
+            this.layoutPresets = Object.assign({}, processPresetsDefaultModel, externalSettings);
+        } else {
+            this.layoutPresets = processPresetsDefaultModel;
+        }
+
+    }
+
+    private getLayoutPreset(name: string = 'default'): DataColumn[] {
+        return (this.layoutPresets[name] || this.layoutPresets['default']).map(col => new ObjectDataColumn(col));
     }
 }
