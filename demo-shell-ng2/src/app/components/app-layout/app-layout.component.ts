@@ -28,20 +28,20 @@ import { Component, ViewEncapsulation } from '@angular/core';
 export class AppLayoutComponent {
 
     links: Array<any> = [
-        { href: '/home', icon: 'home', title: 'Home' },
-        { href: '/files', icon: 'folder_open', title: 'Content Services' },
-        { href: '/activiti', icon: 'device_hub', title: 'Process Services' },
-        { href: '/login', icon: 'vpn_key', title: 'Login' },
-        { href: '/dl-custom-sources', icon: 'extension', title: 'DL: Custom Sources' },
-        { href: '/datatable', icon: 'view_module', title: 'DataTable' },
-        { href: '/form', icon: 'poll', title: 'Form' },
-        { href: '/form-list', icon: 'library_books', title: 'Form List' },
-        { href: '/uploader', icon: 'file_upload', title: 'Uploader' },
-        { href: '/webscript', icon: 'extension', title: 'Webscript' },
-        { href: '/tag', icon: 'local_offer', title: 'Tag' },
-        { href: '/social', icon: 'thumb_up', title: 'Social' },
-        { href: '/settings', icon: 'settings', title: 'Settings' },
-        { href: '/about', icon: 'info_outline', title: 'About' }
+        { href: '/home', icon: 'home', title: 'APP_LAYOUT.HOME' },
+        { href: '/files', icon: 'folder_open', title: 'APP_LAYOUT.CONTENT_SERVICES' },
+        { href: '/activiti', icon: 'device_hub', title: 'APP_LAYOUT.PROCESS_SERVICES' },
+        { href: '/login', icon: 'vpn_key', title: 'APP_LAYOUT.LOGIN' },
+        { href: '/dl-custom-sources', icon: 'extension', title: 'APP_LAYOUT.CUSTOM_SOURCES' },
+        { href: '/datatable', icon: 'view_module', title: 'APP_LAYOUT.DATATABLE' },
+        { href: '/form', icon: 'poll', title: 'APP_LAYOUT.FORM' },
+        { href: '/form-list', icon: 'library_books', title: 'APP_LAYOUT.FORM_LIST' },
+        { href: '/uploader', icon: 'file_upload', title: 'APP_LAYOUT.UPLOADER' },
+        { href: '/webscript', icon: 'extension', title: 'APP_LAYOUT.WEBSCRIPT' },
+        { href: '/tag', icon: 'local_offer', title: 'APP_LAYOUT.TAG' },
+        { href: '/social', icon: 'thumb_up', title: 'APP_LAYOUT.SOCIAL' },
+        { href: '/settings', icon: 'settings', title: 'APP_LAYOUT.SETTINGS' },
+        { href: '/about', icon: 'info_outline', title: 'APP_LAYOUT.ABOUT' }
     ];
 
     constructor(){};
