@@ -129,7 +129,6 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
     }
 
     ngOnInit() {
-        this.loadLayoutPresets();
         if (this.data === undefined) {
             this.data = new ObjectDataTableAdapter();
         }
@@ -137,6 +136,7 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
     }
 
     ngAfterContentInit() {
+        this.loadLayoutPresets();
         this.setupSchema();
     }
 

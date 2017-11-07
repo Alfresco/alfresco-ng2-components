@@ -84,9 +84,50 @@ describe('TaskListComponent', () => {
         error: 'wrong request'
     };
 
+    let fakeCutomSchema = [
+            {
+                'key': 'fakeName',
+                'type': 'text',
+                'title': 'ADF_TASK_LIST.PROPERTIES.FAKE',
+                'sortable': true
+            },
+            {
+                'key': 'fakeTaskName',
+                'type': 'text',
+                'title': 'ADF_TASK_LIST.PROPERTIES.TASK_FAKE',
+                'sortable': true
+            }
+        ];
+
+    let fakeColumnSchema = {
+        'default': [
+                {
+                    'key': 'name',
+                    'type': 'text',
+                    'title': 'ADF_TASK_LIST.PROPERTIES.NAME',
+                    'sortable': true
+                },
+                {
+                    'key': 'created',
+                    'type': 'text',
+                    'title': 'ADF_TASK_LIST.PROPERTIES.CREATED',
+                    'cssClass': 'hidden',
+                    'sortable': true
+                },
+                {
+                    'key': 'assignee',
+                    'type': 'text',
+                    'title': 'ADF_TASK_LIST.PROPERTIES.ASSIGNEE',
+                    'cssClass': 'hidden',
+                    'sortable': true
+                }
+            ]
+        , fakeCutomSchema };
+
     let component: TaskListComponent;
     let fixture: ComponentFixture<TaskListComponent>;
     let taskListService: TaskListService;
+    let appConfig: AppConfigService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -107,30 +148,34 @@ describe('TaskListComponent', () => {
     }));
 
     beforeEach(() => {
-        let appConfig: AppConfigService = TestBed.get(AppConfigService);
+        appConfig = TestBed.get(AppConfigService);
         appConfig.config.bpmHost = 'http://localhost:9876/bpm';
 
         fixture = TestBed.createComponent(TaskListComponent);
         component = fixture.componentInstance;
 
         taskListService = TestBed.get(TaskListService);
-        component.layoutPresets = {
-            'default': [
-                {
-                    'key': 'name',
-                    'type': 'text',
-                    'title': 'ADF_TASK_LIST.PROPERTIES.NAME',
-                    'sortable': true
-                },
-                {
-                    'key': 'created',
-                    'type': 'text',
-                    'title': 'ADF_TASK_LIST.PROPERTIES.CREATED',
-                    'cssClass': 'hidden',
-                    'sortable': true
+        appConfig.config = Object.assign(appConfig.config, {
+            'adf-task-list': {
+                'presets': {
+                    'fakeCutomSchema': [
+                        {
+                            'key': 'fakeName',
+                            'type': 'text',
+                            'title': 'ADF_TASK_LIST.PROPERTIES.FAKE',
+                            'sortable': true
+                        },
+                        {
+                            'key': 'fakeTaskName',
+                            'type': 'text',
+                            'title': 'ADF_TASK_LIST.PROPERTIES.TASK_FAKE',
+                            'sortable': true
+                        }
+                    ]
                 }
-            ]
-        };
+            }
+        }
+    );
 
     });
 
@@ -145,7 +190,7 @@ describe('TaskListComponent', () => {
     it('should use the default schemaColumn as default', () => {
         component.ngAfterContentInit();
         expect(component.data.getColumns()).toBeDefined();
-        expect(component.data.getColumns().length).toEqual(2);
+        expect(component.data.getColumns().length).toEqual(3);
     });
 
     it('should use the schemaColumn passed in input', () => {
@@ -159,6 +204,19 @@ describe('TaskListComponent', () => {
         component.ngAfterContentInit();
         expect(component.data.getColumns()).toBeDefined();
         expect(component.data.getColumns().length).toEqual(1);
+    });
+
+    it('should use the custom schemaColumn from app.config.json', () => {
+        component.ngAfterContentInit();
+        fixture.detectChanges();
+        expect(component.layoutPresets).toEqual(fakeColumnSchema);
+    });
+
+    it('should fetch custom schemaColumn when the input presetColumn is defined', () => {
+        component.presetColumn = 'fakeCutomColumns';
+        fixture.detectChanges();
+        expect(component.data.getColumns()).toBeDefined();
+        expect(component.data.getColumns().length).toEqual(3);
     });
 
     it('should return an empty task list when no input parameters are passed', () => {

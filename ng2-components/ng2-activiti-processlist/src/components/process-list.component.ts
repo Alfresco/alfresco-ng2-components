@@ -18,7 +18,7 @@
 import { DatePipe } from '@angular/common';
 import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { AppConfigService, DataColumnListComponent } from 'ng2-alfresco-core';
-import { DataColumn, DataRowEvent, DataSorting, DataTableAdapter, ObjectDataRow, ObjectDataTableAdapter, ObjectDataColumn } from 'ng2-alfresco-datatable';
+import { DataColumn, DataRowEvent, DataSorting, DataTableAdapter, ObjectDataColumn, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 import { ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
 import { ProcessInstance } from '../models/process-instance.model';
 import { processPresetsDefaultModel } from '../models/process-preset.model';
@@ -67,13 +67,14 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
 
     currentInstanceId: string;
     isLoading: boolean = true;
-    private layoutPresets = {};
+    layoutPresets = {};
 
     constructor(private processService: ProcessService,
                 private appConfig: AppConfigService) {
     }
 
     ngAfterContentInit() {
+        this.loadLayoutPresets();
         this.setupSchema();
 
         if (this.appId) {
@@ -106,7 +107,6 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     ngOnChanges(changes: SimpleChanges) {
         if (this.isPropertyChanged(changes)) {
             this.reload();
-            this.loadLayoutPresets();
         }
     }
 

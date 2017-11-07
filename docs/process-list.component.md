@@ -26,12 +26,45 @@ This component renders a list containing all the process instances matched by th
 </adf-process-instance-list>
 ```
 
+You can also use custom schema declaration as shown below:
+
+define custom schema in the app.config.json like as shown below json format.
+
+```json
+"adf-process-list": {
+        "presets": {
+            "customSchema": [
+            {
+                    "key": "name",
+                    "type": "text",
+                    "title": "name",
+                    "sortable": true         
+            }],
+            "default": [
+                {
+                    "key": "name",
+                    "type": "text",
+                    "title": "name",
+                    "sortable": true
+            }],
+        }
+}
+```
+
+```html
+<adf-process-instance-list
+    [appId]="'1'"
+    [state]="'open'"
+    [presetColumn]="'customSchema'">
+</adf-process-instance-list>
+```
 ### Properties
 
 | Name | Description |
 | --- | --- |
 | appId | The id of the app. |
 | processDefinitionKey | The processDefinitionKey of the process. |
+| presetColumn | string || The presetColumn of the custom schema to fetch. |
 | state | Define state of the processes. Possible values are `running`, `completed` and `all` |
 | sort | Define sort of the processes. Possible values are `created-desc`, `created-asc`, `ended-desc`, `ended-asc` |
 | schemaColumn | List of columns to display in the process instances datatable (see the [Details](#details) section below) |
