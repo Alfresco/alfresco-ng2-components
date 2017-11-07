@@ -71,6 +71,7 @@
     "mime-type-icon.pipe": [],
     "node-permission.directive": [],
     "nodes-api.service": ["document-library.model", "deleted-nodes-api.service"],
+    "node.service": ["nodes-api.service", "deleted-nodes-api.service"],
     "notification.service": [],
     "pagination.component": [],
     "page-title.service": ["app-config.service"],

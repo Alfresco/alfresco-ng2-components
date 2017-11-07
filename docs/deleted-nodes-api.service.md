@@ -20,6 +20,7 @@ page of the Alfresco JS API docs.
 ## See also
 
 - [Nodes api service](nodes-api.service.md)
+- [Node service](node.service.md)
 <!-- seealso end -->
 
 
