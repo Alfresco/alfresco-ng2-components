@@ -28,7 +28,7 @@ This component renders a list containing all the process instances matched by th
 
 You can also use custom schema declaration as shown below:
 
-define custom schema in the app.config.json like as shown below json format.
+define custom schema in the app.config.json as shown below json format.
 
 ```json
 "adf-process-list": {
