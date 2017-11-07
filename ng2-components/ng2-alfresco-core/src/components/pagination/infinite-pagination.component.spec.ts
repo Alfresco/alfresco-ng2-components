@@ -16,10 +16,10 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDatepickerModule, MatIconModule, MatInputModule, MatNativeDateModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Pagination } from 'alfresco-js-api';
+import { MaterialModule } from '../../material.module';
 import { InfinitePaginationComponent } from './infinite-pagination.component';
 
 describe('InfinitePaginationComponent', () => {
@@ -32,10 +32,7 @@ describe('InfinitePaginationComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 NoopAnimationsModule,
-                MatDatepickerModule,
-                MatIconModule,
-                MatInputModule,
-                MatNativeDateModule
+                MaterialModule
             ],
             declarations: [
                 InfinitePaginationComponent

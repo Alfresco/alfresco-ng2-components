@@ -17,12 +17,12 @@
 
 import { NgModule } from '@angular/core';
 import {
-    MatButtonModule, MatChipsModule, MatIconModule, MatInputModule
+    MatButtonModule, MatChipsModule, MatIconModule, MatInputModule, MatListModule
 } from '@angular/material';
 
 export function modules() {
     return [
-        MatButtonModule, MatInputModule, MatChipsModule, MatIconModule
+        MatButtonModule, MatInputModule, MatChipsModule, MatIconModule, MatListModule
     ];
 }
 
