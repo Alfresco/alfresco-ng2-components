@@ -282,3 +282,16 @@ Add a package across all the pacakge json in the project
 ```sh
 ./npm-add-pkg.sh --save-dev NPM_NAME
 ```
+
+***extract-langs.sh*** 
+
+Extract the i18n files from the repo and create a zip
+
+| Option | Description |
+| --- | --- |
+| -h or --help    | show the help  |
+| --output or o   | output folder otherwise will be 18n |
+
+```sh
+./extract-langs.sh 
+```
