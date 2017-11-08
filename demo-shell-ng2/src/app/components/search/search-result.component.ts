@@ -21,11 +21,11 @@ import { NodePaging } from 'alfresco-js-api';
 import { SearchComponent } from 'ng2-alfresco-search';
 
 @Component({
-    selector: 'search-integration-component',
-    templateUrl: './search-integration.component.html',
-    styleUrls: ['./search-integration.component.scss']
+    selector: 'search-result-component',
+    templateUrl: './search-result.component.html',
+    styleUrls: ['./search-result.component.scss']
 })
-export class SearchIntegrationComponent implements OnInit{
+export class SearchResultComponent implements OnInit{
 
     @ViewChild('search')
     search: SearchComponent;
