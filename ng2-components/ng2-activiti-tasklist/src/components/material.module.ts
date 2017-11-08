@@ -25,6 +25,7 @@ import {
     MatGridListModule,
     MatIconModule,
     MatInputModule,
+    MatListModule,
     MatNativeDateModule,
     MatProgressSpinnerModule,
     MatRippleModule,
@@ -46,7 +47,8 @@ export function modules() {
         MatGridListModule,
         MatRippleModule,
         MatTooltipModule,
-        MatChipsModule
+        MatChipsModule,
+        MatListModule
     ];
 }
 

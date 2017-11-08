@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, NgModule } from '@angular/core';
 import {
     MatButtonModule, MatGridListModule, MatIconModule, MatMenuModule,
-    MatTooltipModule
+    MatTooltipModule, MatListModule
 } from '@angular/material';
 import { StyleManager } from './style-manager/style-manager';
 import { DocsSiteTheme, ThemeStorage } from './theme-storage/theme-storage';
@@ -121,6 +121,7 @@ export class ThemePickerComponent {
         MatMenuModule,
         MatGridListModule,
         MatTooltipModule,
+        MatListModule,
         CommonModule
     ],
     exports: [ThemePickerComponent],

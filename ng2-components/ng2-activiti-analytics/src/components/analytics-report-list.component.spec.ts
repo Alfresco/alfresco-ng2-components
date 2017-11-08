@@ -21,6 +21,7 @@ import { ReportParametersModel } from 'ng2-activiti-diagrams';
 import { AlfrescoTranslationService, AppConfigService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { AnalyticsReportListComponent } from '../components/analytics-report-list.component';
+import { MaterialModule } from '../material.module';
 import { AnalyticsService } from '../services/analytics.service';
 
 declare let jasmine: any;
@@ -45,7 +46,8 @@ describe('AnalyticsReportListComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                CoreModule,
+                MaterialModule
             ],
             declarations: [
                 AnalyticsReportListComponent
