@@ -20,6 +20,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AppsProcessService, CoreModule, TranslationService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
+import { MaterialModule } from './material.module';
 
 import { TranslationMock } from '../assets/translation.service.mock';
 import { defaultApp, deployedApps, nonDeployedApps } from './../assets/apps-list.mock';
@@ -36,7 +37,8 @@ describe('AppsListComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                CoreModule,
+                MaterialModule
             ],
             declarations: [
                 AppsListComponent
