@@ -24,12 +24,10 @@ import { ErrorWidgetComponent } from '../error/error.component';
 import { EcmModelService } from './../../../services/ecm-model.service';
 import { FormService } from './../../../services/form.service';
 import { FormFieldModel, FormFieldTypes, FormModel } from './../core/index';
-import { DynamicTableWidgetComponent } from './dynamic-table.widget';
-import { DynamicTableModel } from './dynamic-table.widget.model';
 import { DynamicTableColumn  } from './dynamic-table-column.model';
 import { DynamicTableRow  } from './dynamic-table-row.model';
-
-
+import { DynamicTableWidgetComponent } from './dynamic-table.widget';
+import { DynamicTableModel } from './dynamic-table.widget.model';
 
 import { BooleanEditorComponent } from './editors/boolean/boolean.editor';
 import { DateEditorComponent } from './editors/date/date.editor';

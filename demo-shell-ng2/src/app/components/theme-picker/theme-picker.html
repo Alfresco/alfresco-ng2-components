@@ -3,7 +3,7 @@
 </button>
 
 <mat-menu class="docs-theme-picker-menu" #themeMenu="matMenu" x-position="before">
-    <mat-list-item *ngFor="let theme of themes"  mat-menu-item (click)="installTheme(theme)" >
+    <button *ngFor="let theme of themes"  mat-menu-item (click)="installTheme(theme)" >
         <mat-icon mat-list-icon [matTooltip]="theme.name" class="docs-theme-chosen-icon" [style.color]="theme.accent"
                  [style.background]="theme.primary"
                  *ngIf="currentTheme === theme">check_circle
@@ -13,5 +13,5 @@
                  *ngIf="currentTheme !== theme">invert_colors
         </mat-icon>
         {{theme.name}}
-    </mat-list-item>
+    </button>
 </mat-menu>
