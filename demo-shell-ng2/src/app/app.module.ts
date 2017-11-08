@@ -49,7 +49,7 @@ import { routing } from './app.routes';
     AppLayoutComponent,
     HomeComponent,
     SearchBarComponent,
-    SearchIntegrationComponent,
+    SearchResultComponent,
     AboutComponent,
     ActivitiComponent,
     ActivitiTaskAttachmentsComponent,
