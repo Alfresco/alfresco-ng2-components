@@ -25,7 +25,14 @@ import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
 
 import { TaskDetailsModel } from '../models/task-details.model';
-import { completedTaskDetailsMock, taskDetailsMock } from './../assets/task-details.mock';
+import {
+    completedTaskDetailsMock,
+    taskDetailsMock,
+    taskDetailsWithAssigneeMock,
+    taskDetailsWithInvolvedGroupMock,
+    taskDetailsWithInvolvedPeopleMock,
+    taskDetailsWithOutAssigneeMock
+} from './../assets/task-details.mock';
 import { TaskListService } from './../services/tasklist.service';
 import { TaskHeaderComponent } from './task-header.component';
 
@@ -137,9 +144,34 @@ describe('TaskHeaderComponent', () => {
             let claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
             expect(claimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.CLAIM');
         });
+
+        it('should display the claim button to the invovled group', () => {
+            component.taskDetails = new TaskDetailsModel(taskDetailsWithOutAssigneeMock);
+            component.ngOnChanges({});
+            fixture.detectChanges();
+            let claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
+            expect(claimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.CLAIM');
+        });
     });
 
-    it('should display the requeue button if task is assigned to a current logged-in user ', () => {
+    it('should display the requeue button if the current logged-in user is a part of the invovled group', () => {
+        component.taskDetails = new TaskDetailsModel(taskDetailsWithInvolvedGroupMock);
+        component.ngOnChanges({});
+        fixture.detectChanges();
+        let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
+        expect(unclaimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.UNCLAIM');
+    });
+
+    it('should display the requeue button if the current logged-in user is a part of the invovled people', () => {
+        component.taskDetails = new TaskDetailsModel(taskDetailsWithInvolvedPeopleMock);
+        component.ngOnChanges({});
+        fixture.detectChanges();
+        let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
+        expect(unclaimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.UNCLAIM');
+    });
+
+    it('should not display the claim/requeue button if the current logged-in user is not part of the group', () => {
+        component.taskDetails = new TaskDetailsModel(taskDetailsWithInvolvedGroupMock);
         component.ngOnChanges({});
         fixture.detectChanges();
         let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
@@ -149,6 +181,14 @@ describe('TaskHeaderComponent', () => {
     it('should not display the requeue button if the task is assigned to others', () => {
         const batman = new UserProcessModel({ id : 1, email: 'bruce.wayne@gotham.com', firstName: 'Bruce', lastName: 'Wayne', userImage: 'batman.jpg' });
         component.taskDetails.assignee = batman;
+        component.ngOnChanges({});
+        fixture.detectChanges();
+        let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
+        expect(unclaimButton).toBeNull();
+    });
+
+    it('should not display the requeue button if the task is assigned to others in a group', () => {
+        component.taskDetails = new TaskDetailsModel(taskDetailsWithAssigneeMock);
         component.ngOnChanges({});
         fixture.detectChanges();
         let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
@@ -165,6 +205,7 @@ describe('TaskHeaderComponent', () => {
 
     it('should call the service\'s unclaim method on unclaiming', () => {
         spyOn(service, 'unclaimTask');
+        component.taskDetails = new TaskDetailsModel(taskDetailsWithInvolvedGroupMock);
         component.ngOnChanges({});
         fixture.detectChanges();
 
@@ -177,6 +218,7 @@ describe('TaskHeaderComponent', () => {
     it('should trigger the unclaim event on successfull unclaiming', () => {
         let unclaimed: boolean = false;
         spyOn(service, 'unclaimTask').and.returnValue(Observable.of(true));
+        component.taskDetails = new TaskDetailsModel(taskDetailsWithInvolvedGroupMock);
         component.ngOnChanges({});
         fixture.detectChanges();
         component.unclaim.subscribe(() => { unclaimed = true; });

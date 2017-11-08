@@ -186,10 +186,38 @@ export class TaskHeaderComponent implements OnChanges {
      }
 
     /**
-     * Is the task assigned to the currently loggedin user
+     * Return true if the task assigned to the currently loggedin user
      */
     isAssignedToMe(): boolean {
         return this.taskDetails.assignee ? this.isCurrentUser() : false;
+    }
+
+    /**
+     * Dose the Claim button is visible
+     */
+    isClaimButtonVisible(): boolean {
+        return this.hasAssignee();
+    }
+
+    /**
+     * Dose the Requeue button is visible
+     */
+    isRequeueButtonVisible(): boolean {
+        return ((this.hasInvolvedGroup() || this.hasInvolvedPeople()) && this.isAssignedToMe()) && !this.isCompleted() ? true : false;
+    }
+
+    /**
+     * Return true if the task has involvedGroup
+     */
+    hasInvolvedGroup() {
+        return this.taskDetails.involvedGroups.length > 0 ? true : false;
+    }
+
+    /**
+     * Return true if the task has involvedPeople
+     */
+    hasInvolvedPeople(): boolean {
+        return this.taskDetails.involvedPeople.length > 0 ? true : false;
     }
 
     /**
