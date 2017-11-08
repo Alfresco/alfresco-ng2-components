@@ -756,7 +756,6 @@ That will give the following output:
 ![Custom no permission](docassets/images/no-permission-custom.png)
 <!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
 <!-- seealso start -->
-
 ## See also
 
 - [Datatable component](datatable.component.md)
