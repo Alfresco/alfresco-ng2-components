@@ -247,6 +247,8 @@ for more information about installing and using the source code.
 ### Directives
 
 - [Context menu directive](context-menu.directive.md)
+- [Folder create directive](folder-create.directive.md)
+- [Folder edit directive](folder-edit.directive.md)
 - [Highlight directive](highlight.directive.md)
 - [Logout directive](logout.directive.md)
 - [Node delete directive](node-delete.directive.md)
@@ -254,14 +256,13 @@ for more information about installing and using the source code.
 - [Node permission directive](node-permission.directive.md)
 - [Node restore directive](node-restore.directive.md)
 - [Upload directive](upload.directive.md)
-- [Folder create directive](folder-create.directive.md)
-- [Folder edit directive](folder-edit.directive.md)
 
 ### Models
 
 - [Comment process model](comment-process.model.md)
 - [Product version model](product-version.model.md)
 - [Site model](site.model.md)
+- [User process model](user-process.model.md)
 
 ### Pipes
 
@@ -288,6 +289,8 @@ for more information about installing and using the source code.
 - [Nodes api service](nodes-api.service.md)
 - [Notification service](notification.service.md)
 - [Page title service](page-title.service.md)
+- [People content service](people-content.service.md)
+- [People process service](people-process.service.md)
 - [Renditions service](renditions.service.md)
 - [Sites api service](sites-api.service.md)
 - [Storage service](storage.service.md)
@@ -301,8 +304,6 @@ for more information about installing and using the source code.
 - [*Auth guard service](../ng2-components/ng2-alfresco-core/src/services/auth-guard.service.ts)
 - [*Content service](../ng2-components/ng2-alfresco-core/src/services/content.service.ts)
 - [*Favorites api service](../ng2-components/ng2-alfresco-core/src/services/favorites-api.service.ts)
-- [*People content service](../ng2-components/ng2-alfresco-core/src/services/people-content.service.ts)
-- [*People process service](../ng2-components/ng2-alfresco-core/src/services/people-process.service.ts)
 - [*Search api service](../ng2-components/ng2-alfresco-core/src/services/search-api.service.ts)
 - [*Search service](../ng2-components/ng2-alfresco-core/src/services/search.service.ts)
 - [*Shared links api service](../ng2-components/ng2-alfresco-core/src/services/shared-links-api.service.ts)
@@ -470,10 +471,15 @@ for more information about installing and using the source code.
 
 - [User info component](user-info.component.md)
 
+### Models
+
+- [Bpm user model](bpm-user.model.md)
+- [Ecm user model](ecm-user.model.md)
+
 ### Services
 
-- [*Bpm user service](../ng2-components/ng2-alfresco-userinfo/src/services/bpm-user.service.ts)
-- [*Ecm user service](../ng2-components/ng2-alfresco-userinfo/src/services/ecm-user.service.ts)
+- [Bpm user service](bpm-user.service.md)
+- [Ecm user service](ecm-user.service.md)
 <!-- ng2-alfresco-userinfo end -->
 
 [(Back to Contents)](#contents)
