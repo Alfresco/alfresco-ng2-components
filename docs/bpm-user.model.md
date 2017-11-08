@@ -9,31 +9,10 @@ Instances of this class are returned by the methods of the
 `UserRepresentation` interface, which is defined in the
 [Alfresco JS API]h(ttps://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/UserRepresentation.md).
 
-```ts
-class BpmUserModel implements UserRepresentation {
-    apps: any;
-    capabilities: string[];
-    company: string;
-    created: Date;
-    email: string;
-    externalId: string;
-    firstName: string;
-    lastName: string;
-    fullname: string;
-    fullNameDisplay: string;
-    groups: any;
-    id: string;
-    lastUpdate: Date;
-    latestSyncTimeStamp: Date;
-    password: string;
-    pictureId: number;
-    status: string;
-    tenantId: number;
-    tenantName: string;
-    tenantPictureId: number;
-    type: string;
-}
-```
+Note that the Typescript class for this model is in active development;
+it is likely to change and so its properties are not listed here. For the
+latest version of the class, see the
+[source file](https://github.com/Alfresco/alfresco-ng2-components/blob/development/ng2-components/ng2-alfresco-userinfo/src/models/bpm-user.model.ts).
 
 <!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
 <!-- seealso start -->

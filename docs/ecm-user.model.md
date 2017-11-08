@@ -9,29 +9,10 @@ Instances of this class are returned by the methods of the
 interface, which is defined in the
 [Alfresco JS API](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/Person.md).
 
-```ts
-class EcmUserModel implements Person {
-    id: string;
-    firstName: string;
-    lastName: string;
-    fullNameDisplay: string;
-    description: string;
-    avatarId: string;
-    email: string;
-    skypeId: string;
-    googleId: string;
-    instantMessageId: string;
-    jobTitle: string;
-    location: string;
-    company: EcmCompanyModel;
-    mobile: string;
-    telephone: string;
-    statusUpdatedAt: Date;
-    userStatus: string;
-    enabled: boolean;
-    emailNotificationsEnabled: boolean;
-}
-```
+Note that the Typescript class for this model is in active development;
+it is likely to change and so its properties are not listed here. For the
+latest version of the class, see the
+[source file](https://github.com/Alfresco/alfresco-ng2-components/blob/development/ng2-components/ng2-alfresco-userinfo/src/models/ecm-user.model.ts).
 
 <!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
 <!-- seealso start -->
