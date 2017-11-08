@@ -1,0 +1,13 @@
+{
+  "TAG": {
+    "LABEL": {
+      "NEWTAG": "新建标签"
+    },
+    "MESSAGES": {
+      "EXIST": "标签已存在"
+    },
+    "BUTTON": {
+      "ADD": "添加标题"
+    }
+  }
+}

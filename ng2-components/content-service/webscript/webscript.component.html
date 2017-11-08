@@ -1,0 +1,16 @@
+<div *ngIf="showData">
+    <div *ngIf="contentType === 'JSON'" id="webscript-data-JSON">{{data | json}}</div>
+    <div *ngIf="contentType === 'HTML'" id="webscript-data-HTML" [innerHTML]="data"></div>
+    <div *ngIf="contentType === 'TEXT'" id="webscript-data-TEXT">{{data}}</div>
+    <div *ngIf="isDataTableContent()">
+        <adf-datatable id="webscript-datatable-wrapper" [data]="data"></adf-datatable>
+        <div>
+            <div *ngIf="showError" id="error">{{'WEBSCRIPT.ERROR' | translate: {
+                data: data,
+                contentType: contentType
+                }
+                }}
+            </div>
+        </div>
+    </div>
+</div>

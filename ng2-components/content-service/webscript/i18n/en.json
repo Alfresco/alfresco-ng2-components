@@ -1,0 +1,5 @@
+{
+    "WEBSCRIPT": {
+        "ERROR": "Error during the deserialization of {{data}} as {{contentType}}"
+    }
+}

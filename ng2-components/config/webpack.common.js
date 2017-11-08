@@ -7,22 +7,8 @@ var HappyPack = require('happypack');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const alfrescoLibs = [
-    'ng2-activiti-analytics',
-    'ng2-activiti-diagrams',
-    'ng2-activiti-form',
-    'ng2-activiti-processlist',
-    'ng2-activiti-tasklist',
     'ng2-alfresco-core',
-    'ng2-alfresco-datatable',
-    'ng2-alfresco-documentlist',
-    'ng2-alfresco-login',
-    'ng2-alfresco-search',
-    'ng2-alfresco-social',
-    'ng2-alfresco-tag',
-    'ng2-alfresco-upload',
-    'ng2-alfresco-userinfo',
-    'ng2-alfresco-viewer',
-    'ng2-alfresco-webscript'
+    'content-service'
 ];
 
 const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
@@ -40,23 +26,24 @@ module.exports = {
 
     resolve: {
         alias: {
+            "@adf/content-service": path.resolve(__dirname, '../content-service/'),
             "ng2-alfresco-core$": path.resolve(__dirname, '../ng2-alfresco-core/index.ts'),
-            "ng2-alfresco-core": path.resolve(__dirname, '../ng2-alfresco-core'),
-            "ng2-alfresco-datatable": path.resolve(__dirname, '../ng2-alfresco-datatable/index.ts'),
-            "ng2-activiti-diagrams": path.resolve(__dirname, '../ng2-activiti-diagrams/index.ts'),
-            "ng2-activiti-analytics": path.resolve(__dirname, '../ng2-activiti-analytics/index.ts'),
-            "ng2-activiti-form": path.resolve(__dirname, '../ng2-activiti-form/index.ts'),
-            "ng2-activiti-tasklist": path.resolve(__dirname, '../ng2-activiti-tasklist/index.ts'),
-            "ng2-activiti-processlist": path.resolve(__dirname, '../ng2-activiti-processlist/index.ts'),
-            "ng2-alfresco-documentlist": path.resolve(__dirname, '../ng2-alfresco-documentlist/index.ts'),
-            "ng2-alfresco-login": path.resolve(__dirname, '../ng2-alfresco-login/index.ts'),
-            "ng2-alfresco-search": path.resolve(__dirname, '../ng2-alfresco-search/index.ts'),
-            "ng2-alfresco-social": path.resolve(__dirname, '../ng2-alfresco-social/index.ts'),
-            "ng2-alfresco-tag": path.resolve(__dirname, '../ng2-alfresco-tag/index.ts'),
-            "ng2-alfresco-upload": path.resolve(__dirname, '../ng2-alfresco-upload/index.ts'),
-            "ng2-alfresco-viewer": path.resolve(__dirname, '../ng2-alfresco-viewer/index.ts'),
-            "ng2-alfresco-webscript": path.resolve(__dirname, '../ng2-alfresco-webscript/index.ts'),
-            "ng2-alfresco-userinfo": path.resolve(__dirname, '../ng2-alfresco-userinfo/index.ts')
+            "ng2-alfresco-core": path.resolve(__dirname, '../ng2-alfresco-core')
+            // "ng2-alfresco-datatable": path.resolve(__dirname, '../ng2-alfresco-datatable/index.ts'),
+            // "ng2-activiti-diagrams": path.resolve(__dirname, '../ng2-activiti-diagrams/index.ts'),
+            // "ng2-activiti-analytics": path.resolve(__dirname, '../ng2-activiti-analytics/index.ts'),
+            // "ng2-activiti-form": path.resolve(__dirname, '../ng2-activiti-form/index.ts'),
+            // "ng2-activiti-tasklist": path.resolve(__dirname, '../ng2-activiti-tasklist/index.ts'),
+            // "ng2-activiti-processlist": path.resolve(__dirname, '../ng2-activiti-processlist/index.ts'),
+            // "ng2-alfresco-documentlist": path.resolve(__dirname, '../ng2-alfresco-documentlist/index.ts'),
+            // "ng2-alfresco-login": path.resolve(__dirname, '../ng2-alfresco-login/index.ts'),
+            // "ng2-alfresco-search": path.resolve(__dirname, '../ng2-alfresco-search/index.ts'),
+            // "ng2-alfresco-social": path.resolve(__dirname, '../ng2-alfresco-social/index.ts'),
+            // "ng2-alfresco-tag": path.resolve(__dirname, '../ng2-alfresco-tag/index.ts'),
+            // "ng2-alfresco-upload": path.resolve(__dirname, '../ng2-alfresco-upload/index.ts'),
+            // "ng2-alfresco-viewer": path.resolve(__dirname, '../ng2-alfresco-viewer/index.ts'),
+            // "ng2-alfresco-webscript": path.resolve(__dirname, '../ng2-alfresco-webscript/index.ts'),
+            // "ng2-alfresco-userinfo": path.resolve(__dirname, '../ng2-alfresco-userinfo/index.ts')
         },
         extensions: ['.ts', '.js', '.scss'],
         modules: [helpers.root('node_modules')]
