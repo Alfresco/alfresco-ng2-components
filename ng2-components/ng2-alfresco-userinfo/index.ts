@@ -26,7 +26,6 @@ import { EcmUserService } from './src/services/ecm-user.service';
 export * from './src/components/user-info.component';
 export * from './src/services/bpm-user.service';
 export * from './src/services/ecm-user.service';
-export * from './src/models/bpm-user.model';
 
 export const USER_INFO_DIRECTIVES: any[] = [
     UserInfoComponent

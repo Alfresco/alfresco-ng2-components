@@ -17,7 +17,7 @@
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { CardViewDateItemModel, CardViewItem, CardViewMapItemModel, CardViewTextItemModel, LogService } from 'ng2-alfresco-core';
-import { BpmUserModel, BpmUserService } from 'ng2-alfresco-userinfo';
+import { BpmUserService } from 'ng2-alfresco-userinfo';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 
@@ -41,7 +41,7 @@ export class TaskHeaderComponent implements OnChanges {
     unclaim: EventEmitter<any> = new EventEmitter<any>();
 
     properties: CardViewItem [];
-    bpmUser: BpmUserModel;
+    currentBpmUserId: number;
     inEdit: boolean = false;
 
     constructor(private activitiTaskService: TaskListService,
@@ -157,7 +157,8 @@ export class TaskHeaderComponent implements OnChanges {
      */
     loadBpmUserInfo(): any {
         this.bpmUserService.getCurrentUserInfo().subscribe((res) => {
-            this.bpmUser = res;
+            let id = res ? res.id : '';
+            this.currentBpmUserId = +id;
         });
     }
 
@@ -181,7 +182,7 @@ export class TaskHeaderComponent implements OnChanges {
      * Returns true if the task is completed
      */
     isCurrentUser(): boolean {
-        return this.taskDetails.assignee ? this.bpmUser.firstName === this.taskDetails.assignee.firstName : false;
+        return this.taskDetails.assignee ? (this.currentBpmUserId === this.taskDetails.assignee.id) : false;
      }
 
     /**

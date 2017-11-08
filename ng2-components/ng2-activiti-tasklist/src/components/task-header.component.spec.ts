@@ -25,7 +25,7 @@ import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
 
 import { TaskDetailsModel } from '../models/task-details.model';
-import { completedTaskDetailsMock, taskDetailsMock, taskDetailsWithOutAssigneeMock } from './../assets/task-details.mock';
+import { completedTaskDetailsMock, taskDetailsMock } from './../assets/task-details.mock';
 import { TaskListService } from './../services/tasklist.service';
 import { TaskHeaderComponent } from './task-header.component';
 
@@ -44,11 +44,11 @@ describe('TaskHeaderComponent', () => {
         capabilities: 'fake-capability',
         company: 'fake-company',
         created: 'fake-create-date',
-        email: 'fakeBpm@fake.com',
+        email: 'wilbur@app.activiti.com',
         externalId: 'fake-external-id',
-        firstName: 'fake-first-name',
-        lastName: 'fake-last-name',
-        fullname: 'fake-full-name',
+        firstName: 'Wilbur',
+        lastName: 'Adams',
+        fullname: 'Wilbur Adams',
         groups: []
     };
 
