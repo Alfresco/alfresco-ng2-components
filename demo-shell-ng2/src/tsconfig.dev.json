@@ -64,6 +64,9 @@
       ],
       "@angular/*": [
         "../node_modules/@angular/*"
+      ],
+      "@adf/*": [
+        "../../ng2-components/*"
       ]
     }
   },

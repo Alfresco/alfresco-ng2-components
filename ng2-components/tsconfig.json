@@ -19,6 +19,7 @@
         "outDir": "./dist",
         "baseUrl" :  "./",
         "paths": {
+            "@adf/content-service/*": ["./content-service/*"],
             "ng2-alfresco-core": ["./ng2-alfresco-core/"],
             "ng2-alfresco-datatable": ["./ng2-alfresco-datatable/"],
             "ng2-activiti-diagrams": ["./ng2-activiti-diagrams/"],
