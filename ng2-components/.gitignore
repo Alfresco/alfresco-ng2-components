@@ -1,0 +1,15 @@
+npm-debug.log
+node_modules
+.idea
+.npmrc
+typings
+coverage
+dist
+content-service/**/*.js
+content-service/**/*.js.map
+content-service/**/*.d.ts
+*.tgz
+/package/
+/bundles/
+index.d.ts
+/.happypack
