@@ -45,4 +45,4 @@ import { WebscriptComponent } from './webscript.component';
         }
     ],
 })
-export class WebscriptModule {}
+export class WebScriptModule {}

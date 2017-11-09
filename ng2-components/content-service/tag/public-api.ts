@@ -18,3 +18,4 @@
 export * from './tag-actions.component';
 export * from './tag-list.component';
 export * from './tag-node-list.component';
+export * from './tag-module';

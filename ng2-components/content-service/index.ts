@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export * from '@adf/content-service/social';
-export * from '@adf/content-service/tag';
-export * from '@adf/content-service/webscript';
-export * from '@adf/content-service/services';
+export * from './social';
+export * from './tag';
+export * from './webscript';
+export * from './services';
