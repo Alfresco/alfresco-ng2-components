@@ -20,7 +20,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
-import { ActivitiFormModule, FormService } from '@adf/process-services';
+import { FormModule, FormService } from '@adf/process-services';
 import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 
@@ -42,7 +42,7 @@ describe('ProcessInstanceDetailsComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule,
-                ActivitiFormModule,
+                FormModule,
                 ActivitiTaskListModule
             ],
             declarations: [

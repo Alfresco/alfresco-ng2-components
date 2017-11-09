@@ -19,7 +19,7 @@ import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
 
-import { ActivitiContentService } from '@adf/process-services';
+import { ProcessContentService } from '@adf/process-services';
 import { AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
@@ -27,7 +27,7 @@ import { AttachmentComponent } from './create-task-attachment.component';
 
 describe('Activiti Task Create Attachment', () => {
 
-    let service: ActivitiContentService;
+    let service: ProcessContentService;
     let component: AttachmentComponent;
     let fixture: ComponentFixture<AttachmentComponent>;
     let createTaskRelatedContentSpy: jasmine.Spy;
@@ -43,7 +43,7 @@ describe('Activiti Task Create Attachment', () => {
             providers: [
                 { provide: AppConfigService, useClass: AppConfigServiceMock },
                 { provide: TranslationService, useClass: TranslationMock },
-                ActivitiContentService
+                ProcessContentService
             ]
         }).compileComponents();
     }));
@@ -52,7 +52,7 @@ describe('Activiti Task Create Attachment', () => {
 
         fixture = TestBed.createComponent(AttachmentComponent);
         component = fixture.componentInstance;
-        service = fixture.debugElement.injector.get(ActivitiContentService);
+        service = fixture.debugElement.injector.get(ProcessContentService);
 
         createTaskRelatedContentSpy = spyOn(service, 'createTaskRelatedContent').and.returnValue(Observable.of(
             {

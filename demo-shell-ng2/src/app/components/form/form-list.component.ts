@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewChild } from '@angular/core';
-import { ActivitiForm, FormModel, FormService } from 'ng2-activiti-form';
+import { FormComponent, FormModel, FormService } from '@adf/process-services';
 import { LogService } from 'ng2-alfresco-core';
 
 @Component({
@@ -26,8 +26,8 @@ import { LogService } from 'ng2-alfresco-core';
 })
 export class FormListComponent {
 
-    @ViewChild(ActivitiForm)
-    activitiForm: ActivitiForm;
+    @ViewChild(FormComponent)
+    activitiForm: FormComponent;
 
     formList: any [] = [];
 

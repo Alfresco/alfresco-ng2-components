@@ -22,7 +22,7 @@ import { Observable } from 'rxjs/Rx';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { ActivitiFormModule } from '../../index';
+import { FormModule } from '../../index';
 import { formDefinitionDropdownField, formDefinitionTwoTextFields } from '../assets/formDefinition.mock';
 import { formReadonlyTwoTextFields } from '../assets/formDefinitionReadonly.mock';
 import { formDefVisibilitiFieldDependsOnNextOne, formDefVisibilitiFieldDependsOnPreviousOne } from '../assets/formDefinitionVisibiity.mock';
@@ -54,7 +54,7 @@ describe('FormComponent UI and visibiltiy', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                ActivitiFormModule
+                FormModule
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         }).compileComponents();

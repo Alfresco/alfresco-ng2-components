@@ -89,5 +89,5 @@ import { WidgetVisibilityService } from './services/widget-visibility.service';
         ...WIDGET_DIRECTIVES
     ]
 })
-export class ActivitiFormModule {
+export class FormModule {
 }

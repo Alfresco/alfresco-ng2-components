@@ -19,7 +19,7 @@ import { NgZone, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatProgressSpinnerModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
-import { ActivitiContentService } from '@adf/process-services';
+import { ProcessContentService } from '@adf/process-services';
 import { AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { Observable } from 'rxjs/Rx';
@@ -31,7 +31,7 @@ describe('TaskAttachmentList', () => {
 
     let component: TaskAttachmentListComponent;
     let fixture: ComponentFixture<TaskAttachmentListComponent>;
-    let service: ActivitiContentService;
+    let service: ProcessContentService;
     let getTaskRelatedContentSpy: jasmine.Spy;
     let deleteContentSpy: jasmine.Spy;
     let getFileRawContentSpy: jasmine.Spy;
@@ -49,7 +49,7 @@ describe('TaskAttachmentList', () => {
                 TaskAttachmentListComponent
             ],
             providers: [
-                ActivitiContentService,
+                ProcessContentService,
                 { provide: AppConfigService, useClass: AppConfigServiceMock },
                 { provide: TranslationService, useClass: TranslationMock },
                 { provide: NgZone, useValue: zone }
@@ -63,7 +63,7 @@ describe('TaskAttachmentList', () => {
         fixture = TestBed.createComponent(TaskAttachmentListComponent);
         component = fixture.componentInstance;
 
-        service = TestBed.get(ActivitiContentService);
+        service = TestBed.get(ProcessContentService);
 
         mockAttachment = {
             size: 2,

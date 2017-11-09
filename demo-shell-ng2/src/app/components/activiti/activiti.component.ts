@@ -23,7 +23,7 @@ import { AnalyticsReportListComponent } from 'ng2-activiti-analytics';
 import {
     DynamicTableRow, FORM_FIELD_VALIDATORS, FormEvent, FormFieldEvent, FormRenderingService,
     FormService, ValidateDynamicTableRowEvent
-} from 'ng2-activiti-form';
+} from '@adf/process-services';
 
 import {
     ProcessFiltersComponent,

@@ -18,7 +18,7 @@
 /* tslint:disable */
 
 import { Component, NgModule } from '@angular/core';
-import { WidgetComponent } from 'ng2-activiti-form';
+import { WidgetComponent } from '@adf/process-services';
 
 @Component({
     selector: 'custom-editor',

@@ -21,7 +21,7 @@ import { MatButtonModule, MatInputModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
-import { ActivitiFormModule, FormModel, FormOutcomeEvent, FormOutcomeModel, FormService } from '@adf/process-services';
+import { FormModule, FormModel, FormOutcomeEvent, FormOutcomeModel, FormService } from '@adf/process-services';
 import { AppConfigService, CommentProcessService, CoreModule, LogService, TranslationService } from 'ng2-alfresco-core';
 
 import { PeopleProcessService, UserProcessModel } from 'ng2-alfresco-core';
@@ -61,7 +61,7 @@ describe('TaskDetailsComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule,
-                ActivitiFormModule,
+                FormModule,
                 MatButtonModule,
                 MatInputModule
             ],

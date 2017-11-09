@@ -23,7 +23,7 @@ import {
     MatInputModule,
     MatSelectModule
 } from '@angular/material';
-import { ActivitiFormModule, FormService } from '@adf/process-services';
+import { FormModule, FormService } from '@adf/process-services';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 
@@ -48,7 +48,7 @@ describe('StartProcessInstanceComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule,
-                ActivitiFormModule,
+                FormModule,
                 MatButtonModule,
                 MatCardModule,
                 MatInputModule,

@@ -61,7 +61,7 @@ function createFakeBlob() {
     return new Blob([bytes], { type: 'image/png' });
 }
 
-describe('ActivitiContentService', () => {
+describe('ProcessContentService', () => {
 
     let service: ProcessContentService;
 

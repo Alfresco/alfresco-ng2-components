@@ -17,7 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivitiContentService } from '@adf/process-services';
+import { ProcessContentService } from '@adf/process-services';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { CreateProcessAttachmentComponent } from './create-process-attachment.component';
 
@@ -25,7 +25,7 @@ declare let jasmine: any;
 
 describe('Activiti Process Create Attachment', () => {
 
-    let service: ActivitiContentService;
+    let service: ProcessContentService;
     let component: CreateProcessAttachmentComponent;
     let fixture: ComponentFixture<CreateProcessAttachmentComponent>;
     let element: HTMLElement;
@@ -58,7 +58,7 @@ describe('Activiti Process Create Attachment', () => {
             ],
             providers: [
                 { provide: AlfrescoTranslationService },
-                ActivitiContentService
+                ProcessContentService
             ]
         }).compileComponents();
     }));
@@ -66,7 +66,7 @@ describe('Activiti Process Create Attachment', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(CreateProcessAttachmentComponent);
         component = fixture.componentInstance;
-        service = fixture.debugElement.injector.get(ActivitiContentService);
+        service = fixture.debugElement.injector.get(ProcessContentService);
         element = fixture.nativeElement;
 
         component.processInstanceId = '9999';

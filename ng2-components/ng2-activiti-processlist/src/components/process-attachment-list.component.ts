@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, NgZone, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ActivitiContentService } from '@adf/process-services';
+import { ProcessContentService } from '@adf/process-services';
 import { ContentService, ThumbnailService } from 'ng2-alfresco-core';
 
 declare var require: any;
@@ -49,7 +49,7 @@ export class ProcessAttachmentListComponent implements OnChanges {
     attachments: any[] = [];
     isLoading: boolean = true;
 
-    constructor(private activitiContentService: ActivitiContentService,
+    constructor(private activitiContentService: ProcessContentService,
                 private contentService: ContentService,
                 private thumbnailService: ThumbnailService,
                 private ngZone: NgZone) {

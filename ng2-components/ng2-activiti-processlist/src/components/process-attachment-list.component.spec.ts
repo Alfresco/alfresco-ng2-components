@@ -20,7 +20,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatProgressSpinnerModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
-import { ActivitiContentService } from '@adf/process-services';
+import { ProcessContentService } from '@adf/process-services';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { Observable } from 'rxjs/Rx';
@@ -30,7 +30,7 @@ import { ProcessAttachmentListComponent } from './process-attachment-list.compon
 
 describe('ProcessAttachmentListComponent', () => {
 
-    let service: ActivitiContentService;
+    let service: ProcessContentService;
     let component: ProcessAttachmentListComponent;
     let fixture: ComponentFixture<ProcessAttachmentListComponent>;
     let getProcessRelatedContentSpy: jasmine.Spy;
@@ -51,7 +51,7 @@ describe('ProcessAttachmentListComponent', () => {
             ],
             providers: [
                 { provide: AlfrescoTranslationService, useClass: TranslationMock },
-                ActivitiContentService,
+                ProcessContentService,
                 { provide: NgZone, useValue: zone }
             ]
         }).compileComponents();
@@ -61,7 +61,7 @@ describe('ProcessAttachmentListComponent', () => {
 
         fixture = TestBed.createComponent(ProcessAttachmentListComponent);
         component = fixture.componentInstance;
-        service = fixture.debugElement.injector.get(ActivitiContentService);
+        service = fixture.debugElement.injector.get(ProcessContentService);
 
         const translateService: TranslateService = TestBed.get(TranslateService);
         spyOn(translateService, 'get').and.callFake((key) => {

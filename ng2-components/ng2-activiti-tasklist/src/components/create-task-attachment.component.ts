@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ActivitiContentService } from '@adf/process-services';
+import { ProcessContentService } from '@adf/process-services';
 
 @Component({
     selector: 'adf-create-task-attachment',
@@ -34,7 +34,7 @@ export class AttachmentComponent implements OnChanges {
     @Output()
     success: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(private activitiContentService: ActivitiContentService) {
+    constructor(private activitiContentService: ProcessContentService) {
     }
 
     ngOnChanges(changes: SimpleChanges) {

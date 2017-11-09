@@ -19,7 +19,7 @@ import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
 
-import { ActivitiFormModule } from '@adf/process-service';
+import { FormModule } from '@adf/process-service';
 import { AppConfigService, CommentProcessService, CoreModule, TranslationService } from 'ng2-alfresco-core';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
@@ -45,7 +45,7 @@ describe('CommentsComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule,
-                ActivitiFormModule,
+                FormModule,
                 DataTableModule,
                 MatInputModule
             ],

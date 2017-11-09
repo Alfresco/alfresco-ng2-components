@@ -25,7 +25,7 @@ import {
     MatProgressSpinnerModule,
     MatSelectModule
 } from '@angular/material';
-import { ActivitiFormModule } from '@adf/process-services';
+import { FormModule } from '@adf/process-services';
 import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
 import { CardViewUpdateService, CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
@@ -62,28 +62,6 @@ export * from './src/models/process-instance.model';
 export * from './src/models/process-instance-filter.model';
 export * from './src/models/process-instance-variable.model';
 
-// Old derprecate export
-import {CreateProcessAttachmentComponent as ActivitiCreateProcessAttachmentComponent } from './src/components/create-process-attachment.component';
-import {ProcessAttachmentListComponent as ActivitiProcessAttachmentListComponent } from './src/components/process-attachment-list.component';
-import {ProcessCommentsComponent as ActivitiProcessComments } from './src/components/process-comments.component';
-import {ProcessFiltersComponent as ActivitiProcessFilters } from './src/components/process-filters.component';
-import {ProcessInstanceDetailsComponent as ActivitiProcessInstanceDetails } from './src/components/process-instance-details.component';
-import {ProcessInstanceHeaderComponent as ActivitiProcessInstanceHeader } from './src/components/process-instance-header.component';
-import {ProcessInstanceTasksComponent as ActivitiProcessInstanceTasks } from './src/components/process-instance-tasks.component';
-import {ProcessInstanceListComponent as ActivitiProcessInstanceListComponent } from './src/components/process-list.component';
-import {StartProcessInstanceComponent as ActivitiStartProcessInstance } from './src/components/start-process.component';
-import {ProcessService as ActivitiProcessService } from './src/services/process.service';
-export {CreateProcessAttachmentComponent as ActivitiCreateProcessAttachmentComponent } from './src/components/create-process-attachment.component';
-export {ProcessAttachmentListComponent as ActivitiProcessAttachmentListComponent} from './src/components/process-attachment-list.component';
-export {ProcessCommentsComponent as ActivitiProcessComments } from './src/components/process-comments.component';
-export {ProcessFiltersComponent as ActivitiProcessFilters} from './src/components/process-filters.component';
-export {ProcessInstanceDetailsComponent as ActivitiProcessInstanceDetails} from './src/components/process-instance-details.component';
-export {ProcessInstanceHeaderComponent as ActivitiProcessInstanceHeader} from './src/components/process-instance-header.component';
-export {ProcessInstanceTasksComponent as ActivitiProcessInstanceTasks} from './src/components/process-instance-tasks.component';
-export {ProcessInstanceListComponent as ActivitiProcessInstanceListComponent} from './src/components/process-list.component';
-export {StartProcessInstanceComponent as ActivitiStartProcessInstance} from './src/components/start-process.component';
-export {ProcessService as ActivitiProcessService} from './src/services/process.service';
-
 export const ACTIVITI_PROCESSLIST_DIRECTIVES: [any] = [
     ProcessInstanceListComponent,
     ProcessFiltersComponent,
@@ -95,33 +73,19 @@ export const ACTIVITI_PROCESSLIST_DIRECTIVES: [any] = [
     StartProcessInstanceComponent,
     ProcessAttachmentListComponent,
     CreateProcessAttachmentComponent,
-
-    // Old Deprecated export
-    ActivitiProcessInstanceListComponent,
-    ActivitiProcessFilters,
-    ActivitiProcessInstanceHeader,
-    ActivitiProcessInstanceTasks,
-    ActivitiProcessComments,
-    ActivitiProcessInstanceDetails,
-    ActivitiStartProcessInstance,
-    ActivitiProcessAttachmentListComponent,
-    ActivitiCreateProcessAttachmentComponent
 ];
 
 export const ACTIVITI_PROCESSLIST_PROVIDERS: [any] = [
     ProcessService,
     ProcessUploadService,
     CardViewUpdateService,
-
-    // Old Deprecated import
-    ActivitiProcessService
 ];
 
 @NgModule({
     imports: [
         CoreModule,
         DataTableModule,
-        ActivitiFormModule,
+        FormModule,
         ActivitiTaskListModule,
         MatProgressSpinnerModule,
         MatButtonModule,
