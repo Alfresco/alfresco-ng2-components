@@ -32,9 +32,6 @@
       "ng2-activiti-diagrams": [
         "../../ng2-components/ng2-activiti-diagrams"
       ],
-      "ng2-activiti-processlist": [
-        "../../ng2-components/ng2-activiti-processlist"
-      ],
       "ng2-activiti-tasklist": [
         "../../ng2-components/ng2-activiti-tasklist"
       ],

@@ -15,5 +15,20 @@
  * limitations under the License.
  */
 
-export * from './form';
-export * from './process-list';
+import { RestVariable } from 'alfresco-js-api';
+
+export class ProcessInstanceVariable implements RestVariable {
+
+    name?: string;
+    scope?: string;
+    type?: string;
+    value?: string;
+    valueUrl?: string;
+
+    constructor(obj?: any) {
+        this.name = obj && obj.name !== undefined ? obj.name : null;
+        this.scope = obj && obj.scope !== undefined ? obj.scope : null;
+        this.value = obj && obj.value !== undefined ? obj.value : null;
+        this.valueUrl = obj && obj.valueUrl !== undefined ? obj.valueUrl : null;
+    }
+}

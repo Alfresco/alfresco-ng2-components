@@ -15,5 +15,20 @@
  * limitations under the License.
  */
 
-export * from './form';
-export * from './process-list';
+export let processPresetsDefaultModel = {
+    'default': [
+        {
+            'key': 'name',
+            'type': 'text',
+            'title': 'ADF_PROCESS_LIST.PROPERTIES.NAME',
+            'sortable': true
+        },
+        {
+            'key': 'created',
+            'type': 'text',
+            'title': 'ADF_PROCESS_LIST.PROPERTIES.CREATED',
+            'cssClass': 'hidden',
+            'sortable': true
+        }
+    ]
+};

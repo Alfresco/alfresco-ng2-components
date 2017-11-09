@@ -16,8 +16,8 @@
  */
 
 import { Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
-import { ProcessAttachmentListComponent, ProcessUploadService } from 'ng2-activiti-processlist';
-import { ProcessInstance, ProcessService } from 'ng2-activiti-processlist';
+import { ProcessInstance, ProcessService ,
+    ProcessAttachmentListComponent, ProcessUploadService } from '@adf/process-services';
 import { UploadService } from 'ng2-alfresco-core';
 
 @Component({

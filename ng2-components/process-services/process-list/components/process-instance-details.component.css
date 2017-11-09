@@ -1,0 +1,21 @@
+:host {
+    width: 100%;
+}
+
+.activiti-process-container {
+    width: 100%;
+    min-height: 100px;
+    overflow: visible;
+    padding: 10px;
+}
+
+.adf-comments-dialog {
+    position: fixed;
+    top: 50%;
+    transform: translate(0, -50%);
+    width: 40%;
+}
+
+.adf-in-medias-res-button {
+    margin: 16px 0;
+}

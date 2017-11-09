@@ -26,41 +26,23 @@ import {
     MatSelectModule
 } from '@angular/material';
 import { FormModule } from '@adf/process-services';
+
 import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
 import { CardViewUpdateService, CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 
-import { CreateProcessAttachmentComponent } from './src/components/create-process-attachment.component';
-import { ProcessAttachmentListComponent } from './src/components/process-attachment-list.component';
-import { ProcessAuditDirective } from './src/components/process-audit.directive';
-import { ProcessCommentsComponent } from './src/components/process-comments.component';
-import { ProcessFiltersComponent } from './src/components/process-filters.component';
-import { ProcessInstanceDetailsComponent } from './src/components/process-instance-details.component';
-import { ProcessInstanceHeaderComponent } from './src/components/process-instance-header.component';
-import { ProcessInstanceTasksComponent } from './src/components/process-instance-tasks.component';
-import { ProcessInstanceListComponent } from './src/components/process-list.component';
-import { StartProcessInstanceComponent } from './src/components/start-process.component';
-export {ProcessAttachmentListComponent} from './src/components/process-attachment-list.component';
-export {ProcessCommentsComponent} from './src/components/process-comments.component';
-export {ProcessFiltersComponent} from './src/components/process-filters.component';
-export {ProcessInstanceDetailsComponent} from './src/components/process-instance-details.component';
-export {ProcessAuditDirective} from './src/components/process-audit.directive';
-export {ProcessInstanceHeaderComponent} from './src/components/process-instance-header.component';
-export {ProcessInstanceTasksComponent} from './src/components/process-instance-tasks.component';
-export {ProcessInstanceListComponent} from './src/components/process-list.component';
-export {StartProcessInstanceComponent} from './src/components/start-process.component';
-
-import { ProcessUploadService } from './src/services/process-upload.service';
-import { ProcessService } from './src/services/process.service';
-export { ProcessService } from './src/services/process.service';
-export { ProcessUploadService } from './src/services/process-upload.service';
-
-// models
-export * from './src/models/filter-process.model';
-export * from './src/models/process-definition.model';
-export * from './src/models/process-instance.model';
-export * from './src/models/process-instance-filter.model';
-export * from './src/models/process-instance-variable.model';
+import { CreateProcessAttachmentComponent } from './components/create-process-attachment.component';
+import { ProcessAttachmentListComponent } from './components/process-attachment-list.component';
+import { ProcessAuditDirective } from './components/process-audit.directive';
+import { ProcessCommentsComponent } from './components/process-comments.component';
+import { ProcessFiltersComponent } from './components/process-filters.component';
+import { ProcessInstanceDetailsComponent } from './components/process-instance-details.component';
+import { ProcessInstanceHeaderComponent } from './components/process-instance-header.component';
+import { ProcessInstanceTasksComponent } from './components/process-instance-tasks.component';
+import { ProcessInstanceListComponent } from './components/process-list.component';
+import { StartProcessInstanceComponent } from './components/start-process.component';
+import { ProcessUploadService } from './services/process-upload.service';
+import { ProcessService } from './services/process.service';
 
 export const ACTIVITI_PROCESSLIST_DIRECTIVES: [any] = [
     ProcessInstanceListComponent,

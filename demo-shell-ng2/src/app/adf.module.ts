@@ -8,12 +8,11 @@ import { LoginModule } from 'ng2-alfresco-login';
 import { SearchModule } from 'ng2-alfresco-search';
 import { UserInfoModule } from 'ng2-alfresco-userinfo';
 import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
-import { ActivitiProcessListModule } from 'ng2-activiti-processlist';
 import { DiagramsModule } from 'ng2-activiti-diagrams';
 import { AnalyticsModule } from 'ng2-activiti-analytics';
 
 import { DocumentListModule, SocialModule, TagModule, UploadModule, WebScriptModule } from '@adf/content-services';
-import { FormModule } from '@adf/process-services';
+import { FormModule, ProcessListModule } from '@adf/process-services';
 
 export function modules() {
   return [
@@ -31,7 +30,7 @@ export function modules() {
     WebScriptModule,
     FormModule,
     ActivitiTaskListModule,
-    ActivitiProcessListModule,
+    ProcessListModule,
     DiagramsModule,
     AnalyticsModule
   ];

@@ -15,5 +15,14 @@
  * limitations under the License.
  */
 
-export * from './form';
-export * from './process-list';
+import { Observable } from 'rxjs/Rx';
+
+export class TranslationMock {
+
+    public get(key: string|Array<string>, interpolateParams?: Object): Observable<string|any> {
+        return Observable.of(key);
+    }
+
+    addTranslationFolder() {
+    }
+}

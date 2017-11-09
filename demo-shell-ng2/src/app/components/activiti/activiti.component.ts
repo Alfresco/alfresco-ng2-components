@@ -31,7 +31,7 @@ import {
     ProcessInstanceDetailsComponent,
     ProcessInstanceListComponent,
     StartProcessInstanceComponent
-} from 'ng2-activiti-processlist';
+} from '@adf/process-services';
 import {
     AppsListComponent,
     FilterRepresentationModel,
