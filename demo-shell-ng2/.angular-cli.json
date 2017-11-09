@@ -313,7 +313,18 @@
           "input": "../../ng2-components/ng2-activiti-tasklist/src/i18n",
           "output": "./assets/ng2-activiti-tasklist/i18n"
         },
-        { "glob": "pdf.worker.js", "input": "../node_modules/pdfjs-dist/build", "output": "./" }
+        { "glob": "pdf.worker.js", "input": "../node_modules/pdfjs-dist/build", "output": "./" },
+
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/content-service/webscript/i18n",
+          "output": "./assets/@adf/content-service/webscript/i18n"
+        },
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/content-service/tag/i18n",
+          "output": "./assets/@adf/content-service/tag/i18n"
+        }
       ],
       "index": "index.html",
       "main": "main.ts",

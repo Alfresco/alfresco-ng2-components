@@ -19,9 +19,9 @@ import { NgModule } from '@angular/core';
 import { CoreModule } from 'ng2-alfresco-core';
 import { MaterialModule } from '../material.module';
 
+import { RatingService } from '../services/rating.service';
 import { LikeComponent } from './like.component';
 import { RatingComponent } from './rating.component';
-import { RatingService } from '../services/rating.service';
 
 @NgModule({
     imports: [

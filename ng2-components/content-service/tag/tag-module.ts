@@ -44,8 +44,8 @@ import { TagService } from '../services/tag.service';
             provide: TRANSLATION_PROVIDER,
             multi: true,
             useValue: {
-                name: 'ng2-alfresco-tag',
-                source: 'assets/ng2-alfresco-tag'
+                name: '@adf/content-service/tag',
+                source: 'assets/@adf/content-service/tag'
             }
         }
     ]
