@@ -1,5 +1,0 @@
-@import '../src/components/process-filters.component';
-
-@mixin alfresco-activity-processlist-theme($theme) {
-    @include adf-filters-process-theme($theme);
-}
