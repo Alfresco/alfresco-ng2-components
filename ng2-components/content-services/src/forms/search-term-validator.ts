@@ -15,10 +15,16 @@
  * limitations under the License.
  */
 
-export * from './social';
-export * from './tag';
-export * from './webscript';
-export * from './services';
-export * from './document-list';
-export * from './upload';
-export * from './search';
+import { FormControl } from '@angular/forms';
+
+export class SearchTermValidator {
+
+    static minAlphanumericChars(minChars: number) {
+        return (control: FormControl) => {
+            return ('' + control.value).replace(/[^0-9a-zA-Z]+/g, '').length >= minChars ? null : {
+                hasMinAlphanumericChars: false
+            };
+        };
+    }
+
+}

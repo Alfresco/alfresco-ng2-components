@@ -1,0 +1,47 @@
+{
+  "SEARCH": {
+    "CONTROL": {},
+    "RESULTS": {
+      "SUMMARY": "{{numResults}} Ergebnis gefunden für {{searchTerm}}",
+      "NONE": "Keine Ergebnisse gefunden für {{searchTerm}}",
+      "ERROR": "Bei der Suche ist ein Problem aufgetreten. Versuchen Sie es noch einmal.",
+      "COLUMNS": {
+        "NAME": "Namen anzeigen",
+        "MODIFIED_BY": "Bearbeitet von",
+        "MODIFIED_AT": "Bearbeitet"
+      }
+    },
+    "ICONS": {
+      "ft_ic_raster_image": "Bilddatei",
+      "ft_ic_pdf": "PDF-Dokument",
+      "ft_ic_ms_excel": "Microsoft Excel-Datei",
+      "ft_ic_ms_word": "Microsoft Word-Dokument",
+      "ft_ic_ms_powerpoint": "Microsoft PowerPoint-Datei",
+      "ft_ic_video": "Videodatei",
+      "ft_ic_document": "Dokumentdatei",
+      "ft_ic_website": "Online-Ressource",
+      "ft_ic_archive": "Archivdatei",
+      "ft_ic_presentation": "Präsentation",
+      "ft_ic_spreadsheet": "Kalkulationstabellendatei"
+    },
+    "DOCUMENT_LIST": {
+      "COLUMNS": {
+        "DISPLAY_NAME": "Namen anzeigen",
+        "CREATED_BY": "Erstellt von",
+        "CREATED_ON": "Erstellt"
+      },
+      "ACTIONS": {
+        "FOLDER": {
+          "DELETE": "Löschen"
+        },
+        "DOCUMENT": {
+          "DOWNLOAD": "Herunterladen",
+          "DELETE": "Löschen"
+        }
+      }
+    }
+  },
+  "PERMISSON": {
+    "LACKOF": "Sie verfügen nicht über die nötige Berechtigung ('{{permission}}'), um {{type}} zu {{action}}"
+  }
+}

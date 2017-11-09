@@ -7,12 +7,10 @@
 @import 'ng2-alfresco-core/styles/index';
 @import 'ng2-activiti-analytics/styles/index';
 @import 'ng2-activiti-diagrams/styles/index';
-@import 'ng2-activiti-processlist/styles/index';
 @import 'ng2-activiti-tasklist/styles/index';
 @import 'ng2-alfresco-datatable/styles/index';
 @import 'ng2-alfresco-login/styles/index';
 @import 'ng2-alfresco-userinfo/styles/index';
-@import 'ng2-alfresco-search/styles/index';
 
 @import '~@angular/material/theming';
 
@@ -29,12 +27,10 @@ $theme:   mat-light-theme($primary, $accent, $warn);
 @include alfresco-core-theme($theme);
 @include adf-analytics-theme($theme);
 @include adf-diagrams-theme($theme);
-@include adf-processlist-theme($theme);
 @include adf-tasklist-theme($theme);
 @include alfresco-datatable-theme($theme);
 @include alfresco-login-theme($theme);
 @include alfresco-userinfo-theme($theme);
-@include alfresco-search-theme($theme);
 
 //@include adf-content-services-theme($theme);
 //@include adf-process-services-theme($theme);

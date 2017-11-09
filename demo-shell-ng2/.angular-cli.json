@@ -37,12 +37,6 @@
           "input": "../node_modules/ng2-alfresco-userinfo/bundles/assets",
           "output": "./assets/"
         },
-
-        {
-          "glob": "**/*",
-          "input": "../node_modules/ng2-alfresco-search/bundles/assets",
-          "output": "./assets/"
-        },
         {
           "input": "../node_modules/ng2-alfresco-datatable/bundles/assets",
           "output": "./assets/"
@@ -160,12 +154,6 @@
           "input": "../../ng2-components/ng2-alfresco-upload/bundles/assets",
           "output": "./assets/"
         },
-
-        {
-          "glob": "**/*",
-          "input": "../../ng2-components/ng2-alfresco-search/bundles/assets",
-          "output": "./assets/"
-        },
         {
           "glob": "**/*",
           "input": "../../ng2-components/ng2-alfresco-datatable/bundles/assets",
@@ -230,11 +218,6 @@
           "glob": "**/*",
           "input": "../../ng2-components/ng2-alfresco-userinfo/src/i18n",
           "output": "./assets/ng2-alfresco-userinfo/i18n"
-        },
-        {
-          "glob": "**/*",
-          "input": "../../ng2-components/ng2-alfresco-search/src/i18n",
-          "output": "./assets/ng2-alfresco-search/i18n"
         },
         {
           "glob": "**/*",

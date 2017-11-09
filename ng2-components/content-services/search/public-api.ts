@@ -15,10 +15,7 @@
  * limitations under the License.
  */
 
-export * from './social';
-export * from './tag';
-export * from './webscript';
-export * from './services';
-export * from './document-list';
-export * from './upload';
-export * from './search';
+export * from './components/search.component';
+export * from './components/search-control.component';
+export * from './components/search-trigger.directive';
+export * from './search-module';

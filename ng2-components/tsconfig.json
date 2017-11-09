@@ -26,7 +26,6 @@
             "ng2-activiti-analytics":["./ng2-activiti-analytics/"],
             "ng2-activiti-tasklist": ["./ng2-activiti-tasklist/"],
             "ng2-alfresco-login": ["./ng2-alfresco-login/"],
-            "ng2-alfresco-search": ["./ng2-alfresco-search/"],
             "ng2-alfresco-viewer": ["./ng2-alfresco-viewer/"],
             "ng2-alfresco-userinfo": ["./ng2-alfresco-userinfo"],
             "alfresco-js-api": ["./node_modules/alfresco-js-api/"],

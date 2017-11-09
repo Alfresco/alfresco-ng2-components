@@ -8,13 +8,15 @@
 @import '../../../ng2-alfresco-datatable/styles/index';
 @import '../../../ng2-alfresco-login/styles/index';
 @import '../../../ng2-alfresco-userinfo/styles/index';
-@import '../../../ng2-alfresco-search/styles/index';
 
 @mixin alfresco-material-theme($theme) {
     @include alfresco-core-theme($theme);
+
     @include adf-analytics-theme($theme);
     @include adf-diagrams-theme($theme);
     @include adf-tasklist-theme($theme);
+
+
     @include alfresco-datatable-theme($theme);
 
     @include adf-content-services-theme($theme);
@@ -22,5 +24,4 @@
 
     @include alfresco-login-theme($theme);
     @include alfresco-userinfo-theme($theme);
-    @include alfresco-search-theme($theme);
 }

@@ -17,9 +17,6 @@
       "ng2-alfresco-userinfo": [
         "../../ng2-components/ng2-alfresco-userinfo"
       ],
-      "ng2-alfresco-search": [
-        "../../ng2-components/ng2-alfresco-search"
-      ],
       "ng2-alfresco-datatable": [
         "../../ng2-components/ng2-alfresco-datatable"
       ],

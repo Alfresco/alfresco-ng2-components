@@ -18,7 +18,7 @@
 import { Component, OnInit, Optional, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { NodePaging } from 'alfresco-js-api';
-import { SearchComponent } from 'ng2-alfresco-search';
+import { SearchComponent } from '@adf/content-services';
 
 @Component({
     selector: 'adf-search-result-component',

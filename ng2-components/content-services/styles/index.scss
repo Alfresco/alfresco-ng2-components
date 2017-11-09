@@ -6,6 +6,9 @@
 @import '../upload/components/file-uploading-list-row.component';
 @import '../upload/components/file-uploading-dialog.component';
 
+@import '../search/components/search.component';
+@import '../search/components/search-control.component';
+
 @mixin adf-content-services-theme($theme) {
     @include adf-breadcrumb-theme($theme);
     @include adf-breadcrumb-dropdown-theme($theme);
@@ -13,4 +16,6 @@
     @include adf-document-list-theme($theme) ;
     @include adf-file-uploading-row-theme($theme);
     @include adf-upload-dialog-theme($theme);
+    @include adf-search-control-theme($theme);
+    @include adf-search-autocomplete-theme($theme);
 }

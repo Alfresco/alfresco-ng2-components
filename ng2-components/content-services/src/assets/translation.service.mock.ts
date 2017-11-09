@@ -15,10 +15,23 @@
  * limitations under the License.
  */
 
-export * from './social';
-export * from './tag';
-export * from './webscript';
-export * from './services';
-export * from './document-list';
-export * from './upload';
-export * from './search';
+import { EventEmitter } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
+
+export interface LangChangeEvent {
+    lang: string;
+    translations: any;
+}
+
+export class TranslationMock {
+
+    public onLangChange: EventEmitter<LangChangeEvent> = new EventEmitter<LangChangeEvent>();
+
+    public get(key: string|Array<string>, interpolateParams?: Object): Observable<string|any> {
+        return Observable.of(key);
+    }
+
+    addTranslationFolder() {
+
+    }
+}

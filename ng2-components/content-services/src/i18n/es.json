@@ -1,0 +1,47 @@
+{
+  "SEARCH": {
+    "CONTROL": {},
+    "RESULTS": {
+      "SUMMARY": "{{numResults}} resultados encontrados para {{searchTerm}}",
+      "NONE": "No se han encontrado resultados para {{searchTerm}}",
+      "ERROR": "Se ha producido un problema durante la búsqueda; vuelva a intentarlo.",
+      "COLUMNS": {
+        "NAME": "Nombre a mostrar",
+        "MODIFIED_BY": "Modificado por",
+        "MODIFIED_AT": "Modificado a las"
+      }
+    },
+    "ICONS": {
+      "ft_ic_raster_image": "Fichero de imagen",
+      "ft_ic_pdf": "Documento PDF",
+      "ft_ic_ms_excel": "Fichero de Microsoft Excel",
+      "ft_ic_ms_word": "Documento de Microsoft Word",
+      "ft_ic_ms_powerpoint": "Fichero de Microsoft PowerPoint",
+      "ft_ic_video": "Fichero de vídeo",
+      "ft_ic_document": "Fichero de documento",
+      "ft_ic_website": "Recurso web",
+      "ft_ic_archive": "Fichero de archivo",
+      "ft_ic_presentation": "Fichero de presentación",
+      "ft_ic_spreadsheet": "Fichero de hoja de cálculo"
+    },
+    "DOCUMENT_LIST": {
+      "COLUMNS": {
+        "DISPLAY_NAME": "Nombre a mostrar",
+        "CREATED_BY": "Creado por",
+        "CREATED_ON": "Creado"
+      },
+      "ACTIONS": {
+        "FOLDER": {
+          "DELETE": "Eliminar"
+        },
+        "DOCUMENT": {
+          "DOWNLOAD": "Descargar",
+          "DELETE": "Eliminar"
+        }
+      }
+    }
+  },
+  "PERMISSON": {
+    "LACKOF": "No tiene permiso {{permission}} para {{action}} el {{type}}"
+  }
+}
