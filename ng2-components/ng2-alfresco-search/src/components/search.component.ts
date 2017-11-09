@@ -58,7 +58,7 @@ export class SearchComponent implements AfterContentInit, OnChanges {
     displayWith: ((value: any) => string) | null = null;
 
     @Input()
-    maxResults: number = 5;
+    maxResults: number = 20;
 
     @Input()
     resultSort: string = null;
@@ -82,9 +82,6 @@ export class SearchComponent implements AfterContentInit, OnChanges {
 
     @Output()
     resultLoaded: EventEmitter<NodePaging> = new EventEmitter();
-
-    @Output()
-    error: EventEmitter<any> = new EventEmitter();
 
     showPanel: boolean = false;
     results: NodePaging;
@@ -161,7 +158,8 @@ export class SearchComponent implements AfterContentInit, OnChanges {
                 },
                 error => {
                     if (error.status !== 400) {
-                        this.error.emit(error);
+                        this.results = null;
+                        this.resultLoaded.error(error);
                     }
                 });
         }

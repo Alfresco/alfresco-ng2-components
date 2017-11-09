@@ -1,5 +1,7 @@
 # Search Results component
 
+
+
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
 
 <!-- toc -->
@@ -17,7 +19,8 @@
 
 ```html
 <adf-search 
-    [searchTerm]="searchTerm">
+    [searchTerm]="searchTerm"
+    (resultLoaded)="showSearchResult($event)">
 </adf-search>
 ```
 
@@ -30,25 +33,45 @@
 | resultType | string | | Node type to filter search results by, e.g. 'cm:content', 'cm:folder' if you want only the files. |
 | maxResults | number  | 20 | Maximum number of results to show in the search. |
 | resultSort | string  | | Criteria to sort search results by, must be one of "name" , "modifiedAt" or "createdAt" |
-| navigationMode | string | "dblclick" | Event used to initiate a navigation action to a specific result, one of "click" or "dblclick" |
-| navigate | boolean | true | Allow documentlist to navigate or not. For more information see documentlist component's documentation |
+| displayWith | function | | Define a function that can be applied to the element clicked which will be set to the input value |
 
 ### Events
 
 | Name | Description |
 | --- | --- |
-| preview | Emitted when user acts upon files with either single or double click (depends on `navigation-mode`), recommended for Viewer components integration  |
-| nodeDbClick | Emitted when user acts upon files or folders with double click **only when `navigation-mode` is set to false**, giving more freedom then just simply previewing the file |
-| resultsLoad | Emitted when search results have fully loaded |
+| resultLoaded | Emitted when search results have fully loaded |
 
 ## Details
 
+### Customise Search Results
+You can add a template that will be shown when the results are loaded.
+
 ```html
-<adf-search
-    [searchTerm]="searchTerm">
+<adf-search [searchTerm]="searchTerm">
+    <ng-template let-result>
+        <span *ngFor="let item of result?.list?.entries">
+            {{ item?.entry.name }}
+        </span>
+    </ng-template>
 </adf-search>
 ```
+The results are provided via the ![$implicit variable of angular2] (https://angular.io/api/common/NgTemplateOutlet) and can be accessed via the sugar sintax 'let-yourChosenName'. As per example above the result will be something like : 
+![adf-search-control](docassets/images/search-component-simple-template.png)
 
-Example of a component that displays search results, using the Angular2 router to supply a 'q' parameter containing the
-search term. If no router is present on the page or if the router does not provide such parameter then an empty
-results page will be shown.
+### Attach an input field to the search
+You can also attach your input field to the adf-search component via the trigger [adfSearchAutocomplete]
+
+```html
+<input matInput type="text"
+    [adfSearchAutocomplete]="search"
+    (enterKeyPressed)="searchSubmit($event)">
+
+<adf-search #search="adfSearchAutocomplete">
+    <ng-template let-result>
+        <span *ngFor="let item of result?.list?.entries">
+            {{ item?.entry.name }}
+        </span>
+    </ng-template>
+</adf-search>        
+```
+In this way it is possible to fetch the results from the word typed into the input text straight into the adf-search component via the custom template variable.

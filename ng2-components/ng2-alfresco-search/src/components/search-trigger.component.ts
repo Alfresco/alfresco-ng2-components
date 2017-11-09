@@ -94,7 +94,7 @@ export class AdfAutocompleteTriggerDirective implements ControlValueAccessor, On
                 @Optional() @Inject(DOCUMENT) private document: any) { }
 
     ngOnDestroy() {
-        this.escapeEventStream.complete();
+        this.escapeEventStream.unsubscribe();
         this.panelClosed.unsubscribe();
         this.panelOpened.unsubscribe();
     }
