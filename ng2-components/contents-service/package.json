@@ -1,9 +1,9 @@
 {
-  "name": "content-service",
+  "name": "contents-service",
   "description": "Alfresco content service",
   "version": "1.9.0",
   "author": "Alfresco Software, Ltd.",
-  "main": "bundles/content-service.js",
+  "main": "bundles/contents-service.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/Alfresco/alfresco-ng2-components.git"
@@ -16,7 +16,7 @@
   "devDependencies": {
   },
   "keywords": [
-    "content-service",
+    "contents-service",
     "alfresco-component",
     "angular",
     "components"

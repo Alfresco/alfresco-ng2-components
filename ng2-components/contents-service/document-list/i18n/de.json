@@ -1,0 +1,54 @@
+{
+  "ADF-DOCUMENT-LIST": {
+    "EMPTY": {
+      "HEADER": "Dieser Ordner ist leer"
+    },
+    "LAYOUT": {
+      "THUMBNAIL": "Miniaturansicht",
+      "NAME": "Name",
+      "LOCATION": "Speicherort",
+      "SIZE": "Größe",
+      "DELETED_ON": "Gelöscht",
+      "DELETED_BY": "Gelöscht von",
+      "STATUS": "Status",
+      "MODIFIED_ON": "Bearbeitet",
+      "MODIFIED_BY": "Bearbeitet von",
+      "SHARED_BY": "Freigegeben von",
+      "LOAD_MORE": "Mehr laden"
+    }
+  },
+  "ALFRESCO_DOCUMENT_LIST": {
+    "BUTTON": {
+      "ACTION_CREATE": "Erstellen ...",
+      "ACTION_NEW_FOLDER": "Neuer Ordner",
+      "CREATE": "Erstellen",
+      "CANCEL": "Abbrechen"
+    }
+  },
+  "DROPDOWN": {
+    "PLACEHOLDER_LABEL": "Site-Liste",
+    "MY_FILES_OPTION": ""
+  },
+  "NODE_SELECTOR": {
+    "CANCEL": "Abbrechen",
+    "CHOOSE": "Auswählen",
+    "NO_RESULTS": "Keine Ergebnisse gefunden"
+  },
+  "OPERATION": {
+    "SUCCES": {
+      "CONTENT": {
+        "COPY": "Kopieren erfolgreich",
+        "MOVE": "Verschieben erfolgreich"
+      },
+      "FOLDER": {
+        "COPY": "Kopieren erfolgreich",
+        "MOVE": "Verschieben erfolgreich"
+      }
+    },
+    "ERROR": {
+      "CONFLICT": "Dieser Name wird bereits verwendet. Versuchen Sie es mit einem anderen Namen.",
+      "UNKNOWN": "Die Aktion war nicht erfolgreich. Versuchen Sie es noch einmal oder wenden Sie sich an Ihr IT-Team.",
+      "PERMISSION": "Sie verfügen nicht über die nötigen Zugriffsrechte hierfür."
+    }
+  }
+}

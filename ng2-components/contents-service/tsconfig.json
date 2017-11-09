@@ -24,8 +24,8 @@
     "paths": {
       "ng2-alfresco-core": ["../ng2-alfresco-core/"],
       "ng2-alfresco-datatable": ["../ng2-alfresco-datatable/"],
-      "@adf/content-service/*": ["../content-service/*"],
-      "@adf/process-services/*": ["../process-services/*"]
+      "ng2-alfresco-upload": ["../ng2-alfresco-upload/"],
+      "@adf/contents-service/*": ["../contents-service/*"]
     }
   },
   "files": [
@@ -41,7 +41,7 @@
     "annotateForClosureCompiler": true,
     "strictMetadataEmit": true,
     "flatModuleOutFile": "index.js",
-    "flatModuleId": "@adf/content-service",
+    "flatModuleId": "@adf/contents-service",
     "skipTemplateCodegen": true
   }
 }

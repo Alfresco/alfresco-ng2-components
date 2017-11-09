@@ -5,9 +5,9 @@ node_modules
 typings
 coverage
 dist
-content-service/**/*.js
-content-service/**/*.js.map
-content-service/**/*.d.ts
+contents-service/**/*.js
+contents-service/**/*.js.map
+contents-service/**/*.d.ts
 *.tgz
 /package/
 /bundles/

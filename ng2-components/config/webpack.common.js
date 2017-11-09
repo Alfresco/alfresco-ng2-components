@@ -8,7 +8,7 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const alfrescoLibs = [
     'ng2-alfresco-core',
-    'content-service'
+    'contents-service'
 ];
 
 const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
@@ -26,7 +26,8 @@ module.exports = {
 
     resolve: {
         alias: {
-            "@adf/content-service": path.resolve(__dirname, '../content-service/'),
+            "@adf/contents-service": path.resolve(__dirname, '../contents-service/'),
+            "@adf/contents-service$": path.resolve(__dirname, '../contents-service/index.ts'),
             "ng2-alfresco-core$": path.resolve(__dirname, '../ng2-alfresco-core/index.ts'),
             "ng2-alfresco-core": path.resolve(__dirname, '../ng2-alfresco-core')
             // "ng2-alfresco-datatable": path.resolve(__dirname, '../ng2-alfresco-datatable/index.ts'),

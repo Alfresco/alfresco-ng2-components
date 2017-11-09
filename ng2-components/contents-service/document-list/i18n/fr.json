@@ -1,0 +1,54 @@
+{
+  "ADF-DOCUMENT-LIST": {
+    "EMPTY": {
+      "HEADER": "Ce dossier est vide"
+    },
+    "LAYOUT": {
+      "THUMBNAIL": "Miniature",
+      "NAME": "Nom",
+      "LOCATION": "Emplacement",
+      "SIZE": "Taille",
+      "DELETED_ON": "Supprimé",
+      "DELETED_BY": "Supprimé par",
+      "STATUS": "Statut",
+      "MODIFIED_ON": "Modifié",
+      "MODIFIED_BY": "Modifié par",
+      "SHARED_BY": "Partagé par",
+      "LOAD_MORE": "Charger plus"
+    }
+  },
+  "ALFRESCO_DOCUMENT_LIST": {
+    "BUTTON": {
+      "ACTION_CREATE": "Créer...",
+      "ACTION_NEW_FOLDER": "Nouveau Dossier",
+      "CREATE": "Créer",
+      "CANCEL": "Annuler"
+    }
+  },
+  "DROPDOWN": {
+    "PLACEHOLDER_LABEL": "Liste des Sites",
+    "MY_FILES_OPTION": ""
+  },
+  "NODE_SELECTOR": {
+    "CANCEL": "Annuler",
+    "CHOOSE": "Choisir",
+    "NO_RESULTS": "Aucun résultat trouvé"
+  },
+  "OPERATION": {
+    "SUCCES": {
+      "CONTENT": {
+        "COPY": "Copie réussie",
+        "MOVE": "Déplacement réussi"
+      },
+      "FOLDER": {
+        "COPY": "Copie réussie",
+        "MOVE": "Déplacement réussi"
+      }
+    },
+    "ERROR": {
+      "CONFLICT": "Ce nom est déjà utilisé, choisissez-en un autre.",
+      "UNKNOWN": "L'action a échoué. Réessayez ou contactez le service informatique.",
+      "PERMISSION": "Vous n'avez pas le niveau d'accès requis pour cette opération."
+    }
+  }
+}

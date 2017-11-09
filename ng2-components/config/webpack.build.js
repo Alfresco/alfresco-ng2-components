@@ -35,7 +35,7 @@ module.exports = webpackMerge(commonConfig, {
     },
 
     entry: {
-        "content-service": "./content-service/public-api.ts",
+        "contents-service": "./contents-service/index.ts",
         "ng2-alfresco-core": "./ng2-alfresco-core/index.ts"
         // "ng2-alfresco-datatable": "./ng2-alfresco-datatable/index.ts",
         // "ng2-activiti-diagrams": "./ng2-activiti-diagrams/index.ts",
@@ -43,14 +43,10 @@ module.exports = webpackMerge(commonConfig, {
         // "ng2-activiti-form": "./ng2-activiti-form/index.ts",
         // "ng2-activiti-tasklist": "./ng2-activiti-tasklist/index.ts",
         // "ng2-activiti-processlist": "./ng2-activiti-processlist/index.ts",
-        // "ng2-alfresco-documentlist": "./ng2-alfresco-documentlist/index.ts",
         // "ng2-alfresco-login": "./ng2-alfresco-login/index.ts",
         // "ng2-alfresco-search": "./ng2-alfresco-search/index.ts",
-        // "ng2-alfresco-social": "./ng2-alfresco-social/index.ts",
-        // "ng2-alfresco-tag": "./ng2-alfresco-tag/index.ts",
         // "ng2-alfresco-upload": "./ng2-alfresco-upload/index.ts",
         // "ng2-alfresco-viewer": "./ng2-alfresco-viewer/index.ts",
-        // "ng2-alfresco-webscript": "./ng2-alfresco-webscript/index.ts",
         // "ng2-alfresco-userinfo": "./ng2-alfresco-userinfo/index.ts"
     },
 
