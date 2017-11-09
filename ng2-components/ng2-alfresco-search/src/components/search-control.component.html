@@ -19,12 +19,16 @@
         (keyup.escape)="toggleSearchBar()"
         (ngModelChange)="inputChange($event)"
         [adfSearchAutocomplete]="auto"
-        (enterKeyPressed)="searchSubmit($event)"
-        #searchInput>
+        (enterKeyPressed)="searchSubmit($event)">
 </mat-form-field>
 </div>
 
-<adf-search #auto="adfSearchAutocomplete" class="adf-search-result-autocomplete">
+<adf-search #auto="adfSearchAutocomplete"
+            class="adf-search-result-autocomplete"
+            [rootNodeId]="liveSearchRoot"
+            [resultType]="liveSearchResultType"
+            [resultSort]="liveSearchResultSort"
+            [maxResults]="liveSearchMaxResults">
     <ng-template let-data>
         <mat-list *ngIf="isSearchBarActive()" id="autocomplete-search-result-list">
             <mat-list-item

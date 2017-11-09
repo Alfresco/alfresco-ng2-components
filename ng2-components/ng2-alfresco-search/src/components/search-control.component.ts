@@ -16,7 +16,7 @@
  */
 
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
 import { AlfrescoAuthenticationService, ThumbnailService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Observable';
@@ -55,6 +55,18 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     @Input()
     liveSearchEnabled: boolean = true;
 
+    @Input()
+    liveSearchRoot: string = '-root-';
+
+    @Input()
+    liveSearchResultType: string = null;
+
+    @Input()
+    liveSearchResultSort: string = null;
+
+    @Input()
+    liveSearchMaxResults: number = 5;
+
     @Output()
     submit: EventEmitter<any> = new EventEmitter();
 
@@ -63,9 +75,6 @@ export class SearchControlComponent implements OnInit, OnDestroy {
 
     @Output()
     optionClicked: EventEmitter<any> = new EventEmitter();
-
-    @ViewChild('searchInput')
-    searchInput: ElementRef;
 
     searchTerm: string = '';
     subscriptAnimationState: string;
@@ -139,12 +148,6 @@ export class SearchControlComponent implements OnInit, OnDestroy {
       if (item.entry) {
           this.optionClicked.next(item);
           this.toggleSearchBar();
-      }
-  }
-
-  onAnimationDone(event: any) {
-      if ( this.subscriptAnimationState === 'active') {
-          this.searchInput.nativeElement.focus();
       }
   }
 

@@ -1,5 +1,10 @@
 # Search component
 
+Displays a input text which shows find-as-you-type suggestions.
+
+![adf-search-control](docassets/images/search-control-component.png)
+
+
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
 
 <!-- toc -->
@@ -17,11 +22,9 @@
 
 ```html
 <adf-search-control 
-    [searchTerm]="searchTerm"
-    inputType="search"
-    (searchChange)="onSearchChange($event);"
-    (searchSubmit)="onSearchSubmit($event);"
-    (fileSelect)="onSearchResultSelect($event);">
+    [highlight]="true"
+    (optionClicked)="onItemClicked($event)"
+    (submit)="onSearchSubmit($event)">
 </adf-search-control>
 ```
 
@@ -45,18 +48,16 @@
 | Name | Description |
 | --- | --- |
 | searchChange | Emitted when the search term is changed. The search term is provided in the 'value' property of the returned object.  If the term is less than three characters in length then the term is truncated to an empty string. |
-| searchSubmit | Emitted when the search form is submitted. The search term is provided in the 'value' property of the returned object. |
-| fileSelect | Emitted when a file item from the list of find-as-you-type results is selected |
+| submit | Emitted when the search form is submitted. The search term is provided as value of the event. |
+| optionClicked | Emitted when a file item from the list of find-as-you-type results is selected |
 
 ## Details
 
 ```html
-<adf-search-control
-    [searchTerm]="searchTerm"
-    inputType="search"
-    (searchChange)="onSearchChange($event);"
-    (searchSubmit)="onSearchSubmit($event);"
-    (fileSelect)="onSearchResultSelect($event);">
+<adf-search-control 
+    [highlight]="true"
+    (optionClicked)="onItemClicked($event)"
+    (submit)="onSearchSubmit($event)">
 </adf-search-control>
 ```
 
