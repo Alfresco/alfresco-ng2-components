@@ -1,50 +1,55 @@
 {
-    "ADF_PROCESS_LIST": {
-        "LIST": {
-            "NONE": "Aucune instance de processus trouvée",
-            "SUMMARY": "{{total}} instances de processus trouvées",
-            "ERROR": "Impossible de charger les instances de processus. Réessayez ou transférez le message suivant au service informatique : {{errorMessage}}"
+    "ADF_TASK_LIST": {
+        "APPS": {
+            "NONE": "Aucune application trouvée"
         },
-        "FILTERS": {
+        "LIST": {
             "MESSAGES": {
-                "NONE": "Auncun filtre d'instances de processus sélectionné."
+                "NONE": "Aucune liste de tâches trouvée"
             }
         },
         "DETAILS": {
             "LABELS": {
-                "STARTED_BY": "Démarré par",
-                "STARTED": "Démarré",
-                "ENDED": "Terminé",
+                "ASSIGNEE": "Personne assignée",
+                "DUE": "Echéance",
+                "FORM": "Formulaire",
+                "PEOPLE": "Personnes avec lesquelles cette tâche est partagée",
                 "COMMENTS": "Commentaires",
-                "START_FORM": "Démarrer le formulaire",
-                "TASKS_ACTIVE": "Tâches actives",
-                "TASKS_COMPLETED": "Tâches terminées",
-                "TASK_SUBTITLE": "Assigné à {{user}}, créé le {{created}}"
+                "CHECKLIST": "Liste de contrôle",
+                "INVOLVED_PEOPLE": "Personnes impliquées",
+                "ADD_PEOPLE": "Ajouter des personnes et des groupes",
+                "ADD_ASSIGNEE": "Ajouter une nouvelle personne assignée"
             },
             "BUTTON": {
-                "CANCEL": "Annuler le processus",
-                "CLOSE": "Fermer",
-                "SHOW_DIAGRAM": "Afficher le diagramme",
-                "DRAG-ATTACHMENT": "Déposer les fichiers à importer",
+                "COMPLETE": "Terminer",
+                "CLAIM": "Se l'attribuer",
+                "UNCLAIM": "Replacer dans la file d'attente",
+                "DRAG-ATTACHMENT": "Déposer des fichiers ici...",
                 "UPLOAD-ATTACHMENT": "Importer la pièce jointe"
             },
             "MESSAGES": {
-                "NONE": "Aucun détail de processus trouvé."
+                "NONE": "Aucun détail de tâche trouvé",
+                "CLAIM": "Pour travailler sur cette tâche, cliquez sur Se l'attribuer."
             },
-            "TASKS": {
-                "NO_ACTIVE": "Aucune tâche actuellement active",
-                "NO_COMPLETED": "Aucune tâche terminée",
-                "TASK_DETAILS": "Détails de la tâche",
-                "TASK_CLOSE": "Fermer"
+            "FORM": {
+                "NONE": "Aucun formulaire."
+            },
+            "DUE": {
+                "NONE": "Aucune date d'échéance."
+            },
+            "ASSIGNEE": {
+                "NONE": "Aucune personne assignée."
+            },
+            "PEOPLE": {
+                "NONE": "Aucune personne impliquée."
             },
             "COMMENTS": {
                 "NONE": "Pas de commentaire",
-                "BUTTON": {
-                    "ADD": "Ajouter un commentaire"
-                },
-                "ADD_DIALOG": {
+                "ADD": "Ajouter un commentaire",
+                "HEADER": "Commentaires",
+                "DIALOG": {
                     "TITLE": "Nouveau commentaire",
-                    "LABEL": {
+                    "LABELS": {
                         "MESSAGE": "Message"
                     },
                     "BUTTON": {
@@ -53,43 +58,52 @@
                     }
                 }
             },
-            "ADD_DIALOG": {
-                "TITLE": "Définir la variable de processus",
-                "LABEL": {
-                    "NAME": "Nom",
-                    "VALUE": "Valeur",
-                    "SCOPE": "Etendue"
-                }
+            "CHECKLIST": {
+                "NONE": "Aucune liste de contrôle"
             },
-            "EDIT_DIALOG": {
-                "TITLE": "Modifier la variable de processus"
-            },
-            "ERROR_DIALOG": {
-                "TITLE": "Impossible de terminer cette action",
-                "DESCRIPTION": "Vous n'avez peut-être pas le niveau d'accès requis ; vérifiez auprès du service informatique."
+            "ERROR": {
+                "TITLE": "Impossible de terminer l'action",
+                "DESCRIPTION": "Réessayez ou vérifiez que vous avez le niveau d'accès requis.",
+                "CLOSE": "Fermer"
             }
         },
-        "START_PROCESS": {
-            "BUTTON": "Démarrer le processus",
-            "NO_PROCESS_DEFINITIONS": "Impossible de démarrer un processus car aucune définition de processus n'est disponible",
+        "FILTERS": {
+            "MESSAGES": {
+                "NONE": "Aucun filtre de tâches sélectionné."
+            }
+        },
+        "START_TASK": {
+            "BUTTON": "CRÉER UNE TÂCHE",
             "FORM": {
-                "TITLE": "Démarrer le processus",
+                "TITLE": "Démarrer la tâche",
                 "LABEL": {
-                    "TYPE": "Type",
-                    "NAME": "Nom"
+                    "NONE": "Aucune",
+                    "NAME": "Nom",
+                    "DESCRIPTION": "Description",
+                    "ATTACHFORM": "Joindre un formulaire",
+                    "ASSIGNEE": "Personne assignée",
+                    "FORM": "Formulaire",
+                    "DATE": "Choisir une date"
                 },
-                "TYPE_PLACEHOLDER": "Choisissez une valeur...",
                 "ACTION": {
                     "START": "Démarrer",
                     "CANCEL": "Annuler"
+                },
+                "DATE": {
+                    "ERROR": "Format de date JJ/MM/AAAA"
                 }
-            },
-            "ERROR": {
-                "LOAD_PROCESS_DEFS": "Impossible de charger les définitions de processus ; vérifiez que vous avez le niveau d'accès requis.",
-                "START": "Impossible de démarrer une nouvelle instance de processus ; vérifiez que vous avez le niveau d'accès requis."
             }
         },
-        "PROCESS-ATTACHMENT": {
+        "PEOPLE": {
+            "DIALOG_CLOSE": "FERMER",
+            "ADD_USER": "AJOUTER",
+            "ADD_ASSIGNEE": "ASSIGNER",
+            "SEARCH_USER": "Rechercher des utilisateurs",
+            "SEARCH": {
+                "NO_USERS": "Aucune personne à impliquer trouvée"
+            }
+        },
+        "ATTACHMENT": {
             "EMPTY": {
                 "HEADER": "Cette liste est vide",
                 "DRAG-AND-DROP": {

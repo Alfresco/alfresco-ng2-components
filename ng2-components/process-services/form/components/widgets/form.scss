@@ -1,4 +1,6 @@
 @import './hyperlink/hyperlink.widget';
+@import './container/container.widget';
+@import './people/people.widget';
 
 @mixin adf-form-theme($theme) {
     $primary: map-get($theme, primary);

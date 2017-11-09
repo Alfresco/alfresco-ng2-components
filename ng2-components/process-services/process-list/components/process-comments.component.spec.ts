@@ -24,7 +24,6 @@ import { Observable } from 'rxjs/Rx';
 import {
     CommentListComponent,
     CommentsComponent,
-    TaskListService
 } from 'ng2-activiti-tasklist';
 import { AlfrescoTranslationService, CommentProcessService, CoreModule, PeopleProcessService } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
@@ -35,7 +34,6 @@ import { ProcessCommentsComponent } from './process-comments.component';
 
 describe('ActivitiProcessInstanceComments', () => {
 
-    let service: TaskListService;
     let component: ProcessCommentsComponent;
     let fixture: ComponentFixture<ProcessCommentsComponent>;
     let getCommentsSpy: jasmine.Spy;
@@ -55,7 +53,7 @@ describe('ActivitiProcessInstanceComments', () => {
             ],
             providers: [
                 { provide: AlfrescoTranslationService, useClass: TranslationMock },
-                { provide: TaskListService, useClass: ProcessService },
+                ProcessService,
                 DatePipe,
                 PeopleProcessService,
                 CommentProcessService
@@ -67,7 +65,6 @@ describe('ActivitiProcessInstanceComments', () => {
 
         fixture = TestBed.createComponent(ProcessCommentsComponent);
         component = fixture.componentInstance;
-        service = TestBed.get(TaskListService);
         commentProcessService = TestBed.get(CommentProcessService);
 
         getCommentsSpy = spyOn(commentProcessService, 'getProcessInstanceComments').and.returnValue(Observable.of([

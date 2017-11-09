@@ -1,6 +1,6 @@
 {
   "name": "content-services",
-  "description": "Alfresco content service",
+  "description": "Alfresco ADF content services",
   "version": "1.9.0",
   "author": "Alfresco Software, Ltd.",
   "main": "bundles/content-services.js",

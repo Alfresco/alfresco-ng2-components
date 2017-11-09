@@ -15,4 +15,7 @@
  * limitations under the License.
  */
 
-export * from './index';
+export * from './components/index';
+export * from './components/raphael/index';
+export * from './models/index';
+export * from './diagram-module';

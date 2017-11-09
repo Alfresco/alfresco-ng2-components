@@ -1,50 +1,55 @@
 {
-    "ADF_PROCESS_LIST": {
-        "LIST": {
-            "NONE": "Keine Prozessinstanzen gefunden",
-            "SUMMARY": "{{total}} Prozessinstanzen gefunden",
-            "ERROR": "Prozessesinstanzen konnten nicht geladen werden. Versuchen Sie es noch einmal oder geben Sie die folgende Meldung an Ihr IT-Team weiter: {{errorMessage}}"
+    "ADF_TASK_LIST": {
+        "APPS": {
+            "NONE": "Keine Anwendungen gefunden"
         },
-        "FILTERS": {
+        "LIST": {
             "MESSAGES": {
-                "NONE": "Kein Prozessinstanzfilter ausgewählt."
+                "NONE": "Keine Aufgabenliste gefunden"
             }
         },
         "DETAILS": {
             "LABELS": {
-                "STARTED_BY": "Gestartet von",
-                "STARTED": "Gestartet",
-                "ENDED": "Beendet",
+                "ASSIGNEE": "Zugewiesener Benutzer",
+                "DUE": "Fällig",
+                "FORM": "Formular",
+                "PEOPLE": "Personen, für die diese Aufgabe freigegeben wurde",
                 "COMMENTS": "Kommentare",
-                "START_FORM": "Startformular",
-                "TASKS_ACTIVE": "Aktive Aufgaben",
-                "TASKS_COMPLETED": "Abgeschlossene Aufgaben",
-                "TASK_SUBTITLE": "Zugewiesen: {{user}}. Erstellt: {{created}}"
+                "CHECKLIST": "Prüfliste",
+                "INVOLVED_PEOPLE": "Beteiligte Personen",
+                "ADD_PEOPLE": "Personen und Gruppen hinzufügen",
+                "ADD_ASSIGNEE": "Neuen zugewiesenen Benutzer hinzufügen"
             },
             "BUTTON": {
-                "CANCEL": "Prozess abbrechen",
-                "CLOSE": "Schließen",
-                "SHOW_DIAGRAM": "Diagramm anzeigen",
-                "DRAG-ATTACHMENT": "Dateien zum Hochladen ablegen",
+                "COMPLETE": "Abschließen",
+                "CLAIM": "Anfordern",
+                "UNCLAIM": "Erneut in Warteschlange stellen",
+                "DRAG-ATTACHMENT": "Dateien hier ablegen ...",
                 "UPLOAD-ATTACHMENT": "Anhang hochladen"
             },
             "MESSAGES": {
-                "NONE": "Keine Prozessdetails gefunden."
+                "NONE": "Keine Aufgabendetails gefunden",
+                "CLAIM": "Klicken Sie auf 'Anfordern', um diese Aufgabe zu bearbeiten."
             },
-            "TASKS": {
-                "NO_ACTIVE": "Keine derzeit aktiven Aufgaben",
-                "NO_COMPLETED": "Noch keine Aufgaben abgeschlossen",
-                "TASK_DETAILS": "Aufgabendetails",
-                "TASK_CLOSE": "Schließen"
+            "FORM": {
+                "NONE": "Kein Formular."
+            },
+            "DUE": {
+                "NONE": "Kein Fälligkeitsdatum."
+            },
+            "ASSIGNEE": {
+                "NONE": "Kein zugewiesener Benutzer."
+            },
+            "PEOPLE": {
+                "NONE": "Niemand beteiligt."
             },
             "COMMENTS": {
                 "NONE": "Keine Kommentare vorhanden",
-                "BUTTON": {
-                    "ADD": "Kommentar hinzufügen"
-                },
-                "ADD_DIALOG": {
+                "ADD": "Kommentar hinzufügen",
+                "HEADER": "Kommentare",
+                "DIALOG": {
                     "TITLE": "Neuer Kommentar",
-                    "LABEL": {
+                    "LABELS": {
                         "MESSAGE": "Fehlermeldung"
                     },
                     "BUTTON": {
@@ -53,43 +58,52 @@
                     }
                 }
             },
-            "ADD_DIALOG": {
-                "TITLE": "Prozessvariable festlegen",
-                "LABEL": {
-                    "NAME": "Name",
-                    "VALUE": "Wert",
-                    "SCOPE": "Bereich"
-                }
+            "CHECKLIST": {
+                "NONE": "Keine Prüfliste"
             },
-            "EDIT_DIALOG": {
-                "TITLE": "Prozessvariable bearbeiten"
-            },
-            "ERROR_DIALOG": {
-                "TITLE": "Diese Aktion konnte nicht durchgeführt werden",
-                "DESCRIPTION": "Unter Umständen verfügen Sie nicht über die erforderlichen Zugriffsrechte. Wenden Sie sich an Ihr IT-Team."
+            "ERROR": {
+                "TITLE": "Vorgang konnte nicht durchgeführt werden",
+                "DESCRIPTION": "Versuchen Sie es noch einmal oder überprüfen Sie, ob Sie Zugriff haben.",
+                "CLOSE": "Schließen"
             }
         },
-        "START_PROCESS": {
-            "BUTTON": "Prozess starten",
-            "NO_PROCESS_DEFINITIONS": "Sie können keinen Prozess starten, weil es keine Prozessdefinitionen gibt",
+        "FILTERS": {
+            "MESSAGES": {
+                "NONE": "Kein Aufgabenfilter ausgewählt."
+            }
+        },
+        "START_TASK": {
+            "BUTTON": "AUFGABE ERSTELLEN",
             "FORM": {
-                "TITLE": "Prozess starten",
+                "TITLE": "Aufgabe starten",
                 "LABEL": {
-                    "TYPE": "Typ",
-                    "NAME": "Name"
+                    "NONE": "Keine",
+                    "NAME": "Name",
+                    "DESCRIPTION": "Beschreibung",
+                    "ATTACHFORM": "Formular anhängen",
+                    "ASSIGNEE": "Zugewiesener Benutzer",
+                    "FORM": "Formular",
+                    "DATE": "Datum auswählen"
                 },
-                "TYPE_PLACEHOLDER": "Eine auswählen...",
                 "ACTION": {
                     "START": "Start",
                     "CANCEL": "Abbrechen"
+                },
+                "DATE": {
+                    "ERROR": "Datumsformat TT.MM.JJJJ"
                 }
-            },
-            "ERROR": {
-                "LOAD_PROCESS_DEFS": "Prozessdefinitionen konnten nicht geladen werden. Überprüfen Sie, ob Sie über die nötigen Zugriffsrechte verfügen.",
-                "START": "Neue Prozessinstanz konnte nicht gestartet werden. Überprüfen Sie, ob Sie über die nötigen Zugriffsrechte verfügen."
             }
         },
-        "PROCESS-ATTACHMENT": {
+        "PEOPLE": {
+            "DIALOG_CLOSE": "SCHLIESSEN",
+            "ADD_USER": "HINZUFÜGEN",
+            "ADD_ASSIGNEE": "ZUWEISEN",
+            "SEARCH_USER": "Benutzer suchen",
+            "SEARCH": {
+                "NO_USERS": "Niemand gefunden, der beteiligt werden kann"
+            }
+        },
+        "ATTACHMENT": {
             "EMPTY": {
                 "HEADER": "Diese Liste ist leer",
                 "DRAG-AND-DROP": {

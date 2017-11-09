@@ -19,7 +19,8 @@ module.exports = webpackMerge(commonConfig, {
         'alfresco-js-api',
         'ng2-alfresco-core',
         'content-services',
-        'process-services'
+        'process-services',
+        'core'
     ],
 
     output: {
@@ -32,6 +33,7 @@ module.exports = webpackMerge(commonConfig, {
     entry: {
         "content-services": "./content-services/index.ts",
         "process-services": "./process-services/index.ts",
+        "core": "./core/index.ts",
         "ng2-alfresco-core": "./ng2-alfresco-core/index.ts"
     },
 

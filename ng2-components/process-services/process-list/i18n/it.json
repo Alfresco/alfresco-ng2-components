@@ -1,51 +1,68 @@
 {
-    "ADF_PROCESS_LIST": {
-        "LIST": {
-            "NONE": "Nessuna istanza del processo trovata",
-            "SUMMARY": "{{total}} istanze del processo trovate",
-            "ERROR": "Impossibile caricare le istanze del processo. Riprova o condividi il messaggio seguente con il team IT: {{errorMessage}}"
+    "ADF_TASK_LIST": {
+        "APPS": {
+            "NONE": "Nessuna applicazione trovata",
+            "TASK_APP_NAME": "I miei compiti"
         },
-        "FILTERS": {
+        "LIST": {
             "MESSAGES": {
-                "NONE": "Nessun filtro dell'istanza di processo selezionato."
+                "NONE": "Nessun elenco compiti trovato"
             }
         },
         "DETAILS": {
             "LABELS": {
-                "STARTED_BY": "Avviato da",
-                "STARTED": "Avviato",
-                "ENDED": "Terminato",
+                "ASSIGNEE": "Assegnatario",
+                "DUE": "Scadenza",
+                "FORM": "Modulo",
+                "PEOPLE": "Persone con cui è condiviso questo compito",
                 "COMMENTS": "Commenti",
-                "START_FORM": "Modulo di inizio",
-                "TASKS_ACTIVE": "Compiti attivi",
-                "TASKS_COMPLETED": "Compiti completati",
-                "TASK_SUBTITLE": "Assegnato a {{user}}, creato il {{created}}"
+                "CHECKLIST": "Lista di controllo",
+                "INVOLVED_PEOPLE": "Persone coinvolte",
+                "ADD_PEOPLE": "Aggiungi persone e gruppi",
+                "ADD_ASSIGNEE": "Aggiungi nuovo assegnatario"
             },
             "BUTTON": {
-                "CANCEL": "Annulla processo",
-                "CLOSE": "Chiudi",
-                "SHOW_DIAGRAM": "Visualizza diagramma",
-                "DRAG-ATTACHMENT": "Trascinare i file da caricare",
+                "COMPLETE": "Completa",
+                "CLAIM": "Richiedi",
+                "UNCLAIM": "Metti di nuovo in coda",
+                "DRAG-ATTACHMENT": "Rilascia qui i file...",
                 "UPLOAD-ATTACHMENT": "Carica allegato"
             },
             "MESSAGES": {
-                "NONE": "Nessun dettaglio del processo trovato."
+                "NONE": "Nessun dettaglio compito trovato",
+                "CLAIM": "Per lavorare su questo compito, fai clic su Richiedi."
             },
-            "TASKS": {
-                "NO_ACTIVE": "Nessun compito attualmente attivo",
-                "NO_COMPLETED": "Nessun compito già completato",
-                "TASK_DETAILS": "Dettagli compito",
-                "TASK_CLOSE": "Chiudi"
+            "FORM": {
+                "NONE": "Nessun modulo."
+            },
+            "DUE": {
+                "NONE": "Nessuna data di scadenza."
+            },
+            "ASSIGNEE": {
+                "NONE": "Nessun assegnatario."
+            },
+            "PEOPLE": {
+                "NONE": "Nessuno coinvolto."
             },
             "COMMENTS": {
                 "NONE": "Nessun commento",
-                "BUTTON": {
-                    "ADD": "Aggiungi un commento"
-                },
-                "ADD_DIALOG": {
+                "ADD": "Aggiungi un commento",
+                "HEADER": "Commenti",
+                "DIALOG": {
                     "TITLE": "Nuovo commento",
-                    "LABEL": {
-                        "MESSAGE": "Messaggio"
+                    "LABELS": {
+                        "INFO_DRAWER_TITLE": "pippo",
+                        "INFO_DRAWER_TAB_ACTIVITY_TITLE": "Attivita",
+                        "INFO_DRAWER_TAB_DETAILS_TITLE": "Dettagli",
+                        "ASSIGNEE": "Assegnatario",
+                        "DUE": "Scadenza",
+                        "FORM": "Form",
+                        "PEOPLE": "Persone",
+                        "MESSAGE": "Messaggio",
+                        "COMMENTS": "Commenti",
+                        "CHECKLIST": "Checklist",
+                        "INVOLVED_PEOPLE": "Persone coinvolte",
+                        "ADD_PEOPLE": "Aggiungi persone & gruppi"
                     },
                     "BUTTON": {
                         "ADD": "Aggiungi commento",
@@ -53,43 +70,52 @@
                     }
                 }
             },
-            "ADD_DIALOG": {
-                "TITLE": "Imposta variabile di processo",
-                "LABEL": {
-                    "NAME": "Nome",
-                    "VALUE": "Valore",
-                    "SCOPE": "Ambito"
-                }
+            "CHECKLIST": {
+                "NONE": "Nessun elenco di controllo"
             },
-            "EDIT_DIALOG": {
-                "TITLE": "Modifica variabile di processo"
-            },
-            "ERROR_DIALOG": {
+            "ERROR": {
                 "TITLE": "Impossibile completare l'azione",
-                "DESCRIPTION": "Potresti non avere il livello di accesso necessario, verifica con il team IT."
+                "DESCRIPTION": "Riprova o verifica di avere l'accesso.",
+                "CLOSE": "Chiudi"
             }
         },
-        "START_PROCESS": {
-            "BUTTON": "Avvia processo",
-            "NO_PROCESS_DEFINITIONS": "Impossibile iniziare un processo in quanto non ci sono definizioni del processo disponibili",
+        "FILTERS": {
+            "MESSAGES": {
+                "NONE": "Nessun filtro compito selezionato."
+            }
+        },
+        "START_TASK": {
+            "BUTTON": "CREA COMPITO",
             "FORM": {
-                "TITLE": "Avvia processo",
+                "TITLE": "Avvia compito",
                 "LABEL": {
-                    "TYPE": "Tipo",
-                    "NAME": "Nome"
+                    "NONE": "Nessuno",
+                    "NAME": "Nome",
+                    "DESCRIPTION": "Descrizione",
+                    "ATTACHFORM": "Allega modulo",
+                    "ASSIGNEE": "Assegnatario",
+                    "FORM": "Modulo",
+                    "DATE": "Scegli data"
                 },
-                "TYPE_PLACEHOLDER": "Effettua una scelta...",
                 "ACTION": {
                     "START": "Avvia",
                     "CANCEL": "Annulla"
+                },
+                "DATE": {
+                    "ERROR": "Formato data GG/MM/AAAA"
                 }
-            },
-            "ERROR": {
-                "LOAD_PROCESS_DEFS": "Impossibile caricare le definizioni del processo, verifica di avere l'accesso.",
-                "START": "Impossibile iniziare la nuova istanza di processo, verifica di avere l'accesso."
             }
         },
-        "PROCESS-ATTACHMENT": {
+        "PEOPLE": {
+            "DIALOG_CLOSE": "CHIUDI",
+            "ADD_USER": "Aggiungi",
+            "ADD_ASSIGNEE": "ASSEGNA",
+            "SEARCH_USER": "Cerca utente",
+            "SEARCH": {
+                "NO_USERS": "Nessun utente trovato da coinvolgere"
+            }
+        },
+        "ATTACHMENT": {
             "EMPTY": {
                 "HEADER": "Questo elenco è vuoto",
                 "DRAG-AND-DROP": {

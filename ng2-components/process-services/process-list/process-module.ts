@@ -17,15 +17,8 @@
 
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import {
-    MatButtonModule,
-    MatCardModule,
-    MatChipsModule,
-    MatInputModule,
-    MatProgressSpinnerModule,
-    MatSelectModule
-} from '@angular/material';
 import { FormModule } from '../form';
+import { MaterialModule } from '../material.module';
 
 import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
 import { CardViewUpdateService, CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
@@ -41,7 +34,7 @@ import { ProcessInstanceHeaderComponent } from './components/process-instance-he
 import { ProcessInstanceTasksComponent } from './components/process-instance-tasks.component';
 import { ProcessInstanceListComponent } from './components/process-list.component';
 import { StartProcessInstanceComponent } from './components/start-process.component';
-import { ProcessUploadService } from './services/process-upload.service';
+
 import { ProcessService } from './services/process.service';
 
 export const ACTIVITI_PROCESSLIST_DIRECTIVES: [any] = [
@@ -54,13 +47,12 @@ export const ACTIVITI_PROCESSLIST_DIRECTIVES: [any] = [
     ProcessCommentsComponent,
     StartProcessInstanceComponent,
     ProcessAttachmentListComponent,
-    CreateProcessAttachmentComponent,
+    CreateProcessAttachmentComponent
 ];
 
 export const ACTIVITI_PROCESSLIST_PROVIDERS: [any] = [
     ProcessService,
-    ProcessUploadService,
-    CardViewUpdateService,
+    CardViewUpdateService
 ];
 
 @NgModule({
@@ -69,12 +61,7 @@ export const ACTIVITI_PROCESSLIST_PROVIDERS: [any] = [
         DataTableModule,
         FormModule,
         ActivitiTaskListModule,
-        MatProgressSpinnerModule,
-        MatButtonModule,
-        MatCardModule,
-        MatInputModule,
-        MatChipsModule,
-        MatSelectModule,
+        MaterialModule,
         FlexLayoutModule
     ],
     declarations: [

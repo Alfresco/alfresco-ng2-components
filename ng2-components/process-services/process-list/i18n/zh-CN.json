@@ -1,50 +1,55 @@
 {
-    "ADF_PROCESS_LIST": {
-        "LIST": {
-            "NONE": "未找到流程实例",
-            "SUMMARY": "已找到 {{total}} 个流程实例",
-            "ERROR": "无法加载流程实例。请重试或与您的IT团队分享以下消息：{{errorMessage}}"
+    "ADF_TASK_LIST": {
+        "APPS": {
+            "NONE": "未找到应用程序"
         },
-        "FILTERS": {
+        "LIST": {
             "MESSAGES": {
-                "NONE": "未选择流程实例过滤器。"
+                "NONE": "未找到任务列表"
             }
         },
         "DETAILS": {
             "LABELS": {
-                "STARTED_BY": "启动者",
-                "STARTED": "已启动",
-                "ENDED": "已结束",
+                "ASSIGNEE": "被指派者",
+                "DUE": "截止时间",
+                "FORM": "表单",
+                "PEOPLE": "此任务分享的人员",
                 "COMMENTS": "注释",
-                "START_FORM": "启动表单",
-                "TASKS_ACTIVE": "活动的任务",
-                "TASKS_COMPLETED": "完成的任务",
-                "TASK_SUBTITLE": "已分配至 {{user}}，已创建 {{created}}"
+                "CHECKLIST": "检查表",
+                "INVOLVED_PEOPLE": "涉及的人员",
+                "ADD_PEOPLE": "添加人和组",
+                "ADD_ASSIGNEE": "添加新的被分配人员"
             },
             "BUTTON": {
-                "CANCEL": "取消流程",
-                "CLOSE": "关闭",
-                "SHOW_DIAGRAM": "显示流程图",
-                "DRAG-ATTACHMENT": "放置文件以上传",
+                "COMPLETE": "完成",
+                "CLAIM": "申领",
+                "UNCLAIM": "重新排队",
+                "DRAG-ATTACHMENT": "将文件放到此处...",
                 "UPLOAD-ATTACHMENT": "上传附件"
             },
             "MESSAGES": {
-                "NONE": "未找到流程详情。"
+                "NONE": "未找到任务详情",
+                "CLAIM": "要执行此任务，单击申领。"
             },
-            "TASKS": {
-                "NO_ACTIVE": "无当前活动任务",
-                "NO_COMPLETED": "没有已完成任务",
-                "TASK_DETAILS": "任务详细信息",
-                "TASK_CLOSE": "关闭"
+            "FORM": {
+                "NONE": "无格式。"
+            },
+            "DUE": {
+                "NONE": "无过期时间。"
+            },
+            "ASSIGNEE": {
+                "NONE": "无被分配人员。"
+            },
+            "PEOPLE": {
+                "NONE": "未涉及任何人。"
             },
             "COMMENTS": {
                 "NONE": "无注释",
-                "BUTTON": {
-                    "ADD": "添加注释"
-                },
-                "ADD_DIALOG": {
+                "ADD": "添加注释",
+                "HEADER": "注释",
+                "DIALOG": {
                     "TITLE": "新建注释",
-                    "LABEL": {
+                    "LABELS": {
                         "MESSAGE": "消息"
                     },
                     "BUTTON": {
@@ -53,43 +58,52 @@
                     }
                 }
             },
-            "ADD_DIALOG": {
-                "TITLE": "设置流程变量",
-                "LABEL": {
-                    "NAME": "名称",
-                    "VALUE": "值",
-                    "SCOPE": "范围"
-                }
+            "CHECKLIST": {
+                "NONE": "没有检查表"
             },
-            "EDIT_DIALOG": {
-                "TITLE": "编辑流程变量"
-            },
-            "ERROR_DIALOG": {
+            "ERROR": {
                 "TITLE": "无法完成此操作",
-                "DESCRIPTION": "您可能不具备必须的访问级别，请联系您的 IT 团队。"
+                "DESCRIPTION": "请重试或检查您是否具有访问权。",
+                "CLOSE": "关闭"
             }
         },
-        "START_PROCESS": {
-            "BUTTON": "启动流程",
-            "NO_PROCESS_DEFINITIONS": "您无法启动流程，因为没有可用的流程定义",
+        "FILTERS": {
+            "MESSAGES": {
+                "NONE": "未选择任务过滤器。"
+            }
+        },
+        "START_TASK": {
+            "BUTTON": "创建任务",
             "FORM": {
-                "TITLE": "启动流程",
+                "TITLE": "启动任务",
                 "LABEL": {
-                    "TYPE": "类型",
-                    "NAME": "名称"
+                    "NONE": "无",
+                    "NAME": "名称",
+                    "DESCRIPTION": "说明",
+                    "ATTACHFORM": "附加表单",
+                    "ASSIGNEE": "被指派者",
+                    "FORM": "表单",
+                    "DATE": "选择日期"
                 },
-                "TYPE_PLACEHOLDER": "选择一个...",
                 "ACTION": {
                     "START": "启动",
                     "CANCEL": "取消"
+                },
+                "DATE": {
+                    "ERROR": "日期格式：年/月/日"
                 }
-            },
-            "ERROR": {
-                "LOAD_PROCESS_DEFS": "无法加载流程定义，请检查您是否具有访问权。",
-                "START": "无法启动新的流程实例，请检查您是否具有访问权。"
             }
         },
-        "PROCESS-ATTACHMENT": {
+        "PEOPLE": {
+            "DIALOG_CLOSE": "关闭",
+            "ADD_USER": "添加",
+            "ADD_ASSIGNEE": "分配",
+            "SEARCH_USER": "搜索用户",
+            "SEARCH": {
+                "NO_USERS": "没找到涉及的人员"
+            }
+        },
+        "ATTACHMENT": {
             "EMPTY": {
                 "HEADER": "此列表为空",
                 "DRAG-AND-DROP": {

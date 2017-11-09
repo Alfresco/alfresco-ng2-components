@@ -14,26 +14,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-// component
-export * from './components/process-attachment-list.component';
-export * from './components/process-comments.component';
-export * from './components/process-filters.component';
-export * from './components/process-instance-details.component';
-export * from './components/process-audit.directive';
-export * from './components/process-instance-header.component';
-export * from './components/process-instance-tasks.component';
-export * from './components/process-list.component';
-export * from './components/start-process.component';
-
-// services
-export * from './services/process.service';
-export * from './services/process-upload.service';
-
-// models
-export * from './models/filter-process.model';
-export * from './models/process-definition.model';
-export * from './models/process-instance.model';
-export * from './models/process-instance-filter.model';
-export * from './models/process-instance-variable.model';
-export * from './process-module';
+export * from './public-api';

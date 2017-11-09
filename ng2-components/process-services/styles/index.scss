@@ -1,6 +1,4 @@
 @import '../form/components/widgets/form';
-@import '../form/components/widgets/container/container.widget';
-@import '../form/components/widgets/people/people.widget';
 
 @import '../process-list/components/process-filters.component';
 
@@ -9,12 +7,27 @@
 @import '../analytics/components/analytics-report-list.component';
 @import '../analytics/components/widgets/date-range/date-range.widget';
 
+@import '../task-list/components/comment-list.component';
+@import '../task-list/components/start-task.component';
+@import '../task-list/components/people-search.component';
+@import '../task-list/components/people.component';
+@import '../task-list/components/task-filters.component';
+@import '../task-list/components/task-header.component';
+
 @mixin adf-process-services-theme($theme) {
     @include adf-form-theme($theme);
-    @include adf-container-widget-theme($theme);
-    @include adf-people-widget-theme($theme);
+
     @include adf-process-filters-theme($theme);
+
     @include adf-diagram-tooltip-theme($theme);
+
     @include adf-analytics-report-list-theme($theme);
     @include adf-analytics-date-range-widget-theme($theme);
+
+    @include adf-task-list-comment-list-theme($theme);
+    @include adf-task-list-start-task-theme($theme);
+    @include adf-task-list-people-search-theme($theme);
+    @include adf-task-list-people-theme($theme);
+    @include adf-task-list-filters-task-theme($theme);
+    @include adf-task-list-header-theme($theme);
 }

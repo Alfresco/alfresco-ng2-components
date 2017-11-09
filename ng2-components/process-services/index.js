@@ -23,3 +23,4 @@ __export(require("./form"));
 __export(require("./process-list"));
 __export(require("./diagram"));
 __export(require("./analytics"));
+__export(require("./task-list"));

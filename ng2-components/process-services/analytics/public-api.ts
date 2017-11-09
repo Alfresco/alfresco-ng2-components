@@ -15,4 +15,10 @@
  * limitations under the License.
  */
 
-export * from './index';
+export * from './components/analytics.component';
+export * from './components/analytics-generator.component';
+export * from './components/analytics-report-list.component';
+export * from './components/analytics-report-parameters.component';
+export * from './services/analytics.service';
+export * from './components/widgets/index';
+export * from './analytics-module';

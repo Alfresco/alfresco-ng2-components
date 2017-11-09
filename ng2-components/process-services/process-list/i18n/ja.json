@@ -1,50 +1,55 @@
 {
-    "ADF_PROCESS_LIST": {
-        "LIST": {
-            "NONE": "プロセスインスタンスが見つかりません",
-            "SUMMARY": "{{total}} 個のプロセスインスタンスが見つかりました",
-            "ERROR": "プロセスインスタンスを読み込みませんでした。もう一度操作をやり直すか、次のメッセージを IT 担当者に伝えてください: {{errorMessage}}"
+    "ADF_TASK_LIST": {
+        "APPS": {
+            "NONE": "アプリが見つかりません"
         },
-        "FILTERS": {
+        "LIST": {
             "MESSAGES": {
-                "NONE": "プロセスインスタンスのフィルタが選択されていません"
+                "NONE": "タスクリストが見つかりません"
             }
         },
         "DETAILS": {
             "LABELS": {
-                "STARTED_BY": "開始者",
-                "STARTED": "開始日",
-                "ENDED": "終了日",
+                "ASSIGNEE": "担当者",
+                "DUE": "期限",
+                "FORM": "フォーム",
+                "PEOPLE": "このタスクを共有しているメンバー",
                 "COMMENTS": "コメント",
-                "START_FORM": "開始フォーム",
-                "TASKS_ACTIVE": "アクティブなタスク",
-                "TASKS_COMPLETED": "完了済みタスク",
-                "TASK_SUBTITLE": "割り当て先: {{user}}, 作成日: {{created}}"
+                "CHECKLIST": "チェックリスト",
+                "INVOLVED_PEOPLE": "タスクに関わっているメンバー",
+                "ADD_PEOPLE": "メンバーとグループの追加",
+                "ADD_ASSIGNEE": "新しい担当者の追加"
             },
             "BUTTON": {
-                "CANCEL": "プロセスのキャンセル",
-                "CLOSE": "閉じる",
-                "SHOW_DIAGRAM": "図の表示",
-                "DRAG-ATTACHMENT": "アップロードするファイルをドロップ",
+                "COMPLETE": "完了",
+                "CLAIM": "要求",
+                "UNCLAIM": "キューへの再登録",
+                "DRAG-ATTACHMENT": "ここにファイルをドロップしてください...",
                 "UPLOAD-ATTACHMENT": "添付ファイルをアップロード"
             },
             "MESSAGES": {
-                "NONE": "プロセスの詳細が見つかりません。"
+                "NONE": "タスクの詳細が見つかりません",
+                "CLAIM": "このタスクの作業を行うには、[要求] をクリックします。"
             },
-            "TASKS": {
-                "NO_ACTIVE": "現在アクティブなタスクはありません",
-                "NO_COMPLETED": "完了したタスクはありません",
-                "TASK_DETAILS": "タスクの詳細",
-                "TASK_CLOSE": "閉じる"
+            "FORM": {
+                "NONE": "フォームはありません。"
+            },
+            "DUE": {
+                "NONE": "期限はありません。"
+            },
+            "ASSIGNEE": {
+                "NONE": "担当者はありません。"
+            },
+            "PEOPLE": {
+                "NONE": "関わっているメンバーはいません。"
             },
             "COMMENTS": {
                 "NONE": "コメントなし",
-                "BUTTON": {
-                    "ADD": "コメントの追加"
-                },
-                "ADD_DIALOG": {
+                "ADD": "コメントの追加",
+                "HEADER": "コメント",
+                "DIALOG": {
                     "TITLE": "新しいコメント",
-                    "LABEL": {
+                    "LABELS": {
                         "MESSAGE": "メッセージ"
                     },
                     "BUTTON": {
@@ -53,43 +58,52 @@
                     }
                 }
             },
-            "ADD_DIALOG": {
-                "TITLE": "プロセス変数の設定",
-                "LABEL": {
-                    "NAME": "名前",
-                    "VALUE": "値",
-                    "SCOPE": "範囲"
-                }
+            "CHECKLIST": {
+                "NONE": "チェックリストなし"
             },
-            "EDIT_DIALOG": {
-                "TITLE": "プロセス変数の編集"
-            },
-            "ERROR_DIALOG": {
+            "ERROR": {
                 "TITLE": "処理を完了できませんでした",
-                "DESCRIPTION": "必要なレベルのアクセス権がない可能性があります。IT 担当者に確認してください。"
+                "DESCRIPTION": "もう一度操作をやり直すか、アクセス権があることを確認してください。",
+                "CLOSE": "閉じる"
             }
         },
-        "START_PROCESS": {
-            "BUTTON": "プロセスの開始",
-            "NO_PROCESS_DEFINITIONS": "使用できるプロセス定義がないため、プロセスを開始できません",
+        "FILTERS": {
+            "MESSAGES": {
+                "NONE": "タスクのフィルタが選択されていません。"
+            }
+        },
+        "START_TASK": {
+            "BUTTON": "タスクの作成",
             "FORM": {
-                "TITLE": "プロセスの開始",
+                "TITLE": "タスクの開始",
                 "LABEL": {
-                    "TYPE": "種類",
-                    "NAME": "名前"
+                    "NONE": "なし",
+                    "NAME": "名前",
+                    "DESCRIPTION": "説明",
+                    "ATTACHFORM": "フォームの添付",
+                    "ASSIGNEE": "担当者",
+                    "FORM": "フォーム",
+                    "DATE": "日付を選択してください"
                 },
-                "TYPE_PLACEHOLDER": "1 つ選択してください...",
                 "ACTION": {
                     "START": "開始",
                     "CANCEL": "キャンセル"
+                },
+                "DATE": {
+                    "ERROR": "日付形式: YYYY/MM/DD"
                 }
-            },
-            "ERROR": {
-                "LOAD_PROCESS_DEFS": "プロセス定義を読み込めませんでした。アクセス権があることを確認してください。",
-                "START": "新しいプロセスインスタンスを開始できませんでした。アクセス権があることを確認してください。"
             }
         },
-        "PROCESS-ATTACHMENT": {
+        "PEOPLE": {
+            "DIALOG_CLOSE": "閉じる",
+            "ADD_USER": "追加",
+            "ADD_ASSIGNEE": "割り当て",
+            "SEARCH_USER": "ユーザーの検索",
+            "SEARCH": {
+                "NO_USERS": "タスクに関わっているメンバーが見つかりません"
+            }
+        },
+        "ATTACHMENT": {
             "EMPTY": {
                 "HEADER": "このリストは空です",
                 "DRAG-AND-DROP": {

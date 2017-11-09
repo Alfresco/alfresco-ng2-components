@@ -19,3 +19,4 @@ export * from './form';
 export * from './process-list';
 export * from './diagram';
 export * from './analytics';
+export * from './task-list';

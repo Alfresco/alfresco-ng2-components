@@ -1,0 +1,9 @@
+@import '../userinfo/components/user-info.component';
+@import '../login/components/login.component';
+@import '../datatable/components/datatable/datatable.component';
+
+@mixin adf-core-theme($theme) {
+    @include adf-userinfo-theme($theme);
+    @include adf-login-theme($theme);
+    @include adf-datatable-theme($theme);
+}

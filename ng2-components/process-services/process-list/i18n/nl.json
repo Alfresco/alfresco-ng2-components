@@ -1,50 +1,55 @@
 {
-    "ADF_PROCESS_LIST": {
-        "LIST": {
-            "NONE": "Geen procesinstances gevonden",
-            "SUMMARY": "{{total}} procesinstances gevonden",
-            "ERROR": "Kan procesinstances niet laden. Probeer het opnieuw of deel het volgende bericht met het IT-team: {{errorMessage}}"
+    "ADF_TASK_LIST": {
+        "APPS": {
+            "NONE": "Geen apps gevonden"
         },
-        "FILTERS": {
+        "TASK_LIST": {
             "MESSAGES": {
-                "NONE": "Geen procesinstancefilter geselecteerd."
+                "NONE": "Geen takenlijst gevonden"
             }
         },
         "DETAILS": {
             "LABELS": {
-                "STARTED_BY": "Gestart door",
-                "STARTED": "Gestart",
-                "ENDED": "Beëindigd",
+                "ASSIGNEE": "Toegewezen persoon",
+                "DUE": "Vervalt",
+                "FORM": "Formulier",
+                "PEOPLE": "Personen met wie deze taak is gedeeld",
                 "COMMENTS": "Opmerkingen",
-                "START_FORM": "Beginformulier",
-                "TASKS_ACTIVE": "Actieve taken",
-                "TASKS_COMPLETED": "Voltooide taken",
-                "TASK_SUBTITLE": "Toegewezen aan {{user}}, gemaakt op {{created}}"
+                "CHECKLIST": "Controlelijst",
+                "INVOLVED_PEOPLE": "Betrokken personen",
+                "ADD_PEOPLE": "Personen en groepen toevoegen",
+                "ADD_ASSIGNEE": "Nieuwe uitvoerder toevoegen"
             },
             "BUTTON": {
-                "CANCEL": "Proces annuleren",
-                "CLOSE": "Sluiten",
-                "SHOW_DIAGRAM": "Diagram weergeven",
-                "DRAG-ATTACHMENT": "Bestanden neerzetten om te uploaden",
+                "COMPLETE": "Voltooid",
+                "CLAIM": "Claimen",
+                "UNCLAIM": "Opnieuw in wachtrij plaatsen",
+                "DRAG-ATTACHMENT": "Bestanden hier neerzetten...",
                 "UPLOAD-ATTACHMENT": "Bijlage uploaden"
             },
             "MESSAGES": {
-                "NONE": "Geen procesdetails gevonden."
+                "NONE": "Geen taakdetails gevonden",
+                "CLAIM": "Klik op Claimen om aan deze taak te werken."
             },
-            "TASKS": {
-                "NO_ACTIVE": "Geen momenteel actieve taken",
-                "NO_COMPLETED": "Nog geen taken voltooid",
-                "TASK_DETAILS": "Taakdetails",
-                "TASK_CLOSE": "Sluiten"
+            "FORM": {
+                "NONE": "Geen formulier."
+            },
+            "DUE": {
+                "NONE": "Geen einddatum."
+            },
+            "ASSIGNEE": {
+                "NONE": "Geen uitvoerder."
+            },
+            "PEOPLE": {
+                "NONE": "Niemand betrokken."
             },
             "COMMENTS": {
                 "NONE": "Geen opmerkingen",
-                "BUTTON": {
-                    "ADD": "Een opmerking toevoegen"
-                },
-                "ADD_DIALOG": {
+                "ADD": "Een opmerking toevoegen",
+                "HEADER": "Opmerkingen",
+                "DIALOG": {
                     "TITLE": "Nieuwe opmerking",
-                    "LABEL": {
+                    "LABELS": {
                         "MESSAGE": "Bericht"
                     },
                     "BUTTON": {
@@ -53,47 +58,56 @@
                     }
                 }
             },
-            "ADD_DIALOG": {
-                "TITLE": "Procesvariabele instellen",
-                "LABEL": {
-                    "NAME": "Naam",
-                    "VALUE": "Waarde",
-                    "SCOPE": "Bereik"
-                }
+            "CHECKLIST": {
+                "NONE": "Geen controlelijst"
             },
-            "EDIT_DIALOG": {
-                "TITLE": "Procesvariabele bewerken"
-            },
-            "ERROR_DIALOG": {
-                "TITLE": "Kan die actie niet voltooien",
-                "DESCRIPTION": "U beschikt mogelijk niet over het vereiste toegangsniveau, neem contact op met het IT-team."
+            "ERROR": {
+                "TITLE": "Kan de actie niet voltooien",
+                "DESCRIPTION": "Probeer het opnieuw of controleer of u over toegang beschikt.",
+                "CLOSE": "Sluiten"
             }
         },
-        "START_PROCESS": {
-            "BUTTON": "Proces starten",
-            "NO_PROCESS_DEFINITIONS": "U kunt geen proces starten omdat er geen procesdefinities beschikbaar zijn",
+        "FILTERS": {
+            "MESSAGES": {
+                "NONE": "Geen taakfilter geselecteerd."
+            }
+        },
+        "START_TASK": {
+            "BUTTON": "TAAK MAKEN",
             "FORM": {
-                "TITLE": "Proces starten",
+                "TITLE": "Begintaak",
                 "LABEL": {
-                    "TYPE": "Type",
-                    "NAME": "Naam"
+                    "NONE": "Geen",
+                    "NAME": "Naam",
+                    "DESCRIPTION": "Beschrijving",
+                    "ATTACHFORM": "Formulier bijvoegen",
+                    "ASSIGNEE": "Toegewezen persoon",
+                    "FORM": "Formulier",
+                    "DATE": "Datum kiezen"
                 },
-                "TYPE_PLACEHOLDER": "Maak een keuze...",
                 "ACTION": {
                     "START": "Start",
                     "CANCEL": "Annuleren"
+                },
+                "DATE": {
+                    "ERROR": "Datumnotatie dd-mm-jjjj"
                 }
-            },
-            "ERROR": {
-                "LOAD_PROCESS_DEFS": "Kan procesdefinities niet laden, controleer of u over toegang beschikt",
-                "START": "Kan geen nieuwe procesinstance starten, controleer of u over toegang beschikt."
             }
         },
-        "PROCESS-ATTACHMENT": {
+        "PEOPLE": {
+            "DIALOG_CLOSE": "SLUITEN",
+            "ADD_USER": "TOEVOEGEN",
+            "ADD_ASSIGNEE": "TOEWIJZEN",
+            "SEARCH_USER": "Gebruiker zoeken",
+            "SEARCH": {
+                "NO_USERS": "Niemand gevonden om te betrekken"
+            }
+        },
+        "ATTACHMENT": {
             "EMPTY": {
                 "HEADER": "Deze lijst is leeg",
                 "DRAG-AND-DROP": {
-                    "TITLE": "Slepen en neerzetten om bestanden te uploaden",
+                    "TITLE": "Slepen en neerzetten",
                     "SUBTITLE": "om bestanden te uploaden"
                 }
             },

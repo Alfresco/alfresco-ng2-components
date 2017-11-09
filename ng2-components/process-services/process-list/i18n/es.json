@@ -1,50 +1,55 @@
 {
-    "ADF_PROCESS_LIST": {
-        "LIST": {
-            "NONE": "No se han encontrado instancias de procesos",
-            "SUMMARY": "{{total}} instancias de procesos encontradas",
-            "ERROR": "No se han podido cargar las instancias de procesos. Vuelva a intentarlo o envíe el mensaje siguiente al equipo de TI: {{errorMessage}}"
+    "ADF_TASK_LIST": {
+        "APPS": {
+            "NONE": "No se han encontrado aplicaciones"
         },
-        "FILTERS": {
+        "LIST": {
             "MESSAGES": {
-                "NONE": "No se ha seleccionado ningún filtro de instancias de procesos."
+                "NONE": "No se ha encontrado la lista de tareas"
             }
         },
         "DETAILS": {
             "LABELS": {
-                "STARTED_BY": "Iniciado por",
-                "STARTED": "Iniciado",
-                "ENDED": "Finalizado",
+                "ASSIGNEE": "Asignado a",
+                "DUE": "Vencimiento",
+                "FORM": "Formulario",
+                "PEOPLE": "Personas con las que se comparte esta tarea",
                 "COMMENTS": "Comentarios",
-                "START_FORM": "Iniciar formulario",
-                "TASKS_ACTIVE": "Tareas activas",
-                "TASKS_COMPLETED": "Tareas completadas",
-                "TASK_SUBTITLE": "Asignado a {{user}}, creado {{created}}"
+                "CHECKLIST": "Lista de comprobación",
+                "INVOLVED_PEOPLE": "Personas involucradas",
+                "ADD_PEOPLE": "Añadir personas y grupos",
+                "ADD_ASSIGNEE": "Añadir nuevo usuario a asignar"
             },
             "BUTTON": {
-                "CANCEL": "Cancelar proceso",
-                "CLOSE": "Cerrar",
-                "SHOW_DIAGRAM": "Mostrar diagrama",
-                "DRAG-ATTACHMENT": "Suelte los ficheros a cargar",
+                "COMPLETE": "Completado",
+                "CLAIM": "Pedir",
+                "UNCLAIM": "Volver a poner en cola",
+                "DRAG-ATTACHMENT": "Soltar ficheros aquí...",
                 "UPLOAD-ATTACHMENT": "Cargar adjunto"
             },
             "MESSAGES": {
-                "NONE": "No se han encontrado detalles del proceso."
+                "NONE": "No se han encontrado detalles de la tarea",
+                "CLAIM": "Para trabajar en esta tarea, haga clic en Pedir."
             },
-            "TASKS": {
-                "NO_ACTIVE": "No hay tareas activas actualmente.",
-                "NO_COMPLETED": "No hay tareas finalizadas todavía",
-                "TASK_DETAILS": "Detalles de la tarea",
-                "TASK_CLOSE": "Cerrar"
+            "FORM": {
+                "NONE": "Sin formulario."
+            },
+            "DUE": {
+                "NONE": "Sin fecha de vencimiento."
+            },
+            "ASSIGNEE": {
+                "NONE": "Sin usuario a asignar."
+            },
+            "PEOPLE": {
+                "NONE": "Nadie involucrado."
             },
             "COMMENTS": {
                 "NONE": "No hay comentarios",
-                "BUTTON": {
-                    "ADD": "Añadir comentario"
-                },
-                "ADD_DIALOG": {
+                "ADD": "Añadir comentario",
+                "HEADER": "Comentarios",
+                "DIALOG": {
                     "TITLE": "Nuevo comentario",
-                    "LABEL": {
+                    "LABELS": {
                         "MESSAGE": "Mensaje"
                     },
                     "BUTTON": {
@@ -53,43 +58,52 @@
                     }
                 }
             },
-            "ADD_DIALOG": {
-                "TITLE": "Establecer variable de proceso",
-                "LABEL": {
-                    "NAME": "Nombre",
-                    "VALUE": "Valor",
-                    "SCOPE": "Ámbito"
-                }
+            "CHECKLIST": {
+                "NONE": "No hay lista de comprobación"
             },
-            "EDIT_DIALOG": {
-                "TITLE": "Editar variable de proceso"
-            },
-            "ERROR_DIALOG": {
-                "TITLE": "No se ha podido completar esa acción",
-                "DESCRIPTION": "Puede que no tenga el nivel de acceso necesario; compruébelo con el equipo de TI."
+            "ERROR": {
+                "TITLE": "No se ha podido finalizar la acción.",
+                "DESCRIPTION": "Vuelva a intentarlo o compruebe que tiene acceso.",
+                "CLOSE": "Cerrar"
             }
         },
-        "START_PROCESS": {
-            "BUTTON": "Iniciar proceso",
-            "NO_PROCESS_DEFINITIONS": "No puede iniciar un proceso porque no hay definiciones de procesos disponibles",
+        "FILTERS": {
+            "MESSAGES": {
+                "NONE": "No se ha seleccionado filtro de tareas."
+            }
+        },
+        "START_TASK": {
+            "BUTTON": "CREAR TAREA",
             "FORM": {
-                "TITLE": "Iniciar proceso",
+                "TITLE": "Iniciar tarea",
                 "LABEL": {
-                    "TYPE": "Tipo",
-                    "NAME": "Nombre"
+                    "NONE": "Ninguno",
+                    "NAME": "Nombre",
+                    "DESCRIPTION": "Descripción",
+                    "ATTACHFORM": "Adjuntar formulario",
+                    "ASSIGNEE": "Asignado a",
+                    "FORM": "Formulario",
+                    "DATE": "Seleccione una fecha"
                 },
-                "TYPE_PLACEHOLDER": "Elegir uno...",
                 "ACTION": {
                     "START": "Iniciar",
                     "CANCEL": "Cancelar"
+                },
+                "DATE": {
+                    "ERROR": "Formato de fecha DD/MM/AAAA"
                 }
-            },
-            "ERROR": {
-                "LOAD_PROCESS_DEFS": "No se han podido cargar las definiciones de procesos; compruebe que tiene acceso.",
-                "START": "No se ha podido iniciar la instancia de proceso; compruebe que tiene acceso."
             }
         },
-        "PROCESS-ATTACHMENT": {
+        "PEOPLE": {
+            "DIALOG_CLOSE": "CERRAR",
+            "ADD_USER": "AÑADIR",
+            "ADD_ASSIGNEE": "ASIGNAR",
+            "SEARCH_USER": "Buscar usuario",
+            "SEARCH": {
+                "NO_USERS": "No se ha encontrado nadie a quien involucrar"
+            }
+        },
+        "ATTACHMENT": {
             "EMPTY": {
                 "HEADER": "Esta lista está vacía",
                 "DRAG-AND-DROP": {
