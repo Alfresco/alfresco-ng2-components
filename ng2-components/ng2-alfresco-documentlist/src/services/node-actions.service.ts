@@ -123,7 +123,7 @@ export class NodeActionsService {
 
     private imageResolver(row: ShareDataRow, col: DataColumn): string|null {
         const entry: MinimalNodeEntryEntity = row.node.entry;
-        if (!this.contentService.hasPermission(entry, 'update')) {
+        if (!this.contentService.hasPermission(entry, 'create')) {
             return this.documentListService.getMimeTypeIcon('disable/folder');
         }
 

@@ -255,12 +255,12 @@ export class ContentNodeSelectorComponent implements OnInit {
     }
 
     /**
-     * Selects node as choosen if it has the right permission, clears the selection otherwise
+     * Selects node as chosen if it has the right permission, clears the selection otherwise
      *
      * @param entry
      */
     private attemptNodeSelection(entry: MinimalNodeEntryEntity): void {
-        if (this.contentService.hasPermission(entry, 'update')) {
+        if (this.contentService.hasPermission(entry, 'create')) {
             this.chosenNode = entry;
         } else {
             this.resetChosenNode();
