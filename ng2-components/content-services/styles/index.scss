@@ -1,0 +1,16 @@
+@import '../document-list/components/breadcrumb/breadcrumb.component';
+@import '../document-list/components/breadcrumb/dropdown-breadcrumb.component';
+@import '../document-list/components/content-node-selector/content-node-selector.component';
+@import '../document-list/components/document-list.component';
+
+@import '../upload/components/file-uploading-list-row.component';
+@import '../upload/components/file-uploading-dialog.component';
+
+@mixin alfresco-content-services-theme($theme) {
+    @include adf-breadcrumb-theme($theme);
+    @include adf-breadcrumb-dropdown-theme($theme);
+    @include adf-content-node-selector-theme($theme) ;
+    @include adf-document-list-theme($theme) ;
+    @include adf-file-uploading-row-theme($theme);
+    @include adf-upload-dialog-theme($theme);
+}

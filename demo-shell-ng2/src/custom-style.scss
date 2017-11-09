@@ -1,5 +1,7 @@
 @import './app/components/app-layout/app-layout.component.scss';
 
+@import '@adf/content-service/styles/index';
+
 @import 'ng2-alfresco-core/styles/theming';
 @import 'ng2-alfresco-core/styles/index';
 @import 'ng2-activiti-analytics/styles/index';
@@ -8,9 +10,7 @@
 @import 'ng2-activiti-processlist/styles/index';
 @import 'ng2-activiti-tasklist/styles/index';
 @import 'ng2-alfresco-datatable/styles/index';
-@import 'ng2-alfresco-documentlist/styles/index';
 @import 'ng2-alfresco-login/styles/index';
-@import 'ng2-alfresco-upload/styles/index';
 @import 'ng2-alfresco-userinfo/styles/index';
 @import 'ng2-alfresco-search/styles/index';
 
@@ -33,7 +33,7 @@ $theme:   mat-light-theme($primary, $accent, $warn);
 @include alfresco-activity-processlist-theme($theme);
 @include alfresco-activity-tasklist-theme($theme);
 @include alfresco-datatable-theme($theme);
-@include alfresco-documentlist-theme($theme);
+@include alfresco-content-services-theme($theme);
 @include alfresco-login-theme($theme);
 @include alfresco-upload-theme($theme);
 @include alfresco-userinfo-theme($theme);

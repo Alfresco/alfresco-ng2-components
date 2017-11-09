@@ -35,7 +35,7 @@ module.exports = webpackMerge(commonConfig, {
     },
 
     entry: {
-        "contents-service": "./contents-service/index.ts",
+        "content-services": "./content-services/index.ts",
         "ng2-alfresco-core": "./ng2-alfresco-core/index.ts"
         // "ng2-alfresco-datatable": "./ng2-alfresco-datatable/index.ts",
         // "ng2-activiti-diagrams": "./ng2-activiti-diagrams/index.ts",

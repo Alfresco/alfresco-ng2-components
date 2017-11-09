@@ -26,7 +26,7 @@ import {
     SiteModel, UploadService
 } from 'ng2-alfresco-core';
 import { DataColumn, DataRow } from 'ng2-alfresco-datatable';
-import { DocumentListComponent, PermissionStyleModel } from 'ng2-alfresco-documentlist';
+import { DocumentListComponent, PermissionStyleModel } from '@adf/contetn-service';
 import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-adapter.component';
 import { Subscription } from 'rxjs/Rx';
 

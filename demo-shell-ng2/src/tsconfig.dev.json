@@ -23,23 +23,8 @@
       "ng2-alfresco-datatable": [
         "../../ng2-components/ng2-alfresco-datatable"
       ],
-      "ng2-alfresco-documentlist": [
-        "../../ng2-components/ng2-alfresco-documentlist"
-      ],
       "ng2-alfresco-viewer": [
         "../../ng2-components/ng2-alfresco-viewer"
-      ],
-      "ng2-alfresco-social": [
-        "../../ng2-components/ng2-alfresco-social"
-      ],
-      "ng2-alfresco-tag": [
-        "../../ng2-components/ng2-alfresco-tag"
-      ],
-      "ng2-alfresco-upload": [
-        "../../ng2-components/ng2-alfresco-upload"
-      ],
-      "ng2-alfresco-webscript": [
-        "../../ng2-components/ng2-alfresco-webscript"
       ],
       "ng2-activiti-analytics": [
         "../../ng2-components/ng2-activiti-analytics"
