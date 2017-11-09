@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { CardViewDateItemModel, CardViewItem, CardViewMapItemModel, CardViewTextItemModel, LogService } from 'ng2-alfresco-core';
+import { BpmUserService } from 'ng2-alfresco-userinfo';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 
@@ -25,7 +26,7 @@ import { TaskListService } from './../services/tasklist.service';
     templateUrl: './task-header.component.html',
     styleUrls: ['./task-header.component.scss']
 })
-export class TaskHeaderComponent implements OnChanges {
+export class TaskHeaderComponent implements OnChanges, OnInit {
 
     @Input()
     formName: string = null;
@@ -39,11 +40,18 @@ export class TaskHeaderComponent implements OnChanges {
     @Output()
     unclaim: EventEmitter<any> = new EventEmitter<any>();
 
+    private currentUserId: number;
+
     properties: CardViewItem [];
     inEdit: boolean = false;
 
     constructor(private activitiTaskService: TaskListService,
+                private bpmUserService: BpmUserService,
                 private logService: LogService) {
+    }
+
+    ngOnInit() {
+        this.getCurrentUserId();
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -149,6 +157,15 @@ export class TaskHeaderComponent implements OnChanges {
     }
 
     /**
+     * Return the bpmUser
+     */
+    private getCurrentUserId(): void {
+        this.bpmUserService.getCurrentUserInfo().subscribe((res) => {
+            this.currentUserId = res ? +res.id : null;
+        });
+    }
+
+    /**
      * Return the process parent information
      */
     getParentInfo() {
@@ -161,14 +178,49 @@ export class TaskHeaderComponent implements OnChanges {
      * Does the task have an assignee
      */
     public hasAssignee(): boolean {
-        return (this.taskDetails && this.taskDetails.assignee) ? true : false;
+        return !!this.taskDetails.assignee ? true : false;
     }
 
     /**
-     * Is the task assigned to the currently loggedin user
+     * Returns true if the task is assigne to logged in user
      */
-    isAssignedToMe(): boolean {
-        return this.taskDetails.assignee ? true : false;
+    public isAssignedTo(userId): boolean {
+        return this.hasAssignee() ? this.taskDetails.assignee.id === userId : false;
+    }
+
+    /**
+     * Return true if the task assigned
+     */
+    public isAssignedToCurrentUser(): boolean {
+        return this.hasAssignee() && this.isAssignedTo(this.currentUserId);
+    }
+
+    /**
+     * Return true if the task has involvedGroup
+     */
+    public hasInvolvedGroup(): boolean {
+        return this.taskDetails.involvedGroups.length > 0 ? true : false;
+    }
+
+    /**
+     * Return true if the task has involvedPeople
+     */
+    public hasInvolvedPeople(): boolean {
+        return this.taskDetails.involvedPeople.length > 0 ? true : false;
+    }
+
+    /**
+     * Return true if the task claimable
+     */
+    public isTaskClaimable(): boolean {
+        return !this.isCompleted() && (this.hasInvolvedGroup() || this.hasInvolvedPeople()) && !this.hasAssignee() ;
+    }
+
+    /**
+     * Return true if the task claimed by currentUser
+     */
+    public isTaskClaimedByCurrentUser(): boolean {
+        return !this.isCompleted() && (this.hasInvolvedGroup() || this.hasInvolvedPeople()) && this.isAssignedToCurrentUser();
     }
 
     /**
@@ -207,7 +259,7 @@ export class TaskHeaderComponent implements OnChanges {
     /**
      * Returns true if the task is completed
      */
-    isCompleted() {
-        return !!this.taskDetails.endDate;
+    isCompleted(): boolean {
+        return this.taskDetails && !!this.taskDetails.endDate;
     }
 }

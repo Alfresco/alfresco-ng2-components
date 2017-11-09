@@ -24,6 +24,7 @@
  */
 import { TaskRepresentation } from 'alfresco-js-api';
 import { UserProcessModel } from 'ng2-alfresco-core';
+import { UserGroupModel } from './user-group.model';
 
 export class TaskDetailsModel implements TaskRepresentation {
     id: string;
@@ -43,6 +44,7 @@ export class TaskDetailsModel implements TaskRepresentation {
     managerOfCandidateGroup: boolean;
     memberOfCandidateGroup: boolean;
     memberOfCandidateUsers: boolean;
+    involvedGroups: UserGroupModel [];
     involvedPeople: UserProcessModel [];
     parentTaskId: string;
     parentTaskName: string;
@@ -77,6 +79,7 @@ export class TaskDetailsModel implements TaskRepresentation {
             this.managerOfCandidateGroup = !!obj.managerOfCandidateGroup;
             this.memberOfCandidateGroup = !!obj.memberOfCandidateGroup;
             this.memberOfCandidateUsers = !!obj.memberOfCandidateUsers;
+            this.involvedGroups = obj.involvedGroups;
             this.involvedPeople = obj.involvedPeople;
             this.parentTaskId = obj.parentTaskId || null;
             this.parentTaskName = obj.parentTaskName || null;
