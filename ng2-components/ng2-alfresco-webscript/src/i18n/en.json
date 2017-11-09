@@ -1,5 +1,5 @@
 {
     "WEBSCRIPT": {
-        "ERROR": "Error during the deserialization of {{data}} as {{contentType}}"
+        "ERROR": "Couldn't complete the action. Share this message with you IT Team: Error during the deserialization of {{data}} as {{contentType}}"
     }
 }
