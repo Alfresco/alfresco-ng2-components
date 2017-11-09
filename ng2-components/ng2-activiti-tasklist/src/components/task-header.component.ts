@@ -217,7 +217,7 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
     }
 
     /**
-     * Return true if the task claimed by me
+     * Return true if the task claimed by currentUser
      */
     public isTaskClaimedByCurrentUser(): boolean {
         return !this.isCompleted() && (this.hasInvolvedGroup() || this.hasInvolvedPeople()) && this.isAssignedToCurrentUser();
@@ -260,6 +260,6 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
      * Returns true if the task is completed
      */
     isCompleted(): boolean {
-        return !!this.taskDetails.endDate;
+        return this.taskDetails && !!this.taskDetails.endDate;
     }
 }
