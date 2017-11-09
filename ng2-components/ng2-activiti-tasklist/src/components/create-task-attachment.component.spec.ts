@@ -19,7 +19,7 @@ import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
 
-import { ActivitiContentService } from 'ng2-activiti-form';
+import { ActivitiContentService } from '@adf/process-services';
 import { AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';

@@ -17,7 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivitiContentService } from 'ng2-activiti-form';
+import { ActivitiContentService } from '@adf/process-services';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { CreateProcessAttachmentComponent } from './create-process-attachment.component';
 

@@ -1,0 +1,10 @@
+@import '../form/components/widgets/form';
+@import '../form/components/widgets/container/container.widget';
+@import '../form/components/widgets/people/people.widget';
+
+@mixin adf-process-services-theme($theme) {
+    @include adf-form-theme($theme);
+    @include adf-container-widget-theme($theme);
+    @include adf-people-widget-theme($theme);
+
+}

@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ActivitiContentService } from 'ng2-activiti-form';
+import { ActivitiContentService } from '@adf/process-services';
 
 @Component({
     selector: 'adf-create-task-attachment',

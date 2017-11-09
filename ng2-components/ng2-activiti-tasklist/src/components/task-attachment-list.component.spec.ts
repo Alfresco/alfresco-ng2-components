@@ -19,7 +19,7 @@ import { NgZone, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatProgressSpinnerModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
-import { ActivitiContentService } from 'ng2-activiti-form';
+import { ActivitiContentService } from '@adf/process-services';
 import { AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { Observable } from 'rxjs/Rx';

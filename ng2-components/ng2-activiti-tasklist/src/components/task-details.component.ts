@@ -26,7 +26,7 @@ import { Component,
     ViewChild
 } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
-import { ContentLinkModel, FormFieldValidator, FormModel, FormOutcomeEvent } from 'ng2-activiti-form';
+import { ContentLinkModel, FormFieldValidator, FormModel, FormOutcomeEvent } from '@adf/process-services';
 import { PeopleProcessService, UserProcessModel } from 'ng2-alfresco-core';
 import { AlfrescoAuthenticationService, CardViewUpdateService, ClickNotification, LogService, UpdateNotification } from 'ng2-alfresco-core';
 import { Observable, Observer } from 'rxjs/Rx';

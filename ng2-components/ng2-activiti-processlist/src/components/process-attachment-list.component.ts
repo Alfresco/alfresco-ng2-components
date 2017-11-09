@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, NgZone, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ActivitiContentService } from 'ng2-activiti-form';
+import { ActivitiContentService } from '@adf/process-services';
 import { ContentService, ThumbnailService } from 'ng2-alfresco-core';
 
 declare var require: any;

@@ -28,6 +28,8 @@ module.exports = {
         alias: {
             "@adf/content-services": path.resolve(__dirname, '../content-services/'),
             "@adf/content-services$": path.resolve(__dirname, '../content-services/index.ts'),
+            "@adf/process-services": path.resolve(__dirname, '../process-services/'),
+            "@adf/process-services$": path.resolve(__dirname, '../process-services/index.ts'),
             "ng2-alfresco-core$": path.resolve(__dirname, '../ng2-alfresco-core/index.ts'),
             "ng2-alfresco-core": path.resolve(__dirname, '../ng2-alfresco-core')
             // "ng2-alfresco-datatable": path.resolve(__dirname, '../ng2-alfresco-datatable/index.ts'),

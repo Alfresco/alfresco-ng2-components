@@ -37,4 +37,5 @@ $theme:   mat-light-theme($primary, $accent, $warn);
 @include alfresco-userinfo-theme($theme);
 @include alfresco-search-theme($theme);
 
-//@include alfresco-content-services-theme($theme);
+//@include adf-content-services-theme($theme);
+//@include adf-process-services-theme($theme);

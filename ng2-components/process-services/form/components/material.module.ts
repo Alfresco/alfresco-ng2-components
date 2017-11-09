@@ -17,38 +17,25 @@
 
 import { NgModule } from '@angular/core';
 import {
-    MatButtonModule,
-    MatChipsModule,
-    MatDialogModule,
-    MatIconModule,
-    MatInputModule,
-    MatListModule,
-    MatMenuModule,
-    MatOptionModule,
-    MatProgressSpinnerModule,
-    MatRippleModule,
-    MatSelectModule
+    MAT_PLACEHOLDER_GLOBAL_OPTIONS, MatAutocompleteModule, MatButtonModule, MatCardModule,
+    MatCheckboxModule, MatDatepickerModule, MatGridListModule, MatIconModule, MatInputModule,
+    MatListModule, MatOptionModule, MatRadioModule, MatSelectModule, MatSlideToggleModule, MatTableModule,
+    MatTabsModule
 } from '@angular/material';
 
 export function modules() {
     return [
-        MatButtonModule,
-        MatChipsModule,
-        MatDialogModule,
-        MatIconModule,
-        MatInputModule,
-        MatListModule,
-        MatProgressSpinnerModule,
-        MatRippleModule,
-        MatMenuModule,
-        MatOptionModule,
-        MatSelectModule
+        MatAutocompleteModule, MatButtonModule, MatCardModule, MatCheckboxModule,
+        MatDatepickerModule, MatGridListModule, MatIconModule, MatInputModule, MatListModule,
+        MatOptionModule, MatRadioModule, MatSelectModule, MatSlideToggleModule, MatTableModule, MatTabsModule
     ];
 }
 
 @NgModule({
+    providers: [
+        {provide: MAT_PLACEHOLDER_GLOBAL_OPTIONS, useValue: { float: 'never' }}
+    ],
     imports: modules(),
     exports: modules()
 })
-export class MaterialModule {
-}
+export class MaterialModule {}
