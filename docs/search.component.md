@@ -66,8 +66,7 @@ You can also attach your input field to the adf-search component via the trigger
 
 ```html
 <input matInput type="text"
-    [adfSearchAutocomplete]="search"
-    (enterKeyPressed)="searchSubmit($event)">
+    [adfSearchAutocomplete]="search">
 
 <adf-search #search="adfSearchAutocomplete">
     <ng-template let-result>

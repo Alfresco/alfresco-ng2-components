@@ -19,7 +19,7 @@
         (keyup.escape)="toggleSearchBar()"
         (ngModelChange)="inputChange($event)"
         [adfSearchAutocomplete]="auto"
-        (enterKeyPressed)="searchSubmit($event)">
+        (keyup.enter)="searchSubmit($event)">
 </mat-form-field>
 </div>
 

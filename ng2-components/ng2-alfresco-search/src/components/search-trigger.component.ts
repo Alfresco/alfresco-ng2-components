@@ -20,14 +20,12 @@ import {
     ChangeDetectorRef,
     Directive,
     ElementRef,
-    EventEmitter,
     forwardRef,
     Inject,
     Input,
     NgZone,
     OnDestroy,
-    Optional,
-    Output
+    Optional
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DOCUMENT } from '@angular/platform-browser';
@@ -54,7 +52,6 @@ export const SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR: any = {
         'role': 'combobox',
         'autocomplete': 'off',
         'aria-autocomplete': 'list',
-        '[attr.aria-activedescendant]': 'activeOption?.id',
         '[attr.aria-expanded]': 'panelOpen.toString()',
         '[attr.aria-owns]': 'autocomplete?.id',
         '(blur)': 'onTouched()',
@@ -67,18 +64,6 @@ export class AdfAutocompleteTriggerDirective implements ControlValueAccessor, On
 
     @Input('adfSearchAutocomplete')
     searchPanel: SearchComponent;
-
-    @Output()
-    enterKeyPressed: EventEmitter<KeyboardEvent> = new EventEmitter();
-
-    @Output()
-    shortWordError: EventEmitter<string> = new EventEmitter();
-
-    @Output()
-    panelClosed: EventEmitter<any> = new EventEmitter();
-
-    @Output()
-    panelOpened: EventEmitter<any> = new EventEmitter();
 
     private _panelOpen: boolean = false;
     private closingActionsSubscription: Subscription;
@@ -95,8 +80,6 @@ export class AdfAutocompleteTriggerDirective implements ControlValueAccessor, On
 
     ngOnDestroy() {
         this.escapeEventStream.unsubscribe();
-        this.panelClosed.unsubscribe();
-        this.panelOpened.unsubscribe();
     }
 
     get panelOpen(): boolean {
@@ -106,7 +89,6 @@ export class AdfAutocompleteTriggerDirective implements ControlValueAccessor, On
     openPanel(): void {
         this.searchPanel.isOpen = this._panelOpen = true;
         this.closingActionsSubscription = this.subscribeToClosingActions();
-        this.panelOpened.emit();
     }
 
     closePanel(): void {
@@ -160,7 +142,6 @@ export class AdfAutocompleteTriggerDirective implements ControlValueAccessor, On
             this.escapeEventStream.next();
             event.stopPropagation();
         } else if (keyCode === ENTER) {
-            this.enterKeyPressed.next(event);
             this.escapeEventStream.next();
             event.preventDefault();
         }else {
@@ -181,7 +162,6 @@ export class AdfAutocompleteTriggerDirective implements ControlValueAccessor, On
                 this.searchPanel.keyPressedStream.next(inputValue);
                 this.openPanel();
             } else {
-                this.shortWordError.next();
                 this.searchPanel.resetResults();
             }
         }
@@ -229,6 +209,5 @@ export class AdfAutocompleteTriggerDirective implements ControlValueAccessor, On
             this.element.nativeElement.focus();
         }
         this.closePanel();
-        this.panelClosed.next(event);
     }
 }
