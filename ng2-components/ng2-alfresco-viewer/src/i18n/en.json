@@ -21,6 +21,6 @@
             "OF": "of"
         },
         "LOADING": "Loading",
-        "UNKNOWN_FORMAT": "Document preview could not be loaded"
+        "UNKNOWN_FORMAT": "Couldn't load preview"
     }
 }

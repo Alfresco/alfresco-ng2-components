@@ -1,9 +1,9 @@
 {
     "title": "Welcome",
     "VERSION": {
-      "NO_PERMISSION": "You don't have permission to manage the versions of this content",
-      "NO_PERMISSION_EVENT": "You don't have the ${event.permission} permission to ${event.action} the ${event.type}",
-      "CHOOSE_FILE": "Please choose a document to see the versions of it"
+      "NO_PERMISSION": "You don't have permission to manage versions of this content",
+      "NO_PERMISSION_EVENT": "You don't have ${event.permission} permission to ${event.action} the ${event.type}",
+      "CHOOSE_FILE": "Select a file to see its versions"
     },
     "APP_LAYOUT": {
         "APP_NAME": "ADF Demo Application",
@@ -11,7 +11,7 @@
         "CONTENT_SERVICES": "Content Services",
         "PROCESS_SERVICES": "Process Services",
         "LOGIN": "Login",
-        "CUSTOM_SOURCES": "DL: Custom Sources",
+        "CUSTOM_SOURCES": "Custom Sources",
         "DATATABLE": "Datatable",
         "FORM": "Form",
         "FORM_LIST": "Form List",
@@ -29,8 +29,8 @@
         "CUSTOM_FILTER" :"Custom extensions filter",
         "MAX_SIZE" : "Max size filter",
         "ENABLE_VERSIONING" :"Enable versioning",
-        "DESCRIPTION_UPLOAD" : "Enable upload (demoing enabled/disabled state only if the permission are not checked dynamically)",
-        "MULTISELECT_DESCRIPTION" : "For 'Multiple' selection mode use Cmd (macOS) or Ctrl (Win) to toggle selection of multiple items.",
+        "DESCRIPTION_UPLOAD" : "Enable upload",
+        "MULTISELECT_DESCRIPTION" : "Use Cmd (Mac) or Ctrl (Windows) to toggle selection of multiple items",
         "COLUMNS": {
             "DISPLAY_NAME": "Display name",
             "TAG": "Tag",
@@ -59,7 +59,7 @@
         "REPLACE_COLUMNS":"Replace columns",
         "LOAD_NODE":"Load Node",
         "MULTISELECT":"Multiselect",
-        "MULTISELECT_DESCRIPTION":"For 'Multiple' selection mode use Cmd (macOS) or Ctrl (Win) to toggle selection of multiple items."
+        "MULTISELECT_DESCRIPTION":"Use Cmd (Mac) or Ctrl (Windows) to toggle selection of multiple items"
     },
     "ANALYTICS_REPORT": {
         "NO_REPORT_MESSAGE": "No report selected. Choose a report from the list"
@@ -90,7 +90,7 @@
     },
     "TAG": {
         "LIST":"List Tags Content Services",
-        "INSERT":"Insert Node Id",
+        "INSERT":"Insert Node ID",
         "NODE_LIST":"Tag list By Node ID"
     }
 }
