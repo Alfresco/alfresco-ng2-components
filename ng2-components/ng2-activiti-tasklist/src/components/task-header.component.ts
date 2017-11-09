@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { CardViewDateItemModel, CardViewItem, CardViewMapItemModel, CardViewTextItemModel, LogService } from 'ng2-alfresco-core';
 import { BpmUserService } from 'ng2-alfresco-userinfo';
 import { TaskDetailsModel } from '../models/task-details.model';
@@ -26,7 +26,7 @@ import { TaskListService } from './../services/tasklist.service';
     templateUrl: './task-header.component.html',
     styleUrls: ['./task-header.component.scss']
 })
-export class TaskHeaderComponent implements OnChanges {
+export class TaskHeaderComponent implements OnChanges, OnInit {
 
     @Input()
     formName: string = null;
@@ -40,8 +40,9 @@ export class TaskHeaderComponent implements OnChanges {
     @Output()
     unclaim: EventEmitter<any> = new EventEmitter<any>();
 
+    private currentUserId: number;
+
     properties: CardViewItem [];
-    currentBpmUserId: number;
     inEdit: boolean = false;
 
     constructor(private activitiTaskService: TaskListService,
@@ -49,8 +50,11 @@ export class TaskHeaderComponent implements OnChanges {
                 private logService: LogService) {
     }
 
+    ngOnInit() {
+        this.getCurrentUserId();
+    }
+
     ngOnChanges(changes: SimpleChanges) {
-        this.loadBpmUserInfo();
         this.refreshData();
     }
 
@@ -155,10 +159,9 @@ export class TaskHeaderComponent implements OnChanges {
     /**
      * Return the bpmUser
      */
-    loadBpmUserInfo(): any {
+    private getCurrentUserId(): void {
         this.bpmUserService.getCurrentUserInfo().subscribe((res) => {
-            let id = res ? res.id : '';
-            this.currentBpmUserId = +id;
+            this.currentUserId = res ? +res.id : null;
         });
     }
 
@@ -175,49 +178,49 @@ export class TaskHeaderComponent implements OnChanges {
      * Does the task have an assignee
      */
     public hasAssignee(): boolean {
-        return (this.taskDetails && this.taskDetails.assignee) ? false : true;
+        return !!this.taskDetails.assignee ? true : false;
     }
 
     /**
-     * Returns true if the task is completed
+     * Returns true if the task is assigne to logged in user
      */
-    isCurrentUser(): boolean {
-        return this.taskDetails.assignee ? (this.currentBpmUserId === this.taskDetails.assignee.id) : false;
-     }
-
-    /**
-     * Return true if the task assigned to the currently loggedin user
-     */
-    isAssignedToMe(): boolean {
-        return this.taskDetails.assignee ? this.isCurrentUser() : false;
+    public isAssignedTo(userId): boolean {
+        return this.hasAssignee() ? this.taskDetails.assignee.id === userId : false;
     }
 
     /**
-     * Dose the Claim button is visible
+     * Return true if the task assigned
      */
-    isClaimButtonVisible(): boolean {
-        return this.hasAssignee();
-    }
-
-    /**
-     * Dose the Requeue button is visible
-     */
-    isRequeueButtonVisible(): boolean {
-        return ((this.hasInvolvedGroup() || this.hasInvolvedPeople()) && this.isAssignedToMe()) && !this.isCompleted() ? true : false;
+    public isAssignedToCurrentUser(): boolean {
+        return this.hasAssignee() && this.isAssignedTo(this.currentUserId);
     }
 
     /**
      * Return true if the task has involvedGroup
      */
-    hasInvolvedGroup() {
+    public hasInvolvedGroup(): boolean {
         return this.taskDetails.involvedGroups.length > 0 ? true : false;
     }
 
     /**
      * Return true if the task has involvedPeople
      */
-    hasInvolvedPeople(): boolean {
+    public hasInvolvedPeople(): boolean {
         return this.taskDetails.involvedPeople.length > 0 ? true : false;
+    }
+
+    /**
+     * Return true if the task claimable
+     */
+    public isTaskClaimable(): boolean {
+        return !this.isCompleted() && (this.hasInvolvedGroup() || this.hasInvolvedPeople()) && !this.hasAssignee() ;
+    }
+
+    /**
+     * Return true if the task claimed by me
+     */
+    public isTaskClaimedByCurrentUser(): boolean {
+        return !this.isCompleted() && (this.hasInvolvedGroup() || this.hasInvolvedPeople()) && this.isAssignedToCurrentUser();
     }
 
     /**

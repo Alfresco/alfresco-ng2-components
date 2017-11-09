@@ -136,7 +136,7 @@ describe('TaskHeaderComponent', () => {
     describe('Claiming', () => {
 
         it('should display the claim button if no assignee', () => {
-            component.taskDetails.assignee = null;
+            component.taskDetails = new TaskDetailsModel(taskDetailsWithOutAssigneeMock);
 
             component.ngOnChanges({});
             fixture.detectChanges();
