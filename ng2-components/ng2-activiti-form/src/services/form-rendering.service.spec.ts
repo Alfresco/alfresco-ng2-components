@@ -22,7 +22,8 @@ import {
     UnknownWidgetComponent,
     UploadWidgetComponent
 } from './../components/widgets/index';
-import { DefaultTypeResolver, FormRenderingService } from './form-rendering.service';
+import { DynamicComponentResolver } from './dynamic-component-mapper.service';
+import { FormRenderingService } from './form-rendering.service';
 
 describe('FormRenderingService', () => {
 
@@ -88,9 +89,9 @@ describe('FormRenderingService', () => {
         expect(
             () => service.setComponentTypeResolver(
                 null,
-                DefaultTypeResolver.fromType(UnknownWidgetComponent)
+                DynamicComponentResolver.fromType(UnknownWidgetComponent)
             )
-        ).toThrowError('fieldType is null or not defined');
+        ).toThrowError('type is null or not defined');
     });
 
     it('should require type resolver instance to set resolver for type', () => {
@@ -106,13 +107,13 @@ describe('FormRenderingService', () => {
         expect(
             () => service.setComponentTypeResolver(
                 FormFieldTypes.TEXT,
-                DefaultTypeResolver.fromType(UnknownWidgetComponent)
+                DynamicComponentResolver.fromType(UnknownWidgetComponent)
             )
         ).toThrowError('already mapped, use override option if you intend replacing existing mapping.');
     });
 
     it('should override existing resolver with explicit flag', () => {
-        let customResolver = DefaultTypeResolver.fromType(UnknownWidgetComponent);
+        let customResolver = DynamicComponentResolver.fromType(UnknownWidgetComponent);
         service.setComponentTypeResolver(FormFieldTypes.TEXT, customResolver, true);
         expect(service.getComponentTypeResolver(FormFieldTypes.TEXT)).toBe(customResolver);
     });
