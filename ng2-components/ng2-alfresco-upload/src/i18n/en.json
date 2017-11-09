@@ -38,7 +38,7 @@
             "FOLDER_NOT_SUPPORTED": "Folder upload isn't supported by your browser, try a different browser",
             "REMOVE_FILE_ERROR": "{{ fileName }} couldn't be removed, try again or check with your IT Team.",
             "REMOVE_FILES_ERROR": "{{ total }} files couldn't be removed, try again or check with your IT Team.",
-            "EXCEED_MAX_FILE_SIZE": "The size of the file {{ fileName }} exceed the max allowed file size"
+            "EXCEED_MAX_FILE_SIZE": "File {{ fileName }} is larger than the allowed file size"
         },
         "ACTION": {
             "UNDO": "Undo"
