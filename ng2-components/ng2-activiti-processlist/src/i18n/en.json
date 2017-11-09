@@ -25,7 +25,7 @@
             "BUSINESS_KEY_DEFAULT": "None",
             "DESCRIPTION": "Description",
             "DESCRIPTION_DEFAULT": "No description",
-            "ID": "Id"
+            "ID": "ID"
         },
         "MENU_ACTIONS": {
             "VIEW_CONTENT": "View",
