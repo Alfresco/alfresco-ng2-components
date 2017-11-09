@@ -36,12 +36,10 @@ module.exports = {
             // "ng2-activiti-form": path.resolve(__dirname, '../ng2-activiti-form/index.ts'),
             // "ng2-activiti-tasklist": path.resolve(__dirname, '../ng2-activiti-tasklist/index.ts'),
             // "ng2-activiti-processlist": path.resolve(__dirname, '../ng2-activiti-processlist/index.ts'),
-            // "ng2-alfresco-documentlist": path.resolve(__dirname, '../ng2-alfresco-documentlist/index.ts'),
             // "ng2-alfresco-login": path.resolve(__dirname, '../ng2-alfresco-login/index.ts'),
             // "ng2-alfresco-search": path.resolve(__dirname, '../ng2-alfresco-search/index.ts'),
             // "ng2-alfresco-social": path.resolve(__dirname, '../ng2-alfresco-social/index.ts'),
             // "ng2-alfresco-tag": path.resolve(__dirname, '../ng2-alfresco-tag/index.ts'),
-            // "ng2-alfresco-upload": path.resolve(__dirname, '../ng2-alfresco-upload/index.ts'),
             // "ng2-alfresco-viewer": path.resolve(__dirname, '../ng2-alfresco-viewer/index.ts'),
             // "ng2-alfresco-webscript": path.resolve(__dirname, '../ng2-alfresco-webscript/index.ts'),
             // "ng2-alfresco-userinfo": path.resolve(__dirname, '../ng2-alfresco-userinfo/index.ts')
