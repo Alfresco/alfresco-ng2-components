@@ -20,10 +20,10 @@ import {
     ComponentFactoryResolver,
     Input,
     OnChanges,
-    Type,
     ViewChild
 } from '@angular/core';
 import { CardViewItem } from '../../interface/card-view-item.interface';
+import { CardItemTypeService } from '../../services/card-item-types.service';
 import { CardViewContentProxyDirective } from './card-view-content-proxy.directive';
 
 @Component({
@@ -46,7 +46,8 @@ export class CardViewItemDispatcherComponent implements OnChanges {
     public ngOnInit;
     public ngDoCheck;
 
-    constructor(private resolver: ComponentFactoryResolver) {
+    constructor(private cardItemTypeService: CardItemTypeService,
+                private resolver: ComponentFactoryResolver) {
         const dynamicLifecycleMethods = [
             'ngOnInit',
             'ngDoCheck',
@@ -72,21 +73,13 @@ export class CardViewItemDispatcherComponent implements OnChanges {
     }
 
     private loadComponent() {
-        const upperCamelCasedType = this.getUpperCamelCase(this.property.type),
-            className = `CardView${upperCamelCasedType}ItemComponent`;
+        const factoryClass = this.cardItemTypeService.resolveComponentType(this.property);
 
-        const factories = Array.from(this.resolver['_factories'].keys());
-        const factoryClass = <Type<any>> factories.find((x: any) => x.name === className);
         const factory = this.resolver.resolveComponentFactory(factoryClass);
         this.componentReference = this.content.viewContainerRef.createComponent(factory);
 
         this.componentReference.instance.editable = this.editable;
         this.componentReference.instance.property = this.property;
-    }
-
-    private getUpperCamelCase(type: string): string {
-        const camelCasedType = type.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
-        return camelCasedType[0].toUpperCase() + camelCasedType.substr(1);
     }
 
     private proxy(methodName, ...args) {

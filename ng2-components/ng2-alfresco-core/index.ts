@@ -39,6 +39,7 @@ import { AuthGuardBpm } from './src/services/auth-guard-bpm.service';
 import { AuthGuardEcm } from './src/services/auth-guard-ecm.service';
 import { AuthGuard } from './src/services/auth-guard.service';
 import { AuthenticationService } from './src/services/authentication.service';
+import { CardItemTypeService } from './src/services/card-item-types.service';
 import { CommentProcessService } from './src/services/comment-process.service';
 import { ContentService } from './src/services/content.service';
 import { CookieService } from './src/services/cookie.service';
@@ -98,6 +99,8 @@ export { AlfrescoTranslateLoader } from './src/services/translate-loader.service
 export { AppConfigService } from './src/services/app-config.service';
 export { ThumbnailService } from './src/services/thumbnail.service';
 export { UploadService } from './src/services/upload.service';
+export { DynamicComponentMapper, DynamicComponentResolveFunction, DynamicComponentResolver } from './src/services/dynamic-component-mapper.service';
+export { CardItemTypeService } from './src/services/card-item-types.service';
 export { CardViewUpdateService } from './src/services/card-view-update.service';
 export { UpdateNotification } from './src/services/card-view-update.service';
 export { ClickNotification } from './src/services/card-view-update.service';
@@ -219,6 +222,7 @@ export function providers() {
         PeopleProcessService,
         AppsProcessService,
         CommentProcessService,
+        CardItemTypeService,
         AppConfigService
     ];
 }

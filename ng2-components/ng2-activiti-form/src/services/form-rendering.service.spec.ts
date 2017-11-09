@@ -22,7 +22,7 @@ import {
     UnknownWidgetComponent,
     UploadWidgetComponent
 } from './../components/widgets/index';
-import { DynamicComponentResolver } from './dynamic-component-mapper.service';
+import { DynamicComponentResolver } from 'ng2-alfresco-core';
 import { FormRenderingService } from './form-rendering.service';
 
 describe('FormRenderingService', () => {
