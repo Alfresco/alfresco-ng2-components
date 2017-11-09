@@ -61,19 +61,19 @@
             },
             "MESSAGES": {
                 "NONE": "No task details found",
-                "CLAIM": "Click Claim to work on this task."
+                "CLAIM": "Click Claim to work on this task"
             },
             "FORM": {
-                "NONE": "No form."
+                "NONE": "No form"
             },
             "DUE": {
-                "NONE": "No due date."
+                "NONE": "No due date"
             },
             "ASSIGNEE": {
-                "NONE": "No assignee."
+                "NONE": "No assignee"
             },
             "PEOPLE": {
-                "NONE": "Nobody involved."
+                "NONE": "Nobody involved"
             },
             "COMMENTS": {
                 "NONE": "No comments",
@@ -103,7 +103,7 @@
         },
         "FILTERS": {
             "MESSAGES": {
-                "NONE": "No task filter selected."
+                "NONE": "No task filter selected"
             }
         },
         "START_TASK": {
