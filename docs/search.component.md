@@ -49,13 +49,15 @@ You can add a template that will be shown when the results are loaded.
 ```html
 <adf-search [searchTerm]="searchTerm">
     <ng-template let-result>
-        <span *ngFor="let item of result?.list?.entries">
-            {{ item?.entry.name }}
-        </span>
+        <ul>
+            <li *ngFor="let item of result?.list?.entries">
+                {{ item?.entry.name }}
+            </li>
+        </ul>
     </ng-template>
 </adf-search>
 ```
-The results are provided via the [$implicit variable of angular2] (https://angular.io/api/common/NgTemplateOutlet) and can be accessed via the sugar sintax 'let-yourChosenName'. As per example above the result will be something like : 
+The results are provided via the [$implicit variable of angular2](https://angular.io/api/common/NgTemplateOutlet) and can be accessed via the sugar sintax 'let-yourChosenName'. As per example above the result will be something like : 
 
 ![adf-search-control](docassets/images/search-component-simple-template.png)
 
