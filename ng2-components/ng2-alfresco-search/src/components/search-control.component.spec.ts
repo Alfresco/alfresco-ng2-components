@@ -17,6 +17,7 @@
 
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatInputModule, MatListModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { AlfrescoAuthenticationService, AlfrescoTranslationService, CoreModule, SearchService } from 'ng2-alfresco-core';
 import { ThumbnailService } from 'ng2-alfresco-core';
@@ -24,7 +25,7 @@ import { Observable } from 'rxjs/Observable';
 import { noResult, results } from './../assets/search.component.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
 import { SearchControlComponent } from './search-control.component';
-import { AdfAutocompleteTriggerDirective } from './search-trigger.component';
+import { SearchTriggerDirective } from './search-trigger.directive';
 import { SearchComponent } from './search.component';
 
 describe('SearchControlComponent', () => {
@@ -39,12 +40,14 @@ describe('SearchControlComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                CoreModule,
+                MatInputModule,
+                MatListModule
             ],
             declarations: [
                 SearchControlComponent,
                 SearchComponent,
-                AdfAutocompleteTriggerDirective
+                SearchTriggerDirective
             ],
             providers: [
                 {provide: AlfrescoTranslationService, useClass: TranslationMock},

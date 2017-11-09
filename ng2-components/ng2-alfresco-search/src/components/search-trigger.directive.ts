@@ -42,12 +42,12 @@ export const AUTOCOMPLETE_PANEL_HEIGHT = 256;
 
 export const SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => AdfAutocompleteTriggerDirective),
+    useExisting: forwardRef(() => SearchTriggerDirective),
     multi: true
 };
 
 @Directive({
-    selector: `input[adfSearchAutocomplete], textarea[adfSearchAutocomplete]`,
+    selector: `input[searchAutocomplete], textarea[searchAutocomplete]`,
     host: {
         'role': 'combobox',
         'autocomplete': 'off',
@@ -60,9 +60,9 @@ export const SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR: any = {
     },
     providers: [SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR]
 })
-export class AdfAutocompleteTriggerDirective implements ControlValueAccessor, OnDestroy {
+export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
 
-    @Input('adfSearchAutocomplete')
+    @Input('searchAutocomplete')
     searchPanel: SearchComponent;
 
     private _panelOpen: boolean = false;

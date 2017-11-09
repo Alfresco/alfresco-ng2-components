@@ -62,13 +62,13 @@ The results are provided via the [$implicit variable of angular2](https://angula
 ![adf-search-control](docassets/images/search-component-simple-template.png)
 
 ### Attach an input field to the search
-You can also attach your input field to the adf-search component via the trigger [adfSearchAutocomplete]
+You can also attach your input field to the adf-search component via the trigger [searchAutocomplete]
 
 ```html
 <input matInput type="text"
-    [adfSearchAutocomplete]="search">
+    [searchAutocomplete]="search">
 
-<adf-search #search="adfSearchAutocomplete">
+<adf-search #search="searchAutocomplete">
     <ng-template let-result>
         <span *ngFor="let item of result?.list?.entries">
             {{ item?.entry.name }}

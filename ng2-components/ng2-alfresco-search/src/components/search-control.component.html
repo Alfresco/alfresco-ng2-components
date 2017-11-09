@@ -18,12 +18,12 @@
         (blur)="onBlur($event)"
         (keyup.escape)="toggleSearchBar()"
         (ngModelChange)="inputChange($event)"
-        [adfSearchAutocomplete]="auto"
+        [searchAutocomplete]="auto"
         (keyup.enter)="searchSubmit($event)">
 </mat-form-field>
 </div>
 
-<adf-search #auto="adfSearchAutocomplete"
+<adf-search #auto="searchAutocomplete"
             class="adf-search-result-autocomplete"
             [rootNodeId]="liveSearchRoot"
             [resultType]="liveSearchResultType"

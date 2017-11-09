@@ -55,13 +55,13 @@ describe('SearchComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                let optionShowed = element.querySelectorAll('#autocomplete-search-result-list > mat-option').length;
+                let optionShowed = element.querySelectorAll('#autocomplete-search-result-list > li').length;
                 expect(optionShowed).toBe(1);
                 component.setSearchWordTo('searchTerm2');
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    optionShowed = element.querySelectorAll('#autocomplete-search-result-list > mat-option').length;
+                    optionShowed = element.querySelectorAll('#autocomplete-search-result-list > li').length;
                     expect(optionShowed).toBe(1);
                 });
             });

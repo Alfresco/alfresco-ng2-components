@@ -121,13 +121,13 @@ export let errorJson = {
         (error)="showSearchResult('ERROR')"
         (success)="showSearchResult('success')" #search>
        <ng-template let-data>
-            <mat-list id="autocomplete-search-result-list">
-                <mat-option *ngFor="let item of data?.list?.entries; let idx = index" (click)="elementClicked(item)">
+            <ul id="autocomplete-search-result-list">
+                <li *ngFor="let item of data?.list?.entries; let idx = index" (click)="elementClicked(item)">
                     <div id="result_option_{{idx}}">
                         <span>{{ item?.entry.name }}</span>
                     </div>
-                </mat-option>
-            </mat-list>
+                </li>
+            </ul>
         </ng-template>
     </adf-search>
     <span id="component-result-message">{{message}}</span>

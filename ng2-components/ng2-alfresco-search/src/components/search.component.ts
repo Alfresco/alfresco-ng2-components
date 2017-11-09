@@ -41,7 +41,7 @@ import { Subject } from 'rxjs/Subject';
     encapsulation: ViewEncapsulation.None,
     preserveWhitespaces: false,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    exportAs: 'adfSearchAutocomplete',
+    exportAs: 'searchAutocomplete',
     host: {
         'class': 'adf-search'
     }
@@ -82,6 +82,9 @@ export class SearchComponent implements AfterContentInit, OnChanges {
 
     @Output()
     resultLoaded: EventEmitter<NodePaging> = new EventEmitter();
+
+    @Output()
+    error: EventEmitter<any> = new EventEmitter();
 
     showPanel: boolean = false;
     results: NodePaging;
@@ -159,7 +162,7 @@ export class SearchComponent implements AfterContentInit, OnChanges {
                 error => {
                     if (error.status !== 400) {
                         this.results = null;
-                        this.resultLoaded.error(error);
+                        this.error.emit(error);
                     }
                 });
         }
