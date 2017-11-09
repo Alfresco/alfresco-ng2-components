@@ -8,6 +8,9 @@ dist
 content-services/**/*.js
 content-services/**/*.js.map
 content-services/**/*.d.ts
+process-services/**/*.js
+process-services/**/*.js.map
+process-services/**/*.d.ts
 *.tgz
 /package/
 /bundles/
