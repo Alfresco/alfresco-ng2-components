@@ -23,7 +23,7 @@ import {
     MatInputModule,
     MatSelectModule
 } from '@angular/material';
-import { FormModule, FormService } from '@adf/process-services';
+import { FormModule, FormService } from '../../form';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 

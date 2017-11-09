@@ -1,5 +1,0 @@
-@import '../src/components/tooltip/diagram-tooltip.component';
-
-@mixin adf-diagrams-theme($theme) {
-    @include adf-diagram-tooltip-theme($theme);
-}

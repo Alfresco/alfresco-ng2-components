@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-export * from './form';
-export * from './process-list';
-export * from './diagram';
-export * from './analytics';
+// primitives
+export * from './components/index';
+export * from './components/raphael/index';
+export * from './models/index';
+export * from './diagram-module';

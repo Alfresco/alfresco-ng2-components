@@ -5,8 +5,6 @@
 
 @import 'ng2-alfresco-core/styles/theming';
 @import 'ng2-alfresco-core/styles/index';
-@import 'ng2-activiti-analytics/styles/index';
-@import 'ng2-activiti-diagrams/styles/index';
 @import 'ng2-activiti-tasklist/styles/index';
 @import 'ng2-alfresco-datatable/styles/index';
 @import 'ng2-alfresco-login/styles/index';
@@ -25,8 +23,6 @@ $theme:   mat-light-theme($primary, $accent, $warn);
 
 @include adf-app-layout-theme($theme);
 @include alfresco-core-theme($theme);
-@include adf-analytics-theme($theme);
-@include adf-diagrams-theme($theme);
 @include adf-tasklist-theme($theme);
 @include alfresco-datatable-theme($theme);
 @include alfresco-login-theme($theme);

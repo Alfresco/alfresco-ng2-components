@@ -36,4 +36,4 @@ export * from './models/process-definition.model';
 export * from './models/process-instance.model';
 export * from './models/process-instance-filter.model';
 export * from './models/process-instance-variable.model';
-export * from './form-module';
+export * from './process-module';

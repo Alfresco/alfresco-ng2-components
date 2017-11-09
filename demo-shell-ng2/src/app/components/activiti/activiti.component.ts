@@ -19,9 +19,8 @@
 import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Pagination, ProcessInstanceFilterRepresentation } from 'alfresco-js-api';
-import { AnalyticsReportListComponent } from 'ng2-activiti-analytics';
 import {
-    DynamicTableRow, FORM_FIELD_VALIDATORS, FormEvent, FormFieldEvent, FormRenderingService,
+    AnalyticsReportListComponent, DynamicTableRow, FORM_FIELD_VALIDATORS, FormEvent, FormFieldEvent, FormRenderingService,
     FormService, ValidateDynamicTableRowEvent
 } from '@adf/process-services';
 

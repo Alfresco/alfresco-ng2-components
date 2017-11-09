@@ -32,13 +32,6 @@ module.exports = {
             "@adf/process-services$": path.resolve(__dirname, '../process-services/index.ts'),
             "ng2-alfresco-core$": path.resolve(__dirname, '../ng2-alfresco-core/index.ts'),
             "ng2-alfresco-core": path.resolve(__dirname, '../ng2-alfresco-core')
-            // "ng2-alfresco-datatable": path.resolve(__dirname, '../ng2-alfresco-datatable/index.ts'),
-            // "ng2-activiti-diagrams": path.resolve(__dirname, '../ng2-activiti-diagrams/index.ts'),
-            // "ng2-activiti-analytics": path.resolve(__dirname, '../ng2-activiti-analytics/index.ts'),
-            // "ng2-activiti-tasklist": path.resolve(__dirname, '../ng2-activiti-tasklist/index.ts'),
-            // "ng2-alfresco-login": path.resolve(__dirname, '../ng2-alfresco-login/index.ts'),
-            // "ng2-alfresco-viewer": path.resolve(__dirname, '../ng2-alfresco-viewer/index.ts'),
-            // "ng2-alfresco-userinfo": path.resolve(__dirname, '../ng2-alfresco-userinfo/index.ts')
         },
         extensions: ['.ts', '.js', '.scss'],
         modules: [helpers.root('node_modules')]

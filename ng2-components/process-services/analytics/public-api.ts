@@ -15,7 +15,4 @@
  * limitations under the License.
  */
 
-export * from './form';
-export * from './process-list';
-export * from './diagram';
-export * from './analytics';
+export * from './index';

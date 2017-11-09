@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ProcessContentService } from '@adf/process-services';
+import { ProcessContentService } from '../../form';
 
 @Component({
     selector: 'adf-create-process-attachment',

@@ -1,7 +1,0 @@
-@import '../src/components/analytics-report-list.component';
-@import '../src/components/widgets/date-range/date-range.widget';
-
-@mixin adf-analytics-theme($theme) {
-    @include adf-analytics-report-list-theme($theme);
-    @include adf-analytics-date-range-widget-theme($theme);
-}
