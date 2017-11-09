@@ -57,14 +57,6 @@ for more information about installing and using the source code.
 ### Services
 
 - [*Analytics service](../ng2-components/ng2-activiti-analytics/src/services/analytics.service.ts)
-
-### Widgets
-
-- [*Checkbox widget](../ng2-components/ng2-activiti-analytics/src/components/widgets/checkbox/checkbox.widget.ts)
-- [*Date range widget](../ng2-components/ng2-activiti-analytics/src/components/widgets/date-range/date-range.widget.ts)
-- [*Dropdown widget](../ng2-components/ng2-activiti-analytics/src/components/widgets/dropdown/dropdown.widget.ts)
-- [*Duration widget](../ng2-components/ng2-activiti-analytics/src/components/widgets/duration/duration.widget.ts)
-- [*Number widget](../ng2-components/ng2-activiti-analytics/src/components/widgets/number/number.widget.ts)
 <!-- ng2-activiti-analytics end -->
 
 [(Back to Contents)](#contents)
@@ -120,26 +112,6 @@ for more information about installing and using the source code.
 ### Widgets
 
 - [Content widget](content.widget.md)
-- [*Amount widget](../ng2-components/ng2-activiti-form/src/components/widgets/amount/amount.widget.ts)
-- [*Attach widget](../ng2-components/ng2-activiti-form/src/components/widgets/attach/attach.widget.ts)
-- [*Checkbox widget](../ng2-components/ng2-activiti-form/src/components/widgets/checkbox/checkbox.widget.ts)
-- [*Container widget](../ng2-components/ng2-activiti-form/src/components/widgets/container/container.widget.ts)
-- [*Date widget](../ng2-components/ng2-activiti-form/src/components/widgets/date/date.widget.ts)
-- [*Display text widget](../ng2-components/ng2-activiti-form/src/components/widgets/display-text/display-text.widget.ts)
-- [*Document widget](../ng2-components/ng2-activiti-form/src/components/widgets/document/document.widget.ts)
-- [*Dropdown widget](../ng2-components/ng2-activiti-form/src/components/widgets/dropdown/dropdown.widget.ts)
-- [*Dynamic table widget](../ng2-components/ng2-activiti-form/src/components/widgets/dynamic-table/dynamic-table.widget.ts)
-- [*Functional group widget](../ng2-components/ng2-activiti-form/src/components/widgets/functional-group/functional-group.widget.ts)
-- [*Hyperlink widget](../ng2-components/ng2-activiti-form/src/components/widgets/hyperlink/hyperlink.widget.ts)
-- [*Multiline text widget](../ng2-components/ng2-activiti-form/src/components/widgets/multiline-text/multiline-text.widget.ts)
-- [*Number widget](../ng2-components/ng2-activiti-form/src/components/widgets/number/number.widget.ts)
-- [*People widget](../ng2-components/ng2-activiti-form/src/components/widgets/people/people.widget.ts)
-- [*Radio buttons widget](../ng2-components/ng2-activiti-form/src/components/widgets/radio-buttons/radio-buttons.widget.ts)
-- [*Tabs widget](../ng2-components/ng2-activiti-form/src/components/widgets/tabs/tabs.widget.ts)
-- [*Text widget](../ng2-components/ng2-activiti-form/src/components/widgets/text/text.widget.ts)
-- [*Typeahead widget](../ng2-components/ng2-activiti-form/src/components/widgets/typeahead/typeahead.widget.ts)
-- [*Unknown widget](../ng2-components/ng2-activiti-form/src/components/widgets/unknown/unknown.widget.ts)
-- [*Upload widget](../ng2-components/ng2-activiti-form/src/components/widgets/upload/upload.widget.ts)
 <!-- ng2-activiti-form end -->
 
 ### Other classes and interfaces
@@ -276,6 +248,7 @@ for more information about installing and using the source code.
 ### Services
 
 - [Alfresco api service](alfresco-api.service.md)
+- [Alfresco content service](alfresco-content.service.md)
 - [App config service](app-config.service.md)
 - [Apps process service](apps-process.service.md)
 - [Auth guard bpm service](auth-guard-bpm.service.md)
@@ -284,9 +257,11 @@ for more information about installing and using the source code.
 - [Authentication service](authentication.service.md)
 - [Card view update service](card-view-update.service.md)
 - [Comment process service](comment-process.service.md)
+- [Content service](content.service.md)
 - [Cookie service](cookie.service.md)
 - [Deleted nodes api service](deleted-nodes-api.service.md)
 - [Discovery api service](discovery-api.service.md)
+- [Favorites api service](favorites-api.service.md)
 - [Highlight transform service](highlight-transform.service.md)
 - [Log service](log.service.md)
 - [Nodes api service](nodes-api.service.md)
@@ -295,19 +270,14 @@ for more information about installing and using the source code.
 - [People content service](people-content.service.md)
 - [People process service](people-process.service.md)
 - [Renditions service](renditions.service.md)
+- [Search api service](search-api.service.md)
+- [Shared links api service](shared-links-api.service.md)
 - [Sites api service](sites-api.service.md)
 - [Storage service](storage.service.md)
 - [Thumbnail service](thumbnail.service.md)
 - [Translation service](translation.service.md)
 - [Upload service](upload.service.md)
 - [User preferences service](user-preferences.service.md)
-- [*Alfresco content service](../ng2-components/ng2-alfresco-core/src/services/alfresco-content.service.ts)
-- [*Content service](../ng2-components/ng2-alfresco-core/src/services/content.service.ts)
-- [*Favorites api service](../ng2-components/ng2-alfresco-core/src/services/favorites-api.service.ts)
-- [*Search api service](../ng2-components/ng2-alfresco-core/src/services/search-api.service.ts)
-- [*Search service](../ng2-components/ng2-alfresco-core/src/services/search.service.ts)
-- [*Shared links api service](../ng2-components/ng2-alfresco-core/src/services/shared-links-api.service.ts)
-- [*Translate loader service](../ng2-components/ng2-alfresco-core/src/services/translate-loader.service.ts)
 <!-- ng2-alfresco-core end -->  
 
 [(Back to Contents)](#contents)
@@ -502,19 +472,6 @@ for more information about installing and using the source code.
 ### Components
 
 - [Viewer component](viewer.component.md)
-- [*ImgViewer component](../ng2-components/ng2-alfresco-viewer/src/components/imgViewer.component.ts)
-- [*MediaPlayer component](../ng2-components/ng2-alfresco-viewer/src/components/mediaPlayer.component.ts)
-- [*PdfViewer component](../ng2-components/ng2-alfresco-viewer/src/components/pdfViewer.component.ts)
-- [*TxtViewer component](../ng2-components/ng2-alfresco-viewer/src/components/txtViewer.component.ts)
-- [*Unknown format component](../ng2-components/ng2-alfresco-viewer/src/components/unknown-format/unknown-format.component.ts)
-- [*Viewer more actions component](../ng2-components/ng2-alfresco-viewer/src/components/viewer-more-actions.component.ts)
-- [*Viewer open with component](../ng2-components/ng2-alfresco-viewer/src/components/viewer-open-with.component.ts)
-- [*Viewer sidebar component](../ng2-components/ng2-alfresco-viewer/src/components/viewer-sidebar.component.ts)
-- [*Viewer toolbar component](../ng2-components/ng2-alfresco-viewer/src/components/viewer-toolbar.component.ts)
-
-### Directives
-
-- [*Viewer extension directive](../ng2-components/ng2-alfresco-viewer/src/directives/viewer-extension.directive.ts)
 <!-- ng2-alfresco-viewer end -->
 
 [(Back to Contents)](#contents)

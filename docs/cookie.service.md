@@ -25,5 +25,6 @@ beyond this size.
 <!-- seealso start -->
 ## See also
 
+- [Content service](content.service.md)
 - [Storage service](storage.service.md)
 <!-- seealso end -->
