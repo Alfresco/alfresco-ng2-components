@@ -53,7 +53,7 @@
                 "UPLOAD-ATTACHMENT": "Upload Attachment"
             },
             "MESSAGES": {
-                "NONE": "No process details found."
+                "NONE": "No process details found"
             },
             "TASKS": {
                 "NO_ACTIVE": "No currently active tasks",
@@ -91,7 +91,7 @@
                 "TITLE": "Edit process variable"
             },
             "ERROR_DIALOG": {
-                "TITLE": "Couldn't complete that action",
+                "TITLE": "Couldn't complete the action",
                 "DESCRIPTION": "You might not have the required access level, check with your IT Team."
             }
         },
