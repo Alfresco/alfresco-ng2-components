@@ -1,0 +1,19 @@
+{
+  "name": "@adf/process-services",
+  "description": "ADF components for Alfresco Process Services",
+  "version": "1.9.0",
+  "author": "Alfresco Software, Ltd.",
+  "main": "bundles/adf-process-services.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alfresco/alfresco-ng2-components.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+  },
+  "license": "Apache-2.0"
+}

@@ -41,7 +41,7 @@
     "annotateForClosureCompiler": true,
     "strictMetadataEmit": true,
     "flatModuleOutFile": "index.js",
-    "flatModuleId": "@adf/content-service",
+    "flatModuleId": "@adf/process-services",
     "skipTemplateCodegen": true
   }
 }
