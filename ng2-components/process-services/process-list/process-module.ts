@@ -25,7 +25,7 @@ import {
     MatProgressSpinnerModule,
     MatSelectModule
 } from '@angular/material';
-import { FormModule } from '@adf/process-services';
+import { FormModule } from '../form';
 
 import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
 import { CardViewUpdateService, CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
