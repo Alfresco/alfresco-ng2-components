@@ -11,11 +11,17 @@
     "loading-template",
     "no-content-template",
     "card-view-content-proxy",
-    "login-footer.directive",
-    "login-header.directive",
+    "login-footer\\.directive",
+    "login-header\\.directive",
     "no-task-detail-template",
     "diagram",
     "raphael",
     "context-menu",
-    "alfresco-settings"
+    "alfresco-settings",
+    "\\.widget",
+    "[vV]iewer",
+    "translate-loader",
+    "search\\.service",
+    "mediaPlayer",
+    "unknown-format"
 ]

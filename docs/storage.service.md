@@ -37,4 +37,5 @@ used instead.
 ## See also
 
 - [Cookie service](cookie.service.md)
+- [Content service](content.service.md)
 <!-- seealso end -->
