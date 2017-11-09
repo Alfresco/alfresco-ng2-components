@@ -22,6 +22,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { CardViewItem } from '../../interface/card-view-item.interface';
+import { CardItemTypeService } from '../../services/card-item-types.service';
 import { CardViewContentProxyDirective } from './card-view-content-proxy.directive';
 import { CardViewItemDispatcherComponent } from './card-view-item-dispatcher.component';
 
@@ -37,9 +38,13 @@ export class CardViewShinyCustomElementItemComponent {
 describe('CardViewItemDispatcherComponent', () => {
 
     let fixture: ComponentFixture<CardViewItemDispatcherComponent>;
+    let cardItemTypeService: CardItemTypeService;
     let component: CardViewItemDispatcherComponent;
 
     beforeEach(async(() => {
+        cardItemTypeService = new CardItemTypeService();
+        cardItemTypeService.setComponentTypeResolver('shiny-custom-element', () => CardViewShinyCustomElementItemComponent);
+
         TestBed.configureTestingModule({
             imports: [],
             declarations: [
@@ -47,7 +52,7 @@ describe('CardViewItemDispatcherComponent', () => {
                 CardViewShinyCustomElementItemComponent,
                 CardViewContentProxyDirective
             ],
-            providers: []
+            providers: [ { provide: CardItemTypeService, useValue: cardItemTypeService } ]
         });
 
         // entryComponents are not supported yet on TestBed, that is why this ugly workaround:

@@ -24,12 +24,13 @@
  */
 
 import { CardViewItem } from '../interface/card-view-item.interface';
+import { DynamicComponentModel } from '../services/dynamic-component-mapper.service';
 import { CardViewBaseItemModel, CardViewItemProperties } from './card-view-baseitem.model';
 
 export interface CardViewTextItemProperties extends CardViewItemProperties {
     multiline?: boolean;
 }
-export class CardViewTextItemModel extends CardViewBaseItemModel implements CardViewItem {
+export class CardViewTextItemModel extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
     type: string = 'text';
     multiline: boolean;
 
