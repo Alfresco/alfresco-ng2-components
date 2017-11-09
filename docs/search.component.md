@@ -33,7 +33,7 @@
 | resultType | string | | Node type to filter search results by, e.g. 'cm:content', 'cm:folder' if you want only the files. |
 | maxResults | number  | 20 | Maximum number of results to show in the search. |
 | resultSort | string  | | Criteria to sort search results by, must be one of "name" , "modifiedAt" or "createdAt" |
-| displayWith | function | | Define a function that can be applied to the element clicked which will be set to the input value |
+| displayWith | function | | Function that maps an option's value to its display value in the trigger |
 
 ### Events
 
@@ -44,7 +44,7 @@
 ## Details
 
 ### Customise Search Results
-You can add a template that will be shown when the results are loaded.
+You have to add a template that will be shown when the results are loaded.
 
 ```html
 <adf-search [searchTerm]="searchTerm">
@@ -61,12 +61,58 @@ The results are provided via the [$implicit variable of angular2](https://angula
 
 ![adf-search-control](docassets/images/search-component-simple-template.png)
 
+But you can define even a more complex template : 
+
+```html
+<adf-search class="adf-search-result-autocomplete"
+            [rootNodeId]="liveSearchRoot"
+            [resultType]="liveSearchResultType"
+            [resultSort]="liveSearchResultSort"
+            [maxResults]="liveSearchMaxResults">
+    <ng-template let-data>
+        <mat-list *ngIf="isSearchBarActive()" id="autocomplete-search-result-list">
+            <mat-list-item
+                *ngFor="let item of data?.list?.entries; let idx = index"
+                id="result_option_{{idx}}"
+                [tabindex]="0"
+                (focus)="onFocus($event)"
+                (blur)="onBlur($event)"
+                class="adf-search-autocomplete-item"
+                (click)="elementClicked(item)"
+                (keyup.enter)="elementClicked(item)">
+                <mat-icon mat-list-icon>
+                    <img [src]="getMimeTypeIcon(item)" />
+                </mat-icon>
+                    <h4 mat-line id="result_name_{{idx}}"
+                        *ngIf="highlight; else elseBlock"
+                        class="adf-search-fixed-text"
+                        [innerHtml]="item.entry.name | highlight: searchTerm">
+                        {{ item?.entry.name }}</h4>
+                    <ng-template #elseBlock>
+                        <h4 class="adf-search-fixed-text" mat-line id="result_name_{{idx}}" [innerHtml]="item.entry.name"></h4>
+                    </ng-template>
+                    <p mat-line class="adf-search-fixed-text"> {{item?.entry.createdByUser.displayName}} </p>
+            </mat-list-item>
+            <mat-list-item
+                id="search_no_result"
+                *ngIf="data?.list?.entries.length === 0">
+                <p mat-line class="adf-search-fixed-text">{{ 'SEARCH.RESULTS.NONE' | translate:{searchTerm: searchTerm} }}</p>
+            </mat-list-item>
+        </mat-list>
+    </ng-template>
+</adf-search>
+```
+
+Which will look like :
+
+![adf-search-control](docassets/images/search-component-complex-template.png)
+
+
 ### Attach an input field to the search
 You can also attach your input field to the adf-search component via the trigger [searchAutocomplete]
 
 ```html
-<input matInput type="text"
-    [searchAutocomplete]="search">
+<input type="text" [searchAutocomplete]="search">
 
 <adf-search #search="searchAutocomplete">
     <ng-template let-result>

@@ -21,7 +21,7 @@ import { MinimalNodeEntity } from 'alfresco-js-api';
 import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 
 @Component({
-    selector: 'search-bar',
+    selector: 'adf-search-bar',
     templateUrl: './search-bar.component.html',
     styleUrls: ['./search-bar.component.scss']
 })

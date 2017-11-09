@@ -48,7 +48,7 @@ Displays a input text which shows find-as-you-type suggestions.
 | Name | Description |
 | --- | --- |
 | searchChange | Emitted when the search term is changed. The search term is provided in the 'value' property of the returned object.  If the term is less than three characters in length then the term is truncated to an empty string. |
-| submit | Emitted when the search form is submitted. The search term is provided as value of the event. |
+| submit | Emitted when the search is submitted pressing ENTER button. The search term is provided as value of the event. |
 | optionClicked | Emitted when a file item from the list of find-as-you-type results is selected |
 
 ## Details

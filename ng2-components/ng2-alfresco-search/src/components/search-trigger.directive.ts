@@ -46,6 +46,8 @@ export const SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR: any = {
     multi: true
 };
 
+const MIN_WORD_LENGTH_VALID = 3;
+
 @Directive({
     selector: `input[searchAutocomplete], textarea[searchAutocomplete]`,
     host: {
@@ -158,7 +160,7 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
         if (document.activeElement === event.target) {
             let inputValue: string = (event.target as HTMLInputElement).value;
             this.onChange(inputValue);
-            if (inputValue.length >= 3) {
+            if (inputValue.length >= MIN_WORD_LENGTH_VALID) {
                 this.searchPanel.keyPressedStream.next(inputValue);
                 this.openPanel();
             } else {
