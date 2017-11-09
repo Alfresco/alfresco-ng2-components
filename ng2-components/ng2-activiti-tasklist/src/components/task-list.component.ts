@@ -63,7 +63,7 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
     data: DataTableAdapter;
 
     @Input()
-    selectionMode: string = 'none'; // none|single|multiple
+    selectionMode: string = 'single'; // none|single|multiple
 
     @Input()
     multiselect: boolean = false;

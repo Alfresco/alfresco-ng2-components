@@ -26,7 +26,6 @@
                 <div class="activiti-grid-item activiti-tasks-list" fxFlex.gt-md="335px" [ngClass.gt-md]="{'small-pagination': true}"
                      *ngIf="taskFilter && !isStartTaskMode()">
                     <adf-tasklist
-                        selectionMode="single"
                         [appId]="taskFilter?.appId"
                         [page]="taskPage"
                         [size]="taskPagination.maxItems"
