@@ -21,7 +21,7 @@ import { DiagramsModule } from '../../diagram';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { AnalyticsReportHeatMapComponent } from '../components/analytics-report-heat-map.component';
-import { WIDGET_DIRECTIVES } from '../components/widgets/index';
+import { WIDGET_ANALYTICS_DIRECTIVES } from '../components/widgets/index';
 import { MaterialModule } from '../material.module';
 import { AnalyticsService } from '../services/analytics.service';
 
@@ -51,7 +51,7 @@ describe('AnalyticsReportHeatMapComponent', () => {
             ],
             declarations: [
                 AnalyticsReportHeatMapComponent,
-                ...WIDGET_DIRECTIVES
+                ...WIDGET_ANALYTICS_DIRECTIVES
             ],
             providers: [
                 AnalyticsService

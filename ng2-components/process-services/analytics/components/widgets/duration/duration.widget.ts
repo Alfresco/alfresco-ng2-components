@@ -21,7 +21,7 @@
 import { Component, ElementRef, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ParameterValueModel, ReportParameterDetailsModel } from '../../../../diagram';
-import { NumberWidgetComponent } from './../number/number.widget';
+import { NumberWidgetAanlyticsComponent } from './../number/number.widget';
 
 @Component({
     selector: 'duration-widget',
@@ -29,7 +29,7 @@ import { NumberWidgetComponent } from './../number/number.widget';
     styleUrls: ['./duration.widget.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class DurationWidgetComponent extends NumberWidgetComponent implements OnInit {
+export class DurationWidgetComponent extends NumberWidgetAanlyticsComponent implements OnInit {
 
     @Input()
     field: any;

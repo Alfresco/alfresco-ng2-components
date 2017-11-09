@@ -28,7 +28,7 @@ import { WidgetComponent } from './../widget.component';
     styleUrls: ['./dropdown.widget.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
+export class DropdownWidgetAanalyticsComponent extends WidgetComponent implements OnInit {
 
     @Input()
     field: any;

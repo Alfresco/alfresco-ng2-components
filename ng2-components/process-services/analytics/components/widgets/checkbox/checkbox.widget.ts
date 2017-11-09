@@ -27,7 +27,7 @@ import { WidgetComponent } from './../widget.component';
     templateUrl: './checkbox.widget.html',
     encapsulation: ViewEncapsulation.None
 })
-export class CheckboxWidgetComponent extends WidgetComponent {
+export class CheckboxWidgetAanalyticsComponent extends WidgetComponent {
 
     @Input()
     field: any;

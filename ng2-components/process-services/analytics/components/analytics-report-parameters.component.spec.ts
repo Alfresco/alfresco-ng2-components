@@ -22,7 +22,7 @@ import { AlfrescoTranslationService, AppConfigService, CoreModule } from 'ng2-al
 import { Observable } from 'rxjs/Rx';
 import * as analyticParamsMock from '../assets/analyticsParamsReportComponent.mock';
 import { AnalyticsReportParametersComponent } from '../components/analytics-report-parameters.component';
-import { WIDGET_DIRECTIVES } from '../components/widgets/index';
+import { WIDGET_ANALYTICS_DIRECTIVES } from '../components/widgets/index';
 import { MaterialModule } from '../material.module';
 import { AnalyticsService } from '../services/analytics.service';
 import { DateRangeWidgetComponent } from './widgets/date-range/date-range.widget';
@@ -45,7 +45,7 @@ describe('AnalyticsReportParametersComponent', () => {
             declarations: [
                 DateRangeWidgetComponent,
                 AnalyticsReportParametersComponent,
-                ...WIDGET_DIRECTIVES
+                ...WIDGET_ANALYTICS_DIRECTIVES
             ],
             providers: [
                 AnalyticsService

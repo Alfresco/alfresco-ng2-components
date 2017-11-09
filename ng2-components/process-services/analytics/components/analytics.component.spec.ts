@@ -27,7 +27,7 @@ import { AnalyticsReportHeatMapComponent } from '../components/analytics-report-
 import { AnalyticsReportListComponent } from '../components/analytics-report-list.component';
 import { AnalyticsReportParametersComponent } from '../components/analytics-report-parameters.component';
 import { AnalyticsComponent } from '../components/analytics.component';
-import { WIDGET_DIRECTIVES } from '../components/widgets/index';
+import { WIDGET_ANALYTICS_DIRECTIVES } from '../components/widgets/index';
 import { AnalyticsService } from '../services/analytics.service';
 
 export const ANALYTICS_DIRECTIVES: any[] = [
@@ -36,7 +36,7 @@ export const ANALYTICS_DIRECTIVES: any[] = [
     AnalyticsReportParametersComponent,
     AnalyticsReportListComponent,
     AnalyticsReportHeatMapComponent,
-    WIDGET_DIRECTIVES
+    WIDGET_ANALYTICS_DIRECTIVES
 ];
 export const ANALYTICS_PROVIDERS: any[] = [
     AnalyticsService
