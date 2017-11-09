@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { DynamicComponentResolver } from 'ng2-alfresco-core';
 import {
     AttachWidgetComponent,
     FormFieldModel,
@@ -22,7 +23,6 @@ import {
     UnknownWidgetComponent,
     UploadWidgetComponent
 } from './../components/widgets/index';
-import { DynamicComponentResolver } from 'ng2-alfresco-core';
 import { FormRenderingService } from './form-rendering.service';
 
 describe('FormRenderingService', () => {

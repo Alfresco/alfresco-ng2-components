@@ -45,7 +45,7 @@ Displays a configurable property list renderer.
 
 ## Details
 
-You define the property list, the CardViewComponent does the rest. Each property represents a card view item (a row) in the card view component. At the time of writing two different kind of card view item (property type) is supported out of the box ([text](#card-text-item) item and [date](#card-date-item) item) but you can define your own custom types as well.
+You define the property list, the CardViewComponent does the rest. Each property represents a card view item (a row) in the card view component. At the time of writing three a few kind of card view item (property type) is supported out of the box (e.g: [text](#card-text-item) item and [date](#card-date-item) item) but you can define your own custom types as well.
 
 ### Editing
 
@@ -171,13 +171,16 @@ Card item components are loaded dynamically, which makes you able to define your
 
 Let's consider you want to have a **stardate** type to display Captain Picard's birthday (47457.1). For this, you need to do the following steps.
 
-#### 1. Define the model for the custom type
+#### 1. Define the Model for the custom type
 
-Your model has to extend the CardViewBaseItemModel and implement the CardViewItem interface.
+Your model has to extend the **CardViewBaseItemModel** and implement the **CardViewItem** and **DynamicComponentModel** interface.
 *(You can check how the CardViewTextItemModel is implemented for further guidance.)*
 
 ```js
-export class CardViewStarDateItemModel extends CardViewBaseItemModel implements CardViewItem {
+import { CardViewBaseItemModel, CardViewItem, DynamicComponentModel } from 'ng2-alfresco-core';
+
+export class CardViewStarDateItemModel extends CardViewBaseItemModel implements
+CardViewItem, DynamicComponentModel {
     type: string = 'star-date';
 
     get displayValue() {
@@ -190,13 +193,9 @@ export class CardViewStarDateItemModel extends CardViewBaseItemModel implements 
 }
 ```
 
-The most important part of this model is the value of the **type** attribute. This is how the Card View component will be able to recognise which component is needed to render it dynamically.
+#### 2. Define the Component for the custom type
 
-The type is a **hyphen-separated-lowercase-words** string (just like how I wrote it). This will be converted to a PascalCase (or UpperCamelCase) string to find the right component. In our case the Card View component will look for the CardView**StarDate**ItemComponent.
-
-#### 2. Define the component for the custom type
-
-As discussed in the previous step the only important thing here is the naming of your component class ( **CardViewStarDateItemComponent**). Since the selector is not used in this case, you can give any selector name to it, but it makes sense to follow the angular standards.
+Create your custom card view item component. Defining the selector is not important, being it a dinamically loaded component, so you can give any selector name to it, but it makes sense to follow the angular standards.
 
 ```js
 @Component({
@@ -240,6 +239,27 @@ For Angular to be able to load your custom component dynamically, you have to re
     exports: [...]
 })
 export class MyModule {}
+```
+
+#### 4. Bind your custom component to the custom model type, enabling Angular's dynamic component loader to find it.
+
+For mapping each type to their Component, there is the **CardItemTypeService**. This service extends the **DynamicComponentMapper** abstract class.
+This CardItemTypeService is responible for the type resolution, it contains all the default components (e.g.: text, date, etc...) also. In order to make your component available, you need to extend the list of possible components.
+
+You can extend this list the following way:
+
+```js
+@Component({
+    ...
+    providers: [ CardItemTypeService ] // If you don't want to pollute the main instance of the CardItemTypeService service
+    ...
+})
+export class SomeParentComponent {
+
+    constructor(private cardItemTypeService: CardItemTypeService) {
+        cardItemTypeService.setComponentTypeResolver('star-date', () => CardViewStarDateItemComponent);
+    }
+}
 ```
 
 <!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
