@@ -18,7 +18,9 @@
 export * from './components/upload-button.component';
 export * from './components/file-uploading-dialog.component';
 export * from './components/upload-drag-area.component';
-export * from './directives/file-draggable.directive';
 export * from './components/file-uploading-list.component';
 export * from './components/file-uploading-list-row.component';
+
+export * from './directives/file-draggable.directive';
+
 export * from './upload-module';

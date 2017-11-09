@@ -173,11 +173,6 @@
         },
         {
           "glob": "**/*",
-          "input": "../../ng2-components/ng2-alfresco-documentlist/bundles/assets",
-          "output": "./assets/"
-        },
-        {
-          "glob": "**/*",
           "input": "../../ng2-components/ng2-alfresco-viewer/bundles/assets",
           "output": "./assets/"
         },

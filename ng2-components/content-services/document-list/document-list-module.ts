@@ -21,6 +21,7 @@ import { MaterialModule } from '../material.module';
 
 import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
+import { UploadModule } from '../upload';
 
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { DropdownBreadcrumbComponent } from './components/breadcrumb/dropdown-breadcrumb.component';
@@ -49,7 +50,8 @@ import { NodeActionsService } from './services/node-actions.service';
         CoreModule,
         DataTableModule,
         FlexLayoutModule,
-        MaterialModule
+        MaterialModule,
+        UploadModule
     ],
     declarations: [
         DocumentListComponent,

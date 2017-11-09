@@ -26,8 +26,8 @@ import {
     MatProgressSpinnerModule,
     MatRippleModule,
     MatMenuModule,
-    MatSelectModule,
-    MatOptionModule
+    MatOptionModule,
+    MatSelectModule
 } from '@angular/material';
 
 export function modules() {
@@ -41,8 +41,8 @@ export function modules() {
         MatProgressSpinnerModule,
         MatRippleModule,
         MatMenuModule,
-        MatSelectModule,
-        MatOptionModule
+        MatOptionModule,
+        MatSelectModule
     ];
 }
 

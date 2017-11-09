@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, ViewChild } from '@angular/core';
-import { DocumentListComponent } from 'ng2-alfresco-documentlist';
+import { DocumentListComponent } from '@adf/content-services';
 
 @Component({
     selector: 'adf-custom-sources',
