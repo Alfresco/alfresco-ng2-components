@@ -15,377 +15,101 @@
  * limitations under the License.
  */
 
-import { DebugElement, ReflectiveInjector, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
-import { AlfrescoTranslationService, CoreModule, NotificationService, SearchService } from 'ng2-alfresco-core';
-import { DocumentListModule } from 'ng2-alfresco-documentlist';
-import { PermissionModel } from 'ng2-alfresco-documentlist';
-import { Observable } from 'rxjs/Rx';
-import { TranslationMock } from './../assets/translation.service.mock';
-import { SearchComponent } from './search.component';
+import { CoreModule, SearchService } from 'ng2-alfresco-core';
+import { SearchModule } from '../../index';
+import { differentResult, result, SimpleSearchTestComponent } from './../assets/search.component.mock';
 
 describe('SearchComponent', () => {
 
-    let fixture: ComponentFixture<SearchComponent>, element: HTMLElement;
-    let component: SearchComponent;
-
-    let result = {
-        list: {
-            pagination: {
-                hasMoreItems: false,
-                maxItems: 25,
-                skipCount: 0,
-                totalItems: 1
-            },
-            entries: [
-                {
-                    entry: {
-                        id: '123',
-                        name: 'MyDoc',
-                        isFile: true,
-                        content: {
-                            mimeType: 'text/plain'
-                        },
-                        createdByUser: {
-                            displayName: 'John Doe'
-                        },
-                        modifiedByUser: {
-                            displayName: 'John Doe'
-                        }
-                    }
-                }
-            ]
-        }
-    };
-
-    let folderResult = {
-        list: {
-            pagination: {
-                hasMoreItems: false,
-                maxItems: 25,
-                skipCount: 0,
-                totalItems: 1
-            },
-            entries: [
-                {
-                    entry: {
-                        id: '123',
-                        name: 'MyFolder',
-                        isFile: false,
-                        isFolder: true,
-                        createdByUser: {
-                            displayName: 'John Doe'
-                        },
-                        modifiedByUser: {
-                            displayName: 'John Doe'
-                        }
-                    }
-                }
-            ]
-        }
-    };
-
-    let noResult = {
-        list: {
-            pagination: {
-                hasMoreItems: false,
-                maxItems: 25,
-                skipCount: 0,
-                totalItems: 0
-            },
-            entries: []
-        }
-    };
-
-    let errorJson = {
-        error: {
-            errorKey: 'Search failed',
-            statusCode: 400,
-            briefSummary: '08220082 search failed',
-            stackTrace: 'For security reasons the stack trace is no longer displayed, but the property is kept for previous versions.',
-            descriptionURL: 'https://api-explorer.alfresco.com'
-        }
-    };
+    let fixture: ComponentFixture<SimpleSearchTestComponent>, element: HTMLElement;
+    let component: SimpleSearchTestComponent;
+    let searchService: SearchService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule,
-                DocumentListModule
+                SearchModule
             ],
-            declarations: [SearchComponent],
-            providers: [
-                SearchService,
-                {provide: AlfrescoTranslationService, useClass: TranslationMock},
-                {provide: NotificationService, useClass: NotificationService}
-            ]
+            declarations: [ SimpleSearchTestComponent ]
         }).compileComponents().then(() => {
-            fixture = TestBed.createComponent(SearchComponent);
+            fixture = TestBed.createComponent(SimpleSearchTestComponent);
             component = fixture.componentInstance;
             element = fixture.nativeElement;
+            searchService = TestBed.get(SearchService);
         });
     }));
 
-    afterEach(() => {
-        fixture.detectChanges();
-    });
+    describe('search results', () => {
 
-    it('should not have a search term by default', () => {
-        expect(component.searchTerm).toBe('');
-    });
+        afterEach(() => {
+            fixture.destroy();
+        });
 
-    it('should take the provided search term from query param provided via RouteParams', () => {
-        let injector = ReflectiveInjector.resolveAndCreate([
-            {provide: ActivatedRoute, useValue: {params: Observable.from([{q: 'exampleTerm692'}])}}
-        ]);
-
-        let search = new SearchComponent(null, null, null, injector.get(ActivatedRoute));
-
-        search.ngOnInit();
-
-        expect(search.searchTerm).toBe('exampleTerm692');
-    });
-
-    it('should show the Notification snackbar on permission error', () => {
-        const notoficationService = TestBed.get(NotificationService);
-        spyOn(notoficationService, 'openSnackMessage');
-
-        component.handlePermission(new PermissionModel());
-
-        expect(notoficationService.openSnackMessage).toHaveBeenCalledWith('PERMISSON.LACKOF', 3000);
-    });
-
-    describe('Search results', () => {
-
-        it('should add wildcard in the search parameters', (done) => {
-            let searchTerm = 'searchTerm6368';
-            let searchTermOut = 'searchTerm6368*';
-            let options = {
-                include: ['path', 'allowableOperations'],
-                skipCount: 0,
-                rootNodeId: '-my-',
-                nodeType: 'my:type',
-                maxItems: 20,
-                orderBy: null
-            };
-
-            component.searchTerm = searchTerm;
-            component.rootNodeId = '-my-';
-            component.resultType = 'my:type';
-            let searchService = fixture.debugElement.injector.get(SearchService);
+        it('should clear results straight away when a new search term is entered', async(() => {
             spyOn(searchService, 'getQueryNodesPromise')
-                .and.returnValue(Promise.resolve(result));
-            fixture.detectChanges();
+                .and.returnValues(Promise.resolve(result), Promise.resolve(differentResult));
 
-            component.resultsLoad.subscribe(() => {
+            component.setSearchWordTo('searchTerm');
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(searchService.getQueryNodesPromise).toHaveBeenCalledWith(searchTermOut, options);
-                done();
-            });
-        });
-
-        it('should display search results when a search term is provided', (done) => {
-            let searchService = TestBed.get(SearchService);
-            spyOn(searchService, 'getQueryNodesPromise').and.returnValue(Promise.resolve(result));
-            component.searchTerm = '';
-
-            fixture.detectChanges();
-
-            fixture.whenStable().then(() => {
-                component.resultsLoad.subscribe(() => {
+                let optionShowed = element.querySelectorAll('#autocomplete-search-result-list > li').length;
+                expect(optionShowed).toBe(1);
+                component.setSearchWordTo('searchTerm2');
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let resultsEl = element.querySelector('[data-automation-id="text_MyDoc"]');
-                    expect(resultsEl).not.toBeNull();
-                    expect(resultsEl.innerHTML.trim()).toContain('MyDoc');
-                    done();
+                    optionShowed = element.querySelectorAll('#autocomplete-search-result-list > li').length;
+                    expect(optionShowed).toBe(1);
                 });
-
-                component.ngOnChanges({searchTerm: new SimpleChange('', 'searchTerm', true)});
             });
-        });
+        }));
 
-        it('should display no result if no result are returned', (done) => {
-
-            let searchService = TestBed.get(SearchService);
-            spyOn(searchService, 'getQueryNodesPromise')
-                .and.returnValue(Promise.resolve(noResult));
-
-            component.searchTerm = '';
-
-            fixture.detectChanges();
-
-            fixture.whenStable().then(() => {
-
-                component.resultsLoad.subscribe(() => {
-                    fixture.detectChanges();
-                    expect(element.querySelector('.no-result-message')).not.toBeNull();
-                    done();
-                });
-
-                component.ngOnChanges({searchTerm: new SimpleChange('', 'searchTerm', true)});
-            });
-        });
-
-        it('should display an error if an error is encountered running the search', (done) => {
-
-            let searchService = TestBed.get(SearchService);
-            spyOn(searchService, 'getQueryNodesPromise')
-                .and.returnValue(Promise.reject(errorJson));
-
-            component.searchTerm = '';
-
-            fixture.detectChanges();
-
-            fixture.whenStable().then(() => {
-
-                component.resultsLoad.subscribe(() => {
-                }, () => {
-                    fixture.detectChanges();
-                    let errorEl = element.querySelector('[data-automation-id="search_error_message"]');
-                    expect(errorEl).not.toBeNull();
-                    expect((<any> errorEl).innerText).toBe('SEARCH.RESULTS.ERROR');
-                    done();
-                });
-
-                component.ngOnChanges({searchTerm: new SimpleChange('', 'searchTerm', true)});
-            });
-        });
-
-        it('should update search results when the search term input is changed', (done) => {
-
-            let searchService = TestBed.get(SearchService);
+        it('should display the returned search results', async(() => {
             spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(result));
 
-            component.searchTerm = '';
-
+            component.setSearchWordTo('searchTerm');
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
-                component.resultsLoad.subscribe(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#result_option_0').textContent.trim()).toBe('MyDoc');
+            });
+        }));
+
+        it('should emit error event when search call fail', async(() => {
+            spyOn(searchService, 'getQueryNodesPromise')
+                .and.returnValue(Promise.reject({ status: 402 }));
+            component.setSearchWordTo('searchTerm');
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                let message: HTMLElement = <HTMLElement> element.querySelector('#component-result-message');
+                expect(message.textContent).toBe('ERROR');
+            });
+        }));
+
+        it('should be able to hide the result panel', async(() => {
+            spyOn(searchService, 'getQueryNodesPromise')
+                .and.returnValues(Promise.resolve(result), Promise.resolve(differentResult));
+
+            component.setSearchWordTo('searchTerm');
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                let optionShowed = element.querySelectorAll('#autocomplete-search-result-list');
+                expect(optionShowed).not.toBeNull();
+                component.forceHidePanel();
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    expect(searchService.getQueryNodesPromise).toHaveBeenCalled();
-                    let resultsEl = element.querySelector('[data-automation-id="text_MyDoc"]');
-                    expect(resultsEl).not.toBeNull();
-                    expect(resultsEl.innerHTML.trim()).toContain('MyDoc');
-                    done();
-                });
-
-                component.ngOnChanges({searchTerm: new SimpleChange('', 'searchTerm2', true)});
-            });
-        });
-    });
-
-    describe('search result interactions', () => {
-
-        let debugElement: DebugElement;
-        let searchService: SearchService;
-        let querySpy: jasmine.Spy;
-        let emitSpy: jasmine.Spy;
-
-        beforeEach(() => {
-            debugElement = fixture.debugElement;
-            searchService = TestBed.get(SearchService);
-            querySpy = spyOn(searchService, 'getQueryNodesPromise').and.returnValue(Promise.resolve(result));
-            emitSpy = spyOn(component.preview, 'emit');
-        });
-
-        describe('click results', () => {
-
-            beforeEach(() => {
-                component.navigationMode = SearchComponent.SINGLE_CLICK_NAVIGATION;
-            });
-
-            it('should emit preview event when file item clicked', (done) => {
-
-                component.searchTerm = '';
-
-                fixture.detectChanges();
-
-                fixture.whenStable().then(() => {
-                    component.resultsLoad.subscribe(() => {
-                        fixture.detectChanges();
-
-                        let resultsEl = element.querySelector('[data-automation-id="text_MyDoc"]');
-                        resultsEl.dispatchEvent(new Event('click'));
-
-                        done();
-                    });
-
-                    component.ngOnChanges({searchTerm: new SimpleChange('', 'searchTerm', true)});
+                    let elementList = element.querySelector('#adf-search-results-content');
+                    expect(elementList.classList).toContain('adf-search-hide');
                 });
             });
-
-            it('should emit preview event when non-file item is clicked', (done) => {
-                querySpy.and.returnValue(Promise.resolve(folderResult));
-
-                component.searchTerm = '';
-
-                fixture.detectChanges();
-
-                fixture.whenStable().then(() => {
-                    component.resultsLoad.subscribe(() => {
-                        fixture.detectChanges();
-
-                        let resultsEl = element.querySelector('[data-automation-id="text_MyFolder"]');
-                        resultsEl.dispatchEvent(new Event('click'));
-
-                        done();
-                    });
-
-                    component.ngOnChanges({searchTerm: new SimpleChange('', 'searchTerm', true)});
-                });
-            });
-        });
-
-        describe('double click results', () => {
-
-            beforeEach(() => {
-                component.navigationMode = SearchComponent.DOUBLE_CLICK_NAVIGATION;
-            });
-
-            it('should emit preview event when file item clicked', (done) => {
-                component.searchTerm = '';
-
-                fixture.detectChanges();
-
-                fixture.whenStable().then(() => {
-                    component.resultsLoad.subscribe(() => {
-                        fixture.detectChanges();
-
-                        let resultsEl = element.querySelector('[data-automation-id="text_MyDoc"]');
-                        resultsEl.dispatchEvent(new Event('dblclick'));
-
-                        done();
-                    });
-
-                    component.ngOnChanges({searchTerm: new SimpleChange('', 'searchTerm', true)});
-                });
-            });
-
-            it('should emit preview event when non-file item is clicked', (done) => {
-
-                querySpy.and.returnValue(Promise.resolve(folderResult));
-
-                component.searchTerm = '';
-
-                fixture.detectChanges();
-
-                fixture.whenStable().then(() => {
-
-                    component.resultsLoad.subscribe(() => {
-                        fixture.detectChanges();
-
-                        let resultsEl = element.querySelector('[data-automation-id="text_MyFolder"]');
-                        resultsEl.dispatchEvent(new Event('dblclick'));
-
-                        done();
-                    });
-
-                    component.ngOnChanges({searchTerm: new SimpleChange('', 'searchTerm', true)});
-                });
-            });
-        });
+        }));
     });
 });

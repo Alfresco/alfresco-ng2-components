@@ -28,7 +28,7 @@ import { ActivitiShowDiagramComponent } from './components/activiti/activiti-sho
 import { FormViewerComponent } from './components/activiti/form-viewer.component';
 import { FormNodeViewerComponent } from './components/activiti/form-node-viewer.component';
 import { ActivitiAppsViewComponent } from './components/activiti/apps-view.component';
-import { SearchComponent } from './components/search/search.component';
+import { SearchResultComponent } from './components/search/search-result.component';
 
 import { DataTableComponent } from './components/datatable/datatable.component';
 import { WebscriptComponent } from './components/webscript/webscript.component';
@@ -86,7 +86,7 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'search',
-                component: SearchComponent,
+                component: SearchResultComponent,
                 canActivate: [AuthGuardEcm]
             },
             {

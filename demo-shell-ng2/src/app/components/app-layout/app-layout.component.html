@@ -23,7 +23,7 @@
 
         <div class="adf-app-layout-menu-spacer"></div>
 
-        <search-bar fxFlex="0 1 auto"></search-bar>
+        <adf-search-bar class="adf-search-bar-overflow" fxFlex="0 1 auto"></adf-search-bar>
 
         <a fxFlex="0 0 auto" class="adf-toolbar-link" fxShow fxHide.lt-md="true" mat-button data-automation-id="home" href="" routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">{{'APP_LAYOUT.HOME' | translate }}</a>
         <a fxFlex="0 0 auto" class="adf-toolbar-link" fxShow fxHide.lt-md="true" mat-button data-automation-id="files" href="" routerLink="/files" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">{{'APP_LAYOUT.CONTENT_SERVICES' | translate }}</a>

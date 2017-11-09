@@ -372,7 +372,6 @@ for more information about installing and using the source code.
 
 - [Search control component](search-control.component.md)
 - [Search component](search.component.md)
-- [*Search autocomplete component](../ng2-components/ng2-alfresco-search/src/components/search-autocomplete.component.ts)
 <!-- ng2-alfresco-search end -->
 
 [(Back to Contents)](#contents)

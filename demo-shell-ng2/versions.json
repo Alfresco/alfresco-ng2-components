@@ -1,0 +1,767 @@
+{
+  "name": "myapp",
+  "version": "0.0.0",
+  "problems": [
+    "peer dep missing: @angular/compiler@4.4.6, required by @angular/compiler-cli@4.4.6",
+    "peer dep missing: @angular/core@4.4.6, required by @angular/compiler-cli@4.4.6",
+    "missing: alfresco-js-api@1.9.0, required by myapp@0.0.0",
+    "missing: superagent@3.4.1, required by alfresco-js-api@1.9.0"
+  ],
+  "dependencies": {
+    "@angular/animations": {
+      "version": "4.4.5",
+      "from": "@angular/animations@4.4.5",
+      "resolved": "https://registry.npmjs.org/@angular/animations/-/animations-4.4.5.tgz"
+    },
+    "@angular/cdk": {
+      "version": "2.0.0-beta.12",
+      "from": "@angular/cdk@2.0.0-beta.12",
+      "resolved": "https://registry.npmjs.org/@angular/cdk/-/cdk-2.0.0-beta.12.tgz"
+    },
+    "@angular/common": {
+      "version": "4.4.5",
+      "from": "@angular/common@4.4.5",
+      "resolved": "https://registry.npmjs.org/@angular/common/-/common-4.4.5.tgz"
+    },
+    "@angular/compiler": {
+      "required": {
+        "_from": "@angular/compiler@4.4.5",
+        "_id": "@angular/compiler@4.4.5",
+        "_integrity": "sha1-hyGlkQ8rtS8J4tQEytJk817eWQI=",
+        "_location": "/@angular/compiler",
+        "_phantomChildren": {},
+        "_requested": {
+          "type": "version",
+          "registry": true,
+          "raw": "@angular/compiler@4.4.5",
+          "name": "@angular/compiler",
+          "escapedName": "@angular%2fcompiler",
+          "scope": "@angular",
+          "rawSpec": "4.4.5",
+          "saveSpec": null,
+          "fetchSpec": "4.4.5"
+        },
+        "_requiredBy": [
+          "/"
+        ],
+        "_resolved": "https://registry.npmjs.org/@angular/compiler/-/compiler-4.4.5.tgz",
+        "_shasum": "8721a5910f2bb52f09e2d404cad264f35ede5902",
+        "_spec": "4.4.5",
+        "_where": "/Users/valbano/Documents/alfresco-ng2-components/demo-shell-ng2",
+        "author": {
+          "name": "angular"
+        },
+        "bugs": {
+          "url": "https://github.com/angular/angular/issues"
+        },
+        "bundleDependencies": false,
+        "dependencies": {
+          "tslib": {
+            "_from": "tslib@^1.7.1",
+            "_id": "tslib@1.8.0",
+            "_integrity": "sha512-ymKWWZJST0/CkgduC2qkzjMOWr4bouhuURNXCn/inEX0L57BnRG6FhX76o7FOnsjHazCjfU2LKeSrlS2sIKQJg==",
+            "_location": "/tslib",
+            "_phantomChildren": {},
+            "_requested": {
+              "type": "version",
+              "registry": true,
+              "raw": "tslib@1.8.0",
+              "name": "tslib",
+              "escapedName": "tslib",
+              "rawSpec": "1.8.0",
+              "saveSpec": "[Circular]",
+              "fetchSpec": "1.8.0"
+            },
+            "_requiredBy": [
+              "/@angular/animations",
+              "/@angular/cdk",
+              "/@angular/common",
+              "/@angular/compiler",
+              "/@angular/core",
+              "/@angular/flex-layout",
+              "/@angular/forms",
+              "/@angular/http",
+              "/@angular/material",
+              "/@angular/platform-browser",
+              "/@angular/platform-browser-dynamic",
+              "/@angular/router",
+              "/ng2-activiti-analytics/@angular/animations",
+              "/ng2-activiti-analytics/@angular/cdk",
+              "/ng2-activiti-analytics/@angular/common",
+              "/ng2-activiti-analytics/@angular/compiler",
+              "/ng2-activiti-analytics/@angular/core",
+              "/ng2-activiti-analytics/@angular/forms",
+              "/ng2-activiti-analytics/@angular/http",
+              "/ng2-activiti-analytics/@angular/material",
+              "/ng2-activiti-analytics/@angular/platform-browser",
+              "/ng2-activiti-analytics/@angular/platform-browser-dynamic",
+              "/ng2-activiti-analytics/@angular/router",
+              "/ng2-activiti-diagrams/@angular/animations",
+              "/ng2-activiti-diagrams/@angular/cdk",
+              "/ng2-activiti-diagrams/@angular/common",
+              "/ng2-activiti-diagrams/@angular/compiler",
+              "/ng2-activiti-diagrams/@angular/core",
+              "/ng2-activiti-diagrams/@angular/forms",
+              "/ng2-activiti-diagrams/@angular/http",
+              "/ng2-activiti-diagrams/@angular/material",
+              "/ng2-activiti-diagrams/@angular/platform-browser",
+              "/ng2-activiti-diagrams/@angular/platform-browser-dynamic",
+              "/ng2-activiti-diagrams/@angular/router",
+              "/ng2-activiti-form/@angular/animations",
+              "/ng2-activiti-form/@angular/cdk",
+              "/ng2-activiti-form/@angular/common",
+              "/ng2-activiti-form/@angular/compiler",
+              "/ng2-activiti-form/@angular/core",
+              "/ng2-activiti-form/@angular/forms",
+              "/ng2-activiti-form/@angular/http",
+              "/ng2-activiti-form/@angular/material",
+              "/ng2-activiti-form/@angular/platform-browser",
+              "/ng2-activiti-form/@angular/platform-browser-dynamic",
+              "/ng2-activiti-form/@angular/router",
+              "/ng2-activiti-processlist/@angular/animations",
+              "/ng2-activiti-processlist/@angular/cdk",
+              "/ng2-activiti-processlist/@angular/common",
+              "/ng2-activiti-processlist/@angular/compiler",
+              "/ng2-activiti-processlist/@angular/core",
+              "/ng2-activiti-processlist/@angular/forms",
+              "/ng2-activiti-processlist/@angular/http",
+              "/ng2-activiti-processlist/@angular/material",
+              "/ng2-activiti-processlist/@angular/platform-browser",
+              "/ng2-activiti-processlist/@angular/platform-browser-dynamic",
+              "/ng2-activiti-processlist/@angular/router",
+              "/ng2-activiti-tasklist/@angular/animations",
+              "/ng2-activiti-tasklist/@angular/cdk",
+              "/ng2-activiti-tasklist/@angular/common",
+              "/ng2-activiti-tasklist/@angular/compiler",
+              "/ng2-activiti-tasklist/@angular/core",
+              "/ng2-activiti-tasklist/@angular/forms",
+              "/ng2-activiti-tasklist/@angular/http",
+              "/ng2-activiti-tasklist/@angular/material",
+              "/ng2-activiti-tasklist/@angular/platform-browser",
+              "/ng2-activiti-tasklist/@angular/platform-browser-dynamic",
+              "/ng2-activiti-tasklist/@angular/router",
+              "/ng2-alfresco-core/@angular/animations",
+              "/ng2-alfresco-core/@angular/cdk",
+              "/ng2-alfresco-core/@angular/common",
+              "/ng2-alfresco-core/@angular/compiler",
+              "/ng2-alfresco-core/@angular/core",
+              "/ng2-alfresco-core/@angular/forms",
+              "/ng2-alfresco-core/@angular/http",
+              "/ng2-alfresco-core/@angular/material",
+              "/ng2-alfresco-core/@angular/platform-browser",
+              "/ng2-alfresco-core/@angular/platform-browser-dynamic",
+              "/ng2-alfresco-core/@angular/router",
+              "/ng2-alfresco-datatable/@angular/animations",
+              "/ng2-alfresco-datatable/@angular/cdk",
+              "/ng2-alfresco-datatable/@angular/common",
+              "/ng2-alfresco-datatable/@angular/compiler",
+              "/ng2-alfresco-datatable/@angular/core",
+              "/ng2-alfresco-datatable/@angular/forms",
+              "/ng2-alfresco-datatable/@angular/http",
+              "/ng2-alfresco-datatable/@angular/material",
+              "/ng2-alfresco-datatable/@angular/platform-browser",
+              "/ng2-alfresco-datatable/@angular/platform-browser-dynamic",
+              "/ng2-alfresco-datatable/@angular/router",
+              "/ng2-alfresco-documentlist/@angular/animations",
+              "/ng2-alfresco-documentlist/@angular/cdk",
+              "/ng2-alfresco-documentlist/@angular/common",
+              "/ng2-alfresco-documentlist/@angular/compiler",
+              "/ng2-alfresco-documentlist/@angular/core",
+              "/ng2-alfresco-documentlist/@angular/forms",
+              "/ng2-alfresco-documentlist/@angular/http",
+              "/ng2-alfresco-documentlist/@angular/material",
+              "/ng2-alfresco-documentlist/@angular/platform-browser",
+              "/ng2-alfresco-documentlist/@angular/platform-browser-dynamic",
+              "/ng2-alfresco-documentlist/@angular/router",
+              "/ng2-alfresco-login/@angular/animations",
+              "/ng2-alfresco-login/@angular/cdk",
+              "/ng2-alfresco-login/@angular/common",
+              "/ng2-alfresco-login/@angular/compiler",
+              "/ng2-alfresco-login/@angular/core",
+              "/ng2-alfresco-login/@angular/forms",
+              "/ng2-alfresco-login/@angular/http",
+              "/ng2-alfresco-login/@angular/material",
+              "/ng2-alfresco-login/@angular/platform-browser",
+              "/ng2-alfresco-login/@angular/platform-browser-dynamic",
+              "/ng2-alfresco-login/@angular/router",
+              "/ng2-alfresco-search/@angular/animations",
+              "/ng2-alfresco-search/@angular/cdk",
+              "/ng2-alfresco-search/@angular/common",
+              "/ng2-alfresco-search/@angular/compiler",
+              "/ng2-alfresco-search/@angular/core",
+              "/ng2-alfresco-search/@angular/forms",
+              "/ng2-alfresco-search/@angular/http",
+              "/ng2-alfresco-search/@angular/material",
+              "/ng2-alfresco-search/@angular/platform-browser",
+              "/ng2-alfresco-search/@angular/platform-browser-dynamic",
+              "/ng2-alfresco-search/@angular/router",
+              "/ng2-alfresco-social/@angular/animations",
+              "/ng2-alfresco-social/@angular/cdk",
+              "/ng2-alfresco-social/@angular/common",
+              "/ng2-alfresco-social/@angular/compiler",
+              "/ng2-alfresco-social/@angular/core",
+              "/ng2-alfresco-social/@angular/forms",
+              "/ng2-alfresco-social/@angular/http",
+              "/ng2-alfresco-social/@angular/material",
+              "/ng2-alfresco-social/@angular/platform-browser",
+              "/ng2-alfresco-social/@angular/platform-browser-dynamic",
+              "/ng2-alfresco-social/@angular/router",
+              "/ng2-alfresco-tag/@angular/animations",
+              "/ng2-alfresco-tag/@angular/cdk",
+              "/ng2-alfresco-tag/@angular/common",
+              "/ng2-alfresco-tag/@angular/compiler",
+              "/ng2-alfresco-tag/@angular/core",
+              "/ng2-alfresco-tag/@angular/forms",
+              "/ng2-alfresco-tag/@angular/http",
+              "/ng2-alfresco-tag/@angular/material",
+              "/ng2-alfresco-tag/@angular/platform-browser",
+              "/ng2-alfresco-tag/@angular/platform-browser-dynamic",
+              "/ng2-alfresco-tag/@angular/router",
+              "/ng2-alfresco-upload/@angular/animations",
+              "/ng2-alfresco-upload/@angular/cdk",
+              "/ng2-alfresco-upload/@angular/common",
+              "/ng2-alfresco-upload/@angular/compiler",
+              "/ng2-alfresco-upload/@angular/core",
+              "/ng2-alfresco-upload/@angular/forms",
+              "/ng2-alfresco-upload/@angular/http",
+              "/ng2-alfresco-upload/@angular/material",
+              "/ng2-alfresco-upload/@angular/platform-browser",
+              "/ng2-alfresco-upload/@angular/platform-browser-dynamic",
+              "/ng2-alfresco-upload/@angular/router",
+              "/ng2-alfresco-userinfo/@angular/animations",
+              "/ng2-alfresco-userinfo/@angular/cdk",
+              "/ng2-alfresco-userinfo/@angular/common",
+              "/ng2-alfresco-userinfo/@angular/compiler",
+              "/ng2-alfresco-userinfo/@angular/core",
+              "/ng2-alfresco-userinfo/@angular/forms",
+              "/ng2-alfresco-userinfo/@angular/http",
+              "/ng2-alfresco-userinfo/@angular/material",
+              "/ng2-alfresco-userinfo/@angular/platform-browser",
+              "/ng2-alfresco-userinfo/@angular/platform-browser-dynamic",
+              "/ng2-alfresco-userinfo/@angular/router",
+              "/ng2-alfresco-viewer/@angular/animations",
+              "/ng2-alfresco-viewer/@angular/cdk",
+              "/ng2-alfresco-viewer/@angular/common",
+              "/ng2-alfresco-viewer/@angular/compiler",
+              "/ng2-alfresco-viewer/@angular/core",
+              "/ng2-alfresco-viewer/@angular/forms",
+              "/ng2-alfresco-viewer/@angular/http",
+              "/ng2-alfresco-viewer/@angular/material",
+              "/ng2-alfresco-viewer/@angular/platform-browser",
+              "/ng2-alfresco-viewer/@angular/platform-browser-dynamic",
+              "/ng2-alfresco-viewer/@angular/router",
+              "/ng2-alfresco-webscript/@angular/animations",
+              "/ng2-alfresco-webscript/@angular/cdk",
+              "/ng2-alfresco-webscript/@angular/common",
+              "/ng2-alfresco-webscript/@angular/compiler",
+              "/ng2-alfresco-webscript/@angular/core",
+              "/ng2-alfresco-webscript/@angular/forms",
+              "/ng2-alfresco-webscript/@angular/http",
+              "/ng2-alfresco-webscript/@angular/material",
+              "/ng2-alfresco-webscript/@angular/platform-browser",
+              "/ng2-alfresco-webscript/@angular/platform-browser-dynamic",
+              "/ng2-alfresco-webscript/@angular/router"
+            ],
+            "_resolved": "https://registry.npmjs.org/tslib/-/tslib-1.8.0.tgz",
+            "_shasum": "dc604ebad64bcbf696d613da6c954aa0e7ea1eb6",
+            "_spec": "1.8.0",
+            "_where": "/Users/valbano/Documents/alfresco-ng2-components/demo-shell-ng2",
+            "author": {
+              "name": "Microsoft Corp."
+            },
+            "bugs": {
+              "url": "https://github.com/Microsoft/TypeScript/issues"
+            },
+            "bundleDependencies": false,
+            "deprecated": false,
+            "description": "Runtime library for TypeScript helper functions",
+            "homepage": "http://typescriptlang.org/",
+            "jsnext:main": "tslib.es6.js",
+            "keywords": [
+              "TypeScript",
+              "Microsoft",
+              "compiler",
+              "language",
+              "javascript",
+              "tslib",
+              "runtime"
+            ],
+            "license": "Apache-2.0",
+            "main": "tslib.js",
+            "module": "tslib.es6.js",
+            "name": "tslib",
+            "repository": {
+              "type": "git",
+              "url": "git+https://github.com/Microsoft/tslib.git"
+            },
+            "typings": "tslib.d.ts",
+            "version": "1.8.0",
+            "readme": "# tslib\r\n\r\nThis is a runtime library for [TypeScript](http://www.typescriptlang.org/) that contains all of the TypeScript helper functions.\r\n\r\nThis library is primarily used by the `--importHelpers` flag in TypeScript.\r\nWhen using `--importHelpers`, a module that uses helper functions like `__extends` and `__assign` in the following emitted file:\r\n\r\n```ts\r\nvar __assign = (this && this.__assign) || Object.assign || function(t) {\r\n    for (var s, i = 1, n = arguments.length; i < n; i++) {\r\n        s = arguments[i];\r\n        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))\r\n            t[p] = s[p];\r\n    }\r\n    return t;\r\n};\r\nexports.x = {};\r\nexports.y = __assign({}, exports.x);\r\n\r\n```\r\n\r\nwill instead be emitted as something like the following:\r\n\r\n```ts\r\nvar tslib_1 = require(\"tslib\");\r\nexports.x = {};\r\nexports.y = tslib_1.__assign({}, exports.x);\r\n```\r\n\r\nBecause this can avoid duplicate declarations of things like `__extends`, `__assign`, etc., this means delivering users smaller files on average, as well as less runtime overhead.\r\nFor optimized bundles with TypeScript, you should absolutely consider using `tslib` and `--importHelpers`.\r\n\r\n# Installing\r\n\r\nFor the latest stable version, run:\r\n\r\n## npm\r\n\r\n```sh\r\n# TypeScript 2.3.3 or later\r\nnpm install --save tslib\r\n\r\n# TypeScript 2.3.2 or earlier\r\nnpm install --save tslib@1.6.1\r\n```\r\n\r\n## bower\r\n\r\n```sh\r\n# TypeScript 2.3.3 or later\r\nbower install tslib\r\n\r\n# TypeScript 2.3.2 or earlier\r\nbower install tslib@1.6.1\r\n```\r\n\r\n## JSPM\r\n\r\n```sh\r\n# TypeScript 2.3.3 or later\r\njspm install tslib\r\n\r\n# TypeScript 2.3.2 or earlier\r\njspm install tslib@1.6.1\r\n```\r\n\r\n# Usage\r\n\r\nSet the `importHelpers` compiler option on the command line:\r\n\r\n```\r\ntsc --importHelpers file.ts\r\n```\r\n\r\nor in your tsconfig.json:\r\n\r\n```json\r\n{\r\n    \"compilerOptions\": {\r\n        \"importHelpers\": true\r\n    }\r\n}\r\n```\r\n\r\n#### For bower and JSPM users\r\n\r\nYou will need to add a `paths` mapping for `tslib`, e.g. For Bower users:\r\n\r\n```json\r\n{\r\n    \"compilerOptions\": {\r\n        \"module\": \"amd\",\r\n        \"importHelpers\": true,\r\n        \"baseUrl\": \"./\",\r\n        \"paths\": {\r\n            \"tslib\" : [\"bower_components/tslib/tslib.d.ts\"]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\nFor JSPM users:\r\n\r\n```json\r\n{\r\n    \"compilerOptions\": {\r\n        \"module\": \"system\",\r\n        \"importHelpers\": true,\r\n        \"baseUrl\": \"./\",\r\n        \"paths\": {\r\n            \"tslib\" : [\"jspm_packages/npm/tslib@1.8.0/tslib.d.ts\"]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n\r\n# Contribute\r\n\r\nThere are many ways to [contribute](https://github.com/Microsoft/TypeScript/blob/master/CONTRIBUTING.md) to TypeScript.\r\n\r\n* [Submit bugs](https://github.com/Microsoft/TypeScript/issues) and help us verify fixes as they are checked in.\r\n* Review the [source code changes](https://github.com/Microsoft/TypeScript/pulls).\r\n* Engage with other TypeScript users and developers on [StackOverflow](http://stackoverflow.com/questions/tagged/typescript).\r\n* Join the [#typescript](http://twitter.com/#!/search/realtime/%23typescript) discussion on Twitter.\r\n* [Contribute bug fixes](https://github.com/Microsoft/TypeScript/blob/master/CONTRIBUTING.md).\r\n* Read the language specification ([docx](http://go.microsoft.com/fwlink/?LinkId=267121), [pdf](http://go.microsoft.com/fwlink/?LinkId=267238)).\r\n\r\n# Documentation\r\n\r\n* [Quick tutorial](http://www.typescriptlang.org/Tutorial)\r\n* [Programming handbook](http://www.typescriptlang.org/Handbook)\r\n* [Language specification](https://github.com/Microsoft/TypeScript/blob/master/doc/spec.md)\r\n* [Homepage](http://www.typescriptlang.org/)\r\n",
+            "readmeFilename": "README.md",
+            "_args": [
+              [
+                "tslib@1.8.0",
+                "/Users/valbano/Documents/alfresco-ng2-components/demo-shell-ng2"
+              ]
+            ],
+            "dependencies": {},
+            "devDependencies": {},
+            "optionalDependencies": {},
+            "_dependencies": {},
+            "path": "/Users/valbano/Documents/alfresco-ng2-components/demo-shell-ng2/node_modules/tslib",
+            "error": "[Circular]",
+            "extraneous": false,
+            "_deduped": "tslib"
+          }
+        },
+        "deprecated": false,
+        "description": "Angular - the compiler library",
+        "es2015": "./@angular/compiler.js",
+        "homepage": "https://github.com/angular/angular#readme",
+        "license": "MIT",
+        "main": "./bundles/compiler.umd.js",
+        "module": "./@angular/compiler.es5.js",
+        "name": "@angular/compiler",
+        "peerDependencies": {
+          "@angular/core": "4.4.5"
+        },
+        "repository": {
+          "type": "git",
+          "url": "git+https://github.com/angular/angular.git"
+        },
+        "typings": "./compiler.d.ts",
+        "version": "4.4.5",
+        "readme": "Angular\n=======\n\nThe sources for this package are in the main [Angular](https://github.com/angular/angular) repo. Please file issues and pull requests against that repo.\n\nLicense: MIT\n",
+        "readmeFilename": "README.md",
+        "_args": [
+          [
+            "@angular/compiler@4.4.5",
+            "/Users/valbano/Documents/alfresco-ng2-components/demo-shell-ng2"
+          ]
+        ],
+        "devDependencies": {},
+        "optionalDependencies": {},
+        "_dependencies": {
+          "tslib": "^1.7.1"
+        },
+        "path": "/Users/valbano/Documents/alfresco-ng2-components/demo-shell-ng2/node_modules/@angular/compiler",
+        "error": "[Circular]",
+        "extraneous": false,
+        "peerMissing": [
+          {
+            "requiredBy": "@angular/compiler-cli@4.4.6",
+            "requires": "@angular/compiler@4.4.6"
+          }
+        ]
+      },
+      "peerMissing": true
+    },
+    "@angular/core": {
+      "required": {
+        "_from": "@angular/core@4.4.5",
+        "_id": "@angular/core@4.4.5",
+        "_integrity": "sha1-VKy8vaEXGfiDx4apBpdKvrEy8aA=",
+        "_location": "/@angular/core",
+        "_phantomChildren": {},
+        "_requested": {
+          "type": "version",
+          "registry": true,
+          "raw": "@angular/core@4.4.5",
+          "name": "@angular/core",
+          "escapedName": "@angular%2fcore",
+          "scope": "@angular",
+          "rawSpec": "4.4.5",
+          "saveSpec": "[Circular]",
+          "fetchSpec": "4.4.5"
+        },
+        "_requiredBy": [
+          "/"
+        ],
+        "_resolved": "https://registry.npmjs.org/@angular/core/-/core-4.4.5.tgz",
+        "_shasum": "54acbcbda11719f883c786a906974abeb132f1a0",
+        "_spec": "4.4.5",
+        "_where": "/Users/valbano/Documents/alfresco-ng2-components/demo-shell-ng2",
+        "author": {
+          "name": "angular"
+        },
+        "bugs": {
+          "url": "https://github.com/angular/angular/issues"
+        },
+        "bundleDependencies": false,
+        "dependencies": {
+          "tslib": {
+            "_from": "tslib@^1.7.1",
+            "_id": "tslib@1.8.0",
+            "_integrity": "sha512-ymKWWZJST0/CkgduC2qkzjMOWr4bouhuURNXCn/inEX0L57BnRG6FhX76o7FOnsjHazCjfU2LKeSrlS2sIKQJg==",
+            "_location": "/tslib",
+            "_phantomChildren": "[Circular]",
+            "_requested": {
+              "type": "version",
+              "registry": true,
+              "raw": "tslib@1.8.0",
+              "name": "tslib",
+              "escapedName": "tslib",
+              "rawSpec": "1.8.0",
+              "saveSpec": "[Circular]",
+              "fetchSpec": "1.8.0"
+            },
+            "_requiredBy": "[Circular]",
+            "_resolved": "https://registry.npmjs.org/tslib/-/tslib-1.8.0.tgz",
+            "_shasum": "dc604ebad64bcbf696d613da6c954aa0e7ea1eb6",
+            "_spec": "1.8.0",
+            "_where": "/Users/valbano/Documents/alfresco-ng2-components/demo-shell-ng2",
+            "author": "[Circular]",
+            "bugs": "[Circular]",
+            "bundleDependencies": false,
+            "deprecated": false,
+            "description": "Runtime library for TypeScript helper functions",
+            "homepage": "http://typescriptlang.org/",
+            "jsnext:main": "tslib.es6.js",
+            "keywords": "[Circular]",
+            "license": "Apache-2.0",
+            "main": "tslib.js",
+            "module": "tslib.es6.js",
+            "name": "tslib",
+            "repository": "[Circular]",
+            "typings": "tslib.d.ts",
+            "version": "1.8.0",
+            "readme": "# tslib\r\n\r\nThis is a runtime library for [TypeScript](http://www.typescriptlang.org/) that contains all of the TypeScript helper functions.\r\n\r\nThis library is primarily used by the `--importHelpers` flag in TypeScript.\r\nWhen using `--importHelpers`, a module that uses helper functions like `__extends` and `__assign` in the following emitted file:\r\n\r\n```ts\r\nvar __assign = (this && this.__assign) || Object.assign || function(t) {\r\n    for (var s, i = 1, n = arguments.length; i < n; i++) {\r\n        s = arguments[i];\r\n        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))\r\n            t[p] = s[p];\r\n    }\r\n    return t;\r\n};\r\nexports.x = {};\r\nexports.y = __assign({}, exports.x);\r\n\r\n```\r\n\r\nwill instead be emitted as something like the following:\r\n\r\n```ts\r\nvar tslib_1 = require(\"tslib\");\r\nexports.x = {};\r\nexports.y = tslib_1.__assign({}, exports.x);\r\n```\r\n\r\nBecause this can avoid duplicate declarations of things like `__extends`, `__assign`, etc., this means delivering users smaller files on average, as well as less runtime overhead.\r\nFor optimized bundles with TypeScript, you should absolutely consider using `tslib` and `--importHelpers`.\r\n\r\n# Installing\r\n\r\nFor the latest stable version, run:\r\n\r\n## npm\r\n\r\n```sh\r\n# TypeScript 2.3.3 or later\r\nnpm install --save tslib\r\n\r\n# TypeScript 2.3.2 or earlier\r\nnpm install --save tslib@1.6.1\r\n```\r\n\r\n## bower\r\n\r\n```sh\r\n# TypeScript 2.3.3 or later\r\nbower install tslib\r\n\r\n# TypeScript 2.3.2 or earlier\r\nbower install tslib@1.6.1\r\n```\r\n\r\n## JSPM\r\n\r\n```sh\r\n# TypeScript 2.3.3 or later\r\njspm install tslib\r\n\r\n# TypeScript 2.3.2 or earlier\r\njspm install tslib@1.6.1\r\n```\r\n\r\n# Usage\r\n\r\nSet the `importHelpers` compiler option on the command line:\r\n\r\n```\r\ntsc --importHelpers file.ts\r\n```\r\n\r\nor in your tsconfig.json:\r\n\r\n```json\r\n{\r\n    \"compilerOptions\": {\r\n        \"importHelpers\": true\r\n    }\r\n}\r\n```\r\n\r\n#### For bower and JSPM users\r\n\r\nYou will need to add a `paths` mapping for `tslib`, e.g. For Bower users:\r\n\r\n```json\r\n{\r\n    \"compilerOptions\": {\r\n        \"module\": \"amd\",\r\n        \"importHelpers\": true,\r\n        \"baseUrl\": \"./\",\r\n        \"paths\": {\r\n            \"tslib\" : [\"bower_components/tslib/tslib.d.ts\"]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\nFor JSPM users:\r\n\r\n```json\r\n{\r\n    \"compilerOptions\": {\r\n        \"module\": \"system\",\r\n        \"importHelpers\": true,\r\n        \"baseUrl\": \"./\",\r\n        \"paths\": {\r\n            \"tslib\" : [\"jspm_packages/npm/tslib@1.8.0/tslib.d.ts\"]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n\r\n# Contribute\r\n\r\nThere are many ways to [contribute](https://github.com/Microsoft/TypeScript/blob/master/CONTRIBUTING.md) to TypeScript.\r\n\r\n* [Submit bugs](https://github.com/Microsoft/TypeScript/issues) and help us verify fixes as they are checked in.\r\n* Review the [source code changes](https://github.com/Microsoft/TypeScript/pulls).\r\n* Engage with other TypeScript users and developers on [StackOverflow](http://stackoverflow.com/questions/tagged/typescript).\r\n* Join the [#typescript](http://twitter.com/#!/search/realtime/%23typescript) discussion on Twitter.\r\n* [Contribute bug fixes](https://github.com/Microsoft/TypeScript/blob/master/CONTRIBUTING.md).\r\n* Read the language specification ([docx](http://go.microsoft.com/fwlink/?LinkId=267121), [pdf](http://go.microsoft.com/fwlink/?LinkId=267238)).\r\n\r\n# Documentation\r\n\r\n* [Quick tutorial](http://www.typescriptlang.org/Tutorial)\r\n* [Programming handbook](http://www.typescriptlang.org/Handbook)\r\n* [Language specification](https://github.com/Microsoft/TypeScript/blob/master/doc/spec.md)\r\n* [Homepage](http://www.typescriptlang.org/)\r\n",
+            "readmeFilename": "README.md",
+            "_args": "[Circular]",
+            "dependencies": {},
+            "devDependencies": "[Circular]",
+            "optionalDependencies": "[Circular]",
+            "_dependencies": "[Circular]",
+            "path": "/Users/valbano/Documents/alfresco-ng2-components/demo-shell-ng2/node_modules/tslib",
+            "error": "[Circular]",
+            "extraneous": false,
+            "_deduped": "tslib"
+          }
+        },
+        "deprecated": false,
+        "description": "Angular - the core framework",
+        "es2015": "./@angular/core.js",
+        "homepage": "https://github.com/angular/angular#readme",
+        "license": "MIT",
+        "main": "./bundles/core.umd.js",
+        "module": "./@angular/core.es5.js",
+        "name": "@angular/core",
+        "peerDependencies": {
+          "rxjs": "^5.0.1",
+          "zone.js": "^0.8.4"
+        },
+        "repository": {
+          "type": "git",
+          "url": "git+https://github.com/angular/angular.git"
+        },
+        "typings": "./core.d.ts",
+        "version": "4.4.5",
+        "readme": "Angular\n=======\n\nThe sources for this package are in the main [Angular](https://github.com/angular/angular) repo. Please file issues and pull requests against that repo.\n\nLicense: MIT\n",
+        "readmeFilename": "README.md",
+        "_args": [
+          [
+            "@angular/core@4.4.5",
+            "/Users/valbano/Documents/alfresco-ng2-components/demo-shell-ng2"
+          ]
+        ],
+        "devDependencies": {},
+        "optionalDependencies": {},
+        "_dependencies": {
+          "tslib": "^1.7.1"
+        },
+        "path": "/Users/valbano/Documents/alfresco-ng2-components/demo-shell-ng2/node_modules/@angular/core",
+        "error": "[Circular]",
+        "extraneous": false,
+        "peerMissing": [
+          {
+            "requiredBy": "@angular/compiler-cli@4.4.6",
+            "requires": "@angular/core@4.4.6"
+          }
+        ]
+      },
+      "peerMissing": true
+    },
+    "@angular/flex-layout": {
+      "version": "2.0.0-beta.9",
+      "from": "@angular/flex-layout@2.0.0-beta.9",
+      "resolved": "https://registry.npmjs.org/@angular/flex-layout/-/flex-layout-2.0.0-beta.9.tgz"
+    },
+    "@angular/forms": {
+      "version": "4.4.5",
+      "from": "@angular/forms@4.4.5",
+      "resolved": "https://registry.npmjs.org/@angular/forms/-/forms-4.4.5.tgz"
+    },
+    "@angular/http": {
+      "version": "4.4.5",
+      "from": "@angular/http@4.4.5",
+      "resolved": "https://registry.npmjs.org/@angular/http/-/http-4.4.5.tgz"
+    },
+    "@angular/material": {
+      "version": "2.0.0-beta.12",
+      "from": "@angular/material@2.0.0-beta.12",
+      "resolved": "https://registry.npmjs.org/@angular/material/-/material-2.0.0-beta.12.tgz"
+    },
+    "@angular/platform-browser": {
+      "version": "4.4.5",
+      "from": "@angular/platform-browser@4.4.5",
+      "resolved": "https://registry.npmjs.org/@angular/platform-browser/-/platform-browser-4.4.5.tgz"
+    },
+    "@angular/platform-browser-dynamic": {
+      "version": "4.4.5",
+      "from": "@angular/platform-browser-dynamic@4.4.5",
+      "resolved": "https://registry.npmjs.org/@angular/platform-browser-dynamic/-/platform-browser-dynamic-4.4.5.tgz"
+    },
+    "@angular/router": {
+      "version": "4.4.5",
+      "from": "@angular/router@4.4.5",
+      "resolved": "https://registry.npmjs.org/@angular/router/-/router-4.4.5.tgz"
+    },
+    "@ngx-translate/core": {
+      "version": "7.0.0",
+      "from": "@ngx-translate/core@7.0.0",
+      "resolved": "https://registry.npmjs.org/@ngx-translate/core/-/core-7.0.0.tgz"
+    },
+    "alfresco-js-api": {
+      "version": "1.9.0",
+      "from": "alfresco-js-api@1.9.0",
+      "resolved": "https://registry.npmjs.org/alfresco-js-api/-/alfresco-js-api-1.9.0.tgz",
+      "problems": [
+        "missing: superagent@3.4.1, required by alfresco-js-api@1.9.0"
+      ],
+      "dependencies": {
+        "event-emitter": {
+          "version": "0.3.4",
+          "from": "event-emitter@0.3.4",
+          "resolved": "https://registry.npmjs.org/event-emitter/-/event-emitter-0.3.4.tgz"
+        },
+        "superagent": {
+          "version": "3.4.1",
+          "from": "superagent@3.4.1",
+          "resolved": "https://registry.npmjs.org/superagent/-/superagent-3.4.1.tgz",
+          "dependencies": {
+            "component-emitter": {
+              "version": "1.2.1",
+              "from": "component-emitter@^1.2.0",
+              "resolved": "https://registry.npmjs.org/component-emitter/-/component-emitter-1.2.1.tgz"
+            },
+            "cookiejar": {
+              "version": "2.1.1",
+              "from": "cookiejar@^2.0.6",
+              "resolved": "https://registry.npmjs.org/cookiejar/-/cookiejar-2.1.1.tgz"
+            },
+            "debug": {
+              "version": "2.6.9",
+              "from": "debug@^2.2.0",
+              "resolved": "https://registry.npmjs.org/debug/-/debug-2.6.9.tgz"
+            },
+            "extend": {
+              "version": "3.0.1",
+              "from": "extend@^3.0.0",
+              "resolved": "https://registry.npmjs.org/extend/-/extend-3.0.1.tgz"
+            },
+            "form-data": {
+              "version": "2.3.1",
+              "from": "form-data@^2.1.1",
+              "resolved": "https://registry.npmjs.org/form-data/-/form-data-2.3.1.tgz"
+            },
+            "formidable": {
+              "version": "1.1.1",
+              "from": "formidable@^1.0.17",
+              "resolved": "https://registry.npmjs.org/formidable/-/formidable-1.1.1.tgz"
+            },
+            "methods": {
+              "version": "1.1.2",
+              "from": "methods@^1.1.1",
+              "resolved": "https://registry.npmjs.org/methods/-/methods-1.1.2.tgz"
+            },
+            "mime": {
+              "version": "1.4.1",
+              "from": "mime@^1.3.4",
+              "resolved": "https://registry.npmjs.org/mime/-/mime-1.4.1.tgz"
+            },
+            "qs": {
+              "version": "6.5.1",
+              "from": "qs@^6.1.0",
+              "resolved": "https://registry.npmjs.org/qs/-/qs-6.5.1.tgz"
+            },
+            "readable-stream": {
+              "version": "2.3.3",
+              "from": "readable-stream@^2.0.5",
+              "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-2.3.3.tgz"
+            }
+          }
+        }
+      }
+    },
+    "chart.js": {
+      "version": "2.5.0",
+      "from": "chart.js@2.5.0",
+      "resolved": "https://registry.npmjs.org/chart.js/-/chart.js-2.5.0.tgz"
+    },
+    "classlist.js": {
+      "version": "1.1.20150312",
+      "from": "classlist.js@1.1.20150312",
+      "resolved": "https://registry.npmjs.org/classlist.js/-/classlist.js-1.1.20150312.tgz"
+    },
+    "core-js": {
+      "version": "2.4.1",
+      "from": "core-js@2.4.1",
+      "resolved": "https://registry.npmjs.org/core-js/-/core-js-2.4.1.tgz"
+    },
+    "custom-event-polyfill": {
+      "version": "0.3.0",
+      "from": "custom-event-polyfill@0.3.0",
+      "resolved": "https://registry.npmjs.org/custom-event-polyfill/-/custom-event-polyfill-0.3.0.tgz"
+    },
+    "dialog-polyfill": {
+      "version": "0.4.7",
+      "from": "dialog-polyfill@0.4.7",
+      "resolved": "https://registry.npmjs.org/dialog-polyfill/-/dialog-polyfill-0.4.7.tgz"
+    },
+    "element.scrollintoviewifneeded-polyfill": {
+      "version": "1.0.1",
+      "from": "element.scrollintoviewifneeded-polyfill@1.0.1",
+      "resolved": "https://registry.npmjs.org/element.scrollintoviewifneeded-polyfill/-/element.scrollintoviewifneeded-polyfill-1.0.1.tgz"
+    },
+    "hammerjs": {
+      "version": "2.0.8",
+      "from": "hammerjs@2.0.8",
+      "resolved": "https://registry.npmjs.org/hammerjs/-/hammerjs-2.0.8.tgz"
+    },
+    "intl": {
+      "version": "1.2.5",
+      "from": "intl@1.2.5",
+      "resolved": "https://registry.npmjs.org/intl/-/intl-1.2.5.tgz"
+    },
+    "material-design-lite": {
+      "version": "1.2.1",
+      "from": "material-design-lite@1.2.1",
+      "resolved": "https://registry.npmjs.org/material-design-lite/-/material-design-lite-1.2.1.tgz"
+    },
+    "minimatch": {
+      "version": "3.0.4",
+      "from": "minimatch@3.0.4",
+      "resolved": "https://registry.npmjs.org/minimatch/-/minimatch-3.0.4.tgz"
+    },
+    "moment": {
+      "version": "2.15.1",
+      "from": "moment@2.15.1",
+      "resolved": "https://registry.npmjs.org/moment/-/moment-2.15.1.tgz"
+    },
+    "ng2-3d-editor": {
+      "version": "0.0.18",
+      "from": "ng2-3d-editor@0.0.18",
+      "resolved": "https://registry.npmjs.org/ng2-3d-editor/-/ng2-3d-editor-0.0.18.tgz"
+    },
+    "ng2-activiti-analytics": {
+      "version": "1.9.0",
+      "from": "ng2-activiti-analytics@1.9.0",
+      "resolved": "https://registry.npmjs.org/ng2-activiti-analytics/-/ng2-activiti-analytics-1.9.0.tgz"
+    },
+    "ng2-activiti-diagrams": {
+      "version": "1.9.0",
+      "from": "ng2-activiti-diagrams@1.9.0",
+      "resolved": "https://registry.npmjs.org/ng2-activiti-diagrams/-/ng2-activiti-diagrams-1.9.0.tgz"
+    },
+    "ng2-activiti-form": {
+      "version": "1.9.0",
+      "from": "ng2-activiti-form@1.9.0",
+      "resolved": "https://registry.npmjs.org/ng2-activiti-form/-/ng2-activiti-form-1.9.0.tgz"
+    },
+    "ng2-activiti-processlist": {
+      "version": "1.9.0",
+      "from": "ng2-activiti-processlist@1.9.0",
+      "resolved": "https://registry.npmjs.org/ng2-activiti-processlist/-/ng2-activiti-processlist-1.9.0.tgz"
+    },
+    "ng2-alfresco-core": {
+      "version": "1.9.0",
+      "from": "ng2-alfresco-core@1.9.0",
+      "resolved": "https://registry.npmjs.org/ng2-alfresco-core/-/ng2-alfresco-core-1.9.0.tgz"
+    },
+    "ng2-alfresco-datatable": {
+      "version": "1.9.0",
+      "from": "ng2-alfresco-datatable@1.9.0",
+      "resolved": "https://registry.npmjs.org/ng2-alfresco-datatable/-/ng2-alfresco-datatable-1.9.0.tgz"
+    },
+    "ng2-alfresco-documentlist": {
+      "version": "1.9.0",
+      "from": "ng2-alfresco-documentlist@1.9.0",
+      "resolved": "https://registry.npmjs.org/ng2-alfresco-documentlist/-/ng2-alfresco-documentlist-1.9.0.tgz"
+    },
+    "ng2-alfresco-login": {
+      "version": "1.9.0",
+      "from": "ng2-alfresco-login@1.9.0",
+      "resolved": "https://registry.npmjs.org/ng2-alfresco-login/-/ng2-alfresco-login-1.9.0.tgz"
+    },
+    "ng2-alfresco-search": {
+      "version": "1.9.0",
+      "from": "ng2-alfresco-search@1.9.0",
+      "resolved": "https://registry.npmjs.org/ng2-alfresco-search/-/ng2-alfresco-search-1.9.0.tgz"
+    },
+    "ng2-alfresco-social": {
+      "version": "1.9.0",
+      "from": "ng2-alfresco-social@1.9.0",
+      "resolved": "https://registry.npmjs.org/ng2-alfresco-social/-/ng2-alfresco-social-1.9.0.tgz"
+    },
+    "ng2-alfresco-tag": {
+      "version": "1.9.0",
+      "from": "ng2-alfresco-tag@1.9.0",
+      "resolved": "https://registry.npmjs.org/ng2-alfresco-tag/-/ng2-alfresco-tag-1.9.0.tgz"
+    },
+    "ng2-alfresco-upload": {
+      "version": "1.9.0",
+      "from": "ng2-alfresco-upload@1.9.0",
+      "resolved": "https://registry.npmjs.org/ng2-alfresco-upload/-/ng2-alfresco-upload-1.9.0.tgz"
+    },
+    "ng2-alfresco-userinfo": {
+      "version": "1.9.0",
+      "from": "ng2-alfresco-userinfo@1.9.0",
+      "resolved": "https://registry.npmjs.org/ng2-alfresco-userinfo/-/ng2-alfresco-userinfo-1.9.0.tgz"
+    },
+    "ng2-alfresco-viewer": {
+      "version": "1.9.0",
+      "from": "ng2-alfresco-viewer@1.9.0",
+      "resolved": "https://registry.npmjs.org/ng2-alfresco-viewer/-/ng2-alfresco-viewer-1.9.0.tgz"
+    },
+    "ng2-alfresco-webscript": {
+      "version": "1.9.0",
+      "from": "ng2-alfresco-webscript@1.9.0",
+      "resolved": "https://registry.npmjs.org/ng2-alfresco-webscript/-/ng2-alfresco-webscript-1.9.0.tgz"
+    },
+    "ng2-charts": {
+      "version": "1.6.0",
+      "from": "ng2-charts@1.6.0",
+      "resolved": "https://registry.npmjs.org/ng2-charts/-/ng2-charts-1.6.0.tgz"
+    },
+    "pdfjs-dist": {
+      "version": "1.5.404",
+      "from": "pdfjs-dist@1.5.404",
+      "resolved": "https://registry.npmjs.org/pdfjs-dist/-/pdfjs-dist-1.5.404.tgz"
+    },
+    "raphael": {
+      "version": "2.2.7",
+      "from": "raphael@2.2.7",
+      "resolved": "https://registry.npmjs.org/raphael/-/raphael-2.2.7.tgz"
+    },
+    "reflect-metadata": {
+      "version": "0.1.10",
+      "from": "reflect-metadata@0.1.10",
+      "resolved": "https://registry.npmjs.org/reflect-metadata/-/reflect-metadata-0.1.10.tgz"
+    },
+    "rxjs": {
+      "version": "5.1.0",
+      "from": "rxjs@5.1.0",
+      "resolved": "https://registry.npmjs.org/rxjs/-/rxjs-5.1.0.tgz"
+    },
+    "web-animations-js": {
+      "version": "2.3.1",
+      "from": "web-animations-js@2.3.1",
+      "resolved": "https://registry.npmjs.org/web-animations-js/-/web-animations-js-2.3.1.tgz"
+    },
+    "zone.js": {
+      "version": "0.8.12",
+      "from": "zone.js@0.8.12",
+      "resolved": "https://registry.npmjs.org/zone.js/-/zone.js-0.8.12.tgz"
+    }
+  }
+}
