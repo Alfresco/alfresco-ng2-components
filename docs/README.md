@@ -112,8 +112,8 @@ for more information about installing and using the source code.
 
 - [Form rendering service](form-rendering.service.md)
 - [Form service](form.service.md)
+- [Node service](node.service.md)
 - [*Activiti alfresco service](../ng2-components/ng2-activiti-form/src/services/activiti-alfresco.service.ts)
-- [*Node service](../ng2-components/ng2-activiti-form/src/services/node.service.ts)
 - [*Process content service](../ng2-components/ng2-activiti-form/src/services/process-content.service.ts)
 - [*Widget visibility service](../ng2-components/ng2-activiti-form/src/services/widget-visibility.service.ts)
 
@@ -278,6 +278,9 @@ for more information about installing and using the source code.
 - [Alfresco api service](alfresco-api.service.md)
 - [App config service](app-config.service.md)
 - [Apps process service](apps-process.service.md)
+- [Auth guard bpm service](auth-guard-bpm.service.md)
+- [Auth guard ecm service](auth-guard-ecm.service.md)
+- [Auth guard service](auth-guard.service.md)
 - [Authentication service](authentication.service.md)
 - [Card view update service](card-view-update.service.md)
 - [Comment process service](comment-process.service.md)
@@ -299,9 +302,6 @@ for more information about installing and using the source code.
 - [Upload service](upload.service.md)
 - [User preferences service](user-preferences.service.md)
 - [*Alfresco content service](../ng2-components/ng2-alfresco-core/src/services/alfresco-content.service.ts)
-- [*Auth guard bpm service](../ng2-components/ng2-alfresco-core/src/services/auth-guard-bpm.service.ts)
-- [*Auth guard ecm service](../ng2-components/ng2-alfresco-core/src/services/auth-guard-ecm.service.ts)
-- [*Auth guard service](../ng2-components/ng2-alfresco-core/src/services/auth-guard.service.ts)
 - [*Content service](../ng2-components/ng2-alfresco-core/src/services/content.service.ts)
 - [*Favorites api service](../ng2-components/ng2-alfresco-core/src/services/favorites-api.service.ts)
 - [*Search api service](../ng2-components/ng2-alfresco-core/src/services/search-api.service.ts)
@@ -326,6 +326,10 @@ for more information about installing and using the source code.
 - [*Date cell component](../ng2-components/ng2-alfresco-datatable/src/components/datatable/date-cell.component.ts)
 - [*Filesize cell component](../ng2-components/ng2-alfresco-datatable/src/components/datatable/filesize-cell.component.ts)
 - [*Location cell component](../ng2-components/ng2-alfresco-datatable/src/components/datatable/location-cell.component.ts)
+
+### Directives
+
+- [*No permission template directive](../ng2-components/ng2-alfresco-datatable/src/directives/no-permission-template.directive.ts)
 <!-- ng2-alfresco-datatable end -->
 
 ### Other classes and interfaces
@@ -352,6 +356,10 @@ for more information about installing and using the source code.
 - [Version manager component](version-manager.component.md)
 - [*Content node selector component](../ng2-components/ng2-alfresco-documentlist/src/components/content-node-selector/content-node-selector.component.ts)
 - [*Version upload component](../ng2-components/ng2-alfresco-documentlist/src/components/version-manager/version-upload.component.ts)
+
+### Directives
+
+- [*No permission content directive](../ng2-components/ng2-alfresco-documentlist/src/components/no-permission/no-permission-content.directive.ts)
 
 ### Models
 
