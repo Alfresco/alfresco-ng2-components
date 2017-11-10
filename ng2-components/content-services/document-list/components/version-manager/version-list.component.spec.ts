@@ -33,6 +33,7 @@ describe('VersionListComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+                CoreModule,
                 MaterialModule
             ],
             declarations: [

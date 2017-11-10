@@ -123,9 +123,6 @@ if $EXEC_CLEAN == true; then
 fi
 
 if $EXEC_INSTALL == true; then
-    echo "====== Regenerate global ng2-components package.json ====="
-    npm install package-json-merge -g
-    npm run pkg-build
     echo "====== Install ng2-components dependencies ====="
     npm install
 fi

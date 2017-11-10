@@ -141,11 +141,11 @@
     },
     {
       "path": "./process-services/bundles/process-services.js",
-      "maxSize": "50 kb"
+      "maxSize": "120 kb"
     },
     {
       "path": "./core/bundles/core.js",
-      "maxSize": "50 kb"
+      "maxSize": "70 kb"
     }
   ],
   "module": "./index.js",
