@@ -18,60 +18,17 @@ import {
 } from '@adf/process-services';
 
 import {
-    PipeModule,
-    DirectiveModule,
-    CardViewModule,
-    CollapsableModule,
-    ContextMenuModule,
-    InfoDrawerModule,
-    LanguageMenuModule,
-    LoginModule,
-    PaginationModule,
-    HostSettingsModule,
-    ToolbarModule,
-    DialogModule,
-    DataTableModule,
-    UserInfoModule,
-    ViewerModule,
-    DataColumnModule
-} from '@adf/core';
-
-import {
-    SettingsService,
-    PageTitleService,
-    StorageService,
-    TranslateLoaderService,
-    TranslationService,
-    LogService,
-    UserPreferencesService
+    CoreModule
 } from '@adf/core';
 
 export function modules() {
     return [
-        PipeModule,
-        DirectiveModule,
-        DataColumnModule,
-        CardViewModule,
-        CollapsableModule,
-        ContextMenuModule,
-        InfoDrawerModule,
-        LanguageMenuModule,
-        PaginationModule,
-        HostSettingsModule,
-        ToolbarModule,
-        ViewerModule,
-        DialogModule,
-        DataTableModule,
-        LoginModule,
-        UserInfoModule,
+        CoreModule,
         DocumentListModule,
-        LoginModule,
         SearchModule,
         SocialModule,
         TagModule,
         UploadModule,
-        UserInfoModule,
-        ViewerModule,
         WebScriptModule,
         FormModule,
         TaskListModule,
@@ -83,16 +40,7 @@ export function modules() {
 
 @NgModule({
     imports: modules(),
-    exports: modules(),
-    providers: [
-        SettingsService,
-        PageTitleService,
-        StorageService,
-        TranslateLoaderService,
-        TranslationService,
-        LogService,
-        UserPreferencesService
-    ]
+    exports: modules()
 })
 export class AdfModule {
 }

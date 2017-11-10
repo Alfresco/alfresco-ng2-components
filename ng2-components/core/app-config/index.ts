@@ -15,21 +15,4 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
-import { Title } from '@angular/platform-browser';
-import { AppConfigService } from '../app-config/app-config.service';
-
-@Injectable()
-export class PageTitleService {
-
-    constructor(
-        private titleService: Title,
-        private appConfig: AppConfigService) {}
-
-    setTitle(value: string = '') {
-        const name = this.appConfig.get('application.name') || 'Alfresco ADF Application';
-        const title = value ? `${value} - ${name}` : `${name}`;
-
-        this.titleService.setTitle(title);
-    }
-}
+export * from './public-api';

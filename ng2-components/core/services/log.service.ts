@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { logLevels, LogLevelsEnum } from '../models/log-levels.model';
-import { AppConfigService } from './app-config.service';
+import { AppConfigService } from '../app-config/app-config.service';
 
 @Injectable()
 export class LogService {

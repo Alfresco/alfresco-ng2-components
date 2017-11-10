@@ -29,6 +29,7 @@ export * from './context-menu';
 export * from './collapsable';
 export * from './card-view';
 export * from './dialogs';
+export * from './app-config';
 
 export * from './pipes';
 export * from './services';
@@ -39,3 +40,4 @@ export * from './models';
 export * from './events';
 export * from './mock';
 
+export * from './core.module';

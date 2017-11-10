@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AppConfigService } from './app-config.service';
+import { AppConfigService } from '../app-config/app-config.service';
 import { LogService } from './log.service';
 import { UserPreferencesService } from './user-preferences.service';
 

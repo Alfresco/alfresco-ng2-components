@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-export * from './app-config.service';
 export * from './authentication.service';
 export * from './alfresco-api.service';
 export * from './settings.service';
@@ -37,8 +36,6 @@ export * from './upload.service';
 export * from './dynamic-component-mapper.service';
 export * from './card-item-types.service';
 export * from './card-view-update.service';
-export * from './card-view-update.service';
-export * from './card-view-update.service';
 export * from './user-preferences.service';
 export * from './highlight-transform.service';
 export * from './deleted-nodes-api.service';
@@ -52,3 +49,5 @@ export * from './shared-links-api.service';
 export * from './sites-api.service';
 export * from './discovery-api.service';
 export * from './comment-process.service';
+
+export * from './service.module'

@@ -16,7 +16,7 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { AppConfigService } from '../services/app-config.service';
+import { AppConfigService } from '../app-config';
 import { UserPreferencesService } from '../services/user-preferences.service';
 
 @Component({

@@ -5,6 +5,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 // import { Editor3DModule } from 'ng2-3d-editor';
 import { ChartsModule } from 'ng2-charts';
 import { HttpClientModule } from '@angular/common/http';
+import { TranslateService } from '@ngx-translate/core';
 
 import { AppConfigService, TRANSLATION_PROVIDER } from '@adf/core';
 import { AppComponent } from './app.component';
@@ -87,6 +88,7 @@ import { ReactiveFormsModule } from '@angular/forms';
         VersionManagerDialogAdapterComponent
     ],
     providers: [
+        TranslateService,
         { provide: AppConfigService, useClass: DebugAppConfigService },
         {
             provide: TRANSLATION_PROVIDER,

@@ -20,7 +20,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Rx';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { AppConfigService } from './app-config.service';
+import { AppConfigService } from '../app-config/app-config.service';
 import { StorageService } from './storage.service';
 
 @Injectable()

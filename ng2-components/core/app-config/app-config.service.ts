@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { APP_INITIALIZER, Injectable, NgModule } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { ObjectUtils } from '../utils/object-utils';
 
 @Injectable()
@@ -82,27 +82,4 @@ export class AppConfigService {
 
         return result;
     }
-}
-
-export function startupServiceFactory(configService: AppConfigService): Function {
-    return () => configService.load();
-}
-
-@NgModule({
-    imports: [
-        HttpClientModule
-    ],
-    providers: [
-        AppConfigService,
-        {
-            provide: APP_INITIALIZER,
-            useFactory: startupServiceFactory,
-            deps: [
-                AppConfigService
-            ],
-            multi: true
-        }
-    ]
-})
-export class AppConfigModule {
 }
