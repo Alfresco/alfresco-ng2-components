@@ -20,7 +20,7 @@ import { async, TestBed } from '@angular/core/testing';
 import { MatIconRegistry } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { CookieServiceMock } from './../assets/cookie.service.mock';
+import { CookieServiceMock } from './../mock/cookie.service.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AlfrescoContentService } from './alfresco-content.service';
 import { AlfrescoSettingsService } from './alfresco-settings.service';

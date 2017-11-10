@@ -19,13 +19,12 @@ import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
 import { Component, DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { AlfrescoApiService, CoreModule, RenditionsService } from '@adf/core';
 
-import { CoreModule, RenditionsService } from '@adf/core';
-import { MaterialModule } from './../material.module';
+import { MaterialModule } from './../../material.module';
 
-import { AlfrescoApiService } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
-import { EventMock } from '../assets/event.mock';
+import { EventMock } from '../../mock/event.mock';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { ImgViewerComponent } from './imgViewer.component';
 import { MediaPlayerComponent } from './mediaPlayer.component';

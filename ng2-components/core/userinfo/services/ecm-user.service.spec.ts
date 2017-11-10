@@ -17,7 +17,7 @@
 
 import { async, TestBed } from '@angular/core/testing';
 import { AlfrescoAuthenticationService, AlfrescoContentService, CoreModule } from '@adf/core';
-import { fakeEcmUser } from '../assets/fake-ecm-user.service.mock';
+import { fakeEcmUser } from '../../mock/ecm-user.service.mock';
 import { EcmUserService } from '../services/ecm-user.service';
 
 declare let jasmine: any;

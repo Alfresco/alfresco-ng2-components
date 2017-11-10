@@ -16,7 +16,7 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { fakeRedition, fakeReditionCreated, fakeReditionsList } from '../assets/renditionsService.mock';
+import { fakeRedition, fakeReditionCreated, fakeReditionsList } from '../mock/renditionsService.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AlfrescoSettingsService } from './alfresco-settings.service';
 import { AppConfigModule } from './app-config.service';

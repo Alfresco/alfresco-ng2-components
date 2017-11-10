@@ -24,11 +24,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AlfrescoAuthenticationService, CoreModule } from '@adf/core';
 import { AlfrescoTranslationService, UserPreferencesService } from '@adf/core';
 
-import { MaterialModule } from '../material.module';
+import { MaterialModule } from '../../material.module';
 import { LoginErrorEvent } from '../models/login-error.event';
 import { LoginSuccessEvent } from '../models/login-success.event';
-import { AuthenticationMock } from './../assets/authentication.service.mock';
-import { TranslationMock } from './../assets/translation.service.mock';
+import { AuthenticationMock } from './../../mock/authentication.service.mock';
+import { TranslationMock } from './../../mock/translation.service.mock';
 import { LoginComponent } from './login.component';
 
 describe('LoginComponent', () => {

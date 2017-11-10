@@ -23,10 +23,10 @@ import {
     AlfrescoTranslationService,
     CoreModule
 } from '@adf/core';
-import { fakeBpmUser } from '../assets/fake-bpm-user.service.mock';
-import { fakeEcmEditedUser, fakeEcmUser, fakeEcmUserNoImage } from '../assets/fake-ecm-user.service.mock';
-import { TranslationMock } from '../assets/translation.service.mock';
-import { MaterialModule } from '../material.module';
+import { fakeBpmUser } from '../../mock/bpm-user.service.mock';
+import { fakeEcmEditedUser, fakeEcmUser, fakeEcmUserNoImage } from '../../mock/ecm-user.service.mock';
+import { TranslationMock } from '../../mock/translation.service.mock';
+import { MaterialModule } from '../../material.module';
 import { BpmUserService } from '../services/bpm-user.service';
 import { EcmUserService } from '../services/ecm-user.service';
 import { BpmUserModel } from './../models/bpm-user.model';

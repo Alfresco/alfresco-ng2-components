@@ -15,23 +15,11 @@
  * limitations under the License.
  */
 
-import { EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
-
-export interface LangChangeEvent {
-    lang: string;
-    translations: any;
-}
-
-export class TranslationMock {
-
-    public onLangChange: EventEmitter<LangChangeEvent> = new EventEmitter<LangChangeEvent>();
-
-    public get(key: string|Array<string>, interpolateParams?: Object): Observable<string|any> {
-        return Observable.of(key);
-    }
-
-    addTranslationFolder() {
-
-    }
-}
+export * from './AlfrescoApi.mock';
+export * from './app-config.service.mock';
+export * from './apps-service.mock'
+export * from './comment-process-service.mock';
+export * from './cookie.service.mock';
+export * from './renditionsService.mock';
+export * from './search.service.mock';
+export * from './translation.service.mock';

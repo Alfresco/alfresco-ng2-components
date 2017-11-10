@@ -23,7 +23,7 @@ import {
     AlfrescoSettingsService,
     CoreModule
 } from '@adf/core';
-import { EventMock } from '../assets/event.mock';
+import { EventMock } from '../../mock/event.mock';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { PdfViewerComponent } from './pdfViewer.component';
 

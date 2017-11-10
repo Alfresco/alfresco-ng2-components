@@ -23,7 +23,7 @@ import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/t
 import { Observable } from 'rxjs/Rx';
 
 import { AlfrescoTranslationService, CoreModule } from '../../index';
-import { TranslationMock } from '../assets/translation.service.mock';
+import { TranslationMock } from '../mock/translation.service.mock';
 import { NodesApiService } from '../services/nodes-api.service';
 import { NotificationService } from '../services/notification.service';
 import { TranslationService } from '../services/translation.service';

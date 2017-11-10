@@ -41,4 +41,5 @@ export * from './directives/node-favorite.directive';
 export * from './utils';
 export * from './models';
 export * from './events';
+export * from './mock';
 

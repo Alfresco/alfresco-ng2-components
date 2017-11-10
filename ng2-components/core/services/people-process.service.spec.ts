@@ -17,7 +17,7 @@
 
 import { TestBed } from '@angular/core/testing';
 import { UserProcessModel } from '@adf/core';
-import { AppConfigServiceMock } from '../assets/app-config.service.mock';
+import { AppConfigServiceMock } from '../mock/app-config.service.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AppConfigService } from './app-config.service';
 import { LogService } from './log.service';

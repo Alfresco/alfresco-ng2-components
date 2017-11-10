@@ -17,8 +17,8 @@
 
 import { async, TestBed } from '@angular/core/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { fakeApi, fakeError, fakeSearch } from '../assets/search.service.mock';
-import { CookieServiceMock } from './../assets/cookie.service.mock';
+import { fakeApi, fakeError, fakeSearch } from '../mock/search.service.mock';
+import { CookieServiceMock } from './../mock/cookie.service.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AlfrescoSettingsService } from './alfresco-settings.service';
 import { AppConfigModule } from './app-config.service';
