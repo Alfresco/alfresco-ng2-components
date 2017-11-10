@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MaterialModule } from '../material.module';
+import { MaterialModule } from '../../../material.module';
 import { ErrorWidgetComponent } from '../widgets/error/error.component';
 import { FormRenderingService } from './../../services/form-rendering.service';
 import { WidgetVisibilityService } from './../../services/widget-visibility.service';
@@ -36,7 +36,7 @@ describe('FormFieldComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-                imports: [ServicesModule,
+                imports: [CoreModule,
                     MaterialModule
                 ],
                 declarations: [

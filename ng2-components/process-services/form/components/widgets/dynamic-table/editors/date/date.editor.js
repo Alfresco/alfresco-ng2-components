@@ -23,10 +23,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 /* tslint:disable:component-selector  */
-var core_1 = require("@angular/core");
+var core_1 = require("@adf/core");
+var core_2 = require("@angular/core");
 var material_1 = require("@angular/material");
 var moment = require("moment");
-var core_2 = require("@adf/core");
 var DateEditorComponent = (function () {
     function DateEditorComponent(dateAdapter, preferences) {
         this.dateAdapter = dateAdapter;
@@ -55,21 +55,21 @@ var DateEditorComponent = (function () {
         }
     };
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], DateEditorComponent.prototype, "table", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], DateEditorComponent.prototype, "row", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], DateEditorComponent.prototype, "column", void 0);
     DateEditorComponent = __decorate([
-        core_1.Component({
+        core_2.Component({
             selector: 'adf-date-editor',
             templateUrl: './date.editor.html',
             providers: [
-                { provide: material_1.DateAdapter, useClass: core_2.MomentDateAdapter },
-                { provide: material_1.MAT_DATE_FORMATS, useValue: core_2.MOMENT_DATE_FORMATS }
+                { provide: material_1.DateAdapter, useClass: core_1.MomentDateAdapter },
+                { provide: material_1.MAT_DATE_FORMATS, useValue: core_1.MOMENT_DATE_FORMATS }
             ],
             styleUrls: ['./date.editor.scss']
         })

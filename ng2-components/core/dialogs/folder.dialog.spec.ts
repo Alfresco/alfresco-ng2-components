@@ -22,7 +22,6 @@ import { MatDialogModule, MatDialogRef } from '@angular/material';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { Observable } from 'rxjs/Rx';
 
-import { TranslationService } from '../../index';
 import { TranslationMock } from '../mock/translation.service.mock';
 import { NodesApiService } from '../services/nodes-api.service';
 import { NotificationService } from '../services/notification.service';

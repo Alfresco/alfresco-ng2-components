@@ -18,9 +18,9 @@
 import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AlfrescoApiService, ServicesModule } from '@adf/core';
 import { MaterialModule } from '../../../material.module';
 import { VersionListComponent } from './version-list.component';
+import { CoreModule } from '@adf/core';
 
 describe('VersionListComponent', () => {
     let component: VersionListComponent;
@@ -33,14 +33,11 @@ describe('VersionListComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-
+                CoreModule,
                 MaterialModule
             ],
             declarations: [
                 VersionListComponent
-            ],
-            providers: [
-                AlfrescoApiService
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         }).compileComponents();

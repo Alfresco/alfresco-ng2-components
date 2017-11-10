@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AppDefinitionRepresentationModel, TaskDetailsModel } from 'ng2-activiti-tasklist';
+import { AppDefinitionRepresentationModel, TaskDetailsModel } from '../../task-list';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessDefinitionRepresentation } from '../models/process-definition.model';
 

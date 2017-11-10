@@ -32,8 +32,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var core_2 = require("@adf/core");
+var core_1 = require("@adf/core");
+var core_2 = require("@angular/core");
 var index_1 = require("./../components/widgets/index");
 var FormRenderingService = (function (_super) {
     __extends(FormRenderingService, _super);
@@ -41,24 +41,24 @@ var FormRenderingService = (function (_super) {
         var _this = _super.call(this) || this;
         _this.defaultValue = index_1.UnknownWidgetComponent;
         _this.types = {
-            'text': core_2.DynamicComponentResolver.fromType(index_1.TextWidgetComponent),
-            'string': core_2.DynamicComponentResolver.fromType(index_1.TextWidgetComponent),
-            'integer': core_2.DynamicComponentResolver.fromType(index_1.NumberWidgetComponent),
-            'multi-line-text': core_2.DynamicComponentResolver.fromType(index_1.MultilineTextWidgetComponentComponent),
-            'boolean': core_2.DynamicComponentResolver.fromType(index_1.CheckboxWidgetComponent),
-            'dropdown': core_2.DynamicComponentResolver.fromType(index_1.DropdownWidgetComponent),
-            'date': core_2.DynamicComponentResolver.fromType(index_1.DateWidgetComponent),
-            'amount': core_2.DynamicComponentResolver.fromType(index_1.AmountWidgetComponent),
-            'radio-buttons': core_2.DynamicComponentResolver.fromType(index_1.RadioButtonsWidgetComponent),
-            'hyperlink': core_2.DynamicComponentResolver.fromType(index_1.HyperlinkWidgetComponent),
-            'readonly-text': core_2.DynamicComponentResolver.fromType(index_1.DisplayTextWidgetComponentComponent),
-            'typeahead': core_2.DynamicComponentResolver.fromType(index_1.TypeaheadWidgetComponent),
-            'people': core_2.DynamicComponentResolver.fromType(index_1.PeopleWidgetComponent),
-            'functional-group': core_2.DynamicComponentResolver.fromType(index_1.FunctionalGroupWidgetComponent),
-            'dynamic-table': core_2.DynamicComponentResolver.fromType(index_1.DynamicTableWidgetComponent),
-            'container': core_2.DynamicComponentResolver.fromType(index_1.ContainerWidgetComponent),
-            'group': core_2.DynamicComponentResolver.fromType(index_1.ContainerWidgetComponent),
-            'document': core_2.DynamicComponentResolver.fromType(index_1.DocumentWidgetComponent)
+            'text': core_1.DynamicComponentResolver.fromType(index_1.TextWidgetComponent),
+            'string': core_1.DynamicComponentResolver.fromType(index_1.TextWidgetComponent),
+            'integer': core_1.DynamicComponentResolver.fromType(index_1.NumberWidgetComponent),
+            'multi-line-text': core_1.DynamicComponentResolver.fromType(index_1.MultilineTextWidgetComponentComponent),
+            'boolean': core_1.DynamicComponentResolver.fromType(index_1.CheckboxWidgetComponent),
+            'dropdown': core_1.DynamicComponentResolver.fromType(index_1.DropdownWidgetComponent),
+            'date': core_1.DynamicComponentResolver.fromType(index_1.DateWidgetComponent),
+            'amount': core_1.DynamicComponentResolver.fromType(index_1.AmountWidgetComponent),
+            'radio-buttons': core_1.DynamicComponentResolver.fromType(index_1.RadioButtonsWidgetComponent),
+            'hyperlink': core_1.DynamicComponentResolver.fromType(index_1.HyperlinkWidgetComponent),
+            'readonly-text': core_1.DynamicComponentResolver.fromType(index_1.DisplayTextWidgetComponentComponent),
+            'typeahead': core_1.DynamicComponentResolver.fromType(index_1.TypeaheadWidgetComponent),
+            'people': core_1.DynamicComponentResolver.fromType(index_1.PeopleWidgetComponent),
+            'functional-group': core_1.DynamicComponentResolver.fromType(index_1.FunctionalGroupWidgetComponent),
+            'dynamic-table': core_1.DynamicComponentResolver.fromType(index_1.DynamicTableWidgetComponent),
+            'container': core_1.DynamicComponentResolver.fromType(index_1.ContainerWidgetComponent),
+            'group': core_1.DynamicComponentResolver.fromType(index_1.ContainerWidgetComponent),
+            'document': core_1.DynamicComponentResolver.fromType(index_1.DocumentWidgetComponent)
         };
         _this.types['upload'] = function (field) {
             if (field) {
@@ -73,8 +73,8 @@ var FormRenderingService = (function (_super) {
         return _this;
     }
     FormRenderingService = __decorate([
-        core_1.Injectable()
+        core_2.Injectable()
     ], FormRenderingService);
     return FormRenderingService;
-}(core_2.DynamicComponentMapper));
+}(core_1.DynamicComponentMapper));
 exports.FormRenderingService = FormRenderingService;

@@ -33,10 +33,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 /* tslint:disable:component-selector  */
-var core_1 = require("@angular/core");
+var core_1 = require("@adf/core");
+var core_2 = require("@angular/core");
 var material_1 = require("@angular/material");
 var moment = require("moment");
-var core_2 = require("@adf/core");
 var widget_component_1 = require("./../widget.component");
 var DateWidgetComponent = (function (_super) {
     __extends(DateWidgetComponent, _super);
@@ -77,16 +77,16 @@ var DateWidgetComponent = (function (_super) {
         this.checkVisibility(this.field);
     };
     DateWidgetComponent = __decorate([
-        core_1.Component({
+        core_2.Component({
             selector: 'date-widget',
             providers: [
-                { provide: material_1.DateAdapter, useClass: core_2.MomentDateAdapter },
-                { provide: material_1.MAT_DATE_FORMATS, useValue: core_2.MOMENT_DATE_FORMATS }
+                { provide: material_1.DateAdapter, useClass: core_1.MomentDateAdapter },
+                { provide: material_1.MAT_DATE_FORMATS, useValue: core_1.MOMENT_DATE_FORMATS }
             ],
             templateUrl: './date.widget.html',
             styleUrls: ['./date.widget.scss'],
             host: widget_component_1.baseHost,
-            encapsulation: core_1.ViewEncapsulation.None
+            encapsulation: core_2.ViewEncapsulation.None
         })
     ], DateWidgetComponent);
     return DateWidgetComponent;

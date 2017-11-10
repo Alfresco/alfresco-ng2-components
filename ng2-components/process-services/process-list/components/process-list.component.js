@@ -23,18 +23,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@adf/core");
+var core_2 = require("@adf/core");
 var common_1 = require("@angular/common");
-var core_2 = require("@angular/core");
-var core_3 = require("@adf/core");
+var core_3 = require("@angular/core");
 var filter_process_model_1 = require("../models/filter-process.model");
 var process_preset_model_1 = require("../models/process-preset.model");
 var ProcessInstanceListComponent = (function () {
     function ProcessInstanceListComponent(processService, appConfig) {
         this.processService = processService;
         this.appConfig = appConfig;
-        this.rowClick = new core_2.EventEmitter();
-        this.success = new core_2.EventEmitter();
-        this.error = new core_2.EventEmitter();
+        this.rowClick = new core_3.EventEmitter();
+        this.success = new core_3.EventEmitter();
+        this.error = new core_3.EventEmitter();
         this.isLoading = true;
         this.layoutPresets = {};
     }
@@ -261,40 +261,40 @@ var ProcessInstanceListComponent = (function () {
         return (this.layoutPresets[name] || this.layoutPresets['default']).map(function (col) { return new core_1.ObjectDataColumn(col); });
     };
     __decorate([
-        core_2.ContentChild(core_3.DataColumnListComponent)
+        core_3.ContentChild(core_2.DataColumnListComponent)
     ], ProcessInstanceListComponent.prototype, "columnList", void 0);
     __decorate([
-        core_2.Input()
+        core_3.Input()
     ], ProcessInstanceListComponent.prototype, "appId", void 0);
     __decorate([
-        core_2.Input()
+        core_3.Input()
     ], ProcessInstanceListComponent.prototype, "processDefinitionKey", void 0);
     __decorate([
-        core_2.Input()
+        core_3.Input()
     ], ProcessInstanceListComponent.prototype, "state", void 0);
     __decorate([
-        core_2.Input()
+        core_3.Input()
     ], ProcessInstanceListComponent.prototype, "sort", void 0);
     __decorate([
-        core_2.Input()
+        core_3.Input()
     ], ProcessInstanceListComponent.prototype, "name", void 0);
     __decorate([
-        core_2.Input()
+        core_3.Input()
     ], ProcessInstanceListComponent.prototype, "presetColumn", void 0);
     __decorate([
-        core_2.Input()
+        core_3.Input()
     ], ProcessInstanceListComponent.prototype, "data", void 0);
     __decorate([
-        core_2.Output()
+        core_3.Output()
     ], ProcessInstanceListComponent.prototype, "rowClick", void 0);
     __decorate([
-        core_2.Output()
+        core_3.Output()
     ], ProcessInstanceListComponent.prototype, "success", void 0);
     __decorate([
-        core_2.Output()
+        core_3.Output()
     ], ProcessInstanceListComponent.prototype, "error", void 0);
     ProcessInstanceListComponent = __decorate([
-        core_2.Component({
+        core_3.Component({
             selector: 'adf-process-instance-list',
             styleUrls: ['./process-list.component.css'],
             templateUrl: './process-list.component.html'

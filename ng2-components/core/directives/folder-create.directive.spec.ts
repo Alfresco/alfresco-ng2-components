@@ -24,7 +24,8 @@ import { By } from '@angular/platform-browser';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs/Rx';
 
-import { AppConfigService, providers } from '../../index';
+import { AppConfigService } from '../app-config';
+import { DirectiveModule } from '../directives';
 import { ContentService } from '../services/content.service';
 import { TranslateLoaderService } from '../services/translate-loader.service';
 import { FolderCreateDirective } from './folder-create.directive';
@@ -55,6 +56,7 @@ describe('FolderCreateDirective', () => {
                 HttpClientModule,
                 MatDialogModule,
                 FormsModule,
+                DirectiveModule,
                 ReactiveFormsModule,
                 TranslateModule.forRoot({
                     loader: {
@@ -69,8 +71,7 @@ describe('FolderCreateDirective', () => {
             ],
             providers: [
                 ContentService,
-                AppConfigService,
-                ...providers()
+                AppConfigService
             ]
         });
 

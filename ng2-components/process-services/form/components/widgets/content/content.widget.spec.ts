@@ -19,7 +19,7 @@ import { DebugElement, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatTabsModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
-import { TranslationService, ContentService, ServicesModule } from '@adf/core';
+import { TranslationService, ContentService, CoreModule } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 
 import { EcmModelService } from '../../../services/ecm-model.service';
@@ -68,7 +68,7 @@ describe('ContentWidgetComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 MatTabsModule,
-                ServicesModule
+                CoreModule
             ],
             declarations: [
                 ContentWidgetComponent

@@ -191,7 +191,7 @@ describe('DropdownEditorComponent', () => {
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-                imports: [ServicesModule, MaterialModule],
+                imports: [CoreModule, MaterialModule],
                 declarations: [DropdownEditorComponent],
                 providers: [FormService, EcmModelService]
             }).compileComponents().then(() => {

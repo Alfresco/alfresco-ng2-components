@@ -15,13 +15,8 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
-import {
-    async,
-    ComponentFixture,
-    fakeAsync,
-    TestBed
-} from '@angular/core/testing';
+import { Component, CoreModule } from '@angular/core';
+import { async, ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
 import { ProcessService } from './../services/process.service';
 import { ProcessAuditDirective } from './process-audit.directive';
@@ -54,7 +49,7 @@ describe('ProcessAuditDirective', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [ServicesModule],
+            imports: [CoreModule],
             declarations: [BasicButtonComponent, ProcessAuditDirective],
             providers: [ProcessService]
         });

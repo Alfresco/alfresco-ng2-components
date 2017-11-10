@@ -18,7 +18,7 @@
 import { inject, TestBed } from '@angular/core/testing';
 import { Title } from '@angular/platform-browser';
 
-import { AppConfigService } from './app-config.service';
+import { AppConfigService } from '../app-config';
 import { PageTitleService } from './page-title.service';
 
 class TestConfig {

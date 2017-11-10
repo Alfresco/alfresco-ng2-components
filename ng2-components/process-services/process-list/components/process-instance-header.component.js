@@ -22,8 +22,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var core_2 = require("@adf/core");
+var core_1 = require("@adf/core");
+var core_2 = require("@angular/core");
 var ProcessInstanceHeaderComponent = (function () {
     function ProcessInstanceHeaderComponent() {
     }
@@ -33,47 +33,47 @@ var ProcessInstanceHeaderComponent = (function () {
     ProcessInstanceHeaderComponent.prototype.refreshData = function () {
         if (this.processInstance) {
             this.properties = [
-                new core_2.CardViewTextItemModel({
+                new core_1.CardViewTextItemModel({
                     label: 'ADF_PROCESS_LIST.PROPERTIES.STATUS',
                     value: this.getProcessStatus(),
                     key: 'status'
                 }),
-                new core_2.CardViewDateItemModel({
+                new core_1.CardViewDateItemModel({
                     label: 'ADF_PROCESS_LIST.PROPERTIES.DUE_DATE',
                     value: this.processInstance.ended,
                     format: 'MMM DD YYYY',
                     key: 'dueDate',
                     default: 'ADF_PROCESS_LIST.PROPERTIES.DUE_DATE_DEFAULT'
                 }),
-                new core_2.CardViewTextItemModel({
+                new core_1.CardViewTextItemModel({
                     label: 'ADF_PROCESS_LIST.PROPERTIES.CATEGORY',
                     value: this.processInstance.processDefinitionCategory,
                     key: 'category',
                     default: 'ADF_PROCESS_LIST.PROPERTIES.CATEGORY_DEFAULT'
                 }),
-                new core_2.CardViewTextItemModel({
+                new core_1.CardViewTextItemModel({
                     label: 'ADF_PROCESS_LIST.PROPERTIES.BUSINESS_KEY',
                     value: this.processInstance.businessKey,
                     key: 'businessKey',
                     default: 'ADF_PROCESS_LIST.PROPERTIES.BUSINESS_KEY_DEFAULT'
                 }),
-                new core_2.CardViewTextItemModel({
+                new core_1.CardViewTextItemModel({
                     label: 'ADF_PROCESS_LIST.PROPERTIES.CREATED_BY',
                     value: this.getStartedByFullName(),
                     key: 'assignee',
                     default: 'ADF_PROCESS_LIST.PROPERTIES.CREATED_BY_DEFAULT'
                 }),
-                new core_2.CardViewDateItemModel({
+                new core_1.CardViewDateItemModel({
                     label: 'ADF_PROCESS_LIST.PROPERTIES.CREATED',
                     value: this.processInstance.started,
                     format: 'MMM DD YYYY',
                     key: 'created'
                 }),
-                new core_2.CardViewTextItemModel({ label: 'ADF_PROCESS_LIST.PROPERTIES.ID',
+                new core_1.CardViewTextItemModel({ label: 'ADF_PROCESS_LIST.PROPERTIES.ID',
                     value: this.processInstance.id,
                     key: 'id'
                 }),
-                new core_2.CardViewTextItemModel({ label: 'ADF_PROCESS_LIST.PROPERTIES.DESCRIPTION',
+                new core_1.CardViewTextItemModel({ label: 'ADF_PROCESS_LIST.PROPERTIES.DESCRIPTION',
                     value: this.processInstance.processDefinitionDescription,
                     key: 'description',
                     default: 'ADF_PROCESS_LIST.PROPERTIES.DESCRIPTION_DEFAULT'
@@ -99,10 +99,10 @@ var ProcessInstanceHeaderComponent = (function () {
         return this.processInstance && !this.processInstance.ended;
     };
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], ProcessInstanceHeaderComponent.prototype, "processInstance", void 0);
     ProcessInstanceHeaderComponent = __decorate([
-        core_1.Component({
+        core_2.Component({
             selector: 'adf-process-instance-header',
             templateUrl: './process-instance-header.component.html',
             styleUrls: ['./process-instance-header.component.css']

@@ -20,8 +20,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import {
     AlfrescoApiService,
     AuthenticationService,
-    SettingsService,
-    ContentService
+    ContentService,
+    SettingsService
 } from '../services';
 import { ImgViewerComponent } from './imgViewer.component';
 

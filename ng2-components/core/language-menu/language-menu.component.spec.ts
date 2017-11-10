@@ -18,11 +18,11 @@
 import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
-import { providers } from '../../../index';
-import { MaterialModule } from '../../material.module';
-import { AppConfigService } from '../../services/app-config.service';
-import { TranslateLoaderService } from '../../services/translate-loader.service';
-import { UserPreferencesService } from '../../services/user-preferences.service';
+import { DirectiveModule } from '../directives';
+import { MaterialModule } from '../material.module';
+import { AppConfigService } from '../app-config/app-config.service';
+import { TranslateLoaderService } from '../services/translate-loader.service';
+import { UserPreferencesService } from '../services/user-preferences.service';
 
 import { LanguageMenuComponent } from './language-menu.component';
 
@@ -38,6 +38,7 @@ describe('LanguageMenuComponent', () => {
             imports: [
                 MaterialModule,
                 HttpClientModule,
+                DirectiveModule,
                 TranslateModule.forRoot({
                     loader: {
                         provide: TranslateLoader,
@@ -49,7 +50,6 @@ describe('LanguageMenuComponent', () => {
                 LanguageMenuComponent
             ],
             providers: [
-                ...providers(),
                 AppConfigService,
                 UserPreferencesService
             ]

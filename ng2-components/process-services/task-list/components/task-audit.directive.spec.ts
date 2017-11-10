@@ -54,7 +54,7 @@ describe('TaskAuditDirective', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [ServicesModule],
+            imports: [CoreModule],
             declarations: [BasicButtonComponent, TaskAuditDirective],
             providers: [TaskListService]
         });

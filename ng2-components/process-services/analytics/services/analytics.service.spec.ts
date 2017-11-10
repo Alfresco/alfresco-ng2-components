@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { AlfrescoApiService, ServicesModule } from '@adf/core';
+import { AlfrescoApiService, CoreModule } from '@adf/core';
 import { fakeReportList } from '../assets/analytics.service.mock';
 import { AnalyticsService } from './analytics.service';
 

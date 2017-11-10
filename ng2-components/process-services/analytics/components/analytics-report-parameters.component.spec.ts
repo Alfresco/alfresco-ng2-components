@@ -18,12 +18,12 @@
 import { DebugElement, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReportParametersModel } from '../../diagram';
-import { TranslationService, AppConfigService, ServicesModule } from '@adf/core';
+import { AppConfigService, CoreModule, TranslationService } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import * as analyticParamsMock from '../assets/analyticsParamsReportComponent.mock';
 import { AnalyticsReportParametersComponent } from '../components/analytics-report-parameters.component';
 import { WIDGET_ANALYTICS_DIRECTIVES } from '../components/widgets/index';
-import { MaterialModule } from '../material.module';
+import { MaterialModule } from '../../material.module';
 import { AnalyticsService } from '../services/analytics.service';
 import { DateRangeWidgetComponent } from './widgets/date-range/date-range.widget';
 
@@ -39,7 +39,7 @@ describe('AnalyticsReportParametersComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-
+                CoreModule,
                 MaterialModule
             ],
             declarations: [

@@ -24,8 +24,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var common_1 = require("@angular/common");
 var core_1 = require("@angular/core");
-var task_list_1 = require("../../task-list");
 var Rx_1 = require("rxjs/Rx");
+var task_list_1 = require("../../task-list");
 var ProcessInstanceTasksComponent = (function () {
     function ProcessInstanceTasksComponent(activitiProcess, logService, dialog) {
         var _this = this;
