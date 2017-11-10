@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
-import { TaskDetailsModel } from '../../task-list';
 import { AlfrescoApiService, LogService } from '@adf/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { TaskDetailsModel } from '../../task-list';
 import { ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessDefinitionRepresentation } from '../models/process-definition.model';

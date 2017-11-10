@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { TranslateModule } from '@ngx-translate/core';
+import { TRANSLATION_PROVIDER } from '@adf/core';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { TRANSLATION_PROVIDER } from '@adf/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { DIAGRAM_DIRECTIVES, DIAGRAM_PROVIDERS } from './components/index';
 

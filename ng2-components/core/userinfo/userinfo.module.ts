@@ -17,10 +17,10 @@
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { TRANSLATION_PROVIDER } from '../services';
-import { MaterialModule } from '../material.module';
-import { PipeModule } from '../pipes'
 import { TranslateModule } from '@ngx-translate/core';
+import { MaterialModule } from '../material.module';
+import { PipeModule } from '../pipes';
+import { TRANSLATION_PROVIDER } from '../services';
 
 import { UserInfoComponent } from './components/user-info.component';
 import { BpmUserService } from './services/bpm-user.service';

@@ -22,13 +22,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var core_2 = require("@adf/core");
+var core_1 = require("@adf/core");
+var core_2 = require("@angular/core");
 var FileUploadingListRowComponent = (function () {
     function FileUploadingListRowComponent() {
-        this.cancel = new core_1.EventEmitter();
-        this.remove = new core_1.EventEmitter();
-        this.FileUploadStatus = core_2.FileUploadStatus;
+        this.cancel = new core_2.EventEmitter();
+        this.remove = new core_2.EventEmitter();
+        this.FileUploadStatus = core_1.FileUploadStatus;
     }
     FileUploadingListRowComponent.prototype.onCancel = function (file) {
         this.cancel.emit(file);
@@ -37,16 +37,16 @@ var FileUploadingListRowComponent = (function () {
         this.remove.emit(file);
     };
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], FileUploadingListRowComponent.prototype, "file", void 0);
     __decorate([
-        core_1.Output()
+        core_2.Output()
     ], FileUploadingListRowComponent.prototype, "cancel", void 0);
     __decorate([
-        core_1.Output()
+        core_2.Output()
     ], FileUploadingListRowComponent.prototype, "remove", void 0);
     FileUploadingListRowComponent = __decorate([
-        core_1.Component({
+        core_2.Component({
             selector: 'adf-file-uploading-list-row',
             templateUrl: './file-uploading-list-row.component.html',
             styleUrls: ['./file-uploading-list-row.component.scss']

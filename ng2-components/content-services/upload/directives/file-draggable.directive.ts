@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Directive, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output } from '@angular/core';
 import { FileUtils } from '@adf/core';
+import { Directive, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output } from '@angular/core';
 
 @Directive({
     selector: '[file-draggable]'

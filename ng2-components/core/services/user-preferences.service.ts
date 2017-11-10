@@ -19,8 +19,8 @@ import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Rx';
-import { AlfrescoApiService } from './alfresco-api.service';
 import { AppConfigService } from '../app-config/app-config.service';
+import { AlfrescoApiService } from './alfresco-api.service';
 import { StorageService } from './storage.service';
 
 @Injectable()

@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Directive, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { LogService } from '@adf/core';
+import { Directive, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Point } from './models/point';
 import { RaphaelBase } from './raphael-base';
 import { RaphaelService } from './raphael.service';

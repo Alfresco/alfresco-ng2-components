@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { BaseEvent } from '@adf/core';
+import { MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
 
 export class NodeEntityEvent extends BaseEvent<MinimalNodeEntity> {
     constructor(entity: MinimalNodeEntity) {

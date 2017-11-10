@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { FormModule } from '../form';
 import { MaterialModule } from '../material.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { CardViewModule, CardViewUpdateService, DataColumnModule, DataTableModule, DirectiveModule, PipeModule, TRANSLATION_PROVIDER } from '@adf/core';
 import { TaskListModule } from '../task-list';
-import { CardViewModule, DataColumnModule, DataTableModule, DirectiveModule, CardViewUpdateService, PipeModule, TRANSLATION_PROVIDER } from '@adf/core';
 
 import { CreateProcessAttachmentComponent } from './components/create-process-attachment.component';
 import { ProcessAttachmentListComponent } from './components/process-attachment-list.component';

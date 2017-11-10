@@ -22,8 +22,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var core_2 = require("@adf/core");
+var core_1 = require("@adf/core");
+var core_2 = require("@angular/core");
 var Rx_1 = require("rxjs/Rx");
 var FileUploadingListComponent = (function () {
     function FileUploadingListComponent(uploadService, nodesApi, notificationService, translateService) {
@@ -31,7 +31,7 @@ var FileUploadingListComponent = (function () {
         this.nodesApi = nodesApi;
         this.notificationService = notificationService;
         this.translateService = translateService;
-        this.FileUploadStatus = core_2.FileUploadStatus;
+        this.FileUploadStatus = core_1.FileUploadStatus;
         this.files = [];
     }
     /**
@@ -48,7 +48,7 @@ var FileUploadingListComponent = (function () {
         var _this = this;
         this.deleteNode(file)
             .subscribe(function () {
-            if (file.status === core_2.FileUploadStatus.Error) {
+            if (file.status === core_1.FileUploadStatus.Error) {
                 _this.notifyError(file);
             }
             _this.uploadService.cancelUpload(file);
@@ -62,11 +62,11 @@ var FileUploadingListComponent = (function () {
         this.getUploadingFiles()
             .forEach(function (file) { return _this.uploadService.cancelUpload(file); });
         var deletedFiles = this.files
-            .filter(function (file) { return file.status === core_2.FileUploadStatus.Complete; })
+            .filter(function (file) { return file.status === core_1.FileUploadStatus.Complete; })
             .map(function (file) { return _this.deleteNode(file); });
         Rx_1.Observable.forkJoin.apply(Rx_1.Observable, deletedFiles).subscribe(function (files) {
             var errors = files
-                .filter(function (file) { return file.status === core_2.FileUploadStatus.Error; });
+                .filter(function (file) { return file.status === core_1.FileUploadStatus.Error; });
             if (errors.length) {
                 _this.notifyError.apply(_this, errors);
             }
@@ -84,9 +84,9 @@ var FileUploadingListComponent = (function () {
             !this.files
                 .some(function (_a) {
                 var status = _a.status;
-                return status === core_2.FileUploadStatus.Starting ||
-                    status === core_2.FileUploadStatus.Progress ||
-                    status === core_2.FileUploadStatus.Pending;
+                return status === core_1.FileUploadStatus.Starting ||
+                    status === core_1.FileUploadStatus.Progress ||
+                    status === core_1.FileUploadStatus.Pending;
             });
     };
     /**
@@ -98,9 +98,9 @@ var FileUploadingListComponent = (function () {
             this.files
                 .every(function (_a) {
                 var status = _a.status;
-                return status === core_2.FileUploadStatus.Aborted ||
-                    status === core_2.FileUploadStatus.Cancelled ||
-                    status === core_2.FileUploadStatus.Deleted;
+                return status === core_1.FileUploadStatus.Aborted ||
+                    status === core_1.FileUploadStatus.Cancelled ||
+                    status === core_1.FileUploadStatus.Deleted;
             });
     };
     FileUploadingListComponent.prototype.deleteNode = function (file) {
@@ -108,11 +108,11 @@ var FileUploadingListComponent = (function () {
         return this.nodesApi
             .deleteNode(id, { permanent: true })
             .map(function () {
-            file.status = core_2.FileUploadStatus.Deleted;
+            file.status = core_1.FileUploadStatus.Deleted;
             return file;
         })
             .catch(function (error) {
-            file.status = core_2.FileUploadStatus.Error;
+            file.status = core_1.FileUploadStatus.Error;
             return Rx_1.Observable.of(file);
         });
     };
@@ -136,21 +136,21 @@ var FileUploadingListComponent = (function () {
     };
     FileUploadingListComponent.prototype.getUploadingFiles = function () {
         return this.files.filter(function (item) {
-            if (item.status === core_2.FileUploadStatus.Pending ||
-                item.status === core_2.FileUploadStatus.Progress ||
-                item.status === core_2.FileUploadStatus.Starting) {
+            if (item.status === core_1.FileUploadStatus.Pending ||
+                item.status === core_1.FileUploadStatus.Progress ||
+                item.status === core_1.FileUploadStatus.Starting) {
                 return item;
             }
         });
     };
     __decorate([
-        core_1.ContentChild(core_1.TemplateRef)
+        core_2.ContentChild(core_2.TemplateRef)
     ], FileUploadingListComponent.prototype, "template", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], FileUploadingListComponent.prototype, "files", void 0);
     FileUploadingListComponent = __decorate([
-        core_1.Component({
+        core_2.Component({
             selector: 'adf-file-uploading-list',
             templateUrl: './file-uploading-list.component.html',
             styleUrls: ['./file-uploading-list.component.scss']

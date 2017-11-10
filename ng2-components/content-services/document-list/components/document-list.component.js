@@ -23,8 +23,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@adf/core");
-var core_2 = require("@angular/core");
-var core_3 = require("@adf/core");
+var core_2 = require("@adf/core");
+var core_3 = require("@angular/core");
 var Rx_1 = require("rxjs/Rx");
 var preset_model_1 = require("../models/preset.model");
 var share_datatable_adapter_1 = require("./../data/share-datatable-adapter");
@@ -69,12 +69,12 @@ var DocumentListComponent = (function () {
         this.currentFolderId = null;
         this.folderNode = null;
         this.node = null;
-        this.nodeClick = new core_2.EventEmitter();
-        this.nodeDblClick = new core_2.EventEmitter();
-        this.folderChange = new core_2.EventEmitter();
-        this.preview = new core_2.EventEmitter();
-        this.ready = new core_2.EventEmitter();
-        this.error = new core_2.EventEmitter();
+        this.nodeClick = new core_3.EventEmitter();
+        this.nodeDblClick = new core_3.EventEmitter();
+        this.folderChange = new core_3.EventEmitter();
+        this.preview = new core_3.EventEmitter();
+        this.ready = new core_3.EventEmitter();
+        this.error = new core_3.EventEmitter();
         this.actions = [];
         this.contextActionHandler = new Rx_1.Subject();
         this.layoutPresets = {};
@@ -727,113 +727,113 @@ var DocumentListComponent = (function () {
     DocumentListComponent.DOUBLE_CLICK_NAVIGATION = 'dblclick';
     DocumentListComponent.DEFAULT_PAGE_SIZE = 20;
     __decorate([
-        core_2.ContentChild(core_3.DataColumnListComponent)
+        core_3.ContentChild(core_2.DataColumnListComponent)
     ], DocumentListComponent.prototype, "columnList", void 0);
     __decorate([
-        core_2.Input()
+        core_3.Input()
     ], DocumentListComponent.prototype, "permissionsStyle", void 0);
     __decorate([
-        core_2.Input()
+        core_3.Input()
     ], DocumentListComponent.prototype, "locationFormat", void 0);
     __decorate([
-        core_2.Input()
+        core_3.Input()
     ], DocumentListComponent.prototype, "navigate", void 0);
     __decorate([
-        core_2.Input()
+        core_3.Input()
     ], DocumentListComponent.prototype, "navigationMode", void 0);
     __decorate([
-        core_2.Input()
+        core_3.Input()
     ], DocumentListComponent.prototype, "thumbnails", void 0);
     __decorate([
-        core_2.Input()
+        core_3.Input()
     ], DocumentListComponent.prototype, "selectionMode", void 0);
     __decorate([
-        core_2.Input()
+        core_3.Input()
     ], DocumentListComponent.prototype, "multiselect", void 0);
     __decorate([
-        core_2.Input()
+        core_3.Input()
     ], DocumentListComponent.prototype, "enablePagination", void 0);
     __decorate([
-        core_2.Input()
+        core_3.Input()
     ], DocumentListComponent.prototype, "contentActions", void 0);
     __decorate([
-        core_2.Input()
+        core_3.Input()
     ], DocumentListComponent.prototype, "contentActionsPosition", void 0);
     __decorate([
-        core_2.Input()
+        core_3.Input()
     ], DocumentListComponent.prototype, "contextMenuActions", void 0);
     __decorate([
-        core_2.Input()
+        core_3.Input()
     ], DocumentListComponent.prototype, "pageSize", void 0);
     __decorate([
-        core_2.Input()
+        core_3.Input()
     ], DocumentListComponent.prototype, "emptyFolderImageUrl", void 0);
     __decorate([
-        core_2.Input()
+        core_3.Input()
     ], DocumentListComponent.prototype, "allowDropFiles", void 0);
     __decorate([
-        core_2.Input()
+        core_3.Input()
     ], DocumentListComponent.prototype, "sorting", void 0);
     __decorate([
-        core_2.Input()
+        core_3.Input()
     ], DocumentListComponent.prototype, "rowStyle", void 0);
     __decorate([
-        core_2.Input()
+        core_3.Input()
     ], DocumentListComponent.prototype, "rowStyleClass", void 0);
     __decorate([
-        core_2.Input()
+        core_3.Input()
     ], DocumentListComponent.prototype, "loading", void 0);
     __decorate([
-        core_2.Input()
+        core_3.Input()
     ], DocumentListComponent.prototype, "paginationStrategy", void 0);
     __decorate([
-        core_2.Input()
+        core_3.Input()
     ], DocumentListComponent.prototype, "supportedPageSizes", void 0);
     __decorate([
-        core_2.Input()
+        core_3.Input()
     ], DocumentListComponent.prototype, "rowFilter", void 0);
     __decorate([
-        core_2.Input()
+        core_3.Input()
     ], DocumentListComponent.prototype, "imageResolver", void 0);
     __decorate([
-        core_2.Input()
+        core_3.Input()
     ], DocumentListComponent.prototype, "currentFolderId", void 0);
     __decorate([
-        core_2.Input()
+        core_3.Input()
     ], DocumentListComponent.prototype, "folderNode", void 0);
     __decorate([
-        core_2.Input()
+        core_3.Input()
     ], DocumentListComponent.prototype, "node", void 0);
     __decorate([
-        core_2.Output()
+        core_3.Output()
     ], DocumentListComponent.prototype, "nodeClick", void 0);
     __decorate([
-        core_2.Output()
+        core_3.Output()
     ], DocumentListComponent.prototype, "nodeDblClick", void 0);
     __decorate([
-        core_2.Output()
+        core_3.Output()
     ], DocumentListComponent.prototype, "folderChange", void 0);
     __decorate([
-        core_2.Output()
+        core_3.Output()
     ], DocumentListComponent.prototype, "preview", void 0);
     __decorate([
-        core_2.Output()
+        core_3.Output()
     ], DocumentListComponent.prototype, "ready", void 0);
     __decorate([
-        core_2.Output()
+        core_3.Output()
     ], DocumentListComponent.prototype, "error", void 0);
     __decorate([
-        core_2.ViewChild(core_1.DataTableComponent)
+        core_3.ViewChild(core_1.DataTableComponent)
     ], DocumentListComponent.prototype, "dataTable", void 0);
     __decorate([
-        core_2.HostListener('contextmenu', ['$event'])
+        core_3.HostListener('contextmenu', ['$event'])
     ], DocumentListComponent.prototype, "onShowContextMenu", null);
     DocumentListComponent = DocumentListComponent_1 = __decorate([
-        core_2.Component({
+        core_3.Component({
             selector: 'adf-document-list',
             styleUrls: ['./document-list.component.scss'],
             templateUrl: './document-list.component.html',
-            encapsulation: core_2.ViewEncapsulation.None
+            encapsulation: core_3.ViewEncapsulation.None
         })
     ], DocumentListComponent);
     return DocumentListComponent;

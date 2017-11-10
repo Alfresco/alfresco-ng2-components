@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
+import { AuthenticationService, ThumbnailService } from '@adf/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
-import { AuthenticationService, ThumbnailService } from '@adf/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 

@@ -50,4 +50,4 @@ export * from './sites-api.service';
 export * from './discovery-api.service';
 export * from './comment-process.service';
 
-export * from './service.module'
+export * from './service.module';

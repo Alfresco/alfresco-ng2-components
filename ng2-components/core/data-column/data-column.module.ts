@@ -18,8 +18,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { DataColumnComponent } from './data-column.component';
 import { DataColumnListComponent } from './data-column-list.component';
+import { DataColumnComponent } from './data-column.component';
 
 @NgModule({
     imports: [

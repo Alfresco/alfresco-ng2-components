@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { DataTableModule } from '@adf/core';
 import { TRANSLATION_PROVIDER } from '@adf/core';
@@ -35,6 +35,8 @@ import { StartFormComponent } from './components/start-form.component';
 import { ContentWidgetComponent } from './components/widgets/content/content.widget';
 import { WidgetComponent } from './components/widgets/widget.component';
 
+import { DataColumnModule, PipeModule } from '@adf/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivitiContentService } from './services/activiti-alfresco.service';
 import { EcmModelService } from './services/ecm-model.service';
 import { FormRenderingService } from './services/form-rendering.service';
@@ -42,8 +44,6 @@ import { FormService } from './services/form.service';
 import { NodeService } from './services/node.service';
 import { ProcessContentService } from './services/process-content.service';
 import { WidgetVisibilityService } from './services/widget-visibility.service';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DataColumnModule, PipeModule } from '@adf/core';
 
 @NgModule({
     imports: [

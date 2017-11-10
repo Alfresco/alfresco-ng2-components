@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Directive, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ContentService } from '@adf/core';
+import { Directive, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ProcessService } from './../services/process.service';
 
 const JSON_FORMAT: string = 'json';

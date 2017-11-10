@@ -22,8 +22,8 @@
  *
  * @returns {TaskDetailsModel} .
  */
-import { TaskRepresentation } from 'alfresco-js-api';
 import { UserProcessModel } from '@adf/core';
+import { TaskRepresentation } from 'alfresco-js-api';
 import { UserGroupModel } from './user-group.model';
 
 export class TaskDetailsModel implements TaskRepresentation {

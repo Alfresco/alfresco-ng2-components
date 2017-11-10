@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
+import { AlfrescoApiService, AuthenticationService, ContentService, LogService, PermissionsEnum, ThumbnailService } from '@adf/core';
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
-import { AlfrescoApiService, AuthenticationService, ContentService, LogService, PermissionsEnum, ThumbnailService } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 
 @Injectable()

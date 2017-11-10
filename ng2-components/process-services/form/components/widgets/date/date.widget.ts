@@ -17,11 +17,11 @@
 
 /* tslint:disable:component-selector  */
 
+import { MOMENT_DATE_FORMATS, MomentDateAdapter, UserPreferencesService } from '@adf/core';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import * as moment from 'moment';
 import { Moment } from 'moment';
-import { MOMENT_DATE_FORMATS, MomentDateAdapter, UserPreferencesService } from '@adf/core';
 import { FormService } from './../../../services/form.service';
 import { baseHost , WidgetComponent } from './../widget.component';
 

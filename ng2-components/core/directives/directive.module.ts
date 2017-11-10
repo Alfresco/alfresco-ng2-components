@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
-import { CommonModule } from '@angular/common';
 
 import { FolderCreateDirective } from './folder-create.directive';
 import { FolderEditDirective } from './folder-edit.directive';

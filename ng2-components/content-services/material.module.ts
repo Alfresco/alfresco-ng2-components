@@ -25,8 +25,8 @@ import {
     MatListModule,
     MatMenuModule,
     MatOptionModule,
-    MatProgressSpinnerModule,
     MatProgressBarModule,
+    MatProgressSpinnerModule,
     MatRippleModule,
     MatSelectModule
 } from '@angular/material';

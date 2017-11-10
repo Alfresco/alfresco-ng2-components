@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
+import { LogService } from '@adf/core';
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { TaskDetailsEvent, TaskDetailsModel } from '../../task-list';
-import { LogService } from '@adf/core';
 import { Observable, Observer } from 'rxjs/Rx';
+import { TaskDetailsEvent, TaskDetailsModel } from '../../task-list';
 import { ProcessInstance } from '../models/process-instance.model';
 import { ProcessService } from './../services/process.service';
 

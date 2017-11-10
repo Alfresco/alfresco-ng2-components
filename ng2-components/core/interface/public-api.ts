@@ -17,4 +17,4 @@
 
 export * from './authentication.interface';
 export * from './card-view-item.interface';
-export * from './injection.tokens'
+export * from './injection.tokens';

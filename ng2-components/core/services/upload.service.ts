@@ -18,10 +18,10 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import * as minimatch from 'minimatch';
 import { Subject } from 'rxjs/Rx';
+import { AppConfigService } from '../app-config/app-config.service';
 import { FileUploadCompleteEvent, FileUploadDeleteEvent, FileUploadErrorEvent, FileUploadEvent } from '../events/file.event';
 import { FileModel, FileUploadProgress, FileUploadStatus } from '../models/file.model';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { AppConfigService } from '../app-config/app-config.service';
 
 @Injectable()
 export class UploadService {

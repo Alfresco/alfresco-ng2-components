@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
+import { LogService } from '@adf/core';
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { TaskDetailsEvent } from '../../task-list';
-import { LogService } from '@adf/core';
 
 import { ProcessInstance } from '../models/process-instance.model';
 import { ProcessService } from './../services/process.service';

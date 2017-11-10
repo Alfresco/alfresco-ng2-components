@@ -11,10 +11,8 @@
   "bugs": {
     "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
   },
-  "dependencies": {
-  },
-  "devDependencies": {
-  },
+  "dependencies": {},
+  "devDependencies": {},
   "keywords": [
     "core",
     "alfresco-component",

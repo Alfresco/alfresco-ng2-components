@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { ContentService, LogService } from '@adf/core';
 import {
     AfterContentChecked,
     Component,
@@ -31,7 +32,6 @@ import {
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import * as moment from 'moment';
-import { ContentService, LogService } from '@adf/core';
 import { ParameterValueModel, ReportParameterDetailsModel, ReportParametersModel, ReportQuery } from '../../diagram';
 import { AnalyticsService } from '../services/analytics.service';
 

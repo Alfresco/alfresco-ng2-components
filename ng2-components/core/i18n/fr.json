@@ -44,34 +44,5 @@
       "BACK": "Retour",
       "APPLY": "APPLIQUER"
     }
-  },
-  "LOGIN": {
-    "LOGO": "Alfresco",
-    "LABEL": {
-      "LOGIN": "Connexion",
-      "USERNAME": "Nom d'utilisateur",
-      "PASSWORD": "Mot de passe",
-      "REMEMBER": "Mémoriser"
-    },
-    "MESSAGES": {
-      "USERNAME-REQUIRED": "Requis",
-      "USERNAME-MIN": "Votre nom d'utilisateur doit comporter au moins {{minLenght}} caractères.",
-      "PASSWORD-REQUIRED": "Entrez votre mot de passe pour vous connecter",
-      "LOGIN-ERROR-CREDENTIALS": "Le nom d'utilisateur ou le mot de passe entré est inconnu",
-      "LOGIN-ERROR-PROVIDERS": "Le fournisseur ne peut pas être non défini",
-      "LOGIN-SUCCESS": "Connexion réussie",
-      "LOGIN-ERROR-CORS": "Exception CORS, vérifiez la configuration du serveur",
-      "LOGIN-ERROR-CSRF": "Exception CSRF, set [disableCsrf]=\"true\" in login.component",
-      "LOGIN-ECM-LICENSE": "L'entrepôt Alfresco Content Services est en lecture seule"
-    },
-    "BUTTON": {
-      "LOGIN": "CONNEXION",
-      "CHECKING": "VÉRIFICATION",
-      "WELCOME": "BIENVENUE"
-    },
-    "ACTION": {
-      "HELP": "BESOIN D'AIDE ?",
-      "REGISTER": "S'INSCRIRE"
-    }
   }
 }

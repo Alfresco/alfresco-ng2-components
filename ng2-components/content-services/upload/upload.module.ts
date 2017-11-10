@@ -14,12 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { TRANSLATION_PROVIDER } from '@adf/core';
-import { MaterialModule } from '../material.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { MaterialModule } from '../material.module';
 
 import { FileUploadingDialogComponent } from './components/file-uploading-dialog.component';
 import { FileUploadingListRowComponent } from './components/file-uploading-list-row.component';
@@ -27,8 +28,8 @@ import { FileUploadingListComponent } from './components/file-uploading-list.com
 import { UploadButtonComponent } from './components/upload-button.component';
 import { UploadDragAreaComponent } from './components/upload-drag-area.component';
 
-import { FileDraggableDirective } from './directives/file-draggable.directive';
 import { PipeModule } from '@adf/core';
+import { FileDraggableDirective } from './directives/file-draggable.directive';
 
 @NgModule({
     imports: [

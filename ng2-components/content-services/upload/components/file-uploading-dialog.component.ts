@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FileModel, FileUploadCompleteEvent, FileUploadDeleteEvent,
          FileUploadErrorEvent, FileUploadStatus, UploadService } from '@adf/core';
+import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { FileUploadingListComponent } from './file-uploading-list.component';
 

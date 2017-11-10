@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
+export * from './file-size.pipe';
+export * from './mime-type-icon.pipe';
+export * from './node-name-tooltip.pipe';
+export * from './text-highlight.pipe';
+export * from './time-ago.pipe';
+export * from './user-initial.pipe';
 
-export * from './file-size.pipe'
-export * from './mime-type-icon.pipe'
-export * from './node-name-tooltip.pipe'
-export * from './text-highlight.pipe'
-export * from'./time-ago.pipe'
-export * from './user-initial.pipe'
-
-export * from './pipe.module'
+export * from './pipe.module';

@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { SearchOptions, SearchService } from '@adf/core';
 import {
     AfterContentInit,
     ChangeDetectionStrategy,
@@ -31,7 +32,6 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { NodePaging } from 'alfresco-js-api';
-import { SearchOptions, SearchService } from '@adf/core';
 import { Subject } from 'rxjs/Subject';
 
 @Component({

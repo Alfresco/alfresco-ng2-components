@@ -25,9 +25,9 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
+var core_1 = require("@adf/core");
+var core_2 = require("@angular/core");
 var material_1 = require("@angular/material");
-var core_2 = require("@adf/core");
 var document_list_component_1 = require("../document-list.component");
 var ContentNodeSelectorComponent = (function () {
     function ContentNodeSelectorComponent(contentNodeSelectorService, contentService, data, containingDialog) {
@@ -46,7 +46,7 @@ var ContentNodeSelectorComponent = (function () {
         this.rowFilter = null;
         this.imageResolver = null;
         this.pageSize = 10;
-        this.select = new core_1.EventEmitter();
+        this.select = new core_2.EventEmitter();
         if (data) {
             this.title = data.title;
             this.select = data.select;
@@ -238,38 +238,38 @@ var ContentNodeSelectorComponent = (function () {
         this.containingDialog.close();
     };
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], ContentNodeSelectorComponent.prototype, "title", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], ContentNodeSelectorComponent.prototype, "currentFolderId", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], ContentNodeSelectorComponent.prototype, "rowFilter", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], ContentNodeSelectorComponent.prototype, "imageResolver", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], ContentNodeSelectorComponent.prototype, "pageSize", void 0);
     __decorate([
-        core_1.Output()
+        core_2.Output()
     ], ContentNodeSelectorComponent.prototype, "select", void 0);
     __decorate([
-        core_1.ViewChild(document_list_component_1.DocumentListComponent)
+        core_2.ViewChild(document_list_component_1.DocumentListComponent)
     ], ContentNodeSelectorComponent.prototype, "documentList", void 0);
     __decorate([
-        core_1.ViewChild(core_2.HighlightDirective)
+        core_2.ViewChild(core_1.HighlightDirective)
     ], ContentNodeSelectorComponent.prototype, "highlighter", void 0);
     ContentNodeSelectorComponent = __decorate([
-        core_1.Component({
+        core_2.Component({
             selector: 'adf-content-node-selector',
             styleUrls: ['./content-node-selector.component.scss'],
             templateUrl: './content-node-selector.component.html',
-            encapsulation: core_1.ViewEncapsulation.None
+            encapsulation: core_2.ViewEncapsulation.None
         }),
-        __param(2, core_1.Optional()), __param(2, core_1.Inject(material_1.MAT_DIALOG_DATA)),
-        __param(3, core_1.Optional())
+        __param(2, core_2.Optional()), __param(2, core_2.Inject(material_1.MAT_DIALOG_DATA)),
+        __param(3, core_2.Optional())
     ], ContentNodeSelectorComponent);
     return ContentNodeSelectorComponent;
 }());

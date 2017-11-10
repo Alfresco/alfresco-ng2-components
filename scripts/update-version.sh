@@ -6,22 +6,9 @@ eval GNU=false
 eval EXEC_COMPONENT=true
 eval DIFFERENT_JS_API=false
 
-eval projects=( "ng2-alfresco-core"
-    "ng2-alfresco-datatable"
-    "ng2-alfresco-upload"
-    "ng2-activiti-diagrams"
-    "ng2-activiti-analytics"
-    "ng2-activiti-form"
-    "ng2-activiti-tasklist"
-    "ng2-activiti-processlist"
-    "ng2-alfresco-documentlist"
-    "ng2-alfresco-login"
-    "ng2-alfresco-search"
-    "ng2-alfresco-social"
-    "ng2-alfresco-tag"
-    "ng2-alfresco-viewer"
-    "ng2-alfresco-webscript"
-    "ng2-alfresco-userinfo" )
+eval projects=( "core"
+    "content-service"
+    "process-service" )
 
 cd `dirname $0`
 

@@ -22,8 +22,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var core_2 = require("@adf/core");
+var core_1 = require("@adf/core");
+var core_2 = require("@angular/core");
 var Rx_1 = require("rxjs/Rx");
 var file_uploading_list_component_1 = require("./file-uploading-list.component");
 var FileUploadingDialogComponent = (function () {
@@ -68,7 +68,7 @@ var FileUploadingDialogComponent = (function () {
                     return item.data.entry.id === objId;
                 });
                 if (file) {
-                    file.status = core_2.FileUploadStatus.Cancelled;
+                    file.status = core_1.FileUploadStatus.Cancelled;
                     _this.changeDetecor.detectChanges();
                 }
             }
@@ -118,13 +118,13 @@ var FileUploadingDialogComponent = (function () {
         this.errorSubscription.unsubscribe();
     };
     __decorate([
-        core_1.ViewChild(file_uploading_list_component_1.FileUploadingListComponent)
+        core_2.ViewChild(file_uploading_list_component_1.FileUploadingListComponent)
     ], FileUploadingDialogComponent.prototype, "uploadList", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], FileUploadingDialogComponent.prototype, "position", void 0);
     FileUploadingDialogComponent = __decorate([
-        core_1.Component({
+        core_2.Component({
             selector: 'adf-file-uploading-dialog, file-uploading-dialog',
             templateUrl: './file-uploading-dialog.component.html',
             styleUrls: ['./file-uploading-dialog.component.scss']

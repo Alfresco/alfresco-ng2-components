@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { EventEmitter, Injectable, Output } from '@angular/core';
 import { AlfrescoApiService, LogService } from '@adf/core';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 
 /**

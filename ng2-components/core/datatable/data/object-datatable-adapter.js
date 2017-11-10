@@ -17,8 +17,8 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var common_1 = require("@angular/common");
-var utils_1 = require("../../utils");
 var pipes_1 = require("../../pipes");
+var utils_1 = require("../../utils");
 var data_sorting_model_1 = require("./data-sorting.model");
 // Simple implementation of the DataTableAdapter interface.
 var ObjectDataTableAdapter = (function () {

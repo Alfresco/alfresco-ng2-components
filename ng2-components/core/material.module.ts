@@ -30,10 +30,10 @@ import {
     MatSelectModule,
     MatSidenavModule,
     MatSlideToggleModule,
-    MatTabsModule,
-    MatTooltipModule,
     MatSnackBarModule,
-    MatToolbarModule
+    MatTabsModule,
+    MatToolbarModule,
+    MatTooltipModule
 } from '@angular/material';
 
 export function modules() {

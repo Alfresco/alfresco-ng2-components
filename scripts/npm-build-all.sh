@@ -166,7 +166,6 @@ if $EXEC_FAST_TEST == true; then
     npm run test || exit 1
 fi
 
-
 if $RUN_TEST == true; then
     for PACKAGE in ${projects[@]}
     do

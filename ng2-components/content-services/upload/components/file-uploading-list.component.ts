@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
+import { FileModel, FileUploadStatus, NodesApiService, NotificationService, TranslationService, UploadService } from '@adf/core';
 import { Component, ContentChild, Input, TemplateRef } from '@angular/core';
-import { TranslationService, FileModel, FileUploadStatus, NodesApiService, NotificationService, UploadService } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 
 @Component({

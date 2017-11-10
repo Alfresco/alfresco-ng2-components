@@ -18,16 +18,16 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { FileSizePipe } from './file-size.pipe'
-import { MimeTypeIconPipe } from './mime-type-icon.pipe'
-import { NodeNameTooltipPipe } from './node-name-tooltip.pipe'
-import { HighlightPipe } from './text-highlight.pipe'
-import { TimeAgoPipe } from './time-ago.pipe'
-import { InitialUsernamePipe } from './user-initial.pipe'
+import { FileSizePipe } from './file-size.pipe';
+import { MimeTypeIconPipe } from './mime-type-icon.pipe';
+import { NodeNameTooltipPipe } from './node-name-tooltip.pipe';
+import { HighlightPipe } from './text-highlight.pipe';
+import { TimeAgoPipe } from './time-ago.pipe';
+import { InitialUsernamePipe } from './user-initial.pipe';
 
 @NgModule({
     imports: [
-        CommonModule,
+        CommonModule
     ],
     declarations: [
         FileSizePipe,

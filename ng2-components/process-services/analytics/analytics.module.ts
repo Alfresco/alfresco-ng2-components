@@ -15,16 +15,17 @@
  * limitations under the License.
  */
 
-import { TranslateModule } from '@ngx-translate/core';
+import { TRANSLATION_PROVIDER } from '@adf/core';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { TRANSLATION_PROVIDER } from '@adf/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { DiagramsModule } from '../diagram';
 import { MaterialModule } from '../material.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ChartsModule } from 'ng2-charts';
 
+import { ToolbarModule } from '@adf/core/toolbar';
 import { AnalyticsGeneratorComponent } from './components/analytics-generator.component';
 import { AnalyticsReportHeatMapComponent } from './components/analytics-report-heat-map.component';
 import { AnalyticsReportListComponent } from './components/analytics-report-list.component';
@@ -32,7 +33,6 @@ import { AnalyticsReportParametersComponent } from './components/analytics-repor
 import { AnalyticsComponent } from './components/analytics.component';
 import { WIDGET_ANALYTICS_DIRECTIVES } from './components/widgets/index';
 import { AnalyticsService } from './services/analytics.service';
-import { ToolbarModule } from "@adf/core/toolbar";
 
 export const ANALYTICS_DIRECTIVES: any[] = [
     AnalyticsComponent,

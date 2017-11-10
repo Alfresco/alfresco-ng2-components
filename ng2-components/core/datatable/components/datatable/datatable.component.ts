@@ -20,8 +20,8 @@ import {
     IterableDiffers, OnChanges, Output, SimpleChange, SimpleChanges, TemplateRef, ViewEncapsulation
 } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material';
-import { DataColumnListComponent } from '../../../data-column';
 import { Observable, Observer, Subscription } from 'rxjs/Rx';
+import { DataColumnListComponent } from '../../../data-column';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRowEvent } from '../../data/data-row-event.model';
 import { DataRow } from '../../data/data-row.model';

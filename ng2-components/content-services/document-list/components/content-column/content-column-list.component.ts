@@ -18,8 +18,8 @@
  /* tslint:disable:component-selector  */
 
 import { DataColumn } from '@adf/core';
-import { Component } from '@angular/core';
 import { LogService } from '@adf/core';
+import { Component } from '@angular/core';
 
 import { DocumentListComponent } from './../document-list.component';
 

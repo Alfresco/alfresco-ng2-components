@@ -22,8 +22,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var core_2 = require("@adf/core");
+var core_1 = require("@adf/core");
+var core_2 = require("@angular/core");
 var UploadDragAreaComponent = (function () {
     function UploadDragAreaComponent(uploadService, translateService, notificationService) {
         this.uploadService = uploadService;
@@ -37,7 +37,7 @@ var UploadDragAreaComponent = (function () {
         this.rootFolderId = '-root-';
         this.disabled = false;
         this.versioning = false;
-        this.success = new core_1.EventEmitter();
+        this.success = new core_2.EventEmitter();
     }
     UploadDragAreaComponent_1 = UploadDragAreaComponent;
     Object.defineProperty(UploadDragAreaComponent.prototype, "enabled", {
@@ -62,7 +62,7 @@ var UploadDragAreaComponent = (function () {
     UploadDragAreaComponent.prototype.onFilesDropped = function (files) {
         var _this = this;
         if (!this.disabled && files.length) {
-            var fileModels = files.map(function (file) { return new core_2.FileModel(file, {
+            var fileModels = files.map(function (file) { return new core_1.FileModel(file, {
                 newVersion: _this.versioning,
                 path: '/',
                 parentId: _this.parentId || _this.rootFolderId
@@ -85,7 +85,7 @@ var UploadDragAreaComponent = (function () {
         var _this = this;
         if (!this.disabled) {
             item.file(function (file) {
-                var fileModel = new core_2.FileModel(file, {
+                var fileModel = new core_1.FileModel(file, {
                     newVersion: _this.versioning,
                     parentId: _this.parentId || _this.rootFolderId,
                     path: item.fullPath.replace(item.name, '')
@@ -106,9 +106,9 @@ var UploadDragAreaComponent = (function () {
     UploadDragAreaComponent.prototype.onFolderEntityDropped = function (folder) {
         var _this = this;
         if (!this.disabled && folder.isDirectory) {
-            core_2.FileUtils.flattern(folder).then(function (entries) {
+            core_1.FileUtils.flattern(folder).then(function (entries) {
                 var files = entries.map(function (entry) {
-                    return new core_2.FileModel(entry.file, {
+                    return new core_1.FileModel(entry.file, {
                         newVersion: _this.versioning,
                         parentId: _this.parentId || _this.rootFolderId,
                         path: entry.relativeFolder
@@ -170,7 +170,7 @@ var UploadDragAreaComponent = (function () {
                 if (event.detail.data && event.detail.data.obj.entry.isFolder) {
                     parentId_1 = event.detail.data.obj.entry.id || this.parentId || this.rootFolderId;
                 }
-                var fileModels = files.map(function (fileInfo) { return new core_2.FileModel(fileInfo.file, {
+                var fileModels = files.map(function (fileInfo) { return new core_1.FileModel(fileInfo.file, {
                     newVersion: _this.versioning,
                     path: fileInfo.relativeFolder,
                     parentId: parentId_1
@@ -209,38 +209,38 @@ var UploadDragAreaComponent = (function () {
         return isPermitted;
     };
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], UploadDragAreaComponent.prototype, "enabled", null);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], UploadDragAreaComponent.prototype, "showNotificationBar", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], UploadDragAreaComponent.prototype, "currentFolderPath", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], UploadDragAreaComponent.prototype, "rootFolderId", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], UploadDragAreaComponent.prototype, "disabled", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], UploadDragAreaComponent.prototype, "versioning", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], UploadDragAreaComponent.prototype, "parentId", void 0);
     __decorate([
-        core_1.Output()
+        core_2.Output()
     ], UploadDragAreaComponent.prototype, "success", void 0);
     UploadDragAreaComponent = UploadDragAreaComponent_1 = __decorate([
-        core_1.Component({
+        core_2.Component({
             selector: 'adf-upload-drag-area',
             templateUrl: './upload-drag-area.component.html',
             styleUrls: ['./upload-drag-area.component.css'],
             providers: [
-                { provide: core_2.EXTENDIBLE_COMPONENT, useExisting: core_1.forwardRef(function () { return UploadDragAreaComponent_1; }) }
+                { provide: core_1.EXTENDIBLE_COMPONENT, useExisting: core_2.forwardRef(function () { return UploadDragAreaComponent_1; }) }
             ],
-            encapsulation: core_1.ViewEncapsulation.None
+            encapsulation: core_2.ViewEncapsulation.None
         })
     ], UploadDragAreaComponent);
     return UploadDragAreaComponent;

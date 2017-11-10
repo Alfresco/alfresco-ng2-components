@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
+import { ContentService } from '@adf/core';
 import { Injectable } from '@angular/core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
-import { ContentService } from '@adf/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Rx';
 import { ContentActionHandler } from '../models/content-action.model';

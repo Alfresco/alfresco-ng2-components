@@ -107,20 +107,24 @@
         },
         {
           "glob": "**/*",
-          "input": "../../ng2-components/core/i18n",
-          "output": "./assets/@adf/core/i18n"
+          "input": "../../ng2-components/core/**/i18n",
+          "output": "./assets/ng2-alfresco-core/i18n"
         },
         {
           "glob": "**/*",
           "input": "../../ng2-components/process-services/**/i18n",
-          "output": "./assets/@adf/process-services/i18n"
+          "output": "./assets/ng2-alfresco-core/i18n"
         },
         {
           "glob": "**/*",
           "input": "../../ng2-components/content-services/**/i18n",
-          "output": "./assets/@adf/content-services/i18n"
+          "output": "./assets/ng2-alfresco-core/i18n"
         },
-
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/ng2-alfresco-core/src/i18n",
+          "output": "./assets/ng2-alfresco-core/i18n"
+        },
         { "glob": "pdf.worker.js", "input": "../node_modules/pdfjs-dist/build", "output": "./" }
       ],
       "index": "index.html",

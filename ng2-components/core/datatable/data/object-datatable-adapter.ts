@@ -18,8 +18,8 @@
 import { DatePipe } from '@angular/common';
 import { TemplateRef } from '@angular/core';
 
-import { ObjectUtils } from '../../utils';
 import { TimeAgoPipe } from '../../pipes';
+import { ObjectUtils } from '../../utils';
 import { DataColumn } from './data-column.model';
 import { DataRow } from './data-row.model';
 import { DataSorting } from './data-sorting.model';

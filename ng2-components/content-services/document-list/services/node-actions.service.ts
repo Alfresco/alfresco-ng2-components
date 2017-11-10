@@ -16,10 +16,10 @@
  */
 
 import { DataColumn } from '@adf/core';
+import { ContentService } from '@adf/core';
 import { EventEmitter, Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { ContentService } from '@adf/core';
 import { Subject } from 'rxjs/Rx';
 import { ContentNodeSelectorComponent, ContentNodeSelectorComponentData } from '../components/content-node-selector/content-node-selector.component';
 import { ShareDataRow } from '../data/share-data-row.model';

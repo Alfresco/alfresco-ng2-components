@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+/* tslint:disable:adf-file-name  */
 export class AlfrescoApiMock {
 
     login(username: string, password: string) {

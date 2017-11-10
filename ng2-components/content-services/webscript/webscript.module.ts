@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { DataTableModule, PipeModule } from '@adf/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { TRANSLATION_PROVIDER } from '@adf/core';
 import { MaterialModule } from '../material.module';

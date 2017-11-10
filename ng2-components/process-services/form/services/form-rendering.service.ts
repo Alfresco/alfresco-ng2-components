@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Injectable, Type } from '@angular/core';
 import { DynamicComponentMapper, DynamicComponentResolveFunction, DynamicComponentResolver } from '@adf/core';
+import { Injectable, Type } from '@angular/core';
 
 import {
     AmountWidgetComponent,

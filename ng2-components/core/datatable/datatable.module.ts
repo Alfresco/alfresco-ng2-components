@@ -15,15 +15,17 @@
  * limitations under the License.
  */
 
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { TRANSLATION_PROVIDER } from '../services';
 import { MaterialModule } from '../material.module';
-import { CommonModule } from '@angular/common';
+import { TRANSLATION_PROVIDER } from '../services';
 
-import { PipeModule } from '../pipes';
 import { ContextMenuModule } from '../context-menu';
+import { PipeModule } from '../pipes';
 
+import { TranslateModule } from '@ngx-translate/core';
+import { DirectiveModule } from '../directives';
 import { DataTableCellComponent } from './components/datatable/datatable-cell.component';
 import { DataTableComponent } from './components/datatable/datatable.component';
 import { DateCellComponent } from './components/datatable/date-cell.component';
@@ -36,8 +38,6 @@ import { LocationCellComponent } from './components/datatable/location-cell.comp
 import { LoadingContentTemplateDirective } from './directives/loading-template.directive';
 import { NoContentTemplateDirective } from './directives/no-content-template.directive';
 import { NoPermissionTemplateDirective } from './directives/no-permission-template.directive';
-import { TranslateModule } from '@ngx-translate/core';
-import { DirectiveModule } from "../directives";
 
 @NgModule({
     imports: [

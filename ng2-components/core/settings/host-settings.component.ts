@@ -17,8 +17,8 @@
 
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { SettingsService } from '../services/settings.service';
 import { LogService } from '../services/log.service';
+import { SettingsService } from '../services/settings.service';
 import { StorageService } from '../services/storage.service';
 import { TranslationService } from '../services/translation.service';
 

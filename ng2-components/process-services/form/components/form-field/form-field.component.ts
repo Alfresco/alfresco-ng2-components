@@ -30,7 +30,6 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 
-
 import { FormRenderingService } from './../../services/form-rendering.service';
 import { WidgetVisibilityService } from './../../services/widget-visibility.service';
 import { FormFieldModel } from './../widgets/core/index';

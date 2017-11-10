@@ -16,6 +16,17 @@
  */
 
 import {
+    AlfrescoApiService,
+    EXTENDIBLE_COMPONENT,
+    FileModel,
+    FileUtils,
+    LogService,
+    NodePermissionSubject,
+    NotificationService,
+    TranslationService,
+    UploadService
+} from '@adf/core';
+import {
     Component,
     EventEmitter,
     forwardRef,
@@ -27,17 +38,6 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import {
-    AlfrescoApiService,
-    TranslationService,
-    EXTENDIBLE_COMPONENT,
-    FileModel,
-    FileUtils,
-    LogService,
-    NodePermissionSubject,
-    NotificationService,
-    UploadService
-} from '@adf/core';
 import { Observable, Subject } from 'rxjs/Rx';
 import { PermissionModel } from '../../document-list/models/permissions.model';
 

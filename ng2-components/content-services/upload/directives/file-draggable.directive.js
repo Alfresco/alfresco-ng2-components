@@ -22,15 +22,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var core_2 = require("@adf/core");
+var core_1 = require("@adf/core");
+var core_2 = require("@angular/core");
 var FileDraggableDirective = (function () {
     function FileDraggableDirective(el, ngZone) {
         this.ngZone = ngZone;
         this.enabled = true;
-        this.filesDropped = new core_1.EventEmitter();
-        this.filesEntityDropped = new core_1.EventEmitter();
-        this.folderEntityDropped = new core_1.EventEmitter();
+        this.filesDropped = new core_2.EventEmitter();
+        this.filesEntityDropped = new core_2.EventEmitter();
+        this.folderEntityDropped = new core_2.EventEmitter();
         this.cssClassName = 'file-draggable__input-focus';
         this.element = el.nativeElement;
     }
@@ -71,14 +71,14 @@ var FileDraggableDirective = (function () {
                         }
                     }
                     else {
-                        var files = core_2.FileUtils.toFileArray(event.dataTransfer.files);
+                        var files = core_1.FileUtils.toFileArray(event.dataTransfer.files);
                         this.filesDropped.emit(files);
                     }
                 }
             }
             else {
                 // safari or FF
-                var files = core_2.FileUtils.toFileArray(event.dataTransfer.files);
+                var files = core_1.FileUtils.toFileArray(event.dataTransfer.files);
                 this.filesDropped.emit(files);
             }
             this.element.classList.remove(this.cssClassName);
@@ -127,19 +127,19 @@ var FileDraggableDirective = (function () {
         event.preventDefault();
     };
     __decorate([
-        core_1.Input('file-draggable')
+        core_2.Input('file-draggable')
     ], FileDraggableDirective.prototype, "enabled", void 0);
     __decorate([
-        core_1.Output()
+        core_2.Output()
     ], FileDraggableDirective.prototype, "filesDropped", void 0);
     __decorate([
-        core_1.Output()
+        core_2.Output()
     ], FileDraggableDirective.prototype, "filesEntityDropped", void 0);
     __decorate([
-        core_1.Output()
+        core_2.Output()
     ], FileDraggableDirective.prototype, "folderEntityDropped", void 0);
     FileDraggableDirective = __decorate([
-        core_1.Directive({
+        core_2.Directive({
             selector: '[file-draggable]'
         })
     ], FileDraggableDirective);

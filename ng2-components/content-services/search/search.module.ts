@@ -18,10 +18,10 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from '../material.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { MaterialModule } from '../material.module';
 
-import { SearchService, TRANSLATION_PROVIDER, PipeModule } from '@adf/core';
+import { PipeModule, SearchService, TRANSLATION_PROVIDER } from '@adf/core';
 
 import { SearchTriggerDirective } from './components/search-trigger.directive';
 

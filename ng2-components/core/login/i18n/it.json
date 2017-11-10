@@ -1,0 +1,31 @@
+{
+  "LOGIN": {
+    "LOGO": "Alfresco",
+    "LABEL": {
+      "LOGIN": "Accedi",
+      "USERNAME": "Nome utente",
+      "PASSWORD": "Password",
+      "REMEMBER": "Ricordami"
+    },
+    "MESSAGES": {
+      "USERNAME-REQUIRED": "Campo obbligatorio",
+      "USERNAME-MIN": "Il nome utente deve essere lungo almeno {{minLenght}} caratteri.",
+      "PASSWORD-REQUIRED": "Immetti la password per accedere",
+      "LOGIN-ERROR-CREDENTIALS": "Nome utente o password sconosciuti",
+      "LOGIN-ERROR-PROVIDERS": "I provider non possono essere non definiti",
+      "LOGIN-SUCCESS": "Accesso effettuato con successo",
+      "LOGIN-ERROR-CORS": "Eccezione CORS, controlla la configurazione del server",
+      "LOGIN-ERROR-CSRF": "Eccezione CSRF, imposta [disableCsrf]=\"true\" in login.component",
+      "LOGIN-ECM-LICENSE": "Il repository Alfresco Content Services è in modalità di sola lettura"
+    },
+    "BUTTON": {
+      "LOGIN": "ACCEDI",
+      "CHECKING": "VERIFICA IN CORSO",
+      "WELCOME": "BENVENUTO"
+    },
+    "ACTION": {
+      "HELP": "HAI BISOGNO DI AIUTO?",
+      "REGISTER": "REGISTRATI"
+    }
+  }
+}

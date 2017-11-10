@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { TranslateModule } from '@ngx-translate/core';
 import { FormModule } from '../form';
 
-import { DataTableModule, InfoDrawerModule,  DataColumnModule, CardViewModule, DirectiveModule } from '@adf/core';
+import { CardViewModule, DataColumnModule,  DataTableModule, DirectiveModule, InfoDrawerModule } from '@adf/core';
 import { TRANSLATION_PROVIDER } from '@adf/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -45,7 +45,6 @@ import { TaskDetailsComponent } from './components/task-details.component';
 import { TaskFiltersComponent } from './components/task-filters.component';
 import { TaskHeaderComponent } from './components/task-header.component';
 import { TaskListComponent } from './components/task-list.component';
-
 
 @NgModule({
     imports: [

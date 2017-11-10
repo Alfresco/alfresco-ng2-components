@@ -26,21 +26,21 @@ import { TRANSLATION_PROVIDER, TranslationService } from './services/translation
 
 import { MaterialModule } from './material.module';
 
-import { ViewerModule } from './viewer';
-import { UserInfoModule } from './userinfo';
-import { ToolbarModule } from './toolbar';
-import { HostSettingsModule } from './settings';
-import { PaginationModule } from './pagination';
 import { AppConfigModule } from './app-config';
-import { LoginModule } from './login';
-import { LanguageMenuModule } from './language-menu';
-import { InfoDrawerModule } from './info-drawer';
+import { CardViewModule } from './card-view';
+import { CollapsableModule } from './collapsable';
+import { ContextMenuModule } from './context-menu';
 import { DataColumnModule } from './data-column';
 import { DataTableModule } from './datatable';
-import { ContextMenuModule } from './context-menu';
-import { CollapsableModule } from './collapsable';
-import { CardViewModule } from './card-view';
 import { DialogModule } from './dialogs';
+import { InfoDrawerModule } from './info-drawer';
+import { LanguageMenuModule } from './language-menu';
+import { LoginModule } from './login';
+import { PaginationModule } from './pagination';
+import { HostSettingsModule } from './settings';
+import { ToolbarModule } from './toolbar';
+import { UserInfoModule } from './userinfo';
+import { ViewerModule } from './viewer';
 
 import { DirectiveModule } from './directives';
 import { PipeModule } from './pipes';
@@ -86,8 +86,8 @@ export function createTranslateLoader(http: HttpClient, logService: LogService) 
             provide: TRANSLATION_PROVIDER,
             multi: true,
             useValue: {
-                name: '@adf/core',
-                source: 'assets/@adf/core'
+                name: 'ng2-alfresco-core',
+                source: 'assets/ng2-alfresco-core'
             }
         }
     ],

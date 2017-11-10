@@ -17,8 +17,8 @@
 
  /* tslint:disable:component-selector  */
 
-import { Component, Input, OnInit } from '@angular/core';
 import { LogService } from '@adf/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormService } from './../../../../../services/form.service';
 import { DynamicTableColumnOption } from './../../dynamic-table-column-option.model';
 import { DynamicTableColumn } from './../../dynamic-table-column.model';

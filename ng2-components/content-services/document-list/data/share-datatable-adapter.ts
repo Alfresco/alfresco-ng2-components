@@ -16,9 +16,9 @@
  */
 
 import { DataColumn, DataRow, DataSorting, DataTableAdapter } from '@adf/core';
+import { TimeAgoPipe } from '@adf/core';
 import { DatePipe } from '@angular/common';
 import { NodePaging } from 'alfresco-js-api';
-import { TimeAgoPipe } from '@adf/core';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { DocumentListService } from './../services/document-list.service';
 import { ImageResolver } from './image-resolver.model';

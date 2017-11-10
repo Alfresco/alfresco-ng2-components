@@ -17,11 +17,11 @@
 
 /* tslint:disable:component-selector  */
 
+import { MOMENT_DATE_FORMATS, MomentDateAdapter, UserPreferencesService } from '@adf/core';
 import { Component, Input, OnInit } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import * as moment from 'moment';
 import { Moment } from 'moment';
-import { MOMENT_DATE_FORMATS, MomentDateAdapter, UserPreferencesService } from '@adf/core';
 import { DynamicTableColumn } from './../../dynamic-table-column.model';
 import { DynamicTableRow } from './../../dynamic-table-row.model';
 import { DynamicTableModel } from './../../dynamic-table.widget.model';

@@ -23,8 +23,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var data_column_1 = require("../../../data-column");
 var Rx_1 = require("rxjs/Rx");
+var data_column_1 = require("../../../data-column");
 var data_row_event_model_1 = require("../../data/data-row-event.model");
 var data_sorting_model_1 = require("../../data/data-sorting.model");
 var object_datatable_adapter_1 = require("../../data/object-datatable-adapter");

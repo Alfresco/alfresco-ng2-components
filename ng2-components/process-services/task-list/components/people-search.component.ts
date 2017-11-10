@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
+import { PeopleProcessService, UserProcessModel } from '@adf/core';
 import { Component, Directive, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { PeopleProcessService, UserProcessModel } from '@adf/core';
 import { Observable } from 'rxjs/Observable';
 
 @Component({

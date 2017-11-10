@@ -14,11 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MaterialModule } from '../material.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { MaterialModule } from '../material.module';
 
 import { DataTableModule, PaginationModule, ToolbarModule } from '@adf/core';
 import { TRANSLATION_PROVIDER } from '@adf/core';

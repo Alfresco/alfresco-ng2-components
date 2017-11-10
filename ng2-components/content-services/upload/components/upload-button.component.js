@@ -22,8 +22,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var core_2 = require("@adf/core");
+var core_1 = require("@adf/core");
+var core_2 = require("@angular/core");
 var Rx_1 = require("rxjs/Rx");
 var permissions_model_1 = require("../../document-list/models/permissions.model");
 var UploadButtonComponent = (function () {
@@ -46,10 +46,10 @@ var UploadButtonComponent = (function () {
         this.acceptedFilesType = '*';
         this.tooltip = null;
         this.rootFolderId = '-root-';
-        this.success = new core_1.EventEmitter();
-        this.error = new core_1.EventEmitter();
-        this.createFolder = new core_1.EventEmitter();
-        this.permissionEvent = new core_1.EventEmitter();
+        this.success = new core_2.EventEmitter();
+        this.error = new core_2.EventEmitter();
+        this.createFolder = new core_2.EventEmitter();
+        this.permissionEvent = new core_2.EventEmitter();
         this.hasPermission = false;
         this.permissionValue = new Rx_1.Subject();
     }
@@ -77,7 +77,7 @@ var UploadButtonComponent = (function () {
         return !this.hasPermission && this.disableWithNoPermission ? true : undefined;
     };
     UploadButtonComponent.prototype.onFilesAdded = function ($event) {
-        var files = core_2.FileUtils.toFileArray($event.currentTarget.files);
+        var files = core_1.FileUtils.toFileArray($event.currentTarget.files);
         if (this.hasPermission) {
             this.uploadFiles(files);
         }
@@ -89,7 +89,7 @@ var UploadButtonComponent = (function () {
     };
     UploadButtonComponent.prototype.onDirectoryAdded = function ($event) {
         if (this.hasPermission) {
-            var files = core_2.FileUtils.toFileArray($event.currentTarget.files);
+            var files = core_1.FileUtils.toFileArray($event.currentTarget.files);
             this.uploadFiles(files);
         }
         else {
@@ -123,7 +123,7 @@ var UploadButtonComponent = (function () {
      * @param file
      */
     UploadButtonComponent.prototype.createFileModel = function (file) {
-        return new core_2.FileModel(file, {
+        return new core_1.FileModel(file, {
             newVersion: this.versioning,
             parentId: this.rootFolderId,
             path: (file.webkitRelativePath || '').replace(/\/[^\/]*$/, '')
@@ -206,62 +206,62 @@ var UploadButtonComponent = (function () {
         return false;
     };
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], UploadButtonComponent.prototype, "showNotificationBar", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], UploadButtonComponent.prototype, "currentFolderPath", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], UploadButtonComponent.prototype, "disableWithNoPermission", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], UploadButtonComponent.prototype, "disabled", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], UploadButtonComponent.prototype, "uploadFolders", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], UploadButtonComponent.prototype, "multipleFiles", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], UploadButtonComponent.prototype, "versioning", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], UploadButtonComponent.prototype, "acceptedFilesType", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], UploadButtonComponent.prototype, "maxFilesSize", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], UploadButtonComponent.prototype, "staticTitle", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], UploadButtonComponent.prototype, "tooltip", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], UploadButtonComponent.prototype, "rootFolderId", void 0);
     __decorate([
-        core_1.Output()
+        core_2.Output()
     ], UploadButtonComponent.prototype, "success", void 0);
     __decorate([
-        core_1.Output()
+        core_2.Output()
     ], UploadButtonComponent.prototype, "error", void 0);
     __decorate([
-        core_1.Output()
+        core_2.Output()
     ], UploadButtonComponent.prototype, "createFolder", void 0);
     __decorate([
-        core_1.Output()
+        core_2.Output()
     ], UploadButtonComponent.prototype, "permissionEvent", void 0);
     UploadButtonComponent = UploadButtonComponent_1 = __decorate([
-        core_1.Component({
+        core_2.Component({
             selector: 'adf-upload-button',
             templateUrl: './upload-button.component.html',
             styleUrls: ['./upload-button.component.scss'],
             providers: [
-                { provide: core_2.EXTENDIBLE_COMPONENT, useExisting: core_1.forwardRef(function () { return UploadButtonComponent_1; }) }
+                { provide: core_1.EXTENDIBLE_COMPONENT, useExisting: core_2.forwardRef(function () { return UploadButtonComponent_1; }) }
             ],
-            encapsulation: core_1.ViewEncapsulation.None
+            encapsulation: core_2.ViewEncapsulation.None
         })
     ], UploadButtonComponent);
     return UploadButtonComponent;

@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { PeopleProcessService, UserProcessModel } from '@adf/core';
+import { AuthenticationService, CardViewUpdateService, ClickNotification, LogService, UpdateNotification } from '@adf/core';
 import { Component,
     EventEmitter,
     Input,
@@ -26,8 +28,6 @@ import { Component,
     ViewChild
 } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
-import { PeopleProcessService, UserProcessModel } from '@adf/core';
-import { AuthenticationService, CardViewUpdateService, ClickNotification, LogService, UpdateNotification } from '@adf/core';
 import { Observable, Observer } from 'rxjs/Rx';
 import { ContentLinkModel, FormFieldValidator, FormModel, FormOutcomeEvent } from '../../form';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';

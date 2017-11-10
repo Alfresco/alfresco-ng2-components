@@ -19,5 +19,4 @@ export * from './context-menu-holder.component';
 export * from './context-menu.directive';
 export * from './context-menu.service';
 
-
 export * from './context-menu.module';

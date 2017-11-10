@@ -44,34 +44,5 @@
       "BACK": "Terug",
       "APPLY": "TOEPASSEN"
     }
-  },
-  "LOGIN": {
-    "LOGO": "Alfresco",
-    "LABEL": {
-      "LOGIN": "Aanmelden",
-      "USERNAME": "Gebruikersnaam",
-      "PASSWORD": "Wachtwoord",
-      "REMEMBER": "Mij onthouden"
-    },
-    "MESSAGES": {
-      "USERNAME-REQUIRED": "Vereist",
-      "USERNAME-MIN": "Uw gebruikersnaam moet uit minstens {{minLenght}} tekens bestaan.",
-      "PASSWORD-REQUIRED": "Voer uw wachtwoord in om u aan te melden",
-      "LOGIN-ERROR-CREDENTIALS": "U hebt een onbekende gebruikersnaam of een onbekend wachtwoord ingevoerd",
-      "LOGIN-ERROR-PROVIDERS": "De definitie van providers kan niet ongedaan worden gemaakt",
-      "LOGIN-SUCCESS": "Aanmelden geslaagd",
-      "LOGIN-ERROR-CORS": "CORS-uitzondering, controleer uw serverconfiguratie",
-      "LOGIN-ERROR-CSRF": "CSRF exception, set [disableCsrf]=\"true\" in login.component",
-      "LOGIN-ECM-LICENSE": "Alfresco Content Services-repository bevindt zich in de modus Alleen-lezen"
-    },
-    "BUTTON": {
-      "LOGIN": "AANMELDEN",
-      "CHECKING": "CONTROLEREN",
-      "WELCOME": "WELKOM"
-    },
-    "ACTION": {
-      "HELP": "HULP NODIG?",
-      "REGISTER": "REGISTREREN"
-    }
   }
 }

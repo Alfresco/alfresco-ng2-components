@@ -22,13 +22,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var core_2 = require("@adf/core");
+var core_1 = require("@adf/core");
+var core_2 = require("@angular/core");
 var DropdownSitesComponent = (function () {
     function DropdownSitesComponent(sitesService) {
         this.sitesService = sitesService;
         this.hideMyFiles = false;
-        this.change = new core_1.EventEmitter();
+        this.change = new core_2.EventEmitter();
         this.MY_FILES_VALUE = 'default';
         this.siteList = [];
     }
@@ -42,7 +42,7 @@ var DropdownSitesComponent = (function () {
         var _this = this;
         var siteFound;
         if (this.siteSelected === this.MY_FILES_VALUE) {
-            siteFound = new core_2.SiteModel();
+            siteFound = new core_1.SiteModel();
         }
         else {
             siteFound = this.siteList.find(function (site) { return site.guid === _this.siteSelected; });
@@ -50,13 +50,13 @@ var DropdownSitesComponent = (function () {
         this.change.emit(siteFound);
     };
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], DropdownSitesComponent.prototype, "hideMyFiles", void 0);
     __decorate([
-        core_1.Output()
+        core_2.Output()
     ], DropdownSitesComponent.prototype, "change", void 0);
     DropdownSitesComponent = __decorate([
-        core_1.Component({
+        core_2.Component({
             selector: 'adf-sites-dropdown',
             styleUrls: ['./sites-dropdown.component.scss'],
             templateUrl: './sites-dropdown.component.html'

@@ -1,7 +1,7 @@
 {
   "name": "alfresco-components",
   "description": "Alfresco Angular components",
-  "version": "1.9.0",
+  "version": "2.0.0-beta1",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "clean": "rimraf node_modules",

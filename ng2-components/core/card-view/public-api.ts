@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-
 export * from './card-view-content-proxy.directive';
 export * from './card-view-dateitem.component';
 export * from './card-view-item-dispatcher.component';

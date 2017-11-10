@@ -17,10 +17,10 @@
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MaterialModule } from '../material.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { PaginationComponent } from './pagination.component';
+import { MaterialModule } from '../material.module';
 import { InfinitePaginationComponent } from './infinite-pagination.component';
+import { PaginationComponent } from './pagination.component';
 
 @NgModule({
     imports: [
