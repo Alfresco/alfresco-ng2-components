@@ -23,8 +23,9 @@
     "baseUrl": ".",
     "paths": {
       "ng2-alfresco-core": ["../ng2-alfresco-core/"],
-      "ng2-alfresco-datatable": ["../ng2-alfresco-datatable/"],
-      "@adf/process-services/*": ["../process-services/*"]
+      "@adf/process-services/*": ["../process-services/*"],
+      "@adf/content-services/*": ["../content-services/*"],
+      "@adf/core/*": ["../core/*"]
     }
   },
   "files": [

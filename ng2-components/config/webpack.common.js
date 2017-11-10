@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const helpers = require('./helpers');
-const fs = require('fs');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 var HappyPack = require('happypack');
@@ -8,7 +7,9 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const alfrescoLibs = [
     'ng2-alfresco-core',
-    'content-services'
+    'content-services',
+    'process-service',
+    'core'
 ];
 
 const ENV = process.env.NODE_ENV = process.env.ENV = 'production';

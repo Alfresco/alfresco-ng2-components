@@ -18,6 +18,7 @@ module.exports = webpackMerge(commonConfig, {
         'ng2-charts',
         'alfresco-js-api',
         'ng2-alfresco-core',
+        /^\@adf\//,
         'content-services',
         'process-services',
         'core'
@@ -31,26 +32,26 @@ module.exports = webpackMerge(commonConfig, {
     },
 
     entry: {
-        "content-services": "./content-services/index.ts",
-        "process-services": "./process-services/index.ts",
+        "ng2-alfresco-core": "./ng2-alfresco-core/index.ts",
         "core": "./core/index.ts",
-        "ng2-alfresco-core": "./ng2-alfresco-core/index.ts"
+        "content-services": "./content-services/index.ts",
+        "process-services": "./process-services/index.ts"
     },
 
     plugins: [
 
-        new UglifyJSPlugin({
-            sourceMap: true,
-            uglifyOptions: {
-                ie8: false,
-                ecma: 6,
-                output: {
-                    comments: false,
-                    beautify: false
-                },
-                warnings: false
-            }
-        }),
+        // new UglifyJSPlugin({
+        //     sourceMap: true,
+        //     uglifyOptions: {
+        //         ie8: false,
+        //         ecma: 6,
+        //         output: {
+        //             comments: false,
+        //             beautify: false
+        //         },
+        //         warnings: false
+        //     }
+        // }),
 
         new webpack.BannerPlugin({
             banner: fs.readFileSync(path.resolve(__dirname, './assets/license_header_add.txt'), 'utf8'),
