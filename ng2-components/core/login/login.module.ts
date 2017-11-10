@@ -17,7 +17,7 @@
 
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { TRANSLATION_PROVIDER } from '@adf/core';
+import { TRANSLATION_PROVIDER } from '../services';
 import { MaterialModule } from '../material.module';
 
 import { LoginComponent } from './components/login.component';

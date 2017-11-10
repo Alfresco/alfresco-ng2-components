@@ -17,7 +17,7 @@
 
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { TRANSLATION_PROVIDER } from '../index';
+import { TRANSLATION_PROVIDER } from '../services';
 import { MaterialModule } from '../material.module';
 
 import { DataTableCellComponent } from './components/datatable/datatable-cell.component';
