@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-import { NgZone, SimpleChange } from '@angular/core';
+import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatProgressSpinnerModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
-import { ProcessContentService } from ''../../form';
 import { AppConfigService, TranslationService } from '@adf/core';
-import { DataTableModule } from '@adf/core';
+import { CoreModule } from '@adf/core';
+import { MaterialModule } from '../../material.module';
 import { Observable } from 'rxjs/Rx';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { TaskAttachmentListComponent } from './task-attachment-list.component';
+import { ProcessContentService } from '../../form';
 
 describe('TaskAttachmentList', () => {
 
@@ -38,12 +38,10 @@ describe('TaskAttachmentList', () => {
     let mockAttachment: any;
 
     beforeEach(async(() => {
-        let zone = new NgZone({enableLongStackTrace: false});
         TestBed.configureTestingModule({
             imports: [
-
-                DataTableModule,
-                MatProgressSpinnerModule
+                CoreModule,
+                MaterialModule
             ],
             declarations: [
                 TaskAttachmentListComponent
@@ -51,8 +49,7 @@ describe('TaskAttachmentList', () => {
             providers: [
                 ProcessContentService,
                 { provide: AppConfigService, useClass: AppConfigServiceMock },
-                { provide: TranslationService, useClass: TranslationMock },
-                { provide: NgZone, useValue: zone }
+                { provide: TranslationService, useClass: TranslationMock }
             ]
         }).compileComponents();
 

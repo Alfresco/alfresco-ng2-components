@@ -21,7 +21,7 @@ import { MatProgressSpinnerModule } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
 import { ProcessInstanceListComponent } from './process-list.component';
 
-import { TranslationService, AppConfigService, CoreModule } from '@adf/core';
+import { AppConfigService, CoreModule, TranslationService } from '@adf/core';
 import { DataRowEvent, DataSorting, DataTableModule, ObjectDataRow, ObjectDataTableAdapter } from '@adf/core';
 
 import { fakeProcessInstances, fakeProcessInstancesWithNoName } from '../assets/process-instances-list.mock';
@@ -72,7 +72,7 @@ describe('ProcessInstanceListComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-
+                CoreModule,
                 DataTableModule,
                 MatProgressSpinnerModule
             ],

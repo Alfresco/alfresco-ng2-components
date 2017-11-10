@@ -24,7 +24,7 @@ import { Observable } from 'rxjs/Rx';
 import {
     CommentListComponent,
     CommentsComponent,
-} from 'ng2-activiti-tasklist';
+} from '../../task-list';
 import { TranslationService, CommentProcessService, PeopleProcessService } from '@adf/core';
 import { DataTableModule } from '@adf/core';
 

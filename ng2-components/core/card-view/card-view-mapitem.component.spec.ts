@@ -24,7 +24,7 @@ import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { CardViewMapItemModel } from '../models/card-view-mapitem.model';
-import { AppConfigService } from '../services/app-config.service';
+import { AppConfigService } from '../app-config/app-config.service';
 import { CardViewUpdateService } from '../services/card-view-update.service';
 import { LogService } from '../services/log.service';
 import { TranslateLoaderService } from '../services/translate-loader.service';

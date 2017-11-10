@@ -20,10 +20,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
-import { TaskDetailsModel } from 'ng2-activiti-tasklist';
+import { TaskDetailsModel } from '../../task-list';
 import { TranslationService } from '@adf/core';
 
-import { taskDetailsMock } from './../assets/task-details.mock';
+import { taskDetailsMock } from './../../task-list/assets/task-details.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
 import { ProcessInstance } from './../models/process-instance.model';
 import { ProcessService } from './../services/process.service';

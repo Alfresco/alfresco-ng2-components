@@ -21,7 +21,7 @@ import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Observable } from 'rxjs/Rx';
-import { TranslationService } from '../../index';
+import { TranslationService } from '../services';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { NotificationService } from '../services/notification.service';
 import { NodeRestoreDirective } from './node-restore.directive';

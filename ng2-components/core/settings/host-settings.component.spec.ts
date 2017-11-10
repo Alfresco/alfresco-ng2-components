@@ -19,7 +19,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HostSettingsModule } from './host-settings.module';
-import { MaterialModule } from '../../material.module';
+import { MaterialModule } from '../material.module';
 import { HostSettingsComponent } from './host-settings.component';
 
 describe('HostSettingsComponent', () => {

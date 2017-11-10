@@ -22,7 +22,7 @@ import { DataTableComponent } from '../components/datatable/datatable.component'
 import { DateCellComponent } from '../components/datatable/date-cell.component';
 import { FileSizeCellComponent } from '../components/datatable/filesize-cell.component';
 import { LocationCellComponent } from '../components/datatable/location-cell.component';
-import { MaterialModule } from '../material.module';
+import { MaterialModule } from '../../material.module';
 import { NoContentTemplateDirective } from './no-content-template.directive';
 
 describe('NoContentTemplateDirective', () => {

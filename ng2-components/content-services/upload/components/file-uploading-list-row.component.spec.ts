@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FileModel } from '@adf/core';
-import { UploadModule } from '../upload-module';
+import { UploadModule } from '../upload.module';
 import { FileUploadingListRowComponent } from './file-uploading-list-row.component';
 
 describe('FileUploadingListRowComponent', () => {

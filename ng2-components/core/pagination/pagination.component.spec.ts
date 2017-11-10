@@ -19,11 +19,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { MaterialModule } from '../../material.module';
-import { AppConfigService } from '../../services/app-config.service';
-import { LogService } from '../../services/log.service';
-import { TranslateLoaderService } from '../../services/translate-loader.service';
-import { TranslationService } from '../../services/translation.service';
+import { MaterialModule } from '../material.module';
+import { AppConfigService } from '../app-config/app-config.service';
+import { LogService } from '../services/log.service';
+import { TranslateLoaderService } from '../services/translate-loader.service';
+import { TranslationService } from '../services/translation.service';
 import { PaginationComponent } from './pagination.component';
 
 declare let jasmine: any;

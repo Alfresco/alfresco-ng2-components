@@ -18,7 +18,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslationService, FileUploadStatus, NodesApiService, NotificationService, UploadService } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
-import { UploadModule } from '../upload-module';
+import { UploadModule } from '../upload.module';
 import { FileUploadingListComponent } from './file-uploading-list.component';
 
 describe('FileUploadingListComponent', () => {

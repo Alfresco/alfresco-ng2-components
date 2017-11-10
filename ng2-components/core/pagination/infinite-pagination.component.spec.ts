@@ -19,7 +19,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Pagination } from 'alfresco-js-api';
-import { MaterialModule } from '../../material.module';
+import { MaterialModule } from '../material.module';
 import { InfinitePaginationComponent } from './infinite-pagination.component';
 
 describe('InfinitePaginationComponent', () => {

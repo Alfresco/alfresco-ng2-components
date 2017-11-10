@@ -25,7 +25,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs/Rx';
 
-import { AppConfigService, providers } from '../../index';
+import { AppConfigService } from '../app-config';
+import { DirectiveModule } from '../directives';
 import { ContentService } from '../services/content.service';
 import { TranslateLoaderService } from '../services/translate-loader.service';
 import { FolderEditDirective } from './folder-edit.directive';
@@ -57,6 +58,7 @@ describe('FolderEditDirective', () => {
                 MatDialogModule,
                 FormsModule,
                 ReactiveFormsModule,
+                DirectiveModule,
                 TranslateModule.forRoot({
                     loader: {
                         provide: TranslateLoader,
@@ -71,8 +73,7 @@ describe('FolderEditDirective', () => {
             ,
             providers: [
                 ContentService,
-                AppConfigService,
-                ...providers()
+                AppConfigService
             ]
         });
 

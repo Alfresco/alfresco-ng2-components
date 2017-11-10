@@ -18,7 +18,7 @@
 import { Component, DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { MaterialModule } from '../../material.module';
+import { MaterialModule } from '../material.module';
 import { InfoDrawerLayoutComponent } from './info-drawer-layout.component';
 import { InfoDrawerComponent } from './info-drawer.component';
 

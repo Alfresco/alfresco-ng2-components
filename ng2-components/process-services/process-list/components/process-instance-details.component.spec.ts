@@ -21,8 +21,8 @@ import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
 import { FormModule, FormService } from '../../form';
-import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
-import { TranslationService } from '@adf/core';
+import { TaskListModule } from '../../task-list';
+import { TranslationService, CoreModule } from '@adf/core';
 
 import { ProcessInstance } from '../models/process-instance.model';
 import { exampleProcess, exampleProcessNoName } from './../assets/process.model.mock';
@@ -41,9 +41,9 @@ describe('ProcessInstanceDetailsComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-
+                CoreModule,
                 FormModule,
-                ActivitiTaskListModule
+                TaskListModule
             ],
             declarations: [
                 ProcessInstanceDetailsComponent

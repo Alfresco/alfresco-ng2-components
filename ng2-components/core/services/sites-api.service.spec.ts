@@ -19,7 +19,7 @@ import { async, TestBed } from '@angular/core/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { SettingsService } from './settings.service';
-import { AppConfigModule, AppConfigService } from '../app-config/app-config.service';
+import { AppConfigModule, AppConfigService } from '../app-config';
 import { AuthenticationService } from './authentication.service';
 import { LogService } from './log.service';
 import { SitesApiService } from './sites-api.service';

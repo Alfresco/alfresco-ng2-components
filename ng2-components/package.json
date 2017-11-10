@@ -146,10 +146,6 @@
     {
       "path": "./core/bundles/core.js",
       "maxSize": "50 kb"
-    },
-    {
-      "path": "./core/bundles/ng2-alfresco-core.js",
-      "maxSize": "50 kb"
     }
   ],
   "module": "./index.js",

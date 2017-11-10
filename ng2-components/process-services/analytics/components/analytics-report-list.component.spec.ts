@@ -21,7 +21,7 @@ import { ReportParametersModel } from '../../diagram';
 import { TranslationService, AppConfigService, CoreModule } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { AnalyticsReportListComponent } from '../components/analytics-report-list.component';
-import { MaterialModule } from '../material.module';
+import { MaterialModule } from '../../material.module';
 import { AnalyticsService } from '../services/analytics.service';
 
 declare let jasmine: any;
@@ -46,7 +46,7 @@ describe('AnalyticsReportListComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-
+                CoreModule,
                 MaterialModule
             ],
             declarations: [

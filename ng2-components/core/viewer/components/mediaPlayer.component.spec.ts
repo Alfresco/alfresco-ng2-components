@@ -17,14 +17,14 @@
 
 import { DebugElement, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ContentService } from '../services';
 import { MediaPlayerComponent } from './mediaPlayer.component';
 
 import {
     AlfrescoApiService,
     AuthenticationService,
+    ContentService,
     SettingsService
-} from '../services';
+} from '../../services';
 
 describe('Test ng2-alfresco-viewer Media player component ', () => {
 

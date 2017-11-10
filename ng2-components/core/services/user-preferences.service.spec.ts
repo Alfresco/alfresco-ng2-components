@@ -17,9 +17,10 @@
 
 import { async, TestBed } from '@angular/core/testing';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
-import { providers } from '../../index';
+import { DirectiveModule } from '../directives';
 
-import { AppConfigModule, AppConfigService } from '../app-config/app-config.service';
+import { AppConfigService } from '../app-config/app-config.service';
+import { AppConfigModule } from '../app-config/app-config.module';
 import { StorageService } from './storage.service';
 import { TranslateLoaderService } from './translate-loader.service';
 import { UserPreferencesService } from './user-preferences.service';
@@ -36,6 +37,7 @@ describe('UserPreferencesService', () => {
         TestBed.configureTestingModule({
             imports: [
                 AppConfigModule,
+                DirectiveModule,
                 TranslateModule.forRoot({
                     loader: {
                         provide: TranslateLoader,
@@ -44,7 +46,6 @@ describe('UserPreferencesService', () => {
                 })
             ],
             providers: [
-                ...providers(),
                 UserPreferencesService
             ]
         }).compileComponents();

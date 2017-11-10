@@ -22,7 +22,7 @@ import {
     AuthenticationService,
     ContentService,
     SettingsService
-} from '../services';
+} from '../../services';
 import { ImgViewerComponent } from './imgViewer.component';
 
 describe('Test ng2-alfresco-viewer Img viewer component ', () => {
