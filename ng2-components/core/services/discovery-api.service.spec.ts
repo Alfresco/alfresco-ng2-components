@@ -18,7 +18,7 @@
 import { async, TestBed } from '@angular/core/testing';
 import { BpmProductVersionModel, EcmProductVersionModel } from '../models/product-version.model';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { AlfrescoSettingsService } from './alfresco-settings.service';
+import { SettingsService } from './settings.service';
 import { AppConfigModule, AppConfigService } from './app-config.service';
 import { AuthenticationService } from './authentication.service';
 import { DiscoveryApiService } from './discovery-api.service';
@@ -104,7 +104,7 @@ describe('Discovery Api Service', () => {
                 AlfrescoApiService,
                 UserPreferencesService,
                 AuthenticationService,
-                AlfrescoSettingsService,
+                SettingsService,
                 StorageService
             ]
         }).compileComponents();

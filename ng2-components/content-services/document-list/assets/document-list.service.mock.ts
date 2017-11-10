@@ -19,7 +19,7 @@ import {
     AlfrescoApiService,
     AuthenticationService,
     AlfrescoContentService,
-    AlfrescoSettingsService,
+    SettingsService,
     LogService,
     ThumbnailService
 } from '@adf/core';
@@ -35,7 +35,7 @@ export class DocumentListServiceMock extends DocumentListService {
     getFolderRejectError: string = 'Error';
 
     constructor(
-        settings?: AlfrescoSettingsService,
+        settings?: SettingsService,
         authService?: AuthenticationService,
         contentService?: AlfrescoContentService,
         apiService?: AlfrescoApiService,

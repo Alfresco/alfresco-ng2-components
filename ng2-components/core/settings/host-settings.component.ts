@@ -17,7 +17,7 @@
 
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { AlfrescoSettingsService } from '../services/alfresco-settings.service';
+import { SettingsService } from '../services/settings.service';
 import { LogService } from '../services/log.service';
 import { StorageService } from '../services/storage.service';
 import { TranslationService } from '../services/translation.service';
@@ -48,7 +48,7 @@ export class HostSettingsComponent {
     @Output()
     error = new EventEmitter<string>();
 
-    constructor(private settingsService: AlfrescoSettingsService,
+    constructor(private settingsService: SettingsService,
                 private storage: StorageService,
                 private logService: LogService,
                 private translationService: TranslationService) {

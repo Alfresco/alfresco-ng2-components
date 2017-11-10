@@ -20,7 +20,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import {
     AlfrescoApiService,
     AuthenticationService,
-    AlfrescoSettingsService
+    SettingsService
 } from '../../services';
 import { TxtViewerComponent } from './txtViewer.component';
 
@@ -35,7 +35,7 @@ describe('Test ng2-alfresco-viewer Text View component', () => {
         TestBed.configureTestingModule({
             declarations: [TxtViewerComponent],
             providers: [
-                AlfrescoSettingsService,
+                SettingsService,
                 AuthenticationService,
                 AlfrescoApiService
             ]

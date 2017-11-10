@@ -17,7 +17,7 @@
 
 import { Component, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlfrescoSettingsService, PageTitleService, StorageService, TranslationService } from '@adf/core';
+import { SettingsService, PageTitleService, StorageService, TranslationService } from '@adf/core';
 
 @Component({
   selector: 'app-root',
@@ -28,7 +28,7 @@ import { AlfrescoSettingsService, PageTitleService, StorageService, TranslationS
 export class AppComponent {
   searchTerm: string = '';
 
-  constructor(private settingsService: AlfrescoSettingsService,
+  constructor(private settingsService: SettingsService,
               private storage: StorageService,
               translationService: TranslationService,
               pageTitleService: PageTitleService,

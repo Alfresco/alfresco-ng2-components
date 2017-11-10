@@ -20,7 +20,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { fakeApi, fakeError, fakeSearch } from '../mock/search.service.mock';
 import { CookieServiceMock } from './../mock/cookie.service.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { AlfrescoSettingsService } from './alfresco-settings.service';
+import { SettingsService } from './settings.service';
 import { AppConfigModule } from './app-config.service';
 import { AuthenticationService } from './authentication.service';
 import { CookieService } from './cookie.service';
@@ -50,7 +50,7 @@ describe('SearchService', () => {
                 SearchService,
                 AuthenticationService,
                 AlfrescoApiService,
-                AlfrescoSettingsService,
+                SettingsService,
                 AuthenticationService,
                 StorageService,
                 UserPreferencesService,

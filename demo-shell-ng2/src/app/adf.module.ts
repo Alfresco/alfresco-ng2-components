@@ -36,7 +36,15 @@ import {
     DataColumnModule
 } from '@adf/core';
 
-import { AlfrescoSettingsService, PageTitleService, StorageService, TranslateLoaderService, TranslationService, LogService, UserPreferencesService } from '@adf/core';
+import {
+    SettingsService,
+    PageTitleService,
+    StorageService,
+    TranslateLoaderService,
+    TranslationService,
+    LogService,
+    UserPreferencesService
+} from '@adf/core';
 
 export function modules() {
     return [
@@ -77,7 +85,7 @@ export function modules() {
     imports: modules(),
     exports: modules(),
     providers: [
-        AlfrescoSettingsService,
+        SettingsService,
         PageTitleService,
         StorageService,
         TranslateLoaderService,

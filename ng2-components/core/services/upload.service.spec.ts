@@ -19,7 +19,7 @@ import { EventEmitter } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
 import { FileModel, FileUploadOptions, FileUploadStatus } from '../models/file.model';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { AlfrescoSettingsService } from './alfresco-settings.service';
+import { SettingsService } from './settings.service';
 import { AppConfigModule, AppConfigService } from './app-config.service';
 import { AuthenticationService } from './authentication.service';
 import { StorageService } from './storage.service';
@@ -38,7 +38,7 @@ describe('UploadService', () => {
             providers: [
                 UploadService,
                 AlfrescoApiService,
-                AlfrescoSettingsService,
+                SettingsService,
                 AuthenticationService,
                 StorageService
             ]

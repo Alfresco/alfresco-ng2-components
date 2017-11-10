@@ -21,7 +21,7 @@ import { LogService } from './log.service';
 import { UserPreferencesService } from './user-preferences.service';
 
 @Injectable()
-export class AlfrescoSettingsService {
+export class SettingsService {
 
     constructor(
         private appConfig: AppConfigService,
@@ -31,47 +31,47 @@ export class AlfrescoSettingsService {
 
     /** @deprecated in 1.6.0 */
     public get ecmHost(): string {
-        this.logService.log('AlfrescoSettingsService.ecmHost is deprecated. Use AppConfigService instead.');
+        this.logService.log('SettingsService.ecmHost is deprecated. Use AppConfigService instead.');
         return this.appConfig.get<string>('ecmHost');
     }
 
     /** @deprecated in 1.7.0 */
     public set csrfDisabled(csrfDisabled: boolean) {
-        this.logService.log(`AlfrescoSettingsService.csrfDisabled is deprecated. Use UserPreferencesService.disableCSRF instead.`);
+        this.logService.log(`SettingsService.csrfDisabled is deprecated. Use UserPreferencesService.disableCSRF instead.`);
         this.preferences.disableCSRF = csrfDisabled;
     }
 
     /** @deprecated in 1.6.0 */
     public set ecmHost(ecmHostUrl: string) {
-        this.logService.log('AlfrescoSettingsService.ecmHost is deprecated. Use AppConfigService instead.');
+        this.logService.log('SettingsService.ecmHost is deprecated. Use AppConfigService instead.');
     }
 
     /** @deprecated in 1.6.0 */
     public get bpmHost(): string {
-        this.logService.log('AlfrescoSettingsService.bpmHost is deprecated. Use AppConfigService instead.');
+        this.logService.log('SettingsService.bpmHost is deprecated. Use AppConfigService instead.');
         return this.appConfig.get<string>('bpmHost');
     }
 
     /** @deprecated in 1.6.0 */
     public set bpmHost(bpmHostUrl: string) {
-        this.logService.log('AlfrescoSettingsService.bpmHost is deprecated. Use AppConfigService instead.');
+        this.logService.log('SettingsService.bpmHost is deprecated. Use AppConfigService instead.');
     }
 
     /** @deprecated in 1.6.0 */
     public getBPMApiBaseUrl(): string {
-        this.logService.log('AlfrescoSettingsService.getBPMApiBaseUrl is deprecated.');
+        this.logService.log('SettingsService.getBPMApiBaseUrl is deprecated.');
         return this.bpmHost + '/activiti-app';
     }
 
     /** @deprecated in 1.7.0 */
     public getProviders(): string {
-        this.logService.log(`AlfrescoSettingsService.getProviders is deprecated. Use UserPreferencesService.authType instead.`);
+        this.logService.log(`SettingsService.getProviders is deprecated. Use UserPreferencesService.authType instead.`);
         return this.preferences.authType;
     }
 
     /** @deprecated in 1.7.0 */
     public setProviders(providers: string) {
-        this.logService.log(`AlfrescoSettingsService.getProviders is deprecated. Use UserPreferencesService.authType instead.`);
+        this.logService.log(`SettingsService.getProviders is deprecated. Use UserPreferencesService.authType instead.`);
         this.preferences.authType = providers;
     }
 }

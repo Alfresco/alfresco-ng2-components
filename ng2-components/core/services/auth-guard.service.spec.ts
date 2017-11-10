@@ -22,7 +22,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { CookieServiceMock } from './../mock/cookie.service.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { AlfrescoSettingsService } from './alfresco-settings.service';
+import { SettingsService } from './settings.service';
 import { AppConfigModule } from './app-config.service';
 import { AuthGuard } from './auth-guard.service';
 import { AuthenticationService } from './authentication.service';
@@ -49,7 +49,7 @@ describe('AuthGuardService', () => {
             ],
             providers: [
                 AuthGuard,
-                AlfrescoSettingsService,
+                SettingsService,
                 AlfrescoApiService,
                 AuthenticationService,
                 UserPreferencesService,
@@ -65,7 +65,7 @@ describe('AuthGuardService', () => {
     });
 
     it('if the alfresco js api is logged in should canActivate be true',
-        async(inject([AuthGuard, Router, AlfrescoSettingsService, StorageService, AuthenticationService], (auth, router, settingsService, storage, authService) => {
+        async(inject([AuthGuard, Router, SettingsService, StorageService, AuthenticationService], (auth, router, settingsService, storage, authService) => {
             spyOn(router, 'navigate');
 
             authService.isLoggedIn = () => {
@@ -78,7 +78,7 @@ describe('AuthGuardService', () => {
     );
 
     it('if the alfresco js api is NOT logged in should canActivate be false',
-        async(inject([AuthGuard, Router, AlfrescoSettingsService, StorageService, AuthenticationService], (auth, router, settingsService, storage, authService) => {
+        async(inject([AuthGuard, Router, SettingsService, StorageService, AuthenticationService], (auth, router, settingsService, storage, authService) => {
 
             spyOn(router, 'navigate');
 

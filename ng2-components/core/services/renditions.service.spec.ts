@@ -18,7 +18,7 @@
 import { async, TestBed } from '@angular/core/testing';
 import { fakeRedition, fakeReditionCreated, fakeReditionsList } from '../mock/renditionsService.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { AlfrescoSettingsService } from './alfresco-settings.service';
+import { SettingsService } from './settings.service';
 import { AppConfigModule } from './app-config.service';
 import { LogService } from './log.service';
 import { RenditionsService } from './renditions.service';
@@ -39,7 +39,7 @@ describe('RenditionsService', () => {
             providers: [
                 AlfrescoApiService,
                 RenditionsService,
-                AlfrescoSettingsService,
+                SettingsService,
                 StorageService,
                 LogService
             ]

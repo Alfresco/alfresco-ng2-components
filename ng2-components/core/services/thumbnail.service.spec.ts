@@ -23,7 +23,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { CookieServiceMock } from './../mock/cookie.service.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AlfrescoContentService } from './alfresco-content.service';
-import { AlfrescoSettingsService } from './alfresco-settings.service';
+import { SettingsService } from './settings.service';
 import { AppConfigService } from './app-config.service';
 import { AuthenticationService } from './authentication.service';
 import { CookieService } from './cookie.service';
@@ -53,12 +53,12 @@ describe('ThumbnailService', () => {
                 UserPreferencesService,
                 AuthenticationService,
                 AlfrescoContentService,
-                AlfrescoSettingsService,
+                SettingsService,
                 AppConfigService,
                 { provide: CookieService, useClass: CookieServiceMock },
                 ThumbnailService,
                 AlfrescoApiService,
-                AlfrescoSettingsService,
+                SettingsService,
                 StorageService,
                 LogService,
                 MatIconRegistry

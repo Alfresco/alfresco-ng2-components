@@ -20,7 +20,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { CookieServiceMock } from '../mock/cookie.service.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AlfrescoContentService } from './alfresco-content.service';
-import { AlfrescoSettingsService } from './alfresco-settings.service';
+import { SettingsService } from './settings.service';
 import { AppConfigModule, AppConfigService } from './app-config.service';
 import { AuthenticationService } from './authentication.service';
 import { CookieService } from './cookie.service';
@@ -35,7 +35,7 @@ describe('AlfrescoContentService', () => {
 
     let contentService: AlfrescoContentService;
     let authService: AuthenticationService;
-    let settingsService: AlfrescoSettingsService;
+    let settingsService: SettingsService;
     let storage: StorageService;
     let node: any;
 
@@ -57,7 +57,7 @@ describe('AlfrescoContentService', () => {
                 AlfrescoApiService,
                 AlfrescoContentService,
                 AuthenticationService,
-                AlfrescoSettingsService,
+                SettingsService,
                 StorageService,
                 UserPreferencesService,
                 {provide: CookieService, useClass: CookieServiceMock},
@@ -68,7 +68,7 @@ describe('AlfrescoContentService', () => {
 
     beforeEach(() => {
         authService = TestBed.get(AuthenticationService);
-        settingsService = TestBed.get(AlfrescoSettingsService);
+        settingsService = TestBed.get(SettingsService);
         contentService = TestBed.get(AlfrescoContentService);
         storage = TestBed.get(StorageService);
         storage.clear();

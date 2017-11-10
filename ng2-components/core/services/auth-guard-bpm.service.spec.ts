@@ -21,7 +21,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { CookieServiceMock } from './../mock/cookie.service.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { AlfrescoSettingsService } from './alfresco-settings.service';
+import { SettingsService } from './settings.service';
 import { AppConfigModule } from './app-config.service';
 import { AuthGuardBpm } from './auth-guard-bpm.service';
 import { AuthenticationService } from './authentication.service';
@@ -47,7 +47,7 @@ describe('AuthGuardService BPM', () => {
             ],
             providers: [
                 AuthGuardBpm,
-                AlfrescoSettingsService,
+                SettingsService,
                 AlfrescoApiService,
                 AuthenticationService,
                 StorageService,
@@ -59,7 +59,7 @@ describe('AuthGuardService BPM', () => {
     }));
 
     it('if the alfresco js api is logged in should canActivate be true',
-        async(inject([AuthGuardBpm, Router, AlfrescoSettingsService, StorageService, AuthenticationService], (auth, router, settingsService, storage, authService) => {
+        async(inject([AuthGuardBpm, Router, SettingsService, StorageService, AuthenticationService], (auth, router, settingsService, storage, authService) => {
             spyOn(router, 'navigate');
 
             authService.isBpmLoggedIn = () => {
@@ -72,7 +72,7 @@ describe('AuthGuardService BPM', () => {
     );
 
     it('if the alfresco js api is NOT logged in should canActivate be false',
-        async(inject([AuthGuardBpm, Router, AlfrescoSettingsService, StorageService, AuthenticationService], (auth, router, settingsService, storage, authService) => {
+        async(inject([AuthGuardBpm, Router, SettingsService, StorageService, AuthenticationService], (auth, router, settingsService, storage, authService) => {
 
             spyOn(router, 'navigate');
 
