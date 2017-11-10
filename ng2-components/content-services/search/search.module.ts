@@ -16,8 +16,10 @@
  */
 
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { SearchService, TRANSLATION_PROVIDER } from '@adf/core';
 
@@ -38,9 +40,11 @@ export const ALFRESCO_SEARCH_PROVIDERS: [any] = [
 
 @NgModule({
     imports: [
+        CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        MaterialModule
+        MaterialModule,
+        TranslateModule
     ],
     declarations: [
         ...ALFRESCO_SEARCH_DIRECTIVES
