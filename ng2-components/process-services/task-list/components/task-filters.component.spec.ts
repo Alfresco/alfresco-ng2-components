@@ -22,7 +22,7 @@ import { Observable } from 'rxjs/Rx';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
 import { TaskListService } from '../services/tasklist.service';
-import { MaterialModule } from './material.module';
+import { MaterialModule } from '../../material.module';
 import { TaskFiltersComponent } from './task-filters.component';
 
 describe('TaskFiltersComponent', () => {

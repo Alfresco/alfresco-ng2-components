@@ -22,7 +22,7 @@ import { CoreModule } from 'ng2-alfresco-core';
 import { EcmModelService } from '../../../services/ecm-model.service';
 import { FormService } from '../../../services/form.service';
 import { ProcessContentService } from '../../../services/process-content.service';
-import { MaterialModule } from '../../material.module';
+import { MaterialModule } from '../../../../material.module';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormModel } from '../core/form.model';
 import { ErrorWidgetComponent } from '../error/error.component';

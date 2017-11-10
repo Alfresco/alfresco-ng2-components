@@ -23,7 +23,7 @@ import { Observable } from 'rxjs/Rx';
 import { EcmModelService } from '../services/ecm-model.service';
 import { FormService } from '../services/form.service';
 import { FormListComponent } from './form-list.component';
-import { MaterialModule } from './material.module';
+import { MaterialModule } from '../../material.module';
 
 describe('TaskAttachmentList', () => {
 

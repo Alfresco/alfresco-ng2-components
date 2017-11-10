@@ -24,7 +24,7 @@ import { TextWidgetComponent } from './text.widget';
 
 import { CoreModule } from 'ng2-alfresco-core';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
-import { MaterialModule } from '../../material.module';
+import { MaterialModule } from '../../../../material.module';
 import { ErrorWidgetComponent } from '../error/error.component';
 import { EcmModelService } from './../../../services/ecm-model.service';
 import { FormService } from './../../../services/form.service';

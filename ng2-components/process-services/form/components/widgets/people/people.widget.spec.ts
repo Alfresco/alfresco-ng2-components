@@ -22,7 +22,7 @@ import { CoreModule, UserProcessModel } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 import { FormService } from '../../../services/form.service';
-import { MaterialModule } from '../../material.module';
+import { MaterialModule } from '../../../../material.module';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';

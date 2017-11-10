@@ -22,7 +22,7 @@ import { Observable } from 'rxjs/Rx';
 import { EcmModelService } from '../../../services/ecm-model.service';
 import { FormService } from '../../../services/form.service';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
-import { MaterialModule } from '../../material.module';
+import { MaterialModule } from '../../../../material.module';
 import { ErrorWidgetComponent } from '../error/error.component';
 import { FormFieldOption } from './../core/form-field-option';
 import { FormFieldModel } from './../core/form-field.model';

@@ -17,7 +17,7 @@
 
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { TaskDetailsEvent } from 'ng2-activiti-tasklist';
+import { TaskDetailsEvent } from '../../task-list';
 import { LogService } from 'ng2-alfresco-core';
 
 import { ProcessInstance } from '../models/process-instance.model';

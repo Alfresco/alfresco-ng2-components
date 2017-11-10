@@ -19,7 +19,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule, LogService } from 'ng2-alfresco-core';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
-import { MaterialModule } from '../../material.module';
+import { MaterialModule } from '../../../../material.module';
 import { ErrorWidgetComponent } from '../error/error.component';
 import { EcmModelService } from './../../../services/ecm-model.service';
 import { FormService } from './../../../services/form.service';

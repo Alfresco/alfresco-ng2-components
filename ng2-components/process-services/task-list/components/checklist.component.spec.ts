@@ -23,7 +23,7 @@ import { TranslationMock } from '../assets/translation.service.mock';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from '../services/tasklist.service';
 import { ChecklistComponent } from './checklist.component';
-import { MaterialModule } from './material.module';
+import { MaterialModule } from '../../material.module';
 
 declare let jasmine: any;
 

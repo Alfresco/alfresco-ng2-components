@@ -20,9 +20,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormModule } from '../form';
 import { MaterialModule } from '../material.module';
 
-import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
-import { CardViewUpdateService, CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { DataTableModule } from '@adf/core';
+import { TaskListModule } from '../task-list';
+import { CardViewUpdateService, CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 
 import { CreateProcessAttachmentComponent } from './components/create-process-attachment.component';
 import { ProcessAttachmentListComponent } from './components/process-attachment-list.component';
@@ -37,38 +37,31 @@ import { StartProcessInstanceComponent } from './components/start-process.compon
 
 import { ProcessService } from './services/process.service';
 
-export const ACTIVITI_PROCESSLIST_DIRECTIVES: [any] = [
-    ProcessInstanceListComponent,
-    ProcessFiltersComponent,
-    ProcessInstanceDetailsComponent,
-    ProcessAuditDirective,
-    ProcessInstanceHeaderComponent,
-    ProcessInstanceTasksComponent,
-    ProcessCommentsComponent,
-    StartProcessInstanceComponent,
-    ProcessAttachmentListComponent,
-    CreateProcessAttachmentComponent
-];
-
-export const ACTIVITI_PROCESSLIST_PROVIDERS: [any] = [
-    ProcessService,
-    CardViewUpdateService
-];
 
 @NgModule({
     imports: [
         CoreModule,
         DataTableModule,
         FormModule,
-        ActivitiTaskListModule,
+        TaskListModule,
         MaterialModule,
         FlexLayoutModule
     ],
     declarations: [
-        ...ACTIVITI_PROCESSLIST_DIRECTIVES
+        ProcessInstanceListComponent,
+        ProcessFiltersComponent,
+        ProcessInstanceDetailsComponent,
+        ProcessAuditDirective,
+        ProcessInstanceHeaderComponent,
+        ProcessInstanceTasksComponent,
+        ProcessCommentsComponent,
+        StartProcessInstanceComponent,
+        ProcessAttachmentListComponent,
+        CreateProcessAttachmentComponent
     ],
     providers: [
-        ...ACTIVITI_PROCESSLIST_PROVIDERS,
+        ProcessService,
+        CardViewUpdateService,
         {
             provide: TRANSLATION_PROVIDER,
             multi: true,
@@ -79,7 +72,16 @@ export const ACTIVITI_PROCESSLIST_PROVIDERS: [any] = [
         }
     ],
     exports: [
-        ...ACTIVITI_PROCESSLIST_DIRECTIVES
+        ProcessInstanceListComponent,
+        ProcessFiltersComponent,
+        ProcessInstanceDetailsComponent,
+        ProcessAuditDirective,
+        ProcessInstanceHeaderComponent,
+        ProcessInstanceTasksComponent,
+        ProcessCommentsComponent,
+        StartProcessInstanceComponent,
+        ProcessAttachmentListComponent,
+        CreateProcessAttachmentComponent
     ]
 })
 export class ProcessListModule {}

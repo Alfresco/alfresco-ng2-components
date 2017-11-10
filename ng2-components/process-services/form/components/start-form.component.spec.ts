@@ -28,7 +28,7 @@ import { FormRenderingService } from './../services/form-rendering.service';
 import { FormService } from './../services/form.service';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
 import { FormFieldComponent } from './form-field/form-field.component';
-import { MaterialModule } from './material.module';
+import { MaterialModule } from '../../material.module';
 import { StartFormComponent } from './start-form.component';
 import { ContentWidgetComponent } from './widgets/content/content.widget';
 import { MASK_DIRECTIVE } from './widgets/index';
