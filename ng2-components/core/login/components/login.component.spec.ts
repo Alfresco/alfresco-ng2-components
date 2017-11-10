@@ -60,8 +60,7 @@ describe('LoginComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 RouterTestingModule,
-                MaterialModule,
-                ServicesModule
+                MaterialModule
             ],
             declarations: [
                 LoginComponent

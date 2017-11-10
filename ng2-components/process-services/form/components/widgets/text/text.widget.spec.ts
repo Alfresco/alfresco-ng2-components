@@ -22,7 +22,6 @@ import { FormModel } from '../core/form.model';
 import { InputMaskDirective } from './text-mask.component';
 import { TextWidgetComponent } from './text.widget';
 
-import { ServicesModule } from '@adf/core';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 import { MaterialModule } from '../../../../material.module';
 import { ErrorWidgetComponent } from '../error/error.component';
@@ -38,7 +37,6 @@ describe('TextWidgetComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                ServicesModule,
                 MaterialModule
             ],
             declarations: [

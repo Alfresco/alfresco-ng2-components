@@ -30,7 +30,6 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 
-import { ServicesModule } from '@adf/core';
 
 import { FormRenderingService } from './../../services/form-rendering.service';
 import { WidgetVisibilityService } from './../../services/widget-visibility.service';
@@ -140,7 +139,7 @@ export class FormFieldComponent implements OnInit, OnDestroy {
         };
         const decoratedCmp = Component(metadata)(cmpClass);
 
-        @NgModule({ imports: [ServicesModule], declarations: [decoratedCmp] })
+        @NgModule({ imports: [], declarations: [decoratedCmp] })
         class RuntimeComponentModule {
         }
 

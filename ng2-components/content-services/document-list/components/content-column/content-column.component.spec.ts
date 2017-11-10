@@ -17,7 +17,7 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
-import { ServicesModule, LogService } from '@adf/core';
+import { LogService } from '@adf/core';
 import { DataTableModule } from '@adf/core';
 import { MaterialModule } from '../../../material.module';
 import { DocumentListService } from '../../services/document-list.service';
@@ -34,7 +34,7 @@ describe('ContentColumn', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                ServicesModule,
+
                 DataTableModule,
                 MaterialModule
             ],

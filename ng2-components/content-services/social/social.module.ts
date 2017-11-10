@@ -16,7 +16,6 @@
  */
 
 import { NgModule } from '@angular/core';
-import { ServicesModule } from '@adf/core';
 import { MaterialModule } from '../material.module';
 
 import { RatingService } from '../services/rating.service';
@@ -25,7 +24,7 @@ import { RatingComponent } from './rating.component';
 
 @NgModule({
     imports: [
-        ServicesModule,
+
         MaterialModule
     ],
     exports: [

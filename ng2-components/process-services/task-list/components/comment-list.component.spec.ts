@@ -17,7 +17,7 @@
 
 import { DatePipe } from '@angular/common';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService, CommentProcessModel, ServicesModule, TranslationService, UserProcessModel } from '@adf/core';
+import { AppConfigService, CommentProcessModel, TranslationService, UserProcessModel } from '@adf/core';
 import { DataRowEvent, DataTableModule, ObjectDataRow } from '@adf/core';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
@@ -41,7 +41,7 @@ describe('CommentListComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                ServicesModule,
+
                 DataTableModule
             ],
             declarations: [

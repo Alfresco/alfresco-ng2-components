@@ -18,7 +18,6 @@
 import { Component, DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { ServicesModule } from '../../index';
 import { AlfrescoContentService } from './../services/alfresco-content.service';
 import { NodePermissionDirective } from './node-permission.directive';
 
@@ -42,7 +41,6 @@ describe('NodePermissionDirective', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                ServicesModule
             ],
             declarations: [
                 TestComponent

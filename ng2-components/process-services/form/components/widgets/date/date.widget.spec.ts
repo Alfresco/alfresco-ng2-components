@@ -17,7 +17,6 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import * as moment from 'moment';
-import { ServicesModule } from '@adf/core';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 import { MaterialModule } from '../../../../material.module';
 import { ErrorWidgetComponent } from '../error/error.component';
@@ -37,7 +36,7 @@ describe('DateWidgetComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                ServicesModule,
+
                 MaterialModule
             ],
             declarations: [

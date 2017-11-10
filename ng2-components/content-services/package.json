@@ -1,5 +1,5 @@
 {
-  "name": "@adf/content-services",
+  "name": "content-services",
   "description": "Alfresco ADF content services",
   "version": "1.9.0",
   "author": "Alfresco Software, Ltd.",

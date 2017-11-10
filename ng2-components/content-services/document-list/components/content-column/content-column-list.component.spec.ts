@@ -17,7 +17,6 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
-import { ServicesModule } from '@adf/core';
 import { DataColumn, DataTableModule } from '@adf/core';
 import { MaterialModule } from '../../../material.module';
 
@@ -35,7 +34,7 @@ describe('ContentColumnList', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                ServicesModule,
+
                 DataTableModule,
                 MaterialModule
             ],

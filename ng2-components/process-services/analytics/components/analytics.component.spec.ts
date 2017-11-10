@@ -18,7 +18,7 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DiagramsModule } from '../../diagram';
-import { TranslationService, ServicesModule } from '@adf/core';
+import { TranslationService } from '@adf/core';
 import { ChartsModule } from 'ng2-charts';
 import { Observable } from 'rxjs/Rx';
 
@@ -54,7 +54,7 @@ describe('AnalyticsComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                ServicesModule,
+
                 ChartsModule,
                 DiagramsModule
             ],

@@ -17,7 +17,6 @@
 
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ServicesModule } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 
 import { By } from '@angular/platform-browser';
@@ -206,7 +205,7 @@ describe('TypeaheadWidgetComponent', () => {
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-                imports: [ServicesModule, MaterialModule],
+                imports: [MaterialModule],
                 declarations: [TypeaheadWidgetComponent, ErrorWidgetComponent],
                 providers: [
                     {provide: OverlayContainer, useFactory: () => {

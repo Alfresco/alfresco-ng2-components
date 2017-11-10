@@ -16,7 +16,6 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { ServicesModule } from '@adf/core';
 import { DataColumn, DataRow, DataSorting } from '@adf/core';
 import { FileNode, FolderNode } from './../assets/document-library.model.mock';
 import { DocumentListService } from './../services/document-list.service';
@@ -29,9 +28,7 @@ describe('ShareDataTableAdapter', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-                ServicesModule
-            ],
+            imports: [],
             providers: [
                 DocumentListService
             ]
@@ -426,9 +423,7 @@ describe('ShareDataRow', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-                ServicesModule
-            ],
+            imports: [],
             providers: [
                 DocumentListService
             ]

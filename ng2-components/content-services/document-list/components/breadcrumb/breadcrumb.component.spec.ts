@@ -18,7 +18,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PathElementEntity } from 'alfresco-js-api';
-import { ServicesModule } from '@adf/core';
 import { DataTableModule } from '@adf/core';
 import { fakeNodeWithCreatePermission } from '../../assets/document-list.component.mock';
 import { MaterialModule } from '../../../material.module';
@@ -38,7 +37,6 @@ describe('Breadcrumb', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                ServicesModule,
                 DataTableModule,
                 MaterialModule
             ],

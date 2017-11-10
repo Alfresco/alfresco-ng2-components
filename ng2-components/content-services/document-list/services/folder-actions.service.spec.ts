@@ -16,7 +16,7 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { TranslationService, AppConfigService, ServicesModule, NotificationService } from '@adf/core';
+import { TranslationService, AppConfigService, NotificationService } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { FileNode, FolderNode } from '../assets/document-library.model.mock';
 import { ContentActionHandler } from '../models/content-action.model';
@@ -31,9 +31,7 @@ describe('FolderActionsService', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-                ServicesModule
-            ],
+            imports: [],
             providers: [
                 DocumentListService,
                 FolderActionsService,

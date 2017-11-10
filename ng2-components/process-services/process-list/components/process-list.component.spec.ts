@@ -72,7 +72,7 @@ describe('ProcessInstanceListComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                ServicesModule,
+
                 DataTableModule,
                 MatProgressSpinnerModule
             ],

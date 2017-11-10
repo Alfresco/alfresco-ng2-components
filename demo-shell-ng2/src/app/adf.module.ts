@@ -11,8 +11,6 @@ import {
 import { AnalyticsModule, DiagramsModule, FormModule, ProcessListModule, TaskListModule } from '@adf/process-services';
 
 import {
-    ServicesModule,
-    PipeModule,
     CardViewModule,
     CollapsableModule,
     ContextMenuModule,
@@ -30,8 +28,6 @@ import {
 
 export function modules() {
     return [
-        ServicesModule,
-        PipeModule,
         CardViewModule,
         CollapsableModule,
         ContextMenuModule,

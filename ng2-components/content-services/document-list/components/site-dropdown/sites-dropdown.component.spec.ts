@@ -18,7 +18,6 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { ServicesModule } from '@adf/core';
 import { MaterialModule } from '../../../material.module';
 import { DropdownSitesComponent } from './sites-dropdown.component';
 
@@ -71,7 +70,7 @@ describe('DropdownSitesComponent', () => {
 
         TestBed.configureTestingModule({
             imports: [
-                ServicesModule,
+
                 MaterialModule
             ],
             declarations: [

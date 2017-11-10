@@ -33,7 +33,7 @@ describe('WebscriptComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                ServicesModule,
+
                 DataTableModule
             ],
             declarations: [

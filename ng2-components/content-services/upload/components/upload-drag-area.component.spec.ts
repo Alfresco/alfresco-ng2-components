@@ -17,7 +17,7 @@
 
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslationService, ServicesModule, FileModel, LogService, UploadService } from '@adf/core';
+import { TranslationService, FileModel, LogService, UploadService } from '@adf/core';
 
 import { TranslationMock } from '../assets/translation.service.mock';
 import { FileDraggableDirective } from '../directives/file-draggable.directive';
@@ -68,7 +68,6 @@ describe('UploadDragAreaComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                ServicesModule
             ],
             declarations: [
                 FileDraggableDirective,

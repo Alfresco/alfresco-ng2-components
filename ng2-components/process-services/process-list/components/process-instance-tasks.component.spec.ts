@@ -21,7 +21,7 @@ import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
 import { TaskDetailsModel } from 'ng2-activiti-tasklist';
-import { TranslationService, ServicesModule } from '@adf/core';
+import { TranslationService } from '@adf/core';
 
 import { taskDetailsMock } from './../assets/task-details.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
@@ -41,9 +41,7 @@ describe('ProcessInstanceTasksComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-                ServicesModule
-            ],
+            imports: [],
             declarations: [
                 ProcessInstanceTasksComponent
             ],

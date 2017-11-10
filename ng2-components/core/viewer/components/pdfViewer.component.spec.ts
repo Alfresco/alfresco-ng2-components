@@ -36,7 +36,6 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                ServicesModule
             ],
             declarations: [PdfViewerComponent],
             providers: [

@@ -20,7 +20,7 @@ import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { AlfrescoContentService, TranslationService, ServicesModule, SearchService, SiteModel, SitesApiService } from '@adf/core';
+import { AlfrescoContentService, TranslationService, SearchService, SiteModel, SitesApiService } from '@adf/core';
 import { DataTableModule } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { MaterialModule } from '../../../material.module';
@@ -74,7 +74,7 @@ describe('ContentNodeSelectorComponent', () => {
     function setupTestbed(plusProviders) {
         TestBed.configureTestingModule({
             imports: [
-                ServicesModule,
+
                 DataTableModule,
                 MaterialModule
             ],

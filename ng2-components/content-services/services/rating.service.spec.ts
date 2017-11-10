@@ -16,7 +16,6 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { ServicesModule } from '@adf/core';
 import { RatingService } from '../services/rating.service';
 
 declare let jasmine: any;
@@ -27,9 +26,7 @@ describe('Rating service', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-                ServicesModule
-            ],
+            imports: [],
             providers: [
                 RatingService
             ]

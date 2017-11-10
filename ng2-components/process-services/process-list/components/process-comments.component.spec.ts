@@ -25,7 +25,7 @@ import {
     CommentListComponent,
     CommentsComponent,
 } from 'ng2-activiti-tasklist';
-import { TranslationService, CommentProcessService, ServicesModule, PeopleProcessService } from '@adf/core';
+import { TranslationService, CommentProcessService, PeopleProcessService } from '@adf/core';
 import { DataTableModule } from '@adf/core';
 
 import { TranslationMock } from './../assets/translation.service.mock';
@@ -42,7 +42,7 @@ describe('ActivitiProcessInstanceComments', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                ServicesModule,
+
                 DataTableModule,
                 MatInputModule
             ],

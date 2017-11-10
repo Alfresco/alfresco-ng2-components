@@ -18,7 +18,7 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppsProcessService, ServicesModule, TranslationService } from '@adf/core';
+import { AppsProcessService, TranslationService } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { MaterialModule } from '../../material.module';
 
@@ -37,7 +37,7 @@ describe('AppsListComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                ServicesModule,
+
                 MaterialModule
             ],
             declarations: [

@@ -38,8 +38,7 @@ describe('LogoutDirective', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                RouterTestingModule,
-                ServicesModule
+                RouterTestingModule
             ],
             declarations: [
                 TestComponent

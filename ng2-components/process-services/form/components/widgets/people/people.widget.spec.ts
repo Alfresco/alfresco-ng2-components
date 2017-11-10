@@ -18,7 +18,7 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { ServicesModule, UserProcessModel } from '@adf/core';
+import { UserProcessModel } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 import { FormService } from '../../../services/form.service';
@@ -41,7 +41,7 @@ describe('PeopleWidgetComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                ServicesModule,
+
                 MaterialModule
             ],
             declarations: [

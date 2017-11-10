@@ -27,9 +27,7 @@ describe('TagService', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-                ServicesModule
-            ],
+            imports: [],
             providers: [
                 TagService
             ]

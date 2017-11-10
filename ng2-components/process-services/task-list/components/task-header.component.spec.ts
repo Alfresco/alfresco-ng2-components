@@ -18,7 +18,7 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService, CardViewUpdateService, ServicesModule, TranslationService, UserProcessModel } from '@adf/core';
+import { AppConfigService, CardViewUpdateService, TranslationService, UserProcessModel } from '@adf/core';
 import { BpmUserService } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
@@ -61,9 +61,7 @@ describe('TaskHeaderComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-                ServicesModule
-            ],
+            imports: [],
             declarations: [
                 TaskHeaderComponent
             ],

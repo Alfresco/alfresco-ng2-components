@@ -41,7 +41,6 @@ describe('Test ng2-alfresco-viewer Img viewer component ', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                ServicesModule
             ],
             declarations: [ImgViewerComponent],
             providers: [

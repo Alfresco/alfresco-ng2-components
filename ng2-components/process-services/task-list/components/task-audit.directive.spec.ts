@@ -22,7 +22,6 @@ import {
     fakeAsync,
     TestBed
 } from '@angular/core/testing';
-import { ServicesModule } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { TaskListService } from './../services/tasklist.service';
 import { TaskAuditDirective } from './task-audit.directive';

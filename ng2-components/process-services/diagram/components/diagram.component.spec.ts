@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslationService, ServicesModule } from '@adf/core';
+import { TranslationService } from '@adf/core';
 
 import { DebugElement } from '@angular/core';
 import * as diagramsActivitiesMock from '../assets/diagramActivities.mock';
@@ -44,9 +44,7 @@ describe('Test ng2-activiti-diagrams ', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-                ServicesModule
-            ],
+            imports: [],
             declarations: [
                 ...DIAGRAM_DIRECTIVES,
                 ...RAPHAEL_DIRECTIVES

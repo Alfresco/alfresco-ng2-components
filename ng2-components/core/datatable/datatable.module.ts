@@ -19,6 +19,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TRANSLATION_PROVIDER } from '../services';
 import { MaterialModule } from '../material.module';
+import { CommonModule } from '@angular/common';
+
+import { UploadDirective } from '../directives/upload.directive';
+import { PipeModule } from '../pipes';
+import { ContextMenuModule } from '../context-menu';
 
 import { DataTableCellComponent } from './components/datatable/datatable-cell.component';
 import { DataTableComponent } from './components/datatable/datatable.component';
@@ -32,11 +37,16 @@ import { LocationCellComponent } from './components/datatable/location-cell.comp
 import { LoadingContentTemplateDirective } from './directives/loading-template.directive';
 import { NoContentTemplateDirective } from './directives/no-content-template.directive';
 import { NoPermissionTemplateDirective } from './directives/no-permission-template.directive';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
     imports: [
         RouterModule,
-        MaterialModule
+        MaterialModule,
+        CommonModule,
+        TranslateModule,
+        ContextMenuModule,
+        PipeModule
     ],
     declarations: [
         DataTableComponent,
@@ -50,7 +60,8 @@ import { NoPermissionTemplateDirective } from './directives/no-permission-templa
         LocationCellComponent,
         NoContentTemplateDirective,
         NoPermissionTemplateDirective,
-        LoadingContentTemplateDirective
+        LoadingContentTemplateDirective,
+        UploadDirective
     ],
     providers: [
         {

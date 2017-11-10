@@ -42,7 +42,6 @@ describe('DocumentList', function () {
         var zone = new core_1.NgZone({ enableLongStackTrace: false });
         testing_1.TestBed.configureTestingModule({
             imports: [
-                core_2.CoreModule,
                 core_4.DataTableModule,
                 material_module_1.MaterialModule
             ],

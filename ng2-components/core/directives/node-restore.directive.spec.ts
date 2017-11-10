@@ -22,7 +22,6 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Observable } from 'rxjs/Rx';
 import { TranslationService } from '../../index';
-import { ServicesModule } from '../../index';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { NotificationService } from '../services/notification.service';
 import { NodeRestoreDirective } from './node-restore.directive';
@@ -54,7 +53,6 @@ describe('NodeRestoreDirective', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                ServicesModule,
                 RouterTestingModule
             ],
             declarations: [

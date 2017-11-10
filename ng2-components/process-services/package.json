@@ -1,5 +1,5 @@
 {
-  "name": "@adf/process-services",
+  "name": "process-services",
   "description": "Alfresco ADF process services",
   "version": "1.9.0",
   "author": "Alfresco Software, Ltd.",

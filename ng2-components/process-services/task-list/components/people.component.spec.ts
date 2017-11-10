@@ -18,7 +18,7 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule, MatInputModule } from '@angular/material';
-import { AppConfigService, ServicesModule, LogService, TranslationService } from '@adf/core';
+import { AppConfigService, LogService, TranslationService } from '@adf/core';
 import { PeopleProcessService, UserProcessModel } from '@adf/core';
 import { DataTableModule } from '@adf/core';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
@@ -54,7 +54,7 @@ describe('PeopleComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                ServicesModule,
+
                 DataTableModule,
                 MatButtonModule,
                 MatInputModule

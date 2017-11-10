@@ -17,7 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { TranslationService, ServicesModule } from '@adf/core';
+import { TranslationService } from '@adf/core';
 import { DataTableModule } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { EcmModelService } from '../services/ecm-model.service';
@@ -34,7 +34,7 @@ describe('TaskAttachmentList', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                ServicesModule,
+
                 DataTableModule,
                 MaterialModule
             ],

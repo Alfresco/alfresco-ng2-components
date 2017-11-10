@@ -18,7 +18,7 @@
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MaterialModule } from '../../material.module';
-import { AppConfigService, ServicesModule, TranslationService } from '@adf/core';
+import { AppConfigService, TranslationService } from '@adf/core';
 import { DataTableModule, DataRowEvent, ObjectDataRow, ObjectDataTableAdapter } from '@adf/core';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { TaskListService } from '../services/tasklist.service';
@@ -131,7 +131,7 @@ describe('TaskListComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                ServicesModule,
+
                 DataTableModule,
                 MaterialModule
             ],

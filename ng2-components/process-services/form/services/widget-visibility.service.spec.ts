@@ -16,7 +16,6 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { ServicesModule } from '@adf/core';
 import { ContainerModel, FormFieldModel, FormFieldTypes, FormModel, TabModel } from './../components/widgets/core/index';
 import { TaskProcessVariableModel } from './../models/task-process-variable.model';
 import { WidgetVisibilityModel } from './../models/widget-visibility.model';
@@ -38,9 +37,7 @@ describe('WidgetVisibilityService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                ServicesModule
-            ],
+            imports: [],
             providers: [
                 WidgetVisibilityService
             ]

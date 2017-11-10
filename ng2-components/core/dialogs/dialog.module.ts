@@ -17,6 +17,7 @@
 
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
+import { CommonModule } from '@angular/common';
 
 import { DownloadZipDialogComponent } from './download-zip.dialog';
 import { FolderDialogComponent } from './folder.dialog';
@@ -24,10 +25,16 @@ import { FolderDialogComponent } from './folder.dialog';
 import { NodesApiService } from '../services/nodes-api.service';
 import { NotificationService } from '../services/notification.service';
 import { TranslationService } from '../services/translation.service';
+import { TranslateModule } from '@ngx-translate/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     imports: [
-        MaterialModule
+        CommonModule,
+        MaterialModule,
+        TranslateModule,
+        FormsModule,
+        ReactiveFormsModule
     ],
     declarations: [
         DownloadZipDialogComponent,

@@ -16,7 +16,6 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ServicesModule } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 
 import { EcmModelService } from '../../../services/ecm-model.service';

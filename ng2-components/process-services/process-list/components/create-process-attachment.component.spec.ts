@@ -18,7 +18,7 @@
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProcessContentService } from '../../form';
-import { TranslationService, ServicesModule } from '@adf/core';
+import { TranslationService } from '@adf/core';
 import { CreateProcessAttachmentComponent } from './create-process-attachment.component';
 
 declare let jasmine: any;
@@ -50,9 +50,7 @@ describe('Activiti Process Create Attachment', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-                ServicesModule
-            ],
+            imports: [],
             declarations: [
                 CreateProcessAttachmentComponent
             ],

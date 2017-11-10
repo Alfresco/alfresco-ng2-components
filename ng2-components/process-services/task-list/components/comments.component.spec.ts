@@ -20,7 +20,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
 
 import { FormModule } from '../../form';
-import { AppConfigService, CommentProcessService, ServicesModule, TranslationService } from '@adf/core';
+import { AppConfigService, CommentProcessService, TranslationService } from '@adf/core';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
 
@@ -44,7 +44,7 @@ describe('CommentsComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                ServicesModule,
+
                 FormModule,
                 DataTableModule,
                 MatInputModule

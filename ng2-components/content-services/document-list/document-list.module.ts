@@ -14,13 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../material.module';
+import { TranslateModule } from '@ngx-translate/core';
 
-import { DataTableModule } from '@adf/core';
-import { ServicesModule, TRANSLATION_PROVIDER } from '@adf/core';
+import { DataTableModule, PaginationModule } from '@adf/core';
+import { TRANSLATION_PROVIDER } from '@adf/core';
 import { UploadModule } from '../upload';
 
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
@@ -47,11 +48,13 @@ import { NodeActionsService } from './services/node-actions.service';
 
 @NgModule({
     imports: [
-        ServicesModule,
+        CommonModule,
         DataTableModule,
         FlexLayoutModule,
         MaterialModule,
-        UploadModule
+        UploadModule,
+        TranslateModule,
+        PaginationModule
     ],
     declarations: [
         DocumentListComponent,

@@ -19,7 +19,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 
-import { ServicesModule, SearchService, TRANSLATION_PROVIDER } from '@adf/core';
+import { SearchService, TRANSLATION_PROVIDER } from '@adf/core';
 
 import { SearchTriggerDirective } from './components/search-trigger.directive';
 
@@ -38,7 +38,6 @@ export const ALFRESCO_SEARCH_PROVIDERS: [any] = [
 
 @NgModule({
     imports: [
-        ServicesModule,
         FormsModule,
         ReactiveFormsModule,
         MaterialModule

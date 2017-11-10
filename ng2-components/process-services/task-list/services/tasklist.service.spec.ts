@@ -16,7 +16,7 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { AppConfigService, ServicesModule, TranslationService, UserProcessModel } from '@adf/core';
+import { AppConfigService, TranslationService, UserProcessModel } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import {
@@ -52,7 +52,6 @@ describe('Activiti TaskList Service', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                ServicesModule
             ],
             providers: [
                 TaskListService,

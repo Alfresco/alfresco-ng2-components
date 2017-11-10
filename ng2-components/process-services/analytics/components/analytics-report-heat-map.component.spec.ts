@@ -18,7 +18,7 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DiagramsModule } from '../../diagram';
-import { TranslationService, ServicesModule } from '@adf/core';
+import { TranslationService } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { AnalyticsReportHeatMapComponent } from '../components/analytics-report-heat-map.component';
 import { WIDGET_ANALYTICS_DIRECTIVES } from '../components/widgets/index';
@@ -45,7 +45,7 @@ describe('AnalyticsReportHeatMapComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                ServicesModule,
+
                 DiagramsModule,
                 MaterialModule
             ],

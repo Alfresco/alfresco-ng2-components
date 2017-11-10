@@ -17,7 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService, AppsProcessService, ServicesModule, TranslationService } from '@adf/core';
+import { AppConfigService, AppsProcessService, TranslationService } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
@@ -65,7 +65,7 @@ describe('TaskFiltersComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                ServicesModule,
+
                 MaterialModule
             ],
             declarations: [

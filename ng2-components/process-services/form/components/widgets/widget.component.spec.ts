@@ -16,7 +16,6 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ServicesModule } from '@adf/core';
 import { ActivitiAlfrescoContentService } from '../../services/activiti-alfresco.service';
 import { EcmModelService } from './../../services/ecm-model.service';
 import { FormService } from './../../services/form.service';
@@ -33,9 +32,7 @@ describe('WidgetComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-                ServicesModule
-            ],
+            imports: [],
             declarations: [WidgetComponent],
             providers: [
                 FormService,

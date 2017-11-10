@@ -20,7 +20,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ChartsModule } from 'ng2-charts';
 
 import { MaterialModule } from '../../material.module';
-import { TranslationService, ServicesModule } from '@adf/core';
+import { TranslationService } from '@adf/core';
 
 import { DiagramsModule } from '../../diagram';
 import { Observable } from 'rxjs/Rx';
@@ -58,7 +58,7 @@ describe('AnalyticsGeneratorComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                ServicesModule,
+
                 MaterialModule,
                 ChartsModule,
                 DiagramsModule

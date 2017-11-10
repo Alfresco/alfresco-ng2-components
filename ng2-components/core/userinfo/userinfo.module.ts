@@ -15,32 +15,30 @@
  * limitations under the License.
  */
 
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TRANSLATION_PROVIDER } from '../services';
 import { MaterialModule } from '../material.module';
+import { PipeModule } from '../pipes'
+import { TranslateModule } from '@ngx-translate/core';
 
 import { UserInfoComponent } from './components/user-info.component';
 import { BpmUserService } from './services/bpm-user.service';
 import { EcmUserService } from './services/ecm-user.service';
 
-export const USER_INFO_DIRECTIVES: any[] = [
-    UserInfoComponent
-];
-
-export const USER_INFO_PROVIDERS: any[] = [
-    EcmUserService,
-    BpmUserService
-];
-
 @NgModule({
     imports: [
-        MaterialModule
+        CommonModule,
+        MaterialModule,
+        TranslateModule,
+        PipeModule
     ],
     declarations: [
-        ...USER_INFO_DIRECTIVES
+        UserInfoComponent
     ],
     providers: [
-        ...USER_INFO_PROVIDERS,
+        EcmUserService,
+        BpmUserService,
         {
             provide: TRANSLATION_PROVIDER,
             multi: true,
@@ -51,7 +49,8 @@ export const USER_INFO_PROVIDERS: any[] = [
         }
     ],
     exports: [
-        ...USER_INFO_DIRECTIVES
+        UserInfoComponent
     ]
 })
-export class UserInfoModule {}
+export class UserInfoModule {
+}

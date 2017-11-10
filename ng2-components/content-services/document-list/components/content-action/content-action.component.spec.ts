@@ -18,7 +18,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
-import { AlfrescoContentService, TranslationService, ServicesModule, NotificationService } from '@adf/core';
+import { AlfrescoContentService, TranslationService, NotificationService } from '@adf/core';
 import { DataTableModule } from '@adf/core';
 import { MaterialModule } from '../../../material.module';
 
@@ -47,7 +47,7 @@ describe('ContentAction', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                ServicesModule,
+
                 DataTableModule,
                 MaterialModule
             ],

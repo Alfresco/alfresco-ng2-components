@@ -19,7 +19,7 @@ import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatInputModule, MatListModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
-import { AuthenticationService, TranslationService, ServicesModule, SearchService } from '@adf/core';
+import { AuthenticationService, TranslationService, SearchService } from '@adf/core';
 import { ThumbnailService } from '@adf/core';
 import { Observable } from 'rxjs/Observable';
 import { noResult, results } from './../assets/search.component.mock';
@@ -40,7 +40,7 @@ describe('SearchControlComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                ServicesModule,
+
                 MatInputModule,
                 MatListModule
             ],

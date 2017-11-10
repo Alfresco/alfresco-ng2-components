@@ -22,7 +22,7 @@ import { Observable } from 'rxjs/Rx';
 
 import { FormModule, FormService } from '../../form';
 import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
-import { TranslationService, ServicesModule } from '@adf/core';
+import { TranslationService } from '@adf/core';
 
 import { ProcessInstance } from '../models/process-instance.model';
 import { exampleProcess, exampleProcessNoName } from './../assets/process.model.mock';
@@ -41,7 +41,7 @@ describe('ProcessInstanceDetailsComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                ServicesModule,
+
                 FormModule,
                 ActivitiTaskListModule
             ],

@@ -16,7 +16,6 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { ServicesModule } from '@adf/core';
 import { NodeMetadata } from '../models/node-metadata.model';
 import { EcmModelService } from './ecm-model.service';
 import { NodeService } from './node.service';
@@ -29,9 +28,7 @@ describe('NodeService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                ServicesModule
-            ],
+            imports: [],
             providers: [
                 NodeService,
                 EcmModelService

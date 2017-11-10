@@ -44,7 +44,6 @@ describe('User info component', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                ServicesModule,
                 MaterialModule
             ],
             declarations: [

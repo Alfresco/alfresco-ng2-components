@@ -15,10 +15,14 @@
  * limitations under the License.
  */
 
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TRANSLATION_PROVIDER } from '../services';
 import { MaterialModule } from '../material.module';
+import { ToolbarModule } from '../toolbar';
+import { TranslateModule } from '@ngx-translate/core';
 
+import { PipeModule } from '../pipes'
 import { ImgViewerComponent } from './components/imgViewer.component';
 import { MediaPlayerComponent } from './components/mediaPlayer.component';
 import { PdfViewerComponent } from './components/pdfViewer.component';
@@ -50,7 +54,11 @@ export function declarations() {
 
 @NgModule({
     imports: [
-        MaterialModule
+        CommonModule,
+        MaterialModule,
+        TranslateModule,
+        ToolbarModule,
+        PipeModule
     ],
     declarations: [
         ViewerComponent,

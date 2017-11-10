@@ -18,13 +18,18 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
+import { TranslateModule } from '@ngx-translate/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { HostSettingsComponent } from './host-settings.component';
 
 @NgModule({
     imports: [
         CommonModule,
-        MaterialModule
+        MaterialModule,
+        TranslateModule,
+        FormsModule,
+        ReactiveFormsModule
     ],
     declarations: [
         HostSettingsComponent
@@ -33,4 +38,5 @@ import { HostSettingsComponent } from './host-settings.component';
         HostSettingsComponent
     ]
 })
-export class HostSettingsModule {}
+export class HostSettingsModule {
+}

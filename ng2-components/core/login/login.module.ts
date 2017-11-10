@@ -15,10 +15,13 @@
  * limitations under the License.
  */
 
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TRANSLATION_PROVIDER } from '../services';
 import { MaterialModule } from '../material.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { LoginComponent } from './components/login.component';
 import { LoginFooterDirective } from './directives/login-footer.directive';
@@ -27,7 +30,11 @@ import { LoginHeaderDirective } from './directives/login-header.directive';
 @NgModule({
     imports: [
         RouterModule,
-        MaterialModule
+        MaterialModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CommonModule,
+        TranslateModule
     ],
     declarations: [
         LoginComponent,

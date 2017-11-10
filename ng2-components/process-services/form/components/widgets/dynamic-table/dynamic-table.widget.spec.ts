@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ServicesModule, LogService } from '@adf/core';
+import { LogService } from '@adf/core';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { MaterialModule } from '../../../../material.module';
@@ -88,7 +88,7 @@ describe('DynamicTableWidgetComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                ServicesModule,
+
                 MaterialModule
             ],
             declarations: [DynamicTableWidgetComponent, RowEditorComponent,
