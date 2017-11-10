@@ -24,7 +24,7 @@ import * as moment from 'moment';
 import { AppConfigService } from '../index';
 import { CardViewDateItemModel } from '../models/card-view-dateitem.model';
 import { CardViewUpdateService } from '../services/card-view-update.service';
-import { AlfrescoTranslateLoader } from '../services/translate-loader.service';
+import { TranslateLoaderService } from '../services/translate-loader.service';
 
 import { CardViewDateItemComponent } from './card-view-dateitem.component';
 
@@ -43,7 +43,7 @@ describe('CardViewDateItemComponent', () => {
                 TranslateModule.forRoot({
                     loader: {
                         provide: TranslateLoader,
-                        useClass: AlfrescoTranslateLoader
+                        useClass: TranslateLoaderService
                     }
                 })
             ],

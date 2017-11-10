@@ -24,7 +24,7 @@ import { AppConfigService } from './app-config.service';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { LogService } from './log.service';
 import { StorageService } from './storage.service';
-import { AlfrescoTranslateLoader } from './translate-loader.service';
+import { TranslateLoaderService } from './translate-loader.service';
 import { TRANSLATION_PROVIDER, TranslationService } from './translation.service';
 import { UserPreferencesService } from './user-preferences.service';
 
@@ -35,7 +35,7 @@ declare let jasmine: any;
 describe('TranslateLoader', () => {
     let injector: Injector;
     let translationService: TranslationService;
-    let customLoader: AlfrescoTranslateLoader;
+    let customLoader: TranslateLoaderService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -44,7 +44,7 @@ describe('TranslateLoader', () => {
                 TranslateModule.forRoot({
                     loader: {
                         provide: TranslateLoader,
-                        useClass: AlfrescoTranslateLoader
+                        useClass: TranslateLoaderService
                     }
                 })
             ],
@@ -67,7 +67,7 @@ describe('TranslateLoader', () => {
         });
         injector = getTestBed();
         translationService = injector.get(TranslationService);
-        customLoader = <AlfrescoTranslateLoader> translationService.translate.currentLoader;
+        customLoader = <TranslateLoaderService> translationService.translate.currentLoader;
 
         jasmine.Ajax.install();
     });
@@ -79,7 +79,7 @@ describe('TranslateLoader', () => {
     it('should be able to provide any TranslateLoader', () => {
         expect(translationService).toBeDefined();
         expect(translationService.translate.currentLoader).toBeDefined();
-        expect(translationService.translate.currentLoader instanceof AlfrescoTranslateLoader).toBeTruthy();
+        expect(translationService.translate.currentLoader instanceof TranslateLoaderService).toBeTruthy();
     });
 
     it('should add the component to the list', () => {

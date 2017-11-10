@@ -8,7 +8,14 @@ import {
     UploadModule,
     WebScriptModule
 } from '@adf/content-services';
-import { AnalyticsModule, DiagramsModule, FormModule, ProcessListModule, TaskListModule } from '@adf/process-services';
+
+import {
+    AnalyticsModule,
+    DiagramsModule,
+    FormModule,
+    ProcessListModule,
+    TaskListModule
+} from '@adf/process-services';
 
 import {
     PipeModule,
@@ -28,6 +35,8 @@ import {
     ViewerModule,
     DataColumnModule
 } from '@adf/core';
+
+import { AlfrescoSettingsService, PageTitleService, StorageService, TranslateLoaderService, TranslationService, LogService, UserPreferencesService } from '@adf/core';
 
 export function modules() {
     return [
@@ -66,7 +75,16 @@ export function modules() {
 
 @NgModule({
     imports: modules(),
-    exports: modules()
+    exports: modules(),
+    providers: [
+        AlfrescoSettingsService,
+        PageTitleService,
+        StorageService,
+        TranslateLoaderService,
+        TranslationService,
+        LogService,
+        UserPreferencesService
+    ]
 })
 export class AdfModule {
 }

@@ -22,7 +22,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../../material.module';
 import { AppConfigService } from '../../services/app-config.service';
 import { LogService } from '../../services/log.service';
-import { AlfrescoTranslateLoader } from '../../services/translate-loader.service';
+import { TranslateLoaderService } from '../../services/translate-loader.service';
 import { TranslationService } from '../../services/translation.service';
 import { PaginationComponent } from './pagination.component';
 
@@ -61,7 +61,7 @@ describe('PaginationComponent', () => {
                 TranslateModule.forRoot({
                     loader: {
                         provide: TranslateLoader,
-                        useClass: AlfrescoTranslateLoader
+                        useClass: TranslateLoaderService
                     }
                 })
             ],

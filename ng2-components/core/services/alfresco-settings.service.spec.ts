@@ -22,7 +22,7 @@ import { AlfrescoSettingsService } from './alfresco-settings.service';
 import { AppConfigModule } from './app-config.service';
 import { LogService } from './log.service';
 import { StorageService } from './storage.service';
-import { AlfrescoTranslateLoader } from './translate-loader.service';
+import { TranslateLoaderService } from './translate-loader.service';
 import { UserPreferencesService } from './user-preferences.service';
 
 describe('AlfrescoSettingsService', () => {
@@ -36,7 +36,7 @@ describe('AlfrescoSettingsService', () => {
                 TranslateModule.forRoot({
                     loader: {
                         provide: TranslateLoader,
-                        useClass: AlfrescoTranslateLoader
+                        useClass: TranslateLoaderService
                     }
                 })
             ],

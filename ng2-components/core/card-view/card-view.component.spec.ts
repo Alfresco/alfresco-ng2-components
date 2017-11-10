@@ -30,7 +30,7 @@ import { CardViewDateItemModel } from '../models/card-view-dateitem.model';
 import { CardViewTextItemModel } from '../models/card-view-textitem.model';
 import { CardViewUpdateService } from '../services/card-view-update.service';
 
-import { AlfrescoTranslateLoader } from '../services/translate-loader.service';
+import { TranslateLoaderService } from '../services/translate-loader.service';
 import { CardViewContentProxyDirective } from './card-view-content-proxy.directive';
 import { CardViewDateItemComponent } from './card-view-dateitem.component';
 import { CardViewItemDispatcherComponent } from './card-view-item-dispatcher.component';
@@ -54,7 +54,7 @@ describe('AdfCardView', () => {
                 TranslateModule.forRoot({
                     loader: {
                         provide: TranslateLoader,
-                        useClass: AlfrescoTranslateLoader
+                        useClass: TranslateLoaderService
                     }
                 })
             ],

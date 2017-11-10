@@ -24,7 +24,7 @@ import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { AppConfigService } from './app-config.service';
 import { LogService } from './log.service';
 import { StorageService } from './storage.service';
-import { AlfrescoTranslateLoader } from './translate-loader.service';
+import { TranslateLoaderService } from './translate-loader.service';
 import { TRANSLATION_PROVIDER, TranslationService } from './translation.service';
 import { UserPreferencesService } from './user-preferences.service';
 
@@ -41,7 +41,7 @@ describe('TranslationService', () => {
                 TranslateModule.forRoot({
                     loader: {
                         provide: TranslateLoader,
-                        useClass: AlfrescoTranslateLoader
+                        useClass: TranslateLoaderService
                     }
                 })
             ],

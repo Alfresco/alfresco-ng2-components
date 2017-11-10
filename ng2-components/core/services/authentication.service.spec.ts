@@ -25,7 +25,7 @@ import { AuthenticationService } from './authentication.service';
 import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
 import { StorageService } from './storage.service';
-import { AlfrescoTranslateLoader } from './translate-loader.service';
+import { TranslateLoaderService } from './translate-loader.service';
 import { UserPreferencesService } from './user-preferences.service';
 
 declare let jasmine: any;
@@ -45,7 +45,7 @@ describe('AuthenticationService', () => {
                 TranslateModule.forRoot({
                     loader: {
                         provide: TranslateLoader,
-                        useClass: AlfrescoTranslateLoader
+                        useClass: TranslateLoaderService
                     }
                 })
             ],

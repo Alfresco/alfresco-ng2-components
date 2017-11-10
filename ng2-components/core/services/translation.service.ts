@@ -18,7 +18,7 @@
 import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs/Rx';
-import { AlfrescoTranslateLoader } from './translate-loader.service';
+import { TranslateLoaderService } from './translate-loader.service';
 import { UserPreferencesService } from './user-preferences.service';
 
 export const TRANSLATION_PROVIDER = new InjectionToken('Injection token for translation providers.');
@@ -32,12 +32,12 @@ export interface TranslationProvider {
 export class TranslationService {
     defaultLang: string;
     userLang: string;
-    customLoader: AlfrescoTranslateLoader;
+    customLoader: TranslateLoaderService;
 
     constructor(public translate: TranslateService,
                 private userPreference: UserPreferencesService,
                 @Inject(TRANSLATION_PROVIDER) providers: TranslationProvider[]) {
-        this.customLoader = <AlfrescoTranslateLoader> this.translate.currentLoader;
+        this.customLoader = <TranslateLoaderService> this.translate.currentLoader;
 
         this.defaultLang = 'en';
         translate.setDefaultLang(this.defaultLang);

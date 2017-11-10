@@ -27,7 +27,7 @@ import { Observable } from 'rxjs/Rx';
 
 import { AppConfigService, providers } from '../../index';
 import { AlfrescoContentService } from '../services/alfresco-content.service';
-import { AlfrescoTranslateLoader } from '../services/translate-loader.service';
+import { TranslateLoaderService } from '../services/translate-loader.service';
 import { FolderEditDirective } from './folder-edit.directive';
 
 @Component({
@@ -60,7 +60,7 @@ describe('FolderEditDirective', () => {
                 TranslateModule.forRoot({
                     loader: {
                         provide: TranslateLoader,
-                        useClass: AlfrescoTranslateLoader
+                        useClass: TranslateLoaderService
                     }
                 })
             ],

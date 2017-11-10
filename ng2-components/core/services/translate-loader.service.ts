@@ -25,7 +25,7 @@ import { ObjectUtils } from '../utils/object-utils';
 import { LogService } from './log.service';
 
 @Injectable()
-export class AlfrescoTranslateLoader implements TranslateLoader {
+export class TranslateLoaderService implements TranslateLoader {
 
     private prefix: string = 'i18n';
     private suffix: string = '.json';

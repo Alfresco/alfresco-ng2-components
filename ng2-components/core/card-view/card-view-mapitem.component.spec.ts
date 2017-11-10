@@ -27,7 +27,7 @@ import { CardViewMapItemModel } from '../models/card-view-mapitem.model';
 import { AppConfigService } from '../services/app-config.service';
 import { CardViewUpdateService } from '../services/card-view-update.service';
 import { LogService } from '../services/log.service';
-import { AlfrescoTranslateLoader } from '../services/translate-loader.service';
+import { TranslateLoaderService } from '../services/translate-loader.service';
 
 import { CardViewMapItemComponent } from './card-view-mapitem.component';
 
@@ -49,7 +49,7 @@ describe('CardViewMapItemComponent', () => {
                 TranslateModule.forRoot({
                     loader: {
                         provide: TranslateLoader,
-                        useClass: AlfrescoTranslateLoader
+                        useClass: TranslateLoaderService
                     }
                 })
             ],

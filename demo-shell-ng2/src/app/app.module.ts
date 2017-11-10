@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 // import { Editor3DModule } from 'ng2-3d-editor';
 import { ChartsModule } from 'ng2-charts';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppConfigService, TRANSLATION_PROVIDER } from '@adf/core';
 import { AppComponent } from './app.component';
@@ -56,6 +57,7 @@ import { ReactiveFormsModule } from '@angular/forms';
         FlexLayoutModule,
         //Editor3DModule,
         ChartsModule,
+        HttpClientModule
     ],
     declarations: [
         AppComponent,

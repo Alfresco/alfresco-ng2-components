@@ -21,7 +21,7 @@ import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-transla
 import { providers } from '../../../index';
 import { MaterialModule } from '../../material.module';
 import { AppConfigService } from '../../services/app-config.service';
-import { AlfrescoTranslateLoader } from '../../services/translate-loader.service';
+import { TranslateLoaderService } from '../../services/translate-loader.service';
 import { UserPreferencesService } from '../../services/user-preferences.service';
 
 import { LanguageMenuComponent } from './language-menu.component';
@@ -41,7 +41,7 @@ describe('LanguageMenuComponent', () => {
                 TranslateModule.forRoot({
                     loader: {
                         provide: TranslateLoader,
-                        useClass: AlfrescoTranslateLoader
+                        useClass: TranslateLoaderService
                     }
                 })
             ],
