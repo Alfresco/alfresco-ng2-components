@@ -21,7 +21,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AlfrescoContentService, AlfrescoTranslationService, CoreModule, SearchService, SiteModel, SitesApiService } from 'ng2-alfresco-core';
-import { DataTableModule } from 'ng2-alfresco-datatable';
+import { DataTableModule } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { MaterialModule } from '../../../material.module';
 import { DocumentListService } from '../../services/document-list.service';

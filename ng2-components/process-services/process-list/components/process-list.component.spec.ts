@@ -22,7 +22,7 @@ import { Observable } from 'rxjs/Rx';
 import { ProcessInstanceListComponent } from './process-list.component';
 
 import { AlfrescoTranslationService, AppConfigService, CoreModule } from 'ng2-alfresco-core';
-import { DataRowEvent, DataSorting, DataTableModule, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
+import { DataRowEvent, DataSorting, DataTableModule, ObjectDataRow, ObjectDataTableAdapter } from '@adf/core';
 
 import { fakeProcessInstances, fakeProcessInstancesWithNoName } from '../assets/process-instances-list.mock';
 import { ProcessService } from '../services/process.service';

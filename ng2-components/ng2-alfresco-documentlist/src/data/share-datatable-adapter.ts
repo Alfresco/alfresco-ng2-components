@@ -1,3 +1,4 @@
+"use strict";
 /*!
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
@@ -14,239 +15,194 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import { DatePipe } from '@angular/common';
-import { NodePaging } from 'alfresco-js-api';
-import { TimeAgoPipe } from 'ng2-alfresco-core';
-import { DataColumn, DataRow, DataSorting, DataTableAdapter } from 'ng2-alfresco-datatable';
-import { PermissionStyleModel } from './../models/permissions-style.model';
-import { DocumentListService } from './../services/document-list.service';
-import { ImageResolver } from './image-resolver.model';
-import { RowFilter } from './row-filter.model';
-import { ShareDataRow } from './share-data-row.model';
-
-export class ShareDataTableAdapter implements DataTableAdapter {
-
-    ERR_ROW_NOT_FOUND: string = 'Row not found';
-    ERR_COL_NOT_FOUND: string = 'Column not found';
-
-    private sorting: DataSorting;
-    private rows: DataRow[];
-    private columns: DataColumn[];
-    private page: NodePaging;
-
-    private filter: RowFilter;
-    private imageResolver: ImageResolver;
-
-    thumbnails: boolean = false;
-    permissionsStyle: PermissionStyleModel[];
-    selectedRow: DataRow;
-
-    constructor(private documentListService: DocumentListService,
-                schema: DataColumn[] = [],
-                sorting?: DataSorting) {
+Object.defineProperty(exports, "__esModule", { value: true });
+var common_1 = require("@angular/common");
+var ng2_alfresco_core_1 = require("ng2-alfresco-core");
+var core_1 = require("@adf/core");
+var share_data_row_model_1 = require("./share-data-row.model");
+var ShareDataTableAdapter = (function () {
+    function ShareDataTableAdapter(documentListService, schema, sorting) {
+        if (schema === void 0) { schema = []; }
+        this.documentListService = documentListService;
+        this.ERR_ROW_NOT_FOUND = 'Row not found';
+        this.ERR_COL_NOT_FOUND = 'Column not found';
+        this.thumbnails = false;
         this.rows = [];
         this.columns = schema || [];
         this.sorting = sorting;
     }
-
-    getRows(): Array<DataRow> {
+    ShareDataTableAdapter.prototype.getRows = function () {
         return this.rows;
-    }
-
+    };
     // TODO: disable this api
-    setRows(rows: Array<DataRow>) {
+    ShareDataTableAdapter.prototype.setRows = function (rows) {
         this.rows = rows || [];
         this.sort();
-    }
-
-    getColumns(): Array<DataColumn> {
+    };
+    ShareDataTableAdapter.prototype.getColumns = function () {
         return this.columns;
-    }
-
-    setColumns(columns: Array<DataColumn>) {
+    };
+    ShareDataTableAdapter.prototype.setColumns = function (columns) {
         this.columns = columns || [];
-    }
-
-    getValue(row: DataRow, col: DataColumn): any {
+    };
+    ShareDataTableAdapter.prototype.getValue = function (row, col) {
         if (!row) {
             throw new Error(this.ERR_ROW_NOT_FOUND);
         }
         if (!col) {
             throw new Error(this.ERR_COL_NOT_FOUND);
         }
-        let dataRow: ShareDataRow = <ShareDataRow> row;
-        let value: any = row.getValue(col.key);
+        var dataRow = row;
+        var value = row.getValue(col.key);
         if (dataRow.cache[col.key] !== undefined) {
             return dataRow.cache[col.key];
         }
-
         if (col.type === 'date') {
             try {
-                const result = this.formatDate(col, value);
+                var result = this.formatDate(col, value);
                 return dataRow.cacheValue(col.key, result);
-            } catch (err) {
-                console.error(`Error parsing date ${value} to format ${col.format}`);
+            }
+            catch (err) {
+                console.error("Error parsing date " + value + " to format " + col.format);
                 return 'Error';
             }
         }
-
         if (col.key === '$thumbnail') {
-
             if (this.imageResolver) {
-                let resolved = this.imageResolver(row, col);
+                var resolved = this.imageResolver(row, col);
                 if (resolved) {
                     return resolved;
                 }
             }
-
-            const node = (<ShareDataRow> row).node;
-
+            var node = row.node;
             if (node.entry.isFolder) {
                 return this.documentListService.getMimeTypeIcon('folder');
             }
-
             if (node.entry.isFile) {
                 if (this.thumbnails) {
                     return this.documentListService.getDocumentThumbnailUrl(node);
                 }
             }
-
             if (node.entry.content) {
-                const mimeType = node.entry.content.mimeType;
+                var mimeType = node.entry.content.mimeType;
                 if (mimeType) {
                     return this.documentListService.getMimeTypeIcon(mimeType);
                 }
             }
-
             return this.documentListService.getDefaultMimeTypeIcon();
         }
-
         if (col.type === 'image') {
-
             if (this.imageResolver) {
-                let resolved = this.imageResolver(row, col);
+                var resolved = this.imageResolver(row, col);
                 if (resolved) {
                     return resolved;
                 }
             }
         }
-
         return dataRow.cacheValue(col.key, value);
-    }
-
-    formatDate(col: DataColumn, value: any): string {
+    };
+    ShareDataTableAdapter.prototype.formatDate = function (col, value) {
         if (col.type === 'date') {
-            const format = col.format || 'medium';
+            var format = col.format || 'medium';
             if (format === 'timeAgo') {
-                const timeAgoPipe = new TimeAgoPipe();
+                var timeAgoPipe = new ng2_alfresco_core_1.TimeAgoPipe();
                 return timeAgoPipe.transform(value);
-            } else {
-                const datePipe = new DatePipe('en-US');
+            }
+            else {
+                var datePipe = new common_1.DatePipe('en-US');
                 return datePipe.transform(value, format);
             }
         }
-
         return value;
-    }
-
-    getSorting(): DataSorting {
+    };
+    ShareDataTableAdapter.prototype.getSorting = function () {
         return this.sorting;
-    }
-
-    setSorting(sorting: DataSorting): void {
+    };
+    ShareDataTableAdapter.prototype.setSorting = function (sorting) {
         this.sorting = sorting;
-
         this.sortRows(this.rows, this.sorting);
-    }
-
-    sort(key?: string, direction?: string): void {
-        let sorting = this.sorting || new DataSorting();
+    };
+    ShareDataTableAdapter.prototype.sort = function (key, direction) {
+        var sorting = this.sorting || new core_1.DataSorting();
         if (key) {
             sorting.key = key;
             sorting.direction = direction || 'asc';
         }
         this.setSorting(sorting);
-    }
-
-    setFilter(filter: RowFilter) {
+    };
+    ShareDataTableAdapter.prototype.setFilter = function (filter) {
         this.filter = filter;
-    }
-
-    setImageResolver(resolver: ImageResolver) {
+    };
+    ShareDataTableAdapter.prototype.setImageResolver = function (resolver) {
         this.imageResolver = resolver;
-    }
-
-    private sortRows(rows: DataRow[], sorting: DataSorting) {
-        const options: Intl.CollatorOptions = {};
-
+    };
+    ShareDataTableAdapter.prototype.sortRows = function (rows, sorting) {
+        var options = {};
         if (sorting && sorting.key && rows && rows.length > 0) {
-
             if (sorting.key.includes('sizeInBytes') || sorting.key === 'name') {
                 options.numeric = true;
             }
-
-            rows.sort((a: ShareDataRow, b: ShareDataRow) => {
+            rows.sort(function (a, b) {
                 if (a.node.entry.isFolder !== b.node.entry.isFolder) {
                     return a.node.entry.isFolder ? -1 : 1;
                 }
-
-                let left = a.getValue(sorting.key);
+                var left = a.getValue(sorting.key);
                 if (left) {
                     left = (left instanceof Date) ? left.valueOf().toString() : left.toString();
-                } else {
+                }
+                else {
                     left = '';
                 }
-
-                let right = b.getValue(sorting.key);
+                var right = b.getValue(sorting.key);
                 if (right) {
                     right = (right instanceof Date) ? right.valueOf().toString() : right.toString();
-                } else {
+                }
+                else {
                     right = '';
                 }
-
                 return sorting.direction === 'asc'
                     ? left.localeCompare(right, undefined, options)
                     : right.localeCompare(left, undefined, options);
             });
         }
-    }
-
-    public loadPage(page: NodePaging, merge: boolean = false) {
+    };
+    ShareDataTableAdapter.prototype.loadPage = function (page, merge) {
+        var _this = this;
+        if (merge === void 0) { merge = false; }
         this.page = page;
-
-        let rows = [];
-
+        var rows = [];
         if (page && page.list) {
-            let data = page.list.entries;
+            var data = page.list.entries;
             if (data && data.length > 0) {
-                rows = data.map(item => new ShareDataRow(item, this.documentListService, this.permissionsStyle));
-
+                rows = data.map(function (item) { return new share_data_row_model_1.ShareDataRow(item, _this.documentListService, _this.permissionsStyle); });
                 if (this.filter) {
                     rows = rows.filter(this.filter);
                 }
-
                 // Sort by first sortable or just first column
                 if (this.columns && this.columns.length > 0) {
-                    let sorting = this.getSorting();
+                    var sorting = this.getSorting();
                     if (sorting) {
                         this.sortRows(rows, sorting);
-                    } else {
-                        let sortable = this.columns.filter(c => c.sortable);
+                    }
+                    else {
+                        var sortable = this.columns.filter(function (c) { return c.sortable; });
                         if (sortable.length > 0) {
                             this.sort(sortable[0].key, 'asc');
-                        } else {
+                        }
+                        else {
                             this.sort(this.columns[0].key, 'asc');
                         }
                     }
                 }
             }
         }
-
         if (merge) {
             this.rows = this.rows.concat(rows);
-        } else {
+        }
+        else {
             this.rows = rows;
         }
-    }
-}
+    };
+    return ShareDataTableAdapter;
+}());
+exports.ShareDataTableAdapter = ShareDataTableAdapter;

@@ -22,7 +22,7 @@ import { MaterialModule } from '../material.module';
 
 import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
 import { CardViewUpdateService, CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
-import { DataTableModule } from 'ng2-alfresco-datatable';
+import { DataTableModule } from '@adf/core';
 
 import { CreateProcessAttachmentComponent } from './components/create-process-attachment.component';
 import { ProcessAttachmentListComponent } from './components/process-attachment-list.component';

@@ -22,3 +22,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./components/user-info.component"));
 __export(require("./services/bpm-user.service"));
 __export(require("./services/ecm-user.service"));
+__export(require("./userinfo.module"));

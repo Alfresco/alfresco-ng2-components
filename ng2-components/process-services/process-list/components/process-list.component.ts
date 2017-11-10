@@ -18,7 +18,7 @@
 import { DatePipe } from '@angular/common';
 import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { AppConfigService, DataColumnListComponent } from 'ng2-alfresco-core';
-import { DataColumn, DataRowEvent, DataSorting, DataTableAdapter, ObjectDataColumn, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
+import { DataColumn, DataRowEvent, DataSorting, DataTableAdapter, ObjectDataColumn, ObjectDataRow, ObjectDataTableAdapter } from '@adf/core';
 import { ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
 import { ProcessInstance } from '../models/process-instance.model';
 import { processPresetsDefaultModel } from '../models/process-preset.model';

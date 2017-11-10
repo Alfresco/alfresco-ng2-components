@@ -31,4 +31,4 @@ __export(require("./components/datatable/location-cell.component"));
 __export(require("./directives/loading-template.directive"));
 __export(require("./directives/no-content-template.directive"));
 __export(require("./directives/no-permission-template.directive"));
-__export(require("./datatable-module"));
+__export(require("./datatable.module"));

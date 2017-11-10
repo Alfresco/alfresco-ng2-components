@@ -20,7 +20,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule, MatInputModule } from '@angular/material';
 import { AppConfigService, CoreModule, LogService, TranslationService } from 'ng2-alfresco-core';
 import { PeopleProcessService, UserProcessModel } from 'ng2-alfresco-core';
-import { DataTableModule } from 'ng2-alfresco-datatable';
+import { DataTableModule } from '@adf/core';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { PeopleListComponent } from './people-list.component';

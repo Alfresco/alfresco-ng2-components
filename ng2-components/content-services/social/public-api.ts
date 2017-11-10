@@ -17,4 +17,5 @@
 
 export * from './rating.component';
 export * from './like.component';
-export * from './social-module';
+
+export * from './social.module';

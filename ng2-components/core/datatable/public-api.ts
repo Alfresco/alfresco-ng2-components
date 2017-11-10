@@ -31,4 +31,4 @@ export * from './directives/loading-template.directive';
 export * from './directives/no-content-template.directive';
 export * from './directives/no-permission-template.directive';
 
-export * from './datatable-module';
+export * from './datatable.module';

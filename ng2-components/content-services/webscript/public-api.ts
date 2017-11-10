@@ -16,4 +16,5 @@
  */
 
 export * from './webscript.component';
-export * from './webscript-module';
+
+export * from './webscript.module';

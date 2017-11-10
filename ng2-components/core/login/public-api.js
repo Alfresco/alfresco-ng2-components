@@ -25,4 +25,4 @@ __export(require("./components/login.component"));
 __export(require("./models/login-error.event"));
 __export(require("./models/login-submit.event"));
 __export(require("./models/login-success.event"));
-__export(require("./login-module"));
+__export(require("./login.module"));

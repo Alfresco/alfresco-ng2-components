@@ -17,7 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigService, CoreModule, TranslationService, UserProcessModel } from 'ng2-alfresco-core';
-import { DataRowActionEvent, DataRowEvent, DataTableModule, ObjectDataRow } from 'ng2-alfresco-datatable';
+import { DataRowActionEvent, DataRowEvent, DataTableModule, ObjectDataRow } from '@adf/core';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { UserEventModel } from '../models/user-event.model';

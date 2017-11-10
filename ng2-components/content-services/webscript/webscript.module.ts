@@ -16,9 +16,9 @@
  */
 
 import { NgModule } from '@angular/core';
-import { MaterialModule } from '../material.module';
 import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
-import { DataTableModule } from 'ng2-alfresco-datatable';
+import { DataTableModule } from '@adf/core';
+import { MaterialModule } from '../material.module';
 import { WebscriptComponent } from './webscript.component';
 
 @NgModule({
@@ -38,10 +38,10 @@ import { WebscriptComponent } from './webscript.component';
             provide: TRANSLATION_PROVIDER,
             multi: true,
             useValue: {
-                name: '@adf/content-service/webscript',
-                source: 'assets/@adf/content-service/webscript'
+                name: 'ng2-alfresco-webscript',
+                source: 'assets/ng2-alfresco-webscript'
             }
         }
-    ],
+    ]
 })
 export class WebScriptModule {}

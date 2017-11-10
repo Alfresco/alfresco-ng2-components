@@ -24,4 +24,4 @@ export * from './models/login-error.event';
 export * from './models/login-submit.event';
 export * from './models/login-success.event';
 
-export * from './login-module';
+export * from './login.module';

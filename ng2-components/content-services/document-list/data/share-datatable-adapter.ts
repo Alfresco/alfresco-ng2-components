@@ -18,7 +18,7 @@
 import { DatePipe } from '@angular/common';
 import { NodePaging } from 'alfresco-js-api';
 import { TimeAgoPipe } from 'ng2-alfresco-core';
-import { DataColumn, DataRow, DataSorting, DataTableAdapter } from 'ng2-alfresco-datatable';
+import { DataColumn, DataRow, DataSorting, DataTableAdapter } from '@adf/core';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { DocumentListService } from './../services/document-list.service';
 import { ImageResolver } from './image-resolver.model';

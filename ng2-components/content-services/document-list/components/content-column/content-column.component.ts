@@ -19,7 +19,7 @@
 
 import { AfterContentInit, Component, ContentChild, Input, OnInit, TemplateRef } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
-import { DataColumn } from 'ng2-alfresco-datatable';
+import { DataColumn } from '@adf/core';
 
 import { ContentColumnListComponent } from './content-column-list.component';
 

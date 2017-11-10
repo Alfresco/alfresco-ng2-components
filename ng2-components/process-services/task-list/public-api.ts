@@ -14,20 +14,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/*!
- * @license
- * Copyright 2016 Alfresco Software, Ltd.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-export * from './public-api';
+
+export * from './components/apps-list.component';
+export * from './components/task-list.component';
+export * from './components/checklist.component';
+export * from './components/comments.component';
+export * from './components/task-attachment-list.component';
+export * from './components/people.component';
+export * from './components/task-header.component';
+export * from './components/no-task-detail-template.directive';
+export * from './components/task-filters.component';
+export * from './components/task-details.component';
+export * from './components/task-audit.directive';
+export * from './components/start-task.component';
+export * from './components/people-search.component';
+export * from './components/create-task-attachment.component';
+export * from './components/people-list.component';
+export * from './components/comment-list.component';
+
+export * from './services/tasklist.service';
+export * from './services/process-upload.service';
+
+export * from './models/filter.model';
+export * from './models/icon.model';
+export * from './models/task-details.model';
+export * from './models/task-details.event';
+export * from './models/user-event.model';
+export * from './models/start-task.model';
+
+export * from './task-list.module';

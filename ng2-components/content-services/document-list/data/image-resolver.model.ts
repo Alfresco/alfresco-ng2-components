@@ -15,6 +15,6 @@
  * limitations under the License.
  */
 
-import { DataColumn, DataRow } from 'ng2-alfresco-datatable';
+import { DataColumn, DataRow } from '@adf/core';
 
 export type ImageResolver = (row: DataRow, column: DataColumn) => string;

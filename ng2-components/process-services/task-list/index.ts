@@ -15,31 +15,4 @@
  * limitations under the License.
  */
 
-export * from './components/apps-list.component';
-export * from './components/task-list.component';
-export * from './components/checklist.component';
-export * from './components/comments.component';
-export * from './components/task-attachment-list.component';
-export * from './components/people.component';
-export * from './components/task-header.component';
-export * from './components/no-task-detail-template.directive';
-export * from './components/task-filters.component';
-export * from './components/task-details.component';
-export * from './components/task-audit.directive';
-export * from './components/start-task.component';
-export * from './components/people-search.component';
-export * from './components/create-task-attachment.component';
-export * from './components/people-list.component';
-export * from './components/comment-list.component';
-
-export * from './services/tasklist.service';
-export * from './services/process-upload.service';
-
-export * from './models/filter.model';
-export * from './models/icon.model';
-export * from './models/task-details.model';
-export * from './models/task-details.event';
-export * from './models/user-event.model';
-export * from './models/start-task.model';
-
-export * from './task-list-module';
+export * from './public-api';

@@ -30,4 +30,5 @@ export * from './services/form-rendering.service';
 export * from './services/process-content.service';
 
 export * from './events/index';
-export * from './form-module';
+
+export * from './form.module';

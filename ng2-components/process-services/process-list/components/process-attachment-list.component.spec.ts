@@ -22,7 +22,7 @@ import { By } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { ProcessContentService } from '../../form';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
-import { DataTableModule } from 'ng2-alfresco-datatable';
+import { DataTableModule } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 
 import { TranslationMock } from './../assets/translation.service.mock';

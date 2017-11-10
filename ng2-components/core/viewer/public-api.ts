@@ -27,3 +27,5 @@ export * from './components/viewer-sidebar.component';
 export * from './components/viewer-toolbar.component';
 export * from './components/viewer.component';
 export * from './directives/viewer-extension.directive';
+
+export * from './viewer.module';

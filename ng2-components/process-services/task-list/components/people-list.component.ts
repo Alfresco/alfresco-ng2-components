@@ -17,7 +17,7 @@
 
 import { AfterContentInit, AfterViewInit, Component, ContentChild, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { DataColumnListComponent, UserProcessModel } from 'ng2-alfresco-core';
-import { DataTableComponent } from 'ng2-alfresco-datatable';
+import { DataTableComponent } from '@adf/core';
 import { UserEventModel } from '../models/user-event.model';
 
 @Component({

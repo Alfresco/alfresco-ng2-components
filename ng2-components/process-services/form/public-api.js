@@ -32,4 +32,4 @@ __export(require("./services/node.service"));
 __export(require("./services/form-rendering.service"));
 __export(require("./services/process-content.service"));
 __export(require("./events/index"));
-__export(require("./form-module"));
+__export(require("./form.module"));

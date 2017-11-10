@@ -31,3 +31,4 @@ __export(require("./components/viewer-sidebar.component"));
 __export(require("./components/viewer-toolbar.component"));
 __export(require("./components/viewer.component"));
 __export(require("./directives/viewer-extension.directive"));
+__export(require("./viewer.module"));
