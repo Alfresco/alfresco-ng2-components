@@ -39,6 +39,7 @@ export * from './directives/node-permission.directive';
 export * from './directives/node-favorite.directive';
 
 export * from './utils';
+export * from './interface';
 export * from './models';
 export * from './events';
 export * from './mock';

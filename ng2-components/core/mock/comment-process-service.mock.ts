@@ -39,4 +39,4 @@ export let fakeProcessComment = new CommentProcessModel({id: 1, message: 'Test',
     firstName: 'Wilbur',
     lastName: 'Adams',
     email: 'wilbur@app.com'
-}));
+})});

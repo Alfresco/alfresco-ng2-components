@@ -19,15 +19,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { MatDatepickerModule, MatIconModule, MatInputModule, MatNativeDateModule } from '@angular/material';
+import { MaterialModule } from '../material.module';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { CardViewMapItemModel } from '../../models/card-view-mapitem.model';
-import { AppConfigService } from '../../services/app-config.service';
-import { CardViewUpdateService } from '../../services/card-view-update.service';
-import { LogService } from '../../services/log.service';
-import { AlfrescoTranslateLoader } from '../../services/translate-loader.service';
+import { CardViewMapItemModel } from '../models/card-view-mapitem.model';
+import { AppConfigService } from '../services/app-config.service';
+import { CardViewUpdateService } from '../services/card-view-update.service';
+import { LogService } from '../services/log.service';
+import { AlfrescoTranslateLoader } from '../services/translate-loader.service';
 
 import { CardViewMapItemComponent } from './card-view-mapitem.component';
 
@@ -45,10 +45,7 @@ describe('CardViewMapItemComponent', () => {
                 HttpClientModule,
                 FormsModule,
                 NoopAnimationsModule,
-                MatDatepickerModule,
-                MatIconModule,
-                MatInputModule,
-                MatNativeDateModule,
+                MaterialModule,
                 TranslateModule.forRoot({
                     loader: {
                         provide: TranslateLoader,

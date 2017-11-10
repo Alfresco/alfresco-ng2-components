@@ -15,10 +15,6 @@
  * limitations under the License.
  */
 
-// re-export for tester convenience
-export { BpmUserModel } from '../models/bpm-user.model';
-export { BpmUserService } from '../services/bpm-user.service';
-
 export let fakeBpmUserNoImage = {
     apps: [],
     capabilities: 'fake-capability',

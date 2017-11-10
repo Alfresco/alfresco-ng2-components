@@ -16,8 +16,8 @@
  */
 
 import { Component, Input } from '@angular/core';
-import { CardViewMapItemModel } from '../../models/card-view-mapitem.model';
-import { CardViewUpdateService } from '../../services/card-view-update.service';
+import { CardViewMapItemModel } from '../models/card-view-mapitem.model';
+import { CardViewUpdateService } from '../services/card-view-update.service';
 
 @Component({
     selector: 'adf-card-view-mapitem',

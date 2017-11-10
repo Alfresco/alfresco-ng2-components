@@ -15,15 +15,4 @@
  * limitations under the License.
  */
 
-export * from './AlfrescoApi.mock';
-export * from './app-config.service.mock';
-export * from './apps-service.mock'
-export * from './authentication.service.mock'
-export * from './bpm-user.service.mock'
-export * from './comment-process-service.mock';
-export * from './cookie.service.mock';
-export * from './ecm-user.service.mock'
-export * from './event.mock'
-export * from './renditionsService.mock';
-export * from './search.service.mock';
-export * from './translation.service.mock';
+export * from './public-api';

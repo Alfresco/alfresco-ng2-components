@@ -15,10 +15,6 @@
  * limitations under the License.
  */
 
-// re-export for tester convenience
-export { EcmUserModel } from '../models/ecm-user.model';
-export { EcmUserService } from '../services/ecm-user.service';
-
 import { EcmCompanyModel } from '../models/ecm-company.model';
 
 export let fakeEcmCompany: EcmCompanyModel = {

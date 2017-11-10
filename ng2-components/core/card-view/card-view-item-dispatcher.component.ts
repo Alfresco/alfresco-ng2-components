@@ -22,8 +22,8 @@ import {
     OnChanges,
     ViewChild
 } from '@angular/core';
-import { CardViewItem } from '../../interface/card-view-item.interface';
-import { CardItemTypeService } from '../../services/card-item-types.service';
+import { CardViewItem } from '../interface/card-view-item.interface';
+import { CardItemTypeService } from '../services/card-item-types.service';
 import { CardViewContentProxyDirective } from './card-view-content-proxy.directive';
 
 @Component({

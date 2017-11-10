@@ -21,7 +21,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormModule } from '../form';
 
 import { DataTableModule } from '@adf/core';
-import { CoreModule, TRANSLATION_PROVIDER } from '@adf/core';
+import { TRANSLATION_PROVIDER } from '@adf/core';
 import { MaterialModule } from '../material.module';
 import { ProcessUploadService } from './services/process-upload.service';
 import { TaskListService } from './services/tasklist.service';
@@ -45,7 +45,6 @@ import { TaskListComponent } from './components/task-list.component';
 
 @NgModule({
     imports: [
-        CoreModule,
         DataTableModule,
         FormModule,
         FlexLayoutModule,

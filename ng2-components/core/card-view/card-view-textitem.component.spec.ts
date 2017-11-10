@@ -22,11 +22,11 @@ import { MatDatepickerModule, MatIconModule, MatInputModule, MatNativeDateModule
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
-import { AppConfigService } from '../../services/app-config.service';
-import { CardViewUpdateService } from '../../services/card-view-update.service';
-import { LogService } from '../../services/log.service';
-import { AlfrescoTranslateLoader } from '../../services/translate-loader.service';
+import { CardViewTextItemModel } from '../models/card-view-textitem.model';
+import { AppConfigService } from '../services/app-config.service';
+import { CardViewUpdateService } from '../services/card-view-update.service';
+import { LogService } from '../services/log.service';
+import { AlfrescoTranslateLoader } from '../services/translate-loader.service';
 
 import { CardViewTextItemComponent } from './card-view-textitem.component';
 

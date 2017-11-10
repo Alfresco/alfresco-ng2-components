@@ -16,8 +16,8 @@
  */
 
 import { Component, Input, OnChanges, ViewChild } from '@angular/core';
-import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
-import { CardViewUpdateService } from '../../services/card-view-update.service';
+import { CardViewTextItemModel } from '../models/card-view-textitem.model';
+import { CardViewUpdateService } from '../services/card-view-update.service';
 
 @Component({
     selector: 'adf-card-view-textitem',
