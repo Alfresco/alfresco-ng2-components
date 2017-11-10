@@ -18,11 +18,11 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DiagramsModule } from '../../diagram';
-import { TranslationService } from '@adf/core';
+import { CoreModule, TranslationService } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { AnalyticsReportHeatMapComponent } from '../components/analytics-report-heat-map.component';
 import { WIDGET_ANALYTICS_DIRECTIVES } from '../components/widgets/index';
-import { MaterialModule } from '../material.module';
+import { MaterialModule } from '../../material.module';
 import { AnalyticsService } from '../services/analytics.service';
 
 declare let jasmine: any;
@@ -45,7 +45,7 @@ describe('AnalyticsReportHeatMapComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-
+                CoreModule,
                 DiagramsModule,
                 MaterialModule
             ],

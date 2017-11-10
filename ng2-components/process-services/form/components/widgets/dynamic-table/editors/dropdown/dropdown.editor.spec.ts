@@ -19,13 +19,14 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 import { EcmModelService } from '../../../../../services/ecm-model.service';
-import { MaterialModule } from '../../../../material.module';
+import { MaterialModule } from '../../../../../../material.module';
 import { FormService } from './../../../../../services/form.service';
 import { FormFieldModel, FormModel } from './../../../core/index';
 import { DynamicTableColumnOption  } from './../../dynamic-table-column-option.model';
 import { DynamicTableColumn  } from './../../dynamic-table-column.model';
 import { DynamicTableRow  } from './../../dynamic-table-row.model';
 import { DynamicTableModel } from './../../dynamic-table.widget.model';
+import { CoreModule } from '@adf/core';
 
 import { DropdownEditorComponent } from './dropdown.editor';
 

@@ -34,7 +34,7 @@ describe('DocumentActionsService', () => {
 
     beforeEach(() => {
         documentListService = new DocumentListServiceMock();
-        contentService = new ContentService(null, null, null);
+        contentService = new ContentService(null, null, null, null);
         translateService = <TranslationService> { addTranslationFolder: () => {}};
         nodeActionsService = new NodeActionsService(null, null, null);
         notificationService = new NotificationService(null);
