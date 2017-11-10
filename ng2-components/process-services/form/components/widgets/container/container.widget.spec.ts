@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
+import { ActivitiContentService } from '../../../services/activiti-alfresco.service';
 import { fakeFormJson } from '../../../services/assets/widget-visibility.service.mock';
 import { MaterialModule } from '../../../../material.module';
 import { WIDGET_DIRECTIVES } from '../index';
@@ -37,7 +37,7 @@ describe('ContainerWidgetComponent', () => {
     let widget: ContainerWidgetComponent;
     let fixture: ComponentFixture<ContainerWidgetComponent>;
     let element: HTMLElement;
-    let contentService: ActivitiAlfrescoContentService;
+    let contentService: ActivitiContentService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -49,14 +49,14 @@ describe('ContainerWidgetComponent', () => {
             providers: [
                 FormService,
                 EcmModelService,
-                ActivitiAlfrescoContentService
+                ActivitiContentService
             ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
         fixture = TestBed.createComponent(ContainerWidgetComponent);
-        contentService = TestBed.get(ActivitiAlfrescoContentService);
+        contentService = TestBed.get(ActivitiContentService);
 
         element = fixture.nativeElement;
         widget = fixture.componentInstance;

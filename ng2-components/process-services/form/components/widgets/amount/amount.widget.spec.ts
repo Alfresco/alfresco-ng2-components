@@ -17,7 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatInputModule } from '@angular/material';
-import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
+import { ActivitiContentService } from '../../../services/activiti-alfresco.service';
 import { ErrorWidgetComponent } from '../error/error.component';
 import { EcmModelService } from './../../../services/ecm-model.service';
 import { FormService } from './../../../services/form.service';
@@ -42,7 +42,7 @@ describe('AmountWidgetComponent', () => {
             providers: [
                 FormService,
                 EcmModelService,
-                ActivitiAlfrescoContentService
+                ActivitiContentService
             ]
         }).compileComponents();
     }));

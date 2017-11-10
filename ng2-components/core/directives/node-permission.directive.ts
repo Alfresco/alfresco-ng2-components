@@ -17,7 +17,7 @@
 
 import { Directive, ElementRef, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
-import { AlfrescoContentService } from './../services/alfresco-content.service';
+import { ContentService } from './../services/content.service';
 
 export interface NodePermissionSubject {
     disabled: boolean;
@@ -35,7 +35,7 @@ export class NodePermissionDirective implements OnChanges {
     nodes: MinimalNodeEntity[] = [];
 
     constructor(private elementRef: ElementRef,
-                private contentService: AlfrescoContentService) {
+                private contentService: ContentService) {
     }
 
     ngOnChanges(changes: SimpleChanges) {

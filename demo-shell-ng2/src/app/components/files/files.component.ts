@@ -21,10 +21,9 @@ import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MinimalNodeEntity, NodePaging } from 'alfresco-js-api';
 import {
-    AlfrescoApiService, AlfrescoContentService, TranslationService,
+    AlfrescoApiService, ContentService, TranslationService,
     DownloadZipDialogComponent, FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
-    SiteModel, UploadService,
-    DataColumn, DataRow } from '@adf/core';
+    SiteModel, UploadService, DataColumn, DataRow } from '@adf/core';
 import { DocumentListComponent, PermissionStyleModel } from '@adf/content-services';
 import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-adapter.component';
 import { Subscription } from 'rxjs/Rx';
@@ -103,7 +102,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 private apiService: AlfrescoApiService,
                 private notificationService: NotificationService,
                 private uploadService: UploadService,
-                private contentService: AlfrescoContentService,
+                private contentService: ContentService,
                 private dialog: MatDialog,
                 private translateService: TranslationService,
                 private router: Router,

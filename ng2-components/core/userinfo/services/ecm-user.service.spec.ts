@@ -16,7 +16,7 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { AuthenticationService, AlfrescoContentService  } from '../../services';
+import { AuthenticationService, ContentService  } from '../../services';
 import { fakeEcmUser } from '../../mock/ecm-user.service.mock';
 import { EcmUserService } from '../services/ecm-user.service';
 
@@ -26,14 +26,14 @@ describe('EcmUserService', () => {
 
     let service: EcmUserService;
     let authService: AuthenticationService;
-    let contentService: AlfrescoContentService;
+    let contentService: ContentService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             providers: [
                 EcmUserService,
                 AuthenticationService,
-                AlfrescoContentService
+                ContentService
             ]
         }).compileComponents();
     }));
@@ -41,7 +41,7 @@ describe('EcmUserService', () => {
     beforeEach(() => {
         service = TestBed.get(EcmUserService);
         authService = TestBed.get(AuthenticationService);
-        contentService = TestBed.get(AlfrescoContentService);
+        contentService = TestBed.get(ContentService);
     });
 
     beforeEach(() => {

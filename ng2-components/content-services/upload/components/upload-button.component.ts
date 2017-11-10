@@ -260,7 +260,7 @@ export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionS
         }
     }
 
-    // TODO: move to AlfrescoContentService
+    // TODO: move to ContentService
     getFolderNode(nodeId: string): Observable<MinimalNodeEntryEntity> {
         let opts: any = {
             includeSource: true,

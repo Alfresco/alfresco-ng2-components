@@ -35,7 +35,7 @@ import { StartFormComponent } from './components/start-form.component';
 import { ContentWidgetComponent } from './components/widgets/content/content.widget';
 import { WidgetComponent } from './components/widgets/widget.component';
 
-import { ActivitiAlfrescoContentService } from './services/activiti-alfresco.service';
+import { ActivitiContentService } from './services/activiti-alfresco.service';
 import { EcmModelService } from './services/ecm-model.service';
 import { FormRenderingService } from './services/form-rendering.service';
 import { FormService } from './services/form.service';
@@ -72,7 +72,7 @@ import { DataColumnModule, PipeModule } from '@adf/core';
         ...WIDGET_DIRECTIVES
     ],
     providers: [
-        ActivitiAlfrescoContentService,
+        ActivitiContentService,
         EcmModelService,
         FormRenderingService,
         FormService,

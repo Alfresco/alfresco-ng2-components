@@ -20,7 +20,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { UserProcessModel } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
-import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
+import { ActivitiContentService } from '../../../services/activiti-alfresco.service';
 import { FormService } from '../../../services/form.service';
 import { MaterialModule } from '../../../../material.module';
 import { FormFieldTypes } from '../core/form-field-types';
@@ -51,7 +51,7 @@ describe('PeopleWidgetComponent', () => {
             providers: [
                 FormService,
                 EcmModelService,
-                ActivitiAlfrescoContentService,
+                ActivitiContentService,
                 {
                     provide: OverlayContainer, useFactory: () => {
                     overlayContainerElement = document.createElement('div');

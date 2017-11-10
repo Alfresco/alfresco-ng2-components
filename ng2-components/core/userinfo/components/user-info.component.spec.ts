@@ -19,7 +19,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
     AuthenticationService,
-    AlfrescoContentService,
+    ContentService,
     TranslationService
 } from '../../services';
 import { fakeBpmUser } from '../../mock/bpm-user.service.mock';
@@ -39,7 +39,7 @@ describe('User info component', () => {
     let fixture: ComponentFixture<UserInfoComponent>;
     let element: HTMLElement;
     let stubAuthService: AuthenticationService;
-    let stubContent: AlfrescoContentService;
+    let stubContent: ContentService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -60,7 +60,7 @@ describe('User info component', () => {
             element = fixture.nativeElement;
 
             stubAuthService = TestBed.get(AuthenticationService);
-            stubContent = TestBed.get(AlfrescoContentService);
+            stubContent = TestBed.get(ContentService);
         });
     }));
 

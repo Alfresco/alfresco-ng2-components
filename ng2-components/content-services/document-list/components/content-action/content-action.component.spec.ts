@@ -18,7 +18,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
-import { AlfrescoContentService, TranslationService, NotificationService } from '@adf/core';
+import { ContentService, TranslationService, NotificationService } from '@adf/core';
 import { DataTableModule } from '@adf/core';
 import { MaterialModule } from '../../../material.module';
 
@@ -39,7 +39,7 @@ describe('ContentAction', () => {
     let documentActions: DocumentActionsService;
     let folderActions: FolderActionsService;
 
-    let contentService: AlfrescoContentService;
+    let contentService: ContentService;
     let translateService: TranslationService;
     let notificationService: NotificationService;
     let nodeActionsService: NodeActionsService;
@@ -64,7 +64,7 @@ describe('ContentAction', () => {
     }));
 
     beforeEach(() => {
-        contentService = TestBed.get(AlfrescoContentService);
+        contentService = TestBed.get(ContentService);
         translateService = <TranslationService> { addTranslationFolder: () => {}};
         nodeActionsService = new NodeActionsService(null, null, null);
         notificationService = new NotificationService(null);

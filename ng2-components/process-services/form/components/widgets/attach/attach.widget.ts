@@ -18,7 +18,7 @@
  /* tslint:disable:component-selector  */
 
 import { Component, EventEmitter, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
+import { ActivitiContentService } from '../../../services/activiti-alfresco.service';
 import { ExternalContent } from '../core/external-content';
 import { ExternalContentLink } from '../core/external-content-link';
 import { FormFieldModel } from '../core/form-field.model';
@@ -52,7 +52,7 @@ export class AttachWidgetComponent extends WidgetComponent implements OnInit {
     dialog: any;
 
     constructor(public formService: FormService,
-                private contentService: ActivitiAlfrescoContentService) {
+                private contentService: ActivitiContentService) {
          super(formService);
     }
 

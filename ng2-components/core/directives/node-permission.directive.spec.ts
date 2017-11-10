@@ -18,7 +18,7 @@
 import { Component, DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AlfrescoContentService } from './../services/alfresco-content.service';
+import { ContentService } from './../services/content.service';
 import { NodePermissionDirective } from './node-permission.directive';
 
 @Component({
@@ -36,7 +36,7 @@ describe('NodePermissionDirective', () => {
     let fixture: ComponentFixture<TestComponent>;
     let element: DebugElement;
     let component: TestComponent;
-    let alfrescoContentService: AlfrescoContentService;
+    let alfrescoContentService: ContentService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -49,7 +49,7 @@ describe('NodePermissionDirective', () => {
             .compileComponents()
             .then(() => {
                 fixture = TestBed.createComponent(TestComponent);
-                alfrescoContentService = TestBed.get(AlfrescoContentService);
+                alfrescoContentService = TestBed.get(ContentService);
                 component = fixture.componentInstance;
                 element = fixture.debugElement.query(By.directive(NodePermissionDirective));
             });

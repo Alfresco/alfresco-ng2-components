@@ -183,7 +183,7 @@ var UploadButtonComponent = (function () {
             this.getFolderNode(this.rootFolderId).subscribe(function (res) { return _this.permissionValue.next(_this.hasCreatePermission(res)); }, function (error) { return _this.error.emit(error); });
         }
     };
-    // TODO: move to AlfrescoContentService
+    // TODO: move to ContentService
     UploadButtonComponent.prototype.getFolderNode = function (nodeId) {
         var _this = this;
         var opts = {

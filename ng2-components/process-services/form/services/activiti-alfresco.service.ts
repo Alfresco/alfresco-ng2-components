@@ -23,7 +23,7 @@ import { ExternalContent } from '../components/widgets/core/external-content';
 import { ExternalContentLink } from '../components/widgets/core/external-content-link';
 
 @Injectable()
-export class ActivitiAlfrescoContentService {
+export class ActivitiContentService {
 
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
@@ -81,10 +81,10 @@ export class ActivitiAlfrescoContentService {
     }
 
     handleError(error: any): Observable<any> {
-        let errMsg = ActivitiAlfrescoContentService.UNKNOWN_ERROR_MESSAGE;
+        let errMsg = ActivitiContentService.UNKNOWN_ERROR_MESSAGE;
         if (error) {
             errMsg = (error.message) ? error.message :
-                error.status ? `${error.status} - ${error.statusText}` : ActivitiAlfrescoContentService.GENERIC_ERROR_MESSAGE;
+                error.status ? `${error.status} - ${error.statusText}` : ActivitiContentService.GENERIC_ERROR_MESSAGE;
         }
         this.logService.error(errMsg);
         return Observable.throw(errMsg);

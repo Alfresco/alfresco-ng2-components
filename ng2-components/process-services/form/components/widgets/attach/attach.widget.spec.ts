@@ -17,7 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
-import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
+import { ActivitiContentService } from '../../../services/activiti-alfresco.service';
 import { MaterialModule } from '../../../../material.module';
 import { ExternalContent } from '../core/external-content';
 import { ExternalContentLink } from '../core/external-content-link';
@@ -34,7 +34,7 @@ describe('AttachWidgetComponent', () => {
     let widget: AttachWidgetComponent;
     let fixture: ComponentFixture<AttachWidgetComponent>;
     let element: HTMLElement;
-    let contentService: ActivitiAlfrescoContentService;
+    let contentService: ActivitiContentService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -49,14 +49,14 @@ describe('AttachWidgetComponent', () => {
             providers: [
                 FormService,
                 EcmModelService,
-                ActivitiAlfrescoContentService
+                ActivitiContentService
             ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
         fixture = TestBed.createComponent(AttachWidgetComponent);
-        contentService = TestBed.get(ActivitiAlfrescoContentService);
+        contentService = TestBed.get(ActivitiContentService);
 
         element = fixture.nativeElement;
         widget = fixture.componentInstance;

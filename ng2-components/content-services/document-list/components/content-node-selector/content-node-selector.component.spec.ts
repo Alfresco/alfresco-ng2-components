@@ -20,7 +20,7 @@ import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { AlfrescoContentService, TranslationService, SearchService, SiteModel, SitesApiService } from '@adf/core';
+import { ContentService, TranslationService, SearchService, SiteModel, SitesApiService } from '@adf/core';
 import { DataTableModule } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { MaterialModule } from '../../../material.module';
@@ -86,7 +86,7 @@ describe('ContentNodeSelectorComponent', () => {
                 ContentNodeSelectorComponent
             ],
             providers: [
-                AlfrescoContentService,
+                ContentService,
                 SitesApiService,
                 TranslationService,
                 DocumentListService,
@@ -290,7 +290,7 @@ describe('ContentNodeSelectorComponent', () => {
             });
 
             it('should show the breadcrumb for the selected node when search results are displayed', (done) => {
-                const alfrescoContentService = TestBed.get(AlfrescoContentService);
+                const alfrescoContentService = TestBed.get(ContentService);
                 spyOn(alfrescoContentService, 'hasPermission').and.returnValue(true);
 
                 typeToSearchBox();
@@ -311,7 +311,7 @@ describe('ContentNodeSelectorComponent', () => {
             });
 
             it('should NOT show the breadcrumb for the selected node when not on search results list', (done) => {
-                const alfrescoContentService = TestBed.get(AlfrescoContentService);
+                const alfrescoContentService = TestBed.get(ContentService);
                 spyOn(alfrescoContentService, 'hasPermission').and.returnValue(true);
 
                 typeToSearchBox();
@@ -612,7 +612,7 @@ describe('ContentNodeSelectorComponent', () => {
             let hasPermission;
 
             beforeEach(() => {
-                const alfrescoContentService = TestBed.get(AlfrescoContentService);
+                const alfrescoContentService = TestBed.get(ContentService);
                 spyOn(alfrescoContentService, 'hasPermission').and.callFake(() => hasPermission);
             });
 

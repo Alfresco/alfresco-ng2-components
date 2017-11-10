@@ -26,7 +26,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs/Rx';
 
 import { AppConfigService, providers } from '../../index';
-import { AlfrescoContentService } from '../services/alfresco-content.service';
+import { ContentService } from '../services/content.service';
 import { TranslateLoaderService } from '../services/translate-loader.service';
 import { FolderEditDirective } from './folder-edit.directive';
 
@@ -42,7 +42,7 @@ describe('FolderEditDirective', () => {
     let element;
     let node: any;
     let dialog: MatDialog;
-    let contentService: AlfrescoContentService;
+    let contentService: ContentService;
     let dialogRefMock;
 
     const event = {
@@ -70,7 +70,7 @@ describe('FolderEditDirective', () => {
             ]
             ,
             providers: [
-                AlfrescoContentService,
+                ContentService,
                 AppConfigService,
                 ...providers()
             ]
@@ -81,7 +81,7 @@ describe('FolderEditDirective', () => {
         fixture = TestBed.createComponent(TestComponent);
         element = fixture.debugElement.query(By.directive(FolderEditDirective));
         dialog = TestBed.get(MatDialog);
-        contentService = TestBed.get(AlfrescoContentService);
+        contentService = TestBed.get(ContentService);
     });
 
     beforeEach(() => {

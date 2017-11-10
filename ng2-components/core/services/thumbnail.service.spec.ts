@@ -22,7 +22,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { CookieServiceMock } from './../mock/cookie.service.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { AlfrescoContentService } from './alfresco-content.service';
+import { ContentService } from './content.service';
 import { SettingsService } from './settings.service';
 import { AppConfigService } from './app-config.service';
 import { AuthenticationService } from './authentication.service';
@@ -52,7 +52,7 @@ describe('ThumbnailService', () => {
             providers: [
                 UserPreferencesService,
                 AuthenticationService,
-                AlfrescoContentService,
+                ContentService,
                 SettingsService,
                 AppConfigService,
                 { provide: CookieService, useClass: CookieServiceMock },

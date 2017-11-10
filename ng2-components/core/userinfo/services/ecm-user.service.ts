@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
-import { AlfrescoApiService, AlfrescoContentService, LogService } from '../../services';
+import { AlfrescoApiService, ContentService, LogService } from '../../services';
 import { Observable } from 'rxjs/Rx';
 import { EcmUserModel } from '../models/ecm-user.model';
 /**
@@ -30,7 +30,7 @@ import { EcmUserModel } from '../models/ecm-user.model';
 export class EcmUserService {
 
     constructor(private apiService: AlfrescoApiService,
-                private contentService: AlfrescoContentService,
+                private contentService: ContentService,
                 private logService: LogService) {
     }
 

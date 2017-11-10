@@ -19,7 +19,7 @@ import { Directive, HostListener, Input } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { FolderDialogComponent } from '../dialogs/folder.dialog';
-import { AlfrescoContentService } from '../services/alfresco-content.service';
+import { ContentService } from '../services/content.service';
 
 const DEFAULT_FOLDER_PARENT_ID = '-my-';
 
@@ -40,7 +40,7 @@ export class FolderCreateDirective {
 
     constructor(
         public dialogRef: MatDialog,
-        public content: AlfrescoContentService
+        public content: ContentService
     ) {}
 
     private get dialogConfig(): MatDialogConfig {

@@ -17,7 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LogService } from '@adf/core';
-import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
+import { ActivitiContentService } from '../../../services/activiti-alfresco.service';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { MaterialModule } from '../../../../material.module';
 import { ErrorWidgetComponent } from '../error/error.component';
@@ -97,7 +97,7 @@ describe('DynamicTableWidgetComponent', () => {
             providers: [
                 FormService,
                 LogService,
-                ActivitiAlfrescoContentService,
+                ActivitiContentService,
                 EcmModelService,
                 WidgetVisibilityService
             ]

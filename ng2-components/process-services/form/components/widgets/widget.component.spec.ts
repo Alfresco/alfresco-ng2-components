@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivitiAlfrescoContentService } from '../../services/activiti-alfresco.service';
+import { ActivitiContentService } from '../../services/activiti-alfresco.service';
 import { EcmModelService } from './../../services/ecm-model.service';
 import { FormService } from './../../services/form.service';
 import { FormFieldModel } from './core/form-field.model';
@@ -37,7 +37,7 @@ describe('WidgetComponent', () => {
             providers: [
                 FormService,
                 EcmModelService,
-                ActivitiAlfrescoContentService
+                ActivitiContentService
             ]
         }).compileComponents();
     }));

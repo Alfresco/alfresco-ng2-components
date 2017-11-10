@@ -17,7 +17,7 @@
 
 import { DebugElement, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AlfrescoContentService, TranslationService, UploadService } from '@adf/core';
+import { ContentService, TranslationService, UploadService } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { UploadButtonComponent } from './upload-button.component';
@@ -56,7 +56,7 @@ describe('UploadButtonComponent', () => {
     let debug: DebugElement;
     let element: HTMLElement;
     let uploadService: UploadService;
-    let contentService: AlfrescoContentService;
+    let contentService: ContentService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -75,7 +75,7 @@ describe('UploadButtonComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(UploadButtonComponent);
         uploadService = TestBed.get(UploadService);
-        contentService = TestBed.get(AlfrescoContentService);
+        contentService = TestBed.get(ContentService);
 
         debug = fixture.debugElement;
         element = fixture.nativeElement;

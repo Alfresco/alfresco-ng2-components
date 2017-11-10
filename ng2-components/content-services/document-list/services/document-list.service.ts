@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
-import { AlfrescoApiService, AuthenticationService, AlfrescoContentService, LogService, PermissionsEnum, ThumbnailService } from '@adf/core';
+import { AlfrescoApiService, AuthenticationService, ContentService, LogService, PermissionsEnum, ThumbnailService } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 
 @Injectable()
@@ -27,7 +27,7 @@ export class DocumentListService {
     static ROOT_ID = '-root-';
 
     constructor(authService: AuthenticationService,
-                private contentService: AlfrescoContentService,
+                private contentService: ContentService,
                 private apiService: AlfrescoApiService,
                 private logService: LogService,
                 private thumbnailService: ThumbnailService) {

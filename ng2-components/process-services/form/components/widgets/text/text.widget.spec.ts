@@ -22,7 +22,7 @@ import { FormModel } from '../core/form.model';
 import { InputMaskDirective } from './text-mask.component';
 import { TextWidgetComponent } from './text.widget';
 
-import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
+import { ActivitiContentService } from '../../../services/activiti-alfresco.service';
 import { MaterialModule } from '../../../../material.module';
 import { ErrorWidgetComponent } from '../error/error.component';
 import { EcmModelService } from './../../../services/ecm-model.service';
@@ -47,7 +47,7 @@ describe('TextWidgetComponent', () => {
             providers: [
                 FormService,
                 EcmModelService,
-                ActivitiAlfrescoContentService
+                ActivitiContentService
             ]
         }).compileComponents();
     }));

@@ -25,7 +25,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs/Rx';
 
 import { AppConfigService, providers } from '../../index';
-import { AlfrescoContentService } from '../services/alfresco-content.service';
+import { ContentService } from '../services/content.service';
 import { TranslateLoaderService } from '../services/translate-loader.service';
 import { FolderCreateDirective } from './folder-create.directive';
 
@@ -41,7 +41,7 @@ describe('FolderCreateDirective', () => {
     let element;
     let node: any;
     let dialog: MatDialog;
-    let contentService: AlfrescoContentService;
+    let contentService: ContentService;
     let dialogRefMock;
 
     const event: any = {
@@ -68,7 +68,7 @@ describe('FolderCreateDirective', () => {
                 FolderCreateDirective
             ],
             providers: [
-                AlfrescoContentService,
+                ContentService,
                 AppConfigService,
                 ...providers()
             ]
@@ -79,7 +79,7 @@ describe('FolderCreateDirective', () => {
         fixture = TestBed.createComponent(TestComponent);
         element = fixture.debugElement.query(By.directive(FolderCreateDirective));
         dialog = TestBed.get(MatDialog);
-        contentService = TestBed.get(AlfrescoContentService);
+        contentService = TestBed.get(ContentService);
     });
 
     beforeEach(() => {

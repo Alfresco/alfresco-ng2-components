@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
-import { AlfrescoContentService } from './alfresco-content.service';
+import { ContentService } from './content.service';
 
 declare var require: any;
 
@@ -59,7 +59,7 @@ export class ThumbnailService {
         'selected': require('../assets/images/ft_ic_selected.svg')
     };
 
-    constructor(public contentService: AlfrescoContentService, matIconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+    constructor(public contentService: ContentService, matIconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
         matIconRegistry.addSvgIcon('image/png',
             sanitizer.bypassSecurityTrustResourceUrl(require('../assets/images/ft_ic_raster_image.svg')));
         matIconRegistry.addSvgIcon('image/jpeg',

@@ -18,7 +18,7 @@
 import {
     AlfrescoApiService,
     AuthenticationService,
-    AlfrescoContentService,
+    ContentService,
     SettingsService,
     LogService,
     ThumbnailService
@@ -37,7 +37,7 @@ export class DocumentListServiceMock extends DocumentListService {
     constructor(
         settings?: SettingsService,
         authService?: AuthenticationService,
-        contentService?: AlfrescoContentService,
+        contentService?: ContentService,
         apiService?: AlfrescoApiService,
         logService?: LogService,
         thumbnailService?: ThumbnailService
