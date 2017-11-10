@@ -19,7 +19,7 @@ import { async, TestBed } from '@angular/core/testing';
 import { BpmProductVersionModel, EcmProductVersionModel } from '../models/product-version.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { SettingsService } from './settings.service';
-import { AppConfigModule, AppConfigService } from './app-config.service';
+import { AppConfigModule, AppConfigService } from '../app-config/app-config.service';
 import { AuthenticationService } from './authentication.service';
 import { DiscoveryApiService } from './discovery-api.service';
 import { StorageService } from './storage.service';

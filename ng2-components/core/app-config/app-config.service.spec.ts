@@ -17,7 +17,7 @@
 
 import { HttpClientModule } from '@angular/common/http';
 import { inject, TestBed } from '@angular/core/testing';
-import { AppConfigModule, AppConfigService } from './app-config.service';
+import { AppConfigModule, AppConfigService } from '../app-config/app-config.service';
 
 declare let jasmine: any;
 

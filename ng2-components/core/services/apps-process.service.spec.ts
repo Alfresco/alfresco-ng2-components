@@ -19,7 +19,7 @@ import { TestBed } from '@angular/core/testing';
 import { AppConfigServiceMock } from '../mock/app-config.service.mock';
 import { fakeApps } from '../mock/apps-service.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { AppConfigService } from './app-config.service';
+import { AppConfigService } from '../app-config/app-config.service';
 import { AppsProcessService } from './apps-process.service';
 import { LogService } from './log.service';
 import { StorageService } from './storage.service';

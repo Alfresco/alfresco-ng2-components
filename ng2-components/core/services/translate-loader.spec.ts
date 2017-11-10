@@ -19,7 +19,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Injector } from '@angular/core';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { AppConfigService } from './app-config.service';
+import { AppConfigService } from '../app-config/app-config.service';
 
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { LogService } from './log.service';

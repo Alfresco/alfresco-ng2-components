@@ -21,7 +21,7 @@ import { getTestBed, TestBed } from '@angular/core/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { AlfrescoApiService } from '../services/alfresco-api.service';
-import { AppConfigService } from './app-config.service';
+import { AppConfigService } from '../app-config/app-config.service';
 import { LogService } from './log.service';
 import { StorageService } from './storage.service';
 import { TranslateLoaderService } from './translate-loader.service';

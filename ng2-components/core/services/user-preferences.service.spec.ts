@@ -19,7 +19,7 @@ import { async, TestBed } from '@angular/core/testing';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { providers } from '../../index';
 
-import { AppConfigModule, AppConfigService } from './app-config.service';
+import { AppConfigModule, AppConfigService } from '../app-config/app-config.service';
 import { StorageService } from './storage.service';
 import { TranslateLoaderService } from './translate-loader.service';
 import { UserPreferencesService } from './user-preferences.service';

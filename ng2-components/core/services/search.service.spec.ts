@@ -21,7 +21,7 @@ import { fakeApi, fakeError, fakeSearch } from '../mock/search.service.mock';
 import { CookieServiceMock } from './../mock/cookie.service.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { SettingsService } from './settings.service';
-import { AppConfigModule } from './app-config.service';
+import { AppConfigModule } from '../app-config/app-config.service';
 import { AuthenticationService } from './authentication.service';
 import { CookieService } from './cookie.service';
 import { LogService } from './log.service';

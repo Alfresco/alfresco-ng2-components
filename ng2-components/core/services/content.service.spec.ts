@@ -21,7 +21,7 @@ import { CookieServiceMock } from '../mock/cookie.service.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { ContentService } from './content.service';
 import { SettingsService } from './settings.service';
-import { AppConfigModule, AppConfigService } from './app-config.service';
+import { AppConfigModule, AppConfigService } from '../app-config/app-config.service';
 import { AuthenticationService } from './authentication.service';
 import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
