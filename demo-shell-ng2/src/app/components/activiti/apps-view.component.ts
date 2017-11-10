@@ -17,7 +17,7 @@
 
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AppDefinitionRepresentationModel } from 'ng2-activiti-tasklist';
+import { AppDefinitionRepresentationModel } from '@adf/process-services';
 
 @Component({
     selector: 'activiti-apps-view',

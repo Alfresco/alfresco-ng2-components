@@ -39,7 +39,7 @@ import {
     TaskFiltersComponent,
     TaskListComponent,
     TaskListService
-} from 'ng2-activiti-tasklist';
+} from '@adf/process-services';
 import { LogService } from 'ng2-alfresco-core';
 import { AlfrescoApiService } from 'ng2-alfresco-core';
 import {

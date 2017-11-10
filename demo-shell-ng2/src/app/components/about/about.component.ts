@@ -18,7 +18,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
 import { AlfrescoAuthenticationService, AppConfigService, BpmProductVersionModel, DiscoveryApiService, EcmProductVersionModel  } from 'ng2-alfresco-core';
-import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
+import { ObjectDataTableAdapter } from '@adf/core';
 
 @Component({
     selector: 'adf-about-page',

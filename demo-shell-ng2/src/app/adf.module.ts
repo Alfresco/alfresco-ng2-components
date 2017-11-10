@@ -1,14 +1,9 @@
 import { NgModule } from '@angular/core';
 
 import { CoreModule } from 'ng2-alfresco-core';
-import { DataTableModule } from 'ng2-alfresco-datatable';
-import { ViewerModule } from 'ng2-alfresco-viewer';
-import { LoginModule } from 'ng2-alfresco-login';
-import { UserInfoModule } from 'ng2-alfresco-userinfo';
-import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
-
 import { DocumentListModule, SearchModule, SocialModule, TagModule, UploadModule, WebScriptModule } from '@adf/content-services';
-import { AnalyticsModule, DiagramsModule, FormModule, ProcessListModule } from '@adf/process-services';
+import { AnalyticsModule, DiagramsModule, FormModule, ProcessListModule, TaskListModule } from '@adf/process-services';
+import { DataTableModule, LoginModule, UserInfoModule, ViewerModule  } from '@adf/core';
 
 export function modules() {
   return [
@@ -24,7 +19,7 @@ export function modules() {
     ViewerModule,
     WebScriptModule,
     FormModule,
-    ActivitiTaskListModule,
+    TaskListModule,
     ProcessListModule,
     DiagramsModule,
     AnalyticsModule
