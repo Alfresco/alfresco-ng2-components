@@ -33,11 +33,13 @@ describe('VersionListComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
                 MaterialModule
             ],
             declarations: [
                 VersionListComponent
+            ],
+            providers: [
+                AlfrescoApiService
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         }).compileComponents();

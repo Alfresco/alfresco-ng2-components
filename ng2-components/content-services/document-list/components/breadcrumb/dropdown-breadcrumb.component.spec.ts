@@ -74,7 +74,6 @@ describe('DropdownBreadcrumb', () => {
     function clickOnTheFirstOption() {
         const option = fixture.debugElement.query(By.css('[data-automation-class="dropdown-breadcrumb-path-option"]'));
         option.triggerEventHandler('click', null);
-        fixture.detectChanges();
     }
 
     it('should display only the current folder name if there is no previous folders', () => {
