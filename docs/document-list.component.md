@@ -441,13 +441,13 @@ A custom set of columns can look like the following:
         <data-column
             title="Name" 
             key="name" 
-            sortable="true"
+            [sortable]="true"
             class="full-width ellipsis-cell">
         </data-column>
         <data-column
             title="Created By" 
             key="createdByUser.displayName"
-            sortable="true"
+            [sortable]="true"
             class="desktop-only">
         </data-column>
         <data-column
@@ -455,7 +455,7 @@ A custom set of columns can look like the following:
             key="createdAt" 
             type="date" 
             format="medium"
-            sortable="true"
+            [sortable]="true"
             class="desktop-only">
         </data-column>
     </data-columns>
