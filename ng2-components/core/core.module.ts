@@ -107,12 +107,16 @@ export function createTranslateLoader(http: HttpClient, logService: LogService) 
         ToolbarModule,
         DialogModule,
         LoginModule,
+        UserInfoModule,
         LanguageMenuModule,
         InfoDrawerModule,
         DataColumnModule,
         DataTableModule,
         HostSettingsModule,
-        ServiceModule
+        ServiceModule,
+        ViewerModule,
+        PipeModule,
+        DirectiveModule
     ]
 })
 export class CoreModule {
