@@ -23,7 +23,7 @@ import { Observable } from 'rxjs/Rx';
 
 import {
     CommentListComponent,
-    CommentsComponent,
+    CommentsComponent
 } from '../../task-list';
 import { TranslationService, CommentProcessService, PeopleProcessService } from '@adf/core';
 import { DataTableModule } from '@adf/core';

@@ -17,6 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MaterialModule } from '../../material.module';
 import { Observable } from 'rxjs/Rx';
 
 import { ProcessContentService } from '../../form';
@@ -34,7 +35,9 @@ describe('Activiti Task Create Attachment', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [],
+            imports: [
+                MaterialModule
+            ],
             declarations: [
                 AttachmentComponent
             ],

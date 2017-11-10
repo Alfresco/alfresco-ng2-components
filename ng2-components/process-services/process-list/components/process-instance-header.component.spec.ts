@@ -17,6 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslationService, CardViewUpdateService, CoreModule } from '@adf/core';
+import { MaterialModule } from '../../material.module';
 import { Observable } from 'rxjs/Rx';
 
 import { ProcessInstance } from '../models/process-instance.model';
@@ -33,7 +34,8 @@ describe('ProcessInstanceHeaderComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                CoreModule,
+                MaterialModule
             ],
             declarations: [
                 ProcessInstanceHeaderComponent

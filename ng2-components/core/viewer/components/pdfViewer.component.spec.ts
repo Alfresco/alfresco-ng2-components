@@ -26,7 +26,7 @@ import { EventMock } from '../../mock/event.mock';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { PdfViewerComponent } from './pdfViewer.component';
 
-declare var require: any
+declare var require: any;
 
 describe('Test ng2-alfresco-viewer PdfViewer component', () => {
 

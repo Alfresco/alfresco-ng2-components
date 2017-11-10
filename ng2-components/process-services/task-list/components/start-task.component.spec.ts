@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatButtonModule, MatDatepickerModule, MatGridListModule, MatIconModule, MatInputModule, MatNativeDateModule, MatSelectModule } from '@angular/material';
+import { MaterialModule } from '../../material.module';
 import { AppConfigService, PeopleProcessService, TranslationService } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
@@ -52,14 +52,7 @@ describe('StartTaskComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-
-                MatInputModule,
-                MatIconModule,
-                MatButtonModule,
-                MatDatepickerModule,
-                MatGridListModule,
-                MatNativeDateModule,
-                MatSelectModule
+                MaterialModule
             ],
             declarations: [
                 StartTaskComponent

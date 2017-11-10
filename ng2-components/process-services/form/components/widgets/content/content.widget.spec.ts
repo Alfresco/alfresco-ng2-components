@@ -17,7 +17,7 @@
 
 import { DebugElement, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatTabsModule } from '@angular/material';
+import { MaterialModule } from '../../../../material.module';
 import { By } from '@angular/platform-browser';
 import { TranslationService, ContentService, CoreModule } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
@@ -67,8 +67,8 @@ describe('ContentWidgetComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                MatTabsModule,
-                CoreModule
+                CoreModule,
+                MaterialModule
             ],
             declarations: [
                 ContentWidgetComponent

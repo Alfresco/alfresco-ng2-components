@@ -16,9 +16,16 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
 var appContext = require.context(".", true, /\.spec\.ts/);
 appContext.keys().forEach(appContext);
 
-var testing = require('@angular/core/testing');
-var browser = require('@angular/platform-browser-dynamic/testing');
+const TestBed = require('@angular/core/testing').TestBed;
+const browser = require('@angular/platform-browser-dynamic/testing');
+const CoreModule = require('@adf/core').CoreModule;
 
-testing.TestBed.initTestEnvironment(browser.BrowserDynamicTestingModule, browser.platformBrowserDynamicTesting());
+TestBed.initTestEnvironment(browser.BrowserDynamicTestingModule, browser.platformBrowserDynamicTesting());
 
+beforeEach(() => {
+    TestBed.configureTestingModule({ imports: [ CoreModule ] });
+});
 
+afterEach(() => {
+    TestBed.resetTestingModule();
+});

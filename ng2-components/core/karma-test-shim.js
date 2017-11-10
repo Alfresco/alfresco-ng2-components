@@ -13,12 +13,21 @@ require('zone.js/dist/fake-async-test');
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
 
-var appContext = require.context('.', true, /\.spec\.ts/);
+var appContext = require.context(".", true, /\.spec\.ts/);
 appContext.keys().forEach(appContext);
 
+const TestBed = require('@angular/core/testing').TestBed;
+const browser = require('@angular/platform-browser-dynamic/testing');
+const CoreModule = require('@adf/core').CoreModule;
 
-var testing = require('@angular/core/testing');
-var browser = require('@angular/platform-browser-dynamic/testing');
+TestBed.initTestEnvironment(browser.BrowserDynamicTestingModule, browser.platformBrowserDynamicTesting());
 
-testing.TestBed.initTestEnvironment(browser.BrowserDynamicTestingModule, browser.platformBrowserDynamicTesting());
+beforeEach(() => {
+    TestBed.configureTestingModule({ imports: [ CoreModule ] });
+});
+
+afterEach(() => {
+    TestBed.resetTestingModule();
+});
+
 

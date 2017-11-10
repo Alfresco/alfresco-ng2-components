@@ -17,6 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MaterialModule } from '../../material.module';
 import { ProcessContentService } from '../../form';
 import { TranslationService } from '@adf/core';
 import { CreateProcessAttachmentComponent } from './create-process-attachment.component';
@@ -50,7 +51,9 @@ describe('Activiti Process Create Attachment', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [],
+            imports: [
+                MaterialModule
+            ],
             declarations: [
                 CreateProcessAttachmentComponent
             ],

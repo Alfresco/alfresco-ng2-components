@@ -20,6 +20,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AppConfigService, CardViewUpdateService, TranslationService, UserProcessModel } from '@adf/core';
 import { BpmUserService } from '@adf/core';
+import { MaterialModule } from '../../material.module';
 import { Observable } from 'rxjs/Rx';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
@@ -61,7 +62,9 @@ describe('TaskHeaderComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [],
+            imports: [
+                MaterialModule
+            ],
             declarations: [
                 TaskHeaderComponent
             ],
