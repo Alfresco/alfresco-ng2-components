@@ -1,0 +1,7 @@
+npm-debug.log
+.idea
+.npmrc
+
+coverage/
+dist/
+node_modules
