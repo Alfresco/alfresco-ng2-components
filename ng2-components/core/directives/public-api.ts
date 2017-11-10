@@ -15,27 +15,14 @@
  * limitations under the License.
  */
 
-export * from './viewer';
-export * from './userinfo';
-export * from './toolbar';
-export * from './settings';
-export * from './pagination';
-export * from './login';
-export * from './language-menu';
-export * from './info-drawer';
-export * from './data-column';
-export * from './datatable';
-export * from './context-menu';
-export * from './collapsable';
-export * from './card-view';
-export * from './dialogs';
+export * from './folder-create.directive';
+export * from './folder-edit.directive';
+export * from './highlight.directive';
+export * from './logout.directive';
+export * from './node-delete.directive';
+export * from './node-favorite.directive';
+export * from './node-permission.directive';
+export * from './node-restore.directive';
+export * from './upload.directive';
 
-export * from './pipes';
-export * from './services';
-export * from './directives';
-export * from './utils';
-export * from './interface';
-export * from './models';
-export * from './events';
-export * from './mock';
-
+export * from './directive.module';

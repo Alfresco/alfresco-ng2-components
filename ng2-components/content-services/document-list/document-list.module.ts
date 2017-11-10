@@ -16,12 +16,12 @@
  */
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../material.module';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { DataTableModule, PaginationModule, TRANSLATION_PROVIDER, ToolbarModule } from '@adf/core';
+import { DataTableModule, PaginationModule, ToolbarModule } from '@adf/core';
+import { TRANSLATION_PROVIDER } from '@adf/core';
 import { UploadModule } from '../upload';
 
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
@@ -48,9 +48,8 @@ import { NodeActionsService } from './services/node-actions.service';
 
 @NgModule({
     imports: [
-        CommonModule,
-        FormsModule,
         ToolbarModule,
+        CommonModule,
         DataTableModule,
         FlexLayoutModule,
         MaterialModule,

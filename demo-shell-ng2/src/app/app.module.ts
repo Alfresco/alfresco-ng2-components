@@ -39,62 +39,66 @@ import { ThemePickerModule } from './components/theme-picker/theme-picker';
 import { DebugAppConfigService } from './services/debug-app-config.service';
 
 import { routing } from './app.routes';
+import { TranslateModule } from '@ngx-translate/core';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    SettingsComponent,
-    AppLayoutComponent,
-    HomeComponent,
-    SearchBarComponent,
-    SearchResultComponent,
-    AboutComponent,
-    ActivitiComponent,
-    ActivitiTaskAttachmentsComponent,
-    ActivitiProcessAttachmentsComponent,
-    ActivitiShowDiagramComponent,
-    FormViewerComponent,
-    FormNodeViewerComponent,
-    ActivitiAppsViewComponent,
-    DataTableComponent,
-    FilesComponent,
-    FileViewComponent,
-    FormComponent,
-    FormListComponent,
-    WebscriptComponent,
-    TagComponent,
-    SocialComponent,
-    CustomSourcesComponent,
-    VersionManagerDialogAdapterComponent
-  ],
-  imports: [
-    BrowserModule,
-    routing,
-    FormsModule,
-    AdfModule,
-    MaterialModule,
-    ThemePickerModule,
-    FlexLayoutModule,
-    //Editor3DModule,
-    ChartsModule,
-  ],
-  providers: [
-    { provide: AppConfigService, useClass: DebugAppConfigService },
-    {
-      provide: TRANSLATION_PROVIDER,
-      multi: true,
-      useValue: {
-        name: 'app',
-        source: 'resources'
-      }
-    }
-  ],
-  entryComponents: [
-    VersionManagerDialogAdapterComponent
-  ],
-  bootstrap: [AppComponent]
+    imports: [
+        ReactiveFormsModule,
+        TranslateModule,
+        BrowserModule,
+        routing,
+        FormsModule,
+        AdfModule,
+        MaterialModule,
+        ThemePickerModule,
+        FlexLayoutModule,
+        //Editor3DModule,
+        ChartsModule,
+    ],
+    declarations: [
+        AppComponent,
+        LoginComponent,
+        SettingsComponent,
+        AppLayoutComponent,
+        HomeComponent,
+        SearchBarComponent,
+        SearchResultComponent,
+        AboutComponent,
+        ActivitiComponent,
+        ActivitiTaskAttachmentsComponent,
+        ActivitiProcessAttachmentsComponent,
+        ActivitiShowDiagramComponent,
+        FormViewerComponent,
+        FormNodeViewerComponent,
+        ActivitiAppsViewComponent,
+        DataTableComponent,
+        FilesComponent,
+        FileViewComponent,
+        FormComponent,
+        FormListComponent,
+        WebscriptComponent,
+        TagComponent,
+        SocialComponent,
+        CustomSourcesComponent,
+        VersionManagerDialogAdapterComponent
+    ],
+    providers: [
+        { provide: AppConfigService, useClass: DebugAppConfigService },
+        {
+            provide: TRANSLATION_PROVIDER,
+            multi: true,
+            useValue: {
+                name: 'app',
+                source: 'resources'
+            }
+        }
+    ],
+    entryComponents: [
+        VersionManagerDialogAdapterComponent
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 }

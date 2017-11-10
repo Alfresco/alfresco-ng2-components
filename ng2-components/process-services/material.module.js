@@ -26,18 +26,11 @@ var core_1 = require("@angular/core");
 var material_1 = require("@angular/material");
 function modules() {
     return [
-        material_1.MatButtonModule,
-        material_1.MatChipsModule,
-        material_1.MatDialogModule,
-        material_1.MatIconModule,
-        material_1.MatInputModule,
-        material_1.MatListModule,
-        material_1.MatProgressSpinnerModule,
-        material_1.MatProgressBarModule,
-        material_1.MatRippleModule,
-        material_1.MatMenuModule,
-        material_1.MatOptionModule,
-        material_1.MatSelectModule
+        material_1.MatAutocompleteModule, material_1.MatButtonModule, material_1.MatCardModule, material_1.MatDialogModule,
+        material_1.MatCheckboxModule, material_1.MatDatepickerModule, material_1.MatGridListModule, material_1.MatIconModule, material_1.MatInputModule,
+        material_1.MatListModule, material_1.MatOptionModule, material_1.MatRadioModule, material_1.MatSelectModule, material_1.MatSlideToggleModule, material_1.MatTableModule,
+        material_1.MatTabsModule, material_1.MatProgressSpinnerModule, material_1.MatNativeDateModule, material_1.MatRippleModule, material_1.MatTooltipModule,
+        material_1.MatChipsModule
     ];
 }
 exports.modules = modules;
@@ -46,6 +39,9 @@ var MaterialModule = (function () {
     }
     MaterialModule = __decorate([
         core_1.NgModule({
+            providers: [
+                { provide: material_1.MAT_PLACEHOLDER_GLOBAL_OPTIONS, useValue: { float: 'never' } }
+            ],
             imports: modules(),
             exports: modules()
         })

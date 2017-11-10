@@ -28,7 +28,7 @@ import { UploadButtonComponent } from './components/upload-button.component';
 import { UploadDragAreaComponent } from './components/upload-drag-area.component';
 
 import { FileDraggableDirective } from './directives/file-draggable.directive';
-import { PipeModule } from "@adf/core/pipes/pipe.module";
+import { PipeModule } from '@adf/core';
 
 @NgModule({
     imports: [

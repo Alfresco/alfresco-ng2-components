@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { TranslateModule } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TRANSLATION_PROVIDER } from '@adf/core';
 
@@ -26,6 +28,8 @@ import { RAPHAEL_PROVIDERS } from './components/raphael/index';
 
 @NgModule({
     imports: [
+        CommonModule,
+        TranslateModule
     ],
     declarations: [
         ...DIAGRAM_DIRECTIVES,

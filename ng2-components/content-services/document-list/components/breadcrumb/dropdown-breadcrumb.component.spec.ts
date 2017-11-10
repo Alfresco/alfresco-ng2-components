@@ -35,7 +35,6 @@ describe('DropdownBreadcrumb', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-
                 DataTableModule,
                 MaterialModule
             ],

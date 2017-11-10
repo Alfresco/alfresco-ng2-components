@@ -14,6 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NgModule } from '@angular/core';
 import { TRANSLATION_PROVIDER } from '@adf/core';
@@ -23,10 +26,13 @@ import { TagListComponent } from './tag-list.component';
 import { TagNodeListComponent } from './tag-node-list.component';
 import { TagService } from '../services/tag.service';
 
+
 @NgModule({
     imports: [
-
-        MaterialModule
+        CommonModule,
+        MaterialModule,
+        TranslateModule,
+        FormsModule, ReactiveFormsModule
     ],
     exports: [
         TagActionsComponent,

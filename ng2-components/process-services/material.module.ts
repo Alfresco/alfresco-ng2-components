@@ -17,17 +17,20 @@
 
 import { NgModule } from '@angular/core';
 import {
-    MAT_PLACEHOLDER_GLOBAL_OPTIONS, MatAutocompleteModule, MatButtonModule, MatCardModule,
-    MatCheckboxModule, MatDatepickerModule, MatGridListModule, MatIconModule, MatInputModule,
-    MatListModule, MatOptionModule, MatRadioModule, MatSelectModule, MatSlideToggleModule, MatTableModule,
-    MatTabsModule
+    MAT_PLACEHOLDER_GLOBAL_OPTIONS, MatAutocompleteModule, MatButtonModule, MatCardModule, MatDialogModule,
+    MatCheckboxModule, MatChipsModule, MatDatepickerModule, MatGridListModule, MatIconModule,
+    MatInputModule, MatListModule, MatNativeDateModule, MatOptionModule, MatProgressSpinnerModule, MatRadioModule,
+    MatRippleModule, MatSelectModule, MatSlideToggleModule, MatTableModule, MatTabsModule,
+    MatTooltipModule
 } from '@angular/material';
 
 export function modules() {
     return [
-        MatAutocompleteModule, MatButtonModule, MatCardModule, MatCheckboxModule,
-        MatDatepickerModule, MatGridListModule, MatIconModule, MatInputModule, MatListModule,
-        MatOptionModule, MatRadioModule, MatSelectModule, MatSlideToggleModule, MatTableModule, MatTabsModule
+        MatAutocompleteModule, MatButtonModule, MatCardModule, MatDialogModule,
+        MatCheckboxModule, MatDatepickerModule, MatGridListModule, MatIconModule, MatInputModule,
+        MatListModule, MatOptionModule, MatRadioModule, MatSelectModule, MatSlideToggleModule, MatTableModule,
+        MatTabsModule, MatProgressSpinnerModule, MatNativeDateModule, MatRippleModule, MatTooltipModule,
+        MatChipsModule
     ];
 }
 

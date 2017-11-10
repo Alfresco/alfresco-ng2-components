@@ -15,17 +15,22 @@
  * limitations under the License.
  */
 
-import { DataTableModule } from '@adf/core';
+import { CommonModule } from '@angular/common';
+import { DataTableModule, PipeModule } from '@adf/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { NgModule } from '@angular/core';
+
 import { TRANSLATION_PROVIDER } from '@adf/core';
 import { MaterialModule } from '../material.module';
 import { WebscriptComponent } from './webscript.component';
 
 @NgModule({
     imports: [
-
+        CommonModule,
+        PipeModule,
         MaterialModule,
-        DataTableModule
+        DataTableModule,
+        TranslateModule
     ],
     exports: [
         WebscriptComponent

@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { TranslateModule } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 
@@ -40,12 +42,20 @@ import { FormService } from './services/form.service';
 import { NodeService } from './services/node.service';
 import { ProcessContentService } from './services/process-content.service';
 import { WidgetVisibilityService } from './services/widget-visibility.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DataColumnModule, PipeModule } from '@adf/core';
 
 @NgModule({
     imports: [
+        CommonModule,
         DataTableModule,
         HttpModule,
-        MaterialModule
+        MaterialModule,
+        TranslateModule,
+        FormsModule,
+        ReactiveFormsModule,
+        DataColumnModule,
+        PipeModule
     ],
     declarations: [
         ContentWidgetComponent,

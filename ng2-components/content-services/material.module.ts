@@ -25,8 +25,8 @@ import {
     MatListModule,
     MatMenuModule,
     MatOptionModule,
-    MatProgressBarModule,
     MatProgressSpinnerModule,
+    MatProgressBarModule,
     MatRippleModule,
     MatSelectModule
 } from '@angular/material';
@@ -40,11 +40,11 @@ export function modules() {
         MatInputModule,
         MatListModule,
         MatProgressSpinnerModule,
+        MatProgressBarModule,
         MatRippleModule,
         MatMenuModule,
         MatOptionModule,
-        MatSelectModule,
-        MatProgressBarModule
+        MatSelectModule
     ];
 }
 

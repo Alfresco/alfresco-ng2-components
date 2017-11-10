@@ -11,6 +11,8 @@ import {
 import { AnalyticsModule, DiagramsModule, FormModule, ProcessListModule, TaskListModule } from '@adf/process-services';
 
 import {
+    PipeModule,
+    DirectiveModule,
     CardViewModule,
     CollapsableModule,
     ContextMenuModule,
@@ -23,11 +25,15 @@ import {
     DialogModule,
     DataTableModule,
     UserInfoModule,
-    ViewerModule
+    ViewerModule,
+    DataColumnModule
 } from '@adf/core';
 
 export function modules() {
     return [
+        PipeModule,
+        DirectiveModule,
+        DataColumnModule,
         CardViewModule,
         CollapsableModule,
         ContextMenuModule,

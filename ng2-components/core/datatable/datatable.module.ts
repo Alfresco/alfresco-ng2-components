@@ -21,7 +21,6 @@ import { TRANSLATION_PROVIDER } from '../services';
 import { MaterialModule } from '../material.module';
 import { CommonModule } from '@angular/common';
 
-import { UploadDirective } from '../directives/upload.directive';
 import { PipeModule } from '../pipes';
 import { ContextMenuModule } from '../context-menu';
 
@@ -38,6 +37,7 @@ import { LoadingContentTemplateDirective } from './directives/loading-template.d
 import { NoContentTemplateDirective } from './directives/no-content-template.directive';
 import { NoPermissionTemplateDirective } from './directives/no-permission-template.directive';
 import { TranslateModule } from '@ngx-translate/core';
+import { DirectiveModule } from "../directives";
 
 @NgModule({
     imports: [
@@ -46,7 +46,8 @@ import { TranslateModule } from '@ngx-translate/core';
         CommonModule,
         TranslateModule,
         ContextMenuModule,
-        PipeModule
+        PipeModule,
+        DirectiveModule
     ],
     declarations: [
         DataTableComponent,
@@ -60,8 +61,7 @@ import { TranslateModule } from '@ngx-translate/core';
         LocationCellComponent,
         NoContentTemplateDirective,
         NoPermissionTemplateDirective,
-        LoadingContentTemplateDirective,
-        UploadDirective
+        LoadingContentTemplateDirective
     ],
     providers: [
         {

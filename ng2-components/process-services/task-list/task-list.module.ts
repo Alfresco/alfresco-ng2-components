@@ -15,13 +15,16 @@
  * limitations under the License.
  */
 
-import { DatePipe } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { CommonModule, DatePipe } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormModule } from '../form';
 
-import { DataTableModule } from '@adf/core';
+import { DataTableModule, InfoDrawerModule,  DataColumnModule, CardViewModule, DirectiveModule } from '@adf/core';
 import { TRANSLATION_PROVIDER } from '@adf/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { MaterialModule } from '../material.module';
 import { ProcessUploadService } from './services/process-upload.service';
 import { TaskListService } from './services/tasklist.service';
@@ -43,12 +46,21 @@ import { TaskFiltersComponent } from './components/task-filters.component';
 import { TaskHeaderComponent } from './components/task-header.component';
 import { TaskListComponent } from './components/task-list.component';
 
+
 @NgModule({
     imports: [
+        CommonModule,
+        CardViewModule,
         DataTableModule,
+        DataColumnModule,
+        DirectiveModule,
         FormModule,
         FlexLayoutModule,
-        MaterialModule
+        InfoDrawerModule,
+        MaterialModule,
+        TranslateModule,
+        FormsModule,
+        ReactiveFormsModule
     ],
     declarations: [
         NoTaskDetailsTemplateDirective,

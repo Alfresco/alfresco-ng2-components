@@ -14,29 +14,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { MaterialModule } from '../material.module';
 
-import { RatingService } from '../services/rating.service';
-import { LikeComponent } from './like.component';
-import { RatingComponent } from './rating.component';
-
-@NgModule({
-    imports: [
-        CommonModule,
-        MaterialModule
-    ],
-    exports: [
-        RatingComponent,
-        LikeComponent
-    ],
-    declarations: [
-        RatingComponent,
-        LikeComponent
-    ],
-    providers: [
-        RatingService
-    ]
-})
-export class SocialModule {}
+export * from './public-api';
