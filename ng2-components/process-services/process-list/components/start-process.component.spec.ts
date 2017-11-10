@@ -24,7 +24,7 @@ import {
     MatSelectModule
 } from '@angular/material';
 import { FormModule, FormService } from '../../form';
-import { AlfrescoTranslationService, CoreModule } from '@adf/core';
+import { TranslationService, ServicesModule } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
@@ -47,7 +47,7 @@ describe('StartProcessInstanceComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
+                ServicesModule,
                 FormModule,
                 MatButtonModule,
                 MatCardModule,
@@ -58,7 +58,7 @@ describe('StartProcessInstanceComponent', () => {
                 StartProcessInstanceComponent
             ],
             providers: [
-                {provide: AlfrescoTranslationService, useClass: TranslationMock},
+                {provide: TranslationService, useClass: TranslationMock},
                 ProcessService,
                 FormService
             ]

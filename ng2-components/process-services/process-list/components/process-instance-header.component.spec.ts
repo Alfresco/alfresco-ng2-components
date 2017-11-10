@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AlfrescoTranslationService, CardViewUpdateService, CoreModule } from '@adf/core';
+import { TranslationService, CardViewUpdateService, ServicesModule } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 
 import { ProcessInstance } from '../models/process-instance.model';
@@ -33,7 +33,7 @@ describe('ProcessInstanceHeaderComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                ServicesModule
             ],
             declarations: [
                 ProcessInstanceHeaderComponent
@@ -44,7 +44,7 @@ describe('ProcessInstanceHeaderComponent', () => {
             ]
         }).compileComponents();
 
-        let translateService = TestBed.get(AlfrescoTranslationService);
+        let translateService = TestBed.get(TranslationService);
         spyOn(translateService, 'addTranslationFolder').and.stub();
         spyOn(translateService.translate, 'get').and.callFake((key) => { return Observable.of(key); });
     }));

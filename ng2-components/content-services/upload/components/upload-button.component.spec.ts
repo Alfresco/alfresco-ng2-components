@@ -17,7 +17,7 @@
 
 import { DebugElement, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AlfrescoContentService, AlfrescoTranslationService, CoreModule, UploadService } from '@adf/core';
+import { AlfrescoContentService, TranslationService, ServicesModule, UploadService } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { UploadButtonComponent } from './upload-button.component';
@@ -61,14 +61,14 @@ describe('UploadButtonComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                ServicesModule
             ],
             declarations: [
                 UploadButtonComponent
             ],
             providers: [
                 UploadService,
-                {provide: AlfrescoTranslationService, useClass: TranslationMock}
+                {provide: TranslationService, useClass: TranslationMock}
             ]
         }).compileComponents();
     }));

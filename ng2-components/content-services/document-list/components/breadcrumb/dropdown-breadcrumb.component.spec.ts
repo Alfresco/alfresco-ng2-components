@@ -18,7 +18,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { CoreModule } from '@adf/core';
+import { ServicesModule } from '@adf/core';
 import { DataTableModule } from '@adf/core';
 import { fakeNodeWithCreatePermission } from '../../assets/document-list.component.mock';
 import { MaterialModule } from '../../../material.module';
@@ -36,7 +36,7 @@ describe('DropdownBreadcrumb', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
+                ServicesModule,
                 DataTableModule,
                 MaterialModule
             ],

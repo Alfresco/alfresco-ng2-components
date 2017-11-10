@@ -15,10 +15,7 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-
-import { HttpClient , HttpClientModule } from '@angular/common/http';
 
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AlfrescoContentService } from './alfresco-content.service';
@@ -38,7 +35,7 @@ import { RenditionsService } from './renditions.service';
 import { StorageService } from './storage.service';
 import { ThumbnailService } from './thumbnail.service';
 import { AlfrescoTranslateLoader } from './translate-loader.service';
-import { TRANSLATION_PROVIDER, TranslationService } from './translation.service';
+import { TranslationService } from './translation.service';
 import { UploadService } from './upload.service';
 
 import { AppConfigService } from './app-config.service';

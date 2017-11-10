@@ -17,7 +17,7 @@
 
 import { Component, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlfrescoSettingsService, PageTitleService, StorageService, TranslationService } from 'ng2-alfresco-core';
+import { AlfrescoSettingsService, PageTitleService, StorageService, TranslationService } from '@adf/core';
 
 @Component({
   selector: 'app-root',

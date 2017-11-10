@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-export * from './data/index';
+export * from './download-zip.dialog';
+export * from './folder.dialog';
 
-
-
-export * from './datatable.module';
+export * from './dialog.module';

@@ -19,7 +19,7 @@ import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 
 import { DataTableModule } from '@adf/core';
-import { CoreModule, TRANSLATION_PROVIDER } from '@adf/core';
+import { TRANSLATION_PROVIDER } from '@adf/core';
 import { MaterialModule } from '../material.module';
 
 import { MASK_DIRECTIVE, WIDGET_DIRECTIVES } from './components/widgets/index';
@@ -43,7 +43,6 @@ import { WidgetVisibilityService } from './services/widget-visibility.service';
 
 @NgModule({
     imports: [
-        CoreModule,
         DataTableModule,
         HttpModule,
         MaterialModule

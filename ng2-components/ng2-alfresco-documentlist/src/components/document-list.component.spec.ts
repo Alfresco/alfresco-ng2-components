@@ -18,9 +18,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var testing_1 = require("@angular/core/testing");
-var ng2_alfresco_core_1 = require("ng2-alfresco-core");
 var core_2 = require("@adf/core");
 var core_3 = require("@adf/core");
+var core_4 = require("@adf/core");
 var Rx_1 = require("rxjs/Rx");
 var document_library_model_mock_1 = require("../assets/document-library.model.mock");
 var document_list_component_mock_1 = require("../assets/document-list.component.mock");
@@ -42,8 +42,8 @@ describe('DocumentList', function () {
         var zone = new core_1.NgZone({ enableLongStackTrace: false });
         testing_1.TestBed.configureTestingModule({
             imports: [
-                ng2_alfresco_core_1.CoreModule,
-                core_3.DataTableModule,
+                core_2.CoreModule,
+                core_4.DataTableModule,
                 material_module_1.MaterialModule
             ],
             declarations: [
@@ -62,16 +62,16 @@ describe('DocumentList', function () {
             }
         };
         fixture = testing_1.TestBed.createComponent(document_list_component_1.DocumentListComponent);
-        var translateService = testing_1.TestBed.get(ng2_alfresco_core_1.AlfrescoTranslationService);
+        var translateService = testing_1.TestBed.get(core_2.TranslationService);
         spyOn(translateService, 'get').and.callFake(function (key) {
             return Rx_1.Observable.of(key);
         });
         element = fixture.nativeElement;
         documentList = fixture.componentInstance;
         documentListService = testing_1.TestBed.get(document_list_service_1.DocumentListService);
-        apiService = testing_1.TestBed.get(ng2_alfresco_core_1.AlfrescoApiService);
-        userPreferences = testing_1.TestBed.get(ng2_alfresco_core_1.UserPreferencesService);
-        appConfig = testing_1.TestBed.get(ng2_alfresco_core_1.AppConfigService);
+        apiService = testing_1.TestBed.get(core_2.AlfrescoApiService);
+        userPreferences = testing_1.TestBed.get(core_2.UserPreferencesService);
+        appConfig = testing_1.TestBed.get(core_2.AppConfigService);
         fixture.detectChanges();
     });
     beforeEach(function () {
@@ -570,7 +570,7 @@ describe('DocumentList', function () {
     });
     it('should check [empty folder] template ', function () {
         documentList.emptyFolderTemplate = {};
-        documentList.dataTable = new core_2.DataTableComponent(null, null);
+        documentList.dataTable = new core_3.DataTableComponent(null, null);
         expect(documentList.dataTable).toBeDefined();
         expect(documentList.isEmptyTemplateDefined()).toBeTruthy();
         documentList.emptyFolderTemplate = null;
@@ -582,17 +582,17 @@ describe('DocumentList', function () {
     });
     it('should return true if custom permission template is provided', function () {
         documentList.noPermissionTemplate = {};
-        documentList.dataTable = new core_2.DataTableComponent(null, null);
+        documentList.dataTable = new core_3.DataTableComponent(null, null);
         expect(documentList.isNoPermissionTemplateDefined()).toBe(true);
     });
     it('should return false if no custom permission template is provided', function () {
         documentList.noPermissionTemplate = null;
-        documentList.dataTable = new core_2.DataTableComponent(null, null);
+        documentList.dataTable = new core_3.DataTableComponent(null, null);
         expect(documentList.isNoPermissionTemplateDefined()).toBe(false);
     });
     it('should empty folder NOT show the pagination', function () {
         documentList.emptyFolderTemplate = {};
-        documentList.dataTable = new core_2.DataTableComponent(null, null);
+        documentList.dataTable = new core_3.DataTableComponent(null, null);
         expect(documentList.isEmpty()).toBeTruthy();
         expect(element.querySelector('alfresco-pagination')).toBe(null);
     });

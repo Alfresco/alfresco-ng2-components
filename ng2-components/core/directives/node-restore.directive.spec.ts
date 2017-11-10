@@ -21,8 +21,8 @@ import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Observable } from 'rxjs/Rx';
-import { AlfrescoTranslationService } from '../../index';
-import { CoreModule } from '../../index';
+import { TranslationService } from '../../index';
+import { ServicesModule } from '../../index';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { NotificationService } from '../services/notification.service';
 import { NodeRestoreDirective } from './node-restore.directive';
@@ -44,7 +44,7 @@ describe('NodeRestoreDirective', () => {
     let element: DebugElement;
     let component: TestComponent;
     let alfrescoService: AlfrescoApiService;
-    let translation: AlfrescoTranslationService;
+    let translation: TranslationService;
     let notification: NotificationService;
     let router: Router;
     let nodesService;
@@ -54,7 +54,7 @@ describe('NodeRestoreDirective', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
+                ServicesModule,
                 RouterTestingModule
             ],
             declarations: [
@@ -71,7 +71,7 @@ describe('NodeRestoreDirective', () => {
             alfrescoService = TestBed.get(AlfrescoApiService);
             nodesService = alfrescoService.getInstance().nodes;
             coreApi = alfrescoService.getInstance().core;
-            translation = TestBed.get(AlfrescoTranslationService);
+            translation = TestBed.get(TranslationService);
             notification = TestBed.get(NotificationService);
             router = TestBed.get(Router);
         });

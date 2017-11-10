@@ -19,9 +19,10 @@ import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
 import { Component, DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AlfrescoApiService, CoreModule, RenditionsService } from '@adf/core';
+import { AlfrescoApiService, RenditionsService } from '../../services';
 
 import { MaterialModule } from './../../material.module';
+import { ViewerModule } from '../viewer.module';
 
 import { Observable } from 'rxjs/Rx';
 import { EventMock } from '../../mock/event.mock';
@@ -120,7 +121,7 @@ describe('ViewerComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
+                ViewerModule,
                 MaterialModule
             ],
             declarations: [

@@ -25,3 +25,4 @@ export * from './site.model';
 export * from './product-version.model';
 export * from './user-process.model';
 export * from './comment-process.model';
+export * from './ecm-company.model';

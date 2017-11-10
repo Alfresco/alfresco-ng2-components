@@ -16,7 +16,7 @@
  */
 
 import { Person } from 'alfresco-js-api';
-import { EcmCompanyModel } from './ecm-company.model';
+import { EcmCompanyModel } from '../../models/ecm-company.model';
 
 export class EcmUserModel implements Person {
     id: string;

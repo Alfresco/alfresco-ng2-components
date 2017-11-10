@@ -18,7 +18,7 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
-import { AlfrescoAuthenticationService, ThumbnailService } from '@adf/core';
+import { AuthenticationService, ThumbnailService } from '@adf/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
@@ -82,7 +82,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     private toggleSearch = new Subject<any>();
     private focusSubject = new Subject<FocusEvent>();
 
-    constructor(public authService: AlfrescoAuthenticationService,
+    constructor(public authService: AuthenticationService,
                 private thumbnailService: ThumbnailService) {
 
         this.toggleSearch.asObservable().debounceTime(100).subscribe(() => {

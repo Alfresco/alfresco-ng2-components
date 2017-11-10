@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { BaseEvent } from '@adf/core';
+import { BaseEvent } from '../../../events';
 import { DataRow } from '../../data/data-row.model';
 
 export class DataRowActionEvent extends BaseEvent<DataRowActionModel> {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { BaseUIEvent } from '@adf/core';
+import { BaseUIEvent } from '../../events';
 import { DataRow } from './data-row.model';
 
 export class DataRowEvent extends BaseUIEvent<DataRow> {

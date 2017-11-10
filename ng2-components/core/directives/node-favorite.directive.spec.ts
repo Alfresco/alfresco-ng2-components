@@ -18,7 +18,7 @@
 import { Component, DebugElement } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { CoreModule } from '../../index';
+import { ServicesModule } from '../../index';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { NodeFavoriteDirective } from './node-favorite.directive';
 
@@ -45,7 +45,7 @@ describe('NodeFavoriteDirective', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                ServicesModule
             ],
             declarations: [
                 TestComponent

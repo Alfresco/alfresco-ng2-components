@@ -21,7 +21,7 @@ import { MatProgressSpinnerModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { ProcessContentService } from '../../form';
-import { AlfrescoTranslationService, CoreModule } from '@adf/core';
+import { TranslationService, ServicesModule } from '@adf/core';
 import { DataTableModule } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 
@@ -42,7 +42,7 @@ describe('ProcessAttachmentListComponent', () => {
         let zone = new NgZone({enableLongStackTrace: false});
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
+                ServicesModule,
                 DataTableModule,
                 MatProgressSpinnerModule
             ],
@@ -50,7 +50,7 @@ describe('ProcessAttachmentListComponent', () => {
                 ProcessAttachmentListComponent
             ],
             providers: [
-                { provide: AlfrescoTranslationService, useClass: TranslationMock },
+                { provide: TranslationService, useClass: TranslationMock },
                 ProcessContentService,
                 { provide: NgZone, useValue: zone }
             ]

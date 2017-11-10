@@ -17,7 +17,7 @@
 
 import { Component, EventEmitter, forwardRef, Input, Output, ViewEncapsulation } from '@angular/core';
 import {
-    AlfrescoTranslationService,
+    TranslationService,
     EXTENDIBLE_COMPONENT,
     FileInfo,
     FileModel,
@@ -76,7 +76,7 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
     success = new EventEmitter();
 
     constructor(private uploadService: UploadService,
-                private translateService: AlfrescoTranslationService,
+                private translateService: TranslationService,
                 private notificationService: NotificationService) {
     }
 

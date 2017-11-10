@@ -20,7 +20,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatProgressSpinnerModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { ProcessContentService } from ''../../form';
-import { AppConfigService, CoreModule, TranslationService } from '@adf/core';
+import { AppConfigService, ServicesModule, TranslationService } from '@adf/core';
 import { DataTableModule } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
@@ -41,7 +41,7 @@ describe('TaskAttachmentList', () => {
         let zone = new NgZone({enableLongStackTrace: false});
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
+                ServicesModule,
                 DataTableModule,
                 MatProgressSpinnerModule
             ],

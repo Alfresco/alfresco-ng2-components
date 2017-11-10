@@ -22,9 +22,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var ng2_alfresco_core_1 = require("ng2-alfresco-core");
-var core_2 = require("@adf/core");
+var core_1 = require("@adf/core");
+var core_2 = require("@angular/core");
+var core_3 = require("@adf/core");
 var Rx_1 = require("rxjs/Rx");
 var preset_model_1 = require("../models/preset.model");
 var share_datatable_adapter_1 = require("./../data/share-datatable-adapter");
@@ -69,12 +69,12 @@ var DocumentListComponent = (function () {
         this.currentFolderId = null;
         this.folderNode = null;
         this.node = null;
-        this.nodeClick = new core_1.EventEmitter();
-        this.nodeDblClick = new core_1.EventEmitter();
-        this.folderChange = new core_1.EventEmitter();
-        this.preview = new core_1.EventEmitter();
-        this.ready = new core_1.EventEmitter();
-        this.error = new core_1.EventEmitter();
+        this.nodeClick = new core_2.EventEmitter();
+        this.nodeDblClick = new core_2.EventEmitter();
+        this.folderChange = new core_2.EventEmitter();
+        this.preview = new core_2.EventEmitter();
+        this.ready = new core_2.EventEmitter();
+        this.error = new core_2.EventEmitter();
         this.actions = [];
         this.contextActionHandler = new Rx_1.Subject();
         this.layoutPresets = {};
@@ -676,7 +676,7 @@ var DocumentListComponent = (function () {
         var defaultSorting;
         if (this.sorting) {
             var _a = this.sorting, key = _a[0], direction = _a[1];
-            defaultSorting = new core_2.DataSorting(key, direction);
+            defaultSorting = new core_1.DataSorting(key, direction);
         }
         return defaultSorting;
     };
@@ -721,119 +721,119 @@ var DocumentListComponent = (function () {
     };
     DocumentListComponent.prototype.getLayoutPreset = function (name) {
         if (name === void 0) { name = 'default'; }
-        return (this.layoutPresets[name] || this.layoutPresets['default']).map(function (col) { return new core_2.ObjectDataColumn(col); });
+        return (this.layoutPresets[name] || this.layoutPresets['default']).map(function (col) { return new core_1.ObjectDataColumn(col); });
     };
     DocumentListComponent.SINGLE_CLICK_NAVIGATION = 'click';
     DocumentListComponent.DOUBLE_CLICK_NAVIGATION = 'dblclick';
     DocumentListComponent.DEFAULT_PAGE_SIZE = 20;
     __decorate([
-        core_1.ContentChild(ng2_alfresco_core_1.DataColumnListComponent)
+        core_2.ContentChild(core_3.DataColumnListComponent)
     ], DocumentListComponent.prototype, "columnList", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], DocumentListComponent.prototype, "permissionsStyle", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], DocumentListComponent.prototype, "locationFormat", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], DocumentListComponent.prototype, "navigate", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], DocumentListComponent.prototype, "navigationMode", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], DocumentListComponent.prototype, "thumbnails", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], DocumentListComponent.prototype, "selectionMode", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], DocumentListComponent.prototype, "multiselect", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], DocumentListComponent.prototype, "enablePagination", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], DocumentListComponent.prototype, "contentActions", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], DocumentListComponent.prototype, "contentActionsPosition", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], DocumentListComponent.prototype, "contextMenuActions", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], DocumentListComponent.prototype, "pageSize", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], DocumentListComponent.prototype, "emptyFolderImageUrl", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], DocumentListComponent.prototype, "allowDropFiles", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], DocumentListComponent.prototype, "sorting", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], DocumentListComponent.prototype, "rowStyle", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], DocumentListComponent.prototype, "rowStyleClass", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], DocumentListComponent.prototype, "loading", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], DocumentListComponent.prototype, "paginationStrategy", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], DocumentListComponent.prototype, "supportedPageSizes", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], DocumentListComponent.prototype, "rowFilter", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], DocumentListComponent.prototype, "imageResolver", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], DocumentListComponent.prototype, "currentFolderId", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], DocumentListComponent.prototype, "folderNode", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], DocumentListComponent.prototype, "node", void 0);
     __decorate([
-        core_1.Output()
+        core_2.Output()
     ], DocumentListComponent.prototype, "nodeClick", void 0);
     __decorate([
-        core_1.Output()
+        core_2.Output()
     ], DocumentListComponent.prototype, "nodeDblClick", void 0);
     __decorate([
-        core_1.Output()
+        core_2.Output()
     ], DocumentListComponent.prototype, "folderChange", void 0);
     __decorate([
-        core_1.Output()
+        core_2.Output()
     ], DocumentListComponent.prototype, "preview", void 0);
     __decorate([
-        core_1.Output()
+        core_2.Output()
     ], DocumentListComponent.prototype, "ready", void 0);
     __decorate([
-        core_1.Output()
+        core_2.Output()
     ], DocumentListComponent.prototype, "error", void 0);
     __decorate([
-        core_1.ViewChild(core_2.DataTableComponent)
+        core_2.ViewChild(core_1.DataTableComponent)
     ], DocumentListComponent.prototype, "dataTable", void 0);
     __decorate([
-        core_1.HostListener('contextmenu', ['$event'])
+        core_2.HostListener('contextmenu', ['$event'])
     ], DocumentListComponent.prototype, "onShowContextMenu", null);
     DocumentListComponent = DocumentListComponent_1 = __decorate([
-        core_1.Component({
+        core_2.Component({
             selector: 'adf-document-list',
             styleUrls: ['./document-list.component.scss'],
             templateUrl: './document-list.component.html',
-            encapsulation: core_1.ViewEncapsulation.None
+            encapsulation: core_2.ViewEncapsulation.None
         })
     ], DocumentListComponent);
     return DocumentListComponent;

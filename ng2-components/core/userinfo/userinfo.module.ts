@@ -16,7 +16,7 @@
  */
 
 import { NgModule } from '@angular/core';
-import { CoreModule, TRANSLATION_PROVIDER } from '@adf/core';
+import { TRANSLATION_PROVIDER } from '../index';
 import { MaterialModule } from '../material.module';
 
 import { UserInfoComponent } from './components/user-info.component';
@@ -34,7 +34,6 @@ export const USER_INFO_PROVIDERS: any[] = [
 
 @NgModule({
     imports: [
-        CoreModule,
         MaterialModule
     ],
     declarations: [

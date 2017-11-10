@@ -16,7 +16,6 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreModule } from '@adf/core';
 import { EmptyListComponent } from './empty-list.component';
 
 describe('EmptyListComponentComponent', () => {
@@ -25,9 +24,6 @@ describe('EmptyListComponentComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-                CoreModule
-            ],
             declarations: [
                 EmptyListComponent
             ]

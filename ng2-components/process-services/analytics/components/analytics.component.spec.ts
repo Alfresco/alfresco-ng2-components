@@ -18,7 +18,7 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DiagramsModule } from '../../diagram';
-import { AlfrescoTranslationService, CoreModule } from '@adf/core';
+import { TranslationService, ServicesModule } from '@adf/core';
 import { ChartsModule } from 'ng2-charts';
 import { Observable } from 'rxjs/Rx';
 
@@ -54,7 +54,7 @@ describe('AnalyticsComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
+                ServicesModule,
                 ChartsModule,
                 DiagramsModule
             ],
@@ -66,7 +66,7 @@ describe('AnalyticsComponent', () => {
             ]
         }).compileComponents();
 
-        let translateService = TestBed.get(AlfrescoTranslationService);
+        let translateService = TestBed.get(TranslationService);
         spyOn(translateService, 'addTranslationFolder').and.stub();
         spyOn(translateService, 'get').and.callFake((key) => { return Observable.of(key); });
     }));

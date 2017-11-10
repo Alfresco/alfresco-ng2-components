@@ -104,7 +104,7 @@ var FormFieldComponent = (function () {
             function RuntimeComponentModule() {
             }
             RuntimeComponentModule = __decorate([
-                core_1.NgModule({ imports: [core_2.CoreModule], declarations: [decoratedCmp] })
+                core_1.NgModule({ imports: [core_2.ServicesModule], declarations: [decoratedCmp] })
             ], RuntimeComponentModule);
             return RuntimeComponentModule;
         }());

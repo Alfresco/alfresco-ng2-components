@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { ContentService } from '@adf/core';
+import { ContentService } from '../../services';
 
 @Component({
     selector: 'adf-img-viewer',

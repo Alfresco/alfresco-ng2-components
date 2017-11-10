@@ -16,7 +16,7 @@
  */
 
 import { Component, HostListener, Input, OnChanges, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { LogService } from '@adf/core';
+import { LogService } from '../../services';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 
 declare let PDFJS: any;

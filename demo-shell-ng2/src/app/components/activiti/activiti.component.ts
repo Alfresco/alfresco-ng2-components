@@ -40,8 +40,8 @@ import {
     TaskListComponent,
     TaskListService
 } from '@adf/process-services';
-import { LogService } from 'ng2-alfresco-core';
-import { AlfrescoApiService } from 'ng2-alfresco-core';
+import { LogService } from '@adf/core';
+import { AlfrescoApiService } from '@adf/core';
 import {
     DataSorting,
     ObjectDataRow,

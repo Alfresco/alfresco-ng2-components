@@ -19,10 +19,9 @@ import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import {
     AlfrescoApiService,
-    AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
-    CoreModule
-} from '@adf/core';
+    AuthenticationService,
+    AlfrescoSettingsService
+} from '../../services';
 import { EventMock } from '../../mock/event.mock';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { PdfViewerComponent } from './pdfViewer.component';
@@ -37,12 +36,12 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                ServicesModule
             ],
             declarations: [PdfViewerComponent],
             providers: [
                 AlfrescoSettingsService,
-                AlfrescoAuthenticationService,
+                AuthenticationService,
                 AlfrescoApiService,
                 RenderingQueueServices
             ]

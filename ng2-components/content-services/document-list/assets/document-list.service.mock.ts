@@ -17,10 +17,10 @@
 
 import {
     AlfrescoApiService,
-    AlfrescoAuthenticationService,
+    AuthenticationService,
     AlfrescoContentService,
     AlfrescoSettingsService,
-    LogService
+    LogService,
     ThumbnailService
 } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
@@ -36,7 +36,7 @@ export class DocumentListServiceMock extends DocumentListService {
 
     constructor(
         settings?: AlfrescoSettingsService,
-        authService?: AlfrescoAuthenticationService,
+        authService?: AuthenticationService,
         contentService?: AlfrescoContentService,
         apiService?: AlfrescoApiService,
         logService?: LogService,

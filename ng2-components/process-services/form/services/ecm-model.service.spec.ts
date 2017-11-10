@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { CoreModule } from '@adf/core';
+import { ServicesModule } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { FormModel } from './../components/widgets/core/form.model';
 import { EcmModelService } from './ecm-model.service';
@@ -30,7 +30,7 @@ describe('EcmModelService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                ServicesModule
             ],
             providers: [
                 EcmModelService

@@ -23,41 +23,35 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var ng2_alfresco_core_1 = require("ng2-alfresco-core");
-var material_module_1 = require("../material.module");
-var user_info_component_1 = require("./components/user-info.component");
-var bpm_user_service_1 = require("./services/bpm-user.service");
-var ecm_user_service_1 = require("./services/ecm-user.service");
-exports.USER_INFO_DIRECTIVES = [
-    user_info_component_1.UserInfoComponent
-];
-exports.USER_INFO_PROVIDERS = [
-    ecm_user_service_1.EcmUserService,
-    bpm_user_service_1.BpmUserService
-];
-var UserInfoModule = (function () {
-    function UserInfoModule() {
+var core_2 = require("@adf/core");
+var FileUploadingListRowComponent = (function () {
+    function FileUploadingListRowComponent() {
+        this.cancel = new core_1.EventEmitter();
+        this.remove = new core_1.EventEmitter();
+        this.FileUploadStatus = core_2.FileUploadStatus;
     }
-    UserInfoModule = __decorate([
-        core_1.NgModule({
-            imports: [
-                ng2_alfresco_core_1.CoreModule,
-                material_module_1.MaterialModule
-            ],
-            declarations: exports.USER_INFO_DIRECTIVES.slice(),
-            providers: exports.USER_INFO_PROVIDERS.concat([
-                {
-                    provide: ng2_alfresco_core_1.TRANSLATION_PROVIDER,
-                    multi: true,
-                    useValue: {
-                        name: 'ng2-alfresco-userinfo',
-                        source: 'assets/ng2-alfresco-userinfo'
-                    }
-                }
-            ]),
-            exports: exports.USER_INFO_DIRECTIVES.slice()
+    FileUploadingListRowComponent.prototype.onCancel = function (file) {
+        this.cancel.emit(file);
+    };
+    FileUploadingListRowComponent.prototype.onRemove = function (file) {
+        this.remove.emit(file);
+    };
+    __decorate([
+        core_1.Input()
+    ], FileUploadingListRowComponent.prototype, "file", void 0);
+    __decorate([
+        core_1.Output()
+    ], FileUploadingListRowComponent.prototype, "cancel", void 0);
+    __decorate([
+        core_1.Output()
+    ], FileUploadingListRowComponent.prototype, "remove", void 0);
+    FileUploadingListRowComponent = __decorate([
+        core_1.Component({
+            selector: 'adf-file-uploading-list-row',
+            templateUrl: './file-uploading-list-row.component.html',
+            styleUrls: ['./file-uploading-list-row.component.scss']
         })
-    ], UserInfoModule);
-    return UserInfoModule;
+    ], FileUploadingListRowComponent);
+    return FileUploadingListRowComponent;
 }());
-exports.UserInfoModule = UserInfoModule;
+exports.FileUploadingListRowComponent = FileUploadingListRowComponent;

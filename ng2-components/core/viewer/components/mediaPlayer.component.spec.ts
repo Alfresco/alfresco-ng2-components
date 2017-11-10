@@ -17,15 +17,14 @@
 
 import { DebugElement, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ContentService } from '@adf/core';
+import { ContentService } from '../services';
 import { MediaPlayerComponent } from './mediaPlayer.component';
 
 import {
     AlfrescoApiService,
-    AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
-    CoreModule
-} from '@adf/core';
+    AuthenticationService,
+    AlfrescoSettingsService
+} from '../services';
 
 describe('Test ng2-alfresco-viewer Media player component ', () => {
 
@@ -43,12 +42,12 @@ describe('Test ng2-alfresco-viewer Media player component ', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                ServicesModule
             ],
             declarations: [MediaPlayerComponent],
             providers: [
                 AlfrescoSettingsService,
-                AlfrescoAuthenticationService,
+                AuthenticationService,
                 AlfrescoApiService
             ]
         }).compileComponents();

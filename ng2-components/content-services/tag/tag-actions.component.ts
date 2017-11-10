@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
-import { AlfrescoTranslationService } from '@adf/core';
+import { TranslationService } from '@adf/core';
 import { TagService } from './../services/tag.service';
 
 /**
@@ -54,7 +54,7 @@ export class TagActionsComponent implements OnChanges {
 
     disableAddTag: boolean = true;
 
-    constructor(private tagService: TagService, private translateService: AlfrescoTranslationService) {
+    constructor(private tagService: TagService, private translateService: TranslationService) {
         this.tagService.refresh.subscribe(() => {
             this.refreshTag();
         });

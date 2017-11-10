@@ -16,9 +16,9 @@
  * limitations under the License.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var common_1 = require("@angular/common");
-var ng2_alfresco_core_1 = require("ng2-alfresco-core");
 var core_1 = require("@adf/core");
+var common_1 = require("@angular/common");
+var core_2 = require("@adf/core");
 var share_data_row_model_1 = require("./share-data-row.model");
 var ShareDataTableAdapter = (function () {
     function ShareDataTableAdapter(documentListService, schema, sorting) {
@@ -105,7 +105,7 @@ var ShareDataTableAdapter = (function () {
         if (col.type === 'date') {
             var format = col.format || 'medium';
             if (format === 'timeAgo') {
-                var timeAgoPipe = new ng2_alfresco_core_1.TimeAgoPipe();
+                var timeAgoPipe = new core_2.TimeAgoPipe();
                 return timeAgoPipe.transform(value);
             }
             else {

@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AlfrescoTranslationService, FileUploadStatus, NodesApiService, NotificationService, UploadService } from '@adf/core';
+import { TranslationService, FileUploadStatus, NodesApiService, NotificationService, UploadService } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { UploadModule } from '../upload-module';
 import { FileUploadingListComponent } from './file-uploading-list.component';
@@ -27,7 +27,7 @@ describe('FileUploadingListComponent', () => {
     let uploadService: UploadService;
     let nodesApiService: NodesApiService;
     let notificationService: NotificationService;
-    let translateService: AlfrescoTranslationService;
+    let translateService: TranslationService;
     let file: any;
 
     beforeEach(() => {
@@ -46,7 +46,7 @@ describe('FileUploadingListComponent', () => {
         nodesApiService = TestBed.get(NodesApiService);
         uploadService = TestBed.get(UploadService);
         notificationService = TestBed.get(NotificationService);
-        translateService = TestBed.get(AlfrescoTranslationService);
+        translateService = TestBed.get(TranslationService);
         fixture = TestBed.createComponent(FileUploadingListComponent);
         component = fixture.componentInstance;
 

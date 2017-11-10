@@ -17,7 +17,7 @@
 
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService, CoreModule } from '@adf/core';
+import { AppConfigService, ServicesModule } from '@adf/core';
 import { DataTableModule } from '@adf/core';
 import { WebscriptComponent } from './webscript.component';
 
@@ -33,7 +33,7 @@ describe('WebscriptComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
+                ServicesModule,
                 DataTableModule
             ],
             declarations: [

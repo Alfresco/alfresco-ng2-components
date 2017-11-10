@@ -16,7 +16,7 @@
  */
 
 import { NgModule } from '@angular/core';
-import { CoreModule, TRANSLATION_PROVIDER } from '@adf/core';
+import { TRANSLATION_PROVIDER } from '@adf/core';
 import { DiagramsModule } from '../diagram';
 import { MaterialModule } from '../material.module';
 
@@ -45,7 +45,6 @@ export const ANALYTICS_PROVIDERS: any[] = [
 
 @NgModule({
     imports: [
-        CoreModule,
         ChartsModule,
         DiagramsModule,
         MaterialModule

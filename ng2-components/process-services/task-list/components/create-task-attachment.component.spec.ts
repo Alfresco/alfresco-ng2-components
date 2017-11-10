@@ -20,7 +20,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
 
 import { ProcessContentService } from '../../form';
-import { AppConfigService, CoreModule, TranslationService } from '@adf/core';
+import { AppConfigService, ServicesModule, TranslationService } from '@adf/core';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { AttachmentComponent } from './create-task-attachment.component';
@@ -35,7 +35,7 @@ describe('Activiti Task Create Attachment', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                ServicesModule
             ],
             declarations: [
                 AttachmentComponent

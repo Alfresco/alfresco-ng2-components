@@ -5,7 +5,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 // import { Editor3DModule } from 'ng2-3d-editor';
 import { ChartsModule } from 'ng2-charts';
 
-import { AppConfigService, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
+import { AppConfigService, TRANSLATION_PROVIDER } from '@adf/core';
 import { AppComponent } from './app.component';
 import { AdfModule } from './adf.module';
 import { MaterialModule } from './material.module';

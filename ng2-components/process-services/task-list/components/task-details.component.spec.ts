@@ -22,7 +22,7 @@ import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
 import { FormModule, FormModel, FormOutcomeEvent, FormOutcomeModel, FormService } from '../../form';
-import { AppConfigService, CommentProcessService, CoreModule, LogService, TranslationService } from '@adf/core';
+import { AppConfigService, CommentProcessService, ServicesModule, LogService, TranslationService } from '@adf/core';
 
 import { PeopleProcessService, UserProcessModel } from '@adf/core';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
@@ -60,7 +60,7 @@ describe('TaskDetailsComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
+                ServicesModule,
                 FormModule,
                 MatButtonModule,
                 MatInputModule

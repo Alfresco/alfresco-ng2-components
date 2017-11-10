@@ -17,7 +17,7 @@
 
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { CoreModule, TRANSLATION_PROVIDER } from '@adf/core';
+import { TRANSLATION_PROVIDER } from '@adf/core';
 import { MaterialModule } from '../material.module';
 
 import { LoginComponent } from './components/login.component';
@@ -27,7 +27,6 @@ import { LoginHeaderDirective } from './directives/login-header.directive';
 @NgModule({
     imports: [
         RouterModule,
-        CoreModule,
         MaterialModule
     ],
     declarations: [

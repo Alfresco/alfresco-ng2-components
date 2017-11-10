@@ -18,7 +18,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgZone, SimpleChange, TemplateRef } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Pagination } from 'alfresco-js-api';
-import { AlfrescoApiService, AlfrescoTranslationService, AppConfigService, CoreModule, UserPreferencesService } from '@adf/core';
+import { AlfrescoApiService, TranslationService, AppConfigService, ServicesModule, UserPreferencesService } from '@adf/core';
 import { DataColumn, DataTableComponent } from '@adf/core';
 import { DataTableModule } from '@adf/core';
 import { Observable, Subject } from 'rxjs/Rx';
@@ -56,7 +56,7 @@ describe('DocumentList', () => {
 
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
+                ServicesModule,
                 DataTableModule,
                 MaterialModule
             ],
@@ -79,7 +79,7 @@ describe('DocumentList', () => {
 
         fixture = TestBed.createComponent(DocumentListComponent);
 
-        let translateService = TestBed.get(AlfrescoTranslationService);
+        let translateService = TestBed.get(TranslationService);
         spyOn(translateService, 'get').and.callFake((key) => {
             return Observable.of(key);
         });

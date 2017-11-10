@@ -16,7 +16,7 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { AppConfigService, CoreModule } from '@adf/core';
+import { AppConfigService, ServicesModule } from '@adf/core';
 import { TagService } from '../services/tag.service';
 
 declare let jasmine: any;
@@ -28,7 +28,7 @@ describe('TagService', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                ServicesModule
             ],
             providers: [
                 TagService

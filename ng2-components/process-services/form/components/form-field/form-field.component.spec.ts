@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreModule } from '@adf/core';
+import { ServicesModule } from '@adf/core';
 import { MaterialModule } from '../material.module';
 import { ErrorWidgetComponent } from '../widgets/error/error.component';
 import { FormRenderingService } from './../../services/form-rendering.service';
@@ -37,7 +37,7 @@ describe('FormFieldComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-                imports: [CoreModule,
+                imports: [ServicesModule,
                     MaterialModule
                 ],
                 declarations: [

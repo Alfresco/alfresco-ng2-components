@@ -21,7 +21,7 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Observable } from 'rxjs/Rx';
 
-import { AuthenticationService, CoreModule } from '@adf/core';
+import { AuthenticationService } from '../services';
 
 describe('LogoutDirective', () => {
 
@@ -39,7 +39,7 @@ describe('LogoutDirective', () => {
         TestBed.configureTestingModule({
             imports: [
                 RouterTestingModule,
-                CoreModule
+                ServicesModule
             ],
             declarations: [
                 TestComponent

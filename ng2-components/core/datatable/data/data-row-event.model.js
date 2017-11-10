@@ -26,7 +26,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@adf/core");
+var events_1 = require("../../events");
 var DataRowEvent = (function (_super) {
     __extends(DataRowEvent, _super);
     function DataRowEvent(value, domEvent, sender) {
@@ -37,5 +37,5 @@ var DataRowEvent = (function (_super) {
         return _this;
     }
     return DataRowEvent;
-}(core_1.BaseUIEvent));
+}(events_1.BaseUIEvent));
 exports.DataRowEvent = DataRowEvent;

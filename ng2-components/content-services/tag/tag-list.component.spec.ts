@@ -17,7 +17,7 @@
 
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService, CoreModule } from '@adf/core';
+import { AppConfigService, ServicesModule } from '@adf/core';
 import { TagService } from '../services/tag.service';
 import { TagListComponent } from '././tag-list.component';
 import { MaterialModule } from '../material.module';
@@ -52,7 +52,7 @@ describe('TagList', () => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                CoreModule
+                ServicesModule
             ],
             declarations: [
                 TagListComponent

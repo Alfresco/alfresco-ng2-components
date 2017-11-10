@@ -16,7 +16,7 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { AlfrescoTranslationService, AppConfigService, CoreModule, NotificationService } from '@adf/core';
+import { TranslationService, AppConfigService, ServicesModule, NotificationService } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { FileNode, FolderNode } from '../assets/document-library.model.mock';
 import { ContentActionHandler } from '../models/content-action.model';
@@ -32,13 +32,13 @@ describe('FolderActionsService', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                ServicesModule
             ],
             providers: [
                 DocumentListService,
                 FolderActionsService,
                 NodeActionsService,
-                AlfrescoTranslationService,
+                TranslationService,
                 NotificationService
             ]
         }).compileComponents();

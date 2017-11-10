@@ -17,7 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatInputModule } from '@angular/material';
-import { CoreModule } from '@adf/core';
+import { ServicesModule } from '@adf/core';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 import { ErrorWidgetComponent } from '../error/error.component';
 import { EcmModelService } from './../../../services/ecm-model.service';
@@ -33,7 +33,7 @@ describe('AmountWidgetComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
+                ServicesModule,
                 MatInputModule
             ],
             declarations: [

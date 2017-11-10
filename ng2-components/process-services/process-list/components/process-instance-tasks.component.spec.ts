@@ -21,7 +21,7 @@ import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
 import { TaskDetailsModel } from 'ng2-activiti-tasklist';
-import { AlfrescoTranslationService, CoreModule } from '@adf/core';
+import { TranslationService, ServicesModule } from '@adf/core';
 
 import { taskDetailsMock } from './../assets/task-details.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
@@ -42,13 +42,13 @@ describe('ProcessInstanceTasksComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                ServicesModule
             ],
             declarations: [
                 ProcessInstanceTasksComponent
             ],
             providers: [
-                { provide: AlfrescoTranslationService, useClass: TranslationMock },
+                { provide: TranslationService, useClass: TranslationMock },
                 ProcessService
             ],
             schemas: [NO_ERRORS_SCHEMA]

@@ -22,7 +22,7 @@ import {
     fakeAsync,
     TestBed
 } from '@angular/core/testing';
-import { CoreModule } from '@adf/core';
+import { ServicesModule } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { ProcessService } from './../services/process.service';
 import { ProcessAuditDirective } from './process-audit.directive';
@@ -55,7 +55,7 @@ describe('ProcessAuditDirective', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [CoreModule],
+            imports: [ServicesModule],
             declarations: [BasicButtonComponent, ProcessAuditDirective],
             providers: [ProcessService]
         });

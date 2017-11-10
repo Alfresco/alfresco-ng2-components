@@ -21,12 +21,13 @@ import {
     Input, OnChanges, OnDestroy, Output, TemplateRef, ViewEncapsulation
 } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { AlfrescoApiService, BaseEvent, LogService, RenditionsService } from '@adf/core';
+import { AlfrescoApiService, LogService, RenditionsService } from '../../services';
+import { BaseEvent } from '../../events';
 
 import { ViewerMoreActionsComponent } from './viewer-more-actions.component';
 import { ViewerOpenWithComponent } from './viewer-open-with.component';
 import { ViewerSidebarComponent } from './viewer-sidebar.component';
-import { ViewerToolbarComponent  } from './viewer-toolbar.component';
+import { ViewerToolbarComponent } from './viewer-toolbar.component';
 
 @Component({
     selector: 'adf-viewer',
@@ -133,11 +134,11 @@ export class ViewerComponent implements OnDestroy, OnChanges {
         { mimeType: 'application/pdf', type: 'pdf' }
     ];
 
-    constructor(
-        private apiService: AlfrescoApiService,
-        private logService: LogService,
-        private location: Location,
-        private renditionService: RenditionsService) {}
+    constructor(private apiService: AlfrescoApiService,
+                private logService: LogService,
+                private location: Location,
+                private renditionService: RenditionsService) {
+    }
 
     ngOnChanges(changes) {
         if (this.showViewer) {
@@ -183,7 +184,7 @@ export class ViewerComponent implements OnDestroy, OnChanges {
                     this.apiService.getInstance().nodes.getNodeInfo(this.fileNodeId).then(
                         (data: MinimalNodeEntryEntity) => {
                             this.mimeType = data.content.mimeType;
-                            this.displayName = this.getDisplayName( data.name);
+                            this.displayName = this.getDisplayName(data.name);
                             this.urlFileContent = this.apiService.getInstance().content.getContentUrl(data.id);
                             this.extension = this.getFileExtension(data.name);
 

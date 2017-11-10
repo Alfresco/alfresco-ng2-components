@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { BaseEvent } from '@adf/core';
+import { BaseEvent } from '../../../events';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRow } from '../../data/data-row.model';
 

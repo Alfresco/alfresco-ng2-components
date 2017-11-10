@@ -18,7 +18,7 @@
 import { Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { ProcessInstance, ProcessService ,
     ProcessAttachmentListComponent, ProcessUploadService } from '@adf/process-services';
-import { UploadService } from 'ng2-alfresco-core';
+import { UploadService } from '@adf/core';
 
 @Component({
     selector: 'activiti-process-attachments',

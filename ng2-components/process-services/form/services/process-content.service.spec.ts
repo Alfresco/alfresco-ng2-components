@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { CoreModule } from '@adf/core';
+import { ServicesModule } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { ProcessContentService } from './process-content.service';
 
@@ -68,7 +68,7 @@ describe('ProcessContentService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                ServicesModule
             ],
             providers: [
                 ProcessContentService

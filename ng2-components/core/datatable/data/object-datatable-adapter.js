@@ -17,7 +17,8 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var common_1 = require("@angular/common");
-var core_1 = require("@adf/core");
+var utils_1 = require("../../utils");
+var pipes_1 = require("../../pipes");
 var data_sorting_model_1 = require("./data-sorting.model");
 // Simple implementation of the DataTableAdapter interface.
 var ObjectDataTableAdapter = (function () {
@@ -100,7 +101,7 @@ var ObjectDataTableAdapter = (function () {
         if (col.type === 'date') {
             var format = col.format || 'medium';
             if (format === 'timeAgo') {
-                var timeAgoPipe = new core_1.TimeAgoPipe();
+                var timeAgoPipe = new pipes_1.TimeAgoPipe();
                 return timeAgoPipe.transform(value);
             }
             else {
@@ -159,7 +160,7 @@ var ObjectDataRow = (function () {
         }
     }
     ObjectDataRow.prototype.getValue = function (key) {
-        return core_1.ObjectUtils.getValue(this.obj, key);
+        return utils_1.ObjectUtils.getValue(this.obj, key);
     };
     ObjectDataRow.prototype.hasValue = function (key) {
         return this.getValue(key) !== undefined;

@@ -17,7 +17,7 @@
 
 import { Component, ViewChild } from '@angular/core';
 import { FormComponent, FormModel, FormService } from '@adf/process-services';
-import { LogService } from 'ng2-alfresco-core';
+import { LogService } from '@adf/core';
 
 @Component({
     selector: 'form-list',

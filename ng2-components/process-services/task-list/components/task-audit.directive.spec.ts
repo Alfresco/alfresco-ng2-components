@@ -22,7 +22,7 @@ import {
     fakeAsync,
     TestBed
 } from '@angular/core/testing';
-import { CoreModule } from '@adf/core';
+import { ServicesModule } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { TaskListService } from './../services/tasklist.service';
 import { TaskAuditDirective } from './task-audit.directive';
@@ -55,7 +55,7 @@ describe('TaskAuditDirective', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [CoreModule],
+            imports: [ServicesModule],
             declarations: [BasicButtonComponent, TaskAuditDirective],
             providers: [TaskListService]
         });

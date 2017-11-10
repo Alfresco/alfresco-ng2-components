@@ -17,7 +17,6 @@
 
 import { async, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { CoreModule } from '@adf/core';
 import { MaterialModule } from '../material.module';
 
 import { LoginComponent } from '../components/login.component';
@@ -31,7 +30,6 @@ describe('LoginHeaderDirective', () => {
         TestBed.configureTestingModule({
             imports: [
                 RouterTestingModule,
-                CoreModule,
                 MaterialModule
             ],
             declarations: [

@@ -19,7 +19,7 @@ import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatInputModule, MatListModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
-import { AlfrescoAuthenticationService, AlfrescoTranslationService, CoreModule, SearchService } from '@adf/core';
+import { AuthenticationService, TranslationService, ServicesModule, SearchService } from '@adf/core';
 import { ThumbnailService } from '@adf/core';
 import { Observable } from 'rxjs/Observable';
 import { noResult, results } from './../assets/search.component.mock';
@@ -35,12 +35,12 @@ describe('SearchControlComponent', () => {
     let element: HTMLElement;
     let debugElement: DebugElement;
     let searchService: SearchService;
-    let authService: AlfrescoAuthenticationService;
+    let authService: AuthenticationService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
+                ServicesModule,
                 MatInputModule,
                 MatListModule
             ],
@@ -50,7 +50,7 @@ describe('SearchControlComponent', () => {
                 SearchTriggerDirective
             ],
             providers: [
-                {provide: AlfrescoTranslationService, useClass: TranslationMock},
+                {provide: TranslationService, useClass: TranslationMock},
                 ThumbnailService,
                 SearchService
             ]
@@ -58,7 +58,7 @@ describe('SearchControlComponent', () => {
             fixture = TestBed.createComponent(SearchControlComponent);
             debugElement = fixture.debugElement;
             searchService = TestBed.get(SearchService);
-            authService = TestBed.get(AlfrescoAuthenticationService);
+            authService = TestBed.get(AuthenticationService);
             component = fixture.componentInstance;
             element = fixture.nativeElement;
         });

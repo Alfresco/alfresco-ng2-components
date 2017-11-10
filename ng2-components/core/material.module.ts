@@ -33,7 +33,8 @@ import {
     MatTabsModule,
     MatTooltipModule,
     MatSnackBarModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatCheckboxChange
 } from '@angular/material';
 
 export function modules() {
@@ -54,7 +55,8 @@ export function modules() {
         MatListModule,
         MatSidenavModule,
         MatSnackBarModule,
-        MatToolbarModule
+        MatToolbarModule,
+        MatCheckboxChange
     ];
 }
 

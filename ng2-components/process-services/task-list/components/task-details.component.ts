@@ -27,7 +27,7 @@ import { Component,
 } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { PeopleProcessService, UserProcessModel } from '@adf/core';
-import { AlfrescoAuthenticationService, CardViewUpdateService, ClickNotification, LogService, UpdateNotification } from '@adf/core';
+import { AuthenticationService, CardViewUpdateService, ClickNotification, LogService, UpdateNotification } from '@adf/core';
 import { Observable, Observer } from 'rxjs/Rx';
 import { ContentLinkModel, FormFieldValidator, FormModel, FormOutcomeEvent } from '../../form';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
@@ -143,7 +143,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     peopleSearch$: Observable<UserProcessModel[]>;
 
     constructor(private activitiTaskList: TaskListService,
-                private authService: AlfrescoAuthenticationService,
+                private authService: AuthenticationService,
                 private peopleProcessService: PeopleProcessService,
                 private logService: LogService,
                 private cardViewUpdateService: CardViewUpdateService,

@@ -19,11 +19,10 @@ import { DebugElement, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import {
     AlfrescoApiService,
-    AlfrescoAuthenticationService,
+    AuthenticationService,
     AlfrescoSettingsService,
-    ContentService,
-    CoreModule
-} from '@adf/core';
+    ContentService
+} from '../services';
 import { ImgViewerComponent } from './imgViewer.component';
 
 describe('Test ng2-alfresco-viewer Img viewer component ', () => {
@@ -42,12 +41,12 @@ describe('Test ng2-alfresco-viewer Img viewer component ', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                ServicesModule
             ],
             declarations: [ImgViewerComponent],
             providers: [
                 AlfrescoSettingsService,
-                AlfrescoAuthenticationService,
+                AuthenticationService,
                 AlfrescoApiService
             ]
         }).compileComponents();

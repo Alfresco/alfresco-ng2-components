@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { AlfrescoAuthenticationService } from '@adf/core';
+import { AuthenticationService } from '../../services';
 import { BpmUserModel } from './../models/bpm-user.model';
 import { EcmUserModel } from './../models/ecm-user.model';
 import { BpmUserService } from './../services/bpm-user.service';
@@ -58,7 +58,7 @@ export class UserInfoComponent implements OnInit {
 
     constructor(private ecmUserService: EcmUserService,
                 private bpmUserService: BpmUserService,
-                private authService: AlfrescoAuthenticationService) {
+                private authService: AuthenticationService) {
     }
 
     ngOnInit() {

@@ -16,7 +16,7 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { AlfrescoAuthenticationService, AlfrescoContentService, CoreModule } from '@adf/core';
+import { AuthenticationService, AlfrescoContentService  } from '../../services';
 import { fakeEcmUser } from '../../mock/ecm-user.service.mock';
 import { EcmUserService } from '../services/ecm-user.service';
 
@@ -25,23 +25,22 @@ declare let jasmine: any;
 describe('EcmUserService', () => {
 
     let service: EcmUserService;
-    let authService: AlfrescoAuthenticationService;
+    let authService: AuthenticationService;
     let contentService: AlfrescoContentService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-                CoreModule
-            ],
             providers: [
-                EcmUserService
+                EcmUserService,
+                AuthenticationService,
+                AlfrescoContentService
             ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
         service = TestBed.get(EcmUserService);
-        authService = TestBed.get(AlfrescoAuthenticationService);
+        authService = TestBed.get(AuthenticationService);
         contentService = TestBed.get(AlfrescoContentService);
     });
 

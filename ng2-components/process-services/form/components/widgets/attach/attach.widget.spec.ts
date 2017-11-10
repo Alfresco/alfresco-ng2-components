@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreModule } from '@adf/core';
+import { ServicesModule } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 import { MaterialModule } from '../../../../material.module';
@@ -40,7 +40,7 @@ describe('AttachWidgetComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
+                ServicesModule,
                 MaterialModule
             ],
             declarations: [

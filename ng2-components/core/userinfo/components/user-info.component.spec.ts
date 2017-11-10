@@ -18,11 +18,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
-    AlfrescoAuthenticationService,
+    AuthenticationService,
     AlfrescoContentService,
-    AlfrescoTranslationService,
-    CoreModule
-} from '@adf/core';
+    TranslationService
+} from '../../services';
 import { fakeBpmUser } from '../../mock/bpm-user.service.mock';
 import { fakeEcmEditedUser, fakeEcmUser, fakeEcmUserNoImage } from '../../mock/ecm-user.service.mock';
 import { TranslationMock } from '../../mock/translation.service.mock';
@@ -39,13 +38,13 @@ describe('User info component', () => {
     let userInfoComp: UserInfoComponent;
     let fixture: ComponentFixture<UserInfoComponent>;
     let element: HTMLElement;
-    let stubAuthService: AlfrescoAuthenticationService;
+    let stubAuthService: AuthenticationService;
     let stubContent: AlfrescoContentService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
+                ServicesModule,
                 MaterialModule
             ],
             declarations: [
@@ -54,14 +53,14 @@ describe('User info component', () => {
             providers: [
                 EcmUserService,
                 BpmUserService,
-                {provide: AlfrescoTranslationService, useClass: TranslationMock}
+                {provide: TranslationService, useClass: TranslationMock}
             ]
         }).compileComponents().then(() => {
             fixture = TestBed.createComponent(UserInfoComponent);
             userInfoComp = fixture.componentInstance;
             element = fixture.nativeElement;
 
-            stubAuthService = TestBed.get(AlfrescoAuthenticationService);
+            stubAuthService = TestBed.get(AuthenticationService);
             stubContent = TestBed.get(AlfrescoContentService);
         });
     }));

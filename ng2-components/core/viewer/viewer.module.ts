@@ -16,7 +16,7 @@
  */
 
 import { NgModule } from '@angular/core';
-import { CoreModule, TRANSLATION_PROVIDER } from '@adf/core';
+import { TRANSLATION_PROVIDER } from '../index';
 import { MaterialModule } from '../material.module';
 
 import { ImgViewerComponent } from './components/imgViewer.component';
@@ -50,7 +50,6 @@ export function declarations() {
 
 @NgModule({
     imports: [
-        CoreModule,
         MaterialModule
     ],
     declarations: [

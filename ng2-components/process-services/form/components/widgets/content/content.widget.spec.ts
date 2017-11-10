@@ -19,7 +19,7 @@ import { DebugElement, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatTabsModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
-import { AlfrescoTranslationService, ContentService, CoreModule } from '@adf/core';
+import { TranslationService, ContentService, ServicesModule } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 
 import { EcmModelService } from '../../../services/ecm-model.service';
@@ -68,7 +68,7 @@ describe('ContentWidgetComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 MatTabsModule,
-                CoreModule
+                ServicesModule
             ],
             declarations: [
                 ContentWidgetComponent
@@ -85,7 +85,7 @@ describe('ContentWidgetComponent', () => {
         serviceContent = TestBed.get(ContentService);
         processContentService = TestBed.get(ProcessContentService);
 
-        let translateService = TestBed.get(AlfrescoTranslationService);
+        let translateService = TestBed.get(TranslationService);
         spyOn(translateService, 'addTranslationFolder').and.stub();
         spyOn(translateService, 'get').and.callFake((key) => {
             return Observable.of(key);

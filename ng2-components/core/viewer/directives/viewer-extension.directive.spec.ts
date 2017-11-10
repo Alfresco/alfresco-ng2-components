@@ -20,7 +20,6 @@ import { SpyLocation } from '@angular/common/testing';
 import { ElementRef } from '@angular/core';
 import { Injector } from '@angular/core';
 import { async, getTestBed, TestBed } from '@angular/core/testing';
-import { CoreModule } from '@adf/core';
 import { ViewerComponent } from '../components/viewer.component';
 import { ViewerExtensionDirective } from './viewer-extension.directive';
 
@@ -37,7 +36,6 @@ describe('ExtensionViewerDirective', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [CoreModule],
             providers: [
                 { provide: Location, useClass: SpyLocation },
                 ViewerExtensionDirective,

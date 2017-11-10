@@ -17,13 +17,13 @@
 
 import { DataTableModule } from '@adf/core';
 import { NgModule } from '@angular/core';
-import { CoreModule, TRANSLATION_PROVIDER } from '@adf/core';
+import { ServicesModule, TRANSLATION_PROVIDER } from '@adf/core';
 import { MaterialModule } from '../material.module';
 import { WebscriptComponent } from './webscript.component';
 
 @NgModule({
     imports: [
-        CoreModule,
+        ServicesModule,
         MaterialModule,
         DataTableModule
     ],

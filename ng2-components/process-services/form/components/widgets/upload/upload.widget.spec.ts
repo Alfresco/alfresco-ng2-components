@@ -18,7 +18,7 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { CoreModule } from '@adf/core';
+import { ServicesModule } from '@adf/core';
 import { EcmModelService } from '../../../services/ecm-model.service';
 import { FormService } from '../../../services/form.service';
 import { ProcessContentService } from '../../../services/process-content.service';
@@ -74,7 +74,7 @@ describe('UploadWidgetComponent', () => {
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-                imports: [CoreModule, MaterialModule],
+                imports: [ServicesModule, MaterialModule],
                 declarations: [UploadWidgetComponent, ErrorWidgetComponent],
                 providers: [FormService, EcmModelService, ProcessContentService]
             }).compileComponents().then(() => {

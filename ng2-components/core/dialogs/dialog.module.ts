@@ -49,4 +49,4 @@ import { TranslationService } from '../services/translation.service';
         FolderDialogComponent
     ]
 })
-export class DataTableModule {}
+export class DialogModule {}

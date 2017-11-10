@@ -17,7 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule, MatInputModule } from '@angular/material';
-import { AppConfigService, CoreModule, TranslationService, UserProcessModel } from '@adf/core';
+import { AppConfigService, ServicesModule, TranslationService, UserProcessModel } from '@adf/core';
 import { DataTableModule } from '@adf/core';
 import { Observable } from 'rxjs/Observable';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
@@ -50,7 +50,7 @@ describe('PeopleSearchComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
+                ServicesModule,
                 DataTableModule,
                 MatButtonModule,
                 MatInputModule

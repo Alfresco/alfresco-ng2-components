@@ -19,10 +19,9 @@ import { DebugElement, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import {
     AlfrescoApiService,
-    AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
-    CoreModule
-} from '@adf/core';
+    AuthenticationService,
+    AlfrescoSettingsService
+} from '../../services';
 import { TxtViewerComponent } from './txtViewer.component';
 
 describe('Test ng2-alfresco-viewer Text View component', () => {
@@ -34,13 +33,10 @@ describe('Test ng2-alfresco-viewer Text View component', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-                CoreModule
-            ],
             declarations: [TxtViewerComponent],
             providers: [
                 AlfrescoSettingsService,
-                AlfrescoAuthenticationService,
+                AuthenticationService,
                 AlfrescoApiService
             ]
         }).compileComponents();

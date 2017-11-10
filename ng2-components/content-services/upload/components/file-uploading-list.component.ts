@@ -16,7 +16,7 @@
  */
 
 import { Component, ContentChild, Input, TemplateRef } from '@angular/core';
-import { AlfrescoTranslationService, FileModel, FileUploadStatus, NodesApiService, NotificationService, UploadService } from '@adf/core';
+import { TranslationService, FileModel, FileUploadStatus, NodesApiService, NotificationService, UploadService } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 
 @Component({
@@ -38,7 +38,7 @@ export class FileUploadingListComponent {
         private uploadService: UploadService,
         private nodesApi: NodesApiService,
         private notificationService: NotificationService,
-        private translateService: AlfrescoTranslationService) {
+        private translateService: TranslationService) {
     }
 
     /**

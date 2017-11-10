@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AppConfigService, StorageService } from 'ng2-alfresco-core';
+import { AppConfigService, StorageService } from '@adf/core';
 
 @Injectable()
 export class DebugAppConfigService extends AppConfigService {

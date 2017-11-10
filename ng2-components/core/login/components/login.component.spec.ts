@@ -21,8 +21,7 @@ import { Validators } from '@angular/forms';
 
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AlfrescoAuthenticationService, CoreModule } from '@adf/core';
-import { AlfrescoTranslationService, UserPreferencesService } from '@adf/core';
+import { TranslationService, UserPreferencesService  AuthenticationService } from '../../services';
 
 import { MaterialModule } from '../../material.module';
 import { LoginErrorEvent } from '../models/login-error.event';
@@ -36,7 +35,7 @@ describe('LoginComponent', () => {
     let fixture: ComponentFixture<LoginComponent>;
     let debug: DebugElement;
     let element: any;
-    let authService: AlfrescoAuthenticationService;
+    let authService: AuthenticationService;
     let router: Router;
     let userPreferences: UserPreferencesService;
 
@@ -62,14 +61,14 @@ describe('LoginComponent', () => {
             imports: [
                 RouterTestingModule,
                 MaterialModule,
-                CoreModule
+                ServicesModule
             ],
             declarations: [
                 LoginComponent
             ],
             providers: [
-                {provide: AlfrescoAuthenticationService, useClass: AuthenticationMock},
-                {provide: AlfrescoTranslationService, useClass: TranslationMock}
+                {provide: AuthenticationService, useClass: AuthenticationMock},
+                {provide: TranslationService, useClass: TranslationMock}
             ]
         }).compileComponents();
     }));
@@ -86,7 +85,7 @@ describe('LoginComponent', () => {
         usernameInput = element.querySelector('#username');
         passwordInput = element.querySelector('#password');
 
-        authService = TestBed.get(AlfrescoAuthenticationService);
+        authService = TestBed.get(AuthenticationService);
         router = TestBed.get(Router);
         userPreferences = TestBed.get(UserPreferencesService);
 

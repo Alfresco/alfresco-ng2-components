@@ -16,7 +16,7 @@
  */
 
 import { NgModule } from '@angular/core';
-import { CoreModule, TRANSLATION_PROVIDER } from '@adf/core';
+import { ServicesModule, TRANSLATION_PROVIDER } from '@adf/core';
 
 import { DIAGRAM_DIRECTIVES, DIAGRAM_PROVIDERS } from './components/index';
 
@@ -26,7 +26,7 @@ import { RAPHAEL_PROVIDERS } from './components/raphael/index';
 
 @NgModule({
     imports: [
-        CoreModule
+        ServicesModule
     ],
     declarations: [
         ...DIAGRAM_DIRECTIVES,

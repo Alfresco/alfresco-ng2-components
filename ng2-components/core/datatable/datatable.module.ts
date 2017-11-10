@@ -17,7 +17,7 @@
 
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { CoreModule, TRANSLATION_PROVIDER } from '@adf/core';
+import { TRANSLATION_PROVIDER } from '../index';
 import { MaterialModule } from '../material.module';
 
 import { DataTableCellComponent } from './components/datatable/datatable-cell.component';
@@ -36,7 +36,6 @@ import { NoPermissionTemplateDirective } from './directives/no-permission-templa
 @NgModule({
     imports: [
         RouterModule,
-        CoreModule,
         MaterialModule
     ],
     declarations: [

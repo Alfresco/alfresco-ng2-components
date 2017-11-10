@@ -17,7 +17,7 @@
 
 import { async, TestBed } from '@angular/core/testing';
 import { MatProgressSpinnerModule } from '@angular/material';
-import { CoreModule } from '@adf/core';
+import { ServicesModule } from '@adf/core';
 import { DataTableComponent, DataTableModule } from '@adf/core';
 import { DocumentListService } from '../../services/document-list.service';
 
@@ -32,7 +32,7 @@ describe('NoPermissionContentDirective', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
+                ServicesModule,
                 DataTableModule,
                 MatProgressSpinnerModule
             ],

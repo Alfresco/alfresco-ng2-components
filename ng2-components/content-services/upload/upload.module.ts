@@ -17,7 +17,7 @@
 
 import { NgModule } from '@angular/core';
 
-import { CoreModule, TRANSLATION_PROVIDER } from '@adf/core';
+import { ServicesModule, TRANSLATION_PROVIDER } from '@adf/core';
 import { MaterialModule } from '../material.module';
 
 import { FileUploadingDialogComponent } from './components/file-uploading-dialog.component';
@@ -30,7 +30,7 @@ import { FileDraggableDirective } from './directives/file-draggable.directive';
 
 @NgModule({
     imports: [
-        CoreModule,
+        ServicesModule,
         MaterialModule
     ],
     declarations: [

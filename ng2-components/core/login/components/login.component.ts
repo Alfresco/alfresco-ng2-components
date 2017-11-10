@@ -18,7 +18,8 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoTranslationService, LogService, UserPreferencesService } from '@adf/core';
+import { AuthenticationService, AlfrescoSettingsService,
+    TranslationService, LogService, UserPreferencesService } from '../../services';
 
 import { LoginErrorEvent } from '../models/login-error.event';
 import { LoginSubmitEvent } from '../models/login-submit.event';
@@ -107,9 +108,9 @@ export class LoginComponent implements OnInit {
      * @param translate
      */
     constructor(private _fb: FormBuilder,
-                private authService: AlfrescoAuthenticationService,
+                private authService: AuthenticationService,
                 private settingsService: AlfrescoSettingsService,
-                private translateService: AlfrescoTranslationService,
+                private translateService: TranslationService,
                 private logService: LogService,
                 private elementRef: ElementRef,
                 private router: Router,

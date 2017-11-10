@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreModule, SearchService } from '@adf/core';
+import { ServicesModule, SearchService } from '@adf/core';
 import { SearchModule } from '../../index';
 import { differentResult, result, SimpleSearchTestComponent } from './../assets/search.component.mock';
 
@@ -29,7 +29,7 @@ describe('SearchComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
+                ServicesModule,
                 SearchModule
             ],
             declarations: [ SimpleSearchTestComponent ]

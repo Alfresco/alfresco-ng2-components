@@ -22,19 +22,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@adf/core");
 var common_1 = require("@angular/common");
-var core_1 = require("@angular/core");
-var ng2_alfresco_core_1 = require("ng2-alfresco-core");
-var core_2 = require("@adf/core");
+var core_2 = require("@angular/core");
+var core_3 = require("@adf/core");
 var filter_process_model_1 = require("../models/filter-process.model");
 var process_preset_model_1 = require("../models/process-preset.model");
 var ProcessInstanceListComponent = (function () {
     function ProcessInstanceListComponent(processService, appConfig) {
         this.processService = processService;
         this.appConfig = appConfig;
-        this.rowClick = new core_1.EventEmitter();
-        this.success = new core_1.EventEmitter();
-        this.error = new core_1.EventEmitter();
+        this.rowClick = new core_2.EventEmitter();
+        this.success = new core_2.EventEmitter();
+        this.error = new core_2.EventEmitter();
         this.isLoading = true;
         this.layoutPresets = {};
     }
@@ -55,7 +55,7 @@ var ProcessInstanceListComponent = (function () {
             schema = this.columnList.columns.map(function (c) { return c; });
         }
         if (!this.data) {
-            this.data = new core_2.ObjectDataTableAdapter([], schema.length > 0 ? schema : this.getLayoutPreset(this.presetColumn));
+            this.data = new core_1.ObjectDataTableAdapter([], schema.length > 0 ? schema : this.getLayoutPreset(this.presetColumn));
         }
         else {
             if (schema && schema.length > 0) {
@@ -122,7 +122,7 @@ var ProcessInstanceListComponent = (function () {
     ProcessInstanceListComponent.prototype.createDataRow = function (instances) {
         var instancesRows = [];
         instances.forEach(function (row) {
-            instancesRows.push(new core_2.ObjectDataRow(row));
+            instancesRows.push(new core_1.ObjectDataRow(row));
         });
         return instancesRows;
     };
@@ -147,7 +147,7 @@ var ProcessInstanceListComponent = (function () {
         if (sortingParams.length === 2) {
             var sortColumn = sortingParams[0] === 'created' ? 'started' : sortingParams[0];
             var sortOrder = sortingParams[1];
-            this.data.setSorting(new core_2.DataSorting(sortColumn, sortOrder));
+            this.data.setSorting(new core_1.DataSorting(sortColumn, sortOrder));
         }
     };
     /**
@@ -258,43 +258,43 @@ var ProcessInstanceListComponent = (function () {
     };
     ProcessInstanceListComponent.prototype.getLayoutPreset = function (name) {
         if (name === void 0) { name = 'default'; }
-        return (this.layoutPresets[name] || this.layoutPresets['default']).map(function (col) { return new core_2.ObjectDataColumn(col); });
+        return (this.layoutPresets[name] || this.layoutPresets['default']).map(function (col) { return new core_1.ObjectDataColumn(col); });
     };
     __decorate([
-        core_1.ContentChild(ng2_alfresco_core_1.DataColumnListComponent)
+        core_2.ContentChild(core_3.DataColumnListComponent)
     ], ProcessInstanceListComponent.prototype, "columnList", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], ProcessInstanceListComponent.prototype, "appId", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], ProcessInstanceListComponent.prototype, "processDefinitionKey", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], ProcessInstanceListComponent.prototype, "state", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], ProcessInstanceListComponent.prototype, "sort", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], ProcessInstanceListComponent.prototype, "name", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], ProcessInstanceListComponent.prototype, "presetColumn", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], ProcessInstanceListComponent.prototype, "data", void 0);
     __decorate([
-        core_1.Output()
+        core_2.Output()
     ], ProcessInstanceListComponent.prototype, "rowClick", void 0);
     __decorate([
-        core_1.Output()
+        core_2.Output()
     ], ProcessInstanceListComponent.prototype, "success", void 0);
     __decorate([
-        core_1.Output()
+        core_2.Output()
     ], ProcessInstanceListComponent.prototype, "error", void 0);
     ProcessInstanceListComponent = __decorate([
-        core_1.Component({
+        core_2.Component({
             selector: 'adf-process-instance-list',
             styleUrls: ['./process-list.component.css'],
             templateUrl: './process-list.component.html'

@@ -29,7 +29,7 @@ import {
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import {
     AlfrescoApiService,
-    AlfrescoTranslationService,
+    TranslationService,
     EXTENDIBLE_COMPONENT,
     FileModel,
     FileUtils,
@@ -108,7 +108,7 @@ export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionS
     private permissionValue: Subject<boolean> = new Subject<boolean>();
 
     constructor(private uploadService: UploadService,
-                private translateService: AlfrescoTranslationService,
+                private translateService: TranslationService,
                 private logService: LogService,
                 private notificationService: NotificationService,
                 private apiService: AlfrescoApiService) {

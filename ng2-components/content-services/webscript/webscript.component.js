@@ -22,8 +22,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var core_2 = require("@adf/core");
+var core_1 = require("@adf/core");
+var core_2 = require("@angular/core");
 /**
  * <adf-webscript-get [scriptPath]="string"
  *                         [scriptArgs]="Object"
@@ -53,7 +53,7 @@ var WebscriptComponent = (function () {
         this.contextRoot = 'alfresco';
         this.servicePath = 'service';
         this.contentType = 'TEXT';
-        this.success = new core_1.EventEmitter();
+        this.success = new core_2.EventEmitter();
         this.data = undefined;
         this.showError = false;
     }
@@ -89,10 +89,10 @@ var WebscriptComponent = (function () {
         var datatableData = null;
         try {
             if (!data.schema) {
-                data.schema = core_2.ObjectDataTableAdapter.generateSchema(data.data);
+                data.schema = core_1.ObjectDataTableAdapter.generateSchema(data.data);
             }
             if (data.schema && data.schema.length > 0) {
-                this.data = new core_2.ObjectDataTableAdapter(data.data, data.schema);
+                this.data = new core_1.ObjectDataTableAdapter(data.data, data.schema);
             }
         }
         catch (e) {
@@ -107,28 +107,28 @@ var WebscriptComponent = (function () {
         return this.contentType === 'DATATABLE';
     };
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], WebscriptComponent.prototype, "scriptPath", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], WebscriptComponent.prototype, "scriptArgs", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], WebscriptComponent.prototype, "showData", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], WebscriptComponent.prototype, "contextRoot", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], WebscriptComponent.prototype, "servicePath", void 0);
     __decorate([
-        core_1.Input()
+        core_2.Input()
     ], WebscriptComponent.prototype, "contentType", void 0);
     __decorate([
-        core_1.Output()
+        core_2.Output()
     ], WebscriptComponent.prototype, "success", void 0);
     WebscriptComponent = __decorate([
-        core_1.Component({
+        core_2.Component({
             selector: 'adf-webscript-get',
             templateUrl: 'webscript.component.html'
         })

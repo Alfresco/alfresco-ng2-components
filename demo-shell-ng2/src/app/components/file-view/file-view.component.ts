@@ -17,7 +17,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlfrescoApiService } from 'ng2-alfresco-core';
+import { AlfrescoApiService } from '@adf/core';
 
 @Component({
     selector: 'adf-file-view',

@@ -17,7 +17,7 @@
 
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormModel, FormService } from '@adf/process-services';
-import { LogService } from 'ng2-alfresco-core';
+import { LogService } from '@adf/core';
 import { InMemoryFormService } from '../../services/in-memory-form.service';
 import { DemoForm } from './demo-form';
 

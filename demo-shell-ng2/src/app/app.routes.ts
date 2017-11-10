@@ -17,7 +17,7 @@
 
 import { ModuleWithProviders } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard, AuthGuardBpm, AuthGuardEcm } from 'ng2-alfresco-core';
+import { AuthGuard, AuthGuardBpm, AuthGuardEcm } from '@adf/core';
 import { AppLayoutComponent } from './components/app-layout/app-layout.component';
 import { LoginComponent } from './components/login/login.component';
 import { SettingsComponent } from './components/settings/settings.component';

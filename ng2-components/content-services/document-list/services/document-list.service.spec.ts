@@ -16,7 +16,7 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { CookieService, CoreModule, LogService } from '@adf/core';
+import { CookieService, ServicesModule, LogService } from '@adf/core';
 import { CookieServiceMock } from '../../core/assets/cookie.service.mock';
 import { DocumentListService } from './document-list.service';
 
@@ -90,7 +90,7 @@ describe('DocumentListService', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                ServicesModule
             ],
             providers: [
                 DocumentListService,

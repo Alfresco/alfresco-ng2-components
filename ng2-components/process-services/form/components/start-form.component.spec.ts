@@ -17,7 +17,7 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AlfrescoTranslationService, CoreModule } from '@adf/core';
+import { TranslationService, ServicesModule } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { EntryComponenteMockModule } from '../assets/entry-module.mock';
 import { startFormDateWidgetMock, startFormDropdownDefinitionMock, startFormTextDefinitionMock, startMockForm, startMockFormWithTab } from '../assets/start-form.component.mock';
@@ -51,7 +51,7 @@ describe('ActivitiStartForm', () => {
             imports: [
                 MaterialModule,
                 EntryComponenteMockModule,
-                CoreModule
+                ServicesModule
             ],
             declarations: [
                 StartFormComponent,
@@ -61,7 +61,7 @@ describe('ActivitiStartForm', () => {
                 ...MASK_DIRECTIVE
             ],
             providers: [
-                { provide: AlfrescoTranslationService, useClass: TranslationMock },
+                { provide: TranslationService, useClass: TranslationMock },
                 EcmModelService,
                 FormService,
                 FormRenderingService,

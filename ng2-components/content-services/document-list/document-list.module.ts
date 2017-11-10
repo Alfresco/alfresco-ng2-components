@@ -20,7 +20,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../material.module';
 
 import { DataTableModule } from '@adf/core';
-import { CoreModule, TRANSLATION_PROVIDER } from '@adf/core';
+import { ServicesModule, TRANSLATION_PROVIDER } from '@adf/core';
 import { UploadModule } from '../upload';
 
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
@@ -47,7 +47,7 @@ import { NodeActionsService } from './services/node-actions.service';
 
 @NgModule({
     imports: [
-        CoreModule,
+        ServicesModule,
         DataTableModule,
         FlexLayoutModule,
         MaterialModule,

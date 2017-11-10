@@ -15,23 +15,24 @@
  * limitations under the License.
  */
 
+export * from './app-config.service';
+export * from './authentication.service';
+export * from './alfresco-api.service';
+export * from './alfresco-settings.service';
+export * from './alfresco-content.service';
+export * from './auth-guard.service';
+export * from './auth-guard-ecm.service';
+export * from './auth-guard-bpm.service';
+export * from './apps-process.service';
 export * from './page-title.service';
 export * from './content.service';
 export * from './storage.service';
 export * from './cookie.service';
-export * from './alfresco-api.service';
-export * from './alfresco-settings.service';
-export * from './alfresco-content.service';
 export * from './renditions.service';
-export * from './auth-guard.service';
-export * from './auth-guard-ecm.service';
-export * from './auth-guard-bpm.service';
 export * from './notification.service';
 export * from './log.service';
-export * from './authentication.service';
 export * from './translation.service';
 export * from './translate-loader.service';
-export * from './app-config.service';
 export * from './thumbnail.service';
 export * from './upload.service';
 export * from './dynamic-component-mapper.service';
@@ -39,19 +40,18 @@ export * from './card-item-types.service';
 export * from './card-view-update.service';
 export * from './card-view-update.service';
 export * from './card-view-update.service';
-export * from './app-config.service';
 export * from './user-preferences.service';
 export * from './highlight-transform.service';
-export * from './apps-process.service';
 export * from './deleted-nodes-api.service';
 export * from './favorites-api.service';
 export * from './nodes-api.service';
 export * from './people-content.service';
 export * from './people-process.service';
 export * from './search-api.service';
+export * from './search.service';
 export * from './shared-links-api.service';
 export * from './sites-api.service';
 export * from './discovery-api.service';
 export * from './comment-process.service';
 
-export * from 'services.module'
+export * from './services.module'
