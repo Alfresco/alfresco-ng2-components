@@ -16,18 +16,18 @@
  */
 
 import { CommonModule } from '@angular/common';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { TRANSLATION_PROVIDER, TranslationService } from './services/translation.service';
 
 import { MaterialModule } from './material.module';
 
 import { ViewerModule } from './viewer';
-import { UserInfoModule } from './userinfo'
+import { UserInfoModule } from './userinfo';
 import { ToolbarModule } from './toolbar';
 import { HostSettingsModule } from './settings';
 import { PaginationModule } from './pagination';
@@ -41,11 +41,10 @@ import { ContextMenuModule } from './context-menu';
 import { CollapsableModule } from './collapsable';
 import { CardViewModule } from './card-view';
 import { DialogModule } from './dialogs';
-;
 
-import { PipeModule } from './pipes';
-import { ServiceModule , TranslateLoaderService, LogService } from './services';
 import { DirectiveModule } from './directives';
+import { PipeModule } from './pipes';
+import { LogService , ServiceModule, TranslateLoaderService } from './services';
 
 export function createTranslateLoader(http: HttpClient, logService: LogService) {
     return new TranslateLoaderService(http, logService);
@@ -87,8 +86,8 @@ export function createTranslateLoader(http: HttpClient, logService: LogService) 
             provide: TRANSLATION_PROVIDER,
             multi: true,
             useValue: {
-                name: 'ng2-alfresco-core',
-                source: 'assets/ng2-alfresco-core'
+                name: '@adf/core',
+                source: 'assets/@adf/core'
             }
         }
     ],

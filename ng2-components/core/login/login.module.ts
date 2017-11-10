@@ -17,11 +17,10 @@
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { TRANSLATION_PROVIDER } from '../services';
-import { MaterialModule } from '../material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { MaterialModule } from '../material.module';
 
 import { LoginComponent } from './components/login.component';
 import { LoginFooterDirective } from './directives/login-footer.directive';
@@ -40,16 +39,6 @@ import { LoginHeaderDirective } from './directives/login-header.directive';
         LoginComponent,
         LoginFooterDirective,
         LoginHeaderDirective
-    ],
-    providers: [
-        {
-            provide: TRANSLATION_PROVIDER,
-            multi: true,
-            useValue: {
-                name: 'ng2-alfresco-login',
-                source: 'assets/ng2-alfresco-login'
-            }
-        }
     ],
     exports: [
         [

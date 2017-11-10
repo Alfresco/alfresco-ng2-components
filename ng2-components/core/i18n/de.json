@@ -44,5 +44,34 @@
       "BACK": "Zurück",
       "APPLY": "ANWENDEN"
     }
+  },
+  "LOGIN": {
+    "LOGO": "Alfresco",
+    "LABEL": {
+      "LOGIN": "Anmelden",
+      "USERNAME": "Benutzername",
+      "PASSWORD": "Passwort",
+      "REMEMBER": "Benutzername und Passwort speichern"
+    },
+    "MESSAGES": {
+      "USERNAME-REQUIRED": "Erforderlich",
+      "USERNAME-MIN": "Ihr Benutzername muss mindestens {{minLenght}} Zeichen lang sein.",
+      "PASSWORD-REQUIRED": "Geben Sie Ihr Passwort ein, um sich anzumelden",
+      "LOGIN-ERROR-CREDENTIALS": "Sie haben einen unbekannten Benutzernamen oder ein falsches Passwort eingegeben",
+      "LOGIN-ERROR-PROVIDERS": "Provider müssen definiert werden",
+      "LOGIN-SUCCESS": "Anmeldung erfolgreich",
+      "LOGIN-ERROR-CORS": "CORS-Ausnahme; überprüfen Sie Ihre Serverkonfiguration",
+      "LOGIN-ERROR-CSRF": "CSRF exception, set [disableCsrf]=\"true\" in login.component",
+      "LOGIN-ECM-LICENSE": "Alfresco Content Services-Repository ist schreibgeschützt"
+    },
+    "BUTTON": {
+      "LOGIN": "ANMELDEN",
+      "CHECKING": "ÜBERPRÜFUNG",
+      "WELCOME": "WILLKOMMEN"
+    },
+    "ACTION": {
+      "HELP": "BRAUCHEN SIE HILFE?",
+      "REGISTER": "REGISTRIEREN"
+    }
   }
 }
