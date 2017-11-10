@@ -25,6 +25,7 @@ import {
     MatListModule,
     MatMenuModule,
     MatOptionModule,
+    MatProgressBarModule,
     MatProgressSpinnerModule,
     MatRippleModule,
     MatSelectModule
@@ -42,7 +43,8 @@ export function modules() {
         MatRippleModule,
         MatMenuModule,
         MatOptionModule,
-        MatSelectModule
+        MatSelectModule,
+        MatProgressBarModule
     ];
 }
 
