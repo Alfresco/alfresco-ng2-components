@@ -27,9 +27,7 @@ import { TranslationService } from '../services/translation.service';
 
 @NgModule({
     imports: [
-        MaterialModule,
-        DownloadZipDialogComponent,
-        FolderDialogComponent
+        MaterialModule
     ],
     declarations: [
         DownloadZipDialogComponent,
