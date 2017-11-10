@@ -8,9 +8,6 @@
     "skipLibCheck": false,
     "types": [],
     "paths": {
-      "ng2-alfresco-core": [
-        "../../ng2-components/ng2-alfresco-core"
-      ],
       "alfresco-js-api": [
         "../node_modules/alfresco-js-api/dist/alfresco-js-api.js"
       ],

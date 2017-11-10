@@ -17,7 +17,7 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var common_1 = require("@angular/common");
-var ng2_alfresco_core_1 = require("ng2-alfresco-core");
+var core_1 = require("@adf/core");
 var data_sorting_model_1 = require("./data-sorting.model");
 // Simple implementation of the DataTableAdapter interface.
 var ObjectDataTableAdapter = (function () {
@@ -100,7 +100,7 @@ var ObjectDataTableAdapter = (function () {
         if (col.type === 'date') {
             var format = col.format || 'medium';
             if (format === 'timeAgo') {
-                var timeAgoPipe = new ng2_alfresco_core_1.TimeAgoPipe();
+                var timeAgoPipe = new core_1.TimeAgoPipe();
                 return timeAgoPipe.transform(value);
             }
             else {
@@ -159,7 +159,7 @@ var ObjectDataRow = (function () {
         }
     }
     ObjectDataRow.prototype.getValue = function (key) {
-        return ng2_alfresco_core_1.ObjectUtils.getValue(this.obj, key);
+        return core_1.ObjectUtils.getValue(this.obj, key);
     };
     ObjectDataRow.prototype.hasValue = function (key) {
         return this.getValue(key) !== undefined;

@@ -17,7 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService, AppsProcessService, CoreModule, TranslationService } from 'ng2-alfresco-core';
+import { AppConfigService, AppsProcessService, CoreModule, TranslationService } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';

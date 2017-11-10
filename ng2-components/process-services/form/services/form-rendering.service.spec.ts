@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DynamicComponentResolver } from 'ng2-alfresco-core';
+import { DynamicComponentResolver } from '@adf/core';
 import {
     AttachWidgetComponent,
     FormFieldModel,

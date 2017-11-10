@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { CardViewDateItemModel, CardViewItem, CardViewTextItemModel } from 'ng2-alfresco-core';
+import { CardViewDateItemModel, CardViewItem, CardViewTextItemModel } from '@adf/core';
 import { ProcessInstance } from '../models/process-instance.model';
 
 @Component({

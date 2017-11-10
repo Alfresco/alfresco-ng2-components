@@ -16,7 +16,7 @@
  */
 
 import { Injectable, Type } from '@angular/core';
-import { DynamicComponentMapper, DynamicComponentResolveFunction, DynamicComponentResolver } from 'ng2-alfresco-core';
+import { DynamicComponentMapper, DynamicComponentResolveFunction, DynamicComponentResolver } from '@adf/core';
 
 import {
     AmountWidgetComponent,

@@ -20,7 +20,7 @@ import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import * as moment from 'moment';
 import { Moment } from 'moment';
 import { LogService, MOMENT_DATE_FORMATS,
-    MomentDateAdapter, PeopleProcessService, UserPreferencesService, UserProcessModel } from 'ng2-alfresco-core';
+    MomentDateAdapter, PeopleProcessService, UserPreferencesService, UserProcessModel } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { Form } from '../models/form.model';
 import { StartTaskModel } from '../models/start-task.model';

@@ -22,7 +22,7 @@ import { FormModel } from '../core/form.model';
 import { InputMaskDirective } from './text-mask.component';
 import { TextWidgetComponent } from './text.widget';
 
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule } from '@adf/core';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 import { MaterialModule } from '../../../../material.module';
 import { ErrorWidgetComponent } from '../error/error.component';

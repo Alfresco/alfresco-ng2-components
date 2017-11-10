@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { AfterContentInit, AfterViewInit, Component, ContentChild, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { DataColumnListComponent, UserProcessModel } from 'ng2-alfresco-core';
 import { DataTableComponent } from '@adf/core';
+import { AfterContentInit, AfterViewInit, Component, ContentChild, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { DataColumnListComponent, UserProcessModel } from '@adf/core';
 import { UserEventModel } from '../models/user-event.model';
 
 @Component({

@@ -16,7 +16,7 @@
  */
 
 import { NgModule } from '@angular/core';
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule } from '@adf/core';
 import { MaterialModule } from '../material.module';
 
 import { RatingService } from '../services/rating.service';

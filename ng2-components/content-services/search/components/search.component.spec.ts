@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreModule, SearchService } from 'ng2-alfresco-core';
+import { CoreModule, SearchService } from '@adf/core';
 import { SearchModule } from '../../index';
 import { differentResult, result, SimpleSearchTestComponent } from './../assets/search.component.mock';
 

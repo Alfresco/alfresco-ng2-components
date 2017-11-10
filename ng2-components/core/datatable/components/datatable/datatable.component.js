@@ -23,7 +23,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var ng2_alfresco_core_1 = require("ng2-alfresco-core");
+var core_2 = require("@adf/core");
 var Rx_1 = require("rxjs/Rx");
 var data_row_event_model_1 = require("../../data/data-row-event.model");
 var data_sorting_model_1 = require("../../data/data-sorting.model");
@@ -367,7 +367,7 @@ var DataTableComponent = (function () {
         this.elementRef.nativeElement.dispatchEvent(domEvent);
     };
     __decorate([
-        core_1.ContentChild(ng2_alfresco_core_1.DataColumnListComponent)
+        core_1.ContentChild(core_2.DataColumnListComponent)
     ], DataTableComponent.prototype, "columnList", void 0);
     __decorate([
         core_1.Input()

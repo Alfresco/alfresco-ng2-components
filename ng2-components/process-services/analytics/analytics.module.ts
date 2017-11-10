@@ -16,8 +16,8 @@
  */
 
 import { NgModule } from '@angular/core';
+import { CoreModule, TRANSLATION_PROVIDER } from '@adf/core';
 import { DiagramsModule } from '../diagram';
-import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { MaterialModule } from '../material.module';
 
 import { ChartsModule } from 'ng2-charts';

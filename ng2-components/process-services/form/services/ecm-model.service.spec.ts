@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { FormModel } from './../components/widgets/core/form.model';
 import { EcmModelService } from './ecm-model.service';

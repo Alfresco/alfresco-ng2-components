@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { SiteModel, SitesApiService } from 'ng2-alfresco-core';
+import { SiteModel, SitesApiService } from '@adf/core';
 
 @Component({
     selector: 'adf-sites-dropdown',

@@ -18,8 +18,8 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule, MatInputModule } from '@angular/material';
-import { AppConfigService, CoreModule, LogService, TranslationService } from 'ng2-alfresco-core';
-import { PeopleProcessService, UserProcessModel } from 'ng2-alfresco-core';
+import { AppConfigService, CoreModule, LogService, TranslationService } from '@adf/core';
+import { PeopleProcessService, UserProcessModel } from '@adf/core';
 import { DataTableModule } from '@adf/core';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';

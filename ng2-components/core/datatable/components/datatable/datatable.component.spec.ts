@@ -19,8 +19,8 @@ import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCheckboxChange } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { CoreModule } from 'ng2-alfresco-core';
-import { MaterialModule } from '../../material.module';
+import { DataTableModule } from '../../datatable.module';
+import { MaterialModule } from '../../../material.module';
 import {
     DataColumn,
     DataRow,
@@ -45,7 +45,7 @@ describe('DataTable', () => {
         TestBed.configureTestingModule({
             imports: [
                 RouterTestingModule,
-                CoreModule,
+                DataTableModule,
                 MaterialModule
             ],
             declarations: [

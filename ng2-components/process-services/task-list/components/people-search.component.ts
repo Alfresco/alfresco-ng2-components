@@ -17,7 +17,7 @@
 
 import { Component, Directive, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { PeopleProcessService, UserProcessModel } from 'ng2-alfresco-core';
+import { PeopleProcessService, UserProcessModel } from '@adf/core';
 import { Observable } from 'rxjs/Observable';
 
 @Component({

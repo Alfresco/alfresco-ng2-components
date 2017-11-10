@@ -26,7 +26,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var ng2_alfresco_core_1 = require("ng2-alfresco-core");
+var core_1 = require("@adf/core");
 var DataRowActionEvent = (function (_super) {
     __extends(DataRowActionEvent, _super);
     function DataRowActionEvent(row, action) {
@@ -43,7 +43,7 @@ var DataRowActionEvent = (function (_super) {
         configurable: true
     });
     return DataRowActionEvent;
-}(ng2_alfresco_core_1.BaseEvent));
+}(core_1.BaseEvent));
 exports.DataRowActionEvent = DataRowActionEvent;
 var DataRowActionModel = (function () {
     function DataRowActionModel(row, action) {

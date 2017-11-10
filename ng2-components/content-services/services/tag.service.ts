@@ -16,7 +16,7 @@
  */
 
 import { EventEmitter, Injectable, Output } from '@angular/core';
-import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoApiService, LogService } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 
 /**

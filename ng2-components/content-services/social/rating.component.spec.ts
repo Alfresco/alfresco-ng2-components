@@ -17,7 +17,7 @@
 
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule } from '@adf/core';
 import { RatingComponent } from './rating.component';
 import { MaterialModule } from '../material.module';
 import { RatingService } from '../services/rating.service';

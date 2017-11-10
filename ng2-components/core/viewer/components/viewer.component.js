@@ -23,7 +23,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var ng2_alfresco_core_1 = require("ng2-alfresco-core");
+var core_2 = require("@adf/core");
 var viewer_more_actions_component_1 = require("./viewer-more-actions.component");
 var viewer_open_with_component_1 = require("./viewer-open-with.component");
 var viewer_sidebar_component_1 = require("./viewer-sidebar.component");
@@ -190,7 +190,7 @@ var ViewerComponent = (function () {
             this.close();
         }
         else {
-            var event_1 = new ng2_alfresco_core_1.BaseEvent();
+            var event_1 = new core_2.BaseEvent();
             this.goBack.next(event_1);
             if (!event_1.defaultPrevented) {
                 this.location.back();
@@ -262,7 +262,7 @@ var ViewerComponent = (function () {
     };
     ViewerComponent.prototype.downloadContent = function () {
         if (this.allowDownload && this.downloadUrl && this.fileName) {
-            var args = new ng2_alfresco_core_1.BaseEvent();
+            var args = new core_2.BaseEvent();
             this.download.next(args);
             if (!args.defaultPrevented) {
                 var link = document.createElement('a');
@@ -277,13 +277,13 @@ var ViewerComponent = (function () {
     };
     ViewerComponent.prototype.printContent = function () {
         if (this.allowPrint) {
-            var args = new ng2_alfresco_core_1.BaseEvent();
+            var args = new core_2.BaseEvent();
             this.print.next(args);
         }
     };
     ViewerComponent.prototype.shareContent = function () {
         if (this.allowShare) {
-            var args = new ng2_alfresco_core_1.BaseEvent();
+            var args = new core_2.BaseEvent();
             this.share.next(args);
         }
     };

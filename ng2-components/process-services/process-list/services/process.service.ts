@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { TaskDetailsModel } from '../../task-list';
-import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoApiService, LogService } from '@adf/core';
 import { Observable } from 'rxjs/Observable';
 import { ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';

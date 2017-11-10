@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AlfrescoTranslationService, CardViewUpdateService, CoreModule } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, CardViewUpdateService, CoreModule } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 
 import { ProcessInstance } from '../models/process-instance.model';

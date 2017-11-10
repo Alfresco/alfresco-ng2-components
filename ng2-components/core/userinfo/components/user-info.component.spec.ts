@@ -22,7 +22,7 @@ import {
     AlfrescoContentService,
     AlfrescoTranslationService,
     CoreModule
-} from 'ng2-alfresco-core';
+} from '@adf/core';
 import { fakeBpmUser } from '../assets/fake-bpm-user.service.mock';
 import { fakeEcmEditedUser, fakeEcmUser, fakeEcmUserNoImage } from '../assets/fake-ecm-user.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';

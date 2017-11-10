@@ -18,7 +18,7 @@
  /* tslint:disable:component-selector  */
 
 import { Component, Input, OnInit } from '@angular/core';
-import { LogService } from 'ng2-alfresco-core';
+import { LogService } from '@adf/core';
 import { FormService } from './../../../../../services/form.service';
 import { DynamicTableColumnOption } from './../../dynamic-table-column-option.model';
 import { DynamicTableColumn } from './../../dynamic-table-column.model';

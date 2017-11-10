@@ -19,13 +19,8 @@
         },
         {
           "glob": "**/*",
-          "input": "../node_modules/ng2-alfresco-core/prebuilt-themes",
+          "input": "../node_modules/core/prebuilt-themes",
           "output": "./prebuilt-themes"
-        },
-        {
-          "glob": "**/*",
-          "input": "../node_modules/ng2-alfresco-core/bundles/assets",
-          "output": "./assets/"
         },
         {
           "glob": "**/*",

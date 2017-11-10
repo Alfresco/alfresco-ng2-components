@@ -22,7 +22,7 @@
  *
  * @returns {StartTaskModel} .
  */
-import { UserProcessModel } from 'ng2-alfresco-core';
+import { UserProcessModel } from '@adf/core';
 
 export class StartTaskModel {
 

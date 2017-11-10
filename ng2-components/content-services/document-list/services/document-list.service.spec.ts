@@ -16,7 +16,7 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { CookieService, CoreModule, LogService } from 'ng2-alfresco-core';
+import { CookieService, CoreModule, LogService } from '@adf/core';
 import { CookieServiceMock } from '../../../ng2-alfresco-core/src/assets/cookie.service.mock';
 import { DocumentListService } from './document-list.service';
 

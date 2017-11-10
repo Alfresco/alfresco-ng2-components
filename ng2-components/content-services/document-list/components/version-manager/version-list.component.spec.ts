@@ -18,7 +18,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AlfrescoApiService, CoreModule } from 'ng2-alfresco-core';
+import { AlfrescoApiService, CoreModule } from '@adf/core';
 import { MaterialModule } from '../../../material.module';
 import { VersionListComponent } from './version-list.component';
 

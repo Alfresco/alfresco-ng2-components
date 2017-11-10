@@ -4,9 +4,6 @@
 @import 'process-services/styles/index';
 @import 'core/styles/index';
 
-@import 'ng2-alfresco-core/styles/theming';
-@import 'ng2-alfresco-core/styles/index';
-
 @import '~@angular/material/theming';
 
 @include mat-core($alfresco-typography);
@@ -19,7 +16,6 @@ $theme:   mat-light-theme($primary, $accent, $warn);
 @include angular-material-theme($theme);
 
 @include adf-app-layout-theme($theme);
-@include alfresco-core-theme($theme);
 
 @include adf-content-services-theme($theme);
 @include adf-process-services-theme($theme);

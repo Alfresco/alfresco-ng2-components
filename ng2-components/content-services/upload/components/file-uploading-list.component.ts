@@ -16,7 +16,7 @@
  */
 
 import { Component, ContentChild, Input, TemplateRef } from '@angular/core';
-import { AlfrescoTranslationService, FileModel, FileUploadStatus, NodesApiService, NotificationService, UploadService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, FileModel, FileUploadStatus, NodesApiService, NotificationService, UploadService } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 
 @Component({

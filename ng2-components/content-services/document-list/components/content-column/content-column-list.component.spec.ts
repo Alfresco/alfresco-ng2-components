@@ -17,11 +17,11 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule } from '@adf/core';
 import { DataColumn, DataTableModule } from '@adf/core';
 import { MaterialModule } from '../../../material.module';
 
-import { LogService } from 'ng2-alfresco-core';
+import { LogService } from '@adf/core';
 import { DocumentListService } from '../../services/document-list.service';
 import { DocumentListComponent } from './../document-list.component';
 import { ContentColumnListComponent } from './content-column-list.component';

@@ -18,7 +18,7 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
-import { AlfrescoAuthenticationService, ThumbnailService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, ThumbnailService } from '@adf/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 

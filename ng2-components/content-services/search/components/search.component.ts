@@ -31,7 +31,7 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { NodePaging } from 'alfresco-js-api';
-import { SearchOptions, SearchService } from 'ng2-alfresco-core';
+import { SearchOptions, SearchService } from '@adf/core';
 import { Subject } from 'rxjs/Subject';
 
 @Component({

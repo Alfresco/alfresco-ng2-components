@@ -18,7 +18,7 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import * as moment from 'moment';
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule } from '@adf/core';
 import { MaterialModule } from '../../../../material.module';
 import { FormFieldModel, FormModel } from '../../../index';
 import { DynamicTableColumn  } from './../../dynamic-table-column.model';

@@ -30,7 +30,7 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule } from '@adf/core';
 
 import { FormRenderingService } from './../../services/form-rendering.service';
 import { WidgetVisibilityService } from './../../services/widget-visibility.service';

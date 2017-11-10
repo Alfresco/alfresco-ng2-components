@@ -25,7 +25,7 @@ import {
     NodePermissionSubject,
     NotificationService,
     UploadService
-} from 'ng2-alfresco-core';
+} from '@adf/core';
 
 @Component({
     selector: 'adf-upload-drag-area',

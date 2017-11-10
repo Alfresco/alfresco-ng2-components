@@ -19,19 +19,21 @@ import { NgModule } from '@angular/core';
 import {
     MatButtonModule,
     MatCardModule,
+    MatCheckboxModule,
     MatDialogModule,
     MatIconModule,
+    MatInputModule,
+    MatListModule,
     MatMenuModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
+    MatSelectModule,
+    MatSidenavModule,
+    MatSlideToggleModule,
     MatTabsModule,
     MatTooltipModule,
-    MatCheckboxModule,
-    MatSlideToggleModule,
-    MatInputModule,
-    MatSelectModule,
-    MatListModule,
-    MatSidenavModule
+    MatSnackBarModule,
+    MatToolbarModule
 } from '@angular/material';
 
 export function modules() {
@@ -50,7 +52,9 @@ export function modules() {
         MatInputModule,
         MatSelectModule,
         MatListModule,
-        MatSidenavModule
+        MatSidenavModule,
+        MatSnackBarModule,
+        MatToolbarModule
     ];
 }
 

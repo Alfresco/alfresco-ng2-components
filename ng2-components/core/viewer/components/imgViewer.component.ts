@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { ContentService } from 'ng2-alfresco-core';
+import { ContentService } from '@adf/core';
 
 @Component({
     selector: 'adf-img-viewer',

@@ -23,7 +23,7 @@ import {
     AlfrescoSettingsService,
     ContentService,
     CoreModule
-} from 'ng2-alfresco-core';
+} from '@adf/core';
 import { ImgViewerComponent } from './imgViewer.component';
 
 describe('Test ng2-alfresco-viewer Img viewer component ', () => {

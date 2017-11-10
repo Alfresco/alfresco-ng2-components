@@ -21,7 +21,7 @@ import {
     Input, OnChanges, OnDestroy, Output, TemplateRef, ViewEncapsulation
 } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { AlfrescoApiService, BaseEvent, LogService, RenditionsService } from 'ng2-alfresco-core';
+import { AlfrescoApiService, BaseEvent, LogService, RenditionsService } from '@adf/core';
 
 import { ViewerMoreActionsComponent } from './viewer-more-actions.component';
 import { ViewerOpenWithComponent } from './viewer-open-with.component';

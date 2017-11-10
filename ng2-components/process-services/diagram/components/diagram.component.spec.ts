@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, CoreModule } from '@adf/core';
 
 import { DebugElement } from '@angular/core';
 import * as diagramsActivitiesMock from '../assets/diagramActivities.mock';

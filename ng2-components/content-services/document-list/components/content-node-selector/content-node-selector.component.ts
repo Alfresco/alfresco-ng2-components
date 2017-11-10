@@ -18,7 +18,7 @@
 import { Component, EventEmitter, Inject, Input, OnInit, Optional, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { MinimalNodeEntryEntity, NodePaging, Pagination } from 'alfresco-js-api';
-import { AlfrescoContentService, HighlightDirective, SiteModel } from 'ng2-alfresco-core';
+import { AlfrescoContentService, HighlightDirective, SiteModel } from '@adf/core';
 import { ImageResolver } from '../../data/image-resolver.model';
 import { RowFilter } from '../../data/row-filter.model';
 import { DocumentListComponent, PaginationStrategy } from '../document-list.component';

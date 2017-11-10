@@ -17,7 +17,7 @@
 
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CommentProcessModel, PeopleProcessService, UserProcessModel } from 'ng2-alfresco-core';
+import { CommentProcessModel, PeopleProcessService, UserProcessModel } from '@adf/core';
 
 @Component({
     selector: 'adf-comment-list',

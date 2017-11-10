@@ -20,7 +20,7 @@ import {
     IterableDiffers, OnChanges, Output, SimpleChange, SimpleChanges, TemplateRef, ViewEncapsulation
 } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material';
-import { DataColumnListComponent } from 'ng2-alfresco-core';
+import { DataColumnListComponent } from '@adf/core';
 import { Observable, Observer, Subscription } from 'rxjs/Rx';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRowEvent } from '../../data/data-row-event.model';

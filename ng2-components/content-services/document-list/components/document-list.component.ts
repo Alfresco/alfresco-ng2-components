@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
+import { DataCellEvent, DataColumn, DataRowActionEvent, DataSorting, DataTableComponent, ObjectDataColumn } from '@adf/core';
 import {
     AfterContentInit, Component, ContentChild, ElementRef, EventEmitter, HostListener, Input, NgZone,
     OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild, ViewEncapsulation
 } from '@angular/core';
 import { DeletedNodesPaging, MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, Pagination, PersonEntry, SitePaging } from 'alfresco-js-api';
-import { AlfrescoApiService, AppConfigService, DataColumnListComponent, UserPreferencesService } from 'ng2-alfresco-core';
-import { DataCellEvent, DataColumn, DataRowActionEvent, DataSorting, DataTableComponent, ObjectDataColumn } from '@adf/core';
+import { AlfrescoApiService, AppConfigService, DataColumnListComponent, UserPreferencesService } from '@adf/core';
 import { Observable, Subject } from 'rxjs/Rx';
 import { presetsDefaultModel } from '../models/preset.model';
 import { ImageResolver } from './../data/image-resolver.model';

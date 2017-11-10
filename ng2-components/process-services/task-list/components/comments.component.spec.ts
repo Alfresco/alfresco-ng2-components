@@ -20,13 +20,13 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
 
 import { FormModule } from '../../form';
-import { AppConfigService, CommentProcessService, CoreModule, TranslationService } from 'ng2-alfresco-core';
+import { AppConfigService, CommentProcessService, CoreModule, TranslationService } from '@adf/core';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
 
 import { DatePipe } from '@angular/common';
 import { MatInputModule } from '@angular/material';
-import { PeopleProcessService } from 'ng2-alfresco-core';
+import { PeopleProcessService } from '@adf/core';
 import { DataTableModule } from '@adf/core';
 import { TaskListService } from './../services/tasklist.service';
 import { CommentListComponent } from './comment-list.component';

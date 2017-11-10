@@ -19,7 +19,7 @@ import { DebugElement, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatTabsModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
-import { AlfrescoTranslationService, ContentService, CoreModule } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, ContentService, CoreModule } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 
 import { EcmModelService } from '../../../services/ecm-model.service';

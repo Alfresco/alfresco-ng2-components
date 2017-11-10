@@ -16,8 +16,8 @@
  */
 
 import { Component, EventEmitter, Input, NgZone, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { ContentService, ThumbnailService } from '@adf/core';
 import { ProcessContentService } from '../../form';
-import { ContentService, ThumbnailService } from 'ng2-alfresco-core';
 
 declare var require: any;
 

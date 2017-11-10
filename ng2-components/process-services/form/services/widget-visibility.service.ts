@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
-import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoApiService, LogService } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { FormFieldModel, FormModel, TabModel } from '../components/widgets/core/index';
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';

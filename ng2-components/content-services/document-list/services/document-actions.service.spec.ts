@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoContentService, AlfrescoTranslationService, NotificationService } from 'ng2-alfresco-core';
+import { AlfrescoContentService, AlfrescoTranslationService, NotificationService } from '@adf/core';
 import { FileNode, FolderNode } from '../assets/document-library.model.mock';
 import { DocumentListServiceMock } from '../assets/document-list.service.mock';
 import { ContentActionHandler } from '../models/content-action.model';

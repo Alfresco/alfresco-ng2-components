@@ -18,7 +18,7 @@
 import { DatePipe } from '@angular/common';
 import { TemplateRef } from '@angular/core';
 
-import { ObjectUtils, TimeAgoPipe } from 'ng2-alfresco-core';
+import { ObjectUtils, TimeAgoPipe } from '@adf/core';
 import { DataColumn } from './data-column.model';
 import { DataRow } from './data-row.model';
 import { DataSorting } from './data-sorting.model';

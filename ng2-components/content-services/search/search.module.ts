@@ -19,7 +19,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 
-import { CoreModule, SearchService, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
+import { CoreModule, SearchService, TRANSLATION_PROVIDER } from '@adf/core';
 
 import { SearchTriggerDirective } from './components/search-trigger.directive';
 

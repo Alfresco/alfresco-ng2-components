@@ -17,7 +17,7 @@
 
 import { DebugElement, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AlfrescoContentService, AlfrescoTranslationService, CoreModule, UploadService } from 'ng2-alfresco-core';
+import { AlfrescoContentService, AlfrescoTranslationService, CoreModule, UploadService } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { UploadButtonComponent } from './upload-button.component';

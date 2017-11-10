@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService } from 'ng2-alfresco-core';
+import { AlfrescoApiService } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { NodeMetadata } from '../models/node-metadata.model';
 

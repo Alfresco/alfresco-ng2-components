@@ -20,10 +20,10 @@ import { SpyLocation } from '@angular/common/testing';
 import { Component, DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CoreModule, RenditionsService } from 'ng2-alfresco-core';
+import { CoreModule, RenditionsService } from '@adf/core';
 import { MaterialModule } from './../material.module';
 
-import { AlfrescoApiService } from 'ng2-alfresco-core';
+import { AlfrescoApiService } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { EventMock } from '../assets/event.mock';
 import { RenderingQueueServices } from '../services/rendering-queue.services';

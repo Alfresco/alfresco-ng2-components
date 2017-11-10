@@ -19,7 +19,7 @@
 
 import { ENTER, ESCAPE } from '@angular/cdk/keycodes';
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { PeopleProcessService, UserProcessModel } from 'ng2-alfresco-core';
+import { PeopleProcessService, UserProcessModel } from '@adf/core';
 import { FormService } from '../../../services/form.service';
 import { GroupModel } from '../core/group.model';
 import { baseHost, WidgetComponent } from './../widget.component';

@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
-import { AlfrescoContentService } from 'ng2-alfresco-core';
+import { AlfrescoContentService } from '@adf/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Rx';
 import { ContentActionHandler } from '../models/content-action.model';

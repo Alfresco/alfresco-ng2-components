@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { ContentService, LogService } from 'ng2-alfresco-core';
+import { ContentService, LogService } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { ProcessContentService } from '../../../services/process-content.service';
 import { ContentLinkModel } from '../core/content-link.model';

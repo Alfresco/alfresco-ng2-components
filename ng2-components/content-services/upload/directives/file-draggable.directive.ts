@@ -16,7 +16,7 @@
  */
 
 import { Directive, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output } from '@angular/core';
-import { FileUtils } from 'ng2-alfresco-core';
+import { FileUtils } from '@adf/core';
 
 @Directive({
     selector: '[file-draggable]'

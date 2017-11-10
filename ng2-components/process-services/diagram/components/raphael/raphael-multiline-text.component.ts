@@ -16,7 +16,7 @@
  */
 
 import { Directive, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { LogService } from 'ng2-alfresco-core';
+import { LogService } from '@adf/core';
 import { Point } from './models/point';
 import { RaphaelBase } from './raphael-base';
 import { RaphaelService } from './raphael.service';

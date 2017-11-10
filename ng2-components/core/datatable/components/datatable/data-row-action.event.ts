@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { BaseEvent } from 'ng2-alfresco-core';
+import { BaseEvent } from '@adf/core';
 import { DataRow } from '../../data/data-row.model';
 
 export class DataRowActionEvent extends BaseEvent<DataRowActionModel> {

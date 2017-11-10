@@ -18,7 +18,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgZone, SimpleChange, TemplateRef } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Pagination } from 'alfresco-js-api';
-import { AlfrescoApiService, AlfrescoTranslationService, AppConfigService, CoreModule, UserPreferencesService } from 'ng2-alfresco-core';
+import { AlfrescoApiService, AlfrescoTranslationService, AppConfigService, CoreModule, UserPreferencesService } from '@adf/core';
 import { DataColumn, DataTableComponent } from '@adf/core';
 import { DataTableModule } from '@adf/core';
 import { Observable, Subject } from 'rxjs/Rx';

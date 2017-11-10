@@ -17,10 +17,9 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatProgressSpinnerModule } from '@angular/material';
-import { AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
-import { DataTableModule } from '@adf/core';
-import { DataRowEvent, ObjectDataRow, ObjectDataTableAdapter } from '@adf/core';
+import { MaterialModule } from '../../material.module';
+import { AppConfigService, CoreModule, TranslationService } from '@adf/core';
+import { DataTableModule, DataRowEvent, ObjectDataRow, ObjectDataTableAdapter } from '@adf/core';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { TaskListService } from '../services/tasklist.service';
 import { TaskListComponent } from './task-list.component';
@@ -134,7 +133,7 @@ describe('TaskListComponent', () => {
             imports: [
                 CoreModule,
                 DataTableModule,
-                MatProgressSpinnerModule
+                MaterialModule
             ],
             declarations: [
                 TaskListComponent

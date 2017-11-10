@@ -16,7 +16,7 @@
  */
 
 import { Directive, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ContentService } from 'ng2-alfresco-core';
+import { ContentService } from '@adf/core';
 import { TaskListService } from './../services/tasklist.service';
 
 const JSON_FORMAT: string = 'json';

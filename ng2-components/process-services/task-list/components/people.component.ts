@@ -16,8 +16,8 @@
  */
 
 import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
-import { LogService, UserProcessModel } from 'ng2-alfresco-core';
-import { PeopleProcessService } from 'ng2-alfresco-core';
+import { LogService, UserProcessModel } from '@adf/core';
+import { PeopleProcessService } from '@adf/core';
 import { Observable, Observer } from 'rxjs/Rx';
 import { UserEventModel } from '../models/user-event.model';
 import { PeopleSearchComponent } from './people-search.component';

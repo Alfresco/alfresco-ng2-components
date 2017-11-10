@@ -17,7 +17,7 @@
 
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
+import { CoreModule, TRANSLATION_PROVIDER } from '@adf/core';
 import { MaterialModule } from '../material.module';
 
 import { LoginComponent } from './components/login.component';

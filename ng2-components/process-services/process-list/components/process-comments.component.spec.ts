@@ -25,7 +25,7 @@ import {
     CommentListComponent,
     CommentsComponent,
 } from 'ng2-activiti-tasklist';
-import { AlfrescoTranslationService, CommentProcessService, CoreModule, PeopleProcessService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, CommentProcessService, CoreModule, PeopleProcessService } from '@adf/core';
 import { DataTableModule } from '@adf/core';
 
 import { TranslationMock } from './../assets/translation.service.mock';

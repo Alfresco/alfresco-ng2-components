@@ -17,7 +17,7 @@
 
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AlfrescoTranslationService, CoreModule, FileModel, LogService, UploadService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, CoreModule, FileModel, LogService, UploadService } from '@adf/core';
 
 import { TranslationMock } from '../assets/translation.service.mock';
 import { FileDraggableDirective } from '../directives/file-draggable.directive';

@@ -20,9 +20,9 @@ import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormModule } from '../form';
 
-import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { DataTableModule } from '@adf/core';
-import { MaterialModule } from './components/material.module';
+import { CoreModule, TRANSLATION_PROVIDER } from '@adf/core';
+import { MaterialModule } from '../material.module';
 import { ProcessUploadService } from './services/process-upload.service';
 import { TaskListService } from './services/tasklist.service';
 
@@ -43,32 +43,6 @@ import { TaskFiltersComponent } from './components/task-filters.component';
 import { TaskHeaderComponent } from './components/task-header.component';
 import { TaskListComponent } from './components/task-list.component';
 
-export const ACTIVITI_TASKLIST_DIRECTIVES: any[] = [
-    NoTaskDetailsTemplateDirective,
-    AppsListComponent,
-    TaskFiltersComponent,
-    TaskListComponent,
-    TaskDetailsComponent,
-    TaskAuditDirective,
-    ChecklistComponent,
-    CommentsComponent,
-    PeopleComponent,
-    TaskHeaderComponent,
-    StartTaskComponent,
-    PeopleSearchComponent,
-    PeopleSearchTitleDirective,
-    PeopleSearchActionLabelDirective,
-    TaskAttachmentListComponent,
-    AttachmentComponent,
-    PeopleListComponent,
-    CommentListComponent,
-];
-
-export const ACTIVITI_TASKLIST_PROVIDERS: any[] = [
-    TaskListService,
-    ProcessUploadService
-];
-
 @NgModule({
     imports: [
         CoreModule,
@@ -78,10 +52,28 @@ export const ACTIVITI_TASKLIST_PROVIDERS: any[] = [
         MaterialModule
     ],
     declarations: [
-        ...ACTIVITI_TASKLIST_DIRECTIVES
+        NoTaskDetailsTemplateDirective,
+        AppsListComponent,
+        TaskFiltersComponent,
+        TaskListComponent,
+        TaskDetailsComponent,
+        TaskAuditDirective,
+        ChecklistComponent,
+        CommentsComponent,
+        PeopleComponent,
+        TaskHeaderComponent,
+        StartTaskComponent,
+        PeopleSearchComponent,
+        PeopleSearchTitleDirective,
+        PeopleSearchActionLabelDirective,
+        TaskAttachmentListComponent,
+        AttachmentComponent,
+        PeopleListComponent,
+        CommentListComponent
     ],
     providers: [
-        ...ACTIVITI_TASKLIST_PROVIDERS,
+        TaskListService,
+        ProcessUploadService,
         DatePipe,
         {
             provide: TRANSLATION_PROVIDER,
@@ -93,8 +85,24 @@ export const ACTIVITI_TASKLIST_PROVIDERS: any[] = [
         }
     ],
     exports: [
-        ...ACTIVITI_TASKLIST_DIRECTIVES,
-        MaterialModule
+        NoTaskDetailsTemplateDirective,
+        AppsListComponent,
+        TaskFiltersComponent,
+        TaskListComponent,
+        TaskDetailsComponent,
+        TaskAuditDirective,
+        ChecklistComponent,
+        CommentsComponent,
+        PeopleComponent,
+        TaskHeaderComponent,
+        StartTaskComponent,
+        PeopleSearchComponent,
+        PeopleSearchTitleDirective,
+        PeopleSearchActionLabelDirective,
+        TaskAttachmentListComponent,
+        AttachmentComponent,
+        PeopleListComponent,
+        CommentListComponent
     ]
 })
 export class TaskListModule {}

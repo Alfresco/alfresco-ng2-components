@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FileModel } from 'ng2-alfresco-core';
+import { FileModel } from '@adf/core';
 import { UploadModule } from '../upload-module';
 import { FileUploadingListRowComponent } from './file-uploading-list-row.component';
 

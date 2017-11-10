@@ -18,7 +18,7 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService, CardViewUpdateService, CoreModule, TranslationService, UserProcessModel } from 'ng2-alfresco-core';
+import { AppConfigService, CardViewUpdateService, CoreModule, TranslationService, UserProcessModel } from '@adf/core';
 import { BpmUserService } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';

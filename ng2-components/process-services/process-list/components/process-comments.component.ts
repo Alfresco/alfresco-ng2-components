@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { CommentProcessModel, CommentProcessService } from 'ng2-alfresco-core';
+import { CommentProcessModel, CommentProcessService } from '@adf/core';
 import { Observable, Observer } from 'rxjs/Rx';
 
 @Component({

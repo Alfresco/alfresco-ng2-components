@@ -17,7 +17,7 @@
 
 import { DebugElement, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ContentService } from 'ng2-alfresco-core';
+import { ContentService } from '@adf/core';
 import { MediaPlayerComponent } from './mediaPlayer.component';
 
 import {
@@ -25,7 +25,7 @@ import {
     AlfrescoAuthenticationService,
     AlfrescoSettingsService,
     CoreModule
-} from 'ng2-alfresco-core';
+} from '@adf/core';
 
 describe('Test ng2-alfresco-viewer Media player component ', () => {
 

@@ -21,8 +21,8 @@ import { Validators } from '@angular/forms';
 
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AlfrescoAuthenticationService, CoreModule } from 'ng2-alfresco-core';
-import { AlfrescoTranslationService, UserPreferencesService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, CoreModule } from '@adf/core';
+import { AlfrescoTranslationService, UserPreferencesService } from '@adf/core';
 
 import { MaterialModule } from '../material.module';
 import { LoginErrorEvent } from '../models/login-error.event';

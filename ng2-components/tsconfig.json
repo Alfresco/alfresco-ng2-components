@@ -18,14 +18,9 @@
         "declaration": true,
         "outDir": "./dist",
         "baseUrl" :  "./",
+        "types": ["jasmine"],
         "paths": {
             "@adf/*": ["./*"],
-            "ng2-alfresco-core": ["./ng2-alfresco-core/"],
-            "ng2-alfresco-datatable": ["./ng2-alfresco-datatable/"],
-            "ng2-activiti-tasklist": ["./ng2-activiti-tasklist/"],
-            "ng2-alfresco-login": ["./ng2-alfresco-login/"],
-            "ng2-alfresco-viewer": ["./ng2-alfresco-viewer/"],
-            "ng2-alfresco-userinfo": ["./ng2-alfresco-userinfo"],
             "alfresco-js-api": ["./node_modules/alfresco-js-api/"],
             "@angular/*": ["./node_modules/@angular/*"],
             "rxjs/*": ["./node_modules/rxjs/*"]

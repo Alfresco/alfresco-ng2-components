@@ -37,7 +37,7 @@ import {
     NodePermissionSubject,
     NotificationService,
     UploadService
-} from 'ng2-alfresco-core';
+} from '@adf/core';
 import { Observable, Subject } from 'rxjs/Rx';
 import { PermissionModel } from '../../document-list/models/permissions.model';
 

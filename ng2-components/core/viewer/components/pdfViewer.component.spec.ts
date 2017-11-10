@@ -22,7 +22,7 @@ import {
     AlfrescoAuthenticationService,
     AlfrescoSettingsService,
     CoreModule
-} from 'ng2-alfresco-core';
+} from '@adf/core';
 import { EventMock } from '../assets/event.mock';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { PdfViewerComponent } from './pdfViewer.component';

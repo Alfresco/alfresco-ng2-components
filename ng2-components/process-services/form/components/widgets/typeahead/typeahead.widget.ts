@@ -19,7 +19,7 @@
 
 import { ENTER, ESCAPE } from '@angular/cdk/keycodes';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { LogService } from 'ng2-alfresco-core';
+import { LogService } from '@adf/core';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { FormService } from './../../../services/form.service';
 import { FormFieldOption } from './../core/form-field-option';

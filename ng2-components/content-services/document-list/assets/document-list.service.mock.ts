@@ -22,7 +22,7 @@ import {
     AlfrescoSettingsService,
     LogService
     ThumbnailService
-} from 'ng2-alfresco-core';
+} from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { NodePaging } from './../models/document-library.model';
 import { DocumentListService } from './../services/document-list.service';

@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule } from '@adf/core';
 import { MaterialModule } from '../material.module';
 import { ErrorWidgetComponent } from '../widgets/error/error.component';
 import { FormRenderingService } from './../../services/form-rendering.service';

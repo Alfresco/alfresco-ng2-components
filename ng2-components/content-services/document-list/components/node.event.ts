@@ -16,7 +16,7 @@
  */
 
 import { MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { BaseEvent } from 'ng2-alfresco-core';
+import { BaseEvent } from '@adf/core';
 
 export class NodeEntityEvent extends BaseEvent<MinimalNodeEntity> {
     constructor(entity: MinimalNodeEntity) {

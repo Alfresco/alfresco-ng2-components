@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AppsProcessService, TranslationService } from 'ng2-alfresco-core';
+import { AppsProcessService, TranslationService } from '@adf/core';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { AppDefinitionRepresentationModel } from '../models/filter.model';

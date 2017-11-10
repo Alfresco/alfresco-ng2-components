@@ -6,7 +6,6 @@ var HappyPack = require('happypack');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const alfrescoLibs = [
-    'ng2-alfresco-core',
     'content-services',
     'process-service',
     'core'
@@ -32,9 +31,7 @@ module.exports = {
             "@adf/process-services": path.resolve(__dirname, '../process-services/'),
             "@adf/process-services$": path.resolve(__dirname, '../process-services/index.ts'),
             "@adf/core": path.resolve(__dirname, '../core/'),
-            "@adf/core$": path.resolve(__dirname, '../core/index.ts'),
-            "ng2-alfresco-core$": path.resolve(__dirname, '../ng2-alfresco-core/index.ts'),
-            "ng2-alfresco-core": path.resolve(__dirname, '../ng2-alfresco-core')
+            "@adf/core$": path.resolve(__dirname, '../core/index.ts')
         },
         extensions: ['.ts', '.js', '.scss'],
         modules: [helpers.root('node_modules')]

@@ -22,7 +22,7 @@ import {
     fakeAsync,
     TestBed
 } from '@angular/core/testing';
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { TaskListService } from './../services/tasklist.service';
 import { TaskAuditDirective } from './task-audit.directive';

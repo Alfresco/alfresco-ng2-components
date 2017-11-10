@@ -18,7 +18,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PathElementEntity } from 'alfresco-js-api';
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule } from '@adf/core';
 import { DataTableModule } from '@adf/core';
 import { fakeNodeWithCreatePermission } from '../../assets/document-list.component.mock';
 import { MaterialModule } from '../../../material.module';

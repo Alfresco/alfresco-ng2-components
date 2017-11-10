@@ -22,7 +22,7 @@ import {
     AlfrescoAuthenticationService,
     AlfrescoSettingsService,
     CoreModule
-} from 'ng2-alfresco-core';
+} from '@adf/core';
 import { TxtViewerComponent } from './txtViewer.component';
 
 describe('Test ng2-alfresco-viewer Text View component', () => {

@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
-import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoApiService, LogService } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { BpmUserModel } from '../models/bpm-user.model';
 /**

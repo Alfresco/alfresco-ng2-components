@@ -16,7 +16,7 @@
  */
 
 import { NgModule } from '@angular/core';
-import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
+import { CoreModule, TRANSLATION_PROVIDER } from '@adf/core';
 
 import { DIAGRAM_DIRECTIVES, DIAGRAM_PROVIDERS } from './components/index';
 

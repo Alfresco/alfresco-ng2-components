@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule } from '@adf/core';
 import { ActivitiAlfrescoContentService } from '../../services/activiti-alfresco.service';
 import { EcmModelService } from './../../services/ecm-model.service';
 import { FormService } from './../../services/form.service';

@@ -20,7 +20,7 @@ import { SpyLocation } from '@angular/common/testing';
 import { ElementRef } from '@angular/core';
 import { Injector } from '@angular/core';
 import { async, getTestBed, TestBed } from '@angular/core/testing';
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule } from '@adf/core';
 import { ViewerComponent } from '../components/viewer.component';
 import { ViewerExtensionDirective } from './viewer-extension.directive';
 

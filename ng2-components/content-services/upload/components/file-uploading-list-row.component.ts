@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FileModel, FileUploadStatus } from 'ng2-alfresco-core';
+import { FileModel, FileUploadStatus } from '@adf/core';
 
 @Component({
     selector: 'adf-file-uploading-list-row',

@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, LogService, UserProcessModel } from 'ng2-alfresco-core';
+import { AlfrescoApiService, LogService, UserProcessModel } from '@adf/core';
 import { Observable, Subject } from 'rxjs/Rx';
 import { FormDefinitionModel } from '../models/form-definition.model';
 import { ContentLinkModel } from './../components/widgets/core/content-link.model';

@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, AppConfigService, UploadService } from 'ng2-alfresco-core';
+import { AlfrescoApiService, AppConfigService, UploadService } from '@adf/core';
 
 @Injectable()
 export class ProcessUploadService extends UploadService {

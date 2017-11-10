@@ -17,7 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule, MatDatepickerModule, MatGridListModule, MatIconModule, MatInputModule, MatNativeDateModule, MatSelectModule } from '@angular/material';
-import { AppConfigService, CoreModule, PeopleProcessService, TranslationService } from 'ng2-alfresco-core';
+import { AppConfigService, CoreModule, PeopleProcessService, TranslationService } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
