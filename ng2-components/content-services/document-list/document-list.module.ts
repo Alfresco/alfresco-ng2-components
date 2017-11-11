@@ -25,23 +25,15 @@ import { DataTableModule, PaginationModule, ToolbarModule } from '@adf/core';
 import { TRANSLATION_PROVIDER } from '@adf/core';
 import { UploadModule } from '../upload';
 
-import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
-import { DropdownBreadcrumbComponent } from './components/breadcrumb/dropdown-breadcrumb.component';
 import { ContentActionListComponent } from './components/content-action/content-action-list.component';
 import { ContentActionComponent } from './components/content-action/content-action.component';
 import { ContentColumnListComponent } from './components/content-column/content-column-list.component';
 import { ContentColumnComponent } from './components/content-column/content-column.component';
-import { ContentNodeSelectorComponent } from './components/content-node-selector/content-node-selector.component';
 import { DocumentListComponent } from './components/document-list.component';
-import { DropdownSitesComponent } from './components/site-dropdown/sites-dropdown.component';
-import { VersionListComponent } from './components/version-manager/version-list.component';
-import { VersionManagerComponent } from './components/version-manager/version-manager.component';
-import { VersionUploadComponent } from './components/version-manager/version-upload.component';
 
 import { EmptyFolderContentDirective } from './components/empty-folder/empty-folder-content.directive';
 import { NoPermissionContentDirective } from './components/no-permission/no-permission-content.directive';
 
-import { ContentNodeSelectorService } from './components/content-node-selector/content-node-selector.service';
 import { DocumentActionsService } from './services/document-actions.service';
 import { DocumentListService } from './services/document-list.service';
 import { FolderActionsService } from './services/folder-actions.service';
@@ -65,21 +57,13 @@ import { NodeActionsService } from './services/node-actions.service';
         ContentActionComponent,
         ContentActionListComponent,
         EmptyFolderContentDirective,
-        NoPermissionContentDirective,
-        BreadcrumbComponent,
-        DropdownSitesComponent,
-        DropdownBreadcrumbComponent,
-        ContentNodeSelectorComponent,
-        VersionListComponent,
-        VersionUploadComponent,
-        VersionManagerComponent
+        NoPermissionContentDirective
     ],
     providers: [
         DocumentListService,
         FolderActionsService,
         DocumentActionsService,
         NodeActionsService,
-        ContentNodeSelectorService,
         {
             provide: TRANSLATION_PROVIDER,
             multi: true,
@@ -89,9 +73,6 @@ import { NodeActionsService } from './services/node-actions.service';
             }
         }
     ],
-    entryComponents: [
-        ContentNodeSelectorComponent
-    ],
     exports: [
         DocumentListComponent,
         ContentColumnComponent,
@@ -99,14 +80,7 @@ import { NodeActionsService } from './services/node-actions.service';
         ContentActionComponent,
         ContentActionListComponent,
         EmptyFolderContentDirective,
-        NoPermissionContentDirective,
-        BreadcrumbComponent,
-        DropdownSitesComponent,
-        DropdownBreadcrumbComponent,
-        ContentNodeSelectorComponent,
-        VersionListComponent,
-        VersionUploadComponent,
-        VersionManagerComponent
+        NoPermissionContentDirective
     ]
 })
 export class DocumentListModule {}

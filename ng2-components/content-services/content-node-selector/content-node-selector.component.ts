@@ -15,13 +15,11 @@
  * limitations under the License.
  */
 
-import { ContentService, HighlightDirective, SiteModel } from '@adf/core';
 import { Component, EventEmitter, Inject, Input, OnInit, Optional, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ContentService, HighlightDirective, SiteModel } from '@adf/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { MinimalNodeEntryEntity, NodePaging, Pagination } from 'alfresco-js-api';
-import { ImageResolver } from '../../data/image-resolver.model';
-import { RowFilter } from '../../data/row-filter.model';
-import { DocumentListComponent, PaginationStrategy } from '../document-list.component';
+import { RowFilter, DocumentListComponent, PaginationStrategy , ImageResolver } from '../document-list';
 import { ContentNodeSelectorService } from './content-node-selector.service';
 
 export interface ContentNodeSelectorComponentData {

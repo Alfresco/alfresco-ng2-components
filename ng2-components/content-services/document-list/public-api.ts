@@ -21,15 +21,14 @@ export * from './components/content-column/content-column.component';
 export * from './components/content-column/content-column-list.component';
 export * from './components/content-action/content-action.component';
 export * from './components/content-action/content-action-list.component';
-export * from './components/content-node-selector/content-node-selector.component';
 export * from './components/empty-folder/empty-folder-content.directive';
 export * from './components/no-permission/no-permission-content.directive';
-export * from './components/breadcrumb/breadcrumb.component';
-export * from './components/site-dropdown/sites-dropdown.component';
 
 // data
 export * from './data/share-datatable-adapter';
 export * from './data/share-data-row.model';
+export * from './data/image-resolver.model';
+export * from './data/row-filter.model';
 
 // services
 export * from './services/folder-actions.service';

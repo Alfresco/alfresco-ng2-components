@@ -17,7 +17,7 @@
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { MinimalNodeEntryEntity, PathElementEntity } from 'alfresco-js-api';
-import { DocumentListComponent } from '../document-list.component';
+import { DocumentListComponent } from '../document-list';
 
 @Component({
     selector: 'adf-breadcrumb',

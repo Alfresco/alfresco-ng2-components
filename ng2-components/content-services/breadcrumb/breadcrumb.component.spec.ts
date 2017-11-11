@@ -19,10 +19,9 @@ import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PathElementEntity } from 'alfresco-js-api';
 import { DataTableModule } from '@adf/core';
-import { fakeNodeWithCreatePermission } from '../../assets/document-list.component.mock';
-import { MaterialModule } from '../../../material.module';
-import { DocumentListService } from '../../services/document-list.service';
-import { DocumentListComponent } from '../document-list.component';
+import { fakeNodeWithCreatePermission } from '../mock';
+import { MaterialModule } from '../material.module';
+import { DocumentListService, DocumentListComponent } from '../document-list';
 import { BreadcrumbComponent } from './breadcrumb.component';
 
 declare let jasmine: any;

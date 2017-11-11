@@ -28,6 +28,10 @@ import { WebScriptModule } from './webscript';
 import { DocumentListModule } from './document-list';
 import { UploadModule } from './upload';
 import { SearchModule } from './search';
+import { SitesDropdownModule } from './site-dropdown';
+import { BreadcrumbModule } from './breadcrumb';
+import { VersionManagerModule } from './version-manager';
+import { ContentNodeSelectorModule } from './content-node-selector';
 
 @NgModule({
     imports: [
@@ -41,19 +45,25 @@ import { SearchModule } from './search';
         BrowserAnimationsModule,
         DocumentListModule,
         UploadModule,
-        MaterialModule
+        MaterialModule,
+        SitesDropdownModule,
+        BreadcrumbModule,
+        VersionManagerModule,
+        ContentNodeSelectorModule
     ],
     declarations: [],
-    providers: [
-
-    ],
+    providers: [],
     exports: [
         SocialModule,
         TagModule,
         WebScriptModule,
         DocumentListModule,
         UploadModule,
-        SearchModule
+        SearchModule,
+        SitesDropdownModule,
+        BreadcrumbModule,
+        VersionManagerModule,
+        ContentNodeSelectorModule
     ]
 })
 export class ContentModule {

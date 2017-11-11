@@ -23,12 +23,10 @@ import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { ContentService, TranslationService, SearchService, SiteModel, SitesApiService } from '@adf/core';
 import { DataTableModule } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
-import { MaterialModule } from '../../../material.module';
-import { DocumentListService } from '../../services/document-list.service';
-import { DropdownBreadcrumbComponent } from '../breadcrumb/dropdown-breadcrumb.component';
-import { DocumentListComponent } from '../document-list.component';
-import { EmptyFolderContentDirective } from '../empty-folder/empty-folder-content.directive';
-import { DropdownSitesComponent } from '../site-dropdown/sites-dropdown.component';
+import { MaterialModule } from '../material.module';
+import { EmptyFolderContentDirective, DocumentListComponent, DocumentListService } from '../document-list';
+import { DropdownSitesComponent } from '../site-dropdown';
+import { DropdownBreadcrumbComponent } from '../breadcrumb';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
 import { ContentNodeSelectorService } from './content-node-selector.service';
 

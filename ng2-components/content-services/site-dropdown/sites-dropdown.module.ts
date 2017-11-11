@@ -15,15 +15,23 @@
  * limitations under the License.
  */
 
-export * from './social';
-export * from './tag';
-export * from './webscript';
-export * from './document-list';
-export * from './upload';
-export * from './search';
-export * from  './site-dropdown';
-export * from  './breadcrumb';
-export * from  './version-manager';
-export * from  './content-node-selector';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { MaterialModule } from '../material.module';
 
-export * from  './mock';
+import { DropdownSitesComponent } from './sites-dropdown.component';
+
+@NgModule({
+    imports: [
+        CommonModule,
+        MaterialModule
+    ],
+    exports: [
+        DropdownSitesComponent
+    ],
+    declarations: [
+        DropdownSitesComponent
+    ],
+    providers: []
+})
+export class SitesDropdownModule {}

@@ -15,15 +15,7 @@
  * limitations under the License.
  */
 
-export * from './social';
-export * from './tag';
-export * from './webscript';
-export * from './document-list';
-export * from './upload';
-export * from './search';
-export * from  './site-dropdown';
-export * from  './breadcrumb';
-export * from  './version-manager';
-export * from  './content-node-selector';
+export * from './content-node-selector.component';
+export * from './content-node-selector.service';
 
-export * from  './mock';
+export * from './content-node-selector.module';

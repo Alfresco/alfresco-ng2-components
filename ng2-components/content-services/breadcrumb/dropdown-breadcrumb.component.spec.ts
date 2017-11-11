@@ -19,10 +19,9 @@ import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DataTableModule } from '@adf/core';
-import { fakeNodeWithCreatePermission } from '../../assets/document-list.component.mock';
-import { MaterialModule } from '../../../material.module';
-import { DocumentListService } from '../../services/document-list.service';
-import { DocumentListComponent } from '../document-list.component';
+import { fakeNodeWithCreatePermission } from '../mock';
+import { MaterialModule } from '../material.module';
+import { DocumentListComponent, DocumentListService } from '../document-list';
 import { DropdownBreadcrumbComponent } from './dropdown-breadcrumb.component';
 
 describe('DropdownBreadcrumb', () => {
