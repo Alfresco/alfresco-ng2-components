@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
-import { TagService } from '../services/tag.service';
+import { TagService } from './services/tag.service';
 
 /**
  *

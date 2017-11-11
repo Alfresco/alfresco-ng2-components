@@ -19,7 +19,7 @@ import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigService, CoreModule } from '@adf/core';
 import { TagNodeListComponent } from './tag-node-list.component';
-import { TagService } from '../services/tag.service';
+import { TagService } from './services/tag.service';
 import { MaterialModule } from '../material.module';
 
 declare let jasmine: any;

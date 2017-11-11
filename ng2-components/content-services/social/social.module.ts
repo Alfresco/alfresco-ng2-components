@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
 
-import { RatingService } from '../services/rating.service';
+import { RatingService } from './services/rating.service';
 import { LikeComponent } from './like.component';
 import { RatingComponent } from './rating.component';
 

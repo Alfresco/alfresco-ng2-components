@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
-import { RatingService } from './../services/rating.service';
+import { RatingService } from './services/rating.service';
 
 @Component({
     selector: 'adf-like',

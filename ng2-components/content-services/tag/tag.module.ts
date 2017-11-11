@@ -27,12 +27,15 @@ import { TagListComponent } from './tag-list.component';
 import { TagNodeListComponent } from './tag-node-list.component';
 import { TagService } from '../services/tag.service';
 
+import { TagService } from './services/tag.service';
+
 @NgModule({
     imports: [
         CommonModule,
         MaterialModule,
         TranslateModule,
-        FormsModule, ReactiveFormsModule
+        FormsModule,
+        ReactiveFormsModule
     ],
     exports: [
         TagActionsComponent,
