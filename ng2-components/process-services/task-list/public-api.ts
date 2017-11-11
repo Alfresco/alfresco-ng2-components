@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-export * from './components/apps-list.component';
 export * from './components/task-list.component';
 export * from './components/checklist.component';
 export * from './components/comments.component';
@@ -36,7 +35,6 @@ export * from './services/tasklist.service';
 export * from './services/process-upload.service';
 
 export * from './models/filter.model';
-export * from './models/icon.model';
 export * from './models/task-details.model';
 export * from './models/task-details.event';
 export * from './models/user-event.model';

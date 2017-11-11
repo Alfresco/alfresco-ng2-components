@@ -1,40 +1,14 @@
 import { NgModule } from '@angular/core';
 
-import {
-    DocumentListModule,
-    SearchModule,
-    SocialModule,
-    TagModule,
-    UploadModule,
-    WebScriptModule
-} from '@adf/content-services';
-
-import {
-    AnalyticsModule,
-    DiagramsModule,
-    FormModule,
-    ProcessListModule,
-    TaskListModule
-} from '@adf/process-services';
-
-import {
-    CoreModule
-} from '@adf/core';
+import { ContentModule } from '@adf/content-services';
+import { ProcessModule } from '@adf/process-services';
+import { CoreModule } from '@adf/core';
 
 export function modules() {
     return [
         CoreModule,
-        DocumentListModule,
-        SearchModule,
-        SocialModule,
-        TagModule,
-        UploadModule,
-        WebScriptModule,
-        FormModule,
-        TaskListModule,
-        ProcessListModule,
-        DiagramsModule,
-        AnalyticsModule
+        ProcessModule,
+        ContentModule
     ];
 }
 

@@ -18,12 +18,11 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppsProcessService, TranslationService } from '@adf/core';
+import { AppsProcessService } from '@adf/core';
 import { Observable } from 'rxjs/Rx';
-import { MaterialModule } from '../../material.module';
 
-import { TranslationMock } from '../assets/translation.service.mock';
-import { defaultApp, deployedApps, nonDeployedApps } from './../assets/apps-list.mock';
+import { MaterialModule } from '../material.module';
+import { defaultApp, deployedApps, nonDeployedApps } from '../mock/apps-list.mock';
 import { AppsListComponent } from './apps-list.component';
 
 describe('AppsListComponent', () => {
@@ -44,8 +43,7 @@ describe('AppsListComponent', () => {
                 AppsListComponent
             ],
             providers: [
-                AppsProcessService,
-                { provide: TranslationService, useClass: TranslationMock }
+                AppsProcessService
             ]
         }).compileComponents();
 

@@ -18,6 +18,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { BreadcrumbComponent } from './breadcrumb.component';
 import { DropdownBreadcrumbComponent } from './dropdown-breadcrumb.component';
@@ -25,7 +26,8 @@ import { DropdownBreadcrumbComponent } from './dropdown-breadcrumb.component';
 @NgModule({
     imports: [
         CommonModule,
-        MaterialModule
+        MaterialModule,
+        TranslateModule
     ],
     exports: [
         BreadcrumbComponent,

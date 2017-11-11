@@ -19,7 +19,10 @@ import { Component, EventEmitter, Inject, Input, OnInit, Optional, Output, ViewC
 import { ContentService, HighlightDirective, SiteModel } from '@adf/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { MinimalNodeEntryEntity, NodePaging, Pagination } from 'alfresco-js-api';
-import { RowFilter, DocumentListComponent, PaginationStrategy , ImageResolver } from '../document-list';
+import { DocumentListComponent, PaginationStrategy  } from '../document-list/components/document-list.component';
+import { RowFilter } from '../document-list/data/row-filter.model';
+import { ImageResolver } from '../document-list/data/image-resolver.model';
+
 import { ContentNodeSelectorService } from './content-node-selector.service';
 
 export interface ContentNodeSelectorComponentData {

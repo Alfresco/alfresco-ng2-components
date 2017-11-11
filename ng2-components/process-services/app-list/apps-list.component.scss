@@ -1,3 +1,11 @@
+:host {
+    width: 100%;
+}
+
+.adf-app-list-item {
+    cursor: pointer;
+}
+
 $themes: (
     theme-1: (bg: #269abc, color: #168aac),
     theme-2: (bg: #7da9b0, color: #6d99a0),

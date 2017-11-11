@@ -19,15 +19,13 @@ import { AppsProcessService, TranslationService } from '@adf/core';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
-import { AppDefinitionRepresentationModel } from '../models/filter.model';
-import { IconModel } from '../models/icon.model';
-import { TaskListService } from './../services/tasklist.service';
+import { AppDefinitionRepresentationModel } from '../task-list';
+import { IconModel } from './icon.model';
 
 @Component({
     selector: 'adf-apps',
     templateUrl: 'apps-list.component.html',
-    styleUrls: ['./apps-list.component.scss', './apps-grid.component.scss'],
-    providers: [TaskListService]
+    styleUrls: ['./apps-list.component.scss']
 })
 export class AppsListComponent implements OnInit {
 

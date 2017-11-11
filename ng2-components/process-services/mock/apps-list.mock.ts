@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AppDefinitionRepresentationModel } from '../models/filter.model';
+import { AppDefinitionRepresentationModel } from '../task-list';
 
 export let nonDeployedApps = [new AppDefinitionRepresentationModel({
     id: '1',

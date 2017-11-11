@@ -18,15 +18,19 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { VersionUploadComponent } from './version-upload.component';
 import { VersionManagerComponent } from './version-manager.component';
 import { VersionListComponent } from './version-list.component';
+import { UploadModule } from '../upload';
 
 @NgModule({
     imports: [
         CommonModule,
-        MaterialModule
+        MaterialModule,
+        TranslateModule,
+        UploadModule
     ],
     exports: [
         VersionUploadComponent,

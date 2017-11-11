@@ -18,14 +18,25 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
 import { ContentNodeSelectorService } from './content-node-selector.service';
+import { SitesDropdownModule } from '../site-dropdown';
+import { BreadcrumbModule } from '../breadcrumb';
+import { PaginationModule, ToolbarModule } from '@adf/core';
+import { DocumentListModule } from '../document-list';
 
 @NgModule({
     imports: [
         CommonModule,
-        MaterialModule
+        MaterialModule,
+        TranslateModule,
+        SitesDropdownModule,
+        BreadcrumbModule,
+        ToolbarModule,
+        DocumentListModule,
+        PaginationModule
     ],
     exports: [
         ContentNodeSelectorComponent

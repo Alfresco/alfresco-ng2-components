@@ -29,7 +29,6 @@ import { MaterialModule } from '../material.module';
 import { ProcessUploadService } from './services/process-upload.service';
 import { TaskListService } from './services/tasklist.service';
 
-import { AppsListComponent } from './components/apps-list.component';
 import { ChecklistComponent } from './components/checklist.component';
 import { CommentListComponent } from './components/comment-list.component';
 import { CommentsComponent } from './components/comments.component';
@@ -63,7 +62,6 @@ import { TaskListComponent } from './components/task-list.component';
     ],
     declarations: [
         NoTaskDetailsTemplateDirective,
-        AppsListComponent,
         TaskFiltersComponent,
         TaskListComponent,
         TaskDetailsComponent,
@@ -96,7 +94,6 @@ import { TaskListComponent } from './components/task-list.component';
     ],
     exports: [
         NoTaskDetailsTemplateDirective,
-        AppsListComponent,
         TaskFiltersComponent,
         TaskListComponent,
         TaskDetailsComponent,
