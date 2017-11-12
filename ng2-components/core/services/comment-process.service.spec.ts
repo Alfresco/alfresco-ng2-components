@@ -16,7 +16,7 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { CommentProcessModel } from  '../models';
+import { CommentProcessModel } from '../models';
 import { AppConfigServiceMock } from '../mock/app-config.service.mock';
 import { fakeProcessComment, fakeTasksComment, fakeUser1 } from '../mock/comment-process-service.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
