@@ -20,8 +20,8 @@ import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { DataTableModule } from '@adf/core';
-import { TRANSLATION_PROVIDER } from '@adf/core';
+import { DataTableModule } from '@alfresco/core';
+import { TRANSLATION_PROVIDER } from '@alfresco/core';
 import { MaterialModule } from '../material.module';
 
 import { MASK_DIRECTIVE, WIDGET_DIRECTIVES } from './components/widgets/index';
@@ -35,7 +35,7 @@ import { StartFormComponent } from './components/start-form.component';
 import { ContentWidgetComponent } from './components/widgets/content/content.widget';
 import { WidgetComponent } from './components/widgets/widget.component';
 
-import { DataColumnModule, PipeModule } from '@adf/core';
+import { DataColumnModule, PipeModule } from '@alfresco/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivitiContentService } from './services/activiti-alfresco.service';
 import { EcmModelService } from './services/ecm-model.service';
@@ -83,7 +83,7 @@ import { WidgetVisibilityService } from './services/widget-visibility.service';
             provide: TRANSLATION_PROVIDER,
             multi: true,
             useValue: {
-                name: '@adf/process-services',
+                name: '@alfresco/process-services',
                 source: 'assets/ng2-activiti-form'
             }
         }

@@ -26,7 +26,7 @@ import { MASK_DIRECTIVE } from '../index';
 import { FormFieldComponent } from './../../form-field/form-field.component';
 import { ContentWidgetComponent } from './../content/content.widget';
 import { TabsWidgetComponent } from './tabs.widget';
-import { CoreModule } from '@adf/core';
+import { CoreModule } from '@alfresco/core';
 
 describe('TabsWidgetComponent', () => {
 

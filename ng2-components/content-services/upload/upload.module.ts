@@ -18,7 +18,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { TRANSLATION_PROVIDER } from '@adf/core';
+import { TRANSLATION_PROVIDER } from '@alfresco/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
 
@@ -28,7 +28,7 @@ import { FileUploadingListComponent } from './components/file-uploading-list.com
 import { UploadButtonComponent } from './components/upload-button.component';
 import { UploadDragAreaComponent } from './components/upload-drag-area.component';
 
-import { PipeModule } from '@adf/core';
+import { PipeModule } from '@alfresco/core';
 import { FileDraggableDirective } from './directives/file-draggable.directive';
 
 @NgModule({

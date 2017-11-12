@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FileModel, FileUploadStatus, NodesApiService, NotificationService, TranslationService, UploadService } from '@adf/core';
+import { FileModel, FileUploadStatus, NodesApiService, NotificationService, TranslationService, UploadService } from '@alfresco/core';
 import { Component, ContentChild, Input, TemplateRef } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 

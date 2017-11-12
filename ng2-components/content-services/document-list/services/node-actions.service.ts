@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { DataColumn } from '@adf/core';
-import { ContentService } from '@adf/core';
+import { DataColumn } from '@alfresco/core';
+import { ContentService } from '@alfresco/core';
 import { EventEmitter, Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';

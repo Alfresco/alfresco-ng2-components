@@ -18,7 +18,7 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReportParametersModel } from '../../diagram';
-import { TranslationService, AppConfigService, CoreModule } from '@adf/core';
+import { TranslationService, AppConfigService, CoreModule } from '@alfresco/core';
 import { Observable } from 'rxjs/Rx';
 import { AnalyticsReportListComponent } from '../components/analytics-report-list.component';
 import { MaterialModule } from '../../material.module';

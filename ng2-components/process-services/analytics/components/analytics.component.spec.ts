@@ -18,7 +18,7 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DiagramsModule } from '../../diagram';
-import { TranslationService } from '@adf/core';
+import { TranslationService } from '@alfresco/core';
 import { ChartsModule } from 'ng2-charts';
 import { Observable } from 'rxjs/Rx';
 

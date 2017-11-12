@@ -21,7 +21,7 @@ import { MaterialModule } from '../../material.module';
 import { Observable } from 'rxjs/Rx';
 
 import { ProcessContentService } from '../../form';
-import { AppConfigService, TranslationService } from '@adf/core';
+import { AppConfigService, TranslationService } from '@alfresco/core';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { AttachmentComponent } from './create-task-attachment.component';

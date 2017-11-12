@@ -18,7 +18,7 @@ appContext.keys().forEach(appContext);
 
 const TestBed = require('@angular/core/testing').TestBed;
 const browser = require('@angular/platform-browser-dynamic/testing');
-const CoreModule = require('@adf/core').CoreModule;
+const CoreModule = require('@alfresco/core').CoreModule;
 
 TestBed.initTestEnvironment(browser.BrowserDynamicTestingModule, browser.platformBrowserDynamicTesting());
 

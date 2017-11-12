@@ -20,7 +20,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MaterialModule } from '../material.module';
 import { VersionListComponent } from './version-list.component';
-import { AlfrescoApiService, CoreModule } from '@adf/core';
+import { AlfrescoApiService, CoreModule } from '@alfresco/core';
 
 describe('VersionListComponent', () => {
     let component: VersionListComponent;

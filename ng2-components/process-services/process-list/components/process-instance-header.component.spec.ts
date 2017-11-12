@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslationService, CardViewUpdateService, CoreModule } from '@adf/core';
+import { TranslationService, CardViewUpdateService, CoreModule } from '@alfresco/core';
 import { MaterialModule } from '../../material.module';
 import { Observable } from 'rxjs/Rx';
 

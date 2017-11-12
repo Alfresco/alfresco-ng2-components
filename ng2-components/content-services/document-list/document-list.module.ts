@@ -21,8 +21,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
 
-import { DataTableModule, PaginationModule, ToolbarModule } from '@adf/core';
-import { TRANSLATION_PROVIDER } from '@adf/core';
+import { DataTableModule, PaginationModule, ToolbarModule } from '@alfresco/core';
+import { TRANSLATION_PROVIDER } from '@alfresco/core';
 import { UploadModule } from '../upload';
 
 import { ContentActionListComponent } from './components/content-action/content-action-list.component';

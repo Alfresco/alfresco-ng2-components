@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { TRANSLATION_PROVIDER } from '@adf/core';
+import { TRANSLATION_PROVIDER } from '@alfresco/core';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
 import { TagActionsComponent } from './tag-actions.component';

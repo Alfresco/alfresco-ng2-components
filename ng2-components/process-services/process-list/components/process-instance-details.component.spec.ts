@@ -22,7 +22,7 @@ import { Observable } from 'rxjs/Rx';
 
 import { FormModule, FormService } from '../../form';
 import { TaskListModule } from '../../task-list';
-import { TranslationService, CoreModule } from '@adf/core';
+import { TranslationService, CoreModule } from '@alfresco/core';
 
 import { ProcessInstance } from '../models/process-instance.model';
 import { exampleProcess, exampleProcessNoName } from './../assets/process.model.mock';

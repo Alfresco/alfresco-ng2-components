@@ -24,7 +24,7 @@ import {
     NotificationService,
     TranslationService,
     UploadService
-} from '@adf/core';
+} from '@alfresco/core';
 import { Component, EventEmitter, forwardRef, Input, Output, ViewEncapsulation } from '@angular/core';
 
 @Component({

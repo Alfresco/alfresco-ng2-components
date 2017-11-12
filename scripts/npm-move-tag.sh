@@ -2,9 +2,9 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-eval projects=( "@adf/core"
-    "@adf/content-services"
-    "@adf/process-services" )
+eval projects=( "@alfresco/core"
+    "@alfresco/content-services"
+    "@alfresco/process-services" )
 
 show_help() {
     echo "Usage: npm-clean.sh"

@@ -26,7 +26,7 @@ import { DynamicTableColumnOption  } from './../../dynamic-table-column-option.m
 import { DynamicTableColumn  } from './../../dynamic-table-column.model';
 import { DynamicTableRow  } from './../../dynamic-table-row.model';
 import { DynamicTableModel } from './../../dynamic-table.widget.model';
-import { CoreModule } from '@adf/core';
+import { CoreModule } from '@alfresco/core';
 
 import { DropdownEditorComponent } from './dropdown.editor';
 

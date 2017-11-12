@@ -29,7 +29,7 @@ import { FormFieldOption } from './../core/form-field-option';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
 import { RadioButtonsWidgetComponent } from './radio-buttons.widget';
-import { CoreModule } from '@adf/core';
+import { CoreModule } from '@alfresco/core';
 
 describe('RadioButtonsWidgetComponent', () => {
 

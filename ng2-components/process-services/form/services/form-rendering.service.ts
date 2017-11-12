@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DynamicComponentMapper, DynamicComponentResolveFunction, DynamicComponentResolver } from '@adf/core';
+import { DynamicComponentMapper, DynamicComponentResolveFunction, DynamicComponentResolver } from '@alfresco/core';
 import { Injectable, Type } from '@angular/core';
 
 import {

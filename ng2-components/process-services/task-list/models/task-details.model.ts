@@ -22,7 +22,7 @@
  *
  * @returns {TaskDetailsModel} .
  */
-import { UserProcessModel } from '@adf/core';
+import { UserProcessModel } from '@alfresco/core';
 import { TaskRepresentation } from 'alfresco-js-api';
 import { UserGroupModel } from './user-group.model';
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { TRANSLATION_PROVIDER } from '@adf/core';
+import { TRANSLATION_PROVIDER } from '@alfresco/core';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -25,7 +25,7 @@ import { MaterialModule } from '../material.module';
 
 import { ChartsModule } from 'ng2-charts';
 
-import { ToolbarModule } from '@adf/core/toolbar';
+import { ToolbarModule } from '@alfresco/core/toolbar';
 import { AnalyticsGeneratorComponent } from './components/analytics-generator.component';
 import { AnalyticsReportHeatMapComponent } from './components/analytics-report-heat-map.component';
 import { AnalyticsReportListComponent } from './components/analytics-report-list.component';

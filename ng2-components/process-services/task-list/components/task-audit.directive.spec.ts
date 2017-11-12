@@ -25,7 +25,7 @@ import {
 import { Observable } from 'rxjs/Rx';
 import { TaskListService } from './../services/tasklist.service';
 import { TaskAuditDirective } from './task-audit.directive';
-import { CoreModule } from '@adf/core';
+import { CoreModule } from '@alfresco/core';
 
 declare let jasmine: any;
 

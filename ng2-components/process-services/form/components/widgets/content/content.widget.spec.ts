@@ -19,7 +19,7 @@ import { DebugElement, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MaterialModule } from '../../../../material.module';
 import { By } from '@angular/platform-browser';
-import { TranslationService, ContentService, CoreModule } from '@adf/core';
+import { TranslationService, ContentService, CoreModule } from '@alfresco/core';
 import { Observable } from 'rxjs/Rx';
 
 import { EcmModelService } from '../../../services/ecm-model.service';

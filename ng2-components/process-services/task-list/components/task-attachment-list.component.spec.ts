@@ -18,8 +18,8 @@
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService, TranslationService } from '@adf/core';
-import { CoreModule } from '@adf/core';
+import { AppConfigService, TranslationService } from '@alfresco/core';
+import { CoreModule } from '@alfresco/core';
 import { MaterialModule } from '../../material.module';
 import { Observable } from 'rxjs/Rx';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';

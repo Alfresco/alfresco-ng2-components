@@ -1,0 +1,96 @@
+<!--BPM, ECN AND CSRF TOGGLE-->
+
+<div class="settings">
+    <p class="toggle">
+        <mat-slide-toggle
+            id="switch1"
+            [color]="'primary'"
+            (change)="toggleECM()"
+            [checked]="isECM">
+            {{ 'LOGIN.CONTENT_SERVICES'| translate }}
+        </mat-slide-toggle>
+    </p>
+    <p class="toggle">
+        <mat-slide-toggle
+            id="switch2"
+            [color]="'primary'"
+            (change)="toggleBPM()"
+            [checked]="isBPM">
+            {{ 'LOGIN.PROCESS_SERVICES'| translate }}
+        </mat-slide-toggle>
+    </p>
+    <p class="toggle">
+        <mat-slide-toggle
+            id="switch3"
+            [color]="'primary'"
+            (change)="toggleCSRF()"
+            [checked]="!disableCsrf">
+            CSRF
+        </mat-slide-toggle>
+    </p>
+    <p class="toggle">
+        <mat-slide-toggle
+            id="switch4"
+            [color]="'primary'"
+            (change)="toggleFooter()"
+            [checked]="showFooter">
+            {{ 'LOGIN.LOGIN_FOOTER'| translate }}
+        </mat-slide-toggle>
+    </p>
+</div>
+
+<!--SETTING BUTTON-->
+
+<a mat-fab class="setting-button" data-automation-id="settings" href="" routerLink="/settings">
+    <mat-icon>settings</mat-icon>
+</a>
+
+<adf-login
+    #alfrescologin
+    [providers]="providers"
+    [fieldsValidation]="customValidation"
+    [disableCsrf]="disableCsrf"
+    [showLoginActions]="showFooter"
+    [showRememberMe]="showFooter"
+    copyrightText="© 2016 Alfresco Software, Inc. All Rights Reserved. (customised text)"
+    (success)="onLogin($event)"
+    (error)="onError($event)">
+    <div class="mobile-settings">
+        <p>
+            <mat-slide-toggle
+                id="switch1-mobile"
+                [color]="'primary'"
+                (change)="toggleECM()"
+                [checked]="isECM">
+                {{ 'LOGIN.CONTENT_SERVICES'| translate }}
+            </mat-slide-toggle>
+        </p>
+        <p>
+            <mat-slide-toggle
+                id="switch2-mobile"
+                [color]="'primary'"
+                (change)="toggleBPM()"
+                [checked]="isBPM">
+                {{ 'LOGIN.PROCESS_SERVICES'| translate }}
+            </mat-slide-toggle>
+        </p>
+        <p>
+            <mat-slide-toggle
+                id="switch3-mobile"
+                [color]="'primary'"
+                (change)="toggleCSRF()"
+                [checked]="!disableCsrf">
+                CSRF
+            </mat-slide-toggle>
+        </p>
+        <p>
+            <mat-slide-toggle
+                id="switch4-mobile"
+                [color]="'primary'"
+                (change)="toggleFooter()"
+                [checked]="showFooter">
+                {{ 'LOGIN.LOGIN_FOOTER'| translate }}
+            </mat-slide-toggle>
+        </p>
+    </div>
+</adf-login>

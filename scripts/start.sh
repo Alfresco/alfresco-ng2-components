@@ -16,9 +16,9 @@ eval JSAPI_VERSION=""
 eval NG2_COMPONENTS_VERSION=""
 eval GIT_ISH=""
 
-eval projects=( "@adf/core"
-    "@adf/content-service"
-    "@adf/process-service" )
+eval projects=( "@alfresco/core"
+    "@alfresco/content-service"
+    "@alfresco/process-service" )
 
 show_help() {
     echo "Usage: start.sh"

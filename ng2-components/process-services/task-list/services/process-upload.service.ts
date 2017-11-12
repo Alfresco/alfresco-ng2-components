@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, AppConfigService, UploadService } from '@adf/core';
+import { AlfrescoApiService, AppConfigService, UploadService } from '@alfresco/core';
 import { Injectable } from '@angular/core';
 
 @Injectable()

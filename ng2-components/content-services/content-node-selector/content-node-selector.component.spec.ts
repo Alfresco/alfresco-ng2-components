@@ -20,8 +20,8 @@ import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { ContentService, TranslationService, SearchService, SiteModel, SitesApiService } from '@adf/core';
-import { DataTableModule } from '@adf/core';
+import { ContentService, TranslationService, SearchService, SiteModel, SitesApiService } from '@alfresco/core';
+import { DataTableModule } from '@alfresco/core';
 import { Observable } from 'rxjs/Rx';
 import { MaterialModule } from '../material.module';
 import { EmptyFolderContentDirective, DocumentListComponent, DocumentListService } from '../document-list';

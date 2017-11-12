@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService, UserProcessModel } from '@adf/core';
+import { AlfrescoApiService, LogService, UserProcessModel } from '@alfresco/core';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs/Rx';
 import { FormDefinitionModel } from '../models/form-definition.model';

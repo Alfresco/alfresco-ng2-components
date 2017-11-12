@@ -17,7 +17,7 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslationService, CoreModule } from '@adf/core';
+import { TranslationService, CoreModule } from '@alfresco/core';
 import { Observable } from 'rxjs/Rx';
 import { EntryComponenteMockModule } from '../assets/entry-module.mock';
 import { startFormDateWidgetMock, startFormDropdownDefinitionMock, startFormTextDefinitionMock, startMockForm, startMockFormWithTab } from '../assets/start-form.component.mock';

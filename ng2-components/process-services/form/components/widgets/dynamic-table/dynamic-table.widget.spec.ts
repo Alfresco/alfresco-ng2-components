@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { LogService } from '@adf/core';
+import { LogService } from '@alfresco/core';
 import { ActivitiContentService } from '../../../services/activiti-alfresco.service';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { MaterialModule } from '../../../../material.module';

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService } from '@adf/core';
+import { AlfrescoApiService } from '@alfresco/core';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { NodeMetadata } from '../models/node-metadata.model';

@@ -1,0 +1,10 @@
+<adf-search [searchTerm]="searchedWord"
+            (resultLoaded)="showSearchResult($event)"
+            #search>
+</adf-search>
+
+<adf-files-component
+        [currentFolderId]="null"
+        [nodeResult]="resultNodePageList"
+        (documentListReady)="refreshResults($event)">
+</adf-files-component>

@@ -18,8 +18,8 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService, CardViewUpdateService, TranslationService, UserProcessModel } from '@adf/core';
-import { BpmUserService } from '@adf/core';
+import { AppConfigService, CardViewUpdateService, TranslationService, UserProcessModel } from '@alfresco/core';
+import { BpmUserService } from '@alfresco/core';
 import { MaterialModule } from '../../material.module';
 import { Observable } from 'rxjs/Rx';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';

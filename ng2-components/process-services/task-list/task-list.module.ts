@@ -21,8 +21,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormModule } from '../form';
 
-import { CardViewModule, DataColumnModule,  DataTableModule, DirectiveModule, InfoDrawerModule } from '@adf/core';
-import { TRANSLATION_PROVIDER } from '@adf/core';
+import { CardViewModule, DataColumnModule,  DataTableModule, DirectiveModule, InfoDrawerModule } from '@alfresco/core';
+import { TRANSLATION_PROVIDER } from '@alfresco/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MaterialModule } from '../material.module';

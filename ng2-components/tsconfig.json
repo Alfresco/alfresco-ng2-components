@@ -20,7 +20,7 @@
         "baseUrl" :  "./",
         "types": ["jasmine"],
         "paths": {
-            "@adf/*": ["./*"],
+            "@alfresco/*": ["./*"],
             "alfresco-js-api": ["./node_modules/alfresco-js-api/"],
             "@angular/*": ["./node_modules/@angular/*"],
             "rxjs/*": ["./node_modules/rxjs/*"]

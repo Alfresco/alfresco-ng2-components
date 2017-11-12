@@ -17,7 +17,7 @@
 
 import { async, TestBed } from '@angular/core/testing';
 import { MatProgressSpinnerModule } from '@angular/material';
-import { DataTableComponent, DataTableModule } from '@adf/core';
+import { DataTableComponent, DataTableModule } from '@alfresco/core';
 import { DocumentListService } from '../../services/document-list.service';
 import { MaterialModule } from '../../../material.module';
 

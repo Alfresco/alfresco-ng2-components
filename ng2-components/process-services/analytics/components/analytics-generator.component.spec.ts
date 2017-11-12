@@ -20,7 +20,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ChartsModule } from 'ng2-charts';
 
 import { MaterialModule } from '../../material.module';
-import { TranslationService } from '@adf/core';
+import { TranslationService } from '@alfresco/core';
 
 import { DiagramsModule } from '../../diagram';
 import { Observable } from 'rxjs/Rx';

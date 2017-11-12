@@ -17,8 +17,8 @@
 
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService, CoreModule } from '@adf/core';
-import { DataTableModule } from '@adf/core';
+import { AppConfigService, CoreModule } from '@alfresco/core';
+import { DataTableModule } from '@alfresco/core';
 import { WebscriptComponent } from './webscript.component';
 
 declare let jasmine: any;

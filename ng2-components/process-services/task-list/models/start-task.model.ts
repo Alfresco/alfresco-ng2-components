@@ -22,7 +22,7 @@
  *
  * @returns {StartTaskModel} .
  */
-import { UserProcessModel } from '@adf/core';
+import { UserProcessModel } from '@alfresco/core';
 
 export class StartTaskModel {
 

@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { DataCellEvent, DataColumn, DataRowActionEvent, DataSorting, DataTableComponent, ObjectDataColumn } from '@adf/core';
-import { AlfrescoApiService, AppConfigService, DataColumnListComponent, UserPreferencesService } from '@adf/core';
+import { DataCellEvent, DataColumn, DataRowActionEvent, DataSorting, DataTableComponent, ObjectDataColumn } from '@alfresco/core';
+import { AlfrescoApiService, AppConfigService, DataColumnListComponent, UserPreferencesService } from '@alfresco/core';
 import {
     AfterContentInit, Component, ContentChild, ElementRef, EventEmitter, HostListener, Input, NgZone,
     OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild, ViewEncapsulation

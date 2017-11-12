@@ -23,8 +23,8 @@ import { MinimalNodeEntity, NodePaging } from 'alfresco-js-api';
 import {
     AlfrescoApiService, ContentService, TranslationService,
     DownloadZipDialogComponent, FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
-    SiteModel, UploadService, DataColumn, DataRow } from '@adf/core';
-import { DocumentListComponent, PermissionStyleModel } from '@adf/content-services';
+    SiteModel, UploadService, DataColumn, DataRow } from '@alfresco/core';
+import { DocumentListComponent, PermissionStyleModel } from '@alfresco/content-services';
 import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-adapter.component';
 import { Subscription } from 'rxjs/Rx';
 

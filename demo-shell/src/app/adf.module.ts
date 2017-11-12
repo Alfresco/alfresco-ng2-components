@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 
-import { ContentModule } from '@adf/content-services';
-import { ProcessModule } from '@adf/process-services';
-import { CoreModule } from '@adf/core';
+import { ContentModule } from '@alfresco/content-services';
+import { ProcessModule } from '@alfresco/process-services';
+import { CoreModule } from '@alfresco/core';
 
 export function modules() {
     return [

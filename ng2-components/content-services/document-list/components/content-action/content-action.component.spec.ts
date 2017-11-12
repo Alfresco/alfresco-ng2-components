@@ -18,8 +18,8 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
-import { ContentService, TranslationService, NotificationService } from '@adf/core';
-import { DataTableModule } from '@adf/core';
+import { ContentService, TranslationService, NotificationService } from '@alfresco/core';
+import { DataTableModule } from '@alfresco/core';
 import { MaterialModule } from '../../../material.module';
 
 import { DocumentListService } from '../../services/document-list.service';

@@ -25,8 +25,8 @@ import {
     CommentListComponent,
     CommentsComponent
 } from '../../task-list';
-import { TranslationService, CommentProcessService, PeopleProcessService } from '@adf/core';
-import { DataTableModule } from '@adf/core';
+import { TranslationService, CommentProcessService, PeopleProcessService } from '@alfresco/core';
+import { DataTableModule } from '@alfresco/core';
 
 import { TranslationMock } from './../assets/translation.service.mock';
 import { ProcessService } from './../services/process.service';

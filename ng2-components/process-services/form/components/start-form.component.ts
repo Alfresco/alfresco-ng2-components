@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LogService } from '@adf/core';
+import { LogService } from '@alfresco/core';
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormService } from './../services/form.service';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';

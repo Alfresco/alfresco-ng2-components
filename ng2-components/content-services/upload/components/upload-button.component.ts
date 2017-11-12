@@ -25,7 +25,7 @@ import {
     NotificationService,
     TranslationService,
     UploadService
-} from '@adf/core';
+} from '@alfresco/core';
 import {
     Component,
     EventEmitter,

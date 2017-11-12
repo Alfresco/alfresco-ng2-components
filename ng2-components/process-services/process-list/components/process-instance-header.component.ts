@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CardViewDateItemModel, CardViewItem, CardViewTextItemModel } from '@adf/core';
+import { CardViewDateItemModel, CardViewItem, CardViewTextItemModel } from '@alfresco/core';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ProcessInstance } from '../models/process-instance.model';
 

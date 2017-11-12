@@ -22,9 +22,9 @@ import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
 import { FormModule, FormModel, FormOutcomeEvent, FormOutcomeModel, FormService } from '../../form';
-import { AppConfigService, CommentProcessService, LogService, TranslationService } from '@adf/core';
+import { AppConfigService, CommentProcessService, LogService, TranslationService } from '@alfresco/core';
 
-import { PeopleProcessService, UserProcessModel } from '@adf/core';
+import { PeopleProcessService, UserProcessModel } from '@alfresco/core';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { TaskDetailsModel } from '../models/task-details.model';

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AppsProcessService, TranslationService } from '@adf/core';
+import { AppsProcessService, TranslationService } from '@alfresco/core';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';

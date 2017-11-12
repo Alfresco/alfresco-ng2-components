@@ -17,7 +17,7 @@
 
 /* tslint:disable:component-selector  */
 
-import { PeopleProcessService, UserProcessModel } from '@adf/core';
+import { PeopleProcessService, UserProcessModel } from '@alfresco/core';
 import { ENTER, ESCAPE } from '@angular/cdk/keycodes';
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormService } from '../../../services/form.service';

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SearchOptions, SearchService } from '@adf/core';
+import { SearchOptions, SearchService } from '@alfresco/core';
 import { Injectable } from '@angular/core';
 import { NodePaging } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Rx';

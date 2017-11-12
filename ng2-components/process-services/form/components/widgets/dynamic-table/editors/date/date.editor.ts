@@ -17,7 +17,7 @@
 
 /* tslint:disable:component-selector  */
 
-import { MOMENT_DATE_FORMATS, MomentDateAdapter, UserPreferencesService } from '@adf/core';
+import { MOMENT_DATE_FORMATS, MomentDateAdapter, UserPreferencesService } from '@alfresco/core';
 import { Component, Input, OnInit } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import * as moment from 'moment';

@@ -26,12 +26,12 @@ module.exports = {
 
     resolve: {
         alias: {
-            "@adf/content-services": path.resolve(__dirname, '../content-services/'),
-            "@adf/content-services$": path.resolve(__dirname, '../content-services/index.ts'),
-            "@adf/process-services": path.resolve(__dirname, '../process-services/'),
-            "@adf/process-services$": path.resolve(__dirname, '../process-services/index.ts'),
-            "@adf/core": path.resolve(__dirname, '../core/'),
-            "@adf/core$": path.resolve(__dirname, '../core/index.ts')
+            "@alfresco/content-services": path.resolve(__dirname, '../content-services/'),
+            "@alfresco/content-services$": path.resolve(__dirname, '../content-services/index.ts'),
+            "@alfresco/process-services": path.resolve(__dirname, '../process-services/'),
+            "@alfresco/process-services$": path.resolve(__dirname, '../process-services/index.ts'),
+            "@alfresco/core": path.resolve(__dirname, '../core/'),
+            "@alfresco/core$": path.resolve(__dirname, '../core/index.ts')
         },
         extensions: ['.ts', '.js', '.scss'],
         modules: [helpers.root('node_modules')]

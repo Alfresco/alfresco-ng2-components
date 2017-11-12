@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AppsProcessService } from '@adf/core';
+import { AppsProcessService } from '@alfresco/core';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ProcessInstanceFilterRepresentation } from 'alfresco-js-api';
 import { Observable, Observer } from 'rxjs/Rx';

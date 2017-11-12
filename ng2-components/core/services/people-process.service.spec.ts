@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { UserProcessModel } from '@adf/core';
+import { UserProcessModel } from '@alfresco/core';
 import { AppConfigServiceMock } from '../mock/app-config.service.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AppConfigService } from '../app-config/app-config.service';

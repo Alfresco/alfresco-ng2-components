@@ -17,8 +17,8 @@
 
 import { DatePipe } from '@angular/common';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService, CommentProcessModel, TranslationService, UserProcessModel } from '@adf/core';
-import { DataRowEvent, DataTableModule, ObjectDataRow } from '@adf/core';
+import { AppConfigService, CommentProcessModel, TranslationService, UserProcessModel } from '@alfresco/core';
+import { DataRowEvent, DataTableModule, ObjectDataRow } from '@alfresco/core';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { CommentListComponent } from './comment-list.component';

@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { PeopleProcessService, UserProcessModel } from '@adf/core';
-import { AuthenticationService, CardViewUpdateService, ClickNotification, LogService, UpdateNotification } from '@adf/core';
+import { PeopleProcessService, UserProcessModel } from '@alfresco/core';
+import { AuthenticationService, CardViewUpdateService, ClickNotification, LogService, UpdateNotification } from '@alfresco/core';
 import { Component,
     EventEmitter,
     Input,

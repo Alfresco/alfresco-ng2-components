@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LogService } from '@adf/core';
+import { LogService } from '@alfresco/core';
 import { Directive, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Point } from './models/point';
 import { RaphaelBase } from './raphael-base';

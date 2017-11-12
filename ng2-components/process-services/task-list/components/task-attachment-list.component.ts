@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ContentService, ThumbnailService } from '@adf/core';
+import { ContentService, ThumbnailService } from '@alfresco/core';
 import { Component, EventEmitter, Input, NgZone, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ProcessContentService } from '../../form';
 

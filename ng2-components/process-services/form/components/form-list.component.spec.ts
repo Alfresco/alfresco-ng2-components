@@ -17,8 +17,8 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { TranslationService } from '@adf/core';
-import { DataTableModule } from '@adf/core';
+import { TranslationService } from '@alfresco/core';
+import { DataTableModule } from '@alfresco/core';
 import { Observable } from 'rxjs/Rx';
 import { EcmModelService } from '../services/ecm-model.service';
 import { FormService } from '../services/form.service';

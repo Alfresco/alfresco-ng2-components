@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FileUtils } from '@adf/core';
+import { FileUtils } from '@alfresco/core';
 import { Directive, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output } from '@angular/core';
 
 @Directive({

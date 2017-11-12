@@ -21,7 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
 
-import { PipeModule, SearchService, TRANSLATION_PROVIDER } from '@adf/core';
+import { PipeModule, SearchService, TRANSLATION_PROVIDER } from '@alfresco/core';
 
 import { SearchTriggerDirective } from './components/search-trigger.directive';
 

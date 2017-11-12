@@ -17,7 +17,7 @@
 
 /* tslint:disable:component-selector  */
 
-import { LogService } from '@adf/core';
+import { LogService } from '@alfresco/core';
 import { ENTER, ESCAPE } from '@angular/cdk/keycodes';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';

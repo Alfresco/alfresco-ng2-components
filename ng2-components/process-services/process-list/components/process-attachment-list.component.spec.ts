@@ -21,8 +21,8 @@ import { MatProgressSpinnerModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { ProcessContentService } from '../../form';
-import { TranslationService } from '@adf/core';
-import { DataTableModule } from '@adf/core';
+import { TranslationService } from '@alfresco/core';
+import { DataTableModule } from '@alfresco/core';
 import { Observable } from 'rxjs/Rx';
 
 import { TranslationMock } from './../assets/translation.service.mock';

@@ -21,8 +21,8 @@ import { MatProgressSpinnerModule } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
 import { ProcessInstanceListComponent } from './process-list.component';
 
-import { AppConfigService, CoreModule, TranslationService } from '@adf/core';
-import { DataRowEvent, DataSorting, DataTableModule, ObjectDataRow, ObjectDataTableAdapter } from '@adf/core';
+import { AppConfigService, CoreModule, TranslationService } from '@alfresco/core';
+import { DataRowEvent, DataSorting, DataTableModule, ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/core';
 
 import { fakeProcessInstances, fakeProcessInstancesWithNoName } from '../assets/process-instances-list.mock';
 import { ProcessService } from '../services/process.service';

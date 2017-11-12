@@ -16,7 +16,7 @@
  */
 
 import { LogService, MOMENT_DATE_FORMATS,
-    MomentDateAdapter, PeopleProcessService, UserPreferencesService, UserProcessModel } from '@adf/core';
+    MomentDateAdapter, PeopleProcessService, UserPreferencesService, UserProcessModel } from '@alfresco/core';
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import * as moment from 'moment';

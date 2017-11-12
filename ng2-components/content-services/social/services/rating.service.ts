@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService } from '@adf/core';
+import { AlfrescoApiService } from '@alfresco/core';
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { RatingBody } from 'alfresco-js-api';

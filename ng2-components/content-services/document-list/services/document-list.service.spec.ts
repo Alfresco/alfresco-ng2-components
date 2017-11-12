@@ -16,8 +16,8 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { CookieService, LogService } from '@adf/core';
-import { CookieServiceMock } from '@adf/core/mock';
+import { CookieService, LogService } from '@alfresco/core';
+import { CookieServiceMock } from '@alfresco/core/mock';
 import { DocumentListService } from './document-list.service';
 
 declare let jasmine: any;

@@ -16,7 +16,7 @@
  */
 
 import { FileModel, FileUploadCompleteEvent, FileUploadDeleteEvent,
-         FileUploadErrorEvent, FileUploadStatus, UploadService } from '@adf/core';
+         FileUploadErrorEvent, FileUploadStatus, UploadService } from '@alfresco/core';
 import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { FileUploadingListComponent } from './file-uploading-list.component';

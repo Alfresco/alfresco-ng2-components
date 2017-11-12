@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { DataTableModule, PipeModule } from '@adf/core';
+import { DataTableModule, PipeModule } from '@alfresco/core';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { TRANSLATION_PROVIDER } from '@adf/core';
+import { TRANSLATION_PROVIDER } from '@alfresco/core';
 import { MaterialModule } from '../material.module';
 import { WebscriptComponent } from './webscript.component';
 

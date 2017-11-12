@@ -18,7 +18,7 @@
 import { DebugElement, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReportParametersModel } from '../../diagram';
-import { AppConfigService, CoreModule, TranslationService } from '@adf/core';
+import { AppConfigService, CoreModule, TranslationService } from '@alfresco/core';
 import { Observable } from 'rxjs/Rx';
 import * as analyticParamsMock from '../assets/analyticsParamsReportComponent.mock';
 import { AnalyticsReportParametersComponent } from '../components/analytics-report-parameters.component';

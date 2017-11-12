@@ -17,7 +17,7 @@
       "@angular/*": [
         "../node_modules/@angular/*"
       ],
-      "@adf/*": [
+      "@alfresco/*": [
         "../../ng2-components/*"
       ]
     }

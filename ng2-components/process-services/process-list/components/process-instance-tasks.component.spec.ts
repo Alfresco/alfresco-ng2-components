@@ -21,7 +21,7 @@ import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
 import { TaskDetailsModel } from '../../task-list';
-import { TranslationService } from '@adf/core';
+import { TranslationService } from '@alfresco/core';
 
 import { taskDetailsMock } from './../../task-list/assets/task-details.mock';
 import { TranslationMock } from './../assets/translation.service.mock';

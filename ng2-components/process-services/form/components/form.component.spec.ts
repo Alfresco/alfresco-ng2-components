@@ -16,7 +16,7 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { LogService } from '@adf/core';
+import { LogService } from '@alfresco/core';
 import { Observable } from 'rxjs/Rx';
 import { fakeForm } from '../assets/form.component.mock';
 import { FormService } from './../services/form.service';
