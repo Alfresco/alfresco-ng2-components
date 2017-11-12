@@ -22,7 +22,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AlfrescoApiService, RenditionsService } from '../../services';
 
 import { MaterialModule } from './../../material.module';
-import { ViewerModule } from '../viewer.module';
 
 import { Observable } from 'rxjs/Rx';
 import { EventMock } from '../../mock/event.mock';
@@ -121,7 +120,6 @@ describe('ViewerComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                ViewerModule,
                 MaterialModule
             ],
             declarations: [

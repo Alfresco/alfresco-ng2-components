@@ -35,13 +35,13 @@
     "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
   },
   "keywords": [
-    "alfresco-ng2-components",
+    "alfresco-components",
     "angular",
     "typescript",
     "alfresco",
     "activiti",
-    "ecm",
-    "bpm"
+    "content services",
+    "process services"
   ],
   "dependencies": {
     "@angular/animations": "5.0.0",

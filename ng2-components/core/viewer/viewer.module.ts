@@ -36,22 +36,6 @@ import { ViewerComponent } from './components/viewer.component';
 import { ViewerExtensionDirective } from './directives/viewer-extension.directive';
 import { RenderingQueueServices } from './services/rendering-queue.services';
 
-export function declarations() {
-    return [
-        ViewerComponent,
-        ImgViewerComponent,
-        TxtViewerComponent,
-        MediaPlayerComponent,
-        PdfViewerComponent,
-        ViewerExtensionDirective,
-        UnknownFormatComponent,
-        ViewerToolbarComponent,
-        ViewerSidebarComponent,
-        ViewerOpenWithComponent,
-        ViewerMoreActionsComponent
-    ];
-}
-
 @NgModule({
     imports: [
         CommonModule,

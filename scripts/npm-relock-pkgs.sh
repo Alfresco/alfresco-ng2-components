@@ -62,7 +62,7 @@ for PACKAGE in ${projects[@]}
         fi
     done
 
-cd "$DIR/../demo-shell-ng2"
+cd "$DIR/../demo-shell"
 npm run clean-lock
 npm run clean
 npm install

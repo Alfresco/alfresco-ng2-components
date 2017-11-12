@@ -1,7 +1,7 @@
 {
   "name": "process-services",
   "description": "Alfresco ADF process services",
-  "version": "1.9.0",
+  "version": "2.0.0",
   "author": "Alfresco Software, Ltd.",
   "main": "bundles/process-services.js",
   "repository": {

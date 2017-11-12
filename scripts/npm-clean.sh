@@ -18,7 +18,7 @@ done
 
 npm install rimraf
 
-cd "$DIR/../demo-shell-ng2"
+cd "$DIR/../demo-shell"
 npm run clean
 npm run clean-lock
 
