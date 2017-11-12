@@ -7,8 +7,8 @@ eval SELECTED_UNITS=""
 eval SELECTED_UNITS_ONLY=false
 
 eval projects=( "core"
-    "content-service"
-    "process-service" )
+    "content-services"
+    "process-services" )
 
 show_help() {
     echo "Usage: npm-relock-pkgs.sh [options] [packages...]"

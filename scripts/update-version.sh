@@ -7,8 +7,8 @@ eval EXEC_COMPONENT=true
 eval DIFFERENT_JS_API=false
 
 eval projects=( "core"
-    "content-service"
-    "process-service" )
+    "content-services"
+    "process-services" )
 
 cd `dirname $0`
 

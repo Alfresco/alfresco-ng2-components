@@ -5,8 +5,8 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 eval VERSION=""
 
 eval projects=( "@adf/core"
-    "@adf/content-service"
-    "@adf/process-service" )
+    "@adf/content-services"
+    "@adf/process-services" )
 
 show_help() {
     echo "Usage: npm-check-bundles.sh"

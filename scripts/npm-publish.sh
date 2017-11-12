@@ -15,10 +15,9 @@ eval SLEEP_TIME="0"
 eval EXEC_VERSION_JSAPI=false
 eval JSAPI_VERSION=""
 
-
 eval projects=( "core"
-    "content-service"
-    "process-service" )
+    "content-services"
+    "process-services" )
 
 cd "$DIR/../ng2-components"
 
@@ -119,8 +118,8 @@ done
 npm install rimraf -g
 
 echo "====== INSTALL AND CLEAN ${PACKAGE} ===== "
-npm install
 npm run clean
+npm install
 
 if $EXEC_GIT_NPM_INSTALL_JSAPI == true; then
     echo "====== Use the alfresco JS-API  '$GIT_ISH'====="
