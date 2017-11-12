@@ -9,7 +9,7 @@ To correctly use this demo check that on your machine you have [Node](https://no
 
 ```sh
 git clone https://github.com/Alfresco/alfresco-ng2-components.git
-cd alfresco-ng2-components/demo-shell-ng2/
+cd alfresco-ng2-components/demo-shell/
 npm install
 ```
 
