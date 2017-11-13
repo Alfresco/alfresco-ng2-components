@@ -21,7 +21,7 @@ Adds a collapsible panel to an [accordion menu](accordion.component.md).
 
 ```html
 <adf-accordion>
-    <adf-accordion-group [heading]="titleHeading" [isSelected]="true" [headingIcon]="'assignment'">
+    <adf-accordion-group [heading]="titleHeading" [isSelected]="true" [headingIcon]="'assignment'" [headingIconTooltip]="'Group Tooltip'">
         <my-list></my-list>
     </adf-accordion-group>
 </adf-accordion>
@@ -50,6 +50,7 @@ export class MyComponent implements OnInit {
 | isSelected | boolean | Is this group currently selected? |
 | headingIcon | string | The material design icon. |
 | hasAccordionIcon | boolean | Should the (expanded) accordion icon be shown? Defaults to true |
+| headingIconTooltip | string | Tooltip message to be shown for headingIcon |
 
 ## Details
 
