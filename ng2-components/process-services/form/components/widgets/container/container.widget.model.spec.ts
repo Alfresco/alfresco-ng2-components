@@ -29,11 +29,6 @@ describe('ContainerWidgetComponentModel', () => {
         expect(model.form).toBe(form);
     });
 
-    it('should be expanded by default', () => {
-        let container = new ContainerWidgetComponentModel(null);
-        expect(container.isExpanded).toBeTruthy();
-    });
-
     it('should allow collapsing only when of a group type', () => {
         let container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(), {
             type:  FormFieldTypes.CONTAINER,

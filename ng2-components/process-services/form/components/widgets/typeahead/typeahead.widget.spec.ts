@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { OverlayContainer } from '@angular/cdk/overlay';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
 
@@ -36,7 +35,6 @@ describe('TypeaheadWidgetComponent', () => {
     let formService: FormService;
     let widget: TypeaheadWidgetComponent;
     let visibilityService: WidgetVisibilityService;
-    let overlayContainerElement: HTMLElement;
 
     beforeEach(() => {
         formService = new FormService(null, null, null);
@@ -207,19 +205,7 @@ describe('TypeaheadWidgetComponent', () => {
             TestBed.configureTestingModule({
                 imports: [MaterialModule],
                 declarations: [TypeaheadWidgetComponent, ErrorWidgetComponent],
-                providers: [
-                    {provide: OverlayContainer, useFactory: () => {
-                        overlayContainerElement = document.createElement('div');
-                        overlayContainerElement.classList.add('cdk-overlay-container');
-
-                        document.body.appendChild(overlayContainerElement);
-
-                        // remove body padding to keep consistent cross-browser
-                        document.body.style.padding = '0';
-                        document.body.style.margin = '0';
-
-                        return {getContainerElement: () => overlayContainerElement};
-                      }}, FormService, EcmModelService, WidgetVisibilityService]
+                providers: [ FormService, EcmModelService, WidgetVisibilityService ]
             }).compileComponents().then(() => {
                 fixture = TestBed.createComponent(TypeaheadWidgetComponent);
                 typeaheadWidgetComponent = fixture.componentInstance;

@@ -95,7 +95,8 @@ describe('FormModel', () => {
         form.fields = [];
         expect(form.hasFields()).toBeFalsy();
 
-        form.fields = [new ContainerModel(null)];
+        let field = new FormFieldModel(form);
+        form.fields = [new ContainerModel(field)];
         expect(form.hasFields()).toBeTruthy();
     });
 

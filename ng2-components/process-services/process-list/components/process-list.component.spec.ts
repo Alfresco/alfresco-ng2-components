@@ -162,7 +162,7 @@ describe('ProcessInstanceListComponent', () => {
         expect(emitSpy).toHaveBeenCalledWith(fakeProcessInstances);
     }));
 
-    it('should return the process instances list in original order when datalist passed non-existent columns', (done) => {
+    it('should return the process instances list in original order when datalist passed non-existent columns', async(() => {
         component.data = new ObjectDataTableAdapter(
             [],
             [
@@ -179,12 +179,11 @@ describe('ProcessInstanceListComponent', () => {
             expect(component.data.getRows().length).toEqual(2);
             expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
             expect(component.data.getRows()[1].getValue('name')).toEqual('Process 382927392');
-            done();
         });
         fixture.detectChanges();
-    });
+    }));
 
-    it('should order the process instances by name column when no sort passed', (done) => {
+    it('should order the process instances by name column when no sort passed', async(() => {
         component.appId = 1;
         component.state = 'open';
         component.processDefinitionKey = null;
@@ -195,12 +194,11 @@ describe('ProcessInstanceListComponent', () => {
             expect(component.data.getRows().length).toEqual(2);
             expect(component.data.getRows()[0].getValue('name')).toEqual('Process 382927392');
             expect(component.data.getRows()[1].getValue('name')).toEqual('Process 773443333');
-            done();
         });
         fixture.detectChanges();
-    });
+    }));
 
-    it('should order the process instances by descending column when specified', (done) => {
+    it('should order the process instances by descending column when specified', async(() => {
         component.appId = 1;
         component.state = 'open';
         component.processDefinitionKey = null;
@@ -212,12 +210,11 @@ describe('ProcessInstanceListComponent', () => {
             expect(component.data.getRows().length).toEqual(2);
             expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
             expect(component.data.getRows()[1].getValue('name')).toEqual('Process 382927392');
-            done();
         });
         fixture.detectChanges();
-    });
+    }));
 
-    it('should order the process instances by ascending column when specified', (done) => {
+    it('should order the process instances by ascending column when specified', async(() => {
         component.appId = 1;
         component.state = 'open';
         component.processDefinitionKey = null;
@@ -229,12 +226,11 @@ describe('ProcessInstanceListComponent', () => {
             expect(component.data.getRows().length).toEqual(2);
             expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
             expect(component.data.getRows()[1].getValue('name')).toEqual('Process 382927392');
-            done();
         });
         fixture.detectChanges();
-    });
+    }));
 
-    it('should order the process instances by descending start date when specified', (done) => {
+    it('should order the process instances by descending start date when specified', async(() => {
         component.appId = 1;
         component.state = 'open';
         component.processDefinitionKey = null;
@@ -246,12 +242,11 @@ describe('ProcessInstanceListComponent', () => {
             expect(component.data.getRows().length).toEqual(2);
             expect(component.data.getRows()[0].getValue('name')).toEqual('Process 382927392');
             expect(component.data.getRows()[1].getValue('name')).toEqual('Process 773443333');
-            done();
         });
         fixture.detectChanges();
-    });
+    }));
 
-    it('should return a default name if no name is specified on the process', (done) => {
+    it('should return a default name if no name is specified on the process', async(() => {
         getProcessInstancesSpy = getProcessInstancesSpy.and.returnValue(Observable.of(fakeProcessInstancesWithNoName));
         component.appId = 1;
         component.state = 'open';
@@ -259,10 +254,9 @@ describe('ProcessInstanceListComponent', () => {
         component.success.subscribe( (res) => {
             expect(component.data.getRows()[0].getValue('name')).toEqual('Fake Process Name - Nov 9, 2017, 12:36:14 PM');
             expect(component.data.getRows()[1].getValue('name')).toEqual('Fake Process Name - Nov 9, 2017, 12:37:25 PM');
-            done();
         });
         fixture.detectChanges();
-    });
+    }));
 
     it('should return a currentId null when the processList is empty', () => {
         component.selectFirst();

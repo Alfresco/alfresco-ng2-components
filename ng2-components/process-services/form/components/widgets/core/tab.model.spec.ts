@@ -17,6 +17,7 @@
 
 import { ContainerModel } from './container.model';
 import { FormModel } from './form.model';
+import { FormFieldModel } from './../core/form-field.model';
 import { TabModel } from './tab.model';
 
 describe('TabModel', () => {
@@ -52,7 +53,9 @@ describe('TabModel', () => {
         model.fields = [];
         expect(model.hasContent()).toBeFalsy();
 
-        model.fields = [new ContainerModel(null)];
+        let form = new FormModel();
+        let field = new FormFieldModel(form);
+        model.fields = [new ContainerModel(field)];
         expect(model.hasContent()).toBeTruthy();
     });
 

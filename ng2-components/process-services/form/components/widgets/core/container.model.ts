@@ -29,8 +29,9 @@ export class ContainerModel extends FormWidgetModel {
     }
 
     constructor(field: FormFieldModel) {
+        super(field.form, field.json);
+
         if (field) {
-            super(field.form, field.json);
             this.field = field;
         }
     }

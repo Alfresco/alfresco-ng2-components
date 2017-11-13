@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { OverlayContainer } from '@angular/cdk/overlay';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { UserProcessModel } from '@alfresco/core';
@@ -36,7 +35,6 @@ describe('PeopleWidgetComponent', () => {
     let fixture: ComponentFixture<PeopleWidgetComponent>;
     let element: HTMLElement;
     let formService: FormService;
-    let overlayContainerElement: HTMLElement;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -51,21 +49,7 @@ describe('PeopleWidgetComponent', () => {
             providers: [
                 FormService,
                 EcmModelService,
-                ActivitiContentService,
-                {
-                    provide: OverlayContainer, useFactory: () => {
-                    overlayContainerElement = document.createElement('div');
-                    overlayContainerElement.classList.add('cdk-overlay-container');
-
-                    document.body.appendChild(overlayContainerElement);
-
-                    // remove body padding to keep consistent cross-browser
-                    document.body.style.padding = '0';
-                    document.body.style.margin = '0';
-
-                    return { getContainerElement: () => overlayContainerElement };
-                }
-                }
+                ActivitiContentService
             ]
         }).compileComponents();
     }));
