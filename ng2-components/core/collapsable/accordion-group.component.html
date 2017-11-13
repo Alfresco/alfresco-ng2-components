@@ -1,9 +1,9 @@
 <div class="adf-panel adf-panel-default" [ngClass]="{'adf-panel-open': isOpen}">
     <div class="adf-panel-heading" [ngClass]="{'adf-panel-heading-selected': isSelected}" (click)="toggleOpen($event)">
         <div id="heading-icon" *ngIf="hasHeadingIcon()" class="adf-panel-heading-icon">
-            <i class="material-icons" 
-                [matTooltip]="headingIconTooltip" 
-                [matTooltipDisabled]="!headingIconTooltip">
+            <i class="material-icons"
+               [matTooltip]="headingIconTooltip"
+               [matTooltipDisabled]="!headingIconTooltip">
                 {{headingIcon}}
             </i>
         </div>
