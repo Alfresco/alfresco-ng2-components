@@ -38,6 +38,9 @@ export class AccordionGroupComponent implements OnDestroy {
     headingIcon: string;
 
     @Input()
+    headingIconTooltip: string;
+
+    @Input()
     hasAccordionIcon: boolean = true;
 
     @Output()
