@@ -30,7 +30,7 @@ let fakeGroupResponse = {
     'total': 2,
     'start': 0,
     'data': [{
-        'id': 2004,
+        'id': '2004',
         'name': 'PEOPLE_GROUP',
         'externalId': null,
         'status': 'active',

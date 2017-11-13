@@ -28,11 +28,7 @@ import {
     ObjectDataColumn,
     ObjectDataTableAdapter
 } from './../../data/index';
-import { DataTableCellComponent } from './datatable-cell.component';
 import { DataTableComponent } from './datatable.component';
-import { DateCellComponent } from './date-cell.component';
-import { FileSizeCellComponent } from './filesize-cell.component';
-import { LocationCellComponent } from './location-cell.component';
 
 describe('DataTable', () => {
 
@@ -47,13 +43,6 @@ describe('DataTable', () => {
                 RouterTestingModule,
                 DataTableModule,
                 MaterialModule
-            ],
-            declarations: [
-                DataTableCellComponent,
-                LocationCellComponent,
-                FileSizeCellComponent,
-                DateCellComponent,
-                DataTableComponent
             ]
         }).compileComponents();
     }));

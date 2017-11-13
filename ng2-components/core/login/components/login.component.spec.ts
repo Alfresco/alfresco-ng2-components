@@ -123,16 +123,15 @@ describe('LoginComponent', () => {
         expect(router.navigate).toHaveBeenCalledWith(['redirect-url']);
     });
 
-    it('should update user preferences upon login', (done) => {
+    it('should update user preferences upon login', async(() => {
         spyOn(userPreferences, 'setStoragePrefix').and.callThrough();
 
         component.success.subscribe(() => {
             expect(userPreferences.setStoragePrefix).toHaveBeenCalledWith('fake-username');
-            done();
         });
 
         loginWithCredentials('fake-username', 'fake-password');
-    });
+    }));
 
     describe('Login button', () => {
 
@@ -385,7 +384,7 @@ describe('LoginComponent', () => {
         expect(element.querySelector('input[type="password"]').value).toEqual('fake-change-password');
     });
 
-    it('should return success event after the login have succeeded', (done) => {
+    it('should return success event after the login have succeeded', async(() => {
         component.providers = 'ECM';
         expect(component.isError).toBe(false);
 
@@ -393,14 +392,13 @@ describe('LoginComponent', () => {
             fixture.detectChanges();
 
             expect(component.isError).toBe(false);
-            done();
         });
 
         loginWithCredentials('fake-username', 'fake-password');
 
-    });
+    }));
 
-    it('should return error with a wrong username', (done) => {
+    it('should return error with a wrong username', async(() => {
         component.providers = 'ECM';
 
         component.error.subscribe(() => {
@@ -408,13 +406,12 @@ describe('LoginComponent', () => {
 
             expect(getLoginErrorElement()).toBeDefined();
             expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
-            done();
         });
 
         loginWithCredentials('fake-wrong-username', 'fake-password');
-    });
+    }));
 
-    it('should return error with a wrong password', (done) => {
+    it('should return error with a wrong password', async(() => {
         component.providers = 'ECM';
 
         component.error.subscribe(() => {
@@ -423,13 +420,12 @@ describe('LoginComponent', () => {
             expect(component.isError).toBe(true);
             expect(getLoginErrorElement()).toBeDefined();
             expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
-            done();
         });
 
         loginWithCredentials('fake-username', 'fake-wrong-password');
-    });
+    }));
 
-    it('should return error with a wrong username and password', (done) => {
+    it('should return error with a wrong username and password', async(() => {
         component.providers = 'ECM';
 
         component.error.subscribe(() => {
@@ -438,13 +434,12 @@ describe('LoginComponent', () => {
             expect(component.isError).toBe(true);
             expect(getLoginErrorElement()).toBeDefined();
             expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
-            done();
         });
 
         loginWithCredentials('fake-wrong-username', 'fake-wrong-password');
-    });
+    }));
 
-    it('should return CORS error when server CORS error occurs', (done) => {
+    it('should return CORS error when server CORS error occurs', async(() => {
         component.providers = 'ECM';
 
         component.error.subscribe(() => {
@@ -453,13 +448,12 @@ describe('LoginComponent', () => {
             expect(component.isError).toBe(true);
             expect(getLoginErrorElement()).toBeDefined();
             expect(getLoginErrorMessage()).toEqual('ERROR: the network is offline, Origin is not allowed by Access-Control-Allow-Origin');
-            done();
         });
 
         loginWithCredentials('fake-username-CORS-error', 'fake-password');
-    });
+    }));
 
-    it('should return CSRF error when server CSRF error occurs', (done) => {
+    it('should return CSRF error when server CSRF error occurs', async(() => {
         component.providers = 'ECM';
 
         component.error.subscribe(() => {
@@ -468,13 +462,12 @@ describe('LoginComponent', () => {
             expect(component.isError).toBe(true);
             expect(getLoginErrorElement()).toBeDefined();
             expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CSRF');
-            done();
         });
 
         loginWithCredentials('fake-username-CSRF-error', 'fake-password');
-    });
+    }));
 
-    it('should return ECOM read-oly error when error occurs', (done) => {
+    it('should return ECOM read-oly error when error occurs', async(() => {
         component.providers = 'ECM';
 
         component.error.subscribe(() => {
@@ -483,13 +476,12 @@ describe('LoginComponent', () => {
             expect(component.isError).toBe(true);
             expect(getLoginErrorElement()).toBeDefined();
             expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ECM-LICENSE');
-            done();
         });
 
         loginWithCredentials('fake-username-ECM-access-error', 'fake-password');
-    });
+    }));
 
-    it('should emit success event after the login has succeeded', (done) => {
+    it('should emit success event after the login has succeeded', async(() => {
         component.providers = 'ECM';
 
         component.success.subscribe((event) => {
@@ -499,13 +491,12 @@ describe('LoginComponent', () => {
             expect(event).toEqual(
                 new LoginSuccessEvent({type: 'type', ticket: 'ticket'}, 'fake-username', 'fake-password')
             );
-            done();
         });
 
         loginWithCredentials('fake-username', 'fake-password');
-    });
+    }));
 
-    it('should emit error event after the login has failed', (done) => {
+    it('should emit error event after the login has failed', async(() => {
         component.providers = 'ECM';
 
         component.error.subscribe((error) => {
@@ -517,11 +508,10 @@ describe('LoginComponent', () => {
             expect(error).toEqual(
                 new LoginErrorEvent('Fake server error')
             );
-            done();
         });
 
         loginWithCredentials('fake-username', 'fake-wrong-password');
-    });
+    }));
 
     it('should render the password in clear when the toggleShowPassword is call', () => {
         component.isPasswordShow = false;
@@ -543,7 +533,7 @@ describe('LoginComponent', () => {
         expect(element.querySelector('#password').type).toEqual('password');
     });
 
-    it('should emit error event when the providers is undefined', (done) => {
+    it('should emit error event when the providers is undefined', async(() => {
         component.error.subscribe((error) => {
             fixture.detectChanges();
 
@@ -551,9 +541,8 @@ describe('LoginComponent', () => {
             expect(getLoginErrorElement()).toBeDefined();
             expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-PROVIDERS');
             expect(error).toEqual(new LoginErrorEvent('LOGIN.MESSAGES.LOGIN-ERROR-PROVIDERS'));
-            done();
         });
 
         loginWithCredentials('fake-username', 'fake-password', null);
-    });
+    }));
 });

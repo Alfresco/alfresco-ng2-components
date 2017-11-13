@@ -27,14 +27,14 @@ import { StorageService } from './storage.service';
 declare let jasmine: any;
 
 const firstInvolvedUser: UserProcessModel = new UserProcessModel({
-    id: '1',
+    id: 1,
     email: 'fake-user1@fake.com',
     firstName: 'fakeName1',
     lastName: 'fakeLast1'
 });
 
 const secondInvolvedUser: UserProcessModel = new UserProcessModel({
-    id: '2',
+    id: 2,
     email: 'fake-user2@fake.com',
     firstName: 'fakeName2',
     lastName: 'fakeLast2'

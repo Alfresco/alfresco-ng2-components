@@ -29,7 +29,7 @@ export class BpmUserModel implements UserRepresentation {
     fullname: string;
     fullNameDisplay: string;
     groups: any;
-    id: string;
+    id: number;
     lastUpdate: Date;
     latestSyncTimeStamp: Date;
     password: string;

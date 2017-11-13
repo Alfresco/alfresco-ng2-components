@@ -18,7 +18,8 @@
 import { async, TestBed } from '@angular/core/testing';
 import { ComponentFixture } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatDialogModule, MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
+import { MaterialModule } from '../material.module';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { Observable } from 'rxjs/Rx';
 
@@ -44,10 +45,13 @@ describe('FolderDialogComponent', () => {
 
         TestBed.configureTestingModule({
             imports: [
-                MatDialogModule,
+                MaterialModule,
                 FormsModule,
                 ReactiveFormsModule,
                 BrowserDynamicTestingModule
+            ],
+            declarations: [
+                FolderDialogComponent
             ],
             providers: [
                 { provide: MatDialogRef, useValue: dialogRef },

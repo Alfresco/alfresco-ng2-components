@@ -45,7 +45,6 @@ describe('HighlightDirective', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                HighlightDirective,
                 TestComponent
             ],
             providers: [

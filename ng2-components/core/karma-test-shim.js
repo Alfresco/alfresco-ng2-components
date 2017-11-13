@@ -18,12 +18,48 @@ appContext.keys().forEach(appContext);
 
 const TestBed = require('@angular/core/testing').TestBed;
 const browser = require('@angular/platform-browser-dynamic/testing');
-const CoreModule = require('@alfresco/core').CoreModule;
+const NoopAnimationsModule = require('@angular/platform-browser/animations').NoopAnimationsModule;
+const FormsModule = require('@angular/forms').FormsModule;
+const ReactiveFormsModule = require('@angular/forms').ReactiveFormsModule;
+const HttpClient = require('@angular/common/http').HttpClient;
+const HttpClientModule = require('@angular/common/http').HttpClientModule;
+const TranslateModule = require('@ngx-translate/core').TranslateModule;
+const TranslateLoader = require('@ngx-translate/core').TranslateLoader;
+
+const ServicesModule = require('./services/service.module').ServiceModule;
+const DirectiveModule = require('./directives/directive.module').DirectiveModule;
+const ContextMenuModule = require('./context-menu/context-menu.module').ContextMenuModule;
+const PipeModule = require('./pipes/pipe.module').PipeModule;
+const AppConfigModule = require('./app-config/app-config.module').AppConfigModule;
+const LogService = require('./services/log.service').LogService;
+const TranslateLoaderService = require('./services/translate-loader.service').TranslateLoaderService;
 
 TestBed.initTestEnvironment(browser.BrowserDynamicTestingModule, browser.platformBrowserDynamicTesting());
 
+export function createTranslateLoader(http, logService) {
+    return new TranslateLoaderService(http, logService);
+}
+
 beforeEach(() => {
-    TestBed.configureTestingModule({ imports: [ CoreModule ] });
+    TestBed.configureTestingModule({
+        imports: [
+            ServicesModule,
+            TranslateModule.forRoot({
+                loader: {
+                    provide: TranslateLoader,
+                    useFactory: (createTranslateLoader),
+                    deps: [HttpClient, LogService]
+                }
+            }),
+            DirectiveModule,
+            ContextMenuModule,
+            PipeModule,
+            AppConfigModule,
+            NoopAnimationsModule,
+            FormsModule,
+            ReactiveFormsModule,
+            HttpClientModule
+        ]});
 });
 
 afterEach(() => {

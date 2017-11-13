@@ -47,7 +47,8 @@ class TestConfig {
                         name: this.setup.applicationName
                     }
                 },
-                get: () => this.setup.applicationName
+                get: () => this.setup.applicationName,
+                load: () => {}
             }
         };
 

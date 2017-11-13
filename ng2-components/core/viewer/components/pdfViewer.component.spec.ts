@@ -22,6 +22,8 @@ import {
     AuthenticationService,
     SettingsService
 } from '../../services';
+import { MaterialModule } from '../../material.module';
+import { ToolbarModule } from '../../toolbar';
 import { EventMock } from '../../mock/event.mock';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { PdfViewerComponent } from './pdfViewer.component';
@@ -38,6 +40,8 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+                ToolbarModule,
+                MaterialModule
             ],
             declarations: [PdfViewerComponent],
             providers: [

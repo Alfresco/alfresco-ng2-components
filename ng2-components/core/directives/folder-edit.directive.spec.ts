@@ -67,8 +67,7 @@ describe('FolderEditDirective', () => {
                 })
             ],
             declarations: [
-                TestComponent,
-                FolderEditDirective
+                TestComponent
             ]
             ,
             providers: [
