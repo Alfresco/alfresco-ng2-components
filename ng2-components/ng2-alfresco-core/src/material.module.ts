@@ -27,7 +27,8 @@ import {
     MatProgressSpinnerModule,
     MatSnackBarModule,
     MatTabsModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatTooltipModule
 } from '@angular/material';
 
 export function modules() {
@@ -42,7 +43,8 @@ export function modules() {
         MatTabsModule,
         MatMenuModule,
         MatIconModule,
-        MatCardModule
+        MatCardModule,
+        MatTooltipModule
     ];
 }
 
