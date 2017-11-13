@@ -5,3 +5,16 @@
 .adf-full-width {
     width: 100%;
 }
+
+@mixin adf-dialog-theme($theme) {
+
+    $primary: map-get($theme, primary);
+
+    .adf-dialog-buttons button {
+        text-transform: uppercase;
+    }
+    .adf-dialog-action-button:enabled {
+        color: mat-color($primary);
+    }
+
+}

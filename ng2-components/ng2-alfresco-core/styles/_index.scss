@@ -8,6 +8,7 @@
 @import '../src/components/pagination/pagination.component';
 @import '../src/components/info-drawer/info-drawer-layout.component';
 @import '../src/components/settings/host-settings.component';
+@import '../src/dialogs/folder.dialog';
 
 @mixin alfresco-core-theme($theme) {
     @include adf-host-settings-theme($theme);
@@ -20,4 +21,5 @@
     @include adf-pagination-theme($theme);
     @include adf-colors-theme($theme);
     @include adf-default-class($theme);
+    @include adf-dialog-theme($theme);
 }
