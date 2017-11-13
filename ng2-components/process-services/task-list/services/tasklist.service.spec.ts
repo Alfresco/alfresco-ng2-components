@@ -440,7 +440,7 @@ describe('Activiti TaskList Service', () => {
                     expect(res).toBeDefined();
                     expect(res.id).not.toEqual('');
                     expect(res.name).toEqual('FakeNameTask');
-                    expect(res.created).not.toEqual('');
+                    expect(res.created).not.toEqual(null);
                     done();
                 }
             );
@@ -556,7 +556,7 @@ describe('Activiti TaskList Service', () => {
             service.addFilter(filterFake).subscribe(
                 (res: FilterRepresentationModel) => {
                     expect(res).toBeDefined();
-                    expect(res.id).not.toEqual('');
+                    expect(res.id).not.toEqual(null);
                     expect(res.name).toEqual('FakeNameFilter');
                     expect(res.filter.assignment).toEqual('fake-assignement');
                     done();
@@ -586,7 +586,7 @@ describe('Activiti TaskList Service', () => {
                     expect(res.name).toEqual('FakeNameTask');
                     expect(res.description).toEqual('FakeDescription');
                     expect(res.category).toEqual('3');
-                    expect(res.created).not.toEqual('');
+                    expect(res.created).not.toEqual(null);
                     done();
                 }
             );
@@ -614,7 +614,7 @@ describe('Activiti TaskList Service', () => {
                     expect(res.name).toEqual('FakeNameTask');
                     expect(res.description).toEqual('FakeDescription');
                     expect(res.category).toEqual('3');
-                    expect(res.created).not.toEqual('');
+                    expect(res.created).not.toEqual(null);
                     expect(res.adhocTaskCanBeReassigned).toBe(true);
                     expect(res.assignee).toEqual(new UserProcessModel(fakeUser2));
                     expect(res.involvedPeople[0].email).toEqual(fakeUser1.email);
@@ -650,7 +650,7 @@ describe('Activiti TaskList Service', () => {
                     expect(res.name).toEqual('FakeNameTask');
                     expect(res.description).toEqual('FakeDescription');
                     expect(res.category).toEqual('3');
-                    expect(res.created).not.toEqual('');
+                    expect(res.created).not.toEqual(null);
                     expect(res.adhocTaskCanBeReassigned).toBe(true);
                     expect(res.assignee).toEqual(new UserProcessModel(fakeUser2));
                     expect(res.involvedPeople[0].email).toEqual(fakeUser1.email);

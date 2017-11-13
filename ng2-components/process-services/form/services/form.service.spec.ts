@@ -406,7 +406,7 @@ describe('Form service', () => {
             service.getWorkflowGroups(fakeFilter).subscribe(result => {
                 expect(result).toBeDefined();
                 expect(result.length).toBe(2);
-                expect(result[0].id).toBe(2004);
+                expect(result[0].id).toBe('2004');
                 expect(result[0].name).toBe('PEOPLE_GROUP');
                 done();
             });

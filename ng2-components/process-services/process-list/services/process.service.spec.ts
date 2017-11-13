@@ -86,7 +86,7 @@ describe('ProcessService', () => {
                 let instance = instances[0];
                 expect(instance.id).toBe('340124');
                 expect(instance.name).toBe('James Franklin EMEA Onboarding');
-                expect(instance.started).toBe('2017-10-09T12:19:44.560+0000');
+                expect(instance.started).toBe(new Date('2017-10-09T12:19:44.560+0000'));
             });
         }));
 
@@ -371,7 +371,7 @@ describe('ProcessService', () => {
                 let task = tasks[0];
                 expect(task.id).toBe(fakeTasks[0].id);
                 expect(task.name).toBe(fakeTasks[0].name);
-                expect(task.created).toBe('2016-11-10T00:00:00+00:00');
+                expect(task.created).toBe(new Date('2016-11-10T00:00:00+00:00'));
             });
         }));
 

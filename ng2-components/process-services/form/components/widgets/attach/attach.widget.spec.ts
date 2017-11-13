@@ -76,14 +76,14 @@ describe('AttachWidgetComponent', () => {
 
         widget.field = new FormFieldModel(null, {
             type: FormFieldTypes.UPLOAD,
-            value: [{name: 'file'}]
+            value: [{ name: 'file' }]
         });
         widget.ngOnInit();
         expect(widget.hasFile()).toBeTruthy();
     });
 
     it('should setup with form field', () => {
-        let nodes = [{}];
+        let nodes: any = [{}];
         spyOn(contentService, 'getAlfrescoNodes').and.returnValue(
             Observable.create(observer => {
                 observer.next(nodes);
@@ -142,7 +142,7 @@ describe('AttachWidgetComponent', () => {
     it('should reset', () => {
         widget.field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.UPLOAD,
-            value: [{name: 'filename'}]
+            value: [{ name: 'filename' }]
         });
 
         widget.reset();
@@ -196,7 +196,7 @@ describe('AttachWidgetComponent', () => {
     });
 
     it('should select folder and load nodes', () => {
-        let nodes = [{}];
+        let nodes: any = [{}];
         spyOn(contentService, 'getAlfrescoNodes').and.returnValue(
             Observable.create(observer => {
                 observer.next(nodes);
@@ -204,7 +204,7 @@ describe('AttachWidgetComponent', () => {
             })
         );
 
-        let node = <ExternalContent> {id: '<id>'};
+        let node = <ExternalContent> { id: '<id>' };
         widget.selectFolder(node, null);
 
         expect(widget.selectedFolderPathId).toBe(node.id);
@@ -220,7 +220,7 @@ describe('AttachWidgetComponent', () => {
 
     it('should get linked file name via selected file', () => {
         widget.fileName = null;
-        widget.selectedFile = <ExternalContent> {title: '<title>'};
+        widget.selectedFile = <ExternalContent> { title: '<title>' };
         widget.field = null;
         expect(widget.getLinkedFileName()).toBe(widget.selectedFile.title);
     });
@@ -232,7 +232,7 @@ describe('AttachWidgetComponent', () => {
         let name = '<file>';
         widget.field = new FormFieldModel(null, {
             type: FormFieldTypes.UPLOAD,
-            value: [{name: name}]
+            value: [{ name: name }]
         });
 
         expect(widget.getLinkedFileName()).toBe(name);
@@ -265,7 +265,7 @@ describe('AttachWidgetComponent', () => {
     });
 
     it('should get external content nodes', () => {
-        let nodes = [{}];
+        let nodes: any = [{}];
         spyOn(contentService, 'getAlfrescoNodes').and.returnValue(
             Observable.create(observer => {
                 observer.next(nodes);

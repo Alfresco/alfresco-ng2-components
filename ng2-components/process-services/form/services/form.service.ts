@@ -342,7 +342,7 @@ export class FormService {
         return Observable.fromPromise(this.taskApi.getRestFieldValuesColumn(taskId, field, column)).catch(err => this.handleError(err));
     }
 
-    private getUserProfileImageApi(userId: number): string {
+    getUserProfileImageApi(userId: number): string {
         return this.apiService.getInstance().activiti.userApi.getUserProfilePictureUrl(userId);
     }
 

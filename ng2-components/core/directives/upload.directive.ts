@@ -166,7 +166,7 @@ export class UploadDirective implements OnInit, OnDestroy {
         return this.hasMode('click');
     }
 
-    protected getDataTransfer(event: Event | any): DataTransfer {
+    getDataTransfer(event: Event | any): DataTransfer {
         if (event && event.dataTransfer) {
             return event.dataTransfer;
         }
@@ -180,7 +180,7 @@ export class UploadDirective implements OnInit, OnDestroy {
      * Extract files from the DataTransfer object used to hold the data that is being dragged during a drag and drop operation.
      * @param dataTransfer DataTransfer object
      */
-    protected getFilesDropped(dataTransfer: DataTransfer): Promise<FileInfo[]> {
+    getFilesDropped(dataTransfer: DataTransfer): Promise<FileInfo[]> {
         return new Promise(resolve => {
             const iterations = [];
 

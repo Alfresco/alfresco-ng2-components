@@ -46,7 +46,7 @@ describe('LoginHeaderDirective', () => {
     });
 
     it('applies tempalate to Login component', () => {
-        const template = {};
+        const template: any = 'test template';
         directive.template = template;
         directive.ngAfterContentInit();
         expect(component.headerTemplate).toBe(template);

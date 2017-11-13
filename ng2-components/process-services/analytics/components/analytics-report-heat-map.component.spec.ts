@@ -34,13 +34,13 @@ describe('AnalyticsReportHeatMapComponent', () => {
     let debug: DebugElement;
     let element: HTMLElement;
 
-    let totalCountPerc = { 'sid-fake-id': 0, 'fake-start-event': 100 };
-    let totalTimePerc = { 'sid-fake-id': 10, 'fake-start-event': 30 };
-    let avgTimePercentages = { 'sid-fake-id': 5, 'fake-start-event': 50 };
+    let totalCountPerc: any = { 'sid-fake-id': 0, 'fake-start-event': 100 };
+    let totalTimePerc: any = { 'sid-fake-id': 10, 'fake-start-event': 30 };
+    let avgTimePercentages: any = { 'sid-fake-id': 5, 'fake-start-event': 50 };
 
-    let totalCountValues = { 'sid-fake-id': 2, 'fake-start-event': 3 };
-    let totalTimeValues = { 'sid-fake-id': 1, 'fake-start-event': 4 };
-    let avgTimeValues = { 'sid-fake-id': 4, 'fake-start-event': 5 };
+    let totalCountValues: any = { 'sid-fake-id': 2, 'fake-start-event': 3 };
+    let totalTimeValues: any = { 'sid-fake-id': 1, 'fake-start-event': 4 };
+    let avgTimeValues: any = { 'sid-fake-id': 4, 'fake-start-event': 5 };
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -60,7 +60,9 @@ describe('AnalyticsReportHeatMapComponent', () => {
 
         let translateService = TestBed.get(TranslationService);
         spyOn(translateService, 'addTranslationFolder').and.stub();
-        spyOn(translateService, 'get').and.callFake((key) => { return Observable.of(key); });
+        spyOn(translateService, 'get').and.callFake((key) => {
+            return Observable.of(key);
+        });
 
     }));
 

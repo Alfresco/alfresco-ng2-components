@@ -74,7 +74,7 @@ describe('PeopleProcessService', () => {
                 (users: UserProcessModel[]) => {
                     expect(users).toBeDefined();
                     expect(users.length).toBe(2);
-                    expect(users[0].id).toEqual('1');
+                    expect(users[0].id).toEqual(1);
                     expect(users[0].email).toEqual('fake-user1@fake.com');
                     expect(users[0].firstName).toEqual('fakeName1');
                     expect(users[0].lastName).toEqual('fakeLast1');

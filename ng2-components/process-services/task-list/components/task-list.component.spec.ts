@@ -423,7 +423,7 @@ describe('TaskListComponent', () => {
 
         component.rowClick.subscribe(taskId => {
             expect(taskId).toEqual(999);
-            expect(component.getCurrentId()).toEqual(999);
+            expect(component.getCurrentId()).toEqual('999');
             done();
         });
 

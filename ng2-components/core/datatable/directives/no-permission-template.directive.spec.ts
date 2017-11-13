@@ -54,7 +54,7 @@ describe('NoPermissionTemplateDirective', () => {
     });
 
     it('should apply template to the datatable', () => {
-        const template = {};
+        const template: any = 'test template';
         directive.template = template;
         directive.ngAfterContentInit();
         expect(dataTable.noPermissionTemplate).toBe(template);

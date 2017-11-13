@@ -93,7 +93,7 @@ describe('Like component', () => {
             fixture.detectChanges();
 
             component.ngOnChanges().subscribe(() => {
-                expect(element.querySelector('#adf-like-counter').innerHTML).not.toBe(1);
+                expect(element.querySelector('#adf-like-counter').innerHTML).not.toBe('1');
                 done();
             });
 

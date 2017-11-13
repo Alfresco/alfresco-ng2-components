@@ -15,13 +15,28 @@
  * limitations under the License.
  */
 
-import { DataCellEvent, DataColumn, DataRowActionEvent, DataSorting, DataTableComponent, ObjectDataColumn } from '@alfresco/core';
+import {
+    DataCellEvent,
+    DataColumn,
+    DataRowActionEvent,
+    DataSorting,
+    DataTableComponent,
+    ObjectDataColumn
+} from '@alfresco/core';
 import { AlfrescoApiService, AppConfigService, DataColumnListComponent, UserPreferencesService } from '@alfresco/core';
 import {
     AfterContentInit, Component, ContentChild, ElementRef, EventEmitter, HostListener, Input, NgZone,
     OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild, ViewEncapsulation
 } from '@angular/core';
-import { DeletedNodesPaging, MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, Pagination, PersonEntry, SitePaging } from 'alfresco-js-api';
+import {
+    DeletedNodesPaging,
+    MinimalNodeEntity,
+    MinimalNodeEntryEntity,
+    NodePaging,
+    Pagination,
+    PersonEntry,
+    SitePaging
+} from 'alfresco-js-api';
 import { Observable, Subject } from 'rxjs/Rx';
 import { presetsDefaultModel } from '../models/preset.model';
 import { ImageResolver } from './../data/image-resolver.model';
@@ -123,10 +138,10 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     pagination: Pagination;
 
     @Input()
-    rowFilter: RowFilter|null = null;
+    rowFilter: RowFilter | null = null;
 
     @Input()
-    imageResolver: ImageResolver|null = null;
+    imageResolver: ImageResolver | null = null;
 
     // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
     @Input()
@@ -184,9 +199,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         if (node && node.entry) {
             let actions = this.getNodeActions(node);
             if (actions && actions.length > 0) {
-                return actions.map(a => {
+                return actions.map((currentAction: ContentActionModel) => {
                     return {
-                        model: a,
+                        model: currentAction,
                         node: node,
                         subject: this.contextActionHandler
                     };
@@ -414,7 +429,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             }
 
             if (typeof action.execute === 'function') {
-                handlerSub.subscribe(() => { action.execute(node); });
+                handlerSub.subscribe(() => {
+                    action.execute(node);
+                });
             }
         }
     }
@@ -513,7 +530,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     private loadTrashcan(): void {
         const options = {
-            include: [ 'path', 'properties' ],
+            include: ['path', 'properties'],
             maxItems: this.pageSize,
             skipCount: this.skipCount
         };
@@ -524,7 +541,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     private loadSharedLinks(): void {
         const options = {
-            include: [ 'properties', 'allowableOperations', 'path' ],
+            include: ['properties', 'allowableOperations', 'path'],
             maxItems: this.pageSize,
             skipCount: this.skipCount
         };
@@ -535,7 +552,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     private loadSites(): void {
         const options = {
-            include: [ 'properties' ],
+            include: ['properties'],
             maxItems: this.pageSize,
             skipCount: this.skipCount
         };
@@ -547,7 +564,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     private loadMemberSites(): void {
         const options = {
-            include: [ 'properties' ],
+            include: ['properties'],
             maxItems: this.pageSize,
             skipCount: this.skipCount
         };
@@ -557,7 +574,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                 let page: NodePaging = {
                     list: {
                         entries: result.list.entries
-                            .map(({ entry: { site }}: any) => ({
+                            .map(({ entry: { site } }: any) => ({
                                 entry: site
                             })),
                         pagination: result.list.pagination
@@ -574,7 +591,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             maxItems: this.pageSize,
             skipCount: this.skipCount,
             where: '(EXISTS(target/file) OR EXISTS(target/folder))',
-            include: [ 'properties', 'allowableOperations', 'path' ]
+            include: ['properties', 'allowableOperations', 'path']
         };
 
         this.apiService.favoritesApi.getFavorites('-me-', options)
@@ -582,7 +599,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                 let page: NodePaging = {
                     list: {
                         entries: result.list.entries
-                            .map(({ entry: { target }}: any) => ({
+                            .map(({ entry: { target } }: any) => ({
                                 entry: target.file || target.folder
                             }))
                             .map(({ entry }: any) => {
@@ -614,7 +631,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                         { query: `cm:modifier:${username} OR cm:creator:${username}` },
                         { query: `TYPE:"content" AND -TYPE:"app:filelink" AND -TYPE:"fm:post"` }
                     ],
-                    include: [ 'path', 'properties', 'allowableOperations' ],
+                    include: ['path', 'properties', 'allowableOperations'],
                     sort: [{
                         type: 'FIELD',
                         field: 'cm:modified',

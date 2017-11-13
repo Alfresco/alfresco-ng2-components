@@ -29,7 +29,7 @@ describe('NoTaskDetailsTemplateDirective', () => {
     });
 
     it('should set "no task details" template on task details component', () => {
-        let testTemplate = 'blah blah';
+        let testTemplate: any = 'test template';
         component.template = testTemplate;
         component.ngAfterContentInit();
         expect(detailsComponent.noTaskDetailsTemplateComponent).toBe(testTemplate);

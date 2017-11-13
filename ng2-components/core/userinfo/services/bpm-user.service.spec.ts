@@ -51,7 +51,7 @@ describe('Bpm user service', () => {
         it('should be able to retrieve the user information', (done) => {
             service.getCurrentUserInfo().subscribe((user: BpmUserModel) => {
                 expect(user).toBeDefined();
-                expect(user.id).toBe(1);
+                expect(user.id).toBe('1');
                 expect(user.lastName).toBe('fake-last-name');
                 expect(user.fullname).toBe('fake-full-name');
                 done();

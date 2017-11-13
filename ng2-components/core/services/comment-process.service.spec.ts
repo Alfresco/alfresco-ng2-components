@@ -152,9 +152,9 @@ describe('Comment ProcessService Service', () => {
             service.addTaskComment('999', 'fake-comment-message').subscribe(
                 (res: CommentProcessModel) => {
                     expect(res).toBeDefined();
-                    expect(res.id).not.toEqual('');
+                    expect(res.id).not.toEqual(null);
                     expect(res.message).toEqual('fake-comment-message');
-                    expect(res.created).not.toEqual('');
+                    expect(res.created).not.toEqual(null);
                     expect(res.createdBy.email).toEqual('fake-email@dom.com');
                     expect(res.createdBy.firstName).toEqual('firstName');
                     expect(res.createdBy.lastName).toEqual('lastName');

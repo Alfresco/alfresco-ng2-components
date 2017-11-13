@@ -386,7 +386,7 @@ describe('FormModel', () => {
 
     it('should get field by id', () => {
         const form = new FormModel({}, null, false, formService);
-        const field = { id: 'field1' };
+        const field: any = { id: 'field1' };
         spyOn(form, 'getFormFields').and.returnValue([field]);
 
         const result = form.getFieldById('field1');

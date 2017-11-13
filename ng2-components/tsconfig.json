@@ -6,7 +6,7 @@
         "sourceMap": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "skipLibCheck": true,
+        "skipLibCheck": false,
         "noLib": false,
         "allowUnreachableCode": false,
         "allowUnusedLabels": false,
@@ -20,7 +20,9 @@
         "baseUrl" :  "./",
         "types": ["jasmine"],
         "paths": {
-            "@alfresco/*": ["./*"],
+            "@alfresco/process-services/*": ["./process-services/*"],
+            "@alfresco/content-services/*": ["./content-services/*"],
+            "@alfresco/core/*": ["./core/*"],
             "alfresco-js-api": ["./node_modules/alfresco-js-api/"],
             "@angular/*": ["./node_modules/@angular/*"],
             "rxjs/*": ["./node_modules/rxjs/*"]
@@ -36,9 +38,9 @@
         "*/node_modules",
         "*/demo",
         "config",
-        "coverage",
+        "*/coverage",
         "node_modules",
-        "dist"
+        "*/dist"
     ],
     "angularCompilerOptions": {
         "strictMetadataEmit": false,

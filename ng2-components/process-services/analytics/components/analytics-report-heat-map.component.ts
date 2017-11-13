@@ -38,7 +38,7 @@ export class AnalyticsReportHeatMapComponent implements  OnInit {
 
     metricForm: FormGroup;
     currentMetric: string;
-    currentMetricColors: string;
+    currentMetricColors: any;
     metricType: string;
 
     constructor(private analyticsService: AnalyticsService,

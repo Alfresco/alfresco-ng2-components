@@ -52,7 +52,7 @@ describe('DocumentList', () => {
     let userPreferences: UserPreferencesService;
 
     beforeEach(async(() => {
-        let zone = new NgZone({enableLongStackTrace: false});
+        let zone = new NgZone({ enableLongStackTrace: false });
 
         TestBed.configureTestingModule({
             imports: [
@@ -65,7 +65,7 @@ describe('DocumentList', () => {
             ],
             providers: [
                 DocumentListService,
-                {provide: NgZone, useValue: zone}
+                { provide: NgZone, useValue: zone }
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         }).compileComponents();
@@ -129,7 +129,8 @@ describe('DocumentList', () => {
     it('should call action\'s handler with node', () => {
         let node = new FileNode();
         let action = new ContentActionModel();
-        action.handler = () => {};
+        action.handler = () => {
+        };
 
         spyOn(action, 'handler').and.stub();
 
@@ -141,7 +142,8 @@ describe('DocumentList', () => {
     it('should call action\'s handler with node and permission', () => {
         let node = new FileNode();
         let action = new ContentActionModel();
-        action.handler = () => {};
+        action.handler = () => {
+        };
         action.permission = 'fake-permission';
         spyOn(action, 'handler').and.stub();
 
@@ -153,7 +155,8 @@ describe('DocumentList', () => {
     it('should call action\'s execute with node if it is defined', () => {
         let node = new FileNode();
         let action = new ContentActionModel();
-        action.execute = () => {};
+        action.execute = () => {
+        };
         spyOn(action, 'execute').and.stub();
 
         documentList.executeContentAction(node, action);
@@ -166,7 +169,8 @@ describe('DocumentList', () => {
         let node = new FileNode();
         let action = new ContentActionModel();
         action.handler = () => deleteObservable;
-        action.execute = () => {};
+        action.execute = () => {
+        };
         spyOn(action, 'execute').and.stub();
 
         documentList.executeContentAction(node, action);
@@ -279,7 +283,7 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = {entry: {isFile: true, name: 'xyz', allowableOperations: ['create', 'update']}};
+        let nodeFile = { entry: { isFile: true, name: 'xyz', allowableOperations: ['create', 'update'] } };
 
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
@@ -300,7 +304,7 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = {entry: {isFolder: true, name: 'xyz', allowableOperations: ['create', 'update']}};
+        let nodeFile = { entry: { isFolder: true, name: 'xyz', allowableOperations: ['create', 'update'] } };
 
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
@@ -321,7 +325,7 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = {entry: {isFile: true, name: 'xyz', allowableOperations: ['create', 'update']}};
+        let nodeFile = { entry: { isFile: true, name: 'xyz', allowableOperations: ['create', 'update'] } };
 
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
@@ -341,7 +345,7 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = {entry: {isFolder: true, name: 'xyz', allowableOperations: ['create', 'update']}};
+        let nodeFile = { entry: { isFolder: true, name: 'xyz', allowableOperations: ['create', 'update'] } };
 
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
@@ -361,7 +365,7 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = {entry: {isFile: true, name: 'xyz', allowableOperations: ['create', 'update', 'delete']}};
+        let nodeFile = { entry: { isFile: true, name: 'xyz', allowableOperations: ['create', 'update', 'delete'] } };
 
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
@@ -381,7 +385,7 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = {entry: {isFolder: true, name: 'xyz', allowableOperations: ['create', 'update', 'delete']}};
+        let nodeFile = { entry: { isFolder: true, name: 'xyz', allowableOperations: ['create', 'update', 'delete'] } };
 
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
@@ -400,7 +404,7 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = {entry: {isFile: true, name: 'xyz', allowableOperations: null}};
+        let nodeFile = { entry: { isFile: true, name: 'xyz', allowableOperations: null } };
 
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
@@ -419,7 +423,7 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = {entry: {isFolder: true, name: 'xyz', allowableOperations: null}};
+        let nodeFile = { entry: { isFolder: true, name: 'xyz', allowableOperations: null } };
 
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
@@ -661,7 +665,7 @@ describe('DocumentList', () => {
     });
 
     it('should fetch context menu actions for a file node', () => {
-        let actionModel = {};
+        let actionModel: any = {};
         spyOn(documentList, 'getNodeActions').and.returnValue([actionModel]);
 
         let file = new FileNode();
@@ -675,7 +679,7 @@ describe('DocumentList', () => {
     });
 
     it('should fetch context menu actions for a folder node', () => {
-        let actionModel = {};
+        let actionModel: any = {};
         spyOn(documentList, 'getNodeActions').and.returnValue([actionModel]);
 
         let folder = new FolderNode();
@@ -723,7 +727,7 @@ describe('DocumentList', () => {
         });
 
         documentList.currentFolderId = 'wrong-id';
-        documentList.ngOnChanges({currentFolderId: new SimpleChange(null, documentList.currentFolderId, true)});
+        documentList.ngOnChanges({ currentFolderId: new SimpleChange(null, documentList.currentFolderId, true) });
     });
 
     it('should require dataTable to check empty template', () => {
@@ -774,7 +778,7 @@ describe('DocumentList', () => {
         spyOn(documentList.data, 'setFilter').and.callThrough();
         spyOn(documentListService, 'getFolder');
 
-        documentList.ngOnChanges({rowFilter: new SimpleChange(null, filter, true)});
+        documentList.ngOnChanges({ rowFilter: new SimpleChange(null, filter, true) });
 
         expect(documentList.data.setFilter).toHaveBeenCalledWith(filter);
         expect(documentListService.getFolder).toHaveBeenCalled();
@@ -784,7 +788,7 @@ describe('DocumentList', () => {
         documentList.currentFolderId = null;
         spyOn(documentListService, 'getFolder');
 
-        documentList.ngOnChanges({rowFilter: new SimpleChange(null, <RowFilter> {}, true)});
+        documentList.ngOnChanges({ rowFilter: new SimpleChange(null, <RowFilter> {}, true) });
 
         expect(documentListService.getFolder).not.toHaveBeenCalled();
     });
@@ -793,7 +797,7 @@ describe('DocumentList', () => {
         let resolver = <ImageResolver> {};
         spyOn(documentList.data, 'setImageResolver').and.callThrough();
 
-        documentList.ngOnChanges({imageResolver: new SimpleChange(null, resolver, true)});
+        documentList.ngOnChanges({ imageResolver: new SimpleChange(null, resolver, true) });
 
         expect(documentList.data.setImageResolver).toHaveBeenCalledWith(resolver);
     });
@@ -839,12 +843,12 @@ describe('DocumentList', () => {
     it('should load folder by ID on init', () => {
         documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
         spyOn(documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.resolve());
-        documentList.ngOnChanges({folderNode: new SimpleChange(null, documentList.currentFolderId, true)});
+        documentList.ngOnChanges({ folderNode: new SimpleChange(null, documentList.currentFolderId, true) });
         expect(documentList.loadFolderNodesByFolderNodeId).toHaveBeenCalled();
     });
 
     it('should emit error when getFolderNode fails', (done) => {
-        const error = { message: '{ "error": { "statusCode": 501 } }' } ;
+        const error = { message: '{ "error": { "statusCode": 501 } }' };
         spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.reject(error));
 
         documentList.error.subscribe(val => {
@@ -856,7 +860,7 @@ describe('DocumentList', () => {
     });
 
     it('should emit error when loadFolderNodesByFolderNodeId fails', (done) => {
-        const error = { message: '{ "error": { "statusCode": 501 } }' } ;
+        const error = { message: '{ "error": { "statusCode": 501 } }' };
         spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.resolve(fakeNodeWithCreatePermission));
         spyOn(documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.reject(error));
 
@@ -869,7 +873,7 @@ describe('DocumentList', () => {
     });
 
     it('should set no permision when getFolderNode fails with 403', (done) => {
-        const error = { message: '{ "error": { "statusCode": 403 } }' } ;
+        const error = { message: '{ "error": { "statusCode": 403 } }' };
         spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.reject(error));
 
         documentList.error.subscribe(val => {
@@ -923,7 +927,7 @@ describe('DocumentList', () => {
         spyOn(documentListService, 'getFolder').and.returnValue(Promise.resolve(fakeNodeAnswerWithNOEntries));
 
         let change = new SimpleChange(null, '1d26e465-dea3-42f3-b415-faa8364b9692', true);
-        documentList.ngOnChanges({'currentFolderId': change});
+        documentList.ngOnChanges({ 'currentFolderId': change });
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
@@ -1065,14 +1069,14 @@ describe('DocumentList', () => {
     });
 
     it('should fetch recent', (done) => {
-        const person = { entry: { id: 'person '} };
+        const person = { entry: { id: 'person ' } };
 
         spyOn(apiService.peopleApi, 'getPerson').and.returnValue(Promise.resolve(person));
         spyOn(apiService.searchApi, 'search').and.returnValue(Promise.resolve(null));
 
         documentList.loadFolderByNodeId('-recent-');
 
-        setTimeout(function() {
+        setTimeout(function () {
             expect(apiService.peopleApi.getPerson).toHaveBeenCalledWith('-me-');
             expect(apiService.searchApi.search).toHaveBeenCalled();
             done();
@@ -1091,7 +1095,7 @@ describe('DocumentList', () => {
     });
 
     it('should emit error when fetch recent fails on search call', (done) => {
-        const person = { entry: { id: 'person '} };
+        const person = { entry: { id: 'person ' } };
         spyOn(apiService.peopleApi, 'getPerson').and.returnValue(Promise.resolve(person));
         spyOn(apiService.searchApi, 'search').and.returnValue(Promise.reject('error'));
 
@@ -1129,15 +1133,15 @@ describe('DocumentList', () => {
     it('should reset pagination when switching sources', () => {
         spyOn(documentList, 'resetPagination').and.callThrough();
 
-        documentList.ngOnChanges({currentFolderId: new SimpleChange(null, '-trashcan-', false)});
-        documentList.ngOnChanges({currentFolderId: new SimpleChange(null, '-sites-', false)});
+        documentList.ngOnChanges({ currentFolderId: new SimpleChange(null, '-trashcan-', false) });
+        documentList.ngOnChanges({ currentFolderId: new SimpleChange(null, '-sites-', false) });
 
         expect(documentList.resetPagination).toHaveBeenCalledTimes(2);
     });
 
     it('should reset folder node upon changing current folder id', () => {
         documentList.folderNode = <any> {};
-        documentList.ngOnChanges({currentFolderId: new SimpleChange(null, '-sites-', false)});
+        documentList.ngOnChanges({ currentFolderId: new SimpleChange(null, '-sites-', false) });
 
         expect(documentList.folderNode).toBeNull();
     });
@@ -1150,7 +1154,7 @@ describe('DocumentList', () => {
             }
         });
 
-        let customFixture =  TestBed.createComponent<DocumentListComponent>(DocumentListComponent);
+        let customFixture = TestBed.createComponent<DocumentListComponent>(DocumentListComponent);
         let component: DocumentListComponent = customFixture.componentInstance;
 
         customFixture.detectChanges();

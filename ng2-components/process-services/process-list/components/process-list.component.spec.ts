@@ -339,7 +339,7 @@ describe('ProcessInstanceListComponent', () => {
 
         component.rowClick.subscribe(taskId => {
             expect(taskId).toEqual(999);
-            expect(component.getCurrentId()).toEqual(999);
+            expect(component.getCurrentId()).toEqual('999');
             done();
         });
 
@@ -355,9 +355,9 @@ describe('ProcessInstanceListComponent', () => {
 
         spyOn(keyEvent, 'preventDefault').and.callFake(() => prevented = true);
 
-        component.rowClick.subscribe(taskId => {
-            expect(taskId).toEqual(999);
-            expect(component.getCurrentId()).toEqual(999);
+        component.rowClick.subscribe((taskId: string) => {
+            expect(taskId).toEqual('999');
+            expect(component.getCurrentId()).toEqual('999');
             expect(prevented).toBeTruthy();
             done();
         });

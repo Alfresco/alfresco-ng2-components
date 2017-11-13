@@ -54,7 +54,7 @@ describe('LoadingContentTemplateDirective', () => {
     });
 
     it('applies template to the datatable', () => {
-        const template = {};
+        const template: any = 'test template';
         directive.template = template;
         directive.ngAfterContentInit();
         expect(dataTable.loadingTemplate).toBe(template);

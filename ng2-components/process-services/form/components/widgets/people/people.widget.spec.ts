@@ -63,7 +63,7 @@ describe('PeopleWidgetComponent', () => {
                     document.body.style.padding = '0';
                     document.body.style.margin = '0';
 
-                    return {getContainerElement: () => overlayContainerElement};
+                    return { getContainerElement: () => overlayContainerElement };
                 }
                 }
             ]
@@ -93,12 +93,12 @@ describe('PeopleWidgetComponent', () => {
     });
 
     it('should skip first name for display name', () => {
-        let model = new UserProcessModel({firstName: null, lastName: 'Doe'});
+        let model = new UserProcessModel({ firstName: null, lastName: 'Doe' });
         expect(widget.getDisplayName(model)).toBe('Doe');
     });
 
     it('should skip last name for display name', () => {
-        let model = new UserProcessModel({firstName: 'John', lastName: null});
+        let model = new UserProcessModel({ firstName: 'John', lastName: null });
         expect(widget.getDisplayName(model)).toBe('John');
     });
 
@@ -135,13 +135,13 @@ describe('PeopleWidgetComponent', () => {
         widget.ngOnInit();
         expect(widget.groupId).toBeUndefined();
 
-        widget.field.params = {restrictWithGroup: {id: '<id>'}};
+        widget.field.params = { restrictWithGroup: { id: '<id>' } };
         widget.ngOnInit();
         expect(widget.groupId).toBe('<id>');
     });
 
     it('should fetch users by search term', () => {
-        let users = [{
+        let users: any = [{
             id: 'people-id',
             firstName: 'John',
             lastName: 'Doe'
@@ -169,7 +169,7 @@ describe('PeopleWidgetComponent', () => {
     });
 
     it('should fetch users by search term and group id', () => {
-        let users = [{
+        let users: any = [{
             id: 'people-id',
             firstName: 'John',
             lastName: 'Doe'
@@ -238,7 +238,7 @@ describe('PeopleWidgetComponent', () => {
     });
 
     it('should reset users when the input field is blank string', () => {
-        let fakeUser = new UserProcessModel({id: '1', email: 'ffff@fff'});
+        let fakeUser = new UserProcessModel({ id: '1', email: 'ffff@fff' });
         widget.users.push(fakeUser);
         fixture.detectChanges();
 
@@ -252,15 +252,15 @@ describe('PeopleWidgetComponent', () => {
     describe('when template is ready', () => {
 
         let fakeUserResult = [
-            {id: 1001, firstName: 'Test01', lastName: 'Test01', email: 'test'},
-            {id: 1002, firstName: 'Test02', lastName: 'Test02', email: 'test2'}];
+            { id: 1001, firstName: 'Test01', lastName: 'Test01', email: 'test' },
+            { id: 1002, firstName: 'Test02', lastName: 'Test02', email: 'test2' }];
 
         beforeEach(async(() => {
             spyOn(formService, 'getWorkflowUsers').and.returnValue(Observable.create(observer => {
                 observer.next(fakeUserResult);
                 observer.complete();
             }));
-            widget.field = new FormFieldModel(new FormModel({taskId: 'fake-task-id'}), {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                 id: 'people-id',
                 name: 'people-name',
                 type: FormFieldTypes.PEOPLE,

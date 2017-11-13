@@ -46,7 +46,7 @@ describe('LoginFooterDirective', () => {
     });
 
     it('applies tempalate to Login component', () => {
-        const template = {};
+        const template: any = '';
         directive.template = template;
         directive.ngAfterContentInit();
         expect(component.footerTemplate).toBe(template);
