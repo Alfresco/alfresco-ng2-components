@@ -50,5 +50,16 @@
       "UNKNOWN": "Die Aktion war nicht erfolgreich. Versuchen Sie es noch einmal oder wenden Sie sich an Ihr IT-Team.",
       "PERMISSION": "Sie verfügen nicht über die nötigen Zugriffsrechte hierfür."
     }
+  },
+  "TAG": {
+    "LABEL": {
+      "NEWTAG": "Neues Tag"
+    },
+    "MESSAGES": {
+      "EXIST": "Dieses Tag gibt es bereits"
+    },
+    "BUTTON": {
+      "ADD": "Tag hinzufügen"
+    }
   }
 }

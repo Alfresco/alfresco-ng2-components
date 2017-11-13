@@ -57,5 +57,16 @@
             "UNKNOWN": "The action was unsuccessful. Try again or contact your IT Team.",
             "PERMISSION": "You don't have access to do this."
         }
+  },
+  "TAG": {
+    "LABEL": {
+        "NEWTAG": "New Tag"
+    },
+    "MESSAGES": {
+        "EXIST":"Tag already exists"
+    },
+    "BUTTON": {
+        "ADD": "Add Tag"
     }
+  }
 }

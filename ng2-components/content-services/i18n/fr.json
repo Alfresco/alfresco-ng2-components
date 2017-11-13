@@ -50,5 +50,16 @@
       "UNKNOWN": "L'action a échoué. Réessayez ou contactez le service informatique.",
       "PERMISSION": "Vous n'avez pas le niveau d'accès requis pour cette opération."
     }
+  },
+  "TAG": {
+    "LABEL": {
+      "NEWTAG": "Nouveau Tag"
+    },
+    "MESSAGES": {
+      "EXIST": "Le tag existe déjà"
+    },
+    "BUTTON": {
+      "ADD": "Ajouter un Tag"
+    }
   }
 }

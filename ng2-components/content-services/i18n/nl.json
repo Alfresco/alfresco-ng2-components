@@ -50,5 +50,16 @@
       "UNKNOWN": "De actie is mislukt. Probeer het opnieuw of neem contact op met het IT-team.",
       "PERMISSION": "U beschikt niet over de benodigde toegang om dit te doen."
     }
+  },
+  "TAG": {
+    "LABEL": {
+      "NEWTAG": "Nieuwe tag"
+    },
+    "MESSAGES": {
+      "EXIST": "Tag bestaat al"
+    },
+    "BUTTON": {
+      "ADD": "Tag toevoegen"
+    }
   }
 }

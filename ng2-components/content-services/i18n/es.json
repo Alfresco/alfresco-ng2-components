@@ -50,5 +50,16 @@
       "UNKNOWN": "La acción no ha sido satisfactoria. Vuelva a intentarlo o póngase en contacto con el equipo de TI.",
       "PERMISSION": "No tiene acceso para hacer esto."
     }
+  },
+  "TAG": {
+    "LABEL": {
+      "NEWTAG": "Nueva etiqueta"
+    },
+    "MESSAGES": {
+      "EXIST": "Ya existe esta etiqueta"
+    },
+    "BUTTON": {
+      "ADD": "Añadir etiqueta"
+    }
   }
 }

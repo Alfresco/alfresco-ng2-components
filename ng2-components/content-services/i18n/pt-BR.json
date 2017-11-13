@@ -50,5 +50,16 @@
       "UNKNOWN": "A ação não teve êxito. Tente novamente ou entre em contato com a Equipe de TI.",
       "PERMISSION": "Você não tem acesso para fazer isso."
     }
+  },
+  "TAG": {
+    "LABEL": {
+      "NEWTAG": "Nova marca"
+    },
+    "MESSAGES": {
+      "EXIST": "A marca já existe"
+    },
+    "BUTTON": {
+      "ADD": "Adicionar marca"
+    }
   }
 }

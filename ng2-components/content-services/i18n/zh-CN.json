@@ -50,5 +50,16 @@
       "UNKNOWN": "此操作未成功，请重试或联系您的 IT 团队。",
       "PERMISSION": "您没有执行此操作的访问权。"
     }
+  },
+  "TAG": {
+    "LABEL": {
+      "NEWTAG": "新建标签"
+    },
+    "MESSAGES": {
+      "EXIST": "标签已存在"
+    },
+    "BUTTON": {
+      "ADD": "添加标题"
+    }
   }
 }

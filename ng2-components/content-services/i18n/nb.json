@@ -50,5 +50,16 @@
       "UNKNOWN": "Handlingen var mislykket. Prøv på nytt, eller kontakt IT-teamet.",
       "PERMISSION": "Du har ikke tilgang til dette."
     }
+  },
+  "TAG": {
+    "LABEL": {
+      "NEWTAG": "Ny tagg"
+    },
+    "MESSAGES": {
+      "EXIST": "Tagg finnes allerede"
+    },
+    "BUTTON": {
+      "ADD": "Legg til tagg"
+    }
   }
 }

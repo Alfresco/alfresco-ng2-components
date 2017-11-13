@@ -19,10 +19,9 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
-import { MaterialModule } from '../material.module';
-
 import { DataTableModule, PaginationModule, ToolbarModule } from '@alfresco/core';
-import { TRANSLATION_PROVIDER } from '@alfresco/core';
+
+import { MaterialModule } from '../material.module';
 import { UploadModule } from '../upload';
 
 import { ContentActionListComponent } from './components/content-action/content-action-list.component';
@@ -63,15 +62,7 @@ import { NodeActionsService } from './services/node-actions.service';
         DocumentListService,
         FolderActionsService,
         DocumentActionsService,
-        NodeActionsService,
-        {
-            provide: TRANSLATION_PROVIDER,
-            multi: true,
-            useValue: {
-                name: 'ng2-alfresco-documentlist',
-                source: 'assets/ng2-alfresco-documentlist'
-            }
-        }
+        NodeActionsService
     ],
     exports: [
         DocumentListComponent,

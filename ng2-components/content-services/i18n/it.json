@@ -50,5 +50,16 @@
       "UNKNOWN": "Azione non eseguita correttamente. Riprovare o contattare il team IT.",
       "PERMISSION": "Non si dispone dell'accesso per eseguire questa azione."
     }
+  },
+  "TAG": {
+    "LABEL": {
+      "NEWTAG": "Nuovo tag"
+    },
+    "MESSAGES": {
+      "EXIST": "Tag già presente"
+    },
+    "BUTTON": {
+      "ADD": "Aggiungi tag"
+    }
   }
 }

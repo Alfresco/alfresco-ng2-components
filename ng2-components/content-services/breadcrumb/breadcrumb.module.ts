@@ -36,7 +36,6 @@ import { DropdownBreadcrumbComponent } from './dropdown-breadcrumb.component';
     declarations: [
         BreadcrumbComponent,
         DropdownBreadcrumbComponent
-    ],
-    providers: []
+    ]
 })
 export class BreadcrumbModule {}
