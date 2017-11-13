@@ -19,9 +19,9 @@
     "outDir": "./dist",
     "baseUrl" :  "./",
     "paths": {
-      "@alfresco/process-services/*": ["../process-services/*"],
-      "@alfresco/content-services/*": ["../content-services/*"],
-      "@alfresco/core/*": ["../core/*"]
+      "@alfresco/process-services": ["../process-services"],
+      "@alfresco/content-services": ["../content-services"],
+      "@alfresco/core": ["../core"]
     },
     "lib": [
       "es2015",
