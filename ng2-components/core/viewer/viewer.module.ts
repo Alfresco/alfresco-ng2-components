@@ -18,10 +18,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { MaterialModule } from '../material.module';
-import { TRANSLATION_PROVIDER } from '../services';
-import { ToolbarModule } from '../toolbar';
 
+import { MaterialModule } from '../material.module';
+import { ToolbarModule } from '../toolbar';
 import { PipeModule } from '../pipes';
 import { ImgViewerComponent } from './components/imgViewer.component';
 import { MediaPlayerComponent } from './components/mediaPlayer.component';
@@ -56,17 +55,6 @@ import { RenderingQueueServices } from './services/rendering-queue.services';
         ViewerSidebarComponent,
         ViewerOpenWithComponent,
         ViewerMoreActionsComponent
-    ],
-    providers: [
-        RenderingQueueServices,
-        {
-            provide: TRANSLATION_PROVIDER,
-            multi: true,
-            useValue: {
-                name: 'ng2-alfresco-viewer',
-                source: 'assets/ng2-alfresco-viewer'
-            }
-        }
     ],
     exports: [
         ViewerComponent,
