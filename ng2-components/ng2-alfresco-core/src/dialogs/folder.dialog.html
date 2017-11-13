@@ -41,7 +41,7 @@
     </form>
 </mat-dialog-content>
 
-<mat-dialog-actions>
+<mat-dialog-actions class="adf-dialog-buttons">
     <span class="adf-fill-remaining-space"></span>
 
     <button
@@ -50,7 +50,7 @@
         {{ 'CORE.FOLDER_DIALOG.CANCEL_BUTTON.LABEL' | translate }}
     </button>
 
-    <button
+    <button class="adf-dialog-action-button"
         mat-button
         (click)="submit()"
         [disabled]="!form.valid">
