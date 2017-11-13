@@ -68,5 +68,50 @@
     "BUTTON": {
         "ADD": "Add Tag"
     }
+  },
+  "ADF_FILE_UPLOAD": {
+    "BUTTON": {
+        "MINIMIZE": "Minimize",
+        "MAXIMIZE": "Maximize",
+        "CLOSE": "Close",
+        "CANCEL_ALL": "Cancel uploads",
+        "CANCEL_FILE": "Cancel upload",
+        "REMOVE_FILE": "Remove uploaded file"
+    },
+    "STATUS": {
+        "FILE_CANCELED_STATUS": "Canceled"
+    },
+    "CONFIRMATION": {
+        "BUTTON": {
+            "CANCEL": "Yes",
+            "CONTINUE": "No"
+        },
+        "MESSAGE": {
+            "TITLE": "Cancel Upload",
+            "TEXT": "Stop uploading and remove files already uploaded."
+        }
+    }
+  },
+  "FILE_UPLOAD": {
+    "BUTTON": {
+        "UPLOAD_FILE": "Upload file",
+        "UPLOAD_FOLDER": "Upload folder"
+    },
+    "MESSAGES": {
+        "UPLOAD_CANCELED": "Upload canceled",
+        "UPLOAD_COMPLETED": "Uploaded {{ completed }} / {{ total }}",
+        "UPLOAD_PROGRESS": "Uploading {{ completed }} / {{ total }}",
+        "UPLOAD_ERROR": "{{ total }} upload unsuccessful",
+        "UPLOAD_ERRORS": "{{ total }} uploads unsuccessful",
+        "PROGRESS": "Upload in progress...",
+        "FOLDER_ALREADY_EXIST": "The folder {0} already exists",
+        "FOLDER_NOT_SUPPORTED": "Folder upload isn't supported by your browser, try a different browser",
+        "REMOVE_FILE_ERROR": "{{ fileName }} couldn't be removed, try again or check with your IT Team.",
+        "REMOVE_FILES_ERROR": "{{ total }} files couldn't be removed, try again or check with your IT Team.",
+        "EXCEED_MAX_FILE_SIZE": "File {{ fileName }} is larger than the allowed file size"
+    },
+    "ACTION": {
+        "UNDO": "Undo"
+    }
   }
 }

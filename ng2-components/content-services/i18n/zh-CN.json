@@ -61,5 +61,49 @@
     "BUTTON": {
       "ADD": "添加标题"
     }
+  },
+  "ADF_FILE_UPLOAD": {
+    "BUTTON": {
+      "MINIMIZE": "最小化(&M)",
+      "MAXIMIZE": "最大化",
+      "CLOSE": "关闭",
+      "CANCEL_ALL": "取消上传",
+      "CANCEL_FILE": "取消上传",
+      "REMOVE_FILE": "移除已上传文件"
+    },
+    "STATUS": {
+      "FILE_CANCELED_STATUS": "已取消"
+    },
+    "CONFIRMATION": {
+      "BUTTON": {
+        "CANCEL": "是",
+        "CONTINUE": "否"
+      },
+      "MESSAGE": {
+        "TITLE": "取消上传",
+        "TEXT": "停止上传并移除已上传文件。"
+      }
+    }
+  },
+  "FILE_UPLOAD": {
+    "BUTTON": {
+      "UPLOAD_FILE": "上传文件",
+      "UPLOAD_FOLDER": "上传文件夹"
+    },
+    "MESSAGES": {
+      "UPLOAD_CANCELED": "取消上传",
+      "UPLOAD_COMPLETED": "已上传 {{completed}} 个/共 {{total}} 个",
+      "UPLOAD_PROGRESS": "正在上传 {{completed}} 个/共 {{total}} 个",
+      "UPLOAD_ERROR": "{{total}} 个未成功上传",
+      "UPLOAD_ERRORS": "{{total}} 个未成功上传",
+      "PROGRESS": "正在上传...",
+      "FOLDER_ALREADY_EXIST": "文件夹 {0} 已存在",
+      "FOLDER_NOT_SUPPORTED": "您的浏览器不支持文件夹上传，请使用其他浏览器",
+      "REMOVE_FILE_ERROR": "{{fileName}} 无法移除，请重试或联系您的 IT 团队。",
+      "REMOVE_FILES_ERROR": "{{total}} 个文件无法移除，请重试或联系您的 IT 团队。"
+    },
+    "ACTION": {
+      "UNDO": "撤消"
+    }
   }
 }

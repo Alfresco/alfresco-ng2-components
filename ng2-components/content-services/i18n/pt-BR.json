@@ -61,5 +61,49 @@
     "BUTTON": {
       "ADD": "Adicionar marca"
     }
+  },
+  "ADF_FILE_UPLOAD": {
+    "BUTTON": {
+      "MINIMIZE": "Minimizar",
+      "MAXIMIZE": "Maximizar",
+      "CLOSE": "Fechar",
+      "CANCEL_ALL": "Cancelar uploads",
+      "CANCEL_FILE": "Cancelar upload",
+      "REMOVE_FILE": "Remover arquivo carregado"
+    },
+    "STATUS": {
+      "FILE_CANCELED_STATUS": "Cancelado"
+    },
+    "CONFIRMATION": {
+      "BUTTON": {
+        "CANCEL": "Sim",
+        "CONTINUE": "Não"
+      },
+      "MESSAGE": {
+        "TITLE": "Cancelar upload",
+        "TEXT": "Interrompa o carregamento e remova os arquivos carregados."
+      }
+    }
+  },
+  "FILE_UPLOAD": {
+    "BUTTON": {
+      "UPLOAD_FILE": "Carregar arquivo",
+      "UPLOAD_FOLDER": "Carregar pasta"
+    },
+    "MESSAGES": {
+      "UPLOAD_CANCELED": "Upload cancelado",
+      "UPLOAD_COMPLETED": "Carregados {{ completed }} / {{ total }}",
+      "UPLOAD_PROGRESS": "Carregando {{ completed }} / {{ total }}",
+      "UPLOAD_ERROR": "{{ total }} carregamento malsucedido",
+      "UPLOAD_ERRORS": "{{ total }} carregamentos malsucedidos",
+      "PROGRESS": "Carregamento em andamento...",
+      "FOLDER_ALREADY_EXIST": "A pasta {0} já existe",
+      "FOLDER_NOT_SUPPORTED": "Seu navegador não dá suporte ao carregamento da pasta, tente em outro navegador",
+      "REMOVE_FILE_ERROR": "Não foi possível remover {{ fileName }}, tente novamente ou consulte a Equipe de TI.",
+      "REMOVE_FILES_ERROR": "Não foi possível remover {{ total }} arquivos, tente novamente ou consulte a Equipe de TI."
+    },
+    "ACTION": {
+      "UNDO": "Desfazer"
+    }
   }
 }

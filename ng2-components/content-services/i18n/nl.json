@@ -61,5 +61,49 @@
     "BUTTON": {
       "ADD": "Tag toevoegen"
     }
+  },
+  "ADF_FILE_UPLOAD": {
+    "BUTTON": {
+      "MINIMIZE": "Minimaliseren",
+      "MAXIMIZE": "Maximaliseren",
+      "CLOSE": "Sluiten",
+      "CANCEL_ALL": "Uploads annuleren",
+      "CANCEL_FILE": "Uploaden annuleren",
+      "REMOVE_FILE": "Geüpload bestand verwijderen"
+    },
+    "STATUS": {
+      "FILE_CANCELED_STATUS": "Geannuleerd"
+    },
+    "CONFIRMATION": {
+      "BUTTON": {
+        "CANCEL": "Ja",
+        "CONTINUE": "Nee"
+      },
+      "MESSAGE": {
+        "TITLE": "Uploaden annuleren",
+        "TEXT": "Stop het uploaden en verwijder de bestanden die al zijn geüpload."
+      }
+    }
+  },
+  "FILE_UPLOAD": {
+    "BUTTON": {
+      "UPLOAD_FILE": "Bestand uploaden",
+      "UPLOAD_FOLDER": "Map uploaden"
+    },
+    "MESSAGES": {
+      "UPLOAD_CANCELED": "Uploaden geannuleerd",
+      "UPLOAD_COMPLETED": "{{ completed }} / {{ total }} geüpload",
+      "UPLOAD_PROGRESS": "Uploaden {{ completed }} / {{ total }}",
+      "UPLOAD_ERROR": "{{ total }} upload mislukt",
+      "UPLOAD_ERRORS": "{{ total }} uploads mislukt",
+      "PROGRESS": "Upload wordt uitgevoerd...",
+      "FOLDER_ALREADY_EXIST": "De map {0} bestaat al",
+      "FOLDER_NOT_SUPPORTED": "Het uploaden van mappen wordt niet ondersteund door uw browser, probeer het met een andere browser",
+      "REMOVE_FILE_ERROR": "{{ fileName }} kan niet worden verwijderd, probeer het opnieuw of neem contact op met het IT-team.",
+      "REMOVE_FILES_ERROR": "{{ total }} bestanden kunnen niet worden verwijderd, probeer het opnieuw of neem contact op met het IT-team."
+    },
+    "ACTION": {
+      "UNDO": "Ongedaan maken"
+    }
   }
 }

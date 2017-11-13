@@ -17,11 +17,9 @@
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-
-import { TRANSLATION_PROVIDER } from '@alfresco/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { MaterialModule } from '../material.module';
 
+import { MaterialModule } from '../material.module';
 import { FileUploadingDialogComponent } from './components/file-uploading-dialog.component';
 import { FileUploadingListRowComponent } from './components/file-uploading-list-row.component';
 import { FileUploadingListComponent } from './components/file-uploading-list.component';
@@ -45,16 +43,6 @@ import { FileDraggableDirective } from './directives/file-draggable.directive';
         FileUploadingDialogComponent,
         FileUploadingListComponent,
         FileUploadingListRowComponent
-    ],
-    providers: [
-        {
-            provide: TRANSLATION_PROVIDER,
-            multi: true,
-            useValue: {
-                name: 'ng2-alfresco-upload',
-                source: 'assets/ng2-alfresco-upload'
-            }
-        }
     ],
     exports: [
         FileDraggableDirective,
