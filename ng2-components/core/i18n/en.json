@@ -72,5 +72,33 @@
       "APPLY": "APPLY",
       "NOT_VALID": "http(s)://host|ip:port(/path) not recognized, try a different URL."
     }
+  },
+  "LOGIN": {
+    "LOGO": "Alfresco",
+    "LABEL": {
+        "LOGIN": "Sign in",
+        "USERNAME": "Username",
+        "PASSWORD": "Password",
+        "REMEMBER": "Remember me"
+    },
+    "MESSAGES": {
+        "USERNAME-REQUIRED": "Required",
+        "USERNAME-MIN": "Your username needs to be at least {{minLenght}} characters.",
+        "PASSWORD-REQUIRED": "Enter your password to sign in",
+        "LOGIN-ERROR-CREDENTIALS": "You've entered an unknown username or password",
+        "LOGIN-ERROR-PROVIDERS": "Providers cannot be undefined",
+        "LOGIN-ERROR-CORS": "CORS exception, check your server configuration",
+        "LOGIN-ERROR-CSRF": "CSRF exception, set [disableCsrf]=\"true\" in login.component",
+        "LOGIN-ECM-LICENSE": "Alfresco Content Services repository is in read-only mode"
+    },
+    "BUTTON": {
+        "LOGIN": "SIGN IN",
+        "CHECKING": "CHECKING",
+        "WELCOME": "WELCOME"
+    },
+    "ACTION": {
+        "HELP": "NEED HELP?",
+        "REGISTER": "REGISTER"
+    }
   }
 }

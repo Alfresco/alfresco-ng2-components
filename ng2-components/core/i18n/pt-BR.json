@@ -44,5 +44,34 @@
       "BACK": "Voltar",
       "APPLY": "APLICAR"
     }
+  },
+  "LOGIN": {
+    "LOGO": "Alfresco",
+    "LABEL": {
+      "LOGIN": "Entrar",
+      "USERNAME": "Nome de usuário",
+      "PASSWORD": "Senha",
+      "REMEMBER": "Lembrar-me"
+    },
+    "MESSAGES": {
+      "USERNAME-REQUIRED": "Obrigatório",
+      "USERNAME-MIN": "Seu nome de usuário deve ter no mínimo {{minLength}} caracteres.",
+      "PASSWORD-REQUIRED": "Insira a senha para entrar",
+      "LOGIN-ERROR-CREDENTIALS": "Você inseriu um nome de usuário ou senha desconhecida",
+      "LOGIN-ERROR-PROVIDERS": "Provedores não podem ficar indefinidos",
+      "LOGIN-SUCCESS": "Acesso bem-sucedido",
+      "LOGIN-ERROR-CORS": "Exceção CORS, verifique a configuração do servidor",
+      "LOGIN-ERROR-CSRF": "Exceção CSRF, set [disableCsrf]=\"true\" in login.component",
+      "LOGIN-ECM-LICENSE": "O repositório do Alfresco Content Services está em modo somente leitura"
+    },
+    "BUTTON": {
+      "LOGIN": "ENTRAR",
+      "CHECKING": "VERIFICANDO",
+      "WELCOME": "BEM-VINDO"
+    },
+    "ACTION": {
+      "HELP": "PRECISA DE AJUDA?",
+      "REGISTER": "REGISTRAR"
+    }
   }
 }
