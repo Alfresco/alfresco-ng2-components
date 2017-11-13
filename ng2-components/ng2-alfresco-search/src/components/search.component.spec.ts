@@ -16,7 +16,8 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreModule, SearchService } from 'ng2-alfresco-core';
+import { CoreModule, SearchApiService } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Observable';
 import { SearchModule } from '../../index';
 import { differentResult, result, SimpleSearchTestComponent } from './../assets/search.component.mock';
 
@@ -24,7 +25,7 @@ describe('SearchComponent', () => {
 
     let fixture: ComponentFixture<SimpleSearchTestComponent>, element: HTMLElement;
     let component: SimpleSearchTestComponent;
-    let searchService: SearchService;
+    let searchService: SearchApiService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -37,7 +38,7 @@ describe('SearchComponent', () => {
             fixture = TestBed.createComponent(SimpleSearchTestComponent);
             component = fixture.componentInstance;
             element = fixture.nativeElement;
-            searchService = TestBed.get(SearchService);
+            searchService = TestBed.get(SearchApiService);
         });
     }));
 
@@ -48,8 +49,8 @@ describe('SearchComponent', () => {
         });
 
         it('should clear results straight away when a new search term is entered', async(() => {
-            spyOn(searchService, 'getQueryNodesPromise')
-                .and.returnValues(Promise.resolve(result), Promise.resolve(differentResult));
+            spyOn(searchService, 'search')
+                .and.returnValues(Observable.of(result), Observable.of(differentResult));
 
             component.setSearchWordTo('searchTerm');
             fixture.detectChanges();
@@ -68,8 +69,8 @@ describe('SearchComponent', () => {
         }));
 
         it('should display the returned search results', async(() => {
-            spyOn(searchService, 'getQueryNodesPromise')
-                .and.returnValue(Promise.resolve(result));
+            spyOn(searchService, 'search')
+                .and.returnValue(Observable.of(result));
 
             component.setSearchWordTo('searchTerm');
             fixture.detectChanges();
@@ -81,8 +82,8 @@ describe('SearchComponent', () => {
         }));
 
         it('should emit error event when search call fail', async(() => {
-            spyOn(searchService, 'getQueryNodesPromise')
-                .and.returnValue(Promise.reject({ status: 402 }));
+            spyOn(searchService, 'search')
+                .and.returnValue(Observable.fromPromise(Promise.reject({ status: 402 })));
             component.setSearchWordTo('searchTerm');
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -93,8 +94,8 @@ describe('SearchComponent', () => {
         }));
 
         it('should be able to hide the result panel', async(() => {
-            spyOn(searchService, 'getQueryNodesPromise')
-                .and.returnValues(Promise.resolve(result), Promise.resolve(differentResult));
+            spyOn(searchService, 'search')
+                .and.returnValues(Observable.of(result), Observable.of(differentResult));
 
             component.setSearchWordTo('searchTerm');
             fixture.detectChanges();

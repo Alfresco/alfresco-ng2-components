@@ -19,7 +19,7 @@ import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatInputModule, MatListModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
-import { AlfrescoAuthenticationService, AlfrescoTranslationService, CoreModule, SearchService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoTranslationService, CoreModule, SearchApiService } from 'ng2-alfresco-core';
 import { ThumbnailService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Observable';
 import { noResult, results } from './../assets/search.component.mock';
@@ -34,7 +34,7 @@ describe('SearchControlComponent', () => {
     let component: SearchControlComponent;
     let element: HTMLElement;
     let debugElement: DebugElement;
-    let searchService: SearchService;
+    let searchService: SearchApiService;
     let authService: AlfrescoAuthenticationService;
 
     beforeEach(async(() => {
@@ -52,12 +52,12 @@ describe('SearchControlComponent', () => {
             providers: [
                 {provide: AlfrescoTranslationService, useClass: TranslationMock},
                 ThumbnailService,
-                SearchService
+                SearchApiService
             ]
         }).compileComponents().then(() => {
             fixture = TestBed.createComponent(SearchControlComponent);
             debugElement = fixture.debugElement;
-            searchService = TestBed.get(SearchService);
+            searchService = TestBed.get(SearchApiService);
             authService = TestBed.get(AlfrescoAuthenticationService);
             component = fixture.componentInstance;
             element = fixture.nativeElement;
@@ -80,14 +80,14 @@ describe('SearchControlComponent', () => {
         }));
 
         it('should emit searchChange when search term input changed', async(() => {
-            spyOn(searchService, 'getNodeQueryResults').and.callFake(() => {
+            spyOn(searchService, 'search').and.callFake(() => {
                 return Observable.of({ entry: { list: []}});
             });
             component.searchChange.subscribe(value => {
                 expect(value).toBe('customSearchTerm');
             });
 
-            let inputDebugElement = fixture.debugElement.query(By.css('#adf-control-input'));
+            let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
             inputDebugElement.nativeElement.value = 'customSearchTerm';
             inputDebugElement.nativeElement.focus();
             inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
@@ -95,12 +95,12 @@ describe('SearchControlComponent', () => {
         }));
 
         it('should update FAYT search when user inputs a valid term', async(() => {
-            let inputDebugElement = fixture.debugElement.query(By.css('#adf-control-input'));
+            let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
             inputDebugElement.nativeElement.value = 'customSearchTerm';
             inputDebugElement.nativeElement.focus();
             inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
             spyOn(component, 'isSearchBarActive').and.returnValue(true);
-            spyOn(searchService, 'getNodeQueryResults').and.returnValue(Observable.of(results));
+            spyOn(searchService, 'search').and.returnValue(Observable.of(results));
 
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -112,12 +112,12 @@ describe('SearchControlComponent', () => {
         }));
 
         it('should NOT update FAYT term when user inputs a search term less than 3 characters', async(() => {
-            let inputDebugElement = fixture.debugElement.query(By.css('#adf-control-input'));
+            let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
             inputDebugElement.nativeElement.value = 'cu';
             inputDebugElement.nativeElement.focus();
             inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
             spyOn(component, 'isSearchBarActive').and.returnValue(true);
-            spyOn(searchService, 'getNodeQueryResults').and.returnValue(Observable.of(results));
+            spyOn(searchService, 'search').and.returnValue(Observable.of(results));
 
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -130,7 +130,7 @@ describe('SearchControlComponent', () => {
             component.searchChange.subscribe(value => {
                 expect(value).toBe('cu');
             });
-            let inputDebugElement = fixture.debugElement.query(By.css('#adf-control-input'));
+            let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
             inputDebugElement.nativeElement.value = 'cu';
             inputDebugElement.nativeElement.focus();
             inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
@@ -188,10 +188,10 @@ describe('SearchControlComponent', () => {
             });
 
             spyOn(component, 'isSearchBarActive').and.returnValue(true);
-            spyOn(searchService, 'getNodeQueryResults').and.returnValue(Observable.of(results));
+            spyOn(searchService, 'search').and.returnValue(Observable.of(results));
 
             fixture.detectChanges();
-            let inputDebugElement = fixture.debugElement.query(By.css('#adf-control-input'));
+            let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
             inputDebugElement.nativeElement.value = 'TEST';
             inputDebugElement.nativeElement.focus();
             inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
@@ -210,10 +210,10 @@ describe('SearchControlComponent', () => {
 
         it('should make autocomplete list control visible when search box has focus and there is a search result', (done) => {
             spyOn(component, 'isSearchBarActive').and.returnValue(true);
-            spyOn(searchService, 'getNodeQueryResults').and.returnValue(Observable.of(results));
+            spyOn(searchService, 'search').and.returnValue(Observable.of(results));
             fixture.detectChanges();
 
-            let inputDebugElement = fixture.debugElement.query(By.css('#adf-control-input'));
+            let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
             inputDebugElement.nativeElement.value = 'TEST';
             inputDebugElement.nativeElement.focus();
             inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
@@ -228,10 +228,10 @@ describe('SearchControlComponent', () => {
 
         it('should show autocomplete list noe results when search box has focus and there is search result with length 0', async(() => {
             spyOn(component, 'isSearchBarActive').and.returnValue(true);
-            spyOn(searchService, 'getNodeQueryResults').and.returnValue(Observable.of(noResult));
+            spyOn(searchService, 'search').and.returnValue(Observable.of(noResult));
             fixture.detectChanges();
 
-            let inputDebugElement = fixture.debugElement.query(By.css('#adf-control-input'));
+            let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
             inputDebugElement.nativeElement.value = 'NO RES';
             inputDebugElement.nativeElement.focus();
             inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
@@ -245,10 +245,10 @@ describe('SearchControlComponent', () => {
 
         it('should hide autocomplete list results when the search box loses focus', (done) => {
             spyOn(component, 'isSearchBarActive').and.returnValue(true);
-            spyOn(searchService, 'getNodeQueryResults').and.returnValue(Observable.of(results));
+            spyOn(searchService, 'search').and.returnValue(Observable.of(results));
             fixture.detectChanges();
 
-            let inputDebugElement = fixture.debugElement.query(By.css('#adf-control-input'));
+            let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
             inputDebugElement.nativeElement.value = 'NO RES';
             inputDebugElement.nativeElement.focus();
             inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
@@ -268,10 +268,10 @@ describe('SearchControlComponent', () => {
 
         it('should keep autocomplete list control visible when user tabs into results', async(() => {
             spyOn(component, 'isSearchBarActive').and.returnValue(true);
-            spyOn(searchService, 'getNodeQueryResults').and.returnValue(Observable.of(results));
+            spyOn(searchService, 'search').and.returnValue(Observable.of(results));
             fixture.detectChanges();
 
-            let inputDebugElement = fixture.debugElement.query(By.css('#adf-control-input'));
+            let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
             inputDebugElement.nativeElement.value = 'TEST';
             inputDebugElement.nativeElement.focus();
             inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
@@ -288,12 +288,62 @@ describe('SearchControlComponent', () => {
             });
         }));
 
-        it('should focus input element when autocomplete list is cancelled', async(() => {
+        it('should close the autocomplete when user press ESCAPE', async(() => {
             spyOn(component, 'isSearchBarActive').and.returnValue(true);
-            spyOn(searchService, 'getNodeQueryResults').and.returnValue(Observable.of(results));
+            spyOn(searchService, 'search').and.returnValue(Observable.of(results));
             fixture.detectChanges();
 
-            let inputDebugElement = fixture.debugElement.query(By.css('#adf-control-input'));
+            let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
+            inputDebugElement.nativeElement.value = 'TEST';
+            inputDebugElement.nativeElement.focus();
+            inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                let resultElement: HTMLElement = <HTMLElement> element.querySelector('#result_option_0');
+                expect(resultElement).not.toBeNull();
+                let escapeEvent: any = new Event('ESCAPE');
+                escapeEvent.keyCode = 27;
+                inputDebugElement.triggerEventHandler('keydown', escapeEvent);
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    resultElement = <HTMLElement> element.querySelector('#result_option_0');
+                    expect(resultElement).toBeNull();
+                });
+            });
+        }));
+
+        it('should close the autocomplete when user press ENTER on input', async(() => {
+            spyOn(component, 'isSearchBarActive').and.returnValue(true);
+            spyOn(searchService, 'search').and.returnValue(Observable.of(results));
+            fixture.detectChanges();
+
+            let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
+            inputDebugElement.nativeElement.value = 'TEST';
+            inputDebugElement.nativeElement.focus();
+            inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                let resultElement: HTMLElement = <HTMLElement> element.querySelector('#result_option_0');
+                expect(resultElement).not.toBeNull();
+                let escapeEvent: any = new Event('ENTER');
+                escapeEvent.keyCode = 13;
+                inputDebugElement.triggerEventHandler('keydown', escapeEvent);
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    resultElement = <HTMLElement> element.querySelector('#result_option_0');
+                    expect(resultElement).toBeNull();
+                });
+            });
+        }));
+
+        it('should focus input element when autocomplete list is cancelled', async(() => {
+            spyOn(component, 'isSearchBarActive').and.returnValue(true);
+            spyOn(searchService, 'search').and.returnValue(Observable.of(results));
+            fixture.detectChanges();
+
+            let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
             let escapeEvent: any = new Event('ESCAPE');
             escapeEvent.keyCode = 27;
             inputDebugElement.nativeElement.focus();
@@ -306,11 +356,11 @@ describe('SearchControlComponent', () => {
         }));
 
         it('should NOT display a autocomplete list control when configured not to', async(() => {
-            spyOn(searchService, 'getNodeQueryResults').and.returnValue(Observable.of(results));
+            spyOn(searchService, 'search').and.returnValue(Observable.of(results));
             component.liveSearchEnabled = false;
             fixture.detectChanges();
 
-            let inputDebugElement = fixture.debugElement.query(By.css('#adf-control-input'));
+            let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
             inputDebugElement.nativeElement.value = 'TEST';
             inputDebugElement.nativeElement.focus();
             inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
@@ -324,41 +374,58 @@ describe('SearchControlComponent', () => {
     describe('search button', () => {
 
         it('should NOT display a autocomplete list control when configured not to', async(() => {
+            fixture.detectChanges();
+            let searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
             component.subscriptAnimationState = 'active';
             fixture.detectChanges();
-
-            let searchButton: DebugElement = fixture.debugElement.query(By.css('#adf-search-button'));
+            expect(component.subscriptAnimationState).toBe('active');
             searchButton.triggerEventHandler('click', null);
-            fixture.whenStable().then(() => {
+            window.setTimeout(() => {
                 fixture.detectChanges();
                 expect(component.subscriptAnimationState).toBe('inactive');
-            });
+            }, 100);
         }));
 
         it('click on the search button should open the input box when is close', (done) => {
-            component.subscriptAnimationState = 'inactive';
             fixture.detectChanges();
-            let searchButton: DebugElement = fixture.debugElement.query(By.css('#adf-search-button'));
+            let searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
             searchButton.triggerEventHandler('click', null);
             window.setTimeout(() => {
                 fixture.detectChanges();
                 expect(component.subscriptAnimationState).toBe('active');
                 done();
-            }, 200);
+            }, 100);
         });
 
         it('Search button should not change the input state too often', async(() => {
+            fixture.detectChanges();
+            let searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
             component.subscriptAnimationState = 'active';
             fixture.detectChanges();
-            let searchButton: DebugElement = fixture.debugElement.query(By.css('#adf-search-button'));
+            expect(component.subscriptAnimationState).toBe('active');
             searchButton.triggerEventHandler('click', null);
             fixture.detectChanges();
             searchButton.triggerEventHandler('click', null);
             fixture.detectChanges();
 
-            fixture.whenStable().then(() => {
+            window.setTimeout(() => {
+                fixture.detectChanges();
                 expect(component.subscriptAnimationState).toBe('inactive');
-            });
+            }, 100);
+        }));
+
+        it('Search bar should close when user press ESC button', async(() => {
+            fixture.detectChanges();
+            let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
+            component.subscriptAnimationState = 'active';
+            fixture.detectChanges();
+            expect(component.subscriptAnimationState).toBe('active');
+
+            inputDebugElement.triggerEventHandler('keyup.escape', {});
+            window.setTimeout(() => {
+                fixture.detectChanges();
+                expect(component.subscriptAnimationState).toBe('inactive');
+            }, 100);
         }));
     });
 
@@ -366,26 +433,26 @@ describe('SearchControlComponent', () => {
 
         it('should emit a option clicked event when item is clicked', async(() => {
             spyOn(component, 'isSearchBarActive').and.returnValue(true);
-            spyOn(searchService, 'getNodeQueryResults').and.returnValue(Observable.of(results));
+            spyOn(searchService, 'search').and.returnValue(Observable.of(results));
             component.optionClicked.subscribe((item) => {
                 expect(item.entry.id).toBe('123');
             });
             fixture.detectChanges();
-            let inputDebugElement = fixture.debugElement.query(By.css('#adf-control-input'));
+            let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
             inputDebugElement.nativeElement.value = 'TEST';
             inputDebugElement.nativeElement.focus();
             inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                let firstOption: DebugElement = fixture.debugElement.query(By.css('#result_name_0'));
+                let firstOption: DebugElement = debugElement.query(By.css('#result_name_0'));
                 firstOption.triggerEventHandler('click', null);
             });
         }));
 
         it('should set deactivate the search after element is clicked', async(() => {
             spyOn(component, 'isSearchBarActive').and.returnValue(true);
-            spyOn(searchService, 'getNodeQueryResults').and.returnValue(Observable.of(results));
+            spyOn(searchService, 'search').and.returnValue(Observable.of(results));
             component.optionClicked.subscribe((item) => {
                 window.setTimeout(() => {
                     expect(component.subscriptAnimationState).toBe('inactive');
@@ -393,27 +460,27 @@ describe('SearchControlComponent', () => {
             });
             fixture.detectChanges();
 
-            let inputDebugElement = fixture.debugElement.query(By.css('#adf-control-input'));
+            let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
             inputDebugElement.nativeElement.value = 'TEST';
             inputDebugElement.nativeElement.focus();
             inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                let firstOption: DebugElement = fixture.debugElement.query(By.css('#result_name_0'));
+                let firstOption: DebugElement = debugElement.query(By.css('#result_name_0'));
                 firstOption.triggerEventHandler('click', null);
             });
         }));
 
         it('should NOT reset the search term after element is clicked', async(() => {
             spyOn(component, 'isSearchBarActive').and.returnValue(true);
-            spyOn(searchService, 'getNodeQueryResults').and.returnValue(Observable.of(results));
+            spyOn(searchService, 'search').and.returnValue(Observable.of(results));
             component.optionClicked.subscribe((item) => {
                 expect(component.searchTerm).not.toBeFalsy();
                 expect(component.searchTerm).toBe('TEST');
             });
             fixture.detectChanges();
-            let inputDebugElement = fixture.debugElement.query(By.css('#adf-control-input'));
+            let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
             inputDebugElement.nativeElement.value = 'TEST';
             inputDebugElement.nativeElement.focus();
             inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
@@ -421,7 +488,7 @@ describe('SearchControlComponent', () => {
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                let firstOption: DebugElement = fixture.debugElement.query(By.css('#result_name_0'));
+                let firstOption: DebugElement = debugElement.query(By.css('#result_name_0'));
                 firstOption.triggerEventHandler('click', null);
             });
         }));

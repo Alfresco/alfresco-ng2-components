@@ -31,8 +31,10 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { NodePaging } from 'alfresco-js-api';
-import { SearchOptions, SearchService } from 'ng2-alfresco-core';
+import { SearchApiService } from 'ng2-alfresco-core';
 import { Subject } from 'rxjs/Subject';
+
+const DEFAULT_FILTER_TYPE = "TYPE:'cm:folder' OR TYPE:'cm:content'";
 
 @Component({
     selector: 'adf-search',
@@ -59,6 +61,9 @@ export class SearchComponent implements AfterContentInit, OnChanges {
 
     @Input()
     maxResults: number = 20;
+
+    @Input()
+    skipResults: number = 0;
 
     @Input()
     resultSort: string = null;
@@ -104,7 +109,7 @@ export class SearchComponent implements AfterContentInit, OnChanges {
     _classList: { [key: string]: boolean } = {};
 
     constructor(
-        private searchService: SearchService,
+        private searchService: SearchApiService,
         private changeDetectorRef: ChangeDetectorRef,
         private _elementRef: ElementRef) {
         this.keyPressedStream.asObservable()
@@ -119,6 +124,11 @@ export class SearchComponent implements AfterContentInit, OnChanges {
     }
 
     ngOnChanges(changes) {
+        if ( changes.resultType && changes.resultType.currentValue) {
+            this.resultType = `TYPE:'${changes.resultType.currentValue}'`;
+        } else {
+            this.resultType = DEFAULT_FILTER_TYPE;
+        }
         if (changes.searchTerm) {
             this.resetResults();
             this.displaySearchResults(changes.searchTerm.currentValue);
@@ -140,18 +150,23 @@ export class SearchComponent implements AfterContentInit, OnChanges {
         }
     }
 
-    private displaySearchResults(searchTerm) {
-        let searchOpts: SearchOptions = {
+    private displaySearchResults(searchTerm: string) {
+        let searchOpts = {
+            query: {
+                query: `${searchTerm}* OR name:${searchTerm}*`
+            },
             include: ['path', 'allowableOperations'],
-            rootNodeId: this.rootNodeId,
-            nodeType: this.resultType,
-            maxItems: this.maxResults,
-            orderBy: this.resultSort
+            paging: {
+                maxItems: this.maxResults,
+                skipCount: this.skipResults
+            },
+            filterQueries: [
+                { query: this.resultType },
+                { query: 'NOT cm:creator:System' }]
         };
         if (searchTerm !== null && searchTerm !== '') {
-            searchTerm = searchTerm + '*';
             this.searchService
-                .getNodeQueryResults(searchTerm, searchOpts)
+                .search(searchOpts)
                 .subscribe(
                 results => {
                     this.results = <NodePaging> results;
