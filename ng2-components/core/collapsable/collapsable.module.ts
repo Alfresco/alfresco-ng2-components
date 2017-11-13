@@ -17,15 +17,15 @@
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatTooltipModule } from '@angular/material';
+import { MaterialModule } from '../material.module';
 
 import { AccordionGroupComponent } from './accordion-group.component';
 import { AccordionComponent } from './accordion.component';
 
 @NgModule({
     imports: [
-        CommonModule,
-        MatTooltipModule
+        MaterialModule,
+        CommonModule
     ],
     declarations: [
         AccordionComponent,
@@ -33,8 +33,7 @@ import { AccordionComponent } from './accordion.component';
     ],
     exports: [
         AccordionComponent,
-        AccordionGroupComponent,
-        MatTooltipModule
+        AccordionGroupComponent
     ]
 })
 export class CollapsableModule {}
