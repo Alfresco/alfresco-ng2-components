@@ -149,7 +149,7 @@ do
   fi
 
   echo "====== PUBLISHING: ${DESTDIR} ===== npm publish ${OPTIONS}"
-  npm publish ${OPTIONS} || exit 1
+  npm publish ${OPTIONS} --access=public || exit 1
 
   if $EXEC_CHANGE_REGISTRY == true; then
       npm run rimraf .npmrc

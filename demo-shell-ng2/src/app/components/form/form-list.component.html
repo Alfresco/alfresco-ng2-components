@@ -1,8 +1,0 @@
-<adf-form-list [forms]="formList" (row-dblclick)="onRowDblClick($event)">
-</adf-form-list>
-<div class="form-container" *ngIf="!isEmptyForm()">
-    <adf-form [form]="form" [data]="restoredData">
-    </adf-form>
-</div>
-<button mat-button (click)="store()" color="primary">{{'FORM-LIST.STORE' | translate }}</button>
-<button mat-button (click)="restore()" color="primary">{{'FORM-LIST.RESTORE' | translate }}</button>
