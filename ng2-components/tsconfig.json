@@ -40,7 +40,8 @@
         "config",
         "*/coverage",
         "node_modules",
-        "*/dist"
+        "*/dist",
+        "dist"
     ],
     "angularCompilerOptions": {
         "strictMetadataEmit": false,
