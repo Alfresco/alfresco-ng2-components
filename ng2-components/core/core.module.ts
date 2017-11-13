@@ -78,8 +78,6 @@ export function createTranslateLoader(http: HttpClient, logService: LogService) 
             }
         })
     ],
-    declarations: [
-    ],
     providers: [
         TranslationService,
         {

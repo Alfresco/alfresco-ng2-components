@@ -19,6 +19,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CoreModule, TRANSLATION_PROVIDER } from '@alfresco/core';
 
 import { MaterialModule } from './material.module';
 
@@ -35,6 +36,7 @@ import { ContentNodeSelectorModule } from './content-node-selector';
 
 @NgModule({
     imports: [
+        CoreModule,
         SocialModule,
         TagModule,
         CommonModule,
@@ -51,9 +53,18 @@ import { ContentNodeSelectorModule } from './content-node-selector';
         VersionManagerModule,
         ContentNodeSelectorModule
     ],
-    declarations: [],
-    providers: [],
+    providers: [
+        {
+            provide: TRANSLATION_PROVIDER,
+            multi: true,
+            useValue: {
+                name: '@adf/content-services',
+                source: 'assets/@adf/content-services'
+            }
+        }
+    ],
     exports: [
+        CoreModule,
         SocialModule,
         TagModule,
         WebScriptModule,

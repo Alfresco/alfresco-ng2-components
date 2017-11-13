@@ -117,7 +117,7 @@
         },
         {
           "glob": "**/*",
-          "input": "../../ng2-components/content-services/**/i18n",
+          "input": "../../ng2-components/content-services/i18n",
           "output": "./assets/@adf/content-services/i18n"
         },
         { "glob": "pdf.worker.js", "input": "../node_modules/pdfjs-dist/build", "output": "./" }

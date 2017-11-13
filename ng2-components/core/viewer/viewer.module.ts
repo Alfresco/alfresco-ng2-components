@@ -33,7 +33,6 @@ import { ViewerSidebarComponent } from './components/viewer-sidebar.component';
 import { ViewerToolbarComponent } from './components/viewer-toolbar.component';
 import { ViewerComponent } from './components/viewer.component';
 import { ViewerExtensionDirective } from './directives/viewer-extension.directive';
-import { RenderingQueueServices } from './services/rendering-queue.services';
 
 @NgModule({
     imports: [
