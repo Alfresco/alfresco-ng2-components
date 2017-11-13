@@ -105,5 +105,50 @@
     "ACTION": {
       "UNDO": "Отменить"
     }
+  },
+  "SEARCH": {
+    "CONTROL": {},
+    "RESULTS": {
+      "SUMMARY": "Найдено результатов по поисковому запросу {{searchTerm}}: {{numResults}}",
+      "NONE": "Не найдено результатов по поисковому запросу {{searchTerm}}",
+      "ERROR": "Возникла проблема во время поиска — повторите попытку.",
+      "COLUMNS": {
+        "NAME": "Отображаемое имя",
+        "MODIFIED_BY": "Изменено пользователем",
+        "MODIFIED_AT": "Изменено"
+      }
+    },
+    "ICONS": {
+      "ft_ic_raster_image": "Файл изображения",
+      "ft_ic_pdf": "Документ в формате PDF",
+      "ft_ic_ms_excel": "Файл Microsoft Excel",
+      "ft_ic_ms_word": "Документ Microsoft Word",
+      "ft_ic_ms_powerpoint": "Файл Microsoft PowerPoint",
+      "ft_ic_video": "Видеофайл",
+      "ft_ic_document": "Файл документа",
+      "ft_ic_website": "Веб-ресурс",
+      "ft_ic_archive": "Архивный файл",
+      "ft_ic_presentation": "Файл презентации",
+      "ft_ic_spreadsheet": "Файл электронной таблицы"
+    },
+    "DOCUMENT_LIST": {
+      "COLUMNS": {
+        "DISPLAY_NAME": "Отображаемое имя",
+        "CREATED_BY": "Создано пользователем",
+        "CREATED_ON": "Создано"
+      },
+      "ACTIONS": {
+        "FOLDER": {
+          "DELETE": "Удалить"
+        },
+        "DOCUMENT": {
+          "DOWNLOAD": "Скачать",
+          "DELETE": "Удалить"
+        }
+      }
+    }
+  },
+  "PERMISSON": {
+    "LACKOF": "У вас нет разрешения {{permission}}, чтобы {{action}} {{type}}"
   }
 }

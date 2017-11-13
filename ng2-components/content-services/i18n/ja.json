@@ -105,5 +105,50 @@
     "ACTION": {
       "UNDO": "元に戻す"
     }
+  },
+  "SEARCH": {
+    "CONTROL": {},
+    "RESULTS": {
+      "SUMMARY": "{{searchTerm}} の検索結果は {{numResults}} 件です",
+      "NONE": "{{searchTerm}} の検索結果は 0 件です",
+      "ERROR": "検索中に問題が発生しました。操作をやり直してください。",
+      "COLUMNS": {
+        "NAME": "表示名",
+        "MODIFIED_BY": "変更者",
+        "MODIFIED_AT": "変更日"
+      }
+    },
+    "ICONS": {
+      "ft_ic_raster_image": "画像ファイル",
+      "ft_ic_pdf": "PDF 文書",
+      "ft_ic_ms_excel": "Microsoft Excel ファイル",
+      "ft_ic_ms_word": "Microsoft Word 文書",
+      "ft_ic_ms_powerpoint": "Microsoft PowerPoint ファイル",
+      "ft_ic_video": "ビデオファイル",
+      "ft_ic_document": "文書ファイル",
+      "ft_ic_website": "Web リソース",
+      "ft_ic_archive": "アーカイブファイル",
+      "ft_ic_presentation": "プレゼンテーションファイル",
+      "ft_ic_spreadsheet": "表計算ファイル"
+    },
+    "DOCUMENT_LIST": {
+      "COLUMNS": {
+        "DISPLAY_NAME": "表示名",
+        "CREATED_BY": "作成者",
+        "CREATED_ON": "作成日"
+      },
+      "ACTIONS": {
+        "FOLDER": {
+          "DELETE": "削除"
+        },
+        "DOCUMENT": {
+          "DOWNLOAD": "ダウンロード",
+          "DELETE": "削除"
+        }
+      }
+    }
+  },
+  "PERMISSON": {
+    "LACKOF": "{{type}} を {{action}} するための {{permission}} 権限がありません。"
   }
 }

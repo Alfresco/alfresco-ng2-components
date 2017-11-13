@@ -105,5 +105,50 @@
     "ACTION": {
       "UNDO": "撤消"
     }
+  },
+  "SEARCH": {
+    "CONTROL": {},
+    "RESULTS": {
+      "SUMMARY": "已找到 {{numResults}} 个 {{searchTerm}} 的结果",
+      "NONE": "未找到 {{searchTerm}} 的结果",
+      "ERROR": "搜索过程中遇到问题，请重试。",
+      "COLUMNS": {
+        "NAME": "显示名称",
+        "MODIFIED_BY": "修改人",
+        "MODIFIED_AT": "修改时间"
+      }
+    },
+    "ICONS": {
+      "ft_ic_raster_image": "图像文件",
+      "ft_ic_pdf": "PDF 文档",
+      "ft_ic_ms_excel": "Microsoft Excel 文件",
+      "ft_ic_ms_word": "Microsoft Word 文档",
+      "ft_ic_ms_powerpoint": "Microsoft PowerPoint 文件",
+      "ft_ic_video": "视频文件",
+      "ft_ic_document": "文档文件",
+      "ft_ic_website": "网站资源",
+      "ft_ic_archive": "存档文件",
+      "ft_ic_presentation": "描述文件",
+      "ft_ic_spreadsheet": "电子表格文件"
+    },
+    "DOCUMENT_LIST": {
+      "COLUMNS": {
+        "DISPLAY_NAME": "显示名称",
+        "CREATED_BY": "创建者",
+        "CREATED_ON": "已创建"
+      },
+      "ACTIONS": {
+        "FOLDER": {
+          "DELETE": "删除"
+        },
+        "DOCUMENT": {
+          "DOWNLOAD": "下载",
+          "DELETE": "删除"
+        }
+      }
+    }
+  },
+  "PERMISSON": {
+    "LACKOF": "您没有 {{action}} {{type}} 的 {{permission}} 权限"
   }
 }

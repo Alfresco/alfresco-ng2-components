@@ -105,5 +105,50 @@
     "ACTION": {
       "UNDO": "Angre"
     }
+  },
+  "SEARCH": {
+    "CONTROL": {},
+    "RESULTS": {
+      "SUMMARY": "{{numResults}} resultater funnet for {{searchTerm}}",
+      "NONE": "Ingen resultater funnet for {{searchTerm}}",
+      "ERROR": "Det oppstod et problem under søket, prøv på nytt.",
+      "COLUMNS": {
+        "NAME": "Vis navn",
+        "MODIFIED_BY": "Endret av",
+        "MODIFIED_AT": "Endret"
+      }
+    },
+    "ICONS": {
+      "ft_ic_raster_image": "Bildefil",
+      "ft_ic_pdf": "PDF-dokument",
+      "ft_ic_ms_excel": "Microsoft Excel-fil",
+      "ft_ic_ms_word": "Microsoft Word-dokument",
+      "ft_ic_ms_powerpoint": "Microsoft PowerPoint-fil",
+      "ft_ic_video": "Videofil",
+      "ft_ic_document": "Dokumentfil",
+      "ft_ic_website": "Webressurs",
+      "ft_ic_archive": "Arkiver fil",
+      "ft_ic_presentation": "Presentasjonsfil",
+      "ft_ic_spreadsheet": "Regnarkfil"
+    },
+    "DOCUMENT_LIST": {
+      "COLUMNS": {
+        "DISPLAY_NAME": "Vis navn",
+        "CREATED_BY": "Opprettet av",
+        "CREATED_ON": "Opprettet"
+      },
+      "ACTIONS": {
+        "FOLDER": {
+          "DELETE": "Slett"
+        },
+        "DOCUMENT": {
+          "DOWNLOAD": "Last ned",
+          "DELETE": "Slett"
+        }
+      }
+    }
+  },
+  "PERMISSON": {
+    "LACKOF": "Du har ikke {{permission}} tillatelsen til å {{action}} {{type}}"
   }
 }

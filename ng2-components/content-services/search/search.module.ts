@@ -21,7 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
 
-import { PipeModule, SearchService, TRANSLATION_PROVIDER } from '@alfresco/core';
+import { PipeModule, SearchService } from '@alfresco/core';
 
 import { SearchTriggerDirective } from './components/search-trigger.directive';
 
@@ -51,15 +51,7 @@ export const ALFRESCO_SEARCH_PROVIDERS: [any] = [
         ...ALFRESCO_SEARCH_DIRECTIVES
     ],
     providers: [
-        ...ALFRESCO_SEARCH_PROVIDERS,
-        {
-            provide: TRANSLATION_PROVIDER,
-            multi: true,
-            useValue: {
-                name: 'ng2-alfresco-search',
-                source: 'assets/ng2-alfresco-search'
-            }
-        }
+        ...ALFRESCO_SEARCH_PROVIDERS
     ],
     exports: [
         ...ALFRESCO_SEARCH_DIRECTIVES
