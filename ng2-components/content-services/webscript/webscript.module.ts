@@ -20,7 +20,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { TRANSLATION_PROVIDER } from '@alfresco/core';
 import { MaterialModule } from '../material.module';
 import { WebscriptComponent } from './webscript.component';
 
@@ -37,16 +36,6 @@ import { WebscriptComponent } from './webscript.component';
     ],
     declarations: [
         WebscriptComponent
-    ],
-    providers: [
-        {
-            provide: TRANSLATION_PROVIDER,
-            multi: true,
-            useValue: {
-                name: 'ng2-alfresco-webscript',
-                source: 'assets/ng2-alfresco-webscript'
-            }
-        }
     ]
 })
 export class WebScriptModule {}
