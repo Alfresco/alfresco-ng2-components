@@ -16,7 +16,7 @@ env:
     - MODULE=demo-shell
 
 install:
-    - if ([ "$MODULE" !== "demo-shell" ]); then
+    - if ([ "$MODULE" == "core" ] || [ "$MODULE" == "process" ] || [ "$MODULE" == "content" ]); then
         if ([ "$TRAVIS_BRANCH" = "master" ]); then
             (./scripts/npm-build-all.sh  || exit 1;);
         else
