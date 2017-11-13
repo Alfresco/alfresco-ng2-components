@@ -76,74 +76,74 @@
   "LOGIN": {
     "LOGO": "Alfresco",
     "LABEL": {
-        "LOGIN": "Sign in",
-        "USERNAME": "Username",
-        "PASSWORD": "Password",
-        "REMEMBER": "Remember me"
+      "LOGIN": "Sign in",
+      "USERNAME": "Username",
+      "PASSWORD": "Password",
+      "REMEMBER": "Remember me"
     },
     "MESSAGES": {
-        "USERNAME-REQUIRED": "Required",
-        "USERNAME-MIN": "Your username needs to be at least {{minLenght}} characters.",
-        "PASSWORD-REQUIRED": "Enter your password to sign in",
-        "LOGIN-ERROR-CREDENTIALS": "You've entered an unknown username or password",
-        "LOGIN-ERROR-PROVIDERS": "Providers cannot be undefined",
-        "LOGIN-ERROR-CORS": "CORS exception, check your server configuration",
-        "LOGIN-ERROR-CSRF": "CSRF exception, set [disableCsrf]=\"true\" in login.component",
-        "LOGIN-ECM-LICENSE": "Alfresco Content Services repository is in read-only mode"
+      "USERNAME-REQUIRED": "Required",
+      "USERNAME-MIN": "Your username needs to be at least {{minLenght}} characters.",
+      "PASSWORD-REQUIRED": "Enter your password to sign in",
+      "LOGIN-ERROR-CREDENTIALS": "You've entered an unknown username or password",
+      "LOGIN-ERROR-PROVIDERS": "Providers cannot be undefined",
+      "LOGIN-ERROR-CORS": "CORS exception, check your server configuration",
+      "LOGIN-ERROR-CSRF": "CSRF exception, set [disableCsrf]=\"true\" in login.component",
+      "LOGIN-ECM-LICENSE": "Alfresco Content Services repository is in read-only mode"
     },
     "BUTTON": {
-        "LOGIN": "SIGN IN",
-        "CHECKING": "CHECKING",
-        "WELCOME": "WELCOME"
+      "LOGIN": "SIGN IN",
+      "CHECKING": "CHECKING",
+      "WELCOME": "WELCOME"
     },
     "ACTION": {
-        "HELP": "NEED HELP?",
-        "REGISTER": "REGISTER"
+      "HELP": "NEED HELP?",
+      "REGISTER": "REGISTER"
     }
   },
   "ADF-DATATABLE": {
     "EMPTY": {
-        "HEADER": "This list is empty",
-        "DRAG-AND-DROP": {
-          "TITLE": "Drag and drop",
-          "SUBTITLE": "to upload files"
-        }
+      "HEADER": "This list is empty",
+      "DRAG-AND-DROP": {
+        "TITLE": "Drag and drop",
+        "SUBTITLE": "to upload files"
+      }
     }
   },
   "USER_PROFILE": {
     "LABELS": {
-        "ECM": {
-          "JOB_TITLE": "Job Title"
-        },
-        "BPM": {
-          "TENANT": "Tenant"
-        }
+      "ECM": {
+        "JOB_TITLE": "Job Title"
+      },
+      "BPM": {
+        "TENANT": "Tenant"
+      }
     },
-    "TAB" : {
-        "CS": "Content Services",
-        "PS": "Process Services"
+    "TAB": {
+      "CS": "Content Services",
+      "PS": "Process Services"
     }
   },
   "ADF_VIEWER": {
     "ACTIONS": {
-        "BACK": "Back",
-        "OPEN_WITH": "Open with",
-        "DOWNLOAD": "Download",
-        "PRINT": "Print",
-        "SHARE": "Share",
-        "MORE_ACTIONS": "More actions",
-        "INFO": "Info"
+      "BACK": "Back",
+      "OPEN_WITH": "Open with",
+      "DOWNLOAD": "Download",
+      "PRINT": "Print",
+      "SHARE": "Share",
+      "MORE_ACTIONS": "More actions",
+      "INFO": "Info"
     },
     "ARIA": {
-        "PREVIOUS_PAGE": "Previous page",
-        "NEXT_PAGE": "Next page",
-        "ZOOM_IN": "Zoom in",
-        "ZOOM_OUT": "Zoom out",
-        "FIT_PAGE": "Fit page"
+      "PREVIOUS_PAGE": "Previous page",
+      "NEXT_PAGE": "Next page",
+      "ZOOM_IN": "Zoom in",
+      "ZOOM_OUT": "Zoom out",
+      "FIT_PAGE": "Fit page"
     },
     "PAGE_LABEL": {
-        "SHOWING": "Showing",
-        "OF": "of"
+      "SHOWING": "Showing",
+      "OF": "of"
     },
     "LOADING": "Loading",
     "UNKNOWN_FORMAT": "Couldn't load preview"
