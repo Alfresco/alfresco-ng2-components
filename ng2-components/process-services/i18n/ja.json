@@ -59,5 +59,16 @@
       "START-LESS-THAN-END-DATE": "開始日は終了日より前の日付でなければなりません"
     }
   },
-  "DIAGRAMS": "図"
+  "DIAGRAMS": "図",
+  "FORM": {
+    "START_FORM": {
+      "TITLE": "開始フォーム"
+    },
+    "PREVIEW": {
+      "IMAGE_NOT_AVAILABLE": "プレビューは使用できません"
+    },
+    "FIELD": {
+      "REQUIRED": "*必須"
+    }
+  }
 }

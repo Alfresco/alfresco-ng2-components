@@ -59,5 +59,16 @@
       "START-LESS-THAN-END-DATE": "De begindatum moet voor de einddatum liggen"
     }
   },
-  "DIAGRAMS": "Diagrammen"
+  "DIAGRAMS": "Diagrammen",
+  "FORM": {
+    "START_FORM": {
+      "TITLE": "Beginformulier"
+    },
+    "PREVIEW": {
+      "IMAGE_NOT_AVAILABLE": "Preview niet beschikbaar"
+    },
+    "FIELD": {
+      "REQUIRED": "*Verplicht"
+    }
+  }
 }

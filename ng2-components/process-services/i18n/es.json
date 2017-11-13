@@ -59,5 +59,16 @@
       "START-LESS-THAN-END-DATE": "La fecha de inicio debe ser anterior a la fecha de finalización"
     }
   },
-  "DIAGRAMS": "Diagramas"
+  "DIAGRAMS": "Diagramas",
+  "FORM": {
+    "START_FORM": {
+      "TITLE": "Iniciar formulario"
+    },
+    "PREVIEW": {
+      "IMAGE_NOT_AVAILABLE": "Vista previa no disponible"
+    },
+    "FIELD": {
+      "REQUIRED": "*Requerido"
+    }
+  }
 }

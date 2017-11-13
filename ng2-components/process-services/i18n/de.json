@@ -59,5 +59,16 @@
       "START-LESS-THAN-END-DATE": "Das Startdatum muss vor dem Enddatum liegen"
     }
   },
-  "DIAGRAMS": "Diagramme"
+  "DIAGRAMS": "Diagramme",
+  "FORM": {
+    "START_FORM": {
+      "TITLE": "Startformular"
+    },
+    "PREVIEW": {
+      "IMAGE_NOT_AVAILABLE": "Vorschau nicht verfügbar"
+    },
+    "FIELD": {
+      "REQUIRED": "*Erforderlich"
+    }
+  }
 }

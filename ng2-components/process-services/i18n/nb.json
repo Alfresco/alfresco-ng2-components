@@ -59,5 +59,16 @@
       "START-LESS-THAN-END-DATE": "Startdato må være før sluttdato"
     }
   },
-  "DIAGRAMS": "Diagrammer"
+  "DIAGRAMS": "Diagrammer",
+  "FORM": {
+    "START_FORM": {
+      "TITLE": "Start skjema"
+    },
+    "PREVIEW": {
+      "IMAGE_NOT_AVAILABLE": "Forhåndsvisning ikke tilgjengelig"
+    },
+    "FIELD": {
+      "REQUIRED": "*Påkrevd"
+    }
+  }
 }
