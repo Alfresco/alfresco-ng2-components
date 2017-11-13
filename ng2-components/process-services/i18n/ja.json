@@ -58,5 +58,6 @@
       "START-DATE-REQUIRED": "開始日を指定してください",
       "START-LESS-THAN-END-DATE": "開始日は終了日より前の日付でなければなりません"
     }
-  }
+  },
+  "DIAGRAMS": "図"
 }

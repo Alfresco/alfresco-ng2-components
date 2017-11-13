@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { TRANSLATION_PROVIDER } from '@alfresco/core';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
@@ -37,15 +36,7 @@ import { RAPHAEL_PROVIDERS } from './components/raphael/index';
     ],
     providers: [
         ...DIAGRAM_PROVIDERS,
-        ...RAPHAEL_PROVIDERS,
-        {
-            provide: TRANSLATION_PROVIDER,
-            multi: true,
-            useValue: {
-                name: '@alfresco/process-services',
-                source: 'assets/ng2-activiti-diagrams'
-            }
-        }
+        ...RAPHAEL_PROVIDERS
     ],
     exports: [
         ...DIAGRAM_DIRECTIVES

@@ -58,5 +58,6 @@
       "START-DATE-REQUIRED": "需要启动日期",
       "START-LESS-THAN-END-DATE": "启动日期必须在结束日期前"
     }
-  }
+  },
+  "DIAGRAMS": "图表"
 }
