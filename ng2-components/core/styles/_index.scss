@@ -13,6 +13,7 @@
 @import '../userinfo/components/user-info.component';
 @import '../login/components/login.component';
 @import '../datatable/components/datatable/datatable.component';
+@import '../dialogs/folder.dialog';
 
 @mixin adf-core-theme($theme) {
     @include adf-host-settings-theme($theme);
@@ -28,6 +29,7 @@
     @include adf-userinfo-theme($theme);
     @include adf-login-theme($theme);
     @include adf-datatable-theme($theme);
+    @include adf-dialog-theme($theme);
 }
 
 

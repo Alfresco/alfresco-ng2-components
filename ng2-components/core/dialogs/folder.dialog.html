@@ -1,9 +1,9 @@
 <h2 mat-dialog-title>
     {{
-        (editing
-            ? 'CORE.FOLDER_DIALOG.EDIT_FOLDER_TITLE'
-            : 'CORE.FOLDER_DIALOG.CREATE_FOLDER_TITLE'
-        ) | translate
+    (editing
+    ? 'CORE.FOLDER_DIALOG.EDIT_FOLDER_TITLE'
+    : 'CORE.FOLDER_DIALOG.CREATE_FOLDER_TITLE'
+    ) | translate
     }}
 </h2>
 
@@ -51,14 +51,14 @@
     </button>
 
     <button class="adf-dialog-action-button"
-        mat-button
-        (click)="submit()"
-        [disabled]="!form.valid">
+            mat-button
+            (click)="submit()"
+            [disabled]="!form.valid">
         {{
-            (editing
-                ? 'CORE.FOLDER_DIALOG.UPDATE_BUTTON.LABEL'
-                : 'CORE.FOLDER_DIALOG.CREATE_BUTTON.LABEL'
-            ) | translate
+        (editing
+        ? 'CORE.FOLDER_DIALOG.UPDATE_BUTTON.LABEL'
+        : 'CORE.FOLDER_DIALOG.CREATE_BUTTON.LABEL'
+        ) | translate
         }}
     </button>
 </mat-dialog-actions>

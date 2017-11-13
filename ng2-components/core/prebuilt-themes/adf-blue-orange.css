@@ -70,6 +70,12 @@
  * This mixin contains shared option styles between the select and
  * autocomplete components.
  */
+.adf-fill-remaining-space {
+  flex: 1 1 auto; }
+
+.adf-full-width {
+  width: 100%; }
+
 .mat-elevation-z0 {
   box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12); }
 
@@ -3186,3 +3192,9 @@ adf-people-list ::ng-deep adf-datatable ::ng-deep .people-email {
     border-left: 1px dashed #448aff; }
   .adf-upload__dragging > td:last-child {
     border-right: 1px dashed #448aff; }
+
+.adf-dialog-buttons button {
+  text-transform: uppercase; }
+
+.adf-dialog-action-button:enabled {
+  color: #2196f3; }
