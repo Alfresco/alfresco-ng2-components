@@ -82,5 +82,15 @@
         "SUBTITLE": ""
       }
     }
+  },
+  "USER_PROFILE": {
+    "LABELS": {
+      "ECM": {
+        "JOB_TITLE": "Cargo"
+      },
+      "BPM": {
+        "TENANT": "Inquilino"
+      }
+    }
   }
 }

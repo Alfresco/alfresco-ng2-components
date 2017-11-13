@@ -82,5 +82,15 @@
         "SUBTITLE": "um Dateien hochzuladen"
       }
     }
+  },
+  "USER_PROFILE": {
+    "LABELS": {
+      "ECM": {
+        "JOB_TITLE": "Jobtitel"
+      },
+      "BPM": {
+        "TENANT": "Mandant"
+      }
+    }
   }
 }

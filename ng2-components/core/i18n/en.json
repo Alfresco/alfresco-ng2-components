@@ -105,9 +105,23 @@
     "EMPTY": {
         "HEADER": "This list is empty",
         "DRAG-AND-DROP": {
-            "TITLE": "Drag and drop",
-            "SUBTITLE": "to upload files"
+          "TITLE": "Drag and drop",
+          "SUBTITLE": "to upload files"
         }
+    }
+  },
+  "USER_PROFILE": {
+    "LABELS": {
+        "ECM": {
+          "JOB_TITLE": "Job Title"
+        },
+        "BPM": {
+          "TENANT": "Tenant"
+        }
+    },
+    "TAB" : {
+        "CS": "Content Services",
+        "PS": "Process Services"
     }
   }
 }

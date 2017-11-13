@@ -82,5 +82,15 @@
         "SUBTITLE": "les fichiers à importer"
       }
     }
+  },
+  "USER_PROFILE": {
+    "LABELS": {
+      "ECM": {
+        "JOB_TITLE": "Fonction"
+      },
+      "BPM": {
+        "TENANT": "Client"
+      }
+    }
   }
 }

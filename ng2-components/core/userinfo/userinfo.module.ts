@@ -18,10 +18,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
+
 import { MaterialModule } from '../material.module';
 import { PipeModule } from '../pipes';
-import { TRANSLATION_PROVIDER } from '../services';
-
 import { UserInfoComponent } from './components/user-info.component';
 import { BpmUserService } from './services/bpm-user.service';
 import { EcmUserService } from './services/ecm-user.service';
@@ -38,15 +37,7 @@ import { EcmUserService } from './services/ecm-user.service';
     ],
     providers: [
         EcmUserService,
-        BpmUserService,
-        {
-            provide: TRANSLATION_PROVIDER,
-            multi: true,
-            useValue: {
-                name: 'ng2-alfresco-userinfo',
-                source: 'assets/ng2-alfresco-userinfo'
-            }
-        }
+        BpmUserService
     ],
     exports: [
         UserInfoComponent

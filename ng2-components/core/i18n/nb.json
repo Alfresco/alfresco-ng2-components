@@ -82,5 +82,15 @@
         "SUBTITLE": "for å laste opp filer"
       }
     }
+  },
+  "USER_PROFILE": {
+    "LABELS": {
+      "ECM": {
+        "JOB_TITLE": "Jobbtittel"
+      },
+      "BPM": {
+        "TENANT": "Leietaker"
+      }
+    }
   }
 }

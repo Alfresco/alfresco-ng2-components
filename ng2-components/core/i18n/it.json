@@ -82,5 +82,15 @@
         "SUBTITLE": "per caricare i file"
       }
     }
+  },
+  "USER_PROFILE": {
+    "LABELS": {
+      "ECM": {
+        "JOB_TITLE": "Professione"
+      },
+      "BPM": {
+        "TENANT": "Organizzazione"
+      }
+    }
   }
 }

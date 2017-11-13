@@ -82,5 +82,15 @@
         "SUBTITLE": "om bestanden te uploaden"
       }
     }
+  },
+  "USER_PROFILE": {
+    "LABELS": {
+      "ECM": {
+        "JOB_TITLE": "Functie"
+      },
+      "BPM": {
+        "TENANT": "Tenant"
+      }
+    }
   }
 }

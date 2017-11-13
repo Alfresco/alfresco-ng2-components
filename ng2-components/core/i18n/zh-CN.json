@@ -82,5 +82,15 @@
         "SUBTITLE": "要上传文件"
       }
     }
+  },
+  "USER_PROFILE": {
+    "LABELS": {
+      "ECM": {
+        "JOB_TITLE": "作业标题"
+      },
+      "BPM": {
+        "TENANT": "租户"
+      }
+    }
   }
 }
