@@ -73,5 +73,14 @@
       "HELP": "HAI BISOGNO DI AIUTO?",
       "REGISTER": "REGISTRATI"
     }
+  },
+  "ADF-DATATABLE": {
+    "EMPTY": {
+      "HEADER": "Questo elenco è vuoto",
+      "DRAG-AND-DROP": {
+        "TITLE": "Trascinare e rilasciare",
+        "SUBTITLE": "per caricare i file"
+      }
+    }
   }
 }

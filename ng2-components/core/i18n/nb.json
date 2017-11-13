@@ -73,5 +73,14 @@
       "HELP": "TRENGER HJELP?",
       "REGISTER": "REGISTRER"
     }
+  },
+  "ADF-DATATABLE": {
+    "EMPTY": {
+      "HEADER": "Denne listen er tom",
+      "DRAG-AND-DROP": {
+        "TITLE": "Dra og slipp",
+        "SUBTITLE": "for å laste opp filer"
+      }
+    }
   }
 }

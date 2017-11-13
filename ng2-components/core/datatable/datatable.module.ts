@@ -18,13 +18,12 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MaterialModule } from '../material.module';
-import { TRANSLATION_PROVIDER } from '../services';
+import { TranslateModule } from '@ngx-translate/core';
 
+import { MaterialModule } from '../material.module';
 import { ContextMenuModule } from '../context-menu';
 import { PipeModule } from '../pipes';
 
-import { TranslateModule } from '@ngx-translate/core';
 import { DirectiveModule } from '../directives';
 import { DataTableCellComponent } from './components/datatable/datatable-cell.component';
 import { DataTableComponent } from './components/datatable/datatable.component';
@@ -62,16 +61,6 @@ import { NoPermissionTemplateDirective } from './directives/no-permission-templa
         NoContentTemplateDirective,
         NoPermissionTemplateDirective,
         LoadingContentTemplateDirective
-    ],
-    providers: [
-        {
-            provide: TRANSLATION_PROVIDER,
-            multi: true,
-            useValue: {
-                name: 'ng2-alfresco-datatable',
-                source: 'assets/ng2-alfresco-datatable'
-            }
-        }
     ],
     exports: [
         DataTableComponent,

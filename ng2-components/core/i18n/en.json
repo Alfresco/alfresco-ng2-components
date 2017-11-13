@@ -100,5 +100,14 @@
         "HELP": "NEED HELP?",
         "REGISTER": "REGISTER"
     }
+  },
+  "ADF-DATATABLE": {
+    "EMPTY": {
+        "HEADER": "This list is empty",
+        "DRAG-AND-DROP": {
+            "TITLE": "Drag and drop",
+            "SUBTITLE": "to upload files"
+        }
+    }
   }
 }

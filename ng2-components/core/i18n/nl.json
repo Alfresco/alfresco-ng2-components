@@ -73,5 +73,14 @@
       "HELP": "HULP NODIG?",
       "REGISTER": "REGISTREREN"
     }
+  },
+  "ADF-DATATABLE": {
+    "EMPTY": {
+      "HEADER": "Deze lijst is leeg",
+      "DRAG-AND-DROP": {
+        "TITLE": "Slepen en neerzetten",
+        "SUBTITLE": "om bestanden te uploaden"
+      }
+    }
   }
 }
