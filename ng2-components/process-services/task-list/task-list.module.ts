@@ -22,7 +22,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormModule } from '../form';
 
 import { CardViewModule, DataColumnModule,  DataTableModule, DirectiveModule, InfoDrawerModule } from '@alfresco/core';
-import { TRANSLATION_PROVIDER } from '@alfresco/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MaterialModule } from '../material.module';
@@ -82,15 +81,7 @@ import { TaskListComponent } from './components/task-list.component';
     providers: [
         TaskListService,
         ProcessUploadService,
-        DatePipe,
-        {
-            provide: TRANSLATION_PROVIDER,
-            multi: true,
-            useValue: {
-                name: 'ng2-activiti-tasklist',
-                source: 'assets/ng2-activiti-tasklist'
-            }
-        }
+        DatePipe
     ],
     exports: [
         NoTaskDetailsTemplateDirective,

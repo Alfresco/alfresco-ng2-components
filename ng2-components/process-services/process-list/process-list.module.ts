@@ -23,7 +23,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormModule } from '../form';
 import { MaterialModule } from '../material.module';
 
-import { CardViewModule, CardViewUpdateService, DataColumnModule, DataTableModule, DirectiveModule, PipeModule, TRANSLATION_PROVIDER } from '@alfresco/core';
+import { CardViewModule, CardViewUpdateService, DataColumnModule, DataTableModule, DirectiveModule, PipeModule } from '@alfresco/core';
 import { TaskListModule } from '../task-list';
 
 import { CreateProcessAttachmentComponent } from './components/create-process-attachment.component';
@@ -69,15 +69,7 @@ import { ProcessService } from './services/process.service';
     ],
     providers: [
         ProcessService,
-        CardViewUpdateService,
-        {
-            provide: TRANSLATION_PROVIDER,
-            multi: true,
-            useValue: {
-                name: 'ng2-activiti-processlist',
-                source: 'assets/ng2-activiti-processlist'
-            }
-        }
+        CardViewUpdateService
     ],
     exports: [
         ProcessInstanceListComponent,
