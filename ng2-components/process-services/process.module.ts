@@ -19,6 +19,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CoreModule, TRANSLATION_PROVIDER } from '@alfresco/core';
 
 import { MaterialModule } from './material.module';
 
@@ -31,6 +32,7 @@ import { AppsListModule } from './app-list';
 
 @NgModule({
     imports: [
+        CoreModule,
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
@@ -43,9 +45,18 @@ import { AppsListModule } from './app-list';
         FormModule,
         AppsListModule
     ],
-    declarations: [],
-    providers: [],
+    providers: [
+        {
+            provide: TRANSLATION_PROVIDER,
+            multi: true,
+            useValue: {
+                name: '@adf/process-services',
+                source: 'assets/@adf/process-services'
+            }
+        }
+    ],
     exports: [
+        CoreModule,
         CommonModule,
         FormsModule,
         ReactiveFormsModule,

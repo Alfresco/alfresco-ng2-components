@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { TRANSLATION_PROVIDER } from '@alfresco/core';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -62,15 +61,7 @@ export const ANALYTICS_PROVIDERS: any[] = [
         ...ANALYTICS_DIRECTIVES
     ],
     providers: [
-        ...ANALYTICS_PROVIDERS,
-        {
-            provide: TRANSLATION_PROVIDER,
-            multi: true,
-            useValue: {
-                name: 'ng2-activiti-analytics',
-                source: 'assets/ng2-activiti-analytics'
-            }
-        }
+        ...ANALYTICS_PROVIDERS
     ],
     exports: [
         ...ANALYTICS_DIRECTIVES,
