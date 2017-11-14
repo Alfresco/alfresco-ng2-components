@@ -16,6 +16,7 @@
  */
 
 import { Component, ViewChild } from '@angular/core';
+import { QueryBody } from 'alfresco-js-api';
 import { SearchComponent } from '../components/search.component';
 
 const entryItem = {
@@ -117,7 +118,7 @@ export let errorJson = {
 
 @Component({
     template: `
-    <adf-search [searchTerm]="searchedWord" [maxResults]="maxResults"
+    <adf-search [searchTerm]="searchedWord" [searchNode]="searchNode" [maxResults]="maxResults"
         (error)="showSearchResult('ERROR')"
         (success)="showSearchResult('success')" #search>
        <ng-template let-data>
@@ -142,6 +143,7 @@ export let errorJson = {
     message: string = '';
     searchedWord= '';
     maxResults: number = 5;
+    searchNode: QueryBody;
 
     constructor() {
     }
@@ -156,6 +158,10 @@ export let errorJson = {
 
     setSearchWordTo(str: string) {
         this.searchedWord = str;
+    }
+
+    setSearchNodeTo(searchNode: QueryBody) {
+        this.searchNode = searchNode;
     }
 
     changeMaxResultTo(newMax: number) {

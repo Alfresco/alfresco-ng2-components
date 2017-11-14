@@ -111,9 +111,9 @@ describe('SearchControlComponent', () => {
             });
         }));
 
-        it('should NOT update FAYT term when user inputs a search term less than 3 characters', async(() => {
+        it('should NOT update FAYT term when user inputs an empty string as search term ', async(() => {
             let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
-            inputDebugElement.nativeElement.value = 'cu';
+            inputDebugElement.nativeElement.value = '';
             inputDebugElement.nativeElement.focus();
             inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
             spyOn(component, 'isSearchBarActive').and.returnValue(true);

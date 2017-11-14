@@ -30,11 +30,9 @@ import {
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import { NodePaging } from 'alfresco-js-api';
+import { NodePaging, QueryBody } from 'alfresco-js-api';
 import { SearchApiService } from 'ng2-alfresco-core';
 import { Subject } from 'rxjs/Subject';
-
-const DEFAULT_FILTER_TYPE = "TYPE:'cm:folder' OR TYPE:'cm:content'";
 
 @Component({
     selector: 'adf-search',
@@ -66,16 +64,10 @@ export class SearchComponent implements AfterContentInit, OnChanges {
     skipResults: number = 0;
 
     @Input()
-    resultSort: string = null;
-
-    @Input()
-    rootNodeId: string = '-root-';
-
-    @Input()
-    resultType: string = null;
-
-    @Input()
     searchTerm: string = '';
+
+    @Input()
+    searchNode: QueryBody;
 
     @Input('class')
     set classList(classList: string) {
@@ -95,7 +87,7 @@ export class SearchComponent implements AfterContentInit, OnChanges {
     results: NodePaging;
 
     get isOpen(): boolean {
-        return this._isOpen && this.showPanel;
+      return this._isOpen && this.showPanel;
     }
 
     set isOpen(value: boolean) {
@@ -124,14 +116,12 @@ export class SearchComponent implements AfterContentInit, OnChanges {
     }
 
     ngOnChanges(changes) {
-        if ( changes.resultType && changes.resultType.currentValue) {
-            this.resultType = `TYPE:'${changes.resultType.currentValue}'`;
-        } else {
-            this.resultType = DEFAULT_FILTER_TYPE;
-        }
-        if (changes.searchTerm) {
-            this.resetResults();
+        this.resetResults();
+        if (changes.searchTerm && changes.searchTerm.currentValue) {
             this.displaySearchResults(changes.searchTerm.currentValue);
+        }
+        if (changes.searchNode && changes.searchNode.currentValue) {
+            this.displaySearchResults();
         }
     }
 
@@ -150,21 +140,14 @@ export class SearchComponent implements AfterContentInit, OnChanges {
         }
     }
 
-    private displaySearchResults(searchTerm: string) {
-        let searchOpts = {
-            query: {
-                query: `${searchTerm}* OR name:${searchTerm}*`
-            },
-            include: ['path', 'allowableOperations'],
-            paging: {
-                maxItems: this.maxResults,
-                skipCount: this.skipResults
-            },
-            filterQueries: [
-                { query: this.resultType },
-                { query: 'NOT cm:creator:System' }]
-        };
-        if (searchTerm !== null && searchTerm !== '') {
+    private hasValidSearchQuery(searchOpts: QueryBody) {
+        return searchOpts && searchOpts.query && searchOpts.query.query;
+    }
+
+    private displaySearchResults(searchTerm?: string) {
+        let searchOpts: QueryBody = this.getSearchNode(searchTerm);
+
+        if (this.hasValidSearchQuery(searchOpts)) {
             this.searchService
                 .search(searchOpts)
                 .subscribe(
@@ -197,5 +180,33 @@ export class SearchComponent implements AfterContentInit, OnChanges {
         this._classList['adf-search-show'] = this.showPanel;
         this._classList['adf-search-hide'] = !this.showPanel;
         this.changeDetectorRef.markForCheck();
+    }
+
+    private getSearchNode(searchTerm: string): QueryBody {
+        if (this.searchNode) {
+            if (!this.searchNode.query.query && searchTerm) {
+                this.searchNode.query.query = searchTerm;
+            }
+            return this.searchNode;
+        } else {
+            return this.generateDefaultSearchNode(searchTerm);
+        }
+    }
+
+    private generateDefaultSearchNode(searchTerm: string): QueryBody {
+        let defaultSearchNode: QueryBody = {
+            query: {
+                query: searchTerm ? `${searchTerm}* OR name:${searchTerm}*` : searchTerm
+            },
+            include: ['path', 'allowableOperations'],
+            paging: {
+                maxItems: this.maxResults,
+                skipCount: this.skipResults
+            },
+            filterQueries: [
+                { query: "TYPE:'cm:folder' OR TYPE:'cm:content'" },
+                { query: 'NOT cm:creator:System' }]
+        };
+        return defaultSearchNode;
     }
 }

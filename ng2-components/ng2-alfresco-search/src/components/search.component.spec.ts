@@ -16,10 +16,22 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { QueryBody } from 'alfresco-js-api';
 import { CoreModule, SearchApiService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Observable';
 import { SearchModule } from '../../index';
-import { differentResult, result, SimpleSearchTestComponent } from './../assets/search.component.mock';
+import { differentResult, folderResult, result, SimpleSearchTestComponent } from './../assets/search.component.mock';
+
+function fakeNodeResultSearch(searchNode: QueryBody): Observable<any> {
+    if ( searchNode.query.query === 'FAKE_SEARCH_EXMPL') {
+        return Observable.of(differentResult);
+    }
+    if ( searchNode.filterQueries.length === 1 &&
+        searchNode.filterQueries[0].query === "TYPE:'cm:folder'") {
+            return Observable.of(folderResult);
+    }
+    return Observable.of(result);
+}
 
 describe('SearchComponent', () => {
 
@@ -33,7 +45,7 @@ describe('SearchComponent', () => {
                 CoreModule,
                 SearchModule
             ],
-            declarations: [ SimpleSearchTestComponent ]
+            declarations: [SimpleSearchTestComponent]
         }).compileComponents().then(() => {
             fixture = TestBed.createComponent(SimpleSearchTestComponent);
             component = fixture.componentInstance;
@@ -110,6 +122,72 @@ describe('SearchComponent', () => {
                     let elementList = element.querySelector('#adf-search-results-content');
                     expect(elementList.classList).toContain('adf-search-hide');
                 });
+            });
+        }));
+    });
+
+    describe('search node', () => {
+
+        afterEach(() => {
+            fixture.destroy();
+        });
+
+        it('should perform a search based on the query node given', async(() => {
+            spyOn(searchService, 'search')
+                .and.callFake((searchObj) => fakeNodeResultSearch(searchObj));
+            let fakeSearchNode: QueryBody = {
+                query: {
+                    query: ''
+                },
+                filterQueries: [
+                    { 'query': "TYPE:'cm:folder'" }
+                ]
+            };
+            component.setSearchNodeTo(fakeSearchNode);
+            component.setSearchWordTo('searchTerm');
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                let optionShowed = element.querySelectorAll('#autocomplete-search-result-list > li').length;
+                expect(optionShowed).toBe(1);
+                let folderOption: HTMLElement = <HTMLElement> element.querySelector('#result_option_0');
+                expect(folderOption.textContent.trim()).toBe('MyFolder');
+            });
+        }));
+
+        it('should perform a search with a defaultNode if no searchnode is given', async(() => {
+            spyOn(searchService, 'search')
+                .and.callFake((searchObj) => fakeNodeResultSearch(searchObj));
+            component.setSearchWordTo('searchTerm');
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                let optionShowed = element.querySelectorAll('#autocomplete-search-result-list > li').length;
+                expect(optionShowed).toBe(1);
+                let folderOption: HTMLElement = <HTMLElement> element.querySelector('#result_option_0');
+                expect(folderOption.textContent.trim()).toBe('MyDoc');
+            });
+        }));
+
+        it('should perform a search with the searchNode given', async(() => {
+            spyOn(searchService, 'search')
+                .and.callFake((searchObj) => fakeNodeResultSearch(searchObj));
+            let fakeSearchNode: QueryBody = {
+                query: {
+                    query: 'FAKE_SEARCH_EXMPL'
+                },
+                filterQueries: [
+                    { 'query': "TYPE:'cm:folder'" }
+                ]
+            };
+            component.setSearchNodeTo(fakeSearchNode);
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                let optionShowed = element.querySelectorAll('#autocomplete-search-result-list > li').length;
+                expect(optionShowed).toBe(1);
+                let folderOption: HTMLElement = <HTMLElement> element.querySelector('#result_option_0');
+                expect(folderOption.textContent.trim()).toBe('TEST_DOC');
             });
         }));
     });
