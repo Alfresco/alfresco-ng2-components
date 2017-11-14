@@ -27,3 +27,12 @@ export * from './event.mock';
 export * from './renditionsService.mock';
 export * from './search.service.mock';
 export * from './traslation.service.mock';
+
+export * from './form/entry-module.mock';
+export * from './form/form.component.mock';
+export * from './form/formDefinition.mock';
+export * from './form/formDefinitionReadonly.mock';
+export * from './form/formDefinitionVisibiity.mock';
+export * from './form/start-form.component.mock';
+export * from './form/form.service.mock';
+export * from './form/widget-visibility.service.mock';

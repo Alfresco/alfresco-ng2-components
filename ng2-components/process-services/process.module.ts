@@ -27,7 +27,6 @@ import { AnalyticsModule } from './analytics';
 import { DiagramsModule } from './diagram';
 import { ProcessListModule } from './process-list';
 import { TaskListModule } from './task-list';
-import { FormModule } from './form';
 import { AppsListModule } from './app-list';
 import { CommentsModule } from './comments';
 import { AttachmentModule } from './attachment';
@@ -46,7 +45,6 @@ import { PeopleModule } from './people';
         DiagramsModule,
         ProcessListModule,
         TaskListModule,
-        FormModule,
         AppsListModule,
         AttachmentModule,
         PeopleModule
@@ -73,7 +71,6 @@ import { PeopleModule } from './people';
         DiagramsModule,
         ProcessListModule,
         TaskListModule,
-        FormModule,
         AppsListModule,
         AttachmentModule,
         PeopleModule

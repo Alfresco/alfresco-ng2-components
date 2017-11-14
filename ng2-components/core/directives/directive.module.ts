@@ -19,8 +19,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
 
-import { FolderCreateDirective } from './folder-create.directive';
-import { FolderEditDirective } from './folder-edit.directive';
 import { HighlightDirective } from './highlight.directive';
 import { LogoutDirective } from './logout.directive';
 import { NodeDeleteDirective } from './node-delete.directive';
@@ -35,8 +33,6 @@ import { UploadDirective } from './upload.directive';
         MaterialModule
     ],
     declarations: [
-        FolderCreateDirective,
-        FolderEditDirective,
         HighlightDirective,
         LogoutDirective,
         NodeDeleteDirective,
@@ -46,8 +42,6 @@ import { UploadDirective } from './upload.directive';
         UploadDirective
     ],
     exports: [
-        FolderCreateDirective,
-        FolderEditDirective,
         HighlightDirective,
         LogoutDirective,
         NodeDeleteDirective,

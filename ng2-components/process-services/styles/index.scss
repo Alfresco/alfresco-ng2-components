@@ -1,5 +1,3 @@
-@import '../form/components/widgets/form';
-
 @import '../process-list/components/process-filters.component';
 
 @import '../diagram/components/tooltip/diagram-tooltip.component';
@@ -17,15 +15,10 @@
 @import '../task-list/components/task-header.component';
 
 @mixin adf-process-services-theme($theme) {
-    @include adf-form-theme($theme);
-
     @include adf-process-filters-theme($theme);
-
     @include adf-diagram-tooltip-theme($theme);
-
     @include adf-analytics-report-list-theme($theme);
     @include adf-analytics-date-range-widget-theme($theme);
-
     @include adf-task-list-comment-list-theme($theme);
     @include adf-task-list-start-task-theme($theme);
     @include adf-task-list-people-search-theme($theme);

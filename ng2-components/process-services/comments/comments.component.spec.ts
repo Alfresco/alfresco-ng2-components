@@ -19,7 +19,7 @@ import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
 
-import { FormModule } from '../form';
+import { FormModule } from '@alfresco/core';
 import { AppConfigService, CommentProcessService } from '@alfresco/core';
 import { AppConfigServiceMock } from '../mock';
 

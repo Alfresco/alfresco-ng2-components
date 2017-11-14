@@ -23,9 +23,7 @@ import { MaterialModule } from '../material.module';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { Observable } from 'rxjs/Rx';
 
-import { NodesApiService } from '../services/nodes-api.service';
-import { NotificationService } from '../services/notification.service';
-import { TranslationService } from '../services/translation.service';
+import { NodesApiService, NotificationService, TranslationService } from '@alfresco/core';
 import { FolderDialogComponent } from './folder.dialog';
 
 describe('FolderDialogComponent', () => {

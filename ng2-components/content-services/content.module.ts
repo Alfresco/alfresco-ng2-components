@@ -33,6 +33,8 @@ import { SitesDropdownModule } from './site-dropdown';
 import { BreadcrumbModule } from './breadcrumb';
 import { VersionManagerModule } from './version-manager';
 import { ContentNodeSelectorModule } from './content-node-selector';
+import { DialogModule } from './dialogs';
+import { DirectiveModule } from './directive';
 
 @NgModule({
     imports: [
@@ -51,7 +53,9 @@ import { ContentNodeSelectorModule } from './content-node-selector';
         SitesDropdownModule,
         BreadcrumbModule,
         VersionManagerModule,
-        ContentNodeSelectorModule
+        ContentNodeSelectorModule,
+        DialogModule,
+        DirectiveModule
     ],
     providers: [
         {
@@ -74,7 +78,9 @@ import { ContentNodeSelectorModule } from './content-node-selector';
         SitesDropdownModule,
         BreadcrumbModule,
         VersionManagerModule,
-        ContentNodeSelectorModule
+        ContentNodeSelectorModule,
+        DialogModule,
+        DirectiveModule
     ]
 })
 export class ContentModule {

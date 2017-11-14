@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges,  ViewChild, ViewEncapsulation } from '@angular/core';
-import { StartFormComponent } from '../../form';
+import { StartFormComponent } from '@alfresco/core';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessDefinitionRepresentation } from './../models/process-definition.model';
 import { ProcessInstance } from './../models/process-instance.model';

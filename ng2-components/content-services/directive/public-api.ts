@@ -15,13 +15,7 @@
  * limitations under the License.
  */
 
-export * from './process-list';
-export * from './diagram';
-export * from './analytics';
-export * from './task-list';
-export * from './app-list';
-export * from './attachment';
-export * from './comments';
-export * from './people';
+export * from './folder-create.directive';
+export * from './folder-edit.directive';
 
-export * from './process.module';
+export * from './directive.module';

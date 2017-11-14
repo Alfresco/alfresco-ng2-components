@@ -15,13 +15,25 @@
  * limitations under the License.
  */
 
-export * from './process-list';
-export * from './diagram';
-export * from './analytics';
-export * from './task-list';
-export * from './app-list';
-export * from './attachment';
-export * from './comments';
-export * from './people';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { MaterialModule } from '../material.module';
 
-export * from './process.module';
+import { FolderCreateDirective } from './folder-create.directive';
+import { FolderEditDirective } from './folder-edit.directive';
+
+@NgModule({
+    imports: [
+        CommonModule,
+        MaterialModule
+    ],
+    declarations: [
+        FolderCreateDirective,
+        FolderEditDirective
+    ],
+    exports: [
+        FolderCreateDirective,
+        FolderEditDirective
+    ]
+})
+export class DirectiveModule {}

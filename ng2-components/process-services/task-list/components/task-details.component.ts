@@ -29,7 +29,7 @@ import { Component,
 } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { Observable, Observer } from 'rxjs/Rx';
-import { ContentLinkModel, FormFieldValidator, FormModel, FormOutcomeEvent } from '../../form';
+import { ContentLinkModel, FormFieldValidator, FormModel, FormOutcomeEvent } from '@alfresco/core';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';

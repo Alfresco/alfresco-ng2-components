@@ -24,7 +24,7 @@ import { MaterialModule } from '../material.module';
 import { Observable } from 'rxjs/Rx';
 import { AppConfigServiceMock } from '../mock';
 import { TaskAttachmentListComponent } from './task-attachment-list.component';
-import { ProcessContentService } from '../form';
+import { ProcessContentService } from '@alfresco/core';
 
 describe('TaskAttachmentList', () => {
 

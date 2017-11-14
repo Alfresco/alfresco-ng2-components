@@ -17,7 +17,7 @@
 
 import { ContentService, ThumbnailService } from '@alfresco/core';
 import { Component, EventEmitter, Input, NgZone, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ProcessContentService } from '../form';
+import { ProcessContentService } from '@alfresco/core';
 
 declare var require: any;
 

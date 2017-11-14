@@ -19,7 +19,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
-import { FormModule } from '../form';
+import { FormModule } from '@alfresco/core';
 
 import { CardViewModule, DataColumnModule,  DataTableModule, DirectiveModule, InfoDrawerModule } from '@alfresco/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';

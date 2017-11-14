@@ -20,11 +20,12 @@ import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { FormModule } from '../form';
+import { FormModule } from '@alfresco/core';
 import { MaterialModule } from '../material.module';
 
 import { CardViewModule, CardViewUpdateService, DataColumnModule, DataTableModule, DirectiveModule, PipeModule } from '@alfresco/core';
 import { TaskListModule } from '../task-list';
+import { PeopleModule } from '../people';
 
 import { ProcessAuditDirective } from './components/process-audit.directive';
 import { ProcessFiltersComponent } from './components/process-filters.component';
@@ -50,7 +51,8 @@ import { ProcessService } from './services/process.service';
         ReactiveFormsModule,
         PipeModule,
         DataColumnModule,
-        DirectiveModule
+        DirectiveModule,
+        PeopleModule
     ],
     declarations: [
         ProcessInstanceListComponent,

@@ -18,27 +18,23 @@
 import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
-
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs/Rx';
 
-import { AppConfigService } from '../app-config';
-import { DirectiveModule } from '../directives';
-import { ContentService } from '../services/content.service';
-import { TranslateLoaderService } from '../services/translate-loader.service';
-import { FolderEditDirective } from './folder-edit.directive';
+import { AppConfigService, DirectiveModule, ContentService, TranslateLoaderService } from '@alfresco/core';
+import { FolderCreateDirective } from './folder-create.directive';
 
 @Component({
-    template: '<div [adf-edit-folder]="folder"></div>'
+    template: '<div [adf-create-folder]="parentNode"></div>'
 })
 class TestComponent {
-    folder = {};
+    parentNode = '';
 }
 
-describe('FolderEditDirective', () => {
+describe('FolderCreateDirective', () => {
     let fixture: ComponentFixture<TestComponent>;
     let element;
     let node: any;
@@ -46,7 +42,7 @@ describe('FolderEditDirective', () => {
     let contentService: ContentService;
     let dialogRefMock;
 
-    const event = {
+    const event: any = {
         type: 'click',
         preventDefault: () => null
     };
@@ -57,8 +53,8 @@ describe('FolderEditDirective', () => {
                 HttpClientModule,
                 MatDialogModule,
                 FormsModule,
-                ReactiveFormsModule,
                 DirectiveModule,
+                ReactiveFormsModule,
                 TranslateModule.forRoot({
                     loader: {
                         provide: TranslateLoader,
@@ -68,8 +64,7 @@ describe('FolderEditDirective', () => {
             ],
             declarations: [
                 TestComponent
-            ]
-            ,
+            ],
             providers: [
                 ContentService,
                 AppConfigService
@@ -79,13 +74,13 @@ describe('FolderEditDirective', () => {
         TestBed.compileComponents();
 
         fixture = TestBed.createComponent(TestComponent);
-        element = fixture.debugElement.query(By.directive(FolderEditDirective));
+        element = fixture.debugElement.query(By.directive(FolderCreateDirective));
         dialog = TestBed.get(MatDialog);
         contentService = TestBed.get(ContentService);
     });
 
     beforeEach(() => {
-        node = { entry: { id: 'folderId' } };
+        node = { entry: { id: 'nodeId' } };
 
         dialogRefMock = {
             afterClosed: val =>  Observable.of(val)
@@ -94,10 +89,10 @@ describe('FolderEditDirective', () => {
         spyOn(dialog, 'open').and.returnValue(dialogRefMock);
     });
 
-    it('should emit folderEdit event when input value is not undefined', () => {
+    it('should emit folderCreate event when input value is not undefined', () => {
         spyOn(dialogRefMock, 'afterClosed').and.returnValue(Observable.of(node));
 
-        contentService.folderEdit.subscribe((val) => {
+        contentService.folderCreate.subscribe((val) => {
             expect(val).toBe(node);
         });
 
@@ -105,13 +100,13 @@ describe('FolderEditDirective', () => {
         fixture.detectChanges();
     });
 
-    it('should not emit folderEdit event when input value is undefined', () => {
+    it('should not emit folderCreate event when input value is undefined', () => {
         spyOn(dialogRefMock, 'afterClosed').and.returnValue(Observable.of(null));
-        spyOn(contentService.folderEdit, 'next');
+        spyOn(contentService.folderCreate, 'next');
 
         element.triggerEventHandler('click', event);
         fixture.detectChanges();
 
-        expect(contentService.folderEdit.next).not.toHaveBeenCalled();
+        expect(contentService.folderCreate.next).not.toHaveBeenCalled();
     });
 });

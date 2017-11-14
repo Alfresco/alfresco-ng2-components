@@ -9,6 +9,8 @@
 @import '../search/components/search.component';
 @import '../search/components/search-control.component';
 
+@import '../dialogs/folder.dialog';
+
 @mixin adf-content-services-theme($theme) {
     @include adf-breadcrumb-theme($theme);
     @include adf-breadcrumb-dropdown-theme($theme);
@@ -18,4 +20,5 @@
     @include adf-upload-dialog-theme($theme);
     @include adf-search-control-theme($theme);
     @include adf-search-autocomplete-theme($theme);
+    @include adf-dialog-theme($theme);
 }

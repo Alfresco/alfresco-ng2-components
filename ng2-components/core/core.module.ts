@@ -32,7 +32,6 @@ import { CollapsableModule } from './collapsable';
 import { ContextMenuModule } from './context-menu';
 import { DataColumnModule } from './data-column';
 import { DataTableModule } from './datatable';
-import { DialogModule } from './dialogs';
 import { InfoDrawerModule } from './info-drawer';
 import { LanguageMenuModule } from './language-menu';
 import { LoginModule } from './login';
@@ -41,6 +40,7 @@ import { HostSettingsModule } from './settings';
 import { ToolbarModule } from './toolbar';
 import { UserInfoModule } from './userinfo';
 import { ViewerModule } from './viewer';
+import { FormModule } from './form';
 
 import { DirectiveModule } from './directives';
 import { PipeModule } from './pipes';
@@ -70,6 +70,7 @@ export function createTranslateLoader(http: HttpClient, logService: LogService) 
         CardViewModule,
         CollapsableModule,
         ServiceModule,
+        FormModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -102,7 +103,6 @@ export function createTranslateLoader(http: HttpClient, logService: LogService) 
         CollapsableModule,
         PaginationModule,
         ToolbarModule,
-        DialogModule,
         LoginModule,
         UserInfoModule,
         LanguageMenuModule,
@@ -113,7 +113,8 @@ export function createTranslateLoader(http: HttpClient, logService: LogService) 
         ServiceModule,
         ViewerModule,
         PipeModule,
-        DirectiveModule
+        DirectiveModule,
+        FormModule
     ]
 })
 export class CoreModule {

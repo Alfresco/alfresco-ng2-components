@@ -20,7 +20,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MaterialModule } from '../material.module';
 import { Observable } from 'rxjs/Rx';
 
-import { ProcessContentService } from '../form';
+import { ProcessContentService } from '@alfresco/core';
 import { AppConfigService } from '@alfresco/core';
 import { AppConfigServiceMock } from '../mock';
 import { AttachmentComponent } from './create-task-attachment.component';

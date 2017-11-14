@@ -24,9 +24,7 @@ import { FolderDialogComponent } from './folder.dialog';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { NodesApiService } from '../services/nodes-api.service';
-import { NotificationService } from '../services/notification.service';
-import { TranslationService } from '../services/translation.service';
+import { NodesApiService, NotificationService, TranslationService } from '@alfresco/core';
 
 @NgModule({
     imports: [

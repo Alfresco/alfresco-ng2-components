@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-export * from './folder-create.directive';
-export * from './folder-edit.directive';
 export * from './highlight.directive';
 export * from './logout.directive';
 export * from './node-delete.directive';

@@ -15,40 +15,43 @@
  * limitations under the License.
  */
 
-import { Directive, HostListener, Input } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { FolderDialogComponent } from '../dialogs/folder.dialog';
-import { ContentService } from '../services/content.service';
 
-const DEFAULT_FOLDER_PARENT_ID = '-my-';
+import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+
+import { FolderDialogComponent } from '../dialogs/folder.dialog';
+import { ContentService } from '@alfresco/core';
 
 @Directive({
-    selector: '[adf-create-folder]'
+    selector: '[adf-edit-folder]'
 })
-export class FolderCreateDirective {
+export class FolderEditDirective {
     static DIALOG_WIDTH: number = 400;
 
-    @Input('adf-create-folder')
-    parentNodeId: string = DEFAULT_FOLDER_PARENT_ID;
+    @Input('adf-edit-folder')
+    folder: MinimalNodeEntryEntity;
 
     @HostListener('click', [ '$event' ])
     onClick(event) {
         event.preventDefault();
-        this.openDialog();
+        if (this.folder) {
+            this.openDialog();
+        }
     }
 
     constructor(
         public dialogRef: MatDialog,
+        public elementRef: ElementRef,
         public content: ContentService
     ) {}
 
     private get dialogConfig(): MatDialogConfig {
-        const { DIALOG_WIDTH: width } = FolderCreateDirective;
-        const { parentNodeId } = this;
+        const { DIALOG_WIDTH: width } = FolderEditDirective;
+        const { folder } = this;
 
         return {
-            data: { parentNodeId },
+            data: { folder },
             width: `${width}px`
         };
     }
@@ -59,7 +62,7 @@ export class FolderCreateDirective {
 
         dialogInstance.afterClosed().subscribe((node: MinimalNodeEntryEntity) => {
             if (node) {
-                content.folderCreate.next(node);
+                content.folderEdit.next(node);
             }
         });
     }

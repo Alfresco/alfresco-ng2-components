@@ -21,11 +21,13 @@ export * from './webscript';
 export * from './document-list';
 export * from './upload';
 export * from './search';
-export * from  './site-dropdown';
-export * from  './breadcrumb';
-export * from  './version-manager';
-export * from  './content-node-selector';
+export * from './site-dropdown';
+export * from './breadcrumb';
+export * from './version-manager';
+export * from './content-node-selector';
+export * from './dialogs';
+export * from './directive';
 
-export * from  './mock';
+export * from './mock';
 
 export * from './content.module';

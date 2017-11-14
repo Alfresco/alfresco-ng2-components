@@ -20,6 +20,7 @@ core/**/*.js.map
 
 core/**/*.d.ts
 *.tgz
+core/prebuilt-themes/
 /package/
 /bundles/
 index.d.ts

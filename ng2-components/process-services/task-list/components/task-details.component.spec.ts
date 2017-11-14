@@ -21,7 +21,7 @@ import { MatButtonModule, MatInputModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
-import { FormModule, FormModel, FormOutcomeEvent, FormOutcomeModel, FormService } from '../../form';
+import { FormModule, FormModel, FormOutcomeEvent, FormOutcomeModel, FormService } from '@alfresco/core';
 import { AppConfigService, CommentProcessService, LogService } from '@alfresco/core';
 
 import { PeopleProcessService, UserProcessModel } from '@alfresco/core';

@@ -15,43 +15,40 @@
  * limitations under the License.
  */
 
-import { Directive, ElementRef, HostListener, Input } from '@angular/core';
+import { Directive, HostListener, Input } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
-
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-
 import { FolderDialogComponent } from '../dialogs/folder.dialog';
-import { ContentService } from '../services/content.service';
+import { ContentService } from '@alfresco/core';
+
+const DEFAULT_FOLDER_PARENT_ID = '-my-';
 
 @Directive({
-    selector: '[adf-edit-folder]'
+    selector: '[adf-create-folder]'
 })
-export class FolderEditDirective {
+export class FolderCreateDirective {
     static DIALOG_WIDTH: number = 400;
 
-    @Input('adf-edit-folder')
-    folder: MinimalNodeEntryEntity;
+    @Input('adf-create-folder')
+    parentNodeId: string = DEFAULT_FOLDER_PARENT_ID;
 
     @HostListener('click', [ '$event' ])
     onClick(event) {
         event.preventDefault();
-        if (this.folder) {
-            this.openDialog();
-        }
+        this.openDialog();
     }
 
     constructor(
         public dialogRef: MatDialog,
-        public elementRef: ElementRef,
         public content: ContentService
     ) {}
 
     private get dialogConfig(): MatDialogConfig {
-        const { DIALOG_WIDTH: width } = FolderEditDirective;
-        const { folder } = this;
+        const { DIALOG_WIDTH: width } = FolderCreateDirective;
+        const { parentNodeId } = this;
 
         return {
-            data: { folder },
+            data: { parentNodeId },
             width: `${width}px`
         };
     }
@@ -62,7 +59,7 @@ export class FolderEditDirective {
 
         dialogInstance.afterClosed().subscribe((node: MinimalNodeEntryEntity) => {
             if (node) {
-                content.folderEdit.next(node);
+                content.folderCreate.next(node);
             }
         });
     }

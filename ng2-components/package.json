@@ -146,7 +146,7 @@
     },
     {
       "path": "./core/bundles/core.js",
-      "maxSize": "70 kb"
+      "maxSize": "120 kb"
     }
   ],
   "module": "./index.js",
