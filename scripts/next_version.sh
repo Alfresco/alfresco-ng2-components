@@ -3,8 +3,6 @@
 #!/usr/bin/env bash
 set -f
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
 eval EXEC_PATCH=false
 eval EXEC_MAJOR=false
 eval EXEC_MINOR=false
@@ -22,23 +20,23 @@ show_help() {
 }
 
 major() {
-    EXEC_MAJOR=TRUE
+    EXEC_MAJOR=true
 }
 
 minor() {
-    EXEC_MINOR=TRUE
+    EXEC_MINOR=true
 }
 
 patch() {
-    EXEC_PATCH=TRUE
+    EXEC_PATCH=true
 }
 
 alpha() {
-    EXEC_ALPHA=TRUE
+    EXEC_ALPHA=true
 }
 
 beta() {
-    EXEC_BETA=TRUE
+    EXEC_BETA=true
 }
 
 while [[ $1 == -* ]]; do
@@ -53,8 +51,8 @@ while [[ $1 == -* ]]; do
     esac
 done
 
-
-if $EXEC_MINOR == true; then
+if [[ "${EXEC_MINOR}" == true ]]
+then
     ADF_VERSION=$(npm view ng2-alfresco-core version)
     NEXT_VERSION=( ${ADF_VERSION//./ } )
     ((NEXT_VERSION[1]++))
@@ -62,7 +60,8 @@ if $EXEC_MINOR == true; then
     NEXT_VERSION="${NEXT_VERSION[0]}.${NEXT_VERSION[1]}.${NEXT_VERSION[2]}"
 fi
 
-if $EXEC_MAJOR == true; then
+if [[ "${EXEC_MAJOR}" == true ]]
+then
     ADF_VERSION=$(npm view ng2-alfresco-core version)
     NEXT_VERSION=( ${ADF_VERSION//./ } )
     ((NEXT_VERSION[0]++))
@@ -71,20 +70,22 @@ if $EXEC_MAJOR == true; then
     NEXT_VERSION="${NEXT_VERSION[0]}.${NEXT_VERSION[1]}.${NEXT_VERSION[2]}"
 fi
 
-if $EXEC_PATCH == true; then
+if [[ "${EXEC_PATCH}" == true ]]
+then
     ADF_VERSION=$(npm view ng2-alfresco-core version)
     NEXT_VERSION=( ${ADF_VERSION//./ } )
     ((NEXT_VERSION[2]++))
     NEXT_VERSION="${NEXT_VERSION[0]}.${NEXT_VERSION[1]}.${NEXT_VERSION[2]}"
 fi
 
-
-if $EXEC_ALPHA == true; then
+if [[ "${EXEC_ALPHA}" == true ]]
+then
     ISH_KEY=$(git rev-parse HEAD)
     NEXT_VERSION=${NEXT_VERSION}-${ISH_KEY}
 fi
 
-if $EXEC_BETA == true; then
+if [[ "${EXEC_BETA}" == true ]]
+then
 	BETA_VERSION=$(npm view ng2-alfresco-core@beta version)
 
 	if [[  $BETA_VERSION == "" ]]; then
@@ -108,5 +109,3 @@ if $EXEC_BETA == true; then
 fi
 
 echo $NEXT_VERSION
-
-
