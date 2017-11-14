@@ -1,8 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { MatInputModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 // import { Editor3DModule } from 'ng2-3d-editor';
 import { ChartsModule } from 'ng2-charts';
@@ -16,7 +14,7 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { AppLayoutComponent } from './components/app-layout/app-layout.component';
 import { HomeComponent } from './components/home/home.component';
 import { SearchBarComponent } from './components/search/search-bar.component';
-import { SearchComponent } from './components/search/search.component';
+import { SearchResultComponent } from './components/search/search-result.component';
 import { AboutComponent } from './components/about/about.component';
 import { FormComponent } from './components/form/form.component';
 import { FormListComponent } from './components/form/form-list.component';
@@ -51,7 +49,7 @@ import { routing } from './app.routes';
     AppLayoutComponent,
     HomeComponent,
     SearchBarComponent,
-    SearchComponent,
+    SearchResultComponent,
     AboutComponent,
     ActivitiComponent,
     ActivitiTaskAttachmentsComponent,
@@ -75,8 +73,6 @@ import { routing } from './app.routes';
     BrowserModule,
     routing,
     FormsModule,
-    HttpModule,
-    MatInputModule,
     AdfModule,
     MaterialModule,
     ThemePickerModule,

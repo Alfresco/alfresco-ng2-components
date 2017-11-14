@@ -23,12 +23,13 @@
                         <div mat-card-title class="adf-app-listgrid-item-card-title">
                             <h1>{{getAppName(app) | async}}</h1>
                         </div>
-                        <div mat-card-subtitle class="adf-app-listgrid-item-card-subtitle" fxFlex="1 0 auto">
+                        <mat-card-subtitle class="adf-app-listgrid-item-card-subtitle" fxFlex="1 0 auto">
                             <p>{{app.description}}</p>
-                        </div>
-                        <div mat-card-actions class="adf-app-listgrid-item-card-actions">
+                        </mat-card-subtitle>
+
+                        <mat-card-actions class="adf-app-listgrid-item-card-actions">
                             <mat-icon class="adf-app-listgrid-item-card-actions-icon" *ngIf="isSelected(app.id)">done</mat-icon>
-                        </div>
+                        </mat-card-actions>
                 </mat-card>
         </div>
     </div>

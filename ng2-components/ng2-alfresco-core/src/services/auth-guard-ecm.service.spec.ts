@@ -19,6 +19,7 @@ import { async, inject, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AuthGuardEcm } from './auth-guard-ecm.service';
+import { AuthenticationService } from './authentication.service';
 
 class RouterProvider {
     navigate: Function = jasmine.createSpy('RouterProviderNavigate');
@@ -60,9 +61,14 @@ class AlfrescoApiServiceProvider {
     }
 }
 
+class AuthenticationServiceProvider {
+    setRedirectUrl: Function = jasmine.createSpy('setRedirectUrl');
+}
+
 class TestConfig {
     router: any;
     guard: any;
+    auth: any;
 
     private settings: any = {
         validateTicket: true,
@@ -76,13 +82,15 @@ class TestConfig {
             providers: [
                 this.routerProvider,
                 this.alfrescoApiServiceProvider,
+                this.authenticationProvider,
                 AuthGuardEcm
             ]
         });
 
-        inject([ AuthGuardEcm, Router ], (guard: AuthGuardEcm, router: Router) => {
+        inject([ AuthGuardEcm, Router, AuthenticationService ], (guard: AuthGuardEcm, router: Router, auth: AuthenticationService) => {
             this.guard = guard;
             this.router = router;
+            this.auth = auth;
         })();
     }
 
@@ -90,6 +98,13 @@ class TestConfig {
         return {
             provide: Router,
             useValue: new RouterProvider()
+        };
+    }
+
+    private get authenticationProvider() {
+        return {
+            provide: AuthenticationService,
+            useValue: new AuthenticationServiceProvider()
         };
     }
 
@@ -119,7 +134,7 @@ describe('CanActivateLoggedIn', () => {
 
             const { guard, router } = this.test;
 
-            guard.canActivate().then((activate) => {
+            guard.canActivate(null, { url: '' }).then((activate) => {
                 this.activate = activate;
                 this.navigateSpy = router.navigate;
             });
@@ -143,7 +158,7 @@ describe('CanActivateLoggedIn', () => {
 
             const { guard, router } = this.test;
 
-            guard.canActivate().then((activate) => {
+            guard.canActivate(null, { url: '' }).then((activate) => {
                 this.activate = activate;
                 this.navigateSpy = router.navigate;
             });
@@ -167,7 +182,7 @@ describe('CanActivateLoggedIn', () => {
 
             const { guard, router } = this.test;
 
-            guard.canActivate().then((activate) => {
+            guard.canActivate(null, { url: '' }).then((activate) => {
                 this.activate = activate;
                 this.navigateSpy = router.navigate;
             });
@@ -179,6 +194,24 @@ describe('CanActivateLoggedIn', () => {
 
         it('does not redirect', () => {
             expect(this.navigateSpy).not.toHaveBeenCalled();
+        });
+    });
+
+    describe('redirect url', () => {
+        beforeEach(async(() => {
+            this.test = new TestConfig({
+                isLoggedIn: false
+            });
+
+            const { guard, auth } = this.test;
+
+            guard.canActivate(null, { url: 'some-url' }).then((activate) => {
+                this.auth = auth;
+            });
+        }));
+
+        it('should set redirect url', () => {
+            expect(this.auth.setRedirectUrl).toHaveBeenCalledWith('some-url');
         });
     });
 });

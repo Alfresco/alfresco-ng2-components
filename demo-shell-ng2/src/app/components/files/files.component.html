@@ -122,8 +122,10 @@
                 [allowDropFiles]="true"
                 [selectionMode]="selectionMode"
                 [multiselect]="multiselect"
+                [node]="nodeResult"
                 (error)="onNavigationError($event)"
                 (success)="resetError()"
+                (ready)="emitReadyEvent($event)"
                 (preview)="showFile($event)"
                 (folderChange)="onFolderChange($event)"
                 (permissionError)="handlePermissionError($event)">

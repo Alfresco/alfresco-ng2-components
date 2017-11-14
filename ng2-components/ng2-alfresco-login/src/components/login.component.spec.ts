@@ -114,6 +114,17 @@ describe('LoginComponent', () => {
         expect(router.navigate).toHaveBeenCalledWith([redirect]);
     });
 
+    it('should redirect to previous route state on successful login', () => {
+        const redirect = '/home';
+        component.successRoute = redirect;
+        authService.setRedirectUrl('redirect-url');
+
+        spyOn(router, 'navigate');
+
+        loginWithCredentials('fake-username', 'fake-password');
+        expect(router.navigate).toHaveBeenCalledWith(['redirect-url']);
+    });
+
     it('should update user preferences upon login', (done) => {
         spyOn(userPreferences, 'setStoragePrefix').and.callThrough();
 

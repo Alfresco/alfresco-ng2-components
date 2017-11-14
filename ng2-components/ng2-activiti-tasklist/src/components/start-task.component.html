@@ -42,24 +42,23 @@
                 </div>
             </mat-grid-tile>
             <mat-grid-tile>
-              <mat-form-field>
+              <mat-form-field class="adf-start-task-input-container">
                 <mat-select placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE'|translate}}" id="assignee_id"
-                           class="adf-start-task-input-container adf-mat-select" [(ngModel)]="assigneeId">
+                           class="adf-mat-select" [(ngModel)]="assigneeId">
                     <mat-option>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NONE'|translate}}</mat-option>
-					<span *ngFor="let user of people">
-						<mat-option [value]="user.id" *ngIf="!isUserNameEmpty(user)">{{ getDisplayUser(user.firstName,
+                    <span *ngFor="let user of people">
+                        <mat-option [value]="user.id" *ngIf="!isUserNameEmpty(user)">{{ getDisplayUser(user.firstName,
                             user.lastName, ' ')}}
                         </mat-option>
-					</span>
+                    </span>
                 </mat-select>
               </mat-form-field>
             </mat-grid-tile>
         </mat-grid-list>
         <mat-grid-list cols="2" rowHeight="80px">
             <mat-grid-tile>
-                <mat-form-field>
-                    <mat-select placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.FORM'|translate}}" id="form_id" [(ngModel)]="formKey"
-                               class="adf-start-task-input-container">
+                <mat-form-field class="adf-start-task-input-container">
+                    <mat-select placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.FORM'|translate}}" id="form_id" [(ngModel)]="formKey">
                         <mat-option>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NONE'|translate}}</mat-option>
                         <mat-option *ngFor="let form of forms" [value]="form.id">{{ form.name }}</mat-option>
                     </mat-select>

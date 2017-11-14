@@ -92,6 +92,14 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         }
 
         if (col.key === '$thumbnail') {
+
+            if (this.imageResolver) {
+                let resolved = this.imageResolver(row, col);
+                if (resolved) {
+                    return resolved;
+                }
+            }
+
             const node = (<ShareDataRow> row).node;
 
             if (node.entry.isFolder) {
@@ -113,7 +121,6 @@ export class ShareDataTableAdapter implements DataTableAdapter {
 
             return this.documentListService.getDefaultMimeTypeIcon();
         }
-
 
         if (col.type === 'image') {
 

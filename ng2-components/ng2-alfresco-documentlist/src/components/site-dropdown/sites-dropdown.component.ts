@@ -42,7 +42,8 @@ export class DropdownSitesComponent implements OnInit {
     ngOnInit() {
         this.sitesService.getSites().subscribe((result) => {
             this.siteList = result;
-        });
+        },
+        (error) => {});
     }
 
     selectedSite() {

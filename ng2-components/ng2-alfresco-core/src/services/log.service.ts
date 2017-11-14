@@ -42,6 +42,14 @@ export class LogService {
         };
     }
 
+    get debug(): (message?: any, ...optionalParams: any[]) => any {
+        if (this.currentLogLevel >= LogLevelsEnum.DEBUG) {
+            return console.debug.bind(console);
+        }
+        return (message?: any, ...optionalParams: any[]) => {
+        };
+    }
+
     get info(): (message?: any, ...optionalParams: any[]) => any {
         if (this.currentLogLevel >= LogLevelsEnum.INFO) {
             return console.info.bind(console);

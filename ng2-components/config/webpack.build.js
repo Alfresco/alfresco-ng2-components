@@ -1,6 +1,9 @@
-const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const commonConfig = require('./webpack.common.js');
+const fs = require('fs');
+const webpack = require('webpack');
+const path = require('path');
 
 module.exports = webpackMerge(commonConfig, {
 
@@ -8,7 +11,9 @@ module.exports = webpackMerge(commonConfig, {
     externals: [
         /^\@angular\//,
         /^rxjs\//,
+        /^\@ngx-translate\//,
         'moment',
+        'minimatch',
         'raphael',
         'ng2-charts',
         'alfresco-js-api',
@@ -18,7 +23,8 @@ module.exports = webpackMerge(commonConfig, {
         'ng2-activiti-diagrams',
         'ng2-activiti-form',
         "ng2-activiti-tasklist",
-        'ng2-alfresco-documentlist'
+        'ng2-alfresco-documentlist',
+        'ng2-alfresco-upload',
     ],
 
     output: {
@@ -49,18 +55,22 @@ module.exports = webpackMerge(commonConfig, {
 
     plugins: [
 
-        //new webpack.optimize.UglifyJsPlugin({
-        //    mangle: {
-        //        keep_fnames: true
-        //    },
-        //    compress: {
-        //        warnings: false
-        //    },
-        //    output: {
-        //        comments: false
-        //    },
-        //    sourceMap: true
-        //})
+        new UglifyJSPlugin({
+            sourceMap: true,
+            uglifyOptions: {
+                ie8: false,
+                ecma: 6,
+                output: {
+                    comments: false,
+                    beautify: false
+                },
+                warnings: false
+            }
+        }),
 
+        new webpack.BannerPlugin({
+            banner: fs.readFileSync(path.resolve(__dirname, './assets/license_header_add.txt'), 'utf8'),
+            entryOnly: true
+        })
     ]
 });

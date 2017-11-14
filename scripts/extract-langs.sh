@@ -1,17 +1,35 @@
 #!/usr/bin/env bash
 
-if [ $# -eq 0 ]; then
-    echo "No arguments supplied. Default path for output will be used."
-    LANGS_OUTPUT="./i18n"
-else
-    LANGS_OUTPUT="$1"
-fi
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-COMPONENTS_ROOT="ng2-components"
+LANGS_OUTPUT="./i18n"
+
+output_folder(){
+    if [ $1 -eq 0 ]; then
+        echo "No arguments supplied. Default path for output will be used ./i18n"
+    else
+        LANGS_OUTPUT="$1"
+    fi
+}
+
+show_help() {
+    echo "Usage: extract-langs.sh Extract the i18n files from the repo and create a zip"
+    echo ""
+    echo "--output or -o to specify a folder otherwise it will be created in i18n"
+}
+
+while [[ $1  == -* ]]; do
+    case "$1" in
+      -h|--help|-\?) show_help; exit 0;;
+      --output|-o)  output_folder $2; shift;;
+    esac
+done
+
+COMPONENTS_ROOT="$DIR/../ng2-components"
 
 # Find all directories in $COMPONENTS_ROOT called i18n and add the demo-shell manually
-COMPONENTS=(`find $COMPONENTS_ROOT -type d -name i18n`)
-COMPONENTS+=("demo-shell-ng2/resources/i18n")
+COMPONENTS=(`find $COMPONENTS_ROOT -type d -name i18n -not \( -name '*.*' -o -path '**/node_modules*'  -o -path '**/bundles*' \)`)
+COMPONENTS+=("$DIR/../demo-shell-ng2/resources/i18n")
 
 # Loop the individual components
 for COMPONENT_DIR in "${COMPONENTS[@]}"
@@ -33,12 +51,13 @@ do :
       LANG=`echo "$TMP" | tr '[:lower:]' '[:upper:]'` # Conver to upper case
 
       # Build the output path, ensure it exists then copy the file
-      DEST="$LANGS_OUTPUT/$LANG/$COMPONENT_DIR"
-      echo "\tCopying $i to $DEST"
+      DEST="$LANGS_OUTPUT/$LANG/${COMPONENT_DIR#${DIR}/../}"
+      echo "Copying $i to $DEST"
       `mkdir -p $DEST`
       `cp $i $DEST`
     fi
   done
-  echo "\n"
-
 done
+
+echo "====== Create a zip ======"
+zip -r ${LANGS_OUTPUT}/i18n.zip ./${LANGS_OUTPUT}/*

@@ -15,6 +15,9 @@
  * limitations under the License.
  */
 
+import { Component, ViewChild } from '@angular/core';
+import { SearchComponent } from '../components/search.component';
+
 const entryItem = {
     entry: {
         id: '123',
@@ -32,10 +35,35 @@ const entryItem = {
     }
 };
 
+const entryDifferentItem = {
+    entry: {
+        id: '999',
+        name: 'TEST_DOC',
+        isFile : true,
+        content: {
+            mimeType: 'text/plain'
+        },
+        createdByUser: {
+            displayName: 'John TEST'
+        },
+        modifiedByUser: {
+            displayName: 'John TEST'
+        }
+    }
+};
+
 export let result = {
     list: {
         entries: [
             entryItem
+        ]
+    }
+};
+
+export let differentResult = {
+    list: {
+        entries: [
+            entryDifferentItem
         ]
     }
 };
@@ -86,3 +114,56 @@ export let errorJson = {
         descriptionURL: 'https://api-explorer.alfresco.com'
     }
 };
+
+@Component({
+    template: `
+    <adf-search [searchTerm]="searchedWord" [maxResults]="maxResults"
+        (error)="showSearchResult('ERROR')"
+        (success)="showSearchResult('success')" #search>
+       <ng-template let-data>
+            <ul id="autocomplete-search-result-list">
+                <li *ngFor="let item of data?.list?.entries; let idx = index" (click)="elementClicked(item)">
+                    <div id="result_option_{{idx}}">
+                        <span>{{ item?.entry.name }}</span>
+                    </div>
+                </li>
+            </ul>
+        </ng-template>
+    </adf-search>
+    <span id="component-result-message">{{message}}</span>
+    `
+  })
+
+  export class SimpleSearchTestComponent {
+
+    @ViewChild('search')
+    search: SearchComponent;
+
+    message: string = '';
+    searchedWord= '';
+    maxResults: number = 5;
+
+    constructor() {
+    }
+
+    showSearchResult(event: any) {
+        this.message = event;
+    }
+
+    elementClicked(event: any) {
+        this.message = 'element clicked';
+    }
+
+    setSearchWordTo(str: string) {
+        this.searchedWord = str;
+    }
+
+    changeMaxResultTo(newMax: number) {
+        this.maxResults = newMax;
+    }
+
+    forceHidePanel() {
+        this.search.hidePanel();
+    }
+
+  }

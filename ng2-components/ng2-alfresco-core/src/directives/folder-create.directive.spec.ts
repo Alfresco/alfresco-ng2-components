@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
+import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 import { MatDialog, MatDialogModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -52,7 +52,7 @@ describe('FolderCreateDirective', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                HttpModule,
+                HttpClientModule,
                 MatDialogModule,
                 FormsModule,
                 ReactiveFormsModule,

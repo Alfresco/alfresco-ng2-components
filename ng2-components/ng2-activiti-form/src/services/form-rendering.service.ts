@@ -16,6 +16,7 @@
  */
 
 import { Injectable, Type } from '@angular/core';
+import { DynamicComponentMapper, DynamicComponentResolveFunction, DynamicComponentResolver } from 'ng2-alfresco-core';
 
 import {
     AmountWidgetComponent,
@@ -41,30 +42,33 @@ import {
 } from './../components/widgets/index';
 
 @Injectable()
-export class FormRenderingService {
+export class FormRenderingService extends DynamicComponentMapper {
 
-    private types: { [key: string]: ComponentTypeResolver } = {
-        'text': DefaultTypeResolver.fromType(TextWidgetComponent),
-        'string': DefaultTypeResolver.fromType(TextWidgetComponent),
-        'integer': DefaultTypeResolver.fromType(NumberWidgetComponent),
-        'multi-line-text': DefaultTypeResolver.fromType(MultilineTextWidgetComponentComponent),
-        'boolean': DefaultTypeResolver.fromType(CheckboxWidgetComponent),
-        'dropdown': DefaultTypeResolver.fromType(DropdownWidgetComponent),
-        'date': DefaultTypeResolver.fromType(DateWidgetComponent),
-        'amount': DefaultTypeResolver.fromType(AmountWidgetComponent),
-        'radio-buttons': DefaultTypeResolver.fromType(RadioButtonsWidgetComponent),
-        'hyperlink': DefaultTypeResolver.fromType(HyperlinkWidgetComponent),
-        'readonly-text': DefaultTypeResolver.fromType(DisplayTextWidgetComponentComponent),
-        'typeahead': DefaultTypeResolver.fromType(TypeaheadWidgetComponent),
-        'people': DefaultTypeResolver.fromType(PeopleWidgetComponent),
-        'functional-group': DefaultTypeResolver.fromType(FunctionalGroupWidgetComponent),
-        'dynamic-table': DefaultTypeResolver.fromType(DynamicTableWidgetComponent),
-        'container': DefaultTypeResolver.fromType(ContainerWidgetComponent),
-        'group': DefaultTypeResolver.fromType(ContainerWidgetComponent),
-        'document': DefaultTypeResolver.fromType(DocumentWidgetComponent)
+    protected defaultValue: Type<{}> = UnknownWidgetComponent;
+    protected types: { [key: string]: DynamicComponentResolveFunction } = {
+        'text': DynamicComponentResolver.fromType(TextWidgetComponent),
+        'string': DynamicComponentResolver.fromType(TextWidgetComponent),
+        'integer': DynamicComponentResolver.fromType(NumberWidgetComponent),
+        'multi-line-text': DynamicComponentResolver.fromType(MultilineTextWidgetComponentComponent),
+        'boolean': DynamicComponentResolver.fromType(CheckboxWidgetComponent),
+        'dropdown': DynamicComponentResolver.fromType(DropdownWidgetComponent),
+        'date': DynamicComponentResolver.fromType(DateWidgetComponent),
+        'amount': DynamicComponentResolver.fromType(AmountWidgetComponent),
+        'radio-buttons': DynamicComponentResolver.fromType(RadioButtonsWidgetComponent),
+        'hyperlink': DynamicComponentResolver.fromType(HyperlinkWidgetComponent),
+        'readonly-text': DynamicComponentResolver.fromType(DisplayTextWidgetComponentComponent),
+        'typeahead': DynamicComponentResolver.fromType(TypeaheadWidgetComponent),
+        'people': DynamicComponentResolver.fromType(PeopleWidgetComponent),
+        'functional-group': DynamicComponentResolver.fromType(FunctionalGroupWidgetComponent),
+        'dynamic-table': DynamicComponentResolver.fromType(DynamicTableWidgetComponent),
+        'container': DynamicComponentResolver.fromType(ContainerWidgetComponent),
+        'group': DynamicComponentResolver.fromType(ContainerWidgetComponent),
+        'document': DynamicComponentResolver.fromType(DocumentWidgetComponent)
     };
 
     constructor() {
+        super();
+
         this.types['upload'] = (field: FormFieldModel): Type<{}> => {
             if (field) {
                 let params = field.params;
@@ -74,49 +78,6 @@ export class FormRenderingService {
                 return UploadWidgetComponent;
             }
             return UnknownWidgetComponent;
-        };
-    }
-
-    getComponentTypeResolver(fieldType: string, defaultValue: Type<{}> = UnknownWidgetComponent): ComponentTypeResolver {
-        if (fieldType) {
-            return this.types[fieldType] || DefaultTypeResolver.fromType(defaultValue);
-        }
-        return DefaultTypeResolver.fromType(defaultValue);
-    }
-
-    setComponentTypeResolver(fieldType: string, resolver: ComponentTypeResolver, override: boolean = false) {
-        if (!fieldType) {
-            throw new Error(`fieldType is null or not defined`);
-        }
-
-        if (!resolver) {
-            throw new Error(`resolver is null or not defined`);
-        }
-
-        let existing = this.types[fieldType];
-        if (existing && !override) {
-            throw new Error(`already mapped, use override option if you intend replacing existing mapping.`);
-        }
-
-        this.types[fieldType] = resolver;
-    }
-
-    resolveComponentType(field: FormFieldModel, defaultValue: Type<{}> = UnknownWidgetComponent): Type<{}> {
-        if (field) {
-            let resolver = this.getComponentTypeResolver(field.type, defaultValue);
-            return resolver(field);
-        }
-        return defaultValue;
-    }
-
-}
-
-export type ComponentTypeResolver = (field: FormFieldModel) => Type<{}>;
-
-export class DefaultTypeResolver {
-    static fromType(type: Type<{}>): ComponentTypeResolver {
-        return (field: FormFieldModel) => {
-            return type;
         };
     }
 }

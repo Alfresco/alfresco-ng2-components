@@ -39,6 +39,7 @@ import { FileSizeCellComponent } from './src/components/datatable/filesize-cell.
 import { LocationCellComponent } from './src/components/datatable/location-cell.component';
 import { LoadingContentTemplateDirective } from './src/directives/loading-template.directive';
 import { NoContentTemplateDirective } from './src/directives/no-content-template.directive';
+import { NoPermissionTemplateDirective } from './src/directives/no-permission-template.directive';
 
 export function directives() {
     return [
@@ -52,6 +53,7 @@ export function directives() {
         FileSizeCellComponent,
         LocationCellComponent,
         NoContentTemplateDirective,
+        NoPermissionTemplateDirective,
         LoadingContentTemplateDirective
     ];
 }

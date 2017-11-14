@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
+import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
-import { Http, RequestOptions, Response, ResponseContentType } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 @Component({
@@ -37,7 +37,7 @@ export class TxtViewerComponent implements OnChanges {
 
     content: string;
 
-    constructor(private http: Http) {
+    constructor(private http: HttpClient) {
     }
 
     ngOnChanges(changes: SimpleChanges): Promise<any> {
@@ -59,16 +59,12 @@ export class TxtViewerComponent implements OnChanges {
 
     private getUrlContent(url: string): Promise<any> {
         return new Promise((resolve, reject) => {
-
-            this.http.get(url, new RequestOptions({
-                responseType: ResponseContentType.Text
-            })).toPromise().then(
-                (res: Response) => {
-                    this.content = res.text();
-                    resolve();
-                }, (event) => {
-                    reject(event);
-                });
+            this.http.get(url, { responseType: 'text' }).subscribe(res => {
+                this.content = res;
+                resolve();
+            }, (event) => {
+                reject(event);
+            });
         });
     }
 

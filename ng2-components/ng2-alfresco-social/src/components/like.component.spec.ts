@@ -19,6 +19,7 @@ import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
 import { LikeComponent } from '../components/like.component';
+import { MaterialModule } from '../material.module';
 import { RatingService } from '../services/rating.service';
 
 declare let jasmine: any;
@@ -33,7 +34,8 @@ describe('Like component', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                CoreModule,
+                MaterialModule
             ],
             declarations: [
                 LikeComponent

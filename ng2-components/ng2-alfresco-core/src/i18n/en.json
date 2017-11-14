@@ -63,14 +63,14 @@
       "ERROR_PLURAL": "{{ number }} items couldn't be deleted"
     },
     "HOST_SETTINGS": {
-      "CS_URL_ERROR": "Content service address does not match the pattern",
-      "PS_URL_ERROR": "Process service address does not match the pattern",
+      "CS_URL_ERROR": "Content Services address doesn't match the URL format",
+      "PS_URL_ERROR": "Process Services address doesn't match the URL format",
       "TITLE": "Settings",
-      "CS-HOST": "Content Services host URL configuration",
-      "BP-HOST": "Process Services host URL configuration",
+      "CS-HOST": "Content Services URL",
+      "BP-HOST": "Process Services URL",
       "BACK": "Back",
       "APPLY": "APPLY",
-      "NOT_VALID": "Host not valid! http(s)://host|ip:port(/path)"
+      "NOT_VALID": "http(s)://host|ip:port(/path) not recognized, try a different URL."
     }
   }
 }

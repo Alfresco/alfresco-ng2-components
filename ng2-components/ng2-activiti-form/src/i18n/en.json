@@ -10,13 +10,13 @@
         "UPLOAD": "UPLOAD",
         "REQUIRED" : "*Required",
         "VALIDATOR" : {
-            "INVALID_NUMBER" : "Incorrect number format",
-            "INVALID_DATE" : "Invalid date format",
-            "INVALID_VALUE": "Invalid value inserted",
-            "NOT_GREATER_THAN" : "Should not be greater than {{ maxValue }}",
-            "NOT_LESS_THAN" : "Should not be less than {{ minValue }}",
-            "AT_LEAST_LONG" : "Should be at least {{ minLength }} characters long.",
-            "NO_LONGER_THAN" : "Should be {{ maxLength }} characters maximum."
+            "INVALID_NUMBER" : "Use a different number format",
+            "INVALID_DATE" : "Use a different date format",
+            "INVALID_VALUE": "Enter a different value",
+            "NOT_GREATER_THAN" : "Can't be greater than {{ maxValue }}",
+            "NOT_LESS_THAN" : "Can't be less than {{ minValue }}",
+            "AT_LEAST_LONG" : "Enter at least {{ minLength }} characters",
+            "NO_LONGER_THAN" : "Enter no more than {{ maxLength }} characters"
         }
     }
   }

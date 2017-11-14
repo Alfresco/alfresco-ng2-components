@@ -17,52 +17,36 @@
 
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule, MatListModule } from '@angular/material';
 import { CoreModule, SearchService, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
-import { DocumentListModule } from 'ng2-alfresco-documentlist';
-import { SearchAutocompleteComponent } from './src/components/search-autocomplete.component';
 import { SearchControlComponent } from './src/components/search-control.component';
+import { SearchTriggerDirective } from './src/components/search-trigger.directive';
 import { SearchComponent } from './src/components/search.component';
 
 // services
 export { SearchOptions, SearchService } from 'ng2-alfresco-core';
 export * from './src/components/search.component';
 export * from './src/components/search-control.component';
-export * from './src/components/search-autocomplete.component';
-
-// Old Deprecated export
-import { SearchService as AlfrescoSearchService } from 'ng2-alfresco-core';
-import { SearchAutocompleteComponent as AlfrescoSearchAutocompleteComponent } from './src/components/search-autocomplete.component';
-import { SearchControlComponent as AlfrescoSearchControlComponent } from './src/components/search-control.component';
-import { SearchComponent as AlfrescoSearchComponent } from './src/components/search.component';
-export { SearchService as AlfrescoSearchService } from 'ng2-alfresco-core';
 export { SearchComponent as AlfrescoSearchComponent } from './src/components/search.component';
 export { SearchControlComponent as AlfrescoSearchControlComponent } from './src/components/search-control.component';
-export { SearchAutocompleteComponent as AlfrescoSearchAutocompleteComponent } from './src/components/search-autocomplete.component';
 
 export const ALFRESCO_SEARCH_DIRECTIVES: [any] = [
     SearchComponent,
     SearchControlComponent,
-    SearchAutocompleteComponent,
-
-    // Old Deprecated export
-    AlfrescoSearchComponent,
-    AlfrescoSearchControlComponent,
-    AlfrescoSearchAutocompleteComponent
+    SearchTriggerDirective
 ];
 
 export const ALFRESCO_SEARCH_PROVIDERS: [any] = [
-    SearchService,
-
-    // Old Deprecated export
-    AlfrescoSearchService
+    SearchService
 ];
 
 @NgModule({
     imports: [
-        DocumentListModule,
         CoreModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatListModule,
+        MatInputModule
     ],
     declarations: [
         ...ALFRESCO_SEARCH_DIRECTIVES

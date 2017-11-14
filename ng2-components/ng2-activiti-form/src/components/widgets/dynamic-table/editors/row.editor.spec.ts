@@ -17,11 +17,11 @@
 
 import { FormFieldModel, FormModel } from '../../index';
 import { FormService } from './../../../../services/form.service';
-import { RowEditorComponent } from './row.editor';
-import { DynamicTableModel } from './../dynamic-table.widget.model';
-import { DynamicTableColumn } from './../dynamic-table-column.model';
 import { DynamicRowValidationSummary } from './../dynamic-row-validation-summary.model';
+import { DynamicTableColumn } from './../dynamic-table-column.model';
 import { DynamicTableRow } from './../dynamic-table-row.model';
+import { DynamicTableModel } from './../dynamic-table.widget.model';
+import { RowEditorComponent } from './row.editor';
 
 describe('RowEditorComponent', () => {
 

@@ -16,13 +16,14 @@
  */
 
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
-
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { AlfrescoApiService } from './alfresco-api.service';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable()
 export class AuthGuardEcm implements CanActivate {
     constructor(
+        private authService: AuthenticationService,
         private apiService: AlfrescoApiService,
         private router: Router) {
     }
@@ -42,9 +43,11 @@ export class AuthGuardEcm implements CanActivate {
             .catch(() => false);
     }
 
-    canActivate(): Promise<boolean> {
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
+
         return this.isLoggedIn().then(isLoggedIn => {
             if (!isLoggedIn) {
+                this.authService.setRedirectUrl(state.url);
                 this.router.navigate([ '/login' ]);
             }
 

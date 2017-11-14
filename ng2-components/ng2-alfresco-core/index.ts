@@ -16,9 +16,9 @@
  */
 
 import { CommonModule } from '@angular/common';
+import { HttpClient , HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Http, HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
@@ -39,6 +39,7 @@ import { AuthGuardBpm } from './src/services/auth-guard-bpm.service';
 import { AuthGuardEcm } from './src/services/auth-guard-ecm.service';
 import { AuthGuard } from './src/services/auth-guard.service';
 import { AuthenticationService } from './src/services/authentication.service';
+import { CardItemTypeService } from './src/services/card-item-types.service';
 import { CommentProcessService } from './src/services/comment-process.service';
 import { ContentService } from './src/services/content.service';
 import { CookieService } from './src/services/cookie.service';
@@ -58,6 +59,7 @@ import { HighlightDirective } from './src/directives/highlight.directive';
 import { LogoutDirective } from './src/directives/logout.directive';
 import { NodeDeleteDirective } from './src/directives/node-delete.directive';
 import { NodeFavoriteDirective } from './src/directives/node-favorite.directive';
+import { AppConfigService } from './src/services/app-config.service';
 import { AppsProcessService } from './src/services/apps-process.service';
 import { DeletedNodesApiService } from './src/services/deleted-nodes-api.service';
 import { DiscoveryApiService } from './src/services/discovery-api.service';
@@ -97,6 +99,8 @@ export { AlfrescoTranslateLoader } from './src/services/translate-loader.service
 export { AppConfigService } from './src/services/app-config.service';
 export { ThumbnailService } from './src/services/thumbnail.service';
 export { UploadService } from './src/services/upload.service';
+export { DynamicComponentMapper, DynamicComponentResolveFunction, DynamicComponentResolver } from './src/services/dynamic-component-mapper.service';
+export { CardItemTypeService } from './src/services/card-item-types.service';
 export { CardViewUpdateService } from './src/services/card-view-update.service';
 export { UpdateNotification } from './src/services/card-view-update.service';
 export { ClickNotification } from './src/services/card-view-update.service';
@@ -166,6 +170,7 @@ export * from './src/events/base-ui.event';
 export * from './src/events/folder-created.event';
 export * from './src/events/file.event';
 
+export * from './src/models/card-view-baseitem.model';
 export * from './src/models/card-view-textitem.model';
 export * from './src/models/card-view-mapitem.model';
 export * from './src/models/card-view-dateitem.model';
@@ -217,7 +222,9 @@ export function providers() {
         MomentDateAdapter,
         PeopleProcessService,
         AppsProcessService,
-        CommentProcessService
+        CommentProcessService,
+        CardItemTypeService,
+        AppConfigService
     ];
 }
 
@@ -239,7 +246,7 @@ export function pipes() {
     ];
 }
 
-export function createTranslateLoader(http: Http, logService: LogService) {
+export function createTranslateLoader(http: HttpClient, logService: LogService) {
     return new AlfrescoTranslateLoader(http, logService);
 }
 
@@ -248,13 +255,13 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        HttpModule,
+        HttpClientModule,
         BrowserAnimationsModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
                 useFactory: (createTranslateLoader),
-                deps: [Http, LogService]
+                deps: [HttpClient, LogService]
             }
         }),
         MaterialModule,
@@ -308,7 +315,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        HttpModule,
+        HttpClientModule,
         TranslateModule,
         MaterialModule,
         ContextMenuModule,

@@ -21,7 +21,7 @@ import { MatProgressSpinnerModule } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
 import { ProcessInstanceListComponent } from './process-list.component';
 
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, AppConfigService, CoreModule } from 'ng2-alfresco-core';
 import { DataRowEvent, DataSorting, DataTableModule, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 
 import { fakeProcessInstances, fakeProcessInstancesWithNoName } from '../assets/process-instances-list.mock';
@@ -34,6 +34,40 @@ describe('ProcessInstanceListComponent', () => {
     let component: ProcessInstanceListComponent;
     let service: ProcessService;
     let getProcessInstancesSpy: jasmine.Spy;
+    let appConfig: AppConfigService;
+
+    let fakeCutomSchema = [
+        {
+            'key': 'fakeName',
+            'type': 'text',
+            'title': 'ADF_PROCESS_LIST.PROPERTIES.FAKE',
+            'sortable': true
+        },
+        {
+            'key': 'fakeProcessName',
+            'type': 'text',
+            'title': 'ADF_PROCESS_LIST.PROPERTIES.PROCESS_FAKE',
+            'sortable': true
+        }
+    ];
+
+    let fakeColumnSchema = {
+        'default': [
+                {
+                    'key': 'name',
+                    'type': 'text',
+                    'title': 'ADF_PROCESS_LIST.PROPERTIES.NAME',
+                    'sortable': true
+                },
+                {
+                    'key': 'created',
+                    'type': 'text',
+                    'title': 'ADF_PROCESS_LIST.PROPERTIES.CREATED',
+                    'cssClass': 'hidden',
+                    'sortable': true
+                }
+            ]
+        , fakeCutomSchema };
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -50,9 +84,31 @@ describe('ProcessInstanceListComponent', () => {
         }).compileComponents().then(() => {
             fixture = TestBed.createComponent(ProcessInstanceListComponent);
             component = fixture.componentInstance;
+            appConfig = TestBed.get(AppConfigService);
             service = fixture.debugElement.injector.get(ProcessService);
 
             getProcessInstancesSpy = spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeProcessInstances));
+            appConfig.config = Object.assign(appConfig.config, {
+                'adf-process-list': {
+                    'presets': {
+                        'fakeCutomSchema': [
+                            {
+                                'key': 'fakeName',
+                                'type': 'text',
+                                'title': 'ADF_PROCESS_LIST.PROPERTIES.FAKE',
+                                'sortable': true
+                            },
+                            {
+                                'key': 'fakeProcessName',
+                                'type': 'text',
+                                'title': 'ADF_PROCESS_LIST.PROPERTIES.PROCESS_FAKE',
+                                'sortable': true
+                            }
+                        ]
+                    }
+                }
+            }
+        );
 
         });
     }));
@@ -74,6 +130,20 @@ describe('ProcessInstanceListComponent', () => {
         component.ngAfterContentInit();
         expect(component.data.getColumns()).toBeDefined();
         expect(component.data.getColumns().length).toEqual(1);
+    });
+
+    it('should fetch the custom schemaColumn from app.config.json', () => {
+        component.ngAfterContentInit();
+        fixture.detectChanges();
+        expect(component.layoutPresets).toEqual(fakeColumnSchema);
+    });
+
+    it('should fetch custom schemaColumn when the input presetColumn is defined', () => {
+        component.presetColumn = 'fakeCutomColumns';
+        component.ngAfterContentInit();
+        fixture.detectChanges();
+        expect(component.data.getColumns()).toBeDefined();
+        expect(component.data.getColumns().length).toEqual(2);
     });
 
     it('should return an empty process list when no input parameters are passed', () => {

@@ -23,6 +23,36 @@ You can also use HTML-based schema declaration like shown below:
 </adf-tasklist>
 ```
 
+You can also use custom schema declaration as shown below:
+
+define custom schema in the app.config.json as shown below json format.
+
+```json
+"adf-task-list": {
+        "presets": {
+            "customSchema": [
+            {
+                    "key": "name",
+                    "type": "text",
+                    "title": "name",
+                    "sortable": true         
+            }],
+            "default": [
+                {
+                    "key": "name",
+                    "type": "text",
+                    "title": "name",
+                    "sortable": true
+            }],
+        }
+}
+```
+```html
+<adf-tasklist 
+    [appId]="'1'" 
+    [presetColumn]="'customSchema'">
+</adf-tasklist>
+```
 ### Properties
 
 | Name | Type | Default | Description |
@@ -30,6 +60,7 @@ You can also use HTML-based schema declaration like shown below:
 | appId | string || The id of the app. |
 | processDefinitionKey | string || The processDefinitionKey of the process. |
 | processInstanceId | string || The processInstanceId of the process. |
+| presetColumn | string || The presetColumn of the custom schema to fetch. |
 | page | number | 0 | The page of the tasks to fetch. |
 | size | number | 5 | The number of tasks to fetch. |
 | assignment | string || The assignment of the process. <ul>Possible values are: <li>assignee : where the current user is the assignee</li> <li>candidate: where the current user is a task candidate </li><li>group_x: where the task is assigned to a group where the current user is a member of.</li> <li>no value: where the current user is involved</li> </ul> |

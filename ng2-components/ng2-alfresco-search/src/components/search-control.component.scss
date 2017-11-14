@@ -1,51 +1,58 @@
 @mixin adf-search-control-theme($theme) {
     $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $mat-menu-border-radius: 2px !default;
 
     .adf {
 
-        &-search-button.mat-icon-button {
-            margin-right: 5px;
+        &-search-fixed-text {
+            line-height: normal;
         }
 
-        &-search-container {
-            display: flex;
-            align-items: center;
-
-            .adf-search-field {
-                max-width: 260px;
-                padding-top: 6px;
-
-                .mat-form-field {
-                    width: 100%;
-                }
-
-                .mat-input-underline .mat-input-ripple {
-                    background-color: mat-color($background, card);
-                }
-
-                .mat-form-field-underline {
-                    background-color: mat-color($background, card);
-                }
-
-                .mat-input-element {
-                    font-size: 16px;
-                    line-height: normal;
-                    padding-bottom: 2px;
+        &-input-form-field-divider {
+            .mat-form-field-underline {
+                background-color: mat-color($primary, 50);
+                .mat-form-field-ripple {
+                    background-color: mat-color($primary, 50);
                 }
             }
+            font-size: 16px;
+        }
 
-            .adf-search-field .mat-input-infix {
-                padding: 0;
+        &-search-result-autocomplete {
+            @include mat-menu-base(2);
+            transform-origin: top left;
+            position: absolute;
+            max-width: 200px;
+            max-height: 400px;
+            margin-left: 45px;
+            margin-top: -22px;
+            font-size: 15px;
+            z-index: 5;
+            color: mat-color($foreground, text);
+            background-color: mat-color($background, card);
+            border-radius: $mat-menu-border-radius;
+
+
+            @media screen and ($mat-small) {
+                width: 160px;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
             }
-
         }
 
-        &-search-form{
-            overflow: hidden;
+        &-search-autocomplete-item {
+            &:hover {
+                background-color: mat-color($background, 'hover');
+                opacity: 1;
+            }
         }
+    }
 
-        &-valid-search {
-        }
+    .highlight {
+        color: mat-color($primary, 900);
     }
 }

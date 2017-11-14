@@ -34,7 +34,7 @@
     </thead>
 
     <tbody>
-    <ng-container *ngIf="!loading">
+    <ng-container *ngIf="!loading && !noPermission">
         <tr *ngFor="let row of data.getRows(); let idx = index"
             role="button"
             [class.is-selected]="row.isSelected"
@@ -132,7 +132,7 @@
                 <div *ngIf="col.template" class="cell-container">
                     <ng-container
                         [ngTemplateOutlet]="col.template"
-                        [ngOutletContext]="{ $implicit: { data: data, row: row, col: col }, value: data.getValue(row, col) }">
+                        [ngTemplateOutletContext]="{ $implicit: { data: data, row: row, col: col }, value: data.getValue(row, col) }">
                     </ng-container>
                 </div>
             </td>
@@ -166,6 +166,14 @@
             </td>
         </tr>
     </ng-container>
+    <tr *ngIf="!loading && noPermission" class="adf-no-permission__row">
+        <td class="adf-no-permission__cell">
+            <ng-template *ngIf="noPermissionTemplate"
+                         ngFor [ngForOf]="[data]"
+                         [ngForTemplate]="noPermissionTemplate">
+            </ng-template>
+        </td>
+    </tr>
     <tr *ngIf="loading">
         <td class="adf-loading-content-container"
             [attr.colspan]="1 + data.getColumns().length">
