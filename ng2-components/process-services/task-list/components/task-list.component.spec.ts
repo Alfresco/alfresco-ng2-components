@@ -417,12 +417,12 @@ describe('TaskListComponent', () => {
 
     it('should emit row click event', (done) => {
         let row = new ObjectDataRow({
-            id: 999
+            id: '999'
         });
         let rowEvent = new DataRowEvent(row, null);
 
         component.rowClick.subscribe(taskId => {
-            expect(taskId).toEqual(999);
+            expect(taskId).toEqual('999');
             expect(component.getCurrentId()).toEqual('999');
             done();
         });

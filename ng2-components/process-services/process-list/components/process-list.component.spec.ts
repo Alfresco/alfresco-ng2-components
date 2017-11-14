@@ -327,12 +327,12 @@ describe('ProcessInstanceListComponent', () => {
 
     it('should emit row click event', (done) => {
         let row = new ObjectDataRow({
-            id: 999
+            id: '999'
         });
         let rowEvent = new DataRowEvent(row, null);
 
         component.rowClick.subscribe(taskId => {
-            expect(taskId).toEqual(999);
+            expect(taskId).toEqual('999');
             expect(component.getCurrentId()).toEqual('999');
             done();
         });
@@ -344,7 +344,7 @@ describe('ProcessInstanceListComponent', () => {
         let prevented = false;
         let keyEvent = new CustomEvent('Keyboard event', { detail: {
             keyboardEvent: { key: 'Enter' },
-            row: new ObjectDataRow({ id: 999 })
+            row: new ObjectDataRow({ id: '999' })
         }});
 
         spyOn(keyEvent, 'preventDefault').and.callFake(() => prevented = true);

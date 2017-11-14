@@ -24,7 +24,7 @@ import { UserEventModel } from '../models/user-event.model';
 import { PeopleListComponent } from './people-list.component';
 
 const fakeUser: UserProcessModel = new UserProcessModel({
-    id: '1',
+    id: 1,
     firstName: 'fake-name',
     lastName: 'fake-last',
     email: 'fake@mail.com'
@@ -63,7 +63,7 @@ describe('PeopleListComponent', () => {
         let rowEvent = new DataRowEvent(row, null);
 
         peopleListComponent.clickRow.subscribe(selectedUser => {
-            expect(selectedUser.id).toEqual('1');
+            expect(selectedUser.id).toEqual(1);
             expect(selectedUser.email).toEqual('fake@mail.com');
             expect(peopleListComponent.user.id).toEqual(1);
             expect(peopleListComponent.user.email).toEqual('fake@mail.com');
@@ -83,7 +83,7 @@ describe('PeopleListComponent', () => {
 
         peopleListComponent.clickAction.subscribe((selectedAction: UserEventModel) => {
             expect(selectedAction.type).toEqual('remove');
-            expect(selectedAction.value.id).toEqual('1');
+            expect(selectedAction.value.id).toEqual(1);
             expect(selectedAction.value.email).toEqual('fake@mail.com');
             done();
         });

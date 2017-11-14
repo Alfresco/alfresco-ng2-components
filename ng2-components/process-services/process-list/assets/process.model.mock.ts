@@ -88,7 +88,7 @@ export let fakeProcessInstances = {
         businessKey: null,
         processDefinitionId: 'HROnboarding:60:338704',
         tenantId: 'tenant_1',
-        started: '2017-10-09T12:19:44.560+0000',
+        started: new Date('2017-10-09T12:19:44.560+0000'),
         ended: null,
         startedBy: {
           id: 4004,
