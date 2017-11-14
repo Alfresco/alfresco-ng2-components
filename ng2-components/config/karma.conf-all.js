@@ -1,5 +1,4 @@
 const webpackCoverage = require('./webpack.coverage');
-const helpers = require('./helpers');
 
 module.exports = function (config) {
     var _config = {
@@ -75,22 +74,6 @@ module.exports = function (config) {
 
         browsers: ['ChromeHeadless'],
 
-        customLaunchers: {
-            Chrome_travis_ci: {
-                base: 'Chrome',
-                flags: ['--no-sandbox']
-            },
-            Chrome_headless: {
-                base: 'Chrome',
-                flags: [
-                    '--no-sandbox',
-                    '--headless',
-                    '--disable-gpu',
-                    '--remote-debugging-port=9222'
-                ]
-            }
-        },
-
         // Karma plugins loaded
         plugins: [
             require('../node_modules/karma-jasmine'),
@@ -128,10 +111,6 @@ module.exports = function (config) {
             ]
         }
     };
-
-    if (process.env.TRAVIS) {
-        config.browsers = ['Chrome_travis_ci'];
-    }
 
     config.set(_config);
 };

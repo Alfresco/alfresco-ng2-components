@@ -40,7 +40,7 @@ const fakeUser: UserProcessModel = new UserProcessModel({
     email: 'fake@mail.com'
 });
 
-fdescribe('TaskDetailsComponent', () => {
+describe('TaskDetailsComponent', () => {
 
     let service: TaskListService;
     let formService: FormService;
