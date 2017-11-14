@@ -200,8 +200,8 @@ export class SearchComponent implements AfterContentInit, OnChanges {
             },
             include: ['path', 'allowableOperations'],
             paging: {
-                maxItems: this.maxResults,
-                skipCount: this.skipResults
+                maxItems: this.maxResults.toString(),
+                skipCount: this.skipResults.toString()
             },
             filterQueries: [
                 { query: "TYPE:'cm:folder' OR TYPE:'cm:content'" },
