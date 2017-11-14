@@ -72,7 +72,7 @@ module.exports = function (config) {
         browserDisconnectTolerance: 10,
         browserNoActivityTimeout: 3000000,
 
-        browsers: ['ChromeHeadless'],
+        browsers: ['Chrome'],
 
         // Karma plugins loaded
         plugins: [
@@ -111,6 +111,10 @@ module.exports = function (config) {
             ]
         }
     };
+
+    if (process.env.TRAVIS) {
+        config.browsers = ['ChromeHeadless'];
+    }
 
     config.set(_config);
 };

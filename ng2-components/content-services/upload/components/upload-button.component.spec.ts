@@ -18,9 +18,10 @@
 import { DebugElement, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MaterialModule } from '../../material.module';
-import { ContentService, UploadService } from '@alfresco/core';
+import { ContentService, UploadService, TranslationService } from '@alfresco/core';
 import { Observable } from 'rxjs/Rx';
 import { UploadButtonComponent } from './upload-button.component';
+import { TranslationMock } from '@alfresco/core';
 
 describe('UploadButtonComponent', () => {
 
@@ -67,7 +68,8 @@ describe('UploadButtonComponent', () => {
                 UploadButtonComponent
             ],
             providers: [
-                UploadService
+                UploadService,
+                {provide: TranslationService, useClass: TranslationMock}
             ]
         }).compileComponents();
     }));
@@ -230,15 +232,15 @@ describe('UploadButtonComponent', () => {
         component.uploadFolders = false;
         component.multipleFiles = false;
 
-        expect(compiled.querySelector('#upload-single-file-label').textContent).toEqual('FILE_UPLOAD.BUTTON.UPLOAD_FILE');
+        expect(compiled.querySelector('#upload-single-file-label').innerText).toEqual('FILE_UPLOAD.BUTTON.UPLOAD_FILE');
 
         component.multipleFiles = true;
         fixture.detectChanges();
-        expect(compiled.querySelector('#upload-multiple-file-label').textContent).toEqual('FILE_UPLOAD.BUTTON.UPLOAD_FILE');
+        expect(compiled.querySelector('#upload-multiple-file-label').innerText).toEqual('FILE_UPLOAD.BUTTON.UPLOAD_FILE');
 
         component.uploadFolders = true;
         fixture.detectChanges();
-        expect(compiled.querySelector('#uploadFolder-label').textContent).toEqual('FILE_UPLOAD.BUTTON.UPLOAD_FOLDER');
+        expect(compiled.querySelector('#uploadFolder-label').innerText).toEqual('FILE_UPLOAD.BUTTON.UPLOAD_FOLDER');
     });
 
     it('should staticTitle properties change the title of the upload buttons', () => {
