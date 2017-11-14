@@ -28,7 +28,8 @@ Displays a dropdown menu to show and interact with the sites of the current user
 
 | Attribute | Type | Default | Description |
 | --- | --- | --- | --- |
-| hideMyFiles | boolean | false | Hide the "My Files" option added to the list by default |
+| hideMyFiles | boolean | false                        | Hide the "My Files" option added to the list by default                                            |
+| placeholder | string  | 'DROPDOWN.PLACEHOLDER_LABEL' | The placeholder text/the key from translation files for the placeholder text to be shown by default|
 
 ### Events
 
