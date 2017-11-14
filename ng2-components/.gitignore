@@ -16,7 +16,7 @@ process-services/**/*.d.ts
 core/**/*.js
 !core/karma-test-shim.js
 core/**/*.js.map
-!**/*karma-test-shim.js
+!config/karma-test-shim.js
 
 core/**/*.d.ts
 *.tgz

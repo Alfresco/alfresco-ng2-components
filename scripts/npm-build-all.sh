@@ -16,13 +16,6 @@ eval EXEC_VERSION_JSAPI=false
 eval JSAPI_VERSION=""
 
 eval projects=( "core"
-    "process-services/form"
-    "process-services/analytics"
-    "process-services/app-list"
-    "process-services/diagram"
-    "process-services/form"
-    "process-services/process-list"
-    "process-services/task-list"
     "content-services"
     "process-services" )
 
@@ -158,18 +151,17 @@ if $EXEC_FAST_TEST == true; then
 fi
 
 if $RUN_TEST == true; then
-    for PACKAGE in ${projects[@]}
-    do
       DESTDIR="$DIR/../ng2-components/"
       cd $DESTDIR
       if $EXEC_SINGLE_TEST == true; then
-        if [[ $PACKAGE == $SINGLE_TEST ]]; then
-            test_project $PACKAGE
-        fi
+            cp "$DESTDIR/config/karma-test-shim.js" "$DESTDIR/$SINGLE_TEST/"
+            test_project $SINGLE_TEST
       else
-        test_project $PACKAGE
+       for PACKAGE in ${projects[@]}
+        do
+            test_project $PACKAGE
+        done
       fi
-    done
 fi
 
 if $RUN_TESTBROWSER == true; then
