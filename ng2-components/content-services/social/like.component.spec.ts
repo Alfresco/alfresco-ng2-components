@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LikeComponent } from './like.component';
 import { MaterialModule } from '../material.module';
@@ -27,182 +26,74 @@ describe('Like component', () => {
 
     let component: any;
     let fixture: ComponentFixture<LikeComponent>;
-    let debug: DebugElement;
     let element: HTMLElement;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-                MaterialModule
-            ],
-            declarations: [
-                LikeComponent
-            ],
-            providers: [
-                RatingService
-            ]
+            imports: [ MaterialModule ],
+            declarations: [ LikeComponent ],
+            providers: [ RatingService ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
+        jasmine.Ajax.install();
         fixture = TestBed.createComponent(LikeComponent);
 
-        debug = fixture.debugElement;
         element = fixture.nativeElement;
         component = fixture.componentInstance;
         component.nodeId = 'test-id';
-
         fixture.detectChanges();
     });
 
-    describe('Rendering tests', () => {
-
-        beforeEach(() => {
-            jasmine.Ajax.install();
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
-
-        it('should like component be present', (done) => {
-            fixture.detectChanges();
-
-            component.ngOnChanges().subscribe(() => {
-                expect(element.querySelector('#adf-like-test-id')).not.toBe(null);
-                done();
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: {
-                    entry: {
-                        id: 'likes',
-                        aggregate: {
-                            numberOfRatings: 1
-                        }
-                    }
-                }
-            });
-
-        });
-
-        it('should like component show the number of likes', (done) => {
-            fixture.detectChanges();
-
-            component.ngOnChanges().subscribe(() => {
-                expect(element.querySelector('#adf-like-counter').innerHTML).not.toBe('1');
-                done();
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: {
-                    entry: {
-                        id: 'likes',
-                        aggregate: {
-                            numberOfRatings: 1
-                        }
-                    }
-                }
-            });
-        });
-
-        describe('User actions', () => {
-
-            it('should like component update the number of likes when clicked', (done) => {
-                fixture.detectChanges();
-
-                expect(element.querySelector('#adf-like-counter').innerHTML).toBe('0');
-
-                component.ngOnChanges().subscribe(() => {
-                    component.changeVote.subscribe(() => {
-                        fixture.detectChanges();
-                        expect(element.querySelector('#adf-like-counter').innerHTML).toBe('1');
-                    });
-
-                    let likeButton: any = element.querySelector('#adf-like-test-id');
-                    likeButton.click();
-
-                    component.changeVote.subscribe(() => {
-                        fixture.detectChanges();
-                        expect(element.querySelector('#adf-like-counter').innerHTML).toBe('2');
-                    });
-
-                    jasmine.Ajax.requests.mostRecent().respondWith({
-                        status: 200,
-                        contentType: 'json',
-                        responseText: {
-                            'entry': {
-                                'myRating': true,
-                                'ratedAt': '2017-04-06T15:25:50.305+0000',
-                                'id': 'likes',
-                                'aggregate': {'numberOfRatings': 2}
-                            }
-                        }
-                    });
-
-                    done();
-                });
-
-                jasmine.Ajax.requests.mostRecent().respondWith({
-                    status: 200,
-                    contentType: 'json',
-                    responseText: {
-                        entry: {
-                            id: 'likes',
-                            aggregate: {
-                                numberOfRatings: 1
-                            }
-                        }
-                    }
-                });
-            });
-
-            it('should like component decrease the number of likes when clicked and is already liked', (done) => {
-                fixture.detectChanges();
-
-                expect(element.querySelector('#adf-like-counter').innerHTML).toBe('0');
-
-                component.ngOnChanges().subscribe(() => {
-                    fixture.detectChanges();
-
-                    let likeButton: any = element.querySelector('#adf-like-test-id');
-                    likeButton.click();
-
-                    component.changeVote.subscribe(() => {
-                        fixture.detectChanges();
-                        expect(element.querySelector('#adf-like-counter').innerHTML).toBe('0');
-                    });
-
-                    jasmine.Ajax.requests.mostRecent().respondWith({
-                        status: 204,
-                        contentType: 'json'
-                    });
-
-                    done();
-                });
-
-                component.changeVote.subscribe(() => {
-                    fixture.detectChanges();
-                    expect(element.querySelector('#adf-like-counter').innerHTML).toBe('1');
-                });
-
-                jasmine.Ajax.requests.mostRecent().respondWith({
-                    status: 200,
-                    contentType: 'json',
-                    responseText: {
-                        'entry': {
-                            'myRating': true,
-                            'ratedAt': '2017-04-06T15:41:01.851+0000',
-                            'id': 'likes',
-                            'aggregate': {'numberOfRatings': 1}
-                        }
-                    }
-                });
-            });
-        });
+    afterEach(() => {
+        jasmine.Ajax.uninstall();
     });
+
+    function simulateResponseWithLikes(numberOfRatings: number) {
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            status: 200, contentType: 'json',
+            responseText: {
+                entry: { id: 'likes', aggregate: { numberOfRatings } }
+            }
+        });
+    }
+
+    it('should load the likes by default on onChanges', async(() => {
+        simulateResponseWithLikes(2);
+
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(element.querySelector('#adf-like-counter').innerHTML).toBe('2');
+        });
+    }));
+
+    it('should increase the number of likes when clicked', async(() => {
+        component.likesCounter = 2;
+
+        let likeButton: any = element.querySelector('#adf-like-test-id');
+        likeButton.click();
+
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(element.querySelector('#adf-like-counter').innerHTML).toBe('3');
+        });
+
+        simulateResponseWithLikes(3);
+    }));
+
+    it('should decrease the number of likes when clicked and is already liked', async(() => {
+        component.likesCounter = 2;
+        component.isLike = true;
+
+        let likeButton: any = element.querySelector('#adf-like-test-id');
+        likeButton.click();
+
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(element.querySelector('#adf-like-counter').innerHTML).toBe('1');
+        });
+
+        simulateResponseWithLikes(1);
+    }));
 });

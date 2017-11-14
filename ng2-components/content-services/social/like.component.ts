@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { RatingService } from './services/rating.service';
 
 @Component({
@@ -25,29 +25,24 @@ import { RatingService } from './services/rating.service';
     providers: [RatingService],
     encapsulation: ViewEncapsulation.None
 })
-export class LikeComponent implements OnChanges {
+export class LikeComponent implements OnInit {
 
     @Input()
     nodeId: string;
 
-    likesCounter: number = 0;
-
-    ratingType: string = 'likes';
-
-    isLike: boolean = false;
-
     @Output()
     changeVote = new EventEmitter();
 
-    constructor(private ratingService: RatingService) {
-    }
+    likesCounter: number = 0;
+    ratingType: string = 'likes';
+    isLike: boolean = false;
 
-    ngOnChanges() {
+    constructor(private ratingService: RatingService) {}
+
+    ngOnInit() {
         this.clean();
 
-        let ratingObserver = this.ratingService.getRating(this.nodeId, this.ratingType);
-
-        ratingObserver.subscribe(
+        this.ratingService.getRating(this.nodeId, this.ratingType).subscribe(
             (data) => {
                 if (data.entry.aggregate) {
                     this.likesCounter = data.entry.aggregate.numberOfRatings;
@@ -57,8 +52,6 @@ export class LikeComponent implements OnChanges {
                 }
             }
         );
-
-        return ratingObserver;
     }
 
     likeClick() {
@@ -67,6 +60,7 @@ export class LikeComponent implements OnChanges {
                 () => {
                     this.likesCounter -= 1;
                     this.isLike = false;
+                    this.changeVote.emit(this.likesCounter);
                 }
             );
         } else {
@@ -74,11 +68,10 @@ export class LikeComponent implements OnChanges {
                 (data) => {
                     this.likesCounter = data.entry.aggregate.numberOfRatings;
                     this.isLike = true;
+                    this.changeVote.emit(this.likesCounter);
                 }
             );
         }
-
-        this.changeVote.emit(this.likesCounter);
     }
 
     clean() {
