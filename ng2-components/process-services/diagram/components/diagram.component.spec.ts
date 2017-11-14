@@ -33,7 +33,7 @@ import { RAPHAEL_DIRECTIVES, RAPHAEL_PROVIDERS } from './raphael/index';
 
 declare let jasmine: any;
 
-xdescribe('Diagrams ', () => {
+describe('Diagrams ', () => {
 
     let component: any;
     let fixture: ComponentFixture<DiagramComponent>;
@@ -75,7 +75,11 @@ xdescribe('Diagrams ', () => {
     });
 
     let ajaxReply =  (resp: any) => {
-        component.success.emit(resp);
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            status: 200,
+            contentType: 'json',
+            responseText: resp
+        });
     };
 
     describe('Diagrams component Events: ', () => {
