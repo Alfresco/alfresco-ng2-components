@@ -39,8 +39,8 @@ script:
             (./scripts/npm-build-all.sh -si -sb -t "process*" || exit 1;);
       fi
 
-    - if ([ "$MODULE" == "analyics" ]); then
-            (./scripts/npm-build-all.sh -si -sb -t "process-services/analyics" || exit 1;);
+    - if ([ "$MODULE" == "analytics" ]); then
+            (./scripts/npm-build-all.sh -si -sb -t "process-services/analytics" || exit 1;);
       fi
 
     - if ([ "$MODULE" == "app-list" ]); then
