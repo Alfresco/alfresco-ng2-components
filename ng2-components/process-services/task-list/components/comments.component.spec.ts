@@ -20,9 +20,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
 
 import { FormModule } from '../../form';
-import { AppConfigService, CommentProcessService, TranslationService } from '@alfresco/core';
-import { AppConfigServiceMock } from '../assets/app-config.service.mock';
-import { TranslationMock } from '../assets/translation.service.mock';
+import { AppConfigService, CommentProcessService } from '@alfresco/core';
+import { AppConfigServiceMock } from '../../mock';
 
 import { DatePipe } from '@angular/common';
 import { MatInputModule } from '@angular/material';
@@ -44,7 +43,6 @@ describe('CommentsComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-
                 FormModule,
                 DataTableModule,
                 MatInputModule
@@ -57,7 +55,6 @@ describe('CommentsComponent', () => {
                 TaskListService,
                 DatePipe,
                 PeopleProcessService,
-                { provide: TranslationService, useClass: TranslationMock },
                 { provide: AppConfigService, useClass: AppConfigServiceMock },
                 CommentProcessService
             ]

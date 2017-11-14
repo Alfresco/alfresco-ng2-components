@@ -23,11 +23,10 @@ import { Observable } from 'rxjs/Rx';
 
 import { FormModule, FormService } from '../../form';
 import { TaskListModule } from '../../task-list';
-import { TranslationService, CoreModule } from '@alfresco/core';
+import { CoreModule } from '@alfresco/core';
 
 import { ProcessInstance } from '../models/process-instance.model';
-import { exampleProcess, exampleProcessNoName } from './../assets/process.model.mock';
-import { TranslationMock } from './../assets/translation.service.mock';
+import { exampleProcess, exampleProcessNoName } from './../../mock';
 import { ProcessService } from './../services/process.service';
 import { ProcessInstanceDetailsComponent } from './process-instance-details.component';
 
@@ -51,7 +50,6 @@ describe('ProcessInstanceDetailsComponent', () => {
                 ProcessInstanceDetailsComponent
             ],
             providers: [
-                { provide: TranslationService, useClass: TranslationMock },
                 ProcessService
             ],
             schemas: [ NO_ERRORS_SCHEMA ]

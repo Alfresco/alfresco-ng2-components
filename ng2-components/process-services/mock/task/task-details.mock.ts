@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { TaskDetailsModel } from '../models/task-details.model';
+import { TaskDetailsModel } from '../../task-list/models/task-details.model';
 
 export let taskDetailsMock = new TaskDetailsModel({
     'id': '91',

@@ -19,11 +19,10 @@ import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MaterialModule } from '../../material.module';
 import { By } from '@angular/platform-browser';
-import { AuthenticationService, TranslationService, SearchService } from '@alfresco/core';
+import { AuthenticationService, SearchService } from '@alfresco/core';
 import { ThumbnailService } from '@alfresco/core';
 import { Observable } from 'rxjs/Observable';
-import { noResult, results } from './../assets/search.component.mock';
-import { TranslationMock } from './../assets/translation.service.mock';
+import { noResult, results } from '../../mock';
 import { SearchControlComponent } from './search-control.component';
 import { SearchTriggerDirective } from './search-trigger.directive';
 import { SearchComponent } from './search.component';
@@ -48,7 +47,6 @@ describe('SearchControlComponent', () => {
                 SearchTriggerDirective
             ],
             providers: [
-                {provide: TranslationService, useClass: TranslationMock},
                 ThumbnailService,
                 SearchService
             ]

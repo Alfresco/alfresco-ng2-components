@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FormModel, FormValues } from '../../components/widgets/core/index';
+import { FormModel, FormValues } from '../../form/components/widgets/core/index';
 
 export let formTest = new FormModel({});
 

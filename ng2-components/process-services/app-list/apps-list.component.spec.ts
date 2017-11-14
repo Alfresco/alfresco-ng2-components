@@ -36,7 +36,6 @@ describe('AppsListComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-
                 MaterialModule
             ],
             declarations: [

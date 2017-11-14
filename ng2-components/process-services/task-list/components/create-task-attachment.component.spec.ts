@@ -21,9 +21,8 @@ import { MaterialModule } from '../../material.module';
 import { Observable } from 'rxjs/Rx';
 
 import { ProcessContentService } from '../../form';
-import { AppConfigService, TranslationService } from '@alfresco/core';
-import { AppConfigServiceMock } from '../assets/app-config.service.mock';
-import { TranslationMock } from '../assets/translation.service.mock';
+import { AppConfigService } from '@alfresco/core';
+import { AppConfigServiceMock } from '../../mock';
 import { AttachmentComponent } from './create-task-attachment.component';
 
 describe('Activiti Task Create Attachment', () => {
@@ -42,8 +41,7 @@ describe('Activiti Task Create Attachment', () => {
                 AttachmentComponent
             ],
             providers: [
-                { provide: AppConfigService, useClass: AppConfigServiceMock },
-                { provide: TranslationService, useClass: TranslationMock },
+                { provide: AppConfigService, useClass: AppConfigServiceMock }
                 ProcessContentService
             ]
         }).compileComponents();

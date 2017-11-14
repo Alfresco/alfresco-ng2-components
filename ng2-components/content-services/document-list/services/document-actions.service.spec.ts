@@ -16,8 +16,7 @@
  */
 
 import { ContentService, TranslationService, NotificationService } from '@alfresco/core';
-import { FileNode, FolderNode } from '../assets/document-library.model.mock';
-import { DocumentListServiceMock } from '../assets/document-list.service.mock';
+import { FileNode, FolderNode, DocumentListServiceMock } from '../../mock';
 import { ContentActionHandler } from '../models/content-action.model';
 import { DocumentActionsService } from './document-actions.service';
 import { DocumentListService } from './document-list.service';

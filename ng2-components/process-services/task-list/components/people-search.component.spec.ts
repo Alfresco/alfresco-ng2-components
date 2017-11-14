@@ -17,11 +17,10 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule, MatInputModule } from '@angular/material';
-import { AppConfigService, TranslationService, UserProcessModel } from '@alfresco/core';
+import { AppConfigService, UserProcessModel } from '@alfresco/core';
 import { DataTableModule } from '@alfresco/core';
 import { Observable } from 'rxjs/Observable';
-import { AppConfigServiceMock } from '../assets/app-config.service.mock';
-import { TranslationMock } from '../assets/translation.service.mock';
+import { AppConfigServiceMock } from '../../mock';
 import { PeopleListComponent } from './people-list.component';
 import { PeopleSearchComponent } from './people-search.component';
 
@@ -50,7 +49,6 @@ describe('PeopleSearchComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-
                 DataTableModule,
                 MatButtonModule,
                 MatInputModule
@@ -60,8 +58,7 @@ describe('PeopleSearchComponent', () => {
                 PeopleListComponent
             ],
             providers: [
-                { provide: AppConfigService, useClass: AppConfigServiceMock },
-                { provide: TranslationService, useClass: TranslationMock }
+                { provide: AppConfigService, useClass: AppConfigServiceMock }
             ]
         }).compileComponents().then(() => {
 

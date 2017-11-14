@@ -17,9 +17,8 @@
 
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslationService, FileModel, LogService, UploadService } from '@alfresco/core';
+import { FileModel, LogService, UploadService } from '@alfresco/core';
 
-import { TranslationMock } from '../assets/translation.service.mock';
 import { FileDraggableDirective } from '../directives/file-draggable.directive';
 import { UploadDragAreaComponent } from './upload-drag-area.component';
 
@@ -75,7 +74,6 @@ describe('UploadDragAreaComponent', () => {
             ],
             providers: [
                 UploadService,
-                { provide: TranslationService, useClass: TranslationMock },
                 LogService
             ]
         }).compileComponents();

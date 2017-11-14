@@ -44,7 +44,7 @@ export class ProcessAttachmentListComponent implements OnChanges {
     error: EventEmitter<any> = new EventEmitter<any>();
 
     @Input()
-    emptyListImageUrl: string = require('./../assets/images/empty_doc_lib.svg');
+    emptyListImageUrl: string = require('../../assets/images/empty_doc_lib.svg');
 
     attachments: any[] = [];
     isLoading: boolean = true;

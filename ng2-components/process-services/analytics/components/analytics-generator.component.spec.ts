@@ -27,7 +27,7 @@ import { Observable } from 'rxjs/Rx';
 
 import { Chart } from '../../diagram';
 import { ReportQuery } from '../../diagram';
-import * as analyticMock from '../assets/analyticsComponent.mock';
+import * as analyticMock from '../../mock';
 import { AnalyticsGeneratorComponent } from '../components/analytics-generator.component';
 import { AnalyticsReportHeatMapComponent } from '../components/analytics-report-heat-map.component';
 import { AnalyticsReportListComponent } from '../components/analytics-report-list.component';
@@ -58,7 +58,6 @@ describe('AnalyticsGeneratorComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-
                 MaterialModule,
                 ChartsModule,
                 DiagramsModule

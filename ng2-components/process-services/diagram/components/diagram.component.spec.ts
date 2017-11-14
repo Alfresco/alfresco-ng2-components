@@ -16,19 +16,17 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslationService } from '@alfresco/core';
 
 import { DebugElement } from '@angular/core';
-import * as diagramsActivitiesMock from '../assets/diagramActivities.mock';
-import * as boundaryEventMock from '../assets/diagramBoundary.mock';
-import * as diagramsEventsMock from '../assets/diagramEvents.mock';
-import * as flowsMock from '../assets/diagramFlows.mock';
-import * as diagramsGatewaysMock from '../assets/diagramGateways.mock';
-import * as intermediateCatchingMock from '../assets/diagramIntermediate.mock';
-import * as structuralMock from '../assets/diagramStructural.mock';
-import * as swimLanesMock from '../assets/diagramSwimlanes.mock';
-import * as throwEventMock from '../assets/diagramThrow.mock';
-import { TranslationMock } from '../assets/translation.service.mock';
+import * as diagramsActivitiesMock from '../../mock/diagram/diagramActivities.mock';
+import * as boundaryEventMock from '../../mock/diagram/diagramBoundary.mock';
+import * as diagramsEventsMock from '../../mock/diagram/diagramEvents.mock';
+import * as flowsMock from '../../mock/diagram/diagramFlows.mock';
+import * as diagramsGatewaysMock from '../../mock/diagram/diagramGateways.mock';
+import * as intermediateCatchingMock from '../../mock/diagram/diagramIntermediate.mock';
+import * as structuralMock from '../../mock/diagram/diagramStructural.mock';
+import * as swimLanesMock from '../../mock/diagram/diagramSwimlanes.mock';
+import * as throwEventMock from '../../mock/diagram/diagramThrow.mock';
 import { DiagramComponent } from './index';
 import { DIAGRAM_DIRECTIVES, DIAGRAM_PROVIDERS } from './index';
 import { RAPHAEL_DIRECTIVES, RAPHAEL_PROVIDERS } from './raphael/index';
@@ -51,8 +49,7 @@ describe('Test ng2-activiti-diagrams ', () => {
             ],
             providers: [
                 ...DIAGRAM_PROVIDERS,
-                ...RAPHAEL_PROVIDERS,
-                {provide: TranslationService, useClass: TranslationMock}
+                ...RAPHAEL_PROVIDERS
             ]
         }).compileComponents();
     }));

@@ -21,7 +21,7 @@ import { MaterialModule } from '../../material.module';
 import { Observable } from 'rxjs/Rx';
 
 import { ProcessInstance } from '../models/process-instance.model';
-import { exampleProcess } from './../assets/process.model.mock';
+import { exampleProcess } from '../../mock';
 import { ProcessService } from './../services/process.service';
 import { ProcessInstanceHeaderComponent } from './process-instance-header.component';
 

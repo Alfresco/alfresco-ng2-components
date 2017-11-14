@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { ProcessInstance } from '../models/process-instance.model';
+import { ProcessInstance } from '../../process-list/models/process-instance.model';
 
-export let fakeProcessInstances = [
+export let fakeProcessInstance = [
     new ProcessInstance({
         id: 1,
         name: 'Process 773443333',

@@ -36,7 +36,6 @@ describe('DateWidgetComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-
                 MaterialModule
             ],
             declarations: [

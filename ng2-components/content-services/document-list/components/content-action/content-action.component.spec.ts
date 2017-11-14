@@ -23,7 +23,7 @@ import { DataTableModule } from '@alfresco/core';
 import { MaterialModule } from '../../../material.module';
 
 import { DocumentListService } from '../../services/document-list.service';
-import { FileNode } from './../../assets/document-library.model.mock';
+import { FileNode } from '../../../mock';
 import { ContentActionHandler } from './../../models/content-action.model';
 import { DocumentActionsService } from './../../services/document-actions.service';
 import { FolderActionsService } from './../../services/folder-actions.service';
@@ -47,7 +47,6 @@ describe('ContentAction', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-
                 DataTableModule,
                 MaterialModule
             ],

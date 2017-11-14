@@ -19,7 +19,7 @@ import { async, TestBed } from '@angular/core/testing';
 import { Response, ResponseOptions } from '@angular/http';
 import { AlfrescoApiService, LogService } from '@alfresco/core';
 import { FormDefinitionModel } from '../models/form-definition.model';
-import { formModelTabs } from './assets/form.service.mock';
+import { formModelTabs } from '../../mock';
 import { EcmModelService } from './ecm-model.service';
 import { FormService } from './form.service';
 

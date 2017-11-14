@@ -18,12 +18,11 @@
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService, TranslationService } from '@alfresco/core';
+import { AppConfigService } from '@alfresco/core';
 import { CoreModule } from '@alfresco/core';
 import { MaterialModule } from '../../material.module';
 import { Observable } from 'rxjs/Rx';
-import { AppConfigServiceMock } from '../assets/app-config.service.mock';
-import { TranslationMock } from '../assets/translation.service.mock';
+import { AppConfigServiceMock } from '../../mock';
 import { TaskAttachmentListComponent } from './task-attachment-list.component';
 import { ProcessContentService } from '../../form';
 
@@ -48,8 +47,7 @@ describe('TaskAttachmentList', () => {
             ],
             providers: [
                 ProcessContentService,
-                { provide: AppConfigService, useClass: AppConfigServiceMock },
-                { provide: TranslationService, useClass: TranslationMock }
+                { provide: AppConfigService, useClass: AppConfigServiceMock }
             ]
         }).compileComponents();
 

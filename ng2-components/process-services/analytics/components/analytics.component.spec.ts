@@ -54,7 +54,6 @@ describe('AnalyticsComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-
                 ChartsModule,
                 DiagramsModule
             ],

@@ -17,9 +17,8 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService, AppsProcessService, TranslationService } from '@alfresco/core';
+import { AppConfigService, AppsProcessService } from '@alfresco/core';
 import { Observable } from 'rxjs/Rx';
-import { TranslationMock } from '../assets/translation.service.mock';
 import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
 import { TaskListService } from '../services/tasklist.service';
 import { MaterialModule } from '../../material.module';
@@ -65,15 +64,13 @@ describe('TaskFiltersComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-
                 MaterialModule
             ],
             declarations: [
                 TaskFiltersComponent
             ],
             providers: [
-                TaskListService,
-                { provide: TranslationService, useClass: TranslationMock }
+                TaskListService
             ]
         }).compileComponents();
 

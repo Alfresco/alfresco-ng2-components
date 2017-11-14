@@ -23,12 +23,12 @@ export let startTaskMock = {
     'formKey': null,
     'category': 'fakeAppId'
 };
-
-export let noDataMock = {
-    'name': '',
-    'description': '',
-    'assignee': {},
-    'dueDate': '',
-    'formKey': '',
-    'category': ';'
-};
+//
+// export let noDataMock = {
+//     'name': '',
+//     'description': '',
+//     'assignee': {},
+//     'dueDate': '',
+//     'formKey': '',
+//     'category': ';'
+// };

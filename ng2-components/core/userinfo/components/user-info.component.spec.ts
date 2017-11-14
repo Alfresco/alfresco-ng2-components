@@ -17,14 +17,9 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {
-    AuthenticationService,
-    ContentService,
-    TranslationService
-} from '../../services';
+import { AuthenticationService, ContentService } from '../../services';
 import { fakeBpmUser } from '../../mock/bpm-user.service.mock';
 import { fakeEcmEditedUser, fakeEcmUser, fakeEcmUserNoImage } from '../../mock/ecm-user.service.mock';
-import { TranslationMock } from '../../mock/translation.service.mock';
 import { MaterialModule } from '../../material.module';
 import { BpmUserService } from '../services/bpm-user.service';
 import { EcmUserService } from '../services/ecm-user.service';
@@ -51,8 +46,7 @@ describe('User info component', () => {
             ],
             providers: [
                 EcmUserService,
-                BpmUserService,
-                {provide: TranslationService, useClass: TranslationMock}
+                BpmUserService
             ]
         }).compileComponents().then(() => {
             fixture = TestBed.createComponent(UserInfoComponent);

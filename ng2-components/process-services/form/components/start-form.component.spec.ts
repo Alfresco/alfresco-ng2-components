@@ -17,12 +17,11 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslationService, CoreModule } from '@alfresco/core';
+import { CoreModule } from '@alfresco/core';
 import { Observable } from 'rxjs/Rx';
-import { EntryComponenteMockModule } from '../assets/entry-module.mock';
-import { startFormDateWidgetMock, startFormDropdownDefinitionMock, startFormTextDefinitionMock, startMockForm, startMockFormWithTab } from '../assets/start-form.component.mock';
-import { startFormAmountWidgetMock, startFormNumberWidgetMock, startFormRadioButtonWidgetMock } from '../assets/start-form.component.mock';
-import { TranslationMock } from './../assets/translation.service.mock';
+import { EntryComponenteMockModule } from '../../mock';
+import { startFormDateWidgetMock, startFormDropdownDefinitionMock, startFormTextDefinitionMock, startMockForm, startMockFormWithTab } from '../../mock';
+import { startFormAmountWidgetMock, startFormNumberWidgetMock, startFormRadioButtonWidgetMock } from '../../mock';
 import { EcmModelService } from './../services/ecm-model.service';
 import { FormRenderingService } from './../services/form-rendering.service';
 import { FormService } from './../services/form.service';
@@ -61,7 +60,6 @@ describe('ActivitiStartForm', () => {
                 ...MASK_DIRECTIVE
             ],
             providers: [
-                { provide: TranslationService, useClass: TranslationMock },
                 EcmModelService,
                 FormService,
                 FormRenderingService,

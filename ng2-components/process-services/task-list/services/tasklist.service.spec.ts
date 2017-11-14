@@ -16,9 +16,9 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { AppConfigService, TranslationService, UserProcessModel } from '@alfresco/core';
+import { AppConfigService, UserProcessModel } from '@alfresco/core';
 import { Observable } from 'rxjs/Rx';
-import { AppConfigServiceMock } from '../assets/app-config.service.mock';
+import { AppConfigServiceMock } from '../../mock';
 import {
     fakeAppFilter,
     fakeAppPromise,
@@ -37,8 +37,7 @@ import {
     fakeUser1,
     fakeUser2,
     secondFakeTaskList
-} from '../assets/tasklist-service.mock';
-import { TranslationMock } from '../assets/translation.service.mock';
+} from '../../mock';
 import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './tasklist.service';
@@ -55,8 +54,7 @@ describe('Activiti TaskList Service', () => {
             ],
             providers: [
                 TaskListService,
-                { provide: AppConfigService, useClass: AppConfigServiceMock },
-                { provide: TranslationService, useClass: TranslationMock }
+                { provide: AppConfigService, useClass: AppConfigServiceMock }
             ]
         }).compileComponents();
     }));

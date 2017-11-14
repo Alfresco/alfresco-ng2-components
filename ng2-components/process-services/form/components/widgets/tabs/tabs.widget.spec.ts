@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { fakeFormJson } from '../../../services/assets/widget-visibility.service.mock';
+import { fakeFormJson } from '../../../../mock';
 import { MaterialModule } from '../../../../material.module';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';

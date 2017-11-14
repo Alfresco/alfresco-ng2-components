@@ -35,8 +35,6 @@ import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 import { CommentsComponent } from './comments.component';
 
-declare var require: any;
-
 @Component({
     selector: 'adf-task-details',
     templateUrl: './task-details.component.html',
@@ -94,9 +92,6 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
     @Input()
     showFormRefreshButton: boolean = true;
-
-    @Input()
-    peopleIconImageUrl: string = require('../assets/images/user.jpg');
 
     @Input()
     fieldValidators: FormFieldValidator[] = [];

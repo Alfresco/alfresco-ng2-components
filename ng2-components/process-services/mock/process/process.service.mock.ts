@@ -16,10 +16,10 @@
  */
 
 import { AppDefinitionRepresentationModel, TaskDetailsModel } from '../../task-list';
-import { FilterProcessRepresentationModel } from '../models/filter-process.model';
-import { ProcessDefinitionRepresentation } from '../models/process-definition.model';
+import { FilterProcessRepresentationModel } from '../../process-list/models/filter-process.model';
+import { ProcessDefinitionRepresentation } from '../../process-list/models/process-definition.model';
 
-export let fakeFilters = {
+export let fakeProcessFilters = {
     size: 1, total: 1, start: 0,
     data: [new FilterProcessRepresentationModel({
         'name': 'Running',
@@ -27,7 +27,7 @@ export let fakeFilters = {
         'id': 333,
         'recent': true,
         'icon': 'glyphicon-random',
-        'filter': {'sort': 'created-desc', 'name': '', 'state': 'running'}
+        'filter': { 'sort': 'created-desc', 'name': '', 'state': 'running' }
     })]
 };
 
@@ -61,7 +61,7 @@ export let fakeApp2 = new AppDefinitionRepresentationModel({
     id: 1000
 });
 
-export let fakeTaskList = {
+export let fakeTasksList = {
     data: [new TaskDetailsModel({
         id: 1,
         name: 'Task 1',

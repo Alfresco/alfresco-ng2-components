@@ -17,9 +17,8 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService, TranslationService } from '@alfresco/core';
-import { AppConfigServiceMock } from '../assets/app-config.service.mock';
-import { TranslationMock } from '../assets/translation.service.mock';
+import { AppConfigService } from '@alfresco/core';
+import { AppConfigServiceMock } from '../../mock';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from '../services/tasklist.service';
 import { ChecklistComponent } from './checklist.component';
@@ -42,7 +41,6 @@ describe('ChecklistComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-
                 MaterialModule
             ],
             declarations: [
@@ -50,8 +48,7 @@ describe('ChecklistComponent', () => {
             ],
             providers: [
                 TaskListService,
-                { provide: AppConfigService, useClass: AppConfigServiceMock },
-                { provide: TranslationService, useClass: TranslationMock }
+                { provide: AppConfigService, useClass: AppConfigServiceMock }
             ]
         }).compileComponents().then(() => {
             fixture = TestBed.createComponent(ChecklistComponent);

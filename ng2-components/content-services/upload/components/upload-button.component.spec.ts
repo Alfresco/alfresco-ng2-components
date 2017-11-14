@@ -18,9 +18,8 @@
 import { DebugElement, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MaterialModule } from '../../material.module';
-import { ContentService, TranslationService, UploadService } from '@alfresco/core';
+import { ContentService, UploadService } from '@alfresco/core';
 import { Observable } from 'rxjs/Rx';
-import { TranslationMock } from '../assets/translation.service.mock';
 import { UploadButtonComponent } from './upload-button.component';
 
 describe('UploadButtonComponent', () => {
@@ -68,8 +67,7 @@ describe('UploadButtonComponent', () => {
                 UploadButtonComponent
             ],
             providers: [
-                UploadService,
-                {provide: TranslationService, useClass: TranslationMock}
+                UploadService
             ]
         }).compileComponents();
     }));

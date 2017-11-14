@@ -17,10 +17,9 @@
 
 import { DatePipe } from '@angular/common';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService, CommentProcessModel, TranslationService, UserProcessModel } from '@alfresco/core';
+import { AppConfigService, CommentProcessModel, UserProcessModel } from '@alfresco/core';
 import { DataRowEvent, DataTableModule, ObjectDataRow } from '@alfresco/core';
-import { AppConfigServiceMock } from '../assets/app-config.service.mock';
-import { TranslationMock } from '../assets/translation.service.mock';
+import { AppConfigServiceMock } from '../../mock';
 import { CommentListComponent } from './comment-list.component';
 
 const testUser: UserProcessModel = new UserProcessModel({
@@ -41,7 +40,6 @@ describe('CommentListComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-
                 DataTableModule
             ],
             declarations: [
@@ -49,8 +47,7 @@ describe('CommentListComponent', () => {
             ],
             providers: [
                 DatePipe,
-                {provide: AppConfigService, useClass: AppConfigServiceMock},
-                {provide: TranslationService, useClass: TranslationMock}
+                {provide: AppConfigService, useClass: AppConfigServiceMock}
             ]
         }).compileComponents().then(() => {
 

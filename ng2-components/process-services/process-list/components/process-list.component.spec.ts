@@ -21,12 +21,11 @@ import { MatProgressSpinnerModule } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
 import { ProcessInstanceListComponent } from './process-list.component';
 
-import { AppConfigService, CoreModule, TranslationService } from '@alfresco/core';
+import { AppConfigService, CoreModule } from '@alfresco/core';
 import { DataRowEvent, DataSorting, DataTableModule, ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/core';
 
-import { fakeProcessInstances, fakeProcessInstancesWithNoName } from '../assets/process-instances-list.mock';
+import { fakeProcessInstance, fakeProcessInstancesWithNoName } from '../../mock';
 import { ProcessService } from '../services/process.service';
-import { TranslationMock } from './../assets/translation.service.mock';
 
 describe('ProcessInstanceListComponent', () => {
 
@@ -78,8 +77,7 @@ describe('ProcessInstanceListComponent', () => {
             ],
             declarations: [ ProcessInstanceListComponent ],
             providers: [
-                ProcessService,
-                {provide: TranslationService, useClass: TranslationMock}
+                ProcessService
             ]
         }).compileComponents().then(() => {
             fixture = TestBed.createComponent(ProcessInstanceListComponent);
@@ -87,7 +85,7 @@ describe('ProcessInstanceListComponent', () => {
             appConfig = TestBed.get(AppConfigService);
             service = fixture.debugElement.injector.get(ProcessService);
 
-            getProcessInstancesSpy = spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeProcessInstances));
+            getProcessInstancesSpy = spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeProcessInstance));
             appConfig.config = Object.assign(appConfig.config, {
                 'adf-process-list': {
                     'presets': {
@@ -159,7 +157,7 @@ describe('ProcessInstanceListComponent', () => {
         component.processDefinitionKey = null;
         fixture.detectChanges();
         tick();
-        expect(emitSpy).toHaveBeenCalledWith(fakeProcessInstances);
+        expect(emitSpy).toHaveBeenCalledWith(fakeProcessInstance);
     }));
 
     it('should return the process instances list in original order when datalist passed non-existent columns', async(() => {
@@ -303,7 +301,7 @@ describe('ProcessInstanceListComponent', () => {
         let emitSpy = spyOn(component.success, 'emit');
         component.reload();
         tick();
-        expect(emitSpy).toHaveBeenCalledWith(fakeProcessInstances);
+        expect(emitSpy).toHaveBeenCalledWith(fakeProcessInstance);
     }));
 
     it('should reload processes when reload() is called', (done) => {

@@ -18,7 +18,7 @@
 import { SimpleChange } from '@angular/core';
 import { LogService } from '@alfresco/core';
 import { Observable } from 'rxjs/Rx';
-import { fakeForm } from '../assets/form.component.mock';
+import { fakeForm } from '../../mock';
 import { FormService } from './../services/form.service';
 import { NodeService } from './../services/node.service';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';

@@ -15,23 +15,28 @@
  * limitations under the License.
  */
 
-import { EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { NgModule } from '@angular/core';
+import {
+AmountWidgetComponent,
+ContainerWidgetComponent,
+DateWidgetComponent,
+DropdownWidgetComponent,
+NumberWidgetComponent,
+RadioButtonsWidgetComponent,
+TextWidgetComponent
+} from '../../form/components/widgets/index';
 
-export interface LangChangeEvent {
-    lang: string;
-    translations: any;
-}
+@NgModule({
+  declarations: [],
+  entryComponents: [
+    ContainerWidgetComponent,
+    TextWidgetComponent,
+    NumberWidgetComponent,
+    DateWidgetComponent,
+    DropdownWidgetComponent,
+    RadioButtonsWidgetComponent,
+    AmountWidgetComponent
+  ]
+})
 
-export class TranslationMock {
-
-    public onLangChange: EventEmitter<LangChangeEvent> = new EventEmitter<LangChangeEvent>();
-
-    addTranslationFolder() {
-
-    }
-
-    public get(key: string|Array<string>, interpolateParams?: Object): Observable<string|any> {
-        return Observable.of(key);
-    }
-}
+export class EntryComponenteMockModule {}

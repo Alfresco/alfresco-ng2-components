@@ -25,10 +25,9 @@ import {
     CommentListComponent,
     CommentsComponent
 } from '../../task-list';
-import { TranslationService, CommentProcessService, PeopleProcessService } from '@alfresco/core';
+import { CommentProcessService, PeopleProcessService } from '@alfresco/core';
 import { DataTableModule } from '@alfresco/core';
 
-import { TranslationMock } from './../assets/translation.service.mock';
 import { ProcessService } from './../services/process.service';
 import { ProcessCommentsComponent } from './process-comments.component';
 
@@ -42,7 +41,6 @@ describe('ActivitiProcessInstanceComments', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-
                 DataTableModule,
                 MatInputModule
             ],
@@ -52,7 +50,6 @@ describe('ActivitiProcessInstanceComments', () => {
                 CommentListComponent
             ],
             providers: [
-                { provide: TranslationService, useClass: TranslationMock },
                 ProcessService,
                 DatePipe,
                 PeopleProcessService,

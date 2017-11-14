@@ -22,13 +22,11 @@ import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
 import { FormModule, FormModel, FormOutcomeEvent, FormOutcomeModel, FormService } from '../../form';
-import { AppConfigService, CommentProcessService, LogService, TranslationService } from '@alfresco/core';
+import { AppConfigService, CommentProcessService, LogService } from '@alfresco/core';
 
 import { PeopleProcessService, UserProcessModel } from '@alfresco/core';
-import { AppConfigServiceMock } from '../assets/app-config.service.mock';
-import { TranslationMock } from '../assets/translation.service.mock';
 import { TaskDetailsModel } from '../models/task-details.model';
-import { noDataMock, taskDetailsMock, taskFormMock, tasksMock } from './../assets/task-details.mock';
+import { AppConfigServiceMock, noDataMock, taskDetailsMock, taskFormMock, tasksMock } from '../../mock';
 import { TaskListService } from './../services/tasklist.service';
 import { PeopleSearchComponent } from './people-search.component';
 import { TaskDetailsComponent } from './task-details.component';
@@ -60,7 +58,6 @@ describe('TaskDetailsComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-
                 FormModule,
                 MatButtonModule,
                 MatInputModule
@@ -72,7 +69,6 @@ describe('TaskDetailsComponent', () => {
             providers: [
                 TaskListService,
                 PeopleProcessService,
-                {provide: TranslationService, useClass: TranslationMock},
                 {provide: AppConfigService, useClass: AppConfigServiceMock},
                 CommentProcessService
             ],

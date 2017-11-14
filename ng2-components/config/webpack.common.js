@@ -104,12 +104,10 @@ module.exports = {
                 query: {
                     name: '[name].[hash].[ext]',
                     outputPath: (url, resourcePath)=> {
-                        return resourcePath.replace('src', 'bundles') + url;
+                        return resourcePath.replace('assets/', 'bundles/assets/') + url;
                     },
                     publicPath: (url, resourcePath)=> {
-                        var component = resourcePath.substring(0, resourcePath.indexOf('src'));
-                        var path = resourcePath.replace(component, '').replace('src/', '');
-                        return path + url;
+                        return resourcePath + url;
                     }
                 }
             }

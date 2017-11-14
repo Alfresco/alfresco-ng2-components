@@ -88,7 +88,6 @@ describe('DynamicTableWidgetComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-
                 MaterialModule
             ],
             declarations: [DynamicTableWidgetComponent, RowEditorComponent,

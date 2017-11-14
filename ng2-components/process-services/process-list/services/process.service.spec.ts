@@ -19,8 +19,8 @@ import { TestBed } from '@angular/core/testing';
 import { async } from '@angular/core/testing';
 import { AlfrescoApi } from 'alfresco-js-api';
 import { AlfrescoApiService, CoreModule } from '@alfresco/core';
-import { exampleProcess, fakeProcessInstances } from '../assets/process.model.mock';
-import { fakeError, fakeFilters, fakeProcessDef, fakeTaskList } from '../assets/process.service.mock';
+import { exampleProcess, fakeProcessInstances } from '../../mock';
+import { fakeError, fakeProcessFilters, fakeProcessDef, fakeTasksList } from '../../mock';
 import { FilterProcessRepresentationModel, ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessService } from './process.service';
@@ -358,7 +358,7 @@ describe('ProcessService', () => {
         beforeEach(() => {
             listTasks = spyOn(alfrescoApi.activiti.taskApi, 'listTasks')
                 .and
-                .returnValue(Promise.resolve(fakeTaskList));
+                .returnValue(Promise.resolve(fakeTasksList));
         });
 
         it('should return the correct number of tasks', async(() => {
@@ -368,7 +368,7 @@ describe('ProcessService', () => {
         }));
 
         it('should return the correct task data', async(() => {
-            let fakeTasks = fakeTaskList.data;
+            let fakeTasks = fakeTasksList.data;
             service.getProcessTasks(processId).subscribe((tasks) => {
                 let task = tasks[0];
                 expect(task.id).toBe(fakeTasks[0].id);
@@ -427,7 +427,7 @@ describe('ProcessService', () => {
         beforeEach(() => {
             getFilters = spyOn(alfrescoApi.activiti.userFiltersApi, 'getUserProcessInstanceFilters')
                 .and
-                .returnValue(Promise.resolve(fakeFilters));
+                .returnValue(Promise.resolve(fakeProcessFilters));
 
             createFilter = spyOn(alfrescoApi.activiti.userFiltersApi, 'createUserProcessInstanceFilter')
                 .and
@@ -508,7 +508,7 @@ describe('ProcessService', () => {
 
         describe('add filter', () => {
 
-            let filter = fakeFilters.data[0];
+            let filter = fakeProcessFilters.data[0];
 
             it('should call the API to create the filter', () => {
                 service.addProcessFilter(filter);

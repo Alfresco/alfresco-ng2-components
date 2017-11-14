@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewChild } from '@angular/core';
-import { SearchComponent } from '../components/search.component';
+import { SearchComponent } from '../search/components/search.component';
 
 const entryItem = {
     entry: {

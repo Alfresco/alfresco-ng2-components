@@ -72,7 +72,6 @@ describe('ContentNodeSelectorComponent', () => {
     function setupTestbed(plusProviders) {
         TestBed.configureTestingModule({
             imports: [
-
                 DataTableModule,
                 MaterialModule
             ],

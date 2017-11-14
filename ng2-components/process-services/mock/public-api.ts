@@ -16,3 +16,35 @@
  */
 
 export * from './apps-list.mock';
+export * from './analytics/analytics.service.mock';
+export * from './analytics/analyticsComponent.mock';
+export * from './analytics/analyticsParamsReportComponent.mock';
+
+export * from './diagram/diagramActivities.mock';
+export * from './diagram/diagramBoundary.mock';
+export * from './diagram/diagramFlows.mock';
+export * from './diagram/diagramGateways.mock';
+export * from './diagram/diagramIntermediate.mock';
+export * from './diagram/diagramStructural.mock';
+export * from './diagram/diagramSwimlanes.mock';
+export * from './diagram/diagramThrow.mock';
+
+export * from './form/entry-module.mock';
+export * from './form/form.component.mock';
+export * from './form/formDefinition.mock';
+export * from './form/formDefinitionReadonly.mock';
+export * from './form/formDefinitionVisibiity.mock';
+export * from './form/start-form.component.mock';
+export * from './form/form.service.mock';
+export * from './form/widget-visibility.service.mock';
+
+export * from './process/process-instances-list.mock';
+export * from './process/process.service.mock';
+export * from './process/start-process.component.mock';
+export * from './process/process.model.mock';
+
+export * from './task/app-config.service.mock';
+export * from './task/start-task.mock';
+export * from './task/task-details.mock';
+export * from './task/task-details.component.mock';
+export * from './task/tasklist-service.mock';

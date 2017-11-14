@@ -41,7 +41,6 @@ describe('DateEditorComponent', () => {
                 DateEditorComponent
             ],
             imports: [
-
                 MaterialModule
             ]
         }).compileComponents();

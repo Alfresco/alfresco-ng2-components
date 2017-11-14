@@ -32,7 +32,6 @@ describe('EmptyFolderContent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-
                 DataTableModule,
                 MaterialModule
             ],

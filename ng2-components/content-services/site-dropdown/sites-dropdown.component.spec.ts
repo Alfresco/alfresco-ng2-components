@@ -70,7 +70,6 @@ describe('DropdownSitesComponent', () => {
 
         TestBed.configureTestingModule({
             imports: [
-
                 MaterialModule
             ],
             declarations: [

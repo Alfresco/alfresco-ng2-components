@@ -24,13 +24,11 @@ import {
     MatSelectModule
 } from '@angular/material';
 import { FormModule, FormService } from '../../form';
-import { TranslationService } from '@alfresco/core';
 import { Observable } from 'rxjs/Rx';
 
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessService } from '../services/process.service';
-import { newProcess, taskFormMock, testProcessDefRepr, testProcessDefs, testProcessDefWithForm } from './../assets/start-process.component.mock';
-import { TranslationMock } from './../assets/translation.service.mock';
+import { newProcess, taskFormMock, testProcessDefRepr, testProcessDefs, testProcessDefWithForm } from '../../mock';
 import { StartProcessInstanceComponent } from './start-process.component';
 
 describe('StartProcessInstanceComponent', () => {
@@ -47,7 +45,6 @@ describe('StartProcessInstanceComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-
                 FormModule,
                 MatButtonModule,
                 MatCardModule,
@@ -58,7 +55,6 @@ describe('StartProcessInstanceComponent', () => {
                 StartProcessInstanceComponent
             ],
             providers: [
-                {provide: TranslationService, useClass: TranslationMock},
                 ProcessService,
                 FormService
             ]

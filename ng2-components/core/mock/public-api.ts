@@ -26,4 +26,3 @@ export * from './ecm-user.service.mock';
 export * from './event.mock';
 export * from './renditionsService.mock';
 export * from './search.service.mock';
-export * from './translation.service.mock';

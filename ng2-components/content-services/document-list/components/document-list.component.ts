@@ -107,7 +107,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     pageSize: number = DocumentListComponent.DEFAULT_PAGE_SIZE;
 
     @Input()
-    emptyFolderImageUrl: string = require('../assets/images/empty_doc_lib.svg');
+    emptyFolderImageUrl: string = require('../../assets/images/empty_doc_lib.svg');
 
     @Input()
     allowDropFiles: boolean = false;

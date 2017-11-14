@@ -22,17 +22,12 @@ import { Observable, Observer } from 'rxjs/Rx';
 import { UserEventModel } from '../models/user-event.model';
 import { PeopleSearchComponent } from './people-search.component';
 
-declare var require: any;
-
 @Component({
     selector: 'adf-people',
     templateUrl: './people.component.html',
     styleUrls: ['./people.component.scss']
 })
 export class PeopleComponent implements OnInit, AfterViewInit {
-
-    @Input()
-    iconImageUrl: string = require('../assets/images/user.jpg');
 
     @Input()
     people: UserProcessModel[] = [];

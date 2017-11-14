@@ -50,7 +50,6 @@ describe('DropdownWidgetComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-
                 MaterialModule
             ],
             declarations: [DropdownWidgetComponent, ErrorWidgetComponent],

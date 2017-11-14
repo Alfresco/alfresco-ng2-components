@@ -18,7 +18,7 @@
 import {
     AppDefinitionRepresentationModel,
     FilterRepresentationModel
-} from '../models/filter.model';
+} from '../../task-list/models/filter.model';
 
 export let fakeFilters = {
     size: 2, total: 2, start: 0,

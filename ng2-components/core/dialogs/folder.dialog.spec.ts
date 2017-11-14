@@ -23,7 +23,6 @@ import { MaterialModule } from '../material.module';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { Observable } from 'rxjs/Rx';
 
-import { TranslationMock } from '../mock/translation.service.mock';
 import { NodesApiService } from '../services/nodes-api.service';
 import { NotificationService } from '../services/notification.service';
 import { TranslationService } from '../services/translation.service';
@@ -54,8 +53,7 @@ describe('FolderDialogComponent', () => {
                 FolderDialogComponent
             ],
             providers: [
-                { provide: MatDialogRef, useValue: dialogRef },
-                { provide: TranslationService, useClass: TranslationMock }
+                { provide: MatDialogRef, useValue: dialogRef }
             ]
         });
 

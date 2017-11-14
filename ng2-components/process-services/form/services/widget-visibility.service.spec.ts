@@ -24,7 +24,7 @@ import {
     fakeTaskProcessVariableModels,
     formTest,
     formValues
-} from './assets/widget-visibility.service.mock';
+} from '../../mock';
 import { WidgetVisibilityService } from './widget-visibility.service';
 
 declare let jasmine: any;

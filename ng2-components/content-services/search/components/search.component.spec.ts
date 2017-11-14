@@ -18,7 +18,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchService } from '@alfresco/core';
 import { SearchModule } from '../../index';
-import { differentResult, result, SimpleSearchTestComponent } from './../assets/search.component.mock';
+import { differentResult, result, SimpleSearchTestComponent } from '../../mock';
 
 describe('SearchComponent', () => {
 
@@ -29,7 +29,6 @@ describe('SearchComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-
                 SearchModule
             ],
             declarations: [ SimpleSearchTestComponent ]

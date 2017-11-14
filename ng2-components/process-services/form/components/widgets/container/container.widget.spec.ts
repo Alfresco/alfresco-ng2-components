@@ -17,7 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivitiContentService } from '../../../services/activiti-alfresco.service';
-import { fakeFormJson } from '../../../services/assets/widget-visibility.service.mock';
+import { fakeFormJson } from '../../../../mock';
 import { MaterialModule } from '../../../../material.module';
 import { WIDGET_DIRECTIVES } from '../index';
 import { MASK_DIRECTIVE } from '../index';
@@ -42,7 +42,6 @@ describe('ContainerWidgetComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-
                 MaterialModule
             ],
             declarations: [FormFieldComponent, ContentWidgetComponent, WIDGET_DIRECTIVES, MASK_DIRECTIVE],

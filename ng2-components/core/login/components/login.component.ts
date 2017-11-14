@@ -57,10 +57,10 @@ export class LoginComponent implements OnInit {
     registerLink: string = '';
 
     @Input()
-    logoImageUrl: string = require('../assets/images/alfresco-logo.svg');
+    logoImageUrl: string = require('../../assets/images/alfresco-logo.svg');
 
     @Input()
-    backgroundImageUrl: string = require('../assets/images/background.svg');
+    backgroundImageUrl: string = require('../../assets/images/background.svg');
 
     @Input()
     copyrightText: string = '\u00A9 2016 Alfresco Software, Inc. All Rights Reserved.';

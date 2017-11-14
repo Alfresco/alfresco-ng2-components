@@ -22,13 +22,13 @@ import { AlfrescoApiService, TranslationService, AppConfigService, UserPreferenc
 import { DataColumn, DataTableComponent } from '@alfresco/core';
 import { DataTableModule } from '@alfresco/core';
 import { Observable, Subject } from 'rxjs/Rx';
-import { FileNode, FolderNode } from '../assets/document-library.model.mock';
+import { FileNode, FolderNode } from '../../mock';
 import {
     fakeNodeAnswerWithEntries,
     fakeNodeAnswerWithNOEntries,
     fakeNodeWithCreatePermission,
     fakeNodeWithNoPermission
-} from '../assets/document-list.component.mock';
+} from '../../mock';
 import { MaterialModule } from '../../material.module';
 import { ContentActionModel } from '../models/content-action.model';
 import { NodeMinimal, NodeMinimalEntry, NodePaging } from '../models/document-library.model';
@@ -56,7 +56,6 @@ describe('DocumentList', () => {
 
         TestBed.configureTestingModule({
             imports: [
-
                 DataTableModule,
                 MaterialModule
             ],

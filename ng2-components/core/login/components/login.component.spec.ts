@@ -21,13 +21,12 @@ import { Validators } from '@angular/forms';
 
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TranslationService, UserPreferencesService  AuthenticationService } from '../../services';
+import { UserPreferencesService, AuthenticationService } from '../../services';
 
 import { MaterialModule } from '../../material.module';
 import { LoginErrorEvent } from '../models/login-error.event';
 import { LoginSuccessEvent } from '../models/login-success.event';
 import { AuthenticationMock } from './../../mock/authentication.service.mock';
-import { TranslationMock } from './../../mock/translation.service.mock';
 import { LoginComponent } from './login.component';
 
 describe('LoginComponent', () => {
@@ -66,8 +65,7 @@ describe('LoginComponent', () => {
                 LoginComponent
             ],
             providers: [
-                {provide: AuthenticationService, useClass: AuthenticationMock},
-                {provide: TranslationService, useClass: TranslationMock}
+                {provide: AuthenticationService, useClass: AuthenticationMock}
             ]
         }).compileComponents();
     }));

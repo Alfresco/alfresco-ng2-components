@@ -33,10 +33,10 @@ declare var require: any;
 export class UserInfoComponent implements OnInit {
 
     @Input()
-    ecmBackgroundImage: string = require('../assets/images/ecm-background.png');
+    ecmBackgroundImage: string = require('../../assets/images/ecm-background.png');
 
     @Input()
-    bpmBackgroundImage: string = require('../assets/images/bpm-background.png');
+    bpmBackgroundImage: string = require('../../assets/images/bpm-background.png');
 
     @Input()
     menuPositionX: string = 'after';
@@ -52,7 +52,6 @@ export class UserInfoComponent implements OnInit {
 
     ecmUser: EcmUserModel;
     bpmUser: BpmUserModel;
-    anonymousImageUrl: string = require('../assets/images/anonymous.gif');
     bpmUserImage: any;
     ecmUserImage: any;
 

@@ -23,9 +23,9 @@ import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core
 import { By } from '@angular/platform-browser';
 
 import { FormModule } from '../../index';
-import { formDefinitionDropdownField, formDefinitionTwoTextFields } from '../assets/formDefinition.mock';
-import { formReadonlyTwoTextFields } from '../assets/formDefinitionReadonly.mock';
-import { formDefVisibilitiFieldDependsOnNextOne, formDefVisibilitiFieldDependsOnPreviousOne } from '../assets/formDefinitionVisibiity.mock';
+import { formDefinitionDropdownField, formDefinitionTwoTextFields } from '../../mock';
+import { formReadonlyTwoTextFields } from '../../mock';
+import { formDefVisibilitiFieldDependsOnNextOne, formDefVisibilitiFieldDependsOnPreviousOne } from '../../mock';
 import { FormService } from './../services/form.service';
 import { FormComponent } from './form.component';
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ProcessInstance } from '../models/process-instance.model';
+import { ProcessInstance } from '../../process-list/models/process-instance.model';
 
 export class ProcessList {
 

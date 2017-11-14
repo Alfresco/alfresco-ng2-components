@@ -21,10 +21,8 @@ import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
 import { TaskDetailsModel } from '../../task-list';
-import { TranslationService } from '@alfresco/core';
 
-import { taskDetailsMock } from './../../task-list/assets/task-details.mock';
-import { TranslationMock } from './../assets/translation.service.mock';
+import { taskDetailsMock } from '../../mock';
 import { ProcessInstance } from './../models/process-instance.model';
 import { ProcessService } from './../services/process.service';
 import { ProcessInstanceTasksComponent } from './process-instance-tasks.component';
@@ -46,7 +44,6 @@ describe('ProcessInstanceTasksComponent', () => {
                 ProcessInstanceTasksComponent
             ],
             providers: [
-                { provide: TranslationService, useClass: TranslationMock },
                 ProcessService
             ],
             schemas: [NO_ERRORS_SCHEMA]
