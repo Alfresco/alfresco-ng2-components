@@ -33,7 +33,6 @@ describe('Like component', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-
                 MaterialModule
             ],
             declarations: [

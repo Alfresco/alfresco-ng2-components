@@ -121,6 +121,7 @@ describe('DropdownSitesComponent', () => {
         }));
 
         it('should show the "My files" option by default', async(() => {
+            component.hideMyFiles = false;
             fixture.detectChanges();
             jasmine.Ajax.requests.mostRecent().respondWith({ status: 200, contentType: 'json', responseText: sitesList });
 

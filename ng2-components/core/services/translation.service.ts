@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Inject, Injectable, InjectionToken } from '@angular/core';
+import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs/Rx';
 import { TranslateLoaderService } from './translate-loader.service';
@@ -36,7 +36,7 @@ export class TranslationService {
 
     constructor(public translate: TranslateService,
                 private userPreference: UserPreferencesService,
-                @Inject(TRANSLATION_PROVIDER) providers: TranslationProvider[]) {
+                @Optional() @Inject(TRANSLATION_PROVIDER) providers: TranslationProvider[]) {
         this.customLoader = <TranslateLoaderService> this.translate.currentLoader;
 
         this.defaultLang = 'en';
