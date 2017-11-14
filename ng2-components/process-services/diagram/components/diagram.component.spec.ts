@@ -33,7 +33,7 @@ import { RAPHAEL_DIRECTIVES, RAPHAEL_PROVIDERS } from './raphael/index';
 
 declare let jasmine: any;
 
-describe('Test ng2-activiti-diagrams ', () => {
+describe('Diagrams ', () => {
 
     let component: any;
     let fixture: ComponentFixture<DiagramComponent>;
@@ -62,17 +62,27 @@ describe('Test ng2-activiti-diagrams ', () => {
         fixture.detectChanges();
     });
 
+    beforeEach(() => {
+        jasmine.Ajax.install();
+        component.processInstanceId = '38399';
+        component.processDefinitionId = 'fakeprocess:24:38399';
+        component.metricPercentages = { startEvent: 0 };
+    });
+
+    afterEach(() => {
+        component.success.unsubscribe();
+        jasmine.Ajax.uninstall();
+    });
+
+    let ajaxReply =  (resp: any) => {
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            status: 200,
+            contentType: 'json',
+            responseText: resp
+        });
+    };
+
     describe('Diagrams component Events: ', () => {
-
-        beforeEach(() => {
-            jasmine.Ajax.install();
-            component.processDefinitionId = 'fakeprocess:24:38399';
-            component.metricPercentages = {startEvent: 0};
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
 
         it('Should render the Start Event', async(() => {
             component.success.subscribe((res) => {
@@ -87,12 +97,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsEventsMock.startEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsEventsMock.startEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Start Timer Event', async(() => {
@@ -112,13 +118,9 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsEventsMock.startTimeEvent]};
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsEventsMock.startTimeEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Start Signal Event', async(() => {
@@ -126,7 +128,7 @@ describe('Test ng2-activiti-diagrams ', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
-                    let event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle');
+                    let event: any = element.querySelector('diagram-start-event');
                     expect(event).not.toBeNull();
 
                     let iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
@@ -138,12 +140,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsEventsMock.startSignalEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsEventsMock.startSignalEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Start Message Event', async(() => {
@@ -163,12 +161,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsEventsMock.startMessageEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsEventsMock.startMessageEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Start Error Event', async(() => {
@@ -188,12 +182,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsEventsMock.startErrorEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsEventsMock.startErrorEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the End Event', async(() => {
@@ -209,12 +199,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsEventsMock.endEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsEventsMock.endEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the End Error Event', async(() => {
@@ -234,25 +220,12 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsEventsMock.endErrorEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsEventsMock.endErrorEvent] };
+            ajaxReply(resp);
         }));
     });
 
     describe('Diagrams component Activities: ', () => {
-        beforeEach(() => {
-            jasmine.Ajax.install();
-            component.processDefinitionId = 'fakeprocess:24:38399';
-            component.metricPercentages = {startEvent: 0};
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
 
         it('Should render the User Task', async(() => {
             component.success.subscribe((res) => {
@@ -275,12 +248,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.userTask]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.userTask] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Manual Task', async(() => {
@@ -304,12 +273,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.manualTask]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.manualTask] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Service Task', async(() => {
@@ -333,28 +298,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.serviceTask]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
-        }));
-
-        it('Should render the Service Mail Task', async(() => {
-            component.success.subscribe((res) => {
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    expect(true).toBe(true);
-                });
-            });
-            component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.mailTask]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.serviceTask] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Service Camel Task', async(() => {
@@ -378,12 +323,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.camelTask]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.camelTask] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Service Mule Task', async(() => {
@@ -403,12 +344,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.muleTask]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.muleTask] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Service Alfresco Publish Task', async(() => {
@@ -433,12 +370,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.alfrescoPublishTask]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.alfrescoPublishTask] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Service Google Drive Publish Task', async(() => {
@@ -463,12 +396,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.googleDrivePublishTask]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.googleDrivePublishTask] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Rest Call Task', async(() => {
@@ -493,12 +422,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.restCallTask]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.restCallTask] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Service Box Publish Task', async(() => {
@@ -523,12 +448,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.boxPublishTask]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.boxPublishTask] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Receive Task', async(() => {
@@ -552,12 +473,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.receiveTask]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.receiveTask] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Script Task', async(() => {
@@ -581,12 +498,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.scriptTask]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.scriptTask] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Business Rule Task', async(() => {
@@ -610,26 +523,13 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.businessRuleTask]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.businessRuleTask] };
+            ajaxReply(resp);
         }));
 
     });
 
     describe('Diagrams component Gateways: ', () => {
-        beforeEach(() => {
-            jasmine.Ajax.install();
-            component.processDefinitionId = 'fakeprocess:24:38399';
-            component.metricPercentages = {startEvent: 0};
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
 
         it('Should render the Exclusive Gateway', async(() => {
             component.success.subscribe((res) => {
@@ -648,12 +548,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsGatewaysMock.exclusiveGatway]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsGatewaysMock.exclusiveGatway] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Inclusive Gateway', async(() => {
@@ -673,12 +569,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsGatewaysMock.inclusiveGatway]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsGatewaysMock.inclusiveGatway] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Parallel Gateway', async(() => {
@@ -698,12 +590,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsGatewaysMock.parallelGatway]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsGatewaysMock.parallelGatway] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Event Gateway', async(() => {
@@ -733,25 +621,12 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsGatewaysMock.eventGatway]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsGatewaysMock.eventGatway] };
+            ajaxReply(resp);
         }));
     });
 
     describe('Diagrams component Intermediate Catching events: ', () => {
-        beforeEach(() => {
-            jasmine.Ajax.install();
-            component.processDefinitionId = 'fakeprocess:24:38399';
-            component.metricPercentages = {startEvent: 0};
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
 
         it('Should render the Intermediate catching time event', async(() => {
             component.success.subscribe((res) => {
@@ -778,12 +653,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [intermediateCatchingMock.intermediateCatchingTimeEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [intermediateCatchingMock.intermediateCatchingTimeEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Intermediate catching error event', async(() => {
@@ -811,12 +682,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [intermediateCatchingMock.intermediateCatchingErrorEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [intermediateCatchingMock.intermediateCatchingErrorEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Intermediate catching signal event', async(() => {
@@ -844,12 +711,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [intermediateCatchingMock.intermediateCatchingSignalEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [intermediateCatchingMock.intermediateCatchingSignalEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Intermediate catching signal message', async(() => {
@@ -877,25 +740,12 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [intermediateCatchingMock.intermediateCatchingMessageEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [intermediateCatchingMock.intermediateCatchingMessageEvent] };
+            ajaxReply(resp);
         }));
     });
 
     describe('Diagrams component Boundary events: ', () => {
-        beforeEach(() => {
-            jasmine.Ajax.install();
-            component.processDefinitionId = 'fakeprocess:24:38399';
-            component.metricPercentages = {startEvent: 0};
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
 
         it('Should render the Boundary time event', async(() => {
             component.success.subscribe((res) => {
@@ -922,12 +772,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [boundaryEventMock.boundaryTimeEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [boundaryEventMock.boundaryTimeEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Boundary error event', async(() => {
@@ -955,12 +801,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [boundaryEventMock.boundaryErrorEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [boundaryEventMock.boundaryErrorEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Boundary signal event', async(() => {
@@ -988,12 +830,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [boundaryEventMock.boundarySignalEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [boundaryEventMock.boundarySignalEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Boundary signal message', async(() => {
@@ -1021,12 +859,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [boundaryEventMock.boundaryMessageEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [boundaryEventMock.boundaryMessageEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Boundary signal message', async(() => {
@@ -1054,25 +888,12 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [boundaryEventMock.boundaryMessageEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [boundaryEventMock.boundaryMessageEvent] };
+            ajaxReply(resp);
         }));
     });
 
     describe('Diagrams component Throw events: ', () => {
-        beforeEach(() => {
-            jasmine.Ajax.install();
-            component.processDefinitionId = 'fakeprocess:24:38399';
-            component.metricPercentages = {startEvent: 0};
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
 
         it('Should render the Throw time event', async(() => {
             component.success.subscribe((res) => {
@@ -1095,12 +916,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [throwEventMock.throwTimeEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [throwEventMock.throwTimeEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Throw error event', async(() => {
@@ -1128,12 +945,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [throwEventMock.throwErrorEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [throwEventMock.throwErrorEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Throw signal event', async(() => {
@@ -1161,12 +974,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [throwEventMock.throwSignalEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [throwEventMock.throwSignalEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Throw signal message', async(() => {
@@ -1194,12 +1003,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [throwEventMock.throwMessageEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [throwEventMock.throwMessageEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Throw signal message', async(() => {
@@ -1227,25 +1032,12 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [throwEventMock.throwMessageEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [throwEventMock.throwMessageEvent] };
+            ajaxReply(resp);
         }));
     });
 
     describe('Diagrams component Structural: ', () => {
-        beforeEach(() => {
-            jasmine.Ajax.install();
-            component.processDefinitionId = 'fakeprocess:24:38399';
-            component.metricPercentages = {startEvent: 0};
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
 
         it('Should render the Subprocess', async(() => {
             component.success.subscribe((res) => {
@@ -1261,12 +1053,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [structuralMock.subProcess]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [structuralMock.subProcess] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Event Subprocess', async(() => {
@@ -1283,25 +1071,12 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [structuralMock.eventSubProcess]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [structuralMock.eventSubProcess] };
+            ajaxReply(resp);
         }));
     });
 
     describe('Diagrams component Swim lane: ', () => {
-        beforeEach(() => {
-            jasmine.Ajax.install();
-            component.processDefinitionId = 'fakeprocess:24:38399';
-            component.metricPercentages = {startEvent: 0};
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
 
         it('Should render the Pool', async(() => {
             component.success.subscribe((res) => {
@@ -1317,12 +1092,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {pools: [swimLanesMock.pool]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { pools: [swimLanesMock.pool] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Pool with Lanes', async(() => {
@@ -1342,25 +1113,12 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {pools: [swimLanesMock.poolLanes]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { pools: [swimLanesMock.poolLanes] };
+            ajaxReply(resp);
         }));
     });
 
     describe('Diagrams component Flows: ', () => {
-        beforeEach(() => {
-            jasmine.Ajax.install();
-            component.processDefinitionId = 'fakeprocess:24:38399';
-            component.metricPercentages = {startEvent: 0};
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
 
         it('Should render the flow', async(() => {
             component.success.subscribe((res) => {
@@ -1376,26 +1134,12 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {flows: [flowsMock.flow]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { flows: [flowsMock.flow] };
+            ajaxReply(resp);
         }));
     });
 
     describe('Diagrams component Events with process instance id: ', () => {
-
-        beforeEach(() => {
-            jasmine.Ajax.install();
-            component.processInstanceId = '38399';
-            component.metricPercentages = {startEvent: 0};
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
 
         it('Should render the Start Event', async(() => {
             component.success.subscribe((res) => {
@@ -1410,12 +1154,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsEventsMock.startEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsEventsMock.startEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active Start Event', async(() => {
@@ -1431,12 +1171,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsEventsMock.startEventActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsEventsMock.startEventActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Start Event', async(() => {
@@ -1452,12 +1188,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsEventsMock.startEventCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsEventsMock.startEventCompleted] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Start Timer Event', async(() => {
@@ -1477,13 +1209,9 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsEventsMock.startTimeEvent]};
+            let resp = { elements: [diagramsEventsMock.startTimeEvent] };
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            ajaxReply(resp);
         }));
 
         it('Should render the Active Start Timer Event', async(() => {
@@ -1503,13 +1231,9 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsEventsMock.startTimeEventActive]};
+            let resp = { elements: [diagramsEventsMock.startTimeEventActive] };
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Start Timer Event', async(() => {
@@ -1529,13 +1253,9 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsEventsMock.startTimeEventCompleted]};
+            let resp = { elements: [diagramsEventsMock.startTimeEventCompleted] };
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            ajaxReply(resp);
         }));
 
         it('Should render the Start Signal Event', async(() => {
@@ -1555,12 +1275,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsEventsMock.startSignalEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsEventsMock.startSignalEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active Start Signal Event', async(() => {
@@ -1580,12 +1296,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsEventsMock.startSignalEventActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsEventsMock.startSignalEventActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Start Signal Event', async(() => {
@@ -1605,12 +1317,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsEventsMock.startSignalEventCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsEventsMock.startSignalEventCompleted] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Start Message Event', async(() => {
@@ -1630,12 +1338,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsEventsMock.startMessageEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsEventsMock.startMessageEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active Start Message Event', async(() => {
@@ -1655,12 +1359,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsEventsMock.startMessageEventActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsEventsMock.startMessageEventActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Start Message Event', async(() => {
@@ -1680,12 +1380,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsEventsMock.startMessageEventCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsEventsMock.startMessageEventCompleted] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Start Error Event', async(() => {
@@ -1705,12 +1401,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsEventsMock.startErrorEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsEventsMock.startErrorEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active Start Error Event', async(() => {
@@ -1730,12 +1422,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsEventsMock.startErrorEventActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsEventsMock.startErrorEventActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Start Error Event', async(() => {
@@ -1755,12 +1443,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsEventsMock.startErrorEventCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsEventsMock.startErrorEventCompleted] };
+            ajaxReply(resp);
         }));
 
         it('Should render the End Event', async(() => {
@@ -1776,12 +1460,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsEventsMock.endEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsEventsMock.endEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active End Event', async(() => {
@@ -1797,12 +1477,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsEventsMock.endEventActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsEventsMock.endEventActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed End Event', async(() => {
@@ -1818,12 +1494,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsEventsMock.endEventCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsEventsMock.endEventCompleted] };
+            ajaxReply(resp);
         }));
 
         it('Should render the End Error Event', async(() => {
@@ -1843,12 +1515,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsEventsMock.endErrorEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsEventsMock.endErrorEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active End Error Event', async(() => {
@@ -1868,12 +1536,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsEventsMock.endErrorEventActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsEventsMock.endErrorEventActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed End Error Event', async(() => {
@@ -1893,25 +1557,12 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsEventsMock.endErrorEventCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsEventsMock.endErrorEventCompleted] };
+            ajaxReply(resp);
         }));
     });
 
     describe('Diagrams component Activities with process instance id: ', () => {
-        beforeEach(() => {
-            jasmine.Ajax.install();
-            component.processInstanceId = '38399';
-            component.metricPercentages = {startEvent: 0};
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
 
         it('Should render the User Task', async(() => {
             component.success.subscribe((res) => {
@@ -1934,12 +1585,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.userTask]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.userTask] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active User Task', async(() => {
@@ -1963,12 +1610,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.userTaskActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.userTaskActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed User Task', async(() => {
@@ -1992,12 +1635,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.userTaskCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.userTaskCompleted] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Manual Task', async(() => {
@@ -2021,12 +1660,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.manualTask]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.manualTask] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active Manual Task', async(() => {
@@ -2050,12 +1685,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.manualTaskActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.manualTaskActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Manual Task', async(() => {
@@ -2079,12 +1710,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.manualTaskCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.manualTaskCompleted] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Service Task', async(() => {
@@ -2108,12 +1735,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.serviceTask]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.serviceTask] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active Service Task', async(() => {
@@ -2137,12 +1760,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.serviceTaskActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.serviceTaskActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Service Task', async(() => {
@@ -2166,28 +1785,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.serviceTaskCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
-        }));
-
-        it('Should render the Service Mail Task', async(() => {
-            component.success.subscribe((res) => {
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    expect(true).toBe(true);
-                });
-            });
-            component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.mailTask]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.serviceTaskCompleted] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Service Camel Task', async(() => {
@@ -2211,12 +1810,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.camelTask]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.camelTask] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active Service Camel Task', async(() => {
@@ -2240,12 +1835,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.camelTaskActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.camelTaskActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Service Camel Task', async(() => {
@@ -2269,12 +1860,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.camelTaskCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.camelTaskCompleted] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Service Mule Task', async(() => {
@@ -2294,12 +1881,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.muleTask]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.muleTask] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active Service Mule Task', async(() => {
@@ -2319,12 +1902,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.muleTaskActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.muleTaskActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Service Mule Task', async(() => {
@@ -2344,12 +1923,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.muleTaskCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.muleTaskCompleted] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Service Alfresco Publish Task', async(() => {
@@ -2374,12 +1949,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.alfrescoPublishTask]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.alfrescoPublishTask] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active Service Alfresco Publish Task', async(() => {
@@ -2404,12 +1975,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.alfrescoPublishTaskActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.alfrescoPublishTaskActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Service Alfresco Publish Task', async(() => {
@@ -2434,12 +2001,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.alfrescoPublishTaskCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.alfrescoPublishTaskCompleted] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Service Google Drive Publish Task', async(() => {
@@ -2464,12 +2027,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.googleDrivePublishTask]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.googleDrivePublishTask] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active Service Google Drive Publish Task', async(() => {
@@ -2494,12 +2053,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.googleDrivePublishTaskActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.googleDrivePublishTaskActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Service Google Drive Publish Task', async(() => {
@@ -2524,12 +2079,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.googleDrivePublishTaskCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.googleDrivePublishTaskCompleted] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Rest Call Task', async(() => {
@@ -2554,12 +2105,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.restCallTask]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.restCallTask] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active Rest Call Task', async(() => {
@@ -2584,12 +2131,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.restCallTaskActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.restCallTaskActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Rest Call Task', async(() => {
@@ -2614,12 +2157,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.restCallTaskCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.restCallTaskCompleted] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Service Box Publish Task', async(() => {
@@ -2644,12 +2183,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.boxPublishTask]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.boxPublishTask] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active Service Box Publish Task', async(() => {
@@ -2674,12 +2209,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.boxPublishTaskActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.boxPublishTaskActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Service Box Publish Task', async(() => {
@@ -2704,12 +2235,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.boxPublishTaskCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.boxPublishTaskCompleted] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Receive Task', async(() => {
@@ -2733,12 +2260,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.receiveTask]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.receiveTask] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active Receive Task', async(() => {
@@ -2762,12 +2285,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.receiveTaskActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.receiveTaskActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Receive Task', async(() => {
@@ -2791,12 +2310,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.receiveTaskCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.receiveTaskCompleted] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Script Task', async(() => {
@@ -2820,12 +2335,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.scriptTask]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.scriptTask] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active Script Task', async(() => {
@@ -2849,12 +2360,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.scriptTaskActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.scriptTaskActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Script Task', async(() => {
@@ -2878,12 +2385,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.scriptTaskCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.scriptTaskCompleted] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Business Rule Task', async(() => {
@@ -2907,12 +2410,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.businessRuleTask]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.businessRuleTask] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active Business Rule Task', async(() => {
@@ -2936,12 +2435,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.businessRuleTaskActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.businessRuleTaskActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Business Rule Task', async(() => {
@@ -2965,26 +2460,13 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsActivitiesMock.businessRuleTaskCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsActivitiesMock.businessRuleTaskCompleted] };
+            ajaxReply(resp);
         }));
 
     });
 
     describe('Diagrams component Gateways with process instance id: ', () => {
-        beforeEach(() => {
-            jasmine.Ajax.install();
-            component.processInstanceId = '38399';
-            component.metricPercentages = {startEvent: 0};
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
 
         it('Should render the Exclusive Gateway', async(() => {
             component.success.subscribe((res) => {
@@ -3003,12 +2485,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsGatewaysMock.exclusiveGatway]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsGatewaysMock.exclusiveGatway] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active Exclusive Gateway', async(() => {
@@ -3028,12 +2506,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsGatewaysMock.exclusiveGatwayActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsGatewaysMock.exclusiveGatwayActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Exclusive Gateway', async(() => {
@@ -3053,12 +2527,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsGatewaysMock.exclusiveGatwayCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsGatewaysMock.exclusiveGatwayCompleted] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Inclusive Gateway', async(() => {
@@ -3078,12 +2548,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsGatewaysMock.inclusiveGatway]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsGatewaysMock.inclusiveGatway] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active Inclusive Gateway', async(() => {
@@ -3103,12 +2569,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsGatewaysMock.inclusiveGatwayActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsGatewaysMock.inclusiveGatwayActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Inclusive Gateway', async(() => {
@@ -3128,12 +2590,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsGatewaysMock.inclusiveGatwayCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsGatewaysMock.inclusiveGatwayCompleted] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Parallel Gateway', async(() => {
@@ -3153,12 +2611,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsGatewaysMock.parallelGatway]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsGatewaysMock.parallelGatway] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active Parallel Gateway', async(() => {
@@ -3178,12 +2632,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsGatewaysMock.parallelGatwayActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsGatewaysMock.parallelGatwayActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Parallel Gateway', async(() => {
@@ -3203,12 +2653,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsGatewaysMock.parallelGatwayCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsGatewaysMock.parallelGatwayCompleted] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Event Gateway', async(() => {
@@ -3238,12 +2684,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsGatewaysMock.eventGatway]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsGatewaysMock.eventGatway] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active Event Gateway', async(() => {
@@ -3273,12 +2715,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsGatewaysMock.eventGatwayActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsGatewaysMock.eventGatwayActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Event Gateway', async(() => {
@@ -3308,25 +2746,12 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [diagramsGatewaysMock.eventGatwayCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [diagramsGatewaysMock.eventGatwayCompleted] };
+            ajaxReply(resp);
         }));
     });
 
     describe('Diagrams component Intermediate Catching events with process instance id: ', () => {
-        beforeEach(() => {
-            jasmine.Ajax.install();
-            component.processInstanceId = '38399';
-            component.metricPercentages = {startEvent: 0};
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
 
         it('Should render the Intermediate catching time event', async(() => {
             component.success.subscribe((res) => {
@@ -3353,12 +2778,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [intermediateCatchingMock.intermediateCatchingTimeEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [intermediateCatchingMock.intermediateCatchingTimeEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active Intermediate catching time event', async(() => {
@@ -3390,12 +2811,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [intermediateCatchingMock.intermediateCatchingTimeEventActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [intermediateCatchingMock.intermediateCatchingTimeEventActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Intermediate catching time event', async(() => {
@@ -3427,12 +2844,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [intermediateCatchingMock.intermediateCatchingTimeEventCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [intermediateCatchingMock.intermediateCatchingTimeEventCompleted] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Intermediate catching error event', async(() => {
@@ -3460,12 +2873,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [intermediateCatchingMock.intermediateCatchingErrorEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [intermediateCatchingMock.intermediateCatchingErrorEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active Intermediate catching error event', async(() => {
@@ -3497,12 +2906,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [intermediateCatchingMock.intermediateCatchingErrorEventActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [intermediateCatchingMock.intermediateCatchingErrorEventActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Intermediate catching error event', async(() => {
@@ -3534,12 +2939,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [intermediateCatchingMock.intermediateCatchingErrorEventCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [intermediateCatchingMock.intermediateCatchingErrorEventCompleted] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Intermediate catching signal event', async(() => {
@@ -3567,12 +2968,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [intermediateCatchingMock.intermediateCatchingSignalEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [intermediateCatchingMock.intermediateCatchingSignalEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Intermediate Active catching signal event', async(() => {
@@ -3604,12 +3001,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [intermediateCatchingMock.intermediateCatchingSignalEventActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [intermediateCatchingMock.intermediateCatchingSignalEventActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Intermediate catching signal event', async(() => {
@@ -3641,12 +3034,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [intermediateCatchingMock.intermediateCatchingSignalEventCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [intermediateCatchingMock.intermediateCatchingSignalEventCompleted] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Intermediate catching signal message', async(() => {
@@ -3674,12 +3063,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [intermediateCatchingMock.intermediateCatchingMessageEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [intermediateCatchingMock.intermediateCatchingMessageEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active Intermediate catching signal message', async(() => {
@@ -3711,12 +3096,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [intermediateCatchingMock.intermediateCatchingMessageEventActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [intermediateCatchingMock.intermediateCatchingMessageEventActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Intermediate catching signal message', async(() => {
@@ -3748,25 +3129,12 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [intermediateCatchingMock.intermediateCatchingMessageEventCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [intermediateCatchingMock.intermediateCatchingMessageEventCompleted] };
+            ajaxReply(resp);
         }));
     });
 
     describe('Diagrams component Boundary events with process instance id: ', () => {
-        beforeEach(() => {
-            jasmine.Ajax.install();
-            component.processInstanceId = '38399';
-            component.metricPercentages = {startEvent: 0};
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
 
         it('Should render the Boundary time event', async(() => {
             component.success.subscribe((res) => {
@@ -3793,12 +3161,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [boundaryEventMock.boundaryTimeEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [boundaryEventMock.boundaryTimeEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active Boundary time event', async(() => {
@@ -3830,12 +3194,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [boundaryEventMock.boundaryTimeEventActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [boundaryEventMock.boundaryTimeEventActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Boundary time event', async(() => {
@@ -3867,12 +3227,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [boundaryEventMock.boundaryTimeEventCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [boundaryEventMock.boundaryTimeEventCompleted] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Boundary error event', async(() => {
@@ -3900,12 +3256,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [boundaryEventMock.boundaryErrorEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [boundaryEventMock.boundaryErrorEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active Boundary error event', async(() => {
@@ -3937,12 +3289,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [boundaryEventMock.boundaryErrorEventActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [boundaryEventMock.boundaryErrorEventActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Boundary error event', async(() => {
@@ -3974,12 +3322,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [boundaryEventMock.boundaryErrorEventCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [boundaryEventMock.boundaryErrorEventCompleted] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Boundary signal event', async(() => {
@@ -4007,12 +3351,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [boundaryEventMock.boundarySignalEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [boundaryEventMock.boundarySignalEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active Boundary signal event', async(() => {
@@ -4044,12 +3384,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [boundaryEventMock.boundarySignalEventActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [boundaryEventMock.boundarySignalEventActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Boundary signal event', async(() => {
@@ -4081,12 +3417,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [boundaryEventMock.boundarySignalEventCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [boundaryEventMock.boundarySignalEventCompleted] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Boundary signal message', async(() => {
@@ -4114,12 +3446,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [boundaryEventMock.boundaryMessageEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [boundaryEventMock.boundaryMessageEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active Boundary signal message', async(() => {
@@ -4151,12 +3479,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [boundaryEventMock.boundaryMessageEventActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [boundaryEventMock.boundaryMessageEventActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Boundary signal message', async(() => {
@@ -4188,12 +3512,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [boundaryEventMock.boundaryMessageEventCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [boundaryEventMock.boundaryMessageEventCompleted] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Boundary signal message', async(() => {
@@ -4221,12 +3541,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [boundaryEventMock.boundaryMessageEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [boundaryEventMock.boundaryMessageEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active Boundary signal message', async(() => {
@@ -4258,12 +3574,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [boundaryEventMock.boundaryMessageEventActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [boundaryEventMock.boundaryMessageEventActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Boundary signal message', async(() => {
@@ -4295,25 +3607,12 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [boundaryEventMock.boundaryMessageEventCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [boundaryEventMock.boundaryMessageEventCompleted] };
+            ajaxReply(resp);
         }));
     });
 
     describe('Diagrams component Throw events with process instance id: ', () => {
-        beforeEach(() => {
-            jasmine.Ajax.install();
-            component.processInstanceId = '38399';
-            component.metricPercentages = {startEvent: 0};
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
 
         it('Should render the Throw time event', async(() => {
             component.success.subscribe((res) => {
@@ -4336,12 +3635,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [throwEventMock.throwTimeEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [throwEventMock.throwTimeEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active Throw time event', async(() => {
@@ -4369,12 +3664,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [throwEventMock.throwTimeEventActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [throwEventMock.throwTimeEventActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Throw time event', async(() => {
@@ -4402,12 +3693,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [throwEventMock.throwTimeEventCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [throwEventMock.throwTimeEventCompleted] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Throw error event', async(() => {
@@ -4435,12 +3722,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [throwEventMock.throwErrorEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [throwEventMock.throwErrorEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active Throw error event', async(() => {
@@ -4472,12 +3755,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [throwEventMock.throwErrorEventActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [throwEventMock.throwErrorEventActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Throw error event', async(() => {
@@ -4509,12 +3788,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [throwEventMock.throwErrorEventCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [throwEventMock.throwErrorEventCompleted] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Throw signal event', async(() => {
@@ -4542,12 +3817,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [throwEventMock.throwSignalEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [throwEventMock.throwSignalEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active Throw signal event', async(() => {
@@ -4579,12 +3850,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [throwEventMock.throwSignalEventActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [throwEventMock.throwSignalEventActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Throw signal event', async(() => {
@@ -4616,12 +3883,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [throwEventMock.throwSignalEventCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [throwEventMock.throwSignalEventCompleted] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Throw signal message', async(() => {
@@ -4649,12 +3912,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [throwEventMock.throwMessageEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [throwEventMock.throwMessageEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active Throw signal message', async(() => {
@@ -4686,12 +3945,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [throwEventMock.throwMessageEventActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [throwEventMock.throwMessageEventActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Throw signal message', async(() => {
@@ -4723,12 +3978,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [throwEventMock.throwMessageEventCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [throwEventMock.throwMessageEventCompleted] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Throw signal message', async(() => {
@@ -4756,12 +4007,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [throwEventMock.throwMessageEvent]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [throwEventMock.throwMessageEvent] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active Throw signal message', async(() => {
@@ -4793,12 +4040,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [throwEventMock.throwMessageEventActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [throwEventMock.throwMessageEventActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Throw signal message', async(() => {
@@ -4830,25 +4073,12 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [throwEventMock.throwMessageEventCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [throwEventMock.throwMessageEventCompleted] };
+            ajaxReply(resp);
         }));
     });
 
     describe('Diagrams component Structural with process instance id: ', () => {
-        beforeEach(() => {
-            jasmine.Ajax.install();
-            component.processInstanceId = '38399';
-            component.metricPercentages = {startEvent: 0};
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
 
         it('Should render the Subprocess', async(() => {
             component.success.subscribe((res) => {
@@ -4864,12 +4094,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [structuralMock.subProcess]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [structuralMock.subProcess] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active Subprocess', async(() => {
@@ -4886,12 +4112,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [structuralMock.subProcessActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [structuralMock.subProcessActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Subprocess', async(() => {
@@ -4908,12 +4130,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [structuralMock.subProcessCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [structuralMock.subProcessCompleted] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Event Subprocess', async(() => {
@@ -4930,12 +4148,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [structuralMock.eventSubProcess]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [structuralMock.eventSubProcess] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Active Event Subprocess', async(() => {
@@ -4952,12 +4166,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [structuralMock.eventSubProcessActive]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [structuralMock.eventSubProcessActive] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Completed Event Subprocess', async(() => {
@@ -4974,25 +4184,12 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {elements: [structuralMock.eventSubProcessCompleted]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { elements: [structuralMock.eventSubProcessCompleted] };
+            ajaxReply(resp);
         }));
     });
 
     describe('Diagrams component Swim lane with process instance id: ', () => {
-        beforeEach(() => {
-            jasmine.Ajax.install();
-            component.processInstanceId = '38399';
-            component.metricPercentages = {startEvent: 0};
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
 
         it('Should render the Pool', async(() => {
             component.success.subscribe((res) => {
@@ -5008,12 +4205,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {pools: [swimLanesMock.pool]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { pools: [swimLanesMock.pool] };
+            ajaxReply(resp);
         }));
 
         it('Should render the Pool with Lanes', async(() => {
@@ -5033,25 +4226,12 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {pools: [swimLanesMock.poolLanes]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { pools: [swimLanesMock.poolLanes] };
+            ajaxReply(resp);
         }));
     });
 
     describe('Diagrams component Flows with process instance id: ', () => {
-        beforeEach(() => {
-            jasmine.Ajax.install();
-            component.processInstanceId = '38399';
-            component.metricPercentages = {startEvent: 0};
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
 
         it('Should render the flow', async(() => {
             component.success.subscribe((res) => {
@@ -5067,12 +4247,8 @@ describe('Test ng2-activiti-diagrams ', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = {flows: [flowsMock.flow]};
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: resp
-            });
+            let resp = { flows: [flowsMock.flow] };
+            ajaxReply(resp);
         }));
     });
 });

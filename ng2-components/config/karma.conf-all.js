@@ -28,9 +28,9 @@ module.exports = function (config) {
             },
 
             // pdf-js
-            {pattern: './node_modules/pdfjs-dist/build/pdf.js', included: true, watched: false},
-            {pattern: './node_modules/pdfjs-dist/build/pdf.worker.js', included: true, watched: false},
-            {pattern: './node_modules/pdfjs-dist/web/pdf_viewer.js', included: true, watched: false},
+            // {pattern: './node_modules/pdfjs-dist/build/pdf.js', included: true, watched: false},
+            // {pattern: './node_modules/pdfjs-dist/build/pdf.worker.js', included: true, watched: false},
+            // {pattern: './node_modules/pdfjs-dist/web/pdf_viewer.js', included: true, watched: false},
 
             {pattern: config.component + '/karma-test-shim.js', watched: false},
 
@@ -73,7 +73,7 @@ module.exports = function (config) {
         browserDisconnectTolerance: 10,
         browserNoActivityTimeout: 3000000,
 
-        browsers: ['Chrome'],
+        browsers: ['ChromeHeadless'],
 
         customLaunchers: {
             Chrome_travis_ci: {

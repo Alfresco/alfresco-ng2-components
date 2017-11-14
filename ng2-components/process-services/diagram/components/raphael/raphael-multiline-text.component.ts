@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { LogService } from '@alfresco/core';
 import { Directive, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Point } from './models/point';
 import { RaphaelBase } from './raphael-base';
@@ -44,13 +43,11 @@ export class RaphaelMultilineTextDirective extends RaphaelBase implements OnInit
     TEXT_PADDING = 3;
 
     constructor(public elementRef: ElementRef,
-                raphaelService: RaphaelService,
-                private logService: LogService) {
+                raphaelService: RaphaelService) {
         super(elementRef, raphaelService);
     }
 
     ngOnInit() {
-        this.logService.log(this.elementRef);
         if (this.text === null || this.text === undefined) {
             this.text = '';
         }

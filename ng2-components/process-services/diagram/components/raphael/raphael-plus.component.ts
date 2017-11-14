@@ -46,7 +46,6 @@ export class RaphaelPlusDirective extends RaphaelBase implements OnInit {
     }
 
     ngOnInit() {
-
         let opts = {'stroke-width': this.strokeWidth, 'fill': this.fillColors, 'stroke': this.stroke, 'fill-opacity': this.fillOpacity};
         this.draw(this.center, opts);
     }
