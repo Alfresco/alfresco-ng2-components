@@ -17,8 +17,8 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MaterialModule } from '../../material.module';
-import { ProcessContentService } from '../../form';
+import { MaterialModule } from '../material.module';
+import { ProcessContentService } from '../form';
 import { TranslationService } from '@alfresco/core';
 import { CreateProcessAttachmentComponent } from './create-process-attachment.component';
 

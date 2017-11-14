@@ -29,15 +29,8 @@ import { ProcessUploadService } from './services/process-upload.service';
 import { TaskListService } from './services/tasklist.service';
 
 import { ChecklistComponent } from './components/checklist.component';
-import { CommentListComponent } from './components/comment-list.component';
-import { CommentsComponent } from './components/comments.component';
-import { AttachmentComponent } from './components/create-task-attachment.component';
 import { NoTaskDetailsTemplateDirective } from './components/no-task-detail-template.directive';
-import { PeopleListComponent } from './components/people-list.component';
-import { PeopleSearchActionLabelDirective, PeopleSearchComponent, PeopleSearchTitleDirective } from './components/people-search.component';
-import { PeopleComponent } from './components/people.component';
 import { StartTaskComponent } from './components/start-task.component';
-import { TaskAttachmentListComponent } from './components/task-attachment-list.component';
 import { TaskAuditDirective } from './components/task-audit.directive';
 import { TaskDetailsComponent } from './components/task-details.component';
 import { TaskFiltersComponent } from './components/task-filters.component';
@@ -66,17 +59,8 @@ import { TaskListComponent } from './components/task-list.component';
         TaskDetailsComponent,
         TaskAuditDirective,
         ChecklistComponent,
-        CommentsComponent,
-        PeopleComponent,
         TaskHeaderComponent,
-        StartTaskComponent,
-        PeopleSearchComponent,
-        PeopleSearchTitleDirective,
-        PeopleSearchActionLabelDirective,
-        TaskAttachmentListComponent,
-        AttachmentComponent,
-        PeopleListComponent,
-        CommentListComponent
+        StartTaskComponent
     ],
     providers: [
         TaskListService,
@@ -90,17 +74,8 @@ import { TaskListComponent } from './components/task-list.component';
         TaskDetailsComponent,
         TaskAuditDirective,
         ChecklistComponent,
-        CommentsComponent,
-        PeopleComponent,
         TaskHeaderComponent,
-        StartTaskComponent,
-        PeopleSearchComponent,
-        PeopleSearchTitleDirective,
-        PeopleSearchActionLabelDirective,
-        TaskAttachmentListComponent,
-        AttachmentComponent,
-        PeopleListComponent,
-        CommentListComponent
+        StartTaskComponent
     ]
 })
 export class TaskListModule {}

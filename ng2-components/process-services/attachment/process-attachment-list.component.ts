@@ -17,7 +17,7 @@
 
 import { ContentService, ThumbnailService } from '@alfresco/core';
 import { Component, EventEmitter, Input, NgZone, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ProcessContentService } from '../../form';
+import { ProcessContentService } from '../form';
 
 declare var require: any;
 
@@ -44,7 +44,7 @@ export class ProcessAttachmentListComponent implements OnChanges {
     error: EventEmitter<any> = new EventEmitter<any>();
 
     @Input()
-    emptyListImageUrl: string = require('../../assets/images/empty_doc_lib.svg');
+    emptyListImageUrl: string = require('../assets/images/empty_doc_lib.svg');
 
     attachments: any[] = [];
     isLoading: boolean = true;

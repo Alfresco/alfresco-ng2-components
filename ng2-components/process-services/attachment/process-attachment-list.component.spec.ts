@@ -20,7 +20,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatProgressSpinnerModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
-import { ProcessContentService } from '../../form';
+import { ProcessContentService } from '../form';
 import { DataTableModule } from '@alfresco/core';
 import { Observable } from 'rxjs/Rx';
 

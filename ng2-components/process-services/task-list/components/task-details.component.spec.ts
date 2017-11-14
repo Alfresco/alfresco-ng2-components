@@ -28,7 +28,7 @@ import { PeopleProcessService, UserProcessModel } from '@alfresco/core';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { AppConfigServiceMock, noDataMock, taskDetailsMock, taskFormMock, tasksMock } from '../../mock';
 import { TaskListService } from './../services/tasklist.service';
-import { PeopleSearchComponent } from './people-search.component';
+import { PeopleSearchComponent } from '../../people';
 import { TaskDetailsComponent } from './task-details.component';
 
 declare let jasmine: any;

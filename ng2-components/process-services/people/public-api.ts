@@ -15,14 +15,8 @@
  * limitations under the License.
  */
 
-export * from './form';
-export * from './process-list';
-export * from './diagram';
-export * from './analytics';
-export * from './task-list';
-export * from './app-list';
-export * from './attachment';
-export * from './comments';
-export * from './people';
+export * from './people.component';
+export * from './people-list.component';
+export * from './people-search.component';
 
-export * from './process.module';
+export * from './people.module';

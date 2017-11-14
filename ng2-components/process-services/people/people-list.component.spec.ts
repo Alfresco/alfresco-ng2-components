@@ -18,8 +18,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigService, UserProcessModel } from '@alfresco/core';
 import { DataRowActionEvent, DataRowEvent, DataTableModule, ObjectDataRow } from '@alfresco/core';
-import { AppConfigServiceMock } from '../../mock';
-import { UserEventModel } from '../models/user-event.model';
+import { AppConfigServiceMock } from '../mock';
+import { UserEventModel } from '../task-list/models/user-event.model';
 import { PeopleListComponent } from './people-list.component';
 
 const fakeUser: UserProcessModel = new UserProcessModel({

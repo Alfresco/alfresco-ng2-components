@@ -7,10 +7,12 @@
 @import '../analytics/components/analytics-report-list.component';
 @import '../analytics/components/widgets/date-range/date-range.widget';
 
-@import '../task-list/components/comment-list.component';
+@import '../comments/comment-list.component';
+
+@import '../people/people-search.component';
+@import '../people/people.component';
+
 @import '../task-list/components/start-task.component';
-@import '../task-list/components/people-search.component';
-@import '../task-list/components/people.component';
 @import '../task-list/components/task-filters.component';
 @import '../task-list/components/task-header.component';
 

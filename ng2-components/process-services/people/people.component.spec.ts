@@ -21,7 +21,7 @@ import { MatButtonModule, MatInputModule } from '@angular/material';
 import { AppConfigService, LogService } from '@alfresco/core';
 import { PeopleProcessService, UserProcessModel } from '@alfresco/core';
 import { DataTableModule } from '@alfresco/core';
-import { AppConfigServiceMock } from '../../mock';
+import { AppConfigServiceMock } from '../mock';
 import { PeopleListComponent } from './people-list.component';
 import { PeopleSearchComponent } from './people-search.component';
 import { PeopleComponent } from './people.component';

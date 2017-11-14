@@ -21,14 +21,11 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatInputModule } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
 
-import {
-    CommentListComponent,
-    CommentsComponent
-} from '../../task-list';
+import { CommentListComponent, CommentsComponent } from '../index';
 import { CommentProcessService, PeopleProcessService } from '@alfresco/core';
 import { DataTableModule } from '@alfresco/core';
 
-import { ProcessService } from './../services/process.service';
+import { ProcessService } from '../process-list/services/process.service';
 import { ProcessCommentsComponent } from './process-comments.component';
 
 describe('ActivitiProcessInstanceComments', () => {

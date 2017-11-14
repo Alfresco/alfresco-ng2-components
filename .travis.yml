@@ -19,6 +19,9 @@ env:
     - MODULE=process-list
     - MODULE=task-list
     - MODULE=content
+    - MODULE=attachment
+    - MODULE=comments
+    - MODULE=people
     - MODULE=demo-shell
 
 install:
@@ -53,6 +56,18 @@ script:
 
     - if ([ "$MODULE" == "form" ]); then
             (./scripts/npm-build-all.sh -si -sb -t "process-services/form" || exit 1;);
+      fi
+
+    - if ([ "$MODULE" == "attachment" ]); then
+            (./scripts/npm-build-all.sh -si -sb -t "process-services/attachment" || exit 1;);
+      fi
+
+    - if ([ "$MODULE" == "comments" ]); then
+            (./scripts/npm-build-all.sh -si -sb -t "process-services/comments" || exit 1;);
+      fi
+
+    - if ([ "$MODULE" == "people" ]); then
+            (./scripts/npm-build-all.sh -si -sb -t "process-services/people" || exit 1;);
       fi
 
     - if ([ "$MODULE" == "process-list" ]); then

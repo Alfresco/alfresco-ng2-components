@@ -18,7 +18,7 @@
 import { DataTableComponent } from '@alfresco/core';
 import { DataColumnListComponent, UserProcessModel } from '@alfresco/core';
 import { AfterContentInit, AfterViewInit, Component, ContentChild, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { UserEventModel } from '../models/user-event.model';
+import { UserEventModel } from '../task-list/models/user-event.model';
 
 @Component({
     selector: 'adf-people-list',

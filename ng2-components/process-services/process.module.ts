@@ -29,11 +29,15 @@ import { ProcessListModule } from './process-list';
 import { TaskListModule } from './task-list';
 import { FormModule } from './form';
 import { AppsListModule } from './app-list';
+import { CommentsModule } from './comments';
+import { AttachmentModule } from './attachment';
+import { PeopleModule } from './people';
 
 @NgModule({
     imports: [
         CoreModule,
         CommonModule,
+        CommentsModule,
         FormsModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
@@ -43,7 +47,9 @@ import { AppsListModule } from './app-list';
         ProcessListModule,
         TaskListModule,
         FormModule,
-        AppsListModule
+        AppsListModule,
+        AttachmentModule,
+        PeopleModule
     ],
     providers: [
         {
@@ -58,6 +64,7 @@ import { AppsListModule } from './app-list';
     exports: [
         CoreModule,
         CommonModule,
+        CommentsModule,
         FormsModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
@@ -67,7 +74,9 @@ import { AppsListModule } from './app-list';
         ProcessListModule,
         TaskListModule,
         FormModule,
-        AppsListModule
+        AppsListModule,
+        AttachmentModule,
+        PeopleModule
     ]
 })
 export class ProcessModule {

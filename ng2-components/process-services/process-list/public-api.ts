@@ -16,8 +16,6 @@
  */
 
 // component
-export * from './components/process-attachment-list.component';
-export * from './components/process-comments.component';
 export * from './components/process-filters.component';
 export * from './components/process-instance-details.component';
 export * from './components/process-audit.directive';

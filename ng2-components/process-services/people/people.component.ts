@@ -19,7 +19,7 @@ import { LogService, UserProcessModel } from '@alfresco/core';
 import { PeopleProcessService } from '@alfresco/core';
 import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Observable, Observer } from 'rxjs/Rx';
-import { UserEventModel } from '../models/user-event.model';
+import { UserEventModel } from '../task-list/models/user-event.model';
 import { PeopleSearchComponent } from './people-search.component';
 
 @Component({

@@ -26,10 +26,7 @@ import { MaterialModule } from '../material.module';
 import { CardViewModule, CardViewUpdateService, DataColumnModule, DataTableModule, DirectiveModule, PipeModule } from '@alfresco/core';
 import { TaskListModule } from '../task-list';
 
-import { CreateProcessAttachmentComponent } from './components/create-process-attachment.component';
-import { ProcessAttachmentListComponent } from './components/process-attachment-list.component';
 import { ProcessAuditDirective } from './components/process-audit.directive';
-import { ProcessCommentsComponent } from './components/process-comments.component';
 import { ProcessFiltersComponent } from './components/process-filters.component';
 import { ProcessInstanceDetailsComponent } from './components/process-instance-details.component';
 import { ProcessInstanceHeaderComponent } from './components/process-instance-header.component';
@@ -62,10 +59,7 @@ import { ProcessService } from './services/process.service';
         ProcessAuditDirective,
         ProcessInstanceHeaderComponent,
         ProcessInstanceTasksComponent,
-        ProcessCommentsComponent,
-        StartProcessInstanceComponent,
-        ProcessAttachmentListComponent,
-        CreateProcessAttachmentComponent
+        StartProcessInstanceComponent
     ],
     providers: [
         ProcessService,
@@ -78,10 +72,7 @@ import { ProcessService } from './services/process.service';
         ProcessAuditDirective,
         ProcessInstanceHeaderComponent,
         ProcessInstanceTasksComponent,
-        ProcessCommentsComponent,
-        StartProcessInstanceComponent,
-        ProcessAttachmentListComponent,
-        CreateProcessAttachmentComponent
+        StartProcessInstanceComponent
     ]
 })
 export class ProcessListModule {}

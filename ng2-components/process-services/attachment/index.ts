@@ -15,14 +15,4 @@
  * limitations under the License.
  */
 
-export * from './form';
-export * from './process-list';
-export * from './diagram';
-export * from './analytics';
-export * from './task-list';
-export * from './app-list';
-export * from './attachment';
-export * from './comments';
-export * from './people';
-
-export * from './process.module';
+export * from './public-api';

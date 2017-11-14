@@ -20,7 +20,7 @@ import { MatButtonModule, MatInputModule } from '@angular/material';
 import { AppConfigService, UserProcessModel } from '@alfresco/core';
 import { DataTableModule } from '@alfresco/core';
 import { Observable } from 'rxjs/Observable';
-import { AppConfigServiceMock } from '../../mock';
+import { AppConfigServiceMock } from '../mock';
 import { PeopleListComponent } from './people-list.component';
 import { PeopleSearchComponent } from './people-search.component';
 

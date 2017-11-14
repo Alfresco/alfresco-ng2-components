@@ -33,7 +33,7 @@ import { ContentLinkModel, FormFieldValidator, FormModel, FormOutcomeEvent } fro
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
-import { CommentsComponent } from './comments.component';
+import { CommentsComponent } from '../../comments';
 
 @Component({
     selector: 'adf-task-details',
