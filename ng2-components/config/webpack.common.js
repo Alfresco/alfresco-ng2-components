@@ -144,7 +144,7 @@ module.exports = {
         new CopyWebpackPlugin([
             ... alfrescoLibs.map(lib => {
                 return {
-                    from: `${lib}/src/i18n/`,
+                    from: `${lib}/i18n/`,
                     to: `${lib}/bundles/assets/${lib}/i18n/`
                 }
             })

@@ -33,8 +33,15 @@ module.exports = function (config) {
             {pattern: './node_modules/pdfjs-dist/web/pdf_viewer.js', included: true, watched: false},
 
             {pattern: config.component + '/karma-test-shim.js', watched: false},
-            {pattern: './ng2-**/src/assets/**/*.en.json', included: false, served: true, watched: false},
-            {pattern: './ng2-**/src/**/*.ts', included: false, served: true, watched: false},
+
+            {pattern: './core/i18n/**/*.en.json', included: false, served: true, watched: false},
+            {pattern: './content-services/i18n/**/*.en.json', included: false, served: true, watched: false},
+            {pattern: './process-services/i18n/**/*.en.json', included: false, served: true, watched: false},
+
+            {pattern: './core/**/*.ts', included: false, served: true, watched: false},
+            {pattern: './content-services/**/*.ts', included: false, served: true, watched: false},
+            {pattern: './process-services/**/*.ts', included: false, served: true, watched: false},
+
             {pattern: './config/app.config.json', included: false, served: true, watched: false}
         ],
 
@@ -105,7 +112,7 @@ module.exports = function (config) {
 
         preprocessors: {
             '**/karma-test-shim.js': ['webpack'],
-            '(ng2-alfresco|ng2-activiti)/src/**/!(*spec|index|*mock|*model|*event).js': 'coverage'
+            '(core|content-services|process-service)/**/!(*spec|index|*mock|*model|*event).js': 'coverage'
         },
 
         coverageReporter: {
