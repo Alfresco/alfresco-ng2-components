@@ -12,6 +12,12 @@ env:
   matrix:
     - MODULE=core
     - MODULE=process
+    - MODULE=analyics
+    - MODULE=app-list
+    - MODULE=diagram
+    - MODULE=form
+    - MODULE=process-list
+    - MODULE=task-list
     - MODULE=content
     - MODULE=demo-shell
 
@@ -31,6 +37,30 @@ script:
 
     - if ([ "$MODULE" == "process" ]); then
             (./scripts/npm-build-all.sh -si -sb -t "process*" || exit 1;);
+      fi
+
+    - if ([ "$MODULE" == "analyics" ]); then
+            (./scripts/npm-build-all.sh -si -sb -t "process-services/analyics" || exit 1;);
+      fi
+
+    - if ([ "$MODULE" == "app-list" ]); then
+            (./scripts/npm-build-all.sh -si -sb -t "process-services/app-list" || exit 1;);
+      fi
+
+    - if ([ "$MODULE" == "diagram" ]); then
+            (./scripts/npm-build-all.sh -si -sb -t "process-services/diagram" || exit 1;);
+      fi
+
+    - if ([ "$MODULE" == "form" ]); then
+            (./scripts/npm-build-all.sh -si -sb -t "process-services/form" || exit 1;);
+      fi
+
+    - if ([ "$MODULE" == "process-list" ]); then
+            (./scripts/npm-build-all.sh -si -sb -t "process-services/process-list" || exit 1;);
+      fi
+
+    - if ([ "$MODULE" == "task-list" ]); then
+            (./scripts/npm-build-all.sh -si -sb -t "process-services/task-list" || exit 1;);
       fi
 
     - if ([ "$MODULE" == "content" ]); then

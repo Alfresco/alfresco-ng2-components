@@ -16,6 +16,13 @@ eval EXEC_VERSION_JSAPI=false
 eval JSAPI_VERSION=""
 
 eval projects=( "core"
+    "process-services/form"
+    "process-services/analyics"
+    "process-services/app-list"
+    "process-services/=diagram"
+    "process-services/form"
+    "process-services/process-list"
+    "process-services/task-list"
     "content-services"
     "process-services" )
 
