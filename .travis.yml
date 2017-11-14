@@ -12,7 +12,7 @@ env:
   matrix:
     - MODULE=core
     - MODULE=process
-    - MODULE=analyics
+    - MODULE=analytics
     - MODULE=app-list
     - MODULE=diagram
     - MODULE=form
@@ -22,7 +22,7 @@ env:
     - MODULE=demo-shell
 
 install:
-    - if ([ "$MODULE" == "core" -o  "$MODULE" == "process" -o  "$MODULE" == "content" ]); then
+    - if ([ "$MODULE" != "demo-shell" ]); then
         if ([ "$TRAVIS_BRANCH" = "master" ]); then
             (./scripts/npm-build-all.sh  || exit 1;);
         else
