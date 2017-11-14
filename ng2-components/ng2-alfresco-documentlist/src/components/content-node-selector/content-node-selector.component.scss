@@ -40,9 +40,16 @@
                     transition: none;
                 }
 
+                .adf-site-dropdown-container {
+                    .mat-form-field {
+                        display: block;
+                        margin-bottom: 15px;
+                    }
+                }
+
                 .adf-site-dropdown-list-element {
                     width: 100%;
-                    margin-bottom: 20px;
+                    margin-bottom: 0;
 
                     .mat-select-trigger {
                         font-size: 14px;
@@ -51,7 +58,8 @@
                 }
 
                 .adf-toolbar .mat-toolbar {
-                    border: none;
+                    border-bottom: none;
+                    font-size: 14px;
                 }
 
                 &-list {
