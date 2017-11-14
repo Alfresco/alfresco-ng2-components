@@ -32,6 +32,8 @@
   "NODE_SELECTOR": {
     "CANCEL": "Avbryt",
     "CHOOSE": "Velg",
+    "COPY": "Kopier",
+    "MOVE": "Flytt",
     "NO_RESULTS": "Ingen resultater funnet"
   },
   "OPERATION": {

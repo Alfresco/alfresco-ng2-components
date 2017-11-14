@@ -32,6 +32,8 @@
   "NODE_SELECTOR": {
     "CANCEL": "Annuler",
     "CHOOSE": "Choisir",
+    "COPY": "Copier",
+    "MOVE": "Déplacer",
     "NO_RESULTS": "Aucun résultat trouvé"
   },
   "OPERATION": {
