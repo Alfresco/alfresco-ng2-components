@@ -23,13 +23,15 @@ adf-datatable  ::ng-deep .data-cell {
 }
 
 .adf-empty-list-drag_drop {
-    height: 56px;
+    min-height: 56px;
     opacity: 0.54;
     font-size: 56px;
     line-height: 1;
     letter-spacing: -2px;
     color: #000000;
     margin-top: 40px;
+    word-break: break-all;
+    white-space: pre-line;
 
     @media screen and ($mat-xsmall) {
         font-size: 40px;
@@ -37,13 +39,15 @@ adf-datatable  ::ng-deep .data-cell {
 }
 
 .adf-empty-list__any-files-here-to-add {
-    height: 24px;
+    min-height: 24px;
     opacity: 0.54;
     font-size: 16px;
     line-height: 1.5;
     letter-spacing: -0.4px;
     color: #000000;
     margin-top: 17px;
+    word-break: break-all;
+    white-space: pre-line;
 }
 
 .adf-empty-list__empty_doc_lib {
