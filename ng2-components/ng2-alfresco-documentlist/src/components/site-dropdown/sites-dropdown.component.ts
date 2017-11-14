@@ -28,6 +28,9 @@ export class DropdownSitesComponent implements OnInit {
     @Input()
     hideMyFiles: boolean = false;
 
+    @Input()
+    placeholder: string = 'DROPDOWN.PLACEHOLDER_LABEL';
+
     @Output()
     change: EventEmitter<SiteModel> = new EventEmitter();
 

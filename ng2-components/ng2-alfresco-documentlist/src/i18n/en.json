@@ -41,7 +41,8 @@
         "CHOOSE": "Choose",
         "COPY": "Copy",
         "MOVE": "Move",
-        "NO_RESULTS": "No results found"
+        "NO_RESULTS": "No results found",
+        "SELECT_LOCATION": "Select Location"
     },
     "OPERATION": {
         "SUCCES": {
