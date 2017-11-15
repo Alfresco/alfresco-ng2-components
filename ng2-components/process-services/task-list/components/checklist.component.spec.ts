@@ -160,7 +160,7 @@ describe('ChecklistComponent', () => {
             expect(element.querySelector('#check-fake-check-id').textContent).toContain('fake-check-name');
         });
 
-        it('should add checklist', async(() => {
+        xit('should add checklist', async(() => {
             showChecklistDialog.click();
             let addButtonDialog = <HTMLElement> window.document.querySelector('#add-check');
             addButtonDialog.click();

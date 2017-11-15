@@ -107,5 +107,3 @@ describe('NodePermissionDirective', () => {
         expect(element.nativeElement.disabled).toEqual(true);
     });
 });
-
-})
