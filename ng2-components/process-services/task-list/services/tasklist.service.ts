@@ -126,7 +126,7 @@ export class TaskListService {
             .map((res: any) => {
                 this.tasksListSubject.next(res);
                 return res;
-            }).catch(err => this.handleTasksError(err));
+            }).catch(err => this.handleError(err));
     }
 
     /**
@@ -457,11 +457,6 @@ export class TaskListService {
         this.logService.error(error);
         this.tasksListSubject.error(error);
         return Observable.throw(error || 'Server error');
-    }
-
-    private handleTasksError(error: any) {
-        this.tasksListSubject.error(error.response.body);
-        return this.handleError(error);
     }
 
     /**
