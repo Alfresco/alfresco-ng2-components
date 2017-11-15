@@ -20,7 +20,8 @@ import {
     Component,
     EventEmitter,
     Input,
-    OnInit,
+    OnChanges,
+    SimpleChanges,
     Output,
     ViewEncapsulation
 } from '@angular/core';
@@ -35,7 +36,7 @@ import { Pagination } from 'alfresco-js-api';
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
-export class InfinitePaginationComponent implements OnInit {
+export class InfinitePaginationComponent implements OnChanges {
 
     static DEFAULT_PAGE_SIZE: number = 25;
 
@@ -56,8 +57,10 @@ export class InfinitePaginationComponent implements OnInit {
     @Output()
     loadMore: EventEmitter<Pagination> = new EventEmitter<Pagination>();
 
-    ngOnInit() {
-        if (!this.pagination) {
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.pagination && changes.pagination.currentValue) {
+            this.pagination = changes.pagination.currentValue;
+        }else {
             this.pagination = InfinitePaginationComponent.DEFAULT_PAGINATION;
         }
     }

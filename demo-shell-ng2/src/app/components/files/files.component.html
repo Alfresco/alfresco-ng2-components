@@ -115,6 +115,7 @@
             </adf-toolbar>
             <adf-document-list
                 #documentList
+                [pagination]="pagination"
                 [permissionsStyle]="permissionsStyle"
                 [currentFolderId]="currentFolderId"
                 [contextMenuActions]="true"
@@ -251,6 +252,23 @@
                     </content-action>
                 </content-actions>
             </adf-document-list>
+            <adf-pagination
+                *ngIf="!infiniteScrolling"
+                class="adf-documentlist-pagination"
+                [pagination]="pagination"
+                [supportedPageSizes]="supportedPages"
+                (changePageSize)="onChangePageSize($event)"
+                (changePageNumber)="onChangePageNumber($event)"
+                (nextPage)="onNextPage($event)"
+                (prevPage)="onPrevPage($event)">
+            </adf-pagination>
+            <adf-infinite-pagination
+                *ngIf="infiniteScrolling"
+                [pagination]="pagination"
+
+                (loadMore)="loadNextBatch($event)">
+                {{ 'ADF-DOCUMENT-LIST.LAYOUT.LOAD_MORE' | translate }}
+            </adf-infinite-pagination>
         </adf-upload-drag-area>
         <adf-info-drawer-layout *ngIf="showVersions" class="adf-manage-versions-sidebar" fxFlex="0 0 auto">
             <div info-drawer-content>
@@ -303,6 +321,12 @@
         <section>
             <mat-slide-toggle [color]="'primary'" [(ngModel)]="multipleFileUpload">
                 {{'DOCUMENT_LIST.MULTIPLE_FILE_UPLOAD' | translate}}
+            </mat-slide-toggle>
+        </section>
+
+        <section>
+            <mat-slide-toggle [color]="'primary'" [(ngModel)]="infiniteScrolling">
+                {{'DOCUMENT_LIST.ENABLE_INFINITE_SCROLL' | translate}}
             </mat-slide-toggle>
         </section>
 

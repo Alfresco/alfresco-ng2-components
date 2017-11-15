@@ -123,6 +123,10 @@ export class SearchComponent implements AfterContentInit, OnChanges {
         if (changes.searchNode && changes.searchNode.currentValue) {
             this.displaySearchResults();
         }
+        if (changes.maxItems && changes.maxItems.currentValue ||
+            changes.skipCount && changes.skipCount.currentValue) {
+            this.displaySearchResults();
+        }
     }
 
     resetResults() {

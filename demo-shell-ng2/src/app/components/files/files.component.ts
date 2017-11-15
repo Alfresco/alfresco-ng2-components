@@ -19,7 +19,7 @@ import { Component, Input, OnInit, OnChanges, OnDestroy, ChangeDetectorRef,
         EventEmitter, Optional, ViewChild, SimpleChanges, Output } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { MinimalNodeEntity, NodePaging } from 'alfresco-js-api';
+import { MinimalNodeEntity, NodePaging, Pagination } from 'alfresco-js-api';
 import {
     AlfrescoApiService, AlfrescoContentService, AlfrescoTranslationService,
     DownloadZipDialogComponent, FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
@@ -29,6 +29,7 @@ import { DataColumn, DataRow } from 'ng2-alfresco-datatable';
 import { DocumentListComponent, PermissionStyleModel } from 'ng2-alfresco-documentlist';
 import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-adapter.component';
 import { Subscription } from 'rxjs/Rx';
+import { UserPreferencesService } from 'ng2-alfresco-core';
 
 const DEFAULT_FOLDER_TO_SHOW = '-my-';
 
@@ -89,13 +90,33 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     nodeResult: NodePaging;
 
+    @Input()
+    pagination: Pagination;
+
     @Output()
     documentListReady: EventEmitter<any> = new EventEmitter();
+
+    @Output()
+    changedPageSize: EventEmitter<Pagination> = new EventEmitter();
+
+    @Output()
+    changedPageNumber: EventEmitter<Pagination> = new EventEmitter();
+
+    @Output()
+    turnedNextPage: EventEmitter<Pagination> = new EventEmitter();
+
+    @Output()
+    turnedPreviousPage: EventEmitter<Pagination> = new EventEmitter();
+
+    @Output()
+    loadNext: EventEmitter<Pagination> = new EventEmitter();
 
     @ViewChild(DocumentListComponent)
     documentList: DocumentListComponent;
 
     permissionsStyle: PermissionStyleModel[] = [];
+    supportedPages: number[] = [5, 10, 15, 20];
+    infiniteScrolling: boolean = false;
 
     private onCreateFolder: Subscription;
     private onEditFolder: Subscription;
@@ -109,7 +130,8 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 private translateService: AlfrescoTranslationService,
                 private router: Router,
                 @Optional() private route: ActivatedRoute,
-                private logService: LogService) {
+                private logService: LogService,
+                private preference: UserPreferencesService) {
     }
 
     showFile(event) {
@@ -131,6 +153,12 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnInit() {
+        if( !this.pagination ) {
+            this.pagination = <Pagination>{
+                maxItems : this.preference.paginationSize,
+                skipCount: 0
+            };
+        }
         if (this.route) {
             this.route.params.forEach((params: Params) => {
                 if (params['id']) {
@@ -162,7 +190,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     getCurrentDocumentListNode(): MinimalNodeEntity[] {
-        if (this.documentList.folderNode) {
+        if (this.documentList && this.documentList.folderNode) {
             return [{ entry: this.documentList.folderNode }];
         } else {
             return [];
@@ -222,6 +250,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     emitReadyEvent(event: any) {
         this.documentListReady.emit(event);
+        this.pagination = this.documentList.pagination;
     }
 
     onContentActionError(errors) {
@@ -372,5 +401,32 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             }
         }
         return false;
+    }
+
+    onChangePageSize(event: Pagination): void {
+        this.preference.paginationSize = event.maxItems;
+        this.pagination = event;
+        this.changedPageSize.emit(event);
+    }
+
+    onChangePageNumber(event: Pagination): void {
+        this.pagination = event;
+        this.changedPageNumber.emit(event)
+    }
+
+    onNextPage(event: Pagination): void {
+        this.pagination = event;
+        this.turnedNextPage.emit(event);
+    }
+
+    loadNextBatch(event: Pagination) {
+        this.pagination = event;
+        this.loadNext.emit(event);
+        // this.documentList.reload(true);
+    }
+
+    onPrevPage(event: Pagination): void {
+        this.pagination = event;
+        this.turnedPreviousPage.emit(event);
     }
 }

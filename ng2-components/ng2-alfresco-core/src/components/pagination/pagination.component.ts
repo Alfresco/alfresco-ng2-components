@@ -20,7 +20,8 @@ import {
     Component,
     EventEmitter,
     Input,
-    OnInit,
+    OnChanges,
+    SimpleChanges,
     Output,
     ViewEncapsulation
 } from '@angular/core';
@@ -36,7 +37,7 @@ import { PaginationQueryParams } from './pagination-query-params.interface';
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
-export class PaginationComponent implements OnInit {
+export class PaginationComponent implements OnChanges {
 
     static DEFAULT_PAGE_SIZE: number = 25;
 
@@ -79,8 +80,10 @@ export class PaginationComponent implements OnInit {
     @Output()
     prevPage: EventEmitter<Pagination> = new EventEmitter<Pagination>();
 
-    ngOnInit() {
-        if (!this.pagination) {
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.pagination && changes.pagination.currentValue) {
+            this.pagination = changes.pagination.currentValue;
+        }else {
             this.pagination = PaginationComponent.DEFAULT_PAGINATION;
         }
     }
