@@ -16,9 +16,8 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslationService, CardViewUpdateService } from '@alfresco/core';
+import { CardViewUpdateService } from '@alfresco/core';
 import { MaterialModule } from '../../material.module';
-import { Observable } from 'rxjs/Rx';
 
 import { ProcessInstance } from '../models/process-instance.model';
 import { exampleProcess } from '../../mock';
@@ -44,10 +43,6 @@ describe('ProcessInstanceHeaderComponent', () => {
                 CardViewUpdateService
             ]
         }).compileComponents();
-
-        let translateService = TestBed.get(TranslationService);
-        spyOn(translateService, 'addTranslationFolder').and.stub();
-        spyOn(translateService.translate, 'get').and.callFake((key) => { return Observable.of(key); });
     }));
 
     beforeEach(() => {
