@@ -17,7 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { UserProcessModel } from '../../../index';
+import { UserProcessModel } from '../../../../models';
 import { Observable } from 'rxjs/Rx';
 import { ActivitiContentService } from '../../../services/activiti-alfresco.service';
 import { FormService } from '../../../services/form.service';
