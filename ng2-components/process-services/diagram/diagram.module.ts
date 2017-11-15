@@ -24,7 +24,6 @@ import { DIAGRAM_DIRECTIVES, DIAGRAM_PROVIDERS } from './components/index';
 import { RAPHAEL_DIRECTIVES } from './components/raphael/index';
 import { RAPHAEL_PROVIDERS } from './components/raphael/index';
 
-
 @NgModule({
     imports: [
         CommonModule,

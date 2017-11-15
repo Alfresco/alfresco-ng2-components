@@ -38,18 +38,18 @@ module.exports = webpackMerge(commonConfig, {
 
     plugins: [
 
-        // new UglifyJSPlugin({
-        //     sourceMap: true,
-        //     uglifyOptions: {
-        //         ie8: false,
-        //         ecma: 6,
-        //         output: {
-        //             comments: false,
-        //             beautify: false
-        //         },
-        //         warnings: false
-        //     }
-        // }),
+        new UglifyJSPlugin({
+            sourceMap: true,
+            uglifyOptions: {
+                ie8: false,
+                ecma: 6,
+                output: {
+                    comments: false,
+                    beautify: false
+                },
+                warnings: false
+            }
+        }),
 
         new webpack.BannerPlugin({
             banner: fs.readFileSync(path.resolve(__dirname, './assets/license_header_add.txt'), 'utf8'),

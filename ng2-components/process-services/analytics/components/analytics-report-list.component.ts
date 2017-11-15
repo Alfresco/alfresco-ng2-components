@@ -16,8 +16,8 @@
  */
 
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { ReportParametersModel } from '../../diagram';
 import { Observable, Observer } from 'rxjs/Rx';
+import { ReportParametersModel } from '../../diagram';
 import { AnalyticsService } from '../services/analytics.service';
 
 @Component({
