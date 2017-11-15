@@ -23,10 +23,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { CollapsableModule } from './src/components/collapsable/collapsable.module';
+import { ContentMetadataModule } from './src/components/content-metadata';
 import { ContextMenuModule } from './src/components/context-menu/context-menu.module';
 import { ToolbarModule } from './src/components/toolbar/toolbar.module';
 import { CardViewModule } from './src/components/view/card-view.module';
-import { ContentMetadataModule } from './src/components/content-metadata/content-metadata.module';
 import { MaterialModule } from './src/material.module';
 import { AppConfigModule } from './src/services/app-config.service';
 

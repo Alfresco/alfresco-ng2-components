@@ -21,10 +21,30 @@ import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 @Component({
     selector: 'adf-viewer-default-sidebar',
     templateUrl: './viewer-default-sidebar.component.html',
+    styleUrls: ['./viewer-default-sidebar.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { 'class': 'adf-viewer-default-sidebar' }
 })
 export class ViewerDefaultSidebarComponent {
     @Input()
     node: MinimalNodeEntryEntity;
+
+    editable: boolean = false;
+    expanded: boolean = false;
+
+    toggleEdit(): void {
+        this.editable = !this.editable;
+    }
+
+    toggleExpanded(): void {
+        this.expanded = !this.expanded;
+    }
+
+    get maxProperty() {
+        if (this.expanded) {
+            return null;
+        } else {
+            return 5;
+        }
+    }
 }

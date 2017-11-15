@@ -19,7 +19,8 @@ import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { CardViewItem } from '../../interface/card-view-item.interface';
 import { FileSizePipe } from '../../pipes/file-size.pipe';
-import { ContentMetadataPropertiesService } from './content-metadata-properties.service';
+import { CardViewUpdateService } from '../../services/card-view-update.service';
+import { ContentMetadataService } from './content-metadata.service';
 
 @Component({
     selector: 'adf-content-metadata',
@@ -27,27 +28,46 @@ import { ContentMetadataPropertiesService } from './content-metadata-properties.
     styleUrls: ['./content-metadata.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { 'class': 'adf-content-metadata' },
+    providers: [
+        CardViewUpdateService
+    ],
     viewProviders: [
-        ContentMetadataPropertiesService,
+        ContentMetadataService,
         FileSizePipe
     ]
 })
 export class ContentMetadataComponent implements OnChanges {
 
-    properties: CardViewItem[] = [];
-
     @Input()
     node: MinimalNodeEntryEntity;
 
-    constructor(private propertyService: ContentMetadataPropertiesService) {}
+    @Input()
+    editable: boolean = false;
+
+    @Input()
+    maxPropertiesToShow: number | null;
+
+    properties: CardViewItem[] = [];
+
+    constructor(private contentMetadataService: ContentMetadataService,
+                private cardViewUpdateService: CardViewUpdateService) {
+
+        this.cardViewUpdateService.itemUpdated$.subscribe(this.contentMetadataService.update.bind(this));
+    }
 
     ngOnChanges() {
         this.recalculateProperties();
     }
 
     private recalculateProperties() {
+        let basicProperties = this.contentMetadataService.getBasicProperties(this.node);
+
+        if (this.maxPropertiesToShow) {
+            basicProperties = basicProperties.slice(0, this.maxPropertiesToShow);
+        }
+
         this.properties = [
-            ...this.propertyService.getBasicProperties(this.node)
+            ...basicProperties
         ];
     }
 }

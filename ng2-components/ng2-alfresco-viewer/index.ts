@@ -16,6 +16,7 @@
  */
 
 import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { MaterialModule } from './src/material.module';
 
@@ -55,7 +56,8 @@ export function declarations() {
 @NgModule({
     imports: [
         CoreModule,
-        MaterialModule
+        MaterialModule,
+        FlexLayoutModule
     ],
     declarations: declarations(),
     providers: [

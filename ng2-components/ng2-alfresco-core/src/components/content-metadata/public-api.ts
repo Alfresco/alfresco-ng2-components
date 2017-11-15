@@ -16,6 +16,6 @@
  */
 
 export * from './content-metadata.component';
-export * from './content-metadata-properties.service';
+export * from './content-metadata.service';
 
 export * from './content-metadata.module';
