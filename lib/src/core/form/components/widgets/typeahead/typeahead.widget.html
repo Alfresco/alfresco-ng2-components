@@ -1,0 +1,28 @@
+<div class="adf-typeahead-widget-container">
+    <div class="adf-typeahead-widget {{field.className}}"
+        [class.is-dirty]="value"
+        [class.adf-invalid]="!field.isValid"
+        [class.adf-readonly]="field.readOnly"
+        id="typehead-div" *ngIf="field.isVisible">
+        <mat-form-field>
+            <label class="adf-label" [attr.for]="field.id">{{field.name}}</label>
+            <input matInput class="adf-input"
+                   type="text"
+                   [id]="field.id"
+                   [(ngModel)]="value"
+                   (ngModelChange)="validate()"
+                   (keyup)="onKeyUp($event)"
+                   [disabled]="field.readOnly"
+                   placeholder="{{field.placeholder}}"
+                   [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onItemSelect($event.option.value)">
+                <mat-option *ngFor="let item of options" [value]="item">
+                    <span [id]="field.name+'_option_'+item.id">{{item.name}}</span>
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
+        <error-widget [error]="field.validationSummary"></error-widget>
+        <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
+    </div>
+</div>

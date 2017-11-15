@@ -1,0 +1,13 @@
+@import '../form';
+
+.adf {
+
+    &-typeahead-widget-container {
+        position: relative;
+        display: block;
+    }
+
+    &-typeahead-widget {
+        width: 100%;
+    }
+}

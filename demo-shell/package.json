@@ -16,7 +16,7 @@
     "e2e": "ng e2e",
     "server-versions": "rimraf ./src/versions.json && npm list --depth=0 --json=true --prod=true > ./src/versions.json  || exit 0",
     "clean": "npm run clean-build  && rimraf dist node_modules typings dist",
-    "clean-ng2-component-angular": "rimraf ../ng2-components/node_modules/@angular",
+    "clean-ng2-component-angular": "rimraf ../lib/node_modules/@angular",
     "clean-build": "rimraf 'app/{,**/}**.js' 'app/{,**/}**.js.map' 'app/{,**/}**.d.ts'",
     "clean-lock": "rimraf package-lock.json",
     "webpack": "node node_modules/webpack/bin/webpack.js"

@@ -1,0 +1,39 @@
+<div class="menu-container" *ngIf="!isEmpty()">
+    <mat-list *ngIf="isList()" class="adf-app-list">
+        <mat-list-item class="adf-app-list-item" (click)="selectApp(app)" (keyup.enter)="selectApp(app)" *ngFor="let app of appList" tabindex="0" role="button" title="{{app.name}}">
+            <mat-icon matListIcon>touch_app</mat-icon>
+            <span matLine>{{getAppName(app) | async}}</span>
+        </mat-list-item>
+    </mat-list>
+    <div fxLayout="row wrap" *ngIf="isGrid()" class="adf-app-listgrid">
+        <div *ngFor="let app of appList"
+            class="adf-app-listgrid-item"
+            fxFlex="33.33333%" fxFlex.lt-md="50%" fxFlex.lt-sm="100%">
+                <mat-card tabindex="0"
+                    fxLayout="column"
+                    role="button"
+                    class="adf-app-listgrid-item-card"
+                    title="{{getAppName(app) | async}}"
+                    [ngClass]="[getTheme(app)]"
+                    (click)="selectApp(app)"
+                    (keyup.enter)="selectApp(app)">
+                        <div class="adf-app-listgrid-item-card-logo">
+                            <mat-icon class="adf-app-listgrid-item-card-logo-icon">{{getBackgroundIcon(app)}}</mat-icon>
+                        </div>
+                        <div mat-card-title class="adf-app-listgrid-item-card-title">
+                            <h1>{{getAppName(app) | async}}</h1>
+                        </div>
+                        <mat-card-subtitle class="adf-app-listgrid-item-card-subtitle" fxFlex="1 0 auto">
+                            <p>{{app.description}}</p>
+                        </mat-card-subtitle>
+
+                        <mat-card-actions class="adf-app-listgrid-item-card-actions">
+                            <mat-icon class="adf-app-listgrid-item-card-actions-icon" *ngIf="isSelected(app.id)">done</mat-icon>
+                        </mat-card-actions>
+                </mat-card>
+        </div>
+    </div>
+</div>
+<div class="menu-container" *ngIf="isEmpty()">
+    {{ 'ADF_TASK_LIST.APPS.NONE' | translate }}
+</div>

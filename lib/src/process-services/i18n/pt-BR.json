@@ -1,0 +1,191 @@
+{
+  "ANALYTICS": {
+    "TITLE": "ANÁLISE",
+    "MESSAGES": {
+      "UNKNOWN-WIDGET-TYPE": "TIPO DE WIDGET DESCONHECIDO",
+      "FILL-PARAMETER": "Escolha nas opções de relatório",
+      "NO-DATA-FOUND": "Nenhum dado encontrado",
+      "ZERO-DATA-FOUND": "Há somente valores zero",
+      "ICON-SETTING": "Configurações",
+      "ICON-SAVE": "Salvar",
+      "ICON-DELETE": "Excluir",
+      "ICON-EXPORT-CSV": "Exportar"
+    }
+  },
+  "__KEY_REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-DEFINITION-OVERVIEW": {
+        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Número total de definições de processo",
+        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Número total de instâncias de processo",
+        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Número total de instâncias de processo ativas",
+        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Número total de instâncias de processo concluídas"
+      }
+    }
+  },
+  "REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-HEAT-MAP": {
+        "TYPE-FILTERING": "Inclua etapas de passagem, como iniciar eventos e gateways"
+      },
+      "PROCESS-INSTANCES-OVERVIEW": {
+        "PROCESS-DEFINITION": "Definição de processo",
+        "DATE-RANGE": "Intervalo de datas",
+        "SLOW-PROC-INST-NUMBER": "Quantas instâncias de processo devem ser exibidas?"
+      },
+      "TASK-OVERVIEW": {
+        "PROCESS-DEFINITION": "Definição de processo",
+        "DATE-RANGE": "Intervalo de datas",
+        "DATE-RANGE-INTERVAL": "Agrupar datas por"
+      },
+      "TASK-SLA": {
+        "TASK": "Tarefa",
+        "PROCESS-DEFINITION": "Definição de processo",
+        "DATE-RANGE": "Intervalo de datas",
+        "SLA-DURATION": "Tempo de conclusão exigido por SLA"
+      }
+    },
+    "PROCESS-STATUS": "Status do processo",
+    "TASK-STATUS": "Status da tarefa"
+  },
+  "DIALOG": {
+    "SAVE_MESSAGE": "Clique em Salvar para adicionar um relatório com as configurações atuais à sua lista de relatórios.",
+    "EXPORT_MESSAGE": ""
+  },
+  "DATE-WIDGET": {
+    "START-DATE": "Data de início",
+    "END-DATE": "Data de término",
+    "MESSAGES": {
+      "START-DATE-REQUIRED": "A data de início é obrigatória",
+      "START-LESS-THAN-END-DATE": "A data de início deve ser anterior à data de término"
+    }
+  },
+  "DIAGRAMS": "Diagramas",
+  "FORM": {
+    "START_FORM": {
+      "TITLE": "Iniciar formulário"
+    },
+    "PREVIEW": {
+      "IMAGE_NOT_AVAILABLE": "Pré-visualização não disponível"
+    },
+    "FIELD": {
+      "REQUIRED": "*Obrigatório"
+    }
+  },
+  "ADF_TASK_LIST": {
+    "APPS": {
+      "NONE": "Nenhum aplicativo encontrado"
+    },
+    "LIST": {
+      "MESSAGES": {
+        "NONE": "Nenhuma lista de tarefas encontrada"
+      }
+    },
+    "DETAILS": {
+      "LABELS": {
+        "ASSIGNEE": "Destinatário",
+        "DUE": "Vencimento",
+        "FORM": "Formulário",
+        "PEOPLE": "Pessoas com quem esta tarefa foi compartilhada",
+        "COMMENTS": "Comentários",
+        "CHECKLIST": "Lista de verificação",
+        "INVOLVED_PEOPLE": "Pessoas Envolvidas",
+        "ADD_PEOPLE": "Adicionar pessoas e grupos",
+        "ADD_ASSIGNEE": "Adicionar novo destinatário"
+      },
+      "BUTTON": {
+        "COMPLETE": "Concluído",
+        "CLAIM": "Reivindicar",
+        "UNCLAIM": "Recolocar na fila",
+        "DRAG-ATTACHMENT": "Soltar os arquivos aqui...",
+        "UPLOAD-ATTACHMENT": "Carregar anexo"
+      },
+      "MESSAGES": {
+        "NONE": "Nenhum detalhe de tarefa encontrado",
+        "CLAIM": "Para trabalhar nesta tarefa, clique em Reivindicar."
+      },
+      "FORM": {
+        "NONE": "Nenhum formulário."
+      },
+      "DUE": {
+        "NONE": "Nenhuma data de vencimento."
+      },
+      "ASSIGNEE": {
+        "NONE": "Nenhum destinatário."
+      },
+      "PEOPLE": {
+        "NONE": "Ninguém envolvido."
+      },
+      "COMMENTS": {
+        "NONE": "Sem comentários",
+        "ADD": "Adicionar comentário",
+        "HEADER": "Comentários",
+        "DIALOG": {
+          "TITLE": "Novo comentário",
+          "LABELS": {
+            "MESSAGE": "Mensagem"
+          },
+          "BUTTON": {
+            "ADD": "Adicionar comentário",
+            "CANCEL": "Cancelar"
+          }
+        }
+      },
+      "CHECKLIST": {
+        "NONE": "Nenhuma lista de verificação"
+      },
+      "ERROR": {
+        "TITLE": "Não foi possível concluir a ação",
+        "DESCRIPTION": "Tente novamente ou verifique se você tem acesso.",
+        "CLOSE": "Fechar"
+      }
+    },
+    "FILTERS": {
+      "MESSAGES": {
+        "NONE": "Nenhum filtro de tarefa selecionado."
+      }
+    },
+    "START_TASK": {
+      "BUTTON": "CRIAR TAREFA",
+      "FORM": {
+        "TITLE": "Iniciar Tarefa",
+        "LABEL": {
+          "NONE": "Nenhum",
+          "NAME": "Nome",
+          "DESCRIPTION": "Descrição",
+          "ATTACHFORM": "Anexar Formulário",
+          "ASSIGNEE": "Destinatário",
+          "FORM": "Formulário",
+          "DATE": "Escolher Data"
+        },
+        "ACTION": {
+          "START": "Iniciar",
+          "CANCEL": "Cancelar"
+        },
+        "DATE": {
+          "ERROR": "Formato de data DD/MM/AAAA"
+        }
+      }
+    },
+    "PEOPLE": {
+      "DIALOG_CLOSE": "FECHAR",
+      "ADD_USER": "ADICIONAR",
+      "ADD_ASSIGNEE": "ATRIBUIR",
+      "SEARCH_USER": "Pesquisar usuário",
+      "SEARCH": {
+        "NO_USERS": "Ninguém para envolver"
+      }
+    },
+    "ATTACHMENT": {
+      "EMPTY": {
+        "HEADER": "Esta lista está vazia",
+        "DRAG-AND-DROP": {
+          "TITLE": "Arraste e solte",
+          "SUBTITLE": "para carregar arquivos"
+        }
+      },
+      "EMPTY-LIST": {
+        "HEADER": "Nenhum arquivo disponível"
+      }
+    }
+  }
+}

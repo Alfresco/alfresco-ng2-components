@@ -91,7 +91,7 @@ module.exports = function (config) {
         },
 
         // Coverage reporter generates the coverage
-        reporters: ['mocha', 'coverage', 'kjhtml'],
+        reporters: ['progress', 'kjhtml', 'coverage'],
 
         preprocessors: {
             '**/karma-test-shim.js': ['webpack'],

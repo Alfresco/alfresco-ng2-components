@@ -1,0 +1,12 @@
+<div [ngClass]="field.className">
+    <mat-checkbox
+        [id]="field.id"
+        color="primary"
+        [required]="field.required"
+        [disabled]="field.readOnly || readOnly"
+        [(ngModel)]="field.value"
+        (change)="onChange()">
+        {{field.name}}
+        <span *ngIf="field.required">*</span>
+    </mat-checkbox>
+</div>

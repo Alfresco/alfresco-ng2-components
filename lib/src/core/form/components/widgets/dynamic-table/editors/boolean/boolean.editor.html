@@ -1,0 +1,11 @@
+ <label [attr.for]="column.id">
+    <mat-checkbox
+        color="primary"
+        [id]="column.id"
+        [checked]="table.getCellValue(row, column)"
+        [required]="column.required"
+        [disabled]="!column.editable"
+        (change)="onValueChanged(row, column, $event)">
+    <span class="adf-checkbox-label">{{column.name}}</span>
+    </mat-checkbox>
+</label>

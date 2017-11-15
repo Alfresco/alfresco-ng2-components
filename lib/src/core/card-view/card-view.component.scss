@@ -1,0 +1,34 @@
+
+@mixin adf-card-view-theme($theme) {
+
+    .adf {
+        &-property-list {
+            display: table;
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        &-property {
+            display: table-row;
+        }
+
+        &-property &-property-label {
+            display: table-cell;
+            min-width: 100px;
+            padding-right: 30px;
+            word-wrap: break-word;
+            color: rgb(186, 186, 186);;
+            vertical-align: top;
+            padding-bottom: 20px;
+        }
+
+        &-property &-property-value {
+            width: 100%;
+            display: table-cell;
+            color: rgb(101, 101, 101);
+            vertical-align: top;
+            padding-bottom: 20px;
+        }
+    }
+}

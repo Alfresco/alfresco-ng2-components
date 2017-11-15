@@ -1,0 +1,101 @@
+
+@mixin adf-pagination-theme($theme) {
+    $foreground: map-get($theme, foreground);
+
+    $adf-pagination--height: 48px;
+    $adf-pagination--icon-button-size: 32px;
+    $adf-pagination--border: 1px solid  mat-color($foreground, text, .07);
+
+    .adf-pagination {
+        display: flex;
+        border-top: $adf-pagination--border;
+        height: $adf-pagination--height;
+        line-height: 20px;
+        color: mat-color($foreground, text);
+
+        &__block {
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+            border-right: $adf-pagination--border;
+
+            &:first-child {
+                flex: 1 1 auto;
+                padding-left: 24px;
+            }
+
+            &:last-child {
+                border-right-width: 0;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            & {
+                flex-wrap: wrap;
+                padding-bottom: 24px;
+                padding-top: 8px;
+                justify-content: space-between;
+            }
+
+            &__range-block.adf-pagination__block:first-child {
+                order: 1;
+                flex: 0 0 auto;
+                box-sizing: border-box;
+                padding-left: 16px;
+                justify-content: flex-start;
+            }
+
+            &__perpage-block {
+                order: 3;
+                box-sizing: border-box;
+                padding-left: 16px;
+                justify-content: flex-start;
+            }
+
+            &__actualinfo-block {
+                order: 2;
+                box-sizing: border-box;
+                padding-right: 16px;
+                justify-content: flex-end;
+            }
+
+            &__controls-block {
+                order: 4;
+                box-sizing: border-box;
+                padding-right: 16px;
+                justify-content: flex-end;
+            }
+        }
+
+        &__max-items {
+            margin-left: 10px;
+        }
+
+        &__max-items, &__current-page {
+            margin-right: 5px;
+
+            &, & + button {
+                color: mat-color($foreground, text);
+            }
+
+            & + button {
+                margin-left: -10px;
+            }
+        }
+
+        &__previous-button, &__next-button {
+            margin: 0 5px;
+        }
+
+        &__page-selector {
+            max-height: 250px !important;
+        }
+
+        button[mat-icon-button] {
+            width: $adf-pagination--icon-button-size;
+            height: $adf-pagination--icon-button-size;
+            line-height: $adf-pagination--icon-button-size;
+        }
+    }
+}

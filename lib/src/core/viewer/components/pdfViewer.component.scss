@@ -1,0 +1,38 @@
+.adf-pdf-viewer {
+    .loader-container {
+        display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+        display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+        display: -webkit-flex;     /* NEW - Chrome */
+        display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
+        -webkit-box-flex-direction: row;
+        -moz-box-flex-direction: row;
+        -webkit-flex-direction: row;
+        flex-direction: row;
+        height:100%;
+    }
+
+    .loader-item {
+        margin: auto;
+        max-height:100px;
+        max-width:300px;
+    }
+
+    &__toolbar {
+        position: absolute;
+        bottom: 60px;
+
+        left: 50%;
+        transform: translateX(-50%);
+
+        &-page-selector {
+            font-size: 16px;
+            padding: 4px 0;
+            text-align: right;
+            width: 33px;
+            margin-right: 4px;
+            height: 20px;
+            outline-width: 1px;
+            outline-color: gray;
+        }
+    }
+}

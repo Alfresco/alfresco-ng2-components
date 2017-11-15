@@ -1,0 +1,27 @@
+<div *ngIf="!requestNode">{{ 'ADF_PROCESS_LIST.FILTERS.MESSAGES.NONE' | translate }}</div>
+<div *ngIf="requestNode">
+    <adf-datatable
+        [data]="data"
+        [loading]="isLoading"
+        (rowClick)="onRowClick($event)"
+        (row-keyup)="onRowKeyUp($event)">
+        <loading-content-template>
+            <ng-template>
+                <!--Add your custom loading template here-->
+                <mat-progress-spinner
+                    class="adf-process-list-loading-margin"
+                    [color]="'primary'"
+                    [mode]="'indeterminate'">
+                </mat-progress-spinner>
+            </ng-template>
+        </loading-content-template>
+        <no-content-template>
+            <!--Add your custom empty template here-->
+            <ng-template>
+                <div class="no-content-message">
+                    {{ 'ADF_PROCESS_LIST.LIST.NONE' | translate }}
+                </div>
+            </ng-template>
+        </no-content-template>
+    </adf-datatable>
+</div>

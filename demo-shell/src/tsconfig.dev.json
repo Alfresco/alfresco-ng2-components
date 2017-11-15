@@ -18,7 +18,7 @@
         "../node_modules/@angular/*"
       ],
       "@alfresco/*": [
-        "../../ng2-components/*"
+        "../../lib/src/*"
       ]
     }
   },

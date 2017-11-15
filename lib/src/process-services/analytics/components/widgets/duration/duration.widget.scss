@@ -1,0 +1,20 @@
+.adf-duration-widget-grid {
+    display: flex;
+    justify-content: space-between;
+}
+
+.adf-duration-widget-cell {
+    width: 49%;
+}
+
+.adf-number-widget {
+    width: 100%;
+
+    .mat-form-field {
+        width: 100%;
+    }
+}
+
+.dropdown-container {
+    margin-top: 30px;
+}

@@ -1,0 +1,191 @@
+{
+  "ANALYTICS": {
+    "TITLE": "ANALYSER",
+    "MESSAGES": {
+      "UNKNOWN-WIDGET-TYPE": "UKJENT TYPE MODUL",
+      "FILL-PARAMETER": "Velg fra rapportalternativene",
+      "NO-DATA-FOUND": "Fant ingen data",
+      "ZERO-DATA-FOUND": "Det finnes bare nullverdier",
+      "ICON-SETTING": "Innstillinger",
+      "ICON-SAVE": "Lagre",
+      "ICON-DELETE": "Slett",
+      "ICON-EXPORT-CSV": "Eksporter"
+    }
+  },
+  "__KEY_REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-DEFINITION-OVERVIEW": {
+        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Total antall prosessdefinisjoner",
+        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Total antall prosesstilfeller",
+        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Total antall aktive prosesstilfeller",
+        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Total antall fullførte prosesstilfeller"
+      }
+    }
+  },
+  "REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-HEAT-MAP": {
+        "TYPE-FILTERING": "Inkluder gjennomgangstrinn som start hendelser og gatewayer"
+      },
+      "PROCESS-INSTANCES-OVERVIEW": {
+        "PROCESS-DEFINITION": "Prosessdefinisjon",
+        "DATE-RANGE": "Datointervall",
+        "SLOW-PROC-INST-NUMBER": "Hvor mange av de tregeste prosesstilfellene skal vises?"
+      },
+      "TASK-OVERVIEW": {
+        "PROCESS-DEFINITION": "Prosessdefinisjon",
+        "DATE-RANGE": "Datointervall",
+        "DATE-RANGE-INTERVAL": "Grupper datoer etter"
+      },
+      "TASK-SLA": {
+        "TASK": "Oppgave",
+        "PROCESS-DEFINITION": "Prosessdefinisjon",
+        "DATE-RANGE": "Datointervall",
+        "SLA-DURATION": "SLA krevde fullføringstid"
+      }
+    },
+    "PROCESS-STATUS": "Prosesstatus",
+    "TASK-STATUS": "Oppgavestatus"
+  },
+  "DIALOG": {
+    "SAVE_MESSAGE": "Klikk på Lagre for å legge til en rapport med gjeldende innstillinger til rapportlisten.",
+    "EXPORT_MESSAGE": ""
+  },
+  "DATE-WIDGET": {
+    "START-DATE": "Startdato",
+    "END-DATE": "Sluttdato",
+    "MESSAGES": {
+      "START-DATE-REQUIRED": "Startdato er påkrevd",
+      "START-LESS-THAN-END-DATE": "Startdato må være før sluttdato"
+    }
+  },
+  "DIAGRAMS": "Diagrammer",
+  "FORM": {
+    "START_FORM": {
+      "TITLE": "Start skjema"
+    },
+    "PREVIEW": {
+      "IMAGE_NOT_AVAILABLE": "Forhåndsvisning ikke tilgjengelig"
+    },
+    "FIELD": {
+      "REQUIRED": "*Påkrevd"
+    }
+  },
+  "ADF_TASK_LIST": {
+    "APPS": {
+      "NONE": "Ingen apper funnet"
+    },
+    "LIST": {
+      "MESSAGES": {
+        "NONE": "Ingen oppgaveliste funnet"
+      }
+    },
+    "DETAILS": {
+      "LABELS": {
+        "ASSIGNEE": "Tilordnet",
+        "DUE": "Forfaller",
+        "FORM": "Skjema",
+        "PEOPLE": "Folk som denne oppgaven deles med",
+        "COMMENTS": "Kommentarer",
+        "CHECKLIST": "Sjekkliste",
+        "INVOLVED_PEOPLE": "Folk involvert",
+        "ADD_PEOPLE": "Legg til folk og grupper",
+        "ADD_ASSIGNEE": "Legg til ny tilordnet"
+      },
+      "BUTTON": {
+        "COMPLETE": "Fullfør",
+        "CLAIM": "Krev",
+        "UNCLAIM": "Legg tilbake i kø",
+        "DRAG-ATTACHMENT": "Slipp filer her...",
+        "UPLOAD-ATTACHMENT": "Last opp vedlegg"
+      },
+      "MESSAGES": {
+        "NONE": "Ingen oppgavedetaljer funnet",
+        "CLAIM": "Klikk på Krev for å jobbe med denne oppgaven."
+      },
+      "FORM": {
+        "NONE": "Ingen skjema."
+      },
+      "DUE": {
+        "NONE": "Ingen forfallsdato."
+      },
+      "ASSIGNEE": {
+        "NONE": "Ingen tilordnet."
+      },
+      "PEOPLE": {
+        "NONE": "Ingen involvert."
+      },
+      "COMMENTS": {
+        "NONE": "Ingen kommentarer",
+        "ADD": "Legg til en kommentar",
+        "HEADER": "Kommentarer",
+        "DIALOG": {
+          "TITLE": "Nytt kommentar",
+          "LABELS": {
+            "MESSAGE": "Melding"
+          },
+          "BUTTON": {
+            "ADD": "Legg til kommentar",
+            "CANCEL": "Avbryt"
+          }
+        }
+      },
+      "CHECKLIST": {
+        "NONE": "Ingen sjekkliste"
+      },
+      "ERROR": {
+        "TITLE": "Kan ikke fullføre handlingen",
+        "DESCRIPTION": "Prøve på nytt, eller kontroller at du har tilgang.",
+        "CLOSE": "Lukk"
+      }
+    },
+    "FILTERS": {
+      "MESSAGES": {
+        "NONE": "Ingen oppgavefilter valgt."
+      }
+    },
+    "START_TASK": {
+      "BUTTON": "OPPRETT OPPGAVE",
+      "FORM": {
+        "TITLE": "Start oppgave",
+        "LABEL": {
+          "NONE": "Ingen",
+          "NAME": "Navn",
+          "DESCRIPTION": "Beskrivelse",
+          "ATTACHFORM": "Legg ved skjema",
+          "ASSIGNEE": "Tilordnet",
+          "FORM": "Skjema",
+          "DATE": "Velg dato"
+        },
+        "ACTION": {
+          "START": "Start",
+          "CANCEL": "Avbryt"
+        },
+        "DATE": {
+          "ERROR": "Datoformat DD/MM/ÅÅÅÅ"
+        }
+      }
+    },
+    "PEOPLE": {
+      "DIALOG_CLOSE": "LUKK",
+      "ADD_USER": "LEGG TIL",
+      "ADD_ASSIGNEE": "TILORDNE",
+      "SEARCH_USER": "Søk etter bruker",
+      "SEARCH": {
+        "NO_USERS": "Ingen funnet å involvere"
+      }
+    },
+    "ATTACHMENT": {
+      "EMPTY": {
+        "HEADER": "Denne listen er tom",
+        "DRAG-AND-DROP": {
+          "TITLE": "Dra og slipp",
+          "SUBTITLE": "for å laste opp filer"
+        }
+      },
+      "EMPTY-LIST": {
+        "HEADER": "Ingen tilgjengelige filer"
+      }
+    }
+  }
+}

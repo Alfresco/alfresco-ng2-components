@@ -1,0 +1,32 @@
+<div class="adf-analytics-report-list menu-container">
+    <mat-nav-list *ngIf="isList()">
+        <mat-list-item
+            class="activiti-filters__entry"
+            (click)="selectReport(report)"
+            *ngFor="let report of reports; let idx = index"
+            [class.active]="currentReport === report">
+            <span [attr.id]="'report-list-' + idx" class="activiti-filters__label">
+                <mat-icon mat-list-icon
+                    [attr.data-automation-id]="report.name + '_filter'"
+                    class="activiti-filters__entry-icon">assignment</mat-icon>
+                <span class="text">{{report.name}}</span>
+            </span>
+        </mat-list-item>
+    </mat-nav-list>
+    <div class="adf-report-card-grids" *ngIf="isGrid()">
+        <mat-card (click)="selectReport(report)" class="adf-report-card" *ngFor="let report of reports;">
+            <div class="adf-report-card-logo logo">
+                <mat-icon class="adf-report-card-logo-icon">equalizer</mat-icon>
+            </div>
+            <div mat-card-title class="adf-report-card-title">
+                <h1 class="application-title">{{report.name}}</h1>
+            </div>
+            <div mat-card-content class="adf-report-card-content">
+                <p>{{report.description}}</p>
+            </div>
+            <div mat-card-actions class="adf-report-card-actions">
+                <mat-icon class="adf-report-card-actions-icon" *ngIf="isSelected(report)">done</mat-icon>
+            </div>
+        </mat-card>
+    </div>
+</div>

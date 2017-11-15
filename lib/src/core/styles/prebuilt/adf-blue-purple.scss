@@ -1,0 +1,12 @@
+@import '../theming';
+@import './all-theme';
+
+@include mat-core($alfresco-typography);
+
+$primary: mat-palette($alfresco-ecm-blue);
+$accent:  mat-palette($alfresco-accent-purple);
+$warn:    mat-palette($alfresco-warn);
+$theme:   mat-light-theme($primary, $accent, $warn);
+
+@include angular-material-theme($theme);
+@include alfresco-material-theme($theme);

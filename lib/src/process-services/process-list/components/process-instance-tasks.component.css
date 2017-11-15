@@ -1,0 +1,71 @@
+:host {
+    width: 100%;
+}
+
+.activiti-label {
+    font-weight: bolder;
+    vertical-align: top;
+}
+
+.adf-process-badge {
+    pointer-events: none;
+    outline: none;
+}
+
+.adf-chip-label {
+    position: relative;
+    top: 5px;
+    margin-right: 8px;
+    font-weight: bold;
+}
+
+.menu-container {
+    margin-bottom: 32px;
+}
+
+.activiti-label + .icon {
+    position: relative;
+    top: -2px;
+}
+
+.task-details-dialog {
+    position: fixed;
+    top: 50%;
+    transform: translate(0, -50%);
+    width: 40%;
+}
+
+.process-tasks-refresh {
+    float: right;
+}
+
+.adf-start-process-dialog {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.adf-start-process-dialog-content {
+    flex-grow: 1;
+}
+
+.adf-start-process-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.no-results {
+    margin-left: 9px;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 18px;
+    color: rgba(0, 0, 0, .54);
+    display: block;
+    padding: 12px;
+}
+
+.process-tasks__task-item {
+    cursor: pointer;
+}

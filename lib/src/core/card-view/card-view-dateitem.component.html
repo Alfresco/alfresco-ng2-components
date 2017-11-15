@@ -1,0 +1,30 @@
+<div class="adf-property-label">{{ property.label | translate }}</div>
+<div class="adf-property-value">
+    <span *ngIf="!isEditable()">
+        <span [attr.data-automation-id]="'card-dateitem-' + property.key">
+            <span *ngIf="!property.isEmpty(); else elseEmptyValueBlock">{{ property.displayValue }}</span>
+        </span>
+    </span>
+    <span *ngIf="isEditable()" class="adf-dateitem-editable">
+        <input class="adf-invisible-date-input" [matDatepicker]="picker" [value]="valueDate"
+               (dateChange)="onDateChanged($event)">
+        <span
+            class="adf-datepicker-toggle"
+            [attr.data-automation-id]="'datepicker-label-toggle-' + property.key"
+            (click)="showDatePicker($event)">
+            <span *ngIf="!property.isEmpty(); else elseEmptyValueBlock">{{ property.displayValue }}</span>
+        </span>
+        <mat-datepicker-toggle
+            [attr.data-automation-id]="'datepickertoggle-' + property.key"
+            [for]="picker">
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker
+                       [attr.data-automation-id]="'datepicker-' + property.key"
+                       [startAt]="valueDate"
+                       [touchUi]="true">
+        </mat-datepicker>
+    </span>
+    <ng-template #elseEmptyValueBlock>
+        {{ property.default | translate }}
+    </ng-template>
+</div>

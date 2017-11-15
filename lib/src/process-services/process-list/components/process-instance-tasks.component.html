@@ -1,0 +1,85 @@
+<div  *ngIf="showRefreshButton" class="process-tasks-refresh" >
+    <button mat-icon-button (click)="onRefreshClicked()">
+        <mat-icon class="md-24" aria-label="Refresh">refresh</mat-icon>
+    </button>
+</div>
+
+<!-- ACTIVE FORM -->
+
+<mat-chip-list>
+    <span class="adf-chip-label">{{ 'ADF_PROCESS_LIST.DETAILS.LABELS.TASKS_ACTIVE'|translate }}</span>
+    <mat-chip class="adf-process-badge" color="accent" selected="true">{{activeTasks?.length}}</mat-chip>
+</mat-chip-list>
+
+<div class="menu-container" *ngIf="activeTasks?.length > 0" data-automation-id="active-tasks">
+    <mat-list>
+        <mat-list-item class="process-tasks__task-item" *ngFor="let task of activeTasks" (click)="clickTask($event, task)">
+                <mat-icon mat-list-icon>assignment</mat-icon>
+                <h3 matLine>{{task.name || 'Nameless task'}}</h3>
+                <span matLine>
+                    {{ 'ADF_PROCESS_LIST.DETAILS.LABELS.TASK_SUBTITLE' | translate:{user: getUserFullName(task.assignee), created: getFormatDate(task.created, 'mediumDate') } }}
+                </span>
+        </mat-list-item>
+    </mat-list>
+</div>
+
+<!-- START FORM -->
+
+<div *ngIf="activeTasks?.length === 0" data-automation-id="active-tasks-none" class="no-results">
+    {{ 'ADF_PROCESS_LIST.DETAILS.TASKS.NO_ACTIVE' | translate }}
+</div>
+
+<div *ngIf="hasStartFormDefined()">
+    <span class="activiti-label">{{ 'ADF_PROCESS_LIST.DETAILS.LABELS.START_FORM'|translate }}</span>
+
+    <!--IF START TASK COMPLETED -->
+    <div class="menu-container">
+        <mat-list>
+            <mat-list-item class="process-tasks__task-item" (click)="clickStartTask($event)">
+                <mat-icon mat-list-icon>assignment</mat-icon>
+                <h3 matLine>{{ 'ADF_PROCESS_LIST.DETAILS.LABELS.START_FORM'|translate }}</h3>
+                <span matLine>
+                    {{ 'ADF_PROCESS_LIST.DETAILS.LABELS.TASK_SUBTITLE' | translate:{user:getUserFullName(processInstanceDetails.startedBy), created: getFormatDate(processInstanceDetails.started, 'mediumDate') } }}
+                </span>
+            </mat-list-item>
+        </mat-list>
+    </div>
+
+</div>
+
+<!-- COMPLETED FORM -->
+<mat-chip-list>
+        <span class="adf-chip-label">{{ 'ADF_PROCESS_LIST.DETAILS.LABELS.TASKS_COMPLETED'|translate }}</span>
+        <mat-chip class="adf-process-badge" color="accent" selected="true">{{completedTasks?.length}}</mat-chip>
+</mat-chip-list>
+
+<div class="menu-container" *ngIf="completedTasks?.length > 0" data-automation-id="completed-tasks">
+    <mat-list>
+        <mat-list-item class="process-tasks__task-item" *ngFor="let task of completedTasks" (click)="clickTask($event, task)">
+            <mat-icon mat-list-icon>assignment</mat-icon>
+            <h3 matLine>{{task.name || 'Nameless task'}}</h3>
+            <span matLine>
+                {{ 'ADF_PROCESS_LIST.DETAILS.LABELS.TASK_SUBTITLE' | translate:{user:getUserFullName(task.assignee), created: getFormatDate(task.created, 'mediumDate') } }}
+            </span>
+        </mat-list-item>
+    </mat-list>
+</div>
+
+<div *ngIf="completedTasks?.length === 0" data-automation-id="completed-tasks-none" class="no-results">
+    {{ 'ADF_PROCESS_LIST.DETAILS.TASKS.NO_COMPLETED' | translate }}
+</div>
+
+<ng-template *ngIf="hasStartFormDefined()" #startDialog>
+    <div id="adf-start-process-dialog" class="adf-start-process-dialog">
+        <h4 matDialogTitle>{{ 'ADF_PROCESS_LIST.DETAILS.LABELS.START_FORM'|translate }}</h4>
+        <div mat-dialog-content class="adf-start-process-dialog-content">
+            <adf-start-form [processId]="processId"
+                                 [showRefreshButton]="false" [readOnlyForm]="true"
+                                 (formContentClicked)='onFormContentClick($event)'>
+            </adf-start-form>
+        </div>
+        <div mat-dialog-actions class="adf-start-process-dialog-actions">
+            <button mat-button type="button" (click)="closeSartDialog()">{{ 'ADF_PROCESS_LIST.DETAILS.TASKS.TASK_CLOSE' | translate }}</button>
+        </div>
+    </div>
+</ng-template>

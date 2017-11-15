@@ -1,0 +1,95 @@
+
+@mixin adf-upload-dialog-theme($theme) {
+    $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
+
+    .upload-dialog {
+        background: mat-color($background, dialog);
+        color: mat-color($foreground, text, 0.54);
+        position: fixed;
+        bottom: 20px;
+        width: 40%;
+        box-shadow: 1px 5px 15px #888888;
+
+        &--padding {
+            padding: 1em;
+        }
+
+        &--hide {
+            display: none !important;
+        }
+
+        &--position-left {
+            left: 25px;
+        }
+
+        &--position-right {
+            right: 25px;
+        }
+
+        &--minimized {
+            width: 20%;
+
+            .upload-dialog__content {
+                display: none;
+            }
+        }
+
+        &__header {
+            padding: 1em;
+            display: flex;
+            align-items: center;
+
+            button {
+                min-width: 0;
+                padding: 0;
+                line-height: 0;
+            }
+        }
+
+        &__title {
+            margin-left: 0.5em;
+            flex: 1 1 auto;
+        }
+
+        &__info {
+            padding: 0 1em 1em 1em;
+        }
+
+        &__content {
+            overflow: auto;
+            max-height: 194px;
+            border-top: 1px solid mat-color($foreground, text, 0.14);
+            border-bottom: 1px solid mat-color($foreground, text, 0.14);
+        }
+
+        &__confirmation {
+            padding: 0 0.5em 0 0.5em;
+        }
+
+        &__confirmation--title {
+            font-size: 16px;
+            line-height: 1.5;
+            letter-spacing: -0.4px;
+            color: $black-87-opacity;
+        }
+
+        &__confirmation--text {
+            margin-bottom: 0;
+        }
+
+        &__actions {
+            display: flex;
+            justify-content: flex-end;
+            padding: 1em;
+
+            & > button {
+                text-transform: uppercase;
+            }
+        }
+
+        & mat-icon {
+            cursor: pointer;
+        }
+    }
+}

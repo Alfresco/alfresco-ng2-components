@@ -1,0 +1,10 @@
+.adf-infinite-pagination {
+    display: flex;
+    justify-content: space-around;
+    min-height: 56px;
+
+    &-load-more {
+        margin-bottom: 10px;
+        margin-top: 10px;
+    }
+}

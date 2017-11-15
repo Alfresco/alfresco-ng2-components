@@ -45,7 +45,7 @@ Thumbs.db
 typings/
 node_modules/
 bower_components/
-ng2-components/
+lib/
 app/**/*.js
 app/**/*.js.map
 app/**/*.d.ts

@@ -1,0 +1,14 @@
+@mixin adf-default-class($theme) {
+
+    .adf-hide-small {
+        @media screen and ($mat-small) {
+            display: none !important;
+        }
+    }
+
+    .adf-hide-xsmall {
+        @media screen and ($mat-xsmall) {
+            display: none !important;
+        }
+    }
+}

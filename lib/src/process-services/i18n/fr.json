@@ -1,0 +1,191 @@
+{
+  "ANALYTICS": {
+    "TITLE": "ANALYSE",
+    "MESSAGES": {
+      "UNKNOWN-WIDGET-TYPE": "TYPE DE WIDGET INCONNU",
+      "FILL-PARAMETER": "Choisissez parmi les options de rapport",
+      "NO-DATA-FOUND": "Données introuvables",
+      "ZERO-DATA-FOUND": "Il n'y a que des valeurs zéro",
+      "ICON-SETTING": "Paramètres",
+      "ICON-SAVE": "Enregistrer",
+      "ICON-DELETE": "Supprimer",
+      "ICON-EXPORT-CSV": "Exporter"
+    }
+  },
+  "__KEY_REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-DEFINITION-OVERVIEW": {
+        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Nombre total de définitions de processus",
+        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Nombre total d'instances de processus",
+        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Nombre total d'instances de processus actives",
+        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Nombre total d'instances de processus terminées"
+      }
+    }
+  },
+  "REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-HEAT-MAP": {
+        "TYPE-FILTERING": "Inclure les étapes intermédiaires telles qu'événements de début et passerelles"
+      },
+      "PROCESS-INSTANCES-OVERVIEW": {
+        "PROCESS-DEFINITION": "Définition de processus",
+        "DATE-RANGE": "Plage de dates",
+        "SLOW-PROC-INST-NUMBER": "Combien d'instances de processus les plus lentes doivent être affichées?"
+      },
+      "TASK-OVERVIEW": {
+        "PROCESS-DEFINITION": "Définition de processus",
+        "DATE-RANGE": "Plage de dates",
+        "DATE-RANGE-INTERVAL": "Regrouper les dates par"
+      },
+      "TASK-SLA": {
+        "TASK": "Tâche",
+        "PROCESS-DEFINITION": "Définition de processus",
+        "DATE-RANGE": "Plage de dates",
+        "SLA-DURATION": "Délai d'achèvement imposé par le SLA"
+      }
+    },
+    "PROCESS-STATUS": "État du processus",
+    "TASK-STATUS": "État de la tâche"
+  },
+  "DIALOG": {
+    "SAVE_MESSAGE": "Cliquez sur Enregistrer pour ajouter un rapport avec les paramètres actuels à la liste des rapports.",
+    "EXPORT_MESSAGE": ""
+  },
+  "DATE-WIDGET": {
+    "START-DATE": "Date de début",
+    "END-DATE": "Date de fin",
+    "MESSAGES": {
+      "START-DATE-REQUIRED": "La date de début est obligatoire",
+      "START-LESS-THAN-END-DATE": "La date de début doit être antérieure à la date de fin"
+    }
+  },
+  "DIAGRAMS": "Diagrammes",
+  "FORM": {
+    "START_FORM": {
+      "TITLE": "Démarrer le formulaire"
+    },
+    "PREVIEW": {
+      "IMAGE_NOT_AVAILABLE": "Aperçu non disponible"
+    },
+    "FIELD": {
+      "REQUIRED": "*Obligatoire"
+    }
+  },
+  "ADF_TASK_LIST": {
+    "APPS": {
+      "NONE": "Aucune application trouvée"
+    },
+    "LIST": {
+      "MESSAGES": {
+        "NONE": "Aucune liste de tâches trouvée"
+      }
+    },
+    "DETAILS": {
+      "LABELS": {
+        "ASSIGNEE": "Personne assignée",
+        "DUE": "Echéance",
+        "FORM": "Formulaire",
+        "PEOPLE": "Personnes avec lesquelles cette tâche est partagée",
+        "COMMENTS": "Commentaires",
+        "CHECKLIST": "Liste de contrôle",
+        "INVOLVED_PEOPLE": "Personnes impliquées",
+        "ADD_PEOPLE": "Ajouter des personnes et des groupes",
+        "ADD_ASSIGNEE": "Ajouter une nouvelle personne assignée"
+      },
+      "BUTTON": {
+        "COMPLETE": "Terminer",
+        "CLAIM": "Se l'attribuer",
+        "UNCLAIM": "Replacer dans la file d'attente",
+        "DRAG-ATTACHMENT": "Déposer des fichiers ici...",
+        "UPLOAD-ATTACHMENT": "Importer la pièce jointe"
+      },
+      "MESSAGES": {
+        "NONE": "Aucun détail de tâche trouvé",
+        "CLAIM": "Pour travailler sur cette tâche, cliquez sur Se l'attribuer."
+      },
+      "FORM": {
+        "NONE": "Aucun formulaire."
+      },
+      "DUE": {
+        "NONE": "Aucune date d'échéance."
+      },
+      "ASSIGNEE": {
+        "NONE": "Aucune personne assignée."
+      },
+      "PEOPLE": {
+        "NONE": "Aucune personne impliquée."
+      },
+      "COMMENTS": {
+        "NONE": "Pas de commentaire",
+        "ADD": "Ajouter un commentaire",
+        "HEADER": "Commentaires",
+        "DIALOG": {
+          "TITLE": "Nouveau commentaire",
+          "LABELS": {
+            "MESSAGE": "Message"
+          },
+          "BUTTON": {
+            "ADD": "Ajouter un commentaire",
+            "CANCEL": "Annuler"
+          }
+        }
+      },
+      "CHECKLIST": {
+        "NONE": "Aucune liste de contrôle"
+      },
+      "ERROR": {
+        "TITLE": "Impossible de terminer l'action",
+        "DESCRIPTION": "Réessayez ou vérifiez que vous avez le niveau d'accès requis.",
+        "CLOSE": "Fermer"
+      }
+    },
+    "FILTERS": {
+      "MESSAGES": {
+        "NONE": "Aucun filtre de tâches sélectionné."
+      }
+    },
+    "START_TASK": {
+      "BUTTON": "CRÉER UNE TÂCHE",
+      "FORM": {
+        "TITLE": "Démarrer la tâche",
+        "LABEL": {
+          "NONE": "Aucune",
+          "NAME": "Nom",
+          "DESCRIPTION": "Description",
+          "ATTACHFORM": "Joindre un formulaire",
+          "ASSIGNEE": "Personne assignée",
+          "FORM": "Formulaire",
+          "DATE": "Choisir une date"
+        },
+        "ACTION": {
+          "START": "Démarrer",
+          "CANCEL": "Annuler"
+        },
+        "DATE": {
+          "ERROR": "Format de date JJ/MM/AAAA"
+        }
+      }
+    },
+    "PEOPLE": {
+      "DIALOG_CLOSE": "FERMER",
+      "ADD_USER": "AJOUTER",
+      "ADD_ASSIGNEE": "ASSIGNER",
+      "SEARCH_USER": "Rechercher des utilisateurs",
+      "SEARCH": {
+        "NO_USERS": "Aucune personne à impliquer trouvée"
+      }
+    },
+    "ATTACHMENT": {
+      "EMPTY": {
+        "HEADER": "Cette liste est vide",
+        "DRAG-AND-DROP": {
+          "TITLE": "Glissez-déposez",
+          "SUBTITLE": "les fichiers à importer"
+        }
+      },
+      "EMPTY-LIST": {
+        "HEADER": "Aucun fichier disponible"
+      }
+    }
+  }
+}

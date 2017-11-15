@@ -1,0 +1,38 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "paths": {
+      "@alfresco/process-services": ["./process-services/"],
+      "@alfresco/content-services": ["./content-services/"],
+      "@alfresco/core": ["./core/"],
+      "alfresco-js-api": ["./node_modules/alfresco-js-api/"],
+      "@angular/*": ["./node_modules/@angular/*"],
+      "rxjs/*": ["./node_modules/rxjs/*"]
+    },
+    "lib": [
+      "es2017",
+      "dom"
+    ]
+  },
+  "exclude": [
+    "*/node_modules",
+    "*/demo",
+    "src/assets/test-file.txt",
+    "src/assets/test-file.pdf",
+    "config",
+    "*/coverage",
+    "node_modules",
+    "*/dist",
+    "dist"
+  ]
+}

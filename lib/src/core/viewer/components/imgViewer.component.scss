@@ -1,0 +1,14 @@
+.adf-img-viewer {
+    .image-container {
+        display: flex;
+        flex: 1;
+        text-align: center;
+        flex-direction: row;
+        justify-content: center;
+        height: 90vh;
+        img {
+            width: 100%;
+            object-fit: contain;
+        }
+    }
+}

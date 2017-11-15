@@ -1,0 +1,11 @@
+@import '../theming';
+@import './all-theme';
+
+@include mat-core($alfresco-typography);
+
+$primary: mat-palette($mat-purple, 700, 500, 800);
+$accent:  mat-palette($mat-green, A200, A100, A400);
+$theme: mat-dark-theme($primary, $accent);
+
+@include angular-material-theme($theme);
+@include alfresco-material-theme($theme);

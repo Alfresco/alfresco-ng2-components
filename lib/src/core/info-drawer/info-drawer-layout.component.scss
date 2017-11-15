@@ -1,0 +1,67 @@
+@mixin adf-info-drawer-theme($theme) {
+    $primary: map-get($theme, primary);
+    $background: map-get($theme, background);
+    $foreground: map-get($theme, foreground);
+    $adf-info-drawer-layout-background-color: mat-color($background, background) !default;
+    $adf-info-drawer-layout-title-color: mat-color($foreground, text, .54) !default;
+    $adf-info-drawer-layout-title-font-size: 20px !default;
+
+    .adf {
+        &-info-drawer-layout {
+            width: 100%;
+            display: block;
+            background-color: $adf-info-drawer-layout-background-color;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.27);
+
+            & .mat-tab-label {
+                font-weight: bold;
+                text-align: left;
+                color: mat-color($primary);
+                text-transform: uppercase;
+            }
+
+            &-header {
+                padding: 13px 0px 0px 23px;
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 40px;
+
+                &-buttons {
+                    padding-right:18px; 
+                    mat-icon {
+                        cursor: pointer;
+                    }
+                }
+
+                &-title {
+                    width: 197px;
+                    height: 32px;
+                    font-size: $adf-info-drawer-layout-title-font-size;
+                    line-height: 1.6;
+                    letter-spacing: -0.5px;
+                    text-align: left;
+                    color: $adf-info-drawer-layout-title-color;
+
+                    & > div {
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                    }
+                }
+            }
+
+            &-content {
+                padding: 10px;
+
+                > * {
+                    margin-bottom: 20px;
+                    display: block;
+                }
+
+                > *:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+}

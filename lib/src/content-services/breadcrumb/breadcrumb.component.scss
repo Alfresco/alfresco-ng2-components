@@ -1,0 +1,78 @@
+$breadcrumb-chevron-spacer: 2px;
+
+@mixin adf-breadcrumb-theme($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+
+    .adf-breadcrumb {
+         display: flex;
+	    flex: 1;
+	    line-height: 24px;
+	    font-size: 14px;
+	    font-weight: 600;
+	    letter-spacing: -0.2px;
+
+        &-container {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+            cursor: default;
+            display: flex;
+            overflow: hidden;
+            height: 25px;
+        }
+
+        &-item {
+            padding-right: $breadcrumb-chevron-spacer;
+            overflow: hidden;
+            display: flex;
+            line-height: 24px;
+
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: -0.2px;
+            text-align: left;
+            opacity: 0.6;
+
+            &:hover,
+            &.active {
+                opacity: 1;
+            }
+
+            &.active {
+             flex: 1 0 auto;
+		   }
+
+            &-chevron {
+                opacity: 1;
+            }
+
+            &.mat-primary {
+                color: mat-color($primary);
+            }
+
+            &.mat-accent {
+                color: mat-color($accent);
+            }
+
+            &.mat-warn {
+                color: mat-color($warn);
+            }
+
+            &-anchor {
+                color: inherit;
+                text-decoration: none;
+                display: block;
+                width: 100%;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+
+            &.active {
+                display: block;
+            }
+        }
+    }
+}

@@ -1,0 +1,34 @@
+<div class="adf-people-widget {{field.className}}"
+     [class.is-dirty]="value"
+     [class.adf-invalid]="!field.isValid"
+     [class.adf-readonly]="field.readOnly"
+     id="people-widget-content"
+     *ngIf="field.isVisible">
+    <mat-form-field>
+        <label class="adf-label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
+        <input #inputValue
+               matInput
+               class="adf-input"
+               type="text"
+               [id]="field.id"
+               [value]="getDisplayName(field.value)"
+               (keyup)="onKeyUp($event)"
+               [disabled]="field.readOnly"
+               placeholder="{{field.placeholder}}"
+               [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onItemSelect($event.option.value)"  [displayWith]="getDisplayName">
+            <mat-option *ngFor="let user of users; let i = index" [value]="user">
+                <div class="adf-people-widget-row" id="adf-people-widget-user-{{i}}">
+                    <div [outerHTML]="user | usernameInitials:'adf-people-widget-pic'"></div>
+                    <div *ngIf="user.pictureId" class="adf-people-widget-image-row">
+                        <img id="adf-people-widget-pic-{{i}}" class="adf-people-widget-image"
+                             [src]="peopleProcessService.getUserImage(user)"/>
+                    </div>
+                    <span class="adf-people-label-name">{{getDisplayName(user)}}</span>
+                </div>
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+    <error-widget [error]="field.validationSummary"></error-widget>
+    <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
+</div>

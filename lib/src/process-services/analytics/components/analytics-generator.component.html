@@ -1,0 +1,116 @@
+<div *ngIf="reports">
+    <div class="report-icons">
+        <button mat-icon-button
+                *ngFor="let report of reports; let idx = index"
+                [matTooltip]="report.title"
+                [color]="isCurrent(idx) ? 'primary' : null"
+                (click)="selectCurrent(idx)">
+            <mat-icon>{{report.icon}}</mat-icon>
+        </button>
+    </div>
+    <div class="clear-both"> </div>
+    <div *ngFor="let report of reports; let idx = index">
+        <div [ngSwitch]="report.type">
+            <div *ngSwitchCase="'pie'">
+                <div *ngIf="isCurrent(idx)">
+                    <h4>{{report.title}}</h4>
+                    <div *ngIf="!report.hasData()">{{'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate}}</div>
+                    <div *ngIf="report.hasData()">
+                        <div *ngIf="report.hasZeroValues()">{{'ANALYTICS.MESSAGES.ZERO-DATA-FOUND' | translate}}</div>
+                        <canvas baseChart *ngIf="!report.hasZeroValues()" class="chart"
+                                [data]="report.data"
+                                [labels]="report.labels"
+                                [chartType]="report.type">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+            <div *ngSwitchCase="'table'" >
+                <div *ngIf="isCurrent(idx)">
+                    <h4>{{report.title}}</h4>
+                    <div *ngIf="!report.hasDatasets()">{{'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate}}</div>
+                    <div [attr.id]="'chart-table-' + report.id" *ngIf="report.hasDatasets()">
+                        <table class="table table-responsive table-condensed" class="partial-width">
+                            <tr>
+                                <th *ngFor="let label of report.labels">{{label | translate}}</th>
+                            </tr>
+                            <tr *ngFor="let rows of report.datasets">
+                                <td *ngFor="let row of rows">{{row | translate }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div *ngSwitchCase="'masterDetailTable'" >
+                <div *ngIf="isCurrent(idx)">
+                    <h4>{{report.title}}</h4>
+                    <div *ngIf="!report.hasDatasets()">{{'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate}}</div>
+                    <div [attr.id]="'chart-master-detail-table-' + report.id" *ngIf="report.hasDatasets()">
+                        <table class="table table-responsive table-condensed" class="full-width">
+                            <tr>
+                                <th *ngFor="let label of report.labels">{{label | translate}}</th>
+                            </tr>
+                            <tr *ngFor="let rows of report.datasets" class="analytics-row__entry">
+                                <td *ngFor="let row of rows" (click)="toggleDetailsTable()">{{row | translate }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div [attr.id]="'chart-master-detail-' + report.id" *ngIf="isShowDetails()">
+                        <table class="table table-responsive table-condensed" class="full-width">
+                            <tr>
+                                <th *ngFor="let label of report.detailsTable.labels">{{label | translate}}</th>
+                            </tr>
+                            <tr *ngFor="let rows of report.detailsTable.datasets">
+                                <td *ngFor="let row of rows">{{row | translate }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div *ngSwitchCase="'bar'">
+                <div *ngIf="isCurrent(idx)">
+                    <h4>{{report.title}}</h4>
+                    <div *ngIf="!report.hasDatasets()">{{'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate}}</div>
+                    <canvas baseChart *ngIf="report.hasDatasets()" class="chart"
+                            [datasets]="report.datasets"
+                            [labels]="report.labels"
+                            [options]="report.options"
+                            [chartType]="report.type">
+                    </canvas>
+                </div>
+            </div>
+            <div *ngSwitchCase="'multiBar'">
+                <div *ngIf="isCurrent(idx)">
+                    <h4>{{report.title}}</h4>
+                    <div *ngIf="!report.hasDatasets()">{{'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate}}</div>
+                    <div *ngIf="report.hasDatasets()">
+                        <mat-checkbox
+                            color="primary"
+                            [id]="'stacked-id'"
+                            [checked]="report.options.scales.xAxes[0].stacked"
+                            [(ngModel)]="report.options.scales.xAxes[0].stacked"
+                            (change)="refresh(report)">Stacked</mat-checkbox>
+
+                        <canvas baseChart class="chart"
+                                [datasets]="report.datasets"
+                                [labels]="report.labels"
+                                [options]="report.options"
+                                [chartType]="'bar'">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+            <div *ngSwitchCase="'HeatMap'">
+                <div *ngIf="isCurrent(idx)">
+                    <h4>{{report.title}}</h4>
+                    <analytics-report-heat-map [report]="report"></analytics-report-heat-map>
+                </div>
+            </div>
+            <div *ngSwitchDefault>
+                <span>{{'ANALYTICS.MESSAGES.UNKNOWN-WIDGET-TYPE' | translate}}: {{report.type}}</span>
+            </div>
+        </div>
+    </div>
+</div>
+<br><br><br>
+<div *ngIf="!reports">{{'ANALYTICS.MESSAGES.FILL-PARAMETER' | translate}}</div>

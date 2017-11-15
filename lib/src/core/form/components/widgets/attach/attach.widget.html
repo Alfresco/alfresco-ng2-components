@@ -1,0 +1,32 @@
+<div class="attach-widget {{field.className}}">
+    <label [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
+    <div>
+        <span *ngIf="hasFile()" class="attach-widget__file mdl-chip"><span class="mdl-chip__text">{{getLinkedFileName()}}</span></span>
+        <button #browseFile [disabled]="field.readOnly" (click)="showDialog();" class="mdl-button mdl-jsm-button mdl-js-ripple-effect attach-widget__browser">
+            <mat-icon>image</mat-icon>
+            Browse {{selectedFolderSiteName}}
+        </button>
+        <button *ngIf="hasFile" [disabled]="field.readOnly" (click)="reset(file);" class="mdl-button mdl-js-button mdl-js-ripple-effect attach-widget__reset">Clear</button>
+    </div>
+</div>
+
+<dialog class="mdl-dialog" #dialog>
+    <h4 class="mdl-dialog__title">Select content</h4>
+    <div class="mdl-dialog__content">
+        <ul class='mdl-list'>
+            <li class="mdl-list__item" *ngFor="let node of selectedFolderNodes">
+            <span class="mdl-list__item-primary-content" *ngIf="node.folder">
+            <mat-icon class="mdl-list__item-icon">folder</mat-icon>
+            <a (click)="selectFolder(node, $event)">{{node.title}}</a>
+            </span>
+            <span class="mdl-list__item-primary-content" *ngIf="!node.folder">
+            <mat-icon class="mdl-list__item-icon">description</mat-icon>
+            <a (click)="selectFile(node, $event)">{{node.title}}</a>
+            </span>
+            </li>
+        </ul>
+    </div>
+    <div class="mdl-dialog__actions">
+        <button type="button" (click)="cancel()" class="mdl-button close">Cancel</button>
+    </div>
+</dialog>
