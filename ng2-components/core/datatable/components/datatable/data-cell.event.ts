@@ -19,15 +19,6 @@ import { BaseEvent } from '../../../events';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRow } from '../../data/data-row.model';
 
-export class DataCellEvent extends BaseEvent<DataCellEventModel> {
-
-    constructor(row: DataRow, col: DataColumn, actions: any[]) {
-        super();
-        this.value = new DataCellEventModel(row, col, actions);
-    }
-
-}
-
 export class DataCellEventModel {
 
     readonly row: DataRow;
@@ -38,6 +29,15 @@ export class DataCellEventModel {
         this.row = row;
         this.col = col;
         this.actions = actions || [];
+    }
+
+}
+
+export class DataCellEvent extends BaseEvent<DataCellEventModel> {
+
+    constructor(row: DataRow, col: DataColumn, actions: any[]) {
+        super();
+        this.value = new DataCellEventModel(row, col, actions);
     }
 
 }

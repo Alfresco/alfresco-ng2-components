@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+/* tslint:disable:component-selector  */
 
-import {FormFieldSelectedFolder} from './form-field-selected-folder';
+import { FormFieldSelectedFolder } from './form-field-selected-folder';
 
 export interface FormFieldFileSource {
     metadataAllowed: boolean;

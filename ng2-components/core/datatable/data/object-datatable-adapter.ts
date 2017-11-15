@@ -25,6 +25,25 @@ import { DataRow } from './data-row.model';
 import { DataSorting } from './data-sorting.model';
 import { DataTableAdapter } from './datatable-adapter';
 
+// Simple implementation of the DataRow interface.
+export class ObjectDataRow implements DataRow {
+
+    constructor(private obj: any, public isSelected: boolean = false) {
+        if (!obj) {
+            throw new Error('Object source not found');
+        }
+
+    }
+
+    getValue(key: string): any {
+        return ObjectUtils.getValue(this.obj, key);
+    }
+
+    hasValue(key: string): boolean {
+        return this.getValue(key) !== undefined;
+    }
+}
+
 // Simple implementation of the DataTableAdapter interface.
 export class ObjectDataTableAdapter implements DataTableAdapter {
 
@@ -175,25 +194,6 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
             sorting.direction = direction || 'asc';
         }
         this.setSorting(sorting);
-    }
-}
-
-// Simple implementation of the DataRow interface.
-export class ObjectDataRow implements DataRow {
-
-    constructor(private obj: any, public isSelected: boolean = false) {
-        if (!obj) {
-            throw new Error('Object source not found');
-        }
-
-    }
-
-    getValue(key: string): any {
-        return ObjectUtils.getValue(this.obj, key);
-    }
-
-    hasValue(key: string): boolean {
-        return this.getValue(key) !== undefined;
     }
 }
 

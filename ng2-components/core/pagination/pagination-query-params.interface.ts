@@ -28,4 +28,4 @@
 export interface PaginationQueryParams {
     skipCount: number;
     maxItems: number;
-};
+}

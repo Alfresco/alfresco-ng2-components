@@ -22,6 +22,8 @@ const CoreModule = require('@alfresco/core').CoreModule;
 
 TestBed.initTestEnvironment(browser.BrowserDynamicTestingModule, browser.platformBrowserDynamicTesting());
 
+patchTestBedToDestroyFixturesAfterEveryTest(TestBed);
+
 beforeEach(() => {
     TestBed.configureTestingModule({ imports: [ CoreModule ] });
 });
@@ -29,3 +31,20 @@ beforeEach(() => {
 afterEach(() => {
     TestBed.resetTestingModule();
 });
+
+
+function patchTestBedToDestroyFixturesAfterEveryTest(testBed) {
+    var _resetTestingModule = testBed.resetTestingModule;
+
+    // Monkey-patch the resetTestingModule to destroy fixtures outside of a try/catch block.
+    // With https://github.com/angular/angular/commit/2c5a67134198a090a24f6671dcdb7b102fea6eba
+    // errors when destroying components are no longer causing Jasmine to fail.
+    testBed.resetTestingModule = function() {
+        try {
+            this._activeFixtures.forEach(function (fixture) { fixture.destroy(); });
+        } finally {
+            this._activeFixtures = [];
+            _resetTestingModule.call(this);
+        }
+    };
+}

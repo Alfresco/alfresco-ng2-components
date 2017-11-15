@@ -17,6 +17,40 @@
 
 import { Pagination } from 'alfresco-js-api';
 
+export class SiteContentsModel {
+    id: string;
+    folderId: string;
+
+    constructor(obj?: any) {
+        if (obj) {
+            this.id = obj.id || null;
+            this.folderId = obj.folderId || null;
+        }
+    }
+}
+
+export class SiteMembersModel {
+    role: string;
+    firstName: string;
+    emailNotificationsEnabled: boolean = false;
+    company: any;
+    id: string;
+    enable: boolean = false;
+    email: string;
+
+    constructor(obj?: any) {
+        if (obj) {
+            this.role = obj.role;
+            this.firstName = obj.firstName || null;
+            this.emailNotificationsEnabled = obj.emailNotificationsEnabled;
+            this.company = obj.company || null;
+            this.id = obj.id || null;
+            this.enable = obj.enable;
+            this.email = obj.email;
+        }
+    }
+}
+
 export class SiteModel {
     role: string;
     visibility: string;
@@ -54,38 +88,4 @@ export class SiteModel {
         }
     }
 
-}
-
-export class SiteContentsModel {
-    id: string;
-    folderId: string;
-
-    constructor(obj?: any) {
-        if (obj) {
-            this.id = obj.id || null;
-            this.folderId = obj.folderId || null;
-        }
-    }
-}
-
-export class SiteMembersModel {
-    role: string;
-    firstName: string;
-    emailNotificationsEnabled: boolean = false;
-    company: any;
-    id: string;
-    enable: boolean = false;
-    email: string;
-
-    constructor(obj?: any) {
-        if (obj) {
-            this.role = obj.role;
-            this.firstName = obj.firstName || null;
-            this.emailNotificationsEnabled = obj.emailNotificationsEnabled;
-            this.company = obj.company || null;
-            this.id = obj.id || null;
-            this.enable = obj.enable;
-            this.email = obj.email;
-        }
-    }
 }
