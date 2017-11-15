@@ -16,15 +16,28 @@
  */
 
 import { Injectable } from '@angular/core';
+import { AppConfigService } from '../app-config';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
-export class AppConfigServiceMock {
+export class AppConfigServiceMock extends AppConfigService {
 
-    constructor() { }
+    config: any = {
+        application: {
+            name: 'Alfresco ADF Application'
+        },
+        ecmHost: 'http://{hostname}{:port}/ecm',
+        bpmHost: 'http://{hostname}{:port}/bpm',
+        logLevel: 'silent'
+    };
 
-    /** @override */
-    get(key: string) { }
+    constructor(http: HttpClient) {
+        super(http);
+    }
 
-    load(resource: string, values?: {}) { }
-
+    load(): Promise<any> {
+        return new Promise(resolve => {
+            resolve(this.config);
+        });
+    }
 }
