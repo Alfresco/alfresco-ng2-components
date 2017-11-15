@@ -23,7 +23,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { WidgetComponent } from './../widget.component';
 
 @Component({
-    selector: 'dropdown-widget',
+    selector: 'analytics-dropdown-widget',
     templateUrl: './dropdown.widget.html',
     styleUrls: ['./dropdown.widget.scss'],
     encapsulation: ViewEncapsulation.None

@@ -23,7 +23,7 @@ import { FormGroup } from '@angular/forms';
 import { WidgetComponent } from './../widget.component';
 
 @Component({
-    selector: 'checkbox-widget',
+    selector: 'analytics-checkbox-widget',
     templateUrl: './checkbox.widget.html',
     encapsulation: ViewEncapsulation.None
 })

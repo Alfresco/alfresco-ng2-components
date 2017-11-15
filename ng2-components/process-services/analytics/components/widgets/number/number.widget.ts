@@ -23,7 +23,7 @@ import { FormGroup, Validators } from '@angular/forms';
 import { WidgetComponent } from './../widget.component';
 
 @Component({
-    selector: 'number-widget',
+    selector: 'analytics-number-widget',
     templateUrl: './number.widget.html',
     styleUrls: ['./number.widget.scss'],
     encapsulation: ViewEncapsulation.None

@@ -51,9 +51,9 @@
                     <div [ngSwitch]="field.type">
                         <div *ngSwitchCase="'integer'">
                             <br>
-                            <number-widget [field]="field" [group]="reportForm.controls.processInstanceGroup"
+                            <analytics-number-widget [field]="field" [group]="reportForm.controls.processInstanceGroup"
                                             [controllerName]="'slowProcessInstanceInteger'"
-                                            [required]="true"></number-widget>
+                                            [required]="true"></analytics-number-widget>
                         </div>
                         <div *ngSwitchCase="'duration'">
                             <br>
@@ -62,27 +62,27 @@
                         </div>
                         <div *ngSwitchCase="'boolean'">
                             <br>
-                            <checkbox-widget [field]="field" [group]="reportForm.controls.typeFilteringGroup"
-                                                [controllerName]="'typeFiltering'"></checkbox-widget>
+                            <analytics-checkbox-widget [field]="field" [group]="reportForm.controls.typeFilteringGroup"
+                                                [controllerName]="'typeFiltering'"></analytics-checkbox-widget>
                         </div>
                         <div *ngSwitchCase="'status'">
                             <br>
-                            <dropdown-widget [field]="field" [group]="reportForm.controls.statusGroup"
+                            <analytics-dropdown-widget [field]="field" [group]="reportForm.controls.statusGroup"
                                                 [controllerName]="'status'"
-                                                [required]="true"></dropdown-widget>
+                                                [required]="true"></analytics-dropdown-widget>
                         </div>
                         <div *ngSwitchCase="'processDefinition'">
                             <br>
-                            <dropdown-widget [field]="field" [group]="reportForm.controls.processDefGroup"
+                            <analytics-dropdown-widget [field]="field" [group]="reportForm.controls.processDefGroup"
                                                 [controllerName]="'processDefinitionId'"
                                                 [required]="true"
-                                                (fieldChanged)="onProcessDefinitionChanges(field)"></dropdown-widget>
+                                                (fieldChanged)="onProcessDefinitionChanges(field)"></analytics-dropdown-widget>
                         </div>
                         <div *ngSwitchCase="'task'">
                             <br>
-                            <dropdown-widget [field]="field" [group]="reportForm.controls.taskGroup"
+                            <analytics-dropdown-widget [field]="field" [group]="reportForm.controls.taskGroup"
                                                 [controllerName]="'taskName'"
-                                                [required]="true"></dropdown-widget>
+                                                [required]="true"></analytics-dropdown-widget>
                         </div>
                         <div *ngSwitchCase="'dateRange'">
                             <br>
@@ -91,9 +91,9 @@
                         </div>
                         <div *ngSwitchCase="'dateInterval'">
                             <br>
-                            <dropdown-widget [field]="field" [group]="reportForm.controls.dateIntervalGroup"
+                            <analytics-dropdown-widget [field]="field" [group]="reportForm.controls.dateIntervalGroup"
                                                 [controllerName]="'dateRangeInterval'"
-                                                [required]="true" [showDefaultOption]="false"></dropdown-widget>
+                                                [required]="true" [showDefaultOption]="false"></analytics-dropdown-widget>
                         </div>
                         <div *ngSwitchDefault>
                             <span>{{'ANALYTICS.MESSAGES.UNKNOWN-WIDGET-TYPE' | translate}}: {{field.type}}</span>
