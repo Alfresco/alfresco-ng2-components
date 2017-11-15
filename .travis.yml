@@ -11,8 +11,8 @@ before_install:
 env:
   matrix:
     - MODULE=core
-    - MODULE=process
-    - MODULE=content
+    - MODULE=process-services
+    - MODULE=content-services
     - MODULE=demo-shell
 
 install:
@@ -29,11 +29,11 @@ script:
             (./scripts/npm-build-all.sh -si -sb -t "core*" || exit 1;);
       fi
 
-    - if ([ "$MODULE" == "process" ]); then
+    - if ([ "$MODULE" == "process-services" ]); then
             (./scripts/npm-build-all.sh -si -sb -t "process-services" || exit 1;);
       fi
 
-    - if ([ "$MODULE" == "content" ]); then
+    - if ([ "$MODULE" == "content-services" ]); then
             (./scripts/npm-build-all.sh -si -sb -t "content-services" || exit 1;);
       fi
 

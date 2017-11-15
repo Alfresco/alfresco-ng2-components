@@ -156,6 +156,7 @@ if $RUN_TEST == true; then
       if $EXEC_SINGLE_TEST == true; then
             cp -n "$DESTDIR/config/karma-test-shim.js" "$DESTDIR/$SINGLE_TEST/"
             test_project $SINGLE_TEST
+            rimraf "$DESTDIR/$SINGLE_TEST/karma-test-shim.js"
       else
        for PACKAGE in ${projects[@]}
         do

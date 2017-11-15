@@ -14,7 +14,7 @@ module.exports = function (config) {
                     enforce: 'post',
                     test: /^(?!(.*spec|index|.*mock|.*model|.*event)).*\.ts?$/,
                     loader: 'istanbul-instrumenter-loader',
-                    include: [helpers.root(config.component + '/src')],
+                    include: [helpers.root(config.component)],
                     exclude: [
                         /node_modules/,
                         /test/

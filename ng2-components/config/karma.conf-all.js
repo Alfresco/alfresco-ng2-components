@@ -95,7 +95,7 @@ module.exports = function (config) {
 
         preprocessors: {
             '**/karma-test-shim.js': ['webpack'],
-            '(core|content-services|process-service)/**/!(*spec|index|*mock|*model|*event).js': 'coverage'
+            '(core|content-services|process-services)/**/!(*spec|index|*mock|*model|*event).js': 'coverage'
         },
 
         coverageReporter: {
