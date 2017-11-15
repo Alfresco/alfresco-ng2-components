@@ -29,13 +29,13 @@ import { IconModel } from './icon.model';
 })
 export class AppsListComponent implements OnInit {
 
-    public static LAYOUT_LIST: string = 'LIST';
-    public static LAYOUT_GRID: string = 'GRID';
-    public static DEFAULT_TASKS_APP: string = 'tasks';
-    public static DEFAULT_TASKS_APP_NAME: string = 'ADF_TASK_LIST.APPS.TASK_APP_NAME';
-    public static DEFAULT_TASKS_APP_THEME: string = 'theme-2';
-    public static DEFAULT_TASKS_APP_ICON: string = 'glyphicon-asterisk';
-    public static DEFAULT_TASKS_APP_MATERIAL_ICON: string = 'favorite_border';
+    public static LAYOUT_LIST = 'LIST';
+    public static LAYOUT_GRID = 'GRID';
+    public static DEFAULT_TASKS_APP = 'tasks';
+    public static DEFAULT_TASKS_APP_NAME = 'ADF_TASK_LIST.APPS.TASK_APP_NAME';
+    public static DEFAULT_TASKS_APP_THEME = 'theme-2';
+    public static DEFAULT_TASKS_APP_ICON = 'glyphicon-asterisk';
+    public static DEFAULT_TASKS_APP_MATERIAL_ICON = 'favorite_border';
 
     @Input()
     layoutType: string = AppsListComponent.LAYOUT_GRID;
@@ -125,7 +125,7 @@ export class AppsListComponent implements OnInit {
     }
 
     private filterApps(apps: AppDefinitionRepresentationModel []): AppDefinitionRepresentationModel[] {
-        let filteredApps: AppDefinitionRepresentationModel[] = [];
+        const filteredApps: AppDefinitionRepresentationModel[] = [];
         if (this.filtersAppId) {
             apps.filter((app: AppDefinitionRepresentationModel) => {
                 this.filtersAppId.forEach((filter) => {

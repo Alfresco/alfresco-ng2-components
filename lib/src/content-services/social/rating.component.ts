@@ -30,9 +30,9 @@ export class RatingComponent implements OnChanges {
     @Input()
     nodeId: string;
 
-    average: number = 0;
+    average = 0;
 
-    ratingType: string = 'fiveStar';
+    ratingType = 'fiveStar';
 
     @Output()
     changeVote = new EventEmitter();
@@ -43,7 +43,7 @@ export class RatingComponent implements OnChanges {
     }
 
     ngOnChanges() {
-        let ratingObserver = this.ratingService.getRating(this.nodeId, this.ratingType);
+        const ratingObserver = this.ratingService.getRating(this.nodeId, this.ratingType);
 
         ratingObserver.subscribe(
             (data) => {

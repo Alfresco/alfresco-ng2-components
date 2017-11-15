@@ -37,7 +37,7 @@ import { Pagination } from 'alfresco-js-api';
 })
 export class InfinitePaginationComponent implements OnInit {
 
-    static DEFAULT_PAGE_SIZE: number = 25;
+    static DEFAULT_PAGE_SIZE = 25;
 
     static DEFAULT_PAGINATION: Pagination = {
         skipCount: 0,
@@ -51,7 +51,7 @@ export class InfinitePaginationComponent implements OnInit {
     pageSize: number = InfinitePaginationComponent.DEFAULT_PAGE_SIZE;
 
     @Input('loading')
-    isLoading: boolean = false;
+    isLoading = false;
 
     @Output()
     loadMore: EventEmitter<Pagination> = new EventEmitter<Pagination>();

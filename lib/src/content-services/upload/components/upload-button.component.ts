@@ -54,30 +54,30 @@ export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionS
 
     /** @deprecated Deprecated in 1.6.0, you can use UploadService events and NotificationService api instead. */
     @Input()
-    showNotificationBar: boolean = true;
+    showNotificationBar = true;
 
     /** @deprecated Deprecated in 1.6.0, this property is not used for couple of releases already. */
     @Input()
-    currentFolderPath: string = '/';
+    currentFolderPath = '/';
 
     /** @deprecated Deprecated in 1.8.0, use the button with combination of adf-node-permission directive */
     @Input()
-    disableWithNoPermission: boolean = false;
+    disableWithNoPermission = false;
 
     @Input()
-    disabled: boolean = false;
+    disabled = false;
 
     @Input()
-    uploadFolders: boolean = false;
+    uploadFolders = false;
 
     @Input()
-    multipleFiles: boolean = false;
+    multipleFiles = false;
 
     @Input()
-    versioning: boolean = false;
+    versioning = false;
 
     @Input()
-    acceptedFilesType: string = '*';
+    acceptedFilesType = '*';
 
     @Input()
     maxFilesSize: number;
@@ -89,7 +89,7 @@ export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionS
     tooltip: string = null;
 
     @Input()
-    rootFolderId: string = '-root-';
+    rootFolderId = '-root-';
 
     @Output()
     success = new EventEmitter();
@@ -103,7 +103,7 @@ export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionS
     @Output()
     permissionEvent: EventEmitter<PermissionModel> = new EventEmitter<PermissionModel>();
 
-    private hasPermission: boolean = false;
+    private hasPermission = false;
 
     private permissionValue: Subject<boolean> = new Subject<boolean>();
 
@@ -121,7 +121,7 @@ export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionS
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        let rootFolderId = changes['rootFolderId'];
+        const rootFolderId = changes['rootFolderId'];
         if (rootFolderId && rootFolderId.currentValue) {
             this.checkPermission();
         }
@@ -141,7 +141,7 @@ export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionS
     }
 
     onFilesAdded($event: any): void {
-        let files: File[] = FileUtils.toFileArray($event.currentTarget.files);
+        const files: File[] = FileUtils.toFileArray($event.currentTarget.files);
 
         if (this.hasPermission) {
             this.uploadFiles(files);
@@ -154,7 +154,7 @@ export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionS
 
     onDirectoryAdded($event: any): void {
         if (this.hasPermission) {
-            let files: File[] = FileUtils.toFileArray($event.currentTarget.files);
+            const files: File[] = FileUtils.toFileArray($event.currentTarget.files);
             this.uploadFiles(files);
         } else {
             this.permissionEvent.emit(new PermissionModel({type: 'content', action: 'upload', permission: 'create'}));
@@ -262,7 +262,7 @@ export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionS
 
     // TODO: move to ContentService
     getFolderNode(nodeId: string): Observable<MinimalNodeEntryEntity> {
-        let opts: any = {
+        const opts: any = {
             includeSource: true,
             include: ['allowableOperations']
         };

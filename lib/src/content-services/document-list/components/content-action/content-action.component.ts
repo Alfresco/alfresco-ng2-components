@@ -36,7 +36,7 @@ import { ContentActionListComponent } from './content-action-list.component';
 export class ContentActionComponent implements OnInit, OnChanges {
 
     @Input()
-    title: string = 'Action';
+    title = 'Action';
 
     @Input()
     icon: string;
@@ -54,7 +54,7 @@ export class ContentActionComponent implements OnInit, OnChanges {
     disableWithNoPermission: boolean;
 
     @Input()
-    disabled: boolean = false;
+    disabled = false;
 
     @Output()
     execute = new EventEmitter();
@@ -114,7 +114,7 @@ export class ContentActionComponent implements OnInit, OnChanges {
 
     getSystemHandler(target: string, name: string): ContentActionHandler {
         if (target) {
-            let ltarget = target.toLowerCase();
+            const ltarget = target.toLowerCase();
 
             if (ltarget === 'document') {
                 if (this.documentActions) {

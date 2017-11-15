@@ -64,13 +64,13 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
     data: DataTableAdapter;
 
     @Input()
-    selectionMode: string = 'single'; // none|single|multiple
+    selectionMode = 'single'; // none|single|multiple
 
     @Input()
     presetColumn: string;
 
     @Input()
-    multiselect: boolean = false;
+    multiselect = false;
 
     @Output()
     rowClick: EventEmitter<string> = new EventEmitter<string>();
@@ -89,12 +89,12 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
     layoutPresets = {};
 
     @Input()
-    page: number = 0;
+    page = 0;
 
     @Input()
     size: number = DEFAULT_SIZE;
 
-    isLoading: boolean = true;
+    isLoading = true;
 
     /**
      * Toggles custom data source mode.
@@ -104,7 +104,7 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
      * @type {boolean}
      * @memberOf TaskListComponent
      */
-    hasCustomDataSource: boolean = false;
+    hasCustomDataSource = false;
     isStreamLoaded = false;
 
     constructor(private taskListService: TaskListService,
@@ -116,7 +116,7 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
             this.isStreamLoaded = true;
             this.taskListService.tasksList$.subscribe(
                 (tasks) => {
-                    let instancesRow = this.createDataRow(tasks.data);
+                    const instancesRow = this.createDataRow(tasks.data);
                     this.renderInstances(instancesRow);
                     this.selectTask(this.landingTaskId);
                     this.success.emit(tasks);
@@ -178,9 +178,9 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
     }
 
     private isPropertyChanged(changes: SimpleChanges): boolean {
-        let changed: boolean = true;
+        let changed = true;
 
-        let landingTaskId = changes['landingTaskId'];
+        const landingTaskId = changes['landingTaskId'];
         if (landingTaskId && landingTaskId.currentValue && this.isEqualToCurrentId(landingTaskId.currentValue)) {
             changed = false;
         }
@@ -211,7 +211,7 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
      * @returns {ObjectDataRow[]}
      */
     private createDataRow(instances: any[]): ObjectDataRow[] {
-        let instancesRows: ObjectDataRow[] = [];
+        const instancesRows: ObjectDataRow[] = [];
         instances.forEach((row) => {
             instancesRows.push(new ObjectDataRow(row));
         });
@@ -233,9 +233,9 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
      */
     selectTask(taskIdToSelect: string): void {
         if (!this.isListEmpty()) {
-            let rows = this.data.getRows();
+            const rows = this.data.getRows();
             if (rows.length > 0) {
-                let dataRow = rows.find(row => row.getValue('id') === taskIdToSelect) || rows[0];
+                const dataRow = rows.find(row => row.getValue('id') === taskIdToSelect) || rows[0];
                 this.data.selectedRow = dataRow;
                 dataRow.isSelected = true;
                 this.currentInstanceId = dataRow.getValue('id');
@@ -312,7 +312,7 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
 
     private createRequestNode() {
 
-        let requestNode = {
+        const requestNode = {
             appDefinitionId: this.appId,
             processInstanceId: this.processInstanceId,
             processDefinitionKey: this.processDefinitionKey,

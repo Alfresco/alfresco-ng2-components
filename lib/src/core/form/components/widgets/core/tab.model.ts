@@ -24,7 +24,7 @@ import { FormModel } from './form.model';
 export class TabModel extends FormWidgetModel {
 
     title: string;
-    isVisible: boolean = true;
+    isVisible = true;
     visibilityCondition: WidgetVisibilityModel;
 
     fields: FormWidgetModel[] = [];

@@ -44,8 +44,8 @@ export class NodeService {
      * @returns NodeMetadata
      */
     public createNodeMetadata(nodeType: string, nameSpace: any, data: any, path: string, name?: string): Observable<any> {
-        let properties = {};
-        for (let key in data) {
+        const properties = {};
+        for (const key in data) {
             if (data[key]) {
                 properties[nameSpace + ':' + key] = data[key];
             }
@@ -63,7 +63,7 @@ export class NodeService {
      * @returns NodeMetadata
      */
     public createNode(name: string, nodeType: string, properties: any, path: string): Observable<any> {
-        let body = {
+        const body = {
             name: name,
             nodeType: nodeType,
             properties: properties,
@@ -71,22 +71,22 @@ export class NodeService {
         };
 
         // TODO: requires update to alfresco-js-api typings
-        let apiService: any = this.apiService.getInstance();
+        const apiService: any = this.apiService.getInstance();
         return Observable.fromPromise(apiService.nodes.addNode('-root-', body, {}));
     }
 
     private generateUuid() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-            let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+            const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
             return v.toString(16);
         });
     }
 
     private cleanMetadataFromSemicolon(data: any): NodeMetadata {
-        let metadata = {};
+        const metadata = {};
 
         if (data && data.properties) {
-            for (let key in data.properties) {
+            for (const key in data.properties) {
                 if (key) {
                     if (key.indexOf(':') !== -1) {
                         metadata [key.split(':')[1]] = data.properties[key];

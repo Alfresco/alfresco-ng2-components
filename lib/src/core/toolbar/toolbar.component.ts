@@ -28,7 +28,7 @@ import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@a
 export class ToolbarComponent {
 
     @Input()
-    title: string = '';
+    title = '';
 
     @Input()
     color: string;

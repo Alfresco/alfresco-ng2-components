@@ -25,8 +25,8 @@ import { ExternalContentLink } from '../components/widgets/core/external-content
 @Injectable()
 export class ActivitiContentService {
 
-    static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
-    static GENERIC_ERROR_MESSAGE: string = 'Server error';
+    static UNKNOWN_ERROR_MESSAGE = 'Unknown error';
+    static GENERIC_ERROR_MESSAGE = 'Server error';
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
@@ -40,8 +40,8 @@ export class ActivitiContentService {
      * @returns {null}
      */
     getAlfrescoNodes(accountId: string, folderId: string): Observable<[ExternalContent]> {
-        let apiService: AlfrescoApi = this.apiService.getInstance();
-        let accountShortId = accountId.replace('alfresco-', '');
+        const apiService: AlfrescoApi = this.apiService.getInstance();
+        const accountShortId = accountId.replace('alfresco-', '');
         return Observable.fromPromise(apiService.activiti.alfrescoApi.getContentInFolder(accountShortId, folderId))
             .map(this.toJsonArray)
             .catch(err => this.handleError(err));
@@ -56,7 +56,7 @@ export class ActivitiContentService {
      * @returns {null}
      */
     linkAlfrescoNode(accountId: string, node: ExternalContent, siteId: string): Observable<ExternalContentLink> {
-        let apiService: AlfrescoApi = this.apiService.getInstance();
+        const apiService: AlfrescoApi = this.apiService.getInstance();
         return Observable.fromPromise(apiService.activiti.contentApi.createTemporaryRelatedContent({
             link: true,
             name: node.title,

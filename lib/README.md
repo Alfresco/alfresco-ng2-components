@@ -1,27 +1,40 @@
-# Lib
+# Alfresco Angular Components
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.0.
+<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
 
-## Development server
+<!-- toc -->
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+- [Documentation](#documentation)
+- [Build from sources](#build-from-sources)
+- [NPM scripts](#npm-scripts)
 
-## Code scaffolding
+<!-- tocstop -->
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+<!-- markdown-toc end -->
 
-## Build
+## Documentation
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+The [docs index](../docs/README.md) lists all available documentation for components and
+also includes a user guide that explains techniques in greater detail.
 
-## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Build from sources
 
-## Running end-to-end tests
+You can build component from sources with the following commands:
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+```sh
+npm install
+npm run build
+```
 
-## Further help
+> The `build` task rebuilds all the code, runs tslint, license checks 
+> and other quality check tools before performing unit testing.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## NPM scripts
+
+| Command | Description |
+| --- | --- |
+| npm run build | Build component |
+| npm run test | Run unit tests in the console |
+| npm run test-browser | Run unit tests in the browser
+| npm run coverage | Run unit tests and display code coverage report |

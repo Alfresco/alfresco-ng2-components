@@ -33,7 +33,7 @@ export interface CardViewDateItemProperties extends CardViewItemProperties {
 }
 
 export class CardViewDateItemModel extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
-    type: string = 'date';
+    type = 'date';
     format: string;
 
     constructor(obj: CardViewDateItemProperties) {

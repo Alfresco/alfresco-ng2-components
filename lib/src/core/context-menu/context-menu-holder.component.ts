@@ -51,7 +51,7 @@ export class ContextMenuHolderComponent implements OnInit, OnDestroy {
     private contextMenuListenerFn: () => void;
 
     @Input()
-    showIcons: boolean = false;
+    showIcons = false;
 
     @ViewChild(MatMenuTrigger)
     menuTrigger: MatMenuTrigger;

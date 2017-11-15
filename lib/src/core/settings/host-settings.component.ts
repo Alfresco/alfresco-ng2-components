@@ -33,7 +33,7 @@ import { TranslationService } from '../services/translation.service';
 })
 export class HostSettingsComponent {
 
-    HOST_REGEX: string = '^(http|https):\/\/.*[^/]$';
+    HOST_REGEX = '^(http|https):\/\/.*[^/]$';
 
     ecmHost: string;
     ecmHostTmp: string;
@@ -43,7 +43,7 @@ export class HostSettingsComponent {
     urlFormControlBpm = new FormControl('', [Validators.required, Validators.pattern(this.HOST_REGEX)]);
 
     @Input()
-    providers: string = 'ALL';
+    providers = 'ALL';
 
     @Output()
     error = new EventEmitter<string>();
@@ -57,7 +57,7 @@ export class HostSettingsComponent {
     }
 
     public onChangeECMHost(event: any): void {
-        let value = (<HTMLInputElement> event.target).value.trim();
+        const value = (<HTMLInputElement> event.target).value.trim();
         if (value && this.isValidUrl(value)) {
             this.logService.info(`ECM host: ${value}`);
             this.ecmHostTmp = value;
@@ -69,7 +69,7 @@ export class HostSettingsComponent {
     }
 
     public onChangeBPMHost(event: any): void {
-        let value = (<HTMLInputElement> event.target).value.trim();
+        const value = (<HTMLInputElement> event.target).value.trim();
         if (value && this.isValidUrl(value)) {
             this.logService.info(`BPM host: ${value}`);
             this.bpmHostTmp = value;

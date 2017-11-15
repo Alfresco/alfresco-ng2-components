@@ -34,7 +34,7 @@ export class AnalyticsComponent implements OnChanges {
     reportId: number;
 
     @Input()
-    hideParameters: boolean = false;
+    hideParameters = false;
 
     @Output()
     editReport = new EventEmitter();

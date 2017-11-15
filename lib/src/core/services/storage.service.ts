@@ -21,7 +21,7 @@ import { Injectable } from '@angular/core';
 export class StorageService {
 
     private memoryStore: { [key: string]: any } = {};
-    private useLocalStorage: boolean = false;
+    private useLocalStorage = false;
 
     constructor() {
         this.useLocalStorage = this.storageAvailable('localStorage');
@@ -69,7 +69,7 @@ export class StorageService {
 
     private storageAvailable(type: string): boolean {
         try {
-            let storage = window[type];
+            const storage = window[type];
             const key = '__storage_test__';
             storage.setItem(key, key);
             storage.removeItem(key, key);

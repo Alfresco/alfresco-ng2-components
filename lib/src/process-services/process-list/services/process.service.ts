@@ -48,9 +48,9 @@ export class ProcessService {
     getProcessFilters(appId: number): Observable<FilterProcessRepresentationModel[]> {
         return Observable.fromPromise(this.callApiProcessFilters(appId))
             .map((response: any) => {
-                let filters: FilterProcessRepresentationModel[] = [];
+                const filters: FilterProcessRepresentationModel[] = [];
                 response.data.forEach((filter: FilterProcessRepresentationModel) => {
-                    let filterModel = new FilterProcessRepresentationModel(filter);
+                    const filterModel = new FilterProcessRepresentationModel(filter);
                     filters.push(filterModel);
                 });
                 return filters;
@@ -108,14 +108,14 @@ export class ProcessService {
      * @returns {FilterProcessRepresentationModel[]}
      */
     public createDefaultFilters(appId: number): Observable<any[]> {
-        let runnintFilter = this.getRunningFilterInstance(appId);
-        let runnintObservable = this.addProcessFilter(runnintFilter);
+        const runnintFilter = this.getRunningFilterInstance(appId);
+        const runnintObservable = this.addProcessFilter(runnintFilter);
 
-        let completedFilter = this.getCompletedFilterInstance(appId);
-        let completedObservable = this.addProcessFilter(completedFilter);
+        const completedFilter = this.getCompletedFilterInstance(appId);
+        const completedObservable = this.addProcessFilter(completedFilter);
 
-        let allFilter = this.getAllFilterInstance(appId);
-        let allObservable = this.addProcessFilter(allFilter);
+        const allFilter = this.getAllFilterInstance(appId);
+        const allObservable = this.addProcessFilter(allFilter);
 
         return Observable.create(observer => {
             Observable.forkJoin(
@@ -124,7 +124,7 @@ export class ProcessService {
                 allObservable
             ).subscribe(
                 (res) => {
-                    let filters: FilterProcessRepresentationModel[] = [];
+                    const filters: FilterProcessRepresentationModel[] = [];
                     res.forEach((filter) => {
                         if (filter.name === runnintFilter.name) {
                             filters.push(runnintFilter);
@@ -202,7 +202,7 @@ export class ProcessService {
     }
 
     getProcessTasks(processInstanceId: string, state?: string): Observable<TaskDetailsModel[]> {
-        let taskOpts = state ? {
+        const taskOpts = state ? {
                 processInstanceId: processInstanceId,
                 state: state
             } : {
@@ -218,7 +218,7 @@ export class ProcessService {
     }
 
     getProcessDefinitions(appId?: number): Observable<ProcessDefinitionRepresentation[]> {
-        let opts = appId ? {
+        const opts = appId ? {
                 latest: true,
                 appDefinitionId: appId
             } : {
@@ -233,7 +233,7 @@ export class ProcessService {
     }
 
     startProcess(processDefinitionId: string, name: string, outcome?: string, startFormValues?: any, variables?: ProcessInstanceVariable[]): Observable<ProcessInstance> {
-        let startRequest: any = {
+        const startRequest: any = {
             name: name,
             processDefinitionId: processDefinitionId
         };

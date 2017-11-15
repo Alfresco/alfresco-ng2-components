@@ -97,8 +97,8 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
 
     private maskValue(actualValue, startCaret, maskToApply, isMaskReversed, keyCode) {
         if (this.byPassKeys.indexOf(keyCode) === -1) {
-            let value = this.getMasked(false, actualValue, maskToApply, isMaskReversed);
-            let calculatedCaret = this.calculateCaretPosition(startCaret, actualValue, keyCode);
+            const value = this.getMasked(false, actualValue, maskToApply, isMaskReversed);
+            const calculatedCaret = this.calculateCaretPosition(startCaret, actualValue, keyCode);
             this.render.setElementAttribute(this.el.nativeElement, 'value', value);
             this.el.nativeElement.value = value;
             this.setValue(value);
@@ -113,9 +113,9 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
     }
 
     calculateCaretPosition(caretPosition, newValue, keyCode) {
-        let newValueLength = newValue.length;
-        let oldValue = this.getValue() || '';
-        let oldValueLength = oldValue.length;
+        const newValueLength = newValue.length;
+        const oldValue = this.getValue() || '';
+        const oldValueLength = oldValue.length;
 
         if (keyCode === 8 && oldValue !== newValue) {
             caretPosition = caretPosition - (newValue.slice(0, caretPosition).length - oldValue.slice(0, caretPosition).length);
@@ -154,7 +154,7 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
         }
         check = this.isToCheck(isReversed, maskIndex, maskLen, valueIndex, valueLength);
         while (check) {
-            let maskDigit = mask.charAt(maskIndex),
+            const maskDigit = mask.charAt(maskIndex),
                 valDigit = value.charAt(valueIndex),
                 translation = this.translationMask[maskDigit];
 
@@ -199,7 +199,7 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
             check = this.isToCheck(isReversed, maskIndex, maskLen, valueIndex, valueLength);
         }
 
-        let lastMaskCharDigit = mask.charAt(lastMaskChar);
+        const lastMaskCharDigit = mask.charAt(lastMaskChar);
         if (maskLen === valueLength + 1 && !this.translationMask[lastMaskCharDigit]) {
             buf.push(lastMaskCharDigit);
         }

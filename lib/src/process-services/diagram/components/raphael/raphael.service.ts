@@ -23,8 +23,8 @@ declare let Raphael: any;
 export class RaphaelService implements OnDestroy {
 
     paper: any;
-    width: number = 300;
-    height: number = 400;
+    width = 300;
+    height = 400;
     private ctx: any;
 
     constructor() {
@@ -47,7 +47,7 @@ export class RaphaelService implements OnDestroy {
         if (typeof Raphael === 'undefined') {
             throw new Error('ng2-charts configuration issue: Embedding Chart.js lib is mandatory');
         }
-        let paper = new Raphael(ctx, this.width, this.height);
+        const paper = new Raphael(ctx, this.width, this.height);
         // paper.setViewBox(0, 0, 583, 344.08374193550003, false);
         // paper.renderfix();
         return paper;

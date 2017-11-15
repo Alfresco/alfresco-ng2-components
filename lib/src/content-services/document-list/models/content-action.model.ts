@@ -22,8 +22,8 @@ export class ContentActionModel {
     execute: Function;
     target: string;
     permission: string;
-    disableWithNoPermission: boolean = false;
-    disabled: boolean = false;
+    disableWithNoPermission = false;
+    disabled = false;
 
     constructor(obj?: any) {
         if (obj) {

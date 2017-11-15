@@ -57,7 +57,7 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
             )
             .subscribe(
                 (result: FormFieldOption[]) => {
-                    let options = [];
+                    const options = [];
                     if (this.field.emptyOption) {
                         options.push(this.field.emptyOption);
                     }
@@ -76,7 +76,7 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
             )
             .subscribe(
                 (result: FormFieldOption[]) => {
-                    let options = [];
+                    const options = [];
                     if (this.field.emptyOption) {
                         options.push(this.field.emptyOption);
                     }
@@ -88,7 +88,7 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     getOptionValue(option: FormFieldOption, fieldValue: string): string {
-        let optionValue: string = '';
+        let optionValue = '';
         if (option.id === 'empty' || option.name !== fieldValue) {
             optionValue = option.id;
         } else {

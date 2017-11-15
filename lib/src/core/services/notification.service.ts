@@ -21,7 +21,7 @@ import { MatSnackBar, MatSnackBarRef } from '@angular/material';
 @Injectable()
 export class NotificationService {
 
-    static DEFAULT_DURATION_MESSAGE: number = 5000;
+    static DEFAULT_DURATION_MESSAGE = 5000;
 
     constructor(public snackbar: MatSnackBar) {
     }

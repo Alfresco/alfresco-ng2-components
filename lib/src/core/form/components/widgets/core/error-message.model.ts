@@ -19,7 +19,7 @@
 
 export class ErrorMessageModel {
 
-    message: string = '';
+    message = '';
     attributes: Map<string, string> = null;
 
     constructor(obj?: any) {
@@ -34,7 +34,7 @@ export class ErrorMessageModel {
     getAttributesAsJsonObj() {
         let result = {};
         if (this.attributes.size > 0) {
-            let obj = Object.create(null);
+            const obj = Object.create(null);
             this.attributes.forEach((value, key) => {
                 obj[key] = value;
             });

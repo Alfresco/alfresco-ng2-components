@@ -42,9 +42,9 @@ export class CommentProcessService {
         return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.getTaskComments(taskId))
             .map(res => res)
             .map((response: any) => {
-                let comments: CommentProcessModel[] = [];
+                const comments: CommentProcessModel[] = [];
                 response.data.forEach((comment: CommentProcessModel) => {
-                    let user = new UserProcessModel(comment.createdBy);
+                    const user = new UserProcessModel(comment.createdBy);
                     comments.push(new CommentProcessModel({id: comment.id, message: comment.message, created: comment.created, createdBy: user}));
                 });
                 return comments;
@@ -55,9 +55,9 @@ export class CommentProcessService {
         return Observable.fromPromise(this.apiService.getInstance().activiti.commentsApi.getProcessInstanceComments(processInstanceId))
             .map(res => res)
             .map((response: any) => {
-                let comments: CommentProcessModel[] = [];
+                const comments: CommentProcessModel[] = [];
                 response.data.forEach((comment: CommentProcessModel) => {
-                    let user = new UserProcessModel(comment.createdBy);
+                    const user = new UserProcessModel(comment.createdBy);
                     comments.push(new CommentProcessModel({id: comment.id, message: comment.message, created: comment.created, createdBy: user}));
                 });
                 return comments;

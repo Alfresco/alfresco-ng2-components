@@ -44,7 +44,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     nameFile: string;
 
     @Input()
-    showToolbar: boolean = true;
+    showToolbar = true;
 
     @Input()
     allowThumbnails = false;
@@ -55,13 +55,13 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     totalPages: number;
     loadingPercent: number;
     pdfViewer: any;
-    currentScaleMode: string = 'auto';
+    currentScaleMode = 'auto';
     currentScale: number;
 
-    MAX_AUTO_SCALE: number = 1.25;
-    DEFAULT_SCALE_DELTA: number = 1.1;
-    MIN_SCALE: number = 0.25;
-    MAX_SCALE: number = 10.0;
+    MAX_AUTO_SCALE = 1.25;
+    DEFAULT_SCALE_DELTA = 1.1;
+    MIN_SCALE = 0.25;
+    MAX_SCALE = 10.0;
 
     constructor(private renderingQueueServices: RenderingQueueServices,
                 private logService: LogService) {
@@ -80,7 +80,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             });
         } else {
             return new Promise((resolve, reject) => {
-                let reader = new FileReader();
+                const reader = new FileReader();
                 reader.onload = () => {
                     this.executePdf(reader.result, resolve, reject);
                 };
@@ -90,10 +90,10 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     executePdf(src, resolve, reject) {
-        let loadingTask = this.getPDFJS().getDocument(src);
+        const loadingTask = this.getPDFJS().getDocument(src);
 
         loadingTask.onProgress = (progressData) => {
-            let level = progressData.loaded / progressData.total;
+            const level = progressData.loaded / progressData.total;
             this.loadingPercent = Math.round(level * 100);
         };
 
@@ -129,8 +129,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         PDFJS.verbosity = 1;
         PDFJS.disableWorker = false;
 
-        let documentContainer = document.getElementById('viewer-pdf-container');
-        let viewer: any = document.getElementById('viewer-viewerPdf');
+        const documentContainer = document.getElementById('viewer-pdf-container');
+        const viewer: any = document.getElementById('viewer-viewerPdf');
 
         window.document.addEventListener('scroll', this.onDocumentScroll, true);
 
@@ -159,8 +159,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
         if (this.pdfViewer) {
 
-            let viewerContainer = document.getElementById('viewer-main-container');
-            let documentContainer = document.getElementById('viewer-pdf-container');
+            const viewerContainer = document.getElementById('viewer-main-container');
+            const documentContainer = document.getElementById('viewer-pdf-container');
 
             let widthContainer;
             let heigthContainer;
@@ -173,11 +173,11 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
                 heigthContainer = documentContainer.clientHeight;
             }
 
-            let currentPage = this.pdfViewer._pages[this.pdfViewer._currentPageNumber - 1];
+            const currentPage = this.pdfViewer._pages[this.pdfViewer._currentPageNumber - 1];
 
-            let padding = 20;
-            let pageWidthScale = (widthContainer - padding) / currentPage.width * currentPage.scale;
-            let pageHeightScale = (heigthContainer - padding) / currentPage.width * currentPage.scale;
+            const padding = 20;
+            const pageWidthScale = (widthContainer - padding) / currentPage.width * currentPage.scale;
+            const pageHeightScale = (heigthContainer - padding) / currentPage.width * currentPage.scale;
 
             let scale;
 
@@ -334,7 +334,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
      * @param {string} page - page to load
      */
     inputPage(page: string) {
-        let pageInput = parseInt(page, 10);
+        const pageInput = parseInt(page, 10);
 
         if (!isNaN(pageInput) && pageInput > 0 && pageInput <= this.totalPages) {
             this.page = pageInput;
@@ -351,7 +351,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
      * @param {any} target
      */
     watchScroll(target) {
-        let outputPage = this.getVisibleElement(target);
+        const outputPage = this.getVisibleElement(target);
 
         if (outputPage) {
             this.page = outputPage.id;
@@ -381,10 +381,10 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
      * @returns {boolean}
      */
     isOnScreen(page: any, target: any) {
-        let viewport: any = {};
+        const viewport: any = {};
         viewport.top = target.scrollTop;
         viewport.bottom = viewport.top + target.scrollHeight;
-        let bounds: any = {};
+        const bounds: any = {};
         bounds.top = page.div.offsetTop;
         bounds.bottom = bounds.top + page.viewport.height;
         return ((bounds.top <= viewport.bottom) && (bounds.bottom >= viewport.top));
@@ -396,7 +396,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
      */
     @HostListener('document:keydown', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
-        let key = event.keyCode;
+        const key = event.keyCode;
         if (key === 39) { // right arrow
             this.nextPage();
         } else if (key === 37) {// left arrow

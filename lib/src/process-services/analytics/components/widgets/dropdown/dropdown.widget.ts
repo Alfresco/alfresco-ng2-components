@@ -43,13 +43,13 @@ export class DropdownWidgetAanalyticsComponent extends WidgetComponent implement
     fieldChanged: EventEmitter<any> = new EventEmitter<any>();
 
     @Input()
-    showDefaultOption: boolean = true;
+    showDefaultOption = true;
 
     @Input()
-    required: boolean = false;
+    required = false;
 
     @Input()
-    defaultOptionText: string = 'Choose One';
+    defaultOptionText = 'Choose One';
 
     constructor() {
         super();
@@ -66,7 +66,7 @@ export class DropdownWidgetAanalyticsComponent extends WidgetComponent implement
     }
 
     buildValidatorList() {
-        let validatorList = [];
+        const validatorList = [];
         validatorList.push(Validators.required);
         if (this.showDefaultOption) {
             validatorList.push(this.validateDropDown);

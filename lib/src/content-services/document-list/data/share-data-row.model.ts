@@ -23,12 +23,12 @@ import { DocumentListService } from './../services/document-list.service';
 
 export class ShareDataRow implements DataRow {
 
-    static ERR_OBJECT_NOT_FOUND: string = 'Object source not found';
+    static ERR_OBJECT_NOT_FOUND = 'Object source not found';
 
     cache: { [key: string]: any } = {};
-    isSelected: boolean = false;
+    isSelected = false;
     isDropTarget: boolean;
-    cssClass: string = '';
+    cssClass = '';
 
     get node(): MinimalNodeEntity {
         return this.obj;

@@ -47,7 +47,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
     appName: string;
 
     @Input()
-    hasIcon: boolean = true;
+    hasIcon = true;
 
     private filterObserver: Observer<FilterRepresentationModel>;
     filter$: Observable<FilterRepresentationModel>;
@@ -67,12 +67,12 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        let appId = changes['appId'];
+        const appId = changes['appId'];
         if (appId && (appId.currentValue || appId.currentValue === null)) {
             this.getFiltersByAppId(appId.currentValue);
             return;
         }
-        let appName = changes['appName'];
+        const appName = changes['appName'];
         if (appName && appName !== null && appName.currentValue) {
             this.getFiltersByAppName(appName.currentValue);
             return;
@@ -157,7 +157,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
     }
 
     public selectFilterWithTask(taskId: string) {
-        let filteredFilterList: FilterRepresentationModel[] = [];
+        const filteredFilterList: FilterRepresentationModel[] = [];
         this.taskListService.getFilterForTaskById(taskId, this.filters).subscribe(
             (filter: FilterRepresentationModel) => {
                 filteredFilterList.push(filter);

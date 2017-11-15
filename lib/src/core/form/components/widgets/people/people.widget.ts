@@ -37,7 +37,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
     @ViewChild('inputValue')
     input: ElementRef;
 
-    minTermLength: number = 1;
+    minTermLength = 1;
     oldValue: string;
     users: UserProcessModel[] = [];
     groupId: string;
@@ -48,16 +48,16 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
 
     ngOnInit() {
         if (this.field) {
-            let params = this.field.params;
+            const params = this.field.params;
             if (params && params.restrictWithGroup) {
-                let restrictWithGroup = <GroupModel> params.restrictWithGroup;
+                const restrictWithGroup = <GroupModel> params.restrictWithGroup;
                 this.groupId = restrictWithGroup.id;
             }
         }
     }
 
     onKeyUp(event: KeyboardEvent) {
-        let value = (this.input.nativeElement as HTMLInputElement).value;
+        const value = (this.input.nativeElement as HTMLInputElement).value;
         if (value && value.length >= this.minTermLength && this.oldValue !== value) {
             if (event.keyCode !== ESCAPE && event.keyCode !== ENTER) {
                 if (value.length >= this.minTermLength) {
@@ -94,7 +94,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
     isValidUser(value: string): boolean {
         let isValid = false;
         if (value) {
-            let resultUser: UserProcessModel = this.users.find((user) => this.getDisplayName(user).toLocaleLowerCase() === value.toLocaleLowerCase());
+            const resultUser: UserProcessModel = this.users.find((user) => this.getDisplayName(user).toLocaleLowerCase() === value.toLocaleLowerCase());
 
             if (resultUser) {
                 isValid = true;
@@ -106,7 +106,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
 
     getDisplayName(model: UserProcessModel) {
         if (model) {
-            let displayName = `${model.firstName || ''} ${model.lastName || ''}`;
+            const displayName = `${model.firstName || ''} ${model.lastName || ''}`;
             return displayName.trim();
         }
         return '';

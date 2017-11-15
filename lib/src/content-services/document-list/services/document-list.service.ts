@@ -40,7 +40,7 @@ export class DocumentListService {
             rootNodeId = opts.rootFolderId;
         }
 
-        let params: any = {
+        const params: any = {
             includeSource: true,
             include: ['path', 'properties', 'allowableOperations']
         };
@@ -111,12 +111,12 @@ export class DocumentListService {
     }
 
     getFolderNode(nodeId: string): Promise<MinimalNodeEntryEntity> {
-        let opts: any = {
+        const opts: any = {
             includeSource: true,
             include: ['path', 'properties', 'allowableOperations']
         };
 
-        let nodes: any = this.apiService.getInstance().nodes;
+        const nodes: any = this.apiService.getInstance().nodes;
         return nodes.getNodeInfo(nodeId, opts);
     }
 

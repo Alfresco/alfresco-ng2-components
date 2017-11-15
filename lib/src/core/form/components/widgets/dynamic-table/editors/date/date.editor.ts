@@ -37,7 +37,7 @@ import { DynamicTableModel } from './../../dynamic-table.widget.model';
 })
 export class DateEditorComponent implements OnInit {
 
-    DATE_FORMAT: string = 'DD-MM-YYYY';
+    DATE_FORMAT = 'DD-MM-YYYY';
 
     value: any;
 
@@ -61,7 +61,7 @@ export class DateEditorComponent implements OnInit {
         this.preferences.locale$.subscribe((locale) => {
             this.dateAdapter.setLocale(locale);
         });
-        let momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
+        const momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
         momentDateAdapter.overrideDisplyaFormat = this.DATE_FORMAT;
 
         this.value = moment(this.table.getCellValue(this.row, this.column), this.DATE_FORMAT);
@@ -69,7 +69,7 @@ export class DateEditorComponent implements OnInit {
 
     onDateChanged(newDateValue) {
         if (newDateValue) {
-            let momentDate = moment(newDateValue, this.DATE_FORMAT, true);
+            const momentDate = moment(newDateValue, this.DATE_FORMAT, true);
 
             if (!momentDate.isValid()) {
                 this.row.value[this.column.id] = '';

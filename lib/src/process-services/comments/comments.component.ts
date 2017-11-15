@@ -30,7 +30,7 @@ export class CommentsComponent implements OnChanges {
     taskId: string;
 
     @Input()
-    readOnly: boolean = false;
+    readOnly = false;
 
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
@@ -42,7 +42,7 @@ export class CommentsComponent implements OnChanges {
 
     message: string;
 
-    beingAdded: boolean = false;
+    beingAdded = false;
 
     constructor(private commentProcessService: CommentProcessService) {
         this.comment$ = new Observable<CommentProcessModel>(observer =>  this.commentObserver = observer).share();
@@ -52,7 +52,7 @@ export class CommentsComponent implements OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        let taskId = changes['taskId'];
+        const taskId = changes['taskId'];
         if (taskId) {
             if (taskId.currentValue) {
                 this.getTaskComments(taskId.currentValue);
@@ -68,8 +68,8 @@ export class CommentsComponent implements OnChanges {
             this.commentProcessService.getTaskComments(taskId).subscribe(
                 (res: CommentProcessModel[]) => {
                     res = res.sort((comment1: CommentProcessModel, comment2: CommentProcessModel) => {
-                        let date1 = new Date(comment1.created);
-                        let date2 = new Date(comment2.created);
+                        const date1 = new Date(comment1.created);
+                        const date2 = new Date(comment2.created);
                         return date1 > date2 ? -1 : date1 < date2 ? 1 : 0;
                     });
                     res.forEach((comment) => {

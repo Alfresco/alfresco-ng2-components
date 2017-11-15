@@ -41,7 +41,7 @@ export class FolderActionsService {
 
     getHandler(key: string): ContentActionHandler {
         if (key) {
-            let lkey = key.toLowerCase();
+            const lkey = key.toLowerCase();
             return this.handlers[lkey] || null;
         }
         return null;
@@ -49,7 +49,7 @@ export class FolderActionsService {
 
     setHandler(key: string, handler: ContentActionHandler): boolean {
         if (key) {
-            let lkey = key.toLowerCase();
+            const lkey = key.toLowerCase();
             this.handlers[lkey] = handler;
             return true;
         }

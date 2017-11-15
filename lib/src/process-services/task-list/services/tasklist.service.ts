@@ -41,9 +41,9 @@ export class TaskListService {
     getTaskListFilters(appId?: number): Observable<any> {
         return Observable.fromPromise(this.callApiTaskFilters(appId))
             .map((response: any) => {
-                let filters: FilterRepresentationModel[] = [];
+                const filters: FilterRepresentationModel[] = [];
                 response.data.forEach((filter: FilterRepresentationModel) => {
-                    let filterModel = new FilterRepresentationModel(filter);
+                    const filterModel = new FilterRepresentationModel(filter);
                     filters.push(filterModel);
                 });
                 return filters;
@@ -93,7 +93,7 @@ export class TaskListService {
      * @returns {TaskQueryRequestRepresentationModel}
      */
     private generateTaskRequestNodeFromFilter(filter: FilterRepresentationModel): TaskQueryRequestRepresentationModel {
-        let requestNode = {
+        const requestNode = {
             appDefinitionId: filter.appId,
             assignment: filter.filter.assignment,
             state: filter.filter.state,
@@ -109,7 +109,7 @@ export class TaskListService {
      * @returns {FilterRepresentationModel}
      */
     isTaskRelatedToFilter(taskId: string, filter: FilterRepresentationModel): Observable<FilterRepresentationModel> {
-        let requestNodeForFilter = this.generateTaskRequestNodeFromFilter(filter);
+        const requestNodeForFilter = this.generateTaskRequestNodeFromFilter(filter);
         return Observable.fromPromise(this.callApiTasksFiltered(requestNodeForFilter))
             .map((res: any) => {
                 return res.data.find(element => element.id === taskId) ? filter : null;
@@ -197,7 +197,7 @@ export class TaskListService {
         return Observable.fromPromise(this.callApiTaskChecklist(id))
             .map(res => res)
             .map((response: any) => {
-                let checklists: TaskDetailsModel[] = [];
+                const checklists: TaskDetailsModel[] = [];
                 response.data.forEach((checklist) => {
                     checklists.push(new TaskDetailsModel(checklist));
                 });
@@ -210,7 +210,7 @@ export class TaskListService {
      * @returns {TaskDetailsModel}
      */
     getFormList(): Observable<Form []> {
-        let opts = {
+        const opts = {
             'filter': 'myReusableForms', // String | filter
             'sort': 'modifiedDesc', // String | sort
             'modelType': 2 // Integer | modelType
@@ -218,7 +218,7 @@ export class TaskListService {
 
         return Observable.fromPromise(this.apiService.getInstance().activiti.modelsApi.getModels(opts)).map(res => res)
             .map((response: any) => {
-                let forms: Form[] = [];
+                const forms: Form[] = [];
                 response.data.forEach((form) => {
                     forms.push(new Form(form.id, form.name));
                 });
@@ -236,17 +236,17 @@ export class TaskListService {
      * @returns {FilterRepresentationModel[]}
      */
     public createDefaultFilters(appId: number): Observable<FilterRepresentationModel[]> {
-        let involvedTasksFilter = this.getInvolvedTasksFilterInstance(appId);
-        let involvedObservable = this.addFilter(involvedTasksFilter);
+        const involvedTasksFilter = this.getInvolvedTasksFilterInstance(appId);
+        const involvedObservable = this.addFilter(involvedTasksFilter);
 
-        let myTasksFilter = this.getMyTasksFilterInstance(appId);
-        let myTaskObservable = this.addFilter(myTasksFilter);
+        const myTasksFilter = this.getMyTasksFilterInstance(appId);
+        const myTaskObservable = this.addFilter(myTasksFilter);
 
-        let queuedTasksFilter = this.getQueuedTasksFilterInstance(appId);
-        let queuedObservable = this.addFilter(queuedTasksFilter);
+        const queuedTasksFilter = this.getQueuedTasksFilterInstance(appId);
+        const queuedObservable = this.addFilter(queuedTasksFilter);
 
-        let completedTasksFilter = this.getCompletedTasksFilterInstance(appId);
-        let completeObservable = this.addFilter(completedTasksFilter);
+        const completedTasksFilter = this.getCompletedTasksFilterInstance(appId);
+        const completeObservable = this.addFilter(completedTasksFilter);
 
         return Observable.create(observer => {
             Observable.forkJoin(
@@ -256,7 +256,7 @@ export class TaskListService {
                 completeObservable
             ).subscribe(
                 (res) => {
-                    let filters: FilterRepresentationModel[] = [];
+                    const filters: FilterRepresentationModel[] = [];
                     res.forEach((filter) => {
                         if (filter.name === involvedTasksFilter.name) {
                             filters.push(involvedTasksFilter);
@@ -355,7 +355,7 @@ export class TaskListService {
      * @returns {TaskDetailsModel}
      */
     assignTask(taskId: string, requestNode: any): Observable<TaskDetailsModel> {
-        let assignee = {assignee: requestNode.id};
+        const assignee = {assignee: requestNode.id};
         return Observable.fromPromise(this.callApiAssignTask(taskId, assignee))
             .map(res => res)
             .map((response: TaskDetailsModel) => {
@@ -364,7 +364,7 @@ export class TaskListService {
     }
 
     assignTaskByUserId(taskId: string, userId: number): Observable<TaskDetailsModel> {
-        let assignee = {assignee: userId};
+        const assignee = {assignee: userId};
         return Observable.fromPromise(this.callApiAssignTask(taskId, assignee))
             .map(res => res)
             .map((response: TaskDetailsModel) => {

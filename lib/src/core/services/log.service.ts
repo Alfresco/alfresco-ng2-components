@@ -26,7 +26,7 @@ export class LogService {
 
     constructor(appConfig: AppConfigService) {
         if (appConfig) {
-            let configLevel: string = appConfig.get<string>('logLevel');
+            const configLevel: string = appConfig.get<string>('logLevel');
 
             if (configLevel) {
                 this.currentLogLevel = this.getCurrentLogLevel(configLevel);
@@ -113,7 +113,7 @@ export class LogService {
     }
 
     getCurrentLogLevel(level: string): LogLevelsEnum {
-        let referencedLevel = logLevels.find((currentLevel: any) => {
+        const referencedLevel = logLevels.find((currentLevel: any) => {
             return currentLevel.name.toLocaleLowerCase() === level.toLocaleLowerCase();
         });
 

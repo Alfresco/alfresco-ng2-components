@@ -18,7 +18,7 @@
 /** Base cancellable event implementation */
 export class BaseEvent<T> {
 
-    private isDefaultPrevented: boolean = false;
+    private isDefaultPrevented = false;
 
     value: T;
 

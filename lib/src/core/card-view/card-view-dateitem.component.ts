@@ -35,7 +35,7 @@ import { MOMENT_DATE_FORMATS, MomentDateAdapter } from '../utils/momentDateAdapt
 })
 export class CardViewDateItemComponent implements OnInit {
 
-    public SHOW_FORMAT: string = 'MMM DD YY';
+    public SHOW_FORMAT = 'MMM DD YY';
 
     @Input()
     property: CardViewDateItemModel;
@@ -58,7 +58,7 @@ export class CardViewDateItemComponent implements OnInit {
         this.preferences.locale$.subscribe( (locale) => {
             this.dateAdapter.setLocale(locale);
         });
-        let momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
+        const momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
         momentDateAdapter.overrideDisplyaFormat = this.SHOW_FORMAT;
 
         if (this.property.value) {
@@ -77,7 +77,7 @@ export class CardViewDateItemComponent implements OnInit {
 
     onDateChanged(newDateValue) {
         if (newDateValue) {
-            let momentDate = moment(newDateValue.value, this.SHOW_FORMAT, true);
+            const momentDate = moment(newDateValue.value, this.SHOW_FORMAT, true);
             if (momentDate.isValid()) {
                 this.valueDate = momentDate;
                 this.cardViewUpdateService.update(this.property, {[this.property.key]: momentDate.toDate()});

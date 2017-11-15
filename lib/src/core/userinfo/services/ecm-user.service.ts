@@ -50,7 +50,7 @@ export class EcmUserService {
 
     getUserProfileImage(avatarId: string) {
         if (avatarId) {
-            let nodeObj = {entry: {id: avatarId}};
+            const nodeObj = {entry: {id: avatarId}};
             return this.contentService.getContentUrl(nodeObj);
         }
     }

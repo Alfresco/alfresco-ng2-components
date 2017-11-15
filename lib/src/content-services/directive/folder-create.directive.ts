@@ -27,7 +27,7 @@ const DEFAULT_FOLDER_PARENT_ID = '-my-';
     selector: '[adf-create-folder]'
 })
 export class FolderCreateDirective {
-    static DIALOG_WIDTH: number = 400;
+    static DIALOG_WIDTH = 400;
 
     @Input('adf-create-folder')
     parentNodeId: string = DEFAULT_FOLDER_PARENT_ID;

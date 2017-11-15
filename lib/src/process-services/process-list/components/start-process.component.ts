@@ -54,14 +54,14 @@ export class StartProcessInstanceComponent implements OnChanges {
 
     currentProcessDef: ProcessDefinitionRepresentation = new ProcessDefinitionRepresentation();
 
-    errorMessageId: string = '';
+    errorMessageId = '';
 
     constructor(private activitiProcess: ProcessService) {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        let appIdChange = changes['appId'];
-        let appId = appIdChange ? appIdChange.currentValue : null;
+        const appIdChange = changes['appId'];
+        const appId = appIdChange ? appIdChange.currentValue : null;
         this.load(appId);
     }
 
@@ -81,7 +81,7 @@ export class StartProcessInstanceComponent implements OnChanges {
     public startProcess(outcome?: string) {
         if (this.currentProcessDef.id && this.name) {
             this.resetErrorMessage();
-            let formValues = this.startForm ? this.startForm.form.values : undefined;
+            const formValues = this.startForm ? this.startForm.form.values : undefined;
             this.activitiProcess.startProcess(this.currentProcessDef.id, this.name, outcome, formValues, this.variables).subscribe(
                 (res) => {
                     this.name = '';
@@ -96,7 +96,7 @@ export class StartProcessInstanceComponent implements OnChanges {
     }
 
     onProcessDefChange(processDefinitionId) {
-        let processDef = this.processDefinitions.find((processDefinition) => {
+        const processDef = this.processDefinitions.find((processDefinition) => {
             return processDefinition.id === processDefinitionId;
         });
         if (processDef) {

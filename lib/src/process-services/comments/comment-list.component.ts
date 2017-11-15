@@ -58,12 +58,12 @@ export class CommentListComponent {
 
     transformDate(aDate: string): string {
         let formattedDate: string;
-        let givenDate = Number.parseInt(this.datePipe.transform(aDate, 'yMMdd'));
-        let today = Number.parseInt(this.datePipe.transform(Date.now(), 'yMMdd'));
+        const givenDate = Number.parseInt(this.datePipe.transform(aDate, 'yMMdd'));
+        const today = Number.parseInt(this.datePipe.transform(Date.now(), 'yMMdd'));
         if (givenDate === today) {
             formattedDate = 'Today, ' + this.datePipe.transform(aDate, 'hh:mm a');
         } else {
-            let yesterday = Number.parseInt(this.datePipe.transform(Date.now() - 24 * 3600 * 1000, 'yMMdd'));
+            const yesterday = Number.parseInt(this.datePipe.transform(Date.now() - 24 * 3600 * 1000, 'yMMdd'));
             if (givenDate === yesterday) {
                 formattedDate = 'Yesterday, ' + this.datePipe.transform(aDate, 'hh:mm a');
             } else {

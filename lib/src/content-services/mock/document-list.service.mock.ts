@@ -30,8 +30,8 @@ import { PageNode } from './document-library.model.mock';
 export class DocumentListServiceMock extends DocumentListService {
 
     getFolderResult: NodePaging = new PageNode();
-    getFolderReject: boolean = false;
-    getFolderRejectError: string = 'Error';
+    getFolderReject = false;
+    getFolderRejectError = 'Error';
 
     constructor(
         settings?: SettingsService,

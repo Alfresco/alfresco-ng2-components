@@ -54,7 +54,7 @@ export class TaskDetailsModel implements TaskRepresentation {
     processDefinitionId: string;
     processDefinitionKey: string;
     processDefinitionName: string;
-    processDefinitionVersion: number = 0;
+    processDefinitionVersion = 0;
     processInstanceId: string;
     processInstanceName: string;
     processInstanceStartUserId: string;
@@ -98,11 +98,11 @@ export class TaskDetailsModel implements TaskRepresentation {
     }
 
     getFullName(): string {
-        let fullName: string = '';
+        let fullName = '';
 
         if (this.assignee) {
-            let firstName: string = this.assignee.firstName ? this.assignee.firstName : '';
-            let lastName: string = this.assignee.lastName ? this.assignee.lastName : '';
+            const firstName: string = this.assignee.firstName ? this.assignee.firstName : '';
+            const lastName: string = this.assignee.lastName ? this.assignee.lastName : '';
             fullName = `${firstName} ${lastName}`;
         }
 

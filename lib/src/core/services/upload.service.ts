@@ -28,9 +28,9 @@ export class UploadService {
 
     private queue: FileModel[] = [];
     private cache: { [key: string]: any } = {};
-    private totalComplete: number = 0;
-    private totalAborted: number = 0;
-    private totalError: number = 0;
+    private totalComplete = 0;
+    private totalAborted = 0;
+    private totalError = 0;
     private activeTask: Promise<any> = null;
     private excludedFileList: String[] = [];
 
@@ -101,7 +101,7 @@ export class UploadService {
      */
     uploadFilesInTheQueue(emitter: EventEmitter<any>): void {
         if (!this.activeTask) {
-            let file = this.queue.find(f => f.status === FileUploadStatus.Pending);
+            const file = this.queue.find(f => f.status === FileUploadStatus.Pending);
             if (file) {
                 this.onUploadStarting(file);
 
@@ -109,7 +109,7 @@ export class UploadService {
                 this.activeTask = promise;
                 this.cache[file.id] = promise;
 
-                let next = () => {
+                const next = () => {
                     this.activeTask = null;
                     setTimeout(() => this.uploadFilesInTheQueue(emitter), 100);
                 };
@@ -146,7 +146,7 @@ export class UploadService {
     }
 
     getUploadPromise(file: FileModel) {
-        let opts: any = {
+        const opts: any = {
                 renditions: 'doclib'
             };
 
@@ -167,7 +167,7 @@ export class UploadService {
 
     private beginUpload(file: FileModel, /* @deprecated */emitter: EventEmitter<any>): any {
 
-        let promise = this.getUploadPromise(file);
+        const promise = this.getUploadPromise(file);
 
         promise.on('progress', (progress: FileUploadProgress) => {
             this.onUploadProgress(file, progress);

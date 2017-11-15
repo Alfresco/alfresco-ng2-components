@@ -67,7 +67,7 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
     @Input('searchAutocomplete')
     searchPanel: SearchComponent;
 
-    private _panelOpen: boolean = false;
+    private _panelOpen = false;
     private closingActionsSubscription: Subscription;
     private escapeEventStream = new Subject<void>();
 
@@ -147,7 +147,7 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
             this.escapeEventStream.next();
             event.preventDefault();
         }else {
-            let isArrowKey = keyCode === UP_ARROW || keyCode === DOWN_ARROW;
+            const isArrowKey = keyCode === UP_ARROW || keyCode === DOWN_ARROW;
             if ( isArrowKey ) {
                 if ( !this.panelOpen ) {
                     this.openPanel();
@@ -158,7 +158,7 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
 
     handleInput(event: KeyboardEvent): void {
         if (document.activeElement === event.target) {
-            let inputValue: string = (event.target as HTMLInputElement).value;
+            const inputValue: string = (event.target as HTMLInputElement).value;
             this.onChange(inputValue);
             if (inputValue.length >= MIN_WORD_LENGTH_VALID) {
                 this.searchPanel.keyPressedStream.next(inputValue);
@@ -170,9 +170,9 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
     }
 
     private isPanelOptionClicked(event: MouseEvent) {
-        let isPanelOption: boolean = false;
+        let isPanelOption = false;
         if ( event ) {
-            let clickTarget = event.target as HTMLElement;
+            const clickTarget = event.target as HTMLElement;
             isPanelOption = !this.isNoResultOption(event) &&
                             !!this.searchPanel.panel &&
                             !!this.searchPanel.panel.nativeElement.contains(clickTarget);

@@ -32,7 +32,7 @@ export class VersionListComponent implements OnChanges {
 
     private versionsApi: VersionsApi;
     versions: any = [];
-    isLoading: boolean = true;
+    isLoading = true;
 
     @Input()
     id: string;

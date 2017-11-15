@@ -52,7 +52,7 @@ export class NodeDeleteDirective implements OnChanges {
     selection: MinimalNodeEntity[];
 
     @Input()
-    permanent: boolean = false;
+    permanent = false;
 
     @Output()
     delete: EventEmitter<any> = new EventEmitter();

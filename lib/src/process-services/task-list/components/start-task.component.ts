@@ -38,7 +38,7 @@ import { TaskListService } from './../services/tasklist.service';
 })
 export class StartTaskComponent implements OnInit {
 
-    public  FORMAT_DATE: string = 'DD/MM/YYYY';
+    public  FORMAT_DATE = 'DD/MM/YYYY';
 
     @Input()
     appId: number;
@@ -168,7 +168,7 @@ export class StartTaskComponent implements OnInit {
         this.dateError = false;
 
         if (newDateValue) {
-            let momentDate = moment(newDateValue, this.FORMAT_DATE, true);
+            const momentDate = moment(newDateValue, this.FORMAT_DATE, true);
             if (!momentDate.isValid()) {
                 this.dateError = true;
             }

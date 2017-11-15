@@ -26,7 +26,7 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
     files: File [];
 
     @Input('file-draggable')
-    enabled: boolean = true;
+    enabled = true;
 
     @Output()
     filesDropped: EventEmitter<File[]> = new EventEmitter<File[]>();
@@ -37,7 +37,7 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
     @Output()
     folderEntityDropped: EventEmitter<any> = new EventEmitter();
 
-    private cssClassName: string = 'file-draggable__input-focus';
+    private cssClassName = 'file-draggable__input-focus';
     private element: HTMLElement;
 
     constructor(el: ElementRef, private ngZone: NgZone) {
@@ -68,11 +68,11 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
         if (this.enabled && !event.defaultPrevented) {
             this.preventDefault(event);
 
-            let items = event.dataTransfer.items;
+            const items = event.dataTransfer.items;
             if (items) {
                 for (let i = 0; i < items.length; i++) {
                     if (typeof items[i].webkitGetAsEntry !== 'undefined') {
-                        let item = items[i].webkitGetAsEntry();
+                        const item = items[i].webkitGetAsEntry();
                         if (item) {
                             if (item.isFile) {
                                 this.filesEntityDropped.emit(item);
@@ -81,13 +81,13 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
                             }
                         }
                     } else {
-                        let files = FileUtils.toFileArray(event.dataTransfer.files);
+                        const files = FileUtils.toFileArray(event.dataTransfer.files);
                         this.filesDropped.emit(files);
                     }
                 }
             } else {
                 // safari or FF
-                let files = FileUtils.toFileArray(event.dataTransfer.files);
+                const files = FileUtils.toFileArray(event.dataTransfer.files);
                 this.filesDropped.emit(files);
             }
 

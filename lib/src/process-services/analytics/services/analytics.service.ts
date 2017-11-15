@@ -44,9 +44,9 @@ export class AnalyticsService {
     getReportList(appId: number): Observable<any> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.getReportList())
             .map((res: any) => {
-                let reports: ReportParametersModel[] = [];
+                const reports: ReportParametersModel[] = [];
                 res.forEach((report: ReportParametersModel) => {
-                    let reportModel = new ReportParametersModel(report);
+                    const reportModel = new ReportParametersModel(report);
                     if (this.isReportValid(appId, report)) {
                         reports.push(reportModel);
                     }
@@ -68,7 +68,7 @@ export class AnalyticsService {
     }
 
     private isReportValid(appId: number, report: ReportParametersModel) {
-        let isValid: boolean = true;
+        let isValid = true;
         if (appId && appId !== 0 && report.name.includes('Process definition overview')) {
             isValid = false;
         }
@@ -104,7 +104,7 @@ export class AnalyticsService {
     }
 
     getProcessStatusValues(): Observable<any> {
-        let paramOptions: ParameterValueModel[] = [];
+        const paramOptions: ParameterValueModel[] = [];
 
         paramOptions.push(new ParameterValueModel({id: 'All', name: 'All'}));
         paramOptions.push(new ParameterValueModel({id: 'Active', name: 'Active'}));
@@ -117,7 +117,7 @@ export class AnalyticsService {
     }
 
     getDateIntervalValues(): Observable<any> {
-        let paramOptions: ParameterValueModel[] = [];
+        const paramOptions: ParameterValueModel[] = [];
 
         paramOptions.push(new ParameterValueModel({id: 'byHour', name: 'By hour'}));
         paramOptions.push(new ParameterValueModel({id: 'byDay', name: 'By day'}));
@@ -132,7 +132,7 @@ export class AnalyticsService {
     }
 
     getMetricValues(): Observable<any> {
-        let paramOptions: ParameterValueModel[] = [];
+        const paramOptions: ParameterValueModel[] = [];
 
         paramOptions.push(new ParameterValueModel({id: 'totalCount', name: 'Number of times a step is executed'}));
         paramOptions.push(new ParameterValueModel({id: 'totalTime', name: 'Total time spent in a process step'}));
@@ -147,7 +147,7 @@ export class AnalyticsService {
     getProcessDefinitionsValuesNoApp(): Observable<any> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.getProcessDefinitions())
             .map((res: any) => {
-                let paramOptions: ParameterValueModel[] = [];
+                const paramOptions: ParameterValueModel[] = [];
                 res.forEach((opt) => {
                     paramOptions.push(new ParameterValueModel(opt));
                 });
@@ -156,10 +156,10 @@ export class AnalyticsService {
     }
 
     getProcessDefinitionsValues(appId: number): Observable<any> {
-        let options = {'appDefinitionId': appId};
+        const options = {'appDefinitionId': appId};
         return Observable.fromPromise(this.apiService.getInstance().activiti.processDefinitionsApi.getProcessDefinitions(options))
             .map((res: any) => {
-                let paramOptions: ParameterValueModel[] = [];
+                const paramOptions: ParameterValueModel[] = [];
                 res.data.forEach((opt) => {
                     paramOptions.push(new ParameterValueModel(opt));
                 });
@@ -170,7 +170,7 @@ export class AnalyticsService {
     getTasksByProcessDefinitionId(reportId: string, processDefinitionId: string): Observable<any> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.getTasksByProcessDefinitionId(reportId, processDefinitionId))
             .map((res: any) => {
-                let paramOptions: ParameterValueModel[] = [];
+                const paramOptions: ParameterValueModel[] = [];
                 res.forEach((opt) => {
                     paramOptions.push(new ParameterValueModel({id: opt, name: opt}));
                 });
@@ -181,7 +181,7 @@ export class AnalyticsService {
     getReportsByParams(reportId: number, paramsQuery: any): Observable<any> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.getReportsByParams(reportId, paramsQuery))
             .map((res: any) => {
-                let elements: Chart[] = [];
+                const elements: Chart[] = [];
                 res.elements.forEach((chartData) => {
                     if (chartData.type === 'pieChart') {
                         elements.push(new PieChart(chartData));

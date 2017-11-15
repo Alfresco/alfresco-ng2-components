@@ -39,7 +39,7 @@ export class ContentColumnListComponent {
      */
     registerColumn(column: DataColumn): boolean {
         if (this.documentList && column) {
-            let columns = this.documentList.data.getColumns();
+            const columns = this.documentList.data.getColumns();
             columns.push(column);
             return true;
         }

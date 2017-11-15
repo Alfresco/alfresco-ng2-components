@@ -31,7 +31,7 @@ export interface CardViewTextItemProperties extends CardViewItemProperties {
     multiline?: boolean;
 }
 export class CardViewTextItemModel extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
-    type: string = 'text';
+    type = 'text';
     multiline: boolean;
 
     constructor(obj: CardViewTextItemProperties) {

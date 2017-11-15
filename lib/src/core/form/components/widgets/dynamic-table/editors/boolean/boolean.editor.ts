@@ -39,7 +39,7 @@ export class BooleanEditorComponent {
     column: DynamicTableColumn;
 
     onValueChanged(row: DynamicTableRow, column: DynamicTableColumn, event: any) {
-        let value: boolean = (<HTMLInputElement> event).checked;
+        const value: boolean = (<HTMLInputElement> event).checked;
         row.value[column.id] = value;
     }
 

@@ -43,7 +43,7 @@ import { AnalyticsService } from '../services/analytics.service';
 })
 export class AnalyticsReportParametersComponent implements OnInit, OnChanges, OnDestroy, AfterContentChecked {
 
-    public static FORMAT_DATE_ACTIVITI: string = 'YYYY-MM-DD';
+    public static FORMAT_DATE_ACTIVITI = 'YYYY-MM-DD';
 
     @Input()
     appId: number;
@@ -52,7 +52,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     reportId: string;
 
     @Input()
-    hideComponent: boolean = false;
+    hideComponent = false;
 
     @Output()
     success = new EventEmitter();
@@ -87,7 +87,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
 
     action: string;
 
-    isEditable: boolean = false;
+    isEditable = false;
 
     reportName: string;
 
@@ -95,8 +95,8 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     private reportParamsSub;
     private paramOpts;
     private reportParamQuery: ReportQuery;
-    private hideParameters: boolean = true;
-    private formValidState: boolean = false;
+    private hideParameters = true;
+    private formValidState = false;
 
     constructor(private analyticsService: AnalyticsService,
                 private formBuilder: FormBuilder,
@@ -107,7 +107,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
 
     ngOnInit() {
         this.dropDownSub = this.onDropdownChanged.subscribe((field) => {
-            let paramDependOn: ReportParameterDetailsModel = this.reportParameters.definition.parameters.find(p => p.dependsOn === field.id);
+            const paramDependOn: ReportParameterDetailsModel = this.reportParameters.definition.parameters.find(p => p.dependsOn === field.id);
             if (paramDependOn) {
                 this.retrieveParameterOptions(this.reportParameters.definition.parameters, this.appId, this.reportId, field.value);
             }
@@ -126,19 +126,19 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         if (this.reportForm) {
             this.reportForm.reset();
         }
-        let reportId = changes['reportId'];
+        const reportId = changes['reportId'];
         if (reportId && reportId.currentValue) {
             this.getReportParams(reportId.currentValue);
         }
 
-        let appId = changes['appId'];
+        const appId = changes['appId'];
         if (appId && (appId.currentValue || appId.currentValue === null)) {
             this.getReportParams(this.reportId);
         }
     }
 
     private generateFormGroupFromParameter(parameters: ReportParameterDetailsModel[]) {
-        let formBuilderGroup: any = {};
+        const formBuilderGroup: any = {};
         parameters.forEach((param: ReportParameterDetailsModel) => {
             switch (param.type) {
                 case 'dateRange' :
@@ -257,7 +257,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     }
 
     convertFormValuesToReportParamQuery(values: any): ReportQuery {
-        let reportParamQuery: ReportQuery = new ReportQuery();
+        const reportParamQuery: ReportQuery = new ReportQuery();
         if (values.dateRange) {
             reportParamQuery.dateRange.startDate = this.convertMomentDate(values.dateRange.startDate);
             reportParamQuery.dateRange.endDate = this.convertMomentDate(values.dateRange.endDate);
@@ -351,7 +351,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     doExport(paramQuery: ReportQuery) {
         this.analyticsService.exportReportToCsv(this.reportId, paramQuery).subscribe(
             (data: any) => {
-                let blob: Blob = new Blob([data], {type: 'text/csv'});
+                const blob: Blob = new Blob([data], {type: 'text/csv'});
                 this.contentService.downloadBlob(blob, paramQuery.reportName + '.csv');
             });
     }

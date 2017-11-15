@@ -28,7 +28,7 @@ import { DynamicComponentModel } from '../services/dynamic-component-mapper.serv
 import { CardViewBaseItemModel, CardViewItemProperties } from './card-view-baseitem.model';
 
 export class CardViewMapItemModel extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
-    type: string = 'map';
+    type = 'map';
     value: Map<string, string>;
 
     constructor(obj: CardViewItemProperties) {

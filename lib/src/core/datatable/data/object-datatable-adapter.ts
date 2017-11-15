@@ -35,13 +35,13 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
     selectedRow: DataRow;
 
     static generateSchema(data: any[]) {
-        let schema = [];
+        const schema = [];
 
         if (data && data.length) {
-            let rowToExaminate = data[0];
+            const rowToExaminate = data[0];
 
             if (typeof rowToExaminate === 'object') {
-                for (let key in rowToExaminate) {
+                for (const key in rowToExaminate) {
                     if (rowToExaminate.hasOwnProperty(key)) {
                         schema.push({
                             type: 'text',
@@ -73,7 +73,7 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
             });
 
             // Sort by first sortable or just first column
-            let sortable = this._columns.filter(c => c.sortable);
+            const sortable = this._columns.filter(c => c.sortable);
             if (sortable.length > 0) {
                 this.sort(sortable[0].key, 'asc');
             }
@@ -105,7 +105,7 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
             throw new Error('Column not found');
         }
 
-        let value = row.getValue(col.key);
+        const value = row.getValue(col.key);
 
         if (col.type === 'date') {
             try {
@@ -169,7 +169,7 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
     }
 
     sort(key?: string, direction?: string): void {
-        let sorting = this._sorting || new DataSorting();
+        const sorting = this._sorting || new DataSorting();
         if (key) {
             sorting.key = key;
             sorting.direction = direction || 'asc';

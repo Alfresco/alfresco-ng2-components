@@ -27,8 +27,8 @@ import { ShareDataRow } from './share-data-row.model';
 
 export class ShareDataTableAdapter implements DataTableAdapter {
 
-    ERR_ROW_NOT_FOUND: string = 'Row not found';
-    ERR_COL_NOT_FOUND: string = 'Column not found';
+    ERR_ROW_NOT_FOUND = 'Row not found';
+    ERR_COL_NOT_FOUND = 'Column not found';
 
     private sorting: DataSorting;
     private rows: DataRow[];
@@ -38,7 +38,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     private filter: RowFilter;
     private imageResolver: ImageResolver;
 
-    thumbnails: boolean = false;
+    thumbnails = false;
     permissionsStyle: PermissionStyleModel[];
     selectedRow: DataRow;
 
@@ -75,8 +75,8 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         if (!col) {
             throw new Error(this.ERR_COL_NOT_FOUND);
         }
-        let dataRow: ShareDataRow = <ShareDataRow> row;
-        let value: any = row.getValue(col.key);
+        const dataRow: ShareDataRow = <ShareDataRow> row;
+        const value: any = row.getValue(col.key);
         if (dataRow.cache[col.key] !== undefined) {
             return dataRow.cache[col.key];
         }
@@ -94,7 +94,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         if (col.key === '$thumbnail') {
 
             if (this.imageResolver) {
-                let resolved = this.imageResolver(row, col);
+                const resolved = this.imageResolver(row, col);
                 if (resolved) {
                     return resolved;
                 }
@@ -125,7 +125,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         if (col.type === 'image') {
 
             if (this.imageResolver) {
-                let resolved = this.imageResolver(row, col);
+                const resolved = this.imageResolver(row, col);
                 if (resolved) {
                     return resolved;
                 }
@@ -161,7 +161,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     }
 
     sort(key?: string, direction?: string): void {
-        let sorting = this.sorting || new DataSorting();
+        const sorting = this.sorting || new DataSorting();
         if (key) {
             sorting.key = key;
             sorting.direction = direction || 'asc';
@@ -218,7 +218,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         let rows = [];
 
         if (page && page.list) {
-            let data = page.list.entries;
+            const data = page.list.entries;
             if (data && data.length > 0) {
                 rows = data.map(item => new ShareDataRow(item, this.documentListService, this.permissionsStyle));
 
@@ -228,11 +228,11 @@ export class ShareDataTableAdapter implements DataTableAdapter {
 
                 // Sort by first sortable or just first column
                 if (this.columns && this.columns.length > 0) {
-                    let sorting = this.getSorting();
+                    const sorting = this.getSorting();
                     if (sorting) {
                         this.sortRows(rows, sorting);
                     } else {
-                        let sortable = this.columns.filter(c => c.sortable);
+                        const sortable = this.columns.filter(c => c.sortable);
                         if (sortable.length > 0) {
                             this.sort(sortable[0].key, 'asc');
                         } else {

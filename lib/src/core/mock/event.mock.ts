@@ -18,7 +18,7 @@
 export class EventMock {
 
     static keyDown(key: any) {
-        let event: any = document.createEvent('Event');
+        const event: any = document.createEvent('Event');
         event.keyCode = key;
         event.initEvent('keydown');
         document.dispatchEvent(event);

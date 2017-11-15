@@ -128,7 +128,7 @@ export class ThumbnailService {
      * @returns {string} URL address.
      */
     public getDocumentThumbnailUrl(document: any): string {
-        let thumbnail = this.contentService.getDocumentThumbnailUrl(document);
+        const thumbnail = this.contentService.getDocumentThumbnailUrl(document);
         return thumbnail || this.DEFAULT_ICON;
     }
 
@@ -138,7 +138,7 @@ export class ThumbnailService {
      * @returns {string} URL SVG address.
      */
     public getMimeTypeIcon(mimeType: string): string {
-        let icon = this.mimeTypeIcons[mimeType];
+        const icon = this.mimeTypeIcons[mimeType];
         return (icon || this.DEFAULT_ICON);
     }
 

@@ -29,7 +29,7 @@ export class InitialUsernamePipe implements PipeTransform {
     transform(user: UserProcessModel, className: string = '', delimiter: string = ''): SafeHtml {
         let result: SafeHtml = '';
         if (user) {
-            let initialResult = this.getInitialUserName(user.firstName, user.lastName, delimiter);
+            const initialResult = this.getInitialUserName(user.firstName, user.lastName, delimiter);
             result = this.sanitized.bypassSecurityTrustHtml(`<div id="user-initials-image" class="${className}">${initialResult}</div>`);
         }
         return result;

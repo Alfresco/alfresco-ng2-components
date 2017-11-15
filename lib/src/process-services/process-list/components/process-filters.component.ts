@@ -48,7 +48,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
     appName: string;
 
     @Input()
-    showIcon: boolean = true;
+    showIcon = true;
 
     private filterObserver: Observer<ProcessInstanceFilterRepresentation>;
     filter$: Observable<ProcessInstanceFilterRepresentation>;
@@ -68,12 +68,12 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        let appId = changes['appId'];
+        const appId = changes['appId'];
         if (appId && (appId.currentValue || appId.currentValue === null)) {
             this.getFiltersByAppId(appId.currentValue);
             return;
         }
-        let appName = changes['appName'];
+        const appName = changes['appName'];
         if (appName && appName.currentValue) {
             this.getFiltersByAppName(appName.currentValue);
             return;

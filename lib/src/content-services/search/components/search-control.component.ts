@@ -41,22 +41,22 @@ import { Subject } from 'rxjs/Subject';
 export class SearchControlComponent implements OnInit, OnDestroy {
 
     @Input()
-    expandable: boolean = true;
+    expandable = true;
 
     @Input()
-    highlight: boolean = false;
+    highlight = false;
 
     @Input()
-    inputType: string = 'text';
+    inputType = 'text';
 
     @Input()
-    autocomplete: boolean = false;
+    autocomplete = false;
 
     @Input()
-    liveSearchEnabled: boolean = true;
+    liveSearchEnabled = true;
 
     @Input()
-    liveSearchRoot: string = '-root-';
+    liveSearchRoot = '-root-';
 
     @Input()
     liveSearchResultType: string = null;
@@ -65,7 +65,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     liveSearchResultSort: string = null;
 
     @Input()
-    liveSearchMaxResults: number = 5;
+    liveSearchMaxResults = 5;
 
     @Output()
     submit: EventEmitter<any> = new EventEmitter();
@@ -76,7 +76,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     @Output()
     optionClicked: EventEmitter<any> = new EventEmitter();
 
-    searchTerm: string = '';
+    searchTerm = '';
     subscriptAnimationState: string;
 
     private toggleSearch = new Subject<any>();
@@ -166,7 +166,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
   }
 
   private setupFocusEventHandlers() {
-      let focusEvents: Observable<FocusEvent> = this.focusSubject.asObservable()
+      const focusEvents: Observable<FocusEvent> = this.focusSubject.asObservable()
                                                     .distinctUntilChanged().debounceTime(50);
       focusEvents.filter(($event: any) => {
           return this.isSearchBarActive() && ($event.type === 'blur' ||  $event.type === 'focusout');

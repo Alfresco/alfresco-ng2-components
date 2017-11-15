@@ -62,7 +62,7 @@ export class Chart {
     }
 
     private getIconType(type: string): string {
-        let typeIcon: string = '';
+        let typeIcon = '';
         switch (type) {
             case 'pie':
                 typeIcon = 'pie_chart';
@@ -146,7 +146,7 @@ export class BarChart extends Chart {
         this.options.scales.yAxes[0].ticks.callback = this.yAxisTickFormatFunction(this.yAxisType);
         if (obj.values) {
             obj.values.forEach((params: any) => {
-                let dataValue = [];
+                const dataValue = [];
                 params.values.forEach((info: any) => {
                     info.forEach((value: any, index: any) => {
                         if (index % 2 === 0) {
@@ -184,7 +184,7 @@ export class BarChart extends Chart {
         return function (value) {
             if (yAxisType !== null && yAxisType !== undefined) {
                 if ('count' === yAxisType) {
-                    let label = '' + value;
+                    const label = '' + value;
                     if (label.indexOf('.') !== -1) {
                         return '';
                     }
@@ -229,7 +229,7 @@ export class TableChart extends Chart {
 
 export class DetailsTableChart extends TableChart {
     detailsTable: any;
-    showDetails: boolean = false;
+    showDetails = false;
 
     constructor(obj?: any) {
         super(obj);
@@ -293,7 +293,7 @@ export class PieChart extends Chart {
     }
 
     hasZeroValues(): boolean {
-        let isZeroValues: boolean = false;
+        let isZeroValues = false;
         if (this.hasData()) {
             isZeroValues = true;
             this.data.forEach((value) => {

@@ -23,9 +23,9 @@ import { FormModel } from '../components/widgets/core/form.model';
 @Injectable()
 export class EcmModelService {
 
-    public static MODEL_NAMESPACE: string = 'activitiForms';
-    public static MODEL_NAME: string = 'activitiFormsModel';
-    public static TYPE_MODEL: string = 'cm:folder';
+    public static MODEL_NAMESPACE = 'activitiForms';
+    public static MODEL_NAME = 'activitiFormsModel';
+    public static TYPE_MODEL = 'cm:folder';
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
@@ -148,7 +148,7 @@ export class EcmModelService {
     }
 
     public createEcmType(typeName: string, modelName: string, parentType: string): Observable<any> {
-        let name = this.cleanNameType(typeName);
+        const name = this.cleanNameType(typeName);
 
         return Observable.fromPromise(this.apiService.getInstance().core.customModelApi.createCustomType(modelName, name, parentType, typeName, ''))
             .map(this.toJson)
@@ -156,11 +156,11 @@ export class EcmModelService {
     }
 
     public addPropertyToAType(modelName: string, typeName: string, formFields: any) {
-        let name = this.cleanNameType(typeName);
+        const name = this.cleanNameType(typeName);
 
-        let properties = [];
+        const properties = [];
         if (formFields && formFields.values) {
-            for (let key in formFields.values) {
+            for (const key in formFields.values) {
                 if (key) {
                     properties.push({
                         name: key,

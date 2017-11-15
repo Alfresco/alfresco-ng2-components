@@ -44,7 +44,7 @@ export class NumberCellValidator implements CellValidator {
     validate(row: DynamicTableRow, column: DynamicTableColumn, summary?: DynamicRowValidationSummary): boolean {
 
         if (this.isSupported(column)) {
-            let value = row.value[column.id];
+            const value = row.value[column.id];
             if (value === null ||
                 value === undefined ||
                 value === '' ||

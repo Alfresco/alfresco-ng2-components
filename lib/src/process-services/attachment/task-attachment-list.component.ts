@@ -32,7 +32,7 @@ export class TaskAttachmentListComponent implements OnChanges {
     taskId: string;
 
     @Input()
-    disabled: boolean = false;
+    disabled = false;
 
     @Output()
     attachmentClick = new EventEmitter();
@@ -47,7 +47,7 @@ export class TaskAttachmentListComponent implements OnChanges {
     emptyListImageUrl: string = require('../assets/images/empty_doc_lib.svg');
 
     attachments: any[] = [];
-    isLoading: boolean = true;
+    isLoading = true;
 
     constructor(private activitiContentService: ProcessContentService,
                 private contentService: ContentService,
@@ -89,7 +89,7 @@ export class TaskAttachmentListComponent implements OnChanges {
             this.reset();
             this.activitiContentService.getTaskRelatedContent(taskId).subscribe(
                 (res: any) => {
-                    let attachList = [];
+                    const attachList = [];
                     res.data.forEach(content => {
                         attachList.push({
                             id: content.id,
@@ -129,17 +129,17 @@ export class TaskAttachmentListComponent implements OnChanges {
     }
 
     onShowRowActionsMenu(event: any) {
-        let viewAction = {
+        const viewAction = {
             title: 'ADF_TASK_LIST.MENU_ACTIONS.VIEW_CONTENT',
             name: 'view'
         };
 
-        let removeAction = {
+        const removeAction = {
             title: 'ADF_TASK_LIST.MENU_ACTIONS.REMOVE_CONTENT',
             name: 'remove'
         };
 
-        let downloadAction = {
+        const downloadAction = {
             title: 'ADF_TASK_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT',
             name: 'download'
         };
@@ -155,8 +155,8 @@ export class TaskAttachmentListComponent implements OnChanges {
     }
 
     onExecuteRowAction(event: any) {
-        let args = event.value;
-        let action = args.action;
+        const args = event.value;
+        const action = args.action;
         if (action.name === 'view') {
             this.emitDocumentContent(args.row.obj);
         } else if (action.name === 'remove') {
@@ -167,7 +167,7 @@ export class TaskAttachmentListComponent implements OnChanges {
     }
 
     openContent(event: any): void {
-        let content = event.value.obj;
+        const content = event.value.obj;
         this.emitDocumentContent(content);
     }
 

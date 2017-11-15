@@ -28,8 +28,8 @@ import { AnalyticsService } from '../services/analytics.service';
 })
 export class AnalyticsReportListComponent implements OnInit {
 
-    public static LAYOUT_LIST: string = 'LIST';
-    public static LAYOUT_GRID: string = 'GRID';
+    public static LAYOUT_LIST = 'LIST';
+    public static LAYOUT_GRID = 'GRID';
 
     @Input()
     layoutType: string = AnalyticsReportListComponent.LAYOUT_LIST;
@@ -38,7 +38,7 @@ export class AnalyticsReportListComponent implements OnInit {
     appId: number;
 
     @Input()
-    selectFirst: boolean = false;
+    selectFirst = false;
 
     @Output()
     reportClick: EventEmitter<ReportParametersModel> = new EventEmitter<ReportParametersModel>();
@@ -152,7 +152,7 @@ export class AnalyticsReportListComponent implements OnInit {
     }
 
     public selectReportByReportId(reportId) {
-        let reportFound = this.reports.find(report => report.id === reportId);
+        const reportFound = this.reports.find(report => report.id === reportId);
         if (reportFound) {
             this.currentReport = reportFound;
             this.reportClick.emit(reportFound);

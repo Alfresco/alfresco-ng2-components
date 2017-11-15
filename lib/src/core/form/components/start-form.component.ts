@@ -55,13 +55,13 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
     processId: string;
 
     @Input()
-    showOutcomeButtons: boolean = true;
+    showOutcomeButtons = true;
 
     @Input()
-    showRefreshButton: boolean = true;
+    showRefreshButton = true;
 
     @Input()
-    readOnlyForm: boolean = false;
+    readOnlyForm = false;
 
     @Output()
     outcomeClick: EventEmitter<any> = new EventEmitter<any>();
@@ -86,14 +86,14 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        let processDefinitionId = changes['processDefinitionId'];
+        const processDefinitionId = changes['processDefinitionId'];
         if (processDefinitionId && processDefinitionId.currentValue) {
             this.visibilityService.cleanProcessVariable();
             this.getStartFormDefinition(processDefinitionId.currentValue);
             return;
         }
 
-        let processId = changes['processId'];
+        const processId = changes['processId'];
         if (processId && processId.currentValue) {
             this.visibilityService.cleanProcessVariable();
             this.loadStartForm(processId.currentValue);

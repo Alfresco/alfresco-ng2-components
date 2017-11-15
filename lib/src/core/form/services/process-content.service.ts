@@ -23,8 +23,8 @@ import { Observable } from 'rxjs/Rx';
 @Injectable()
 export class ProcessContentService {
 
-    static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
-    static GENERIC_ERROR_MESSAGE: string = 'Server error';
+    static UNKNOWN_ERROR_MESSAGE = 'Unknown error';
+    static GENERIC_ERROR_MESSAGE = 'Server error';
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {

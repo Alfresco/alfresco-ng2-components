@@ -33,7 +33,7 @@ export class DiagramTooltipComponent implements AfterViewInit, OnDestroy {
     private targetElement: any;
     private boundMouseEnterHandler: EventListenerObject;
     private boundMouseLeaveAndScrollHandler: EventListenerObject;
-    public adf: string = 'adf';
+    public adf = 'adf';
 
     @ViewChild('tooltipContent') tooltipContent: ElementRef;
 
@@ -41,10 +41,10 @@ export class DiagramTooltipComponent implements AfterViewInit, OnDestroy {
     data: any;
 
     @Input()
-    position: string = 'bottom';
+    position = 'bottom';
 
     @Input()
-    strategy: string = 'cursor';
+    strategy = 'cursor';
 
     /**
      * Set up event listeners for the target element (defined in the data.id)
@@ -107,9 +107,9 @@ export class DiagramTooltipComponent implements AfterViewInit, OnDestroy {
             props = {top: (event.pageY - 150), left: event.pageX , width: event.layerX, height: 50};
         }
 
-        let top = props.top + (props.height / 2);
-        let marginLeft = -1 * (this.tooltipElement.offsetWidth / 2);
-        let marginTop = -1 * (this.tooltipElement.offsetHeight / 2);
+        const top = props.top + (props.height / 2);
+        const marginLeft = -1 * (this.tooltipElement.offsetWidth / 2);
+        const marginTop = -1 * (this.tooltipElement.offsetHeight / 2);
         let left = props.left + (props.width / 2);
 
         if (this.position === POSITION.LEFT || this.position === POSITION.RIGHT) {

@@ -16,12 +16,12 @@
  */
 
 export class PermissionsEnum extends String {
-    static DELETE: string = 'delete';
-    static UPDATE: string = 'update';
-    static CREATE: string = 'create';
-    static UPDATEPERMISSIONS: string = 'updatePermissions';
-    static NOT_DELETE: string = '!delete';
-    static NOT_UPDATE: string = '!update';
-    static NOT_CREATE: string = '!create';
-    static NOT_UPDATEPERMISSIONS: string = '!updatePermissions';
+    static DELETE = 'delete';
+    static UPDATE = 'update';
+    static CREATE = 'create';
+    static UPDATEPERMISSIONS = 'updatePermissions';
+    static NOT_DELETE = '!delete';
+    static NOT_UPDATE = '!update';
+    static NOT_CREATE = '!create';
+    static NOT_UPDATEPERMISSIONS = '!updatePermissions';
 }

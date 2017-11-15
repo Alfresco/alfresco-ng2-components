@@ -34,7 +34,7 @@ export class RatingService {
     }
 
     postRating(nodeId: string, ratingType: any, vote: any): any {
-        let ratingBody: RatingBody = {
+        const ratingBody: RatingBody = {
             'id': ratingType,
             'myRating': vote
         };

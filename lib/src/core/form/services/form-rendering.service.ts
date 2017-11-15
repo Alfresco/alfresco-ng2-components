@@ -71,7 +71,7 @@ export class FormRenderingService extends DynamicComponentMapper {
 
         this.types['upload'] = (field: FormFieldModel): Type<{}> => {
             if (field) {
-                let params = field.params;
+                const params = field.params;
                 if (params && params.link) {
                     return AttachWidgetComponent;
                 }

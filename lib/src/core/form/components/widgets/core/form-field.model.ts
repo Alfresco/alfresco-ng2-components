@@ -31,9 +31,9 @@ import { FormModel } from './form.model';
 export class FormFieldModel extends FormWidgetModel {
 
     private _value: string;
-    private _readOnly: boolean = false;
-    private _isValid: boolean = true;
-    private _required: boolean = false;
+    private _readOnly = false;
+    private _isValid = true;
+    private _required = false;
 
     readonly defaultDateFormat: string = 'D-M-YYYY';
 
@@ -44,11 +44,11 @@ export class FormFieldModel extends FormWidgetModel {
     type: string;
     overrideId: boolean;
     tab: string;
-    rowspan: number = 1;
-    colspan: number = 1;
+    rowspan = 1;
+    colspan = 1;
     placeholder: string = null;
-    minLength: number = 0;
-    maxLength: number = 0;
+    minLength = 0;
+    maxLength = 0;
     minValue: string;
     maxValue: string;
     regexPattern: string;
@@ -63,14 +63,14 @@ export class FormFieldModel extends FormWidgetModel {
     params: FormFieldMetadata = {};
     hyperlinkUrl: string;
     displayText: string;
-    isVisible: boolean = true;
+    isVisible = true;
     visibilityCondition: WidgetVisibilityModel = null;
-    enableFractions: boolean = false;
+    enableFractions = false;
     currency: string = null;
     dateDisplayFormat: string = this.dateDisplayFormat || this.defaultDateFormat;
 
     // container model members
-    numberOfColumns: number = 1;
+    numberOfColumns = 1;
     fields: FormFieldModel[] = [];
     columns: ContainerColumnModel[] = [];
 
@@ -120,8 +120,8 @@ export class FormFieldModel extends FormWidgetModel {
     validate(): boolean {
         this.validationSummary = new ErrorMessageModel();
 
-        let validators = this.form.fieldValidators || [];
-        for (let validator of validators) {
+        const validators = this.form.fieldValidators || [];
+        for (const validator of validators) {
             if (!validator.validate(this)) {
                 this._isValid = false;
                 return this._isValid;
@@ -217,7 +217,7 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     private getVariablesValue(variableName: string, form: FormModel) {
-        let variable = form.json.variables.find((currentVariable) => {
+        const variable = form.json.variables.find((currentVariable) => {
             return currentVariable.name === variableName;
         });
 
@@ -255,11 +255,11 @@ export class FormFieldModel extends FormWidgetModel {
         this.colspan = 1;
 
         if (json.fields) {
-            for (let currentField in json.fields) {
+            for (const currentField in json.fields) {
                 if (json.fields.hasOwnProperty(currentField)) {
-                    let col = new ContainerColumnModel();
+                    const col = new ContainerColumnModel();
 
-                    let fields: FormFieldModel[] = (json.fields[currentField] || []).map(f => new FormFieldModel(form, f));
+                    const fields: FormFieldModel[] = (json.fields[currentField] || []).map(f => new FormFieldModel(form, f));
                     col.fields = fields;
                     col.rowspan = json.fields[currentField].length;
 
@@ -283,9 +283,9 @@ export class FormFieldModel extends FormWidgetModel {
          */
         if (json.type === FormFieldTypes.DROPDOWN) {
             if (json.hasEmptyValue && json.options) {
-                let options = <FormFieldOption[]> json.options || [];
+                const options = <FormFieldOption[]> json.options || [];
                 if (options.length > 0) {
-                    let emptyOption = json.options[0];
+                    const emptyOption = json.options[0];
                     if (value === '' || value === emptyOption.id || value === emptyOption.name) {
                         value = emptyOption.id;
                     }
@@ -301,7 +301,7 @@ export class FormFieldModel extends FormWidgetModel {
             // Activiti has a bug with default radio button value where initial selection passed as `name` value
             // so try resolving current one with a fallback to first entry via name or id
             // TODO: needs to be reported and fixed at Activiti side
-            let entry: FormFieldOption[] = this.options.filter(opt => opt.id === value || opt.name === value);
+            const entry: FormFieldOption[] = this.options.filter(opt => opt.id === value || opt.name === value);
             if (entry.length > 0) {
                 value = entry[0].id;
             }
@@ -342,7 +342,7 @@ export class FormFieldModel extends FormWidgetModel {
                 if (this.value === 'empty' || this.value === '') {
                     this.form.values[this.id] = {};
                 } else {
-                    let entry: FormFieldOption[] = this.options.filter(opt => opt.id === this.value);
+                    const entry: FormFieldOption[] = this.options.filter(opt => opt.id === this.value);
                     if (entry.length > 0) {
                         this.form.values[this.id] = entry[0];
                     }
@@ -353,7 +353,7 @@ export class FormFieldModel extends FormWidgetModel {
                  This is needed due to Activiti issue related to reading radio button values as value string
                  but saving back as object: { id: <id>, name: <name> }
                  */
-                let rbEntry: FormFieldOption[] = this.options.filter(opt => opt.id === this.value);
+                const rbEntry: FormFieldOption[] = this.options.filter(opt => opt.id === this.value);
                 if (rbEntry.length > 0) {
                     this.form.values[this.id] = rbEntry[0];
                 }
@@ -366,7 +366,7 @@ export class FormFieldModel extends FormWidgetModel {
                 }
                 break;
             case FormFieldTypes.TYPEAHEAD:
-                let taEntry: FormFieldOption[] = this.options.filter(opt => opt.id === this.value);
+                const taEntry: FormFieldOption[] = this.options.filter(opt => opt.id === this.value);
                 if (taEntry.length > 0) {
                     this.form.values[this.id] = taEntry[0];
                 } else if (this.options.length > 0) {
@@ -374,7 +374,7 @@ export class FormFieldModel extends FormWidgetModel {
                 }
                 break;
             case FormFieldTypes.DATE:
-                let dateValue = moment(this.value, this.dateDisplayFormat, true);
+                const dateValue = moment(this.value, this.dateDisplayFormat, true);
                 if (dateValue && dateValue.isValid()) {
                     this.form.values[this.id] = `${dateValue.format('YYYY-MM-DD')}T00:00:00.000Z`;
                 } else {
@@ -410,7 +410,7 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     getOptionName(): string {
-        let option: FormFieldOption = this.options.find(opt => opt.id === this.value);
+        const option: FormFieldOption = this.options.find(opt => opt.id === this.value);
         return option ? option.name : null;
     }
 

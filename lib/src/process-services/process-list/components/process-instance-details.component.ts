@@ -42,10 +42,10 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
     tasksList: ProcessInstanceTasksComponent;
 
     @Input()
-    showTitle: boolean = true;
+    showTitle = true;
 
     @Input()
-    showRefreshButton: boolean = true;
+    showRefreshButton = true;
 
     @Output()
     processCancelled: EventEmitter<any> = new EventEmitter<any>();
@@ -71,7 +71,7 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        let processInstanceId = changes['processInstanceId'];
+        const processInstanceId = changes['processInstanceId'];
         if (processInstanceId && !processInstanceId.currentValue) {
             this.reset();
             return;
@@ -131,7 +131,7 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
     }
 
     getFormatDate(value, format: string) {
-        let datePipe = new DatePipe('en-US');
+        const datePipe = new DatePipe('en-US');
         try {
             return datePipe.transform(value, format);
         } catch (err) {

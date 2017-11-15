@@ -33,7 +33,7 @@ export class NodeRestoreDirective {
     selection: DeletedNodeEntry[];
 
     @Input()
-    location: string = '';
+    location = '';
 
     @Output()
     restore: EventEmitter<any> = new EventEmitter();

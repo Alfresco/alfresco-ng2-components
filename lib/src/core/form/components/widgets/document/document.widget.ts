@@ -28,7 +28,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
 export class DocumentWidgetComponent extends WidgetComponent implements OnInit {
 
     fileId: string = null;
-    hasFile: boolean = false;
+    hasFile = false;
 
     constructor(public formService: FormService) {
          super(formService);

@@ -24,7 +24,7 @@ import { FileInfo, FileUtils } from '../utils/file-utils';
 export class UploadDirective implements OnInit, OnDestroy {
 
     @Input('adf-upload')
-    enabled: boolean = true;
+    enabled = true;
 
     @Input('adf-upload-data')
     data: any;
@@ -41,9 +41,9 @@ export class UploadDirective implements OnInit, OnDestroy {
     @Input()
     directory: boolean;
 
-    isDragging: boolean = false;
+    isDragging = false;
 
-    private cssClassName: string = 'adf-upload__dragging';
+    private cssClassName = 'adf-upload__dragging';
     private upload: HTMLInputElement;
     private element: HTMLElement;
 
@@ -141,7 +141,7 @@ export class UploadDirective implements OnInit, OnDestroy {
 
     onUploadFiles(files: FileInfo[]) {
         if (this.enabled && files.length > 0) {
-            let e = new CustomEvent('upload-files', {
+            const e = new CustomEvent('upload-files', {
                 detail: {
                     sender: this,
                     data: this.data,
@@ -189,7 +189,7 @@ export class UploadDirective implements OnInit, OnDestroy {
                 if (items) {
                     for (let i = 0; i < items.length; i++) {
                         if (typeof items[i].webkitGetAsEntry !== 'undefined') {
-                            let item = items[i].webkitGetAsEntry();
+                            const item = items[i].webkitGetAsEntry();
                             if (item) {
                                 if (item.isFile) {
                                     iterations.push(Promise.resolve(<FileInfo> {
@@ -213,7 +213,7 @@ export class UploadDirective implements OnInit, OnDestroy {
                     }
                 } else {
                     // safari or FF
-                    let files = FileUtils
+                    const files = FileUtils
                         .toFileArray(dataTransfer.files)
                         .map(file => <FileInfo> {
                             entry: null,

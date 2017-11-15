@@ -210,7 +210,7 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
     }
 
     fromIso8601(iso8601String: string): Moment | null {
-        let d = moment(iso8601String, moment.ISO_8601).locale(this.locale);
+        const d = moment(iso8601String, moment.ISO_8601).locale(this.locale);
         return this.isValid(d) ? d : null;
     }
 

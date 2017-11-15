@@ -62,7 +62,7 @@ export class ContainerWidgetComponent extends WidgetComponent implements OnInit,
         while (rowContainsElement) {
             rowContainsElement = false;
             for (let i = 0; i < this.content.columns.length; i++ ) {
-                let field = this.content.columns[i].fields[rowIndex];
+                const field = this.content.columns[i].fields[rowIndex];
                 if (field) {
                     rowContainsElement = true;
                 }

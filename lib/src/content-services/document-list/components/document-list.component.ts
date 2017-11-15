@@ -64,9 +64,9 @@ export enum PaginationStrategy {
 })
 export class DocumentListComponent implements OnInit, OnChanges, AfterContentInit {
 
-    static SINGLE_CLICK_NAVIGATION: string = 'click';
-    static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
-    static DEFAULT_PAGE_SIZE: number = 20;
+    static SINGLE_CLICK_NAVIGATION = 'click';
+    static DOUBLE_CLICK_NAVIGATION = 'dblclick';
+    static DEFAULT_PAGE_SIZE = 20;
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
@@ -74,34 +74,34 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     permissionsStyle: PermissionStyleModel[] = [];
 
     @Input()
-    locationFormat: string = '/';
+    locationFormat = '/';
 
     @Input()
-    navigate: boolean = true;
+    navigate = true;
 
     @Input()
     navigationMode: string = DocumentListComponent.DOUBLE_CLICK_NAVIGATION; // click|dblclick
 
     @Input()
-    thumbnails: boolean = false;
+    thumbnails = false;
 
     @Input()
-    selectionMode: string = 'single'; // null|single|multiple
+    selectionMode = 'single'; // null|single|multiple
 
     @Input()
-    multiselect: boolean = false;
+    multiselect = false;
 
     @Input()
-    enablePagination: boolean = true;
+    enablePagination = true;
 
     @Input()
-    contentActions: boolean = false;
+    contentActions = false;
 
     @Input()
-    contentActionsPosition: string = 'right'; // left|right
+    contentActionsPosition = 'right'; // left|right
 
     @Input()
-    contextMenuActions: boolean = false;
+    contextMenuActions = false;
 
     @Input()
     pageSize: number = DocumentListComponent.DEFAULT_PAGE_SIZE;
@@ -110,7 +110,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     emptyFolderImageUrl: string = require('../../assets/images/empty_doc_lib.svg');
 
     @Input()
-    allowDropFiles: boolean = false;
+    allowDropFiles = false;
 
     @Input()
     sorting: string[];
@@ -122,7 +122,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     rowStyleClass: string;
 
     @Input()
-    loading: boolean = false;
+    loading = false;
 
     @Input()
     paginationStrategy: PaginationStrategy = PaginationStrategy.Finite;
@@ -130,11 +130,11 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     @Input()
     supportedPageSizes: number[];
 
-    infiniteLoading: boolean = false;
-    noPermission: boolean = false;
+    infiniteLoading = false;
+    noPermission = false;
 
     selection = new Array<MinimalNodeEntity>();
-    skipCount: number = 0;
+    skipCount = 0;
     pagination: Pagination;
 
     @Input()
@@ -197,7 +197,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     getContextActions(node: MinimalNodeEntity) {
         if (node && node.entry) {
-            let actions = this.getNodeActions(node);
+            const actions = this.getNodeActions(node);
             if (actions && actions.length > 0) {
                 return actions.map((currentAction: ContentActionModel) => {
                     return {
@@ -265,7 +265,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             this.data.setColumns(schema);
         }
 
-        let columns = this.data.getColumns();
+        const columns = this.data.getColumns();
         if (!columns || columns.length === 0) {
             this.setupDefaultColumns(this.currentFolderId);
         }
@@ -360,8 +360,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             }
 
             if (target) {
-                let ltarget = target.toLowerCase();
-                let actionsByTarget = this.actions.filter(entry => {
+                const ltarget = target.toLowerCase();
+                const actionsByTarget = this.actions.filter(entry => {
                     return entry.target.toLowerCase() === ltarget;
                 }).map(action => new ContentActionModel(action));
 
@@ -379,8 +379,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     checkPermission(node: any, action: ContentActionModel): ContentActionModel {
         if (action.permission) {
             if (this.hasPermissions(node)) {
-                let permissions = node.entry.allowableOperations;
-                let findPermission = permissions.find(permission => permission === action.permission);
+                const permissions = node.entry.allowableOperations;
+                const findPermission = permissions.find(permission => permission === action.permission);
                 if (!findPermission && action.disableWithNoPermission === true) {
                     action.disabled = true;
                 }
@@ -443,7 +443,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             this.loading = true;
         }
 
-        let nodeId = this.folderNode ? this.folderNode.id : this.currentFolderId;
+        const nodeId = this.folderNode ? this.folderNode.id : this.currentFolderId;
         if (nodeId) {
             this.loadFolderNodesByFolderNodeId(nodeId, this.pageSize, this.skipCount, merge).catch(err => this.error.emit(err));
         }
@@ -571,7 +571,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
         this.apiService.peopleApi.getSiteMembership('-me-', options)
             .then((result: SitePaging) => {
-                let page: NodePaging = {
+                const page: NodePaging = {
                     list: {
                         entries: result.list.entries
                             .map(({ entry: { site } }: any) => ({
@@ -596,7 +596,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
         this.apiService.favoritesApi.getFavorites('-me-', options)
             .then((result: NodePaging) => {
-                let page: NodePaging = {
+                const page: NodePaging = {
                     list: {
                         entries: result.list.entries
                             .map(({ entry: { target } }: any) => ({
@@ -768,8 +768,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     onShowRowContextMenu(event: DataCellEvent) {
         if (this.contextMenuActions) {
-            let args = event.value;
-            let node = (<ShareDataRow> args.row).node;
+            const args = event.value;
+            const node = (<ShareDataRow> args.row).node;
             if (node) {
                 args.actions = this.getContextActions(node) || [];
             }
@@ -778,8 +778,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     onShowRowActionsMenu(event: DataCellEvent) {
         if (this.contentActions) {
-            let args = event.value;
-            let node = (<ShareDataRow> args.row).node;
+            const args = event.value;
+            const node = (<ShareDataRow> args.row).node;
             if (node) {
                 args.actions = this.getNodeActions(node) || [];
             }
@@ -788,9 +788,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     onExecuteRowAction(event: DataRowActionEvent) {
         if (this.contentActions) {
-            let args = event.value;
-            let node = (<ShareDataRow> args.row).node;
-            let action = (<ContentActionModel> args.action);
+            const args = event.value;
+            const node = (<ShareDataRow> args.row).node;
+            const action = (<ContentActionModel> args.action);
             this.executeContentAction(node, action);
         }
     }
@@ -865,9 +865,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     hasCurrentNodePermission(permission: string): boolean {
-        let hasPermission: boolean = false;
+        let hasPermission = false;
         if (this.currentNodeAllowableOperations.length > 0) {
-            let permFound = this.currentNodeAllowableOperations.find(element => element === permission);
+            const permFound = this.currentNodeAllowableOperations.find(element => element === permission);
             hasPermission = permFound ? true : false;
         }
         return hasPermission;

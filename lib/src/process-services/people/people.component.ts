@@ -33,15 +33,15 @@ export class PeopleComponent implements OnInit, AfterViewInit {
     people: UserProcessModel[] = [];
 
     @Input()
-    taskId: string = '';
+    taskId = '';
 
     @Input()
-    readOnly: boolean = false;
+    readOnly = false;
 
     @ViewChild(PeopleSearchComponent)
     peopleSearch: PeopleSearchComponent;
 
-    showAssignment: boolean = false;
+    showAssignment = false;
 
     private peopleSearchObserver: Observer<UserProcessModel[]>;
     peopleSearch$: Observable<UserProcessModel[]>;

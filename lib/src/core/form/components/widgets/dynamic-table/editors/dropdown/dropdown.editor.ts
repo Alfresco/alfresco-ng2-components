@@ -49,7 +49,7 @@ export class DropdownEditorComponent implements OnInit {
     }
 
     ngOnInit() {
-        let field = this.table.field;
+        const field = this.table.field;
         if (field) {
             if (this.column.optionType === 'rest') {
                 if (this.table.form && this.table.form.taskId) {

@@ -44,11 +44,11 @@ export const baseHost = {
 })
 export class WidgetComponent implements AfterViewInit {
 
-    static DEFAULT_HYPERLINK_URL: string = '#';
-    static DEFAULT_HYPERLINK_SCHEME: string = 'http://';
+    static DEFAULT_HYPERLINK_URL = '#';
+    static DEFAULT_HYPERLINK_SCHEME = 'http://';
 
     @Input()
-    readOnly: boolean = false;
+    readOnly = false;
 
     @Input()
     field: FormFieldModel;

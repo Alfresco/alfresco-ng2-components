@@ -39,7 +39,7 @@ export class ImgViewerComponent implements OnChanges {
     constructor(private contentService: ContentService) {}
 
     ngOnChanges(changes: SimpleChanges) {
-        let blobFile = changes['blobFile'];
+        const blobFile = changes['blobFile'];
         if (blobFile && blobFile.currentValue) {
             this.urlFile = this.contentService.createTrustedUrl(this.blobFile);
             return;

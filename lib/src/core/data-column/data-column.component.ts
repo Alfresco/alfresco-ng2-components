@@ -29,16 +29,16 @@ export class DataColumnComponent implements OnInit {
     key: string;
 
     @Input()
-    type: string = 'text';
+    type = 'text';
 
     @Input()
     format: string;
 
     @Input()
-    sortable: boolean = true;
+    sortable = true;
 
     @Input()
-    title: string = '';
+    title = '';
 
     @ContentChild(TemplateRef)
     template: any;

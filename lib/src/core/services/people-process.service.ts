@@ -30,7 +30,7 @@ export class PeopleProcessService {
     }
 
     getWorkflowUsers(taskId?: string, searchWord?: string): Observable<UserProcessModel[]> {
-        let option = { excludeTaskId: taskId, filter: searchWord };
+        const option = { excludeTaskId: taskId, filter: searchWord };
         return Observable.fromPromise(this.getWorkflowUserApi(option))
             .map((response: any) => <UserProcessModel[]> response.data || [])
             .catch(err => this.handleError(err));
@@ -41,13 +41,13 @@ export class PeopleProcessService {
     }
 
     involveUserWithTask(taskId: string, idToInvolve: string): Observable<UserProcessModel[]> {
-        let node = {userId: idToInvolve};
+        const node = {userId: idToInvolve};
         return Observable.fromPromise(this.involveUserToTaskApi(taskId, node))
             .catch(err => this.handleError(err));
     }
 
     removeInvolvedUser(taskId: string, idToRemove: string): Observable<UserProcessModel[]> {
-        let node = {userId: idToRemove};
+        const node = {userId: idToRemove};
         return Observable.fromPromise(this.removeInvolvedUserFromTaskApi(taskId, node))
             .catch(err => this.handleError(err));
     }

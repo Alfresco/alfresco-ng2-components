@@ -42,7 +42,7 @@ export class DocumentActionsService {
 
     getHandler(key: string): ContentActionHandler {
         if (key) {
-            let lkey = key.toLowerCase();
+            const lkey = key.toLowerCase();
             return this.handlers[lkey] || null;
         }
         return null;
@@ -50,7 +50,7 @@ export class DocumentActionsService {
 
     setHandler(key: string, handler: ContentActionHandler): boolean {
         if (key) {
-            let lkey = key.toLowerCase();
+            const lkey = key.toLowerCase();
             this.handlers[lkey] = handler;
             return true;
         }
@@ -70,7 +70,7 @@ export class DocumentActionsService {
 
     private download(obj: any): Observable<boolean> {
         if (this.canExecuteAction(obj) && this.contentService) {
-            let link = document.createElement('a');
+            const link = document.createElement('a');
             document.body.appendChild(link);
             link.setAttribute('download', 'download');
             link.href = this.contentService.getContentUrl(obj);

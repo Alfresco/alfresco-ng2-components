@@ -139,9 +139,9 @@ export let errorJson = {
     @ViewChild('search')
     search: SearchComponent;
 
-    message: string = '';
+    message = '';
     searchedWord= '';
-    maxResults: number = 5;
+    maxResults = 5;
 
     constructor() {
     }

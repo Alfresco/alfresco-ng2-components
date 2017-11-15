@@ -20,7 +20,7 @@ import { TaskDetailsModel } from './task-details.model';
 export class TaskDetailsEvent {
 
     private _value: TaskDetailsModel;
-    private _defaultPrevented: boolean = false;
+    private _defaultPrevented = false;
 
     get value(): TaskDetailsModel {
         return this._value;

@@ -34,7 +34,7 @@ export class ContentWidgetComponent implements OnChanges {
     id: string;
 
     @Input()
-    showDocumentContent: boolean = true;
+    showDocumentContent = true;
 
     @Output()
     contentClick = new EventEmitter();

@@ -38,7 +38,7 @@ export class LocationCellComponent extends DataTableCellComponent implements OnI
     link: any[];
 
     @Input()
-    displayText: string = '';
+    displayText = '';
 
     /** @override */
     ngOnInit() {

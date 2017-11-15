@@ -20,8 +20,8 @@ import { PermissionsEnum } from '@alfresco/core';
 export class PermissionStyleModel {
     css: string;
     permission: PermissionsEnum;
-    isFolder: boolean = true;
-    isFile: boolean = true;
+    isFolder = true;
+    isFile = true;
 
     constructor(css: string, permission: PermissionsEnum, isFile: boolean = true, isFolder: boolean = true) {
         this.css = css;

@@ -53,22 +53,22 @@ export class WebscriptComponent implements OnChanges {
     scriptArgs: any;
 
     @Input()
-    showData: boolean = true;
+    showData = true;
 
     @Input()
-    contextRoot: string = 'alfresco';
+    contextRoot = 'alfresco';
 
     @Input()
-    servicePath: string = 'service';
+    servicePath = 'service';
 
     @Input()
-    contentType: string = 'TEXT';
+    contentType = 'TEXT';
 
     @Output()
     success = new EventEmitter();
 
     data: any = undefined;
-    showError: boolean = false;
+    showError = false;
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
@@ -108,7 +108,7 @@ export class WebscriptComponent implements OnChanges {
      * @retutns the data as datatable
      */
     showDataAsDataTable(data: any) {
-        let datatableData: any = null;
+        const datatableData: any = null;
         try {
 
             if (!data.schema) {

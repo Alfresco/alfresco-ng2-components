@@ -26,7 +26,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class DropdownSitesComponent implements OnInit {
 
     @Input()
-    hideMyFiles: boolean = false;
+    hideMyFiles = false;
 
     @Output()
     change: EventEmitter<SiteModel> = new EventEmitter();

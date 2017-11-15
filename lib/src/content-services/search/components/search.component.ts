@@ -58,19 +58,19 @@ export class SearchComponent implements AfterContentInit, OnChanges {
     displayWith: ((value: any) => string) | null = null;
 
     @Input()
-    maxResults: number = 20;
+    maxResults = 20;
 
     @Input()
     resultSort: string = null;
 
     @Input()
-    rootNodeId: string = '-root-';
+    rootNodeId = '-root-';
 
     @Input()
     resultType: string = null;
 
     @Input()
-    searchTerm: string = '';
+    searchTerm = '';
 
     @Input('class')
     set classList(classList: string) {
@@ -86,7 +86,7 @@ export class SearchComponent implements AfterContentInit, OnChanges {
     @Output()
     error: EventEmitter<any> = new EventEmitter();
 
-    showPanel: boolean = false;
+    showPanel = false;
     results: NodePaging;
 
     get isOpen(): boolean {
@@ -97,7 +97,7 @@ export class SearchComponent implements AfterContentInit, OnChanges {
         this._isOpen = value;
     }
 
-    _isOpen: boolean = false;
+    _isOpen = false;
 
     keyPressedStream: Subject<string> = new Subject();
 
@@ -141,7 +141,7 @@ export class SearchComponent implements AfterContentInit, OnChanges {
     }
 
     private displaySearchResults(searchTerm) {
-        let searchOpts: SearchOptions = {
+        const searchOpts: SearchOptions = {
             include: ['path', 'allowableOperations'],
             rootNodeId: this.rootNodeId,
             nodeType: this.resultType,

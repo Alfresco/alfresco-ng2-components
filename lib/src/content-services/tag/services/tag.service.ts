@@ -43,11 +43,11 @@ export class TagService {
     }
 
     addTag(nodeId: string, tagName: string): any {
-        let alfrescoApi: any = this.apiService.getInstance();
-        let tagBody = new alfrescoApi.core.TagBody();
+        const alfrescoApi: any = this.apiService.getInstance();
+        const tagBody = new alfrescoApi.core.TagBody();
         tagBody.tag = tagName;
 
-        let promiseAdd = Observable.fromPromise(this.apiService.getInstance().core.tagsApi.addTag(nodeId, tagBody));
+        const promiseAdd = Observable.fromPromise(this.apiService.getInstance().core.tagsApi.addTag(nodeId, tagBody));
 
         promiseAdd.subscribe((data) => {
             this.refresh.emit(data);
@@ -59,7 +59,7 @@ export class TagService {
     }
 
     removeTag(nodeId: string, tag: string): any {
-        let promiseRemove = Observable.fromPromise(this.apiService.getInstance().core.tagsApi.removeTag(nodeId, tag));
+        const promiseRemove = Observable.fromPromise(this.apiService.getInstance().core.tagsApi.removeTag(nodeId, tag));
 
         promiseRemove.subscribe((data) => {
             this.refresh.emit(data);

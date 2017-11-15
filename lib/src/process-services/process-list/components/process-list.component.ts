@@ -66,7 +66,7 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     error: EventEmitter<any> = new EventEmitter<any>();
 
     currentInstanceId: string;
-    isLoading: boolean = true;
+    isLoading = true;
     layoutPresets = {};
 
     constructor(private processService: ProcessService,
@@ -111,13 +111,13 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     }
 
     private isPropertyChanged(changes: SimpleChanges): boolean {
-        let changed: boolean = false;
+        let changed = false;
 
-        let appId = changes['appId'];
-        let processDefinitionKey = changes['processDefinitionKey'];
-        let state = changes['state'];
-        let sort = changes['sort'];
-        let name = changes['name'];
+        const appId = changes['appId'];
+        const processDefinitionKey = changes['processDefinitionKey'];
+        const state = changes['state'];
+        const sort = changes['sort'];
+        const name = changes['name'];
 
         if (appId && appId.currentValue) {
             changed = true;
@@ -143,7 +143,7 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
         this.processService.getProcessInstances(requestNode, this.processDefinitionKey)
             .subscribe(
                 (response) => {
-                    let instancesRow = this.createDataRow(response);
+                    const instancesRow = this.createDataRow(response);
                     this.renderInstances(instancesRow);
                     this.selectFirst();
                     this.success.emit(response);
@@ -161,7 +161,7 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
      * @returns {ObjectDataRow[]}
      */
     private createDataRow(instances: any[]): ObjectDataRow[] {
-        let instancesRows: ObjectDataRow[] = [];
+        const instancesRows: ObjectDataRow[] = [];
         instances.forEach((row) => {
             instancesRows.push(new ObjectDataRow(row));
         });
@@ -186,10 +186,10 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
         if (!this.sort) {
             return;
         }
-        let sortingParams: string[] = this.sort.split('-');
+        const sortingParams: string[] = this.sort.split('-');
         if (sortingParams.length === 2) {
-            let sortColumn = sortingParams[0] === 'created' ? 'started' : sortingParams[0];
-            let sortOrder = sortingParams[1];
+            const sortColumn = sortingParams[0] === 'created' ? 'started' : sortingParams[0];
+            const sortOrder = sortingParams[1];
             this.data.setSorting(new DataSorting(sortColumn, sortOrder));
         }
     }
@@ -199,7 +199,7 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
      */
     selectFirst() {
         if (!this.isListEmpty()) {
-            let row = this.data.getRows()[0];
+            const row = this.data.getRows()[0];
             row.isSelected = true;
             this.data.selectedRow = row;
             this.currentInstanceId = row.getValue('id');
@@ -233,7 +233,7 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
      * @param event
      */
     onRowClick(event: DataRowEvent) {
-        let item = event;
+        const item = event;
         this.currentInstanceId = item.value.getValue('id');
         this.rowClick.emit(this.currentInstanceId);
     }
@@ -273,7 +273,7 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     }
 
     getFormatDate(value, format: string) {
-        let datePipe = new DatePipe('en-US');
+        const datePipe = new DatePipe('en-US');
         try {
             return datePipe.transform(value, format);
         } catch (err) {
@@ -282,7 +282,7 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     }
 
     private createRequestNode() {
-        let requestNode = {
+        const requestNode = {
             appDefinitionId: this.appId,
             state: this.state,
             sort: this.sort

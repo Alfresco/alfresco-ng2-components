@@ -24,13 +24,13 @@ import { HighlightTransformService, HightlightTransformResult } from '../service
 export class HighlightDirective {
 
     @Input('adf-highlight-selector')
-    selector: string = '';
+    selector = '';
 
     @Input('adf-highlight')
-    search: string = '';
+    search = '';
 
     @Input('adf-highlight-class')
-    classToApply: string = 'adf-highlight';
+    classToApply = 'adf-highlight';
 
     constructor(
         private el: ElementRef,

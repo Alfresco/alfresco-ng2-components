@@ -39,16 +39,16 @@ export class UserInfoComponent implements OnInit {
     bpmBackgroundImage: string = require('../../assets/images/bpm-background.png');
 
     @Input()
-    menuPositionX: string = 'after';
+    menuPositionX = 'after';
 
     @Input()
-    menuPositionY: string = 'below';
+    menuPositionY = 'below';
 
     @Input()
-    showName: boolean = true;
+    showName = true;
 
     @Input()
-    namePosition: string = 'right';
+    namePosition = 'right';
 
     ecmUser: EcmUserModel;
     bpmUser: BpmUserModel;

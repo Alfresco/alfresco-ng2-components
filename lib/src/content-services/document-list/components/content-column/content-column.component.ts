@@ -33,16 +33,16 @@ export class ContentColumnComponent implements OnInit, AfterContentInit, DataCol
     key: string;
 
     @Input()
-    type: string = 'text';
+    type = 'text';
 
     @Input()
     format: string;
 
     @Input()
-    sortable: boolean = false;
+    sortable = false;
 
     @Input()
-    title: string = '';
+    title = '';
 
     @ContentChild(TemplateRef)
     template: any;

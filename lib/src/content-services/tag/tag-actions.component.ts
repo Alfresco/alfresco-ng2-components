@@ -52,7 +52,7 @@ export class TagActionsComponent implements OnChanges {
 
     errorMsg: string;
 
-    disableAddTag: boolean = true;
+    disableAddTag = true;
 
     constructor(private tagService: TagService, private translateService: TranslationService) {
         this.tagService.refresh.subscribe(() => {

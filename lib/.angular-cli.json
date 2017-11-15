@@ -17,7 +17,7 @@
         { "glob": "process-services/assets", "input": "./", "output": "./assets" }
       ],
       "index": "index.html",
-      "main": "main.ts",
+      "main": "core/index.ts",
       "polyfills": "polyfills.ts",
       "test": "core/test.ts",
       "tsconfig": "tsconfig.app.json",
@@ -46,7 +46,7 @@
         { "glob": "process-services/assets", "input": "./", "output": "./assets" }
       ],
       "index": "index.html",
-      "main": "/main.ts",
+      "main": "content-services/index.ts",
       "polyfills": "polyfills.ts",
       "test": "content-services/test.ts",
       "tsconfig": "tsconfig.app.json",
@@ -75,7 +75,7 @@
         { "glob": "process-services/assets", "input": "./", "output": "./assets" }
       ],
       "index": "index.html",
-      "main": "main.ts",
+      "main": "process-services/index.ts",
       "polyfills": "polyfills.ts",
       "test": "process-services/test.ts",
       "tsconfig": "tsconfig.app.json",

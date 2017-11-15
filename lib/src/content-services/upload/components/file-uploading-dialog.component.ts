@@ -31,14 +31,14 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     uploadList: FileUploadingListComponent;
 
     @Input()
-    position: string = 'right';
+    position = 'right';
 
     filesUploadingList: FileModel[] = [];
-    isDialogActive: boolean = false;
-    totalCompleted: number = 0;
-    totalErrors: number = 0;
-    isDialogMinimized: boolean = false;
-    isConfirmation: boolean = false;
+    isDialogActive = false;
+    totalCompleted = 0;
+    totalErrors = 0;
+    isDialogMinimized = false;
+    isConfirmation = false;
 
     private listSubscription: Subscription;
     private counterSubscription: Subscription;
@@ -82,7 +82,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
 
         this.uploadService.fileDeleted.subscribe((objId) => {
             if (this.filesUploadingList) {
-                let file = this.filesUploadingList.find((item) => {
+                const file = this.filesUploadingList.find((item) => {
                     return item.data.entry.id === objId;
                 });
                 if (file) {

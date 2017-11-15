@@ -16,12 +16,12 @@
  */
 
 export class LogLevelsEnum extends Number {
-    static TRACE: number = 5;
-    static DEBUG: number = 4;
-    static INFO: number = 3;
-    static WARN: number = 2;
-    static ERROR: number = 1;
-    static SILENT: number = 0;
+    static TRACE = 5;
+    static DEBUG = 4;
+    static INFO = 3;
+    static WARN = 2;
+    static ERROR = 1;
+    static SILENT = 0;
 }
 
 export let logLevels: any[] = [

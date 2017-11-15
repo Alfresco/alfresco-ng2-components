@@ -37,7 +37,7 @@ export class PeopleListComponent implements AfterViewInit, AfterContentInit {
     users: UserProcessModel[];
 
     @Input()
-    actions: boolean = false;
+    actions = false;
 
     @Output()
     clickRow: EventEmitter<UserProcessModel> = new EventEmitter<UserProcessModel>();
@@ -65,7 +65,7 @@ export class PeopleListComponent implements AfterViewInit, AfterContentInit {
 
     onShowRowActionsMenu(event: any) {
 
-        let removeAction = {
+        const removeAction = {
             title: 'Remove',
             name: 'remove'
         };
@@ -76,8 +76,8 @@ export class PeopleListComponent implements AfterViewInit, AfterContentInit {
     }
 
     onExecuteRowAction(event: any) {
-        let args = event.value;
-        let action = args.action;
+        const args = event.value;
+        const action = args.action;
         this.clickAction.emit(new UserEventModel({type: action.name, value: args.row.obj}));
     }
 }

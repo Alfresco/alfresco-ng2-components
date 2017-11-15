@@ -55,43 +55,43 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     errorDialog: TemplateRef<any>;
 
     @Input()
-    debugMode: boolean = false;
+    debugMode = false;
 
     @Input()
     taskId: string;
 
     @Input()
-    showNextTask: boolean = true;
+    showNextTask = true;
 
     @Input()
-    showHeader: boolean = true;
+    showHeader = true;
 
     @Input()
-    showHeaderContent: boolean = true;
+    showHeaderContent = true;
 
     @Input()
-    showInvolvePeople: boolean = true;
+    showInvolvePeople = true;
 
     @Input()
-    showComments: boolean = true;
+    showComments = true;
 
     @Input()
-    showChecklist: boolean = true;
+    showChecklist = true;
 
     @Input()
-    showFormTitle: boolean = true;
+    showFormTitle = true;
 
     @Input()
-    showFormCompleteButton: boolean = true;
+    showFormCompleteButton = true;
 
     @Input()
-    showFormSaveButton: boolean = true;
+    showFormSaveButton = true;
 
     @Input()
-    readOnlyForm: boolean = false;
+    readOnlyForm = false;
 
     @Input()
-    showFormRefreshButton: boolean = true;
+    showFormRefreshButton = true;
 
     @Input()
     fieldValidators: FormFieldValidator[] = [];
@@ -130,7 +130,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
     noTaskDetailsTemplateComponent: TemplateRef<any>;
 
-    showAssignee: boolean = false;
+    showAssignee = false;
 
     private peopleSearchObserver: Observer<UserProcessModel[]>;
     public errorDialogRef: MatDialogRef<TemplateRef<any>>;
@@ -156,7 +156,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        let taskId = changes.taskId;
+        const taskId = changes.taskId;
         this.showAssignee = false;
 
         if (taskId && !taskId.currentValue) {
@@ -225,7 +225,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
                         this.taskDetails.name = 'No name';
                     }
 
-                    let endDate: any = res.endDate;
+                    const endDate: any = res.endDate;
                     this.readOnlyForm = this.readOnlyForm ? this.readOnlyForm : !!(endDate && !isNaN(endDate.getTime()));
                     if (this.taskDetails && this.taskDetails.involvedPeople) {
                         this.taskDetails.involvedPeople.forEach((user) => {
@@ -250,7 +250,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
      * @param processDefinitionId
      */
     private loadNextTask(processInstanceId: string, processDefinitionId: string): void {
-        let requestNode = new TaskQueryRequestRepresentationModel(
+        const requestNode = new TaskQueryRequestRepresentationModel(
             {
                 processInstanceId: processInstanceId,
                 processDefinitionId: processDefinitionId

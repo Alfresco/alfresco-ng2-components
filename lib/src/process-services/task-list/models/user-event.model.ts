@@ -23,7 +23,7 @@
  * @returns {UserEventModel} .
  */
 export class UserEventModel {
-    type: string = '';
+    type = '';
     value: any = {};
 
     constructor(obj?: any) {

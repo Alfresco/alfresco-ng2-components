@@ -42,12 +42,12 @@ export class TxtViewerComponent implements OnChanges {
 
     ngOnChanges(changes: SimpleChanges): Promise<any> {
 
-        let blobFile = changes['blobFile'];
+        const blobFile = changes['blobFile'];
         if (blobFile && blobFile.currentValue) {
             return this.readBlob(blobFile.currentValue);
         }
 
-        let urlFile = changes['urlFile'];
+        const urlFile = changes['urlFile'];
         if (urlFile && urlFile.currentValue) {
             return this.getUrlContent(urlFile.currentValue);
         }
@@ -70,7 +70,7 @@ export class TxtViewerComponent implements OnChanges {
 
     private readBlob(blob: Blob): Promise<any> {
         return new Promise((resolve, reject) => {
-            let reader = new FileReader();
+            const reader = new FileReader();
 
             reader.onload = () => {
                 this.content = reader.result;

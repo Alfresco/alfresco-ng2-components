@@ -58,7 +58,7 @@ export class AttachWidgetComponent extends WidgetComponent implements OnInit {
 
     ngOnInit() {
         if (this.field) {
-            let params = this.field.params;
+            const params = this.field.params;
 
             if (params &&
                 params.fileSource &&
@@ -73,7 +73,7 @@ export class AttachWidgetComponent extends WidgetComponent implements OnInit {
 
     setupFileBrowser() {
         if (this.field) {
-            let params = this.field.params;
+            const params = this.field.params;
             this.selectedFolderPathId = params.fileSource.selectedFolder.pathId;
             this.selectedFolderAccountId = params.fileSource.selectedFolder.accountId;
         }

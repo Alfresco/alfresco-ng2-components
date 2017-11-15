@@ -32,8 +32,8 @@ import { EcmModelService } from './ecm-model.service';
 @Injectable()
 export class FormService {
 
-    static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
-    static GENERIC_ERROR_MESSAGE: string = 'Server error';
+    static UNKNOWN_ERROR_MESSAGE = 'Unknown error';
+    static GENERIC_ERROR_MESSAGE = 'Server error';
 
     formLoaded = new Subject<FormEvent>();
     formDataRefreshed = new Subject<FormEvent>();
@@ -86,7 +86,7 @@ export class FormService {
 
     parseForm(json: any, data?: FormValues, readOnly: boolean = false): FormModel {
         if (json) {
-            let form = new FormModel(json, data, readOnly, this);
+            const form = new FormModel(json, data, readOnly, this);
             if (!json.fields) {
                 form.outcomes = [
                     new FormOutcomeModel(form, {
@@ -111,7 +111,7 @@ export class FormService {
                 form => {
                     this.ecmModelService.searchEcmType(formName, EcmModelService.MODEL_NAME).subscribe(
                         customType => {
-                            let formDefinitionModel = new FormDefinitionModel(form.id, form.name, form.lastUpdatedByFullName, form.lastUpdated, customType.entry.properties);
+                            const formDefinitionModel = new FormDefinitionModel(form.id, form.name, form.lastUpdatedByFullName, form.lastUpdated, customType.entry.properties);
                             this.addFieldsToAForm(form.id, formDefinitionModel).subscribe(formData => {
                                 observer.next(formData);
                                 observer.complete();
@@ -128,7 +128,7 @@ export class FormService {
      * @returns {Observable<any>}
      */
     createForm(formName: string): Observable<any> {
-        let dataModel = {
+        const dataModel = {
             name: formName,
             description: '',
             modelType: 2,
@@ -163,7 +163,7 @@ export class FormService {
      * @returns {Observable<any>}
      */
     searchFrom(name: string): Observable<any> {
-        let opts = {
+        const opts = {
             'modelType': 2
         };
 
@@ -181,7 +181,7 @@ export class FormService {
      * @returns {Observable<any>}
      */
     getForms(): Observable<any> {
-        let opts = {
+        const opts = {
             'modelType': 2
         };
 
@@ -234,7 +234,7 @@ export class FormService {
      * @returns {Observable<any>}
      */
     saveTaskForm(taskId: string, formValues: FormValues): Observable<any> {
-        let body = JSON.stringify({values: formValues});
+        const body = JSON.stringify({values: formValues});
 
         return Observable.fromPromise(this.taskApi.saveTaskForm(taskId, body))
             .catch(err => this.handleError(err));
@@ -248,11 +248,11 @@ export class FormService {
      * @returns {Observable<any>}
      */
     completeTaskForm(taskId: string, formValues: FormValues, outcome?: string): Observable<any> {
-        let data: any = {values: formValues};
+        const data: any = {values: formValues};
         if (outcome) {
             data.outcome = outcome;
         }
-        let body = JSON.stringify(data);
+        const body = JSON.stringify(data);
 
         return Observable.fromPromise(this.taskApi.completeTaskForm(taskId, body))
             .catch(err => this.handleError(err));
@@ -286,7 +286,7 @@ export class FormService {
      * @returns {Promise<T>|Promise<ErrorObservable>}
      */
     getFormDefinitionByName(name: string): Observable<any> {
-        let opts = {
+        const opts = {
             'filter': 'myReusableForms',
             'filterText': name,
             'modelType': 2
@@ -348,7 +348,7 @@ export class FormService {
     }
 
     getWorkflowUsers(filter: string, groupId?: string): Observable<UserProcessModel[]> {
-        let option: any = {filter: filter};
+        const option: any = {filter: filter};
         if (groupId) {
             option.groupId = groupId;
         }
@@ -364,7 +364,7 @@ export class FormService {
     }
 
     getWorkflowGroups(filter: string, groupId?: string): Observable<GroupModel[]> {
-        let option: any = {filter: filter};
+        const option: any = {filter: filter};
         if (groupId) {
             option.groupId = groupId;
         }

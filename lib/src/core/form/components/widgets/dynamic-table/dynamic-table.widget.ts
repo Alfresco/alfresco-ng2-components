@@ -39,7 +39,7 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
 
     content: DynamicTableModel;
 
-    editMode: boolean = false;
+    editMode = false;
     editRow: DynamicTableRow = null;
 
     private selectArrayCode = [32, 0, 13];
@@ -62,7 +62,7 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
     forceFocusOnAddButton() {
         if (this.content) {
             this.cd.detectChanges();
-            let buttonAddRow = <HTMLButtonElement> this.elementRef.nativeElement.querySelector('#' + this.content.id + '-add-row');
+            const buttonAddRow = <HTMLButtonElement> this.elementRef.nativeElement.querySelector('#' + this.content.id + '-add-row');
             if (this.isDynamicTableReady(buttonAddRow)) {
                 buttonAddRow.focus();
             }
@@ -151,7 +151,7 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
 
     getCellValue(row: DynamicTableRow, column: DynamicTableColumn): any {
         if (this.content) {
-            let result = this.content.getCellValue(row, column);
+            const result = this.content.getCellValue(row, column);
             if (column.type === 'Amount') {
                 return (column.amountCurrency || '$') + ' ' + (result || 0);
             }
@@ -163,7 +163,7 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
     onSaveChanges() {
         if (this.content) {
             if (this.editRow.isNew) {
-                let row = this.copyRow(this.editRow);
+                const row = this.copyRow(this.editRow);
                 this.content.selectedRow = null;
                 this.content.addRow(row);
                 this.editRow.isNew = false;

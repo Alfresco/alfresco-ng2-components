@@ -40,7 +40,7 @@ export class ContentNodeSelectorService {
 
         searchTerm = searchTerm + '*';
 
-        let searchOpts: SearchOptions = {
+        const searchOpts: SearchOptions = {
             include: ['path', 'allowableOperations'],
             skipCount,
             rootNodeId,

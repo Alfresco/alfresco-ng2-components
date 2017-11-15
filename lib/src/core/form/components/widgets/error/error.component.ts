@@ -49,7 +49,7 @@ export class ErrorWidgetComponent extends WidgetComponent implements OnChanges {
 
     translateParameters: any = null;
 
-    _subscriptAnimationState: string = '';
+    _subscriptAnimationState = '';
 
     constructor(public formService: FormService) {
         super(formService);

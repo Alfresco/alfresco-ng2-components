@@ -40,7 +40,7 @@ export class CardViewItemDispatcherComponent implements OnChanges {
     @ViewChild(CardViewContentProxyDirective)
     private content: CardViewContentProxyDirective;
 
-    private loaded: boolean = false;
+    private loaded = false;
     private componentReference: any = null;
 
     public ngOnInit;

@@ -40,13 +40,13 @@ export class DiagramComponent implements OnChanges {
     metricColor: any;
 
     @Input()
-    metricType: string = '';
+    metricType = '';
 
     @Input()
-    width: number = 1000;
+    width = 1000;
 
     @Input()
-    height: number = 500;
+    height = 500;
 
     @Output()
     success = new EventEmitter();
@@ -54,8 +54,8 @@ export class DiagramComponent implements OnChanges {
     @Output()
     error = new EventEmitter();
 
-    PADDING_WIDTH: number = 60;
-    PADDING_HEIGHT: number = 60;
+    PADDING_WIDTH = 60;
+    PADDING_HEIGHT = 60;
 
     diagram: DiagramModel;
 
@@ -105,9 +105,9 @@ export class DiagramComponent implements OnChanges {
     }
 
     setMetricValueToDiagramElement(diagram: DiagramModel, metrics: any, metricType: string) {
-        for (let key in metrics) {
+        for (const key in metrics) {
             if (metrics.hasOwnProperty(key)) {
-                let foundElement: DiagramElementModel = diagram.elements.find(
+                const foundElement: DiagramElementModel = diagram.elements.find(
                     (element: DiagramElementModel) => element.id === key);
                 if (foundElement) {
                     foundElement.value = metrics[key];

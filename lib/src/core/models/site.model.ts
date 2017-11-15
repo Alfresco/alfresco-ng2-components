@@ -71,10 +71,10 @@ export class SiteContentsModel {
 export class SiteMembersModel {
     role: string;
     firstName: string;
-    emailNotificationsEnabled: boolean = false;
+    emailNotificationsEnabled = false;
     company: any;
     id: string;
-    enable: boolean = false;
+    enable = false;
     email: string;
 
     constructor(obj?: any) {

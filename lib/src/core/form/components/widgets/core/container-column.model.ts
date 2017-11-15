@@ -21,10 +21,10 @@ import { FormFieldModel } from './form-field.model';
 
 export class ContainerColumnModel {
 
-    size: number = 12;
+    size = 12;
     fields: FormFieldModel[] = [];
-    colspan: number = 1;
-    rowspan: number = 1;
+    colspan = 1;
+    rowspan = 1;
 
     hasFields(): boolean {
         return this.fields && this.fields.length > 0;

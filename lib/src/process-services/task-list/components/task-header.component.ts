@@ -44,7 +44,7 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
     private currentUserId: number;
 
     properties: CardViewItem [];
-    inEdit: boolean = false;
+    inEdit = false;
 
     constructor(private activitiTaskService: TaskListService,
                 private bpmUserService: BpmUserService,

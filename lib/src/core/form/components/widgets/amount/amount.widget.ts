@@ -30,7 +30,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
 })
 export class AmountWidgetComponent extends WidgetComponent implements OnInit {
 
-    static DEFAULT_CURRENCY: string = '$';
+    static DEFAULT_CURRENCY = '$';
 
     currency: string = AmountWidgetComponent.DEFAULT_CURRENCY;
 

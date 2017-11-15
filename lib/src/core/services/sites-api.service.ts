@@ -45,7 +45,7 @@ export class SitesApiService {
     }
 
     deleteSite(siteId: string, permanentFlag: boolean = true): any {
-        let options: any = {};
+        const options: any = {};
         options.permanent = permanentFlag;
         return Observable.fromPromise(this.apiService.getInstance().core.sitesApi.deleteSite(siteId, options)
             .catch(this.handleError));
@@ -65,7 +65,7 @@ export class SitesApiService {
     }
 
     private convertToModel(response: any) {
-        let convertedList: SiteModel[] = [];
+        const convertedList: SiteModel[] = [];
         if (response &&
             response.list &&
             response.list.entries &&

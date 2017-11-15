@@ -19,7 +19,7 @@ import { Observable } from 'rxjs/Rx';
 
 // TODO: should be extending AuthenticationService
 export class AuthenticationMock /*extends AuthenticationService*/ {
-    private redirectUrl: string = '';
+    private redirectUrl = '';
 
     setRedirectUrl(url: string) {
         this.redirectUrl = url;

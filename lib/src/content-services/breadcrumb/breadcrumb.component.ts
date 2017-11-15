@@ -87,7 +87,7 @@ export class BreadcrumbComponent implements OnChanges {
     }
 
     private getElementPosition(route: PathElementEntity[], nodeId: string): number {
-        let result: number = -1;
+        let result = -1;
 
         if (route && route.length > 0 && nodeId) {
             result = route.findIndex(el => el.id === nodeId);

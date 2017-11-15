@@ -19,8 +19,8 @@ import { ContentService } from '@alfresco/core';
 import { Directive, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ProcessService } from './../services/process.service';
 
-const JSON_FORMAT: string = 'json';
-const PDF_FORMAT: string = 'pdf';
+const JSON_FORMAT = 'json';
+const PDF_FORMAT = 'pdf';
 
 @Directive({
     selector: 'button[adf-process-audit]',
@@ -35,13 +35,13 @@ export class ProcessAuditDirective implements OnChanges {
     processId: string;
 
     @Input()
-    fileName: string = 'Audit';
+    fileName = 'Audit';
 
     @Input()
-    format: string = 'pdf';
+    format = 'pdf';
 
     @Input()
-    download: boolean = true;
+    download = true;
 
     @Output()
     clicked: EventEmitter<any> = new EventEmitter<any>();

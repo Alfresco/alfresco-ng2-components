@@ -42,19 +42,19 @@ enum LoginSteps {
 })
 export class LoginComponent implements OnInit {
 
-    isPasswordShow: boolean = false;
+    isPasswordShow = false;
 
     @Input()
-    showRememberMe: boolean = true;
+    showRememberMe = true;
 
     @Input()
-    showLoginActions: boolean = true;
+    showLoginActions = true;
 
     @Input()
-    needHelpLink: string = '';
+    needHelpLink = '';
 
     @Input()
-    registerLink: string = '';
+    registerLink = '';
 
     @Input()
     logoImageUrl: string = require('../../assets/images/alfresco-logo.svg');
@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit {
     backgroundImageUrl: string = require('../../assets/images/background.svg');
 
     @Input()
-    copyrightText: string = '\u00A9 2016 Alfresco Software, Inc. All Rights Reserved.';
+    copyrightText = '\u00A9 2016 Alfresco Software, Inc. All Rights Reserved.';
 
     @Input()
     providers: string;
@@ -87,13 +87,13 @@ export class LoginComponent implements OnInit {
     executeSubmit = new EventEmitter<LoginSubmitEvent>();
 
     form: FormGroup;
-    isError: boolean = false;
+    isError = false;
     errorMsg: string;
     actualLoginStep: any = LoginSteps.Landing;
     LoginSteps: any = LoginSteps;
-    rememberMe: boolean = true;
+    rememberMe = true;
     formError: { [id: string]: string };
-    minLength: number = 2;
+    minLength = 2;
     footerTemplate: TemplateRef<any>;
     headerTemplate: TemplateRef<any>;
     data: any;
@@ -159,13 +159,13 @@ export class LoginComponent implements OnInit {
      */
     onValueChanged(data: any) {
         this.disableError();
-        for (let field in this.formError) {
+        for (const field in this.formError) {
             if (field) {
                 this.formError[field] = '';
-                let hasError = (this.form.controls[field].errors && data[field] !== '') ||
+                const hasError = (this.form.controls[field].errors && data[field] !== '') ||
                     (this.form.controls[field].dirty && !this.form.controls[field].valid);
                 if (hasError) {
-                    for (let key in this.form.controls[field].errors) {
+                    for (const key in this.form.controls[field].errors) {
                         if (key) {
                             this.formError[field] += this._message[field][key] + '';
                         }

@@ -33,9 +33,9 @@ export class LikeComponent implements OnInit {
     @Output()
     changeVote = new EventEmitter();
 
-    likesCounter: number = 0;
-    ratingType: string = 'likes';
-    isLike: boolean = false;
+    likesCounter = 0;
+    ratingType = 'likes';
+    isLike = false;
 
     constructor(private ratingService: RatingService) {}
 

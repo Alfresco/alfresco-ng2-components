@@ -25,8 +25,8 @@ import { AccordionComponent } from './accordion.component';
     encapsulation: ViewEncapsulation.None
 })
 export class AccordionGroupComponent implements OnDestroy {
-    private _isOpen: boolean = false;
-    private _isSelected: boolean = false;
+    private _isOpen = false;
+    private _isSelected = false;
 
     @ViewChild('contentWrapper')
     contentWrapper: any;
@@ -41,7 +41,7 @@ export class AccordionGroupComponent implements OnDestroy {
     headingIconTooltip: string;
 
     @Input()
-    hasAccordionIcon: boolean = true;
+    hasAccordionIcon = true;
 
     @Output()
     headingClick: EventEmitter<any> = new EventEmitter<any>();

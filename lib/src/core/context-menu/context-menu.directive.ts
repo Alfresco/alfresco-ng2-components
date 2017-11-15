@@ -26,7 +26,7 @@ export class ContextMenuDirective {
     links: any[];
 
     @Input('context-menu-enabled')
-    enabled: boolean = false;
+    enabled = false;
 
     constructor(private _contextMenuService: ContextMenuService) {
     }

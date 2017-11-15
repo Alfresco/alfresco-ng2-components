@@ -43,15 +43,15 @@ export class ContentNodeSelectorComponent implements OnInit {
 
     nodes: NodePaging | null = null;
     siteId: null | string;
-    searchTerm: string = '';
-    showingSearchResults: boolean = false;
-    loadingSearchResults: boolean = false;
-    inDialog: boolean = false;
+    searchTerm = '';
+    showingSearchResults = false;
+    loadingSearchResults = false;
+    inDialog = false;
     chosenNode: MinimalNodeEntryEntity | null = null;
     folderIdToShow: string | null = null;
     paginationStrategy: PaginationStrategy;
     pagination: Pagination;
-    skipCount: number = 0;
+    skipCount = 0;
 
     @Input()
     title: string;
@@ -66,7 +66,7 @@ export class ContentNodeSelectorComponent implements OnInit {
     imageResolver: ImageResolver = null;
 
     @Input()
-    pageSize: number = 10;
+    pageSize = 10;
 
     @Output()
     select: EventEmitter<MinimalNodeEntryEntity[]> = new EventEmitter<MinimalNodeEntryEntity[]>();

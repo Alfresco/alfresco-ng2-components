@@ -40,7 +40,7 @@ export class NumberWidgetAanlyticsComponent extends WidgetComponent implements O
     public controllerName: string;
 
     @Input()
-    required: boolean = false;
+    required = false;
 
     constructor(public elementRef: ElementRef) {
         super();

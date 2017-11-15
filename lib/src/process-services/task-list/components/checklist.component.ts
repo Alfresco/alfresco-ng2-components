@@ -33,7 +33,7 @@ export class ChecklistComponent implements OnInit, OnChanges {
     taskId: string;
 
     @Input()
-    readOnly: boolean = false;
+    readOnly = false;
 
     @Input()
     assignee: string;
@@ -76,7 +76,7 @@ export class ChecklistComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        let taskId = changes['taskId'];
+        const taskId = changes['taskId'];
         if (taskId && taskId.currentValue) {
             this.getTaskChecklist(taskId.currentValue);
             return;
@@ -106,7 +106,7 @@ export class ChecklistComponent implements OnInit, OnChanges {
     }
 
     public add() {
-        let newTask = new TaskDetailsModel({
+        const newTask = new TaskDetailsModel({
             name: this.taskName,
             parentTaskId: this.taskId,
             assignee: { id: this.assignee }

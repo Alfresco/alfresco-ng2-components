@@ -38,7 +38,7 @@ import { PaginationQueryParams } from './pagination-query-params.interface';
 })
 export class PaginationComponent implements OnInit {
 
-    static DEFAULT_PAGE_SIZE: number = 25;
+    static DEFAULT_PAGE_SIZE = 25;
 
     static DEFAULT_PAGINATION: Pagination = {
         skipCount: 0,

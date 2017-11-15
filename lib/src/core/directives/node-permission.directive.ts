@@ -50,7 +50,7 @@ export class NodePermissionDirective implements OnChanges {
      * @memberof NodePermissionDirective
      */
     updateElement(): void {
-        let hasPermission = this.hasPermission(this.nodes, this.permission);
+        const hasPermission = this.hasPermission(this.nodes, this.permission);
         this.setDisableAttribute(!hasPermission);
     }
 

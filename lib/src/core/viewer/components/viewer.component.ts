@@ -162,7 +162,7 @@ export class ViewerComponent implements OnDestroy, OnChanges {
                     resolve();
                 } else if (this.urlFile) {
                     this.isLoading = true;
-                    let filenameFromUrl = this.getFilenameFromUrl(this.urlFile);
+                    const filenameFromUrl = this.getFilenameFromUrl(this.urlFile);
                     this.displayName = this.getDisplayName(filenameFromUrl);
                     this.extension = this.getFileExtension(filenameFromUrl);
                     this.urlFileContent = this.urlFile;
@@ -328,9 +328,9 @@ export class ViewerComponent implements OnDestroy, OnChanges {
      * @returns {string} name file
      */
     getFilenameFromUrl(url: string): string {
-        let anchor = url.indexOf('#');
-        let query = url.indexOf('?');
-        let end = Math.min(
+        const anchor = url.indexOf('#');
+        const query = url.indexOf('?');
+        const end = Math.min(
             anchor > 0 ? anchor : url.length,
             query > 0 ? query : url.length);
         return url.substring(url.lastIndexOf('/', end) + 1, end);
@@ -363,7 +363,7 @@ export class ViewerComponent implements OnDestroy, OnChanges {
      */
     @HostListener('document:keydown', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
-        let key = event.keyCode;
+        const key = event.keyCode;
         if (key === 27 && this.overlayMode) { // esc
             this.close();
         }

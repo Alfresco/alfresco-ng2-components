@@ -53,21 +53,21 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
 
     /** @deprecated Deprecated in 1.6.0, you can use UploadService events and NotificationService api instead. */
     @Input()
-    showNotificationBar: boolean = true;
+    showNotificationBar = true;
 
     /** @deprecated Deprecated in 1.6.0, this property is not used for couple of releases already. Use rootFolderId instead. */
     @Input()
-    currentFolderPath: string = '/';
+    currentFolderPath = '/';
 
     /** @deprecated Deprecated in 1.6.2, this property is not used for couple of releases already. Use parentId instead. */
     @Input()
-    rootFolderId: string = '-root-';
+    rootFolderId = '-root-';
 
     @Input()
-    disabled: boolean = false;
+    disabled = false;
 
     @Input()
-    versioning: boolean = false;
+    versioning = false;
 
     @Input()
     parentId: string;
@@ -94,7 +94,7 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
             }));
             this.uploadService.addToQueue(...fileModels);
             this.uploadService.uploadFilesInTheQueue(this.success);
-            let latestFilesAdded = this.uploadService.getQueue();
+            const latestFilesAdded = this.uploadService.getQueue();
             if (this.showNotificationBar) {
                 this.showUndoNotificationBar(latestFilesAdded);
             }
@@ -131,7 +131,7 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
     onFolderEntityDropped(folder: any): void {
         if (!this.disabled && folder.isDirectory) {
             FileUtils.flattern(folder).then(entries => {
-                let files = entries.map(entry => {
+                const files = entries.map(entry => {
                     return new FileModel(entry.file, {
                         newVersion: this.versioning,
                         parentId: this.parentId || this.rootFolderId,
@@ -141,7 +141,7 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
                 this.uploadService.addToQueue(...files);
                 /* @deprecated in 1.6.0 */
                 if (this.showNotificationBar) {
-                    let latestFilesAdded = this.uploadService.getQueue();
+                    const latestFilesAdded = this.uploadService.getQueue();
                     this.showUndoNotificationBar(latestFilesAdded);
                 }
                 this.uploadService.uploadFilesInTheQueue(this.success);
@@ -187,9 +187,9 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
     onUploadFiles(event: CustomEvent) {
         event.stopPropagation();
         event.preventDefault();
-        let isAllowed: boolean = this.hasCreatePermission(event.detail.data.obj.entry);
+        const isAllowed: boolean = this.hasCreatePermission(event.detail.data.obj.entry);
         if (isAllowed) {
-            let files: FileInfo[] = event.detail.files;
+            const files: FileInfo[] = event.detail.files;
             if (files && files.length > 0) {
                 let parentId = this.parentId || this.rootFolderId;
                 if (event.detail.data && event.detail.data.obj.entry.isFolder) {
@@ -214,7 +214,7 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
         if (files.length) {
             this.uploadService.addToQueue(...files);
             this.uploadService.uploadFilesInTheQueue(this.success);
-            let latestFilesAdded = this.uploadService.getQueue();
+            const latestFilesAdded = this.uploadService.getQueue();
             if (this.showNotificationBar) {
                 this.showUndoNotificationBar(latestFilesAdded);
             }
@@ -229,7 +229,7 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
     private hasCreatePermission(node: any): boolean {
         let isPermitted = false;
         if (node && node['allowableOperations']) {
-            let permFound = node['allowableOperations'].find(element => element === 'create');
+            const permFound = node['allowableOperations'].find(element => element === 'create');
             isPermitted = permFound ? true : false;
         }
         return isPermitted;

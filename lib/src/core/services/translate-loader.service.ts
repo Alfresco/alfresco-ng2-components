@@ -27,8 +27,8 @@ import { LogService } from './log.service';
 @Injectable()
 export class TranslateLoaderService implements TranslateLoader {
 
-    private prefix: string = 'i18n';
-    private suffix: string = '.json';
+    private prefix = 'i18n';
+    private suffix = '.json';
     private providers: ComponentTranslationModel[] = [];
     private queue: string [][] = [];
 
@@ -37,7 +37,7 @@ export class TranslateLoaderService implements TranslateLoader {
     }
 
     registerProvider(name: string, path: string) {
-        let registered = this.providers.find(provider => provider.name === name);
+        const registered = this.providers.find(provider => provider.name === name);
         if (registered) {
             registered.path = path;
         } else {
@@ -50,7 +50,7 @@ export class TranslateLoaderService implements TranslateLoader {
     }
 
     getComponentToFetch(lang: string) {
-        let observableBatch = [];
+        const observableBatch = [];
         if (!this.queue[lang]) {
             this.queue[lang] = [];
         }
@@ -58,7 +58,7 @@ export class TranslateLoaderService implements TranslateLoader {
             if (!this.isComponentInQueue(lang, component.name)) {
                 this.queue[lang].push(component.name);
 
-                let currentObserv = Observable.create(observer => {
+                const currentObserv = Observable.create(observer => {
                     this.http.get(`${component.path}/${this.prefix}/${lang}${this.suffix}`)
                         .map((res: Response) => {
                             component.json[lang] = res;
@@ -112,13 +112,13 @@ export class TranslateLoaderService implements TranslateLoader {
     }
 
     getTranslation(lang: string): Observable<any> {
-        let observableBatch = this.getComponentToFetch(lang);
+        const observableBatch = this.getComponentToFetch(lang);
 
         return Observable.create(observer => {
             if (observableBatch.length > 0) {
                 Observable.forkJoin(observableBatch).subscribe(
                     () => {
-                        let fullTranslation = this.getFullTranslationJSON(lang);
+                        const fullTranslation = this.getFullTranslationJSON(lang);
                         if (fullTranslation) {
                             observer.next(fullTranslation);
                         }
@@ -128,7 +128,7 @@ export class TranslateLoaderService implements TranslateLoader {
                         this.logService.error(err);
                     });
             } else {
-                let fullTranslation = this.getFullTranslationJSON(lang);
+                const fullTranslation = this.getFullTranslationJSON(lang);
                 if (fullTranslation) {
                     observer.next(fullTranslation);
                 }
