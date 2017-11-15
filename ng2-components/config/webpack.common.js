@@ -7,7 +7,7 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const alfrescoLibs = [
     'content-services',
-    'process-service',
+    'process-services',
     'core'
 ];
 
