@@ -82,42 +82,32 @@
         },
         {
           "glob": "**/*",
-          "input": "../../ng2-components/ng2-alfresco-core/prebuilt-themes",
-          "output": "./prebuilt-themes"
-        },
-        {
-          "glob": "**/*",
-          "input": "../../ng2-components/ng2-alfresco-core/bundles/assets",
+          "input": "../../lib/core/bundles/assets",
           "output": "./assets/"
         },
         {
           "glob": "**/*",
-          "input": "../../ng2-components/core/bundles/assets",
+          "input": "../../lib/process-services/bundles/assets",
           "output": "./assets/"
         },
         {
           "glob": "**/*",
-          "input": "../../ng2-components/process-services/bundles/assets",
+          "input": "../../lib/content-services/bundles/assets",
           "output": "./assets/"
         },
         {
           "glob": "**/*",
-          "input": "../../ng2-components/content-services/bundles/assets",
-          "output": "./assets/"
-        },
-        {
-          "glob": "**/*",
-          "input": "../../ng2-components/core/i18n",
+          "input": "../../lib/core/i18n",
           "output": "./assets/@adf/core/i18n"
         },
         {
           "glob": "**/*",
-          "input": "../../ng2-components/process-services/i18n",
+          "input": "../../lib/process-services/i18n",
           "output": "./assets/@adf/process-services/i18n"
         },
         {
           "glob": "**/*",
-          "input": "../../ng2-components/content-services/i18n",
+          "input": "../../lib/content-services/i18n",
           "output": "./assets/@adf/content-services/i18n"
         },
         { "glob": "pdf.worker.js", "input": "../node_modules/pdfjs-dist/build", "output": "./" }
@@ -135,7 +125,7 @@
       ],
       "stylePreprocessorOptions": {
       "includePaths": [
-        "../../ng2-components/"
+        "../../lib/"
       ]
       },
       "scripts": [

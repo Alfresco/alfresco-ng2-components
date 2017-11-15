@@ -51,18 +51,18 @@ only_demoshell() {
 
 update_component_version() {
    echo "====== UPDATE PACKAGE VERSION of ${PACKAGE} to ${VERSION} version in all the package.json ======"
-   DESTDIR="$DIR/../ng2-components/${1}"
+   DESTDIR="$DIR/../lib/${1}"
    sed "${sedi[@]}" "s/\"version\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"version\": \"${VERSION}\"/g"  ${DESTDIR}/package.json
 }
 
 clean_lock() {
    echo "====== clean lock file ${1} ======"
-   DESTDIR="$DIR/../ng2-components/${1}"
+   DESTDIR="$DIR/../lib/${1}"
    rm ${DESTDIR}/package-lock.json
 }
 
 update_component_dependency_version(){
-   DESTDIR="$DIR/../ng2-components/${1}"
+   DESTDIR="$DIR/../lib/${1}"
 
    for (( j=0; j<${projectslength}; j++ ));
     do
@@ -75,7 +75,7 @@ update_component_dependency_version(){
 }
 
 update_total_build_dependency_version(){
-   DESTDIR="$DIR/../ng2-components/"
+   DESTDIR="$DIR/../lib/"
 
    for (( j=0; j<${projectslength}; j++ ));
     do
@@ -87,7 +87,7 @@ update_total_build_dependency_version(){
 
 update_total_build_dependency_js_version(){
     echo "====== UPDATE DEPENDENCY VERSION of total build to ~${1} in ${DESTDIR}======"
-    DESTDIR="$DIR/../ng2-components/"
+    DESTDIR="$DIR/../lib/"
     PACKAGETOCHANGE="alfresco-js-api"
 
     sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
@@ -96,7 +96,7 @@ update_total_build_dependency_js_version(){
 
 update_component_js_version(){
    echo "====== UPDATE DEPENDENCY VERSION of alfresco-js-api in ${1} to ${2} ======"
-   DESTDIR="$DIR/../ng2-components/${1}"
+   DESTDIR="$DIR/../lib/${1}"
 
    PACKAGETOCHANGE="alfresco-js-api"
 
@@ -213,7 +213,6 @@ DESTDIR="$DIR/../demo-shell/"
 sed "${sedi[@]}" "s/\"version\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"version\": \"${VERSION}\"/g"  ${DIR}/../demo-shell/package.json
 
 if $EXEC_COMPONENT == true; then
-    rm ${DIR}/../ng2-components/package-lock.json
-    sed "${sedi[@]}" "s/\"version\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"version\": \"${VERSION}\"/g"  ${DIR}/../ng2-components/package.json
-    sed "${sedi[@]}" "s/\"version\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"version\": \"${VERSION}\"/g"  ${DIR}/../ng2-components/package-base.json
+    rm ${DIR}/../lib/package-lock.json
+    sed "${sedi[@]}" "s/\"version\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"version\": \"${VERSION}\"/g"  ${DIR}/../lib/package.json
 fi

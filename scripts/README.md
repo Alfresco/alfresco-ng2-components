@@ -19,19 +19,19 @@ feel of what's available.
 
 # Quick examples developed with ADF
 
-* Start the demo shell using the JS-API from the development branch and the local component in the ng2-components folder
+* Start the demo shell using the JS-API from the development branch and the local component in the lib folder
 
 ```sh
 ./start.sh -dev -t -gitjsapi development
 ```
 
-* Build the ng2-components folder using the JS-API from the development branch 
+* Build the lib folder using the JS-API from the development branch 
 
 ```sh
 ./npm-build-all.sh -gitjsapi development
 ```
 
-* Build the ng2-components folder using the JS-API from the development branch and run the tests on it
+* Build the lib folder using the JS-API from the development branch and run the tests on it
 
 ```sh
 ./npm-build-all.sh -t -gitjsapi development
@@ -53,10 +53,10 @@ All the commands before can be used in combination
 | -c or --clean   | clean the demo shell folder before starting it  |
 | -t or --test    | run the tests on the demo-shell  |
 | -r or --registry    |  Start the demo using an alternative npm registry  |
-| -v or --version    | Use the version defined in the pacakge.json . Download from npm and Install a different version of the ng2-components (this option is not compatible with -dev)  |
+| -v or --version    | Use the version defined in the pacakge.json . Download from npm and Install a different version of the lib (this option is not compatible with -dev)  |
 | -si or --skipinstall    | skip the install of the node_modules  |
 | -ss or --skipstart    | skip the start of the demo shell and only build it providing a dist folder in the relative demo-shell folder  |
-| -dev or --develop    | Start the demo in development mode building the relative folder ng2-components with all the components and pointing to those components instead of the ng2-components present in the node_modules folder |
+| -dev or --develop    | Start the demo in development mode building the relative folder lib with all the components and pointing to those components instead of the lib present in the node_modules folder |
 | -dist     | Start the demo shell using a light server and the files built in the dist folder, particular useful to test the final result of the project |
 | -gitjsapi   | Start the demo shell using an alfresco-js-api referenced by commit-ish version of the JS-API |
 | -vjsapi   | Use the version defined in the pacakge.json. Download from npm and install a different version of JS-API  |
@@ -88,7 +88,7 @@ All the commands before can be used in combination
 ./start.sh -update or -u
 ```
 
-* Use instead the version defined in the pacakge.json. Download from npm and install a different version of the ng2-components (this option is not compatible with -dev)  |
+* Use instead the version defined in the pacakge.json. Download from npm and install a different version of the lib (this option is not compatible with -dev)  |
 
 ```sh
 ./start.sh -version or -v COMPONENTS_VERSION
@@ -96,7 +96,7 @@ All the commands before can be used in combination
 ./start.sh -v 1.4.0
 ```
 
-* Start the demo in development mode building the relative folder ng2-components with all the components and pointing to this component instead of the node_modules one
+* Start the demo in development mode building the relative folder lib with all the components and pointing to this component instead of the node_modules one
 
 ```sh
 ./start.sh -develop or -dev
@@ -134,7 +134,7 @@ All the commands before can be used in combination
 
 # npm-build-all.sh
 
-***npm-build-all.sh*** this script provides an easy way to deal with the npm command and the correct sequence to build the ng2-components
+***npm-build-all.sh*** this script provides an easy way to deal with the npm command and the correct sequence to build the lib
 
 ## Options
 
@@ -170,7 +170,7 @@ The default behaviour of the ***npm-build-all.sh*** install node_modules and bui
 ./npm-build-all.sh -d
 ```
 
-* Clean the ng2-components folder node_modules before build
+* Clean the lib folder node_modules before build
 
 ```sh
 ./npm-build-all.sh -c
@@ -246,7 +246,7 @@ For development environment configuration please refer to [project docs](../demo
 
 # npm-clean.sh
 
-***npm-clean.sh*** clean all the projects folders : ng2-components and  demo-shell.
+***npm-clean.sh*** clean all the projects folders : lib and  demo-shell.
 
 ## Options
 

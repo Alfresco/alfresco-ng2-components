@@ -50,7 +50,7 @@ echo "====== Regenerate package-lock.json ====="
 for PACKAGE in ${projects[@]}
     do
         echo "====== $PACKAGE ====="
-        DESTDIR="$DIR/../ng2-components/$PACKAGE"
+        DESTDIR="$DIR/../lib/$PACKAGE"
         cd $DESTDIR
 
         npm run clean-lock
@@ -67,7 +67,7 @@ npm run clean-lock
 npm run clean
 npm install
 
-cd "$DIR/../ng2-components"
+cd "$DIR/../lib"
 npm run clean-lock
 npm run clean
 npm install

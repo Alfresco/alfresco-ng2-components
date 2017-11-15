@@ -19,7 +19,7 @@ eval projects=( "core"
     "content-services"
     "process-services" )
 
-cd "$DIR/../ng2-components"
+cd "$DIR/../lib"
 
 show_help() {
     echo "Usage: npm-publish.sh"

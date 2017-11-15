@@ -22,7 +22,7 @@ cd "$DIR/../demo-shell"
 npm run clean
 npm run clean-lock
 
-cd "$DIR/../ng2-components"
+cd "$DIR/../lib"
 npm run clean
 npm run clean-lock
 
