@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DynamicComponentResolver } from '@alfresco/core';
+import { DynamicComponentResolver } from '../../index';
 import {
     AttachWidgetComponent,
     FormFieldModel,

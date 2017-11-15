@@ -18,7 +18,7 @@
 /* tslint:disable */
 
 import { Component, NgModule } from '@angular/core';
-import { WidgetComponent } from '@alfresco/process-services';
+import { WidgetComponent } from '@alfresco/core';
 
 @Component({
     selector: 'custom-editor',

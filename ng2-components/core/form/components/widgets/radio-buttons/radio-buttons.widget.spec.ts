@@ -29,7 +29,6 @@ import { FormFieldOption } from './../core/form-field-option';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
 import { RadioButtonsWidgetComponent } from './radio-buttons.widget';
-import { CoreModule } from '@alfresco/core';
 
 describe('RadioButtonsWidgetComponent', () => {
 
@@ -140,7 +139,7 @@ describe('RadioButtonsWidgetComponent', () => {
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-                imports: [CoreModule, MaterialModule ],
+                imports: [ MaterialModule ],
                 declarations: [RadioButtonsWidgetComponent, ErrorWidgetComponent],
                 providers: [FormService, EcmModelService, WidgetVisibilityService]
             }).compileComponents().then(() => {

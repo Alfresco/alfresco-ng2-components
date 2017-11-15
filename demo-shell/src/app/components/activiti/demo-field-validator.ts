@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FormFieldModel, FormFieldTypes, FormFieldValidator } from '@alfresco/process-services';
+import { FormFieldModel, FormFieldTypes, FormFieldValidator } from '@alfresco/core';
 
 export class DemoFieldValidator implements FormFieldValidator {
 

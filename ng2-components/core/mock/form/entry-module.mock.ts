@@ -39,4 +39,4 @@ TextWidgetComponent
   ]
 })
 
-export class EntryComponenteMockModule {}
+export class EntryComponentMockModule {}

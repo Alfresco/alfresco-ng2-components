@@ -18,13 +18,21 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { MaterialModule } from '../material.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { DataColumnModule,  DataTableModule } from '@alfresco/core';
 import { PeopleComponent } from './people.component';
 import { PeopleListComponent } from './people-list.component';
 import { PeopleSearchActionLabelDirective, PeopleSearchComponent, PeopleSearchTitleDirective } from './people-search.component';
 
 @NgModule({
     imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        DataColumnModule,
+        DataTableModule,
+        MaterialModule,
         CommonModule,
         TranslateModule
     ],

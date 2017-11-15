@@ -17,19 +17,20 @@
 
 /* tslint:disable:component-selector  */
 
-import { MOMENT_DATE_FORMATS, MomentDateAdapter, UserPreferencesService } from '@alfresco/core';
+import { UserPreferencesService } from '../../../../services';
+import { MOMENT_DATE_FORMATS, MomentDateAdapter } from '../../../../utils';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import * as moment from 'moment';
 import { Moment } from 'moment';
 import { FormService } from './../../../services/form.service';
-import { baseHost , WidgetComponent } from './../widget.component';
+import { baseHost, WidgetComponent } from './../widget.component';
 
 @Component({
     selector: 'date-widget',
     providers: [
-        {provide: DateAdapter, useClass: MomentDateAdapter},
-        {provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS}],
+        { provide: DateAdapter, useClass: MomentDateAdapter },
+        { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }],
     templateUrl: './date.widget.html',
     styleUrls: ['./date.widget.scss'],
     host: baseHost,
@@ -42,15 +43,14 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit {
 
     displayDate: Moment;
 
-    constructor(
-        public formService: FormService,
-        private dateAdapter: DateAdapter<Moment>,
-        private preferences: UserPreferencesService) {
+    constructor(public formService: FormService,
+                private dateAdapter: DateAdapter<Moment>,
+                private preferences: UserPreferencesService) {
         super(formService);
     }
 
     ngOnInit() {
-        this.preferences.locale$.subscribe( (locale) => {
+        this.preferences.locale$.subscribe((locale) => {
             this.dateAdapter.setLocale(locale);
         });
         let momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
@@ -71,9 +71,9 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit {
     onDateChanged(newDateValue) {
         if (newDateValue && newDateValue.value) {
             this.field.value = newDateValue.value.format(this.field.dateDisplayFormat);
-        }else if ( newDateValue ) {
+        } else if (newDateValue) {
             this.field.value = newDateValue;
-        }else {
+        } else {
             this.field.value = null;
         }
         this.checkVisibility(this.field);

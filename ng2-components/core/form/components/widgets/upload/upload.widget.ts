@@ -17,7 +17,7 @@
 
 /* tslint:disable:component-selector  */
 
-import { LogService, ThumbnailService } from '@alfresco/core';
+import { LogService, ThumbnailService } from '../../../../services';
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { FormService } from '../../../services/form.service';

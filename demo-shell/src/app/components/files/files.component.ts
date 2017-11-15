@@ -15,16 +15,21 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, OnChanges, OnDestroy, ChangeDetectorRef,
-        EventEmitter, Optional, ViewChild, SimpleChanges, Output } from '@angular/core';
+import {
+    Component, Input, OnInit, OnChanges, OnDestroy, ChangeDetectorRef,
+    EventEmitter, Optional, ViewChild, SimpleChanges, Output
+} from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MinimalNodeEntity, NodePaging } from 'alfresco-js-api';
 import {
     AlfrescoApiService, ContentService, TranslationService,
-    DownloadZipDialogComponent, FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
-    SiteModel, UploadService, DataColumn, DataRow } from '@alfresco/core';
-import { DocumentListComponent, PermissionStyleModel } from '@alfresco/content-services';
+    FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
+    SiteModel, UploadService, DataColumn, DataRow
+} from '@alfresco/core';
+
+import { DocumentListComponent, PermissionStyleModel, DownloadZipDialogComponent } from '@alfresco/content-services';
+
 import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-adapter.component';
 import { Subscription } from 'rxjs/Rx';
 
@@ -51,7 +56,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     ];
 
     @Input()
-    // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
+        // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
     currentFolderId: string = DEFAULT_FOLDER_TO_SHOW;
 
     @Input()

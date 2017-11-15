@@ -26,7 +26,6 @@ import { MASK_DIRECTIVE } from '../index';
 import { FormFieldComponent } from './../../form-field/form-field.component';
 import { ContentWidgetComponent } from './../content/content.widget';
 import { TabsWidgetComponent } from './tabs.widget';
-import { CoreModule } from '@alfresco/core';
 
 describe('TabsWidgetComponent', () => {
 
@@ -86,7 +85,7 @@ describe('TabsWidgetComponent', () => {
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-                imports: [CoreModule, MaterialModule ],
+                imports: [ MaterialModule ],
                 declarations: [FormFieldComponent, ContentWidgetComponent, WIDGET_DIRECTIVES, MASK_DIRECTIVE]
             }).compileComponents().then(() => {
                 fixture = TestBed.createComponent(TabsWidgetComponent);

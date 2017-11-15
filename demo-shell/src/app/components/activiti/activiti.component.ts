@@ -16,13 +16,24 @@
  */
 
 // tslint:disable-next-line:adf-file-name
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    Input,
+    OnDestroy,
+    OnInit,
+    ViewChild,
+    ViewEncapsulation
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Pagination, ProcessInstanceFilterRepresentation } from 'alfresco-js-api';
 import {
-    AnalyticsReportListComponent, DynamicTableRow, FORM_FIELD_VALIDATORS, FormEvent, FormFieldEvent, FormRenderingService,
-    FormService, ValidateDynamicTableRowEvent
-} from '@alfresco/process-services';
+    FORM_FIELD_VALIDATORS, FormEvent, FormFieldEvent, FormRenderingService, FormService,
+    DynamicTableRow, ValidateDynamicTableRowEvent
+} from '@alfresco/core';
+
+import { AnalyticsReportListComponent } from '@alfresco/process-services';
 
 import {
     ProcessFiltersComponent,
@@ -205,10 +216,20 @@ export class ActivitiComponent implements AfterViewInit, OnDestroy, OnInit {
     ngOnInit() {
         this.taskListService.tasksList$.subscribe(
             (tasks) => {
-                this.taskPagination = { count: tasks.data.length, maxItems: this.taskPagination.maxItems, skipCount: this.taskPagination.skipCount, totalItems: tasks.total };
-                this.logService.log({ count: tasks.data.length, maxItems: this.taskPagination.maxItems, skipCount: this.taskPagination.skipCount, totalItems: tasks.total });
+                this.taskPagination = {
+                    count: tasks.data.length,
+                    maxItems: this.taskPagination.maxItems,
+                    skipCount: this.taskPagination.skipCount,
+                    totalItems: tasks.total
+                };
+                this.logService.log({
+                    count: tasks.data.length,
+                    maxItems: this.taskPagination.maxItems,
+                    skipCount: this.taskPagination.skipCount,
+                    totalItems: tasks.total
+                });
             }, (err) => {
-                this.logService.log('err' +  err);
+                this.logService.log('err' + err);
             });
 
         if (this.router.url.includes('processes')) {

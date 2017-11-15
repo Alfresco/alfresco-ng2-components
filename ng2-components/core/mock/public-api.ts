@@ -28,7 +28,6 @@ export * from './renditionsService.mock';
 export * from './search.service.mock';
 export * from './traslation.service.mock';
 
-export * from './form/entry-module.mock';
 export * from './form/form.component.mock';
 export * from './form/formDefinition.mock';
 export * from './form/formDefinitionReadonly.mock';

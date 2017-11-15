@@ -18,16 +18,26 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { MaterialModule } from '../material.module';
+import { DataColumnModule, DataTableModule, DirectiveModule } from '@alfresco/core';
 
 import { TaskAttachmentListComponent } from './task-attachment-list.component';
 import { ProcessAttachmentListComponent } from './process-attachment-list.component';
 import { CreateProcessAttachmentComponent } from './create-process-attachment.component';
 import { AttachmentComponent } from './create-task-attachment.component';
+import { ProcessUploadService } from '../task-list/services/process-upload.service';
 
 @NgModule({
     imports: [
+        DataColumnModule,
+        DataTableModule,
+        MaterialModule,
         CommonModule,
-        TranslateModule
+        TranslateModule,
+        DirectiveModule
+    ],
+    providers: [
+        ProcessUploadService
     ],
     declarations: [
         TaskAttachmentListComponent,

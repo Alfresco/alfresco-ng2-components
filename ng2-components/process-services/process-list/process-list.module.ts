@@ -26,6 +26,7 @@ import { MaterialModule } from '../material.module';
 import { CardViewModule, CardViewUpdateService, DataColumnModule, DataTableModule, DirectiveModule, PipeModule } from '@alfresco/core';
 import { TaskListModule } from '../task-list';
 import { PeopleModule } from '../people';
+import { CommentsModule } from '../comments';
 
 import { ProcessAuditDirective } from './components/process-audit.directive';
 import { ProcessFiltersComponent } from './components/process-filters.component';
@@ -52,7 +53,8 @@ import { ProcessService } from './services/process.service';
         PipeModule,
         DataColumnModule,
         DirectiveModule,
-        PeopleModule
+        PeopleModule,
+        CommentsModule
     ],
     declarations: [
         ProcessInstanceListComponent,

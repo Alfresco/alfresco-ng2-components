@@ -21,7 +21,8 @@
     "paths": {
       "@alfresco/process-services": ["../process-services"],
       "@alfresco/content-services": ["../content-services"],
-      "@alfresco/core": ["../core"]
+      "@alfresco/core": ["../core"],
+      "@angular/*": ["../node_modules/@angular/*"]
     },
     "lib": [
       "es2015",

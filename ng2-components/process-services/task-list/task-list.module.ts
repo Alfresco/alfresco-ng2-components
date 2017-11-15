@@ -25,6 +25,8 @@ import { CardViewModule, DataColumnModule,  DataTableModule, DirectiveModule, In
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MaterialModule } from '../material.module';
+import { PeopleModule } from '../people';
+import { CommentsModule } from '../comments';
 import { ProcessUploadService } from './services/process-upload.service';
 import { TaskListService } from './services/tasklist.service';
 
@@ -50,7 +52,9 @@ import { TaskListComponent } from './components/task-list.component';
         MaterialModule,
         TranslateModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        PeopleModule,
+        CommentsModule
     ],
     declarations: [
         NoTaskDetailsTemplateDirective,

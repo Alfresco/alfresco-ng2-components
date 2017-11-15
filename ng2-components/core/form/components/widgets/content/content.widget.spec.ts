@@ -19,7 +19,7 @@ import { DebugElement, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MaterialModule } from '../../../../material.module';
 import { By } from '@angular/platform-browser';
-import { TranslationService, ContentService, CoreModule } from '@alfresco/core';
+import { TranslationService, ContentService } from '../../../index';
 import { Observable } from 'rxjs/Rx';
 
 import { EcmModelService } from '../../../services/ecm-model.service';
@@ -67,7 +67,6 @@ describe('ContentWidgetComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
                 MaterialModule
             ],
             declarations: [

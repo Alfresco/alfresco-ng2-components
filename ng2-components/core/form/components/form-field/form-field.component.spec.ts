@@ -25,7 +25,6 @@ import { FormFieldModel, FormFieldTypes, FormModel } from './../widgets/core/ind
 import { InputMaskDirective } from './../widgets/text/text-mask.component';
 import { TextWidgetComponent } from './../widgets/text/text.widget';
 import { FormFieldComponent } from './form-field.component';
-import { CoreModule } from '@alfresco/core';
 
 describe('FormFieldComponent', () => {
 
@@ -38,7 +37,6 @@ describe('FormFieldComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
                 imports: [
-                    CoreModule,
                     MaterialModule
                 ],
                 declarations: [

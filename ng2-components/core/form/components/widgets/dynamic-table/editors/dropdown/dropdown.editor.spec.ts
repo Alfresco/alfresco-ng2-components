@@ -26,7 +26,6 @@ import { DynamicTableColumnOption  } from './../../dynamic-table-column-option.m
 import { DynamicTableColumn  } from './../../dynamic-table-column.model';
 import { DynamicTableRow  } from './../../dynamic-table-row.model';
 import { DynamicTableModel } from './../../dynamic-table.widget.model';
-import { CoreModule } from '@alfresco/core';
 
 import { DropdownEditorComponent } from './dropdown.editor';
 
@@ -192,7 +191,7 @@ describe('DropdownEditorComponent', () => {
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-                imports: [CoreModule, MaterialModule],
+                imports: [MaterialModule],
                 declarations: [DropdownEditorComponent],
                 providers: [FormService, EcmModelService]
             }).compileComponents().then(() => {

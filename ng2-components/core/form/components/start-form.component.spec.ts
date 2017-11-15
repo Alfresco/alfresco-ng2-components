@@ -17,9 +17,8 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreModule } from '@alfresco/core';
 import { Observable } from 'rxjs/Rx';
-import { EntryComponenteMockModule } from '../../mock';
+import { EntryComponentMockModule } from '../../mock';
 import { startFormDateWidgetMock, startFormDropdownDefinitionMock, startFormTextDefinitionMock, startMockForm, startMockFormWithTab } from '../../mock';
 import { startFormAmountWidgetMock, startFormNumberWidgetMock, startFormRadioButtonWidgetMock } from '../../mock';
 import { EcmModelService } from './../services/ecm-model.service';
@@ -49,8 +48,7 @@ describe('ActivitiStartForm', () => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                EntryComponenteMockModule,
-                CoreModule
+                EntryComponentMockModule
             ],
             declarations: [
                 StartFormComponent,

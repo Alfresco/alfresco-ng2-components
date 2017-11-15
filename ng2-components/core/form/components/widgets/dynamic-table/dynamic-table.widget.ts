@@ -17,7 +17,7 @@
 
 /* tslint:disable:component-selector  */
 
-import { LogService } from '@alfresco/core';
+import { LogService } from '../../../../services';
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { FormService } from './../../../services/form.service';

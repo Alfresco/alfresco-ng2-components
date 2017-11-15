@@ -17,44 +17,22 @@
 
 import { NgModule } from '@angular/core';
 import {
-    MatButtonModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatDialogModule,
-    MatIconModule,
-    MatInputModule,
-    MatListModule,
-    MatMenuModule,
-    MatProgressBarModule,
-    MatProgressSpinnerModule,
-    MatSelectModule,
-    MatSidenavModule,
-    MatSlideToggleModule,
-    MatSnackBarModule,
-    MatTabsModule,
-    MatToolbarModule,
+    MatAutocompleteModule, MatButtonModule, MatCardModule, MatCheckboxModule,
+    MatChipsModule, MatDatepickerModule, MatDialogModule, MatGridListModule, MatIconModule,
+    MatInputModule, MatListModule, MatNativeDateModule, MatOptionModule, MatProgressSpinnerModule, MatRadioModule,
+    MatRippleModule, MatSelectModule, MatSlideToggleModule, MatTableModule, MatTabsModule,
+    MatMenuModule, MatProgressBarModule, MatSidenavModule, MatSnackBarModule, MatToolbarModule,
     MatTooltipModule
 } from '@angular/material';
 
 export function modules() {
     return [
-        MatButtonModule,
-        MatCardModule,
-        MatDialogModule,
-        MatIconModule,
-        MatMenuModule,
-        MatProgressBarModule,
-        MatProgressSpinnerModule,
-        MatTabsModule,
-        MatTooltipModule,
-        MatCheckboxModule,
-        MatSlideToggleModule,
-        MatInputModule,
-        MatSelectModule,
-        MatListModule,
-        MatSidenavModule,
-        MatSnackBarModule,
-        MatToolbarModule
+        MatAutocompleteModule, MatButtonModule, MatCardModule, MatCheckboxModule,
+        MatChipsModule, MatDatepickerModule, MatDialogModule, MatGridListModule, MatIconModule,
+        MatInputModule, MatListModule, MatNativeDateModule, MatOptionModule, MatProgressSpinnerModule, MatRadioModule,
+        MatRippleModule, MatSelectModule, MatSlideToggleModule, MatTableModule, MatTabsModule,
+        MatMenuModule, MatProgressBarModule, MatSidenavModule, MatSnackBarModule, MatToolbarModule,
+        MatTooltipModule
     ];
 }
 

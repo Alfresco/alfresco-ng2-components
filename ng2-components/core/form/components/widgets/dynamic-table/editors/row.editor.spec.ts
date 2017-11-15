@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FormFieldModel, FormModel } from '../../index';
+import { FormFieldModel, FormModel } from '../../../index';
 import { FormService } from './../../../../services/form.service';
 import { DynamicRowValidationSummary } from './../dynamic-row-validation-summary.model';
 import { DynamicTableColumn } from './../dynamic-table-column.model';
