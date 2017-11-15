@@ -16,4 +16,3 @@
  */
 
 export * from './public-api';
-
