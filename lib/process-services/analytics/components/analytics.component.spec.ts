@@ -18,9 +18,7 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DiagramsModule } from '../../diagram';
-import { TranslationService } from '@alfresco/core';
 import { ChartsModule } from 'ng2-charts';
-import { Observable } from 'rxjs/Rx';
 
 import { AnalyticsGeneratorComponent } from '../components/analytics-generator.component';
 import { AnalyticsReportHeatMapComponent } from '../components/analytics-report-heat-map.component';
@@ -64,10 +62,6 @@ describe('AnalyticsComponent', () => {
                 ...ANALYTICS_PROVIDERS
             ]
         }).compileComponents();
-
-        let translateService = TestBed.get(TranslationService);
-        spyOn(translateService, 'addTranslationFolder').and.stub();
-        spyOn(translateService, 'get').and.callFake((key) => { return Observable.of(key); });
     }));
 
     beforeEach(() => {

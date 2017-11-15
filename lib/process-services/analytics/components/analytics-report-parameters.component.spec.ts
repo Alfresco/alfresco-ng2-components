@@ -18,8 +18,6 @@
 import { DebugElement, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReportParametersModel } from '../../diagram';
-import { AppConfigService, TranslationService } from '@alfresco/core';
-import { Observable } from 'rxjs/Rx';
 import * as analyticParamsMock from '../../mock';
 import { AnalyticsReportParametersComponent } from '../components/analytics-report-parameters.component';
 import { WIDGET_ANALYTICS_DIRECTIVES } from '../components/widgets/index';
@@ -50,18 +48,9 @@ describe('AnalyticsReportParametersComponent', () => {
                 AnalyticsService
             ]
         }).compileComponents();
-
-        let translateService = TestBed.get(TranslationService);
-        spyOn(translateService, 'addTranslationFolder').and.stub();
-        spyOn(translateService, 'get').and.callFake((key) => {
-            return Observable.of(key);
-        });
     }));
 
     beforeEach(() => {
-        let appConfig: AppConfigService = TestBed.get(AppConfigService);
-        appConfig.config.bpmHost = 'http://localhost:9876/bpm';
-
         fixture = TestBed.createComponent(AnalyticsReportParametersComponent);
         component = fixture.componentInstance;
         debug = fixture.debugElement;

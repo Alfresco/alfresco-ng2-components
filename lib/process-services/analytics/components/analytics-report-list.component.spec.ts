@@ -18,8 +18,6 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReportParametersModel } from '../../diagram';
-import { TranslationService, AppConfigService } from '@alfresco/core';
-import { Observable } from 'rxjs/Rx';
 import { AnalyticsReportListComponent } from '../components/analytics-report-list.component';
 import { MaterialModule } from '../../material.module';
 import { AnalyticsService } from '../services/analytics.service';
@@ -55,18 +53,9 @@ describe('AnalyticsReportListComponent', () => {
                 AnalyticsService
             ]
         }).compileComponents();
-
-        let translateService = TestBed.get(TranslationService);
-        spyOn(translateService, 'addTranslationFolder').and.stub();
-        spyOn(translateService, 'get').and.callFake((key) => {
-            return Observable.of(key);
-        });
     }));
 
     beforeEach(() => {
-        let appConfig: AppConfigService = TestBed.get(AppConfigService);
-        appConfig.config.bpmHost = 'http://localhost:9876/bpm';
-
         fixture = TestBed.createComponent(AnalyticsReportListComponent);
         component = fixture.componentInstance;
         debug = fixture.debugElement;

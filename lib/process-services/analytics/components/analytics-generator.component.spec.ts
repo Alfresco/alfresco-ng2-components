@@ -20,11 +20,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ChartsModule } from 'ng2-charts';
 
 import { MaterialModule } from '../../material.module';
-import { TranslationService } from '@alfresco/core';
 
 import { DiagramsModule } from '../../diagram';
-import { Observable } from 'rxjs/Rx';
-
 import { Chart } from '../../diagram';
 import { ReportQuery } from '../../diagram';
 import * as analyticMock from '../../mock';
@@ -69,12 +66,6 @@ describe('AnalyticsGeneratorComponent', () => {
                 ...ANALYTICS_PROVIDERS
             ]
         }).compileComponents();
-
-        let translateService = TestBed.get(TranslationService);
-        spyOn(translateService, 'addTranslationFolder').and.stub();
-        spyOn(translateService, 'get').and.callFake((key) => {
-            return Observable.of(key);
-        });
     }));
 
     beforeEach(() => {

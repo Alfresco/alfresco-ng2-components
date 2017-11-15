@@ -18,8 +18,6 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DiagramsModule } from '../../diagram';
-import { TranslationService } from '@alfresco/core';
-import { Observable } from 'rxjs/Rx';
 import { AnalyticsReportHeatMapComponent } from '../components/analytics-report-heat-map.component';
 import { WIDGET_ANALYTICS_DIRECTIVES } from '../components/widgets/index';
 import { MaterialModule } from '../../material.module';
@@ -56,12 +54,6 @@ describe('AnalyticsReportHeatMapComponent', () => {
                 AnalyticsService
             ]
         }).compileComponents();
-
-        let translateService = TestBed.get(TranslationService);
-        spyOn(translateService, 'addTranslationFolder').and.stub();
-        spyOn(translateService, 'get').and.callFake((key) => {
-            return Observable.of(key);
-        });
 
     }));
 
