@@ -26,6 +26,7 @@ import { CollapsableModule } from './src/components/collapsable/collapsable.modu
 import { ContextMenuModule } from './src/components/context-menu/context-menu.module';
 import { ToolbarModule } from './src/components/toolbar/toolbar.module';
 import { CardViewModule } from './src/components/view/card-view.module';
+import { ContentMetadataModule } from './src/components/content-metadata/content-metadata.module';
 import { MaterialModule } from './src/material.module';
 import { AppConfigModule } from './src/services/app-config.service';
 
@@ -120,7 +121,6 @@ export { SitesApiService } from './src/services/sites-api.service';
 export { DiscoveryApiService } from './src/services/discovery-api.service';
 export { CommentProcessService } from './src/services/comment-process.service';
 
-import { ContentMetadataComponent } from './src/components/content-metadata/content-metadata.component';
 import { DataColumnListComponent } from './src/components/data-column/data-column-list.component';
 import { DataColumnComponent } from './src/components/data-column/data-column.component';
 import {
@@ -270,6 +270,7 @@ export function createTranslateLoader(http: HttpClient, logService: LogService) 
         ToolbarModule,
         ContextMenuModule,
         CardViewModule,
+        ContentMetadataModule,
         CollapsableModule
     ],
     declarations: [
@@ -291,7 +292,6 @@ export function createTranslateLoader(http: HttpClient, logService: LogService) 
         InfoDrawerTitleDirective,
         InfoDrawerButtonsDirective,
         InfoDrawerContentDirective,
-        ContentMetadataComponent,
         LanguageMenuComponent,
         HostSettingsComponent,
         DownloadZipDialogComponent,
@@ -324,6 +324,7 @@ export function createTranslateLoader(http: HttpClient, logService: LogService) 
         CardViewModule,
         CollapsableModule,
         ToolbarModule,
+        ContentMetadataModule,
         ...pipes(),
         FolderCreateDirective,
         FolderEditDirective,
@@ -345,7 +346,6 @@ export function createTranslateLoader(http: HttpClient, logService: LogService) 
         InfoDrawerTitleDirective,
         InfoDrawerButtonsDirective,
         InfoDrawerContentDirective,
-        ContentMetadataComponent,
         InfinitePaginationComponent,
         LanguageMenuComponent,
         PaginationComponent

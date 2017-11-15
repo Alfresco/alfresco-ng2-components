@@ -18,9 +18,8 @@
 import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { CardViewItem } from '../../interface/card-view-item.interface';
-import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
-import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { FileSizePipe } from '../../pipes/file-size.pipe';
+import { ContentMetadataPropertiesService } from './content-metadata-properties.service';
 
 @Component({
     selector: 'adf-content-metadata',
@@ -28,7 +27,10 @@ import { FileSizePipe } from '../../pipes/file-size.pipe';
     styleUrls: ['./content-metadata.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { 'class': 'adf-content-metadata' },
-    providers: [ FileSizePipe ]
+    viewProviders: [
+        ContentMetadataPropertiesService,
+        FileSizePipe
+    ]
 })
 export class ContentMetadataComponent implements OnChanges {
 
@@ -37,7 +39,7 @@ export class ContentMetadataComponent implements OnChanges {
     @Input()
     node: MinimalNodeEntryEntity;
 
-    constructor(private fileSizePipe: FileSizePipe) {}
+    constructor(private propertyService: ContentMetadataPropertiesService) {}
 
     ngOnChanges() {
         this.recalculateProperties();
@@ -45,89 +47,7 @@ export class ContentMetadataComponent implements OnChanges {
 
     private recalculateProperties() {
         this.properties = [
-            ...this.calculateBasicProperties()
+            ...this.propertyService.getBasicProperties(this.node)
         ];
-    }
-
-    private calculateBasicProperties() {
-        const basicProperties = [];
-
-        basicProperties.push(new CardViewTextItemModel({
-            label: 'CORE.METADATA.BASIC.NAME',
-            value: this.node.name,
-            key: 'name'
-        }));
-
-        const title = this.node.properties['cm:title'];
-        if (title) {
-            basicProperties.push(new CardViewTextItemModel({
-                label: 'CORE.METADATA.BASIC.TITLE',
-                value: title,
-                key: 'properties.cm:title'
-            }));
-        }
-
-        const description = this.node.properties['cm:description'];
-        if (description) {
-            basicProperties.push(new CardViewTextItemModel({
-                label: 'CORE.METADATA.BASIC.DESCRIPTION',
-                value: description,
-                key: 'properties.cm:description'
-            }));
-        }
-
-        const author = this.node.properties['cm:author'];
-        if (author) {
-            basicProperties.push(new CardViewTextItemModel({
-                label: 'CORE.METADATA.BASIC.AUTHOR',
-                value: author,
-                key: 'properties.cm:author'
-            }));
-        }
-
-        basicProperties.push(new CardViewTextItemModel({
-            label: 'CORE.METADATA.BASIC.MIMETYPE',
-            value: this.node.content.mimeTypeName,
-            key: 'content.mimeTypeName',
-            editable: false
-        }));
-
-        basicProperties.push(new CardViewTextItemModel({
-            label: 'CORE.METADATA.BASIC.SIZE',
-            value: this.node.content.sizeInBytes,
-            key: 'content.sizeInBytes',
-            pipes: [ { pipe: this.fileSizePipe } ],
-            editable: false
-        }));
-
-        basicProperties.push(new CardViewTextItemModel({
-            label: 'CORE.METADATA.BASIC.CREATOR',
-            value: this.node.createdByUser.displayName,
-            key: 'createdByUser.displayName',
-            editable: false
-        }));
-
-        basicProperties.push(new CardViewDateItemModel({
-            label: 'CORE.METADATA.BASIC.CREATED_DATE',
-            value: this.node.createdAt,
-            key: 'createdAt',
-            editable: false
-        }));
-
-        basicProperties.push(new CardViewTextItemModel({
-            label: 'CORE.METADATA.BASIC.MODIFIER',
-            value: this.node.modifiedByUser.displayName,
-            key: 'modifiedByUser.displayName',
-            editable: false
-        }));
-
-        basicProperties.push(new CardViewDateItemModel({
-            label: 'CORE.METADATA.BASIC.MODIFIED_DATE',
-            value: this.node.modifiedAt,
-            key: 'modifiedAt',
-            editable: false
-        }));
-
-        return basicProperties;
     }
 }
