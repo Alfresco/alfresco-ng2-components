@@ -12,15 +12,7 @@ env:
   matrix:
     - MODULE=core
     - MODULE=process
-    - MODULE=analytics
-    - MODULE=app-list
-    - MODULE=diagram
-    - MODULE=process-list
-    - MODULE=task-list
     - MODULE=content
-    - MODULE=attachment
-    - MODULE=comments
-    - MODULE=people
     - MODULE=demo-shell
 
 install:
@@ -38,43 +30,11 @@ script:
       fi
 
     - if ([ "$MODULE" == "process" ]); then
-            (./scripts/npm-build-all.sh -si -sb -t "process*" || exit 1;);
-      fi
-
-    - if ([ "$MODULE" == "analytics" ]); then
-            (./scripts/npm-build-all.sh -si -sb -t "process-services/analytics" || exit 1;);
-      fi
-
-    - if ([ "$MODULE" == "app-list" ]); then
-            (./scripts/npm-build-all.sh -si -sb -t "process-services/app-list" || exit 1;);
-      fi
-
-    - if ([ "$MODULE" == "diagram" ]); then
-            (./scripts/npm-build-all.sh -si -sb -t "process-services/diagram" || exit 1;);
-      fi
-
-    - if ([ "$MODULE" == "attachment" ]); then
-            (./scripts/npm-build-all.sh -si -sb -t "process-services/attachment" || exit 1;);
-      fi
-
-    - if ([ "$MODULE" == "comments" ]); then
-            (./scripts/npm-build-all.sh -si -sb -t "process-services/comments" || exit 1;);
-      fi
-
-    - if ([ "$MODULE" == "people" ]); then
-            (./scripts/npm-build-all.sh -si -sb -t "process-services/people" || exit 1;);
-      fi
-
-    - if ([ "$MODULE" == "process-list" ]); then
-            (./scripts/npm-build-all.sh -si -sb -t "process-services/process-list" || exit 1;);
-      fi
-
-    - if ([ "$MODULE" == "task-list" ]); then
-            (./scripts/npm-build-all.sh -si -sb -t "process-services/task-list" || exit 1;);
+            (./scripts/npm-build-all.sh -si -sb -t "process-services" || exit 1;);
       fi
 
     - if ([ "$MODULE" == "content" ]); then
-            (./scripts/npm-build-all.sh -si -sb -t "content*" || exit 1;);
+            (./scripts/npm-build-all.sh -si -sb -t "content-services" || exit 1;);
       fi
 
     - if ([ "$MODULE" == "demo-shell" ]); then

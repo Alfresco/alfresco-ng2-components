@@ -63,7 +63,8 @@ describe('FolderCreateDirective', () => {
                 })
             ],
             declarations: [
-                TestComponent
+                TestComponent,
+                FolderCreateDirective
             ],
             providers: [
                 ContentService,
