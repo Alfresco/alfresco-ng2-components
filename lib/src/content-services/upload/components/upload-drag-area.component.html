@@ -1,8 +1,0 @@
-<div [file-draggable]="isDroppable()" id="UploadBorder" class="upload-border"
-     (filesDropped)="onFilesDropped($event)"
-     (filesEntityDropped)="onFilesEntityDropped($event)"
-     (folderEntityDropped)="onFolderEntityDropped($event)"
-     (upload-files)="onUploadFiles($event)"
-     dropzone="" webkitdropzone="*" #droparea>
-    <ng-content></ng-content>
-</div>

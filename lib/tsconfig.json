@@ -1,38 +1,50 @@
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-    "outDir": "./dist/out-tsc",
-    "sourceMap": true,
-    "declaration": false,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "target": "es5",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "paths": {
-      "@alfresco/process-services": ["./process-services/"],
-      "@alfresco/content-services": ["./content-services/"],
-      "@alfresco/core": ["./core/"],
-      "alfresco-js-api": ["./node_modules/alfresco-js-api/"],
-      "@angular/*": ["./node_modules/@angular/*"],
-      "rxjs/*": ["./node_modules/rxjs/*"]
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "skipLibCheck": false,
+        "noLib": false,
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "noImplicitAny": false,
+        "noImplicitReturns": false,
+        "noImplicitUseStrict": false,
+        "noFallthroughCasesInSwitch": true,
+        "removeComments": true,
+        "declaration": true,
+        "outDir": "./dist",
+        "baseUrl" :  "./",
+        "types": ["jasmine"],
+        "paths": {
+            "@alfresco/process-services": ["./process-services/"],
+            "@alfresco/content-services": ["./content-services/"],
+            "@alfresco/core": ["./core/"],
+            "alfresco-js-api": ["./node_modules/alfresco-js-api/"],
+            "@angular/*": ["./node_modules/@angular/*"],
+            "rxjs/*": ["./node_modules/rxjs/*"]
+        },
+        "lib": [
+            "es2015",
+            "dom"
+        ],
+        "suppressImplicitAnyIndexErrors": true,
+        "noUnusedLocals": true
     },
-    "lib": [
-      "es2017",
-      "dom"
-    ]
-  },
-  "exclude": [
-    "*/node_modules",
-    "*/demo",
-    "src/assets/test-file.txt",
-    "src/assets/test-file.pdf",
-    "config",
-    "*/coverage",
-    "node_modules",
-    "*/dist",
-    "dist"
-  ]
+    "exclude": [
+        "*/node_modules",
+        "*/demo",
+        "config",
+        "*/coverage",
+        "node_modules",
+        "*/dist",
+        "dist"
+    ],
+    "angularCompilerOptions": {
+        "strictMetadataEmit": false,
+        "skipTemplateCodegen": true
+    }
 }

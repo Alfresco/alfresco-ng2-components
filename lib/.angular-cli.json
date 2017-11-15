@@ -6,7 +6,7 @@
   "apps": [
     {
       "name": "core",
-      "root": "src",
+      "root": "./",
       "outDir": "dist",
       "assets": [
         "assets",
@@ -18,10 +18,9 @@
       ],
       "index": "index.html",
       "main": "core/index.ts",
-      "polyfills": "polyfills.ts",
       "test": "core/test.ts",
       "tsconfig": "tsconfig.app.json",
-      "testTsconfig": "tsconfig.spec.json",
+      "testTsconfig": "tsconfig.json",
       "prefix": "app",
       "styles": [
         "styles.css"
@@ -35,7 +34,7 @@
     },
     {
       "name": "content-services",
-      "root": "src",
+      "root": "./",
       "outDir": "dist",
       "assets": [
         "assets",
@@ -47,10 +46,9 @@
       ],
       "index": "index.html",
       "main": "content-services/index.ts",
-      "polyfills": "polyfills.ts",
       "test": "content-services/test.ts",
       "tsconfig": "tsconfig.app.json",
-      "testTsconfig": "tsconfig.spec.json",
+      "testTsconfig": "tsconfig.json",
       "prefix": "app",
       "styles": [
         "styles.css"
@@ -64,7 +62,7 @@
     },
     {
       "name": "process-services",
-      "root": "src",
+      "root": "./",
       "outDir": "dist",
       "assets": [
         "assets",
@@ -76,10 +74,9 @@
       ],
       "index": "index.html",
       "main": "process-services/index.ts",
-      "polyfills": "polyfills.ts",
       "test": "process-services/test.ts",
       "tsconfig": "tsconfig.app.json",
-      "testTsconfig": "tsconfig.spec.json",
+      "testTsconfig": "tsconfig.json",
       "prefix": "app",
       "styles": [
         "styles.css"
@@ -99,11 +96,11 @@
   },
   "lint": [
     {
-      "project": "src/tsconfig.app.json",
+      "project": "./tsconfig.app.json",
       "exclude": "**/node_modules/**"
     },
     {
-      "project": "src/tsconfig.spec.json",
+      "project": "./tsconfig.json",
       "exclude": "**/node_modules/**"
     },
     {

@@ -82,37 +82,37 @@
         },
         {
           "glob": "**/*",
-          "input": "../../lib/src/core/prebuilt-themes",
+          "input": "../../lib/core/prebuilt-themes",
           "output": "./prebuilt-themes"
         },
         {
           "glob": "**/*",
-          "input": "../../lib/src/core/bundles/assets",
+          "input": "../../lib/core/bundles/assets",
           "output": "./assets/"
         },
         {
           "glob": "**/*",
-          "input": "../../lib/src/process-services/bundles/assets",
+          "input": "../../lib/process-services/bundles/assets",
           "output": "./assets/"
         },
         {
           "glob": "**/*",
-          "input": "../../lib/src/content-services/bundles/assets",
+          "input": "../../lib/content-services/bundles/assets",
           "output": "./assets/"
         },
         {
           "glob": "**/*",
-          "input": "../../lib/src/core/i18n",
+          "input": "../../lib/core/i18n",
           "output": "./assets/@adf/core/i18n"
         },
         {
           "glob": "**/*",
-          "input": "../../lib/src/process-services/i18n",
+          "input": "../../lib/process-services/i18n",
           "output": "./assets/@adf/process-services/i18n"
         },
         {
           "glob": "**/*",
-          "input": "../../lib/src/content-services/i18n",
+          "input": "../../lib/content-services/i18n",
           "output": "./assets/@adf/content-services/i18n"
         },
         { "glob": "pdf.worker.js", "input": "../node_modules/pdfjs-dist/build", "output": "./" }
@@ -130,7 +130,7 @@
       ],
       "stylePreprocessorOptions": {
       "includePaths": [
-        "../../lib/src/"
+        "../../lib/"
       ]
       },
       "scripts": [
