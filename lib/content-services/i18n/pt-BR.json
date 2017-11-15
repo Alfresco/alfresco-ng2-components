@@ -1,0 +1,154 @@
+{
+  "ADF-DOCUMENT-LIST": {
+    "EMPTY": {
+      "HEADER": "Esta pasta está vazia"
+    },
+    "LAYOUT": {
+      "THUMBNAIL": "Miniatura",
+      "NAME": "Nome",
+      "LOCATION": "Localização",
+      "SIZE": "Tamanho",
+      "DELETED_ON": "Excluído",
+      "DELETED_BY": "Excluído por",
+      "STATUS": "Status",
+      "MODIFIED_ON": "Modificado",
+      "MODIFIED_BY": "Modificado por",
+      "SHARED_BY": "Compartilhado por",
+      "LOAD_MORE": "Carregar mais"
+    }
+  },
+  "ALFRESCO_DOCUMENT_LIST": {
+    "BUTTON": {
+      "ACTION_CREATE": "Criar...",
+      "ACTION_NEW_FOLDER": "Nova Pasta",
+      "CREATE": "Criar",
+      "CANCEL": "Cancelar"
+    }
+  },
+  "DROPDOWN": {
+    "PLACEHOLDER_LABEL": "Lista do Site",
+    "MY_FILES_OPTION": ""
+  },
+  "NODE_SELECTOR": {
+    "CANCEL": "Cancelar",
+    "CHOOSE": "Escolher",
+    "NO_RESULTS": "Nenhum resultado encontrado"
+  },
+  "OPERATION": {
+    "SUCCES": {
+      "CONTENT": {
+        "COPY": "Copiado com êxito",
+        "MOVE": "Movido com êxito"
+      },
+      "FOLDER": {
+        "COPY": "Copiado com êxito",
+        "MOVE": "Movido com êxito"
+      }
+    },
+    "ERROR": {
+      "CONFLICT": "Este nome já está em uso, tente outro nome.",
+      "UNKNOWN": "A ação não teve êxito. Tente novamente ou entre em contato com a Equipe de TI.",
+      "PERMISSION": "Você não tem acesso para fazer isso."
+    }
+  },
+  "TAG": {
+    "LABEL": {
+      "NEWTAG": "Nova marca"
+    },
+    "MESSAGES": {
+      "EXIST": "A marca já existe"
+    },
+    "BUTTON": {
+      "ADD": "Adicionar marca"
+    }
+  },
+  "ADF_FILE_UPLOAD": {
+    "BUTTON": {
+      "MINIMIZE": "Minimizar",
+      "MAXIMIZE": "Maximizar",
+      "CLOSE": "Fechar",
+      "CANCEL_ALL": "Cancelar uploads",
+      "CANCEL_FILE": "Cancelar upload",
+      "REMOVE_FILE": "Remover arquivo carregado"
+    },
+    "STATUS": {
+      "FILE_CANCELED_STATUS": "Cancelado"
+    },
+    "CONFIRMATION": {
+      "BUTTON": {
+        "CANCEL": "Sim",
+        "CONTINUE": "Não"
+      },
+      "MESSAGE": {
+        "TITLE": "Cancelar upload",
+        "TEXT": "Interrompa o carregamento e remova os arquivos carregados."
+      }
+    }
+  },
+  "FILE_UPLOAD": {
+    "BUTTON": {
+      "UPLOAD_FILE": "Carregar arquivo",
+      "UPLOAD_FOLDER": "Carregar pasta"
+    },
+    "MESSAGES": {
+      "UPLOAD_CANCELED": "Upload cancelado",
+      "UPLOAD_COMPLETED": "Carregados {{ completed }} / {{ total }}",
+      "UPLOAD_PROGRESS": "Carregando {{ completed }} / {{ total }}",
+      "UPLOAD_ERROR": "{{ total }} carregamento malsucedido",
+      "UPLOAD_ERRORS": "{{ total }} carregamentos malsucedidos",
+      "PROGRESS": "Carregamento em andamento...",
+      "FOLDER_ALREADY_EXIST": "A pasta {0} já existe",
+      "FOLDER_NOT_SUPPORTED": "Seu navegador não dá suporte ao carregamento da pasta, tente em outro navegador",
+      "REMOVE_FILE_ERROR": "Não foi possível remover {{ fileName }}, tente novamente ou consulte a Equipe de TI.",
+      "REMOVE_FILES_ERROR": "Não foi possível remover {{ total }} arquivos, tente novamente ou consulte a Equipe de TI."
+    },
+    "ACTION": {
+      "UNDO": "Desfazer"
+    }
+  },
+  "SEARCH": {
+    "CONTROL": {},
+    "RESULTS": {
+      "SUMMARY": "{{numResults}} resultado encontrado para {{searchTerm}}",
+      "NONE": "Nenhum resultado encontrado para {{searchTerm}}",
+      "ERROR": "Houve um problema durante a pesquisa, tente novamente.",
+      "COLUMNS": {
+        "NAME": "Nome de exibição",
+        "MODIFIED_BY": "Modificado por",
+        "MODIFIED_AT": "Modificado em"
+      }
+    },
+    "ICONS": {
+      "ft_ic_raster_image": "Arquivo de imagem",
+      "ft_ic_pdf": "Documento em PDF",
+      "ft_ic_ms_excel": "Arquivo do Microsoft Excel",
+      "ft_ic_ms_word": "Documento do Microsoft Word",
+      "ft_ic_ms_powerpoint": "Arquivo do Microsoft PowerPoint",
+      "ft_ic_video": "Arquivo de vídeo",
+      "ft_ic_document": "Arquivo de documento",
+      "ft_ic_website": "Recurso da Web",
+      "ft_ic_archive": "Arquivo de arquivamento",
+      "ft_ic_presentation": "Arquivo de apresentação",
+      "ft_ic_spreadsheet": "Arquivo de planilha"
+    },
+    "DOCUMENT_LIST": {
+      "COLUMNS": {
+        "DISPLAY_NAME": "Nome de exibição",
+        "CREATED_BY": "Criado por",
+        "CREATED_ON": "Criado"
+      },
+      "ACTIONS": {
+        "FOLDER": {
+          "DELETE": "Excluir"
+        },
+        "DOCUMENT": {
+          "DOWNLOAD": "Download",
+          "DELETE": "Excluir"
+        }
+      }
+    }
+  },
+  "PERMISSON": {
+    "LACKOF": "Você não tem a permissão {{permission}} para {{action}} o {{type}}"
+  }
+}

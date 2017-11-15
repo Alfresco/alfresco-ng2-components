@@ -52,4 +52,4 @@ ADF (demo shell) imports by default the following set of recommended polyfills:
 <link rel="stylesheet" type="text/css" href="node_modules/dialog-polyfill/dialog-polyfill.css" />
 ```
 
-For a complete code please refer to [demo shell](demo-shell-ng2/index.html) example.
+For a complete code please refer to [demo shell](demo-shell/index.html) example.

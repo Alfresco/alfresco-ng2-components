@@ -55,7 +55,7 @@ All the commands before can be used in combination
 | -r or --registry    |  Start the demo using an alternative npm registry  |
 | -v or --version    | Use the version defined in the pacakge.json . Download from npm and Install a different version of the ng2-components (this option is not compatible with -dev)  |
 | -si or --skipinstall    | skip the install of the node_modules  |
-| -ss or --skipstart    | skip the start of the demo shell and only build it providing a dist folder in the relative demo-shell-ng2 folder  |
+| -ss or --skipstart    | skip the start of the demo shell and only build it providing a dist folder in the relative demo-shell folder  |
 | -dev or --develop    | Start the demo in development mode building the relative folder ng2-components with all the components and pointing to those components instead of the ng2-components present in the node_modules folder |
 | -dist     | Start the demo shell using a light server and the files built in the dist folder, particular useful to test the final result of the project |
 | -gitjsapi   | Start the demo shell using an alfresco-js-api referenced by commit-ish version of the JS-API |
@@ -204,7 +204,7 @@ The default behaviour of the ***npm-build-all.sh*** install node_modules and bui
 ./npm-clean.sh
 ```
 
-For development environment configuration please refer to [project docs](../demo-shell-ng2/README.md).
+For development environment configuration please refer to [project docs](../demo-shell/README.md).
 
 
 # npm-relock-pkgs.sh
@@ -246,7 +246,7 @@ For development environment configuration please refer to [project docs](../demo
 
 # npm-clean.sh
 
-***npm-clean.sh*** clean all the projects folders : ng2-components and  demo-shell-ng2.
+***npm-clean.sh*** clean all the projects folders : ng2-components and  demo-shell.
 
 ## Options
 

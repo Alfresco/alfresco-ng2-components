@@ -15,22 +15,9 @@ eval SINGLE_TEST=""
 eval EXEC_VERSION_JSAPI=false
 eval JSAPI_VERSION=""
 
-eval projects=( "ng2-alfresco-core"
-    "ng2-alfresco-datatable"
-    "ng2-alfresco-upload"
-    "ng2-alfresco-userinfo"
-    "ng2-activiti-diagrams"
-    "ng2-activiti-analytics"
-    "ng2-activiti-form"
-    "ng2-activiti-tasklist"
-    "ng2-activiti-processlist"
-    "ng2-alfresco-documentlist"
-    "ng2-alfresco-login"
-    "ng2-alfresco-search"
-    "ng2-alfresco-social"
-    "ng2-alfresco-tag"
-    "ng2-alfresco-viewer"
-    "ng2-alfresco-webscript" )
+eval projects=( "core"
+    "content-services"
+    "process-services" )
 
 show_help() {
     echo "Usage: npm-build-all.sh"
@@ -66,7 +53,7 @@ enable_testbrowser(){
 
 test_project() {
     echo "====== test project: $1 ====="
-    npm run test -- --component $1 || exit 1
+    ng test --app $1 || exit 1
 }
 
 debug_project() {
@@ -127,28 +114,25 @@ while [[ $1 == -* ]]; do
     esac
 done
 
-cd "$DIR/../ng2-components/"
+cd "$DIR/../lib/"
 
 if $EXEC_CLEAN == true; then
-  echo "====== Clean ng2-components ====="
+  echo "====== Clean components ====="
   npm install rimraf -g
   npm run clean
 fi
 
 if $EXEC_INSTALL == true; then
-    echo "====== Regenerate global ng2-components package.json ====="
-    npm install package-json-merge -g
-    npm run pkg-build
-    echo "====== Install ng2-components dependencies ====="
+    echo "====== Install components dependencies ====="
     npm install
 fi
 
 if $EXEC_GIT_NPM_INSTALL_JSAPI == true; then
   echo "====== Use the alfresco JS-API  '$GIT_ISH'====="
   npm install $GIT_ISH --no-save
-  cd "$DIR/../ng2-components/node_modules/alfresco-js-api"
+  cd "$DIR/../lib/node_modules/alfresco-js-api"
   npm install
-  cd "$DIR/../ng2-components/"
+  cd "$DIR/../lib/"
 fi
 
 if $EXEC_VERSION_JSAPI == true; then
@@ -157,35 +141,34 @@ if $EXEC_VERSION_JSAPI == true; then
 fi
 
 if $EXEC_BUILD == true; then
-    echo "====== Build ng2-components ====="
+    echo "====== Build components ====="
     npm run build || exit 1
 fi
 
 if $EXEC_FAST_TEST == true; then
-    echo "====== Test all ng2-components (fast option) ====="
+    echo "====== Test all components (fast option) ====="
     npm run test || exit 1
 fi
 
-
 if $RUN_TEST == true; then
-    for PACKAGE in ${projects[@]}
-    do
-      DESTDIR="$DIR/../ng2-components/"
+      DESTDIR="$DIR/../lib/"
       cd $DESTDIR
       if $EXEC_SINGLE_TEST == true; then
-        if [[ $PACKAGE == $SINGLE_TEST ]]; then
-            test_project $PACKAGE
-        fi
+            cp -n "$DESTDIR/config/karma-test-shim.js" "$DESTDIR/$SINGLE_TEST/"
+            test_project $SINGLE_TEST
+            rimraf "$DESTDIR/$SINGLE_TEST/karma-test-shim.js"
       else
-        test_project $PACKAGE
+       for PACKAGE in ${projects[@]}
+        do
+            test_project $PACKAGE
+        done
       fi
-    done
 fi
 
 if $RUN_TESTBROWSER == true; then
     for PACKAGE in ${projects[@]}
     do
-        DESTDIR="$DIR/../ng2-components/"
+        DESTDIR="$DIR/../lib/"
         cd $DESTDIR
         if [[ $PACKAGE == $SINGLE_TEST ]]; then
             debug_project $PACKAGE

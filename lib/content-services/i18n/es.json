@@ -1,0 +1,154 @@
+{
+  "ADF-DOCUMENT-LIST": {
+    "EMPTY": {
+      "HEADER": "Esta carpeta está vacía"
+    },
+    "LAYOUT": {
+      "THUMBNAIL": "Miniatura",
+      "NAME": "Nombre",
+      "LOCATION": "Ubicación",
+      "SIZE": "Tamaño",
+      "DELETED_ON": "Eliminado",
+      "DELETED_BY": "Eliminado por",
+      "STATUS": "Estado",
+      "MODIFIED_ON": "Modificado",
+      "MODIFIED_BY": "Modificado por",
+      "SHARED_BY": "Compartido por",
+      "LOAD_MORE": "Cargar más"
+    }
+  },
+  "ALFRESCO_DOCUMENT_LIST": {
+    "BUTTON": {
+      "ACTION_CREATE": "Crear...",
+      "ACTION_NEW_FOLDER": "Nueva carpeta",
+      "CREATE": "Crear",
+      "CANCEL": "Cancelar"
+    }
+  },
+  "DROPDOWN": {
+    "PLACEHOLDER_LABEL": "Lista de sitios",
+    "MY_FILES_OPTION": ""
+  },
+  "NODE_SELECTOR": {
+    "CANCEL": "Cancelar",
+    "CHOOSE": "Elegir",
+    "NO_RESULTS": "Ningún resultado encontrado"
+  },
+  "OPERATION": {
+    "SUCCES": {
+      "CONTENT": {
+        "COPY": "Copia satisfactoria",
+        "MOVE": "Traslado satisfactorio"
+      },
+      "FOLDER": {
+        "COPY": "Copia satisfactoria",
+        "MOVE": "Traslado satisfactorio"
+      }
+    },
+    "ERROR": {
+      "CONFLICT": "Este nombre ya está en uso; pruebe con un nombre diferente.",
+      "UNKNOWN": "La acción no ha sido satisfactoria. Vuelva a intentarlo o póngase en contacto con el equipo de TI.",
+      "PERMISSION": "No tiene acceso para hacer esto."
+    }
+  },
+  "TAG": {
+    "LABEL": {
+      "NEWTAG": "Nueva etiqueta"
+    },
+    "MESSAGES": {
+      "EXIST": "Ya existe esta etiqueta"
+    },
+    "BUTTON": {
+      "ADD": "Añadir etiqueta"
+    }
+  },
+  "ADF_FILE_UPLOAD": {
+    "BUTTON": {
+      "MINIMIZE": "Minimizar",
+      "MAXIMIZE": "Maximizar",
+      "CLOSE": "Cerrar",
+      "CANCEL_ALL": "Cancelar cargas",
+      "CANCEL_FILE": "Cancelar carga",
+      "REMOVE_FILE": "Eliminar fichero cargado"
+    },
+    "STATUS": {
+      "FILE_CANCELED_STATUS": "Cancelado"
+    },
+    "CONFIRMATION": {
+      "BUTTON": {
+        "CANCEL": "Sí",
+        "CONTINUE": "No"
+      },
+      "MESSAGE": {
+        "TITLE": "Cancelar carga",
+        "TEXT": "Detener la carga y eliminar los ficheros ya cargados."
+      }
+    }
+  },
+  "FILE_UPLOAD": {
+    "BUTTON": {
+      "UPLOAD_FILE": "Añadir fichero",
+      "UPLOAD_FOLDER": "Cargar carpeta"
+    },
+    "MESSAGES": {
+      "UPLOAD_CANCELED": "Carga cancelada",
+      "UPLOAD_COMPLETED": "Cargados {{ completed }} / {{ total }}",
+      "UPLOAD_PROGRESS": "Cargando {{ completed }} / {{ total }}",
+      "UPLOAD_ERROR": "Error en carga {{ total }}",
+      "UPLOAD_ERRORS": "Error en {{ total }} cargas",
+      "PROGRESS": "Carga en curso...",
+      "FOLDER_ALREADY_EXIST": "La carpeta {0} ya existe",
+      "FOLDER_NOT_SUPPORTED": "Su navegador no es compatible con la carga de carpetas; pruebe con un navegador diferente.",
+      "REMOVE_FILE_ERROR": "{{ fileName }} no se ha podido eliminar; vuelva a intentarlo o póngase en contacto con el equipo de TI.",
+      "REMOVE_FILES_ERROR": "{{ total }} ficheros no se han podido eliminar; vuelva a intentarlo o póngase en contacto con su equipo de TI."
+    },
+    "ACTION": {
+      "UNDO": "Deshacer"
+    }
+  },
+  "SEARCH": {
+    "CONTROL": {},
+    "RESULTS": {
+      "SUMMARY": "{{numResults}} resultados encontrados para {{searchTerm}}",
+      "NONE": "No se han encontrado resultados para {{searchTerm}}",
+      "ERROR": "Se ha producido un problema durante la búsqueda; vuelva a intentarlo.",
+      "COLUMNS": {
+        "NAME": "Nombre a mostrar",
+        "MODIFIED_BY": "Modificado por",
+        "MODIFIED_AT": "Modificado a las"
+      }
+    },
+    "ICONS": {
+      "ft_ic_raster_image": "Fichero de imagen",
+      "ft_ic_pdf": "Documento PDF",
+      "ft_ic_ms_excel": "Fichero de Microsoft Excel",
+      "ft_ic_ms_word": "Documento de Microsoft Word",
+      "ft_ic_ms_powerpoint": "Fichero de Microsoft PowerPoint",
+      "ft_ic_video": "Fichero de vídeo",
+      "ft_ic_document": "Fichero de documento",
+      "ft_ic_website": "Recurso web",
+      "ft_ic_archive": "Fichero de archivo",
+      "ft_ic_presentation": "Fichero de presentación",
+      "ft_ic_spreadsheet": "Fichero de hoja de cálculo"
+    },
+    "DOCUMENT_LIST": {
+      "COLUMNS": {
+        "DISPLAY_NAME": "Nombre a mostrar",
+        "CREATED_BY": "Creado por",
+        "CREATED_ON": "Creado"
+      },
+      "ACTIONS": {
+        "FOLDER": {
+          "DELETE": "Eliminar"
+        },
+        "DOCUMENT": {
+          "DOWNLOAD": "Descargar",
+          "DELETE": "Eliminar"
+        }
+      }
+    }
+  },
+  "PERMISSON": {
+    "LACKOF": "No tiene permiso {{permission}} para {{action}} el {{type}}"
+  }
+}

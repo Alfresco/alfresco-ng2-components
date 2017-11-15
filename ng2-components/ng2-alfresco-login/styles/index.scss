@@ -1,5 +1,0 @@
-@import '../src/components/login.component';
-
-@mixin alfresco-login-theme($theme) {
-    @include adf-login-theme($theme);
-}

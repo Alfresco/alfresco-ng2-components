@@ -16,23 +16,9 @@ eval JSAPI_VERSION=""
 eval NG2_COMPONENTS_VERSION=""
 eval GIT_ISH=""
 
-eval projects=( "ng2-alfresco-core"
-    "ng2-alfresco-datatable"
-    "ng2-alfresco-upload"
-    "ng2-activiti-diagrams"
-    "ng2-activiti-analytics"
-    "ng2-activiti-form"
-    "ng2-activiti-tasklist"
-    "ng2-activiti-processlist"
-    "ng2-alfresco-documentlist"
-    "ng2-alfresco-login"
-    "ng2-alfresco-search"
-    "ng2-alfresco-social"
-    "ng2-alfresco-tag"
-    "ng2-alfresco-social"
-    "ng2-alfresco-viewer"
-    "ng2-alfresco-webscript"
-    "ng2-alfresco-userinfo" )
+eval projects=( "@alfresco/core"
+    "@alfresco/content-service"
+    "@alfresco/process-service" )
 
 show_help() {
     echo "Usage: start.sh"
@@ -139,7 +125,7 @@ while [[ $1  == -* ]]; do
     esac
 done
 
-cd "$DIR/../demo-shell-ng2"
+cd "$DIR/../demo-shell"
 
 if $EXEC_CLEAN == true; then
   echo "====== Clean Demo shell ====="
@@ -156,7 +142,7 @@ if $EXEC_DEVELOP == true; then
    echo "====== Install node_modules ng2-components ====="
    cd "$DIR/../ng2-components"
    npm install
-   cd "$DIR/../demo-shell-ng2"
+   cd "$DIR/../demo-shell"
 fi
 
 if $EXEC_VERSION == true; then
@@ -177,7 +163,7 @@ fi
 if $EXEC_GIT_NPM_INSTALL_JSAPI == true; then
   echo "====== Use the alfresco JS-API  '$GIT_ISH'====="
   npm install $GIT_ISH --no-save
-  cd "$DIR/../demo-shell-ng2/node_modules/alfresco-js-api"
+  cd "$DIR/../demo-shell/node_modules/alfresco-js-api"
   npm install
   if $EXEC_DEVELOP == true; then
    cd "$DIR/../ng2-components/"
@@ -185,7 +171,7 @@ if $EXEC_GIT_NPM_INSTALL_JSAPI == true; then
    cd "$DIR/../ng2-components/node_modules/alfresco-js-api"
    npm install
   fi
-  cd "$DIR/../demo-shell-ng2"
+  cd "$DIR/../demo-shell"
 fi
 
 if $EXEC_VERSION_JSAPI == true; then
@@ -196,7 +182,7 @@ if $EXEC_VERSION_JSAPI == true; then
    cd "$DIR/../ng2-components/"
    npm install alfresco-js-api@${JSAPI_VERSION} --no-save
   fi
-  cd "$DIR/../demo-shell-ng2"
+  cd "$DIR/../demo-shell"
 fi
 
 if $EXEC_TEST == true; then
