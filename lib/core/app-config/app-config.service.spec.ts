@@ -44,6 +44,7 @@ describe('AppConfigService', () => {
                 AppConfigModule
             ],
             providers: [
+                { provide: AppConfigService, useClass: AppConfigService }
             ]
         });
 
