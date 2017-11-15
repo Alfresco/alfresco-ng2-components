@@ -154,7 +154,7 @@ if $RUN_TEST == true; then
       DESTDIR="$DIR/../ng2-components/"
       cd $DESTDIR
       if $EXEC_SINGLE_TEST == true; then
-            cp "$DESTDIR/config/karma-test-shim.js" "$DESTDIR/$SINGLE_TEST/"
+            cp -n "$DESTDIR/config/karma-test-shim.js" "$DESTDIR/$SINGLE_TEST/"
             test_project $SINGLE_TEST
       else
        for PACKAGE in ${projects[@]}
