@@ -31,7 +31,7 @@ const fakeTaskDetail = new TaskDetailsModel({
     name: 'fake-check-name'
 });
 
-describe('ChecklistComponent', () => {
+xdescribe('ChecklistComponent', () => {
 
     let checklistComponent: ChecklistComponent;
     let fixture: ComponentFixture<ChecklistComponent>;

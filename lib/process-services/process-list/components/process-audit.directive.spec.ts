@@ -20,7 +20,6 @@ import { async, ComponentFixture, fakeAsync, TestBed } from '@angular/core/testi
 import { Observable } from 'rxjs/Rx';
 import { ProcessService } from './../services/process.service';
 import { ProcessAuditDirective } from './process-audit.directive';
-import { CoreModule } from '@alfresco/core';
 
 declare let jasmine: any;
 
@@ -50,7 +49,6 @@ describe('ProcessAuditDirective', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [CoreModule],
             declarations: [BasicButtonComponent, ProcessAuditDirective],
             providers: [ProcessService]
         });

@@ -25,7 +25,6 @@ import {
 import { Observable } from 'rxjs/Rx';
 import { TaskListService } from './../services/tasklist.service';
 import { TaskAuditDirective } from './task-audit.directive';
-import { CoreModule } from '@alfresco/core';
 
 declare let jasmine: any;
 
@@ -55,7 +54,6 @@ describe('TaskAuditDirective', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [CoreModule],
             declarations: [BasicButtonComponent, TaskAuditDirective],
             providers: [TaskListService]
         });

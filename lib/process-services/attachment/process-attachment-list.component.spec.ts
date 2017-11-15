@@ -21,7 +21,6 @@ import { MatProgressSpinnerModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { ProcessContentService } from '@alfresco/core';
-import { DataTableModule } from '@alfresco/core';
 import { Observable } from 'rxjs/Rx';
 
 import { ProcessAttachmentListComponent } from './process-attachment-list.component';
@@ -40,7 +39,6 @@ describe('ProcessAttachmentListComponent', () => {
         let zone = new NgZone({enableLongStackTrace: false});
         TestBed.configureTestingModule({
             imports: [
-                DataTableModule,
                 MatProgressSpinnerModule
             ],
             declarations: [

@@ -26,7 +26,6 @@ import { AppConfigServiceMock } from '../mock';
 import { DatePipe } from '@angular/common';
 import { MatInputModule } from '@angular/material';
 import { PeopleProcessService } from '@alfresco/core';
-import { DataTableModule } from '@alfresco/core';
 import { TaskListService } from '../task-list/services/tasklist.service';
 import { CommentListComponent } from './comment-list.component';
 import { CommentsComponent } from './comments.component';
@@ -44,7 +43,6 @@ describe('CommentsComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 FormModule,
-                DataTableModule,
                 MatInputModule
             ],
             declarations: [

@@ -21,8 +21,8 @@ import { MatProgressSpinnerModule } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
 import { ProcessInstanceListComponent } from './process-list.component';
 
-import { AppConfigService, CoreModule } from '@alfresco/core';
-import { DataRowEvent, DataSorting, DataTableModule, ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/core';
+import { AppConfigService } from '@alfresco/core';
+import { DataRowEvent, DataSorting, ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/core';
 
 import { fakeProcessInstance, fakeProcessInstancesWithNoName } from '../../mock';
 import { ProcessService } from '../services/process.service';
@@ -71,8 +71,6 @@ describe('ProcessInstanceListComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
-                DataTableModule,
                 MatProgressSpinnerModule
             ],
             declarations: [ ProcessInstanceListComponent ],

@@ -19,7 +19,7 @@ import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MaterialModule } from '../../material.module';
 import { AppConfigService } from '@alfresco/core';
-import { DataTableModule, DataRowEvent, ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/core';
+import { DataRowEvent, ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/core';
 import { TaskListService } from '../services/tasklist.service';
 import { TaskListComponent } from './task-list.component';
 
@@ -130,7 +130,6 @@ xdescribe('TaskListComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                DataTableModule,
                 MaterialModule
             ],
             declarations: [

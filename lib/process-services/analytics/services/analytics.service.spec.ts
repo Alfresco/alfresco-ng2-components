@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { AlfrescoApiService, CoreModule } from '@alfresco/core';
+import { AlfrescoApiService } from '@alfresco/core';
 import { fakeReportList } from '../../mock';
 import { AnalyticsService } from './analytics.service';
 
@@ -30,7 +30,6 @@ describe('Activiti Analytics Service', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
             ],
             providers: [
                 AnalyticsService

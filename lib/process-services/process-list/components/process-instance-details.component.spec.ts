@@ -23,7 +23,6 @@ import { Observable } from 'rxjs/Rx';
 
 import { FormModule, FormService } from '@alfresco/core';
 import { TaskListModule } from '../../task-list';
-import { CoreModule } from '@alfresco/core';
 
 import { ProcessInstance } from '../models/process-instance.model';
 import { exampleProcess, exampleProcessNoName } from './../../mock';
@@ -42,7 +41,6 @@ describe('ProcessInstanceDetailsComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                CoreModule,
                 FormModule,
                 TaskListModule
             ],

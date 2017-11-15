@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslationService, CardViewUpdateService, CoreModule } from '@alfresco/core';
+import { TranslationService, CardViewUpdateService } from '@alfresco/core';
 import { MaterialModule } from '../../material.module';
 import { Observable } from 'rxjs/Rx';
 
@@ -34,7 +34,6 @@ describe('ProcessInstanceHeaderComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
                 MaterialModule
             ],
             declarations: [

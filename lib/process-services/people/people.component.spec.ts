@@ -20,7 +20,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule, MatInputModule } from '@angular/material';
 import { AppConfigService, LogService } from '@alfresco/core';
 import { PeopleProcessService, UserProcessModel } from '@alfresco/core';
-import { DataTableModule } from '@alfresco/core';
 import { AppConfigServiceMock } from '../mock';
 import { PeopleListComponent } from './people-list.component';
 import { PeopleSearchComponent } from './people-search.component';
@@ -53,7 +52,6 @@ describe('PeopleComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                DataTableModule,
                 MatButtonModule,
                 MatInputModule
             ],

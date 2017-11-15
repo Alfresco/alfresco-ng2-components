@@ -23,7 +23,6 @@ import { Observable } from 'rxjs/Rx';
 
 import { CommentListComponent, CommentsComponent } from '../index';
 import { CommentProcessService, PeopleProcessService } from '@alfresco/core';
-import { DataTableModule } from '@alfresco/core';
 
 import { ProcessService } from '../process-list/services/process.service';
 import { ProcessCommentsComponent } from './process-comments.component';
@@ -38,7 +37,6 @@ describe('ActivitiProcessInstanceComments', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                DataTableModule,
                 MatInputModule
             ],
             declarations: [

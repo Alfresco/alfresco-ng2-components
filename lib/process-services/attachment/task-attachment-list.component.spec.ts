@@ -19,7 +19,6 @@ import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AppConfigService } from '@alfresco/core';
-import { CoreModule } from '@alfresco/core';
 import { MaterialModule } from '../material.module';
 import { Observable } from 'rxjs/Rx';
 import { AppConfigServiceMock } from '../mock';
@@ -39,7 +38,6 @@ describe('TaskAttachmentList', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
                 MaterialModule
             ],
             declarations: [

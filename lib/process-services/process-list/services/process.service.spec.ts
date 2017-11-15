@@ -18,7 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { async } from '@angular/core/testing';
 import { AlfrescoApi } from 'alfresco-js-api';
-import { AlfrescoApiService, CoreModule } from '@alfresco/core';
+import { AlfrescoApiService } from '@alfresco/core';
 import { exampleProcess, fakeProcessInstances } from '../../mock';
 import { fakeError, fakeProcessFilters, fakeProcessDef, fakeTasksList } from '../../mock';
 import { FilterProcessRepresentationModel, ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
@@ -36,7 +36,6 @@ describe('ProcessService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
             ],
             providers: [
                 ProcessService
