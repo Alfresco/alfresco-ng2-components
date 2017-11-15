@@ -76,9 +76,6 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     @Input()
     multiselect: boolean = false;
 
-    // @Input()
-    // enablePagination: boolean = true;
-
     @Input()
     contentActions: boolean = false;
 
@@ -87,9 +84,6 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     @Input()
     contextMenuActions: boolean = false;
-
-    // @Input()
-    // pageSize: number = DocumentListComponent.DEFAULT_PAGE_SIZE;
 
     @Input()
     emptyFolderImageUrl: string = require('../assets/images/empty_doc_lib.svg');
@@ -108,9 +102,6 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     @Input()
     loading: boolean = false;
-
-    // @Input()
-    // paginationStrategy: PaginationStrategy = PaginationStrategy.Finite;
 
     @Input()
     rowFilter: RowFilter|null = null;
@@ -617,18 +608,6 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             this.ready.emit();
         }
     }
-
-    // private isCurrentPageEmpty(node, skipCount): boolean {
-    //     return !this.hasNodeEntries(node) && this.hasPages(skipCount);
-    // }
-
-    // private hasPages(skipCount): boolean {
-    //     return skipCount > 0 && !this.isEmpty();
-    // }
-
-    // private hasNodeEntries(node): boolean {
-    //     return node && node.list && node.list.entries && node.list.entries.length > 0;
-    // }
 
     /**
      * Creates a set of predefined columns.

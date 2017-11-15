@@ -247,6 +247,10 @@ describe('ContentNodeSelectorComponent', () => {
                 spyOn(documentListService, 'getFolder').and.returnValue(Observable.throw('No results for test'));
                 spyOn(sitesApiService, 'getSites').and.returnValue(Observable.of([]));
                 spyOn(component.documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.resolve());
+                component.documentList.pagination = {
+                    maxItems: 10,
+                    skipCount: 0
+                };
                 component.currentFolderId = 'cat-girl-nuku-nuku';
                 fixture.detectChanges();
             });
@@ -353,7 +357,10 @@ describe('ContentNodeSelectorComponent', () => {
 
                 spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.resolve(expectedDefaultFolderNode));
                 spyOn(component.documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.resolve());
-
+                component.documentList.pagination = {
+                    maxItems: 10,
+                    skipCount: 0
+                };
                 component.currentFolderId = 'cat-girl-nuku-nuku';
                 fixture.detectChanges();
             });

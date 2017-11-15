@@ -21,8 +21,8 @@ import {
     EventEmitter,
     Input,
     OnChanges,
-    SimpleChanges,
     Output,
+    SimpleChanges,
     ViewEncapsulation
 } from '@angular/core';
 

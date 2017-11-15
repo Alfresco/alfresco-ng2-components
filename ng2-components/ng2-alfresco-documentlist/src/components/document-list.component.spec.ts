@@ -18,7 +18,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgZone, SimpleChange, TemplateRef } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Pagination } from 'alfresco-js-api';
-import { AlfrescoApiService, AlfrescoTranslationService, AppConfigService, CoreModule, UserPreferencesService } from 'ng2-alfresco-core';
+import { AlfrescoApiService, AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { DataColumn, DataTableComponent } from 'ng2-alfresco-datatable';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { Observable, Subject } from 'rxjs/Rx';
@@ -48,8 +48,6 @@ describe('DocumentList', () => {
     let fixture: ComponentFixture<DocumentListComponent>;
     let element: HTMLElement;
     let eventMock: any;
-    let appConfig: AppConfigService;
-    let userPreferences: UserPreferencesService;
 
     beforeEach(async(() => {
         let zone = new NgZone({enableLongStackTrace: false});
@@ -88,8 +86,6 @@ describe('DocumentList', () => {
         documentList = fixture.componentInstance;
         documentListService = TestBed.get(DocumentListService);
         apiService = TestBed.get(AlfrescoApiService);
-        userPreferences = TestBed.get(UserPreferencesService);
-        appConfig = TestBed.get(AppConfigService);
 
         fixture.detectChanges();
     });
@@ -200,12 +196,20 @@ describe('DocumentList', () => {
 
     it('should reset selection on loading folder by node id', () => {
         spyOn(documentList, 'resetSelection').and.callThrough();
+        documentList.pagination = {
+            skipCount: 0,
+            maxItems: 10
+        };
         documentList.loadFolderByNodeId('-trashcan-');
         expect(documentList.resetSelection).toHaveBeenCalled();
     });
 
     it('should reset selection in the datatable also', () => {
         spyOn(documentList.dataTable, 'resetSelection').and.callThrough();
+        documentList.pagination = {
+            skipCount: 0,
+            maxItems: 10
+        };
         documentList.loadFolderByNodeId('-trashcan-');
         expect(documentList.dataTable.resetSelection).toHaveBeenCalled();
     });
@@ -214,6 +218,10 @@ describe('DocumentList', () => {
         documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
         documentList.folderNode = new NodeMinimal();
         documentList.folderNode.id = '1d26e465-dea3-42f3-b415-faa8364b9692';
+        documentList.pagination = {
+            skipCount: 0,
+            maxItems: 10
+        };
         documentList.reload();
 
         fixture.detectChanges();
@@ -592,6 +600,10 @@ describe('DocumentList', () => {
     it('should perform navigation for folder node only', () => {
         let folder = new FolderNode();
         let file = new FileNode();
+        documentList.pagination = {
+            skipCount: 0,
+            maxItems: 10
+        };
 
         expect(documentList.performNavigation(folder)).toBeTruthy();
         expect(documentList.performNavigation(file)).toBeFalsy();
@@ -773,6 +785,10 @@ describe('DocumentList', () => {
         documentList.currentFolderId = 'id';
         spyOn(documentList.data, 'setFilter').and.callThrough();
         spyOn(documentListService, 'getFolder');
+        documentList.pagination = {
+            skipCount: 0,
+            maxItems: 10
+        };
 
         documentList.ngOnChanges({rowFilter: new SimpleChange(null, filter, true)});
 
@@ -792,6 +808,10 @@ describe('DocumentList', () => {
     it('should set image resolver for underlying adapter', () => {
         let resolver = <ImageResolver> {};
         spyOn(documentList.data, 'setImageResolver').and.callThrough();
+        documentList.pagination = {
+            skipCount: 0,
+            maxItems: 10
+        };
 
         documentList.ngOnChanges({imageResolver: new SimpleChange(null, resolver, true)});
 
@@ -839,6 +859,10 @@ describe('DocumentList', () => {
     it('should load folder by ID on init', () => {
         documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
         spyOn(documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.resolve());
+        documentList.pagination = {
+            skipCount: 0,
+            maxItems: 10
+        };
         documentList.ngOnChanges({folderNode: new SimpleChange(null, documentList.currentFolderId, true)});
         expect(documentList.loadFolderNodesByFolderNodeId).toHaveBeenCalled();
     });
@@ -859,7 +883,10 @@ describe('DocumentList', () => {
         const error = { message: '{ "error": { "statusCode": 501 } }' } ;
         spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.resolve(fakeNodeWithCreatePermission));
         spyOn(documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.reject(error));
-
+        documentList.pagination = {
+            skipCount: 0,
+            maxItems: 10
+        };
         documentList.error.subscribe(val => {
             expect(val).toBe(error);
             done();
@@ -885,11 +912,12 @@ describe('DocumentList', () => {
         documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
         documentList.folderNode = new NodeMinimal();
         documentList.folderNode.id = '1d26e465-dea3-42f3-b415-faa8364b9692';
-        documentList.skipCount = 5;
-        documentList.pageSize = 5;
-        spyOn(documentList, 'isPaginationEnabled').and.returnValue(true);
-        documentList.reload();
+        documentList.pagination = <Pagination> {
+            skipCount: 5,
+            maxItems: 5
+        };
 
+        documentList.reload();
         fixture.detectChanges();
 
         documentList.ready.subscribe(() => {
@@ -917,8 +945,10 @@ describe('DocumentList', () => {
         documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
         documentList.folderNode = new NodeMinimal();
         documentList.folderNode.id = '1d26e465-dea3-42f3-b415-faa8364b9692';
-        documentList.skipCount = 5;
-        documentList.pageSize = 5;
+        documentList.pagination = <Pagination> {
+            skipCount: 5,
+            maxItems: 5
+        };
         spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.resolve(fakeNodeWithCreatePermission));
         spyOn(documentListService, 'getFolder').and.returnValue(Promise.resolve(fakeNodeAnswerWithNOEntries));
 
@@ -937,8 +967,10 @@ describe('DocumentList', () => {
         documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
         documentList.folderNode = new NodeMinimal();
         documentList.folderNode.id = '1d26e465-dea3-42f3-b415-faa8364b9692';
-        documentList.skipCount = 5;
-        documentList.pageSize = 5;
+        documentList.pagination = {
+            skipCount: 5,
+            maxItems: 5
+        };
         spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.resolve(fakeNodeWithNoPermission));
         spyOn(documentListService, 'getFolder').and.returnValue(Promise.resolve(fakeNodeAnswerWithNOEntries));
 
@@ -968,14 +1000,20 @@ describe('DocumentList', () => {
 
     it('should fetch trashcan', () => {
         spyOn(apiService.nodesApi, 'getDeletedNodes').and.returnValue(Promise.resolve(null));
-
+        documentList.pagination = {
+            skipCount: 0,
+            maxItems: 10
+        };
         documentList.loadFolderByNodeId('-trashcan-');
         expect(apiService.nodesApi.getDeletedNodes).toHaveBeenCalled();
     });
 
     it('should emit error when fetch trashcan fails', (done) => {
         spyOn(apiService.nodesApi, 'getDeletedNodes').and.returnValue(Promise.reject('error'));
-
+        documentList.pagination = {
+            skipCount: 0,
+            maxItems: 10
+        };
         documentList.error.subscribe(val => {
             expect(val).toBe('error');
             done();
@@ -987,7 +1025,10 @@ describe('DocumentList', () => {
     it('should fetch shared links', () => {
         const sharedlinksApi = apiService.getInstance().core.sharedlinksApi;
         spyOn(sharedlinksApi, 'findSharedLinks').and.returnValue(Promise.resolve(null));
-
+        documentList.pagination = {
+            skipCount: 0,
+            maxItems: 10
+        };
         documentList.loadFolderByNodeId('-sharedlinks-');
         expect(sharedlinksApi.findSharedLinks).toHaveBeenCalled();
     });
@@ -995,6 +1036,10 @@ describe('DocumentList', () => {
     it('should emit error when fetch shared links fails', (done) => {
         spyOn(apiService.getInstance().core.sharedlinksApi, 'findSharedLinks')
             .and.returnValue(Promise.reject('error'));
+        documentList.pagination = {
+            skipCount: 0,
+            maxItems: 10
+        };
 
         documentList.error.subscribe(val => {
             expect(val).toBe('error');
@@ -1007,6 +1052,10 @@ describe('DocumentList', () => {
     it('should fetch sites', () => {
         const sitesApi = apiService.getInstance().core.sitesApi;
         spyOn(sitesApi, 'getSites').and.returnValue(Promise.resolve(null));
+        documentList.pagination = {
+            skipCount: 0,
+            maxItems: 10
+        };
 
         documentList.loadFolderByNodeId('-sites-');
         expect(sitesApi.getSites).toHaveBeenCalled();
@@ -1015,6 +1064,10 @@ describe('DocumentList', () => {
     it('should emit error when fetch sites fails', (done) => {
         spyOn(apiService.getInstance().core.sitesApi, 'getSites')
             .and.returnValue(Promise.reject('error'));
+        documentList.pagination = {
+            skipCount: 0,
+            maxItems: 10
+        };
 
         documentList.error.subscribe(val => {
             expect(val).toBe('error');
@@ -1027,6 +1080,10 @@ describe('DocumentList', () => {
     it('should fetch user membership sites', () => {
         const peopleApi = apiService.getInstance().core.peopleApi;
         spyOn(peopleApi, 'getSiteMembership').and.returnValue(Promise.resolve());
+        documentList.pagination = {
+            skipCount: 0,
+            maxItems: 10
+        };
 
         documentList.loadFolderByNodeId('-mysites-');
         expect(peopleApi.getSiteMembership).toHaveBeenCalled();
@@ -1035,6 +1092,10 @@ describe('DocumentList', () => {
     it('should emit error when fetch membership sites fails', (done) => {
         spyOn(apiService.getInstance().core.peopleApi, 'getSiteMembership')
             .and.returnValue(Promise.reject('error'));
+        documentList.pagination = {
+            skipCount: 0,
+            maxItems: 10
+        };
 
         documentList.error.subscribe(val => {
             expect(val).toBe('error');
@@ -1047,6 +1108,10 @@ describe('DocumentList', () => {
     it('should fetch favorites', () => {
         const favoritesApi = apiService.getInstance().core.favoritesApi;
         spyOn(favoritesApi, 'getFavorites').and.returnValue(Promise.resolve(null));
+        documentList.pagination = {
+            skipCount: 0,
+            maxItems: 10
+        };
 
         documentList.loadFolderByNodeId('-favorites-');
         expect(favoritesApi.getFavorites).toHaveBeenCalled();
@@ -1055,6 +1120,10 @@ describe('DocumentList', () => {
     it('should emit error when fetch favorites fails', (done) => {
         spyOn(apiService.getInstance().core.favoritesApi, 'getFavorites')
             .and.returnValue(Promise.reject('error'));
+        documentList.pagination = {
+            skipCount: 0,
+            maxItems: 10
+        };
 
         documentList.error.subscribe(val => {
             expect(val).toBe('error');
@@ -1069,6 +1138,10 @@ describe('DocumentList', () => {
 
         spyOn(apiService.peopleApi, 'getPerson').and.returnValue(Promise.resolve(person));
         spyOn(apiService.searchApi, 'search').and.returnValue(Promise.resolve(null));
+        documentList.pagination = {
+            skipCount: 0,
+            maxItems: 10
+        };
 
         documentList.loadFolderByNodeId('-recent-');
 
@@ -1094,6 +1167,10 @@ describe('DocumentList', () => {
         const person = { entry: { id: 'person '} };
         spyOn(apiService.peopleApi, 'getPerson').and.returnValue(Promise.resolve(person));
         spyOn(apiService.searchApi, 'search').and.returnValue(Promise.reject('error'));
+        documentList.pagination = {
+            skipCount: 0,
+            maxItems: 10
+        };
 
         documentList.error.subscribe(val => {
             expect(val).toBe('error');
@@ -1103,59 +1180,15 @@ describe('DocumentList', () => {
         documentList.loadFolderByNodeId('-recent-');
     });
 
-    it('should switch to another page', () => {
-        spyOn(documentList, 'reload').and.stub();
-
-        const page1: Pagination = {
-            maxItems: 5,
-            skipCount: 0
-        };
-        const page2: Pagination = {
-            maxItems: 5,
-            skipCount: 10
-        };
-
-        documentList.onChangePageNumber(page1);
-        expect(documentList.pageSize).toBe(page1.maxItems);
-        expect(documentList.skipCount).toBe(page1.skipCount);
-
-        documentList.onChangePageNumber(page2);
-        expect(documentList.pageSize).toBe(page2.maxItems);
-        expect(documentList.skipCount).toBe(page2.skipCount);
-
-        expect(documentList.reload).toHaveBeenCalledTimes(2);
-    });
-
-    it('should reset pagination when switching sources', () => {
-        spyOn(documentList, 'resetPagination').and.callThrough();
-
-        documentList.ngOnChanges({currentFolderId: new SimpleChange(null, '-trashcan-', false)});
-        documentList.ngOnChanges({currentFolderId: new SimpleChange(null, '-sites-', false)});
-
-        expect(documentList.resetPagination).toHaveBeenCalledTimes(2);
-    });
-
     it('should reset folder node upon changing current folder id', () => {
         documentList.folderNode = <any> {};
+        documentList.pagination = {
+            skipCount: 0,
+            maxItems: 10
+        };
+
         documentList.ngOnChanges({currentFolderId: new SimpleChange(null, '-sites-', false)});
 
         expect(documentList.folderNode).toBeNull();
-    });
-
-    it('should fallback to first page size supported', () => {
-        userPreferences.paginationSize = 10;
-        appConfig.config = Object.assign(appConfig.config, {
-            'document-list': {
-                supportedPageSizes: [20, 30, 40]
-            }
-        });
-
-        let customFixture =  TestBed.createComponent<DocumentListComponent>(DocumentListComponent);
-        let component: DocumentListComponent = customFixture.componentInstance;
-
-        customFixture.detectChanges();
-
-        expect(component.supportedPageSizes).toEqual([20, 30, 40]);
-        expect(component.pageSize).toBe(20);
     });
 });
