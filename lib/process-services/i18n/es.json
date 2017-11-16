@@ -127,5 +127,108 @@
         "HEADER": "No hay ficheros disponibles"
       }
     }
+  },
+  "ADF_PROCESS_LIST": {
+    "LIST": {
+      "NONE": "No process instances found",
+      "SUMMARY": "{{total}} instances of processes found",
+      "ERROR": "Unable to load the process instances. Please try again or send the following message to the IT team: {{errorMessage}}"
+    },
+    "FILTERS": {
+      "MESSAGES": {
+        "NONE": "No process instance filter has been selected."
+      }
+    },
+    "DETAILS": {
+      "LABELS": {
+        "STARTED_BY": "Started by",
+        "STARTED": "Started",
+        "ENDED": "Completed",
+        "COMMENTS": "Comments",
+        "START_FORM": "Start form",
+        "TASKS_ACTIVE": "Active tasks",
+        "TASKS_COMPLETED": "Tasks completed",
+        "TASK_SUBTITLE": "Assigned to {{user}}, created {{created}}"
+      },
+      "BUTTON": {
+        "CANCEL": "Cancel process",
+        "CLOSE": "Close",
+        "SHOW_DIAGRAM": "Show diagram",
+        "DRAG-ATTACHMENT": "Drop the files to load",
+        "UPLOAD-ATTACHMENT": "Upload attachment"
+      },
+      "MESSAGES": {
+        "NONE": "No details of the process were found."
+      },
+      "TASKS": {
+        "NO_ACTIVE": "There are no active tasks currently.",
+        "NO_COMPLETED": "No tasks completed yet",
+        "TASK_DETAILS": "Details of the task",
+        "TASK_CLOSE": "Close"
+      },
+      "COMMENTS": {
+        "NONE": "No comments",
+        "BUTTON": {
+          "ADD": "Add comment"
+        },
+        "ADD_DIALOG": {
+          "TITLE": "New comment",
+          "LABEL": {
+            "MESSAGE": "Message"
+          },
+          "BUTTON": {
+            "ADD": "Add comment",
+            "CANCEL": "Cancel"
+          }
+        }
+      },
+      "ADD_DIALOG": {
+        "TITLE": "Set process variable",
+        "LABEL": {
+          "NAME": "Name",
+          "VALUE": "Value",
+          "SCOPE": "Scope"
+        }
+      },
+      "EDIT_DIALOG": {
+        "TITLE": "Edit process variable"
+      },
+      "ERROR_DIALOG": {
+        "TITLE": "This action could not be completed",
+        "DESCRIPTION": "You may not have the necessary level of access, check it with the IT team."
+      }
+    },
+    "START_PROCESS": {
+      "BUTTON": "Start process",
+      "NO_PROCESS_DEFINITIONS": "You can not start a process because there are no process definitions available",
+      "FORM": {
+        "TITLE": "Start process",
+        "LABEL": {
+          "TYPE": "Type",
+          "NAME": "Name"
+        },
+        "TYPE_PLACEHOLDER": "Choose one ...",
+        "ACTION": {
+          "START": "Start",
+          "CANCEL": "Cancel"
+        }
+      },
+      "ERROR": {
+        "LOAD_PROCESS_DEFS": "Unable to load process definitions, verify that you have access.",
+        "START": "The process instance could not be started, check that it has access."
+      }
+    },
+    "PROCESS-ATTACHMENT": {
+      "EMPTY": {
+        "HEADER": "This list is empty",
+        "DRAG-AND-DROP": {
+          "TITLE": "Drag and drop",
+          "SUBTITLE": "to load files"
+        }
+      },
+      "EMPTY-LIST": {
+        "HEADER": "No files available"
+      }
+    }
   }
 }

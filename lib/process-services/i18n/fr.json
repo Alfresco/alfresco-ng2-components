@@ -127,5 +127,108 @@
         "HEADER": "Aucun fichier disponible"
       }
     }
+  },
+  "ADF_PROCESS_LIST": {
+    "LIST": {
+      "NONE": "Aucune instance de processus trouvée",
+      "SUMMARY": "{{total}} instances de processus trouvées",
+      "ERROR": "Impossible de charger les instances de processus. Réessayez ou transférez le message suivant au service informatique : {{errorMessage}}"
+    },
+    "FILTERS": {
+      "MESSAGES": {
+        "NONE": "Auncun filtre d'instances de processus sélectionné."
+      }
+    },
+    "DETAILS": {
+      "LABELS": {
+        "STARTED_BY": "Démarré par",
+        "STARTED": "Démarré",
+        "ENDED": "Terminé",
+        "COMMENTS": "Commentaires",
+        "START_FORM": "Démarrer le formulaire",
+        "TASKS_ACTIVE": "Tâches actives",
+        "TASKS_COMPLETED": "Tâches terminées",
+        "TASK_SUBTITLE": "Assigné à {{user}}, créé le {{created}}"
+      },
+      "BUTTON": {
+        "CANCEL": "Annuler le processus",
+        "CLOSE": "Fermer",
+        "SHOW_DIAGRAM": "Afficher le diagramme",
+        "DRAG-ATTACHMENT": "Déposer les fichiers à importer",
+        "UPLOAD-ATTACHMENT": "Importer la pièce jointe"
+      },
+      "MESSAGES": {
+        "NONE": "Aucun détail de processus trouvé."
+      },
+      "TASKS": {
+        "NO_ACTIVE": "Aucune tâche actuellement active",
+        "NO_COMPLETED": "Aucune tâche terminée",
+        "TASK_DETAILS": "Détails de la tâche",
+        "TASK_CLOSE": "Fermer"
+      },
+      "COMMENTS": {
+        "NONE": "Pas de commentaire",
+        "BUTTON": {
+          "ADD": "Ajouter un commentaire"
+        },
+        "ADD_DIALOG": {
+          "TITLE": "Nouveau commentaire",
+          "LABEL": {
+            "MESSAGE": "Message"
+          },
+          "BUTTON": {
+            "ADD": "Ajouter un commentaire",
+            "CANCEL": "Annuler"
+          }
+        }
+      },
+      "ADD_DIALOG": {
+        "TITLE": "Définir la variable de processus",
+        "LABEL": {
+          "NAME": "Nom",
+          "VALUE": "Valeur",
+          "SCOPE": "Etendue"
+        }
+      },
+      "EDIT_DIALOG": {
+        "TITLE": "Modifier la variable de processus"
+      },
+      "ERROR_DIALOG": {
+        "TITLE": "Impossible de terminer cette action",
+        "DESCRIPTION": "Vous n'avez peut-être pas le niveau d'accès requis ; vérifiez auprès du service informatique."
+      }
+    },
+    "START_PROCESS": {
+      "BUTTON": "Démarrer le processus",
+      "NO_PROCESS_DEFINITIONS": "Impossible de démarrer un processus car aucune définition de processus n'est disponible",
+      "FORM": {
+        "TITLE": "Démarrer le processus",
+        "LABEL": {
+          "TYPE": "Type",
+          "NAME": "Nom"
+        },
+        "TYPE_PLACEHOLDER": "Choisissez une valeur...",
+        "ACTION": {
+          "START": "Démarrer",
+          "CANCEL": "Annuler"
+        }
+      },
+      "ERROR": {
+        "LOAD_PROCESS_DEFS": "Impossible de charger les définitions de processus ; vérifiez que vous avez le niveau d'accès requis.",
+        "START": "Impossible de démarrer une nouvelle instance de processus ; vérifiez que vous avez le niveau d'accès requis."
+      }
+    },
+    "PROCESS-ATTACHMENT": {
+      "EMPTY": {
+        "HEADER": "Cette liste est vide",
+        "DRAG-AND-DROP": {
+          "TITLE": "Glissez-déposez",
+          "SUBTITLE": "les fichiers à importer"
+        }
+      },
+      "EMPTY-LIST": {
+        "HEADER": "Aucun fichier disponible"
+      }
+    }
   }
 }
