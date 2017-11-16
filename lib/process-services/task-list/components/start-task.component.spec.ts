@@ -17,9 +17,9 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MaterialModule } from '../../material.module';
-import { AppConfigService, PeopleProcessService } from '@alfresco/core';
+import { PeopleProcessService } from '@alfresco/core';
 import { Observable } from 'rxjs/Rx';
-import { AppConfigServiceMock, startTaskMock } from '../../mock';
+import { startTaskMock } from '../../mock';
 import { StartTaskModel } from '../models/start-task.model';
 import { TaskListService } from '../services/tasklist.service';
 import {  } from './../assets/start-task.mock';
@@ -58,8 +58,7 @@ describe('StartTaskComponent', () => {
             ],
             providers: [
                 TaskListService,
-                PeopleProcessService,
-                { provide: AppConfigService, useClass: AppConfigServiceMock }
+                PeopleProcessService
             ]
         }).compileComponents().then(() => {
 

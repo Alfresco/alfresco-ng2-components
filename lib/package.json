@@ -145,7 +145,7 @@
       "maxSize": "50 kb"
     },
     {
-      "path": "./analytics/bundles/analytics.js",
+      "path": "./insights/bundles/insights.js",
       "maxSize": "50 kb"
     },
     {

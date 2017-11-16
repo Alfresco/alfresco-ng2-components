@@ -42,8 +42,8 @@ import { DiagramsModule } from './diagram';
             provide: TRANSLATION_PROVIDER,
             multi: true,
             useValue: {
-                name: '@adf/analytics',
-                source: 'assets/@adf/analytics'
+                name: '@adf/insights',
+                source: 'assets/@adf/insights'
             }
         }
     ],
@@ -58,5 +58,5 @@ import { DiagramsModule } from './diagram';
         DiagramsModule
     ]
 })
-export class AnalyticsModule {
+export class InsightsModule {
 }

@@ -11,7 +11,7 @@ before_install:
 env:
   matrix:
     - MODULE=core
-    - MODULE=analytics
+    - MODULE=insights
     - MODULE=process-services
     - MODULE=content-services
     - MODULE=demo-shell
@@ -34,8 +34,8 @@ script:
             (./scripts/npm-build-all.sh -si -sb -t "process-services" || exit 1;);
       fi
 
-    - if ([ "$MODULE" == "analytics" ]); then
-            (./scripts/npm-build-all.sh -si -sb -t "analytics" || exit 1;);
+    - if ([ "$MODULE" == "insights" ]); then
+            (./scripts/npm-build-all.sh -si -sb -t "insights" || exit 1;);
       fi
 
     - if ([ "$MODULE" == "content-services" ]); then

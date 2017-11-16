@@ -18,9 +18,8 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule, MatInputModule } from '@angular/material';
-import { AppConfigService, LogService } from '@alfresco/core';
+import { LogService } from '@alfresco/core';
 import { PeopleProcessService, UserProcessModel } from '@alfresco/core';
-import { AppConfigServiceMock } from '../mock';
 import { PeopleListComponent } from './people-list.component';
 import { PeopleSearchComponent } from './people-search.component';
 import { PeopleComponent } from './people.component';
@@ -61,8 +60,7 @@ describe('PeopleComponent', () => {
                 PeopleComponent
             ],
             providers: [
-                PeopleProcessService,
-                { provide: AppConfigService, useClass: AppConfigServiceMock }
+                PeopleProcessService
             ],
             schemas: [ NO_ERRORS_SCHEMA ]
         }).compileComponents().then(() => {

@@ -31,8 +31,7 @@ describe('Process filter', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-            ],
+
             providers: [
                 ProcessFilterService
             ]

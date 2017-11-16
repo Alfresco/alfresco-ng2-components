@@ -22,11 +22,11 @@ import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
 import { FormModule, FormModel, FormOutcomeEvent, FormOutcomeModel, FormService } from '@alfresco/core';
-import { AppConfigService, CommentProcessService, LogService } from '@alfresco/core';
+import { CommentProcessService, LogService } from '@alfresco/core';
 
 import { PeopleProcessService, UserProcessModel } from '@alfresco/core';
 import { TaskDetailsModel } from '../models/task-details.model';
-import { AppConfigServiceMock, noDataMock, taskDetailsMock, taskFormMock, tasksMock } from '../../mock';
+import { noDataMock, taskDetailsMock, taskFormMock, tasksMock } from '../../mock';
 import { TaskListService } from './../services/tasklist.service';
 import { PeopleSearchComponent } from '../../people';
 import { TaskDetailsComponent } from './task-details.component';
@@ -69,7 +69,6 @@ describe('TaskDetailsComponent', () => {
             providers: [
                 TaskListService,
                 PeopleProcessService,
-                {provide: AppConfigService, useClass: AppConfigServiceMock},
                 CommentProcessService
             ],
             schemas: [NO_ERRORS_SCHEMA]

@@ -35,8 +35,7 @@ describe('ProcessService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-            ],
+
             providers: [
                 ProcessService
             ]

@@ -20,8 +20,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
 
 import { FormModule } from '@alfresco/core';
-import { AppConfigService, CommentProcessService } from '@alfresco/core';
-import { AppConfigServiceMock } from '../mock';
+import { CommentProcessService } from '@alfresco/core';
 
 import { DatePipe } from '@angular/common';
 import { MatInputModule } from '@angular/material';
@@ -53,7 +52,6 @@ describe('CommentsComponent', () => {
                 TaskListService,
                 DatePipe,
                 PeopleProcessService,
-                { provide: AppConfigService, useClass: AppConfigServiceMock },
                 CommentProcessService
             ]
         }).compileComponents();

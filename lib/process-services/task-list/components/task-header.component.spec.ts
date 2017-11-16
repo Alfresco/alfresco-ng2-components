@@ -18,7 +18,7 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService, CardViewUpdateService, UserProcessModel } from '@alfresco/core';
+import { CardViewUpdateService, UserProcessModel } from '@alfresco/core';
 import { BpmUserService } from '@alfresco/core';
 import { MaterialModule } from '../../material.module';
 import { Observable } from 'rxjs/Rx';
@@ -28,8 +28,7 @@ import {
     taskDetailsWithAssigneeMock,
     taskDetailsWithInvolvedGroupMock,
     taskDetailsWithInvolvedPeopleMock,
-    taskDetailsWithOutAssigneeMock,
-    AppConfigServiceMock } from '../../mock';
+    taskDetailsWithOutAssigneeMock } from '../../mock';
 
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
@@ -69,8 +68,7 @@ describe('TaskHeaderComponent', () => {
             providers: [
                 TaskListService,
                 BpmUserService,
-                CardViewUpdateService,
-                { provide: AppConfigService, useClass: AppConfigServiceMock }
+                CardViewUpdateService
             ]
         }).compileComponents();
     }));

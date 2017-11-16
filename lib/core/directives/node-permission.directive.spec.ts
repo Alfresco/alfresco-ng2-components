@@ -40,8 +40,7 @@ describe('NodePermissionDirective', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-            ],
+
             declarations: [
                 TestComponent
             ]

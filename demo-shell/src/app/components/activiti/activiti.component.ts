@@ -33,7 +33,7 @@ import {
     DynamicTableRow, ValidateDynamicTableRowEvent
 } from '@alfresco/core';
 
-import { AnalyticsReportListComponent } from '@alfresco/analytics';
+import { AnalyticsReportListComponent } from '@alfresco/insights';
 
 import {
     ProcessFiltersComponent,

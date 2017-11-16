@@ -41,8 +41,7 @@ describe('Test ng2-alfresco-viewer Media player component ', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-            ],
+
             declarations: [MediaPlayerComponent],
             providers: [
                 SettingsService,

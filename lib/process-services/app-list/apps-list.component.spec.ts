@@ -18,12 +18,13 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppsProcessService } from '@alfresco/core';
+import { AppsProcessService, CoreModule } from '@alfresco/core';
 import { Observable } from 'rxjs/Rx';
 
 import { MaterialModule } from '../material.module';
 import { defaultApp, deployedApps, nonDeployedApps } from '../mock/apps-list.mock';
 import { AppsListComponent } from './apps-list.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('AppsListComponent', () => {
 
@@ -36,13 +37,14 @@ describe('AppsListComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                MaterialModule
+                CoreModule,
+                MaterialModule,
+                TranslateModule
             ],
             declarations: [
                 AppsListComponent
             ],
             providers: [
-                AppsProcessService
             ]
         }).compileComponents();
 

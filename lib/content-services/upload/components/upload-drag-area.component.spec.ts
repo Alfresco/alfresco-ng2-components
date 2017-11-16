@@ -66,8 +66,7 @@ describe('UploadDragAreaComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-            ],
+
             declarations: [
                 FileDraggableDirective,
                 UploadDragAreaComponent

@@ -20,7 +20,6 @@ export * from './process/process.service.mock';
 export * from './process/start-process.component.mock';
 export * from './process/process.model.mock';
 
-export * from './task/app-config.service.mock';
 export * from './task/start-task.mock';
 export * from './task/task-details.mock';
 export * from './task/task-details.component.mock';

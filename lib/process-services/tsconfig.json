@@ -21,7 +21,7 @@
     "paths": {
       "@alfresco/process-services": ["../process-services"],
       "@alfresco/content-services": ["../content-services"],
-      "@alfresco/analytics": ["../analytics"],
+      "@alfresco/insights": ["../analytics"],
       "@alfresco/core": ["../core"],
       "@angular/*": ["../node_modules/@angular/*"]
     },

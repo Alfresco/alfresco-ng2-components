@@ -18,10 +18,8 @@
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService } from '@alfresco/core';
 import { MaterialModule } from '../material.module';
 import { Observable } from 'rxjs/Rx';
-import { AppConfigServiceMock } from '../mock';
 import { TaskAttachmentListComponent } from './task-attachment-list.component';
 import { ProcessContentService } from '@alfresco/core';
 
@@ -44,8 +42,7 @@ describe('TaskAttachmentList', () => {
                 TaskAttachmentListComponent
             ],
             providers: [
-                ProcessContentService,
-                { provide: AppConfigService, useClass: AppConfigServiceMock }
+                ProcessContentService
             ]
         }).compileComponents();
 

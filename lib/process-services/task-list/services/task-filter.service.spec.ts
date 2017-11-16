@@ -16,8 +16,6 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { AppConfigService } from '@alfresco/core';
-import { AppConfigServiceMock } from '../../mock';
 import {
     fakeAppFilter,
     fakeAppPromise,
@@ -34,11 +32,9 @@ describe('Activiti Tas filter Service', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-            ],
+
             providers: [
-                TaskFilterService,
-                { provide: AppConfigService, useClass: AppConfigServiceMock }
+                TaskFilterService
             ]
         }).compileComponents();
     }));

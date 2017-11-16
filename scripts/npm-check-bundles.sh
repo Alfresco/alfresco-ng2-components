@@ -5,7 +5,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 eval VERSION=""
 
 eval projects=( "@alfresco/adf-core"
-    "@alfresco/analytics"
+    "@alfresco/insights"
     "@alfresco/adf-content-services"
     "@alfresco/adf-process-services" )
 

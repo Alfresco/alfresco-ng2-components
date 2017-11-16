@@ -18,4 +18,4 @@
 export * from './diagram';
 export * from './analytics-process';
 
-export * from './analytics.module';
+export * from './insights.module';

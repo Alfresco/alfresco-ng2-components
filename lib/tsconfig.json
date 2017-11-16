@@ -23,7 +23,7 @@
             "@alfresco/process-services": ["./process-services/"],
             "@alfresco/content-services": ["./content-services/"],
             "@alfresco/core": ["./core/"],
-            "@alfresco/analytics": ["./analytics"],
+            "@alfresco/insights": ["./analytics"],
             "alfresco-js-api": ["./node_modules/alfresco-js-api/"],
             "@angular/*": ["./node_modules/@angular/*"],
             "rxjs/*": ["./node_modules/rxjs/*"]

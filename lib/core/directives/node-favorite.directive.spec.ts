@@ -43,8 +43,7 @@ describe('NodeFavoriteDirective', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-            ],
+
             declarations: [
                 TestComponent
             ]

@@ -16,7 +16,7 @@ eval EXEC_VERSION_JSAPI=false
 eval JSAPI_VERSION=""
 
 eval projects=( "core"
-    "analytics"
+    "insights"
     "content-services"
     "process-services" )
 

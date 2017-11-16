@@ -164,7 +164,7 @@ export class ProcessFilterService {
         if (appId) {
             return this.alfrescoApiService.getInstance().activiti.userFiltersApi.getUserProcessInstanceFilters({ appId: appId });
         } else {
-            return this.alfrescoApiService.getInstance().activiti.userFiltersApi.getUserProcessInstanceFilters(); )
+            return this.alfrescoApiService.getInstance().activiti.userFiltersApi.getUserProcessInstanceFilters();
         }
     }
 

@@ -1,6 +1,6 @@
 {
-  "name": "adf-analytics-services",
-  "description": "Alfresco ADF analytics",
+  "name": "adf-insights",
+  "description": "Alfresco ADF insights",
   "version": "2.0.0",
   "author": "Alfresco Software, Ltd.",
   "main": "bundles/analytics.js",

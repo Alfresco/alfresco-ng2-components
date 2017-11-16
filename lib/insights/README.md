@@ -1,4 +1,4 @@
-# Alfresco Process services
+# Alfresco insights
 
 Contains a variety of components, directives and services used throughout ADF
 
@@ -30,7 +30,7 @@ necessary configuration, see this [page](https://github.com/Alfresco/alfresco-ng
 ## Install
 
 ```sh
-npm install @alfresco/process-services
+npm install @alfresco/insights
 ```
 
 ## License

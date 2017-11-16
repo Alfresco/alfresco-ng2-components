@@ -16,9 +16,8 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService, UserProcessModel } from '@alfresco/core';
+import { UserProcessModel } from '@alfresco/core';
 import { DataRowActionEvent, DataRowEvent, ObjectDataRow } from '@alfresco/core';
-import { AppConfigServiceMock } from '../mock';
 import { UserEventModel } from '../task-list/models/user-event.model';
 import { PeopleListComponent } from './people-list.component';
 
@@ -37,13 +36,11 @@ describe('PeopleListComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-            ],
+
             declarations: [
                 PeopleListComponent
             ],
             providers: [
-                { provide: AppConfigService, useClass: AppConfigServiceMock }
             ]
         }).compileComponents().then(() => {
 

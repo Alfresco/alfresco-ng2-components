@@ -17,9 +17,8 @@
 
 import { DatePipe } from '@angular/common';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService, CommentProcessModel, UserProcessModel } from '@alfresco/core';
+import { CommentProcessModel, UserProcessModel } from '@alfresco/core';
 import { DataRowEvent, ObjectDataRow } from '@alfresco/core';
-import { AppConfigServiceMock } from '../mock';
 import { CommentListComponent } from './comment-list.component';
 
 const testUser: UserProcessModel = new UserProcessModel({
@@ -39,14 +38,12 @@ describe('CommentListComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-            ],
+
             declarations: [
                 CommentListComponent
             ],
             providers: [
-                DatePipe,
-                {provide: AppConfigService, useClass: AppConfigServiceMock}
+                DatePipe
             ]
         }).compileComponents().then(() => {
 
