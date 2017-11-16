@@ -1,4 +1,6 @@
 {
+    "PERSONAL_FILES": "Personal Files",
+    "FILE_LIBRARIES": "File Libraries",
     "ADF-DOCUMENT-LIST": {
         "EMPTY": {
             "HEADER": "This folder is empty"
