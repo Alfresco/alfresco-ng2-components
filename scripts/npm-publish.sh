@@ -152,7 +152,7 @@ do
   npm publish ${OPTIONS} --access=public || exit 1
 
   if $EXEC_CHANGE_REGISTRY == true; then
-      npm run rimraf .npmrc
+      rm rimraf .npmrc
   fi
 
   if $EXEC_SLEEP == true; then
