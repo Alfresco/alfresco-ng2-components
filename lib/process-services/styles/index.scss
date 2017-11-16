@@ -1,10 +1,5 @@
 @import '../process-list/components/process-filters.component';
 
-@import '../diagram/components/tooltip/diagram-tooltip.component';
-
-@import '../analytics/components/analytics-report-list.component';
-@import '../analytics/components/widgets/date-range/date-range.widget';
-
 @import '../comments/comment-list.component';
 
 @import '../people/people-search.component';
@@ -16,9 +11,6 @@
 
 @mixin adf-process-services-theme($theme) {
     @include adf-process-filters-theme($theme);
-    @include adf-diagram-tooltip-theme($theme);
-    @include adf-analytics-report-list-theme($theme);
-    @include adf-analytics-date-range-widget-theme($theme);
     @include adf-task-list-comment-list-theme($theme);
     @include adf-task-list-start-task-theme($theme);
     @include adf-task-list-people-search-theme($theme);

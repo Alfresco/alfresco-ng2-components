@@ -1,4 +1,15 @@
 {
+  "FORM": {
+    "START_FORM": {
+      "TITLE": "Запустить форму"
+    },
+    "PREVIEW": {
+      "IMAGE_NOT_AVAILABLE": "Предварительный просмотр недоступен"
+    },
+    "FIELD": {
+      "REQUIRED": "*Обязательно для заполнения"
+    }
+  },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "Эта папка пуста"

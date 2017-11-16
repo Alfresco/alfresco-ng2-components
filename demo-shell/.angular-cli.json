@@ -29,6 +29,11 @@
         },
         {
           "glob": "**/*",
+          "input": "../node_modules/analytics/bundles/assets",
+          "output": "./assets/"
+        },
+        {
+          "glob": "**/*",
           "input": "../node_modules/process-services/bundles/assets",
           "output": "./assets/"
         },
@@ -97,8 +102,18 @@
         },
         {
           "glob": "**/*",
+          "input": "../../lib/analytics/bundles/assets",
+          "output": "./assets/"
+        },
+        {
+          "glob": "**/*",
           "input": "../../lib/core/i18n",
           "output": "./assets/@adf/core/i18n"
+        },
+        {
+          "glob": "**/*",
+          "input": "../../lib/analytics/i18n",
+          "output": "./assets/@adf/analytics/i18n"
         },
         {
           "glob": "**/*",

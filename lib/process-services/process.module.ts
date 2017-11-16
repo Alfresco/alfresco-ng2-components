@@ -23,8 +23,6 @@ import { CoreModule, TRANSLATION_PROVIDER } from '@alfresco/core';
 
 import { MaterialModule } from './material.module';
 
-import { AnalyticsModule } from './analytics';
-import { DiagramsModule } from './diagram';
 import { ProcessListModule } from './process-list';
 import { TaskListModule } from './task-list';
 import { AppsListModule } from './app-list';
@@ -41,8 +39,6 @@ import { PeopleModule } from './people';
         ReactiveFormsModule,
         BrowserAnimationsModule,
         MaterialModule,
-        AnalyticsModule,
-        DiagramsModule,
         ProcessListModule,
         TaskListModule,
         AppsListModule,
@@ -67,8 +63,6 @@ import { PeopleModule } from './people';
         ReactiveFormsModule,
         BrowserAnimationsModule,
         MaterialModule,
-        AnalyticsModule,
-        DiagramsModule,
         ProcessListModule,
         TaskListModule,
         AppsListModule,

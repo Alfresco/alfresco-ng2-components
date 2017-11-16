@@ -17,6 +17,7 @@ eval JSAPI_VERSION=""
 
 eval projects=( "core"
     "content-services"
+    "analytics"
     "process-services" )
 
 show_help() {

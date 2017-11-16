@@ -1,4 +1,15 @@
 {
+  "FORM": {
+    "START_FORM": {
+      "TITLE": "開始フォーム"
+    },
+    "PREVIEW": {
+      "IMAGE_NOT_AVAILABLE": "プレビューは使用できません"
+    },
+    "FIELD": {
+      "REQUIRED": "*必須"
+    }
+  },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "このフォルダは空です"

@@ -1,4 +1,15 @@
 {
+  "FORM": {
+    "START_FORM": {
+      "TITLE": "Iniciar formulario"
+    },
+    "PREVIEW": {
+      "IMAGE_NOT_AVAILABLE": "Vista previa no disponible"
+    },
+    "FIELD": {
+      "REQUIRED": "*Requerido"
+    }
+  },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "Esta carpeta está vacía"

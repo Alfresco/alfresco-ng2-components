@@ -25,7 +25,7 @@ import { TaskListComponent } from './task-list.component';
 
 declare let jasmine: any;
 
-xdescribe('TaskListComponent', () => {
+describe('TaskListComponent', () => {
 
     let fakeGlobalTask = {
         size: 2,

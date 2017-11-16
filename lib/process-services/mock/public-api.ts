@@ -15,20 +15,6 @@
  * limitations under the License.
  */
 
-export * from './apps-list.mock';
-export * from './analytics/analytics.service.mock';
-export * from './analytics/analyticsComponent.mock';
-export * from './analytics/analyticsParamsReportComponent.mock';
-
-export * from './diagram/diagramActivities.mock';
-export * from './diagram/diagramBoundary.mock';
-export * from './diagram/diagramFlows.mock';
-export * from './diagram/diagramGateways.mock';
-export * from './diagram/diagramIntermediate.mock';
-export * from './diagram/diagramStructural.mock';
-export * from './diagram/diagramSwimlanes.mock';
-export * from './diagram/diagramThrow.mock';
-
 export * from './process/process-instances-list.mock';
 export * from './process/process.service.mock';
 export * from './process/start-process.component.mock';

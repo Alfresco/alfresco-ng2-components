@@ -1,4 +1,15 @@
 {
+  "FORM": {
+    "START_FORM": {
+      "TITLE": "Démarrer le formulaire"
+    },
+    "PREVIEW": {
+      "IMAGE_NOT_AVAILABLE": "Aperçu non disponible"
+    },
+    "FIELD": {
+      "REQUIRED": "*Obligatoire"
+    }
+  },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "Ce dossier est vide"

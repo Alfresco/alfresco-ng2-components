@@ -1,4 +1,15 @@
 {
+  "FORM": {
+    "START_FORM": {
+      "TITLE": "启动表单"
+    },
+    "PREVIEW": {
+      "IMAGE_NOT_AVAILABLE": "预览不可用"
+    },
+    "FIELD": {
+      "REQUIRED": "*必填项"
+    }
+  },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "此文件夹为空"

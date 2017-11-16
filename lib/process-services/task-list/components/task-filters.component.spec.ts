@@ -24,7 +24,7 @@ import { TaskListService } from '../services/tasklist.service';
 import { MaterialModule } from '../../material.module';
 import { TaskFiltersComponent } from './task-filters.component';
 
-xdescribe('TaskFiltersComponent', () => {
+describe('TaskFiltersComponent', () => {
 
     let activitiService: TaskListService;
     let appsProcessService: AppsProcessService;

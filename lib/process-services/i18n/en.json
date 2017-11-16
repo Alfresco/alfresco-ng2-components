@@ -1,52 +1,4 @@
 {
-  "ANALYTICS": {
-    "TITLE": "ANALYTICS",
-    "MESSAGES": {
-      "UNKNOWN-WIDGET-TYPE": "UNKNOWN WIDGET TYPE",
-      "FILL-PARAMETER": "Choose from the report options",
-      "NO-DATA-FOUND": "No data found",
-      "ZERO-DATA-FOUND": "There are only zero values",
-      "ICON-SETTING": "Settings",
-      "ICON-SAVE": "Save",
-      "ICON-DELETE": "Delete",
-      "ICON-EXPORT-CSV": "Export"
-    }
-  },
-  "__KEY_REPORTING": {
-    "DEFAULT-REPORTS": {
-      "PROCESS-DEFINITION-OVERVIEW": {
-        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Total number of process definitions",
-        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Total number of process instances",
-        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Total number of active process instances",
-        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Total number of completed process instances"
-      }
-    }
-  },
-  "REPORTING": {
-    "DEFAULT-REPORTS": {
-      "PROCESS-HEAT-MAP": {
-        "TYPE-FILTERING": "Include pass through steps such as start events and gateways"
-      },
-      "PROCESS-INSTANCES-OVERVIEW": {
-        "PROCESS-DEFINITION": "Process definition",
-        "DATE-RANGE": "Date range",
-        "SLOW-PROC-INST-NUMBER": "How many of the slowest process instances should be displayed?"
-      },
-      "TASK-OVERVIEW": {
-        "PROCESS-DEFINITION": "Process definition",
-        "DATE-RANGE": "Date range",
-        "DATE-RANGE-INTERVAL": "Group dates by"
-      },
-      "TASK-SLA": {
-        "TASK": "Task",
-        "PROCESS-DEFINITION": "Process definition",
-        "DATE-RANGE": "Date range",
-        "SLA-DURATION": "SLA required completion time"
-      }
-    },
-    "PROCESS-STATUS": "Process status",
-    "TASK-STATUS": "Task status"
-  },
   "DIALOG": {
     "SAVE_MESSAGE": "Click Save to add a report with the current settings to your reports list.",
     "EXPORT_MESSAGE": ""
@@ -57,28 +9,6 @@
     "MESSAGES": {
       "START-DATE-REQUIRED": "Start date is required",
       "START-LESS-THAN-END-DATE": "Start date must be before end date"
-    }
-  },
-  "DIAGRAMS": "Diagrams",
-  "FORM": {
-    "START_FORM": {
-      "TITLE": "Start Form"
-    },
-    "PREVIEW": {
-      "IMAGE_NOT_AVAILABLE": "Preview not available"
-    },
-    "FIELD": {
-      "UPLOAD": "UPLOAD",
-      "REQUIRED": "*Required",
-      "VALIDATOR": {
-        "INVALID_NUMBER": "Use a different number format",
-        "INVALID_DATE": "Use a different date format",
-        "INVALID_VALUE": "Enter a different value",
-        "NOT_GREATER_THAN": "Can't be greater than {{ maxValue }}",
-        "NOT_LESS_THAN": "Can't be less than {{ minValue }}",
-        "AT_LEAST_LONG": "Enter at least {{ minLength }} characters",
-        "NO_LONGER_THAN": "Enter no more than {{ maxLength }} characters"
-      }
     }
   },
   "ADF_TASK_LIST": {

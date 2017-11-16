@@ -1,52 +1,4 @@
 {
-  "ANALYTICS": {
-    "TITLE": "ANALISI",
-    "MESSAGES": {
-      "UNKNOWN-WIDGET-TYPE": "TIPO WIDGET SCONOSCIUTO",
-      "FILL-PARAMETER": "Scegli dalle opzioni del rapporto",
-      "NO-DATA-FOUND": "Nessun dato trovato",
-      "ZERO-DATA-FOUND": "Ci sono solo valori che valgono zero",
-      "ICON-SETTING": "Impostazioni",
-      "ICON-SAVE": "Salva",
-      "ICON-DELETE": "Elimina",
-      "ICON-EXPORT-CSV": "Esporta come CSV"
-    }
-  },
-  "__KEY_REPORTING": {
-    "DEFAULT-REPORTS": {
-      "PROCESS-DEFINITION-OVERVIEW": {
-        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Numero totale di definizioni del processo",
-        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Numero totale di istanze del processo",
-        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Numero totale di istanze del processo attive",
-        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Numero totale di istanze del processo completate"
-      }
-    }
-  },
-  "REPORTING": {
-    "DEFAULT-REPORTS": {
-      "PROCESS-HEAT-MAP": {
-        "TYPE-FILTERING": "Include tutti i gli eventi di passaggio come eventi iniziali e gateway"
-      },
-      "PROCESS-INSTANCES-OVERVIEW": {
-        "PROCESS-DEFINITION": "Definizione del processo",
-        "DATE-RANGE": "Intervallo di date",
-        "SLOW-PROC-INST-NUMBER": "Quante delle istanze di processo più lente devono essere visualizzate?"
-      },
-      "TASK-OVERVIEW": {
-        "PROCESS-DEFINITION": "Definizione del processo",
-        "DATE-RANGE": "Intervallo di date",
-        "DATE-RANGE-INTERVAL": "Aggrega date per"
-      },
-      "TASK-SLA": {
-        "TASK": "Compito",
-        "PROCESS-DEFINITION": "Definizione del processo",
-        "DATE-RANGE": "Intervallo di date",
-        "SLA-DURATION": "Tempo di completamento richiesto dallo SLA"
-      }
-    },
-    "PROCESS-STATUS": "Stato del processo",
-    "TASK-STATUS": "Stato del compito"
-  },
   "DIALOG": {
     "SAVE_MESSAGE": "Fai clic su Salva per aggiungere un rapporto con le impostazioni correnti all'elenco dei rapporti.",
     "EXPORT_MESSAGE": ""
@@ -57,28 +9,6 @@
     "MESSAGES": {
       "START-DATE-REQUIRED": "Data di inizio richiesta",
       "START-LESS-THAN-END-DATE": "La data di inizio deve essere precedente alla data di fine"
-    }
-  },
-  "DIAGRAMS": "Diagrammi",
-  "FORM": {
-    "START_FORM": {
-      "TITLE": "Modulo di inizio"
-    },
-    "PREVIEW": {
-      "IMAGE_NOT_AVAILABLE": "Anteprima immagine non disponibile."
-    },
-    "FIELD": {
-      "UPLOAD": "UPLOAD",
-      "REQUIRED": "*Obbligatorio",
-      "VALIDATOR": {
-        "INVALID_NUMBER": "Non un numero",
-        "INVALID_DATE": "Non una data",
-        "INVALID_VALUE": "Valore non valido",
-        "NOT_GREATER_THAN": "Non dovrebbe essere piu grande di {{ maxValue }}",
-        "NOT_LESS_THAN": "Non dovrebbe essere meno di {{ minValue }}",
-        "AT_LEAST_LONG": "Dovrebbe essere almeno {{ minLength }} caratteri.",
-        "NO_LONGER_THAN": "Dovrebbe essere massimo {{ maxLength }} caratteri."
-      }
     }
   },
   "ADF_TASK_LIST": {

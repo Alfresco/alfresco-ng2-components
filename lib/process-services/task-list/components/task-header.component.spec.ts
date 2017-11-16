@@ -35,7 +35,7 @@ import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 import { TaskHeaderComponent } from './task-header.component';
 
-xdescribe('TaskHeaderComponent', () => {
+describe('TaskHeaderComponent', () => {
 
     let service: TaskListService;
     let component: TaskHeaderComponent;

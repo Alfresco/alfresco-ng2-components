@@ -25,7 +25,7 @@ import { TaskListService } from '../services/tasklist.service';
 import {  } from './../assets/start-task.mock';
 import { StartTaskComponent } from './start-task.component';
 
-xdescribe('StartTaskComponent', () => {
+describe('StartTaskComponent', () => {
 
     let component: StartTaskComponent;
     let fixture: ComponentFixture<StartTaskComponent>;
