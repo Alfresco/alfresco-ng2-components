@@ -27,6 +27,7 @@ export * from './version-manager';
 export * from './content-node-selector';
 export * from './dialogs';
 export * from './directive';
+export * from './content-metadata';
 
 export * from './mock';
 

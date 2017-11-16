@@ -17,9 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
-import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
-import { FileSizePipe } from '../../pipes/file-size.pipe';
+import { CardViewDateItemModel, CardViewTextItemModel, FileSizePipe } from '@alfresco/core';
 
 @Injectable()
 export class ContentMetadataService {

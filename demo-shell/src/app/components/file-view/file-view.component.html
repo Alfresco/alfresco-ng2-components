@@ -1,36 +1,52 @@
 <ng-container *ngIf="nodeId">
-    <adf-viewer [fileNodeId]="nodeId" [allowSidebar]="true">
 
-      <!--
-      <adf-viewer-extension [supportedExtensions]="['json']">
-        <ng-template let-urlFileContent="urlFileContent" let-extension="extension">
-          <h1>JSON VIEWER</h1>
-        </ng-template>
-      </adf-viewer-extension>
-      -->
+    <ng-template let-node="node" #sidebarTemplate>
+        <adf-info-drawer title="Details">
+            <adf-info-drawer-tab label="Properties">
+                <adf-content-metadata-card [node]="node"></adf-content-metadata-card>
+            </adf-info-drawer-tab>
 
-      <!--
-      <adf-viewer-extension [supportedExtensions]="['png']">
-        <ng-template>
-          <h1>PNG Viewer</h1>
-        </ng-template>
-      </adf-viewer-extension>
-      -->
+            <adf-info-drawer-tab label="Versions">
+                <mat-card>
+                    <mat-card-content>
+                        Versions go here...
+                    </mat-card-content>
+                </mat-card>
+            </adf-info-drawer-tab>
+        </adf-info-drawer>
+    </ng-template>
 
-      <!--
-      <adf-viewer-extension [supportedExtensions]="['pdf']">
-        <ng-template>
-          <h1>PDF Viewer</h1>
-        </ng-template>
-      </adf-viewer-extension>
-      -->
+    <adf-viewer [fileNodeId]="nodeId" [allowSidebar]="true" [sidebarTemplate]="sidebarTemplate">
+        <!--
+        <adf-viewer-extension [supportedExtensions]="['json']">
+            <ng-template let-urlFileContent="urlFileContent" let-extension="extension">
+            <h1>JSON VIEWER</h1>
+            </ng-template>
+        </adf-viewer-extension>
+        -->
 
-      <!--
-      <extension-viewer [supportedExtensions]="['obj','3DS']" #extension>
-        <ng-template let-urlFileContent="urlFileContent" let-extension="extension" >
-          <threed-viewer [urlFile]="urlFileContent" [extension]="extension" ></threed-viewer>
-        </ng-template>
-      </extension-viewer>
-      -->
+        <!--
+        <adf-viewer-extension [supportedExtensions]="['png']">
+            <ng-template>
+            <h1>PNG Viewer</h1>
+            </ng-template>
+        </adf-viewer-extension>
+        -->
+
+        <!--
+        <adf-viewer-extension [supportedExtensions]="['pdf']">
+            <ng-template>
+            <h1>PDF Viewer</h1>
+            </ng-template>
+        </adf-viewer-extension>
+        -->
+
+        <!--
+        <extension-viewer [supportedExtensions]="['obj','3DS']" #extension>
+            <ng-template let-urlFileContent="urlFileContent" let-extension="extension" >
+            <threed-viewer [urlFile]="urlFileContent" [extension]="extension" ></threed-viewer>
+            </ng-template>
+        </extension-viewer>
+        -->
     </adf-viewer>
 </ng-container>

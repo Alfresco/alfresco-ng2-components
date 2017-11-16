@@ -91,6 +91,9 @@ export class ViewerComponent implements OnDestroy, OnChanges {
     @Input()
     sidebarPosition = 'right';
 
+    @Input()
+    sidebarTemplate: TemplateRef<any> = null;
+
     @Output()
     goBack = new EventEmitter<BaseEvent<any>>();
 
@@ -121,6 +124,7 @@ export class ViewerComponent implements OnDestroy, OnChanges {
     otherMenu: any;
     extension: string;
     mimeType: string;
+    sidebarTemplateContext: { node: MinimalNodeEntryEntity } = { node: null };
 
     private extensions = {
         image: ['png', 'jpg', 'jpeg', 'gif', 'bpm'],
@@ -203,7 +207,7 @@ export class ViewerComponent implements OnDestroy, OnChanges {
                             }
 
                             this.extensionChange.emit(this.extension);
-                            this.node = data;
+                            this.sidebarTemplateContext.node = data;
                             this.scrollTop();
                             resolve();
                         },

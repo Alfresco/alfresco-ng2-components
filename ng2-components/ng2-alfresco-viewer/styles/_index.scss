@@ -1,7 +1,0 @@
-@import '../src/components/viewer.component';
-@import '../src/components/viewer-default-sidebar.component';
-
-@mixin alfresco-viewer-theme($theme) {
-    @include adf-viewer-theme($theme);
-    @include adf-viewer-default-sidebar-theme($theme);
-}

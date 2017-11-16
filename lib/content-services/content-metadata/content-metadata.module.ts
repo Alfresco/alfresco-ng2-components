@@ -16,25 +16,30 @@
  */
 
 import { CommonModule } from '@angular/common';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { MaterialModule } from '../../material.module';
-import { CardViewModule } from '../view/card-view.module';
+import { MaterialModule } from '../material.module';
+import { CardViewModule } from '@alfresco/core';
 
 import { ContentMetadataComponent } from './content-metadata.component';
+import { ContentMetadataCardComponent } from './content-metadata-card.component';
 
 @NgModule({
     imports: [
         CommonModule,
         MaterialModule,
         TranslateModule,
+        FlexLayoutModule,
         CardViewModule
     ],
     exports: [
-        ContentMetadataComponent
+        ContentMetadataComponent,
+        ContentMetadataCardComponent
     ],
     declarations: [
-        ContentMetadataComponent
+        ContentMetadataComponent,
+        ContentMetadataCardComponent
     ]
 })
 export class ContentMetadataModule {}

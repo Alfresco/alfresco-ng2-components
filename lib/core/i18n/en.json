@@ -160,6 +160,12 @@
       "OF": "of"
     },
     "LOADING": "Loading",
-    "UNKNOWN_FORMAT": "Couldn't load preview"
+    "UNKNOWN_FORMAT": "Couldn't load preview",
+    "SIDEBAR": {
+      "METADATA": {
+          "MORE_INFORMATION": "More information",
+          "LESS_INFORMATION": "Less information"
+      }
+    }
   }
 }

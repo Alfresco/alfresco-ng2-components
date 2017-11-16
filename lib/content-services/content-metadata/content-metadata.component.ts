@@ -18,10 +18,7 @@
 import { Component, Input, OnChanges, OnInit, ViewEncapsulation } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Rx';
-import { CardViewItem } from '../../interface/card-view-item.interface';
-import { FileSizePipe } from '../../pipes/file-size.pipe';
-import { CardViewUpdateService } from '../../services/card-view-update.service';
-import { NodesApiService } from '../../services/nodes-api.service';
+import { CardViewItem, CardViewUpdateService, FileSizePipe, NodesApiService } from '@alfresco/core';
 import { ContentMetadataService } from './content-metadata.service';
 
 @Component({

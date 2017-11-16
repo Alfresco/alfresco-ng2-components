@@ -19,13 +19,13 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 
 @Component({
-    selector: 'adf-viewer-default-sidebar',
-    templateUrl: './viewer-default-sidebar.component.html',
-    styleUrls: ['./viewer-default-sidebar.component.scss'],
+    selector: 'adf-content-metadata-card',
+    templateUrl: './content-metadata-card.component.html',
+    styleUrls: ['./content-metadata-card.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { 'class': 'adf-viewer-default-sidebar' }
 })
-export class ViewerDefaultSidebarComponent {
+export class ContentMetadataCardComponent {
     @Input()
     node: MinimalNodeEntryEntity;
 
