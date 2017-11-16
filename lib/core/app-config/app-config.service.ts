@@ -29,7 +29,8 @@ export class AppConfigService {
             name: 'Alfresco ADF Application'
         },
         ecmHost: 'http://{hostname}{:port}/ecm',
-        bpmHost: 'http://{hostname}{:port}/bpm'
+        bpmHost: 'http://{hostname}{:port}/bpm',
+        logLevel: 'silent'
     };
 
     constructor(private http: HttpClient) {
