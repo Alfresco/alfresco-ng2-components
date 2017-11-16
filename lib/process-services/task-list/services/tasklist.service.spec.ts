@@ -40,7 +40,7 @@ import { TaskListService } from './tasklist.service';
 
 declare let jasmine: any;
 
-describe('Activiti TaskList Service', () => {
+xdescribe('Activiti TaskList Service', () => {
 
     let service: TaskListService;
 
