@@ -37,7 +37,7 @@ You can browse all the components at the following [page](http://devproducts.alf
 
 ## Demo Application
 
-A separate application showcasing integration of components can be found [here](https://github.com/Alfresco/alfresco-ng2-components/tree/master/demo-shell-ng2).
+A separate application showcasing integration of components can be found [here](https://github.com/Alfresco/alfresco-ng2-components/tree/master/demo-shell).
 
 You will find examples of basic interaction for both BPM and ECM sets of widgets.
 

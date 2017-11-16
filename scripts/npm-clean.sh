@@ -9,23 +9,6 @@ show_help() {
     echo ""
 }
 
-eval projects=( "ng2-activiti-diagrams"
-      "ng2-activiti-analytics"
-      "ng2-activiti-form"
-      "ng2-activiti-processlist"
-      "ng2-activiti-tasklist"
-      "ng2-alfresco-core"
-      "ng2-alfresco-datatable"
-      "ng2-alfresco-documentlist"
-      "ng2-alfresco-login"
-      "ng2-alfresco-search"
-      "ng2-alfresco-social"
-      "ng2-alfresco-tag"
-      "ng2-alfresco-upload"
-      "ng2-alfresco-viewer"
-      "ng2-alfresco-webscript"
-      "ng2-alfresco-userinfo" )
-
 while [[ $1  == -* ]]; do
     case "$1" in
       -h|--help|-\?) show_help; exit 0;;
@@ -35,19 +18,11 @@ done
 
 npm install rimraf
 
-for PACKAGE in ${projects[@]}
-do
-    echo "====== clean component: ${PACKAGE} ====="
-    cd "$DIR/../ng2-components/${PACKAGE}"
-    npm run clean
-    npm run clean-lock
-done
-
-cd "$DIR/../demo-shell-ng2"
+cd "$DIR/../demo-shell"
 npm run clean
 npm run clean-lock
 
-cd "$DIR/../ng2-components"
+cd "$DIR/../lib"
 npm run clean
 npm run clean-lock
 

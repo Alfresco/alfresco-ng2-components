@@ -1,5 +1,0 @@
-@import '../src/components/user-info.component';
-
-@mixin alfresco-userinfo-theme($theme) {
-    @include adf-userinfo-theme($theme);
-}

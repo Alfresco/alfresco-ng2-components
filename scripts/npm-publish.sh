@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
@@ -11,8 +12,15 @@ eval EXEC_GIT_NPM_INSTALL_JSAPI=false
 eval GIT_ISH=""
 eval EXEC_SLEEP=false
 eval SLEEP_TIME="0"
+eval EXEC_VERSION_JSAPI=false
+eval JSAPI_VERSION=""
 
-cd "$DIR/../demo-shell-ng2"
+eval projects=( "core"
+    "insights"
+    "content-services"
+    "process-services" )
+
+cd "$DIR/../lib"
 
 show_help() {
     echo "Usage: npm-publish.sh"
@@ -23,6 +31,7 @@ show_help() {
     echo "-t or --tag to add a tag when publish a package"
     echo "--sleep add a sleep before any publish"
     echo "-gitjsapi to build all the components against a commit-ish version of the JS-API"
+    echo "-vjsapi <commit-ish>      Install different version from npm of JS-API defined in the package.json"
 }
 
 enable_force(){
@@ -67,6 +76,18 @@ add_tag(){
     OPTIONS="$OPTIONS --tag $1"
 }
 
+version_js_api() {
+    JSAPI_VERSION=$1
+
+    if [[ "${JSAPI_VERSION}" == "" ]]
+    then
+      echo "JSAPI version required with -vJSApi"
+      exit 0
+    fi
+
+    EXEC_VERSION_JSAPI=true
+}
+
 change_registry(){
     if [[ "${NPM_REGISTRY}" == "" ]]
     then
@@ -90,53 +111,46 @@ while [[ $1 == -* ]]; do
       --sleep) set_sleep $2; shift 2;;
       -r|--registry) enable_change_registry $2; shift 2;;
       -gitjsapi)  enable_js_api_git_link $2; shift 2;;
+      -vjsapi)  version_js_api $2; shift 2;;
       -*) echo "invalid option: $1" 1>&2; show_help; exit 0;;
     esac
 done
 
 npm install rimraf -g
 
-for PACKAGE in \
-  ng2-alfresco-core \
-  ng2-alfresco-datatable \
-  ng2-alfresco-upload \
-  ng2-alfresco-userinfo \
-  ng2-activiti-diagrams \
-  ng2-activiti-analytics \
-  ng2-activiti-form \
-  ng2-activiti-tasklist \
-  ng2-activiti-processlist \
-  ng2-alfresco-documentlist \
-  ng2-alfresco-login \
-  ng2-alfresco-search \
-  ng2-alfresco-tag \
-  ng2-alfresco-social \
-  ng2-alfresco-viewer \
-  ng2-alfresco-webscript
-do
-  DESTDIR="$DIR/../ng2-components/${PACKAGE}"
-  echo "====== MOVE DIR: ${DESTDIR} ===== "
-  cd ${DESTDIR}
+echo "====== INSTALL AND CLEAN ${PACKAGE} ===== "
+npm run clean
+npm install
 
-  echo "====== INSTALL AND CLEAN ${PACKAGE} ===== "
-  npm run clean
-
-  if $EXEC_CHANGE_REGISTRY == true; then
-    change_registry
-  fi
-
-  if $EXEC_GIT_NPM_INSTALL_JSAPI == true; then
+if $EXEC_GIT_NPM_INSTALL_JSAPI == true; then
     echo "====== Use the alfresco JS-API  '$GIT_ISH'====="
     npm install $GIT_ISH
     cd  "${DESTDIR}/node_modules/alfresco-js-api"
     npm install
     cd ${DESTDIR}
+fi
+
+if $EXEC_VERSION_JSAPI == true; then
+  echo "====== Use the alfresco JS-API '$JSAPI_VERSION'====="
+  npm install alfresco-js-api@${JSAPI_VERSION} --no-save
+fi
+
+echo "====== Build ADF ===== "
+npm run build
+
+for PACKAGE in ${projects[@]}
+do
+
+  DESTDIR="$DIR/../ng2-components/${PACKAGE}"
+  echo "====== MOVE DIR: ${DESTDIR} ===== "
+  cd ${DESTDIR}
+
+  if $EXEC_CHANGE_REGISTRY == true; then
+    change_registry
   fi
 
-  npm install
-
   echo "====== PUBLISHING: ${DESTDIR} ===== npm publish ${OPTIONS}"
-  npm publish ${OPTIONS} || exit 1
+  npm publish ${OPTIONS} --access=public || exit 1
 
   if $EXEC_CHANGE_REGISTRY == true; then
       npm run rimraf .npmrc

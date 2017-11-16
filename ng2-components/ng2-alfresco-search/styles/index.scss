@@ -1,7 +1,0 @@
-@import '../src/components/search.component';
-@import '../src/components/search-control.component';
-
-@mixin alfresco-search-theme($theme) {
-    @include adf-search-control-theme($theme);
-    @include adf-search-autocomplete-theme($theme);
-}

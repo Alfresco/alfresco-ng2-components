@@ -59,11 +59,11 @@ $theme:   mat-light-theme($primary, $accent, $warn);
 @include angular-material-theme($theme);
 
 @include alfresco-core-theme($theme);
-@include alfresco-activity-analytics-theme($theme);
-@include alfresco-activity-diagrams-theme($theme);
-@include alfresco-activity-form-theme($theme);
-@include alfresco-activity-processlist-theme($theme);
-@include alfresco-activity-tasklist-theme($theme);
+@include adf-analytics-theme($theme);
+@include adf-diagrams-theme($theme);
+@include adf-form-theme($theme);
+@include adf-processlist-theme($theme);
+@include adf-tasklist-theme($theme);
 @include alfresco-datatable-theme($theme);
 @include alfresco-documentlist-theme($theme);
 @include alfresco-login-theme($theme);

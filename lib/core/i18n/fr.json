@@ -1,0 +1,96 @@
+{
+  "CORE": {
+    "PAGINATION": {
+      "ITEMS_RANGE": "Affichage de {{ range }} sur {{ total }}",
+      "ITEMS_PER_PAGE": "Éléments par page",
+      "CURRENT_PAGE": "Page {{ number }}",
+      "TOTAL_PAGES": "sur {{ total }}"
+    },
+    "FOLDER_DIALOG": {
+      "CREATE_FOLDER_TITLE": "Créer un nouveau filtre",
+      "EDIT_FOLDER_TITLE": "Modifier le dossier",
+      "FOLDER_NAME": {
+        "LABEL": "Nom",
+        "ERRORS": {
+          "REQUIRED": "Nom de dossier requis",
+          "SPECIAL_CHARACTERS": "Un nom de dossier ne peut pas contenir les caractères * \" < > \\ / ? : |",
+          "ENDING_DOT": "Un nom de dossier ne peut pas se terminer par un point .",
+          "ONLY_SPACES": "Un nom de dossier ne peut pas contenir uniquement des espaces"
+        }
+      },
+      "FOLDER_DESCRIPTION": {
+        "LABEL": "Description"
+      },
+      "CREATE_BUTTON": {
+        "LABEL": "Créer"
+      },
+      "UPDATE_BUTTON": {
+        "LABEL": "Mis à jour"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "Annuler"
+      }
+    },
+    "MESSAGES": {
+      "ERRORS": {
+        "GENERIC": "L'action a échoué. Réessayez ou contactez le service informatique.",
+        "EXISTENT_FOLDER": "Un dossier du même nom existe déjà. Essayez avec un nom différent."
+      }
+    },
+    "HOST_SETTINGS": {
+      "TITLE": "Paramètres",
+      "CS-HOST": "Configuration de l'URL de l'hôte de Content Services",
+      "BP-HOST": "Configuration de l'URL de l'hôte de Process Services",
+      "BACK": "Retour",
+      "APPLY": "APPLIQUER"
+    }
+  },
+  "LOGIN": {
+    "LOGO": "Alfresco",
+    "LABEL": {
+      "LOGIN": "Connexion",
+      "USERNAME": "Nom d'utilisateur",
+      "PASSWORD": "Mot de passe",
+      "REMEMBER": "Mémoriser"
+    },
+    "MESSAGES": {
+      "USERNAME-REQUIRED": "Requis",
+      "USERNAME-MIN": "Votre nom d'utilisateur doit comporter au moins {{minLenght}} caractères.",
+      "PASSWORD-REQUIRED": "Entrez votre mot de passe pour vous connecter",
+      "LOGIN-ERROR-CREDENTIALS": "Le nom d'utilisateur ou le mot de passe entré est inconnu",
+      "LOGIN-ERROR-PROVIDERS": "Le fournisseur ne peut pas être non défini",
+      "LOGIN-SUCCESS": "Connexion réussie",
+      "LOGIN-ERROR-CORS": "Exception CORS, vérifiez la configuration du serveur",
+      "LOGIN-ERROR-CSRF": "Exception CSRF, set [disableCsrf]=\"true\" in login.component",
+      "LOGIN-ECM-LICENSE": "L'entrepôt Alfresco Content Services est en lecture seule"
+    },
+    "BUTTON": {
+      "LOGIN": "CONNEXION",
+      "CHECKING": "VÉRIFICATION",
+      "WELCOME": "BIENVENUE"
+    },
+    "ACTION": {
+      "HELP": "BESOIN D'AIDE ?",
+      "REGISTER": "S'INSCRIRE"
+    }
+  },
+  "ADF-DATATABLE": {
+    "EMPTY": {
+      "HEADER": "Cette liste est vide",
+      "DRAG-AND-DROP": {
+        "TITLE": "Glissez-déposez",
+        "SUBTITLE": "les fichiers à importer"
+      }
+    }
+  },
+  "USER_PROFILE": {
+    "LABELS": {
+      "ECM": {
+        "JOB_TITLE": "Fonction"
+      },
+      "BPM": {
+        "TENANT": "Client"
+      }
+    }
+  }
+}
