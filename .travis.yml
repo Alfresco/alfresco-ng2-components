@@ -83,4 +83,4 @@ cache:
   - ./node_modules/material-design-lite
   - ./node_modules/material-design-icons
   - demo-shell/node_modules
-  - ng2-components/node_modules
+  - lib/node_modules

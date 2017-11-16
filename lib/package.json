@@ -146,7 +146,7 @@
     },
     {
       "path": "./analytics/bundles/analytics.js",
-      "maxSize": "100 kb"
+      "maxSize": "50 kb"
     },
     {
       "path": "./core/bundles/core.js",
