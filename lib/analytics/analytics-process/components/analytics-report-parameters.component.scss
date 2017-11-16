@@ -1,0 +1,103 @@
+.dropdown-widget {
+    width: 100%;
+}
+
+.dropdown-widget__select {
+    width: 100%;
+}
+
+.dropdown-widget__invalid .dropdown-widget__select {
+    border-color: #d50000;
+}
+
+.dropdown-widget__invalid .dropdown-widget__label {
+    color: #d50000;
+}
+
+.dropdown-widget__invalid .dropdown-widget__label:after {
+    background-color: #d50000;
+}
+
+.adf-edit-report-title {
+    float: left;
+    font-size: 20px!important;
+    padding-top: 19px;
+}
+
+.adf-report-icon {
+    float: left;
+    padding: 5px 5px 0 0;
+    visibility: hidden;
+}
+
+.adf-report-title-container {
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 12px;
+
+    :hover .adf-report-icon {
+        color: rgb(68, 138, 255);
+        visibility: visible;
+    }
+
+}
+
+.adf-report-title {
+    padding-top: 10px;
+}
+
+.adf-full-width-input {
+    width: 100%;
+}
+
+.is-hide {
+    height: 0;
+    overflow: hidden;
+    transition: height 0.5s;
+}
+
+.adf-report-report-container {
+    border-bottom: solid 1px rgb(212, 212, 212);
+    padding-top: 10px;
+
+    .mat-toolbar {
+        border: 0 !important;
+        padding: 0 !important;
+    }
+}
+
+.report-container-setting {
+    padding-left: 10px;
+}
+
+.option_button_details {
+    padding-top: 20px;
+}
+
+.export-message {
+    background-color: lightgray;
+}
+
+.save-export-input {
+    width: 100%;
+}
+
+.delete-parameter {
+    position: absolute;
+    margin-left: 60%;
+    padding-top: 5px;
+}
+
+.hide {
+    display: none;
+}
+
+.adf-report-dialog {
+    .mat-form-field {
+        width: 100%;
+    }
+
+    .mat-dialog-actions {
+        justify-content: flex-end;
+    }
+}

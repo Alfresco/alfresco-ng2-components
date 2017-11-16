@@ -1,0 +1,9 @@
+<div [formGroup]="formGroup">
+        <mat-checkbox
+        color="primary"
+        formControlName="{{controllerName}}"
+        [id]="field.id"
+        [checked]="field.value"
+        [(ngModel)]="field.value"
+        (ngModelChange)="changeValue(field)">{{field.nameKey | translate}}</mat-checkbox>
+</div>

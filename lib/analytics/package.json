@@ -1,6 +1,6 @@
 {
   "name": "adf-analytics-services",
-  "description": "Analytics ADF process services",
+  "description": "Alfresco ADF analytics",
   "version": "2.0.0",
   "author": "Alfresco Software, Ltd.",
   "main": "bundles/analytics.js",
