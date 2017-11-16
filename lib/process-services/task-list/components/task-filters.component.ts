@@ -19,6 +19,7 @@ import { AppsProcessService } from '@alfresco/core';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Observable, Observer } from 'rxjs/Rx';
 import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
+import { TaskFilterService } from './../services/task-filter.service';
 import { TaskListService } from './../services/tasklist.service';
 
 @Component({
@@ -56,7 +57,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
 
     filters: FilterRepresentationModel [] = [];
 
-    constructor(private taskListService: TaskListService, private appsProcessService: AppsProcessService) {
+    constructor(private taskFilterService: TaskFilterService, private taskListService: TaskListService, private appsProcessService: AppsProcessService) {
         this.filter$ = new Observable<FilterRepresentationModel>(observer => this.filterObserver = observer).share();
     }
 
@@ -99,10 +100,10 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
      * @param appId - optional
      */
     getFiltersByAppId(appId?: number) {
-        this.taskListService.getTaskListFilters(appId).subscribe(
+        this.taskFilterService.getTaskListFilters(appId).subscribe(
             (res: FilterRepresentationModel[]) => {
                 if (res.length === 0 && this.isFilterListEmpty()) {
-                    this.taskListService.createDefaultFilters(appId).subscribe(
+                    this.taskFilterService.createDefaultFilters(appId).subscribe(
                         (resDefault: FilterRepresentationModel[]) => {
                             this.resetFilter();
                             resDefault.forEach((filter) => {

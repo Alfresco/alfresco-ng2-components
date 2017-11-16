@@ -19,13 +19,13 @@ import { SimpleChange } from '@angular/core';
 import { AppsProcessService } from '@alfresco/core';
 import { Observable } from 'rxjs/Rx';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
-import { ProcessService } from '../services/process.service';
+import { ProcessFilterService } from '../services/process-filter.service';
 import { ProcessFiltersComponent } from './process-filters.component';
 
 describe('ActivitiFilters', () => {
 
     let filterList: ProcessFiltersComponent;
-    let processService: ProcessService;
+    let processFilterService: ProcessFilterService;
     let appsProcessService: AppsProcessService;
 
     let fakeGlobalFilter = [];
@@ -56,13 +56,13 @@ describe('ActivitiFilters', () => {
     });
 
     beforeEach(() => {
-        processService = new ProcessService(null, null);
+        processFilterService = new ProcessFilterService(null, null);
         appsProcessService = new AppsProcessService(null, null);
-        filterList = new ProcessFiltersComponent(processService, appsProcessService);
+        filterList = new ProcessFiltersComponent(processFilterService, appsProcessService);
     });
 
     it('should return the filter task list', (done) => {
-        spyOn(processService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+        spyOn(processFilterService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
         const appId = '1';
         let change = new SimpleChange(null, appId, true);
         filterList.ngOnChanges({ 'appId': change });
@@ -81,7 +81,7 @@ describe('ActivitiFilters', () => {
     });
 
     it('should select the Running process filter', (done) => {
-        spyOn(processService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+        spyOn(processFilterService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
         const appId = '1';
         let change = new SimpleChange(null, appId, true);
         filterList.ngOnChanges({ 'appId': change });
@@ -104,7 +104,7 @@ describe('ActivitiFilters', () => {
         });
 
         spyOn(appsProcessService, 'getDeployedApplicationsByName').and.returnValue(Observable.fromPromise(fakeDeployedApplicationsPromise));
-        spyOn(processService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+        spyOn(processFilterService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
 
         let change = new SimpleChange(null, 'test', true);
         filterList.ngOnChanges({ 'appName': change });
@@ -120,7 +120,7 @@ describe('ActivitiFilters', () => {
     });
 
     it('should emit an error with a bad response', (done) => {
-        spyOn(processService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeErrorFilterPromise));
+        spyOn(processFilterService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeErrorFilterPromise));
 
         const appId = '1';
         let change = new SimpleChange(null, appId, true);

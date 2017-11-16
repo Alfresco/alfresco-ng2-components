@@ -29,6 +29,7 @@ import { PeopleModule } from '../people';
 import { CommentsModule } from '../comments';
 import { ProcessUploadService } from './services/process-upload.service';
 import { TaskListService } from './services/tasklist.service';
+import { TaskFilterService } from './services/task-filter.service';
 
 import { ChecklistComponent } from './components/checklist.component';
 import { NoTaskDetailsTemplateDirective } from './components/no-task-detail-template.directive';
@@ -68,6 +69,7 @@ import { TaskListComponent } from './components/task-list.component';
     ],
     providers: [
         TaskListService,
+        TaskFilterService,
         ProcessUploadService,
         DatePipe
     ],

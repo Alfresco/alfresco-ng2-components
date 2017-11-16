@@ -26,6 +26,7 @@ export * from './components/start-task.component';
 
 export * from './services/tasklist.service';
 export * from './services/process-upload.service';
+export * from './services/task-filter.service';
 
 export * from './models/filter.model';
 export * from './models/task-details.model';

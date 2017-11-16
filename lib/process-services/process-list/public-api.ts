@@ -26,6 +26,7 @@ export * from './components/start-process.component';
 
 // services
 export * from './services/process.service';
+export * from './services/process-filter.service';
 
 // models
 export * from './models/filter-process.model';

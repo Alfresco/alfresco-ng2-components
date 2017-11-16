@@ -37,6 +37,7 @@ import { ProcessInstanceListComponent } from './components/process-list.componen
 import { StartProcessInstanceComponent } from './components/start-process.component';
 
 import { ProcessService } from './services/process.service';
+import { ProcessFilterService } from './services/process-filter.service';
 
 @NgModule({
     imports: [
@@ -67,6 +68,7 @@ import { ProcessService } from './services/process.service';
     ],
     providers: [
         ProcessService,
+        ProcessFilterService,
         CardViewUpdateService
     ],
     exports: [

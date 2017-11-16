@@ -201,7 +201,7 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
 
     private loadTasksByState(): Observable<TaskListModel> {
         return this.requestNode.state === 'all'
-               ? this.taskListService.findAllTasksWhitoutState(this.requestNode)
+               ? this.taskListService.findAllTasksWithoutState(this.requestNode)
                : this.taskListService.findTasksByState(this.requestNode);
     }
 

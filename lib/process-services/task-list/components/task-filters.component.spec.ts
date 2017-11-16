@@ -21,12 +21,14 @@ import { AppConfigService, AppsProcessService } from '@alfresco/core';
 import { Observable } from 'rxjs/Rx';
 import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
 import { TaskListService } from '../services/tasklist.service';
+import { TaskFilterService } from '../services/task-filter.service';
 import { MaterialModule } from '../../material.module';
 import { TaskFiltersComponent } from './task-filters.component';
 
 describe('TaskFiltersComponent', () => {
 
-    let activitiService: TaskListService;
+    let taskListService: TaskListService;
+    let taskFilterService: TaskFilterService;
     let appsProcessService: AppsProcessService;
 
     let fakeGlobalFilter = [];
@@ -70,7 +72,8 @@ describe('TaskFiltersComponent', () => {
                 TaskFiltersComponent
             ],
             providers: [
-                TaskListService
+                TaskListService,
+                TaskFilterService
             ]
         }).compileComponents();
 
@@ -83,12 +86,13 @@ describe('TaskFiltersComponent', () => {
         fixture = TestBed.createComponent(TaskFiltersComponent);
         component = fixture.componentInstance;
 
-        activitiService = TestBed.get(TaskListService);
+        taskListService = TestBed.get(TaskListService);
+        taskFilterService = TestBed.get(TaskFilterService);
         appsProcessService = TestBed.get(AppsProcessService);
     });
 
     it('should emit an error with a bad response', (done) => {
-        spyOn(activitiService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeErrorFilterPromise));
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeErrorFilterPromise));
 
         const appId = '1';
         let change = new SimpleChange(null, appId, true);
@@ -102,7 +106,7 @@ describe('TaskFiltersComponent', () => {
     });
 
     it('should return the filter task list', (done) => {
-        spyOn(activitiService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
         const appId = '1';
         let change = new SimpleChange(null, appId, true);
         component.ngOnChanges({ 'appId': change });
@@ -127,7 +131,7 @@ describe('TaskFiltersComponent', () => {
         });
 
         spyOn(appsProcessService, 'getDeployedApplicationsByName').and.returnValue(Observable.fromPromise(fakeDeployedApplicationsPromise));
-        spyOn(activitiService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
 
         let change = new SimpleChange(null, 'test', true);
         component.ngOnChanges({ 'appName': change });
@@ -143,7 +147,7 @@ describe('TaskFiltersComponent', () => {
     });
 
     it('should select the first filter as default', (done) => {
-        spyOn(activitiService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
 
         const appId = '1';
         let change = new SimpleChange(null, appId, true);
@@ -161,7 +165,7 @@ describe('TaskFiltersComponent', () => {
     });
 
     it('should select the task filter based on the input by name param', (done) => {
-        spyOn(activitiService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
 
         component.filterParam = new FilterParamsModel({name: 'FakeMyTasks1'});
         const appId = '1';
@@ -180,7 +184,7 @@ describe('TaskFiltersComponent', () => {
     });
 
     it('should select the default task filter if filter input does not exist', (done) => {
-        spyOn(activitiService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
 
         component.filterParam = new FilterParamsModel({name: 'UnexistableFilter'});
 
@@ -200,7 +204,7 @@ describe('TaskFiltersComponent', () => {
     });
 
     it('should select the task filter based on the input by index param', (done) => {
-        spyOn(activitiService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
 
         component.filterParam = new FilterParamsModel({index: 2});
 
@@ -220,7 +224,7 @@ describe('TaskFiltersComponent', () => {
     });
 
     it('should select the task filter based on the input by id param', (done) => {
-        spyOn(activitiService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
 
         component.filterParam = new FilterParamsModel({id: 10});
 
@@ -308,7 +312,7 @@ describe('TaskFiltersComponent', () => {
         });
         component.filters = fakeGlobalFilter;
         component.currentFilter = filter;
-        spyOn(activitiService, 'isTaskRelatedToFilter').and.returnValue(Observable.of(null));
+        spyOn(taskListService, 'isTaskRelatedToFilter').and.returnValue(Observable.of(null));
         component.selectFilterWithTask('111');
 
         expect(component.currentFilter).toBe(filter);

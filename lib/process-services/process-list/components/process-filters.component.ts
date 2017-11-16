@@ -20,7 +20,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { ProcessInstanceFilterRepresentation } from 'alfresco-js-api';
 import { Observable, Observer } from 'rxjs/Rx';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
-import { ProcessService } from './../services/process.service';
+import { ProcessFilterService } from './../services/process-filter.service';
 
 @Component({
     selector: 'adf-process-instance-filters',
@@ -57,7 +57,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
 
     filters: ProcessInstanceFilterRepresentation [] = [];
 
-    constructor(private processService: ProcessService, private appsProcessService: AppsProcessService) {
+    constructor(private processFilterService: ProcessFilterService, private appsProcessService: AppsProcessService) {
         this.filter$ = new Observable<ProcessInstanceFilterRepresentation>(observer => this.filterObserver = observer).share();
     }
 
@@ -85,10 +85,10 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
      * @param appId - optional
      */
     getFiltersByAppId(appId?: number) {
-        this.processService.getProcessFilters(appId).subscribe(
+        this.processFilterService.getProcessFilters(appId).subscribe(
             (res: ProcessInstanceFilterRepresentation[]) => {
                 if (res.length === 0 && this.isFilterListEmpty()) {
-                    this.processService.createDefaultFilters(appId).subscribe(
+                    this.processFilterService.createDefaultFilters(appId).subscribe(
                         (resDefault: ProcessInstanceFilterRepresentation[]) => {
                             this.resetFilter();
                             resDefault.forEach((filter) => {
@@ -162,7 +162,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
      * Select the Running filter
      */
     public selectRunningFilter() {
-        this.selectProcessFilter(this.processService.getRunningFilterInstance(null));
+        this.selectProcessFilter(this.processFilterService.getRunningFilterInstance(null));
     }
 
     /**
