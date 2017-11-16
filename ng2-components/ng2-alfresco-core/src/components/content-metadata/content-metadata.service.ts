@@ -26,11 +26,6 @@ export class ContentMetadataService {
 
     constructor(private fileSizePipe: FileSizePipe) {}
 
-    update() {
-        /*tslint:disable-next-line*/
-        console.log(arguments);
-    }
-
     getBasicProperties(node: MinimalNodeEntryEntity) {
         return [
             new CardViewTextItemModel({
