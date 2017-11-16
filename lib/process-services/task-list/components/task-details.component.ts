@@ -137,7 +137,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
     peopleSearch$: Observable<UserProcessModel[]>;
 
-    constructor(private activitiTaskList: TaskListService,
+    constructor(private taskListService: TaskListService,
                 private authService: AuthenticationService,
                 private peopleProcessService: PeopleProcessService,
                 private logService: LogService,
@@ -194,7 +194,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
      * @param updateNotification
      */
     private updateTaskDetails(updateNotification: UpdateNotification) {
-        this.activitiTaskList.updateTask(this.taskId, updateNotification.changed)
+        this.taskListService.updateTask(this.taskId, updateNotification.changed)
             .subscribe(
                 () => {
                     this.loadDetails(this.taskId);
@@ -217,7 +217,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
         this.readOnlyForm = false;
 
         if (taskId) {
-            this.activitiTaskList.getTaskDetails(taskId).subscribe(
+            this.taskListService.getTaskDetails(taskId).subscribe(
                 (res: TaskDetailsModel) => {
                     this.taskDetails = res;
 
@@ -256,7 +256,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
                 processDefinitionId: processDefinitionId
             }
         );
-        this.activitiTaskList.getTasks(requestNode).subscribe(
+        this.taskListService.getTasks(requestNode).subscribe(
             (response) => {
                 if (response && response.length > 0) {
                     this.taskDetails = new TaskDetailsModel(response[0]);
@@ -272,7 +272,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
      * Complete button clicked
      */
     onComplete(): void {
-        this.activitiTaskList.completeTask(this.taskId).subscribe(
+        this.taskListService.completeTask(this.taskId).subscribe(
             (res) => this.onFormCompleted(null)
         );
     }
@@ -343,7 +343,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     }
 
     assignTaskToUser(selectedUser: UserProcessModel) {
-        this.activitiTaskList.assignTask(this.taskDetails.id, selectedUser).subscribe(
+        this.taskListService.assignTask(this.taskDetails.id, selectedUser).subscribe(
             (res: any) => {
                 this.logService.info('Task Assigned to ' + selectedUser.email);
                 this.assignTask.emit();
