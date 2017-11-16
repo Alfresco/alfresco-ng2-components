@@ -186,7 +186,7 @@ export class TaskListService {
     }
 
     attachFormToATask(taskId: string, formId: number): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.attachForm(taskId, {'formId': formId}));
+        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.attachForm(taskId, {'formId': formId})).catch(err => this.handleError(err));
     }
 
     /**
@@ -218,7 +218,8 @@ export class TaskListService {
      */
     completeTask(taskId: string) {
         return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.completeTask(taskId))
-            .map(res => res);
+            .map(res => res)
+            .catch(err => this.handleError(err));
     }
 
     /**
