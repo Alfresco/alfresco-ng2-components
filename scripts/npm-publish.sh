@@ -116,9 +116,8 @@ while [[ $1 == -* ]]; do
     esac
 done
 
-npm install rimraf -g
-
 echo "====== INSTALL AND CLEAN ${PACKAGE} ===== "
+npm install rimraf
 npm run clean
 npm install
 
