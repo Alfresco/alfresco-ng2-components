@@ -17,6 +17,7 @@
 
 import { AlfrescoApiService, AppConfigService, UploadService } from '@alfresco/core';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
 
 @Injectable()
 export class ProcessUploadService extends UploadService {
@@ -28,12 +29,16 @@ export class ProcessUploadService extends UploadService {
         this.instanceApi = apiService;
     }
 
-    getUploadPromise(file: any) {
+    getUploadPromise(file: any): any {
         let opts = {
             isRelatedContent: true
         };
         let taskId = file.options.parentId;
-        return this.instanceApi.getInstance().activiti.contentApi.createRelatedContentOnTask(taskId, file.file, opts);
+        return this.instanceApi.getInstance().activiti.contentApi.createRelatedContentOnTask(taskId, file.file, opts).catch(err => this.handleError(err));
+    }
+
+    private handleError(error: any) {
+        return Observable.throw(error || 'Server error');
     }
 
 }
