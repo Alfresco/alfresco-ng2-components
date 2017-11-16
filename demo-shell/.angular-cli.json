@@ -29,7 +29,7 @@
         },
         {
           "glob": "**/*",
-          "input": "../node_modules/analytics/bundles/assets",
+          "input": "../node_modules/insights/bundles/assets",
           "output": "./assets/"
         },
         {
@@ -102,7 +102,7 @@
         },
         {
           "glob": "**/*",
-          "input": "../../lib/analytics/bundles/assets",
+          "input": "../../lib/insights/bundles/assets",
           "output": "./assets/"
         },
         {
@@ -112,8 +112,8 @@
         },
         {
           "glob": "**/*",
-          "input": "../../lib/analytics/i18n",
-          "output": "./assets/@adf/analytics/i18n"
+          "input": "../../lib/insights/i18n",
+          "output": "./assets/@adf/insights/i18n"
         },
         {
           "glob": "**/*",
