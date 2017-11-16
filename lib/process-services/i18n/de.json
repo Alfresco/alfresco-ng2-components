@@ -13,15 +13,47 @@
   },
   "ADF_TASK_LIST": {
     "APPS": {
-      "NONE": "Keine Anwendungen gefunden"
+      "NONE": "Keine Anwendungen gefunden",
+      "TASK_APP_NAME": "Aufgabenanwendung"
     },
     "LIST": {
       "MESSAGES": {
         "NONE": "Keine Aufgabenliste gefunden"
       }
     },
+    "PROPERTIES": {
+      "TASK_NAME": "Aufgabe",
+      "THUMBNAIL": "Miniaturansicht",
+      "NAME": "Name",
+      "ASSIGNEE": "Zugewiesener Benutzer",
+      "ASSIGNEE_DEFAULT": "Kein zugewiesener Benutzer",
+      "PRIORITY": "Priorität",
+      "DUE_DATE": "Fälligkeitsdatum",
+      "DUE_DATE_DEFAULT": "Kein Datum",
+      "STATUS": "Status",
+      "CATEGORY": "Kategorie",
+      "CATEGORY_DEFAULT": "Keine Kategorie",
+      "PARENT_NAME": "Name übergeordnetes Element",
+      "PARENT_NAME_DEFAULT": "Kein übergeordnetes Element",
+      "CREATED_BY": "Erstellt von",
+      "CREATED": "Erstellt",
+      "ID": "ID",
+      "DESCRIPTION": "Beschreibung",
+      "DESCRIPTION_DEFAULT": "Keine Beschreibung",
+      "FORM_NAME": "Formularname",
+      "FORM_NAME_DEFAULT": "Kein Formular"
+    },
+    "MENU_ACTIONS": {
+      "VIEW_CONTENT": "Anzeigen",
+      "REMOVE_CONTENT": "Entfernen",
+      "DOWNLOAD_CONTENT": "Herunterladen",
+      "DOWNLOAD_AUDIT": "Audit herunterladen"
+    },
     "DETAILS": {
       "LABELS": {
+        "INFO_DRAWER_TITLE": "Aktivitäten",
+        "INFO_DRAWER_TAB_ACTIVITY_TITLE": "Aktivität",
+        "INFO_DRAWER_TAB_DETAILS_TITLE": "Details",
         "ASSIGNEE": "Zugewiesener Benutzer",
         "DUE": "Fällig",
         "FORM": "Formular",
@@ -36,29 +68,31 @@
         "COMPLETE": "Abschließen",
         "CLAIM": "Anfordern",
         "UNCLAIM": "Erneut in Warteschlange stellen",
-        "DRAG-ATTACHMENT": "Dateien hier ablegen ...",
+        "DRAG-ATTACHMENT": "Dateien zum Hochladen ablegen",
         "UPLOAD-ATTACHMENT": "Anhang hochladen"
       },
       "MESSAGES": {
         "NONE": "Keine Aufgabendetails gefunden",
-        "CLAIM": "Klicken Sie auf 'Anfordern', um diese Aufgabe zu bearbeiten."
+        "CLAIM": "Klicken Sie auf 'Anfordern', um diese Aufgabe zu bearbeiten"
       },
       "FORM": {
-        "NONE": "Kein Formular."
+        "NONE": "Kein Formular"
       },
       "DUE": {
-        "NONE": "Kein Fälligkeitsdatum."
+        "NONE": "Kein Fälligkeitsdatum"
       },
       "ASSIGNEE": {
-        "NONE": "Kein zugewiesener Benutzer."
+        "NONE": "Kein zugewiesener Benutzer"
       },
       "PEOPLE": {
-        "NONE": "Niemand beteiligt."
+        "NONE": "Niemand beteiligt"
       },
       "COMMENTS": {
         "NONE": "Keine Kommentare vorhanden",
         "ADD": "Kommentar hinzufügen",
-        "HEADER": "Kommentare",
+        "HEADER": "Kommentare ({{ count }})",
+        "CREATED_BY_HEADER": "Erstellt von",
+        "MESSAGE_HEADER": "Fehlermeldung",
         "DIALOG": {
           "TITLE": "Neuer Kommentar",
           "LABELS": {
@@ -81,11 +115,11 @@
     },
     "FILTERS": {
       "MESSAGES": {
-        "NONE": "Kein Aufgabenfilter ausgewählt."
+        "NONE": "Kein Aufgabenfilter ausgewählt"
       }
     },
     "START_TASK": {
-      "BUTTON": "AUFGABE ERSTELLEN",
+      "BUTTON": "Aufgabe erstellen",
       "FORM": {
         "TITLE": "Aufgabe starten",
         "LABEL": {
@@ -107,9 +141,9 @@
       }
     },
     "PEOPLE": {
-      "DIALOG_CLOSE": "SCHLIESSEN",
-      "ADD_USER": "HINZUFÜGEN",
-      "ADD_ASSIGNEE": "ZUWEISEN",
+      "DIALOG_CLOSE": "Schließen",
+      "ADD_USER": "Hinzufügen",
+      "ADD_ASSIGNEE": "Zuweisen",
       "SEARCH_USER": "Benutzer suchen",
       "SEARCH": {
         "NO_USERS": "Niemand gefunden, der beteiligt werden kann"
@@ -139,6 +173,30 @@
         "NONE": "Kein Prozessinstanzfilter ausgewählt."
       }
     },
+    "PROPERTIES": {
+      "PROCESS_NAME": "Prozess",
+      "NAME": "Name",
+      "STATUS": "Status",
+      "DUE_DATE": "Fälligkeitsdatum",
+      "DUE_DATE_DEFAULT": "Kein Datum",
+      "CATEGORY": "Kategorie",
+      "CATEGORY_DEFAULT": "Keine Kategorie",
+      "CREATED_BY": "Erstellt von",
+      "CREATED_BY_DEFAULT": "Kein zugewiesener Benutzer",
+      "CREATED": "Erstellt",
+      "BUSINESS_KEY": "Geschäftsschlüssel",
+      "BUSINESS_KEY_DEFAULT": "Keine",
+      "DESCRIPTION": "Beschreibung",
+      "DESCRIPTION_DEFAULT": "Keine Beschreibung",
+      "ID": "ID"
+    },
+    "MENU_ACTIONS": {
+      "VIEW_CONTENT": "Anzeigen",
+      "REMOVE_CONTENT": "Entfernen",
+      "DOWNLOAD_CONTENT": "Herunterladen",
+      "DOWNLOAD_AUDIT": "Audit herunterladen",
+      "VIEW_TASK": "Aufgabe anzeigen"
+    },
     "DETAILS": {
       "LABELS": {
         "STARTED_BY": "Gestartet von",
@@ -158,7 +216,7 @@
         "UPLOAD-ATTACHMENT": "Anhang hochladen"
       },
       "MESSAGES": {
-        "NONE": "Keine Prozessdetails gefunden."
+        "NONE": "Keine Prozessdetails gefunden"
       },
       "TASKS": {
         "NO_ACTIVE": "Keine derzeit aktiven Aufgaben",
@@ -167,6 +225,8 @@
         "TASK_CLOSE": "Schließen"
       },
       "COMMENTS": {
+        "ADD": "Kommentar hinzufügen",
+        "HEADER": "Kommentare ({{ count }})",
         "NONE": "Keine Kommentare vorhanden",
         "BUTTON": {
           "ADD": "Kommentar hinzufügen"
@@ -194,7 +254,7 @@
         "TITLE": "Prozessvariable bearbeiten"
       },
       "ERROR_DIALOG": {
-        "TITLE": "Diese Aktion konnte nicht durchgeführt werden",
+        "TITLE": "Vorgang konnte nicht durchgeführt werden",
         "DESCRIPTION": "Unter Umständen verfügen Sie nicht über die erforderlichen Zugriffsrechte. Wenden Sie sich an Ihr IT-Team."
       }
     },
@@ -204,12 +264,12 @@
       "FORM": {
         "TITLE": "Prozess starten",
         "LABEL": {
-          "TYPE": "Typ",
-          "NAME": "Name"
+          "TYPE": "Prozess auswählen",
+          "NAME": "Prozessname"
         },
         "TYPE_PLACEHOLDER": "Eine auswählen...",
         "ACTION": {
-          "START": "Start",
+          "START": "Prozess starten",
           "CANCEL": "Abbrechen"
         }
       },
@@ -228,6 +288,10 @@
       },
       "EMPTY-LIST": {
         "HEADER": "Keine Dateien verfügbar"
+      },
+      "COLUMNS": {
+        "NAME": "Name",
+        "CREATED-ON": "Erstellt am"
       }
     }
   }

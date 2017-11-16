@@ -43,7 +43,7 @@ import { DiagramsModule } from './diagram';
             multi: true,
             useValue: {
                 name: '@adf/insights',
-                source: 'assets/@adf/analytics'
+                source: 'assets/@adf/insights'
             }
         }
     ],

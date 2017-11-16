@@ -1,6 +1,6 @@
 {
   "DIALOG": {
-    "SAVE_MESSAGE": "レポートを現在の設定でレポートリストに追加するには、[保存] をクリックします。",
+    "SAVE_MESSAGE": "レポートを現在の設定でレポートリストに追加するには、[保存] をクリックします.",
     "EXPORT_MESSAGE": ""
   },
   "DATE-WIDGET": {
@@ -13,15 +13,47 @@
   },
   "ADF_TASK_LIST": {
     "APPS": {
-      "NONE": "アプリが見つかりません"
+      "NONE": "アプリケーションが見つかりません",
+      "TASK_APP_NAME": "タスクアプリ"
     },
     "LIST": {
       "MESSAGES": {
         "NONE": "タスクリストが見つかりません"
       }
     },
+    "PROPERTIES": {
+      "TASK_NAME": "タスク",
+      "THUMBNAIL": "サムネイル",
+      "NAME": "名前",
+      "ASSIGNEE": "担当者",
+      "ASSIGNEE_DEFAULT": "担当者なし",
+      "PRIORITY": "優先度",
+      "DUE_DATE": "期限",
+      "DUE_DATE_DEFAULT": "期限なし",
+      "STATUS": "ステータス",
+      "CATEGORY": "カテゴリ",
+      "CATEGORY_DEFAULT": "カテゴリなし",
+      "PARENT_NAME": "親名",
+      "PARENT_NAME_DEFAULT": "親なし",
+      "CREATED_BY": "作成者",
+      "CREATED": "作成日",
+      "ID": "ID",
+      "DESCRIPTION": "説明",
+      "DESCRIPTION_DEFAULT": "説明なし",
+      "FORM_NAME": "フォームの名前",
+      "FORM_NAME_DEFAULT": "フォームなし"
+    },
+    "MENU_ACTIONS": {
+      "VIEW_CONTENT": "表示",
+      "REMOVE_CONTENT": "削除",
+      "DOWNLOAD_CONTENT": "ダウンロード",
+      "DOWNLOAD_AUDIT": "監査のダウンロード"
+    },
     "DETAILS": {
       "LABELS": {
+        "INFO_DRAWER_TITLE": "アクティビティ",
+        "INFO_DRAWER_TAB_ACTIVITY_TITLE": "アクティビティ",
+        "INFO_DRAWER_TAB_DETAILS_TITLE": "詳細",
         "ASSIGNEE": "担当者",
         "DUE": "期限",
         "FORM": "フォーム",
@@ -36,29 +68,31 @@
         "COMPLETE": "完了",
         "CLAIM": "要求",
         "UNCLAIM": "キューへの再登録",
-        "DRAG-ATTACHMENT": "ここにファイルをドロップしてください...",
-        "UPLOAD-ATTACHMENT": "添付ファイルをアップロード"
+        "DRAG-ATTACHMENT": "アップロードするファイルをここにドロップしてください",
+        "UPLOAD-ATTACHMENT": "添付ファイルのアップロード"
       },
       "MESSAGES": {
         "NONE": "タスクの詳細が見つかりません",
-        "CLAIM": "このタスクの作業を行うには、[要求] をクリックします。"
+        "CLAIM": "このタスクの作業を行うには、[要求] をクリックします"
       },
       "FORM": {
-        "NONE": "フォームはありません。"
+        "NONE": "フォームなし"
       },
       "DUE": {
-        "NONE": "期限はありません。"
+        "NONE": "期限なし"
       },
       "ASSIGNEE": {
-        "NONE": "担当者はありません。"
+        "NONE": "担当者なし"
       },
       "PEOPLE": {
-        "NONE": "関わっているメンバーはいません。"
+        "NONE": "関わっているメンバーなし"
       },
       "COMMENTS": {
         "NONE": "コメントなし",
         "ADD": "コメントの追加",
-        "HEADER": "コメント",
+        "HEADER": "コメント ({{ count }} 件)",
+        "CREATED_BY_HEADER": "作成者",
+        "MESSAGE_HEADER": "メッセージ",
         "DIALOG": {
           "TITLE": "新しいコメント",
           "LABELS": {
@@ -75,13 +109,13 @@
       },
       "ERROR": {
         "TITLE": "処理を完了できませんでした",
-        "DESCRIPTION": "もう一度操作をやり直すか、アクセス権があることを確認してください。",
+        "DESCRIPTION": "もう一度操作をやり直すか、アクセス権があることを確認してください.",
         "CLOSE": "閉じる"
       }
     },
     "FILTERS": {
       "MESSAGES": {
-        "NONE": "タスクのフィルタが選択されていません。"
+        "NONE": "タスクのフィルタが選択されていません"
       }
     },
     "START_TASK": {
@@ -132,12 +166,36 @@
     "LIST": {
       "NONE": "プロセスインスタンスが見つかりません",
       "SUMMARY": "{{total}} 個のプロセスインスタンスが見つかりました",
-      "ERROR": "プロセスインスタンスを読み込みませんでした。もう一度操作をやり直すか、次のメッセージを IT 担当者に伝えてください: {{errorMessage}}"
+      "ERROR": "プロセスインスタンスを読み込めませんでした。操作をやり直すか、次のメッセージを IT 担当者に伝えてください: {{errorMessage}}"
     },
     "FILTERS": {
       "MESSAGES": {
-        "NONE": "プロセスインスタンスのフィルタが選択されていません"
+        "NONE": "プロセスインスタンスのフィルタが選択されていません."
       }
+    },
+    "PROPERTIES": {
+      "PROCESS_NAME": "プロセス",
+      "NAME": "名前",
+      "STATUS": "ステータス",
+      "DUE_DATE": "期限",
+      "DUE_DATE_DEFAULT": "期限なし",
+      "CATEGORY": "カテゴリ",
+      "CATEGORY_DEFAULT": "カテゴリなし",
+      "CREATED_BY": "作成者",
+      "CREATED_BY_DEFAULT": "担当者なし",
+      "CREATED": "作成日",
+      "BUSINESS_KEY": "ビジネスキー",
+      "BUSINESS_KEY_DEFAULT": "なし",
+      "DESCRIPTION": "説明",
+      "DESCRIPTION_DEFAULT": "説明なし",
+      "ID": "ID"
+    },
+    "MENU_ACTIONS": {
+      "VIEW_CONTENT": "表示",
+      "REMOVE_CONTENT": "削除",
+      "DOWNLOAD_CONTENT": "ダウンロード",
+      "DOWNLOAD_AUDIT": "監査のダウンロード",
+      "VIEW_TASK": "タスクの表示"
     },
     "DETAILS": {
       "LABELS": {
@@ -154,19 +212,21 @@
         "CANCEL": "プロセスのキャンセル",
         "CLOSE": "閉じる",
         "SHOW_DIAGRAM": "図の表示",
-        "DRAG-ATTACHMENT": "アップロードするファイルをドロップ",
-        "UPLOAD-ATTACHMENT": "添付ファイルをアップロード"
+        "DRAG-ATTACHMENT": "アップロードするファイルをここにドロップしてください",
+        "UPLOAD-ATTACHMENT": "添付ファイルのアップロード"
       },
       "MESSAGES": {
-        "NONE": "プロセスの詳細が見つかりません。"
+        "NONE": "プロセスの詳細が見つかりません"
       },
       "TASKS": {
         "NO_ACTIVE": "現在アクティブなタスクはありません",
-        "NO_COMPLETED": "完了したタスクはありません",
+        "NO_COMPLETED": "完了済みのタスクはまだありません",
         "TASK_DETAILS": "タスクの詳細",
         "TASK_CLOSE": "閉じる"
       },
       "COMMENTS": {
+        "ADD": "コメントの追加",
+        "HEADER": "コメント ({{ count }} 件)",
         "NONE": "コメントなし",
         "BUTTON": {
           "ADD": "コメントの追加"
@@ -195,7 +255,7 @@
       },
       "ERROR_DIALOG": {
         "TITLE": "処理を完了できませんでした",
-        "DESCRIPTION": "必要なレベルのアクセス権がない可能性があります。IT 担当者に確認してください。"
+        "DESCRIPTION": "必要なレベルのアクセス権がない可能性があります。IT 担当者に確認してください."
       }
     },
     "START_PROCESS": {
@@ -204,18 +264,18 @@
       "FORM": {
         "TITLE": "プロセスの開始",
         "LABEL": {
-          "TYPE": "種類",
-          "NAME": "名前"
+          "TYPE": "プロセスの選択",
+          "NAME": "プロセス名"
         },
         "TYPE_PLACEHOLDER": "1 つ選択してください...",
         "ACTION": {
-          "START": "開始",
+          "START": "プロセスの開始",
           "CANCEL": "キャンセル"
         }
       },
       "ERROR": {
-        "LOAD_PROCESS_DEFS": "プロセス定義を読み込めませんでした。アクセス権があることを確認してください。",
-        "START": "新しいプロセスインスタンスを開始できませんでした。アクセス権があることを確認してください。"
+        "LOAD_PROCESS_DEFS": "プロセス定義を読み込めませんでした。アクセス権があることを確認してください.",
+        "START": "新しいプロセスインスタンスを開始できませんでした。アクセス権があることを確認してください."
       }
     },
     "PROCESS-ATTACHMENT": {
@@ -228,6 +288,10 @@
       },
       "EMPTY-LIST": {
         "HEADER": "使用できるファイルがありません"
+      },
+      "COLUMNS": {
+        "NAME": "名前",
+        "CREATED-ON": "作成日"
       }
     }
   }

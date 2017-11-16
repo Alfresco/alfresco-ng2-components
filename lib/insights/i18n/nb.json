@@ -1,8 +1,8 @@
 {
   "ANALYTICS": {
-    "TITLE": "ANALYSER",
+    "TITLE": "Analyser",
     "MESSAGES": {
-      "UNKNOWN-WIDGET-TYPE": "UKJENT TYPE MODUL",
+      "UNKNOWN-WIDGET-TYPE": "Ukjent type modul",
       "FILL-PARAMETER": "Velg fra rapportalternativene",
       "NO-DATA-FOUND": "Fant ingen data",
       "ZERO-DATA-FOUND": "Det finnes bare nullverdier",

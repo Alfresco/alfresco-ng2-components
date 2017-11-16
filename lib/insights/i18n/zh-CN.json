@@ -30,7 +30,7 @@
       "PROCESS-INSTANCES-OVERVIEW": {
         "PROCESS-DEFINITION": "流程定义",
         "DATE-RANGE": "日期范围",
-        "SLOW-PROC-INST-NUMBER": "应显示多少个最慢的流程实例？"
+        "SLOW-PROC-INST-NUMBER": "应显示多少个最慢的流程实例？?"
       },
       "TASK-OVERVIEW": {
         "PROCESS-DEFINITION": "流程定义",

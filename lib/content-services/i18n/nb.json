@@ -7,14 +7,26 @@
       "IMAGE_NOT_AVAILABLE": "Forhåndsvisning ikke tilgjengelig"
     },
     "FIELD": {
-      "REQUIRED": "*Påkrevd"
+      "UPLOAD": "Laster opp",
+      "REQUIRED": "*Påkrevd",
+      "VALIDATOR": {
+        "INVALID_NUMBER": "Bruk et annet nummerformat",
+        "INVALID_DATE": "Bruk et annet datoformat",
+        "INVALID_VALUE": "Angi en annen verdi",
+        "NOT_GREATER_THAN": "Kan ikke være større enn {{ maxValue }}",
+        "NOT_LESS_THAN": "Kan ikke være mindre enn {{ minValue }}",
+        "AT_LEAST_LONG": "Angi minst {{ minLength }} tegn",
+        "NO_LONGER_THAN": "Ikke angi flere enn {{ maxLength }} tegn"
+      }
     }
   },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "Denne mappen er tom"
     },
+    "NO_PERMISSION": "Du har ikke tillatelse til å se denne filen eller mappen.",
     "LAYOUT": {
+      "CREATED": "Opprettet",
       "THUMBNAIL": "Miniatyrbilde",
       "NAME": "Navn",
       "LOCATION": "Sted",
@@ -26,6 +38,11 @@
       "MODIFIED_BY": "Endret av",
       "SHARED_BY": "Delt av",
       "LOAD_MORE": "Last ned mer"
+    },
+    "MENU_ACTIONS": {
+      "VIEW": "Vis",
+      "REMOVE": "Fjern",
+      "DOWNLOAD": "Last ned"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {
@@ -38,7 +55,7 @@
   },
   "DROPDOWN": {
     "PLACEHOLDER_LABEL": "Områdeliste",
-    "MY_FILES_OPTION": ""
+    "MY_FILES_OPTION": "Mine filer"
   },
   "NODE_SELECTOR": {
     "CANCEL": "Avbryt",
@@ -111,11 +128,15 @@
       "FOLDER_ALREADY_EXIST": "Mappen {0} finnes allerede",
       "FOLDER_NOT_SUPPORTED": "Denne nettleseren støtter ikke mappeopplasting, prøv en annen nettleser",
       "REMOVE_FILE_ERROR": "{{ fileName }} kan ikke fjernes, prøv på nytt, eller sjekk med IT-teamet.",
-      "REMOVE_FILES_ERROR": "{{ total }} filer kan ikke fjernes, prøv igjen, eller sjekk med IT-teamet."
+      "REMOVE_FILES_ERROR": "{{ total }} filer kan ikke fjernes, prøv igjen, eller sjekk med IT-teamet.",
+      "EXCEED_MAX_FILE_SIZE": "Filen {{ fileName }} er større enn den tillatte filstørrelsen"
     },
     "ACTION": {
       "UNDO": "Angre"
     }
+  },
+  "WEBSCRIPT": {
+    "ERROR": "Kan ikke fullføre handlingen. Del denne meldingen med IT-teamet: Feil under deserialisering av {{data}} som {{contentType}}"
   },
   "SEARCH": {
     "CONTROL": {},

@@ -4,19 +4,19 @@
       "TITLE": "Modulo di inizio"
     },
     "PREVIEW": {
-      "IMAGE_NOT_AVAILABLE": "Anteprima immagine non disponibile."
+      "IMAGE_NOT_AVAILABLE": "Anteprima non disponibile"
     },
     "FIELD": {
-      "UPLOAD": "UPLOAD",
+      "UPLOAD": "Carica",
       "REQUIRED": "*Obbligatorio",
       "VALIDATOR": {
-        "INVALID_NUMBER": "Non un numero",
-        "INVALID_DATE": "Non una data",
-        "INVALID_VALUE": "Valore non valido",
-        "NOT_GREATER_THAN": "Non dovrebbe essere piu grande di {{ maxValue }}",
-        "NOT_LESS_THAN": "Non dovrebbe essere meno di {{ minValue }}",
-        "AT_LEAST_LONG": "Dovrebbe essere almeno {{ minLength }} caratteri.",
-        "NO_LONGER_THAN": "Dovrebbe essere massimo {{ maxLength }} caratteri."
+        "INVALID_NUMBER": "Usa un formato numerico diverso",
+        "INVALID_DATE": "Usa un formato di data diverso",
+        "INVALID_VALUE": "Immetti un valore diverso",
+        "NOT_GREATER_THAN": "Non può essere maggiore di {{ maxValue }}",
+        "NOT_LESS_THAN": "Non può essere inferiore di {{ minValue }}",
+        "AT_LEAST_LONG": "Immetti almeno {{ minLength }} caratteri",
+        "NO_LONGER_THAN": "Immetti non più di {{ maxLength }} caratteri"
       }
     }
   },
@@ -24,7 +24,9 @@
     "EMPTY": {
       "HEADER": "Questa cartella è vuota"
     },
+    "NO_PERMISSION": "Non disponi del permesso per visualizzare questo file o questa cartella.",
     "LAYOUT": {
+      "CREATED": "Creato",
       "THUMBNAIL": "Miniatura",
       "NAME": "Nome",
       "LOCATION": "Località",
@@ -36,6 +38,11 @@
       "MODIFIED_BY": "Modificato da",
       "SHARED_BY": "Condiviso da",
       "LOAD_MORE": "Carica altro"
+    },
+    "MENU_ACTIONS": {
+      "VIEW": "Visualizza",
+      "REMOVE": "Rimuovi",
+      "DOWNLOAD": "Download"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {
@@ -48,7 +55,7 @@
   },
   "DROPDOWN": {
     "PLACEHOLDER_LABEL": "Elenco sito",
-    "MY_FILES_OPTION": ""
+    "MY_FILES_OPTION": "I miei file"
   },
   "NODE_SELECTOR": {
     "CANCEL": "Annulla",
@@ -121,11 +128,15 @@
       "FOLDER_ALREADY_EXIST": "Cartella {0} già presente",
       "FOLDER_NOT_SUPPORTED": "L'upload di cartelle non è supportato dal browser, prova con un altro browser",
       "REMOVE_FILE_ERROR": "Impossibile rimuovere {{ fileName }}, riprova o verifica con il team IT.",
-      "REMOVE_FILES_ERROR": "Impossibile rimuovere {{ total }} file. Riprova o verifica con il team IT."
+      "REMOVE_FILES_ERROR": "Impossibile rimuovere {{ total }} file. Riprova o verifica con il team IT.",
+      "EXCEED_MAX_FILE_SIZE": "Il file {{ fileName }} è più grande delle dimensioni del file consentite"
     },
     "ACTION": {
       "UNDO": "Annulla"
     }
+  },
+  "WEBSCRIPT": {
+    "ERROR": "Impossibile completare l'azione. Condividi il messaggio con il team IT: Errore durante la deserializzazione di {{data}} come {{contentType}}"
   },
   "SEARCH": {
     "CONTROL": {},

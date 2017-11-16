@@ -1,8 +1,8 @@
 {
   "ANALYTICS": {
-    "TITLE": "ANALISI",
+    "TITLE": "Analisi",
     "MESSAGES": {
-      "UNKNOWN-WIDGET-TYPE": "TIPO WIDGET SCONOSCIUTO",
+      "UNKNOWN-WIDGET-TYPE": "Tipo widget sconosciuto",
       "FILL-PARAMETER": "Scegli dalle opzioni del rapporto",
       "NO-DATA-FOUND": "Nessun dato trovato",
       "ZERO-DATA-FOUND": "Ci sono solo valori che valgono zero",

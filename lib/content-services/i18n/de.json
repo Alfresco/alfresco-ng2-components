@@ -7,14 +7,26 @@
       "IMAGE_NOT_AVAILABLE": "Vorschau nicht verfügbar"
     },
     "FIELD": {
-      "REQUIRED": "*Erforderlich"
+      "UPLOAD": "Hochladen",
+      "REQUIRED": "*Erforderlich",
+      "VALIDATOR": {
+        "INVALID_NUMBER": "Verwenden Sie ein anderes Zahlenformat",
+        "INVALID_DATE": "Verwenden Sie ein anderes Datumsformat",
+        "INVALID_VALUE": "Geben Sie einen anderen Wert ein",
+        "NOT_GREATER_THAN": "Darf nicht größer als {{ maxValue }} sein",
+        "NOT_LESS_THAN": "Darf nicht kleiner als {{ minValue }} sein",
+        "AT_LEAST_LONG": "Geben Sie mindestens {{ minLength }} Zeichen ein",
+        "NO_LONGER_THAN": "Geben Sie höchstens {{ maxLength }} Zeichen ein"
+      }
     }
   },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "Dieser Ordner ist leer"
     },
+    "NO_PERMISSION": "Sie verfügen nicht über die nötige Berechtigung, um diese Datei oder diesen Ordner anzuzeigen.",
     "LAYOUT": {
+      "CREATED": "Erstellt",
       "THUMBNAIL": "Miniaturansicht",
       "NAME": "Name",
       "LOCATION": "Speicherort",
@@ -26,11 +38,16 @@
       "MODIFIED_BY": "Bearbeitet von",
       "SHARED_BY": "Freigegeben von",
       "LOAD_MORE": "Mehr laden"
+    },
+    "MENU_ACTIONS": {
+      "VIEW": "Anzeigen",
+      "REMOVE": "Entfernen",
+      "DOWNLOAD": "Herunterladen"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {
     "BUTTON": {
-      "ACTION_CREATE": "Erstellen ...",
+      "ACTION_CREATE": "Erstellen...",
       "ACTION_NEW_FOLDER": "Neuer Ordner",
       "CREATE": "Erstellen",
       "CANCEL": "Abbrechen"
@@ -38,7 +55,7 @@
   },
   "DROPDOWN": {
     "PLACEHOLDER_LABEL": "Site-Liste",
-    "MY_FILES_OPTION": ""
+    "MY_FILES_OPTION": "Meine Dateien"
   },
   "NODE_SELECTOR": {
     "CANCEL": "Abbrechen",
@@ -107,15 +124,19 @@
       "UPLOAD_PROGRESS": "Hochladen: {{ completed }} / {{ total }}",
       "UPLOAD_ERROR": "{{ total }} erfolgreich hochgeladen",
       "UPLOAD_ERRORS": "{{ total }} nicht erfolgreich hochgeladen",
-      "PROGRESS": "Hochladen läuft ...",
+      "PROGRESS": "Hochladen läuft...",
       "FOLDER_ALREADY_EXIST": "Den Ordner {0} gibt es bereits",
       "FOLDER_NOT_SUPPORTED": "Ihr Browser lässt das Hochladen von Ordnern nicht zu. Versuchen Sie es mit einem anderen Browser",
       "REMOVE_FILE_ERROR": "{{ fileName }} konnte nicht entfernt werden. Versuchen Sie es noch einmal oder wenden Sie sich an Ihr IT-Team.",
-      "REMOVE_FILES_ERROR": "{{ total }} Dateien konnten nicht entfernt werden. Versuchen Sie es noch einmal oder wenden Sie sich an Ihr IT-Team."
+      "REMOVE_FILES_ERROR": "{{ total }} Dateien konnten nicht entfernt werden. Versuchen Sie es noch einmal oder wenden Sie sich an Ihr IT-Team.",
+      "EXCEED_MAX_FILE_SIZE": "Datei {{ fileName }} ist größer als maximal zulässige Dateigröße"
     },
     "ACTION": {
       "UNDO": "Rückgängig machen"
     }
+  },
+  "WEBSCRIPT": {
+    "ERROR": "Vorgang konnte nicht durchgeführt werden. Geben Sie diese Meldung an Ihr IT-Team weiter: Fehler bei Deserialisierung von {{data}} als {{contentType}}"
   },
   "SEARCH": {
     "CONTROL": {},
