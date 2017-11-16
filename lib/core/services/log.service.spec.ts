@@ -45,31 +45,6 @@ describe('Log Service', () => {
         appConfigService = TestBed.get(AppConfigService);
     });
 
-    it('should log all the levels by default', () => {
-        providesLogComponent = TestBed.createComponent(ProvidesLogComponent);
-
-        spyOn(console, 'log');
-        spyOn(console, 'trace');
-        spyOn(console, 'debug');
-        spyOn(console, 'info');
-        spyOn(console, 'warn');
-        spyOn(console, 'error');
-
-        providesLogComponent.componentInstance.log();
-        providesLogComponent.componentInstance.trace();
-        providesLogComponent.componentInstance.debug();
-        providesLogComponent.componentInstance.info();
-        providesLogComponent.componentInstance.warn();
-        providesLogComponent.componentInstance.error();
-
-        expect(console.log).toHaveBeenCalled();
-        expect(console.trace).toHaveBeenCalled();
-        expect(console.debug).toHaveBeenCalled();
-        expect(console.info).toHaveBeenCalled();
-        expect(console.warn).toHaveBeenCalled();
-        expect(console.error).toHaveBeenCalled();
-    });
-
     it('should not log anything if is silent', () => {
         appConfigService.config['logLevel'] = 'silent';
         providesLogComponent = TestBed.createComponent(ProvidesLogComponent);
