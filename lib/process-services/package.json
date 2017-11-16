@@ -3,7 +3,7 @@
   "description": "Alfresco ADF process services",
   "version": "2.0.0",
   "author": "Alfresco Software, Ltd.",
-  "main": "bundles/process-services.js",
+  "main": "bundles/adf-process-services.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/Alfresco/alfresco-ng2-components.git"
