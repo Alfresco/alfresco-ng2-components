@@ -704,7 +704,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         }
     }
 
-    onNodeDblClick(node: any) {
+    onNodeDblClick(node: MinimalNodeEntity) {
         const domEvent = new CustomEvent('node-dblclick', {
             detail: {
                 sender: this,
