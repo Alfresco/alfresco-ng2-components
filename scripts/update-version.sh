@@ -8,7 +8,8 @@ eval DIFFERENT_JS_API=false
 
 eval projects=( "core"
     "content-services"
-    "process-services" )
+    "process-services"
+    "insights" )
 
 cd `dirname $0`
 
