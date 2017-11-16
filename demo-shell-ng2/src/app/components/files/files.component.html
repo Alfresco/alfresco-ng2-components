@@ -115,7 +115,9 @@
             </adf-toolbar>
             <adf-document-list
                 #documentList
-                [pagination]="pagination"
+                [maxItems]="currentMaxItems"
+                [skipCount]="currentSkipCount"
+                [enableInfiniteScrolling]="infiniteScrolling"
                 [permissionsStyle]="permissionsStyle"
                 [currentFolderId]="currentFolderId"
                 [contextMenuActions]="true"
@@ -265,7 +267,8 @@
             <adf-infinite-pagination
                 *ngIf="infiniteScrolling"
                 [pagination]="pagination"
-
+                [loading]="documentList.infiniteLoading"
+                [pageSize]="currentMaxItems"
                 (loadMore)="loadNextBatch($event)">
                 {{ 'ADF-DOCUMENT-LIST.LAYOUT.LOAD_MORE' | translate }}
             </adf-infinite-pagination>

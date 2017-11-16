@@ -19,8 +19,8 @@ import {
     AfterContentInit, Component, ContentChild, ElementRef, EventEmitter, HostListener, Input, NgZone,
     OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild, ViewEncapsulation
 } from '@angular/core';
-import { DeletedNodesPaging, MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, Pagination, PersonEntry, SitePaging } from 'alfresco-js-api';
-import { AlfrescoApiService, AppConfigService, DataColumnListComponent } from 'ng2-alfresco-core';
+import { DeletedNodesPaging, MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, PersonEntry, SitePaging } from 'alfresco-js-api';
+import { AlfrescoApiService, AppConfigService, DataColumnListComponent, UserPreferencesService } from 'ng2-alfresco-core';
 import { DataCellEvent, DataColumn, DataRowActionEvent, DataSorting, DataTableComponent, ObjectDataColumn } from 'ng2-alfresco-datatable';
 import { Observable, Subject } from 'rxjs/Rx';
 import { presetsDefaultModel } from '../models/preset.model';
@@ -120,7 +120,13 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     node: NodePaging = null;
 
     @Input()
-    pagination: Pagination;
+    maxItems: number;
+
+    @Input()
+    skipCount: number = 0;
+
+    @Input()
+    enableInfiniteScrolling: boolean = false;
 
     @Output()
     nodeClick: EventEmitter<NodeEntityEvent> = new EventEmitter<NodeEntityEvent>();
@@ -162,7 +168,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                 private ngZone: NgZone,
                 private elementRef: ElementRef,
                 private apiService: AlfrescoApiService,
-                private appConfig: AppConfigService) {
+                private appConfig: AppConfigService,
+                private preferences: UserPreferencesService) {
     }
 
     getContextActions(node: MinimalNodeEntity) {
@@ -205,6 +212,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             this.data.setImageResolver(this.imageResolver);
         }
 
+        this.maxItems = this.preferences.paginationSize;
+
         this.contextActionHandler.subscribe(val => this.contextActionCallback(val));
 
         this.enforceSingleClickNavigationForMobile();
@@ -230,35 +239,31 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes.pagination && changes.pagination.currentValue) {
-            if (this.isPaginationChanged(changes)) {
-                this.pagination = changes.pagination.currentValue;
-                this.reload();
-            }
+        if (this.isSkipCountChanged(changes) ||
+            this.isMaxItemsChanged(changes)) {
+            this.reload(this.enableInfiniteScrolling);
         }
-        if (this.pagination) {
-            if (changes.folderNode && changes.folderNode.currentValue) {
-                this.loadFolder();
-            } else if (changes.currentFolderId && changes.currentFolderId.currentValue) {
-                if (changes.currentFolderId.previousValue !== changes.currentFolderId.currentValue) {
-                    this.folderNode = null;
+        if (changes.folderNode && changes.folderNode.currentValue) {
+            this.loadFolder();
+        } else if (changes.currentFolderId && changes.currentFolderId.currentValue) {
+            if (changes.currentFolderId.previousValue !== changes.currentFolderId.currentValue) {
+                this.folderNode = null;
+            }
+            if (!this.hasCustomLayout) {
+                this.setupDefaultColumns(changes.currentFolderId.currentValue);
+            }
+            this.loadFolderByNodeId(changes.currentFolderId.currentValue);
+        } else if (this.data) {
+            if (changes.node && changes.node.currentValue) {
+                this.resetSelection();
+                this.data.loadPage(changes.node.currentValue);
+            } else if (changes.rowFilter) {
+                this.data.setFilter(changes.rowFilter.currentValue);
+                if (this.currentFolderId) {
+                    this.loadFolderNodesByFolderNodeId(this.currentFolderId, this.maxItems, this.skipCount);
                 }
-                if (!this.hasCustomLayout) {
-                    this.setupDefaultColumns(changes.currentFolderId.currentValue);
-                }
-                this.loadFolderByNodeId(changes.currentFolderId.currentValue);
-            } else if (this.data) {
-                if (changes.node && changes.node.currentValue) {
-                    this.resetSelection();
-                    this.data.loadPage(changes.node.currentValue);
-                } else if (changes.rowFilter) {
-                    this.data.setFilter(changes.rowFilter.currentValue);
-                    if (this.currentFolderId) {
-                        this.loadFolderNodesByFolderNodeId(this.currentFolderId, this.pagination.maxItems, this.pagination.skipCount);
-                    }
-                } else if (changes.imageResolver) {
-                    this.data.setImageResolver(changes.imageResolver.currentValue);
-                }
+            } else if (changes.imageResolver) {
+                this.data.setImageResolver(changes.imageResolver.currentValue);
             }
         }
     }
@@ -273,7 +278,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                 this.loadFolderByNodeId(this.currentFolderId);
             } else if (this.node) {
                 this.data.loadPage(this.node);
-                this.ready.emit();
+                this.ready.emit(this.node);
             }
         });
     }
@@ -399,7 +404,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
         let nodeId = this.folderNode ? this.folderNode.id : this.currentFolderId;
         if (nodeId) {
-            this.loadFolderNodesByFolderNodeId(nodeId, this.pagination.maxItems, this.pagination.skipCount, merge).catch(err => this.error.emit(err));
+            this.loadFolderNodesByFolderNodeId(nodeId, this.maxItems, this.skipCount, merge).catch(err => this.error.emit(err));
         }
     }
 
@@ -427,7 +432,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                     this.folderNode = node;
                     this.currentFolderId = node.id;
                     this.currentNodeAllowableOperations = node['allowableOperations'] ? node['allowableOperations'] : [];
-                    return this.loadFolderNodesByFolderNodeId(node.id, this.pagination.maxItems, this.pagination.skipCount);
+                    return this.loadFolderNodesByFolderNodeId(node.id, this.maxItems, this.skipCount);
                 })
                 .catch(err => {
                     if (JSON.parse(err.message).error.statusCode === 403) {
@@ -451,10 +456,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                 .subscribe(
                     val => {
                             this.data.loadPage(<NodePaging> val, merge);
-                            this.pagination = val.list.pagination;
                             this.loading = false;
                             this.infiniteLoading = false;
-                            this.ready.emit();
+                            this.ready.emit(val);
                             resolve(true);
                     },
                     error => {
@@ -469,21 +473,22 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         this.selection = [];
     }
 
-    private isPaginationChanged(changePage: SimpleChanges) {
-        let currentPaginationObj = changePage.pagination.currentValue;
-        let previousPaginationObj = changePage.pagination.previousValue || this.pagination;
-        return currentPaginationObj.count !== previousPaginationObj.count ||
-                currentPaginationObj.hasMoreItems !== previousPaginationObj.hasMoreItems ||
-                currentPaginationObj.maxItems !== previousPaginationObj.maxItems ||
-                currentPaginationObj.skipCount !== previousPaginationObj.skipCount ||
-                currentPaginationObj.totalItems !== previousPaginationObj.totalItems;
+    private isSkipCountChanged(changePage: SimpleChanges) {
+        return changePage.skipCount &&
+               changePage.skipCount.currentValue !== changePage.skipCount.previousValue;
+    }
+
+    private isMaxItemsChanged(changePage: SimpleChanges) {
+        return changePage.maxItems &&
+               changePage.maxItems.currentValue &&
+               changePage.maxItems.currentValue !== changePage.maxItems.previousValue;
     }
 
     private loadTrashcan(): void {
         const options = {
             include: [ 'path', 'properties' ],
-            maxItems: this.pagination.maxItems,
-            skipCount: this.pagination.skipCount
+            maxItems: this.maxItems,
+            skipCount: this.skipCount
         };
         this.apiService.nodesApi.getDeletedNodes(options)
             .then((page: DeletedNodesPaging) => this.onPageLoaded(page))
@@ -493,8 +498,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     private loadSharedLinks(): void {
         const options = {
             include: [ 'properties', 'allowableOperations', 'path' ],
-            maxItems: this.pagination.maxItems,
-            skipCount: this.pagination.skipCount
+            maxItems: this.maxItems,
+            skipCount: this.skipCount
         };
         this.apiService.sharedLinksApi.findSharedLinks(options)
             .then((page: NodePaging) => this.onPageLoaded(page))
@@ -504,8 +509,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     private loadSites(): void {
         const options = {
             include: [ 'properties' ],
-            maxItems: this.pagination.maxItems,
-            skipCount: this.pagination.skipCount
+            maxItems: this.maxItems,
+            skipCount: this.skipCount
         };
 
         this.apiService.sitesApi.getSites(options)
@@ -516,8 +521,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     private loadMemberSites(): void {
         const options = {
             include: [ 'properties' ],
-            maxItems: this.pagination.maxItems,
-            skipCount: this.pagination.skipCount
+            maxItems: this.maxItems,
+            skipCount: this.skipCount
         };
 
         this.apiService.peopleApi.getSiteMembership('-me-', options)
@@ -539,8 +544,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     private loadFavorites(): void {
         const options = {
-            maxItems: this.pagination.maxItems,
-            skipCount: this.pagination.skipCount,
+            maxItems: this.maxItems,
+            skipCount: this.skipCount,
             where: '(EXISTS(target/file) OR EXISTS(target/folder))',
             include: [ 'properties', 'allowableOperations', 'path' ]
         };
@@ -589,8 +594,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                         ascending: false
                     }],
                     paging: {
-                        maxItems: this.pagination.maxItems,
-                        skipCount: this.pagination.skipCount
+                        maxItems: this.maxItems,
+                        skipCount: this.skipCount
                     }
                 };
 
@@ -603,9 +608,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     private onPageLoaded(page: NodePaging) {
         if (page) {
             this.data.loadPage(page);
-            this.pagination = page.list.pagination;
+            // this.pagination = page.list.pagination;
             this.loading = false;
-            this.ready.emit();
+            this.ready.emit(page);
         }
     }
 

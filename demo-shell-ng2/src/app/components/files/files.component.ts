@@ -117,6 +117,8 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     permissionsStyle: PermissionStyleModel[] = [];
     supportedPages: number[] = [5, 10, 15, 20];
     infiniteScrolling: boolean = false;
+    currentMaxItems: number;
+    currentSkipCount: number = 0;
 
     private onCreateFolder: Subscription;
     private onEditFolder: Subscription;
@@ -153,11 +155,12 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnInit() {
-        if( !this.pagination ) {
-            this.pagination = <Pagination>{
+        if ( !this.pagination ) {
+            this.pagination = <Pagination> {
                 maxItems : this.preference.paginationSize,
                 skipCount: 0
             };
+            this.currentMaxItems = this.preference.paginationSize;
         }
         if (this.route) {
             this.route.params.forEach((params: Params) => {
@@ -238,7 +241,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 message,
                 4000
             );
-        })
+        });
     }
 
     handleUploadError(event: any) {
@@ -250,7 +253,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     emitReadyEvent(event: any) {
         this.documentListReady.emit(event);
-        this.pagination = this.documentList.pagination;
+        this.pagination = event.list.pagination;
     }
 
     onContentActionError(errors) {
@@ -405,28 +408,32 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     onChangePageSize(event: Pagination): void {
         this.preference.paginationSize = event.maxItems;
-        this.pagination = event;
+        this.currentMaxItems = event.maxItems;
+        this.currentSkipCount = event.skipCount;
         this.changedPageSize.emit(event);
     }
 
     onChangePageNumber(event: Pagination): void {
-        this.pagination = event;
-        this.changedPageNumber.emit(event)
+        this.currentMaxItems = event.maxItems;
+        this.currentSkipCount = event.skipCount;
+        this.changedPageNumber.emit(event);
     }
 
     onNextPage(event: Pagination): void {
-        this.pagination = event;
+        this.currentMaxItems = event.maxItems;
+        this.currentSkipCount = event.skipCount;
         this.turnedNextPage.emit(event);
     }
 
     loadNextBatch(event: Pagination) {
-        this.pagination = event;
+        this.currentMaxItems = event.maxItems;
+        this.currentSkipCount = event.skipCount;
         this.loadNext.emit(event);
-        // this.documentList.reload(true);
     }
 
     onPrevPage(event: Pagination): void {
-        this.pagination = event;
+        this.currentMaxItems = event.maxItems;
+        this.currentSkipCount = event.skipCount;
         this.turnedPreviousPage.emit(event);
     }
 }
