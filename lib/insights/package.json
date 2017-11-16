@@ -1,0 +1,25 @@
+{
+  "name": "adf-insights",
+  "description": "Alfresco ADF insights",
+  "version": "2.0.0",
+  "author": "Alfresco Software, Ltd.",
+  "main": "bundles/analytics.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alfresco/alfresco-ng2-components.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+  },
+  "keywords": [
+    "analytics",
+    "alfresco-component",
+    "angular",
+    "components"
+  ],
+  "license": "Apache-2.0"
+}

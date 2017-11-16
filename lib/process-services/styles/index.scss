@@ -1,0 +1,20 @@
+@import '../process-list/components/process-filters.component';
+
+@import '../comments/comment-list.component';
+
+@import '../people/people-search.component';
+@import '../people/people.component';
+
+@import '../task-list/components/start-task.component';
+@import '../task-list/components/task-filters.component';
+@import '../task-list/components/task-header.component';
+
+@mixin adf-process-services-theme($theme) {
+    @include adf-process-filters-theme($theme);
+    @include adf-task-list-comment-list-theme($theme);
+    @include adf-task-list-start-task-theme($theme);
+    @include adf-task-list-people-search-theme($theme);
+    @include adf-task-list-people-theme($theme);
+    @include adf-task-list-filters-task-theme($theme);
+    @include adf-task-list-header-theme($theme);
+}

@@ -1,0 +1,165 @@
+{
+  "FORM": {
+    "START_FORM": {
+      "TITLE": "開始フォーム"
+    },
+    "PREVIEW": {
+      "IMAGE_NOT_AVAILABLE": "プレビューは使用できません"
+    },
+    "FIELD": {
+      "REQUIRED": "*必須"
+    }
+  },
+  "ADF-DOCUMENT-LIST": {
+    "EMPTY": {
+      "HEADER": "このフォルダは空です"
+    },
+    "LAYOUT": {
+      "THUMBNAIL": "サムネイル",
+      "NAME": "名前",
+      "LOCATION": "場所",
+      "SIZE": "サイズ",
+      "DELETED_ON": "削除済み",
+      "DELETED_BY": "削除者",
+      "STATUS": "ステータス",
+      "MODIFIED_ON": "変更日",
+      "MODIFIED_BY": "変更者",
+      "SHARED_BY": "共有者",
+      "LOAD_MORE": "もっと見る"
+    }
+  },
+  "ALFRESCO_DOCUMENT_LIST": {
+    "BUTTON": {
+      "ACTION_CREATE": "作成...",
+      "ACTION_NEW_FOLDER": "新しいフォルダ",
+      "CREATE": "作成",
+      "CANCEL": "キャンセル"
+    }
+  },
+  "DROPDOWN": {
+    "PLACEHOLDER_LABEL": "サイトリスト",
+    "MY_FILES_OPTION": ""
+  },
+  "NODE_SELECTOR": {
+    "CANCEL": "キャンセル",
+    "CHOOSE": "選択",
+    "NO_RESULTS": "一致するアイテムはありません"
+  },
+  "OPERATION": {
+    "SUCCES": {
+      "CONTENT": {
+        "COPY": "コピーが完了しました",
+        "MOVE": "移動が完了しました"
+      },
+      "FOLDER": {
+        "COPY": "コピーが完了しました",
+        "MOVE": "移動が完了しました"
+      }
+    },
+    "ERROR": {
+      "CONFLICT": "この名前は既に使用されています。別の名前を使用してください。",
+      "UNKNOWN": "処理が失敗しました。もう一度操作をやり直すか、IT 担当者に連絡してください。",
+      "PERMISSION": "この処理を行うための権限がありません。"
+    }
+  },
+  "TAG": {
+    "LABEL": {
+      "NEWTAG": "新しいタグ"
+    },
+    "MESSAGES": {
+      "EXIST": "タグは既に存在します"
+    },
+    "BUTTON": {
+      "ADD": "タグの追加"
+    }
+  },
+  "ADF_FILE_UPLOAD": {
+    "BUTTON": {
+      "MINIMIZE": "最小化",
+      "MAXIMIZE": "最大化",
+      "CLOSE": "閉じる",
+      "CANCEL_ALL": "アップロードをキャンセル",
+      "CANCEL_FILE": "アップロードのキャンセル",
+      "REMOVE_FILE": "アップロードしたファイルを削除"
+    },
+    "STATUS": {
+      "FILE_CANCELED_STATUS": "キャンセルされました"
+    },
+    "CONFIRMATION": {
+      "BUTTON": {
+        "CANCEL": "はい",
+        "CONTINUE": "いいえ"
+      },
+      "MESSAGE": {
+        "TITLE": "アップロードのキャンセル",
+        "TEXT": "アップロードを中止し、アップロード済みのファイルを削除します。"
+      }
+    }
+  },
+  "FILE_UPLOAD": {
+    "BUTTON": {
+      "UPLOAD_FILE": "ファイルのアップロード",
+      "UPLOAD_FOLDER": "フォルダのアップロード"
+    },
+    "MESSAGES": {
+      "UPLOAD_CANCELED": "アップロードがキャンセルされました",
+      "UPLOAD_COMPLETED": "{{ completed }} / {{ total }} 個をアップロードしました",
+      "UPLOAD_PROGRESS": "{{ completed }} / {{ total }} 個をアップロードしています",
+      "UPLOAD_ERROR": "{{ total }} 個をアップロードできませんでした",
+      "UPLOAD_ERRORS": "{{ total }} 個をアップロードできませんでした",
+      "PROGRESS": "アップロードしています...",
+      "FOLDER_ALREADY_EXIST": "フォルダ ''{0}'' は既に存在します",
+      "FOLDER_NOT_SUPPORTED": "お使いのブラウザではフォルダをアップロードできません。別のブラウザを使用してください。",
+      "REMOVE_FILE_ERROR": "{{ fileName }} を削除できませんでした。もう一度操作をやり直すか、IT 担当者に確認してください。",
+      "REMOVE_FILES_ERROR": "{{ total }} 個のファイルを削除できませんでした。もう一度操作をやり直すか、IT 担当者に確認してください。"
+    },
+    "ACTION": {
+      "UNDO": "元に戻す"
+    }
+  },
+  "SEARCH": {
+    "CONTROL": {},
+    "RESULTS": {
+      "SUMMARY": "{{searchTerm}} の検索結果は {{numResults}} 件です",
+      "NONE": "{{searchTerm}} の検索結果は 0 件です",
+      "ERROR": "検索中に問題が発生しました。操作をやり直してください。",
+      "COLUMNS": {
+        "NAME": "表示名",
+        "MODIFIED_BY": "変更者",
+        "MODIFIED_AT": "変更日"
+      }
+    },
+    "ICONS": {
+      "ft_ic_raster_image": "画像ファイル",
+      "ft_ic_pdf": "PDF 文書",
+      "ft_ic_ms_excel": "Microsoft Excel ファイル",
+      "ft_ic_ms_word": "Microsoft Word 文書",
+      "ft_ic_ms_powerpoint": "Microsoft PowerPoint ファイル",
+      "ft_ic_video": "ビデオファイル",
+      "ft_ic_document": "文書ファイル",
+      "ft_ic_website": "Web リソース",
+      "ft_ic_archive": "アーカイブファイル",
+      "ft_ic_presentation": "プレゼンテーションファイル",
+      "ft_ic_spreadsheet": "表計算ファイル"
+    },
+    "DOCUMENT_LIST": {
+      "COLUMNS": {
+        "DISPLAY_NAME": "表示名",
+        "CREATED_BY": "作成者",
+        "CREATED_ON": "作成日"
+      },
+      "ACTIONS": {
+        "FOLDER": {
+          "DELETE": "削除"
+        },
+        "DOCUMENT": {
+          "DOWNLOAD": "ダウンロード",
+          "DELETE": "削除"
+        }
+      }
+    }
+  },
+  "PERMISSON": {
+    "LACKOF": "{{type}} を {{action}} するための {{permission}} 権限がありません。"
+  }
+}

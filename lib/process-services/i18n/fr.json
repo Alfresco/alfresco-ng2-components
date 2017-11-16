@@ -1,0 +1,131 @@
+{
+  "DIALOG": {
+    "SAVE_MESSAGE": "Cliquez sur Enregistrer pour ajouter un rapport avec les paramètres actuels à la liste des rapports.",
+    "EXPORT_MESSAGE": ""
+  },
+  "DATE-WIDGET": {
+    "START-DATE": "Date de début",
+    "END-DATE": "Date de fin",
+    "MESSAGES": {
+      "START-DATE-REQUIRED": "La date de début est obligatoire",
+      "START-LESS-THAN-END-DATE": "La date de début doit être antérieure à la date de fin"
+    }
+  },
+  "ADF_TASK_LIST": {
+    "APPS": {
+      "NONE": "Aucune application trouvée"
+    },
+    "LIST": {
+      "MESSAGES": {
+        "NONE": "Aucune liste de tâches trouvée"
+      }
+    },
+    "DETAILS": {
+      "LABELS": {
+        "ASSIGNEE": "Personne assignée",
+        "DUE": "Echéance",
+        "FORM": "Formulaire",
+        "PEOPLE": "Personnes avec lesquelles cette tâche est partagée",
+        "COMMENTS": "Commentaires",
+        "CHECKLIST": "Liste de contrôle",
+        "INVOLVED_PEOPLE": "Personnes impliquées",
+        "ADD_PEOPLE": "Ajouter des personnes et des groupes",
+        "ADD_ASSIGNEE": "Ajouter une nouvelle personne assignée"
+      },
+      "BUTTON": {
+        "COMPLETE": "Terminer",
+        "CLAIM": "Se l'attribuer",
+        "UNCLAIM": "Replacer dans la file d'attente",
+        "DRAG-ATTACHMENT": "Déposer des fichiers ici...",
+        "UPLOAD-ATTACHMENT": "Importer la pièce jointe"
+      },
+      "MESSAGES": {
+        "NONE": "Aucun détail de tâche trouvé",
+        "CLAIM": "Pour travailler sur cette tâche, cliquez sur Se l'attribuer."
+      },
+      "FORM": {
+        "NONE": "Aucun formulaire."
+      },
+      "DUE": {
+        "NONE": "Aucune date d'échéance."
+      },
+      "ASSIGNEE": {
+        "NONE": "Aucune personne assignée."
+      },
+      "PEOPLE": {
+        "NONE": "Aucune personne impliquée."
+      },
+      "COMMENTS": {
+        "NONE": "Pas de commentaire",
+        "ADD": "Ajouter un commentaire",
+        "HEADER": "Commentaires",
+        "DIALOG": {
+          "TITLE": "Nouveau commentaire",
+          "LABELS": {
+            "MESSAGE": "Message"
+          },
+          "BUTTON": {
+            "ADD": "Ajouter un commentaire",
+            "CANCEL": "Annuler"
+          }
+        }
+      },
+      "CHECKLIST": {
+        "NONE": "Aucune liste de contrôle"
+      },
+      "ERROR": {
+        "TITLE": "Impossible de terminer l'action",
+        "DESCRIPTION": "Réessayez ou vérifiez que vous avez le niveau d'accès requis.",
+        "CLOSE": "Fermer"
+      }
+    },
+    "FILTERS": {
+      "MESSAGES": {
+        "NONE": "Aucun filtre de tâches sélectionné."
+      }
+    },
+    "START_TASK": {
+      "BUTTON": "CRÉER UNE TÂCHE",
+      "FORM": {
+        "TITLE": "Démarrer la tâche",
+        "LABEL": {
+          "NONE": "Aucune",
+          "NAME": "Nom",
+          "DESCRIPTION": "Description",
+          "ATTACHFORM": "Joindre un formulaire",
+          "ASSIGNEE": "Personne assignée",
+          "FORM": "Formulaire",
+          "DATE": "Choisir une date"
+        },
+        "ACTION": {
+          "START": "Démarrer",
+          "CANCEL": "Annuler"
+        },
+        "DATE": {
+          "ERROR": "Format de date JJ/MM/AAAA"
+        }
+      }
+    },
+    "PEOPLE": {
+      "DIALOG_CLOSE": "FERMER",
+      "ADD_USER": "AJOUTER",
+      "ADD_ASSIGNEE": "ASSIGNER",
+      "SEARCH_USER": "Rechercher des utilisateurs",
+      "SEARCH": {
+        "NO_USERS": "Aucune personne à impliquer trouvée"
+      }
+    },
+    "ATTACHMENT": {
+      "EMPTY": {
+        "HEADER": "Cette liste est vide",
+        "DRAG-AND-DROP": {
+          "TITLE": "Glissez-déposez",
+          "SUBTITLE": "les fichiers à importer"
+        }
+      },
+      "EMPTY-LIST": {
+        "HEADER": "Aucun fichier disponible"
+      }
+    }
+  }
+}

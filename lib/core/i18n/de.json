@@ -1,0 +1,96 @@
+{
+  "CORE": {
+    "PAGINATION": {
+      "ITEMS_RANGE": "Angezeigt werden {{ range }} von {{ total }}",
+      "ITEMS_PER_PAGE": "Elemente pro Seite",
+      "CURRENT_PAGE": "Seite {{ number }}",
+      "TOTAL_PAGES": "von {{ total }}"
+    },
+    "FOLDER_DIALOG": {
+      "CREATE_FOLDER_TITLE": "Neuen Ordner erstellen",
+      "EDIT_FOLDER_TITLE": "Ordner bearbeiten",
+      "FOLDER_NAME": {
+        "LABEL": "Name",
+        "ERRORS": {
+          "REQUIRED": "Ordnername ist erforderlich",
+          "SPECIAL_CHARACTERS": "Ordnername darf die folgenden Zeichen nicht enthalten: * \" < > \\ / ? : |",
+          "ENDING_DOT": "Ordnername darf nicht mit einem Punkt enden.",
+          "ONLY_SPACES": "Ordnername darf nicht nur aus Leerzeichen bestehen."
+        }
+      },
+      "FOLDER_DESCRIPTION": {
+        "LABEL": "Beschreibung"
+      },
+      "CREATE_BUTTON": {
+        "LABEL": "Erstellen"
+      },
+      "UPDATE_BUTTON": {
+        "LABEL": "Aktualisieren"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "Abbrechen"
+      }
+    },
+    "MESSAGES": {
+      "ERRORS": {
+        "GENERIC": "Die Aktion war nicht erfolgreich. Versuchen Sie es noch einmal oder wenden Sie sich an Ihr IT-Team.",
+        "EXISTENT_FOLDER": "Es gibt bereits einen Ordner mit diesem Namen. Probieren Sie es mit einem anderen Namen."
+      }
+    },
+    "HOST_SETTINGS": {
+      "TITLE": "Einstellungen",
+      "CS-HOST": "Konfiguration der Host-URL für Content Services",
+      "BP-HOST": "Konfiguration der Host-URL für Process Services",
+      "BACK": "Zurück",
+      "APPLY": "ANWENDEN"
+    }
+  },
+  "LOGIN": {
+    "LOGO": "Alfresco",
+    "LABEL": {
+      "LOGIN": "Anmelden",
+      "USERNAME": "Benutzername",
+      "PASSWORD": "Passwort",
+      "REMEMBER": "Benutzername und Passwort speichern"
+    },
+    "MESSAGES": {
+      "USERNAME-REQUIRED": "Erforderlich",
+      "USERNAME-MIN": "Ihr Benutzername muss mindestens {{minLenght}} Zeichen lang sein.",
+      "PASSWORD-REQUIRED": "Geben Sie Ihr Passwort ein, um sich anzumelden",
+      "LOGIN-ERROR-CREDENTIALS": "Sie haben einen unbekannten Benutzernamen oder ein falsches Passwort eingegeben",
+      "LOGIN-ERROR-PROVIDERS": "Provider müssen definiert werden",
+      "LOGIN-SUCCESS": "Anmeldung erfolgreich",
+      "LOGIN-ERROR-CORS": "CORS-Ausnahme; überprüfen Sie Ihre Serverkonfiguration",
+      "LOGIN-ERROR-CSRF": "CSRF exception, set [disableCsrf]=\"true\" in login.component",
+      "LOGIN-ECM-LICENSE": "Alfresco Content Services-Repository ist schreibgeschützt"
+    },
+    "BUTTON": {
+      "LOGIN": "ANMELDEN",
+      "CHECKING": "ÜBERPRÜFUNG",
+      "WELCOME": "WILLKOMMEN"
+    },
+    "ACTION": {
+      "HELP": "BRAUCHEN SIE HILFE?",
+      "REGISTER": "REGISTRIEREN"
+    }
+  },
+  "ADF-DATATABLE": {
+    "EMPTY": {
+      "HEADER": "Diese Liste ist leer",
+      "DRAG-AND-DROP": {
+        "TITLE": "Ziehen und ablegen",
+        "SUBTITLE": "um Dateien hochzuladen"
+      }
+    }
+  },
+  "USER_PROFILE": {
+    "LABELS": {
+      "ECM": {
+        "JOB_TITLE": "Jobtitel"
+      },
+      "BPM": {
+        "TENANT": "Mandant"
+      }
+    }
+  }
+}

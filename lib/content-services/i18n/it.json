@@ -1,0 +1,175 @@
+{
+  "FORM": {
+    "START_FORM": {
+      "TITLE": "Modulo di inizio"
+    },
+    "PREVIEW": {
+      "IMAGE_NOT_AVAILABLE": "Anteprima immagine non disponibile."
+    },
+    "FIELD": {
+      "UPLOAD": "UPLOAD",
+      "REQUIRED": "*Obbligatorio",
+      "VALIDATOR": {
+        "INVALID_NUMBER": "Non un numero",
+        "INVALID_DATE": "Non una data",
+        "INVALID_VALUE": "Valore non valido",
+        "NOT_GREATER_THAN": "Non dovrebbe essere piu grande di {{ maxValue }}",
+        "NOT_LESS_THAN": "Non dovrebbe essere meno di {{ minValue }}",
+        "AT_LEAST_LONG": "Dovrebbe essere almeno {{ minLength }} caratteri.",
+        "NO_LONGER_THAN": "Dovrebbe essere massimo {{ maxLength }} caratteri."
+      }
+    }
+  },
+  "ADF-DOCUMENT-LIST": {
+    "EMPTY": {
+      "HEADER": "Questa cartella è vuota"
+    },
+    "LAYOUT": {
+      "THUMBNAIL": "Miniatura",
+      "NAME": "Nome",
+      "LOCATION": "Località",
+      "SIZE": "Dimensione",
+      "DELETED_ON": "Eliminato",
+      "DELETED_BY": "Eliminato da",
+      "STATUS": "Stato",
+      "MODIFIED_ON": "Modificato",
+      "MODIFIED_BY": "Modificato da",
+      "SHARED_BY": "Condiviso da",
+      "LOAD_MORE": "Carica altro"
+    }
+  },
+  "ALFRESCO_DOCUMENT_LIST": {
+    "BUTTON": {
+      "ACTION_CREATE": "Crea...",
+      "ACTION_NEW_FOLDER": "Nuova cartella",
+      "CREATE": "Crea",
+      "CANCEL": "Annulla"
+    }
+  },
+  "DROPDOWN": {
+    "PLACEHOLDER_LABEL": "Elenco sito",
+    "MY_FILES_OPTION": ""
+  },
+  "NODE_SELECTOR": {
+    "CANCEL": "Annulla",
+    "CHOOSE": "Scegli",
+    "NO_RESULTS": "Nessun risultato trovato"
+  },
+  "OPERATION": {
+    "SUCCES": {
+      "CONTENT": {
+        "COPY": "Copia elemento eseguito correttamente",
+        "MOVE": "Sposta elemento eseguito correttamente"
+      },
+      "FOLDER": {
+        "COPY": "Copia elemento eseguito correttamente",
+        "MOVE": "Sposta elemento eseguito correttamente"
+      }
+    },
+    "ERROR": {
+      "CONFLICT": "Nome già in uso, provare un nome diverso.",
+      "UNKNOWN": "Azione non eseguita correttamente. Riprovare o contattare il team IT.",
+      "PERMISSION": "Non si dispone dell'accesso per eseguire questa azione."
+    }
+  },
+  "TAG": {
+    "LABEL": {
+      "NEWTAG": "Nuovo tag"
+    },
+    "MESSAGES": {
+      "EXIST": "Tag già presente"
+    },
+    "BUTTON": {
+      "ADD": "Aggiungi tag"
+    }
+  },
+  "ADF_FILE_UPLOAD": {
+    "BUTTON": {
+      "MINIMIZE": "Minimizzare",
+      "MAXIMIZE": "Massimizzare",
+      "CLOSE": "Chiudi",
+      "CANCEL_ALL": "Annulla i caricamenti",
+      "CANCEL_FILE": "Annulla caricamento",
+      "REMOVE_FILE": "Rimuovere file caricato"
+    },
+    "STATUS": {
+      "FILE_CANCELED_STATUS": "Annullato"
+    },
+    "CONFIRMATION": {
+      "BUTTON": {
+        "CANCEL": "Sì",
+        "CONTINUE": "No"
+      },
+      "MESSAGE": {
+        "TITLE": "Annulla caricamento",
+        "TEXT": "Interrompi il caricamento e rimuovi i file già caricati."
+      }
+    }
+  },
+  "FILE_UPLOAD": {
+    "BUTTON": {
+      "UPLOAD_FILE": "Carica file",
+      "UPLOAD_FOLDER": "Carica cartella"
+    },
+    "MESSAGES": {
+      "UPLOAD_CANCELED": "Caricamento annullato",
+      "UPLOAD_COMPLETED": "Caricato {{ completed }} / {{ total }}",
+      "UPLOAD_PROGRESS": "Caricamento in corso di {{ completed }} / {{ total }}",
+      "UPLOAD_ERROR": "Caricamento di {{ total }} non eseguito correttamente",
+      "UPLOAD_ERRORS": "{{ total }} caricamenti eseguiti correttamente",
+      "PROGRESS": "Caricamento in corso...",
+      "FOLDER_ALREADY_EXIST": "Cartella {0} già presente",
+      "FOLDER_NOT_SUPPORTED": "L'upload di cartelle non è supportato dal browser, prova con un altro browser",
+      "REMOVE_FILE_ERROR": "Impossibile rimuovere {{ fileName }}, riprova o verifica con il team IT.",
+      "REMOVE_FILES_ERROR": "Impossibile rimuovere {{ total }} file. Riprova o verifica con il team IT."
+    },
+    "ACTION": {
+      "UNDO": "Annulla"
+    }
+  },
+  "SEARCH": {
+    "CONTROL": {},
+    "RESULTS": {
+      "SUMMARY": "Trovati {{numResults}} risultati per {{searchTerm}}",
+      "NONE": "Nessun risultato trovato per {{searchTerm}}",
+      "ERROR": "La ricerca ha generato un errore, riprova.",
+      "COLUMNS": {
+        "NAME": "Nome visualizzato",
+        "MODIFIED_BY": "Modificato da",
+        "MODIFIED_AT": "Modificato"
+      }
+    },
+    "ICONS": {
+      "ft_ic_raster_image": "File di immagine",
+      "ft_ic_pdf": "Documento PDF",
+      "ft_ic_ms_excel": "File Microsoft Excel",
+      "ft_ic_ms_word": "Documento di Microsoft Word",
+      "ft_ic_ms_powerpoint": "File di Microsoft PowerPoint",
+      "ft_ic_video": "File video",
+      "ft_ic_document": "File di documento",
+      "ft_ic_website": "Risorsa Web",
+      "ft_ic_archive": "File di archivio",
+      "ft_ic_presentation": "File di presentazione",
+      "ft_ic_spreadsheet": "File di foglio di calcolo"
+    },
+    "DOCUMENT_LIST": {
+      "COLUMNS": {
+        "DISPLAY_NAME": "Nome visualizzato",
+        "CREATED_BY": "Creato da",
+        "CREATED_ON": "Creato"
+      },
+      "ACTIONS": {
+        "FOLDER": {
+          "DELETE": "Elimina"
+        },
+        "DOCUMENT": {
+          "DOWNLOAD": "Download",
+          "DELETE": "Elimina"
+        }
+      }
+    }
+  },
+  "PERMISSON": {
+    "LACKOF": "Non hai l'autorizzazione {{permission}} per {{action}} {{type}}"
+  }
+}

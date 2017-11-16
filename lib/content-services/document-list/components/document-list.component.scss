@@ -1,0 +1,133 @@
+@mixin adf-document-list-theme($theme) {
+    $foreground: map-get($theme, foreground);
+    $accent: map-get($theme, accent);
+
+    adf-datatable > table > tbody > tr.is-selected > td.adf-data-table-cell.adf-data-table-cell--image.image-table-cell > div > div > mat-icon > svg {
+        fill: mat-color($accent);
+        margin-top: -4px;
+        margin-left: -4px;
+        width: 32px;
+        height: 32px;
+    }
+
+    .document-list_empty_template {
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .document-list__this-space-is-empty {
+        height: 32px;
+        opacity: 0.26;
+        font-size: 24px;
+        line-height: 1.33;
+        letter-spacing: -1px;
+        color: mat-color($foreground, text);
+    }
+
+    .document-list__drag-drop {
+        height: 56px;
+        opacity: 0.54;
+        font-size: 56px;
+        line-height: 1;
+        letter-spacing: -2px;
+        color: mat-color($foreground, text);
+        margin-top: 40px;
+    }
+
+    .document-list__any-files-here-to-add {
+        height: 24px;
+        opacity: 0.54;
+        font-size: 16px;
+        line-height: 1.5;
+        letter-spacing: -0.4px;
+        color: mat-color($foreground, text)0;
+        margin-top: 17px;
+    }
+
+    .document-list__empty_doc_lib {
+        width: 565px;
+        height: 161px;
+        object-fit: contain;
+        margin-top: 17px;
+    }
+
+    .adf-document-list-loading-margin {
+        margin: auto;
+    }
+
+    .adf-document-list-loading-container {
+        min-height: 300px;
+        display: flex;
+        flex-direction: row;
+        height: 100%;
+    }
+
+    .adf-empty-list-header {
+        height: 32px;
+        opacity: 0.26 !important;
+        font-size: 24px;
+        line-height: 1.33;
+        letter-spacing: -1px;
+        color: mat-color($foreground, text);
+    }
+
+    .adf-documentlist-pagination {
+        color: mat-color($foreground, text);
+
+        .adf-pagination__block {
+            border-right: none;
+        }
+    }
+
+    .adf-empty-folder {
+
+        &-this-space-is-empty {
+            height: 32px;
+            opacity: 0.26;
+            font-size: 24px;
+            line-height: 1.33;
+            letter-spacing: -1px;
+            color: mat-color($foreground, text);
+        }
+
+        &-drag-drop {
+            min-height: 56px;
+            opacity: 0.54;
+            font-size: 53px;
+            line-height: 1;
+            letter-spacing: -2px;
+            color: mat-color($foreground, text);
+            margin-top: 40px;
+            word-break: break-all;
+            white-space: pre-line;
+
+            @media screen and ($mat-xsmall) {
+                font-size: 48px;
+            }
+        }
+
+        &-any-files-here-to-add {
+            min-height: 24px;
+            opacity: 0.54;
+            font-size: 16px;
+            line-height: 1.5;
+            letter-spacing: -0.4px;
+            color: mat-color($foreground, text);
+            margin-top: 17px;
+            word-break: break-all;
+            white-space: pre-line;
+        }
+
+        &-image {
+            width: 565px;
+            max-width: 100%;
+            object-fit: contain;
+            margin-top: 17px;
+
+            @media screen and ($mat-xsmall) {
+                width: 250px;
+            }
+        }
+    }
+}
