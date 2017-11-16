@@ -26,9 +26,9 @@ import {
     AlfrescoApiService, ContentService, TranslationService,
     FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
     SiteModel, UploadService, DataColumn, DataRow
-} from '@alfresco/core';
+} from '@alfresco/adf-core';
 
-import { DocumentListComponent, PermissionStyleModel, DownloadZipDialogComponent } from '@alfresco/content-services';
+import { DocumentListComponent, PermissionStyleModel, DownloadZipDialogComponent } from '@alfresco/adf-content-services';
 
 import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-adapter.component';
 import { Subscription } from 'rxjs/Rx';

@@ -22,7 +22,7 @@ import { MatInputModule } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
 
 import { CommentListComponent, CommentsComponent } from '../index';
-import { CommentProcessService, PeopleProcessService } from '@alfresco/core';
+import { CommentProcessService, PeopleProcessService } from '@alfresco/adf-core';
 
 import { ProcessService } from '../process-list/services/process.service';
 import { ProcessCommentsComponent } from './process-comments.component';

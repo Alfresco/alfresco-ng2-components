@@ -19,9 +19,9 @@
     "outDir": "./dist",
     "baseUrl" :  "./",
     "paths": {
-      "@alfresco/process-services": ["../process-services"],
-      "@alfresco/content-services": ["../content-services"],
-      "@alfresco/core": ["../core"],
+      "@alfresco/adf-process-services": ["../process-services"],
+      "@alfresco/adf-content-services": ["../content-services"],
+      "@alfresco/adf-core": ["../core"],
       "@angular/*": ["../node_modules/@angular/*"]
     },
     "lib": [

@@ -24,7 +24,7 @@ import { ContentNodeSelectorComponent } from './content-node-selector.component'
 import { ContentNodeSelectorService } from './content-node-selector.service';
 import { SitesDropdownModule } from '../site-dropdown';
 import { BreadcrumbModule } from '../breadcrumb';
-import { PaginationModule, ToolbarModule } from '@alfresco/core';
+import { PaginationModule, ToolbarModule } from '@alfresco/adf-core';
 import { DocumentListModule } from '../document-list';
 
 @NgModule({

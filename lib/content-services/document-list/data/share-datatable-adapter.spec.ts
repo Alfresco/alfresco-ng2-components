@@ -16,7 +16,7 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { DataColumn, DataRow, DataSorting } from '@alfresco/core';
+import { DataColumn, DataRow, DataSorting } from '@alfresco/adf-core';
 import { FileNode, FolderNode } from './../../mock';
 import { DocumentListService } from './../services/document-list.service';
 import { ShareDataRow } from './share-data-row.model';

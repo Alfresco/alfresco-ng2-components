@@ -22,7 +22,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { NodesApiService, NotificationService, TranslationService } from '@alfresco/core';
+import { NodesApiService, NotificationService, TranslationService } from '@alfresco/adf-core';
 
 import { forbidEndingDot, forbidOnlySpaces, forbidSpecialCharacters } from './folder-name.validators';
 

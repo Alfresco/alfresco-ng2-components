@@ -19,10 +19,10 @@
     "outDir": "./dist",
     "baseUrl" :  "./",
     "paths": {
-      "@alfresco/process-services": ["../process-services"],
-      "@alfresco/content-services": ["../content-services"],
-      "@alfresco/insights": ["../analytics"],
-      "@alfresco/core": ["../core"],
+      "@alfresco/adf-process-services": ["../process-services"],
+      "@alfresco/adf-content-services": ["../content-services"],
+      "@alfresco/adf-insights": ["../analytics"],
+      "@alfresco/adf-core": ["../core"],
       "@angular/*": ["../node_modules/@angular/*"]
     },
     "lib": [

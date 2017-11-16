@@ -17,7 +17,7 @@
 
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FileModel, LogService, UploadService } from '@alfresco/core';
+import { FileModel, LogService, UploadService } from '@alfresco/adf-core';
 
 import { FileDraggableDirective } from '../directives/file-draggable.directive';
 import { UploadDragAreaComponent } from './upload-drag-area.component';

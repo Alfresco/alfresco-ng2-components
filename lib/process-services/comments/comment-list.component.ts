@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CommentProcessModel, PeopleProcessService, UserProcessModel } from '@alfresco/core';
+import { CommentProcessModel, PeopleProcessService, UserProcessModel } from '@alfresco/adf-core';
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 

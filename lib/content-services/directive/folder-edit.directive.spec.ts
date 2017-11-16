@@ -25,7 +25,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs/Rx';
 
-import { AppConfigService, ContentService, TranslateLoaderService, DirectiveModule } from '@alfresco/core';
+import { AppConfigService, ContentService, TranslateLoaderService, DirectiveModule } from '@alfresco/adf-core';
 import { FolderEditDirective } from './folder-edit.directive';
 
 @Component({

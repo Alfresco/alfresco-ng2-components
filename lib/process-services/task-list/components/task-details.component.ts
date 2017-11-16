@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { PeopleProcessService, UserProcessModel } from '@alfresco/core';
-import { AuthenticationService, CardViewUpdateService, ClickNotification, LogService, UpdateNotification } from '@alfresco/core';
+import { PeopleProcessService, UserProcessModel } from '@alfresco/adf-core';
+import { AuthenticationService, CardViewUpdateService, ClickNotification, LogService, UpdateNotification } from '@alfresco/adf-core';
 import { Component,
     EventEmitter,
     Input,
@@ -29,7 +29,7 @@ import { Component,
 } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { Observable, Observer } from 'rxjs/Rx';
-import { ContentLinkModel, FormFieldValidator, FormModel, FormOutcomeEvent } from '@alfresco/core';
+import { ContentLinkModel, FormFieldValidator, FormModel, FormOutcomeEvent } from '@alfresco/adf-core';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ContentService, TranslationService, NotificationService } from '@alfresco/core';
+import { ContentService, TranslationService, NotificationService } from '@alfresco/adf-core';
 import { FileNode, FolderNode, DocumentListServiceMock } from '../../mock';
 import { ContentActionHandler } from '../models/content-action.model';
 import { DocumentActionsService } from './document-actions.service';

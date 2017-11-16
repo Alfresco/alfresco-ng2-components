@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { DataColumn, DataRowEvent, DataSorting, DataTableAdapter, ObjectDataColumn, ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/core';
-import { AppConfigService, DataColumnListComponent } from '@alfresco/core';
+import { DataColumn, DataRowEvent, DataSorting, DataTableAdapter, ObjectDataColumn, ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/adf-core';
+import { AppConfigService, DataColumnListComponent } from '@alfresco/adf-core';
 import { DatePipe } from '@angular/common';
 import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ProcessFilterParamRepresentationModel } from '../models/filter-process.model';

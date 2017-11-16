@@ -16,8 +16,8 @@
  */
 
 import { Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
-import { ProcessUploadService, TaskListService, TaskAttachmentListComponent } from '@alfresco/process-services';
-import { UploadService } from '@alfresco/core';
+import { ProcessUploadService, TaskListService, TaskAttachmentListComponent } from '@alfresco/adf-process-services';
+import { UploadService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'activiti-task-attachments',

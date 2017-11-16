@@ -24,7 +24,7 @@ import {
     DiscoveryApiService,
     EcmProductVersionModel,
     ObjectDataTableAdapter
-} from '@alfresco/core';
+} from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-about-page',
@@ -123,7 +123,7 @@ export class AboutComponent implements OnInit {
 
     private gitHubLinkCreation(alfrescoPackagesTableRepresentation): void {
         let corePackage = alfrescoPackagesTableRepresentation.find((packageUp) => {
-            return packageUp.name === '@alfresco/core';
+            return packageUp.name === '@alfresco/adf-core';
         });
 
         if (corePackage) {

@@ -17,8 +17,8 @@
 
 import { DatePipe } from '@angular/common';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CommentProcessModel, UserProcessModel } from '@alfresco/core';
-import { DataRowEvent, ObjectDataRow } from '@alfresco/core';
+import { CommentProcessModel, UserProcessModel } from '@alfresco/adf-core';
+import { DataRowEvent, ObjectDataRow } from '@alfresco/adf-core';
 import { CommentListComponent } from './comment-list.component';
 
 const testUser: UserProcessModel = new UserProcessModel({

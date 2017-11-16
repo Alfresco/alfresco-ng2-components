@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { LogService, UserProcessModel } from '@alfresco/core';
-import { PeopleProcessService } from '@alfresco/core';
+import { LogService, UserProcessModel } from '@alfresco/adf-core';
+import { PeopleProcessService } from '@alfresco/adf-core';
 import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Observable, Observer } from 'rxjs/Rx';
 import { UserEventModel } from '../task-list/models/user-event.model';

@@ -20,7 +20,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MaterialModule } from '../material.module';
 import { Observable } from 'rxjs/Rx';
 
-import { ProcessContentService } from '@alfresco/core';
+import { ProcessContentService } from '@alfresco/adf-core';
 import { AttachmentComponent } from './create-task-attachment.component';
 
 describe('Activiti Task Create Attachment', () => {

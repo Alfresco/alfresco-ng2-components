@@ -16,7 +16,7 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { UserProcessModel } from '@alfresco/core';
+import { UserProcessModel } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Rx';
 import {
     fakeCompletedTaskList,

@@ -18,8 +18,8 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule, MatInputModule } from '@angular/material';
-import { LogService } from '@alfresco/core';
-import { PeopleProcessService, UserProcessModel } from '@alfresco/core';
+import { LogService } from '@alfresco/adf-core';
+import { PeopleProcessService, UserProcessModel } from '@alfresco/adf-core';
 import { PeopleListComponent } from './people-list.component';
 import { PeopleSearchComponent } from './people-search.component';
 import { PeopleComponent } from './people.component';
