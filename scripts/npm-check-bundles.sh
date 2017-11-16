@@ -5,7 +5,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 eval VERSION=""
 
 eval projects=( "adf-core"
-    "insights"
+    "adf-insights"
     "adf-content-services"
     "adf-process-services" )
 
@@ -60,7 +60,6 @@ do
  if [ ! -f package/bundles/$PACKAGE.js ]; then
     error_out '31;1' "$PACKAGE bundles not found!" >&2
     cd $DIR
-    rm -rf temp
     exit 1
  else
      echo "bundles ok!"
