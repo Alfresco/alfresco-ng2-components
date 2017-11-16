@@ -4,10 +4,10 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 eval VERSION=""
 
-eval projects=( "@alfresco/adf-core"
-    "@alfresco/insights"
-    "@alfresco/adf-content-services"
-    "@alfresco/adf-process-services" )
+eval projects=( "adf-core"
+    "insights"
+    "adf-content-services"
+    "adf-process-services" )
 
 show_help() {
     echo "Usage: npm-check-bundles.sh"
@@ -55,8 +55,8 @@ for PACKAGE in ${projects[@]}
 do
  mkdir $PACKAGE
  cd  $PACKAGE
- npm pack $PACKAGE@$VERSION
- tar zxf $PACKAGE-$VERSION.tgz
+ npm pack '@alfresco/'$PACKAGE@$VERSION
+ tar zxf 'alfresco-'$PACKAGE-$VERSION.tgz
  if [ ! -f package/bundles/$PACKAGE.js ]; then
     error_out '31;1' "$PACKAGE bundles not found!" >&2
     cd $DIR

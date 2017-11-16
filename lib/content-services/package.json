@@ -3,7 +3,7 @@
   "description": "Alfresco ADF content services",
   "version": "2.0.0",
   "author": "Alfresco Software, Ltd.",
-  "main": "bundles/content-services.js",
+  "main": "bundles/adf-content-services.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/Alfresco/alfresco-ng2-components.git"

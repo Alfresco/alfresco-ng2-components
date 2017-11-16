@@ -137,19 +137,19 @@
   "license": "Apache-2.0",
   "bundlesize": [
     {
-      "path": "./content-services/bundles/content-services.js",
+      "path": "./content-services/bundles/adf-content-services.js",
       "maxSize": "50 kb"
     },
     {
-      "path": "./process-services/bundles/process-services.js",
+      "path": "./process-services/bundles/adf-process-services.js",
       "maxSize": "50 kb"
     },
     {
-      "path": "./insights/bundles/insights.js",
+      "path": "./insights/bundles/adf-insights.js",
       "maxSize": "50 kb"
     },
     {
-      "path": "./core/bundles/core.js",
+      "path": "./core/bundles/adf-core.js",
       "maxSize": "120 kb"
     }
   ],
