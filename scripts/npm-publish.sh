@@ -141,7 +141,7 @@ npm run build
 for PACKAGE in ${projects[@]}
 do
 
-  DESTDIR="$DIR/../ng2-components/${PACKAGE}"
+  DESTDIR="$DIR/../lib/${PACKAGE}"
   echo "====== MOVE DIR: ${DESTDIR} ===== "
   cd ${DESTDIR}
 
