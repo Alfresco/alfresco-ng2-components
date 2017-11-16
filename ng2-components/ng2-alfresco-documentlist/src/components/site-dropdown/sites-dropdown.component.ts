@@ -28,22 +28,28 @@ export class DropdownSitesComponent implements OnInit {
     @Input()
     hideMyFiles: boolean = false;
 
+    @Input()
+    siteList: any[] = null;
+
     @Output()
     change: EventEmitter<SiteModel> = new EventEmitter();
 
     public MY_FILES_VALUE = 'default';
-
-    siteList = [];
 
     public siteSelected: string;
 
     constructor(private sitesService: SitesApiService) {}
 
     ngOnInit() {
-        this.sitesService.getSites().subscribe((result) => {
-            this.siteList = result;
-        },
-        (error) => {});
+        // fetch sites data only if siteList input has not been given a value
+        if (!this.siteList) {
+
+            this.siteList = [];
+            this.sitesService.getSites().subscribe((result) => {
+                    this.siteList = result;
+                },
+                (error) => {});
+        }
     }
 
     selectedSite() {
