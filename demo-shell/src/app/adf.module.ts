@@ -3,14 +3,14 @@ import { NgModule } from '@angular/core';
 import { ContentModule } from '@alfresco/content-services';
 import { ProcessModule } from '@alfresco/process-services';
 import { CoreModule } from '@alfresco/core';
-import { AnalyticsModule } from '@alfresco/insights';
+import { InsightsModule } from '@alfresco/insights';
 
 export function modules() {
     return [
-        AnalyticsModule,
         CoreModule,
-        ProcessModule,
-        ContentModule
+        ContentModule,
+        InsightsModule,
+        ProcessModule
     ];
 }
 
