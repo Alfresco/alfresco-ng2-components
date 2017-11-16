@@ -153,22 +153,18 @@ export class ProcessFilterService {
      * @returns {FilterProcessRepresentationModel}
      */
     addProcessFilter(filter: FilterProcessRepresentationModel): Observable<FilterProcessRepresentationModel> {
-        return Observable.fromPromise(this.callApiAddProcessFilter(filter))
+        return Observable.fromPromise(this.alfrescoApiService.getInstance().activiti.userFiltersApi.createUserProcessInstanceFilter(filter))
             .map(res => res)
             .map((response: FilterProcessRepresentationModel) => {
                 return response;
             }).catch(err => this.handleProcessError(err));
     }
 
-    private callApiAddProcessFilter(filter: FilterProcessRepresentationModel) {
-        return this.alfrescoApiService.getInstance().activiti.userFiltersApi.createUserProcessInstanceFilter(filter).catch(err => this.handleProcessError(err));
-    }
-
     callApiProcessFilters(appId?: number) {
         if (appId) {
-            return this.alfrescoApiService.getInstance().activiti.userFiltersApi.getUserProcessInstanceFilters({ appId: appId }).catch(err => this.handleProcessError(err));
+            return this.alfrescoApiService.getInstance().activiti.userFiltersApi.getUserProcessInstanceFilters({ appId: appId });
         } else {
-            return this.alfrescoApiService.getInstance().activiti.userFiltersApi.getUserProcessInstanceFilters().catch(err => this.handleProcessError(err));
+            return this.alfrescoApiService.getInstance().activiti.userFiltersApi.getUserProcessInstanceFilters(); )
         }
     }
 

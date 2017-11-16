@@ -126,22 +126,18 @@ export class TaskFilterService {
      * @returns {FilterRepresentationModel}
      */
     addFilter(filter: FilterRepresentationModel): Observable<FilterRepresentationModel> {
-        return Observable.fromPromise(this.callApiAddFilter(filter))
+        return Observable.fromPromise(this.apiService.getInstance().activiti.userFiltersApi.createUserTaskFilter(filter))
             .map(res => res)
             .map((response: FilterRepresentationModel) => {
                 return response;
             }).catch(err => this.handleError(err));
     }
 
-    private callApiAddFilter(filter: FilterRepresentationModel) {
-        return this.apiService.getInstance().activiti.userFiltersApi.createUserTaskFilter(filter).catch(err => this.handleError(err));
-    }
-
     callApiTaskFilters(appId?: number) {
         if (appId) {
-            return this.apiService.getInstance().activiti.userFiltersApi.getUserTaskFilters({appId: appId}).catch(err => this.handleError(err));
+            return this.apiService.getInstance().activiti.userFiltersApi.getUserTaskFilters({appId: appId});
         } else {
-            return this.apiService.getInstance().activiti.userFiltersApi.getUserTaskFilters().catch(err => this.handleError(err));
+            return this.apiService.getInstance().activiti.userFiltersApi.getUserTaskFilters();
         }
     }
 
