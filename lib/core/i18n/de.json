@@ -6,6 +6,14 @@
       "CURRENT_PAGE": "Seite {{ number }}",
       "TOTAL_PAGES": "von {{ total }}"
     },
+    "DIALOG": {
+      "DOWNLOAD_ZIP": {
+        "ACTIONS": {
+          "CANCEL": "Abbrechen"
+        },
+        "TITLE": "Dateien werden zu ZIP-Ordner hinzugefügt. Dies kann ein paar Minuten dauern"
+      }
+    },
     "FOLDER_DIALOG": {
       "CREATE_FOLDER_TITLE": "Neuen Ordner erstellen",
       "EDIT_FOLDER_TITLE": "Ordner bearbeiten",
@@ -14,8 +22,8 @@
         "ERRORS": {
           "REQUIRED": "Ordnername ist erforderlich",
           "SPECIAL_CHARACTERS": "Ordnername darf die folgenden Zeichen nicht enthalten: * \" < > \\ / ? : |",
-          "ENDING_DOT": "Ordnername darf nicht mit einem Punkt enden.",
-          "ONLY_SPACES": "Ordnername darf nicht nur aus Leerzeichen bestehen."
+          "ENDING_DOT": "Ordnername darf nicht mit einem Punkt enden .",
+          "ONLY_SPACES": "Ordnername darf nicht nur aus Leerzeichen bestehen"
         }
       },
       "FOLDER_DESCRIPTION": {
@@ -37,12 +45,32 @@
         "EXISTENT_FOLDER": "Es gibt bereits einen Ordner mit diesem Namen. Probieren Sie es mit einem anderen Namen."
       }
     },
+    "RESTORE_NODE": {
+      "VIEW": "Anzeigen",
+      "PARTIAL_PLURAL": "{{ number }} Elemente wurden nicht wiederhergestellt, weil es Probleme mit dem Speicherort für die Wiederherstellung gab",
+      "NODE_EXISTS": "Wiederherstellung nicht möglich, Element '{{ name }}' gibt es bereits",
+      "LOCATION_MISSING": "Element '{{ name }}' kann nicht wiederhergestellt werden, weil es den ursprünglichen Speicherort nicht mehr gibt",
+      "GENERIC": "Beim Wiederherstellen des Elements '{{ name }}' ist ein Problem aufgetreten",
+      "PLURAL": "Wiederherstellung erfolgreich",
+      "SINGULAR": "Element '{{ name }}' wiederhergestellt"
+    },
+    "DELETE_NODE": {
+      "SINGULAR": "{{ name }} gelöscht",
+      "PLURAL": "{{ number }} Elemente gelöscht",
+      "PARTIAL_SINGULAR": "{{ success }} Element gelöscht, {{ failed }} konnte(n) nicht gelöscht werden",
+      "PARTIAL_PLURAL": "{{ success }} Elemente gelöscht, {{ failed }} konnte(n) nicht gelöscht werden",
+      "ERROR_SINGULAR": "{{ name }} konnte nicht gelöscht werden",
+      "ERROR_PLURAL": "{{ number }} Elemente konnten nicht gelöscht werden"
+    },
     "HOST_SETTINGS": {
+      "CS_URL_ERROR": "Content Services-Adresse nicht im richtigen URL-Format",
+      "PS_URL_ERROR": "Process Services-Adresse nicht im richtigen URL-Format",
       "TITLE": "Einstellungen",
-      "CS-HOST": "Konfiguration der Host-URL für Content Services",
-      "BP-HOST": "Konfiguration der Host-URL für Process Services",
+      "CS-HOST": "URL für Content Services",
+      "BP-HOST": "URL für Process Services",
       "BACK": "Zurück",
-      "APPLY": "ANWENDEN"
+      "APPLY": "Anwenden",
+      "NOT_VALID": "http(s)://host|ip:port(/path) nicht erkannt. Probieren Sie es mit einer anderen URL."
     }
   },
   "LOGIN": {
@@ -59,19 +87,18 @@
       "PASSWORD-REQUIRED": "Geben Sie Ihr Passwort ein, um sich anzumelden",
       "LOGIN-ERROR-CREDENTIALS": "Sie haben einen unbekannten Benutzernamen oder ein falsches Passwort eingegeben",
       "LOGIN-ERROR-PROVIDERS": "Provider müssen definiert werden",
-      "LOGIN-SUCCESS": "Anmeldung erfolgreich",
       "LOGIN-ERROR-CORS": "CORS-Ausnahme; überprüfen Sie Ihre Serverkonfiguration",
       "LOGIN-ERROR-CSRF": "CSRF exception, set [disableCsrf]=\"true\" in login.component",
       "LOGIN-ECM-LICENSE": "Alfresco Content Services-Repository ist schreibgeschützt"
     },
     "BUTTON": {
-      "LOGIN": "ANMELDEN",
-      "CHECKING": "ÜBERPRÜFUNG",
-      "WELCOME": "WILLKOMMEN"
+      "LOGIN": "Anmelden",
+      "CHECKING": "Überprüfung",
+      "WELCOME": "Willkommen"
     },
     "ACTION": {
-      "HELP": "BRAUCHEN SIE HILFE?",
-      "REGISTER": "REGISTRIEREN"
+      "HELP": "Brauchen Sie Hilfe?",
+      "REGISTER": "Registrieren"
     }
   },
   "ADF-DATATABLE": {
@@ -91,6 +118,34 @@
       "BPM": {
         "TENANT": "Mandant"
       }
+    },
+    "TAB": {
+      "CS": "Content Services",
+      "PS": "Process Services"
     }
+  },
+  "ADF_VIEWER": {
+    "ACTIONS": {
+      "BACK": "Zurück",
+      "OPEN_WITH": "Öffnen mit",
+      "DOWNLOAD": "Herunterladen",
+      "PRINT": "Drucken",
+      "SHARE": "Freigeben",
+      "MORE_ACTIONS": "Weitere Aktionen",
+      "INFO": "Info"
+    },
+    "ARIA": {
+      "PREVIOUS_PAGE": "Vorherige Seite",
+      "NEXT_PAGE": "Nächste Seite",
+      "ZOOM_IN": "Vergrößern",
+      "ZOOM_OUT": "Verkleinern",
+      "FIT_PAGE": "Seite anpassen"
+    },
+    "PAGE_LABEL": {
+      "SHOWING": "Angezeigt",
+      "OF": "von"
+    },
+    "LOADING": "Laden",
+    "UNKNOWN_FORMAT": "Vorschau konnte nicht geladen werden"
   }
 }

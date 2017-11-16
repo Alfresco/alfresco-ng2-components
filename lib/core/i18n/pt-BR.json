@@ -6,6 +6,14 @@
       "CURRENT_PAGE": "Página {{ number }}",
       "TOTAL_PAGES": "de {{ total }}"
     },
+    "DIALOG": {
+      "DOWNLOAD_ZIP": {
+        "ACTIONS": {
+          "CANCEL": "Cancelar"
+        },
+        "TITLE": "Adicionando arquivos ao zip, isso pode levar alguns minutos"
+      }
+    },
     "FOLDER_DIALOG": {
       "CREATE_FOLDER_TITLE": "Criar nova pasta",
       "EDIT_FOLDER_TITLE": "Editar pasta",
@@ -37,12 +45,32 @@
         "EXISTENT_FOLDER": "Já existe uma pasta com este nome. Tente outro nome."
       }
     },
+    "RESTORE_NODE": {
+      "VIEW": "Visualizar",
+      "PARTIAL_PLURAL": "{{ number }} itens não restaurados devido a problemas com o local da restauração",
+      "NODE_EXISTS": "Não foi possível restaurar, o item {{ name }} já existe",
+      "LOCATION_MISSING": "Não foi possível restaurar o item {{ name }}, o local original não existe mais",
+      "GENERIC": "Houve um problema ao restaurar o item {{ name }}",
+      "PLURAL": "Restauração bem-sucedida",
+      "SINGULAR": "Item {{ name }} restaurado"
+    },
+    "DELETE_NODE": {
+      "SINGULAR": "{{ name }} excluído",
+      "PLURAL": "{{ number }} itens excluídos",
+      "PARTIAL_SINGULAR": "Item {{ success }} excluído, não foi possível excluir {{ failed }}",
+      "PARTIAL_PLURAL": "Itens {{ success }} excluídos, não foi possível excluir {{ failed }}",
+      "ERROR_SINGULAR": "Não foi possível excluir {{ name }}",
+      "ERROR_PLURAL": "Não foi possível excluir {{ number }} itens"
+    },
     "HOST_SETTINGS": {
+      "CS_URL_ERROR": "O endereço do Content Services não corresponde ao formato de URL",
+      "PS_URL_ERROR": "O endereço do Process Services não corresponde ao formato de URL",
       "TITLE": "Configurações",
-      "CS-HOST": "Configuração de URL de host do Content Services",
-      "BP-HOST": "Configuração de URL de host do Process Services",
+      "CS-HOST": "URL do Content Services",
+      "BP-HOST": "URL do Process Services",
       "BACK": "Voltar",
-      "APPLY": "APLICAR"
+      "APPLY": "Aplicar",
+      "NOT_VALID": "http(s)://host|ip:port(/path) não reconhecida, tente uma URL diferente."
     }
   },
   "LOGIN": {
@@ -59,19 +87,18 @@
       "PASSWORD-REQUIRED": "Insira a senha para entrar",
       "LOGIN-ERROR-CREDENTIALS": "Você inseriu um nome de usuário ou senha desconhecida",
       "LOGIN-ERROR-PROVIDERS": "Provedores não podem ficar indefinidos",
-      "LOGIN-SUCCESS": "Acesso bem-sucedido",
       "LOGIN-ERROR-CORS": "Exceção CORS, verifique a configuração do servidor",
       "LOGIN-ERROR-CSRF": "Exceção CSRF, set [disableCsrf]=\"true\" in login.component",
       "LOGIN-ECM-LICENSE": "O repositório do Alfresco Content Services está em modo somente leitura"
     },
     "BUTTON": {
-      "LOGIN": "ENTRAR",
-      "CHECKING": "VERIFICANDO",
-      "WELCOME": "BEM-VINDO"
+      "LOGIN": "Entrar",
+      "CHECKING": "Verificando",
+      "WELCOME": "Bem-vindo"
     },
     "ACTION": {
-      "HELP": "PRECISA DE AJUDA?",
-      "REGISTER": "REGISTRAR"
+      "HELP": "Precisa de ajuda?",
+      "REGISTER": "Registrar"
     }
   },
   "ADF-DATATABLE": {
@@ -91,6 +118,34 @@
       "BPM": {
         "TENANT": "Tenant"
       }
+    },
+    "TAB": {
+      "CS": "Content Services",
+      "PS": "Process Services"
     }
+  },
+  "ADF_VIEWER": {
+    "ACTIONS": {
+      "BACK": "Voltar",
+      "OPEN_WITH": "Abrir com",
+      "DOWNLOAD": "Download",
+      "PRINT": "Imprimir",
+      "SHARE": "Compartilhar",
+      "MORE_ACTIONS": "Mais ações",
+      "INFO": "Informações"
+    },
+    "ARIA": {
+      "PREVIOUS_PAGE": "Página anterior",
+      "NEXT_PAGE": "Próxima página",
+      "ZOOM_IN": "Ampliar",
+      "ZOOM_OUT": "Reduzir",
+      "FIT_PAGE": "Ajustar página"
+    },
+    "PAGE_LABEL": {
+      "SHOWING": "Mostrando",
+      "OF": "de"
+    },
+    "LOADING": "Carregando",
+    "UNKNOWN_FORMAT": "Não foi possível carregar pré-visualização"
   }
 }

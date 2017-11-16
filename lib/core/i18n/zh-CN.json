@@ -6,6 +6,14 @@
       "CURRENT_PAGE": "第 {{number}} 页",
       "TOTAL_PAGES": "/共 {{total}} 页"
     },
+    "DIALOG": {
+      "DOWNLOAD_ZIP": {
+        "ACTIONS": {
+          "CANCEL": "取消"
+        },
+        "TITLE": "添加文件至 zip，此操作需要数分钟时间"
+      }
+    },
     "FOLDER_DIALOG": {
       "CREATE_FOLDER_TITLE": "新建文件夹",
       "EDIT_FOLDER_TITLE": "编辑文件夹",
@@ -14,7 +22,7 @@
         "ERRORS": {
           "REQUIRED": "需要文件夹名称",
           "SPECIAL_CHARACTERS": "文件夹名称不能包含 * \" < > \\ / ? : | 字符",
-          "ENDING_DOT": "文件夹名称不能以句点结尾。",
+          "ENDING_DOT": "文件夹名称不能以句点结尾 .",
           "ONLY_SPACES": "文件夹名称不能只包含空格"
         }
       },
@@ -34,15 +42,35 @@
     "MESSAGES": {
       "ERRORS": {
         "GENERIC": "此操作未成功，请重试或联系您的 IT 团队.",
-        "EXISTENT_FOLDER": "存在使用此名称的文件夹。请尝试使用其他名称。"
+        "EXISTENT_FOLDER": "存在使用此名称的文件夹。请尝试使用其他名称."
       }
     },
+    "RESTORE_NODE": {
+      "VIEW": "查看",
+      "PARTIAL_PLURAL": "{{ number }} 个项目无法恢复，因为恢复位置存在问题",
+      "NODE_EXISTS": "无法恢复，{{ name }} 项目已存在",
+      "LOCATION_MISSING": "无法恢复 {{ name }} 项目，原位置不存在",
+      "GENERIC": "恢复 {{ name }} 项目时出现问题",
+      "PLURAL": "成功恢复",
+      "SINGULAR": "{{ name }} 项目已恢复"
+    },
+    "DELETE_NODE": {
+      "SINGULAR": "{{ name }} 已删除",
+      "PLURAL": "{{ number }} 个项目已删除",
+      "PARTIAL_SINGULAR": "已删除 {{ success }} 项目，{{ failed }} 无法删除",
+      "PARTIAL_PLURAL": "已删除 {{ success }} 项目，{{ failed }} 无法删除",
+      "ERROR_SINGULAR": "{{ name }} 无法删除",
+      "ERROR_PLURAL": "{{ number }} 个项目无法删除"
+    },
     "HOST_SETTINGS": {
+      "CS_URL_ERROR": "Content Services 地址与 URL 格式不匹配",
+      "PS_URL_ERROR": "Process Services 地址与 URL 格式不匹配",
       "TITLE": "设置",
-      "CS-HOST": "Content Services 主机 URL 配置",
-      "BP-HOST": "流程服务主机 URL 配置",
+      "CS-HOST": "Content Services URL",
+      "BP-HOST": "Process Services URL",
       "BACK": "返回",
-      "APPLY": "应用"
+      "APPLY": "应用",
+      "NOT_VALID": "http(s)://host|ip:port(/path) 无法识别，请使用其他 URL."
     }
   },
   "LOGIN": {
@@ -55,11 +83,10 @@
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "必需",
-      "USERNAME-MIN": "您的用户名需要至少 {{minLenght}} 个字符。",
+      "USERNAME-MIN": "您的用户名需要至少 {{minLenght}} 个字符.",
       "PASSWORD-REQUIRED": "输入登录密码",
       "LOGIN-ERROR-CREDENTIALS": "您已输入未知用户名或密码",
       "LOGIN-ERROR-PROVIDERS": "提供商未定义",
-      "LOGIN-SUCCESS": "成功登录",
       "LOGIN-ERROR-CORS": "CORS 异常，检查您的服务器配置",
       "LOGIN-ERROR-CSRF": "CSRF 异常，设置 [disableCsrf]=\"true\" in login.component",
       "LOGIN-ECM-LICENSE": "Alfresco Content Services 存储库为只读模式"
@@ -70,7 +97,7 @@
       "WELCOME": "欢迎使用"
     },
     "ACTION": {
-      "HELP": "是否需要帮助？",
+      "HELP": "是否需要帮助？?",
       "REGISTER": "注册"
     }
   },
@@ -91,6 +118,34 @@
       "BPM": {
         "TENANT": "租户"
       }
+    },
+    "TAB": {
+      "CS": "Content Services",
+      "PS": "Process Services"
     }
+  },
+  "ADF_VIEWER": {
+    "ACTIONS": {
+      "BACK": "返回",
+      "OPEN_WITH": "打开方式",
+      "DOWNLOAD": "下载",
+      "PRINT": "打印",
+      "SHARE": "共享",
+      "MORE_ACTIONS": "更多操作",
+      "INFO": "信息"
+    },
+    "ARIA": {
+      "PREVIOUS_PAGE": "上一页",
+      "NEXT_PAGE": "下一页",
+      "ZOOM_IN": "放大",
+      "ZOOM_OUT": "缩小",
+      "FIT_PAGE": "符合页面"
+    },
+    "PAGE_LABEL": {
+      "SHOWING": "正在显示",
+      "OF": "/"
+    },
+    "LOADING": "正在加载",
+    "UNKNOWN_FORMAT": "无法加载预览"
   }
 }

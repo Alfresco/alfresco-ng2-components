@@ -6,6 +6,14 @@
       "CURRENT_PAGE": "Page {{ number }}",
       "TOTAL_PAGES": "sur {{ total }}"
     },
+    "DIALOG": {
+      "DOWNLOAD_ZIP": {
+        "ACTIONS": {
+          "CANCEL": "Annuler"
+        },
+        "TITLE": "Ajout de fichiers au zip, veuillez patienter quelques minutes"
+      }
+    },
     "FOLDER_DIALOG": {
       "CREATE_FOLDER_TITLE": "Créer un nouveau filtre",
       "EDIT_FOLDER_TITLE": "Modifier le dossier",
@@ -37,12 +45,32 @@
         "EXISTENT_FOLDER": "Un dossier du même nom existe déjà. Essayez avec un nom différent."
       }
     },
+    "RESTORE_NODE": {
+      "VIEW": "Afficher",
+      "PARTIAL_PLURAL": "{{ number }} éléments n'ont pas été restaurés en raison de problèmes avec l'emplacement de restauration",
+      "NODE_EXISTS": "Restauration impossible, l'élément {{ name }} existe déjà",
+      "LOCATION_MISSING": "Impossible de restaurer l'élément {{ name }}, l'emplacement d'origine n'existe plus",
+      "GENERIC": "Un problème est survenu pendant la restauration de l'élément {{ name }}",
+      "PLURAL": "Restauration réussie",
+      "SINGULAR": "Elément {{ name }} restauré"
+    },
+    "DELETE_NODE": {
+      "SINGULAR": "{{ name }} supprimé",
+      "PLURAL": "{{ number }} éléments supprimés",
+      "PARTIAL_SINGULAR": "{{ success }} élément supprimé, {{ failed }} n'a/n'ont pas pu être supprimé(s)",
+      "PARTIAL_PLURAL": "{{ success }} éléments supprimés, {{ failed }} n'a/n'ont pas pu être supprimé(s)",
+      "ERROR_SINGULAR": "{{ name }} n'a pas pu être supprimé",
+      "ERROR_PLURAL": "{{ number }} éléments n'ont pas pu être supprimés"
+    },
     "HOST_SETTINGS": {
+      "CS_URL_ERROR": "L'adresse Content Services ne correspond pas au format d'URL",
+      "PS_URL_ERROR": "L'adresse Process Services ne correspond pas au format d'URL",
       "TITLE": "Paramètres",
-      "CS-HOST": "Configuration de l'URL de l'hôte de Content Services",
-      "BP-HOST": "Configuration de l'URL de l'hôte de Process Services",
+      "CS-HOST": "URL Content Services",
+      "BP-HOST": "URL Process Services",
       "BACK": "Retour",
-      "APPLY": "APPLIQUER"
+      "APPLY": "Appliquer",
+      "NOT_VALID": "Adresse http(s)://host|ip:port(/path) non reconnue, essayez une autre URL."
     }
   },
   "LOGIN": {
@@ -59,19 +87,18 @@
       "PASSWORD-REQUIRED": "Entrez votre mot de passe pour vous connecter",
       "LOGIN-ERROR-CREDENTIALS": "Le nom d'utilisateur ou le mot de passe entré est inconnu",
       "LOGIN-ERROR-PROVIDERS": "Le fournisseur ne peut pas être non défini",
-      "LOGIN-SUCCESS": "Connexion réussie",
       "LOGIN-ERROR-CORS": "Exception CORS, vérifiez la configuration du serveur",
       "LOGIN-ERROR-CSRF": "Exception CSRF, set [disableCsrf]=\"true\" in login.component",
       "LOGIN-ECM-LICENSE": "L'entrepôt Alfresco Content Services est en lecture seule"
     },
     "BUTTON": {
-      "LOGIN": "CONNEXION",
-      "CHECKING": "VÉRIFICATION",
-      "WELCOME": "BIENVENUE"
+      "LOGIN": "Connexion",
+      "CHECKING": "Vérification",
+      "WELCOME": "Bienvenue"
     },
     "ACTION": {
-      "HELP": "BESOIN D'AIDE ?",
-      "REGISTER": "S'INSCRIRE"
+      "HELP": "Besoin d'aide?",
+      "REGISTER": "S'inscrire"
     }
   },
   "ADF-DATATABLE": {
@@ -91,6 +118,34 @@
       "BPM": {
         "TENANT": "Client"
       }
+    },
+    "TAB": {
+      "CS": "Content Services",
+      "PS": "Process Services"
     }
+  },
+  "ADF_VIEWER": {
+    "ACTIONS": {
+      "BACK": "Retour",
+      "OPEN_WITH": "Ouvrir avec",
+      "DOWNLOAD": "Télécharger",
+      "PRINT": "Imprimer",
+      "SHARE": "Partager",
+      "MORE_ACTIONS": "Plus d'actions",
+      "INFO": "Informations"
+    },
+    "ARIA": {
+      "PREVIOUS_PAGE": "Page précédente",
+      "NEXT_PAGE": "Page suivante",
+      "ZOOM_IN": "Zoom avant",
+      "ZOOM_OUT": "Zoom arrière",
+      "FIT_PAGE": "Ajuster à la page"
+    },
+    "PAGE_LABEL": {
+      "SHOWING": "Affichage en cours",
+      "OF": "sur"
+    },
+    "LOADING": "Chargement en cours",
+    "UNKNOWN_FORMAT": "Impossible de charger l'aperçu"
   }
 }

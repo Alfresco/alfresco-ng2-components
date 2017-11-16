@@ -7,14 +7,26 @@
       "IMAGE_NOT_AVAILABLE": "Предварительный просмотр недоступен"
     },
     "FIELD": {
-      "REQUIRED": "*Обязательно для заполнения"
+      "UPLOAD": "Загрузить",
+      "REQUIRED": "*Обязательно для заполнения",
+      "VALIDATOR": {
+        "INVALID_NUMBER": "Используйте другой формат числа",
+        "INVALID_DATE": "Используйте другой формат даты",
+        "INVALID_VALUE": "Введите другое значение",
+        "NOT_GREATER_THAN": "Не может быть более {{ maxValue }}",
+        "NOT_LESS_THAN": "Не может быть менее {{ minValue }}",
+        "AT_LEAST_LONG": "Введите не менее {{ minLength }} символ",
+        "NO_LONGER_THAN": "Введите не более {{ maxLength }} символ"
+      }
     }
   },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "Эта папка пуста"
     },
+    "NO_PERMISSION": "У вас нет разрешения на просмотр этого файла или папки.",
     "LAYOUT": {
+      "CREATED": "Создано",
       "THUMBNAIL": "Эскиз",
       "NAME": "Имя",
       "LOCATION": "Местоположение",
@@ -26,6 +38,11 @@
       "MODIFIED_BY": "Изменено пользователем",
       "SHARED_BY": "Доступ открыт пользователем",
       "LOAD_MORE": "Загрузить еще"
+    },
+    "MENU_ACTIONS": {
+      "VIEW": "Посмотреть",
+      "REMOVE": "Удалить",
+      "DOWNLOAD": "Скачать"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {
@@ -38,7 +55,7 @@
   },
   "DROPDOWN": {
     "PLACEHOLDER_LABEL": "Список сайтов",
-    "MY_FILES_OPTION": ""
+    "MY_FILES_OPTION": "Мои файлы"
   },
   "NODE_SELECTOR": {
     "CANCEL": "Отмена",
@@ -78,8 +95,8 @@
       "MINIMIZE": "Свернуть",
       "MAXIMIZE": "Развернуть",
       "CLOSE": "Закрыть",
-      "CANCEL_ALL": "Отменить выгрузки",
-      "CANCEL_FILE": "Отменить выгрузку",
+      "CANCEL_ALL": "Отменить загрузки",
+      "CANCEL_FILE": "Отменить загрузку",
       "REMOVE_FILE": "Удалить выгруженный файл"
     },
     "STATUS": {
@@ -105,17 +122,21 @@
       "UPLOAD_CANCELED": "Выгрузка отменена",
       "UPLOAD_COMPLETED": "Выгружено {{ completed }} / {{ total }}",
       "UPLOAD_PROGRESS": "Выгрузка {{ completed }} / {{ total }}",
-      "UPLOAD_ERROR": "Ошибка {{ total }} выгрузки",
+      "UPLOAD_ERROR": "Ошибка {{ total }} загрузки",
       "UPLOAD_ERRORS": "Ошибка {{ total }} выгрузок",
       "PROGRESS": "Идет выгрузка...",
       "FOLDER_ALREADY_EXIST": "Папка {0} уже существует",
-      "FOLDER_NOT_SUPPORTED": "Данный браузер не поддерживает выгрузку папок, используйте другой браузер",
+      "FOLDER_NOT_SUPPORTED": "Данный браузер не поддерживает загрузку папок, используйте другой браузер",
       "REMOVE_FILE_ERROR": "Ошибка удаления файла {{ fileName }}, повторите попытку или обратитесь к IT-специалистам.",
-      "REMOVE_FILES_ERROR": "Не удалось удалить следующее количество файлов: {{ total }}. Повторите попытку или обратитесь к IT-специалистам."
+      "REMOVE_FILES_ERROR": "Не удалось удалить следующее количество файлов: {{ total }}. Повторите попытку или обратитесь к IT-специалистам.",
+      "EXCEED_MAX_FILE_SIZE": "Размер файла {{ fileName }} больше допустимого значения"
     },
     "ACTION": {
       "UNDO": "Отменить"
     }
+  },
+  "WEBSCRIPT": {
+    "ERROR": "Не удалось выполнить действие. Покажите IT-специалистам следующее сообщение: ошибка во время десериализации {{data}} в виде {{contentType}}"
   },
   "SEARCH": {
     "CONTROL": {},

@@ -1,6 +1,36 @@
 {
   "title": "Benvenuto",
+  "VERSION": {
+    "NO_PERMISSION": "Non hai il permesso di gestire versioni di questo contenuto",
+    "NO_PERMISSION_EVENT": "Non hai il permesso ${event.permission} di ${event.action} ${event.type}",
+    "CHOOSE_FILE": "Seleziona un file per visualizzarne le versioni"
+  },
+  "APP_LAYOUT": {
+    "APP_NAME": "Applicazione demo ADF",
+    "HOME": "Home",
+    "CONTENT_SERVICES": "Content Services",
+    "PROCESS_SERVICES": "Process Services",
+    "LOGIN": "Login",
+    "CUSTOM_SOURCES": "Fonti personalizzate",
+    "DATATABLE": "Datatable",
+    "FORM": "Modulo",
+    "FORM_LIST": "Elenco moduli",
+    "UPLOADER": "Uploader",
+    "WEBSCRIPT": "Webscript",
+    "TAG": "Tag",
+    "SOCIAL": "Social",
+    "SETTINGS": "Impostazioni",
+    "ABOUT": "Informazioni su"
+  },
   "DOCUMENT_LIST": {
+    "MULTISELECT_CHECKBOXES": "Selezione multipla (con caselle di spunta)",
+    "MULTIPLE_FILE_UPLOAD": "Caricamento di file multipli",
+    "FOLDER_UPLOAD": "Caricamento cartelle",
+    "CUSTOM_FILTER": "Filtro estensioni personalizzato",
+    "MAX_SIZE": "Filtro dimensioni max",
+    "ENABLE_VERSIONING": "Abilita controllo delle versioni",
+    "DESCRIPTION_UPLOAD": "Abilita caricamento",
+    "MULTISELECT_DESCRIPTION": "Usa Cmd (Mac) o Ctrl (Windows) per attivare/disattivare la selezione di più elementi",
     "COLUMNS": {
       "DISPLAY_NAME": "Nome visualizzato",
       "TAG": "Tag",
@@ -22,6 +52,15 @@
       }
     }
   },
+  "DATATABLE": {
+    "RESET_DEFAULT": "Ripristina ai valori predefiniti",
+    "ADD_ROW": "Aggiungi riga",
+    "REPLACE_ROWS": "Sostituisci righe",
+    "REPLACE_COLUMNS": "Sostituisci colonne",
+    "LOAD_NODE": "Carica nodo",
+    "MULTISELECT": "Selezione multipla",
+    "MULTISELECT_DESCRIPTION": "Usa Cmd (Mac) o Ctrl (Windows) per attivare/disattivare la selezione di più elementi"
+  },
   "ANALYTICS_REPORT": {
     "NO_REPORT_MESSAGE": "Nessun rapporto selezionato. Scegliere un rapporto dall'elenco"
   },
@@ -36,5 +75,22 @@
   "FORM-LIST": {
     "STORE": "Memorizza",
     "RESTORE": "Ripristina"
+  },
+  "LOGIN": {
+    "CONTENT_SERVICES": "Content Services",
+    "PROCESS_SERVICES": "Process Services",
+    "LOGIN_FOOTER": "Piè di pagina login"
+  },
+  "SEARCH": {
+    "RESULTS": "Risultati della ricerca"
+  },
+  "SOCIAL": {
+    "LIKE": "Componente Like",
+    "RATING": "Componente valutazione"
+  },
+  "TAG": {
+    "LIST": "Elenco tag Content Services",
+    "INSERT": "Inserisci ID nodo",
+    "NODE_LIST": "Elenco tag per ID nodo"
   }
 }
