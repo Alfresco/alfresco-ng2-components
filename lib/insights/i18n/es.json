@@ -1,15 +1,15 @@
 {
   "ANALYTICS": {
-    "TITLE": "ANÁLISIS",
+    "TITLE": "Análisis",
     "MESSAGES": {
-      "UNKNOWN-WIDGET-TYPE": "TIPO DE WIDGET DESCONOCIDO",
+      "UNKNOWN-WIDGET-TYPE": "Tipo de widget desconocido",
       "FILL-PARAMETER": "Elija de las opciones de informes",
       "NO-DATA-FOUND": "No se encontraron datos",
       "ZERO-DATA-FOUND": "Solo hay valores cero",
       "ICON-SETTING": "Configuración",
       "ICON-SAVE": "Guardar",
       "ICON-DELETE": "Eliminar",
-      "ICON-EXPORT-CSV": "Exportar"
+      "ICON-EXPORT-CSV": "Exportar como csv"
     }
   },
   "__KEY_REPORTING": {

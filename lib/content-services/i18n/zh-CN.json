@@ -7,14 +7,26 @@
       "IMAGE_NOT_AVAILABLE": "预览不可用"
     },
     "FIELD": {
-      "REQUIRED": "*必填项"
+      "UPLOAD": "上传",
+      "REQUIRED": "*必填项",
+      "VALIDATOR": {
+        "INVALID_NUMBER": "使用其他数字格式",
+        "INVALID_DATE": "使用其他日期格式",
+        "INVALID_VALUE": "输入其他值",
+        "NOT_GREATER_THAN": "不得大于 {{ maxValue }}",
+        "NOT_LESS_THAN": "不得小于 {{ minValue }}",
+        "AT_LEAST_LONG": "输入至少 {{ minLength }} 个字符",
+        "NO_LONGER_THAN": "不得输入超过 {{ maxLength }} 个字符"
+      }
     }
   },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "此文件夹为空"
     },
+    "NO_PERMISSION": "您没有查看该文件或文件夹的权限.",
     "LAYOUT": {
+      "CREATED": "已创建",
       "THUMBNAIL": "缩略图",
       "NAME": "名称",
       "LOCATION": "位置",
@@ -26,6 +38,11 @@
       "MODIFIED_BY": "修改人",
       "SHARED_BY": "分享人",
       "LOAD_MORE": "加载更多"
+    },
+    "MENU_ACTIONS": {
+      "VIEW": "查看",
+      "REMOVE": "删除",
+      "DOWNLOAD": "下载"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {
@@ -38,7 +55,7 @@
   },
   "DROPDOWN": {
     "PLACEHOLDER_LABEL": "网站列表",
-    "MY_FILES_OPTION": ""
+    "MY_FILES_OPTION": "我的文件"
   },
   "NODE_SELECTOR": {
     "CANCEL": "取消",
@@ -57,9 +74,9 @@
       }
     },
     "ERROR": {
-      "CONFLICT": "此名称已使用，请尝试其他名称。",
-      "UNKNOWN": "此操作未成功，请重试或联系您的 IT 团队。",
-      "PERMISSION": "您没有执行此操作的访问权。"
+      "CONFLICT": "此名称已使用，请尝试其他名称.",
+      "UNKNOWN": "此操作未成功，请重试或联系您的 IT 团队.",
+      "PERMISSION": "您没有执行此操作的访问权."
     }
   },
   "TAG": {
@@ -92,7 +109,7 @@
       },
       "MESSAGE": {
         "TITLE": "取消上传",
-        "TEXT": "停止上传并移除已上传文件。"
+        "TEXT": "停止上传并移除已上传文件."
       }
     }
   },
@@ -110,19 +127,23 @@
       "PROGRESS": "正在上传...",
       "FOLDER_ALREADY_EXIST": "文件夹 {0} 已存在",
       "FOLDER_NOT_SUPPORTED": "您的浏览器不支持文件夹上传，请使用其他浏览器",
-      "REMOVE_FILE_ERROR": "{{fileName}} 无法移除，请重试或联系您的 IT 团队。",
-      "REMOVE_FILES_ERROR": "{{total}} 个文件无法移除，请重试或联系您的 IT 团队。"
+      "REMOVE_FILE_ERROR": "{{fileName}} 无法移除，请重试或联系您的 IT 团队.",
+      "REMOVE_FILES_ERROR": "{{total}} 个文件无法移除，请重试或联系您的 IT 团队.",
+      "EXCEED_MAX_FILE_SIZE": "文件 {{ fileName }} 超出允许的文件大小"
     },
     "ACTION": {
       "UNDO": "撤消"
     }
+  },
+  "WEBSCRIPT": {
+    "ERROR": "无法完成该操作。将此信息告知您的 IT 团队：将 {{data}} 反序列化为 {{contentType}} 过程中出错"
   },
   "SEARCH": {
     "CONTROL": {},
     "RESULTS": {
       "SUMMARY": "已找到 {{numResults}} 个 {{searchTerm}} 的结果",
       "NONE": "未找到 {{searchTerm}} 的结果",
-      "ERROR": "搜索过程中遇到问题，请重试。",
+      "ERROR": "搜索过程中遇到问题，请重试.",
       "COLUMNS": {
         "NAME": "显示名称",
         "MODIFIED_BY": "修改人",

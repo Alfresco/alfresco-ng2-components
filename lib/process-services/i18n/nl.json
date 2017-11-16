@@ -13,15 +13,47 @@
   },
   "ADF_TASK_LIST": {
     "APPS": {
-      "NONE": "Geen apps gevonden"
+      "NONE": "Geen apps gevonden",
+      "TASK_APP_NAME": "Task App"
     },
-    "TASK_LIST": {
+    "LIST": {
       "MESSAGES": {
-        "NONE": "Geen takenlijst gevonden"
+        "NONE": "Geen takenlijsten gevonden"
       }
+    },
+    "PROPERTIES": {
+      "TASK_NAME": "Taak",
+      "THUMBNAIL": "Miniatuur",
+      "NAME": "Naam",
+      "ASSIGNEE": "Toegewezen persoon",
+      "ASSIGNEE_DEFAULT": "Geen toegewezen persoon",
+      "PRIORITY": "Prioriteit",
+      "DUE_DATE": "Vervaldatum",
+      "DUE_DATE_DEFAULT": "Geen vervaldatum",
+      "STATUS": "Status",
+      "CATEGORY": "Categorie",
+      "CATEGORY_DEFAULT": "Geen categorie",
+      "PARENT_NAME": "Naam bovenliggend element",
+      "PARENT_NAME_DEFAULT": "Geen bovenliggend element",
+      "CREATED_BY": "Gemaakt door",
+      "CREATED": "Gemaakt",
+      "ID": "Id",
+      "DESCRIPTION": "Beschrijving",
+      "DESCRIPTION_DEFAULT": "Geen beschrijving",
+      "FORM_NAME": "Formuliernaam",
+      "FORM_NAME_DEFAULT": "Geen formulier"
+    },
+    "MENU_ACTIONS": {
+      "VIEW_CONTENT": "Weergeven",
+      "REMOVE_CONTENT": "Verwijderen",
+      "DOWNLOAD_CONTENT": "Downloaden",
+      "DOWNLOAD_AUDIT": "Audit downloaden"
     },
     "DETAILS": {
       "LABELS": {
+        "INFO_DRAWER_TITLE": "Activiteiten",
+        "INFO_DRAWER_TAB_ACTIVITY_TITLE": "Activiteit",
+        "INFO_DRAWER_TAB_DETAILS_TITLE": "Details",
         "ASSIGNEE": "Toegewezen persoon",
         "DUE": "Vervalt",
         "FORM": "Formulier",
@@ -30,35 +62,37 @@
         "CHECKLIST": "Controlelijst",
         "INVOLVED_PEOPLE": "Betrokken personen",
         "ADD_PEOPLE": "Personen en groepen toevoegen",
-        "ADD_ASSIGNEE": "Nieuwe uitvoerder toevoegen"
+        "ADD_ASSIGNEE": "Nieuwe toegewezen persoon toevoegen"
       },
       "BUTTON": {
         "COMPLETE": "Voltooid",
         "CLAIM": "Claimen",
         "UNCLAIM": "Opnieuw in wachtrij plaatsen",
-        "DRAG-ATTACHMENT": "Bestanden hier neerzetten...",
+        "DRAG-ATTACHMENT": "Bestanden neerzetten om te uploaden",
         "UPLOAD-ATTACHMENT": "Bijlage uploaden"
       },
       "MESSAGES": {
         "NONE": "Geen taakdetails gevonden",
-        "CLAIM": "Klik op Claimen om aan deze taak te werken."
+        "CLAIM": "Klik op Claimen om aan deze taak te werken"
       },
       "FORM": {
-        "NONE": "Geen formulier."
+        "NONE": "Geen formulier"
       },
       "DUE": {
-        "NONE": "Geen einddatum."
+        "NONE": "Geen vervaldatum"
       },
       "ASSIGNEE": {
-        "NONE": "Geen uitvoerder."
+        "NONE": "Geen toegewezen persoon"
       },
       "PEOPLE": {
-        "NONE": "Niemand betrokken."
+        "NONE": "Niemand betrokken"
       },
       "COMMENTS": {
         "NONE": "Geen opmerkingen",
-        "ADD": "Een opmerking toevoegen",
-        "HEADER": "Opmerkingen",
+        "ADD": "Opmerking toevoegen",
+        "HEADER": "Opmerkingen ({{ count }})",
+        "CREATED_BY_HEADER": "Gemaakt door",
+        "MESSAGE_HEADER": "Bericht",
         "DIALOG": {
           "TITLE": "Nieuwe opmerking",
           "LABELS": {
@@ -81,13 +115,13 @@
     },
     "FILTERS": {
       "MESSAGES": {
-        "NONE": "Geen taakfilter geselecteerd."
+        "NONE": "Geen taakfilter geselecteerd"
       }
     },
     "START_TASK": {
-      "BUTTON": "TAAK MAKEN",
+      "BUTTON": "Taak maken",
       "FORM": {
-        "TITLE": "Begintaak",
+        "TITLE": "Taak starten",
         "LABEL": {
           "NONE": "Geen",
           "NAME": "Naam",
@@ -107,9 +141,9 @@
       }
     },
     "PEOPLE": {
-      "DIALOG_CLOSE": "SLUITEN",
-      "ADD_USER": "TOEVOEGEN",
-      "ADD_ASSIGNEE": "TOEWIJZEN",
+      "DIALOG_CLOSE": "Sluiten",
+      "ADD_USER": "Toevoegen",
+      "ADD_ASSIGNEE": "Toewijzen",
       "SEARCH_USER": "Gebruiker zoeken",
       "SEARCH": {
         "NO_USERS": "Niemand gevonden om te betrekken"
@@ -132,12 +166,36 @@
     "LIST": {
       "NONE": "Geen procesinstances gevonden",
       "SUMMARY": "{{total}} procesinstances gevonden",
-      "ERROR": "Kan procesinstances niet laden. Probeer het opnieuw of deel het volgende bericht met het IT-team: {{errorMessage}}"
+      "ERROR": "Kan procesinstances niet laden. Probeer het opnieuw of geef het volgende bericht door aan het IT-team: {{errorMessage}}"
     },
     "FILTERS": {
       "MESSAGES": {
         "NONE": "Geen procesinstancefilter geselecteerd."
       }
+    },
+    "PROPERTIES": {
+      "PROCESS_NAME": "Proces",
+      "NAME": "Naam",
+      "STATUS": "Status",
+      "DUE_DATE": "Vervaldatum",
+      "DUE_DATE_DEFAULT": "Geen vervaldatum",
+      "CATEGORY": "Categorie",
+      "CATEGORY_DEFAULT": "Geen categorie",
+      "CREATED_BY": "Gemaakt door",
+      "CREATED_BY_DEFAULT": "Geen toegewezen persoon",
+      "CREATED": "Gemaakt",
+      "BUSINESS_KEY": "Business key",
+      "BUSINESS_KEY_DEFAULT": "Geen",
+      "DESCRIPTION": "Beschrijving",
+      "DESCRIPTION_DEFAULT": "Geen beschrijving",
+      "ID": "Id"
+    },
+    "MENU_ACTIONS": {
+      "VIEW_CONTENT": "Weergeven",
+      "REMOVE_CONTENT": "Verwijderen",
+      "DOWNLOAD_CONTENT": "Downloaden",
+      "DOWNLOAD_AUDIT": "Audit downloaden",
+      "VIEW_TASK": "Taak weergeven"
     },
     "DETAILS": {
       "LABELS": {
@@ -148,7 +206,7 @@
         "START_FORM": "Beginformulier",
         "TASKS_ACTIVE": "Actieve taken",
         "TASKS_COMPLETED": "Voltooide taken",
-        "TASK_SUBTITLE": "Toegewezen aan {{user}}, gemaakt op {{created}}"
+        "TASK_SUBTITLE": "Toegewezen aan {{user}}, gemaakt {{created}}"
       },
       "BUTTON": {
         "CANCEL": "Proces annuleren",
@@ -158,7 +216,7 @@
         "UPLOAD-ATTACHMENT": "Bijlage uploaden"
       },
       "MESSAGES": {
-        "NONE": "Geen procesdetails gevonden."
+        "NONE": "Geen procesdetails gevonden"
       },
       "TASKS": {
         "NO_ACTIVE": "Geen momenteel actieve taken",
@@ -167,9 +225,11 @@
         "TASK_CLOSE": "Sluiten"
       },
       "COMMENTS": {
+        "ADD": "Opmerking toevoegen",
+        "HEADER": "Opmerkingen ({{ count }})",
         "NONE": "Geen opmerkingen",
         "BUTTON": {
-          "ADD": "Een opmerking toevoegen"
+          "ADD": "Opmerking toevoegen"
         },
         "ADD_DIALOG": {
           "TITLE": "Nieuwe opmerking",
@@ -194,7 +254,7 @@
         "TITLE": "Procesvariabele bewerken"
       },
       "ERROR_DIALOG": {
-        "TITLE": "Kan die actie niet voltooien",
+        "TITLE": "Kan de actie niet voltooien",
         "DESCRIPTION": "U beschikt mogelijk niet over het vereiste toegangsniveau, neem contact op met het IT-team."
       }
     },
@@ -204,17 +264,17 @@
       "FORM": {
         "TITLE": "Proces starten",
         "LABEL": {
-          "TYPE": "Type",
-          "NAME": "Naam"
+          "TYPE": "Proces selecteren",
+          "NAME": "Procesnaam"
         },
         "TYPE_PLACEHOLDER": "Maak een keuze...",
         "ACTION": {
-          "START": "Start",
+          "START": "Proces starten",
           "CANCEL": "Annuleren"
         }
       },
       "ERROR": {
-        "LOAD_PROCESS_DEFS": "Kan procesdefinities niet laden, controleer of u over toegang beschikt",
+        "LOAD_PROCESS_DEFS": "Kan procesdefinities niet laden, controleer of u over toegang beschikt.",
         "START": "Kan geen nieuwe procesinstance starten, controleer of u over toegang beschikt."
       }
     },
@@ -222,12 +282,16 @@
       "EMPTY": {
         "HEADER": "Deze lijst is leeg",
         "DRAG-AND-DROP": {
-          "TITLE": "Slepen en neerzetten om bestanden te uploaden",
+          "TITLE": "Slepen en neerzetten",
           "SUBTITLE": "om bestanden te uploaden"
         }
       },
       "EMPTY-LIST": {
         "HEADER": "Er zijn geen bestanden beschikbaar"
+      },
+      "COLUMNS": {
+        "NAME": "Naam",
+        "CREATED-ON": "Gemaakt op"
       }
     }
   }

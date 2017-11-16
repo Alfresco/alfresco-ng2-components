@@ -1,8 +1,8 @@
 {
   "ANALYTICS": {
-    "TITLE": "ANÁLISE",
+    "TITLE": "Análise",
     "MESSAGES": {
-      "UNKNOWN-WIDGET-TYPE": "TIPO DE WIDGET DESCONHECIDO",
+      "UNKNOWN-WIDGET-TYPE": "Tipo de widget desconhecido",
       "FILL-PARAMETER": "Escolha nas opções de relatório",
       "NO-DATA-FOUND": "Nenhum dado encontrado",
       "ZERO-DATA-FOUND": "Há somente valores zero",

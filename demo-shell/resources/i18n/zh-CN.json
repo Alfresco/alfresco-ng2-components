@@ -1,6 +1,36 @@
 {
   "title": "欢迎使用",
+  "VERSION": {
+    "NO_PERMISSION": "您没有管理此内容版本的权限",
+    "NO_PERMISSION_EVENT": "您没有${event.action}${event.type}的${event.permission}权限",
+    "CHOOSE_FILE": "选择一个文件，查看其版本"
+  },
+  "APP_LAYOUT": {
+    "APP_NAME": "ADF 演示应用程序",
+    "HOME": "主页",
+    "CONTENT_SERVICES": "Content Services",
+    "PROCESS_SERVICES": "Process Services",
+    "LOGIN": "登录",
+    "CUSTOM_SOURCES": "自定义来源",
+    "DATATABLE": "Datatable",
+    "FORM": "表单",
+    "FORM_LIST": "表单列表",
+    "UPLOADER": "上传程序",
+    "WEBSCRIPT": "Webscript",
+    "TAG": "标签",
+    "SOCIAL": "社交",
+    "SETTINGS": "设置",
+    "ABOUT": "关于"
+  },
   "DOCUMENT_LIST": {
+    "MULTISELECT_CHECKBOXES": "多选（含复选框）",
+    "MULTIPLE_FILE_UPLOAD": "上传多个文件",
+    "FOLDER_UPLOAD": "文件夹上传",
+    "CUSTOM_FILTER": "自定义扩展过滤器",
+    "MAX_SIZE": "最大大小过滤器",
+    "ENABLE_VERSIONING": "启用版本控制",
+    "DESCRIPTION_UPLOAD": "启用上传",
+    "MULTISELECT_DESCRIPTION": "使用 Cmd (Mac) 或 Ctrl (Windows) 切换多个项目的选择",
     "COLUMNS": {
       "DISPLAY_NAME": "显示名称",
       "TAG": "标签",
@@ -22,6 +52,15 @@
       }
     }
   },
+  "DATATABLE": {
+    "RESET_DEFAULT": "重设为默认值",
+    "ADD_ROW": "新增行",
+    "REPLACE_ROWS": "替换行",
+    "REPLACE_COLUMNS": "替换列",
+    "LOAD_NODE": "加载节点",
+    "MULTISELECT": "多选",
+    "MULTISELECT_DESCRIPTION": "使用 Cmd (Mac) 或 Ctrl (Windows) 切换多个项目的选择"
+  },
   "ANALYTICS_REPORT": {
     "NO_REPORT_MESSAGE": "未选择报告，请从列表中选择报告"
   },
@@ -36,5 +75,22 @@
   "FORM-LIST": {
     "STORE": "存储",
     "RESTORE": "恢复"
+  },
+  "LOGIN": {
+    "CONTENT_SERVICES": "Content Services",
+    "PROCESS_SERVICES": "Process Services",
+    "LOGIN_FOOTER": "登录页脚"
+  },
+  "SEARCH": {
+    "RESULTS": "搜索结果"
+  },
+  "SOCIAL": {
+    "LIKE": "点赞组件",
+    "RATING": "评分组件"
+  },
+  "TAG": {
+    "LIST": "列表标签 Content Services",
+    "INSERT": "插入节点 ID",
+    "NODE_LIST": "标签列表（按节点 ID 排序）"
   }
 }

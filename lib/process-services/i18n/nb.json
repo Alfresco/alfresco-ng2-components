@@ -13,52 +13,86 @@
   },
   "ADF_TASK_LIST": {
     "APPS": {
-      "NONE": "Ingen apper funnet"
+      "NONE": "Ingen apper funnet",
+      "TASK_APP_NAME": "Oppgaveapp"
     },
     "LIST": {
       "MESSAGES": {
-        "NONE": "Ingen oppgaveliste funnet"
+        "NONE": "Ingen oppgavelister funnet"
       }
+    },
+    "PROPERTIES": {
+      "TASK_NAME": "Oppgave",
+      "THUMBNAIL": "Miniatyrbilde",
+      "NAME": "Navn",
+      "ASSIGNEE": "Tilordnet",
+      "ASSIGNEE_DEFAULT": "Ingen tilordnet",
+      "PRIORITY": "Prioritet",
+      "DUE_DATE": "Forfallsdato",
+      "DUE_DATE_DEFAULT": "Ingen fristdato",
+      "STATUS": "Status",
+      "CATEGORY": "Kategori",
+      "CATEGORY_DEFAULT": "Ingen kategori",
+      "PARENT_NAME": "Navn på overordnet",
+      "PARENT_NAME_DEFAULT": "Ingen overordnet",
+      "CREATED_BY": "Opprettet av",
+      "CREATED": "Opprettet",
+      "ID": "ID",
+      "DESCRIPTION": "Beskrivelse",
+      "DESCRIPTION_DEFAULT": "Ingen beskrivelse",
+      "FORM_NAME": "Skjemaets navn",
+      "FORM_NAME_DEFAULT": "Ikke noe skjema"
+    },
+    "MENU_ACTIONS": {
+      "VIEW_CONTENT": "Vis",
+      "REMOVE_CONTENT": "Fjern",
+      "DOWNLOAD_CONTENT": "Last ned",
+      "DOWNLOAD_AUDIT": "Last ned revisjon"
     },
     "DETAILS": {
       "LABELS": {
+        "INFO_DRAWER_TITLE": "Aktiviteter",
+        "INFO_DRAWER_TAB_ACTIVITY_TITLE": "Aktivitet",
+        "INFO_DRAWER_TAB_DETAILS_TITLE": "Detaljer",
         "ASSIGNEE": "Tilordnet",
         "DUE": "Forfaller",
         "FORM": "Skjema",
-        "PEOPLE": "Folk som denne oppgaven deles med",
+        "PEOPLE": "Personer som denne oppgavene er delt med",
         "COMMENTS": "Kommentarer",
         "CHECKLIST": "Sjekkliste",
-        "INVOLVED_PEOPLE": "Folk involvert",
-        "ADD_PEOPLE": "Legg til folk og grupper",
+        "INVOLVED_PEOPLE": "Personer involvert",
+        "ADD_PEOPLE": "Legg til personer og grupper",
         "ADD_ASSIGNEE": "Legg til ny tilordnet"
       },
       "BUTTON": {
         "COMPLETE": "Fullfør",
         "CLAIM": "Krev",
         "UNCLAIM": "Legg tilbake i kø",
-        "DRAG-ATTACHMENT": "Slipp filer her...",
+        "DRAG-ATTACHMENT": "Slipp filer for å laste opp",
         "UPLOAD-ATTACHMENT": "Last opp vedlegg"
       },
       "MESSAGES": {
         "NONE": "Ingen oppgavedetaljer funnet",
-        "CLAIM": "Klikk på Krev for å jobbe med denne oppgaven."
+        "CLAIM": "Klikk på Krav for å jobbe med denne oppgaven"
       },
       "FORM": {
-        "NONE": "Ingen skjema."
+        "NONE": "Ikke noe skjema"
       },
       "DUE": {
-        "NONE": "Ingen forfallsdato."
+        "NONE": "Ingen forfallsdato"
       },
       "ASSIGNEE": {
-        "NONE": "Ingen tilordnet."
+        "NONE": "Ingen tilordnet"
       },
       "PEOPLE": {
-        "NONE": "Ingen involvert."
+        "NONE": "Ingen involvert"
       },
       "COMMENTS": {
         "NONE": "Ingen kommentarer",
-        "ADD": "Legg til en kommentar",
-        "HEADER": "Kommentarer",
+        "ADD": "Legg til kommentar",
+        "HEADER": "Kommentarer ({{ count }})",
+        "CREATED_BY_HEADER": "Opprettet av",
+        "MESSAGE_HEADER": "Melding",
         "DIALOG": {
           "TITLE": "Nytt kommentar",
           "LABELS": {
@@ -75,17 +109,17 @@
       },
       "ERROR": {
         "TITLE": "Kan ikke fullføre handlingen",
-        "DESCRIPTION": "Prøve på nytt, eller kontroller at du har tilgang.",
+        "DESCRIPTION": "Prøv igjen, eller kontroller om du har tilgang.",
         "CLOSE": "Lukk"
       }
     },
     "FILTERS": {
       "MESSAGES": {
-        "NONE": "Ingen oppgavefilter valgt."
+        "NONE": "Ingen oppgavefilter valgt"
       }
     },
     "START_TASK": {
-      "BUTTON": "OPPRETT OPPGAVE",
+      "BUTTON": "Opprett oppgave",
       "FORM": {
         "TITLE": "Start oppgave",
         "LABEL": {
@@ -102,14 +136,14 @@
           "CANCEL": "Avbryt"
         },
         "DATE": {
-          "ERROR": "Datoformat DD/MM/ÅÅÅÅ"
+          "ERROR": "Datoformat dd/mm/åååå"
         }
       }
     },
     "PEOPLE": {
-      "DIALOG_CLOSE": "LUKK",
-      "ADD_USER": "LEGG TIL",
-      "ADD_ASSIGNEE": "TILORDNE",
+      "DIALOG_CLOSE": "Lukk",
+      "ADD_USER": "Legg til",
+      "ADD_ASSIGNEE": "Tilordne",
       "SEARCH_USER": "Søk etter bruker",
       "SEARCH": {
         "NO_USERS": "Ingen funnet å involvere"
@@ -132,12 +166,36 @@
     "LIST": {
       "NONE": "Ingen prosesstilfeller funnet",
       "SUMMARY": "{{total}} prosesstilfeller funnet",
-      "ERROR": "Kan ikke laste inn prosesstilfeller. Prøv på nytt, eller del følgende melding med IT-teamet {{errorMessage}}"
+      "ERROR": "Kan ikke laste inn prosesstilfeller. Prøv igjen, eller del følgende melding med IT-teamet: {{errorMessage}}"
     },
     "FILTERS": {
       "MESSAGES": {
         "NONE": "Ingen prosesstilfellefilter valgt."
       }
+    },
+    "PROPERTIES": {
+      "PROCESS_NAME": "Prosess",
+      "NAME": "Navn",
+      "STATUS": "Status",
+      "DUE_DATE": "Forfallsdato",
+      "DUE_DATE_DEFAULT": "Ingen fristdato",
+      "CATEGORY": "Kategori",
+      "CATEGORY_DEFAULT": "Ingen kategori",
+      "CREATED_BY": "Opprettet av",
+      "CREATED_BY_DEFAULT": "Ingen tilordnet",
+      "CREATED": "Opprettet",
+      "BUSINESS_KEY": "Forretningsnøkkel",
+      "BUSINESS_KEY_DEFAULT": "Ingen",
+      "DESCRIPTION": "Beskrivelse",
+      "DESCRIPTION_DEFAULT": "Ingen beskrivelse",
+      "ID": "ID"
+    },
+    "MENU_ACTIONS": {
+      "VIEW_CONTENT": "Vis",
+      "REMOVE_CONTENT": "Fjern",
+      "DOWNLOAD_CONTENT": "Last ned",
+      "DOWNLOAD_AUDIT": "Last ned revisjon",
+      "VIEW_TASK": "Vis oppgave"
     },
     "DETAILS": {
       "LABELS": {
@@ -148,7 +206,7 @@
         "START_FORM": "Start skjema",
         "TASKS_ACTIVE": "Aktive oppgaver",
         "TASKS_COMPLETED": "Fullførte oppgaver",
-        "TASK_SUBTITLE": "Tilordet {{user}}, opprettet {{created}}"
+        "TASK_SUBTITLE": "Tilordnet til {{user}}, opprettet {{created}}"
       },
       "BUTTON": {
         "CANCEL": "Avbryt prosess",
@@ -158,18 +216,20 @@
         "UPLOAD-ATTACHMENT": "Last opp vedlegg"
       },
       "MESSAGES": {
-        "NONE": "Ingen prosessdetaljer funnet."
+        "NONE": "Ingen prosessdetaljer funnet"
       },
       "TASKS": {
-        "NO_ACTIVE": "Ingen aktive oppgaver i øyeblikket",
-        "NO_COMPLETED": "Ingen oppgaver fullført ennå",
+        "NO_ACTIVE": "Ingen oppgaver aktive i øyeblikket",
+        "NO_COMPLETED": "Ingen oppgaver ennå fullført",
         "TASK_DETAILS": "Detaljer for oppgave",
         "TASK_CLOSE": "Lukk"
       },
       "COMMENTS": {
+        "ADD": "Legg til kommentar",
+        "HEADER": "Kommentarer ({{ count }})",
         "NONE": "Ingen kommentarer",
         "BUTTON": {
-          "ADD": "Legg til en kommentar"
+          "ADD": "Legg til kommentar"
         },
         "ADD_DIALOG": {
           "TITLE": "Nytt kommentar",
@@ -183,7 +243,7 @@
         }
       },
       "ADD_DIALOG": {
-        "TITLE": "Still inn prosessvariabel",
+        "TITLE": "Angi prosessvariabel",
         "LABEL": {
           "NAME": "Navn",
           "VALUE": "Verdi",
@@ -191,11 +251,11 @@
         }
       },
       "EDIT_DIALOG": {
-        "TITLE": "Rediger prosessvariabel"
+        "TITLE": "Rediger prosessvariabel'"
       },
       "ERROR_DIALOG": {
-        "TITLE": "Kan ikke fullføre den handlingen",
-        "DESCRIPTION": "Du har kanskje ikke det påkrevde tilgangsnivået, sjekk med IT-teamet."
+        "TITLE": "Kan ikke fullføre handlingen",
+        "DESCRIPTION": "Du har kanskje ikke det nødvendige tilgangsnivået, kontakt IT-teamet."
       }
     },
     "START_PROCESS": {
@@ -204,18 +264,18 @@
       "FORM": {
         "TITLE": "Start prosess",
         "LABEL": {
-          "TYPE": "Type",
-          "NAME": "Navn"
+          "TYPE": "Velg prosess",
+          "NAME": "Prosessnavn"
         },
         "TYPE_PLACEHOLDER": "Velg én...",
         "ACTION": {
-          "START": "Start",
+          "START": "Start prosess",
           "CANCEL": "Avbryt"
         }
       },
       "ERROR": {
-        "LOAD_PROCESS_DEFS": "Kan ikke laste inn prosessdefinisjoner, kontroller om du har tilgang.",
-        "START": "Kan ikke starte nytt prosesstilfelle, kontroller om du har tilgang."
+        "LOAD_PROCESS_DEFS": "Kan ikke laste prosessdefinisjoner, kontroller om du har tilgang.",
+        "START": "Kan ikke start nytt prosesstilfelle, kontroller om du har tilgang."
       }
     },
     "PROCESS-ATTACHMENT": {
@@ -228,6 +288,10 @@
       },
       "EMPTY-LIST": {
         "HEADER": "Ingen tilgjengelige filer"
+      },
+      "COLUMNS": {
+        "NAME": "Navn",
+        "CREATED-ON": "Opprettet"
       }
     }
   }

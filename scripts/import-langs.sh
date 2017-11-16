@@ -1,11 +1,31 @@
 #!/usr/bin/env bash
 
-if [ $# -eq 0 ]; then
-    echo "No arguments supplied. You must provide path for the translations"
-    exit;
-else
-    LANG_ROOT=${1%/}
-fi
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+LANG_ROOT="./i18n"
+
+show_help() {
+    echo "Usage: import-langs.sh import the i18n files from a folder"
+    echo ""
+    echo "--output or -o to specify a folder otherwise it will be created in i18n"
+}
+
+input_folder(){
+    if [ $1 -eq 0 ]; then
+        echo "No arguments supplied. Default path for output will be used ./i18n"
+    else
+        LANG_ROOT="$1"
+    fi
+}
+
+while [[ $1  == -* ]]; do
+    case "$1" in
+      -h|--help|-\?) show_help; exit 0;;
+      --input|-i)  input_folder $2; shift;;
+    esac
+done
+
+COMPONENTS_ROOT="$DIR/../"
 
 # Findn all JSON files
 FILES=(`find $LANG_ROOT -type f -name "*.json"`)
@@ -19,8 +39,8 @@ do :
     if [[ $FILE =~ /[A-Z0-0_-]+/(.+)$ ]] ; then
 
       DEST=${BASH_REMATCH[1]} # Will contain the full file path
-      echo "\tCopying $FILE to $DEST"
-      `cp $FILE $DEST`
+      echo "\tCopying $FILE to $COMPONENTS_ROOT/$DEST"
+      `cp $FILE $COMPONENTS_ROOT/$DEST`
     fi
     echo "\n"
 done

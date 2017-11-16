@@ -7,14 +7,26 @@
       "IMAGE_NOT_AVAILABLE": "Aperçu non disponible"
     },
     "FIELD": {
-      "REQUIRED": "*Obligatoire"
+      "UPLOAD": "Importer",
+      "REQUIRED": "*Obligatoire",
+      "VALIDATOR": {
+        "INVALID_NUMBER": "Utiliser un format de numéro différent",
+        "INVALID_DATE": "Utiliser un format de date différent",
+        "INVALID_VALUE": "Entrer une valeur différente",
+        "NOT_GREATER_THAN": "Ne peut pas être supérieur à {{ maxValue }}",
+        "NOT_LESS_THAN": "Ne peut pas être inférieur à {{ minValue }}",
+        "AT_LEAST_LONG": "Entrez {{ minLength }} caractères minimum",
+        "NO_LONGER_THAN": "Entrez {{ maxLength }} caractères maximum"
+      }
     }
   },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "Ce dossier est vide"
     },
+    "NO_PERMISSION": "Vous n'avez pas les droits d'accès pour consulter ce fichier ou dossier.",
     "LAYOUT": {
+      "CREATED": "Créé",
       "THUMBNAIL": "Miniature",
       "NAME": "Nom",
       "LOCATION": "Emplacement",
@@ -26,6 +38,11 @@
       "MODIFIED_BY": "Modifié par",
       "SHARED_BY": "Partagé par",
       "LOAD_MORE": "Charger plus"
+    },
+    "MENU_ACTIONS": {
+      "VIEW": "Afficher",
+      "REMOVE": "Supprimer",
+      "DOWNLOAD": "Télécharger"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {
@@ -38,7 +55,7 @@
   },
   "DROPDOWN": {
     "PLACEHOLDER_LABEL": "Liste des Sites",
-    "MY_FILES_OPTION": ""
+    "MY_FILES_OPTION": "Mes fichiers"
   },
   "NODE_SELECTOR": {
     "CANCEL": "Annuler",
@@ -111,11 +128,15 @@
       "FOLDER_ALREADY_EXIST": "Le dossier {0} existe déjà",
       "FOLDER_NOT_SUPPORTED": "Votre navigateur ne prend pas en charge l'importation de dossiers, réessayez avec un autre navigateur",
       "REMOVE_FILE_ERROR": "{{ fileName }} n'a pas pu être supprimé ; réessayez ou contactez le service informatique.",
-      "REMOVE_FILES_ERROR": "{{ total }} fichiers n'ont pas pu être supprimés ; réessayez ou contactez le service informatique."
+      "REMOVE_FILES_ERROR": "{{ total }} fichiers n'ont pas pu être supprimés ; réessayez ou contactez le service informatique.",
+      "EXCEED_MAX_FILE_SIZE": "La taille du fichier {{ fileName }} est supérieure à la taille maximum autorisée"
     },
     "ACTION": {
       "UNDO": "Annuler"
     }
+  },
+  "WEBSCRIPT": {
+    "ERROR": "Impossible de terminer l'action. Transférez le message suivant au service informatique : erreur pendant la désérialisation de {{data}} en tant que {{contentType}}"
   },
   "SEARCH": {
     "CONTROL": {},

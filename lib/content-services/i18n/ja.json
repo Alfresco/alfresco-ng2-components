@@ -7,14 +7,26 @@
       "IMAGE_NOT_AVAILABLE": "プレビューは使用できません"
     },
     "FIELD": {
-      "REQUIRED": "*必須"
+      "UPLOAD": "アップロード",
+      "REQUIRED": "*必須",
+      "VALIDATOR": {
+        "INVALID_NUMBER": "別の番号形式を使用してください",
+        "INVALID_DATE": "別の日付形式を使用してください",
+        "INVALID_VALUE": "別の値を入力してください",
+        "NOT_GREATER_THAN": "{{ maxValue }} より大きい値にすることはできません",
+        "NOT_LESS_THAN": "{{ minValue }} より小さい値にすることはできません",
+        "AT_LEAST_LONG": "{{ minLength }} 文字以上で入力してください",
+        "NO_LONGER_THAN": "{{ maxLength }} 文字以内で入力してください"
+      }
     }
   },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "このフォルダは空です"
     },
+    "NO_PERMISSION": "このファイルまたはフォルダを表示する権限がありません.",
     "LAYOUT": {
+      "CREATED": "作成日",
       "THUMBNAIL": "サムネイル",
       "NAME": "名前",
       "LOCATION": "場所",
@@ -26,6 +38,11 @@
       "MODIFIED_BY": "変更者",
       "SHARED_BY": "共有者",
       "LOAD_MORE": "もっと見る"
+    },
+    "MENU_ACTIONS": {
+      "VIEW": "表示",
+      "REMOVE": "削除",
+      "DOWNLOAD": "ダウンロード"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {
@@ -38,7 +55,7 @@
   },
   "DROPDOWN": {
     "PLACEHOLDER_LABEL": "サイトリスト",
-    "MY_FILES_OPTION": ""
+    "MY_FILES_OPTION": "あなたのファイル"
   },
   "NODE_SELECTOR": {
     "CANCEL": "キャンセル",
@@ -57,9 +74,9 @@
       }
     },
     "ERROR": {
-      "CONFLICT": "この名前は既に使用されています。別の名前を使用してください。",
-      "UNKNOWN": "処理が失敗しました。もう一度操作をやり直すか、IT 担当者に連絡してください。",
-      "PERMISSION": "この処理を行うための権限がありません。"
+      "CONFLICT": "この名前は既に使用されています。別の名前を使用してください.",
+      "UNKNOWN": "処理が失敗しました。もう一度操作をやり直すか、IT 担当者に連絡してください.",
+      "PERMISSION": "この処理を行うための権限がありません."
     }
   },
   "TAG": {
@@ -92,7 +109,7 @@
       },
       "MESSAGE": {
         "TITLE": "アップロードのキャンセル",
-        "TEXT": "アップロードを中止し、アップロード済みのファイルを削除します。"
+        "TEXT": "アップロードを中止し、アップロード済みのファイルを削除します."
       }
     }
   },
@@ -109,20 +126,24 @@
       "UPLOAD_ERRORS": "{{ total }} 個をアップロードできませんでした",
       "PROGRESS": "アップロードしています...",
       "FOLDER_ALREADY_EXIST": "フォルダ ''{0}'' は既に存在します",
-      "FOLDER_NOT_SUPPORTED": "お使いのブラウザではフォルダをアップロードできません。別のブラウザを使用してください。",
-      "REMOVE_FILE_ERROR": "{{ fileName }} を削除できませんでした。もう一度操作をやり直すか、IT 担当者に確認してください。",
-      "REMOVE_FILES_ERROR": "{{ total }} 個のファイルを削除できませんでした。もう一度操作をやり直すか、IT 担当者に確認してください。"
+      "FOLDER_NOT_SUPPORTED": "お使いのブラウザではフォルダをアップロードできません。別のブラウザを使用してください",
+      "REMOVE_FILE_ERROR": "{{ fileName }} を削除できませんでした。もう一度操作をやり直すか、IT 担当者に確認してください.",
+      "REMOVE_FILES_ERROR": "{{ total }} 個のファイルを削除できませんでした。もう一度操作をやり直すか、IT 担当者に確認してください.",
+      "EXCEED_MAX_FILE_SIZE": "ファイル {{ fileName }} は最大許容サイズを超えています"
     },
     "ACTION": {
       "UNDO": "元に戻す"
     }
+  },
+  "WEBSCRIPT": {
+    "ERROR": "処理を完了できませんでした。次のメッセージを IT 担当者に伝えてください: {{data}} を {{contentType}} としてシリアル化解除中にエラーが発生しました"
   },
   "SEARCH": {
     "CONTROL": {},
     "RESULTS": {
       "SUMMARY": "{{searchTerm}} の検索結果は {{numResults}} 件です",
       "NONE": "{{searchTerm}} の検索結果は 0 件です",
-      "ERROR": "検索中に問題が発生しました。操作をやり直してください。",
+      "ERROR": "検索中に問題が発生しました。操作をやり直してください.",
       "COLUMNS": {
         "NAME": "表示名",
         "MODIFIED_BY": "変更者",
@@ -160,6 +181,6 @@
     }
   },
   "PERMISSON": {
-    "LACKOF": "{{type}} を {{action}} するための {{permission}} 権限がありません。"
+    "LACKOF": "{{type}} を {{action}} するための {{permission}} 権限がありません"
   }
 }

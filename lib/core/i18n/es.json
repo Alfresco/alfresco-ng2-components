@@ -6,6 +6,14 @@
       "CURRENT_PAGE": "Página {{ number }}",
       "TOTAL_PAGES": "de {{ total }}"
     },
+    "DIALOG": {
+      "DOWNLOAD_ZIP": {
+        "ACTIONS": {
+          "CANCEL": "Cancelar"
+        },
+        "TITLE": "Añadiendo ficheros al zip; esto puede tardar unos minutos"
+      }
+    },
     "FOLDER_DIALOG": {
       "CREATE_FOLDER_TITLE": "Crear nueva carpeta",
       "EDIT_FOLDER_TITLE": "Editar carpeta",
@@ -37,12 +45,32 @@
         "EXISTENT_FOLDER": "Ya existe una carpeta con este nombre. Pruebe un nombre diferente."
       }
     },
+    "RESTORE_NODE": {
+      "VIEW": "Ver",
+      "PARTIAL_PLURAL": "{{ number }} elementos no se han restaurado debido a problemas con la ubicación de restauración",
+      "NODE_EXISTS": "Error en la restauración, el elemento {{ name }} ya existe",
+      "LOCATION_MISSING": "No se ha podido restaurar el elemento {{ name }}, la ubicación original ya no existe",
+      "GENERIC": "Error al restaurar el elemento {{ name }}",
+      "PLURAL": "Restauración satisfactoria",
+      "SINGULAR": "Elemento {{ name }} restaurado"
+    },
+    "DELETE_NODE": {
+      "SINGULAR": "{{ name }} eliminado",
+      "PLURAL": "{{ number }} elementos eliminados",
+      "PARTIAL_SINGULAR": "Se ha eliminado el elemento {{ success }}, {{ failed }} no se ha podido eliminar",
+      "PARTIAL_PLURAL": "Se han eliminado {{ success }} elementos, {{ failed }} no se han podido eliminar",
+      "ERROR_SINGULAR": "{{ name }} no se ha podido eliminar",
+      "ERROR_PLURAL": "{{ number }} elementos no se han podido eliminar"
+    },
     "HOST_SETTINGS": {
+      "CS_URL_ERROR": "La dirección de Content Services no coincide con el formato de la URL",
+      "PS_URL_ERROR": "La dirección de Process Services no coincide con el formato de la URL",
       "TITLE": "Configuración",
-      "CS-HOST": "Configuración de URL de host de Content Services",
-      "BP-HOST": "Configuración de URL de host de Process Services",
+      "CS-HOST": "URL de Content Services",
+      "BP-HOST": "URL de Process Services",
       "BACK": "Volver",
-      "APPLY": "APLICAR"
+      "APPLY": "Aplicar",
+      "NOT_VALID": "http(s)://host|ip:port(/path) no reconocido; pruebe con una URL diferente."
     }
   },
   "LOGIN": {
@@ -59,27 +87,26 @@
       "PASSWORD-REQUIRED": "Introduzca su contraseña para iniciar sesión",
       "LOGIN-ERROR-CREDENTIALS": "Ha introducido un nombre de usuario o contraseña desconocidos",
       "LOGIN-ERROR-PROVIDERS": "Los proveedores no pueden estar no definidos",
-      "LOGIN-SUCCESS": "Inicio de sesión satisfactorio",
       "LOGIN-ERROR-CORS": "Excepción CORS, compruebe la configuración del servidor",
       "LOGIN-ERROR-CSRF": "Excepción CSRF, configure [disableCsrf]=\"true\" en login.component",
       "LOGIN-ECM-LICENSE": "El respositorio de Alfresco Content Services está en modo solo lectura"
     },
     "BUTTON": {
       "LOGIN": "Iniciar sesión",
-      "CHECKING": "COMPROBANDO",
-      "WELCOME": "BIENVENIDA"
+      "CHECKING": "Comprobando",
+      "WELCOME": "Bienvenido"
     },
     "ACTION": {
-      "HELP": "¿NECESITA AYUDA?",
-      "REGISTER": "REGISTRARSE"
+      "HELP": "¿Necesita ayuda?",
+      "REGISTER": "Registrarse"
     }
   },
   "ADF-DATATABLE": {
     "EMPTY": {
       "HEADER": "Esta lista está vacía",
       "DRAG-AND-DROP": {
-        "TITLE": "Arrastrar y soltar para cargar ficheros",
-        "SUBTITLE": ""
+        "TITLE": "Arrastrar y soltar",
+        "SUBTITLE": "para cargar ficheros"
       }
     }
   },
@@ -91,6 +118,34 @@
       "BPM": {
         "TENANT": "Inquilino"
       }
+    },
+    "TAB": {
+      "CS": "Content Services",
+      "PS": "Process Services"
     }
+  },
+  "ADF_VIEWER": {
+    "ACTIONS": {
+      "BACK": "Volver",
+      "OPEN_WITH": "Abrir con",
+      "DOWNLOAD": "Descargar",
+      "PRINT": "Imprimir",
+      "SHARE": "Compartir",
+      "MORE_ACTIONS": "Más acciones",
+      "INFO": "Información"
+    },
+    "ARIA": {
+      "PREVIOUS_PAGE": "Página anterior",
+      "NEXT_PAGE": "Página siguiente",
+      "ZOOM_IN": "Acercar",
+      "ZOOM_OUT": "Alejar",
+      "FIT_PAGE": "Ajustar página"
+    },
+    "PAGE_LABEL": {
+      "SHOWING": "Mostrando",
+      "OF": "de"
+    },
+    "LOADING": "Cargando",
+    "UNKNOWN_FORMAT": "No se ha podido cargar la vista previa"
   }
 }

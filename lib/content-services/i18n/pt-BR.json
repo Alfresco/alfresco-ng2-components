@@ -7,14 +7,26 @@
       "IMAGE_NOT_AVAILABLE": "Pré-visualização não disponível"
     },
     "FIELD": {
-      "REQUIRED": "*Obrigatório"
+      "UPLOAD": "Carregar",
+      "REQUIRED": "*Obrigatório",
+      "VALIDATOR": {
+        "INVALID_NUMBER": "Use um formato de número diferente",
+        "INVALID_DATE": "Use um formato de data diferente",
+        "INVALID_VALUE": "Insira um valor diferente",
+        "NOT_GREATER_THAN": "Não pode ser maior do que {{ maxValue }}",
+        "NOT_LESS_THAN": "Não pode ser menor do que {{ minValue }}",
+        "AT_LEAST_LONG": "Insira no mínimo {{ minLength }} caracteres",
+        "NO_LONGER_THAN": "Insira no máximo {{ maxLength }} caracteres"
+      }
     }
   },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "Esta pasta está vazia"
     },
+    "NO_PERMISSION": "Você não tem permissão para visualizar este arquivo ou pasta.",
     "LAYOUT": {
+      "CREATED": "Criado",
       "THUMBNAIL": "Miniatura",
       "NAME": "Nome",
       "LOCATION": "Localização",
@@ -26,6 +38,11 @@
       "MODIFIED_BY": "Modificado por",
       "SHARED_BY": "Compartilhado por",
       "LOAD_MORE": "Carregar mais"
+    },
+    "MENU_ACTIONS": {
+      "VIEW": "Visualizar",
+      "REMOVE": "Remover",
+      "DOWNLOAD": "Download"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {
@@ -38,7 +55,7 @@
   },
   "DROPDOWN": {
     "PLACEHOLDER_LABEL": "Lista do Site",
-    "MY_FILES_OPTION": ""
+    "MY_FILES_OPTION": "Meus arquivos"
   },
   "NODE_SELECTOR": {
     "CANCEL": "Cancelar",
@@ -111,11 +128,15 @@
       "FOLDER_ALREADY_EXIST": "A pasta {0} já existe",
       "FOLDER_NOT_SUPPORTED": "Seu navegador não dá suporte ao carregamento da pasta, tente em outro navegador",
       "REMOVE_FILE_ERROR": "Não foi possível remover {{ fileName }}, tente novamente ou consulte a Equipe de TI.",
-      "REMOVE_FILES_ERROR": "Não foi possível remover {{ total }} arquivos, tente novamente ou consulte a Equipe de TI."
+      "REMOVE_FILES_ERROR": "Não foi possível remover {{ total }} arquivos, tente novamente ou consulte a Equipe de TI.",
+      "EXCEED_MAX_FILE_SIZE": "O arquivo {{ fileName }} é maior do que o tamanho permitido"
     },
     "ACTION": {
       "UNDO": "Desfazer"
     }
+  },
+  "WEBSCRIPT": {
+    "ERROR": "Não foi possível concluir a ação. Compartilhe esta mensagem com a Equipe de TI: Erro durante a desserialização de {{data}} como {{contentType}}"
   },
   "SEARCH": {
     "CONTROL": {},

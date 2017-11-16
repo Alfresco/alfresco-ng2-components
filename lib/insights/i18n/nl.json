@@ -1,8 +1,8 @@
 {
   "ANALYTICS": {
-    "TITLE": "ANALYTICS",
+    "TITLE": "Analytics",
     "MESSAGES": {
-      "UNKNOWN-WIDGET-TYPE": "ONBEKEND WIDGETTYPE",
+      "UNKNOWN-WIDGET-TYPE": "Onbekend widgettype",
       "FILL-PARAMETER": "Maak een keuze uit de rapportopties",
       "NO-DATA-FOUND": "Geen gegevens gevonden",
       "ZERO-DATA-FOUND": "Er zijn alleen nulwaarden",
@@ -30,7 +30,7 @@
       "PROCESS-INSTANCES-OVERVIEW": {
         "PROCESS-DEFINITION": "Procesdefinitie",
         "DATE-RANGE": "Datumbereik",
-        "SLOW-PROC-INST-NUMBER": "Hoeveel langzaamste procesinstanties moeten worden weergegeven?"
+        "SLOW-PROC-INST-NUMBER": "Hoeveel langzaamste procesinstances moeten worden weergegeven?"
       },
       "TASK-OVERVIEW": {
         "PROCESS-DEFINITION": "Procesdefinitie",

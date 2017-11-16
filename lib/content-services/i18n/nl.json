@@ -7,14 +7,26 @@
       "IMAGE_NOT_AVAILABLE": "Preview niet beschikbaar"
     },
     "FIELD": {
-      "REQUIRED": "*Verplicht"
+      "UPLOAD": "Uploaden",
+      "REQUIRED": "*Verplicht",
+      "VALIDATOR": {
+        "INVALID_NUMBER": "Gebruik een andere getalnotatie",
+        "INVALID_DATE": "Gebruik een andere datumnotatie",
+        "INVALID_VALUE": "Voer een andere waarde in",
+        "NOT_GREATER_THAN": "Mag niet groter zijn dan {{ maxValue }}",
+        "NOT_LESS_THAN": "Mag niet kleiner zijn dan {{ minValue }}",
+        "AT_LEAST_LONG": "Voer minimaal {{ minLength }} tekens in",
+        "NO_LONGER_THAN": "Voer maximaal {{ maxLength }} tekens in"
+      }
     }
   },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "Deze map is leeg"
     },
+    "NO_PERMISSION": "U hebt geen rechten voor het weergeven van dit bestand of deze map.",
     "LAYOUT": {
+      "CREATED": "Gemaakt",
       "THUMBNAIL": "Miniatuur",
       "NAME": "Naam",
       "LOCATION": "Locatie",
@@ -26,6 +38,11 @@
       "MODIFIED_BY": "Aangepast door",
       "SHARED_BY": "Gedeeld door",
       "LOAD_MORE": "Meer laden"
+    },
+    "MENU_ACTIONS": {
+      "VIEW": "Weergeven",
+      "REMOVE": "Verwijderen",
+      "DOWNLOAD": "Downloaden"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {
@@ -38,7 +55,7 @@
   },
   "DROPDOWN": {
     "PLACEHOLDER_LABEL": "Lijst met sites",
-    "MY_FILES_OPTION": ""
+    "MY_FILES_OPTION": "Mijn bestanden"
   },
   "NODE_SELECTOR": {
     "CANCEL": "Annuleren",
@@ -111,11 +128,15 @@
       "FOLDER_ALREADY_EXIST": "De map {0} bestaat al",
       "FOLDER_NOT_SUPPORTED": "Het uploaden van mappen wordt niet ondersteund door uw browser, probeer het met een andere browser",
       "REMOVE_FILE_ERROR": "{{ fileName }} kan niet worden verwijderd, probeer het opnieuw of neem contact op met het IT-team.",
-      "REMOVE_FILES_ERROR": "{{ total }} bestanden kunnen niet worden verwijderd, probeer het opnieuw of neem contact op met het IT-team."
+      "REMOVE_FILES_ERROR": "{{ total }} bestanden kunnen niet worden verwijderd, probeer het opnieuw of neem contact op met het IT-team.",
+      "EXCEED_MAX_FILE_SIZE": "Het bestand {{ fileName }} overschrijdt de toegestane bestandsgrootte"
     },
     "ACTION": {
       "UNDO": "Ongedaan maken"
     }
+  },
+  "WEBSCRIPT": {
+    "ERROR": "Kan de actie niet voltooien. Geef het volgende bericht door aan het IT-team: Fout bij de deserialisatie van {{data}} als {{contentType}}"
   },
   "SEARCH": {
     "CONTROL": {},
@@ -160,6 +181,6 @@
     }
   },
   "PERMISSON": {
-    "LACKOF": "U hebt geen {{permission}} rechten voor {{action}} van {{type}}"
+    "LACKOF": "U hebt geen {{permission}} rechten voor het {{action}} van {{type}}"
   }
 }
