@@ -5,6 +5,7 @@ eval JS_API=true
 eval GNU=false
 eval EXEC_COMPONENT=true
 eval DIFFERENT_JS_API=false
+eval AUTO=false
 
 eval projects=( "core"
     "content-services"
@@ -22,12 +23,25 @@ show_help() {
     echo "-vj or -versionjsapi  to use a different version of js-api"
     echo "-demoshell execute the change version only in the demo shell "
     echo "-v or -version  version to update"
+    echo "-alpha update last alpha version of js-api and lib automatically"
     echo "-gnu for gnu"
 }
 
 skip_js() {
     echo "====== Skip JS-API change version $1 ====="
     JS_API=false
+}
+
+last_alpha_mode() {
+    echo "====== Auto find last version ====="
+    JS_API=false
+    VERSION=$(npm view @alfresco/adf-core@alpha version)
+
+    echo "====== version lib ${VERSION} ====="
+
+    DIFFERENT_JS_API=$(npm view alfresco-js-api@alpha version)
+
+    echo "====== version js-api ${DIFFERENT_JS_API} ====="
 }
 
 gnu_mode() {
@@ -148,6 +162,7 @@ while [[ $1  == -* ]]; do
       -sj|sjsapi) skip_js; shift;;
       -vj|versionjsapi)  version_js_change $2; shift 2;;
       -gnu) gnu_mode; shift;;
+      -alpha) last_alpha_mode; shift;;
       -demoshell) only_demoshell; shift;;
       -*) shift;;
     esac
