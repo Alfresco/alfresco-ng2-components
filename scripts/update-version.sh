@@ -13,6 +13,8 @@ eval projects=( "core"
 
 cd `dirname $0`
 
+prefix="@alfresco\/adf-"
+
 show_help() {
     echo "Usage: update-version.sh"
     echo ""
@@ -53,7 +55,7 @@ only_demoshell() {
 update_component_version() {
    echo "====== UPDATE PACKAGE VERSION of ${PACKAGE} to ${VERSION} version in all the package.json ======"
    DESTDIR="$DIR/../lib/${1}"
-   sed "${sedi[@]}" "s/\"version\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"version\": \"${VERSION}\"/g"  ${DESTDIR}/package.json
+   sed "${sedi[@]}" "s/\"version\": \".*\"/\"version\": \"${VERSION}\"/g"  ${DESTDIR}/package.json
 }
 
 clean_lock() {
@@ -67,10 +69,11 @@ update_component_dependency_version(){
 
    for (( j=0; j<${projectslength}; j++ ));
     do
-       echo "====== UPDATE DEPENDENCY VERSION of ${projects[$j]} to ~${VERSION} in ${1}======"
+       echo "====== UPDATE DEPENDENCY VERSION of .* to ~${VERSION} in ${1}======"
 
-       sed "${sedi[@]}" "s/\"${projects[$j]}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${projects[$j]}\": \"${VERSION}\"/g"  ${DESTDIR}/package.json
-       sed "${sedi[@]}" "s/\"${projects[$j]}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${projects[$j]}\": \"~${VERSION}\"/g"  ${DESTDIR}/package.json
+       sed "${sedi[@]}" "s/\"${prefix}${projects[$j]}\": \".*\"/\"${prefix}${projects[$j]}\": \"${VERSION}\"/g"  ${DESTDIR}/package.json
+       sed "${sedi[@]}" "s/\"${prefix}${projects[$j]}\": \"~.*\"/\"${prefix}${projects[$j]}\": \"~${VERSION}\"/g"  ${DESTDIR}/package.json
+       sed "${sedi[@]}" "s/\"${prefix}${projects[$j]}\": \"^.*\"/\"${prefix}${projects[$j]}\": \"^${VERSION}\"/g"  ${DESTDIR}/package.json
 
     done
 }
@@ -80,9 +83,10 @@ update_total_build_dependency_version(){
 
    for (( j=0; j<${projectslength}; j++ ));
     do
-       echo "====== UPDATE TOTAL BUILD DEPENDENCY VERSION of ${projects[$j]} to ~${VERSION} in ${1}======"
-       sed "${sedi[@]}" "s/\"${projects[$j]}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${projects[$j]}\": \"${VERSION}\"/g"  ${DESTDIR}/package.json
-       sed "${sedi[@]}" "s/\"${projects[$j]}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${projects[$j]}\": \"~${VERSION}\"/g"  ${DESTDIR}/package.json
+       echo "====== UPDATE TOTAL BUILD DEPENDENCY VERSION of .* to ~${VERSION} in ${1}======"
+       sed "${sedi[@]}" "s/\"${prefix}${projects[$j]}\": \".*\"/\"${prefix}${projects[$j]}\": \"${VERSION}\"/g"  ${DESTDIR}/package.json
+       sed "${sedi[@]}" "s/\"${prefix}${projects[$j]}\": \"~.*\"/\"${prefix}${projects[$j]}\": \"~${VERSION}\"/g"  ${DESTDIR}/package.json
+       sed "${sedi[@]}" "s/\"${prefix}${projects[$j]}\": \"^.*\"/\"${prefix}${projects[$j]}\": \"^${VERSION}\"/g"  ${DESTDIR}/package.json
      done
 }
 
@@ -91,8 +95,9 @@ update_total_build_dependency_js_version(){
     DESTDIR="$DIR/../lib/"
     PACKAGETOCHANGE="alfresco-js-api"
 
-    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
-    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
+    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \".*\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
+    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~.*\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
+    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"^.*\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
 }
 
 update_component_js_version(){
@@ -101,8 +106,9 @@ update_component_js_version(){
 
    PACKAGETOCHANGE="alfresco-js-api"
 
-   sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"${2}\"/g"  ${DESTDIR}/package.json
-   sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"${2}\"/g"  ${DESTDIR}/package.json
+   sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \".*\"/\"${PACKAGETOCHANGE}\": \"${2}\"/g"  ${DESTDIR}/package.json
+   sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~.*\"/\"${PACKAGETOCHANGE}\": \"${2}\"/g"  ${DESTDIR}/package.json
+   sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"^.*\"/\"${PACKAGETOCHANGE}\": \"${2}\"/g"  ${DESTDIR}/package.json
 
 }
 
@@ -113,8 +119,9 @@ update_demo_shell_dependency_version(){
     echo "====== UPDATE VERSION OF DEMO-SHELL to ${projects[$k]} version ${VERSION} ======"
     DESTDIR="$DIR/../demo-shell/"
 
-    sed "${sedi[@]}" "s/\"${projects[$k]}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${projects[$k]}\": \"${VERSION}\"/g"  ${DESTDIR}/package.json
-    sed "${sedi[@]}" "s/\"${projects[$k]}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${projects[$k]}\": \"~${VERSION}\"/g"  ${DESTDIR}/package.json
+       sed "${sedi[@]}" "s/\"${prefix}${projects[$k]}\": \".*\"/\"${prefix}${projects[$k]}\": \"${VERSION}\"/g"  ${DESTDIR}/package.json
+       sed "${sedi[@]}" "s/\"${prefix}${projects[$k]}\": \"~.*\"/\"${prefix}${projects[$k]}\": \"~${VERSION}\"/g"  ${DESTDIR}/package.json
+       sed "${sedi[@]}" "s/\"${prefix}${projects[$k]}\": \"^.*\"/\"${prefix}${projects[$k]}\": \"^${VERSION}\"/g"  ${DESTDIR}/package.json
    done
 }
 
@@ -123,8 +130,9 @@ update_demo_shell_js_version(){
     DESTDIR="$DIR/../demo-shell/"
     PACKAGETOCHANGE="alfresco-js-api"
 
-    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
-    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
+    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \".*\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
+    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~.*\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
+    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"^.*\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
 }
 
 clean_lock_demo_shell(){
@@ -211,9 +219,9 @@ if $JS_API == true; then
 fi
 
 DESTDIR="$DIR/../demo-shell/"
-sed "${sedi[@]}" "s/\"version\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"version\": \"${VERSION}\"/g"  ${DIR}/../demo-shell/package.json
+sed "${sedi[@]}" "s/\"version\": \".*\"/\"version\": \"${VERSION}\"/g"  ${DIR}/../demo-shell/package.json
 
 if $EXEC_COMPONENT == true; then
     rm ${DIR}/../lib/package-lock.json
-    sed "${sedi[@]}" "s/\"version\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"version\": \"${VERSION}\"/g"  ${DIR}/../lib/package.json
+    sed "${sedi[@]}" "s/\"version\": \".*\"/\"version\": \"${VERSION}\"/g"  ${DIR}/../lib/package.json
 fi
