@@ -141,7 +141,19 @@ describe('TaskAttachmentList', () => {
         });
     }));
 
-    it('should display all actions if attachements are not read only', () => {
+    it('emit document when a user wants to view the document', () => {
+        component.emitDocumentContent(mockAttachment.data[1]);
+        fixture.detectChanges();
+        expect(getFileRawContentSpy).toHaveBeenCalled();
+    });
+
+    it('download document when a user wants to view the document', () => {
+        component.downloadContent(mockAttachment.data[1]);
+        fixture.detectChanges();
+        expect(getFileRawContentSpy).toHaveBeenCalled();
+    });
+
+    it('should display all actions if attachments are not read only', () => {
         let change = new SimpleChange(null, '123', true);
         component.ngOnChanges({'taskId': change});
         fixture.detectChanges();
@@ -186,40 +198,6 @@ describe('TaskAttachmentList', () => {
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual('ADF_TASK_LIST.ATTACHMENT.EMPTY.HEADER');
-        });
-    }));
-
-    it('should show the empty list drag and drop component when the task is not completed', async(() => {
-        getTaskRelatedContentSpy.and.returnValue(Observable.of({
-            'size': 0,
-            'total': 0,
-            'start': 0,
-            'data': []
-        }));
-        let change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({'taskId': change});
-
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('adf-empty-list .adf-empty-list-drag_drop').innerText.trim()).toEqual('ADF_TASK_LIST.ATTACHMENT.EMPTY.DRAG-AND-DROP.TITLE');
-        });
-    }));
-
-    it('should not show the empty list drag and drop component when is disabled', async(() => {
-        getTaskRelatedContentSpy.and.returnValue(Observable.of({
-            'size': 0,
-            'total': 0,
-            'start': 0,
-            'data': []
-        }));
-        let change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({'taskId': change});
-        component.disabled = true;
-
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('adf-empty-list .adf-empty-list-drag_drop')).toBeNull();
             expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual('ADF_TASK_LIST.ATTACHMENT.EMPTY.HEADER');
         });
     }));
@@ -270,7 +248,7 @@ describe('TaskAttachmentList', () => {
             expect(getTaskRelatedContentSpy).toHaveBeenCalledWith('456');
         });
 
-        it('should NOT fetch new attachments when empty changeset made', () => {
+        it('should NOT fetch new attachments when empty change set made', () => {
             component.ngOnChanges({});
             expect(getTaskRelatedContentSpy).not.toHaveBeenCalled();
         });
@@ -290,6 +268,12 @@ describe('TaskAttachmentList', () => {
 
         it('should display a dialog to the user when the Add button clicked', () => {
             expect(true).toBe(true);
+        });
+
+        it('delete content by contentId', () => {
+            component.deleteAttachmentById(5);
+            fixture.detectChanges();
+            expect(deleteContentSpy).toHaveBeenCalled();
         });
 
     });

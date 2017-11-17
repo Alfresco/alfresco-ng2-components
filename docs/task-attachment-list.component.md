@@ -1,6 +1,6 @@
 # Task Attachment List Component
 
-Displays attached documents on a specified task
+Displays attached documents on a specified task.
 
 ![task-attachment-list-sample](docassets/images/task-attachment-list.png)
 
@@ -9,6 +9,7 @@ Displays attached documents on a specified task
 <!-- toc -->
 
 - [Basic Usage](#basic-usage)
+  *[Drag and Drop Functionality](#how-to-add-drag-and-drop-functionality)
   * [Properties](#properties)
   * [Events](#events)
 
@@ -24,6 +25,38 @@ Displays attached documents on a specified task
     (attachmentClick)="YOUR_HANDLER">
 </adf-task-attachment-list>
 ```
+If the List is empty, a default no content template is displayed.
+
+![default-no-content-template-sample](docassets/images/default-no-content-template.png)
+
+### How to Add Drag and Drop Functionality
+
+If we want user to be able to upload attachments for empty lists, We can wrap our component with upload drag area component. In that case, We should also pass a custom *no content template* as shown below with our component urging the user to drag files to upload whenever the list is empty.
+
+```html
+<adf-upload-drag-area
+    [parentId]="YOUR_TASK_ID"
+    [showNotificationBar]="BOOLEAN">
+    <adf-task-attachment-list  
+        [taskId]="YOUR_TASK_ID"
+        (attachmentClick)="YOUR_HANDLER">
+            <div adf-empty-list> //no content template
+                <adf-empty-list>
+                    <div adf-empty-list-header>{{This List is empty}}</div>
+                    <div adf-empty-list-body>{{Drag and drop to upload}}</div>
+                    <div adf-empty-list-footer>
+                        <img [src]="Your custom image URL"></div> 
+                </adf-empty-list>
+            </div>
+    </adf-task-attachment-list>
+</adf-upload-drag-area>
+```
+
+[Upload Drag Area Component](./upload-drag-area.component.md)
+
+If the List is empty, the custom no-content template we passed is displayed. 
+
+![custom-no-content-drag-drop-template-sample](docassets/images/custom-no-content-drag-drop-template.png)
 
 ### Properties
 
