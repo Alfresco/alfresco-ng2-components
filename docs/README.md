@@ -1,29 +1,17 @@
 # Component Docs Index
 
-Below is an index of the documentation for each component library. The [User Guide](#user-guide)
+Below is an index of the documentation for ADF. The [User Guide](#user-guide)
 section discusses particular techniques in depth. The other sections are references for the ADF
-components. Items marked with an asterisk (*) do not currently have documentation - the link leads
+libraries. Items marked with an asterisk (*) do not currently have documentation - the link leads
 to the appropriate source file.
 
 ## Contents
 
 - [User Guide](#user-guide)
-- [ADF Analytics](#adf-analytics)
-- [ADF Diagrams](#adf-diagrams)
-- [ADF Form](#adf-form)
-- [ADF Processlist](#adf-processlist)
-- [ADF Tasklist](#adf-tasklist)
 - [ADF Core](#adf-core)
-- [ADF Datatable](#adf-datatable)
-- [ADF Documentlist](#adf-documentlist)
-- [ADF Login](#adf-login)
-- [ADF Search](#adf-search)
-- [ADF Social](#adf-social)
-- [ADF Tag](#adf-tag)
-- [ADF Upload](#adf-upload)
-- [ADF Userinfo](#adf-userinfo)
-- [ADF Viewer](#adf-viewer)
-- [ADF Webscript](#adf-webscript)
+- [ADF Content Services](#adf-content-services)
+- [ADF Process Services](#adf-process-services)
+- [ADF Insights](#adf-insights)
 
 ## User guide
 
@@ -38,189 +26,48 @@ to the appropriate source file.
 <!-- guide end -->
 [(Back to Contents)](#contents)
 
-## ADF Analytics
-
-Contains the Analytics component and other related items. See the library's
-[README file](../ng2-components/ng2-activiti-analytics/README.md)
-for more information about installing and using the source code.
-<!-- ng2-activiti-analytics start -->
-
-### Components
-
-- [Analytics generator component](analytics-generator.component.md)
-- [Analytics report list component](analytics-report-list.component.md)
-- [Analytics component](analytics.component.md)
-- [Widget component](widget.component.md)
-- [*Analytics report heat map component](../ng2-components/ng2-activiti-analytics/src/components/analytics-report-heat-map.component.ts)
-- [*Analytics report parameters component](../ng2-components/ng2-activiti-analytics/src/components/analytics-report-parameters.component.ts)
-
-### Services
-
-- [*Analytics service](../ng2-components/ng2-activiti-analytics/src/services/analytics.service.ts)
-<!-- ng2-activiti-analytics end -->
-
-[(Back to Contents)](#contents)
-
-## ADF Diagrams
-
-Contains the Diagram component and other related items. See the library's
-[README file](../ng2-components/ng2-activiti-diagrams/README.md)
-for more information about installing and using the source code.
-<!-- ng2-activiti-diagrams start -->
-
-### Components
-
-- [Diagram component](diagram.component.md)
-<!-- ng2-activiti-diagrams end -->
-
-[(Back to Contents)](#contents)
-
-## ADF Form
-
-Contains the Form component and other related items. See the library's
-[README file](../ng2-components/ng2-activiti-form/README.md)
-for more information about installing and using the source code.
-<!-- ng2-activiti-form start -->
-
-### Components
-
-- [Form list component](form-list.component.md)
-- [Form component](form.component.md)
-- [Widget component](widget.component.md)
-- [*Form field component](../ng2-components/ng2-activiti-form/src/components/form-field/form-field.component.ts)
-- [*Start form component](../ng2-components/ng2-activiti-form/src/components/start-form.component.ts)
-- [*Error component](../ng2-components/ng2-activiti-form/src/components/widgets/error/error.component.ts)
-- [*Text mask component](../ng2-components/ng2-activiti-form/src/components/widgets/text/text-mask.component.ts)
-
-### Directives
-
-- [*Form custom button directive](../ng2-components/ng2-activiti-form/src/components/form-custom-button.directive.ts)
-
-### Models
-
-- [Form field model](form-field.model.md)
-
-### Services
-
-- [Form rendering service](form-rendering.service.md)
-- [Form service](form.service.md)
-- [Node service](node.service.md)
-- [*Activiti alfresco service](../ng2-components/ng2-activiti-form/src/services/activiti-alfresco.service.ts)
-- [*Process content service](../ng2-components/ng2-activiti-form/src/services/process-content.service.ts)
-- [*Widget visibility service](../ng2-components/ng2-activiti-form/src/services/widget-visibility.service.ts)
-
-### Widgets
-
-- [Content widget](content.widget.md)
-<!-- ng2-activiti-form end -->
-
-### Other classes and interfaces
-
-- [FormFieldValidator interface](FormFieldValidator.md)
-
-[(Back to Contents)](#contents)
-
-## ADF Processlist
-
-Contains the Processlist component and other related items. See the library's
-[README file](../ng2-components/ng2-activiti-processlist/README.md)
-for more information about installing and using the source code.
-
-<!-- ng2-activiti-processlist start -->
-
-### Components
-
-- [Create process attachment component](create-process-attachment.component.md)
-- [Process attachment list component](process-attachment-list.component.md)
-- [Process comments component](process-comments.component.md)
-- [Process filters component](process-filters.component.md)
-- [Process instance details component](process-instance-details.component.md)
-- [Process instance header component](process-instance-header.component.md)
-- [Process instance tasks component](process-instance-tasks.component.md)
-- [Process list component](process-list.component.md)
-- [Start process component](start-process.component.md)
-
-### Directives
-
-- [Process audit directive](process-audit.directive.md)
-
-### Services
-
-- [*Process upload service](../ng2-components/ng2-activiti-processlist/src/services/process-upload.service.ts)
-- [*Process service](../ng2-components/ng2-activiti-processlist/src/services/process.service.ts)
-<!-- ng2-activiti-processlist end -->
-
-[(Back to Contents)](#contents)
-
-## ADF Tasklist
-
-Contains the Tasklist component and other related items. See the library's
-[README file](../ng2-components/ng2-activiti-tasklist/README.md)
-for more information about installing and using the source code.
-<!-- ng2-activiti-tasklist start -->
-
-### Components
-
-- [Apps list component](apps-list.component.md)
-- [Checklist component](checklist.component.md)
-- [Comments component](comments.component.md)
-- [Create task attachment component](create-task-attachment.component.md)
-- [People search component](people-search.component.md)
-- [People component](people.component.md)
-- [Start task component](start-task.component.md)
-- [Task attachment list component](task-attachment-list.component.md)
-- [Task details component](task-details.component.md)
-- [Task filters component](task-filters.component.md)
-- [Task header component](task-header.component.md)
-- [Task list component](task-list.component.md)
-- [*Comment list component](../ng2-components/ng2-activiti-tasklist/src/components/comment-list.component.ts)
-- [*People list component](../ng2-components/ng2-activiti-tasklist/src/components/people-list.component.ts)
-
-### Directives
-
-- [Task audit directive](task-audit.directive.md)
-
-### Models
-
-- [Filter model](filter.model.md)
-- [Task details model](task-details.model.md)
-
-### Services
-
-- [*Process upload service](../ng2-components/ng2-activiti-tasklist/src/services/process-upload.service.ts)
-- [*Tasklist service](../ng2-components/ng2-activiti-tasklist/src/services/tasklist.service.ts)
-<!-- ng2-activiti-tasklist end -->
-
-[(Back to Contents)](#contents)
-
 ## ADF Core
 
-Contains a variety of components, directives and other classes used throughout ADF. See the library's
-[README file](../ng2-components/ng2-alfresco-core/README.md)
+Contains a variety of components used throughout ADF.
+See the library's
+[README file](../lib/core/README.md)
 for more information about installing and using the source code.
-<!-- ng2-alfresco-core start -->
+<!-- core start -->
 
 ### Components
 
+- [Card view component](card-view.component.md)
 - [Accordion group component](accordion-group.component.md)
 - [Accordion component](accordion.component.md)
 - [Data column component](data-column.component.md)
+- [Datatable component](datatable.component.md)
+- [Form field component](form-field.component.md)
+- [Form list component](form-list.component.md)
+- [Form component](form.component.md)
+- [Widget component](widget.component.md)
 - [Info drawer layout component](info-drawer-layout.component.md)
 - [Info drawer component](info-drawer.component.md)
 - [Language menu component](language-menu.component.md)
+- [Login component](login.component.md)
 - [Pagination component](pagination.component.md)
 - [Host settings component](host-settings.component.md)
 - [Toolbar divider component](toolbar-divider.component.md)
 - [Toolbar title component](toolbar-title.component.md)
 - [Toolbar component](toolbar.component.md)
-- [Card view component](card-view.component.md)
-- [*Infinite pagination component](../ng2-components/ng2-alfresco-core/src/components/pagination/infinite-pagination.component.ts)
+- [User info component](user-info.component.md)
+- [Viewer component](viewer.component.md)
+- [*Datatable cell component](../lib/core/datatable/components/datatable/datatable-cell.component.ts)
+- [*Date cell component](../lib/core/datatable/components/datatable/date-cell.component.ts)
+- [*Filesize cell component](../lib/core/datatable/components/datatable/filesize-cell.component.ts)
+- [*Location cell component](../lib/core/datatable/components/datatable/location-cell.component.ts)
+- [*Start form component](../lib/core/form/components/start-form.component.ts)
+- [*Error component](../lib/core/form/components/widgets/error/error.component.ts)
+- [*Text mask component](../lib/core/form/components/widgets/text/text-mask.component.ts)
+- [*Infinite pagination component](../lib/core/pagination/infinite-pagination.component.ts)
 
 ### Directives
 
 - [Context menu directive](context-menu.directive.md)
-- [Folder create directive](folder-create.directive.md)
-- [Folder edit directive](folder-edit.directive.md)
 - [Highlight directive](highlight.directive.md)
 - [Logout directive](logout.directive.md)
 - [Node delete directive](node-delete.directive.md)
@@ -228,13 +75,18 @@ for more information about installing and using the source code.
 - [Node permission directive](node-permission.directive.md)
 - [Node restore directive](node-restore.directive.md)
 - [Upload directive](upload.directive.md)
+- [*No permission template directive](../lib/core/datatable/directives/no-permission-template.directive.ts)
+- [*Form custom button directive](../lib/core/form/components/form-custom-button.directive.ts)
 
 ### Models
 
+- [Form field model](form-field.model.md)
 - [Comment process model](comment-process.model.md)
 - [Product version model](product-version.model.md)
 - [Site model](site.model.md)
 - [User process model](user-process.model.md)
+- [Bpm user model](bpm-user.model.md)
+- [Ecm user model](ecm-user.model.md)
 
 ### Pipes
 
@@ -247,9 +99,12 @@ for more information about installing and using the source code.
 
 ### Services
 
-- [Alfresco api service](alfresco-api.service.md)
-- [Alfresco content service](alfresco-content.service.md)
 - [App config service](app-config.service.md)
+- [Form rendering service](form-rendering.service.md)
+- [Form service](form.service.md)
+- [Node service](node.service.md)
+- [Process content service](process-content.service.md)
+- [Alfresco api service](alfresco-api.service.md)
 - [Apps process service](apps-process.service.md)
 - [Auth guard bpm service](auth-guard-bpm.service.md)
 - [Auth guard ecm service](auth-guard-ecm.service.md)
@@ -278,42 +133,33 @@ for more information about installing and using the source code.
 - [Translation service](translation.service.md)
 - [Upload service](upload.service.md)
 - [User preferences service](user-preferences.service.md)
-<!-- ng2-alfresco-core end -->  
+- [Bpm user service](bpm-user.service.md)
+- [Ecm user service](ecm-user.service.md)
+- [*Activiti alfresco service](../lib/core/form/services/activiti-alfresco.service.ts)
+- [*Widget visibility service](../lib/core/form/services/widget-visibility.service.ts)
+- [*Card item types service](../lib/core/services/card-item-types.service.ts)
+- [*Dynamic component mapper service](../lib/core/services/dynamic-component-mapper.service.ts)
+- [*Settings service](../lib/core/services/settings.service.ts)
 
-[(Back to Contents)](#contents)
+### Widgets
 
-## ADF Datatable
-
-Contains the Datatable component and other related items. See the library's
-[README file](../ng2-components/ng2-alfresco-datatable/README.md)
-for more information about installing and using the source code.
-<!-- ng2-alfresco-datatable start -->
-
-### Components
-
-- [Datatable component](datatable.component.md)
-- [*Datatable cell component](../ng2-components/ng2-alfresco-datatable/src/components/datatable/datatable-cell.component.ts)
-- [*Date cell component](../ng2-components/ng2-alfresco-datatable/src/components/datatable/date-cell.component.ts)
-- [*Filesize cell component](../ng2-components/ng2-alfresco-datatable/src/components/datatable/filesize-cell.component.ts)
-- [*Location cell component](../ng2-components/ng2-alfresco-datatable/src/components/datatable/location-cell.component.ts)
-
-### Directives
-
-- [*No permission template directive](../ng2-components/ng2-alfresco-datatable/src/directives/no-permission-template.directive.ts)
-<!-- ng2-alfresco-datatable end -->
+- [Content widget](content.widget.md)
+<!-- core end -->
 
 ### Other classes and interfaces
 
 - [DataTableAdapter interface](DataTableAdapter.md)
+- [FormFieldValidator interface](FormFieldValidator.md)
 
 [(Back to Contents)](#contents)
 
-## ADF Documentlist
+## ADF Content Services
 
-Contains the Document List component and other related items. See the library's
-[README file](../ng2-components/ng2-alfresco-documentlist/README.md)
+Contains components related to Content Services.
+See the library's
+[README file](../lib/content-services/README.md)
 for more information about installing and using the source code.
-<!-- ng2-alfresco-documentlist start -->
+<!-- content-services start -->
 
 ### Components
 
@@ -321,15 +167,32 @@ for more information about installing and using the source code.
 - [Dropdown breadcrumb component](dropdown-breadcrumb.component.md)
 - [Content action component](content-action.component.md)
 - [Document list component](document-list.component.md)
+- [Search control component](search-control.component.md)
+- [Search component](search.component.md)
 - [Sites dropdown component](sites-dropdown.component.md)
+- [Like component](like.component.md)
+- [Rating component](rating.component.md)
+- [Tag actions component](tag-actions.component.md)
+- [Tag list component](tag-list.component.md)
+- [Tag node list component](tag-node-list.component.md)
+- [File uploading dialog component](file-uploading-dialog.component.md)
+- [Upload button component](upload-button.component.md)
+- [Upload drag area component](upload-drag-area.component.md)
 - [Version list component](version-list.component.md)
 - [Version manager component](version-manager.component.md)
-- [*Content node selector component](../ng2-components/ng2-alfresco-documentlist/src/components/content-node-selector/content-node-selector.component.ts)
-- [*Version upload component](../ng2-components/ng2-alfresco-documentlist/src/components/version-manager/version-upload.component.ts)
+- [Webscript component](webscript.component.md)
+- [*Content node selector component](../lib/content-services/content-node-selector/content-node-selector.component.ts)
+- [*File uploading list row component](../lib/content-services/upload/components/file-uploading-list-row.component.ts)
+- [*File uploading list component](../lib/content-services/upload/components/file-uploading-list.component.ts)
+- [*Version upload component](../lib/content-services/version-manager/version-upload.component.ts)
 
 ### Directives
 
-- [*No permission content directive](../ng2-components/ng2-alfresco-documentlist/src/components/no-permission/no-permission-content.directive.ts)
+- [Folder create directive](folder-create.directive.md)
+- [Folder edit directive](folder-edit.directive.md)
+- [File draggable directive](file-draggable.directive.md)
+- [*No permission content directive](../lib/content-services/document-list/components/no-permission/no-permission-content.directive.ts)
+- [*Search trigger directive](../lib/content-services/search/components/search-trigger.directive.ts)
 
 ### Models
 
@@ -340,151 +203,91 @@ for more information about installing and using the source code.
 
 - [Document actions service](document-actions.service.md)
 - [Folder actions service](folder-actions.service.md)
-- [*Content node selector service](../ng2-components/ng2-alfresco-documentlist/src/components/content-node-selector/content-node-selector.service.ts)
-- [*Document list service](../ng2-components/ng2-alfresco-documentlist/src/services/document-list.service.ts)
-- [*Node actions service](../ng2-components/ng2-alfresco-documentlist/src/services/node-actions.service.ts)
-<!-- ng2-alfresco-documentlist end -->
+- [*Content node selector service](../lib/content-services/content-node-selector/content-node-selector.service.ts)
+- [*Document list service](../lib/content-services/document-list/services/document-list.service.ts)
+- [*Node actions service](../lib/content-services/document-list/services/node-actions.service.ts)
+- [*Rating service](../lib/content-services/social/services/rating.service.ts)
+- [*Tag service](../lib/content-services/tag/services/tag.service.ts)
+<!-- content-services end -->
 
 [(Back to Contents)](#contents)
 
-## ADF Login
+## ADF Process Services
 
-Contains the Login component and other related items. See the library's
-[README file](../ng2-components/ng2-alfresco-login/README.md)
+Contains components related to Process Services.
+See the library's
+[README file](../lib/process-services/README.md)
 for more information about installing and using the source code.
-<!-- ng2-alfresco-login start -->
+<!-- process-services start -->
 
 ### Components
 
-- [Login component](login.component.md)
-<!-- ng2-alfresco-login end -->
-
-[(Back to Contents)](#contents)
-
-## ADF Search
-
-Contains the Search component and other related items. See the library's
-[README file](../ng2-components/ng2-alfresco-search/README.md)
-for more information about installing and using the source code.
-<!-- ng2-alfresco-search start -->
-
-### Components
-
-- [Search control component](search-control.component.md)
-- [Search component](search.component.md)
-<!-- ng2-alfresco-search end -->
-
-[(Back to Contents)](#contents)
-
-## ADF Social
-
-Contains components for adding likes and ratings to items. See the library's
-[README file](../ng2-components/ng2-alfresco-social/README.md)
-for more information about installing and using the source code.
-<!-- ng2-alfresco-social start -->
-
-### Components
-
-- [Like component](like.component.md)
-- [Rating component](rating.component.md)
-
-### Services
-
-- [*Rating service](../ng2-components/ng2-alfresco-social/src/services/rating.service.ts)
-<!-- ng2-alfresco-social end -->
-
-[(Back to Contents)](#contents)
-
-## ADF Tag
-
-Contains components for adding tags to documents. See the library's
-[README file](../ng2-components/ng2-alfresco-tag/README.md)
-for more information about installing and using the source code.
-<!-- ng2-alfresco-tag start -->
-
-### Components
-
-- [Tag actions component](tag-actions.component.md)
-- [Tag list component](tag-list.component.md)
-- [Tag node list component](tag-node-list.component.md)
-
-### Services
-
-- [*Tag service](../ng2-components/ng2-alfresco-tag/src/services/tag.service.ts)
-<!-- ng2-alfresco-tag end -->
-
-[(Back to Contents)](#contents)
-
-## ADF Upload
-
-Contains components for uploading files to Content Services. See the library's
-[README file](../ng2-components/ng2-alfresco-upload/README.md)
-for more information about installing and using the source code.
-<!-- ng2-alfresco-upload start -->
-
-### Components
-
-- [File uploading dialog component](file-uploading-dialog.component.md)
-- [Upload button component](upload-button.component.md)
-- [Upload drag area component](upload-drag-area.component.md)
-- [*File uploading list row component](../ng2-components/ng2-alfresco-upload/src/components/file-uploading-list-row.component.ts)
-- [*File uploading list component](../ng2-components/ng2-alfresco-upload/src/components/file-uploading-list.component.ts)
+- [Apps list component](apps-list.component.md)
+- [Create process attachment component](create-process-attachment.component.md)
+- [Create task attachment component](create-task-attachment.component.md)
+- [Process attachment list component](process-attachment-list.component.md)
+- [Task attachment list component](task-attachment-list.component.md)
+- [Comment list component](comment-list.component.md)
+- [Comments component](comments.component.md)
+- [Process comments component](process-comments.component.md)
+- [People search component](people-search.component.md)
+- [People component](people.component.md)
+- [Process filters component](process-filters.component.md)
+- [Process instance details component](process-instance-details.component.md)
+- [Process instance header component](process-instance-header.component.md)
+- [Process instance tasks component](process-instance-tasks.component.md)
+- [Process list component](process-list.component.md)
+- [Start process component](start-process.component.md)
+- [Checklist component](checklist.component.md)
+- [Start task component](start-task.component.md)
+- [Task details component](task-details.component.md)
+- [Task filters component](task-filters.component.md)
+- [Task header component](task-header.component.md)
+- [Task list component](task-list.component.md)
+- [*People list component](../lib/process-services/people/people-list.component.ts)
 
 ### Directives
 
-- [*File draggable directive](../ng2-components/ng2-alfresco-upload/src/directives/file-draggable.directive.ts)
-<!-- ng2-alfresco-upload end -->
-
-[(Back to Contents)](#contents)
-
-## ADF Userinfo
-
-Contains the User Info component and other related items. See the library's
-[README file](../ng2-components/ng2-alfresco-userinfo/README.md)
-for more information about installing and using the source code.
-<!-- ng2-alfresco-userinfo start -->
-
-### Components
-
-- [User info component](user-info.component.md)
+- [Process audit directive](process-audit.directive.md)
+- [Task audit directive](task-audit.directive.md)
 
 ### Models
 
-- [Bpm user model](bpm-user.model.md)
-- [Ecm user model](ecm-user.model.md)
+- [Filter model](filter.model.md)
+- [Task details model](task-details.model.md)
 
 ### Services
 
-- [Bpm user service](bpm-user.service.md)
-- [Ecm user service](ecm-user.service.md)
-<!-- ng2-alfresco-userinfo end -->
+- [Process service](process.service.md)
+- [*Process filter service](../lib/process-services/process-list/services/process-filter.service.ts)
+- [*Process upload service](../lib/process-services/task-list/services/process-upload.service.ts)
+- [*Task filter service](../lib/process-services/task-list/services/task-filter.service.ts)
+- [*Tasklist service](../lib/process-services/task-list/services/tasklist.service.ts)
+<!-- process-services end -->
 
 [(Back to Contents)](#contents)
 
-## ADF Viewer
+## ADF Insights
 
-Contains the Viewer component and other related items. See the library's
-[README file](../ng2-components/ng2-alfresco-viewer/README.md)
+Contains components for Process Services analytics and diagrams.
+See the library's
+[README file](../lib/insights/README.md)
 for more information about installing and using the source code.
-<!-- ng2-alfresco-viewer start -->
+<!-- insights start -->
 
 ### Components
 
-- [Viewer component](viewer.component.md)
-<!-- ng2-alfresco-viewer end -->
+- [Analytics generator component](analytics-generator.component.md)
+- [Analytics report list component](analytics-report-list.component.md)
+- [Analytics component](analytics.component.md)
+- [Widget component](widget.component.md)
+- [Diagram component](diagram.component.md)
+- [*Analytics report heat map component](../lib/insights/analytics-process/components/analytics-report-heat-map.component.ts)
+- [*Analytics report parameters component](../lib/insights/analytics-process/components/analytics-report-parameters.component.ts)
 
-[(Back to Contents)](#contents)
+### Services
 
-## ADF Webscript
-
-Contains the Webscript component. See the library's
-[README file](../ng2-components/ng2-alfresco-webscript/README.md)
-for more information about installing and using the source code.
-<!-- ng2-alfresco-webscript start -->
-
-### Components
-
-- [Webscript component](webscript.component.md)
-<!-- ng2-alfresco-webscript end -->
+- [*Analytics service](../lib/insights/analytics-process/services/analytics.service.ts)
+<!-- insights end -->
 
 [(Back to Contents)](#contents)
