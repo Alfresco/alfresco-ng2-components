@@ -85,7 +85,7 @@ export class ContentWidgetComponent implements OnChanges {
             if (this.content.isTypeImage()) {
                 observable = this.processContentService.getFileRawContent(content.id);
             } else {
-                observable = this.processContentService.getContentThumbnailUrl(content.id);
+                observable = this.processContentService.getContentThumbnail(content.id);
             }
 
             if (observable) {
@@ -104,7 +104,7 @@ export class ContentWidgetComponent implements OnChanges {
     }
 
     openViewer(content: ContentLinkModel): void {
-        this.processContentService.getFileRawContent(content.id).subscribe(
+        this.processContentService.getContentPreview(content.id).subscribe(
             (blob: Blob) => {
                 content.contentBlob = blob;
                 this.contentClick.emit(content);

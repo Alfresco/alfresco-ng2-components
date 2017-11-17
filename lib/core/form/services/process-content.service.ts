@@ -46,12 +46,16 @@ export class ProcessContentService {
         return Observable.fromPromise(this.contentApi.getRawContent(contentId)).catch(err => this.handleError(err));
     }
 
+    getContentPreview(contentId: number): Observable<Blob> {
+        return Observable.fromPromise(this.contentApi.getContentPreview(contentId)).catch(err => this.handleError(err));
+    }
+
     getFileRawContentUrl(contentId: number): string {
         return this.contentApi.getRawContentUrl(contentId);
     }
 
-    getContentThumbnailUrl(contentId: number): Observable<any> {
-        return Observable.fromPromise(this.contentApi.getContentThumbnailUrl(contentId)).catch(err => this.handleError(err));
+    getContentThumbnail(contentId: number): Observable<Blob> {
+        return Observable.fromPromise(this.contentApi.getContentThumbnail(contentId)).catch(err => this.handleError(err));
     }
 
     getTaskRelatedContent(taskId: string): Observable<any> {

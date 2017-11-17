@@ -162,7 +162,7 @@ describe('ContentWidgetComponent', () => {
 
         it('should load the thumbnail preview of a pdf', (done) => {
             let blob = createFakePdfBlob();
-            spyOn(processContentService, 'getContentThumbnailUrl').and.returnValue(Observable.of(blob));
+            spyOn(processContentService, 'getContentThumbnail').and.returnValue(Observable.of(blob));
 
             component.thumbnailLoaded.subscribe((res) => {
                 fixture.detectChanges();
