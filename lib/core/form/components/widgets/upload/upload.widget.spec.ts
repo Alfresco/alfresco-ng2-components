@@ -18,6 +18,8 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { Observable } from 'rxjs/Rx';
+
 import { EcmModelService } from '../../../services/ecm-model.service';
 import { FormService } from '../../../services/form.service';
 import { ProcessContentService } from '../../../services/process-content.service';
@@ -60,6 +62,8 @@ declare let jasmine: any;
 
 describe('UploadWidgetComponent', () => {
 
+    let contentService: ProcessContentService;
+
     let filePngFake = new File(['fakePng'], 'file-fake.png', {type: 'image/png'});
     let filJpgFake = new File(['fakeJpg'], 'file-fake.jpg', {type: 'image/jpg'});
 
@@ -81,6 +85,7 @@ describe('UploadWidgetComponent', () => {
                 uploadWidgetComponent = fixture.componentInstance;
                 element = fixture.nativeElement;
                 debugElement = fixture.debugElement;
+                contentService = TestBed.get(ProcessContentService);
             });
         }));
 
@@ -393,6 +398,8 @@ describe('UploadWidgetComponent', () => {
 
         it('should emit form content clicked event on icon click', (done) => {
 
+            spyOn(contentService, 'getContentPreview').and.returnValue(Observable.of(new Blob()));
+
             formServiceInstance.formContentClicked.subscribe((content: any) => {
                 expect(content.name).toBe(fakeJpgAnswer.name);
                 expect(content.id).toBe(fakeJpgAnswer.id);
@@ -409,11 +416,6 @@ describe('UploadWidgetComponent', () => {
             fixture.whenStable().then(() => {
                 let fileJpegIcon = debugElement.query(By.css('#file-1156-icon'));
                 fileJpegIcon.nativeElement.dispatchEvent(new MouseEvent('click'));
-                jasmine.Ajax.requests.mostRecent().respondWith({
-                    status: 200,
-                    contentType: 'json',
-                    responseText: new Blob()
-                });
             });
 
         });
