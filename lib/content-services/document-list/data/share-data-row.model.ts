@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { DataRow } from '@alfresco/core';
-import { ObjectUtils } from '@alfresco/core';
+import { DataRow } from '@alfresco/adf-core';
+import { ObjectUtils } from '@alfresco/adf-core';
 import { MinimalNode, MinimalNodeEntity } from 'alfresco-js-api';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { DocumentListService } from './../services/document-list.service';

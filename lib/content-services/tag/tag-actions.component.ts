@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { TranslationService } from '@alfresco/core';
+import { TranslationService } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
 import { TagService } from './services/tag.service';
 

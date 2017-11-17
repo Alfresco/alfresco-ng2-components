@@ -18,7 +18,7 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppsProcessService, CoreModule } from '@alfresco/core';
+import { AppsProcessService, CoreModule } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Rx';
 
 import { MaterialModule } from '../material.module';

@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
-import { DataTableModule, PaginationModule, ToolbarModule } from '@alfresco/core';
+import { DataTableModule, PaginationModule, ToolbarModule } from '@alfresco/adf-core';
 
 import { MaterialModule } from '../material.module';
 import { UploadModule } from '../upload';

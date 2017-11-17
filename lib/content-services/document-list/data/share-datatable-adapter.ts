@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { DataColumn, DataRow, DataSorting, DataTableAdapter } from '@alfresco/core';
-import { TimeAgoPipe } from '@alfresco/core';
+import { DataColumn, DataRow, DataSorting, DataTableAdapter } from '@alfresco/adf-core';
+import { TimeAgoPipe } from '@alfresco/adf-core';
 import { DatePipe } from '@angular/common';
 import { NodePaging } from 'alfresco-js-api';
 import { PermissionStyleModel } from './../models/permissions-style.model';

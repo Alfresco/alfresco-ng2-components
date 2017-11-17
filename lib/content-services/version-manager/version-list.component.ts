@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService } from '@alfresco/core';
+import { AlfrescoApiService } from '@alfresco/adf-core';
 import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
 import { VersionsApi } from 'alfresco-js-api';
 

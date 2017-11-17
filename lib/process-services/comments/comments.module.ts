@@ -20,7 +20,7 @@ import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DataColumnModule, DataTableModule } from '@alfresco/core';
+import { DataColumnModule, DataTableModule } from '@alfresco/adf-core';
 
 import { ProcessCommentsComponent } from './process-comments.component';
 import { CommentListComponent } from './comment-list.component';

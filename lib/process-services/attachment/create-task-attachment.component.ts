@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ProcessContentService } from '@alfresco/core';
+import { ProcessContentService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-create-task-attachment',

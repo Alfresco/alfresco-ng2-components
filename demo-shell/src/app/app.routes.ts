@@ -17,7 +17,7 @@
 
 import { ModuleWithProviders } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard, AuthGuardBpm, AuthGuardEcm } from '@alfresco/core';
+import { AuthGuard, AuthGuardBpm, AuthGuardEcm } from '@alfresco/adf-core';
 import { AppLayoutComponent } from './components/app-layout/app-layout.component';
 import { LoginComponent } from './components/login/login.component';
 import { SettingsComponent } from './components/settings/settings.component';
@@ -37,7 +37,7 @@ import { SocialComponent } from './components/social/social.component';
 import { FilesComponent } from './components/files/files.component';
 import { FormComponent } from './components/form/form.component';
 
-import { UploadButtonComponent } from '@alfresco/content-services';
+import { UploadButtonComponent } from '@alfresco/adf-content-services';
 import { FileViewComponent } from './components/file-view/file-view.component';
 import { CustomSourcesComponent } from './components/files/custom-sources.component';
 import { FormListComponent } from './components/form/form-list.component';

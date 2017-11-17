@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ContentService, LogService } from '@alfresco/core';
+import { ContentService, LogService } from '@alfresco/adf-core';
 import {
     AfterContentChecked,
     Component,

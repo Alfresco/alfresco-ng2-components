@@ -15,6 +15,6 @@
  * limitations under the License.
  */
 
-import { DataColumn, DataRow } from '@alfresco/core';
+import { DataColumn, DataRow } from '@alfresco/adf-core';
 
 export type ImageResolver = (row: DataRow, column: DataColumn) => string;

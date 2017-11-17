@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CoreModule, TRANSLATION_PROVIDER } from '@alfresco/core';
+import { CoreModule, TRANSLATION_PROVIDER } from '@alfresco/adf-core';
 
 import { MaterialModule } from './material.module';
 
@@ -50,8 +50,8 @@ import { PeopleModule } from './people';
             provide: TRANSLATION_PROVIDER,
             multi: true,
             useValue: {
-                name: '@adf/process-services',
-                source: 'assets/@adf/process-services'
+                name: '@alfresco/process-services',
+                source: '@alfresco/process-services'
             }
         }
     ],

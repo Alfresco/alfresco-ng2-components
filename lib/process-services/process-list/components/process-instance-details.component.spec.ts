@@ -21,7 +21,7 @@ import { MaterialModule } from '../../material.module';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
-import { FormModule, FormService } from '@alfresco/core';
+import { FormModule, FormService } from '@alfresco/adf-core';
 import { TaskListModule } from '../../task-list';
 
 import { ProcessInstance } from '../models/process-instance.model';

@@ -24,7 +24,7 @@ import { MaterialModule } from '../material.module';
 
 import { ChartsModule } from 'ng2-charts';
 
-import { ToolbarModule } from '@alfresco/core';
+import { ToolbarModule } from '@alfresco/adf-core';
 import { AnalyticsGeneratorComponent } from './components/analytics-generator.component';
 import { AnalyticsReportHeatMapComponent } from './components/analytics-report-heat-map.component';
 import { AnalyticsReportListComponent } from './components/analytics-report-list.component';

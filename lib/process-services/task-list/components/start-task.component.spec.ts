@@ -17,7 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MaterialModule } from '../../material.module';
-import { PeopleProcessService } from '@alfresco/core';
+import { PeopleProcessService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Rx';
 import { startTaskMock } from '../../mock';
 import { StartTaskModel } from '../models/start-task.model';

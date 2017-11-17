@@ -23,7 +23,7 @@ import {
     MatInputModule,
     MatSelectModule
 } from '@angular/material';
-import { FormModule, FormService } from '@alfresco/core';
+import { FormModule, FormService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Rx';
 
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';

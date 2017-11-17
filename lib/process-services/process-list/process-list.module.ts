@@ -20,10 +20,10 @@ import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { FormModule } from '@alfresco/core';
+import { FormModule } from '@alfresco/adf-core';
 import { MaterialModule } from '../material.module';
 
-import { CardViewModule, CardViewUpdateService, DataColumnModule, DataTableModule, DirectiveModule, PipeModule } from '@alfresco/core';
+import { CardViewModule, CardViewUpdateService, DataColumnModule, DataTableModule, DirectiveModule, PipeModule } from '@alfresco/adf-core';
 import { TaskListModule } from '../task-list';
 import { PeopleModule } from '../people';
 import { CommentsModule } from '../comments';

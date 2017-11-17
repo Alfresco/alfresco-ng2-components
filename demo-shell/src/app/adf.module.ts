@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 
-import { ContentModule } from '@alfresco/content-services';
-import { ProcessModule } from '@alfresco/process-services';
-import { CoreModule } from '@alfresco/core';
-import { InsightsModule } from '@alfresco/insights';
+import { ContentModule } from '@alfresco/adf-content-services';
+import { ProcessModule } from '@alfresco/adf-process-services';
+import { CoreModule } from '@alfresco/adf-core';
+import { InsightsModule } from '@alfresco/adf-insights';
 
 export function modules() {
     return [

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { PermissionsEnum } from '@alfresco/core';
+import { PermissionsEnum } from '@alfresco/adf-core';
 
 export class PermissionStyleModel {
     css: string;

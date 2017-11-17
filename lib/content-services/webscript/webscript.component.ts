@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { ObjectDataTableAdapter } from '@alfresco/core';
-import { AlfrescoApiService, LogService } from '@alfresco/core';
+import { ObjectDataTableAdapter } from '@alfresco/adf-core';
+import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 
 /**

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LogService } from '@alfresco/core';
+import { LogService } from '@alfresco/adf-core';
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { TaskDetailsEvent } from '../../task-list';

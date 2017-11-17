@@ -18,7 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { async } from '@angular/core/testing';
 import { AlfrescoApi } from 'alfresco-js-api';
-import { AlfrescoApiService } from '@alfresco/core';
+import { AlfrescoApiService } from '@alfresco/adf-core';
 import { fakeError, fakeProcessFilters } from '../../mock';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterService } from './process-filter.service';

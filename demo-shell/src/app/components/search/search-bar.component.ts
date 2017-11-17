@@ -18,7 +18,7 @@
 import { Component, EventEmitter, Output, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { MinimalNodeEntity } from 'alfresco-js-api';
-import { AuthenticationService } from '@alfresco/core';
+import { AuthenticationService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-search-bar',

@@ -20,10 +20,10 @@
         "baseUrl" :  "./",
         "types": ["jasmine"],
         "paths": {
-            "@alfresco/process-services": ["./process-services/"],
-            "@alfresco/content-services": ["./content-services/"],
-            "@alfresco/core": ["./core/"],
-            "@alfresco/insights": ["./analytics"],
+            "@alfresco/adf-process-services": ["./process-services/"],
+            "@alfresco/adf-content-services": ["./content-services/"],
+            "@alfresco/adf-core": ["./core/"],
+            "@alfresco/adf-insights": ["./analytics"],
             "alfresco-js-api": ["./node_modules/alfresco-js-api/"],
             "@angular/*": ["./node_modules/@angular/*"],
             "rxjs/*": ["./node_modules/rxjs/*"]

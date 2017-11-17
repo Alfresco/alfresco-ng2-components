@@ -16,7 +16,7 @@
  */
 
 import { Component } from '@angular/core';
-import { LogService } from '@alfresco/core';
+import { LogService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'alfresco-webscript',
