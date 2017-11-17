@@ -62,8 +62,8 @@ import { DirectiveModule } from './directive';
             provide: TRANSLATION_PROVIDER,
             multi: true,
             useValue: {
-                name: '@alfresco/content-services',
-                source: '@alfresco/content-services'
+                name: 'adf-content-services',
+                source: 'assets/adf-content-services'
             }
         }
     ],

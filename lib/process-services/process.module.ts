@@ -50,8 +50,8 @@ import { PeopleModule } from './people';
             provide: TRANSLATION_PROVIDER,
             multi: true,
             useValue: {
-                name: '@alfresco/process-services',
-                source: '@alfresco/process-services'
+                name: 'adf-process-services',
+                source: 'assets/adf-process-services'
             }
         }
     ],
