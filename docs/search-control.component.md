@@ -1,4 +1,4 @@
-# Search component
+# Search control component
 
 Displays a input text which shows find-as-you-type suggestions.
 
@@ -38,10 +38,8 @@ Displays a input text which shows find-as-you-type suggestions.
 | highlight | boolean | false  | Use the true value if you want to see the searched word highlighted. |
 | expandable | boolean |  true  | Whether to use an expanding search control, if false then a regular input is used. |
 | liveSearchEnabled | boolean | true  | Whether find-as-you-type suggestions should be offered for matching content items. Set to false to disable. |
-| liveSearchRoot | string | "-root-" | NodeRef or node name where the search should start. |
-| liveSearchResultType | string | |  Node type to filter live search results by, e.g. 'cm:content'. |
 | liveSearchMaxResults | number | 5 |  Maximum number of results to show in the live search. |
-| liveSearchResultSort | string | |  Criteria to sort live search results by, must be one of "name" ,  "modifiedAt" or "createdAt" |
+| customSearchNode | [QueryBody](https://github.com/Alfresco/alfresco-js-api/blob/1.6.0/src/alfresco-search-rest-api/docs/QueryBody.md) | | object which allow you to perform more elaborated query from the search api |
 
 ### Events
 
