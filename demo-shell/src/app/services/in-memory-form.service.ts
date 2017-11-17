@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AppConfigService, AlfrescoApiService, EcmModelService, LogService, FormFieldOption, FormService } from '@alfresco/adf-core';
+import { AppConfigService, AlfrescoApiService, EcmModelService, LogService, FormFieldOption, FormService, FormValues, FormModel, FormOutcomeModel } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 
 interface ActivitiData {
@@ -60,6 +60,23 @@ export class InMemoryFormService extends FormService {
             this.logService.log(values);
             observer.next(values);
         });
+    }
+
+    parseForm(json: any, data?: FormValues, readOnly: boolean = false): FormModel {
+        if (json) {
+            let form = new FormModel(json, data, readOnly, this);
+            if (!json.fields) {
+                form.outcomes = [
+                    new FormOutcomeModel(form, {
+                        id: '$custom',
+                        name: FormOutcomeModel.SAVE_ACTION,
+                        isSystem: true
+                    })
+                ];
+            }
+            return form;
+        }
+        return null;
     }
 
     /** @override */

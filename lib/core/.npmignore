@@ -22,3 +22,5 @@ dist/
 node_modules
 typings/
 fonts/
+i18n/
+assets/

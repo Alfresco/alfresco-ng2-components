@@ -10,6 +10,7 @@ npm-debug.log
 /gulpfile.ts
 /.npmignore
 /.happypack
+
 **/*.html
 **/*.js
 **/*.ts
@@ -22,3 +23,5 @@ dist/
 node_modules
 typings/
 fonts/
+i18n/
+assets/
