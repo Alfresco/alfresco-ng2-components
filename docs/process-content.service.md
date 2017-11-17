@@ -153,12 +153,12 @@ The response is going to be `null` if the delete was successful.
 
 See `getProcessRelatedContent` and `getTaskRelatedContent` for how to get to the `contentId`.
 
-#### getContentThumbnailUrl(contentId: number): Observable<any>
+#### getContentThumbnail(contentId: number): Observable<Blob>
 Get the thumbnail URL for related content (currently does not return this): 
 
 ```ts
  const contentId = 6008;
- this.contentService.getContentThumbnailUrl(contentId).subscribe(
+ this.contentService.getContentThumbnail(contentId).subscribe(
    res  => {
      console.log('Response: ', res);
    }, error => {
