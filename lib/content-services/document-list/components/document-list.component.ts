@@ -305,7 +305,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             if (this.folderNode) {
                 this.loadFolder(merge);
             } else if (this.currentFolderId) {
-                this.loadFolderByNodeId(this.currentFolderId);
+                this.loadFolderByNodeId(this.currentFolderId, merge);
             } else if (this.node) {
                 this.data.loadPage(this.node);
                 this.ready.emit();
@@ -454,22 +454,22 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     // gets folder node and its content
-    loadFolderByNodeId(nodeId: string) {
+    loadFolderByNodeId(nodeId: string, merge: boolean = false) {
         this.loading = true;
         this.resetSelection();
 
         if (nodeId === '-trashcan-') {
-            this.loadTrashcan();
+            this.loadTrashcan(merge);
         } else if (nodeId === '-sharedlinks-') {
-            this.loadSharedLinks();
+            this.loadSharedLinks(merge);
         } else if (nodeId === '-sites-') {
-            this.loadSites();
+            this.loadSites(merge);
         } else if (nodeId === '-mysites-') {
-            this.loadMemberSites();
+            this.loadMemberSites(merge);
         } else if (nodeId === '-favorites-') {
-            this.loadFavorites();
+            this.loadFavorites(merge);
         } else if (nodeId === '-recent-') {
-            this.loadRecent();
+            this.loadRecent(merge);
         } else {
             this.documentListService
                 .getFolderNode(nodeId)
@@ -478,7 +478,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                     this.currentFolderId = node.id;
                     this.skipCount = 0;
                     this.currentNodeAllowableOperations = node['allowableOperations'] ? node['allowableOperations'] : [];
-                    return this.loadFolderNodesByFolderNodeId(node.id, this.pageSize, this.skipCount);
+                    return this.loadFolderNodesByFolderNodeId(node.id, this.pageSize, this.skipCount, merge);
                 })
                 .catch(err => {
                     if (JSON.parse(err.message).error.statusCode === 403) {
@@ -532,29 +532,29 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         this.skipCount = 0;
     }
 
-    private loadTrashcan(): void {
+    private loadTrashcan(merge: boolean = false): void {
         const options = {
             include: ['path', 'properties'],
             maxItems: this.pageSize,
             skipCount: this.skipCount
         };
         this.apiService.nodesApi.getDeletedNodes(options)
-            .then((page: DeletedNodesPaging) => this.onPageLoaded(page))
+            .then((page: DeletedNodesPaging) => this.onPageLoaded(page, merge))
             .catch(error => this.error.emit(error));
     }
 
-    private loadSharedLinks(): void {
+    private loadSharedLinks(merge: boolean = false): void {
         const options = {
             include: ['properties', 'allowableOperations', 'path'],
             maxItems: this.pageSize,
             skipCount: this.skipCount
         };
         this.apiService.sharedLinksApi.findSharedLinks(options)
-            .then((page: NodePaging) => this.onPageLoaded(page))
+            .then((page: NodePaging) => this.onPageLoaded(page, merge))
             .catch(error => this.error.emit(error));
     }
 
-    private loadSites(): void {
+    private loadSites(merge: boolean = false): void {
         const options = {
             include: ['properties'],
             maxItems: this.pageSize,
@@ -562,11 +562,11 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         };
 
         this.apiService.sitesApi.getSites(options)
-            .then((page: NodePaging) => this.onPageLoaded(page))
+            .then((page: NodePaging) => this.onPageLoaded(page, merge))
             .catch(error => this.error.emit(error));
     }
 
-    private loadMemberSites(): void {
+    private loadMemberSites(merge: boolean = false): void {
         const options = {
             include: ['properties'],
             maxItems: this.pageSize,
@@ -588,12 +588,12 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                     }
                 };
 
-                this.onPageLoaded(page);
+                this.onPageLoaded(page, merge);
             })
             .catch(error => this.error.emit(error));
     }
 
-    private loadFavorites(): void {
+    private loadFavorites(merge: boolean = false): void {
         const options = {
             maxItems: this.pageSize,
             skipCount: this.skipCount,
@@ -619,12 +619,12 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                         pagination: result.list.pagination
                     }
                 };
-                this.onPageLoaded(page);
+                this.onPageLoaded(page, merge);
             })
             .catch(error => this.error.emit(error));
     }
 
-    private loadRecent(): void {
+    private loadRecent(merge: boolean = false): void {
         this.apiService.peopleApi.getPerson('-me-')
             .then((person: PersonEntry) => {
                 const username = person.entry.id;
@@ -652,13 +652,13 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
                 return this.apiService.searchApi.search(query);
             })
-            .then((page: NodePaging) => this.onPageLoaded(page))
+            .then((page: NodePaging) => this.onPageLoaded(page, merge))
             .catch(error => this.error.emit(error));
     }
 
-    private onPageLoaded(page: NodePaging) {
+    private onPageLoaded(page: NodePaging, merge: boolean = false) {
         if (page) {
-            this.data.loadPage(page);
+            this.data.loadPage(page, merge);
             this.pagination = page.list.pagination;
             this.loading = false;
             this.ready.emit();
@@ -743,17 +743,6 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
                     if (node.entry.isFolder) {
                         this.performNavigation(node);
-                    }
-
-                    if (node.entry.guid) {
-                        const options = {
-                            include: ['path', 'properties', 'allowableOperations']
-                        };
-
-                        this.apiService.nodesApi.getNode(node.entry.guid, options)
-                            .then(documentLibrary => {
-                                this.performNavigation(documentLibrary);
-                            });
                     }
                 }
             }
