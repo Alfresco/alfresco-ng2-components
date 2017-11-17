@@ -4,7 +4,36 @@
     font-weight: 600;
     font-size: 18px;
 }
+.activiti-attachments-file {
+    &-viewer-container {
+        background: #fff;
+        margin: 16px;
+        border: 1px solid #e1e1e1;
+        height: calc(100% - 47px);
 
+        &-action-bar {
+            border-bottom: 1px solid #e1e1e1;
+            text-align: right;
+
+            & > button {
+                border-left: 1px solid #e1e1e1;
+                opacity: 0.54;
+            }
+
+            & > span {
+                float: left;
+                font-weight: 600;
+                font-size: 16px;
+                padding: 8px 16px;
+            }
+        }
+
+        &-viewer-bar {
+            text-align: center;
+            height: calc(100% - 37px);
+        }
+    }
+}
 .activiti-grid {
 
     .activiti-grid-item {

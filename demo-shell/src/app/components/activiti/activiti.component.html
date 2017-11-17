@@ -83,13 +83,28 @@
                         </button>
                         <hr>
                     </div>
-                    <mat-card>
+                    <mat-card *ngIf="!viewTaskAttachment">
                         <mat-card-content>
                             <adf-task-attachment-list
-                                [taskId]="currentTaskId">
+                                [taskId]="currentTaskId"
+                                (attachmentClick)="onTaskAttachmentClick($event)">
                             </adf-task-attachment-list>
                         </mat-card-content>
                     </mat-card>
+                    <div class="activiti-attachments-file-viewer-container" *ngIf="viewTaskAttachment">
+                        <div class="activiti-attachments-file-viewer-container-action-bar">
+                                <span *ngIf="taskAttachmentDetails?.name" class = 'attachment_name'>{{ taskAttachmentDetails.name }}</span>
+                                <button mat-button color="primary" (click)="closeActiveViewer()">CLOSE</button>
+                        </div>
+                        <div class="activiti-attachments-file-viewer-container-viewer-bar">
+                                <adf-viewer *ngIf="taskAttachmentDetails?.contentBlob" 
+                                    [displayName]="taskAttachmentDetails.name" 
+                                    (goBack)="closeActiveViewer()" 
+                                    [overlayMode]="false"
+                                    [blobFile]="taskAttachmentDetails.contentBlob">
+                                </adf-viewer>
+                        </div>
+                    </div>
                 </div>
                 <div class="activiti-grid-item activiti-tasks-start" *ngIf="isStartTaskMode()" fxFlex.gt-md="1 1 auto">
                     <adf-start-task
@@ -171,14 +186,30 @@
                         </button>
                         <hr>
                     </div>
-                    <mat-card>
-
+                    <mat-card *ngIf="!viewProcessAttachment">
                         <mat-card-content>
                             <adf-process-attachment-list
-                                [processInstanceId]="currentProcessInstanceId">
+                                [processInstanceId]="currentProcessInstanceId"
+                                (attachmentClick)="onProcessAttachmentClick($event)">
                             </adf-process-attachment-list>
                         </mat-card-content>
                     </mat-card>
+
+                    <div class="activiti-attachments-file-viewer-container" *ngIf="viewProcessAttachment">
+                        <div class="activiti-attachments-file-viewer-container-action-bar">
+                            <span *ngIf="processAttachmentDetails?.name" class = 'attachment_name'>{{ processAttachmentDetails.name }}</span>
+                            <button mat-button color="primary" (click)="closeActiveViewer()">CLOSE</button>
+                        </div>
+                        <div class="activiti-attachments-file-viewer-container-viewer-bar">
+                                <adf-viewer *ngIf="processAttachmentDetails?.contentBlob" 
+                                    [displayName]="processAttachmentDetails.name" 
+                                    (goBack)="closeActiveViewer()" 
+                                    [overlayMode]="false"
+                                    [blobFile]="processAttachmentDetails.contentBlob">
+                                </adf-viewer>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="activiti-grid-item activiti-processes-start" fxFlex.gt-md="1 1 auto"
                      *ngIf="isStartProcessMode()">
