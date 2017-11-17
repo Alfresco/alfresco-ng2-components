@@ -399,6 +399,7 @@ describe('UploadWidgetComponent', () => {
         it('should emit form content clicked event on icon click', (done) => {
 
             spyOn(contentService, 'getContentPreview').and.returnValue(Observable.of(new Blob()));
+            spyOn(contentService, 'getFileRawContent').and.returnValue(Observable.of(new Blob()));
 
             formServiceInstance.formContentClicked.subscribe((content: any) => {
                 expect(content.name).toBe(fakeJpgAnswer.name);

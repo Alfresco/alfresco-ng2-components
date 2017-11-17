@@ -245,6 +245,7 @@ describe('ContentWidgetComponent', () => {
         it('should open the viewer when the view button is clicked', (done) => {
             let blob = createFakePdfBlob();
             spyOn(processContentService, 'getContentPreview').and.returnValue(Observable.of(blob));
+            spyOn(processContentService, 'getFileRawContent').and.returnValue(Observable.of(blob));
 
             component.content = new ContentLinkModel({
                 id: 4004,
