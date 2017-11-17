@@ -42,8 +42,8 @@ import { DiagramsModule } from './diagram';
             provide: TRANSLATION_PROVIDER,
             multi: true,
             useValue: {
-                name: '@alfresco/insights',
-                source: '@alfresco/insights'
+                name: 'adf-insights',
+                source: 'assets/adf-insights'
             }
         }
     ],
