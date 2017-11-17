@@ -20,7 +20,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
-import { CardViewModule } from '@alfresco/core';
+import { CardViewModule } from '@alfresco/adf-core';
 
 import { ContentMetadataComponent } from './content-metadata.component';
 import { ContentMetadataCardComponent } from './content-metadata-card.component';

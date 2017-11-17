@@ -15,25 +15,21 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, ViewEncapsulation } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Rx';
-import { CardViewItem, CardViewUpdateService, FileSizePipe, NodesApiService } from '@alfresco/core';
+import { CardViewItem, CardViewUpdateService, FileSizePipe, NodesApiService } from '@alfresco/adf-core';
 import { ContentMetadataService } from './content-metadata.service';
 
 @Component({
     selector: 'adf-content-metadata',
     templateUrl: './content-metadata.component.html',
     styleUrls: ['./content-metadata.component.scss'],
-    encapsulation: ViewEncapsulation.None,
     host: { 'class': 'adf-content-metadata' },
-    providers: [
-        CardViewUpdateService
-    ],
-    viewProviders: [
-        ContentMetadataService,
-        FileSizePipe
-    ]
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+    providers: [ CardViewUpdateService ],
+    viewProviders: [ ContentMetadataService, FileSizePipe ]
 })
 export class ContentMetadataComponent implements OnChanges, OnInit {
 
