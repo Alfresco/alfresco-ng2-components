@@ -207,21 +207,21 @@ describe('ViewerComponent', () => {
         expect(customElement.querySelector('.adf-viewer-container-more-actions')).toBeDefined();
     });
 
-    fit('should display sidebar on the left side', () => {
+    it('should display sidebar on the left side', () => {
         component.sidebarPosition = 'left';
         fixture.detectChanges();
         let sidebar = element.querySelector('.adf-viewer__sidebar');
         expect(getComputedStyle(sidebar).order).toEqual('1');
     });
 
-    fit('should display sidebar on the right side', () => {
+    it('should display sidebar on the right side', () => {
         component.sidebarPosition = 'right';
         fixture.detectChanges();
         let sidebar = element.querySelector('.adf-viewer__sidebar');
         expect(getComputedStyle(sidebar).order).toEqual('2');
     });
 
-    fit('should display sidebar on the right side as fallback', () => {
+    it('should display sidebar on the right side as fallback', () => {
         component.sidebarPosition = 'unknown-value';
         fixture.detectChanges();
         let sidebar = element.querySelector('.adf-viewer__sidebar');
