@@ -34,6 +34,7 @@
         <adf-toolbar-title>
             <adf-dropdown-breadcrumb *ngIf="needBreadcrumbs()"
                 class="adf-content-node-selector-content-breadcrumb"
+                (navigate)="clear()"
                 [target]="documentList"
                 [folderNode]="breadcrumbFolderNode"
                 data-automation-id="content-node-selector-content-breadcrumb">
@@ -47,6 +48,9 @@
                     adf-highlight
                     adf-highlight-selector=".cell-value adf-datatable-cell .adf-datatable-cell-value"
                     [node]="nodes"
+                    [maxItems]="pageSize"
+                    [skipCount]="skipCount"
+                    [enableInfiniteScrolling]="infiniteScroll"
                     [rowFilter]="rowFilter"
                     [imageResolver]="imageResolver"
                     [currentFolderId]="folderIdToShow"
@@ -55,7 +59,7 @@
                     [contentActions]="false"
                     [allowDropFiles]="false"
                     (folderChange)="onFolderChange()"
-                    (ready)="onFolderLoaded()"
+                    (ready)="onFolderLoaded($event)"
                     data-automation-id="content-node-selector-document-list">
             <empty-folder-content>
                 <ng-template>
@@ -65,7 +69,6 @@
         </adf-document-list>
 
         <adf-infinite-pagination
-            *ngIf="showingSearchResults && isSearchTermLongEnough()"
             [pagination]="pagination"
             [pageSize]="pageSize"
             [loading]="loadingSearchResults"

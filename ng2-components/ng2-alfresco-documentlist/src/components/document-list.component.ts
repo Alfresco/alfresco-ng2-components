@@ -170,6 +170,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                 private apiService: AlfrescoApiService,
                 private appConfig: AppConfigService,
                 private preferences: UserPreferencesService) {
+        this.maxItems = this.preferences.paginationSize;
     }
 
     getContextActions(node: MinimalNodeEntity) {
@@ -211,8 +212,6 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         if (this.imageResolver) {
             this.data.setImageResolver(this.imageResolver);
         }
-
-        this.maxItems = this.preferences.paginationSize;
 
         this.contextActionHandler.subscribe(val => this.contextActionCallback(val));
 
@@ -366,6 +365,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         if (this.canNavigateFolder(node)) {
             this.currentFolderId = node.entry.id;
             this.folderNode = node.entry;
+            this.skipCount = 0;
             this.currentNodeAllowableOperations = node.entry['allowableOperations'] ? node.entry['allowableOperations'] : [];
             this.loadFolder();
             this.folderChange.emit(new NodeEntryEvent(node.entry));
@@ -475,6 +475,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     private isSkipCountChanged(changePage: SimpleChanges) {
         return changePage.skipCount &&
+               changePage.skipCount.currentValue !== null &&
+               changePage.skipCount.currentValue !== undefined &&
                changePage.skipCount.currentValue !== changePage.skipCount.previousValue;
     }
 

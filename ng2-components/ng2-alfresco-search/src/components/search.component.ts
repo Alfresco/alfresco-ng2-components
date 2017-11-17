@@ -167,6 +167,8 @@ export class SearchComponent implements AfterContentInit, OnChanges {
                         this.error.emit(error);
                     }
                 });
+        }else {
+            this.cleanResults();
         }
     }
 

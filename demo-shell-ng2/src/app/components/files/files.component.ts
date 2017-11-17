@@ -116,7 +116,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     permissionsStyle: PermissionStyleModel[] = [];
     supportedPages: number[] = [5, 10, 15, 20];
-    infiniteScrolling: boolean = false;
+    infiniteScrolling: boolean;
     currentMaxItems: number;
     currentSkipCount: number = 0;
 

@@ -20,7 +20,7 @@ import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { AlfrescoContentService, AlfrescoTranslationService, CoreModule, SearchService, SiteModel, SitesApiService } from 'ng2-alfresco-core';
+import { AlfrescoContentService, AlfrescoTranslationService, CoreModule, SearchService, SiteModel, SitesApiService, UserPreferencesService } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { Observable } from 'rxjs/Rx';
 import { MaterialModule } from '../../material.module';
@@ -92,6 +92,7 @@ describe('ContentNodeSelectorComponent', () => {
                 DocumentListService,
                 SearchService,
                 ContentNodeSelectorService,
+                UserPreferencesService,
                 ...plusProviders
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -167,19 +168,22 @@ describe('ContentNodeSelectorComponent', () => {
         describe('Cancel button', () => {
 
             let dummyMdDialogRef;
+            let fakePreference: UserPreferencesService = <UserPreferencesService> jasmine.createSpyObj('UserPreferencesService', ['paginationSize']);
+            fakePreference.paginationSize = 10;
 
             beforeEach(() => {
                 dummyMdDialogRef = <MatDialogRef<ContentNodeSelectorComponent>> { close: () => {} };
             });
 
             it('should be shown if dialogRef is injected', () => {
-                const componentInstance = new ContentNodeSelectorComponent(null, null, data, dummyMdDialogRef);
+
+                const componentInstance = new ContentNodeSelectorComponent(null, null, fakePreference, data, dummyMdDialogRef);
                 expect(componentInstance.inDialog).toBeTruthy();
             });
 
             it('should should call the close method in the injected dialogRef', () => {
                 spyOn(dummyMdDialogRef, 'close');
-                const componentInstance = new ContentNodeSelectorComponent(null, null, data, dummyMdDialogRef);
+                const componentInstance = new ContentNodeSelectorComponent(null, null, fakePreference, data, dummyMdDialogRef);
 
                 componentInstance.close();
 
@@ -247,10 +251,7 @@ describe('ContentNodeSelectorComponent', () => {
                 spyOn(documentListService, 'getFolder').and.returnValue(Observable.throw('No results for test'));
                 spyOn(sitesApiService, 'getSites').and.returnValue(Observable.of([]));
                 spyOn(component.documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.resolve());
-                component.documentList.pagination = {
-                    maxItems: 10,
-                    skipCount: 0
-                };
+
                 component.currentFolderId = 'cat-girl-nuku-nuku';
                 fixture.detectChanges();
             });
@@ -346,7 +347,7 @@ describe('ContentNodeSelectorComponent', () => {
                     skipCount,
                     rootNodeId,
                     nodeType: 'cm:folder',
-                    maxItems: 10,
+                    maxItems: 25,
                     orderBy: null
                 };
             }
@@ -357,10 +358,7 @@ describe('ContentNodeSelectorComponent', () => {
 
                 spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.resolve(expectedDefaultFolderNode));
                 spyOn(component.documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.resolve());
-                component.documentList.pagination = {
-                    maxItems: 10,
-                    skipCount: 0
-                };
+
                 component.currentFolderId = 'cat-girl-nuku-nuku';
                 fixture.detectChanges();
             });
@@ -534,7 +532,7 @@ describe('ContentNodeSelectorComponent', () => {
 
                 it('should NOT be shown by default', () => {
                     fixture.detectChanges();
-                    const pagination = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-pagination"]'));
+                    const pagination = fixture.debugElement.query(By.css('[data-automation-id="adf-infinite-pagination-button"]'));
                     expect(pagination).toBeNull();
                 });
 
@@ -546,19 +544,6 @@ describe('ContentNodeSelectorComponent', () => {
                         fixture.detectChanges();
                         const pagination = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-pagination"]'));
                         expect(pagination).not.toBeNull();
-                    });
-                }));
-
-                it('should NOT be shown when modifying searchTerm to be less then 4 characters after search results have been diplayed', async(() => {
-                    typeToSearchBox('shenron');
-                    respondWithSearchResults(ONE_FOLDER_RESULT);
-
-                    fixture.whenStable().then(() => {
-                        typeToSearchBox('sh');
-                        fixture.detectChanges();
-
-                        const pagination = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-pagination"]'));
-                        expect(pagination).toBeNull();
                     });
                 }));
 

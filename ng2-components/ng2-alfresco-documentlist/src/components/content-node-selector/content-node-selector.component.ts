@@ -18,7 +18,7 @@
 import { Component, EventEmitter, Inject, Input, OnInit, Optional, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { MinimalNodeEntryEntity, NodePaging, Pagination } from 'alfresco-js-api';
-import { AlfrescoContentService, HighlightDirective, SiteModel } from 'ng2-alfresco-core';
+import { AlfrescoContentService, HighlightDirective, SiteModel, UserPreferencesService } from 'ng2-alfresco-core';
 import { ImageResolver } from '../../data/image-resolver.model';
 import { RowFilter } from '../../data/row-filter.model';
 import { DocumentListComponent, PaginationStrategy } from '../document-list.component';
@@ -51,6 +51,7 @@ export class ContentNodeSelectorComponent implements OnInit {
     paginationStrategy: PaginationStrategy;
     pagination: Pagination;
     skipCount: number = 0;
+    infiniteScroll: boolean = false;
 
     @Input()
     title: string;
@@ -65,7 +66,7 @@ export class ContentNodeSelectorComponent implements OnInit {
     imageResolver: ImageResolver = null;
 
     @Input()
-    pageSize: number = 10;
+    pageSize: number;
 
     @Output()
     select: EventEmitter<MinimalNodeEntryEntity[]> = new EventEmitter<MinimalNodeEntryEntity[]>();
@@ -78,6 +79,7 @@ export class ContentNodeSelectorComponent implements OnInit {
 
     constructor(private contentNodeSelectorService: ContentNodeSelectorService,
                 private contentService: AlfrescoContentService,
+                private preferences: UserPreferencesService,
                 @Optional() @Inject(MAT_DIALOG_DATA) data?: ContentNodeSelectorComponentData,
                 @Optional() private containingDialog?: MatDialogRef<ContentNodeSelectorComponent>) {
         if (data) {
@@ -91,6 +93,7 @@ export class ContentNodeSelectorComponent implements OnInit {
         if (this.containingDialog) {
             this.inDialog = true;
         }
+        this.pageSize = this.preferences.paginationSize;
     }
 
     ngOnInit() {
@@ -179,6 +182,7 @@ export class ContentNodeSelectorComponent implements OnInit {
      * @param event Pagination object
      */
     getNextPageOfSearch(event: Pagination): void {
+        this.infiniteScroll = true;
         this.skipCount = event.skipCount;
         this.querySearch();
     }
@@ -203,14 +207,7 @@ export class ContentNodeSelectorComponent implements OnInit {
     private showSearchResults(results: NodePaging): void {
         this.showingSearchResults = true;
         this.loadingSearchResults = false;
-
-        // Documentlist hack, since data displaying for preloaded nodes is a little bit messy there
-        if (!this.nodes) {
-            this.nodes = results;
-        } else {
-            this.documentList.data.loadPage(results, true);
-        }
-
+        this.nodes = results;
         this.pagination = results.list.pagination;
         this.highlight();
     }
@@ -244,14 +241,17 @@ export class ContentNodeSelectorComponent implements OnInit {
      * Sets showingSearchResults state to be able to differentiate between search results or folder results
      */
     onFolderChange(): void {
+        this.skipCount = 0;
+        this.infiniteScroll = false;
         this.showingSearchResults = false;
     }
 
     /**
      * Attempts to set the currently loaded node
      */
-    onFolderLoaded(): void {
+    onFolderLoaded(nodePage: NodePaging): void {
         this.attemptNodeSelection(this.documentList.folderNode);
+        this.pagination = nodePage.list.pagination;
     }
 
     /**
