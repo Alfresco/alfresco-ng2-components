@@ -19,6 +19,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule, MatDatepickerModule, MatIconModule, MatInputModule, MatNativeDateModule } from '@angular/material';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { CardViewContentProxyDirective } from './card-view-content-proxy.directive';
@@ -37,6 +38,7 @@ import { CardViewComponent } from './card-view.component';
         MatIconModule,
         MatButtonModule,
         FormsModule,
+        FlexLayoutModule,
         TranslateModule
     ],
     declarations: [

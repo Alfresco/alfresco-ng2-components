@@ -79,7 +79,7 @@ export class ContentMetadataService {
                 label: 'CORE.METADATA.BASIC.AUTHOR',
                 value: node.properties['cm:author'],
                 key: 'properties.cm:author',
-                editable: false
+                editable: true
             }),
             new CardViewTextItemModel({
                 label: 'CORE.METADATA.BASIC.DESCRIPTION',

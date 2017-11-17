@@ -18,6 +18,8 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 
+const PROPERTY_COUNTER_WHILE_COLLAPSED = 5;
+
 @Component({
     selector: 'adf-content-metadata-card',
     templateUrl: './content-metadata-card.component.html',
@@ -40,11 +42,7 @@ export class ContentMetadataCardComponent {
         this.expanded = !this.expanded;
     }
 
-    get maxProperty() {
-        if (this.expanded) {
-            return null;
-        } else {
-            return 5;
-        }
+    get maxPropertiesToShow(): number {
+        return this.expanded ? Infinity : PROPERTY_COUNTER_WHILE_COLLAPSED;
     }
 }

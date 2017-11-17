@@ -44,7 +44,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
     editable: boolean = false;
 
     @Input()
-    maxPropertiesToShow: number | null;
+    maxPropertiesToShow: number = Infinity;
 
     properties: CardViewItem[] = [];
 
@@ -52,7 +52,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
                 private cardViewUpdateService: CardViewUpdateService,
                 private nodesApi: NodesApiService) {}
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.cardViewUpdateService.itemUpdated$
             .switchMap(this.saveNode.bind(this))
             .subscribe(
@@ -69,7 +69,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
         return this.nodesApi.updateNode(this.node.id, nodeBody);
     }
 
-    private handleError(error) {
+    private handleError(error): void {
         /*tslint:disable-next-line*/
         console.log(error);
     }
