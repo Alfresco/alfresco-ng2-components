@@ -53,7 +53,7 @@ export class ProcessContentService {
                     observer.next(result);
                     observer.complete();
                 },
-                (err) => {
+                () => {
                     this.contentApi.getRawContent(contentId).then(
                         (data) => {
                             observer.next(data);
