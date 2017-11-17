@@ -37,6 +37,7 @@ import { ViewerOpenWithComponent } from './viewer-open-with.component';
 import { ViewerSidebarComponent } from './viewer-sidebar.component';
 import { ViewerToolbarComponent } from './viewer-toolbar.component';
 import { ViewerComponent } from './viewer.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 declare let jasmine: any;
 
@@ -122,7 +123,8 @@ describe('ViewerComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 ToolbarModule,
-                MaterialModule
+                MaterialModule,
+                FlexLayoutModule
             ],
             declarations: [
                 ViewerComponent,
