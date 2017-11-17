@@ -19,6 +19,7 @@ import { Component, OnInit, Optional, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { NodePaging, Pagination } from 'alfresco-js-api';
 import { SearchComponent } from 'ng2-alfresco-search';
+import { UserPreferencesService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'adf-search-result-component',
@@ -36,11 +37,12 @@ export class SearchResultComponent implements OnInit {
     fileShowed: boolean = false;
     navigationMode: string = 'dblclick';
     resultNodePageList: NodePaging;
-    maxItems: number = 10;
+    maxItems: number;
     skipCount: number = 0;
     paging: Pagination;
 
     constructor(public router: Router,
+                private preferences: UserPreferencesService,
                 @Optional() private route: ActivatedRoute) {
     }
 
@@ -50,6 +52,7 @@ export class SearchResultComponent implements OnInit {
                 this.searchedWord = params.hasOwnProperty(this.queryParamName) ? params[this.queryParamName] : null;
             });
         }
+        this.maxItems = this.preferences.paginationSize;
     }
 
     showSearchResult(event: NodePaging) {
