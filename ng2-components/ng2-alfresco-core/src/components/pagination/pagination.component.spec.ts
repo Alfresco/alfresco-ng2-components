@@ -41,7 +41,7 @@ class FakePaginationInput {
     }
 }
 
-fdescribe('PaginationComponent', () => {
+describe('PaginationComponent', () => {
 
     let fixture: ComponentFixture<PaginationComponent>;
 
