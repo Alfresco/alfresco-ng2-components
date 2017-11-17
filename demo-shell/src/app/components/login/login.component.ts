@@ -18,7 +18,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LogService, StorageService } from '@alfresco/core';
+import { LogService, StorageService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'login',

@@ -22,8 +22,8 @@ import {
     DataSorting,
     DataTableComponent,
     ObjectDataColumn
-} from '@alfresco/core';
-import { AlfrescoApiService, AppConfigService, DataColumnListComponent, UserPreferencesService } from '@alfresco/core';
+} from '@alfresco/adf-core';
+import { AlfrescoApiService, AppConfigService, DataColumnListComponent, UserPreferencesService } from '@alfresco/adf-core';
 import {
     AfterContentInit, Component, ContentChild, ElementRef, EventEmitter, HostListener, Input, NgZone,
     OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild, ViewEncapsulation

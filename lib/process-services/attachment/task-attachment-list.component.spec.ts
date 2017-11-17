@@ -21,7 +21,7 @@ import { By } from '@angular/platform-browser';
 import { MaterialModule } from '../material.module';
 import { Observable } from 'rxjs/Rx';
 import { TaskAttachmentListComponent } from './task-attachment-list.component';
-import { ProcessContentService } from '@alfresco/core';
+import { ProcessContentService } from '@alfresco/adf-core';
 
 describe('TaskAttachmentList', () => {
 

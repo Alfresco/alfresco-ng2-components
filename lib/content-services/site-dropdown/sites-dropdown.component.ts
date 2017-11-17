@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SiteModel, SitesApiService } from '@alfresco/core';
+import { SiteModel, SitesApiService } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({

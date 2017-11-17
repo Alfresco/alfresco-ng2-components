@@ -26,7 +26,7 @@ import { FileUploadingListComponent } from './components/file-uploading-list.com
 import { UploadButtonComponent } from './components/upload-button.component';
 import { UploadDragAreaComponent } from './components/upload-drag-area.component';
 
-import { PipeModule } from '@alfresco/core';
+import { PipeModule } from '@alfresco/adf-core';
 import { FileDraggableDirective } from './directives/file-draggable.directive';
 
 @NgModule({

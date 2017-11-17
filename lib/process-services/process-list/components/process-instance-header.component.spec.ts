@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CardViewUpdateService } from '@alfresco/core';
+import { CardViewUpdateService } from '@alfresco/adf-core';
 import { MaterialModule } from '../../material.module';
 
 import { ProcessInstance } from '../models/process-instance.model';

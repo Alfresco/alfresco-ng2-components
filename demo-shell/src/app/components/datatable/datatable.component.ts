@@ -16,8 +16,8 @@
  */
 
 import { Component, Input } from '@angular/core';
-import { AlfrescoApiService, LogService } from '@alfresco/core';
-import { DataCellEvent, DataRowActionEvent, DataSorting, ObjectDataColumn, ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/core';
+import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
+import { DataCellEvent, DataRowActionEvent, DataSorting, ObjectDataColumn, ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 
 @Component({

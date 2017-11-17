@@ -24,7 +24,7 @@ import { By } from '@angular/platform-browser';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs/Rx';
 
-import { AppConfigService, DirectiveModule, ContentService, TranslateLoaderService } from '@alfresco/core';
+import { AppConfigService, DirectiveModule, ContentService, TranslateLoaderService } from '@alfresco/adf-core';
 import { FolderCreateDirective } from './folder-create.directive';
 
 @Component({

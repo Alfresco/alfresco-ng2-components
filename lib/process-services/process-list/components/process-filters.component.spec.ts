@@ -16,7 +16,7 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { AppsProcessService } from '@alfresco/core';
+import { AppsProcessService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Rx';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterService } from '../services/process-filter.service';

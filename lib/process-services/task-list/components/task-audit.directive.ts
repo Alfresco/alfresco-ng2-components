@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ContentService } from '@alfresco/core';
+import { ContentService } from '@alfresco/adf-core';
 import { Directive, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { TaskListService } from './../services/tasklist.service';
 

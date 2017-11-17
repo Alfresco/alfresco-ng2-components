@@ -18,8 +18,8 @@
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MaterialModule } from '../../material.module';
-import { AppConfigService } from '@alfresco/core';
-import { DataRowEvent, ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/core';
+import { AppConfigService } from '@alfresco/adf-core';
+import { DataRowEvent, ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/adf-core';
 import { TaskListService } from '../services/tasklist.service';
 import { TaskListComponent } from './task-list.component';
 

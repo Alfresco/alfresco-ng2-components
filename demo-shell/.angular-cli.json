@@ -24,23 +24,43 @@
         },
         {
           "glob": "**/*",
-          "input": "../node_modules/core/bundles/assets",
-          "output": "./assets/"
+          "input": "../node_modules/@alfresco/adf-core/bundles/assets",
+          "output": "./core/assets/"
         },
         {
           "glob": "**/*",
-          "input": "../node_modules/insights/bundles/assets",
-          "output": "./assets/"
+          "input": "../node_modules/@alfresco/adf-insights/bundles/assets",
+          "output": "./insights/assets/"
         },
         {
           "glob": "**/*",
-          "input": "../node_modules/process-services/bundles/assets",
-          "output": "./assets/"
+          "input": "../node_modules/@alfresco/adf-process-services/bundles/assets",
+          "output": "./process-services/assets/"
         },
         {
           "glob": "**/*",
-          "input": "../node_modules/content-services/bundles/assets",
-          "output": "./assets/"
+          "input": "../node_modules/@alfresco/adf-content-services/bundles/assets",
+          "output": "./content-services/assets/"
+        },
+        {
+          "glob": "**/*",
+          "input": "../node_modules/@alfresco/adf-core/i18n",
+          "output": "./assets/@alfresco/core/i18n"
+        },
+        {
+          "glob": "**/*",
+          "input": "../node_modules/@alfresco/adf-insights/i18n",
+          "output": "./assets/@alfresco/insights/i18n"
+        },
+        {
+          "glob": "**/*",
+          "input": "../node_modules/@alfresco/adf-process-services/i18n",
+          "output": "./assets/@alfresco/process-services/i18n"
+        },
+        {
+          "glob": "**/*",
+          "input": "../node_modules/@alfresco/adf-content-services/i18n",
+          "output": "./assets/@alfresco/content-services/i18n"
         },
         { "glob": "pdf.worker.js", "input": "../node_modules/pdfjs-dist/build", "output": "./" }
       ],
@@ -108,22 +128,22 @@
         {
           "glob": "**/*",
           "input": "../../lib/core/i18n",
-          "output": "./assets/@adf/core/i18n"
+          "output": "./@alfresco/core/i18n"
         },
         {
           "glob": "**/*",
           "input": "../../lib/insights/i18n",
-          "output": "./assets/@adf/insights/i18n"
+          "output": "./@alfresco/insights/i18n"
         },
         {
           "glob": "**/*",
           "input": "../../lib/process-services/i18n",
-          "output": "./assets/@adf/process-services/i18n"
+          "output": "./@alfresco/process-services/i18n"
         },
         {
           "glob": "**/*",
           "input": "../../lib/content-services/i18n",
-          "output": "./assets/@adf/content-services/i18n"
+          "output": "./@alfresco/content-services/i18n"
         },
         { "glob": "pdf.worker.js", "input": "../node_modules/pdfjs-dist/build", "output": "./" }
       ],

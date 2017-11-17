@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AppConfigService, AlfrescoApiService, EcmModelService, LogService, FormFieldOption, FormService } from '@alfresco/core';
+import { AppConfigService, AlfrescoApiService, EcmModelService, LogService, FormFieldOption, FormService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 
 interface ActivitiData {

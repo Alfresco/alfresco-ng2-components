@@ -85,8 +85,8 @@ export function createTranslateLoader(http: HttpClient, logService: LogService) 
             provide: TRANSLATION_PROVIDER,
             multi: true,
             useValue: {
-                name: '@adf/core',
-                source: 'assets/@adf/core'
+                name: '@alfresco/core',
+                source: '@alfresco/core'
             }
         }
     ],

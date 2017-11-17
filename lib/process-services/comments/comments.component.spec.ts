@@ -19,12 +19,12 @@ import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
 
-import { FormModule } from '@alfresco/core';
-import { CommentProcessService } from '@alfresco/core';
+import { FormModule } from '@alfresco/adf-core';
+import { CommentProcessService } from '@alfresco/adf-core';
 
 import { DatePipe } from '@angular/common';
 import { MatInputModule } from '@angular/material';
-import { PeopleProcessService } from '@alfresco/core';
+import { PeopleProcessService } from '@alfresco/adf-core';
 import { TaskListService } from '../task-list/services/tasklist.service';
 import { CommentListComponent } from './comment-list.component';
 import { CommentsComponent } from './comments.component';

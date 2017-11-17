@@ -18,8 +18,8 @@
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MaterialModule } from '../material.module';
-import { ProcessContentService } from '@alfresco/core';
-import { TranslationService } from '@alfresco/core';
+import { ProcessContentService } from '@alfresco/adf-core';
+import { TranslationService } from '@alfresco/adf-core';
 import { CreateProcessAttachmentComponent } from './create-process-attachment.component';
 
 declare let jasmine: any;

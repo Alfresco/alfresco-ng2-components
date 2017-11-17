@@ -17,8 +17,8 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
-import { LogService } from '@alfresco/core';
-import { DataTableModule } from '@alfresco/core';
+import { LogService } from '@alfresco/adf-core';
+import { DataTableModule } from '@alfresco/adf-core';
 import { MaterialModule } from '../../../material.module';
 import { DocumentListService } from '../../services/document-list.service';
 import { DocumentListComponent } from './../document-list.component';

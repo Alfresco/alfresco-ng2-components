@@ -18,7 +18,7 @@
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { DownloadEntry, MinimalNodeEntity } from 'alfresco-js-api';
-import { LogService, AlfrescoApiService } from '@alfresco/core';
+import { LogService, AlfrescoApiService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-download-zip-dialog',

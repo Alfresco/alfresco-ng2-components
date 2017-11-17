@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CoreModule, TRANSLATION_PROVIDER } from '@alfresco/core';
+import { CoreModule, TRANSLATION_PROVIDER } from '@alfresco/adf-core';
 
 import { MaterialModule } from './material.module';
 
@@ -62,8 +62,8 @@ import { DirectiveModule } from './directive';
             provide: TRANSLATION_PROVIDER,
             multi: true,
             useValue: {
-                name: '@adf/content-services',
-                source: 'assets/@adf/content-services'
+                name: '@alfresco/content-services',
+                source: '@alfresco/content-services'
             }
         }
     ],

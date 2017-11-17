@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SearchOptions, SearchService } from '@alfresco/core';
+import { SearchOptions, SearchService } from '@alfresco/adf-core';
 import {
     AfterContentInit,
     ChangeDetectionStrategy,

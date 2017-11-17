@@ -7,7 +7,7 @@ import { ChartsModule } from 'ng2-charts';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 
-import { AppConfigService, TRANSLATION_PROVIDER } from '@alfresco/core';
+import { AppConfigService, TRANSLATION_PROVIDER } from '@alfresco/adf-core';
 import { AppComponent } from './app.component';
 import { AdfModule } from './adf.module';
 import { MaterialModule } from './material.module';

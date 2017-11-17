@@ -56,7 +56,7 @@ describe('TranslationService', () => {
                     provide: TRANSLATION_PROVIDER,
                     multi: true,
                     useValue: {
-                        name: '@alfresco/core',
+                        name: '@alfresco/adf-core',
                         source: 'assets/ng2-alfresco-core'
                     }
                 }

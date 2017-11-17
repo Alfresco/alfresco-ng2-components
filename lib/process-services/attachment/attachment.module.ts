@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
-import { DataColumnModule, DataTableModule, DirectiveModule } from '@alfresco/core';
+import { DataColumnModule, DataTableModule, DirectiveModule } from '@alfresco/adf-core';
 
 import { TaskAttachmentListComponent } from './task-attachment-list.component';
 import { ProcessAttachmentListComponent } from './process-attachment-list.component';

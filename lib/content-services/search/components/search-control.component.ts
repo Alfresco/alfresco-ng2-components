@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AuthenticationService, ThumbnailService } from '@alfresco/core';
+import { AuthenticationService, ThumbnailService } from '@alfresco/adf-core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MinimalNodeEntity } from 'alfresco-js-api';

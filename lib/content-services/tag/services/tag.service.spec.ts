@@ -16,7 +16,7 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { AppConfigService, CoreModule } from '@alfresco/core';
+import { AppConfigService, CoreModule } from '@alfresco/adf-core';
 import { TagService } from './tag.service';
 
 declare let jasmine: any;

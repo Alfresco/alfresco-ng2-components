@@ -21,10 +21,10 @@ import { MatButtonModule, MatInputModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
-import { FormModule, FormModel, FormOutcomeEvent, FormOutcomeModel, FormService } from '@alfresco/core';
-import { CommentProcessService, LogService } from '@alfresco/core';
+import { FormModule, FormModel, FormOutcomeEvent, FormOutcomeModel, FormService } from '@alfresco/adf-core';
+import { CommentProcessService, LogService } from '@alfresco/adf-core';
 
-import { PeopleProcessService, UserProcessModel } from '@alfresco/core';
+import { PeopleProcessService, UserProcessModel } from '@alfresco/adf-core';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { noDataMock, taskDetailsMock, taskFormMock, tasksMock } from '../../mock';
 import { TaskListService } from './../services/tasklist.service';

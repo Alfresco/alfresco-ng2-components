@@ -21,7 +21,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 
 import { FolderDialogComponent } from '../dialogs/folder.dialog';
-import { ContentService } from '@alfresco/core';
+import { ContentService } from '@alfresco/adf-core';
 
 @Directive({
     selector: '[adf-edit-folder]'
