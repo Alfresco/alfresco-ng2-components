@@ -47,7 +47,26 @@ export class ProcessContentService {
     }
 
     getContentPreview(contentId: number): Observable<Blob> {
-        return Observable.fromPromise(this.contentApi.getContentPreview(contentId)).catch(err => this.handleError(err));
+        return new Observable(observer => {
+            this.contentApi.getContentPreview(contentId).then(
+                (result) => {
+                    observer.next(result);
+                    observer.complete();
+                },
+                (err) => {
+                    this.contentApi.getRawContent(contentId).then(
+                        (data) => {
+                            observer.next(data);
+                            observer.complete();
+                        },
+                        (err) => {
+                            observer.error(err);
+                            observer.complete();
+                        }
+                    );
+                }
+            );
+        });
     }
 
     getFileRawContentUrl(contentId: number): string {
