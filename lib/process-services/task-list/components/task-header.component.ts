@@ -52,7 +52,7 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
     }
 
     ngOnInit() {
-        this.getCurrentUserId();
+        this.loadCurrentBpmUserId();
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -158,9 +158,9 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
     }
 
     /**
-     * Return the bpmUser
+     * Loads current bpm userId
      */
-    private getCurrentUserId(): void {
+    private loadCurrentBpmUserId(): void {
         this.bpmUserService.getCurrentUserInfo().subscribe((res) => {
             this.currentUserId = res ? +res.id : null;
         });
