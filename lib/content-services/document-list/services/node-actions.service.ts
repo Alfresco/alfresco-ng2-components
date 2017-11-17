@@ -87,6 +87,8 @@ export class NodeActionsService {
             const data: ContentNodeSelectorComponentData = {
                 title: `${action} ${contentEntry.name} to ...`,
                 currentFolderId: contentEntry.parentId,
+                dropdownHideMyFiles: true,
+                dropdownSiteList: [{title:'PERSONAL_FILES', guid: '-my-'}, {title:'FILE_LIBRARIES', guid: '-mysites-'}],
                 rowFilter: this.rowFilter.bind(this, contentEntry.id),
                 imageResolver: this.imageResolver.bind(this),
                 select: new EventEmitter<MinimalNodeEntryEntity[]>()

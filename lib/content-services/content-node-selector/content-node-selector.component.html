@@ -28,6 +28,8 @@
 
     <adf-sites-dropdown
         (change)="siteChanged($event)"
+        [hideMyFiles]="dropdownHideMyFiles"
+        [siteList]="dropdownSiteList"
         data-automation-id="content-node-selector-sites-combo"></adf-sites-dropdown>
 
     <adf-toolbar>

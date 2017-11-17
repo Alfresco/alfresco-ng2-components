@@ -444,6 +444,10 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         }
 
         let nodeId = this.folderNode ? this.folderNode.id : this.currentFolderId;
+
+        if (!this.hasCustomLayout) {
+            this.setupDefaultColumns(nodeId);
+        }
         if (nodeId) {
             this.loadFolderNodesByFolderNodeId(nodeId, this.pageSize, this.skipCount, merge).catch(err => this.error.emit(err));
         }
@@ -574,9 +578,12 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                 let page: NodePaging = {
                     list: {
                         entries: result.list.entries
-                            .map(({ entry: { site } }: any) => ({
-                                entry: site
-                            })),
+                            .map(({entry: {site}}: any) => {
+                                site.allowableOperations = site.allowableOperations ? site.allowableOperations : [this.CREATE_PERMISSION];
+                                return {
+                                    entry: site
+                                };
+                            }),
                         pagination: result.list.pagination
                     }
                 };
@@ -737,6 +744,17 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                     if (node.entry.isFolder) {
                         this.performNavigation(node);
                     }
+
+                    if (node.entry.guid) {
+                        const options = {
+                            include: ['path', 'properties', 'allowableOperations']
+                        };
+
+                        this.apiService.nodesApi.getNode(node.entry.guid, options)
+                            .then(documentLibrary => {
+                                this.performNavigation(documentLibrary);
+                            });
+                    }
                 }
             }
         }
@@ -839,6 +857,10 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     canNavigateFolder(node: MinimalNodeEntity): boolean {
+        if (this.currentFolderId === '-mysites-') {
+            return true;
+        }
+
         if (this.isCustomSource(this.currentFolderId)) {
             return false;
         }

@@ -28,6 +28,8 @@ import { ContentNodeSelectorService } from './content-node-selector.service';
 export interface ContentNodeSelectorComponentData {
     title: string;
     currentFolderId?: string;
+    dropdownHideMyFiles?: boolean;
+    dropdownSiteList?: any[];
     rowFilter?: RowFilter;
     imageResolver?: ImageResolver;
     select: EventEmitter<MinimalNodeEntryEntity[]>;
@@ -60,6 +62,12 @@ export class ContentNodeSelectorComponent implements OnInit {
     currentFolderId: string | null = null;
 
     @Input()
+    dropdownHideMyFiles: boolean = false;
+
+    @Input()
+    dropdownSiteList: any[] = null;
+
+    @Input()
     rowFilter: RowFilter = null;
 
     @Input()
@@ -85,6 +93,8 @@ export class ContentNodeSelectorComponent implements OnInit {
             this.title = data.title;
             this.select = data.select;
             this.currentFolderId = data.currentFolderId;
+            this.dropdownHideMyFiles = data.dropdownHideMyFiles;
+            this.dropdownSiteList = data.dropdownSiteList;
             this.rowFilter = data.rowFilter;
             this.imageResolver = data.imageResolver;
         }
