@@ -8,15 +8,15 @@
     <button mat-button [matMenuTriggerFor]="menu" class="adf-userinfo-menu_button">
         <div class="adf-userinfo-button-profile" id="user-profile" data-automation-id="user-profile">
             <div *ngIf="bpmUser && !ecmUser" id="bpm-user-image">
-                <div [outerHTML]="bpmUser | usernameInitials:'adf-userinfo-pic'"></div>
-                <div *ngIf="bpmUser.pictureId" class="adf-userinfo-profile-container">
+                <div *ngIf="!hasBpmUserPictureId()" [outerHTML]="bpmUser | usernameInitials:'adf-userinfo-pic'"></div>
+                <div *ngIf="hasBpmUserPictureId()" class="adf-userinfo-profile-container">
                     <img id="logged-user-img" [src]="bpmUserImage" alt="user-info-profile-button"
                         class="adf-userinfo-profile-image"/>
                 </div>
             </div>
             <div *ngIf="ecmUser" id="ecm-user-image">
-                    <div [outerHTML]="ecmUser | usernameInitials:'adf-userinfo-pic'"></div>
-                    <div *ngIf="ecmUser.avatarId" class="adf-userinfo-profile-container">
+                    <div *ngIf="!hasEcmUserAvatarId()" [outerHTML]="ecmUser | usernameInitials:'adf-userinfo-pic'"></div>
+                    <div *ngIf="hasEcmUserAvatarId()" class="adf-userinfo-profile-container">
                         <img id="logged-user-img" [src]="ecmUserImage" alt="user-info-profile-button"
                             class="adf-userinfo-profile-image"/>
                     </div>
@@ -29,8 +29,8 @@
             <mat-tab id="ecm-panel" label="{{ 'USER_PROFILE.TAB.CS' | translate }}" *ngIf="ecmUser">
                 <mat-card class="adf-userinfo-card">
                     <mat-card-header class="adf-userinfo-card-header" [style.background-image]="'url(' + ecmBackgroundImage + ')'">
-                        <div [outerHTML]="ecmUser | usernameInitials:'adf-userinfo-profile-initials adf-hide-small'"></div>
-                        <div  *ngIf="ecmUser.avatarId" class="adf-userinfo-profile-container adf-hide-small">
+                        <div *ngIf="!hasEcmUserAvatarId()" [outerHTML]="ecmUser | usernameInitials:'adf-userinfo-profile-initials adf-hide-small'"></div>
+                        <div *ngIf="hasEcmUserAvatarId()" class="adf-userinfo-profile-container adf-hide-small">
                             <img class="adf-userinfo-profile-picture" id="ecm-user-detail-image"
                                 alt="ecm-profile-image" [src]="ecmUserImage" />
                         </div>
@@ -55,8 +55,8 @@
             <mat-tab id="bpm-panel" label="{{ 'USER_PROFILE.TAB.PS' | translate }}" *ngIf="bpmUser">
             <mat-card class="adf-userinfo-card">
                 <mat-card-header class="adf-userinfo-card-header" [style.background-image]="'url(' + bpmBackgroundImage + ')'">
-                    <div [outerHTML]="bpmUser | usernameInitials:'adf-userinfo-profile-initials adf-hide-small'"></div>
-                    <img *ngIf="bpmUser.pictureId" class="adf-userinfo-profile-picture adf-hide-small" id="bpm-user-detail-image"
+                    <div *ngIf="!hasBpmUserPictureId()" [outerHTML]="bpmUser | usernameInitials:'adf-userinfo-profile-initials adf-hide-small'"></div>
+                    <img *ngIf="hasBpmUserPictureId()" class="adf-userinfo-profile-picture adf-hide-small" id="bpm-user-detail-image"
                             alt="bpm-profile-image" [src]="bpmUserImage"/>
                    <div class="adf-userinfo-title" id="bpm-username">{{bpmUser.fullNameDisplay}}</div>
                 </mat-card-header>
