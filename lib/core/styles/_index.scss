@@ -14,7 +14,7 @@
 @import '../login/components/login.component';
 @import '../datatable/components/datatable/datatable.component';
 @import '../form/components/widgets/form';
-@import '../viewer/components/viewer.component.scss';
+@import '../viewer/components/viewer.component';
 
 @mixin adf-core-theme($theme) {
     @include adf-form-theme($theme);

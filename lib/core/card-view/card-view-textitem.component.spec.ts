@@ -215,4 +215,19 @@ describe('CardViewTextItemComponent', () => {
         let updateInput = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
         updateInput.triggerEventHandler('click', null);
     });
+
+    it('should switch back to readonly mode after an update attempt', async(() => {
+        component.editable = true;
+        component.property.editable = true;
+        component.inEdit = true;
+        component.editedValue = 'updated-value';
+        fixture.detectChanges();
+
+        component.update();
+
+        fixture.whenStable().then(() => {
+            expect(component.property.value).toBe(component.editedValue);
+            expect(component.inEdit).toBeFalsy();
+        });
+    }));
 });
