@@ -84,7 +84,7 @@ fi
 
 if [[ "${EXEC_BETA}" == true ]]
 then
-	BETA_VERSION=$(npm view ng2-alfresco-core@beta version)
+	BETA_VERSION=$(npm view @alfresco/adf-core@beta version)
 
 	if [[  $BETA_VERSION == "" ]]; then
 	    NEXT_BETA_VERSION=1
