@@ -182,5 +182,19 @@
   },
   "PERMISSON": {
     "LACKOF": "You don't have the {{permission}} permission to {{action}} the {{type}}"
+  },
+  "METADATA": {
+    "BASIC": {
+        "NAME": "Name",
+        "TITLE": "Title",
+        "DESCRIPTION": "Description",
+        "AUTHOR": "Author",
+        "MIMETYPE": "Mimetype",
+        "SIZE": "Size",
+        "CREATOR": "Creator",
+        "CREATED_DATE": "Created Date",
+        "MODIFIER": "Modifier",
+        "MODIFIED_DATE": "Modified Date"
+    }
   }
 }

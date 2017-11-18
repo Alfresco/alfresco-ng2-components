@@ -11,11 +11,11 @@
         </ng-template>
     </span>
     <span *ngIf="isEditble()">
-        <div *ngIf="!inEdit" (click)="setEditMode(true)" class="adf-textitem-readonly" [attr.data-automation-id]="'card-textitem-edit-toggle-' + property.key">
+        <div *ngIf="!inEdit" (click)="setEditMode(true)" class="adf-textitem-readonly" [attr.data-automation-id]="'card-textitem-edit-toggle-' + property.key" fxLayout="row" fxLayoutAlign="space-between center">
             <span [attr.data-automation-id]="'card-textitem-value-' + property.key">
                 <span *ngIf="!property.isEmpty(); else elseEmptyValueBlock">{{ property.displayValue }}</span>
             </span>
-            <mat-icon [attr.data-automation-id]="'card-textitem-edit-icon-' + property.key" class="adf-textitem-icon">create</mat-icon>
+            <mat-icon fxFlex="0 0 auto" [attr.data-automation-id]="'card-textitem-edit-icon-' + property.key" class="adf-textitem-icon">create</mat-icon>
         </div>
         <div *ngIf="inEdit" class="adf-textitem-editable">
             <mat-form-field floatPlaceholder="never" class="adf-input-container">

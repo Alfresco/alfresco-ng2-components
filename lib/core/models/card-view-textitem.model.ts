@@ -23,24 +23,41 @@
  * @returns {CardViewTextItemModel} .
  */
 
+import { PipeTransform } from '@angular/core';
 import { CardViewItem } from '../interface/card-view-item.interface';
 import { DynamicComponentModel } from '../services/dynamic-component-mapper.service';
 import { CardViewBaseItemModel, CardViewItemProperties } from './card-view-baseitem.model';
 
+export interface CardViewTextItemPipeProperty {
+    pipe: PipeTransform;
+    params?: Array<any>;
+}
 export interface CardViewTextItemProperties extends CardViewItemProperties {
     multiline?: boolean;
+    pipes?: Array<CardViewTextItemPipeProperty>;
 }
 export class CardViewTextItemModel extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
     type: string = 'text';
-    multiline: boolean;
+    multiline?: boolean;
+    pipes?: Array<CardViewTextItemPipeProperty>;
 
     constructor(obj: CardViewTextItemProperties) {
         super(obj);
         this.multiline = !!obj.multiline ;
+        this.pipes = obj.pipes || [];
     }
 
     get displayValue() {
-        return this.value;
+        return this.applyPipes(this.value);
     }
 
+    private applyPipes(displayValue) {
+        if (this.pipes.length) {
+            displayValue = this.pipes.reduce((accumulator, { pipe, params }) => {
+                return pipe.transform(accumulator, ...params);
+            }, displayValue);
+        }
+
+        return displayValue;
+    }
 }

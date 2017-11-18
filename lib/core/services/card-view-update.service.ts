@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
+import { Observable, Subject } from 'rxjs/Rx';
 import { CardViewBaseItemModel } from '../models/card-view-baseitem.model';
 
 export interface UpdateNotification {
@@ -28,26 +28,34 @@ export interface ClickNotification {
     target: any;
 }
 
+export function transformKeyToObject(key: string, value): Object {
+    const objectLevels: string[] = key.split('.').reverse();
+
+    return objectLevels.reduce<{}>((previousValue, currentValue) => {
+        return { [currentValue]: previousValue};
+    }, value);
+}
+
 @Injectable()
 export class CardViewUpdateService {
 
     // Observable sources
     private itemUpdatedSource = new Subject<UpdateNotification>();
+    private itemClickedSource = new Subject<ClickNotification>();
 
     // Observable streams
-    public itemUpdated$ = this.itemUpdatedSource.asObservable();
+    public itemUpdated$ = <Observable<UpdateNotification>> this.itemUpdatedSource.asObservable();
+    public itemClicked$ = <Observable<ClickNotification>> this.itemClickedSource.asObservable();
 
-    public itemClicked$: Subject<ClickNotification> = new Subject<ClickNotification>();
-
-    update(property: CardViewBaseItemModel, changed: any) {
+    update(property: CardViewBaseItemModel, newValue: any) {
         this.itemUpdatedSource.next({
             target: property,
-            changed
+            changed: transformKeyToObject(property.key, newValue)
         });
     }
 
     clicked(property: CardViewBaseItemModel) {
-        this.itemClicked$.next({
+        this.itemClickedSource.next({
             target: property
         });
     }

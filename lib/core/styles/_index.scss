@@ -14,6 +14,7 @@
 @import '../login/components/login.component';
 @import '../datatable/components/datatable/datatable.component';
 @import '../form/components/widgets/form';
+@import '../viewer/components/viewer.component';
 
 @mixin adf-core-theme($theme) {
     @include adf-form-theme($theme);
@@ -30,6 +31,7 @@
     @include adf-userinfo-theme($theme);
     @include adf-login-theme($theme);
     @include adf-datatable-theme($theme);
+    @include adf-viewer-theme($theme);
 }
 
 

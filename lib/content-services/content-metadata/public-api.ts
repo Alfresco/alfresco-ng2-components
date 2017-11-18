@@ -15,20 +15,7 @@
  * limitations under the License.
  */
 
-export * from './social';
-export * from './tag';
-export * from './webscript';
-export * from './document-list';
-export * from './upload';
-export * from './search';
-export * from './site-dropdown';
-export * from './breadcrumb';
-export * from './version-manager';
-export * from './content-node-selector';
-export * from './dialogs';
-export * from './directive';
-export * from './content-metadata';
+export * from './content-metadata.component';
+export * from './content-metadata.service';
 
-export * from './mock';
-
-export * from './content.module';
+export * from './content-metadata.module';

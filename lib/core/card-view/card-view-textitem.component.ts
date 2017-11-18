@@ -64,7 +64,9 @@ export class CardViewTextItemComponent implements OnChanges {
     }
 
     update(): void {
-        this.cardViewUpdateService.update(this.property, { [this.property.key]: this.editedValue });
+        this.cardViewUpdateService.update(this.property, this.editedValue );
+        this.property.value = this.editedValue;
+        this.setEditMode(false);
     }
 
     clicked(): void {
