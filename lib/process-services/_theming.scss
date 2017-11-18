@@ -1,0 +1,449 @@
+@mixin adf-process-filters-theme($theme) {
+    $primary: map-get($theme, primary);
+
+    .adf {
+
+        &-filters__entry {
+            cursor: pointer;
+            font-size: 14px!important;
+            font-weight: bold;
+            opacity: .54;
+            padding-left: 30px;
+
+            .mat-list-item-content {
+                height: 34px;
+            }
+            &.active, &:hover {
+                color: mat-color($primary);
+                opacity: 1;
+            }
+        }
+
+        &-filters__entry-icon {
+            padding-right: 12px !important;
+            padding-left: 0px !important;
+        }
+
+    }
+
+}
+
+
+@mixin adf-task-list-comment-list-theme($theme) {
+    $primary: map-get($theme, primary);
+
+    .adf {
+
+        &-comment-img-container {
+            float: left;
+            width: 40px;
+            padding: 5px 10px;
+            height: 100%;
+        }
+
+        &-comment-user-icon {
+            padding: 10px 5px;
+            width: 30px;
+            background-color: mat-color($primary);
+            border-radius: 50%;
+            font-size: 16px;
+            color: #fff;
+            text-align: center;
+            height: 18px;
+            background-size: cover;
+        }
+
+        &-comment-user-name {
+            float: left;
+            width: calc(100% - 120px);
+            padding: 2px 10px;
+            font-weight: 600;
+            color: #595959;
+        }
+
+        &-comment-message {
+            float: left;
+            width: calc(100% - 10px);
+            padding: 2px 10px;
+            font-style: italic;
+            color: #595959;
+            white-space: initial;
+        }
+
+        &-comment-message-time {
+            float: left;
+            width: calc(100% - 120px);
+            padding: 2px 10px;
+            font-size: 12px;
+            color: #595959;
+        }
+
+        &-comment-contents {
+            float: left;
+            width: calc(100% - 10px);
+        }
+
+        &-datatable ::ng-deep table {
+            border: none !important;
+            tbody td {
+                padding: 0px !important;
+                border-top: none !important;
+            }
+        }
+
+        &-people-img {
+            border-radius: 90%;
+            width: 40px;
+            height: 40px;
+            vertical-align: middle;
+        }
+
+    }
+}
+
+
+
+
+
+@mixin adf-task-list-people-search-theme($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+
+    .adf-people-search {
+        width: 100%;
+
+        .activiti-label {
+            font-weight: bolder;
+        }
+
+        .fix-element-user-list {
+            padding-top: 0px;
+            padding-right: 0px;
+            padding-bottom: 0px;
+            padding-left: 0px;
+        }
+
+        .search-text-header {
+            font-weight: bold;
+            opacity: 0.54;
+        }
+
+        .search-text-container {
+            width: 100%;
+
+            input {
+                line-height: normal;
+            }
+        }
+
+        .search-list-container {
+            max-height: 152px;
+            width: 100%;
+            overflow-y: auto;
+        }
+
+        adf-people-list ::ng-deep adf-datatable ::ng-deep thead {
+            display: none;
+        }
+
+        .search-list-action-container {
+            border-top: 1px solid #eee;
+            text-align: right;
+            padding: 5px 0px;
+            margin-top: 5px;
+            > button {
+                opacity: 0.54;
+                font-weight: bolder;
+                &:hover {
+                    color: mat-color($primary);
+                }
+            }
+        }
+
+        .people-pic {
+            background: mat-color($primary);
+            width: 30px;
+            padding: 10px 5px;
+            border-radius: 90%;
+            color: #fff;
+            text-align: center;
+            font-weight: bolder;
+            font-size: 18px;
+            text-transform: uppercase;
+            vertical-align: text-bottom;
+        }
+
+        .people-img {
+            border-radius: 90%;
+            width: 40px;
+            height: 40px;
+            vertical-align: middle;
+        }
+    }
+}
+
+@mixin adf-task-list-people-theme($theme) {
+    $primary: map-get($theme, primary);
+
+    .assignment-header {
+        border-bottom: 1px solid #eee;
+        padding: 6px 20px;
+    }
+
+    .assigment-count {
+        float: left;
+        padding: 10px 0px;
+        font-weight: bolder;
+        opacity: 0.54;
+    }
+
+    .add-people {
+        float: right;
+        padding: 8px;
+        height: 26px;
+        opacity: 0.54;
+        cursor: pointer;
+        &:hover {
+            color: mat-color($primary);
+        }
+    }
+
+    .assignment-top-container.mat-card {
+        border-top: 2px solid #eee;
+        margin: 0px;
+        padding: 0px;
+        display: flex;
+        flex-flow: row wrap;
+        align-items: stretch;
+    }
+
+    .assignment-top-container-content {
+        display: flex;
+        flex-flow: column;
+        align-items: stretch;
+        flex: 1 0 auto;
+        max-width: 100%;
+    }
+
+    .assignment-container {
+        padding: 10px 20px;
+        border-bottom: 1px solid #eee;
+        max-width: 100%;
+    }
+
+    .assignment-list-container {
+        padding: 0px;
+    }
+
+    adf-people-list ::ng-deep adf-datatable ::ng-deep {
+        thead {
+            display: none;
+        }
+        .people-email {
+            opacity: 0.54;
+        }
+    }
+
+    .people-img {
+        border-radius: 90%;
+        width: 40px;
+        height: 40px;
+        vertical-align: middle;
+    }
+
+    .adf-people-search-people-pic {
+        background: mat-color($primary);
+        width: 30px;
+        padding: 10px 5px;
+        border-radius: 100px;
+        color: #fff;
+        text-align: center;
+        font-weight: bolder;
+        font-size: 18px;
+        text-transform: uppercase;
+        vertical-align: text-bottom;
+    }
+}
+
+
+@mixin adf-task-list-start-task-theme($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+
+    .adf-new-task-heading {
+        padding: 12px 20px;
+        font-weight: bold;
+        border-bottom: 1px solid #eee;
+        font-size: 18px;
+        float: left;
+        text-align: left;
+        width: calc(100% - 40px);
+    }
+
+    .adf-new-task-layout-card {
+        width: 66.6667%;
+        margin-right: calc(33.3333% / 2 - 24px);
+        margin-left: calc(33.3333% / 2 - 24px);
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding: 0px;
+    }
+
+    .adf-new-task-footer {
+        padding: 4px;
+        font-size: 18px;
+        border-top: 1px solid #eee;
+        float: left;
+        width: calc(100% - 40px);
+        text-align: right;
+    }
+
+    .adf-start-task-input-container {
+        width: 80%;
+    }
+
+    .adf-new-task-text-width {
+        width: 90%;
+    }
+
+    .adf-mat-select {
+        padding-top: 0px;
+    }
+
+    adf-start-task {
+        .adf {
+
+            &-start-task-input-container .mat-input-wrapper {
+                padding-top: 8px;
+            }
+
+            &-error-text-container {
+                position: absolute;
+                width: 81%;
+                height: 20px;
+                margin-top: 30px;
+            }
+
+            &-error-text {
+                padding: 1px;
+                height: 16px;
+                font-size: 12px;
+                line-height: 1.33;
+                float: left;
+                color: mat-color($warn);
+            }
+
+            &-error-icon {
+                float: right;
+                font-size: 17px;
+                color: mat-color($warn);
+            }
+
+            &-label {
+                color: rgb(186, 186, 186);;
+            }
+
+            &-invalid {
+
+                .mat-input-underline {
+                    background-color: #f44336 !important;
+                }
+
+                .adf-file {
+                    border-color: mat-color($warn);
+                }
+
+                .mat-input-prefix {
+                    color: mat-color($warn);
+                }
+
+                .adf-input {
+                    border-color: mat-color($warn);
+                }
+
+                .adf-label {
+                    color: mat-color($warn);
+                    &:after {
+                        background-color: mat-color($warn);
+                    }
+                }
+            }
+        }
+    }
+}
+
+@mixin adf-task-list-filters-task-theme($theme) {
+    $primary: map-get($theme, primary);
+
+    .adf {
+
+        &-filters__entry {
+            cursor: pointer;
+            font-size: 14px!important;
+            font-weight: bold;
+            opacity: .54;
+            padding-left: 30px;
+
+            .mat-list-item-content {
+                height: 34px;
+            }
+        }
+
+        &-filters__entry-icon {
+            padding-right: 12px !important;
+            padding-left: 0px !important;
+        }
+
+        &-filters__entry {
+            &.active, &:hover {
+                color: mat-color($primary);
+                opacity: 1;
+            }
+        }
+
+    }
+}
+
+@mixin adf-task-list-header-theme($theme) {
+    $primary: map-get($theme, primary);
+
+    .adf {
+        &-controls {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        &-edit-controls {
+            display: flex;
+            justify-content: flex-end;
+            margin-left: auto;
+        }
+
+        &-switch-to-edit-mode,
+        &-save-edit-mode {
+            color: mat-color($primary);
+        }
+
+        &-cancel-edit-mode,
+        &-claim-controls {
+            color: rgb(131, 131, 131);
+        }
+
+        &-card-container {
+            font-family: inherit;
+        }
+    }
+}
+
+
+@mixin adf-process-services-theme($theme) {
+    @include adf-process-filters-theme($theme);
+    @include adf-task-list-comment-list-theme($theme);
+    @include adf-task-list-start-task-theme($theme);
+    @include adf-task-list-people-search-theme($theme);
+    @include adf-task-list-people-theme($theme);
+    @include adf-task-list-filters-task-theme($theme);
+    @include adf-task-list-header-theme($theme);
+}

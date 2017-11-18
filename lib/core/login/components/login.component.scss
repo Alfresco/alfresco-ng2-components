@@ -159,10 +159,14 @@
             justify-content: center;
         }
 
-        mat-spinner {
-            height: 30px !important;
-            width: 20px !important;
-            margin-left: 10px;
+        .adf-login-spinner-container{
+            margin-left: 15px;
+            margin-top: 5px;
+        }
+
+        #checking-spinner > svg > circle{
+            stroke-width: 16% !important;
+
         }
 
         .adf-login-controls {
