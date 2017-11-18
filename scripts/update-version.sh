@@ -39,7 +39,8 @@ last_alpha_mode() {
 
     echo "====== version lib ${VERSION} ====="
 
-    DIFFERENT_JS_API=$(npm view alfresco-js-api@alpha version)
+    DIFFERENT_JS_API=true
+    VERSION_JS_API=$(npm view alfresco-js-api@alpha version)
 
     echo "====== version js-api ${DIFFERENT_JS_API} ====="
 }
@@ -50,7 +51,8 @@ next_alpha_mode() {
 
     echo "====== version lib ${VERSION} ====="
 
-    DIFFERENT_JS_API=$(npm view alfresco-js-api@alpha version)
+    DIFFERENT_JS_API=true
+    VERSION_JS_API=$(npm view alfresco-js-api@alpha version)
 
     echo "====== version js-api ${DIFFERENT_JS_API} ====="
 }
@@ -61,7 +63,8 @@ next_beta_mode() {
 
     echo "====== version lib ${VERSION} ====="
 
-    DIFFERENT_JS_API=$(npm view alfresco-js-api@beta version)
+    DIFFERENT_JS_API=true
+    VERSION_JS_API=$(npm view alfresco-js-api@beta version)
 
     echo "====== version js-api ${DIFFERENT_JS_API} ====="
 }
@@ -72,7 +75,8 @@ last_beta_mode() {
 
     echo "====== version lib ${VERSION} ====="
 
-    DIFFERENT_JS_API=$(npm view alfresco-js-api@beta version)
+    DIFFERENT_JS_API=true
+    VERSION_JS_API=$(npm view alfresco-js-api@beta version)
 
     echo "====== version js-api ${DIFFERENT_JS_API} ====="
 }
