@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-
-#!/usr/bin/env bash
 set -f
 
 eval EXEC_PATCH=false

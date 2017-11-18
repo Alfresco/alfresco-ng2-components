@@ -45,10 +45,34 @@ last_alpha_mode() {
     echo "====== version js-api ${DIFFERENT_JS_API} ====="
 }
 
+next_alpha_mode() {
+    echo "====== Auto find next ALPHA version ====="
+    JS_API=false
+    VERSION=$(./next_version.sh -major -alpha)
+
+    echo "====== version lib ${VERSION} ====="
+
+    DIFFERENT_JS_API=$(npm view alfresco-js-api@alpha version)
+
+    echo "====== version js-api ${DIFFERENT_JS_API} ====="
+}
+
+next_beta_mode() {
+    echo "====== Auto find next BETA version ====="
+    JS_API=false
+    VERSION=$(./next_version.sh -major -beta)
+
+    echo "====== version lib ${VERSION} ====="
+
+    DIFFERENT_JS_API=$(npm view alfresco-js-api@beta version)
+
+    echo "====== version js-api ${DIFFERENT_JS_API} ====="
+}
+
 last_beta_mode() {
     echo "====== Auto find last BETA version ====="
     JS_API=false
-    VERSION=$(npm view @alfresco/adf-core@beta version)
+    VERSION=$(npm view ng2-alfresco-core@beta version)
 
     echo "====== version lib ${VERSION} ====="
 
@@ -176,7 +200,9 @@ while [[ $1  == -* ]]; do
       -vj|versionjsapi)  version_js_change $2; shift 2;;
       -gnu) gnu_mode; shift;;
       -alpha) last_alpha_mode; shift;;
+      -nextalpha) next_alpha_mode; shift;;
       -beta) last_beta_mode; shift;;
+      -nextbeta) next_beta_mode; shift;;
       -demoshell) only_demoshell; shift;;
       -*) shift;;
     esac
