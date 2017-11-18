@@ -21,3 +21,12 @@ $theme:   mat-light-theme($primary, $accent, $warn);
 @include adf-process-services-theme($theme);
 @include adf-insights-theme($theme);
 @include adf-core-theme($theme);
+
+body, html {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+    font-size: mat-font-size($alfresco-typography, body-1);
+    font-family: mat-font-family($alfresco-typography);
+    line-height: mat-line-height($alfresco-typography, body-1);
+}
