@@ -35,7 +35,7 @@ core/prebuilt-themes/
 index.d.ts
 /.happypack
 
-process-services/_theming.scs
+process-services/_theming.scss
 content-services/_theming.scss
 core/_theming.scss
 insights/_theming.scss
