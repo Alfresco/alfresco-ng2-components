@@ -35,7 +35,6 @@ skip_js() {
 
 last_alpha_mode() {
     echo "====== Auto find last ALPHA version ====="
-    JS_API=false
     VERSION=$(npm view @alfresco/adf-core@alpha version)
 
     echo "====== version lib ${VERSION} ====="
@@ -47,7 +46,6 @@ last_alpha_mode() {
 
 next_alpha_mode() {
     echo "====== Auto find next ALPHA version ====="
-    JS_API=false
     VERSION=$(./next_version.sh -major -alpha)
 
     echo "====== version lib ${VERSION} ====="
@@ -59,7 +57,6 @@ next_alpha_mode() {
 
 next_beta_mode() {
     echo "====== Auto find next BETA version ====="
-    JS_API=false
     VERSION=$(./next_version.sh -major -beta)
 
     echo "====== version lib ${VERSION} ====="
@@ -71,7 +68,6 @@ next_beta_mode() {
 
 last_beta_mode() {
     echo "====== Auto find last BETA version ====="
-    JS_API=false
     VERSION=$(npm view ng2-alfresco-core@beta version)
 
     echo "====== version lib ${VERSION} ====="
@@ -142,7 +138,7 @@ update_total_build_dependency_version(){
 }
 
 update_total_build_dependency_js_version(){
-    echo "====== UPDATE DEPENDENCY VERSION of total build to ~${1} in ${DESTDIR}======"
+    echo "====== UPDATE DEPENDENCY VERSION alfresco-js-api total build to ~${1} in ${DESTDIR}======"
     DESTDIR="$DIR/../lib/"
     PACKAGETOCHANGE="alfresco-js-api"
 
