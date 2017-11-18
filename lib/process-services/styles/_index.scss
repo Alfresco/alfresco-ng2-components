@@ -1,5 +1,8 @@
 @import '../process-list/components/process-filters.component';
 
+@import '../attachment/process-attachment-list.component';
+@import '../attachment/task-attachment-list.component';
+
 @import '../comments/comment-list.component';
 
 @import '../people/people-search.component';
@@ -17,4 +20,6 @@
     @include adf-task-list-people-theme($theme);
     @include adf-task-list-filters-task-theme($theme);
     @include adf-task-list-header-theme($theme);
+    @include adf-process-attachment-list($theme);
+    @include adf-task-attachment-list($theme);
 }
