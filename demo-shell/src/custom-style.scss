@@ -1,9 +1,9 @@
 @import './app/components/app-layout/app-layout.component.scss';
 
-@import '~@alfresco/adf-content-services';
-@import '~@alfresco/adf-process-services';
-@import '~@alfresco/adf-insights';
-@import '~@alfresco/adf-core';
+@import '~@alfresco/adf-content-services/theming';
+@import '~@alfresco/adf-process-services/theming';
+@import '~@alfresco/adf-insights/theming';
+@import '~@alfresco/adf-core/theming';
 
 @import '~@angular/material/theming';
 
