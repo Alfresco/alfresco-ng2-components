@@ -80,7 +80,7 @@ export class CardViewDateItemComponent implements OnInit {
             let momentDate = moment(newDateValue.value, this.SHOW_FORMAT, true);
             if (momentDate.isValid()) {
                 this.valueDate = momentDate;
-                this.cardViewUpdateService.update(this.property, {[this.property.key]: momentDate.toDate()});
+                this.cardViewUpdateService.update(this.property, momentDate.toDate());
             }
         }
     }
