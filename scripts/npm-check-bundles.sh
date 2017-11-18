@@ -79,7 +79,7 @@ do
      echo "style ok!"
  fi
 
- if [ ! -f package/readme.md ]; then
+ if [ ! -f package/README.md ]; then
     error_out '31;1' "$PACKAGE readme not found!" >&2
     exit 1
  else
