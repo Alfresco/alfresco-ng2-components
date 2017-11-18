@@ -24,6 +24,7 @@ show_help() {
     echo "-demoshell execute the change version only in the demo shell "
     echo "-v or -version  version to update"
     echo "-alpha update last alpha version of js-api and lib automatically"
+    echo "-beta update beta alpha version of js-api and lib automatically"
     echo "-gnu for gnu"
 }
 
@@ -33,13 +34,25 @@ skip_js() {
 }
 
 last_alpha_mode() {
-    echo "====== Auto find last version ====="
+    echo "====== Auto find last ALPHA version ====="
     JS_API=false
     VERSION=$(npm view @alfresco/adf-core@alpha version)
 
     echo "====== version lib ${VERSION} ====="
 
     DIFFERENT_JS_API=$(npm view alfresco-js-api@alpha version)
+
+    echo "====== version js-api ${DIFFERENT_JS_API} ====="
+}
+
+last_beta_mode() {
+    echo "====== Auto find last BETA version ====="
+    JS_API=false
+    VERSION=$(npm view @alfresco/adf-core@beta version)
+
+    echo "====== version lib ${VERSION} ====="
+
+    DIFFERENT_JS_API=$(npm view alfresco-js-api@beta version)
 
     echo "====== version js-api ${DIFFERENT_JS_API} ====="
 }
@@ -163,6 +176,7 @@ while [[ $1  == -* ]]; do
       -vj|versionjsapi)  version_js_change $2; shift 2;;
       -gnu) gnu_mode; shift;;
       -alpha) last_alpha_mode; shift;;
+      -beta) last_beta_mode; shift;;
       -demoshell) only_demoshell; shift;;
       -*) shift;;
     esac
