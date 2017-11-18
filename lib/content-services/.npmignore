@@ -17,6 +17,10 @@ npm-debug.log
 !**/*.d.ts
 !**/adf-content-services.js
 
+**/*.scss
+**/*.css
+!**/_theming.scss
+
 coverage/
 demo/
 dist/

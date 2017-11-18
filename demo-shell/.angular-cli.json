@@ -20,8 +20,8 @@
         },
         {
           "glob": "**/*",
-          "input": "../node_modules/core/prebuilt-themes",
-          "output": "./prebuilt-themes"
+          "input": "../node_modules/@alfresco/adf-core/prebuilt-themes",
+          "output": "./assets/prebuilt-themes"
         },
         {
           "glob": "**/*",
@@ -88,6 +88,11 @@
         },
         {
           "glob": "**/*",
+          "input": "../../lib/core/prebuilt-themes",
+          "output": "./assets/prebuilt-themes"
+        },
+        {
+          "glob": "**/*",
           "input": "../../lib/core/bundles/assets",
           "output": "./assets/"
         },
@@ -117,7 +122,7 @@
       "prefix": "app-dev",
       "styles": [
         "styles.scss",
-        "custom-style.scss"
+        "custom-style-dev.scss"
       ],
       "stylePreprocessorOptions": {
       "includePaths": [

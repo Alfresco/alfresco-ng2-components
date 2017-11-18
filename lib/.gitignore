@@ -21,10 +21,10 @@ core/**/*.js
 core/**/*.js.map
 core/**/*.d.ts
 
-analytics/**/*.js
-!analytics/karma-test-shim.js
-analytics/**/*.js.map
-analytics/**/*.d.ts
+insights/**/*.js
+!insights/karma-test-shim.js
+insights/**/*.js.map
+insights/**/*.d.ts
 
 !config/karma-test-shim.js!
 
@@ -34,3 +34,8 @@ core/prebuilt-themes/
 /bundles/
 index.d.ts
 /.happypack
+
+process-services/_theming.scs
+content-services/_theming.scss
+core/_theming.scss
+insights/_theming.scss
