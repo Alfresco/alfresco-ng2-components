@@ -57,17 +57,46 @@ do
  cd  $PACKAGE
  npm pack '@alfresco/'$PACKAGE@$VERSION
  tar zxf 'alfresco-'$PACKAGE-$VERSION.tgz
+
  if [ ! -f package/bundles/$PACKAGE.js ]; then
     error_out '31;1' "$PACKAGE bundles not found!" >&2
-    cd $DIR
     exit 1
  else
      echo "bundles ok!"
  fi
+
+ if [ ! -f package/bundles/$PACKAGE.js.map ]; then
+    error_out '31;1' "$PACKAGE js.map not found!" >&2
+    exit 1
+ else
+     echo "js.map ok!"
+ fi
+
+  if [ ! -f package/_theming.scss ]; then
+    error_out '31;1' "$PACKAGE style not found!" >&2
+    exit 1
+ else
+     echo "style ok!"
+ fi
+
+ if [ ! -f package/readme.md ]; then
+    error_out '31;1' "$PACKAGE readme not found!" >&2
+    exit 1
+ else
+     echo "readme ok!"
+ fi
+
+ if [ ! -f package/bundles/assets/$PACKAGE/i18n/en.json ]; then
+    error_out '31;1' "$PACKAGE i18n not found!" >&2
+    exit 1
+ else
+     echo "i18n ok!"
+ fi
+
  cd ..
 done
+ cd ..
 
-cd $DIR
 rm -rf temp
 
 set_npm_registry
