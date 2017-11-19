@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SearchOptions, SearchService } from '@alfresco/adf-core';
+import { SearchApiService } from '@alfresco/adf-core';
 import {
     AfterContentInit,
     ChangeDetectionStrategy,
@@ -31,7 +31,7 @@ import {
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import { NodePaging } from 'alfresco-js-api';
+import { NodePaging, QueryBody } from 'alfresco-js-api';
 import { Subject } from 'rxjs/Subject';
 
 @Component({
@@ -61,16 +61,13 @@ export class SearchComponent implements AfterContentInit, OnChanges {
     maxResults: number = 20;
 
     @Input()
-    resultSort: string = null;
-
-    @Input()
-    rootNodeId: string = '-root-';
-
-    @Input()
-    resultType: string = null;
+    skipResults: number = 0;
 
     @Input()
     searchTerm: string = '';
+
+    @Input()
+    searchNode: QueryBody;
 
     @Input('class')
     set classList(classList: string) {
@@ -104,7 +101,7 @@ export class SearchComponent implements AfterContentInit, OnChanges {
     _classList: { [key: string]: boolean } = {};
 
     constructor(
-        private searchService: SearchService,
+        private searchService: SearchApiService,
         private changeDetectorRef: ChangeDetectorRef,
         private _elementRef: ElementRef) {
         this.keyPressedStream.asObservable()
@@ -119,9 +116,12 @@ export class SearchComponent implements AfterContentInit, OnChanges {
     }
 
     ngOnChanges(changes) {
-        if (changes.searchTerm) {
-            this.resetResults();
+        this.resetResults();
+        if (changes.searchTerm && changes.searchTerm.currentValue) {
             this.displaySearchResults(changes.searchTerm.currentValue);
+        }
+        if (changes.searchNode && changes.searchNode.currentValue) {
+            this.displaySearchResults();
         }
     }
 
@@ -140,18 +140,17 @@ export class SearchComponent implements AfterContentInit, OnChanges {
         }
     }
 
-    private displaySearchResults(searchTerm) {
-        let searchOpts: SearchOptions = {
-            include: ['path', 'allowableOperations'],
-            rootNodeId: this.rootNodeId,
-            nodeType: this.resultType,
-            maxItems: this.maxResults,
-            orderBy: this.resultSort
-        };
-        if (searchTerm !== null && searchTerm !== '') {
+    private hasValidSearchQuery(searchOpts: QueryBody) {
+        return searchOpts && searchOpts.query && searchOpts.query.query;
+    }
+
+    private displaySearchResults(searchTerm?: string) {
+        let searchOpts: QueryBody = this.getSearchNode(searchTerm);
+
+        if (this.hasValidSearchQuery(searchOpts)) {
             searchTerm = searchTerm + '*';
             this.searchService
-                .getNodeQueryResults(searchTerm, searchOpts)
+                .search(searchOpts)
                 .subscribe(
                 results => {
                     this.results = <NodePaging> results;
@@ -165,7 +164,37 @@ export class SearchComponent implements AfterContentInit, OnChanges {
                         this.error.emit(error);
                     }
                 });
+        } else {
+            this.cleanResults();
         }
+    }
+
+    private getSearchNode(searchTerm: string): QueryBody {
+        if (this.searchNode) {
+            if (!this.searchNode.query.query && searchTerm) {
+                this.searchNode.query.query = searchTerm;
+            }
+            return this.searchNode;
+        } else {
+            return this.generateDefaultSearchNode(searchTerm);
+        }
+    }
+
+    private generateDefaultSearchNode(searchTerm: string): QueryBody {
+        let defaultSearchNode: QueryBody = {
+            query: {
+                query: searchTerm ? `${searchTerm}* OR name:${searchTerm}*` : searchTerm
+            },
+            include: ['path', 'allowableOperations'],
+            paging: {
+                maxItems: this.maxResults.toString(),
+                skipCount: this.skipResults.toString()
+            },
+            filterQueries: [
+                { query: "TYPE:'cm:folder' OR TYPE:'cm:content'" },
+                { query: 'NOT cm:creator:System' }]
+        };
+        return defaultSearchNode;
     }
 
     hidePanel() {
