@@ -80,6 +80,9 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
 
     ngOnDestroy() {
         this.escapeEventStream.unsubscribe();
+        if ( this.closingActionsSubscription ) {
+            this.closingActionsSubscription.unsubscribe();
+        }
     }
 
     get panelOpen(): boolean {
@@ -191,7 +194,6 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
                 this.searchPanel.setVisibility();
                 return this.panelClosingActions;
             })
-            .first()
             .subscribe(event => this.setValueAndClose(event));
     }
 
