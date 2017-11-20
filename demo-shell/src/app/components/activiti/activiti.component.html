@@ -66,7 +66,7 @@
                                            [taskId]="currentTaskId"
                                            [fieldValidators]="fieldValidators"
                                            (formCompleted)="onFormCompleted($event)"
-                                           (formContentClicked)="onFormContentClick($event)"
+                                           (formContentClicked)="onContentClick($event)"
                                            (taskCreated)="onTaskCreated($event)"
                                            (assignTask)="onAssignTask()"
                                            (taskDeleted)="onTaskDeleted($event)">
@@ -86,7 +86,8 @@
                     <mat-card>
                         <mat-card-content>
                             <adf-task-attachment-list
-                                [taskId]="currentTaskId">
+                                [taskId]="currentTaskId"
+                                (attachmentClick)="onContentClick($event)">
                             </adf-task-attachment-list>
                         </mat-card-content>
                     </mat-card>
@@ -172,10 +173,10 @@
                         <hr>
                     </div>
                     <mat-card>
-
                         <mat-card-content>
                             <adf-process-attachment-list
-                                [processInstanceId]="currentProcessInstanceId">
+                                [processInstanceId]="currentProcessInstanceId"
+                                (attachmentClick)="onContentClick($event)">
                             </adf-process-attachment-list>
                         </mat-card-content>
                     </mat-card>
