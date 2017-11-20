@@ -16,6 +16,7 @@
  */
 
 import { CommonModule } from '@angular/common';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -26,6 +27,7 @@ import { AppsListComponent } from './apps-list.component';
     imports: [
         CommonModule,
         MaterialModule,
+        FlexLayoutModule,
         TranslateModule
     ],
     declarations: [
