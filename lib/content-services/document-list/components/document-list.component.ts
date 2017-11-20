@@ -474,7 +474,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                     this.data.loadPage(<NodePaging> val, merge);
                     this.loading = false;
                     this.infiniteLoading = false;
-                    this.ready.emit();
+                    this.ready.emit(val);
                     resolve(true);
                 },
                 error => {
