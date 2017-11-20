@@ -44,11 +44,14 @@ for more information about installing and using the source code.
 - [Form field component](form-field.component.md)
 - [Form list component](form-list.component.md)
 - [Form component](form.component.md)
+- [Start form component](start-form.component.md)
+- [Text mask component](text-mask.component.md)
 - [Widget component](widget.component.md)
 - [Info drawer layout component](info-drawer-layout.component.md)
 - [Info drawer component](info-drawer.component.md)
 - [Language menu component](language-menu.component.md)
 - [Login component](login.component.md)
+- [Infinite pagination component](infinite-pagination.component.md)
 - [Pagination component](pagination.component.md)
 - [Host settings component](host-settings.component.md)
 - [Toolbar divider component](toolbar-divider.component.md)
@@ -56,14 +59,6 @@ for more information about installing and using the source code.
 - [Toolbar component](toolbar.component.md)
 - [User info component](user-info.component.md)
 - [Viewer component](viewer.component.md)
-- [*Datatable cell component](../lib/core/datatable/components/datatable/datatable-cell.component.ts)
-- [*Date cell component](../lib/core/datatable/components/datatable/date-cell.component.ts)
-- [*Filesize cell component](../lib/core/datatable/components/datatable/filesize-cell.component.ts)
-- [*Location cell component](../lib/core/datatable/components/datatable/location-cell.component.ts)
-- [*Start form component](../lib/core/form/components/start-form.component.ts)
-- [*Error component](../lib/core/form/components/widgets/error/error.component.ts)
-- [*Text mask component](../lib/core/form/components/widgets/text/text-mask.component.ts)
-- [*Infinite pagination component](../lib/core/pagination/infinite-pagination.component.ts)
 
 ### Directives
 
@@ -75,8 +70,6 @@ for more information about installing and using the source code.
 - [Node permission directive](node-permission.directive.md)
 - [Node restore directive](node-restore.directive.md)
 - [Upload directive](upload.directive.md)
-- [*No permission template directive](../lib/core/datatable/directives/no-permission-template.directive.ts)
-- [*Form custom button directive](../lib/core/form/components/form-custom-button.directive.ts)
 
 ### Models
 
@@ -136,10 +129,6 @@ for more information about installing and using the source code.
 - [Bpm user service](bpm-user.service.md)
 - [Ecm user service](ecm-user.service.md)
 - [*Activiti alfresco service](../lib/core/form/services/activiti-alfresco.service.ts)
-- [*Widget visibility service](../lib/core/form/services/widget-visibility.service.ts)
-- [*Card item types service](../lib/core/services/card-item-types.service.ts)
-- [*Dynamic component mapper service](../lib/core/services/dynamic-component-mapper.service.ts)
-- [*Settings service](../lib/core/services/settings.service.ts)
 
 ### Widgets
 
@@ -181,6 +170,8 @@ for more information about installing and using the source code.
 - [Version list component](version-list.component.md)
 - [Version manager component](version-manager.component.md)
 - [Webscript component](webscript.component.md)
+- [*Content metadata card component](../lib/content-services/content-metadata/content-metadata-card.component.ts)
+- [*Content metadata component](../lib/content-services/content-metadata/content-metadata.component.ts)
 - [*Content node selector component](../lib/content-services/content-node-selector/content-node-selector.component.ts)
 - [*File uploading list row component](../lib/content-services/upload/components/file-uploading-list-row.component.ts)
 - [*File uploading list component](../lib/content-services/upload/components/file-uploading-list.component.ts)
@@ -191,7 +182,6 @@ for more information about installing and using the source code.
 - [Folder create directive](folder-create.directive.md)
 - [Folder edit directive](folder-edit.directive.md)
 - [File draggable directive](file-draggable.directive.md)
-- [*No permission content directive](../lib/content-services/document-list/components/no-permission/no-permission-content.directive.ts)
 - [*Search trigger directive](../lib/content-services/search/components/search-trigger.directive.ts)
 
 ### Models
@@ -203,6 +193,7 @@ for more information about installing and using the source code.
 
 - [Document actions service](document-actions.service.md)
 - [Folder actions service](folder-actions.service.md)
+- [*Content metadata service](../lib/content-services/content-metadata/content-metadata.service.ts)
 - [*Content node selector service](../lib/content-services/content-node-selector/content-node-selector.service.ts)
 - [*Document list service](../lib/content-services/document-list/services/document-list.service.ts)
 - [*Node actions service](../lib/content-services/document-list/services/node-actions.service.ts)
@@ -230,6 +221,7 @@ for more information about installing and using the source code.
 - [Comment list component](comment-list.component.md)
 - [Comments component](comments.component.md)
 - [Process comments component](process-comments.component.md)
+- [People list component](people-list.component.md)
 - [People search component](people-search.component.md)
 - [People component](people.component.md)
 - [Process filters component](process-filters.component.md)
@@ -244,7 +236,6 @@ for more information about installing and using the source code.
 - [Task filters component](task-filters.component.md)
 - [Task header component](task-header.component.md)
 - [Task list component](task-list.component.md)
-- [*People list component](../lib/process-services/people/people-list.component.ts)
 
 ### Directives
 
