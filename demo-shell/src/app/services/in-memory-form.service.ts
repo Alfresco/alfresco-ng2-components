@@ -56,9 +56,11 @@ export class InMemoryFormService extends FormService {
             let field = this.data.rest.fields.find(
                 f => f.taskId === taskId && f.fieldId === field
             );
-            let values: FormFieldOption[] = field.values || [];
-            this.logService.log(values);
-            observer.next(values);
+            if ( field ) {
+                let values: FormFieldOption[] = field.values || [];
+                this.logService.log(values);
+                observer.next(values);
+            }
         });
     }
 
