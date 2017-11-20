@@ -66,7 +66,7 @@ export class ContextMenuHolderComponent implements OnInit, OnDestroy {
     @HostListener('window:resize', ['$event'])
     onResize(event) {
         if (this.mdMenuElement) {
-            this.setPosition();
+            this.setPositionAfterCDKrecalculation();
         }
     }
 
@@ -130,8 +130,14 @@ export class ContextMenuHolderComponent implements OnInit, OnDestroy {
         this.menuTrigger.openMenu();
 
         if (this.mdMenuElement) {
-            this.setPosition();
+            this.setPositionAfterCDKrecalculation();
         }
+    }
+
+    setPositionAfterCDKrecalculation() {
+        setTimeout(() => {
+            this.setPosition();
+        }, 0);
     }
 
     get mdMenuElement() {

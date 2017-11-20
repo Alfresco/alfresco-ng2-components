@@ -17,7 +17,7 @@
 
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { ViewportRuler } from '@angular/cdk/scrolling';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { fakeAsync, ComponentFixture, TestBed, tick } from '@angular/core/testing';
 import { ContextMenuHolderComponent } from './context-menu-holder.component';
 import { ContextMenuModule } from './context-menu.module';
 import { ContextMenuService } from './context-menu.service';
@@ -148,61 +148,65 @@ describe('ContextMenuHolderComponent', () => {
             component.mdMenuElement.clientWidth = 200;
         });
 
-        it('should set position to mouse position', () => {
+        it('should set position to mouse position', fakeAsync(() => {
             const contextMenuEvent = {
                 clientX: 100,
                 clientY: 210
             };
 
             component.showMenu(<any> contextMenuEvent, [{}]);
+            tick();
 
             expect(component.mdMenuElement.parentElement.style).toEqual({
                 left: '100px',
                 top: '210px'
             });
-        });
+        }));
 
-        it('should ajust position relative to right margin of the screen', () => {
+        it('should ajust position relative to right margin of the screen', fakeAsync(() => {
             const contextMenuEvent = {
                 clientX: 1000,
                 clientY: 210
             };
 
             component.showMenu(<any> contextMenuEvent, [{}]);
+            tick();
 
             expect(component.mdMenuElement.parentElement.style).toEqual({
                 left: '800px',
                 top: '210px'
             });
-        });
+        }));
 
-        it('should ajust position relative to bottom margin of the screen', () => {
+        it('should ajust position relative to bottom margin of the screen', fakeAsync(() => {
             const contextMenuEvent = {
                 clientX: 100,
                 clientY: 600
             };
 
             component.showMenu(<any> contextMenuEvent, [{}]);
+            tick();
 
             expect(component.mdMenuElement.parentElement.style).toEqual({
                 left: '100px',
                 top: '440px'
             });
-        });
+        }));
 
-        it('should ajust position relative to bottom - right margin of the screen', () => {
+        it('should ajust position relative to bottom - right margin of the screen', fakeAsync(() => {
             const contextMenuEvent = {
                 clientX: 900,
                 clientY: 610
             };
 
             component.showMenu(<any> contextMenuEvent, [{}]);
+            tick();
 
             expect(component.mdMenuElement.parentElement.style).toEqual({
                 left: '700px',
                 top: '450px'
             });
-        });
+        }));
     });
 
     describe('Menu direction', () => {
@@ -212,52 +216,56 @@ describe('ContextMenuHolderComponent', () => {
             component.mdMenuElement.clientWidth = 200;
         });
 
-        it('should set default menu direction', () => {
+        it('should set default menu direction', fakeAsync(() => {
             const contextMenuEvent = {
                 clientX: 100,
                 clientY: 210
             };
 
             component.showMenu(<any> contextMenuEvent, [{}]);
+            tick();
 
             expect(component.menuTrigger.menu.xPosition).toBe('after');
             expect(component.menuTrigger.menu.yPosition).toBe('below');
-        });
+        }));
 
-        it('should ajust direction relative to right margin of the screen', () => {
+        it('should ajust direction relative to right margin of the screen', fakeAsync(() => {
             const contextMenuEvent = {
                 clientX: 1000,
                 clientY: 210
             };
 
             component.showMenu(<any> contextMenuEvent, [{}]);
+            tick();
 
             expect(component.menuTrigger.menu.xPosition).toBe('before');
             expect(component.menuTrigger.menu.yPosition).toBe('below');
-        });
+        }));
 
-        it('should ajust direction relative to bottom margin of the screen', () => {
+        it('should ajust direction relative to bottom margin of the screen', fakeAsync(() => {
             const contextMenuEvent = {
                 clientX: 100,
                 clientY: 600
             };
 
             component.showMenu(<any> contextMenuEvent, [{}]);
+            tick();
 
             expect(component.menuTrigger.menu.xPosition).toBe('after');
             expect(component.menuTrigger.menu.yPosition).toBe('above');
-        });
+        }));
 
-        it('should ajust position relative to bottom - right margin of the screen', () => {
+        it('should ajust position relative to bottom - right margin of the screen', fakeAsync(() => {
             const contextMenuEvent = {
                 clientX: 900,
                 clientY: 610
             };
 
             component.showMenu(<any> contextMenuEvent, [{}]);
+            tick();
 
             expect(component.menuTrigger.menu.xPosition).toBe('before');
             expect(component.menuTrigger.menu.yPosition).toBe('above');
-        });
+        }));
     });
 });
