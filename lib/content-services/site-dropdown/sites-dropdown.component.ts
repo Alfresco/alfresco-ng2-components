@@ -28,22 +28,22 @@ export class DropdownSitesComponent implements OnInit {
     @Input()
     hideMyFiles: boolean = false;
 
+    @Input()
+    siteList: any[] = null;
+
     @Output()
     change: EventEmitter<SiteModel> = new EventEmitter();
 
     public MY_FILES_VALUE = 'default';
-
-    siteList = [];
 
     public siteSelected: string;
 
     constructor(private sitesService: SitesApiService) {}
 
     ngOnInit() {
-        this.sitesService.getSites().subscribe((result) => {
-            this.siteList = result;
-        },
-        (error) => {});
+        if (!this.siteList) {
+            this.setDefaultSiteList();
+        }
     }
 
     selectedSite() {
@@ -54,6 +54,14 @@ export class DropdownSitesComponent implements OnInit {
            siteFound = this.siteList.find( site => site.guid === this.siteSelected);
         }
         this.change.emit(siteFound);
+    }
+
+    setDefaultSiteList() {
+        this.siteList = [];
+        this.sitesService.getSites().subscribe((result) => {
+                this.siteList = result;
+            },
+            (error) => {});
     }
 
 }
