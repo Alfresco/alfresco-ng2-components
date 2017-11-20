@@ -311,7 +311,7 @@ export class FormFieldModel extends FormWidgetModel {
          This is needed due to Activiti displaying/editing dates in d-M-YYYY format
          but storing on server in ISO8601 format (i.e. 2013-02-04T22:44:30.652Z)
          */
-        if (json.type === FormFieldTypes.DATE) {
+        if (this.isDateField(json)) {
             if (value) {
                 let dateValue;
                 if (NumberFieldValidator.isNumber(value)) {
@@ -416,5 +416,12 @@ export class FormFieldModel extends FormWidgetModel {
 
     hasOptions() {
         return this.options && this.options.length > 0;
+    }
+
+    private isDateField(json: any) {
+        return (json.params &&
+                json.params.field &&
+                json.params.field.type === FormFieldTypes.DATE ) ||
+                json.type === FormFieldTypes.DATE;
     }
 }
