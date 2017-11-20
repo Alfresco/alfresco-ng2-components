@@ -134,10 +134,6 @@ export class ActivitiComponent implements AfterViewInit, OnDestroy, OnInit {
     dataTasks: ObjectDataTableAdapter;
     dataProcesses: ObjectDataTableAdapter;
     presetColoum: string = 'default';
-    taskAttachmentDetails: any = {};
-    processAttachmentDetails: any = {};
-    viewTaskAttachment: boolean = false;
-    viewProcessAttachment: boolean = false;
 
     fieldValidators = [
         ...FORM_FIELD_VALIDATORS,
@@ -307,24 +303,20 @@ export class ActivitiComponent implements AfterViewInit, OnDestroy, OnInit {
 
     onTaskRowClick(taskId): void {
         this.currentTaskId = taskId;
-        this.viewTaskAttachment = false;
     }
 
     onTaskRowDblClick(event: CustomEvent) {
         const taskId = event.detail.value.obj.id;
         this.currentTaskId = taskId;
-        this.viewTaskAttachment = false;
     }
 
     onProcessRowDblClick(event: CustomEvent) {
         const processInstanceId = event.detail.value.obj.id;
         this.currentProcessInstanceId = processInstanceId;
-        this.viewProcessAttachment = false;
     }
 
     onProcessRowClick(processInstanceId): void {
         this.currentProcessInstanceId = processInstanceId;
-        this.viewProcessAttachment = false;
     }
 
     onEditReport(name: string): void {
@@ -396,7 +388,7 @@ export class ActivitiComponent implements AfterViewInit, OnDestroy, OnInit {
         }
     }
 
-    onFormContentClick(content: any): void {
+    onContentClick(content: any): void {
         this.fileShowed = true;
         this.content = content.contentBlob;
         this.contentName = content.name;
@@ -473,14 +465,10 @@ export class ActivitiComponent implements AfterViewInit, OnDestroy, OnInit {
     }
 
     onRowClick(event): void {
-        this.viewProcessAttachment  = false;
-        this.viewTaskAttachment  = false;
         this.logService.log(event);
     }
 
     onRowDblClick(event): void {
-        this.viewProcessAttachment  = false;
-        this.viewTaskAttachment  = false;
         this.logService.log(event);
     }
 
@@ -491,20 +479,5 @@ export class ActivitiComponent implements AfterViewInit, OnDestroy, OnInit {
     onAssignTask() {
         this.taskList.reload();
         this.currentTaskId = null;
-    }
-
-    onTaskAttachmentClick(attachmentDetails: any) {
-        this.taskAttachmentDetails = attachmentDetails;
-        this.viewTaskAttachment = true;
-    }
-
-    onProcessAttachmentClick(attachmentDetails: any) {
-        this.processAttachmentDetails = attachmentDetails;
-        this.viewProcessAttachment = true;
-    }
-    
-    closeActiveViewer() {
-        this.viewProcessAttachment = false;
-        this.viewTaskAttachment = false;
     }
 }
