@@ -255,6 +255,7 @@
                 </content-actions>
             </adf-document-list>
             <adf-pagination
+                #standardPagination
                 *ngIf="!infiniteScrolling"
                 class="adf-documentlist-pagination"
                 [pagination]="pagination"
