@@ -312,7 +312,7 @@ export class ContentNodeSelectorComponent implements OnInit {
 
             this.apiService.nodesApi.getNode(node.guid, options)
                 .then(documentLibrary => {
-                    this.documentList.performNavigation(documentLibrary);
+                    this.documentList.performCustomSourceNavigation(documentLibrary);
                 });
         }
     }

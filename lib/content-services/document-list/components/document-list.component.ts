@@ -402,15 +402,27 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     performNavigation(node: MinimalNodeEntity): boolean {
         if (this.canNavigateFolder(node)) {
-            this.currentFolderId = node.entry.id;
-            this.folderNode = node.entry;
-            this.skipCount = 0;
-            this.currentNodeAllowableOperations = node.entry['allowableOperations'] ? node.entry['allowableOperations'] : [];
-            this.loadFolder();
-            this.folderChange.emit(new NodeEntryEvent(node.entry));
+            this.updateFolderData(node);
             return true;
         }
         return false;
+    }
+
+    performCustomSourceNavigation(node: MinimalNodeEntity): boolean {
+        if (this.isCustomSource(this.currentFolderId)) {
+            this.updateFolderData(node);
+            return true;
+        }
+        return false;
+    }
+
+    updateFolderData(node: MinimalNodeEntity): void {
+        this.currentFolderId = node.entry.id;
+        this.folderNode = node.entry;
+        this.skipCount = 0;
+        this.currentNodeAllowableOperations = node.entry['allowableOperations'] ? node.entry['allowableOperations'] : [];
+        this.loadFolder();
+        this.folderChange.emit(new NodeEntryEvent(node.entry));
     }
 
     /**
@@ -846,10 +858,6 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     canNavigateFolder(node: MinimalNodeEntity): boolean {
-        if (this.currentFolderId === '-mysites-') {
-            return true;
-        }
-
         if (this.isCustomSource(this.currentFolderId)) {
             return false;
         }

@@ -41,14 +41,8 @@ export class DropdownSitesComponent implements OnInit {
     constructor(private sitesService: SitesApiService) {}
 
     ngOnInit() {
-        // fetch sites data only if siteList input has not been given a value
         if (!this.siteList) {
-
-            this.siteList = [];
-            this.sitesService.getSites().subscribe((result) => {
-                    this.siteList = result;
-                },
-                (error) => {});
+            this.setDefaultSiteList();
         }
     }
 
@@ -60,6 +54,14 @@ export class DropdownSitesComponent implements OnInit {
            siteFound = this.siteList.find( site => site.guid === this.siteSelected);
         }
         this.change.emit(siteFound);
+    }
+
+    setDefaultSiteList() {
+        this.siteList = [];
+        this.sitesService.getSites().subscribe((result) => {
+                this.siteList = result;
+            },
+            (error) => {});
     }
 
 }
