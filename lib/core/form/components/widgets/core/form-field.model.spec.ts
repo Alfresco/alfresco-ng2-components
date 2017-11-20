@@ -224,6 +224,31 @@ describe('FormFieldModel', () => {
         expect(form.values['ddmmyyy']).toEqual('2017-04-28T00:00:00.000Z');
     });
 
+    it('should parse the date with the format DD-MM-YYYY when it is readonly', () => {
+        let form = new FormModel();
+        let field = new FormFieldModel(form, {
+            fieldType: 'FormFieldRepresentation',
+            id: 'ddmmyyy',
+            name: 'DD-MM-YYYY',
+            type: 'readonly',
+            value: '2017-04-28T00:00:00.000+0000',
+            required: false,
+            readOnly: true,
+            params: {
+                field: {
+                    id: 'ddmmyyy',
+                    name: 'DD-MM-YYYY',
+                    type: 'date',
+                    value: null,
+                    required: false,
+                    readOnly: false
+                }
+            },
+            dateDisplayFormat: 'DD-MM-YYYY'
+        });
+        expect(field.value).toBe('28-04-2017');
+    });
+
     it('should return the label of selected dropdown value ', () => {
         let field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.DROPDOWN,
