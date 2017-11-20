@@ -20,7 +20,7 @@ import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { ContentService, TranslationService, SearchService, SiteModel, SitesApiService, UserPreferencesService } from '@alfresco/adf-core';
+import { AlfrescoApiService, ContentService, TranslationService, SearchService, SiteModel, SitesApiService, UserPreferencesService } from '@alfresco/adf-core';
 import { DataTableModule } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Rx';
 import { MaterialModule } from '../material.module';
@@ -83,6 +83,7 @@ describe('ContentNodeSelectorComponent', () => {
                 ContentNodeSelectorComponent
             ],
             providers: [
+                AlfrescoApiService,
                 ContentService,
                 SitesApiService,
                 TranslationService,
@@ -173,13 +174,13 @@ describe('ContentNodeSelectorComponent', () => {
             });
 
             it('should be shown if dialogRef is injected', () => {
-                const componentInstance = new ContentNodeSelectorComponent(null, null, fakePreference, data, dummyMdDialogRef);
+                const componentInstance = new ContentNodeSelectorComponent(null, null, null, fakePreference, data, dummyMdDialogRef);
                 expect(componentInstance.inDialog).toBeTruthy();
             });
 
             it('should should call the close method in the injected dialogRef', () => {
                 spyOn(dummyMdDialogRef, 'close');
-                const componentInstance = new ContentNodeSelectorComponent(null, null, fakePreference, data, dummyMdDialogRef);
+                const componentInstance = new ContentNodeSelectorComponent(null, null, null, fakePreference, data, dummyMdDialogRef);
 
                 componentInstance.close();
 
