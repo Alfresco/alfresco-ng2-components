@@ -5,6 +5,7 @@ eval JS_API=true
 eval GNU=false
 eval EXEC_COMPONENT=true
 eval DIFFERENT_JS_API=false
+eval AUTO=false
 
 eval projects=( "core"
     "content-services"
@@ -22,12 +23,62 @@ show_help() {
     echo "-vj or -versionjsapi  to use a different version of js-api"
     echo "-demoshell execute the change version only in the demo shell "
     echo "-v or -version  version to update"
+    echo "-alpha update last alpha version of js-api and lib automatically"
+    echo "-beta update beta alpha version of js-api and lib automatically"
     echo "-gnu for gnu"
 }
 
 skip_js() {
     echo "====== Skip JS-API change version $1 ====="
     JS_API=false
+}
+
+last_alpha_mode() {
+    echo "====== Auto find last ALPHA version ====="
+    VERSION=$(npm view @alfresco/adf-core@alpha version)
+
+    echo "====== version lib ${VERSION} ====="
+
+    DIFFERENT_JS_API=true
+    VERSION_JS_API=$(npm view alfresco-js-api@alpha version)
+
+    echo "====== version js-api ${DIFFERENT_JS_API} ====="
+}
+
+next_alpha_mode() {
+    echo "====== Auto find next ALPHA version ====="
+    VERSION=$(./next_version.sh -major -alpha)
+
+    echo "====== version lib ${VERSION} ====="
+
+    DIFFERENT_JS_API=true
+    VERSION_JS_API=$(npm view alfresco-js-api@alpha version)
+
+    echo "====== version js-api ${DIFFERENT_JS_API} ====="
+}
+
+next_beta_mode() {
+    echo "====== Auto find next BETA version ====="
+    VERSION=$(./next_version.sh -major -beta)
+
+    echo "====== version lib ${VERSION} ====="
+
+    DIFFERENT_JS_API=true
+    VERSION_JS_API=$(npm view alfresco-js-api@beta version)
+
+    echo "====== version js-api ${DIFFERENT_JS_API} ====="
+}
+
+last_beta_mode() {
+    echo "====== Auto find last BETA version ====="
+    VERSION=$(npm view ng2-alfresco-core@beta version)
+
+    echo "====== version lib ${VERSION} ====="
+
+    DIFFERENT_JS_API=true
+    VERSION_JS_API=$(npm view alfresco-js-api@beta version)
+
+    echo "====== version js-api ${DIFFERENT_JS_API} ====="
 }
 
 gnu_mode() {
@@ -91,7 +142,7 @@ update_total_build_dependency_version(){
 }
 
 update_total_build_dependency_js_version(){
-    echo "====== UPDATE DEPENDENCY VERSION of total build to ~${1} in ${DESTDIR}======"
+    echo "====== UPDATE DEPENDENCY VERSION alfresco-js-api total build to ~${1} in ${DESTDIR}======"
     DESTDIR="$DIR/../lib/"
     PACKAGETOCHANGE="alfresco-js-api"
 
@@ -148,6 +199,10 @@ while [[ $1  == -* ]]; do
       -sj|sjsapi) skip_js; shift;;
       -vj|versionjsapi)  version_js_change $2; shift 2;;
       -gnu) gnu_mode; shift;;
+      -alpha) last_alpha_mode; shift;;
+      -nextalpha) next_alpha_mode; shift;;
+      -beta) last_beta_mode; shift;;
+      -nextbeta) next_beta_mode; shift;;
       -demoshell) only_demoshell; shift;;
       -*) shift;;
     esac

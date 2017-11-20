@@ -129,14 +129,19 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
         return this.thumbnailService.getMimeTypeIcon(mimeType);
     }
 
-    fileClicked(file: ContentLinkModel): void {
-        this.processContentService.getFileRawContent(file.id).subscribe(
+    fileClicked(obj: any): void {
+        const file = new ContentLinkModel(obj);
+        let fetch = this.processContentService.getContentPreview(file.id);
+        if (file.isTypeImage() || file.isTypePdf()) {
+            fetch = this.processContentService.getFileRawContent(file.id);
+        }
+        fetch.subscribe(
             (blob: Blob) => {
                 file.contentBlob = blob;
                 this.formService.formContentClicked.next(file);
             },
             (error) => {
-                this.logService.error('Unable to send evento for file ' + file.name);
+                this.logService.error('Unable to send event for file ' + file.name);
             }
         );
     }

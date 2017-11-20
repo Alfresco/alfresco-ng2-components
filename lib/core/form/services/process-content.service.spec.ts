@@ -179,8 +179,8 @@ describe('ProcessContentService', () => {
     it('should return a Blob as thumbnail', (done) => {
         let contentId: number = 999;
         let blob = createFakeBlob();
-        spyOn(service, 'getContentThumbnailUrl').and.returnValue(Observable.of(blob));
-        service.getContentThumbnailUrl(contentId).subscribe(result => {
+        spyOn(service, 'getContentThumbnail').and.returnValue(Observable.of(blob));
+        service.getContentThumbnail(contentId).subscribe(result => {
             expect(result).toEqual(jasmine.any(Blob));
             expect(result.size).toEqual(48);
             expect(result.type).toEqual('image/png');

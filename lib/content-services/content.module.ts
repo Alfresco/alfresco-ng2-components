@@ -35,6 +35,7 @@ import { VersionManagerModule } from './version-manager';
 import { ContentNodeSelectorModule } from './content-node-selector';
 import { DialogModule } from './dialogs';
 import { DirectiveModule } from './directive';
+import { ContentMetadataModule } from './content-metadata';
 
 @NgModule({
     imports: [
@@ -54,6 +55,7 @@ import { DirectiveModule } from './directive';
         BreadcrumbModule,
         VersionManagerModule,
         ContentNodeSelectorModule,
+        ContentMetadataModule,
         DialogModule,
         DirectiveModule
     ],
@@ -62,8 +64,8 @@ import { DirectiveModule } from './directive';
             provide: TRANSLATION_PROVIDER,
             multi: true,
             useValue: {
-                name: '@alfresco/content-services',
-                source: '@alfresco/content-services'
+                name: 'adf-content-services',
+                source: 'assets/adf-content-services'
             }
         }
     ],
@@ -79,6 +81,7 @@ import { DirectiveModule } from './directive';
         BreadcrumbModule,
         VersionManagerModule,
         ContentNodeSelectorModule,
+        ContentMetadataModule,
         DialogModule,
         DirectiveModule
     ]

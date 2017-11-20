@@ -150,10 +150,10 @@
 
             <ng-container *ngIf="showSidebar && sidebarPosition !== 'left'">
                 <div class="adf-viewer__sidebar adf-viewer__sidebar-right">
-                    <ng-content select="adf-viewer-sidebar"></ng-content>
-                    <ng-container *ngIf="!sidebar">
-                        <!-- todo: default info drawer -->
+                    <ng-container *ngIf="sidebarTemplate">
+                        <ng-container *ngTemplateOutlet="sidebarTemplate;context:sidebarTemplateContext"></ng-container>
                     </ng-container>
+                    <ng-content *ngIf="!sidebarTemplate" select="adf-viewer-sidebar"></ng-content>
                 </div>
             </ng-container>
         </div>

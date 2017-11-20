@@ -84,7 +84,7 @@ dropdown item.
 selected by `restResponsePath`. Its value will be used for the `label` property of the
 dropdown item (ie, the text visible to the user).
 
-The [REST Call Task 101](https://community.alfresco.com/community/bpm/blog/2016/08/31/rest-integration)
+The [REST Call Task 101](https://community.alfresco.com/community/bpm/blog/2016/08/31/rest-integration-101)
 tutorial on the [APS community site](https://community.alfresco.com/community/bpm)
 contains full details about how the REST calls work, along with a worked example.
 

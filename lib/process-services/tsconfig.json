@@ -16,7 +16,7 @@
     "noFallthroughCasesInSwitch": true,
     "removeComments": true,
     "declaration": true,
-    "outDir": "./dist",
+    "outDir": "./",
     "baseUrl" :  "./",
     "paths": {
       "@alfresco/adf-process-services": ["../process-services"],

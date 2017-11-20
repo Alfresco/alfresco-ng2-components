@@ -56,11 +56,6 @@ export class PaginationComponent implements OnInit {
     @Input()
     supportedPageSizes: number[] = [ 25, 50, 100 ];
 
-    /** @deprecated */
-    /** "pagination" object already has "maxItems" */
-    @Input()
-    maxItems: number = PaginationComponent.DEFAULT_PAGE_SIZE;
-
     @Input()
     pagination: Pagination;
 

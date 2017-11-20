@@ -25,9 +25,7 @@
 
 <adf-search #auto="searchAutocomplete"
             class="adf-search-result-autocomplete"
-            [rootNodeId]="liveSearchRoot"
-            [resultType]="liveSearchResultType"
-            [resultSort]="liveSearchResultSort"
+            [searchNode]="customSearchNode"
             [maxResults]="liveSearchMaxResults">
     <ng-template let-data>
         <mat-list *ngIf="isSearchBarActive()" id="autocomplete-search-result-list">

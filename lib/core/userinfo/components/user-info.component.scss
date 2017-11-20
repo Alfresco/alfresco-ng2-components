@@ -35,6 +35,7 @@
         }
 
         &-userinfo-profile-image {
+            background: mat-color($primary, 300);
             text-align: center;
             border-radius: 90%;
             width: 40px;
@@ -42,7 +43,7 @@
             margin-right: 0;
             cursor: pointer;
             vertical-align: middle;
-            margin-left: -45px;
+            margin-left: 0px;
         }
 
         &-userinfo-profile-container{
@@ -136,11 +137,12 @@
         }
 
         &-userinfo-profile-picture {
+            background: mat-color($primary, 300);
             background-size: cover;
             border-radius: 50%;
             height: 80px;
             width: 80px;
-            margin-left: -88px;
+            margin-left: 0px;
             margin-right: 8px;
         }
 

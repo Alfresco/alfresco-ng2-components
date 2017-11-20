@@ -5,6 +5,7 @@
   },
   "apps": [
     {
+      "name" : "dist",
       "root": "src",
       "outDir": "dist",
       "assets": [
@@ -19,48 +20,28 @@
         },
         {
           "glob": "**/*",
-          "input": "../node_modules/core/prebuilt-themes",
-          "output": "./prebuilt-themes"
+          "input": "../node_modules/@alfresco/adf-core/prebuilt-themes",
+          "output": "./assets/prebuilt-themes"
         },
         {
           "glob": "**/*",
           "input": "../node_modules/@alfresco/adf-core/bundles/assets",
-          "output": "./core/assets/"
+          "output": "./assets/"
         },
         {
           "glob": "**/*",
           "input": "../node_modules/@alfresco/adf-insights/bundles/assets",
-          "output": "./insights/assets/"
+          "output": "./assets/"
         },
         {
           "glob": "**/*",
           "input": "../node_modules/@alfresco/adf-process-services/bundles/assets",
-          "output": "./process-services/assets/"
+          "output": "./assets/"
         },
         {
           "glob": "**/*",
           "input": "../node_modules/@alfresco/adf-content-services/bundles/assets",
-          "output": "./content-services/assets/"
-        },
-        {
-          "glob": "**/*",
-          "input": "../node_modules/@alfresco/adf-core/i18n",
-          "output": "./assets/@alfresco/core/i18n"
-        },
-        {
-          "glob": "**/*",
-          "input": "../node_modules/@alfresco/adf-insights/i18n",
-          "output": "./assets/@alfresco/insights/i18n"
-        },
-        {
-          "glob": "**/*",
-          "input": "../node_modules/@alfresco/adf-process-services/i18n",
-          "output": "./assets/@alfresco/process-services/i18n"
-        },
-        {
-          "glob": "**/*",
-          "input": "../node_modules/@alfresco/adf-content-services/i18n",
-          "output": "./assets/@alfresco/content-services/i18n"
+          "output": "./assets/"
         },
         { "glob": "pdf.worker.js", "input": "../node_modules/pdfjs-dist/build", "output": "./" }
       ],
@@ -72,7 +53,8 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.scss"
+        "styles.scss",
+        "custom-style.scss"
       ],
       "stylePreprocessorOptions": {
         "includePaths": [
@@ -92,8 +74,8 @@
         "prod": "environments/environment.prod.ts"
       }
     },
-
     {
+      "name" :"dev",
       "root": "src",
       "outDir": "dist",
       "assets": [
@@ -104,6 +86,11 @@
           "glob": "**/*",
           "input": "../resources",
           "output": "./resources"
+        },
+        {
+          "glob": "**/*",
+          "input": "../../lib/core/prebuilt-themes",
+          "output": "./assets/prebuilt-themes"
         },
         {
           "glob": "**/*",
@@ -125,26 +112,6 @@
           "input": "../../lib/insights/bundles/assets",
           "output": "./assets/"
         },
-        {
-          "glob": "**/*",
-          "input": "../../lib/core/i18n",
-          "output": "./@alfresco/core/i18n"
-        },
-        {
-          "glob": "**/*",
-          "input": "../../lib/insights/i18n",
-          "output": "./@alfresco/insights/i18n"
-        },
-        {
-          "glob": "**/*",
-          "input": "../../lib/process-services/i18n",
-          "output": "./@alfresco/process-services/i18n"
-        },
-        {
-          "glob": "**/*",
-          "input": "../../lib/content-services/i18n",
-          "output": "./@alfresco/content-services/i18n"
-        },
         { "glob": "pdf.worker.js", "input": "../node_modules/pdfjs-dist/build", "output": "./" }
       ],
       "index": "index.html",
@@ -156,7 +123,7 @@
       "prefix": "app-dev",
       "styles": [
         "styles.scss",
-        "custom-style.scss"
+        "custom-style-dev.scss"
       ],
       "stylePreprocessorOptions": {
       "includePaths": [

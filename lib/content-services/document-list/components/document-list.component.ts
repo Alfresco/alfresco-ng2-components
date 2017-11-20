@@ -33,7 +33,6 @@ import {
     MinimalNodeEntity,
     MinimalNodeEntryEntity,
     NodePaging,
-    Pagination,
     PersonEntry,
     SitePaging
 } from 'alfresco-js-api';
@@ -92,9 +91,6 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     multiselect: boolean = false;
 
     @Input()
-    enablePagination: boolean = true;
-
-    @Input()
     contentActions: boolean = false;
 
     @Input()
@@ -102,9 +98,6 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     @Input()
     contextMenuActions: boolean = false;
-
-    @Input()
-    pageSize: number = DocumentListComponent.DEFAULT_PAGE_SIZE;
 
     @Input()
     emptyFolderImageUrl: string = require('../../assets/images/empty_doc_lib.svg');
@@ -125,19 +118,6 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     loading: boolean = false;
 
     @Input()
-    paginationStrategy: PaginationStrategy = PaginationStrategy.Finite;
-
-    @Input()
-    supportedPageSizes: number[];
-
-    infiniteLoading: boolean = false;
-    noPermission: boolean = false;
-
-    selection = new Array<MinimalNodeEntity>();
-    skipCount: number = 0;
-    pagination: Pagination;
-
-    @Input()
     rowFilter: RowFilter | null = null;
 
     @Input()
@@ -152,6 +132,15 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     @Input()
     node: NodePaging = null;
+
+    @Input()
+    maxItems: number;
+
+    @Input()
+    skipCount: number = 0;
+
+    @Input()
+    enableInfiniteScrolling: boolean = false;
 
     @Output()
     nodeClick: EventEmitter<NodeEntityEvent> = new EventEmitter<NodeEntityEvent>();
@@ -180,11 +169,13 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     noPermissionTemplate: TemplateRef<any>;
     contextActionHandler: Subject<any> = new Subject();
     data: ShareDataTableAdapter;
+    infiniteLoading: boolean = false;
+    noPermission: boolean = false;
+    selection = new Array<MinimalNodeEntity>();
 
     private layoutPresets = {};
     private currentNodeAllowableOperations: string[] = [];
     private CREATE_PERMISSION = 'create';
-    private defaultPageSizes = [5, 10, 15, 20];
 
     constructor(private documentListService: DocumentListService,
                 private ngZone: NgZone,
@@ -192,7 +183,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                 private apiService: AlfrescoApiService,
                 private appConfig: AppConfigService,
                 private preferences: UserPreferencesService) {
-        this.supportedPageSizes = appConfig.get('document-list.supportedPageSizes', this.defaultPageSizes);
+            this.maxItems = this.preferences.paginationSize;
     }
 
     getContextActions(node: MinimalNodeEntity) {
@@ -221,19 +212,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         return this.columnList && this.columnList.columns && this.columnList.columns.length > 0;
     }
 
-    getDefaultPageSize(): number {
-        let result = this.preferences.paginationSize;
-
-        const pageSizes = this.supportedPageSizes || this.defaultPageSizes;
-        if (pageSizes && pageSizes.length > 0 && pageSizes.indexOf(result) < 0) {
-            result = pageSizes[0];
-        }
-
-        return result;
-    }
-
     ngOnInit() {
-        this.pageSize = this.getDefaultPageSize();
         this.loadLayoutPresets();
         this.data = new ShareDataTableAdapter(this.documentListService, null, this.getDefaultSorting());
         this.data.thumbnails = this.thumbnails;
@@ -272,11 +251,14 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     ngOnChanges(changes: SimpleChanges) {
+        if (this.isSkipCountChanged(changes) ||
+            this.isMaxItemsChanged(changes)) {
+            this.reload(this.enableInfiniteScrolling);
+        }
         if (changes.folderNode && changes.folderNode.currentValue) {
             this.loadFolder();
         } else if (changes.currentFolderId && changes.currentFolderId.currentValue) {
             if (changes.currentFolderId.previousValue !== changes.currentFolderId.currentValue) {
-                this.resetPagination();
                 this.folderNode = null;
             }
             if (!this.hasCustomLayout) {
@@ -290,7 +272,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             } else if (changes.rowFilter) {
                 this.data.setFilter(changes.rowFilter.currentValue);
                 if (this.currentFolderId) {
-                    this.loadFolderNodesByFolderNodeId(this.currentFolderId, this.pageSize, this.skipCount);
+                    this.loadFolderNodesByFolderNodeId(this.currentFolderId, this.maxItems, this.skipCount);
                 }
             } else if (changes.imageResolver) {
                 this.data.setImageResolver(changes.imageResolver.currentValue);
@@ -308,7 +290,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                 this.loadFolderByNodeId(this.currentFolderId, merge);
             } else if (this.node) {
                 this.data.loadPage(this.node);
-                this.ready.emit();
+                this.ready.emit(this.node);
             }
         });
     }
@@ -337,14 +319,6 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     isEmpty() {
         return !this.data || this.data.getRows().length === 0;
-    }
-
-    isPaginationEnabled() {
-        return this.enablePagination && !this.isEmpty();
-    }
-
-    isPaginationNeeded() {
-        return this.paginationStrategy === PaginationStrategy.Finite;
     }
 
     getNodeActions(node: MinimalNodeEntity | any): ContentActionModel[] {
@@ -461,7 +435,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             this.setupDefaultColumns(nodeId);
         }
         if (nodeId) {
-            this.loadFolderNodesByFolderNodeId(nodeId, this.pageSize, this.skipCount, merge).catch(err => this.error.emit(err));
+            this.loadFolderNodesByFolderNodeId(nodeId, this.maxItems, this.skipCount, merge).catch(err => this.error.emit(err));
         }
     }
 
@@ -490,7 +464,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                     this.currentFolderId = node.id;
                     this.skipCount = 0;
                     this.currentNodeAllowableOperations = node['allowableOperations'] ? node['allowableOperations'] : [];
-                    return this.loadFolderNodesByFolderNodeId(node.id, this.pageSize, this.skipCount, merge);
+                    return this.loadFolderNodesByFolderNodeId(node.id, this.maxItems, this.skipCount, merge);
                 })
                 .catch(err => {
                     if (JSON.parse(err.message).error.statusCode === 403) {
@@ -512,25 +486,16 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                     rootFolderId: id
                 })
                 .subscribe(
-                    val => {
-                        if (this.isCurrentPageEmpty(val, skipCount)) {
-                            this.updateSkipCount(skipCount - maxItems);
-                            this.loadFolderNodesByFolderNodeId(id, maxItems, skipCount - maxItems).then(
-                                () => resolve(true),
-                                error => reject(error)
-                            );
-                        } else {
-                            this.data.loadPage(<NodePaging> val, merge);
-                            this.pagination = val.list.pagination;
-                            this.loading = false;
-                            this.infiniteLoading = false;
-                            this.ready.emit();
-                            resolve(true);
-                        }
-                    },
-                    error => {
-                        reject(error);
-                    });
+                val => {
+                    this.data.loadPage(<NodePaging> val, merge);
+                    this.loading = false;
+                    this.infiniteLoading = false;
+                    this.ready.emit(val);
+                    resolve(true);
+                },
+                error => {
+                    reject(error);
+                });
         });
 
     }
@@ -540,14 +505,23 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         this.selection = [];
     }
 
-    resetPagination() {
-        this.skipCount = 0;
+    private isSkipCountChanged(changePage: SimpleChanges) {
+        return changePage.skipCount &&
+            changePage.skipCount.currentValue !== null &&
+            changePage.skipCount.currentValue !== undefined &&
+            changePage.skipCount.currentValue !== changePage.skipCount.previousValue;
+    }
+
+    private isMaxItemsChanged(changePage: SimpleChanges) {
+        return changePage.maxItems &&
+            changePage.maxItems.currentValue &&
+            changePage.maxItems.currentValue !== changePage.maxItems.previousValue;
     }
 
     private loadTrashcan(merge: boolean = false): void {
         const options = {
             include: ['path', 'properties'],
-            maxItems: this.pageSize,
+            maxItems: this.maxItems,
             skipCount: this.skipCount
         };
         this.apiService.nodesApi.getDeletedNodes(options)
@@ -558,7 +532,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     private loadSharedLinks(merge: boolean = false): void {
         const options = {
             include: ['properties', 'allowableOperations', 'path'],
-            maxItems: this.pageSize,
+            maxItems: this.maxItems,
             skipCount: this.skipCount
         };
         this.apiService.sharedLinksApi.findSharedLinks(options)
@@ -569,7 +543,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     private loadSites(merge: boolean = false): void {
         const options = {
             include: ['properties'],
-            maxItems: this.pageSize,
+            maxItems: this.maxItems,
             skipCount: this.skipCount
         };
 
@@ -581,7 +555,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     private loadMemberSites(merge: boolean = false): void {
         const options = {
             include: ['properties'],
-            maxItems: this.pageSize,
+            maxItems: this.maxItems,
             skipCount: this.skipCount
         };
 
@@ -607,7 +581,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     private loadFavorites(merge: boolean = false): void {
         const options = {
-            maxItems: this.pageSize,
+            maxItems: this.maxItems,
             skipCount: this.skipCount,
             where: '(EXISTS(target/file) OR EXISTS(target/folder))',
             include: ['properties', 'allowableOperations', 'path']
@@ -657,7 +631,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                         ascending: false
                     }],
                     paging: {
-                        maxItems: this.pageSize,
+                        maxItems: this.maxItems,
                         skipCount: this.skipCount
                     }
                 };
@@ -671,22 +645,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     private onPageLoaded(page: NodePaging, merge: boolean = false) {
         if (page) {
             this.data.loadPage(page, merge);
-            this.pagination = page.list.pagination;
             this.loading = false;
-            this.ready.emit();
+            this.ready.emit(page);
         }
-    }
-
-    private isCurrentPageEmpty(node, skipCount): boolean {
-        return !this.hasNodeEntries(node) && this.hasPages(skipCount);
-    }
-
-    private hasPages(skipCount): boolean {
-        return skipCount > 0 && this.isPaginationEnabled();
-    }
-
-    private hasNodeEntries(node): boolean {
-        return node && node.list && node.list.entries && node.list.entries.length > 0;
     }
 
     /**
@@ -814,34 +775,6 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         }
     }
 
-    onChangePageSize(event: Pagination): void {
-        this.preferences.paginationSize = event.maxItems;
-        this.pageSize = event.maxItems;
-        this.skipCount = 0;
-        this.reload();
-    }
-
-    onChangePageNumber(page: Pagination): void {
-        this.pageSize = page.maxItems;
-        this.skipCount = page.skipCount;
-        this.reload();
-    }
-
-    onNextPage(event: Pagination): void {
-        this.skipCount = event.skipCount;
-        this.reload();
-    }
-
-    loadNextBatch(event: Pagination) {
-        this.skipCount = event.skipCount;
-        this.reload(true);
-    }
-
-    onPrevPage(event: Pagination): void {
-        this.skipCount = event.skipCount;
-        this.reload();
-    }
-
     private enforceSingleClickNavigationForMobile(): void {
         if (this.isMobile()) {
             this.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
@@ -877,10 +810,6 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         }
 
         return false;
-    }
-
-    updateSkipCount(newSkipCount) {
-        this.skipCount = newSkipCount;
     }
 
     hasCurrentNodePermission(permission: string): boolean {

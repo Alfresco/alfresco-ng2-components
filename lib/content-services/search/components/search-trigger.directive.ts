@@ -46,8 +46,6 @@ export const SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR: any = {
     multi: true
 };
 
-const MIN_WORD_LENGTH_VALID = 3;
-
 @Directive({
     selector: `input[searchAutocomplete], textarea[searchAutocomplete]`,
     host: {
@@ -82,6 +80,9 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
 
     ngOnDestroy() {
         this.escapeEventStream.unsubscribe();
+        if ( this.closingActionsSubscription ) {
+            this.closingActionsSubscription.unsubscribe();
+        }
     }
 
     get panelOpen(): boolean {
@@ -160,11 +161,11 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
         if (document.activeElement === event.target) {
             let inputValue: string = (event.target as HTMLInputElement).value;
             this.onChange(inputValue);
-            if (inputValue.length >= MIN_WORD_LENGTH_VALID) {
+            if (inputValue) {
                 this.searchPanel.keyPressedStream.next(inputValue);
                 this.openPanel();
             } else {
-                this.searchPanel.resetResults();
+                this.closePanel();
             }
         }
     }
@@ -193,7 +194,6 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
                 this.searchPanel.setVisibility();
                 return this.panelClosingActions;
             })
-            .first()
             .subscribe(event => this.setValueAndClose(event));
     }
 

@@ -9,8 +9,10 @@ environment:
   nodejs_version: "8"
 
   matrix:
-  - COMPONENT_NAME: ng2-components-activiti
-  - COMPONENT_NAME: ng2-components-alfresco
+  - COMPONENT_NAME: core
+  - COMPONENT_NAME: process-service
+  - COMPONENT_NAME: content-service
+  - COMPONENT_NAME: insights
 #  - COMPONENT_NAME: ng2-demo-shell
 
 # Install scripts. (runs after repo cloning)
@@ -18,17 +20,29 @@ install:
   # Get the latest stable version of Node.js or io.js
   - ps: Install-Product node $env:nodejs_version
   # install module
-  - if %COMPONENT_NAME% EQU ng2-components-activiti (
+  - if %COMPONENT_NAME% EQU process-service (
               if %APPVEYOR_REPO_BRANCH EQU master
-                (cd scripts && sh npm-build-all.sh -t "ng2-activiti*"  || exit 1)
+                (cd scripts && sh npm-build-all.sh -t "process-services"  || exit 1)
               else
-                (cd scripts && sh npm-build-all.sh -t "ng2-activiti*" -vjsapi alpha|| exit 1)
+                (cd scripts && sh npm-build-all.sh -t "process-services" -vjsapi alpha|| exit 1)
     )
-  - if %COMPONENT_NAME% EQU ng2-components-alfresco (
+  - if %COMPONENT_NAME% EQU content-service (
               if %APPVEYOR_REPO_BRANCH EQU master
-                (cd scripts && sh npm-build-all.sh -t "ng2-alfresco*"  || exit 1)
+                (cd scripts && sh npm-build-all.sh -t "content-services"  || exit 1)
               else
-                (cd scripts && sh npm-build-all.sh -t "ng2-alfresco*" -vjsapi alpha|| exit 1)
+                (cd scripts && sh npm-build-all.sh -t "content-services" -vjsapi alpha|| exit 1)
+    )
+  - if %COMPONENT_NAME% EQU insights (
+              if %APPVEYOR_REPO_BRANCH EQU master
+                (cd scripts && sh npm-build-all.sh -t "insights"  || exit 1)
+              else
+                (cd scripts && sh npm-build-all.sh -t "insights" -vjsapi alpha|| exit 1)
+    )
+   - if %COMPONENT_NAME% EQU core (
+              if %APPVEYOR_REPO_BRANCH EQU master
+                (cd scripts && sh npm-build-all.sh -t "core"  || exit 1)
+              else
+                (cd scripts && sh npm-build-all.sh -t "core" -vjsapi alpha|| exit 1)
     )
 #  - if %COMPONENT_NAME% EQU ng2-demo-shell (
 #              if %APPVEYOR_REPO_BRANCH EQU master

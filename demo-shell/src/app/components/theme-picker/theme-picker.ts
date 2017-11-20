@@ -101,7 +101,7 @@ export class ThemePickerComponent {
         } else {
             this.currentTheme = this._getCurrentThemeFromHref(theme.href);
 
-            this.styleManager.setStyle('theme', `prebuilt-themes/${theme.href}`);
+            this.styleManager.setStyle('theme', `assets/prebuilt-themes/${theme.href}`);
 
             if (this.currentTheme) {
                 this._themeStorage.storeTheme(this.currentTheme);

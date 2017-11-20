@@ -36,7 +36,7 @@ The `relativePath` will create a sequence of folders within `parentId` with `nam
 element but you can use an empty string to make the folder a direct child of `parentId`.
 
 The `hasPermission` method reports whether the node has the specified permission. (The
-[Permissions](https://github.com/Alfresco/alfresco-ng2-components/blob/development/ng2-components/ng2-alfresco-core/src/models/permissions.enum.ts)
+[Permissions](https://github.com/Alfresco/alfresco-ng2-components/blob/development/lib/core/models/permissions.enum.ts)
 enum contains the values `DELETE`, `UPDATE`, `CREATE`, `UPDATEPERMISSIONS`, `NOT_DELETE`,
 `NOT_UPDATE`, `NOT_CREATE` and `NOT_UPDATEPERMISSIONS`.
 
