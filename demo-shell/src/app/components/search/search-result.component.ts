@@ -53,6 +53,7 @@ export class SearchResultComponent implements OnInit {
                 this.searchedWord = params.hasOwnProperty(this.queryParamName) ? params[this.queryParamName] : null;
             });
         }
+        this.maxItems = this.preferences.paginationSize;
     }
 
     showSearchResult(event: NodePaging) {
