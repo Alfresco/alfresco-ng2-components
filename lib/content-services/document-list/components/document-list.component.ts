@@ -155,7 +155,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     preview: EventEmitter<NodeEntityEvent> = new EventEmitter<NodeEntityEvent>();
 
     @Output()
-    ready: EventEmitter<NodePaging> = new EventEmitter();
+    ready: EventEmitter<any> = new EventEmitter();
 
     @Output()
     error: EventEmitter<any> = new EventEmitter();
