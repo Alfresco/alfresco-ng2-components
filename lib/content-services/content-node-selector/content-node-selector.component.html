@@ -28,6 +28,8 @@
 
     <adf-sites-dropdown
         (change)="siteChanged($event)"
+        [hideMyFiles]="dropdownHideMyFiles"
+        [siteList]="dropdownSiteList"
         data-automation-id="content-node-selector-sites-combo"></adf-sites-dropdown>
 
     <adf-toolbar>
@@ -60,6 +62,7 @@
                     [allowDropFiles]="false"
                     (folderChange)="onFolderChange()"
                     (ready)="onFolderLoaded($event)"
+                    (node-dblclick)="onNodeDoubleClick($event)"
                     data-automation-id="content-node-selector-document-list">
             <empty-folder-content>
                 <ng-template>
