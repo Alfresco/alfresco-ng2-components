@@ -21,11 +21,11 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { MinimalNodeEntity, NodePaging } from 'alfresco-js-api';
+import { MinimalNodeEntity, NodePaging, Pagination } from 'alfresco-js-api';
 import {
     AlfrescoApiService, ContentService, TranslationService,
     FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
-    SiteModel, UploadService, DataColumn, DataRow
+    SiteModel, UploadService, DataColumn, DataRow, UserPreferencesService
 } from '@alfresco/adf-core';
 
 import { DocumentListComponent, PermissionStyleModel, DownloadZipDialogComponent } from '@alfresco/adf-content-services';
@@ -92,13 +92,35 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     nodeResult: NodePaging;
 
+    @Input()
+    pagination: Pagination;
+
     @Output()
     documentListReady: EventEmitter<any> = new EventEmitter();
+
+    @Output()
+    changedPageSize: EventEmitter<Pagination> = new EventEmitter();
+
+    @Output()
+    changedPageNumber: EventEmitter<Pagination> = new EventEmitter();
+
+    @Output()
+    turnedNextPage: EventEmitter<Pagination> = new EventEmitter();
+
+    @Output()
+    turnedPreviousPage: EventEmitter<Pagination> = new EventEmitter();
+
+    @Output()
+    loadNext: EventEmitter<Pagination> = new EventEmitter();
 
     @ViewChild(DocumentListComponent)
     documentList: DocumentListComponent;
 
     permissionsStyle: PermissionStyleModel[] = [];
+    supportedPages: number[] = [5, 10, 15, 20];
+    infiniteScrolling: boolean;
+    currentMaxItems: number;
+    currentSkipCount: number = 0;
 
     private onCreateFolder: Subscription;
     private onEditFolder: Subscription;
@@ -112,7 +134,8 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 private translateService: TranslationService,
                 private router: Router,
                 @Optional() private route: ActivatedRoute,
-                private logService: LogService) {
+                private logService: LogService,
+                private preference: UserPreferencesService) {
     }
 
     showFile(event) {
@@ -134,6 +157,13 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnInit() {
+        if (!this.pagination) {
+            this.pagination = <Pagination>{
+                maxItems: this.preference.paginationSize,
+                skipCount: 0
+            };
+            this.currentMaxItems = this.preference.paginationSize;
+        }
         if (this.route) {
             this.route.params.forEach((params: Params) => {
                 if (params['id']) {
@@ -225,6 +255,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     emitReadyEvent(event: any) {
         this.documentListReady.emit(event);
+        this.pagination = event.list.pagination;
     }
 
     onContentActionError(errors) {
@@ -375,5 +406,36 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             }
         }
         return false;
+    }
+
+    onChangePageSize(event: Pagination): void {
+        this.preference.paginationSize = event.maxItems;
+        this.currentMaxItems = event.maxItems;
+        this.currentSkipCount = event.skipCount;
+        this.changedPageSize.emit(event);
+    }
+
+    onChangePageNumber(event: Pagination): void {
+        this.currentMaxItems = event.maxItems;
+        this.currentSkipCount = event.skipCount;
+        this.changedPageNumber.emit(event);
+    }
+
+    onNextPage(event: Pagination): void {
+        this.currentMaxItems = event.maxItems;
+        this.currentSkipCount = event.skipCount;
+        this.turnedNextPage.emit(event);
+    }
+
+    loadNextBatch(event: Pagination) {
+        this.currentMaxItems = event.maxItems;
+        this.currentSkipCount = event.skipCount;
+        this.loadNext.emit(event);
+    }
+
+    onPrevPage(event: Pagination): void {
+        this.currentMaxItems = event.maxItems;
+        this.currentSkipCount = event.skipCount;
+        this.turnedPreviousPage.emit(event);
     }
 }

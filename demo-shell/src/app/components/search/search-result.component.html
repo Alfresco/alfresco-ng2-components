@@ -1,4 +1,6 @@
 <adf-search [searchTerm]="searchedWord"
+            [maxResults]="maxItems"
+            [skipResults]="skipCount"
             (resultLoaded)="showSearchResult($event)"
             #search>
 </adf-search>
@@ -6,5 +8,10 @@
 <adf-files-component
         [currentFolderId]="null"
         [nodeResult]="resultNodePageList"
-        (documentListReady)="refreshResults($event)">
+        (documentListReady)="refreshResults($event)"
+        (changedPageSize)="refreshPage($event)"
+        (changedPageNumber)="refreshPage($event)"
+        (turnedNextPage)="refreshPage($event)"
+        (loadNext)="refreshPage($event)"
+        (turnedPreviousPage)="refreshPage($event)">
 </adf-files-component>
