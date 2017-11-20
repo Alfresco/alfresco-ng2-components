@@ -60,6 +60,8 @@
   "NODE_SELECTOR": {
     "CANCEL": "Annulla",
     "CHOOSE": "Scegli",
+    "COPY": "Copia",
+    "MOVE": "Sposta",
     "NO_RESULTS": "Nessun risultato trovato"
   },
   "OPERATION": {

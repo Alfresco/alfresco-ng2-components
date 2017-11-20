@@ -60,6 +60,8 @@
   "NODE_SELECTOR": {
     "CANCEL": "Отмена",
     "CHOOSE": "Выбрать",
+    "COPY": "Копировать",
+    "MOVE": "Переместить",
     "NO_RESULTS": "Результаты не найдены"
   },
   "OPERATION": {

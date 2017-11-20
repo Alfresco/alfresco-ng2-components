@@ -85,7 +85,8 @@ export class NodeActionsService {
 
         if (this.contentService.hasPermission(contentEntry, permission)) {
             const data: ContentNodeSelectorComponentData = {
-                title: `${action} ${contentEntry.name} to ...`,
+                title: `${action} '${contentEntry.name}' to ...`,
+                actionName: action,
                 currentFolderId: contentEntry.parentId,
                 rowFilter: this.rowFilter.bind(this, contentEntry.id),
                 imageResolver: this.imageResolver.bind(this),

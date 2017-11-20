@@ -27,6 +27,7 @@ import { ContentNodeSelectorService } from './content-node-selector.service';
 
 export interface ContentNodeSelectorComponentData {
     title: string;
+    actionName?: string;
     currentFolderId?: string;
     rowFilter?: RowFilter;
     imageResolver?: ImageResolver;
@@ -53,9 +54,13 @@ export class ContentNodeSelectorComponent implements OnInit {
     pagination: Pagination;
     skipCount: number = 0;
     infiniteScroll: boolean = false;
+    buttonActionName: string;
 
     @Input()
     title: string;
+
+    @Input()
+    actionName: string;
 
     @Input()
     currentFolderId: string | null = null;
@@ -85,11 +90,13 @@ export class ContentNodeSelectorComponent implements OnInit {
                 @Optional() private containingDialog?: MatDialogRef<ContentNodeSelectorComponent>) {
         if (data) {
             this.title = data.title;
+            this.actionName = data.actionName ? data.actionName : 'Choose';
             this.select = data.select;
             this.currentFolderId = data.currentFolderId;
             this.rowFilter = data.rowFilter;
             this.imageResolver = data.imageResolver;
         }
+        this.buttonActionName = `NODE_SELECTOR.${this.actionName.toUpperCase()}`;
 
         if (this.containingDialog) {
             this.inDialog = true;
