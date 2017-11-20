@@ -23,5 +23,13 @@
     "translate-loader",
     "search\\.service",
     "mediaPlayer",
-    "unknown-format"
+    "unknown-format",
+    "cell",
+    "error.component",
+    "no-permission",
+    "form-custom",
+    "widget-visibility",
+    "card-item-types",
+    "dynamic-component",
+    "settings"
 ]
