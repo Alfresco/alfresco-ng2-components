@@ -9,7 +9,7 @@
                 <div adf-empty-list-header class="adf-empty-list-header" *ngIf="!isCustomTemplateDefined()">
                     {{'ADF_TASK_LIST.ATTACHMENT.EMPTY.HEADER' | translate}} 
                 </div>
-                <div #customEmptyListTemplate class="adf-custom-empty-template">
+                <div *ngIf="!isDisabled()" #customEmptyListTemplate class="adf-custom-empty-template">
                     <ng-content select="[adf-empty-list]"></ng-content>
                 </div>    
             </adf-empty-list>

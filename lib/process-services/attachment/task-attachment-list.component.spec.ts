@@ -153,6 +153,41 @@ describe('TaskAttachmentList', () => {
         expect(getFileRawContentSpy).toHaveBeenCalled();
     });
 
+    it('should show the empty list drag and drop component when the task is not completed', async(() => {
+        getTaskRelatedContentSpy.and.returnValue(Observable.of({
+            'size': 0,
+            'total': 0,
+            'start': 0,
+            'data': []
+            }));
+        let change = new SimpleChange(null, '123', true);
+        component.ngOnChanges({'taskId': change});
+        component.disabled = false;
+
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(fixture.nativeElement.querySelector('.adf-custom-empty-template')).not.toBeNull();
+            });
+    }));
+
+    it('should not show the empty list drag and drop component when is disabled', async(() => {
+        getTaskRelatedContentSpy.and.returnValue(Observable.of({
+        'size': 0,
+        'total': 0,
+        'start': 0,
+        'data': []
+        }));
+        let change = new SimpleChange(null, '123', true);
+        component.ngOnChanges({'taskId': change});
+        component.disabled = true;
+
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(fixture.nativeElement.querySelector('.adf-custom-empty-template')).toBeNull();
+            expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual('ADF_TASK_LIST.ATTACHMENT.EMPTY.HEADER');
+            });
+    }));
+
     it('should display all actions if attachments are not read only', () => {
         let change = new SimpleChange(null, '123', true);
         component.ngOnChanges({'taskId': change});

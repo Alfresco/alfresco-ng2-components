@@ -9,7 +9,7 @@ Displays attached documents on a specified task.
 <!-- toc -->
 
 - [Basic Usage](#basic-usage)
-  *[Drag and Drop Functionality](#how-to-add-drag-and-drop-functionality)
+  * [Drag and Drop Functionality](#how-to-add-drag-and-drop-functionality)
   * [Properties](#properties)
   * [Events](#events)
 

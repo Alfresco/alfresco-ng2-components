@@ -170,8 +170,6 @@ export class ActivitiComponent implements AfterViewInit, OnDestroy, OnInit {
             this.logService.log(`Form loaded: ${e.form.id}`);
         });
 
-        this.uploadService.fileUploadComplete.subscribe(value => this.onFileUploadComplete(value.data));
-
         formService.formFieldValueChanged.subscribe((e: FormFieldEvent) => {
             this.logService.log(`Field value changed. Form: ${e.form.id}, Field: ${e.field.id}, Value: ${e.field.value}`);
         });
@@ -258,6 +256,7 @@ export class ActivitiComponent implements AfterViewInit, OnDestroy, OnInit {
             this.currentProcessInstanceId = null;
         });
         this.layoutType = AppsListComponent.LAYOUT_GRID;
+        this.uploadService.fileUploadComplete.subscribe(value => this.onTaskFileUploadComplete(value.data));
 
     }
 
@@ -492,7 +491,7 @@ export class ActivitiComponent implements AfterViewInit, OnDestroy, OnInit {
         this.currentTaskId = null;
     }
 
-    onFileUploadComplete(content: any) {
+    onTaskFileUploadComplete(content: any) {
         this.taskAttachList.add(content);
     }
 }
