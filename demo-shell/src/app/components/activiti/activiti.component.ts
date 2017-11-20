@@ -388,7 +388,7 @@ export class ActivitiComponent implements AfterViewInit, OnDestroy, OnInit {
         }
     }
 
-    onFormContentClick(content: any): void {
+    onContentClick(content: any): void {
         this.fileShowed = true;
         this.content = content.contentBlob;
         this.contentName = content.name;
