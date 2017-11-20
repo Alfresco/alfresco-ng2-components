@@ -91,10 +91,11 @@
             width: 350px;
             height: 100%;
             display: block;
-            padding: 8px 0;
+            padding: 0;
             background-color: #fafafa;
-            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.27);
-            border-left: 1px solid rgba(0, 0, 0, 0.07);
+            box-shadow: 0 2px 4px 0 mat-color($foreground, text, 0.27);
+            border-left: 1px solid mat-color($foreground, text, 0.07);
+            overflow: auto;
         }
     }
 }

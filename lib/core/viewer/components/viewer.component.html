@@ -3,7 +3,7 @@
     [class.adf-viewer-overlay-container]="overlayMode"
     [class.adf-viewer-inline-container]="!overlayMode">
 
-    <div class="adf-viewer-content">
+    <div class="adf-viewer-content" fxLayout="column">
         <ng-content select="adf-viewer-toolbar"></ng-content>
         <ng-container *ngIf="showToolbar && !toolbar">
             <adf-toolbar color="default" class="adf-viewer-toolbar">
@@ -93,7 +93,7 @@
         </ng-container>
 
         <ng-container *ngIf="isLoading">
-            <div class="adf-viewer__loading-screen">
+            <div class="adf-viewer__loading-screen" fxFlex="1 1 auto">
                 <h2>{{ 'ADF_VIEWER.LOADING' | translate }}</h2>
                 <div>
                     <mat-spinner></mat-spinner>
@@ -101,7 +101,7 @@
             </div>
         </ng-container>
 
-        <div *ngIf="!isLoading"  fxLayout="row" >
+        <div *ngIf="!isLoading" fxLayout="row" fxFlex="1 1 auto">
 
             <div *ngIf="showSidebar" fxFlexOrder="{{sidebarPosition === 'left'? 1: 2 }}" >
                 <div class="adf-viewer__sidebar">
