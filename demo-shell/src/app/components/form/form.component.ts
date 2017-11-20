@@ -33,7 +33,10 @@ export class FormComponent implements OnInit {
     form: FormModel;
 
     constructor(@Inject(FormService) private formService: InMemoryFormService) {
-
+        formService.executeOutcome.subscribe(e => {
+            e.preventDefault();
+            console.log(e.outcome);
+        });
     }
 
     ngOnInit() {
