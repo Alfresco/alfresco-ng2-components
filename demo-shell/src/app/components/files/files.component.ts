@@ -191,6 +191,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     ngOnChanges(changes: SimpleChanges) {
         if (changes.nodeResult && changes.nodeResult.currentValue) {
             this.nodeResult = <NodePaging> changes.nodeResult.currentValue;
+            this.pagination = this.nodeResult.list.pagination;
         }
     }
 
