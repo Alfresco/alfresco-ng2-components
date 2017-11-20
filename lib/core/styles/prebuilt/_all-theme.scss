@@ -1,0 +1,9 @@
+@import '../../../content-services/styles/index';
+@import '../../../process-services/styles/index';
+@import '../../../core/styles/index';
+
+@mixin alfresco-material-theme($theme) {
+    @include adf-content-services-theme($theme);
+    @include adf-process-services-theme($theme);
+    @include adf-core-theme($theme);
+}

@@ -1,0 +1,96 @@
+{
+  "title": "Bienvenue",
+  "VERSION": {
+    "NO_PERMISSION": "Vous n'avez pas les droits d'accès pour gérer les versions de ce contenu",
+    "NO_PERMISSION_EVENT": "Vous n'avez pas les droits d'accès ${event.permission} pour ${event.action} le/la ${event.type}",
+    "CHOOSE_FILE": "Sélectionnez un fichier pour afficher ses versions"
+  },
+  "APP_LAYOUT": {
+    "APP_NAME": "Application Démo ADF",
+    "HOME": "Accueil",
+    "CONTENT_SERVICES": "Content Services",
+    "PROCESS_SERVICES": "Process Services",
+    "LOGIN": "Connexion",
+    "CUSTOM_SOURCES": "Sources personnalisées",
+    "DATATABLE": "Table de données",
+    "FORM": "Formulaire",
+    "FORM_LIST": "Liste de formulaires",
+    "UPLOADER": "Chargeur",
+    "WEBSCRIPT": "Script Web",
+    "TAG": "Tag",
+    "SOCIAL": "Réseaux sociaux",
+    "SETTINGS": "Paramètres",
+    "ABOUT": "À propos de"
+  },
+  "DOCUMENT_LIST": {
+    "MULTISELECT_CHECKBOXES": "Sélection multiple (avec cases à cocher)",
+    "MULTIPLE_FILE_UPLOAD": "Importation de fichiers multiples",
+    "FOLDER_UPLOAD": "Importation de dossier",
+    "CUSTOM_FILTER": "Filtre d'extensions personnalisées",
+    "MAX_SIZE": "Filtre de taille max",
+    "ENABLE_VERSIONING": "Activer le contrôle de version",
+    "DESCRIPTION_UPLOAD": "Activer l'importation",
+    "MULTISELECT_DESCRIPTION": "Utiliser Cmd (Mac) ou Ctrl (Windows) pour activer/désactiver la sélection d'éléments multiples",
+    "COLUMNS": {
+      "DISPLAY_NAME": "Nom affiché",
+      "TAG": "Tag",
+      "CREATED_BY": "Créé par",
+      "CREATED_ON": "Créé le",
+      "CREATED": "Créé"
+    },
+    "ACTIONS": {
+      "FOLDER": {
+        "COPY": "Copier",
+        "MOVE": "Déplacer",
+        "DELETE": "Supprimer"
+      },
+      "DOCUMENT": {
+        "DOWNLOAD": "Télécharger",
+        "COPY": "Copier",
+        "MOVE": "Déplacer",
+        "DELETE": "Supprimer"
+      }
+    }
+  },
+  "DATATABLE": {
+    "RESET_DEFAULT": "Rétablir les valeurs par défaut",
+    "ADD_ROW": "Ajouter une ligne",
+    "REPLACE_ROWS": "Remplacer les lignes",
+    "REPLACE_COLUMNS": "Remplacer les colonnes",
+    "LOAD_NODE": "Charger le nœud",
+    "MULTISELECT": "Sélection multiple",
+    "MULTISELECT_DESCRIPTION": "Utiliser Cmd (Mac) ou Ctrl (Windows) pour activer/désactiver la sélection d'éléments multiples"
+  },
+  "ANALYTICS_REPORT": {
+    "NO_REPORT_MESSAGE": "Aucun rapport sélectionné. Choisissez un rapport dans la liste"
+  },
+  "PS-TAB": {
+    "TASKS-TAB": "Tâches",
+    "PROCESSES-TAB": "Processus",
+    "REPORTS-TAB": "Rapports",
+    "START-TASK": "Démarrer la tâche",
+    "START-PROCESS": "Démarrer le processus",
+    "AUDIT-LOG": "Journal d'audit des processus"
+  },
+  "FORM-LIST": {
+    "STORE": "Stocker",
+    "RESTORE": "Restaurer"
+  },
+  "LOGIN": {
+    "CONTENT_SERVICES": "Content Services",
+    "PROCESS_SERVICES": "Process Services",
+    "LOGIN_FOOTER": "Pied de la page connexion"
+  },
+  "SEARCH": {
+    "RESULTS": "Résultats de la recherche"
+  },
+  "SOCIAL": {
+    "LIKE": "Composant J'aime",
+    "RATING": "Composant d'évaluation"
+  },
+  "TAG": {
+    "LIST": "Liste de tags Content Services",
+    "INSERT": "Insérer l'ID du nœud",
+    "NODE_LIST": "Liste de tags par ID de nœud"
+  }
+}

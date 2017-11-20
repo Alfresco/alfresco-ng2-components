@@ -1,0 +1,298 @@
+{
+  "DIALOG": {
+    "SAVE_MESSAGE": "Haga clic en Guardar para añadir un informe con los ajustes actuales a su lista de informes.",
+    "EXPORT_MESSAGE": ""
+  },
+  "DATE-WIDGET": {
+    "START-DATE": "Fecha de inicio",
+    "END-DATE": "Fecha de fin",
+    "MESSAGES": {
+      "START-DATE-REQUIRED": "Fecha de inicio obligatoria",
+      "START-LESS-THAN-END-DATE": "La fecha de inicio debe ser anterior a la fecha de finalización"
+    }
+  },
+  "ADF_TASK_LIST": {
+    "APPS": {
+      "NONE": "No se han encontrado aplicaciones",
+      "TASK_APP_NAME": "Aplicación de tareas"
+    },
+    "LIST": {
+      "MESSAGES": {
+        "NONE": "No se han encontrado listas de tareas"
+      }
+    },
+    "PROPERTIES": {
+      "TASK_NAME": "Tarea",
+      "THUMBNAIL": "Miniatura",
+      "NAME": "Nombre",
+      "ASSIGNEE": "Asignado a",
+      "ASSIGNEE_DEFAULT": "Sin asignado",
+      "PRIORITY": "Prioridad",
+      "DUE_DATE": "Fecha de vencimiento",
+      "DUE_DATE_DEFAULT": "Sin fecha",
+      "STATUS": "Estado",
+      "CATEGORY": "Categoría",
+      "CATEGORY_DEFAULT": "Sin categoría",
+      "PARENT_NAME": "Nombre del elemento primario",
+      "PARENT_NAME_DEFAULT": "Sin elemento primario",
+      "CREATED_BY": "Creado por",
+      "CREATED": "Creado",
+      "ID": "ID",
+      "DESCRIPTION": "Descripción",
+      "DESCRIPTION_DEFAULT": "Sin descripción",
+      "FORM_NAME": "Nombre del formulario",
+      "FORM_NAME_DEFAULT": "No hay formulario"
+    },
+    "MENU_ACTIONS": {
+      "VIEW_CONTENT": "Ver",
+      "REMOVE_CONTENT": "Eliminar",
+      "DOWNLOAD_CONTENT": "Descargar",
+      "DOWNLOAD_AUDIT": "Descargar auditoría"
+    },
+    "DETAILS": {
+      "LABELS": {
+        "INFO_DRAWER_TITLE": "Actividades",
+        "INFO_DRAWER_TAB_ACTIVITY_TITLE": "Actividad",
+        "INFO_DRAWER_TAB_DETAILS_TITLE": "Detalles",
+        "ASSIGNEE": "Asignado a",
+        "DUE": "Vencimiento",
+        "FORM": "Formulario",
+        "PEOPLE": "Personas con las que se comparte esta tarea",
+        "COMMENTS": "Comentarios",
+        "CHECKLIST": "Lista de comprobación",
+        "INVOLVED_PEOPLE": "Personas participantes",
+        "ADD_PEOPLE": "Añadir personas y grupos",
+        "ADD_ASSIGNEE": "Añadir nuevo asignado"
+      },
+      "BUTTON": {
+        "COMPLETE": "Completado",
+        "CLAIM": "Pedir",
+        "UNCLAIM": "Volver a poner en cola",
+        "DRAG-ATTACHMENT": "Arrastrar ficheros a cargar",
+        "UPLOAD-ATTACHMENT": "Cargar adjunto"
+      },
+      "MESSAGES": {
+        "NONE": "No se han encontrado detalles de la tarea",
+        "CLAIM": "Haga clic en Pedir para trabajar en esta tarea"
+      },
+      "FORM": {
+        "NONE": "No hay formulario"
+      },
+      "DUE": {
+        "NONE": "No hay fecha de vencimiento"
+      },
+      "ASSIGNEE": {
+        "NONE": "Sin asignado"
+      },
+      "PEOPLE": {
+        "NONE": "Ningún participante"
+      },
+      "COMMENTS": {
+        "NONE": "No hay comentarios",
+        "ADD": "Añadir comentario",
+        "HEADER": "Comentarios ({{ count }})",
+        "CREATED_BY_HEADER": "Creado por",
+        "MESSAGE_HEADER": "Mensaje",
+        "DIALOG": {
+          "TITLE": "Nuevo comentario",
+          "LABELS": {
+            "MESSAGE": "Mensaje"
+          },
+          "BUTTON": {
+            "ADD": "Añadir comentario",
+            "CANCEL": "Cancelar"
+          }
+        }
+      },
+      "CHECKLIST": {
+        "NONE": "No hay lista de comprobación"
+      },
+      "ERROR": {
+        "TITLE": "No se ha podido finalizar la acción",
+        "DESCRIPTION": "Vuelva a intentarlo o compruebe que tiene acceso.",
+        "CLOSE": "Cerrar"
+      }
+    },
+    "FILTERS": {
+      "MESSAGES": {
+        "NONE": "No se ha seleccionado ningún filtro de tareas"
+      }
+    },
+    "START_TASK": {
+      "BUTTON": "Crear tarea",
+      "FORM": {
+        "TITLE": "Iniciar tarea",
+        "LABEL": {
+          "NONE": "Ninguna",
+          "NAME": "Nombre",
+          "DESCRIPTION": "Descripción",
+          "ATTACHFORM": "Adjuntar formulario",
+          "ASSIGNEE": "Asignado a",
+          "FORM": "Formulario",
+          "DATE": "Elegir fecha"
+        },
+        "ACTION": {
+          "START": "Comenzar",
+          "CANCEL": "Cancelar"
+        },
+        "DATE": {
+          "ERROR": "Formato de fecha DD/MM/AAAA"
+        }
+      }
+    },
+    "PEOPLE": {
+      "DIALOG_CLOSE": "Cerrar",
+      "ADD_USER": "Añadir",
+      "ADD_ASSIGNEE": "Asignar",
+      "SEARCH_USER": "Buscar usuario",
+      "SEARCH": {
+        "NO_USERS": "No se ha encontrado a nadie para participar"
+      }
+    },
+    "ATTACHMENT": {
+      "EMPTY": {
+        "HEADER": "Esta lista está vacía",
+        "DRAG-AND-DROP": {
+          "TITLE": "Arrastrar y soltar",
+          "SUBTITLE": "para cargar ficheros"
+        }
+      },
+      "EMPTY-LIST": {
+        "HEADER": "No hay ficheros disponibles"
+      }
+    }
+  },
+  "ADF_PROCESS_LIST": {
+    "LIST": {
+      "NONE": "No se ha encontrado instancias de procesos",
+      "SUMMARY": "Se han encontrado {{total}} instancias de procesos",
+      "ERROR": "No se han podido cargar las instancias de procesos. Vuelva a intentarlo o comparta el mensaje siguiente con el equipo de TI: {{errorMessage}}"
+    },
+    "FILTERS": {
+      "MESSAGES": {
+        "NONE": "No se ha seleccionado ningún filtro de instancias."
+      }
+    },
+    "PROPERTIES": {
+      "PROCESS_NAME": "Proceso",
+      "NAME": "Nombre",
+      "STATUS": "Estado",
+      "DUE_DATE": "Fecha de vencimiento",
+      "DUE_DATE_DEFAULT": "Sin fecha",
+      "CATEGORY": "Categoría",
+      "CATEGORY_DEFAULT": "Sin categoría",
+      "CREATED_BY": "Creado por",
+      "CREATED_BY_DEFAULT": "Sin asignado",
+      "CREATED": "Creado",
+      "BUSINESS_KEY": "Clave de negocio",
+      "BUSINESS_KEY_DEFAULT": "Ninguna",
+      "DESCRIPTION": "Descripción",
+      "DESCRIPTION_DEFAULT": "Sin descripción",
+      "ID": "ID"
+    },
+    "MENU_ACTIONS": {
+      "VIEW_CONTENT": "Ver",
+      "REMOVE_CONTENT": "Eliminar",
+      "DOWNLOAD_CONTENT": "Descargar",
+      "DOWNLOAD_AUDIT": "Descargar auditoría",
+      "VIEW_TASK": "Ver tarea"
+    },
+    "DETAILS": {
+      "LABELS": {
+        "STARTED_BY": "Iniciado por",
+        "STARTED": "Iniciado",
+        "ENDED": "Finalizado",
+        "COMMENTS": "Comentarios",
+        "START_FORM": "Iniciar formulario",
+        "TASKS_ACTIVE": "Tareas activas",
+        "TASKS_COMPLETED": "Tareas completadas",
+        "TASK_SUBTITLE": "Asignado a {{user}}, creado {{created}}"
+      },
+      "BUTTON": {
+        "CANCEL": "Cancelar proceso",
+        "CLOSE": "Cerrar",
+        "SHOW_DIAGRAM": "Mostrar diagrama",
+        "DRAG-ATTACHMENT": "Arrastrar los ficheros a cargar",
+        "UPLOAD-ATTACHMENT": "Cargar adjunto"
+      },
+      "MESSAGES": {
+        "NONE": "No se han encontrado detalles del proceso"
+      },
+      "TASKS": {
+        "NO_ACTIVE": "No hay tareas activas en estos momentos",
+        "NO_COMPLETED": "No hay tareas finalizadas todavía",
+        "TASK_DETAILS": "Detalles de la tarea",
+        "TASK_CLOSE": "Cerrar"
+      },
+      "COMMENTS": {
+        "ADD": "Añadir comentario",
+        "HEADER": "Comentarios ({{ count }})",
+        "NONE": "No hay comentarios",
+        "BUTTON": {
+          "ADD": "Añadir comentario"
+        },
+        "ADD_DIALOG": {
+          "TITLE": "Nuevo comentario",
+          "LABEL": {
+            "MESSAGE": "Mensaje"
+          },
+          "BUTTON": {
+            "ADD": "Añadir comentario",
+            "CANCEL": "Cancelar"
+          }
+        }
+      },
+      "ADD_DIALOG": {
+        "TITLE": "Establecer variable del proceso",
+        "LABEL": {
+          "NAME": "Nombre",
+          "VALUE": "Valor",
+          "SCOPE": "Ámbito"
+        }
+      },
+      "EDIT_DIALOG": {
+        "TITLE": "Editar variable del proceso"
+      },
+      "ERROR_DIALOG": {
+        "TITLE": "No se ha podido finalizar la acción",
+        "DESCRIPTION": "Puede que no tenga el nivel de acceso requerido; consúltelo con el equipo de TI."
+      }
+    },
+    "START_PROCESS": {
+      "BUTTON": "Iniciar proceso",
+      "NO_PROCESS_DEFINITIONS": "No puede iniciar un proceso porque no hay definiciones de procesos disponibles",
+      "FORM": {
+        "TITLE": "Iniciar proceso",
+        "LABEL": {
+          "TYPE": "Seleccionar proceso",
+          "NAME": "Nombre del proceso"
+        },
+        "TYPE_PLACEHOLDER": "Elegir una...",
+        "ACTION": {
+          "START": "Iniciar proceso",
+          "CANCEL": "Cancelar"
+        }
+      },
+      "ERROR": {
+        "LOAD_PROCESS_DEFS": "No se han podido cargar las definiciones de procesos; compruebe que tiene acceso.",
+        "START": "No se ha podido iniciar una nueva instancia de proceso; compruebe que tiene acceso."
+      }
+    },
+    "PROCESS-ATTACHMENT": {
+      "EMPTY": {
+        "HEADER": "Esta lista está vacía",
+        "DRAG-AND-DROP": {
+          "TITLE": "Arrastrar y soltar",
+          "SUBTITLE": "para cargar ficheros"
+        }
+      },
+      "EMPTY-LIST": {
+        "HEADER": "No hay ficheros disponibles"
+      },
+      "COLUMNS": {
+        "NAME": "Nombre",
+        "CREATED-ON": "Creado"
+      }
+    }
+  }
+}

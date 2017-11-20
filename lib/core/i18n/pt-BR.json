@@ -1,0 +1,151 @@
+{
+  "CORE": {
+    "PAGINATION": {
+      "ITEMS_RANGE": "Mostrando {{ range }} de {{ total }}",
+      "ITEMS_PER_PAGE": "Itens por página",
+      "CURRENT_PAGE": "Página {{ number }}",
+      "TOTAL_PAGES": "de {{ total }}"
+    },
+    "DIALOG": {
+      "DOWNLOAD_ZIP": {
+        "ACTIONS": {
+          "CANCEL": "Cancelar"
+        },
+        "TITLE": "Adicionando arquivos ao zip, isso pode levar alguns minutos"
+      }
+    },
+    "FOLDER_DIALOG": {
+      "CREATE_FOLDER_TITLE": "Criar nova pasta",
+      "EDIT_FOLDER_TITLE": "Editar pasta",
+      "FOLDER_NAME": {
+        "LABEL": "Nome",
+        "ERRORS": {
+          "REQUIRED": "O nome da pasta é obrigatório",
+          "SPECIAL_CHARACTERS": "O nome da pasta não pode conter estes caracteres * \" < > \\ / ? : |",
+          "ENDING_DOT": "O nome da pasta não pode terminar com ponto final .",
+          "ONLY_SPACES": "O nome da pasta não pode conter somente espaços"
+        }
+      },
+      "FOLDER_DESCRIPTION": {
+        "LABEL": "Descrição"
+      },
+      "CREATE_BUTTON": {
+        "LABEL": "Criar"
+      },
+      "UPDATE_BUTTON": {
+        "LABEL": "Atualizar"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "Cancelar"
+      }
+    },
+    "MESSAGES": {
+      "ERRORS": {
+        "GENERIC": "A ação não teve êxito. Tente novamente ou entre em contato com a Equipe de TI.",
+        "EXISTENT_FOLDER": "Já existe uma pasta com este nome. Tente outro nome."
+      }
+    },
+    "RESTORE_NODE": {
+      "VIEW": "Visualizar",
+      "PARTIAL_PLURAL": "{{ number }} itens não restaurados devido a problemas com o local da restauração",
+      "NODE_EXISTS": "Não foi possível restaurar, o item {{ name }} já existe",
+      "LOCATION_MISSING": "Não foi possível restaurar o item {{ name }}, o local original não existe mais",
+      "GENERIC": "Houve um problema ao restaurar o item {{ name }}",
+      "PLURAL": "Restauração bem-sucedida",
+      "SINGULAR": "Item {{ name }} restaurado"
+    },
+    "DELETE_NODE": {
+      "SINGULAR": "{{ name }} excluído",
+      "PLURAL": "{{ number }} itens excluídos",
+      "PARTIAL_SINGULAR": "Item {{ success }} excluído, não foi possível excluir {{ failed }}",
+      "PARTIAL_PLURAL": "Itens {{ success }} excluídos, não foi possível excluir {{ failed }}",
+      "ERROR_SINGULAR": "Não foi possível excluir {{ name }}",
+      "ERROR_PLURAL": "Não foi possível excluir {{ number }} itens"
+    },
+    "HOST_SETTINGS": {
+      "CS_URL_ERROR": "O endereço do Content Services não corresponde ao formato de URL",
+      "PS_URL_ERROR": "O endereço do Process Services não corresponde ao formato de URL",
+      "TITLE": "Configurações",
+      "CS-HOST": "URL do Content Services",
+      "BP-HOST": "URL do Process Services",
+      "BACK": "Voltar",
+      "APPLY": "Aplicar",
+      "NOT_VALID": "http(s)://host|ip:port(/path) não reconhecida, tente uma URL diferente."
+    }
+  },
+  "LOGIN": {
+    "LOGO": "Alfresco",
+    "LABEL": {
+      "LOGIN": "Entrar",
+      "USERNAME": "Nome de usuário",
+      "PASSWORD": "Senha",
+      "REMEMBER": "Lembrar-me"
+    },
+    "MESSAGES": {
+      "USERNAME-REQUIRED": "Obrigatório",
+      "USERNAME-MIN": "Seu nome de usuário deve ter no mínimo {{minLength}} caracteres.",
+      "PASSWORD-REQUIRED": "Insira a senha para entrar",
+      "LOGIN-ERROR-CREDENTIALS": "Você inseriu um nome de usuário ou senha desconhecida",
+      "LOGIN-ERROR-PROVIDERS": "Provedores não podem ficar indefinidos",
+      "LOGIN-ERROR-CORS": "Exceção CORS, verifique a configuração do servidor",
+      "LOGIN-ERROR-CSRF": "Exceção CSRF, set [disableCsrf]=\"true\" in login.component",
+      "LOGIN-ECM-LICENSE": "O repositório do Alfresco Content Services está em modo somente leitura"
+    },
+    "BUTTON": {
+      "LOGIN": "Entrar",
+      "CHECKING": "Verificando",
+      "WELCOME": "Bem-vindo"
+    },
+    "ACTION": {
+      "HELP": "Precisa de ajuda?",
+      "REGISTER": "Registrar"
+    }
+  },
+  "ADF-DATATABLE": {
+    "EMPTY": {
+      "HEADER": "Esta lista está vazia",
+      "DRAG-AND-DROP": {
+        "TITLE": "Arraste e solte",
+        "SUBTITLE": "para carregar arquivos"
+      }
+    }
+  },
+  "USER_PROFILE": {
+    "LABELS": {
+      "ECM": {
+        "JOB_TITLE": "Cargo"
+      },
+      "BPM": {
+        "TENANT": "Tenant"
+      }
+    },
+    "TAB": {
+      "CS": "Content Services",
+      "PS": "Process Services"
+    }
+  },
+  "ADF_VIEWER": {
+    "ACTIONS": {
+      "BACK": "Voltar",
+      "OPEN_WITH": "Abrir com",
+      "DOWNLOAD": "Download",
+      "PRINT": "Imprimir",
+      "SHARE": "Compartilhar",
+      "MORE_ACTIONS": "Mais ações",
+      "INFO": "Informações"
+    },
+    "ARIA": {
+      "PREVIOUS_PAGE": "Página anterior",
+      "NEXT_PAGE": "Próxima página",
+      "ZOOM_IN": "Ampliar",
+      "ZOOM_OUT": "Reduzir",
+      "FIT_PAGE": "Ajustar página"
+    },
+    "PAGE_LABEL": {
+      "SHOWING": "Mostrando",
+      "OF": "de"
+    },
+    "LOADING": "Carregando",
+    "UNKNOWN_FORMAT": "Não foi possível carregar pré-visualização"
+  }
+}

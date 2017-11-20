@@ -1,0 +1,151 @@
+{
+  "CORE": {
+    "PAGINATION": {
+      "ITEMS_RANGE": "Affichage de {{ range }} sur {{ total }}",
+      "ITEMS_PER_PAGE": "Éléments par page",
+      "CURRENT_PAGE": "Page {{ number }}",
+      "TOTAL_PAGES": "sur {{ total }}"
+    },
+    "DIALOG": {
+      "DOWNLOAD_ZIP": {
+        "ACTIONS": {
+          "CANCEL": "Annuler"
+        },
+        "TITLE": "Ajout de fichiers au zip, veuillez patienter quelques minutes"
+      }
+    },
+    "FOLDER_DIALOG": {
+      "CREATE_FOLDER_TITLE": "Créer un nouveau filtre",
+      "EDIT_FOLDER_TITLE": "Modifier le dossier",
+      "FOLDER_NAME": {
+        "LABEL": "Nom",
+        "ERRORS": {
+          "REQUIRED": "Nom de dossier requis",
+          "SPECIAL_CHARACTERS": "Un nom de dossier ne peut pas contenir les caractères * \" < > \\ / ? : |",
+          "ENDING_DOT": "Un nom de dossier ne peut pas se terminer par un point .",
+          "ONLY_SPACES": "Un nom de dossier ne peut pas contenir uniquement des espaces"
+        }
+      },
+      "FOLDER_DESCRIPTION": {
+        "LABEL": "Description"
+      },
+      "CREATE_BUTTON": {
+        "LABEL": "Créer"
+      },
+      "UPDATE_BUTTON": {
+        "LABEL": "Mis à jour"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "Annuler"
+      }
+    },
+    "MESSAGES": {
+      "ERRORS": {
+        "GENERIC": "L'action a échoué. Réessayez ou contactez le service informatique.",
+        "EXISTENT_FOLDER": "Un dossier du même nom existe déjà. Essayez avec un nom différent."
+      }
+    },
+    "RESTORE_NODE": {
+      "VIEW": "Afficher",
+      "PARTIAL_PLURAL": "{{ number }} éléments n'ont pas été restaurés en raison de problèmes avec l'emplacement de restauration",
+      "NODE_EXISTS": "Restauration impossible, l'élément {{ name }} existe déjà",
+      "LOCATION_MISSING": "Impossible de restaurer l'élément {{ name }}, l'emplacement d'origine n'existe plus",
+      "GENERIC": "Un problème est survenu pendant la restauration de l'élément {{ name }}",
+      "PLURAL": "Restauration réussie",
+      "SINGULAR": "Elément {{ name }} restauré"
+    },
+    "DELETE_NODE": {
+      "SINGULAR": "{{ name }} supprimé",
+      "PLURAL": "{{ number }} éléments supprimés",
+      "PARTIAL_SINGULAR": "{{ success }} élément supprimé, {{ failed }} n'a/n'ont pas pu être supprimé(s)",
+      "PARTIAL_PLURAL": "{{ success }} éléments supprimés, {{ failed }} n'a/n'ont pas pu être supprimé(s)",
+      "ERROR_SINGULAR": "{{ name }} n'a pas pu être supprimé",
+      "ERROR_PLURAL": "{{ number }} éléments n'ont pas pu être supprimés"
+    },
+    "HOST_SETTINGS": {
+      "CS_URL_ERROR": "L'adresse Content Services ne correspond pas au format d'URL",
+      "PS_URL_ERROR": "L'adresse Process Services ne correspond pas au format d'URL",
+      "TITLE": "Paramètres",
+      "CS-HOST": "URL Content Services",
+      "BP-HOST": "URL Process Services",
+      "BACK": "Retour",
+      "APPLY": "Appliquer",
+      "NOT_VALID": "Adresse http(s)://host|ip:port(/path) non reconnue, essayez une autre URL."
+    }
+  },
+  "LOGIN": {
+    "LOGO": "Alfresco",
+    "LABEL": {
+      "LOGIN": "Connexion",
+      "USERNAME": "Nom d'utilisateur",
+      "PASSWORD": "Mot de passe",
+      "REMEMBER": "Mémoriser"
+    },
+    "MESSAGES": {
+      "USERNAME-REQUIRED": "Requis",
+      "USERNAME-MIN": "Votre nom d'utilisateur doit comporter au moins {{minLenght}} caractères.",
+      "PASSWORD-REQUIRED": "Entrez votre mot de passe pour vous connecter",
+      "LOGIN-ERROR-CREDENTIALS": "Le nom d'utilisateur ou le mot de passe entré est inconnu",
+      "LOGIN-ERROR-PROVIDERS": "Le fournisseur ne peut pas être non défini",
+      "LOGIN-ERROR-CORS": "Exception CORS, vérifiez la configuration du serveur",
+      "LOGIN-ERROR-CSRF": "Exception CSRF, set [disableCsrf]=\"true\" in login.component",
+      "LOGIN-ECM-LICENSE": "L'entrepôt Alfresco Content Services est en lecture seule"
+    },
+    "BUTTON": {
+      "LOGIN": "Connexion",
+      "CHECKING": "Vérification",
+      "WELCOME": "Bienvenue"
+    },
+    "ACTION": {
+      "HELP": "Besoin d'aide?",
+      "REGISTER": "S'inscrire"
+    }
+  },
+  "ADF-DATATABLE": {
+    "EMPTY": {
+      "HEADER": "Cette liste est vide",
+      "DRAG-AND-DROP": {
+        "TITLE": "Glissez-déposez",
+        "SUBTITLE": "les fichiers à importer"
+      }
+    }
+  },
+  "USER_PROFILE": {
+    "LABELS": {
+      "ECM": {
+        "JOB_TITLE": "Fonction"
+      },
+      "BPM": {
+        "TENANT": "Client"
+      }
+    },
+    "TAB": {
+      "CS": "Content Services",
+      "PS": "Process Services"
+    }
+  },
+  "ADF_VIEWER": {
+    "ACTIONS": {
+      "BACK": "Retour",
+      "OPEN_WITH": "Ouvrir avec",
+      "DOWNLOAD": "Télécharger",
+      "PRINT": "Imprimer",
+      "SHARE": "Partager",
+      "MORE_ACTIONS": "Plus d'actions",
+      "INFO": "Informations"
+    },
+    "ARIA": {
+      "PREVIOUS_PAGE": "Page précédente",
+      "NEXT_PAGE": "Page suivante",
+      "ZOOM_IN": "Zoom avant",
+      "ZOOM_OUT": "Zoom arrière",
+      "FIT_PAGE": "Ajuster à la page"
+    },
+    "PAGE_LABEL": {
+      "SHOWING": "Affichage en cours",
+      "OF": "sur"
+    },
+    "LOADING": "Chargement en cours",
+    "UNKNOWN_FORMAT": "Impossible de charger l'aperçu"
+  }
+}

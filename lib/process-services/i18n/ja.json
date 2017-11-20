@@ -1,0 +1,298 @@
+{
+  "DIALOG": {
+    "SAVE_MESSAGE": "レポートを現在の設定でレポートリストに追加するには、[保存] をクリックします.",
+    "EXPORT_MESSAGE": ""
+  },
+  "DATE-WIDGET": {
+    "START-DATE": "開始日",
+    "END-DATE": "終了日",
+    "MESSAGES": {
+      "START-DATE-REQUIRED": "開始日を指定してください",
+      "START-LESS-THAN-END-DATE": "開始日は終了日より前の日付でなければなりません"
+    }
+  },
+  "ADF_TASK_LIST": {
+    "APPS": {
+      "NONE": "アプリケーションが見つかりません",
+      "TASK_APP_NAME": "タスクアプリ"
+    },
+    "LIST": {
+      "MESSAGES": {
+        "NONE": "タスクリストが見つかりません"
+      }
+    },
+    "PROPERTIES": {
+      "TASK_NAME": "タスク",
+      "THUMBNAIL": "サムネイル",
+      "NAME": "名前",
+      "ASSIGNEE": "担当者",
+      "ASSIGNEE_DEFAULT": "担当者なし",
+      "PRIORITY": "優先度",
+      "DUE_DATE": "期限",
+      "DUE_DATE_DEFAULT": "期限なし",
+      "STATUS": "ステータス",
+      "CATEGORY": "カテゴリ",
+      "CATEGORY_DEFAULT": "カテゴリなし",
+      "PARENT_NAME": "親名",
+      "PARENT_NAME_DEFAULT": "親なし",
+      "CREATED_BY": "作成者",
+      "CREATED": "作成日",
+      "ID": "ID",
+      "DESCRIPTION": "説明",
+      "DESCRIPTION_DEFAULT": "説明なし",
+      "FORM_NAME": "フォームの名前",
+      "FORM_NAME_DEFAULT": "フォームなし"
+    },
+    "MENU_ACTIONS": {
+      "VIEW_CONTENT": "表示",
+      "REMOVE_CONTENT": "削除",
+      "DOWNLOAD_CONTENT": "ダウンロード",
+      "DOWNLOAD_AUDIT": "監査のダウンロード"
+    },
+    "DETAILS": {
+      "LABELS": {
+        "INFO_DRAWER_TITLE": "アクティビティ",
+        "INFO_DRAWER_TAB_ACTIVITY_TITLE": "アクティビティ",
+        "INFO_DRAWER_TAB_DETAILS_TITLE": "詳細",
+        "ASSIGNEE": "担当者",
+        "DUE": "期限",
+        "FORM": "フォーム",
+        "PEOPLE": "このタスクを共有しているメンバー",
+        "COMMENTS": "コメント",
+        "CHECKLIST": "チェックリスト",
+        "INVOLVED_PEOPLE": "タスクに関わっているメンバー",
+        "ADD_PEOPLE": "メンバーとグループの追加",
+        "ADD_ASSIGNEE": "新しい担当者の追加"
+      },
+      "BUTTON": {
+        "COMPLETE": "完了",
+        "CLAIM": "要求",
+        "UNCLAIM": "キューへの再登録",
+        "DRAG-ATTACHMENT": "アップロードするファイルをここにドロップしてください",
+        "UPLOAD-ATTACHMENT": "添付ファイルのアップロード"
+      },
+      "MESSAGES": {
+        "NONE": "タスクの詳細が見つかりません",
+        "CLAIM": "このタスクの作業を行うには、[要求] をクリックします"
+      },
+      "FORM": {
+        "NONE": "フォームなし"
+      },
+      "DUE": {
+        "NONE": "期限なし"
+      },
+      "ASSIGNEE": {
+        "NONE": "担当者なし"
+      },
+      "PEOPLE": {
+        "NONE": "関わっているメンバーなし"
+      },
+      "COMMENTS": {
+        "NONE": "コメントなし",
+        "ADD": "コメントの追加",
+        "HEADER": "コメント ({{ count }} 件)",
+        "CREATED_BY_HEADER": "作成者",
+        "MESSAGE_HEADER": "メッセージ",
+        "DIALOG": {
+          "TITLE": "新しいコメント",
+          "LABELS": {
+            "MESSAGE": "メッセージ"
+          },
+          "BUTTON": {
+            "ADD": "コメントの追加",
+            "CANCEL": "キャンセル"
+          }
+        }
+      },
+      "CHECKLIST": {
+        "NONE": "チェックリストなし"
+      },
+      "ERROR": {
+        "TITLE": "処理を完了できませんでした",
+        "DESCRIPTION": "もう一度操作をやり直すか、アクセス権があることを確認してください.",
+        "CLOSE": "閉じる"
+      }
+    },
+    "FILTERS": {
+      "MESSAGES": {
+        "NONE": "タスクのフィルタが選択されていません"
+      }
+    },
+    "START_TASK": {
+      "BUTTON": "タスクの作成",
+      "FORM": {
+        "TITLE": "タスクの開始",
+        "LABEL": {
+          "NONE": "なし",
+          "NAME": "名前",
+          "DESCRIPTION": "説明",
+          "ATTACHFORM": "フォームの添付",
+          "ASSIGNEE": "担当者",
+          "FORM": "フォーム",
+          "DATE": "日付を選択してください"
+        },
+        "ACTION": {
+          "START": "開始",
+          "CANCEL": "キャンセル"
+        },
+        "DATE": {
+          "ERROR": "日付形式: YYYY/MM/DD"
+        }
+      }
+    },
+    "PEOPLE": {
+      "DIALOG_CLOSE": "閉じる",
+      "ADD_USER": "追加",
+      "ADD_ASSIGNEE": "割り当て",
+      "SEARCH_USER": "ユーザーの検索",
+      "SEARCH": {
+        "NO_USERS": "タスクに関わっているメンバーが見つかりません"
+      }
+    },
+    "ATTACHMENT": {
+      "EMPTY": {
+        "HEADER": "このリストは空です",
+        "DRAG-AND-DROP": {
+          "TITLE": "アップロードするファイルをドラッグ & ドロップしてください",
+          "SUBTITLE": ""
+        }
+      },
+      "EMPTY-LIST": {
+        "HEADER": "使用できるファイルがありません"
+      }
+    }
+  },
+  "ADF_PROCESS_LIST": {
+    "LIST": {
+      "NONE": "プロセスインスタンスが見つかりません",
+      "SUMMARY": "{{total}} 個のプロセスインスタンスが見つかりました",
+      "ERROR": "プロセスインスタンスを読み込めませんでした。操作をやり直すか、次のメッセージを IT 担当者に伝えてください: {{errorMessage}}"
+    },
+    "FILTERS": {
+      "MESSAGES": {
+        "NONE": "プロセスインスタンスのフィルタが選択されていません."
+      }
+    },
+    "PROPERTIES": {
+      "PROCESS_NAME": "プロセス",
+      "NAME": "名前",
+      "STATUS": "ステータス",
+      "DUE_DATE": "期限",
+      "DUE_DATE_DEFAULT": "期限なし",
+      "CATEGORY": "カテゴリ",
+      "CATEGORY_DEFAULT": "カテゴリなし",
+      "CREATED_BY": "作成者",
+      "CREATED_BY_DEFAULT": "担当者なし",
+      "CREATED": "作成日",
+      "BUSINESS_KEY": "ビジネスキー",
+      "BUSINESS_KEY_DEFAULT": "なし",
+      "DESCRIPTION": "説明",
+      "DESCRIPTION_DEFAULT": "説明なし",
+      "ID": "ID"
+    },
+    "MENU_ACTIONS": {
+      "VIEW_CONTENT": "表示",
+      "REMOVE_CONTENT": "削除",
+      "DOWNLOAD_CONTENT": "ダウンロード",
+      "DOWNLOAD_AUDIT": "監査のダウンロード",
+      "VIEW_TASK": "タスクの表示"
+    },
+    "DETAILS": {
+      "LABELS": {
+        "STARTED_BY": "開始者",
+        "STARTED": "開始日",
+        "ENDED": "終了日",
+        "COMMENTS": "コメント",
+        "START_FORM": "開始フォーム",
+        "TASKS_ACTIVE": "アクティブなタスク",
+        "TASKS_COMPLETED": "完了済みタスク",
+        "TASK_SUBTITLE": "割り当て先: {{user}}, 作成日: {{created}}"
+      },
+      "BUTTON": {
+        "CANCEL": "プロセスのキャンセル",
+        "CLOSE": "閉じる",
+        "SHOW_DIAGRAM": "図の表示",
+        "DRAG-ATTACHMENT": "アップロードするファイルをここにドロップしてください",
+        "UPLOAD-ATTACHMENT": "添付ファイルのアップロード"
+      },
+      "MESSAGES": {
+        "NONE": "プロセスの詳細が見つかりません"
+      },
+      "TASKS": {
+        "NO_ACTIVE": "現在アクティブなタスクはありません",
+        "NO_COMPLETED": "完了済みのタスクはまだありません",
+        "TASK_DETAILS": "タスクの詳細",
+        "TASK_CLOSE": "閉じる"
+      },
+      "COMMENTS": {
+        "ADD": "コメントの追加",
+        "HEADER": "コメント ({{ count }} 件)",
+        "NONE": "コメントなし",
+        "BUTTON": {
+          "ADD": "コメントの追加"
+        },
+        "ADD_DIALOG": {
+          "TITLE": "新しいコメント",
+          "LABEL": {
+            "MESSAGE": "メッセージ"
+          },
+          "BUTTON": {
+            "ADD": "コメントの追加",
+            "CANCEL": "キャンセル"
+          }
+        }
+      },
+      "ADD_DIALOG": {
+        "TITLE": "プロセス変数の設定",
+        "LABEL": {
+          "NAME": "名前",
+          "VALUE": "値",
+          "SCOPE": "範囲"
+        }
+      },
+      "EDIT_DIALOG": {
+        "TITLE": "プロセス変数の編集"
+      },
+      "ERROR_DIALOG": {
+        "TITLE": "処理を完了できませんでした",
+        "DESCRIPTION": "必要なレベルのアクセス権がない可能性があります。IT 担当者に確認してください."
+      }
+    },
+    "START_PROCESS": {
+      "BUTTON": "プロセスの開始",
+      "NO_PROCESS_DEFINITIONS": "使用できるプロセス定義がないため、プロセスを開始できません",
+      "FORM": {
+        "TITLE": "プロセスの開始",
+        "LABEL": {
+          "TYPE": "プロセスの選択",
+          "NAME": "プロセス名"
+        },
+        "TYPE_PLACEHOLDER": "1 つ選択してください...",
+        "ACTION": {
+          "START": "プロセスの開始",
+          "CANCEL": "キャンセル"
+        }
+      },
+      "ERROR": {
+        "LOAD_PROCESS_DEFS": "プロセス定義を読み込めませんでした。アクセス権があることを確認してください.",
+        "START": "新しいプロセスインスタンスを開始できませんでした。アクセス権があることを確認してください."
+      }
+    },
+    "PROCESS-ATTACHMENT": {
+      "EMPTY": {
+        "HEADER": "このリストは空です",
+        "DRAG-AND-DROP": {
+          "TITLE": "アップロードするファイルをドラッグ & ドロップしてください",
+          "SUBTITLE": ""
+        }
+      },
+      "EMPTY-LIST": {
+        "HEADER": "使用できるファイルがありません"
+      },
+      "COLUMNS": {
+        "NAME": "名前",
+        "CREATED-ON": "作成日"
+      }
+    }
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "title": "Bienvenido",
+  "VERSION": {
+    "NO_PERMISSION": "No tiene permiso para administrar versiones de este contenido",
+    "NO_PERMISSION_EVENT": "No tiene permiso ${event.permission} para ${event.action} el ${event.type}",
+    "CHOOSE_FILE": "Seleccione un fichero para ver sus versiones"
+  },
+  "APP_LAYOUT": {
+    "APP_NAME": "Aplicación ADF Demo",
+    "HOME": "Inicio",
+    "CONTENT_SERVICES": "Content Services",
+    "PROCESS_SERVICES": "Process Services",
+    "LOGIN": "Iniciar sesión",
+    "CUSTOM_SOURCES": "Fuentes personalizadas",
+    "DATATABLE": "Tabla de datos",
+    "FORM": "Formulario",
+    "FORM_LIST": "Lista de formularios",
+    "UPLOADER": "Cargador",
+    "WEBSCRIPT": "Webscript",
+    "TAG": "Etiqueta",
+    "SOCIAL": "Social",
+    "SETTINGS": "Configuración",
+    "ABOUT": "Acerca de"
+  },
+  "DOCUMENT_LIST": {
+    "MULTISELECT_CHECKBOXES": "Selección múltiple (con casillas)",
+    "MULTIPLE_FILE_UPLOAD": "Carga de varios ficheros",
+    "FOLDER_UPLOAD": "Carga de carpetas",
+    "CUSTOM_FILTER": "Filtro de extensiones personalizado",
+    "MAX_SIZE": "Filtro de tamaño máximo",
+    "ENABLE_VERSIONING": "Habilitar control de versiones",
+    "DESCRIPTION_UPLOAD": "Habilitar carga",
+    "MULTISELECT_DESCRIPTION": "Utilice Cmd (Mac) o Ctrl (Windows) para cambiar la selección de varios elementos",
+    "COLUMNS": {
+      "DISPLAY_NAME": "Nombre a mostrar",
+      "TAG": "Etiqueta",
+      "CREATED_BY": "Creado por",
+      "CREATED_ON": "Creado",
+      "CREATED": "Creado"
+    },
+    "ACTIONS": {
+      "FOLDER": {
+        "COPY": "Copiar",
+        "MOVE": "Mover",
+        "DELETE": "Eliminar"
+      },
+      "DOCUMENT": {
+        "DOWNLOAD": "Descargar",
+        "COPY": "Copiar",
+        "MOVE": "Mover",
+        "DELETE": "Eliminar"
+      }
+    }
+  },
+  "DATATABLE": {
+    "RESET_DEFAULT": "Restablecer a predeterminado",
+    "ADD_ROW": "Añadir fila",
+    "REPLACE_ROWS": "Sustituir filas",
+    "REPLACE_COLUMNS": "Sustituir columnas",
+    "LOAD_NODE": "Cargar nodo",
+    "MULTISELECT": "Selección múltiple",
+    "MULTISELECT_DESCRIPTION": "Utilice Cmd (Mac) o Ctrl (Windows) para cambiar la selección de varios elementos"
+  },
+  "ANALYTICS_REPORT": {
+    "NO_REPORT_MESSAGE": "No se ha seleccionado ningún informe. Elija un informe de la lista."
+  },
+  "PS-TAB": {
+    "TASKS-TAB": "Tareas",
+    "PROCESSES-TAB": "Proceso",
+    "REPORTS-TAB": "Informes",
+    "START-TASK": "Iniciar tarea",
+    "START-PROCESS": "Iniciar proceso",
+    "AUDIT-LOG": "Procesar registro de auditorías"
+  },
+  "FORM-LIST": {
+    "STORE": "Almacenar",
+    "RESTORE": "Restaurar"
+  },
+  "LOGIN": {
+    "CONTENT_SERVICES": "Content Services",
+    "PROCESS_SERVICES": "Process Services",
+    "LOGIN_FOOTER": "Pie del inicio de sesión"
+  },
+  "SEARCH": {
+    "RESULTS": "Resultados de la búsqueda"
+  },
+  "SOCIAL": {
+    "LIKE": "Componente Me gusta",
+    "RATING": "Componente de calificación"
+  },
+  "TAG": {
+    "LIST": "Lista de etiquetas de Content Services",
+    "INSERT": "Insertar ID del nodo",
+    "NODE_LIST": "Lista de etiquetas por ID de nodo"
+  }
+}

@@ -1,0 +1,135 @@
+<div class="adf-login-content" [style.background-image]="'url(' + backgroundImageUrl + ')'">
+     <div class="ie11FixerParent">
+         <div class="ie11FixerChild">
+
+            <mat-card class="adf-login-card-wide">
+                <form [formGroup]="form" (submit)="onSubmit(form.value)">
+
+                    <mat-card-header>
+                        <mat-card-title>
+                            <div class="adf-alfresco-logo">
+                                <!--HEADER TEMPLATE-->
+                                <ng-template *ngIf="headerTemplate"
+                                            ngFor [ngForOf]="[data]"
+                                            [ngForTemplate]="headerTemplate">
+                                </ng-template>
+                                <img *ngIf="!headerTemplate" class="adf-img-logo" [src]="logoImageUrl"
+                                    alt="{{'LOGIN.LOGO' | translate }}">
+                            </div>
+                        </mat-card-title>
+                    </mat-card-header>
+
+                    <mat-card-content class="adf-login-controls">
+
+                        <!--ERRORS AREA-->
+                        <div class="adf-error-container">
+                            <div *ngIf="isError" id="login-error" data-automation-id="login-error"
+                                class="error  adf-error-message">
+                                <mat-icon class="error-icon">warning</mat-icon>
+                                <span class="login-error-message">{{errorMsg | translate }}</span>
+                            </div>
+                        </div>
+
+                        <!--USERNAME FIELD-->
+                        <div class="adf-login__field" [ngClass]="{'is-invalid': isErrorStyle(form.controls.username)}">
+                            <mat-form-field class="adf-full-width" floatPlaceholder="never" color="primary">
+                                <input matInput placeholder="{{'LOGIN.LABEL.USERNAME' | translate }}"
+                                    type="text"
+                                    class="adf-full-width"
+                                    [formControl]="form.controls['username']"
+                                    autocapitalize="none"
+                                    id="username"
+                                    data-automation-id="username"
+                                    (blur)="trimUsername($event)"
+                                    tabindex="1">
+                            </mat-form-field>
+
+                            <span class="adf-login-validation" for="username" *ngIf="formError.username">
+                                <span id="username-error" class="adf-login-error" data-automation-id="username-error">{{formError.username | translate }}</span>
+                            </span>
+                        </div>
+
+                        <!--PASSWORD FIELD-->
+                        <div class="adf-login__field">
+                            <mat-form-field class="adf-full-width" floatPlaceholder="never" color="primary">
+                                <input matInput placeholder="{{'LOGIN.LABEL.PASSWORD' | translate }}"
+                                    type="password"
+                                    [formControl]="form.controls['password']"
+                                    id="password"
+                                    data-automation-id="password"
+                                    tabindex="2">
+                                <mat-icon *ngIf="isPasswordShow" matSuffix class="adf-login-password-icon"
+                                        data-automation-id="hide_password" (click)="toggleShowPassword()">visibility
+                                </mat-icon>
+                                <mat-icon *ngIf="!isPasswordShow" matSuffix class="adf-login-password-icon"
+                                        data-automation-id="show_password" (click)="toggleShowPassword()">visibility_off
+                                </mat-icon>
+                            </mat-form-field>
+                            <span class="adf-login-validation" for="password" *ngIf="formError.password">
+                                <span id="password-required" class="adf-login-error"
+                                    data-automation-id="password-required">{{formError.password | translate }}</span>
+                            </span>
+                        </div>
+
+                        <!--CUSTOM CONTENT-->
+                        <ng-content></ng-content>
+
+                        <br>
+                        <button type="submit" id="login-button" tabindex="3"
+                                class="adf-login-button"
+                                mat-raised-button color="primary"
+                                [class.isChecking]="actualLoginStep === LoginSteps.Checking"
+                                [class.isWelcome]="actualLoginStep === LoginSteps.Welcome"
+                                data-automation-id="login-button" [disabled]="!form.valid">
+                            
+                            <span *ngIf="actualLoginStep === LoginSteps.Landing" class="adf-login-button-label">{{ 'LOGIN.BUTTON.LOGIN' | translate }}</span>
+
+                            <div *ngIf="actualLoginStep === LoginSteps.Checking" class="adf-interactive-login-label">
+                                <span class="adf-login-button-label">{{ 'LOGIN.BUTTON.CHECKING' | translate }}</span>
+                                <div class="adf-login-spinner-container">
+                                    <mat-spinner id="checking-spinner" class="adf-login-checking-spinner" [diameter]="25" color="accent"></mat-spinner>
+                                </div>
+                            </div>
+
+
+                            <div *ngIf="actualLoginStep === LoginSteps.Welcome" class="adf-interactive-login-label">
+                                <span class="adf-login-button-label">{{ 'LOGIN.BUTTON.WELCOME' | translate }}</span>
+                                <mat-icon class="welcome-icon">done</mat-icon>
+                            </div>
+
+                        </button>
+                        <div *ngIf="showRememberMe" class="adf-login__remember-me">
+                            <mat-checkbox id="adf-login-remember" color="primary" class="adf-login-rememberme" [checked]="rememberMe"
+                                        (change)="rememberMe = !rememberMe">{{ 'LOGIN.LABEL.REMEMBER' | translate }}
+                            </mat-checkbox>
+                        </div>
+                    </mat-card-content>
+                    <mat-card-actions *ngIf="footerTemplate || showLoginActions">
+
+                        <div class="adf-login-action-container">
+                            <!--FOOTER TEMPLATE-->
+                            <ng-template *ngIf="footerTemplate"
+                                        ngFor [ngForOf]="[data]"
+                                        [ngForTemplate]="footerTemplate">
+                            </ng-template>
+                            <div class="adf-login-action" *ngIf="!footerTemplate && showLoginActions">
+                                <div id="adf-login-action-left" class="adf-login-action-left">
+                                    <a href="{{needHelpLink}}">{{'LOGIN.ACTION.HELP' | translate }}</a>
+                                </div>
+                                <div id="adf-login-action-right" class="adf-login-action-right">
+                                    <a href="{{registerLink}}">{{'LOGIN.ACTION.REGISTER' | translate }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card-actions>
+
+                </form>
+            </mat-card>
+
+            <div class="copyright" data-automation-id="login-copyright">
+                {{ copyrightText }}
+            </div>
+
+        </div>
+     </div>
+</div>

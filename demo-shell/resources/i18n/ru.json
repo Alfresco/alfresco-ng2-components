@@ -1,0 +1,96 @@
+{
+  "title": "Добро пожаловать",
+  "VERSION": {
+    "NO_PERMISSION": "У вас нет разрешения на управление версиями этого контента",
+    "NO_PERMISSION_EVENT": "У вас нет разрешения ${event.permission} на ${event.action} ${event.type}",
+    "CHOOSE_FILE": "Чтобы просмотреть версии файла, выберите файл"
+  },
+  "APP_LAYOUT": {
+    "APP_NAME": "Демонстрационное приложение ADF",
+    "HOME": "Домашняя",
+    "CONTENT_SERVICES": "Content Services",
+    "PROCESS_SERVICES": "Process Services",
+    "LOGIN": "Войти",
+    "CUSTOM_SOURCES": "Пользовательские источники",
+    "DATATABLE": "Datatable",
+    "FORM": "Форма",
+    "FORM_LIST": "Список форм",
+    "UPLOADER": "Загрузчик",
+    "WEBSCRIPT": "Webscript",
+    "TAG": "Метка",
+    "SOCIAL": "Социальный",
+    "SETTINGS": "Параметры",
+    "ABOUT": "О приложении"
+  },
+  "DOCUMENT_LIST": {
+    "MULTISELECT_CHECKBOXES": "Выбор нескольких вариантов (с флажками)",
+    "MULTIPLE_FILE_UPLOAD": "Загрузка нескольких файлов",
+    "FOLDER_UPLOAD": "Загрузка папки",
+    "CUSTOM_FILTER": "Пользовательский фильтр расширений",
+    "MAX_SIZE": "Фильтр максимального размера",
+    "ENABLE_VERSIONING": "Включить поддержку версий",
+    "DESCRIPTION_UPLOAD": "Включить загрузку",
+    "MULTISELECT_DESCRIPTION": "Использовать кнопку Cmd (Mac) или Ctrl (Windows) для переключения выбора нескольких элементов",
+    "COLUMNS": {
+      "DISPLAY_NAME": "Отображаемое имя",
+      "TAG": "Метка",
+      "CREATED_BY": "Создано пользователем",
+      "CREATED_ON": "Дата создания",
+      "CREATED": "Создано"
+    },
+    "ACTIONS": {
+      "FOLDER": {
+        "COPY": "Копировать",
+        "MOVE": "Переместить",
+        "DELETE": "Удалить"
+      },
+      "DOCUMENT": {
+        "DOWNLOAD": "Скачать",
+        "COPY": "Копировать",
+        "MOVE": "Переместить",
+        "DELETE": "Удалить"
+      }
+    }
+  },
+  "DATATABLE": {
+    "RESET_DEFAULT": "Установить значение по умолчанию",
+    "ADD_ROW": "Добавить строку",
+    "REPLACE_ROWS": "Заменить строки",
+    "REPLACE_COLUMNS": "Заменить столбцы",
+    "LOAD_NODE": "Загрузить узел",
+    "MULTISELECT": "Выбор нескольких вариантов",
+    "MULTISELECT_DESCRIPTION": "Использовать кнопку Cmd (Mac) или Ctrl (Windows) для переключения выбора нескольких элементов"
+  },
+  "ANALYTICS_REPORT": {
+    "NO_REPORT_MESSAGE": "Отчет не выбран. Выберите отчет из списка"
+  },
+  "PS-TAB": {
+    "TASKS-TAB": "Задачи",
+    "PROCESSES-TAB": "Процесс",
+    "REPORTS-TAB": "Отчеты",
+    "START-TASK": "Начать задачу",
+    "START-PROCESS": "Начать процесс",
+    "AUDIT-LOG": "Журнал аудита процессов"
+  },
+  "FORM-LIST": {
+    "STORE": "Хранилище",
+    "RESTORE": "Восстановить"
+  },
+  "LOGIN": {
+    "CONTENT_SERVICES": "Content Services",
+    "PROCESS_SERVICES": "Process Services",
+    "LOGIN_FOOTER": "Нижний колонтитул страницы входа в систему"
+  },
+  "SEARCH": {
+    "RESULTS": "Результаты поиска"
+  },
+  "SOCIAL": {
+    "LIKE": "Компонент \"Нравится\"",
+    "RATING": "Компонент \"Рейтинг\""
+  },
+  "TAG": {
+    "LIST": "Список меток Content Services",
+    "INSERT": "Вставить идентификатор узла",
+    "NODE_LIST": "Список меток по идентификатору узла"
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "title": "ようこそ",
+  "VERSION": {
+    "NO_PERMISSION": "このコンテンツのバージョンを管理する権限がありません",
+    "NO_PERMISSION_EVENT": "${event.type} を ${event.action} するための ${event.permission} 権限がありません",
+    "CHOOSE_FILE": "バージョンを表示するファイルを選択してください"
+  },
+  "APP_LAYOUT": {
+    "APP_NAME": "ADF デモアプリケーション",
+    "HOME": "ホーム",
+    "CONTENT_SERVICES": "Content Services",
+    "PROCESS_SERVICES": "Process Services",
+    "LOGIN": "ログイン",
+    "CUSTOM_SOURCES": "カスタムソース",
+    "DATATABLE": "Datatable",
+    "FORM": "フォーム",
+    "FORM_LIST": "フォームリスト",
+    "UPLOADER": "アップローダー",
+    "WEBSCRIPT": "Webscript",
+    "TAG": "タグ",
+    "SOCIAL": "ソーシャル",
+    "SETTINGS": "設定",
+    "ABOUT": "バージョン情報"
+  },
+  "DOCUMENT_LIST": {
+    "MULTISELECT_CHECKBOXES": "複数選択 (チェックボックスを使用)",
+    "MULTIPLE_FILE_UPLOAD": "複数ファイルのアップロード",
+    "FOLDER_UPLOAD": "フォルダのアップロード",
+    "CUSTOM_FILTER": "カスタム拡張子フィルタ",
+    "MAX_SIZE": "最大サイズフィルタ",
+    "ENABLE_VERSIONING": "バージョン管理を有効にする",
+    "DESCRIPTION_UPLOAD": "アップロードを有効にします",
+    "MULTISELECT_DESCRIPTION": "複数選択の切り替えを行うには、Cmd (Mac) キーまたは Ctrl (Windows) キーを押します",
+    "COLUMNS": {
+      "DISPLAY_NAME": "表示名",
+      "TAG": "タグ",
+      "CREATED_BY": "作成者",
+      "CREATED_ON": "作成日",
+      "CREATED": "作成日"
+    },
+    "ACTIONS": {
+      "FOLDER": {
+        "COPY": "コピー",
+        "MOVE": "移動",
+        "DELETE": "削除"
+      },
+      "DOCUMENT": {
+        "DOWNLOAD": "ダウンロード",
+        "COPY": "コピー",
+        "MOVE": "移動",
+        "DELETE": "削除"
+      }
+    }
+  },
+  "DATATABLE": {
+    "RESET_DEFAULT": "デフォルトに戻す",
+    "ADD_ROW": "行の追加",
+    "REPLACE_ROWS": "行の置換",
+    "REPLACE_COLUMNS": "列の置換",
+    "LOAD_NODE": "ノードの読み込み",
+    "MULTISELECT": "複数選択",
+    "MULTISELECT_DESCRIPTION": "複数選択の切り替えを行うには、Cmd (Mac) キーまたは Ctrl (Windows) キーを押します"
+  },
+  "ANALYTICS_REPORT": {
+    "NO_REPORT_MESSAGE": "レポートが選択されていません。リストからレポートを選択してください。"
+  },
+  "PS-TAB": {
+    "TASKS-TAB": "タスク",
+    "PROCESSES-TAB": "プロセス",
+    "REPORTS-TAB": "レポート",
+    "START-TASK": "タスクの開始",
+    "START-PROCESS": "プロセスの開始",
+    "AUDIT-LOG": "プロセスの監査ログ"
+  },
+  "FORM-LIST": {
+    "STORE": "保存",
+    "RESTORE": "復元"
+  },
+  "LOGIN": {
+    "CONTENT_SERVICES": "Content Services",
+    "PROCESS_SERVICES": "Process Services",
+    "LOGIN_FOOTER": "ログインページのフッター"
+  },
+  "SEARCH": {
+    "RESULTS": "検索結果"
+  },
+  "SOCIAL": {
+    "LIKE": "[いいね!] コンポーネント",
+    "RATING": "評価付けコンポーネント"
+  },
+  "TAG": {
+    "LIST": "Content Services のタグリスト",
+    "INSERT": "ノード ID の挿入",
+    "NODE_LIST": "ノード ID 別タグリスト"
+  }
+}

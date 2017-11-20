@@ -1,0 +1,25 @@
+<mat-card *ngIf="node">
+    <mat-card-content>
+        <adf-content-metadata [node]="node" [editable]="editable" [maxPropertiesToShow]="maxPropertiesToShow"></adf-content-metadata>
+    </mat-card-content>
+    <mat-card-footer class="adf-viewer-default-sidebar-card-footer" fxLayout="row" fxLayoutAlign="space-between stretch">
+        <div>
+            <button mat-icon-button>
+                <mat-icon>star_border</mat-icon>
+            </button>
+            <button mat-icon-button (click)="toggleEdit()">
+                <mat-icon>mode_edit</mat-icon>
+            </button>
+        </div>
+        <button mat-button (click)="toggleExpanded()">
+            <ng-container *ngIf="!expanded">
+                <span>{{ 'ADF_VIEWER.SIDEBAR.METADATA.MORE_INFORMATION' | translate }}</span>
+                <mat-icon>keyboard_arrow_down</mat-icon>
+            </ng-container>
+            <ng-container *ngIf="expanded">
+                <span>{{ 'ADF_VIEWER.SIDEBAR.METADATA.LESS_INFORMATION' | translate }}</span>
+                <mat-icon>keyboard_arrow_up</mat-icon>
+            </ng-container>
+        </button>
+    </mat-card-footer>
+</mat-card>

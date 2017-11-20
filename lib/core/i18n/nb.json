@@ -1,0 +1,151 @@
+{
+  "CORE": {
+    "PAGINATION": {
+      "ITEMS_RANGE": "Vis {{ range }} av {{ total }}",
+      "ITEMS_PER_PAGE": "Elementer per side",
+      "CURRENT_PAGE": "Side {{ number }}",
+      "TOTAL_PAGES": "av {{ total }}"
+    },
+    "DIALOG": {
+      "DOWNLOAD_ZIP": {
+        "ACTIONS": {
+          "CANCEL": "Avbryt"
+        },
+        "TITLE": "Legger til filer som skal komprimeres, dette kan ta noen minutter"
+      }
+    },
+    "FOLDER_DIALOG": {
+      "CREATE_FOLDER_TITLE": "Opprett ny mappe",
+      "EDIT_FOLDER_TITLE": "Rediger mappe",
+      "FOLDER_NAME": {
+        "LABEL": "Navn",
+        "ERRORS": {
+          "REQUIRED": "Mappenavn påkrevd",
+          "SPECIAL_CHARACTERS": "Mappenavn kan ikke inneholde disse tegnene * \" < > \\ / ? : |",
+          "ENDING_DOT": "Mappenavn kan ikke slutte med punktum .",
+          "ONLY_SPACES": "Mappenavn kan ikke inneholde bare mellomrom"
+        }
+      },
+      "FOLDER_DESCRIPTION": {
+        "LABEL": "Beskrivelse"
+      },
+      "CREATE_BUTTON": {
+        "LABEL": "Opprett"
+      },
+      "UPDATE_BUTTON": {
+        "LABEL": "Oppdater"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "Avbryt"
+      }
+    },
+    "MESSAGES": {
+      "ERRORS": {
+        "GENERIC": "Handlingen var mislykket. Prøv på nytt, eller kontakt IT-teamet.",
+        "EXISTENT_FOLDER": "Det finnes allerede en mappe med det navnet, Prøv med et annet navn."
+      }
+    },
+    "RESTORE_NODE": {
+      "VIEW": "Vis",
+      "PARTIAL_PLURAL": "{{ number }} elementer kan ikke gjenopprettes fordi det finnes problemer med gjenoppretingsstedet",
+      "NODE_EXISTS": "Kan ikke gjenopprette, {{ name }} item already exists",
+      "LOCATION_MISSING": "Kan ikke gjenopprette elementet {{ name }}, det opprinnelige stedet finnes ikke lenger",
+      "GENERIC": "Problem med å gjenopprette elementet {{ name }}",
+      "PLURAL": "Er nå gjenopprettet",
+      "SINGULAR": "Elementet {{ name }} gjenopprettet"
+    },
+    "DELETE_NODE": {
+      "SINGULAR": "Element {{ name }} slettet",
+      "PLURAL": "{{ number }} elementer slettet",
+      "PARTIAL_SINGULAR": "Slettet {{ success }} element, {{ failed }} kunne ikke slettes",
+      "PARTIAL_PLURAL": "Slettet {{ success }} elementer, {{ failed }} kunne ikke slettes",
+      "ERROR_SINGULAR": "{{ name }} kan ikke slettes",
+      "ERROR_PLURAL": "{{ number }} elementer kan ikke slettes"
+    },
+    "HOST_SETTINGS": {
+      "CS_URL_ERROR": "Adressen til innholdstjenesten stemmer ikke med URL-formatet",
+      "PS_URL_ERROR": "Adressen til prosesstjenestene stemmer ikke med URL-formatet",
+      "TITLE": "Innstillinger",
+      "CS-HOST": "URL tinnholdstjenester",
+      "BP-HOST": "URL prosesstjenester",
+      "BACK": "Tilbake",
+      "APPLY": "Bruk",
+      "NOT_VALID": "http(s)://host|ip:port(/path) ikke gjenkjent, prøv en annen URL."
+    }
+  },
+  "LOGIN": {
+    "LOGO": "Alfresco",
+    "LABEL": {
+      "LOGIN": "Logg på",
+      "USERNAME": "Brukernavn",
+      "PASSWORD": "Passord",
+      "REMEMBER": "Husk meg"
+    },
+    "MESSAGES": {
+      "USERNAME-REQUIRED": "Påkrevd",
+      "USERNAME-MIN": "Brukernavnet må ha minst {{minLenght}} tegn.",
+      "PASSWORD-REQUIRED": "Angi passordet for å logge på",
+      "LOGIN-ERROR-CREDENTIALS": "Du har angitt ukjent brukernavn eller passord",
+      "LOGIN-ERROR-PROVIDERS": "Leverandører kan ikke være udefinert",
+      "LOGIN-ERROR-CORS": "CORS-unntak, kontroller serverkonfigurasjonen",
+      "LOGIN-ERROR-CSRF": "CSRF-unntak, still inn [disableCsrf]=\"sannt\" i påloggingskomponent",
+      "LOGIN-ECM-LICENSE": "Alfresco Content Services-database i skrivebeskyttet modus"
+    },
+    "BUTTON": {
+      "LOGIN": "Logg på",
+      "CHECKING": "Kontrollerer",
+      "WELCOME": "Velkommen"
+    },
+    "ACTION": {
+      "HELP": "Trenger hjelp?",
+      "REGISTER": "Registrer"
+    }
+  },
+  "ADF-DATATABLE": {
+    "EMPTY": {
+      "HEADER": "Denne listen er tom",
+      "DRAG-AND-DROP": {
+        "TITLE": "Dra og slipp",
+        "SUBTITLE": "for å laste opp filer"
+      }
+    }
+  },
+  "USER_PROFILE": {
+    "LABELS": {
+      "ECM": {
+        "JOB_TITLE": "Jobbtittel"
+      },
+      "BPM": {
+        "TENANT": "Leietaker"
+      }
+    },
+    "TAB": {
+      "CS": "Content Services",
+      "PS": "Process Services"
+    }
+  },
+  "ADF_VIEWER": {
+    "ACTIONS": {
+      "BACK": "Tilbake",
+      "OPEN_WITH": "Åpne med",
+      "DOWNLOAD": "Last ned",
+      "PRINT": "Skriv ut",
+      "SHARE": "Del",
+      "MORE_ACTIONS": "Flere handlinger",
+      "INFO": "Info"
+    },
+    "ARIA": {
+      "PREVIOUS_PAGE": "Forrige side",
+      "NEXT_PAGE": "Neste side",
+      "ZOOM_IN": "Zoom inn",
+      "ZOOM_OUT": "Zoom ut",
+      "FIT_PAGE": "Tilpass side"
+    },
+    "PAGE_LABEL": {
+      "SHOWING": "Viser",
+      "OF": "av"
+    },
+    "LOADING": "Laster",
+    "UNKNOWN_FORMAT": "Kan ikke laste forhåndsvisning"
+  }
+}

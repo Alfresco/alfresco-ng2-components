@@ -1,0 +1,51 @@
+{
+  "ANALYTICS": {
+    "TITLE": "Analyser",
+    "MESSAGES": {
+      "UNKNOWN-WIDGET-TYPE": "Ukjent type modul",
+      "FILL-PARAMETER": "Velg fra rapportalternativene",
+      "NO-DATA-FOUND": "Fant ingen data",
+      "ZERO-DATA-FOUND": "Det finnes bare nullverdier",
+      "ICON-SETTING": "Innstillinger",
+      "ICON-SAVE": "Lagre",
+      "ICON-DELETE": "Slett",
+      "ICON-EXPORT-CSV": "Eksporter"
+    }
+  },
+  "__KEY_REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-DEFINITION-OVERVIEW": {
+        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Total antall prosessdefinisjoner",
+        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Total antall prosesstilfeller",
+        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Total antall aktive prosesstilfeller",
+        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Total antall fullførte prosesstilfeller"
+      }
+    }
+  },
+  "REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-HEAT-MAP": {
+        "TYPE-FILTERING": "Inkluder gjennomgangstrinn som start hendelser og gatewayer"
+      },
+      "PROCESS-INSTANCES-OVERVIEW": {
+        "PROCESS-DEFINITION": "Prosessdefinisjon",
+        "DATE-RANGE": "Datointervall",
+        "SLOW-PROC-INST-NUMBER": "Hvor mange av de tregeste prosesstilfellene skal vises?"
+      },
+      "TASK-OVERVIEW": {
+        "PROCESS-DEFINITION": "Prosessdefinisjon",
+        "DATE-RANGE": "Datointervall",
+        "DATE-RANGE-INTERVAL": "Grupper datoer etter"
+      },
+      "TASK-SLA": {
+        "TASK": "Oppgave",
+        "PROCESS-DEFINITION": "Prosessdefinisjon",
+        "DATE-RANGE": "Datointervall",
+        "SLA-DURATION": "SLA krevde fullføringstid"
+      }
+    },
+    "PROCESS-STATUS": "Prosesstatus",
+    "TASK-STATUS": "Oppgavestatus"
+  },
+  "DIAGRAMS": "Diagrammer"
+}

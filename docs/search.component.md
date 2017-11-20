@@ -1,4 +1,4 @@
-# Search Results component
+# Search component
 
 
 
@@ -29,11 +29,10 @@
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | searchTerm | string | | Search term to use when executing the search. Updating this value will run a new search and update the results  |
-| rootNodeId | string | "-root-" | NodeRef or node name where the search should start. |
-| resultType | string | | Node type to filter search results by, e.g. 'cm:content', 'cm:folder' if you want only the files. |
 | maxResults | number  | 20 | Maximum number of results to show in the search. |
-| resultSort | string  | | Criteria to sort search results by, must be one of "name" , "modifiedAt" or "createdAt" |
+| skipResults | number  | 0 | Number of results to skip from the results pagination. |
 | displayWith | function | | Function that maps an option's value to its display value in the trigger |
+| searchNode | [QueryBody](https://github.com/Alfresco/alfresco-js-api/blob/1.6.0/src/alfresco-search-rest-api/docs/QueryBody.md) | | object which allow you to perform more elaborated query from the search api |
 
 ### Events
 

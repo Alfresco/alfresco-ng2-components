@@ -1,0 +1,50 @@
+@mixin adf-form-people-widget-theme($theme) {
+    $primary: map-get($theme, primary);
+    $background: map-get($theme, background);
+    $foreground: map-get($theme, foreground);
+
+    .adf {
+
+        &-people-widget {
+            width: 100%;
+        }
+
+        &-people-widget-pic {
+            background: mat-color($primary);
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border-radius: 100px;
+            color: mat-color($foreground, text);
+            text-align: center;
+            font-weight: bolder;
+            font-size: 18px;
+            text-transform: uppercase;
+            vertical-align: middle;
+        }
+
+        &-people-widget-row {
+            padding-bottom: 10px;
+        }
+
+        &-people-widget-image {
+            margin-left: -44px;
+            left: 21px;
+            background: mat-color($background, dialog);
+            border-radius: 100px;
+            width: 40px;
+            height: 40px;
+            vertical-align: middle;
+            display: inline-block;
+            padding: 0;
+        }
+
+        &-people-widget-image-row {
+            display: inline-block;
+        }
+
+        &-people-label-name {
+            padding-left: 10px;
+        }
+    }
+}

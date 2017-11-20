@@ -1,0 +1,96 @@
+{
+  "title": "Willkommen",
+  "VERSION": {
+    "NO_PERMISSION": "Sie verfügen nicht über die nötige Berechtigung, um Versionen dieses Inhalts zu verwalten",
+    "NO_PERMISSION_EVENT": "Sie verfügen nicht über die nötige Berechtigung ('${event.permission}'), um ${event.action} zu ${event.type}",
+    "CHOOSE_FILE": "Wählen Sie eine Datei aus, um ihre Versionen anzuzeigen"
+  },
+  "APP_LAYOUT": {
+    "APP_NAME": "ADF-Demoanwendung",
+    "HOME": "Startseite",
+    "CONTENT_SERVICES": "Content Services",
+    "PROCESS_SERVICES": "Process Services",
+    "LOGIN": "Anmelden",
+    "CUSTOM_SOURCES": "Benutzerdefinierte Quellen",
+    "DATATABLE": "DataTable",
+    "FORM": "Formular",
+    "FORM_LIST": "Formularliste",
+    "UPLOADER": "Uploader",
+    "WEBSCRIPT": "Webscript",
+    "TAG": "Tag",
+    "SOCIAL": "Soziale Funktionen",
+    "SETTINGS": "Einstellungen",
+    "ABOUT": "Info"
+  },
+  "DOCUMENT_LIST": {
+    "MULTISELECT_CHECKBOXES": "Mehrfachauswahl (mit Kontrollkästchen)",
+    "MULTIPLE_FILE_UPLOAD": "Mehrere Dateien hochladen",
+    "FOLDER_UPLOAD": "Ordner hochladen",
+    "CUSTOM_FILTER": "Filter für benutzerdefinierte Erweiterungen",
+    "MAX_SIZE": "Filter für max. Größe",
+    "ENABLE_VERSIONING": "Versionsverwaltung aktivieren",
+    "DESCRIPTION_UPLOAD": "Hochladen aktivieren",
+    "MULTISELECT_DESCRIPTION": "Mit der Befehls- (Mac) oder der Steuerungstaste (Windows) können Sie die Auswahl mehrerer Elemente umschalten",
+    "COLUMNS": {
+      "DISPLAY_NAME": "Namen anzeigen",
+      "TAG": "Tag",
+      "CREATED_BY": "Erstellt von",
+      "CREATED_ON": "Erstellt am",
+      "CREATED": "Erstellt"
+    },
+    "ACTIONS": {
+      "FOLDER": {
+        "COPY": "Kopieren",
+        "MOVE": "Verschieben",
+        "DELETE": "Löschen"
+      },
+      "DOCUMENT": {
+        "DOWNLOAD": "Herunterladen",
+        "COPY": "Kopieren",
+        "MOVE": "Verschieben",
+        "DELETE": "Löschen"
+      }
+    }
+  },
+  "DATATABLE": {
+    "RESET_DEFAULT": "Auf Standard zurücksetzen",
+    "ADD_ROW": "Zeile hinzufügen",
+    "REPLACE_ROWS": "Zeilen ersetzen",
+    "REPLACE_COLUMNS": "Spalten ersetzen",
+    "LOAD_NODE": "Node laden",
+    "MULTISELECT": "Mehrfachauswahl",
+    "MULTISELECT_DESCRIPTION": "Mit der Befehls- (Mac) oder der Steuerungstaste (Windows) können Sie die Auswahl mehrerer Elemente umschalten"
+  },
+  "ANALYTICS_REPORT": {
+    "NO_REPORT_MESSAGE": "Kein Bericht ausgewählt. Wählen Sie einen Bericht aus der Liste"
+  },
+  "PS-TAB": {
+    "TASKS-TAB": "Aufgaben",
+    "PROCESSES-TAB": "Prozess",
+    "REPORTS-TAB": "Berichte",
+    "START-TASK": "Aufgabe starten",
+    "START-PROCESS": "Prozess starten",
+    "AUDIT-LOG": "Audit-Protokoll verarbeiten"
+  },
+  "FORM-LIST": {
+    "STORE": "Speichern",
+    "RESTORE": "Wiederherstellen"
+  },
+  "LOGIN": {
+    "CONTENT_SERVICES": "Content Services",
+    "PROCESS_SERVICES": "Process Services",
+    "LOGIN_FOOTER": "Login-Fußzeile"
+  },
+  "SEARCH": {
+    "RESULTS": "Ergebnisse durchsuchen"
+  },
+  "SOCIAL": {
+    "LIKE": "Like-Komponente",
+    "RATING": "Bewertungskomponente"
+  },
+  "TAG": {
+    "LIST": "Content Services-Tagliste",
+    "INSERT": "Node-ID einfügen",
+    "NODE_LIST": "Tagliste nach Node-ID"
+  }
+}

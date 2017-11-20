@@ -4,22 +4,10 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 eval VERSION=""
 
-eval projects=( "ng2-alfresco-core"
-    "ng2-alfresco-datatable"
-    "ng2-activiti-diagrams"
-    "ng2-activiti-analytics"
-    "ng2-activiti-form"
-    "ng2-activiti-tasklist"
-    "ng2-activiti-processlist"
-    "ng2-alfresco-documentlist"
-    "ng2-alfresco-login"
-    "ng2-alfresco-search"
-    "ng2-alfresco-social"
-    "ng2-alfresco-tag"
-    "ng2-alfresco-upload"
-    "ng2-alfresco-viewer"
-    "ng2-alfresco-webscript"
-    "ng2-alfresco-userinfo" )
+eval projects=( "adf-core"
+    "adf-insights"
+    "adf-content-services"
+    "adf-process-services" )
 
 show_help() {
     echo "Usage: npm-check-bundles.sh"
@@ -67,20 +55,48 @@ for PACKAGE in ${projects[@]}
 do
  mkdir $PACKAGE
  cd  $PACKAGE
- npm pack $PACKAGE@$VERSION
- tar zxf $PACKAGE-$VERSION.tgz
+ npm pack '@alfresco/'$PACKAGE@$VERSION
+ tar zxf 'alfresco-'$PACKAGE-$VERSION.tgz
+
  if [ ! -f package/bundles/$PACKAGE.js ]; then
     error_out '31;1' "$PACKAGE bundles not found!" >&2
-    cd $DIR
-    rm -rf temp
     exit 1
  else
      echo "bundles ok!"
  fi
+
+ if [ ! -f package/bundles/$PACKAGE.js.map ]; then
+    error_out '31;1' "$PACKAGE js.map not found!" >&2
+    exit 1
+ else
+     echo "js.map ok!"
+ fi
+
+  if [ ! -f package/_theming.scss ]; then
+    error_out '31;1' "$PACKAGE style not found!" >&2
+    exit 1
+ else
+     echo "style ok!"
+ fi
+
+ if [ ! -f package/README.md ]; then
+    error_out '31;1' "$PACKAGE readme not found!" >&2
+    exit 1
+ else
+     echo "readme ok!"
+ fi
+
+ if [ ! -f package/bundles/assets/$PACKAGE/i18n/en.json ]; then
+    error_out '31;1' "$PACKAGE i18n not found!" >&2
+    exit 1
+ else
+     echo "i18n ok!"
+ fi
+
  cd ..
 done
+ cd ..
 
-cd $DIR
 rm -rf temp
 
 set_npm_registry

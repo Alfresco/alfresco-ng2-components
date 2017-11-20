@@ -1,0 +1,151 @@
+{
+  "CORE": {
+    "PAGINATION": {
+      "ITEMS_RANGE": "{{ range }} van {{ total }} wordt weergegeven",
+      "ITEMS_PER_PAGE": "Items per pagina",
+      "CURRENT_PAGE": "Pagina {{ number }}",
+      "TOTAL_PAGES": "van {{ total }}"
+    },
+    "DIALOG": {
+      "DOWNLOAD_ZIP": {
+        "ACTIONS": {
+          "CANCEL": "Annuleren"
+        },
+        "TITLE": "Bestanden toevoegen aan .zip-bestand, dit kan een paar minuten duren"
+      }
+    },
+    "FOLDER_DIALOG": {
+      "CREATE_FOLDER_TITLE": "Nieuwe map maken",
+      "EDIT_FOLDER_TITLE": "Map bewerken",
+      "FOLDER_NAME": {
+        "LABEL": "Naam",
+        "ERRORS": {
+          "REQUIRED": "Mapnaam is vereist",
+          "SPECIAL_CHARACTERS": "Mapnaam mag de volgende tekens niet bevatten: * \" < > \\ / ? : |",
+          "ENDING_DOT": "Mapnaam mag niet eindigen met een punt .",
+          "ONLY_SPACES": "Mapnaam mag niet alleen uit spaties bestaan"
+        }
+      },
+      "FOLDER_DESCRIPTION": {
+        "LABEL": "Beschrijving"
+      },
+      "CREATE_BUTTON": {
+        "LABEL": "Maken"
+      },
+      "UPDATE_BUTTON": {
+        "LABEL": "Bijwerken"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "Annuleren"
+      }
+    },
+    "MESSAGES": {
+      "ERRORS": {
+        "GENERIC": "De actie is mislukt. Probeer het opnieuw of neem contact op met het IT-team.",
+        "EXISTENT_FOLDER": "Er bestaat al een map met deze naam. Probeer een andere naam."
+      }
+    },
+    "RESTORE_NODE": {
+      "VIEW": "Weergeven",
+      "PARTIAL_PLURAL": "Kan {{ number }} items niet herstellen vanwege problemen met de herstellocatie",
+      "NODE_EXISTS": "Herstellen niet mogelijk, het item {{ name }} bestaat al",
+      "LOCATION_MISSING": "Kan het item {{ name }} niet herstellen, de oorspronkelijke locatie bestaat niet meer",
+      "GENERIC": "Er is een probleem opgetreden bij het herstellen van het item {{ name }}",
+      "PLURAL": "Herstellen geslaagd",
+      "SINGULAR": "Item {{ name }} hersteld"
+    },
+    "DELETE_NODE": {
+      "SINGULAR": "{{ name }} verwijderd",
+      "PLURAL": "{{ number }} items verwijderd",
+      "PARTIAL_SINGULAR": "{{ success }} item verwijderd, kan {{ failed }} niet verwijderen",
+      "PARTIAL_PLURAL": "{{ success }} items verwijderd, kan {{ failed }} niet verwijderen",
+      "ERROR_SINGULAR": "Kan {{ name }} niet verwijderen",
+      "ERROR_PLURAL": "Kan {{ number }} items niet verwijderen"
+    },
+    "HOST_SETTINGS": {
+      "CS_URL_ERROR": "Content Services-adres komt niet overeen met de URL-indeling",
+      "PS_URL_ERROR": "Process Services-adres komt niet overeen met de URL-indeling",
+      "TITLE": "Instellingen",
+      "CS-HOST": "Content Services-URL",
+      "BP-HOST": "Process Services-URL",
+      "BACK": "Terug",
+      "APPLY": "Toepassen",
+      "NOT_VALID": "http(s)://host|ip:port(/path) niet herkend, probeer een andere URL."
+    }
+  },
+  "LOGIN": {
+    "LOGO": "Alfresco",
+    "LABEL": {
+      "LOGIN": "Aanmelden",
+      "USERNAME": "Gebruikersnaam",
+      "PASSWORD": "Wachtwoord",
+      "REMEMBER": "Mij onthouden"
+    },
+    "MESSAGES": {
+      "USERNAME-REQUIRED": "Vereist",
+      "USERNAME-MIN": "Uw gebruikersnaam moet uit minstens {{minLenght}} tekens bestaan.",
+      "PASSWORD-REQUIRED": "Voer uw wachtwoord in om u aan te melden",
+      "LOGIN-ERROR-CREDENTIALS": "U hebt een onbekende gebruikersnaam of een onbekend wachtwoord ingevoerd",
+      "LOGIN-ERROR-PROVIDERS": "De definitie van providers kan niet ongedaan worden gemaakt",
+      "LOGIN-ERROR-CORS": "CORS-uitzondering, controleer uw serverconfiguratie",
+      "LOGIN-ERROR-CSRF": "CSRF exception, set [disableCsrf]=\"true\" in login.component",
+      "LOGIN-ECM-LICENSE": "Alfresco Content Services-repository bevindt zich in de modus Alleen-lezen"
+    },
+    "BUTTON": {
+      "LOGIN": "Aanmelden",
+      "CHECKING": "Controleren",
+      "WELCOME": "Welkom"
+    },
+    "ACTION": {
+      "HELP": "Hulp nodig?",
+      "REGISTER": "Registreren"
+    }
+  },
+  "ADF-DATATABLE": {
+    "EMPTY": {
+      "HEADER": "Deze lijst is leeg",
+      "DRAG-AND-DROP": {
+        "TITLE": "Slepen en neerzetten",
+        "SUBTITLE": "om bestanden te uploaden"
+      }
+    }
+  },
+  "USER_PROFILE": {
+    "LABELS": {
+      "ECM": {
+        "JOB_TITLE": "Functie"
+      },
+      "BPM": {
+        "TENANT": "Tenant"
+      }
+    },
+    "TAB": {
+      "CS": "Content Services",
+      "PS": "Process Services"
+    }
+  },
+  "ADF_VIEWER": {
+    "ACTIONS": {
+      "BACK": "Terug",
+      "OPEN_WITH": "Openen met",
+      "DOWNLOAD": "Downloaden",
+      "PRINT": "Afdrukken",
+      "SHARE": "Delen",
+      "MORE_ACTIONS": "Meer acties",
+      "INFO": "Info"
+    },
+    "ARIA": {
+      "PREVIOUS_PAGE": "Vorige pagina",
+      "NEXT_PAGE": "Volgende pagina",
+      "ZOOM_IN": "Inzoomen",
+      "ZOOM_OUT": "Uitzoomen",
+      "FIT_PAGE": "Aangepast aan pagina"
+    },
+    "PAGE_LABEL": {
+      "SHOWING": "Wordt weergegeven",
+      "OF": "van"
+    },
+    "LOADING": "Wordt geladen",
+    "UNKNOWN_FORMAT": "Kan voorbeeld niet laden"
+  }
+}

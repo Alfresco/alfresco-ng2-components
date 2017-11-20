@@ -1,0 +1,298 @@
+{
+  "DIALOG": {
+    "SAVE_MESSAGE": "单击保存以用当前设置将报告添加至报告列表.",
+    "EXPORT_MESSAGE": ""
+  },
+  "DATE-WIDGET": {
+    "START-DATE": "启动日期",
+    "END-DATE": "结束日期",
+    "MESSAGES": {
+      "START-DATE-REQUIRED": "需要启动日期",
+      "START-LESS-THAN-END-DATE": "启动日期必须在结束日期前"
+    }
+  },
+  "ADF_TASK_LIST": {
+    "APPS": {
+      "NONE": "未找到应用程序",
+      "TASK_APP_NAME": "任务 App"
+    },
+    "LIST": {
+      "MESSAGES": {
+        "NONE": "未找到任务列表"
+      }
+    },
+    "PROPERTIES": {
+      "TASK_NAME": "任务",
+      "THUMBNAIL": "缩略图",
+      "NAME": "名称",
+      "ASSIGNEE": "被指派者",
+      "ASSIGNEE_DEFAULT": "没有被分派人",
+      "PRIORITY": "优先级",
+      "DUE_DATE": "截止日期",
+      "DUE_DATE_DEFAULT": "没有日期",
+      "STATUS": "状态",
+      "CATEGORY": "类别",
+      "CATEGORY_DEFAULT": "没有类别",
+      "PARENT_NAME": "父类别名称",
+      "PARENT_NAME_DEFAULT": "没有父类别",
+      "CREATED_BY": "创建者",
+      "CREATED": "已创建",
+      "ID": "ID",
+      "DESCRIPTION": "说明",
+      "DESCRIPTION_DEFAULT": "没有描述",
+      "FORM_NAME": "表单名称",
+      "FORM_NAME_DEFAULT": "无表单"
+    },
+    "MENU_ACTIONS": {
+      "VIEW_CONTENT": "查看",
+      "REMOVE_CONTENT": "删除",
+      "DOWNLOAD_CONTENT": "下载",
+      "DOWNLOAD_AUDIT": "下载审计"
+    },
+    "DETAILS": {
+      "LABELS": {
+        "INFO_DRAWER_TITLE": "活动",
+        "INFO_DRAWER_TAB_ACTIVITY_TITLE": "活动",
+        "INFO_DRAWER_TAB_DETAILS_TITLE": "详细信息",
+        "ASSIGNEE": "被指派者",
+        "DUE": "截止时间",
+        "FORM": "表单",
+        "PEOPLE": "与其共享该任务的人员",
+        "COMMENTS": "注释",
+        "CHECKLIST": "检查表",
+        "INVOLVED_PEOPLE": "涉及人员",
+        "ADD_PEOPLE": "添加人员和组",
+        "ADD_ASSIGNEE": "新增被分派人"
+      },
+      "BUTTON": {
+        "COMPLETE": "完成",
+        "CLAIM": "申领",
+        "UNCLAIM": "重新排队",
+        "DRAG-ATTACHMENT": "放置文件以上传",
+        "UPLOAD-ATTACHMENT": "上传附件"
+      },
+      "MESSAGES": {
+        "NONE": "未找到任务详情",
+        "CLAIM": "单击声明，以处理该任务"
+      },
+      "FORM": {
+        "NONE": "无表单"
+      },
+      "DUE": {
+        "NONE": "无截止日期"
+      },
+      "ASSIGNEE": {
+        "NONE": "没有被分派人"
+      },
+      "PEOPLE": {
+        "NONE": "未包含任何人"
+      },
+      "COMMENTS": {
+        "NONE": "无注释",
+        "ADD": "添加注释",
+        "HEADER": "评论 ({{ count }})",
+        "CREATED_BY_HEADER": "创建者",
+        "MESSAGE_HEADER": "消息",
+        "DIALOG": {
+          "TITLE": "新增评论",
+          "LABELS": {
+            "MESSAGE": "消息"
+          },
+          "BUTTON": {
+            "ADD": "添加注释",
+            "CANCEL": "取消"
+          }
+        }
+      },
+      "CHECKLIST": {
+        "NONE": "没有检查表"
+      },
+      "ERROR": {
+        "TITLE": "无法完成该操作",
+        "DESCRIPTION": "重试或检查您是否有访问权限.",
+        "CLOSE": "关闭"
+      }
+    },
+    "FILTERS": {
+      "MESSAGES": {
+        "NONE": "未选择任务筛选器"
+      }
+    },
+    "START_TASK": {
+      "BUTTON": "创建任务",
+      "FORM": {
+        "TITLE": "启动任务",
+        "LABEL": {
+          "NONE": "无",
+          "NAME": "名称",
+          "DESCRIPTION": "说明",
+          "ATTACHFORM": "附加表单",
+          "ASSIGNEE": "被指派者",
+          "FORM": "表单",
+          "DATE": "选择日期"
+        },
+        "ACTION": {
+          "START": "开始",
+          "CANCEL": "取消"
+        },
+        "DATE": {
+          "ERROR": "日期格式 DD/MM/YYYY"
+        }
+      }
+    },
+    "PEOPLE": {
+      "DIALOG_CLOSE": "关闭",
+      "ADD_USER": "添加",
+      "ADD_ASSIGNEE": "指派",
+      "SEARCH_USER": "搜索用户",
+      "SEARCH": {
+        "NO_USERS": "未找到涉及的人员"
+      }
+    },
+    "ATTACHMENT": {
+      "EMPTY": {
+        "HEADER": "此列表为空",
+        "DRAG-AND-DROP": {
+          "TITLE": "拖放",
+          "SUBTITLE": "要上传文件"
+        }
+      },
+      "EMPTY-LIST": {
+        "HEADER": "没有可用的文件"
+      }
+    }
+  },
+  "ADF_PROCESS_LIST": {
+    "LIST": {
+      "NONE": "未找到进程实例",
+      "SUMMARY": "找到 {{total}} 个进程实例",
+      "ERROR": "无法加载进程实例。请重试，或将以下信息告知 IT 团队：{{errorMessage}}"
+    },
+    "FILTERS": {
+      "MESSAGES": {
+        "NONE": "未选择进程实例过滤器."
+      }
+    },
+    "PROPERTIES": {
+      "PROCESS_NAME": "流程",
+      "NAME": "名称",
+      "STATUS": "状态",
+      "DUE_DATE": "截止日期",
+      "DUE_DATE_DEFAULT": "没有日期",
+      "CATEGORY": "类别",
+      "CATEGORY_DEFAULT": "没有类别",
+      "CREATED_BY": "创建者",
+      "CREATED_BY_DEFAULT": "没有被分派人",
+      "CREATED": "已创建",
+      "BUSINESS_KEY": "商业 Key",
+      "BUSINESS_KEY_DEFAULT": "无",
+      "DESCRIPTION": "说明",
+      "DESCRIPTION_DEFAULT": "没有描述",
+      "ID": "ID"
+    },
+    "MENU_ACTIONS": {
+      "VIEW_CONTENT": "查看",
+      "REMOVE_CONTENT": "删除",
+      "DOWNLOAD_CONTENT": "下载",
+      "DOWNLOAD_AUDIT": "下载审计",
+      "VIEW_TASK": "查看任务"
+    },
+    "DETAILS": {
+      "LABELS": {
+        "STARTED_BY": "启动者",
+        "STARTED": "已启动",
+        "ENDED": "已结束",
+        "COMMENTS": "注释",
+        "START_FORM": "启动表单",
+        "TASKS_ACTIVE": "活动的任务",
+        "TASKS_COMPLETED": "完成的任务",
+        "TASK_SUBTITLE": "分配给 {{user}}，已创建 {{created}}"
+      },
+      "BUTTON": {
+        "CANCEL": "取消流程",
+        "CLOSE": "关闭",
+        "SHOW_DIAGRAM": "显示流程图",
+        "DRAG-ATTACHMENT": "放置文件以上传",
+        "UPLOAD-ATTACHMENT": "上传附件"
+      },
+      "MESSAGES": {
+        "NONE": "未找到流程详情"
+      },
+      "TASKS": {
+        "NO_ACTIVE": "没有当前处于活动状态的任务",
+        "NO_COMPLETED": "尚未完成任何任务",
+        "TASK_DETAILS": "任务详细信息",
+        "TASK_CLOSE": "关闭"
+      },
+      "COMMENTS": {
+        "ADD": "添加注释",
+        "HEADER": "评论 ({{ count }})",
+        "NONE": "无注释",
+        "BUTTON": {
+          "ADD": "添加注释"
+        },
+        "ADD_DIALOG": {
+          "TITLE": "新增评论",
+          "LABEL": {
+            "MESSAGE": "消息"
+          },
+          "BUTTON": {
+            "ADD": "添加注释",
+            "CANCEL": "取消"
+          }
+        }
+      },
+      "ADD_DIALOG": {
+        "TITLE": "设置流程变量",
+        "LABEL": {
+          "NAME": "名称",
+          "VALUE": "值",
+          "SCOPE": "范围"
+        }
+      },
+      "EDIT_DIALOG": {
+        "TITLE": "编辑流程变量"
+      },
+      "ERROR_DIALOG": {
+        "TITLE": "无法完成该操作",
+        "DESCRIPTION": "您可能没有要求的访问权限级别，请与 IT 团队确认."
+      }
+    },
+    "START_PROCESS": {
+      "BUTTON": "启动流程",
+      "NO_PROCESS_DEFINITIONS": "无法启动流程，因为没有可用的流程定义",
+      "FORM": {
+        "TITLE": "启动流程",
+        "LABEL": {
+          "TYPE": "选择流程",
+          "NAME": "流程名称"
+        },
+        "TYPE_PLACEHOLDER": "选择一个...",
+        "ACTION": {
+          "START": "启动流程",
+          "CANCEL": "取消"
+        }
+      },
+      "ERROR": {
+        "LOAD_PROCESS_DEFS": "无法加载流程定义，请确定您是否有访问权限.",
+        "START": "无法启动新流程实例，请确定您是否有访问权限."
+      }
+    },
+    "PROCESS-ATTACHMENT": {
+      "EMPTY": {
+        "HEADER": "此列表为空",
+        "DRAG-AND-DROP": {
+          "TITLE": "拖放",
+          "SUBTITLE": "要上传文件"
+        }
+      },
+      "EMPTY-LIST": {
+        "HEADER": "没有可用的文件"
+      },
+      "COLUMNS": {
+        "NAME": "名称",
+        "CREATED-ON": "创建日期"
+      }
+    }
+  }
+}

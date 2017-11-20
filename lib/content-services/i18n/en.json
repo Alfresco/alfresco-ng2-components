@@ -1,0 +1,200 @@
+{
+  "FORM": {
+    "START_FORM": {
+      "TITLE": "Start Form"
+    },
+    "PREVIEW": {
+      "IMAGE_NOT_AVAILABLE": "Preview not available"
+    },
+    "FIELD": {
+      "UPLOAD": "UPLOAD",
+      "REQUIRED": "*Required",
+      "VALIDATOR": {
+        "INVALID_NUMBER": "Use a different number format",
+        "INVALID_DATE": "Use a different date format",
+        "INVALID_VALUE": "Enter a different value",
+        "NOT_GREATER_THAN": "Can't be greater than {{ maxValue }}",
+        "NOT_LESS_THAN": "Can't be less than {{ minValue }}",
+        "AT_LEAST_LONG": "Enter at least {{ minLength }} characters",
+        "NO_LONGER_THAN": "Enter no more than {{ maxLength }} characters"
+      }
+    }
+  },
+  "ADF-DOCUMENT-LIST": {
+    "EMPTY": {
+      "HEADER": "This folder is empty"
+    },
+    "NO_PERMISSION": "You don't have permission to view this file or folder.",
+    "LAYOUT": {
+      "CREATED": "Created",
+      "THUMBNAIL": "Thumbnail",
+      "NAME": "Name",
+      "LOCATION": "Location",
+      "SIZE": "Size",
+      "DELETED_ON": "Deleted",
+      "DELETED_BY": "Deleted by",
+      "STATUS": "Status",
+      "MODIFIED_ON": "Modified",
+      "MODIFIED_BY": "Modified by",
+      "SHARED_BY": "Shared by",
+      "LOAD_MORE": "Load more"
+    },
+    "MENU_ACTIONS": {
+      "VIEW": "View",
+      "REMOVE": "Remove",
+      "DOWNLOAD": "Download"
+    }
+  },
+  "ALFRESCO_DOCUMENT_LIST": {
+    "BUTTON": {
+      "ACTION_CREATE": "Create...",
+      "ACTION_NEW_FOLDER": "New Folder",
+      "CREATE": "Create",
+      "CANCEL": "Cancel"
+    }
+  },
+  "DROPDOWN": {
+    "PLACEHOLDER_LABEL": "Site List",
+    "MY_FILES_OPTION": "My files"
+  },
+  "NODE_SELECTOR": {
+    "CANCEL": "Cancel",
+    "CHOOSE": "Choose",
+    "NO_RESULTS": "No results found"
+  },
+  "OPERATION": {
+    "SUCCES": {
+      "CONTENT": {
+        "COPY": "Copy successful",
+        "MOVE": "Move successful"
+      },
+      "FOLDER": {
+        "COPY": "Copy successful",
+        "MOVE": "Move successful"
+      }
+    },
+    "ERROR": {
+      "CONFLICT": "This name is already in use, try a different name.",
+      "UNKNOWN": "The action was unsuccessful. Try again or contact your IT Team.",
+      "PERMISSION": "You don't have access to do this."
+    }
+  },
+  "TAG": {
+    "LABEL": {
+      "NEWTAG": "New Tag"
+    },
+    "MESSAGES": {
+      "EXIST": "Tag already exists"
+    },
+    "BUTTON": {
+      "ADD": "Add Tag"
+    }
+  },
+  "ADF_FILE_UPLOAD": {
+    "BUTTON": {
+      "MINIMIZE": "Minimize",
+      "MAXIMIZE": "Maximize",
+      "CLOSE": "Close",
+      "CANCEL_ALL": "Cancel uploads",
+      "CANCEL_FILE": "Cancel upload",
+      "REMOVE_FILE": "Remove uploaded file"
+    },
+    "STATUS": {
+      "FILE_CANCELED_STATUS": "Canceled"
+    },
+    "CONFIRMATION": {
+      "BUTTON": {
+        "CANCEL": "Yes",
+        "CONTINUE": "No"
+      },
+      "MESSAGE": {
+        "TITLE": "Cancel Upload",
+        "TEXT": "Stop uploading and remove files already uploaded."
+      }
+    }
+  },
+  "FILE_UPLOAD": {
+    "BUTTON": {
+      "UPLOAD_FILE": "Upload file",
+      "UPLOAD_FOLDER": "Upload folder"
+    },
+    "MESSAGES": {
+      "UPLOAD_CANCELED": "Upload canceled",
+      "UPLOAD_COMPLETED": "Uploaded {{ completed }} / {{ total }}",
+      "UPLOAD_PROGRESS": "Uploading {{ completed }} / {{ total }}",
+      "UPLOAD_ERROR": "{{ total }} upload unsuccessful",
+      "UPLOAD_ERRORS": "{{ total }} uploads unsuccessful",
+      "PROGRESS": "Upload in progress...",
+      "FOLDER_ALREADY_EXIST": "The folder {0} already exists",
+      "FOLDER_NOT_SUPPORTED": "Folder upload isn't supported by your browser, try a different browser",
+      "REMOVE_FILE_ERROR": "{{ fileName }} couldn't be removed, try again or check with your IT Team.",
+      "REMOVE_FILES_ERROR": "{{ total }} files couldn't be removed, try again or check with your IT Team.",
+      "EXCEED_MAX_FILE_SIZE": "File {{ fileName }} is larger than the allowed file size"
+    },
+    "ACTION": {
+      "UNDO": "Undo"
+    }
+  },
+  "WEBSCRIPT": {
+    "ERROR": "Couldn't complete the action. Share this message with your IT Team: Error during the deserialization of {{data}} as {{contentType}}"
+  },
+  "SEARCH": {
+    "CONTROL": {},
+    "RESULTS": {
+      "SUMMARY": "{{numResults}} result found for {{searchTerm}}",
+      "NONE": "No results found for {{searchTerm}}",
+      "ERROR": "We hit a problem during the search - try again.",
+      "COLUMNS": {
+        "NAME": "Display name",
+        "MODIFIED_BY": "Modified by",
+        "MODIFIED_AT": "Modified at"
+      }
+    },
+    "ICONS": {
+      "ft_ic_raster_image": "Image file",
+      "ft_ic_pdf": "PDF document",
+      "ft_ic_ms_excel": "Microsoft Excel file",
+      "ft_ic_ms_word": "Microsoft Word document",
+      "ft_ic_ms_powerpoint": "Microsoft PowerPoint file",
+      "ft_ic_video": "Video file",
+      "ft_ic_document": "Document file",
+      "ft_ic_website": "Web resource",
+      "ft_ic_archive": "Archive file",
+      "ft_ic_presentation": "Presentation file",
+      "ft_ic_spreadsheet": "Spreadsheet file"
+    },
+    "DOCUMENT_LIST": {
+      "COLUMNS": {
+        "DISPLAY_NAME": "Display name",
+        "CREATED_BY": "Created by",
+        "CREATED_ON": "Created"
+      },
+      "ACTIONS": {
+        "FOLDER": {
+          "DELETE": "Delete"
+        },
+        "DOCUMENT": {
+          "DOWNLOAD": "Download",
+          "DELETE": "Delete"
+        }
+      }
+    }
+  },
+  "PERMISSON": {
+    "LACKOF": "You don't have the {{permission}} permission to {{action}} the {{type}}"
+  },
+  "METADATA": {
+    "BASIC": {
+        "NAME": "Name",
+        "TITLE": "Title",
+        "DESCRIPTION": "Description",
+        "AUTHOR": "Author",
+        "MIMETYPE": "Mimetype",
+        "SIZE": "Size",
+        "CREATOR": "Creator",
+        "CREATED_DATE": "Created Date",
+        "MODIFIER": "Modifier",
+        "MODIFIED_DATE": "Modified Date"
+    }
+  }
+}

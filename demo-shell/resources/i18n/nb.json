@@ -1,0 +1,96 @@
+{
+  "title": "Velkommen",
+  "VERSION": {
+    "NO_PERMISSION": "Du har ikke tillatelse til å håndtere versjoner av dette innholdet",
+    "NO_PERMISSION_EVENT": "Du har ikke ${event.permission} tillatelse til å ${event.action} ${event.type}",
+    "CHOOSE_FILE": "Velg en fil for å se versjonene"
+  },
+  "APP_LAYOUT": {
+    "APP_NAME": "ADF-demoprogam",
+    "HOME": "Hjem",
+    "CONTENT_SERVICES": "Content Services",
+    "PROCESS_SERVICES": "Process Services",
+    "LOGIN": "Logg på",
+    "CUSTOM_SOURCES": "Tilpassede kilder",
+    "DATATABLE": "Datatable",
+    "FORM": "Skjema",
+    "FORM_LIST": "Skjemaliste",
+    "UPLOADER": "Opplaster",
+    "WEBSCRIPT": "Webscript",
+    "TAG": "Tagg",
+    "SOCIAL": "Sosial",
+    "SETTINGS": "Innstillinger",
+    "ABOUT": "Om"
+  },
+  "DOCUMENT_LIST": {
+    "MULTISELECT_CHECKBOXES": "Multivalg (med avskrysningsbokser)",
+    "MULTIPLE_FILE_UPLOAD": "Opplasting av flere filer",
+    "FOLDER_UPLOAD": "Opplasting av mappe",
+    "CUSTOM_FILTER": "Tilpasset utvidelsesfilter",
+    "MAX_SIZE": "Maks. størrelsesfilter",
+    "ENABLE_VERSIONING": "Aktiver versjonering",
+    "DESCRIPTION_UPLOAD": "Aktiver opplasting",
+    "MULTISELECT_DESCRIPTION": "Bruk Cmd (Mac) eller Ctrl (Windows) for å veksle mellom valg av flere elementer",
+    "COLUMNS": {
+      "DISPLAY_NAME": "Vis navn",
+      "TAG": "Tagg",
+      "CREATED_BY": "Opprettet av",
+      "CREATED_ON": "Opprettet",
+      "CREATED": "Opprettet"
+    },
+    "ACTIONS": {
+      "FOLDER": {
+        "COPY": "Kopier",
+        "MOVE": "Flytt",
+        "DELETE": "Slett"
+      },
+      "DOCUMENT": {
+        "DOWNLOAD": "Last ned",
+        "COPY": "Kopier",
+        "MOVE": "Flytt",
+        "DELETE": "Slett"
+      }
+    }
+  },
+  "DATATABLE": {
+    "RESET_DEFAULT": "Tilbakestill til standard",
+    "ADD_ROW": "Legg til rad",
+    "REPLACE_ROWS": "Erstatt rader",
+    "REPLACE_COLUMNS": "erstatt kolonner",
+    "LOAD_NODE": "Last node",
+    "MULTISELECT": "Multivalg",
+    "MULTISELECT_DESCRIPTION": "Bruk Cmd (Mac) eller Ctrl (Windows) for å veksle mellom valg av flere elementer"
+  },
+  "ANALYTICS_REPORT": {
+    "NO_REPORT_MESSAGE": "Ingen rapport valgt. Velg en rapport fra listen"
+  },
+  "PS-TAB": {
+    "TASKS-TAB": "Oppgaver",
+    "PROCESSES-TAB": "Prosess",
+    "REPORTS-TAB": "Rapporter",
+    "START-TASK": "Start oppgave",
+    "START-PROCESS": "Start prosess",
+    "AUDIT-LOG": "Behandle revisjonslogg"
+  },
+  "FORM-LIST": {
+    "STORE": "Lagre",
+    "RESTORE": "Gjenopprett"
+  },
+  "LOGIN": {
+    "CONTENT_SERVICES": "Content Services",
+    "PROCESS_SERVICES": "Process Services",
+    "LOGIN_FOOTER": "Bunntekt pålogging"
+  },
+  "SEARCH": {
+    "RESULTS": "Søkeresultater"
+  },
+  "SOCIAL": {
+    "LIKE": "Like komponent",
+    "RATING": "Rangering komponent"
+  },
+  "TAG": {
+    "LIST": "Liste med tagger Innholdstjenester",
+    "INSERT": "Sett inn node-ID",
+    "NODE_LIST": "Tagg listen etter node-ID"
+  }
+}

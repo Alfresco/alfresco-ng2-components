@@ -1,0 +1,23 @@
+<div class="adf-duration-widget-grid">
+    <div class="adf-duration-widget-cell">
+        <div class="adf-number-widget">
+            <mat-form-field class="example-full-width" floatPlaceholder="always">
+                <input matInput
+                    placeholder="{{field.nameKey | translate}}"
+                    type="text"
+                    pattern="-?[0-9]*(\.[0-9]+)?"
+                    [id]="field.id"
+                    [value]="field.value"
+                    [(ngModel)]="field.value"
+                    (ngModelChange)="calculateDuration()">
+             </mat-form-field>
+        </div>
+    </div>
+    <div class="adf-duration-widget-cell">
+        <div class="dropdown-container">
+            <analytics-dropdown-widget  [field]="duration" [group]="formGroup" [controllerName]="'timeType'"
+                             [showDefaultOption]="false"
+                             (fieldChanged)="calculateDuration()"></analytics-dropdown-widget>
+        </div>
+    </div>
+</div>

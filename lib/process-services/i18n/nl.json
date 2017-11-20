@@ -1,0 +1,298 @@
+{
+  "DIALOG": {
+    "SAVE_MESSAGE": "Klik op Opslaan om een rapport met de huidige instellingen toe te voegen aan uw lijst met rapporten.",
+    "EXPORT_MESSAGE": ""
+  },
+  "DATE-WIDGET": {
+    "START-DATE": "Begindatum",
+    "END-DATE": "Einddatum",
+    "MESSAGES": {
+      "START-DATE-REQUIRED": "Begindatum is vereist",
+      "START-LESS-THAN-END-DATE": "De begindatum moet voor de einddatum liggen"
+    }
+  },
+  "ADF_TASK_LIST": {
+    "APPS": {
+      "NONE": "Geen apps gevonden",
+      "TASK_APP_NAME": "Task App"
+    },
+    "LIST": {
+      "MESSAGES": {
+        "NONE": "Geen takenlijsten gevonden"
+      }
+    },
+    "PROPERTIES": {
+      "TASK_NAME": "Taak",
+      "THUMBNAIL": "Miniatuur",
+      "NAME": "Naam",
+      "ASSIGNEE": "Toegewezen persoon",
+      "ASSIGNEE_DEFAULT": "Geen toegewezen persoon",
+      "PRIORITY": "Prioriteit",
+      "DUE_DATE": "Vervaldatum",
+      "DUE_DATE_DEFAULT": "Geen vervaldatum",
+      "STATUS": "Status",
+      "CATEGORY": "Categorie",
+      "CATEGORY_DEFAULT": "Geen categorie",
+      "PARENT_NAME": "Naam bovenliggend element",
+      "PARENT_NAME_DEFAULT": "Geen bovenliggend element",
+      "CREATED_BY": "Gemaakt door",
+      "CREATED": "Gemaakt",
+      "ID": "Id",
+      "DESCRIPTION": "Beschrijving",
+      "DESCRIPTION_DEFAULT": "Geen beschrijving",
+      "FORM_NAME": "Formuliernaam",
+      "FORM_NAME_DEFAULT": "Geen formulier"
+    },
+    "MENU_ACTIONS": {
+      "VIEW_CONTENT": "Weergeven",
+      "REMOVE_CONTENT": "Verwijderen",
+      "DOWNLOAD_CONTENT": "Downloaden",
+      "DOWNLOAD_AUDIT": "Audit downloaden"
+    },
+    "DETAILS": {
+      "LABELS": {
+        "INFO_DRAWER_TITLE": "Activiteiten",
+        "INFO_DRAWER_TAB_ACTIVITY_TITLE": "Activiteit",
+        "INFO_DRAWER_TAB_DETAILS_TITLE": "Details",
+        "ASSIGNEE": "Toegewezen persoon",
+        "DUE": "Vervalt",
+        "FORM": "Formulier",
+        "PEOPLE": "Personen met wie deze taak is gedeeld",
+        "COMMENTS": "Opmerkingen",
+        "CHECKLIST": "Controlelijst",
+        "INVOLVED_PEOPLE": "Betrokken personen",
+        "ADD_PEOPLE": "Personen en groepen toevoegen",
+        "ADD_ASSIGNEE": "Nieuwe toegewezen persoon toevoegen"
+      },
+      "BUTTON": {
+        "COMPLETE": "Voltooid",
+        "CLAIM": "Claimen",
+        "UNCLAIM": "Opnieuw in wachtrij plaatsen",
+        "DRAG-ATTACHMENT": "Bestanden neerzetten om te uploaden",
+        "UPLOAD-ATTACHMENT": "Bijlage uploaden"
+      },
+      "MESSAGES": {
+        "NONE": "Geen taakdetails gevonden",
+        "CLAIM": "Klik op Claimen om aan deze taak te werken"
+      },
+      "FORM": {
+        "NONE": "Geen formulier"
+      },
+      "DUE": {
+        "NONE": "Geen vervaldatum"
+      },
+      "ASSIGNEE": {
+        "NONE": "Geen toegewezen persoon"
+      },
+      "PEOPLE": {
+        "NONE": "Niemand betrokken"
+      },
+      "COMMENTS": {
+        "NONE": "Geen opmerkingen",
+        "ADD": "Opmerking toevoegen",
+        "HEADER": "Opmerkingen ({{ count }})",
+        "CREATED_BY_HEADER": "Gemaakt door",
+        "MESSAGE_HEADER": "Bericht",
+        "DIALOG": {
+          "TITLE": "Nieuwe opmerking",
+          "LABELS": {
+            "MESSAGE": "Bericht"
+          },
+          "BUTTON": {
+            "ADD": "Opmerking toevoegen",
+            "CANCEL": "Annuleren"
+          }
+        }
+      },
+      "CHECKLIST": {
+        "NONE": "Geen controlelijst"
+      },
+      "ERROR": {
+        "TITLE": "Kan de actie niet voltooien",
+        "DESCRIPTION": "Probeer het opnieuw of controleer of u over toegang beschikt.",
+        "CLOSE": "Sluiten"
+      }
+    },
+    "FILTERS": {
+      "MESSAGES": {
+        "NONE": "Geen taakfilter geselecteerd"
+      }
+    },
+    "START_TASK": {
+      "BUTTON": "Taak maken",
+      "FORM": {
+        "TITLE": "Taak starten",
+        "LABEL": {
+          "NONE": "Geen",
+          "NAME": "Naam",
+          "DESCRIPTION": "Beschrijving",
+          "ATTACHFORM": "Formulier bijvoegen",
+          "ASSIGNEE": "Toegewezen persoon",
+          "FORM": "Formulier",
+          "DATE": "Datum kiezen"
+        },
+        "ACTION": {
+          "START": "Start",
+          "CANCEL": "Annuleren"
+        },
+        "DATE": {
+          "ERROR": "Datumnotatie dd-mm-jjjj"
+        }
+      }
+    },
+    "PEOPLE": {
+      "DIALOG_CLOSE": "Sluiten",
+      "ADD_USER": "Toevoegen",
+      "ADD_ASSIGNEE": "Toewijzen",
+      "SEARCH_USER": "Gebruiker zoeken",
+      "SEARCH": {
+        "NO_USERS": "Niemand gevonden om te betrekken"
+      }
+    },
+    "ATTACHMENT": {
+      "EMPTY": {
+        "HEADER": "Deze lijst is leeg",
+        "DRAG-AND-DROP": {
+          "TITLE": "Slepen en neerzetten",
+          "SUBTITLE": "om bestanden te uploaden"
+        }
+      },
+      "EMPTY-LIST": {
+        "HEADER": "Er zijn geen bestanden beschikbaar"
+      }
+    }
+  },
+  "ADF_PROCESS_LIST": {
+    "LIST": {
+      "NONE": "Geen procesinstances gevonden",
+      "SUMMARY": "{{total}} procesinstances gevonden",
+      "ERROR": "Kan procesinstances niet laden. Probeer het opnieuw of geef het volgende bericht door aan het IT-team: {{errorMessage}}"
+    },
+    "FILTERS": {
+      "MESSAGES": {
+        "NONE": "Geen procesinstancefilter geselecteerd."
+      }
+    },
+    "PROPERTIES": {
+      "PROCESS_NAME": "Proces",
+      "NAME": "Naam",
+      "STATUS": "Status",
+      "DUE_DATE": "Vervaldatum",
+      "DUE_DATE_DEFAULT": "Geen vervaldatum",
+      "CATEGORY": "Categorie",
+      "CATEGORY_DEFAULT": "Geen categorie",
+      "CREATED_BY": "Gemaakt door",
+      "CREATED_BY_DEFAULT": "Geen toegewezen persoon",
+      "CREATED": "Gemaakt",
+      "BUSINESS_KEY": "Business key",
+      "BUSINESS_KEY_DEFAULT": "Geen",
+      "DESCRIPTION": "Beschrijving",
+      "DESCRIPTION_DEFAULT": "Geen beschrijving",
+      "ID": "Id"
+    },
+    "MENU_ACTIONS": {
+      "VIEW_CONTENT": "Weergeven",
+      "REMOVE_CONTENT": "Verwijderen",
+      "DOWNLOAD_CONTENT": "Downloaden",
+      "DOWNLOAD_AUDIT": "Audit downloaden",
+      "VIEW_TASK": "Taak weergeven"
+    },
+    "DETAILS": {
+      "LABELS": {
+        "STARTED_BY": "Gestart door",
+        "STARTED": "Gestart",
+        "ENDED": "Beëindigd",
+        "COMMENTS": "Opmerkingen",
+        "START_FORM": "Beginformulier",
+        "TASKS_ACTIVE": "Actieve taken",
+        "TASKS_COMPLETED": "Voltooide taken",
+        "TASK_SUBTITLE": "Toegewezen aan {{user}}, gemaakt {{created}}"
+      },
+      "BUTTON": {
+        "CANCEL": "Proces annuleren",
+        "CLOSE": "Sluiten",
+        "SHOW_DIAGRAM": "Diagram weergeven",
+        "DRAG-ATTACHMENT": "Bestanden neerzetten om te uploaden",
+        "UPLOAD-ATTACHMENT": "Bijlage uploaden"
+      },
+      "MESSAGES": {
+        "NONE": "Geen procesdetails gevonden"
+      },
+      "TASKS": {
+        "NO_ACTIVE": "Geen momenteel actieve taken",
+        "NO_COMPLETED": "Nog geen taken voltooid",
+        "TASK_DETAILS": "Taakdetails",
+        "TASK_CLOSE": "Sluiten"
+      },
+      "COMMENTS": {
+        "ADD": "Opmerking toevoegen",
+        "HEADER": "Opmerkingen ({{ count }})",
+        "NONE": "Geen opmerkingen",
+        "BUTTON": {
+          "ADD": "Opmerking toevoegen"
+        },
+        "ADD_DIALOG": {
+          "TITLE": "Nieuwe opmerking",
+          "LABEL": {
+            "MESSAGE": "Bericht"
+          },
+          "BUTTON": {
+            "ADD": "Opmerking toevoegen",
+            "CANCEL": "Annuleren"
+          }
+        }
+      },
+      "ADD_DIALOG": {
+        "TITLE": "Procesvariabele instellen",
+        "LABEL": {
+          "NAME": "Naam",
+          "VALUE": "Waarde",
+          "SCOPE": "Bereik"
+        }
+      },
+      "EDIT_DIALOG": {
+        "TITLE": "Procesvariabele bewerken"
+      },
+      "ERROR_DIALOG": {
+        "TITLE": "Kan de actie niet voltooien",
+        "DESCRIPTION": "U beschikt mogelijk niet over het vereiste toegangsniveau, neem contact op met het IT-team."
+      }
+    },
+    "START_PROCESS": {
+      "BUTTON": "Proces starten",
+      "NO_PROCESS_DEFINITIONS": "U kunt geen proces starten omdat er geen procesdefinities beschikbaar zijn",
+      "FORM": {
+        "TITLE": "Proces starten",
+        "LABEL": {
+          "TYPE": "Proces selecteren",
+          "NAME": "Procesnaam"
+        },
+        "TYPE_PLACEHOLDER": "Maak een keuze...",
+        "ACTION": {
+          "START": "Proces starten",
+          "CANCEL": "Annuleren"
+        }
+      },
+      "ERROR": {
+        "LOAD_PROCESS_DEFS": "Kan procesdefinities niet laden, controleer of u over toegang beschikt.",
+        "START": "Kan geen nieuwe procesinstance starten, controleer of u over toegang beschikt."
+      }
+    },
+    "PROCESS-ATTACHMENT": {
+      "EMPTY": {
+        "HEADER": "Deze lijst is leeg",
+        "DRAG-AND-DROP": {
+          "TITLE": "Slepen en neerzetten",
+          "SUBTITLE": "om bestanden te uploaden"
+        }
+      },
+      "EMPTY-LIST": {
+        "HEADER": "Er zijn geen bestanden beschikbaar"
+      },
+      "COLUMNS": {
+        "NAME": "Naam",
+        "CREATED-ON": "Gemaakt op"
+      }
+    }
+  }
+}

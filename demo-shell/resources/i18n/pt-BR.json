@@ -1,0 +1,96 @@
+{
+  "title": "Bem-vindo",
+  "VERSION": {
+    "NO_PERMISSION": "Você não tem permissão para gerenciar versões deste conteúdo",
+    "NO_PERMISSION_EVENT": "Você não tem a permissão ${event.permission} para ${event.action} o ${event.type}",
+    "CHOOSE_FILE": "Selecione um arquivo para ver suas versões"
+  },
+  "APP_LAYOUT": {
+    "APP_NAME": "Aplicativo Demo ADF",
+    "HOME": "Página Inicial",
+    "CONTENT_SERVICES": "Content Services",
+    "PROCESS_SERVICES": "Process Services",
+    "LOGIN": "Login",
+    "CUSTOM_SOURCES": "Origens Personalizadas",
+    "DATATABLE": "Datatable",
+    "FORM": "Formulário",
+    "FORM_LIST": "Lista de Formulário",
+    "UPLOADER": "Carregador",
+    "WEBSCRIPT": "Webscript",
+    "TAG": "Marca",
+    "SOCIAL": "Social",
+    "SETTINGS": "Configurações",
+    "ABOUT": "Sobre"
+  },
+  "DOCUMENT_LIST": {
+    "MULTISELECT_CHECKBOXES": "Seleção Múltipla (com caixas de seleção)",
+    "MULTIPLE_FILE_UPLOAD": "Carregamento de Vários Arquivos",
+    "FOLDER_UPLOAD": "Carregamento de Pasta",
+    "CUSTOM_FILTER": "Filtro de extensões personalizado",
+    "MAX_SIZE": "Tamanho máximo do filtro",
+    "ENABLE_VERSIONING": "Ativar versões",
+    "DESCRIPTION_UPLOAD": "Ativar carregamento",
+    "MULTISELECT_DESCRIPTION": "Use Cmd (Mac) ou Ctrl (Windows) para alternar a seleção de vários itens",
+    "COLUMNS": {
+      "DISPLAY_NAME": "Nome de exibição",
+      "TAG": "Marca",
+      "CREATED_BY": "Criado por",
+      "CREATED_ON": "Criado em",
+      "CREATED": "Criado"
+    },
+    "ACTIONS": {
+      "FOLDER": {
+        "COPY": "Copiar",
+        "MOVE": "Mover",
+        "DELETE": "Excluir"
+      },
+      "DOCUMENT": {
+        "DOWNLOAD": "Download",
+        "COPY": "Copiar",
+        "MOVE": "Mover",
+        "DELETE": "Excluir"
+      }
+    }
+  },
+  "DATATABLE": {
+    "RESET_DEFAULT": "Redefinir para o padrão",
+    "ADD_ROW": "Adicionar linha",
+    "REPLACE_ROWS": "Substituir linhas",
+    "REPLACE_COLUMNS": "Substituir colunas",
+    "LOAD_NODE": "Carregar Nó",
+    "MULTISELECT": "Seleção Múltipla",
+    "MULTISELECT_DESCRIPTION": "Use Cmd (Mac) ou Ctrl (Windows) para alternar a seleção de vários itens"
+  },
+  "ANALYTICS_REPORT": {
+    "NO_REPORT_MESSAGE": "Nenhum relatório selecionado. Escolha um relatório na lista"
+  },
+  "PS-TAB": {
+    "TASKS-TAB": "Tarefas",
+    "PROCESSES-TAB": "Processo",
+    "REPORTS-TAB": "Relatórios",
+    "START-TASK": "Iniciar tarefa",
+    "START-PROCESS": "Iniciar processo",
+    "AUDIT-LOG": "Log de auditoria de processo"
+  },
+  "FORM-LIST": {
+    "STORE": "Armazenar",
+    "RESTORE": "Restaurar"
+  },
+  "LOGIN": {
+    "CONTENT_SERVICES": "Content Services",
+    "PROCESS_SERVICES": "Process Services",
+    "LOGIN_FOOTER": "Rodapé de login"
+  },
+  "SEARCH": {
+    "RESULTS": "Resultados da pesquisa"
+  },
+  "SOCIAL": {
+    "LIKE": "Componente Like",
+    "RATING": "Componente de classificação"
+  },
+  "TAG": {
+    "LIST": "Lista de Marcas do Content Services",
+    "INSERT": "Inserir ID de Nó",
+    "NODE_LIST": "Lista de marcas por ID de Nó"
+  }
+}

@@ -20,7 +20,7 @@ and can be applied separately to files and folders by setting `isFile` and `isFo
 
 ### Permissions enum
 
-The [Permissions](https://github.com/Alfresco/alfresco-ng2-components/blob/development/ng2-components/ng2-alfresco-core/src/models/permissions.enum.ts)
+The [Permissions](https://github.com/Alfresco/alfresco-ng2-components/blob/development/lib/core/models/permissions.enum.ts)
 enum contains all the valid permissions for which you can apply custom styles: **DELETE**, **UPDATE**,
 **CREATE**, **UPDATEPERMISSIONS**, **NOT_DELETE**, **NOT_UPDATE**, **NOT_CREATE**, **NOT_UPDATEPERMISSIONS**.
 

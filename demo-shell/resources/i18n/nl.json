@@ -1,0 +1,96 @@
+{
+  "title": "Welkom",
+  "VERSION": {
+    "NO_PERMISSION": "U hebt geen rechten voor het beheren van versies van deze content",
+    "NO_PERMISSION_EVENT": "U hebt geen ${event.permission} rechten voor het ${event.action} van ${event.type}",
+    "CHOOSE_FILE": "Selecteer een bestand om de versies ervan te zien"
+  },
+  "APP_LAYOUT": {
+    "APP_NAME": "ADF-demotoepassing",
+    "HOME": "Home",
+    "CONTENT_SERVICES": "Content Services",
+    "PROCESS_SERVICES": "Process Services",
+    "LOGIN": "Aanmelden",
+    "CUSTOM_SOURCES": "Aangepaste bronnen",
+    "DATATABLE": "Datatable",
+    "FORM": "Formulier",
+    "FORM_LIST": "Formulierlijst",
+    "UPLOADER": "Uploader",
+    "WEBSCRIPT": "Webscript",
+    "TAG": "Tag",
+    "SOCIAL": "Sociaal",
+    "SETTINGS": "Instellingen",
+    "ABOUT": "Info"
+  },
+  "DOCUMENT_LIST": {
+    "MULTISELECT_CHECKBOXES": "Multiselect (met selectievakjes)",
+    "MULTIPLE_FILE_UPLOAD": "Meerdere bestanden uploaden",
+    "FOLDER_UPLOAD": "Map uploaden",
+    "CUSTOM_FILTER": "Aangepast extensiefilter",
+    "MAX_SIZE": "Max.formaat filter",
+    "ENABLE_VERSIONING": "Versiebeheer inschakelen",
+    "DESCRIPTION_UPLOAD": "Uploaden inschakelen",
+    "MULTISELECT_DESCRIPTION": "Cmd (Mac) of Ctrl (Windows) gebruiken om de selectie van meerdere items in of uit te schakelen",
+    "COLUMNS": {
+      "DISPLAY_NAME": "Getoonde naam",
+      "TAG": "Tag",
+      "CREATED_BY": "Gemaakt door",
+      "CREATED_ON": "Gemaakt op",
+      "CREATED": "Gemaakt"
+    },
+    "ACTIONS": {
+      "FOLDER": {
+        "COPY": "Kopiëren",
+        "MOVE": "Verplaatsen",
+        "DELETE": "Verwijderen"
+      },
+      "DOCUMENT": {
+        "DOWNLOAD": "Downloaden",
+        "COPY": "Kopiëren",
+        "MOVE": "Verplaatsen",
+        "DELETE": "Verwijderen"
+      }
+    }
+  },
+  "DATATABLE": {
+    "RESET_DEFAULT": "Opnieuw instellen op standaardwaarden",
+    "ADD_ROW": "Rij toevoegen",
+    "REPLACE_ROWS": "Rijen vervangen",
+    "REPLACE_COLUMNS": "Kolommen vervangen",
+    "LOAD_NODE": "Node laden",
+    "MULTISELECT": "Multiselect",
+    "MULTISELECT_DESCRIPTION": "Cmd (Mac) of Ctrl (Windows) gebruiken om de selectie van meerdere items in of uit te schakelen"
+  },
+  "ANALYTICS_REPORT": {
+    "NO_REPORT_MESSAGE": "Geen rapport geselecteerd. Kies een rapport uit de lijst"
+  },
+  "PS-TAB": {
+    "TASKS-TAB": "Taken",
+    "PROCESSES-TAB": "Proces",
+    "REPORTS-TAB": "Rapporten",
+    "START-TASK": "Taak starten",
+    "START-PROCESS": "Proces starten",
+    "AUDIT-LOG": "Auditlog van proces"
+  },
+  "FORM-LIST": {
+    "STORE": "Opslaan",
+    "RESTORE": "Herstellen"
+  },
+  "LOGIN": {
+    "CONTENT_SERVICES": "Content Services",
+    "PROCESS_SERVICES": "Process Services",
+    "LOGIN_FOOTER": "Voettekst aanmeldingspagina"
+  },
+  "SEARCH": {
+    "RESULTS": "Zoekresultaten"
+  },
+  "SOCIAL": {
+    "LIKE": "'Vind ik leuk'-component",
+    "RATING": "Beoordelingscomponent"
+  },
+  "TAG": {
+    "LIST": "Taglijst Content Services",
+    "INSERT": "Node-id invoegen",
+    "NODE_LIST": "Taglijst per node-id"
+  }
+}

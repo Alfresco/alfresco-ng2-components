@@ -1,0 +1,51 @@
+{
+  "ANALYTICS": {
+    "TITLE": "Анализ данных",
+    "MESSAGES": {
+      "UNKNOWN-WIDGET-TYPE": "Неизвестный тип виджета",
+      "FILL-PARAMETER": "Выберите из параметров отчета",
+      "NO-DATA-FOUND": "Данные не найдены",
+      "ZERO-DATA-FOUND": "Есть только нулевые значения",
+      "ICON-SETTING": "Параметры",
+      "ICON-SAVE": "Сохранить",
+      "ICON-DELETE": "Удалить",
+      "ICON-EXPORT-CSV": "Экспорт"
+    }
+  },
+  "__KEY_REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-DEFINITION-OVERVIEW": {
+        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Общее количество определений процесса",
+        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Общее количество экземпляров процесса",
+        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Общее количество активных экземпляров процесса",
+        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Общее количество завершенных экземпляров процесса"
+      }
+    }
+  },
+  "REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-HEAT-MAP": {
+        "TYPE-FILTERING": "Включите прохождение таких шагов, как стартовые события и шлюзы"
+      },
+      "PROCESS-INSTANCES-OVERVIEW": {
+        "PROCESS-DEFINITION": "Определение процесса",
+        "DATE-RANGE": "Диапазон дат",
+        "SLOW-PROC-INST-NUMBER": "Сколько самых медленных экземпляров процесса должно отображаться?"
+      },
+      "TASK-OVERVIEW": {
+        "PROCESS-DEFINITION": "Определение процесса",
+        "DATE-RANGE": "Диапазон дат",
+        "DATE-RANGE-INTERVAL": "Группировать даты по"
+      },
+      "TASK-SLA": {
+        "TASK": "Задача",
+        "PROCESS-DEFINITION": "Определение процесса",
+        "DATE-RANGE": "Диапазон дат",
+        "SLA-DURATION": "Время завершения, требуемое соглашением об уровне обслуживания"
+      }
+    },
+    "PROCESS-STATUS": "Статус процесса",
+    "TASK-STATUS": "Статус задачи"
+  },
+  "DIAGRAMS": "Схемы"
+}

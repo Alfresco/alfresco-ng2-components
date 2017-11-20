@@ -1,5 +1,0 @@
-@import '../src/components/tooltip/diagram-tooltip.component';
-
-@mixin alfresco-activity-diagrams-theme($theme) {
-    @include adf-diagram-tooltip-theme($theme);
-}

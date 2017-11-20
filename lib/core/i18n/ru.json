@@ -1,0 +1,151 @@
+{
+  "CORE": {
+    "PAGINATION": {
+      "ITEMS_RANGE": "Отображается {{ range }} из {{ total }}",
+      "ITEMS_PER_PAGE": "Элементов на странице",
+      "CURRENT_PAGE": "Страница {{ number }}",
+      "TOTAL_PAGES": "из {{ total }}"
+    },
+    "DIALOG": {
+      "DOWNLOAD_ZIP": {
+        "ACTIONS": {
+          "CANCEL": "Отмена"
+        },
+        "TITLE": "Добавление файлов в архив, это может занять несколько минут"
+      }
+    },
+    "FOLDER_DIALOG": {
+      "CREATE_FOLDER_TITLE": "Создать новую папку",
+      "EDIT_FOLDER_TITLE": "Редактировать папку",
+      "FOLDER_NAME": {
+        "LABEL": "Имя",
+        "ERRORS": {
+          "REQUIRED": "Имя папки является обязательным",
+          "SPECIAL_CHARACTERS": "Имя папки не может содержать следующие символы * \" < > \\ / ? : |",
+          "ENDING_DOT": "Имя папки не может заканчиваться точкой .",
+          "ONLY_SPACES": "Имя папки не может состоять только из пробелов"
+        }
+      },
+      "FOLDER_DESCRIPTION": {
+        "LABEL": "Описание"
+      },
+      "CREATE_BUTTON": {
+        "LABEL": "Создать"
+      },
+      "UPDATE_BUTTON": {
+        "LABEL": "Обновить"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "Отмена"
+      }
+    },
+    "MESSAGES": {
+      "ERRORS": {
+        "GENERIC": "Действие не выполнено. Повторите попытку или обратитесь к IT-специалистам.",
+        "EXISTENT_FOLDER": "Папка с таким же именем уже существует. Используйте другое имя."
+      }
+    },
+    "RESTORE_NODE": {
+      "VIEW": "Посмотреть",
+      "PARTIAL_PLURAL": "Из-за проблем с местоположением восстановления не восстановлено элементов: {{ number }}",
+      "NODE_EXISTS": "Невозможно восстановить, элемент {{ name }} уже существует",
+      "LOCATION_MISSING": "Невозможно восстановить элемент {{ name }}, исходное местоположение больше не существует",
+      "GENERIC": "Возникла проблема с восстановлением элемента {{ name }}",
+      "PLURAL": "Восстановлено",
+      "SINGULAR": "Элемент {{ name }} восстановлен"
+    },
+    "DELETE_NODE": {
+      "SINGULAR": "{{ name }} удален",
+      "PLURAL": "Удалено элементов: {{ number }}",
+      "PARTIAL_SINGULAR": "Удален {{ success }} элемент, не удалось удалить: {{ failed }}",
+      "PARTIAL_PLURAL": "Удалено элементов: {{ success }}, не удалось удалить: {{ failed }}",
+      "ERROR_SINGULAR": "Не удалось удалить {{ name }}",
+      "ERROR_PLURAL": "Не удалось удалить элементов: {{ number }}"
+    },
+    "HOST_SETTINGS": {
+      "CS_URL_ERROR": "Адрес Content Services не соответствует формату URL",
+      "PS_URL_ERROR": "Адрес Process Services не соответствует формату URL",
+      "TITLE": "Параметры",
+      "CS-HOST": "URL-адрес Content Services",
+      "BP-HOST": "URL-адрес Process Services",
+      "BACK": "Назад",
+      "APPLY": "Применить",
+      "NOT_VALID": "http(s)://host|ip:port(/path) не распознан, используйте другой URL-адрес."
+    }
+  },
+  "LOGIN": {
+    "LOGO": "Alfresco",
+    "LABEL": {
+      "LOGIN": "Войти",
+      "USERNAME": "Имя пользователя",
+      "PASSWORD": "Пароль",
+      "REMEMBER": "Запомнить меня"
+    },
+    "MESSAGES": {
+      "USERNAME-REQUIRED": "Обязательное поле",
+      "USERNAME-MIN": "Имя пользователя должно быть не меньше {{minLenght}} символов.",
+      "PASSWORD-REQUIRED": "Введите пароль для входа",
+      "LOGIN-ERROR-CREDENTIALS": "Вы ввели неверное имя пользователя или пароль",
+      "LOGIN-ERROR-PROVIDERS": "Поставщики не могут оставаться неопределенными",
+      "LOGIN-ERROR-CORS": "Исключение CORS, проверьте конфигурацию сервера",
+      "LOGIN-ERROR-CSRF": "Исключение CSRF, установите [disableCsrf]=\"true\" в login.component",
+      "LOGIN-ECM-LICENSE": "Репозиторий Alfresco Content Services находится в режиме только для чтения"
+    },
+    "BUTTON": {
+      "LOGIN": "Войти",
+      "CHECKING": "Проверка",
+      "WELCOME": "Добро пожаловать"
+    },
+    "ACTION": {
+      "HELP": "Справка?",
+      "REGISTER": "Регистрация"
+    }
+  },
+  "ADF-DATATABLE": {
+    "EMPTY": {
+      "HEADER": "Этот список пуст",
+      "DRAG-AND-DROP": {
+        "TITLE": "Перетащите",
+        "SUBTITLE": "для загрузки файлов"
+      }
+    }
+  },
+  "USER_PROFILE": {
+    "LABELS": {
+      "ECM": {
+        "JOB_TITLE": "Имя задания"
+      },
+      "BPM": {
+        "TENANT": "Клиент"
+      }
+    },
+    "TAB": {
+      "CS": "Content Services",
+      "PS": "Process Services"
+    }
+  },
+  "ADF_VIEWER": {
+    "ACTIONS": {
+      "BACK": "Назад",
+      "OPEN_WITH": "Открыть с помощью",
+      "DOWNLOAD": "Скачать",
+      "PRINT": "Печатать",
+      "SHARE": "Открыть доступ",
+      "MORE_ACTIONS": "Больше действий",
+      "INFO": "Информация"
+    },
+    "ARIA": {
+      "PREVIOUS_PAGE": "Предыдущая страница",
+      "NEXT_PAGE": "Следующая страница",
+      "ZOOM_IN": "Увеличить",
+      "ZOOM_OUT": "Уменьшить",
+      "FIT_PAGE": "По размеру страницы"
+    },
+    "PAGE_LABEL": {
+      "SHOWING": "Отображается",
+      "OF": "из"
+    },
+    "LOADING": "Загружается",
+    "UNKNOWN_FORMAT": "Не удалось загрузить предварительный просмотр"
+  }
+}

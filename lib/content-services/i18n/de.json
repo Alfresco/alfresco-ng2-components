@@ -1,0 +1,186 @@
+{
+  "FORM": {
+    "START_FORM": {
+      "TITLE": "Startformular"
+    },
+    "PREVIEW": {
+      "IMAGE_NOT_AVAILABLE": "Vorschau nicht verfügbar"
+    },
+    "FIELD": {
+      "UPLOAD": "Hochladen",
+      "REQUIRED": "*Erforderlich",
+      "VALIDATOR": {
+        "INVALID_NUMBER": "Verwenden Sie ein anderes Zahlenformat",
+        "INVALID_DATE": "Verwenden Sie ein anderes Datumsformat",
+        "INVALID_VALUE": "Geben Sie einen anderen Wert ein",
+        "NOT_GREATER_THAN": "Darf nicht größer als {{ maxValue }} sein",
+        "NOT_LESS_THAN": "Darf nicht kleiner als {{ minValue }} sein",
+        "AT_LEAST_LONG": "Geben Sie mindestens {{ minLength }} Zeichen ein",
+        "NO_LONGER_THAN": "Geben Sie höchstens {{ maxLength }} Zeichen ein"
+      }
+    }
+  },
+  "ADF-DOCUMENT-LIST": {
+    "EMPTY": {
+      "HEADER": "Dieser Ordner ist leer"
+    },
+    "NO_PERMISSION": "Sie verfügen nicht über die nötige Berechtigung, um diese Datei oder diesen Ordner anzuzeigen.",
+    "LAYOUT": {
+      "CREATED": "Erstellt",
+      "THUMBNAIL": "Miniaturansicht",
+      "NAME": "Name",
+      "LOCATION": "Speicherort",
+      "SIZE": "Größe",
+      "DELETED_ON": "Gelöscht",
+      "DELETED_BY": "Gelöscht von",
+      "STATUS": "Status",
+      "MODIFIED_ON": "Bearbeitet",
+      "MODIFIED_BY": "Bearbeitet von",
+      "SHARED_BY": "Freigegeben von",
+      "LOAD_MORE": "Mehr laden"
+    },
+    "MENU_ACTIONS": {
+      "VIEW": "Anzeigen",
+      "REMOVE": "Entfernen",
+      "DOWNLOAD": "Herunterladen"
+    }
+  },
+  "ALFRESCO_DOCUMENT_LIST": {
+    "BUTTON": {
+      "ACTION_CREATE": "Erstellen...",
+      "ACTION_NEW_FOLDER": "Neuer Ordner",
+      "CREATE": "Erstellen",
+      "CANCEL": "Abbrechen"
+    }
+  },
+  "DROPDOWN": {
+    "PLACEHOLDER_LABEL": "Site-Liste",
+    "MY_FILES_OPTION": "Meine Dateien"
+  },
+  "NODE_SELECTOR": {
+    "CANCEL": "Abbrechen",
+    "CHOOSE": "Auswählen",
+    "NO_RESULTS": "Keine Ergebnisse gefunden"
+  },
+  "OPERATION": {
+    "SUCCES": {
+      "CONTENT": {
+        "COPY": "Kopieren erfolgreich",
+        "MOVE": "Verschieben erfolgreich"
+      },
+      "FOLDER": {
+        "COPY": "Kopieren erfolgreich",
+        "MOVE": "Verschieben erfolgreich"
+      }
+    },
+    "ERROR": {
+      "CONFLICT": "Dieser Name wird bereits verwendet. Versuchen Sie es mit einem anderen Namen.",
+      "UNKNOWN": "Die Aktion war nicht erfolgreich. Versuchen Sie es noch einmal oder wenden Sie sich an Ihr IT-Team.",
+      "PERMISSION": "Sie verfügen nicht über die nötigen Zugriffsrechte hierfür."
+    }
+  },
+  "TAG": {
+    "LABEL": {
+      "NEWTAG": "Neues Tag"
+    },
+    "MESSAGES": {
+      "EXIST": "Dieses Tag gibt es bereits"
+    },
+    "BUTTON": {
+      "ADD": "Tag hinzufügen"
+    }
+  },
+  "ADF_FILE_UPLOAD": {
+    "BUTTON": {
+      "MINIMIZE": "Minimieren",
+      "MAXIMIZE": "Maximieren",
+      "CLOSE": "Schließen",
+      "CANCEL_ALL": "Hochladen abbrechen",
+      "CANCEL_FILE": "Upload abbrechen",
+      "REMOVE_FILE": "Hochgeladene Datei entfernen"
+    },
+    "STATUS": {
+      "FILE_CANCELED_STATUS": "Abgebrochen"
+    },
+    "CONFIRMATION": {
+      "BUTTON": {
+        "CANCEL": "Ja",
+        "CONTINUE": "Nein"
+      },
+      "MESSAGE": {
+        "TITLE": "Upload abbrechen",
+        "TEXT": "Beenden Sie das Hochladen und entfernen Sie bereits hochgeladene Dateien."
+      }
+    }
+  },
+  "FILE_UPLOAD": {
+    "BUTTON": {
+      "UPLOAD_FILE": "Datei hochladen",
+      "UPLOAD_FOLDER": "Ordner hochladen"
+    },
+    "MESSAGES": {
+      "UPLOAD_CANCELED": "Hochladen abgebrochen",
+      "UPLOAD_COMPLETED": "Hochgeladen: {{ completed }} / {{ total }}",
+      "UPLOAD_PROGRESS": "Hochladen: {{ completed }} / {{ total }}",
+      "UPLOAD_ERROR": "{{ total }} erfolgreich hochgeladen",
+      "UPLOAD_ERRORS": "{{ total }} nicht erfolgreich hochgeladen",
+      "PROGRESS": "Hochladen läuft...",
+      "FOLDER_ALREADY_EXIST": "Den Ordner {0} gibt es bereits",
+      "FOLDER_NOT_SUPPORTED": "Ihr Browser lässt das Hochladen von Ordnern nicht zu. Versuchen Sie es mit einem anderen Browser",
+      "REMOVE_FILE_ERROR": "{{ fileName }} konnte nicht entfernt werden. Versuchen Sie es noch einmal oder wenden Sie sich an Ihr IT-Team.",
+      "REMOVE_FILES_ERROR": "{{ total }} Dateien konnten nicht entfernt werden. Versuchen Sie es noch einmal oder wenden Sie sich an Ihr IT-Team.",
+      "EXCEED_MAX_FILE_SIZE": "Datei {{ fileName }} ist größer als maximal zulässige Dateigröße"
+    },
+    "ACTION": {
+      "UNDO": "Rückgängig machen"
+    }
+  },
+  "WEBSCRIPT": {
+    "ERROR": "Vorgang konnte nicht durchgeführt werden. Geben Sie diese Meldung an Ihr IT-Team weiter: Fehler bei Deserialisierung von {{data}} als {{contentType}}"
+  },
+  "SEARCH": {
+    "CONTROL": {},
+    "RESULTS": {
+      "SUMMARY": "{{numResults}} Ergebnis gefunden für {{searchTerm}}",
+      "NONE": "Keine Ergebnisse gefunden für {{searchTerm}}",
+      "ERROR": "Bei der Suche ist ein Problem aufgetreten. Versuchen Sie es noch einmal.",
+      "COLUMNS": {
+        "NAME": "Namen anzeigen",
+        "MODIFIED_BY": "Bearbeitet von",
+        "MODIFIED_AT": "Bearbeitet"
+      }
+    },
+    "ICONS": {
+      "ft_ic_raster_image": "Bilddatei",
+      "ft_ic_pdf": "PDF-Dokument",
+      "ft_ic_ms_excel": "Microsoft Excel-Datei",
+      "ft_ic_ms_word": "Microsoft Word-Dokument",
+      "ft_ic_ms_powerpoint": "Microsoft PowerPoint-Datei",
+      "ft_ic_video": "Videodatei",
+      "ft_ic_document": "Dokumentdatei",
+      "ft_ic_website": "Online-Ressource",
+      "ft_ic_archive": "Archivdatei",
+      "ft_ic_presentation": "Präsentation",
+      "ft_ic_spreadsheet": "Kalkulationstabellendatei"
+    },
+    "DOCUMENT_LIST": {
+      "COLUMNS": {
+        "DISPLAY_NAME": "Namen anzeigen",
+        "CREATED_BY": "Erstellt von",
+        "CREATED_ON": "Erstellt"
+      },
+      "ACTIONS": {
+        "FOLDER": {
+          "DELETE": "Löschen"
+        },
+        "DOCUMENT": {
+          "DOWNLOAD": "Herunterladen",
+          "DELETE": "Löschen"
+        }
+      }
+    }
+  },
+  "PERMISSON": {
+    "LACKOF": "Sie verfügen nicht über die nötige Berechtigung ('{{permission}}'), um {{type}} zu {{action}}"
+  }
+}

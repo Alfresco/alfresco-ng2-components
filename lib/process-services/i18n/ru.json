@@ -1,0 +1,298 @@
+{
+  "DIALOG": {
+    "SAVE_MESSAGE": "Нажмите Сохранить, чтобы добавить отчет с текущими параметрами в список отчетов.",
+    "EXPORT_MESSAGE": ""
+  },
+  "DATE-WIDGET": {
+    "START-DATE": "Дата начала",
+    "END-DATE": "Дата окончания",
+    "MESSAGES": {
+      "START-DATE-REQUIRED": "Необходимо указать дату начала",
+      "START-LESS-THAN-END-DATE": "Дата начала должна быть раньше даты окончания"
+    }
+  },
+  "ADF_TASK_LIST": {
+    "APPS": {
+      "NONE": "Приложений не найдено",
+      "TASK_APP_NAME": "Приложение для задач"
+    },
+    "LIST": {
+      "MESSAGES": {
+        "NONE": "Списков задач не найдено"
+      }
+    },
+    "PROPERTIES": {
+      "TASK_NAME": "Задача",
+      "THUMBNAIL": "Эскиз",
+      "NAME": "Имя",
+      "ASSIGNEE": "Исполнитель",
+      "ASSIGNEE_DEFAULT": "Нет исполнителя",
+      "PRIORITY": "Приоритет",
+      "DUE_DATE": "Срок",
+      "DUE_DATE_DEFAULT": "Нет срока",
+      "STATUS": "Статус",
+      "CATEGORY": "Категория",
+      "CATEGORY_DEFAULT": "Нет категории",
+      "PARENT_NAME": "Имя родительского элемента",
+      "PARENT_NAME_DEFAULT": "Нет родительского элемента",
+      "CREATED_BY": "Создано пользователем",
+      "CREATED": "Создано",
+      "ID": "Идентификатор",
+      "DESCRIPTION": "Описание",
+      "DESCRIPTION_DEFAULT": "Нет описания",
+      "FORM_NAME": "Имя формы",
+      "FORM_NAME_DEFAULT": "Без формы"
+    },
+    "MENU_ACTIONS": {
+      "VIEW_CONTENT": "Посмотреть",
+      "REMOVE_CONTENT": "Удалить",
+      "DOWNLOAD_CONTENT": "Скачать",
+      "DOWNLOAD_AUDIT": "Скачать аудит"
+    },
+    "DETAILS": {
+      "LABELS": {
+        "INFO_DRAWER_TITLE": "Действия",
+        "INFO_DRAWER_TAB_ACTIVITY_TITLE": "Действие",
+        "INFO_DRAWER_TAB_DETAILS_TITLE": "Сведения",
+        "ASSIGNEE": "Исполнитель",
+        "DUE": "Срок",
+        "FORM": "Форма",
+        "PEOPLE": "Люди, которым открыт доступ к этой задаче",
+        "COMMENTS": "Комментарии",
+        "CHECKLIST": "Контрольный список",
+        "INVOLVED_PEOPLE": "Участвующие люди",
+        "ADD_PEOPLE": "Добавить людей и группы",
+        "ADD_ASSIGNEE": "Добавить нового исполнителя"
+      },
+      "BUTTON": {
+        "COMPLETE": "Выполнить",
+        "CLAIM": "Принять",
+        "UNCLAIM": "Повторно поставить в очередь",
+        "DRAG-ATTACHMENT": "Перетащите файлы для загрузки",
+        "UPLOAD-ATTACHMENT": "Загрузить вложение"
+      },
+      "MESSAGES": {
+        "NONE": "Сведений о задаче не найдено",
+        "CLAIM": "Чтобы приступить к работе над этой задачей, нажмите \"Я выполню это\""
+      },
+      "FORM": {
+        "NONE": "Без формы"
+      },
+      "DUE": {
+        "NONE": "Без срока"
+      },
+      "ASSIGNEE": {
+        "NONE": "Нет исполнителя"
+      },
+      "PEOPLE": {
+        "NONE": "Нет участников"
+      },
+      "COMMENTS": {
+        "NONE": "Нет комментариев",
+        "ADD": "Добавить комментарий",
+        "HEADER": "Комментарии ({{ count }})",
+        "CREATED_BY_HEADER": "Создано пользователем",
+        "MESSAGE_HEADER": "Сообщение",
+        "DIALOG": {
+          "TITLE": "Новый комментарий",
+          "LABELS": {
+            "MESSAGE": "Сообщение"
+          },
+          "BUTTON": {
+            "ADD": "Добавить комментарий",
+            "CANCEL": "Отмена"
+          }
+        }
+      },
+      "CHECKLIST": {
+        "NONE": "Нет контрольных списков"
+      },
+      "ERROR": {
+        "TITLE": "Не удалось выполнить действие",
+        "DESCRIPTION": "Повторите попытку или убедитесь, что у вас есть доступ.",
+        "CLOSE": "Закрыть"
+      }
+    },
+    "FILTERS": {
+      "MESSAGES": {
+        "NONE": "Фильтр задач не выбран"
+      }
+    },
+    "START_TASK": {
+      "BUTTON": "Создать задачу",
+      "FORM": {
+        "TITLE": "Начать задачу",
+        "LABEL": {
+          "NONE": "Нет",
+          "NAME": "Имя",
+          "DESCRIPTION": "Описание",
+          "ATTACHFORM": "Прикрепить форму",
+          "ASSIGNEE": "Исполнитель",
+          "FORM": "Форма",
+          "DATE": "Выбрать дату"
+        },
+        "ACTION": {
+          "START": "Начать",
+          "CANCEL": "Отмена"
+        },
+        "DATE": {
+          "ERROR": "Формат даты ДД/ММ/ГГГГ"
+        }
+      }
+    },
+    "PEOPLE": {
+      "DIALOG_CLOSE": "Закрыть",
+      "ADD_USER": "Добавить",
+      "ADD_ASSIGNEE": "Назначить",
+      "SEARCH_USER": "Искать пользователя",
+      "SEARCH": {
+        "NO_USERS": "Участников не найдено"
+      }
+    },
+    "ATTACHMENT": {
+      "EMPTY": {
+        "HEADER": "Этот список пуст",
+        "DRAG-AND-DROP": {
+          "TITLE": "Перетащите",
+          "SUBTITLE": "для загрузки файлов"
+        }
+      },
+      "EMPTY-LIST": {
+        "HEADER": "Файлы отсутствуют"
+      }
+    }
+  },
+  "ADF_PROCESS_LIST": {
+    "LIST": {
+      "NONE": "Экземпляры процесса не найдены",
+      "SUMMARY": "Найдено экземпляров процесса: {{total}}",
+      "ERROR": "Не удалось загрузить экземпляры процессов. Повторите попытку или покажите IT-специалистам следующее сообщение: {{errorMessage}}"
+    },
+    "FILTERS": {
+      "MESSAGES": {
+        "NONE": "Фильтр экземпляров процессов не найден."
+      }
+    },
+    "PROPERTIES": {
+      "PROCESS_NAME": "Процесс",
+      "NAME": "Имя",
+      "STATUS": "Статус",
+      "DUE_DATE": "Срок",
+      "DUE_DATE_DEFAULT": "Нет срока",
+      "CATEGORY": "Категория",
+      "CATEGORY_DEFAULT": "Нет категории",
+      "CREATED_BY": "Создано пользователем",
+      "CREATED_BY_DEFAULT": "Нет исполнителя",
+      "CREATED": "Создано",
+      "BUSINESS_KEY": "Бизнес-ключ",
+      "BUSINESS_KEY_DEFAULT": "Нет",
+      "DESCRIPTION": "Описание",
+      "DESCRIPTION_DEFAULT": "Нет описания",
+      "ID": "Идентификатор"
+    },
+    "MENU_ACTIONS": {
+      "VIEW_CONTENT": "Посмотреть",
+      "REMOVE_CONTENT": "Удалить",
+      "DOWNLOAD_CONTENT": "Скачать",
+      "DOWNLOAD_AUDIT": "Скачать аудит",
+      "VIEW_TASK": "Просмотреть задачу"
+    },
+    "DETAILS": {
+      "LABELS": {
+        "STARTED_BY": "Запущено пользователем",
+        "STARTED": "Запущено",
+        "ENDED": "Завершено",
+        "COMMENTS": "Комментарии",
+        "START_FORM": "Запустить форму",
+        "TASKS_ACTIVE": "Активные задачи",
+        "TASKS_COMPLETED": "Завершенные задачи",
+        "TASK_SUBTITLE": "Назначено пользователю {{user}}, создано {{created}}"
+      },
+      "BUTTON": {
+        "CANCEL": "Отменить процесс",
+        "CLOSE": "Закрыть",
+        "SHOW_DIAGRAM": "Показать схему",
+        "DRAG-ATTACHMENT": "Перетащите файлы для загрузки",
+        "UPLOAD-ATTACHMENT": "Загрузить вложение"
+      },
+      "MESSAGES": {
+        "NONE": "Сведения о процессе не найдены"
+      },
+      "TASKS": {
+        "NO_ACTIVE": "Активные задачи в настоящее время отсутствуют",
+        "NO_COMPLETED": "Выполненные задачи пока отсутствуют",
+        "TASK_DETAILS": "Сведения о задаче",
+        "TASK_CLOSE": "Закрыть"
+      },
+      "COMMENTS": {
+        "ADD": "Добавить комментарий",
+        "HEADER": "Комментарии ({{ count }})",
+        "NONE": "Нет комментариев",
+        "BUTTON": {
+          "ADD": "Добавить комментарий"
+        },
+        "ADD_DIALOG": {
+          "TITLE": "Новый комментарий",
+          "LABEL": {
+            "MESSAGE": "Сообщение"
+          },
+          "BUTTON": {
+            "ADD": "Добавить комментарий",
+            "CANCEL": "Отмена"
+          }
+        }
+      },
+      "ADD_DIALOG": {
+        "TITLE": "Установить переменную процесса",
+        "LABEL": {
+          "NAME": "Имя",
+          "VALUE": "Значение",
+          "SCOPE": "Область применения"
+        }
+      },
+      "EDIT_DIALOG": {
+        "TITLE": "Редактировать переменную процесса"
+      },
+      "ERROR_DIALOG": {
+        "TITLE": "Не удалось выполнить действие",
+        "DESCRIPTION": "Возможно, у вас нет необходимого уровня доступа, обратитесь к IT-специалистам."
+      }
+    },
+    "START_PROCESS": {
+      "BUTTON": "Начать процесс",
+      "NO_PROCESS_DEFINITIONS": "Невозможно начать процесс, поскольку нет определений процесса",
+      "FORM": {
+        "TITLE": "Начать процесс",
+        "LABEL": {
+          "TYPE": "Выбрать процесс",
+          "NAME": "Имя процесса"
+        },
+        "TYPE_PLACEHOLDER": "Выбрать элемент...",
+        "ACTION": {
+          "START": "Начать процесс",
+          "CANCEL": "Отмена"
+        }
+      },
+      "ERROR": {
+        "LOAD_PROCESS_DEFS": "Не удалось загрузить определения процесса, проверьте, есть ли у вас доступ.",
+        "START": "Не удалось начать новый экземпляр процесса, проверьте, есть ли у вас доступ."
+      }
+    },
+    "PROCESS-ATTACHMENT": {
+      "EMPTY": {
+        "HEADER": "Этот список пуст",
+        "DRAG-AND-DROP": {
+          "TITLE": "Перетащите",
+          "SUBTITLE": "для загрузки файлов"
+        }
+      },
+      "EMPTY-LIST": {
+        "HEADER": "Файлы отсутствуют"
+      },
+      "COLUMNS": {
+        "NAME": "Имя",
+        "CREATED-ON": "Дата создания"
+      }
+    }
+  }
+}

@@ -1,0 +1,298 @@
+{
+  "DIALOG": {
+    "SAVE_MESSAGE": "Klicken Sie auf 'Speichern', um einen Bericht mit den derzeitigen Einstellungen zu Ihrer Berichteliste hinzuzufügen.",
+    "EXPORT_MESSAGE": ""
+  },
+  "DATE-WIDGET": {
+    "START-DATE": "Startdatum",
+    "END-DATE": "Enddatum",
+    "MESSAGES": {
+      "START-DATE-REQUIRED": "Startdatum ist erforderlich",
+      "START-LESS-THAN-END-DATE": "Das Startdatum muss vor dem Enddatum liegen"
+    }
+  },
+  "ADF_TASK_LIST": {
+    "APPS": {
+      "NONE": "Keine Anwendungen gefunden",
+      "TASK_APP_NAME": "Aufgabenanwendung"
+    },
+    "LIST": {
+      "MESSAGES": {
+        "NONE": "Keine Aufgabenliste gefunden"
+      }
+    },
+    "PROPERTIES": {
+      "TASK_NAME": "Aufgabe",
+      "THUMBNAIL": "Miniaturansicht",
+      "NAME": "Name",
+      "ASSIGNEE": "Zugewiesener Benutzer",
+      "ASSIGNEE_DEFAULT": "Kein zugewiesener Benutzer",
+      "PRIORITY": "Priorität",
+      "DUE_DATE": "Fälligkeitsdatum",
+      "DUE_DATE_DEFAULT": "Kein Datum",
+      "STATUS": "Status",
+      "CATEGORY": "Kategorie",
+      "CATEGORY_DEFAULT": "Keine Kategorie",
+      "PARENT_NAME": "Name übergeordnetes Element",
+      "PARENT_NAME_DEFAULT": "Kein übergeordnetes Element",
+      "CREATED_BY": "Erstellt von",
+      "CREATED": "Erstellt",
+      "ID": "ID",
+      "DESCRIPTION": "Beschreibung",
+      "DESCRIPTION_DEFAULT": "Keine Beschreibung",
+      "FORM_NAME": "Formularname",
+      "FORM_NAME_DEFAULT": "Kein Formular"
+    },
+    "MENU_ACTIONS": {
+      "VIEW_CONTENT": "Anzeigen",
+      "REMOVE_CONTENT": "Entfernen",
+      "DOWNLOAD_CONTENT": "Herunterladen",
+      "DOWNLOAD_AUDIT": "Audit herunterladen"
+    },
+    "DETAILS": {
+      "LABELS": {
+        "INFO_DRAWER_TITLE": "Aktivitäten",
+        "INFO_DRAWER_TAB_ACTIVITY_TITLE": "Aktivität",
+        "INFO_DRAWER_TAB_DETAILS_TITLE": "Details",
+        "ASSIGNEE": "Zugewiesener Benutzer",
+        "DUE": "Fällig",
+        "FORM": "Formular",
+        "PEOPLE": "Personen, für die diese Aufgabe freigegeben wurde",
+        "COMMENTS": "Kommentare",
+        "CHECKLIST": "Prüfliste",
+        "INVOLVED_PEOPLE": "Beteiligte Personen",
+        "ADD_PEOPLE": "Personen und Gruppen hinzufügen",
+        "ADD_ASSIGNEE": "Neuen zugewiesenen Benutzer hinzufügen"
+      },
+      "BUTTON": {
+        "COMPLETE": "Abschließen",
+        "CLAIM": "Anfordern",
+        "UNCLAIM": "Erneut in Warteschlange stellen",
+        "DRAG-ATTACHMENT": "Dateien zum Hochladen ablegen",
+        "UPLOAD-ATTACHMENT": "Anhang hochladen"
+      },
+      "MESSAGES": {
+        "NONE": "Keine Aufgabendetails gefunden",
+        "CLAIM": "Klicken Sie auf 'Anfordern', um diese Aufgabe zu bearbeiten"
+      },
+      "FORM": {
+        "NONE": "Kein Formular"
+      },
+      "DUE": {
+        "NONE": "Kein Fälligkeitsdatum"
+      },
+      "ASSIGNEE": {
+        "NONE": "Kein zugewiesener Benutzer"
+      },
+      "PEOPLE": {
+        "NONE": "Niemand beteiligt"
+      },
+      "COMMENTS": {
+        "NONE": "Keine Kommentare vorhanden",
+        "ADD": "Kommentar hinzufügen",
+        "HEADER": "Kommentare ({{ count }})",
+        "CREATED_BY_HEADER": "Erstellt von",
+        "MESSAGE_HEADER": "Fehlermeldung",
+        "DIALOG": {
+          "TITLE": "Neuer Kommentar",
+          "LABELS": {
+            "MESSAGE": "Fehlermeldung"
+          },
+          "BUTTON": {
+            "ADD": "Kommentar hinzufügen",
+            "CANCEL": "Abbrechen"
+          }
+        }
+      },
+      "CHECKLIST": {
+        "NONE": "Keine Prüfliste"
+      },
+      "ERROR": {
+        "TITLE": "Vorgang konnte nicht durchgeführt werden",
+        "DESCRIPTION": "Versuchen Sie es noch einmal oder überprüfen Sie, ob Sie Zugriff haben.",
+        "CLOSE": "Schließen"
+      }
+    },
+    "FILTERS": {
+      "MESSAGES": {
+        "NONE": "Kein Aufgabenfilter ausgewählt"
+      }
+    },
+    "START_TASK": {
+      "BUTTON": "Aufgabe erstellen",
+      "FORM": {
+        "TITLE": "Aufgabe starten",
+        "LABEL": {
+          "NONE": "Keine",
+          "NAME": "Name",
+          "DESCRIPTION": "Beschreibung",
+          "ATTACHFORM": "Formular anhängen",
+          "ASSIGNEE": "Zugewiesener Benutzer",
+          "FORM": "Formular",
+          "DATE": "Datum auswählen"
+        },
+        "ACTION": {
+          "START": "Start",
+          "CANCEL": "Abbrechen"
+        },
+        "DATE": {
+          "ERROR": "Datumsformat TT.MM.JJJJ"
+        }
+      }
+    },
+    "PEOPLE": {
+      "DIALOG_CLOSE": "Schließen",
+      "ADD_USER": "Hinzufügen",
+      "ADD_ASSIGNEE": "Zuweisen",
+      "SEARCH_USER": "Benutzer suchen",
+      "SEARCH": {
+        "NO_USERS": "Niemand gefunden, der beteiligt werden kann"
+      }
+    },
+    "ATTACHMENT": {
+      "EMPTY": {
+        "HEADER": "Diese Liste ist leer",
+        "DRAG-AND-DROP": {
+          "TITLE": "Ziehen und ablegen",
+          "SUBTITLE": "um Dateien hochzuladen"
+        }
+      },
+      "EMPTY-LIST": {
+        "HEADER": "Keine Dateien verfügbar"
+      }
+    }
+  },
+  "ADF_PROCESS_LIST": {
+    "LIST": {
+      "NONE": "Keine Prozessinstanzen gefunden",
+      "SUMMARY": "{{total}} Prozessinstanzen gefunden",
+      "ERROR": "Prozessesinstanzen konnten nicht geladen werden. Versuchen Sie es noch einmal oder geben Sie die folgende Meldung an Ihr IT-Team weiter: {{errorMessage}}"
+    },
+    "FILTERS": {
+      "MESSAGES": {
+        "NONE": "Kein Prozessinstanzfilter ausgewählt."
+      }
+    },
+    "PROPERTIES": {
+      "PROCESS_NAME": "Prozess",
+      "NAME": "Name",
+      "STATUS": "Status",
+      "DUE_DATE": "Fälligkeitsdatum",
+      "DUE_DATE_DEFAULT": "Kein Datum",
+      "CATEGORY": "Kategorie",
+      "CATEGORY_DEFAULT": "Keine Kategorie",
+      "CREATED_BY": "Erstellt von",
+      "CREATED_BY_DEFAULT": "Kein zugewiesener Benutzer",
+      "CREATED": "Erstellt",
+      "BUSINESS_KEY": "Geschäftsschlüssel",
+      "BUSINESS_KEY_DEFAULT": "Keine",
+      "DESCRIPTION": "Beschreibung",
+      "DESCRIPTION_DEFAULT": "Keine Beschreibung",
+      "ID": "ID"
+    },
+    "MENU_ACTIONS": {
+      "VIEW_CONTENT": "Anzeigen",
+      "REMOVE_CONTENT": "Entfernen",
+      "DOWNLOAD_CONTENT": "Herunterladen",
+      "DOWNLOAD_AUDIT": "Audit herunterladen",
+      "VIEW_TASK": "Aufgabe anzeigen"
+    },
+    "DETAILS": {
+      "LABELS": {
+        "STARTED_BY": "Gestartet von",
+        "STARTED": "Gestartet",
+        "ENDED": "Beendet",
+        "COMMENTS": "Kommentare",
+        "START_FORM": "Startformular",
+        "TASKS_ACTIVE": "Aktive Aufgaben",
+        "TASKS_COMPLETED": "Abgeschlossene Aufgaben",
+        "TASK_SUBTITLE": "Zugewiesen: {{user}}. Erstellt: {{created}}"
+      },
+      "BUTTON": {
+        "CANCEL": "Prozess abbrechen",
+        "CLOSE": "Schließen",
+        "SHOW_DIAGRAM": "Diagramm anzeigen",
+        "DRAG-ATTACHMENT": "Dateien zum Hochladen ablegen",
+        "UPLOAD-ATTACHMENT": "Anhang hochladen"
+      },
+      "MESSAGES": {
+        "NONE": "Keine Prozessdetails gefunden"
+      },
+      "TASKS": {
+        "NO_ACTIVE": "Keine derzeit aktiven Aufgaben",
+        "NO_COMPLETED": "Noch keine Aufgaben abgeschlossen",
+        "TASK_DETAILS": "Aufgabendetails",
+        "TASK_CLOSE": "Schließen"
+      },
+      "COMMENTS": {
+        "ADD": "Kommentar hinzufügen",
+        "HEADER": "Kommentare ({{ count }})",
+        "NONE": "Keine Kommentare vorhanden",
+        "BUTTON": {
+          "ADD": "Kommentar hinzufügen"
+        },
+        "ADD_DIALOG": {
+          "TITLE": "Neuer Kommentar",
+          "LABEL": {
+            "MESSAGE": "Fehlermeldung"
+          },
+          "BUTTON": {
+            "ADD": "Kommentar hinzufügen",
+            "CANCEL": "Abbrechen"
+          }
+        }
+      },
+      "ADD_DIALOG": {
+        "TITLE": "Prozessvariable festlegen",
+        "LABEL": {
+          "NAME": "Name",
+          "VALUE": "Wert",
+          "SCOPE": "Bereich"
+        }
+      },
+      "EDIT_DIALOG": {
+        "TITLE": "Prozessvariable bearbeiten"
+      },
+      "ERROR_DIALOG": {
+        "TITLE": "Vorgang konnte nicht durchgeführt werden",
+        "DESCRIPTION": "Unter Umständen verfügen Sie nicht über die erforderlichen Zugriffsrechte. Wenden Sie sich an Ihr IT-Team."
+      }
+    },
+    "START_PROCESS": {
+      "BUTTON": "Prozess starten",
+      "NO_PROCESS_DEFINITIONS": "Sie können keinen Prozess starten, weil es keine Prozessdefinitionen gibt",
+      "FORM": {
+        "TITLE": "Prozess starten",
+        "LABEL": {
+          "TYPE": "Prozess auswählen",
+          "NAME": "Prozessname"
+        },
+        "TYPE_PLACEHOLDER": "Eine auswählen...",
+        "ACTION": {
+          "START": "Prozess starten",
+          "CANCEL": "Abbrechen"
+        }
+      },
+      "ERROR": {
+        "LOAD_PROCESS_DEFS": "Prozessdefinitionen konnten nicht geladen werden. Überprüfen Sie, ob Sie über die nötigen Zugriffsrechte verfügen.",
+        "START": "Neue Prozessinstanz konnte nicht gestartet werden. Überprüfen Sie, ob Sie über die nötigen Zugriffsrechte verfügen."
+      }
+    },
+    "PROCESS-ATTACHMENT": {
+      "EMPTY": {
+        "HEADER": "Diese Liste ist leer",
+        "DRAG-AND-DROP": {
+          "TITLE": "Ziehen und ablegen",
+          "SUBTITLE": "um Dateien hochzuladen"
+        }
+      },
+      "EMPTY-LIST": {
+        "HEADER": "Keine Dateien verfügbar"
+      },
+      "COLUMNS": {
+        "NAME": "Name",
+        "CREATED-ON": "Erstellt am"
+      }
+    }
+  }
+}

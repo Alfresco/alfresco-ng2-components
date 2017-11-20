@@ -1,0 +1,93 @@
+@mixin adf-card-view-textitem-theme($theme) {
+    $foreground: map-get($theme, foreground);
+
+    .adf {
+        &-textitem-icon {
+            font-size: 16px;
+            width: 16px;
+            height: 16px;
+            position: relative;
+            top: 4px;
+            padding-left: 8px;
+            opacity: 0.3;
+        }
+
+        &-update-icon {
+            padding-left: 13px;
+        }
+
+        &-textitem-readonly {
+            cursor: pointer;
+
+            &:hover mat-icon {
+                opacity: 1;
+            }
+        }
+
+        &-textitem-clickable-value {
+            cursor: pointer;
+            color: mat-color($primary);
+        }
+
+        &-textitem-editable {
+            display: flex;
+
+            mat-icon:hover {
+                opacity: 1;
+                cursor: pointer;
+            }
+
+            mat-form-field {
+                width: 100%;
+            }
+
+            input:focus,
+            textarea:focus {
+                border: 1px solid mat-color($foreground, text, 0.15);
+            }
+        }
+
+        &-textitem-editable .mat-input-wrapper {
+            margin: 0;
+            padding-bottom: 0;
+        }
+
+        &-textitem-editable .mat-input-underline {
+            display: none;
+        }
+
+        &-textitem-editable .mat-input-infix {
+            padding: 0;
+            border-top: none;
+        }
+
+        &-textitem-editable .mat-input-placeholder-wrapper {
+            padding-top: 2em;
+            position: static;
+        }
+
+        &-textitem-editable .mat-input-placeholder {
+            top: 0;
+        }
+
+        &-textitem-editable .mat-input-element {
+            font-family: inherit;
+            position: relative;
+            padding-top: 6px;
+        }
+
+        &-textitem-editable .mat-input-element:focus {
+            padding: 5px;
+            left: -6px;
+            top: 0;
+        }
+
+        &-textitem-editable input.mat-input-element {
+            margin-bottom: 2px;
+        }
+
+        &-textitem-editable input.mat-input-element:focus {
+            margin-bottom: -8px;
+        }
+    }
+}

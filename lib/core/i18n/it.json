@@ -1,0 +1,151 @@
+{
+  "CORE": {
+    "PAGINATION": {
+      "ITEMS_RANGE": "Visualizzazione di {{ range }} su {{ total }}",
+      "ITEMS_PER_PAGE": "Elementi per pagina",
+      "CURRENT_PAGE": "Pagina {{ number }}",
+      "TOTAL_PAGES": "di {{ total }}"
+    },
+    "DIALOG": {
+      "DOWNLOAD_ZIP": {
+        "ACTIONS": {
+          "CANCEL": "Annulla"
+        },
+        "TITLE": "Aggiunta dei file allo zip in corso. Questa operazione potrebbe richiedere alcuni minuti"
+      }
+    },
+    "FOLDER_DIALOG": {
+      "CREATE_FOLDER_TITLE": "Crea nuova cartella",
+      "EDIT_FOLDER_TITLE": "Modifica cartella",
+      "FOLDER_NAME": {
+        "LABEL": "Nome",
+        "ERRORS": {
+          "REQUIRED": "Nome cartella obbligatorio",
+          "SPECIAL_CHARACTERS": "Il nome della cartella non può contenere questi caratteri * \" < > \\ / ? : |",
+          "ENDING_DOT": "Il nome della cartella non può terminare con un punto .",
+          "ONLY_SPACES": "Il nome della cartella non può contenere solo spazi"
+        }
+      },
+      "FOLDER_DESCRIPTION": {
+        "LABEL": "Descrizione"
+      },
+      "CREATE_BUTTON": {
+        "LABEL": "Crea"
+      },
+      "UPDATE_BUTTON": {
+        "LABEL": "Aggiorna"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "Annulla"
+      }
+    },
+    "MESSAGES": {
+      "ERRORS": {
+        "GENERIC": "Azione non eseguita correttamente. Riprovare o contattare il team IT.",
+        "EXISTENT_FOLDER": "Esiste già una cartella con questo nome. Provare un nome diverso."
+      }
+    },
+    "RESTORE_NODE": {
+      "VIEW": "Visualizza",
+      "PARTIAL_PLURAL": "{{ number }} elementi non ripristinati a causa dei problemi con il percorso di ripristino",
+      "NODE_EXISTS": "Impossibile ripristinare, elemento {{ name }} già esistente",
+      "LOCATION_MISSING": "Impossibile ripristinare l'elemento {{ name }}, il percorso originale non esiste più",
+      "GENERIC": "Si è verificato un problema nel ripristino dell'elemento {{ name }}",
+      "PLURAL": "Ripristino eseguito correttamente",
+      "SINGULAR": "Elemento {{ name }} ripristinato"
+    },
+    "DELETE_NODE": {
+      "SINGULAR": "{{ name }} eliminato",
+      "PLURAL": "{{ number }} elementi eliminati",
+      "PARTIAL_SINGULAR": "Elemento {{ success }} eliminato, impossibile eliminare {{ failed }}",
+      "PARTIAL_PLURAL": "Elementi {{ success }} eliminati, impossibile eliminare {{ failed }}",
+      "ERROR_SINGULAR": "Impossibile eliminare {{ name }}",
+      "ERROR_PLURAL": "Impossibile eliminare {{ number }} elementi"
+    },
+    "HOST_SETTINGS": {
+      "CS_URL_ERROR": "L'indirizzo Content Services non corrisponde al formato dell'URL",
+      "PS_URL_ERROR": "L'indirizzo Process Services non corrisponde al formato dell'URL",
+      "TITLE": "Impostazioni",
+      "CS-HOST": "URL Content Services",
+      "BP-HOST": "URL Process Services",
+      "BACK": "Indietro",
+      "APPLY": "Applica",
+      "NOT_VALID": "http(s)://host|ip:port(/path) non riconosciuto, provare un URL diverso."
+    }
+  },
+  "LOGIN": {
+    "LOGO": "Alfresco",
+    "LABEL": {
+      "LOGIN": "Accedi",
+      "USERNAME": "Nome utente",
+      "PASSWORD": "Password",
+      "REMEMBER": "Ricordami"
+    },
+    "MESSAGES": {
+      "USERNAME-REQUIRED": "Campo obbligatorio",
+      "USERNAME-MIN": "Il nome utente deve essere lungo almeno {{minLenght}} caratteri.",
+      "PASSWORD-REQUIRED": "Immetti la password per accedere",
+      "LOGIN-ERROR-CREDENTIALS": "Nome utente o password sconosciuti",
+      "LOGIN-ERROR-PROVIDERS": "I provider non possono essere non definiti",
+      "LOGIN-ERROR-CORS": "Eccezione CORS, controlla la configurazione del server",
+      "LOGIN-ERROR-CSRF": "Eccezione CSRF, imposta [disableCsrf]=\"true\" in login.component",
+      "LOGIN-ECM-LICENSE": "Il repository Alfresco Content Services è in modalità di sola lettura"
+    },
+    "BUTTON": {
+      "LOGIN": "Accedi",
+      "CHECKING": "Verifica in corso",
+      "WELCOME": "Benvenuto"
+    },
+    "ACTION": {
+      "HELP": "Hai bisogno di aiuto?",
+      "REGISTER": "Registrati"
+    }
+  },
+  "ADF-DATATABLE": {
+    "EMPTY": {
+      "HEADER": "Questo elenco è vuoto",
+      "DRAG-AND-DROP": {
+        "TITLE": "Trascinare e rilasciare",
+        "SUBTITLE": "per caricare i file"
+      }
+    }
+  },
+  "USER_PROFILE": {
+    "LABELS": {
+      "ECM": {
+        "JOB_TITLE": "Professione"
+      },
+      "BPM": {
+        "TENANT": "Organizzazione"
+      }
+    },
+    "TAB": {
+      "CS": "Content Services",
+      "PS": "Process Services"
+    }
+  },
+  "ADF_VIEWER": {
+    "ACTIONS": {
+      "BACK": "Indietro",
+      "OPEN_WITH": "Apri con",
+      "DOWNLOAD": "Download",
+      "PRINT": "Stampa",
+      "SHARE": "Condividi",
+      "MORE_ACTIONS": "Altre azioni",
+      "INFO": "Informazioni"
+    },
+    "ARIA": {
+      "PREVIOUS_PAGE": "Pagina precedente",
+      "NEXT_PAGE": "Pagina successiva",
+      "ZOOM_IN": "Zoom avanti",
+      "ZOOM_OUT": "Zoom indietro",
+      "FIT_PAGE": "Adatta pagina"
+    },
+    "PAGE_LABEL": {
+      "SHOWING": "Visualizzazione di",
+      "OF": "di"
+    },
+    "LOADING": "Caricamento in corso",
+    "UNKNOWN_FORMAT": "Impossibile caricare l'anteprima"
+  }
+}

@@ -1,0 +1,298 @@
+{
+  "DIALOG": {
+    "SAVE_MESSAGE": "Cliquez sur Enregistrer pour ajouter un rapport avec les paramètres actuels à la liste des rapports.",
+    "EXPORT_MESSAGE": ""
+  },
+  "DATE-WIDGET": {
+    "START-DATE": "Date de début",
+    "END-DATE": "Date de fin",
+    "MESSAGES": {
+      "START-DATE-REQUIRED": "La date de début est obligatoire",
+      "START-LESS-THAN-END-DATE": "La date de début doit être antérieure à la date de fin"
+    }
+  },
+  "ADF_TASK_LIST": {
+    "APPS": {
+      "NONE": "Aucune application trouvée",
+      "TASK_APP_NAME": "Application Tâches"
+    },
+    "LIST": {
+      "MESSAGES": {
+        "NONE": "Aucune liste de tâches trouvée"
+      }
+    },
+    "PROPERTIES": {
+      "TASK_NAME": "Tâche",
+      "THUMBNAIL": "Miniature",
+      "NAME": "Nom",
+      "ASSIGNEE": "Personne assignée",
+      "ASSIGNEE_DEFAULT": "Aucune personne assignée",
+      "PRIORITY": "Priorité",
+      "DUE_DATE": "Date d'échéance",
+      "DUE_DATE_DEFAULT": "Aucune date",
+      "STATUS": "Statut",
+      "CATEGORY": "Catégorie",
+      "CATEGORY_DEFAULT": "Aucune catégorie",
+      "PARENT_NAME": "Nom du parent",
+      "PARENT_NAME_DEFAULT": "Aucun parent",
+      "CREATED_BY": "Créé par",
+      "CREATED": "Créé",
+      "ID": "ID",
+      "DESCRIPTION": "Description",
+      "DESCRIPTION_DEFAULT": "Aucune description",
+      "FORM_NAME": "Nom du formulaire",
+      "FORM_NAME_DEFAULT": "Aucun formulaire"
+    },
+    "MENU_ACTIONS": {
+      "VIEW_CONTENT": "Afficher",
+      "REMOVE_CONTENT": "Supprimer",
+      "DOWNLOAD_CONTENT": "Télécharger",
+      "DOWNLOAD_AUDIT": "Télécharger l'audit"
+    },
+    "DETAILS": {
+      "LABELS": {
+        "INFO_DRAWER_TITLE": "Activités",
+        "INFO_DRAWER_TAB_ACTIVITY_TITLE": "Activité",
+        "INFO_DRAWER_TAB_DETAILS_TITLE": "Détails",
+        "ASSIGNEE": "Personne assignée",
+        "DUE": "Echéance",
+        "FORM": "Formulaire",
+        "PEOPLE": "Personnes avec lesquelles cette tâche est partagée",
+        "COMMENTS": "Commentaires",
+        "CHECKLIST": "Liste de contrôle",
+        "INVOLVED_PEOPLE": "Personnes impliquées",
+        "ADD_PEOPLE": "Ajouter des personnes et des groupes",
+        "ADD_ASSIGNEE": "Ajouter une nouvelle personne assignée"
+      },
+      "BUTTON": {
+        "COMPLETE": "Terminer",
+        "CLAIM": "Se l'attribuer",
+        "UNCLAIM": "Replacer dans la file d'attente",
+        "DRAG-ATTACHMENT": "Déposez des fichiers pour les importer",
+        "UPLOAD-ATTACHMENT": "Importer la pièce jointe"
+      },
+      "MESSAGES": {
+        "NONE": "Aucun détail de tâche trouvé",
+        "CLAIM": "Cliquez sur Se l'attribuer pour travailler sur cette tâche"
+      },
+      "FORM": {
+        "NONE": "Aucun formulaire"
+      },
+      "DUE": {
+        "NONE": "Pas de date prévue"
+      },
+      "ASSIGNEE": {
+        "NONE": "Aucune personne assignée"
+      },
+      "PEOPLE": {
+        "NONE": "Aucune personne impliquée"
+      },
+      "COMMENTS": {
+        "NONE": "Pas de commentaire",
+        "ADD": "Ajouter un commentaire",
+        "HEADER": "Commentaires ({{ count }})",
+        "CREATED_BY_HEADER": "Créé par",
+        "MESSAGE_HEADER": "Message",
+        "DIALOG": {
+          "TITLE": "Nouveau commentaire",
+          "LABELS": {
+            "MESSAGE": "Message"
+          },
+          "BUTTON": {
+            "ADD": "Ajouter un commentaire",
+            "CANCEL": "Annuler"
+          }
+        }
+      },
+      "CHECKLIST": {
+        "NONE": "Aucune liste de contrôle"
+      },
+      "ERROR": {
+        "TITLE": "Impossible de terminer l'action",
+        "DESCRIPTION": "Réessayez ou vérifiez que vous avez les droits d'accès.",
+        "CLOSE": "Fermer"
+      }
+    },
+    "FILTERS": {
+      "MESSAGES": {
+        "NONE": "Aucun filtre de tâches sélectionné"
+      }
+    },
+    "START_TASK": {
+      "BUTTON": "Créer une tâche",
+      "FORM": {
+        "TITLE": "Démarrer la tâche",
+        "LABEL": {
+          "NONE": "Aucune",
+          "NAME": "Nom",
+          "DESCRIPTION": "Description",
+          "ATTACHFORM": "Joindre un formulaire",
+          "ASSIGNEE": "Personne assignée",
+          "FORM": "Formulaire",
+          "DATE": "Choisir la date"
+        },
+        "ACTION": {
+          "START": "Démarrer",
+          "CANCEL": "Annuler"
+        },
+        "DATE": {
+          "ERROR": "Format de date JJ/MM/AAAA"
+        }
+      }
+    },
+    "PEOPLE": {
+      "DIALOG_CLOSE": "Fermer",
+      "ADD_USER": "Ajouter",
+      "ADD_ASSIGNEE": "Assigner",
+      "SEARCH_USER": "Rechercher des utilisateurs",
+      "SEARCH": {
+        "NO_USERS": "Aucune personne à impliquer trouvée"
+      }
+    },
+    "ATTACHMENT": {
+      "EMPTY": {
+        "HEADER": "Cette liste est vide",
+        "DRAG-AND-DROP": {
+          "TITLE": "Glissez-déposez",
+          "SUBTITLE": "les fichiers à importer"
+        }
+      },
+      "EMPTY-LIST": {
+        "HEADER": "Aucun fichier disponible"
+      }
+    }
+  },
+  "ADF_PROCESS_LIST": {
+    "LIST": {
+      "NONE": "Aucune instance de processus trouvée",
+      "SUMMARY": "{{total}} instances de processus trouvées",
+      "ERROR": "Impossible de charger les instances de processus. Réessayez ou transférez le message suivant au service informatique : {{errorMessage}}"
+    },
+    "FILTERS": {
+      "MESSAGES": {
+        "NONE": "Aucun filtre d'instances de processus sélectionné."
+      }
+    },
+    "PROPERTIES": {
+      "PROCESS_NAME": "Processus",
+      "NAME": "Nom",
+      "STATUS": "Statut",
+      "DUE_DATE": "Date d'échéance",
+      "DUE_DATE_DEFAULT": "Aucune date",
+      "CATEGORY": "Catégorie",
+      "CATEGORY_DEFAULT": "Aucune catégorie",
+      "CREATED_BY": "Créé par",
+      "CREATED_BY_DEFAULT": "Aucune personne assignée",
+      "CREATED": "Créé",
+      "BUSINESS_KEY": "Clé de processus métier",
+      "BUSINESS_KEY_DEFAULT": "Aucune",
+      "DESCRIPTION": "Description",
+      "DESCRIPTION_DEFAULT": "Aucune description",
+      "ID": "ID"
+    },
+    "MENU_ACTIONS": {
+      "VIEW_CONTENT": "Afficher",
+      "REMOVE_CONTENT": "Supprimer",
+      "DOWNLOAD_CONTENT": "Télécharger",
+      "DOWNLOAD_AUDIT": "Télécharger l'audit",
+      "VIEW_TASK": "Afficher la tâche"
+    },
+    "DETAILS": {
+      "LABELS": {
+        "STARTED_BY": "Démarré par",
+        "STARTED": "Démarré",
+        "ENDED": "Terminé",
+        "COMMENTS": "Commentaires",
+        "START_FORM": "Démarrer le formulaire",
+        "TASKS_ACTIVE": "Tâches actives",
+        "TASKS_COMPLETED": "Tâches terminées",
+        "TASK_SUBTITLE": "Assigné à {{user}}, créé le {{created}}"
+      },
+      "BUTTON": {
+        "CANCEL": "Annuler le processus",
+        "CLOSE": "Fermer",
+        "SHOW_DIAGRAM": "Afficher le diagramme",
+        "DRAG-ATTACHMENT": "Déposez des fichiers pour les importer",
+        "UPLOAD-ATTACHMENT": "Importer la pièce jointe"
+      },
+      "MESSAGES": {
+        "NONE": "Aucun détail de processus trouvé"
+      },
+      "TASKS": {
+        "NO_ACTIVE": "Aucune tâche actuellement active",
+        "NO_COMPLETED": "Aucune tâche terminée pour l'instant",
+        "TASK_DETAILS": "Détails de la tâche",
+        "TASK_CLOSE": "Fermer"
+      },
+      "COMMENTS": {
+        "ADD": "Ajouter un commentaire",
+        "HEADER": "Commentaires ({{ count }})",
+        "NONE": "Pas de commentaire",
+        "BUTTON": {
+          "ADD": "Ajouter un commentaire"
+        },
+        "ADD_DIALOG": {
+          "TITLE": "Nouveau commentaire",
+          "LABEL": {
+            "MESSAGE": "Message"
+          },
+          "BUTTON": {
+            "ADD": "Ajouter un commentaire",
+            "CANCEL": "Annuler"
+          }
+        }
+      },
+      "ADD_DIALOG": {
+        "TITLE": "Définir une variable de processus",
+        "LABEL": {
+          "NAME": "Nom",
+          "VALUE": "Valeur",
+          "SCOPE": "Etendue"
+        }
+      },
+      "EDIT_DIALOG": {
+        "TITLE": "Modifier la variable de processus"
+      },
+      "ERROR_DIALOG": {
+        "TITLE": "Impossible de terminer l'action",
+        "DESCRIPTION": "Vous n'avez peut-être pas le niveau d'accès requis ; vérifiez auprès du service informatique."
+      }
+    },
+    "START_PROCESS": {
+      "BUTTON": "Démarrer le processus",
+      "NO_PROCESS_DEFINITIONS": "Impossible de démarrer un processus car aucune définition de processus n'est disponible",
+      "FORM": {
+        "TITLE": "Démarrer le processus",
+        "LABEL": {
+          "TYPE": "Sélectionner un processus",
+          "NAME": "Nom de processus"
+        },
+        "TYPE_PLACEHOLDER": "Choisissez une valeur...",
+        "ACTION": {
+          "START": "Démarrer le processus",
+          "CANCEL": "Annuler"
+        }
+      },
+      "ERROR": {
+        "LOAD_PROCESS_DEFS": "Impossible de charger les définitions de processus ; vérifiez que vous avez les droits d'accès.",
+        "START": "Impossible de démarrer la nouvelle instance de processus ; vérifiez que vous avez les droits d'accès."
+      }
+    },
+    "PROCESS-ATTACHMENT": {
+      "EMPTY": {
+        "HEADER": "Cette liste est vide",
+        "DRAG-AND-DROP": {
+          "TITLE": "Glissez-déposez",
+          "SUBTITLE": "les fichiers à importer"
+        }
+      },
+      "EMPTY-LIST": {
+        "HEADER": "Aucun fichier disponible"
+      },
+      "COLUMNS": {
+        "NAME": "Nom",
+        "CREATED-ON": "Créé le"
+      }
+    }
+  }
+}
