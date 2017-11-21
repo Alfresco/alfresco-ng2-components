@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Output, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MinimalNodeEntity } from 'alfresco-js-api';
-import { AuthenticationService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-search-bar',
@@ -27,18 +26,7 @@ import { AuthenticationService } from '@alfresco/adf-core';
 })
 export class SearchBarComponent {
 
-    @Input()
-    expandable: boolean = true;
-
-    @Output()
-    expand = new EventEmitter();
-
-    constructor(public router: Router,
-                public authService: AuthenticationService) {
-    }
-
-    isLoggedIn(): boolean {
-        return this.authService.isLoggedIn();
+    constructor(public router: Router) {
     }
 
     /**
@@ -47,18 +35,18 @@ export class SearchBarComponent {
      * @param event Parameters relating to the search
      */
     onSearchSubmit(event: KeyboardEvent) {
-      let value = (event.target as HTMLInputElement).value;
-      this.router.navigate(['/search', {
-          q: value
-      }]);
-  }
+        const value = (event.target as HTMLInputElement).value;
+        this.router.navigate(['/search', {
+            q: value
+        }]);
+    }
 
-  onItemClicked(event: MinimalNodeEntity) {
-      if (event.entry.isFile) {
-        this.router.navigate(['/files', event.entry.id, 'view']);
-      } else if (event.entry.isFolder) {
-          this.router.navigate(['/files', event.entry.id]);
-      }
-  }
+    onItemClicked(event: MinimalNodeEntity) {
+        if (event.entry.isFile) {
+            this.router.navigate(['/files', event.entry.id, 'view']);
+        } else if (event.entry.isFolder) {
+            this.router.navigate(['/files', event.entry.id]);
+        }
+    }
 
 }
