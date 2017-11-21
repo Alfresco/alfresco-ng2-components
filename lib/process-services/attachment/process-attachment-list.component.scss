@@ -1,4 +1,4 @@
-@mixin adf-process-attachment-list($theme) {
+@mixin adf-process-attachment-list-theme($theme) {
 
     adf-datatable ::ng-deep th span {
         color: #232323;
