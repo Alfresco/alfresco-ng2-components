@@ -53,6 +53,9 @@ export class ViewerComponent implements OnDestroy, OnChanges {
     urlFile = '';
 
     @Input()
+    urlFileViewer: string = null;
+
+    @Input()
     blobFile: Blob;
 
     @Input()
@@ -174,7 +177,7 @@ export class ViewerComponent implements OnDestroy, OnChanges {
                     this.downloadUrl = this.urlFile;
                     this.fileName = this.displayName;
 
-                    this.viewerType = this.getViewerTypeByExtension(this.extension);
+                    this.viewerType = this.urlFileViewer || this.getViewerTypeByExtension(this.extension);
                     if (this.viewerType === 'unknown') {
                         this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
                     }
@@ -342,13 +345,20 @@ export class ViewerComponent implements OnDestroy, OnChanges {
     }
 
     /**
-     * Get the token from the local storage
+     * Get file extension from the string.
+     * Supports the URL formats like:
+     * http://localhost/test.jpg?cache=1000
+     * http://localhost/test.jpg#cache=1000
      *
      * @param {string} fileName - file name
      * @returns {string} file name extension
      */
     getFileExtension(fileName: string): string {
-        return fileName.split('.').pop().toLowerCase();
+        if (fileName) {
+            const match = fileName.match(/\.([^\./\?\#]+)($|\?|\#)/);
+            return match ? match[1] : null;
+        }
+        return null;
     }
 
     isCustomViewerExtension(extension: string): boolean {
