@@ -31,5 +31,10 @@
     "widget-visibility",
     "card-item-types",
     "dynamic-component",
-    "settings"
+    "settings",
+    "file-uploading",
+    "version-upload",
+    "search-trigger",
+    "node-actions",
+    "content-node-selector.service"
 ]
