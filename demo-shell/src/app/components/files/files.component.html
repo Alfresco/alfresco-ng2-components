@@ -5,6 +5,7 @@
     </div>
     <div class="document-list-container" fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="16px">
         <adf-upload-drag-area fxFlex="1 1 auto"
+            [disabled]="disableDragArea"
             [parentId]="getDocumentListCurrentFolderId()"
             [versioning]="versioning"
             [adf-node-permission]="'create'"
@@ -15,7 +16,7 @@
                 </button>
                 <span class="error-message--text">{{errorMessage}}</span>
             </div>
-            <adf-toolbar [color]="toolbarColor" class="adf-files-toolbar">
+            <adf-toolbar *ngIf="!disableDragArea" [color]="toolbarColor" class="adf-files-toolbar">
                 <adf-toolbar-title fxFlex="0 1 auto">
                     <adf-breadcrumb fxShow fxHide.lt-sm="true"
                                     class="files-breadcrumb"
@@ -132,6 +133,13 @@
                 (preview)="showFile($event)"
                 (folderChange)="onFolderChange($event)"
                 (permissionError)="handlePermissionError($event)">
+                <empty-folder-content *ngIf="disableDragArea">
+                    <ng-template>
+                        <div class="adf-empty_template">
+                            <div class="adf-no-result-message">{{ 'SEARCH.NO_RESULT' | translate }}</div>
+                        </div>
+                    </ng-template>
+                </empty-folder-content>
                 <data-columns>
                     <data-column
                         key="$thumbnail"

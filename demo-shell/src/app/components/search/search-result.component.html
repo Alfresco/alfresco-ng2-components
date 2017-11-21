@@ -8,6 +8,7 @@
 <adf-files-component
         [currentFolderId]="null"
         [nodeResult]="resultNodePageList"
+        [disableDragArea]="true"
         (documentListReady)="refreshResults($event)"
         (changedPageSize)="refreshPage($event)"
         (changedPageNumber)="refreshPage($event)"
