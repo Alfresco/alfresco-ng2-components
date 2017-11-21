@@ -16,17 +16,16 @@
  */
 
 import { ContentService, ThumbnailService } from '@alfresco/adf-core';
-import { Component, EventEmitter, Input, NgZone, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, NgZone, OnChanges, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ProcessContentService } from '@alfresco/adf-core';
-
-declare var require: any;
 
 @Component({
     selector: 'adf-task-attachment-list',
     styleUrls: ['./task-attachment-list.component.scss'],
-    templateUrl: './task-attachment-list.component.html'
+    templateUrl: './task-attachment-list.component.html',
+    encapsulation: ViewEncapsulation.None
 })
-export class TaskAttachmentListComponent implements OnChanges {
+export class TaskAttachmentListComponent implements OnChanges, AfterViewInit {
 
     @Input()
     taskId: string;
@@ -43,8 +42,9 @@ export class TaskAttachmentListComponent implements OnChanges {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    @Input()
-    emptyListImageUrl: string = require('../assets/images/empty_doc_lib.svg');
+    hasCustomTemplate: boolean;
+
+    @ViewChild('customEmptyListTemplate') customTemplateRef: ElementRef;
 
     attachments: any[] = [];
     isLoading: boolean = true;
@@ -60,6 +60,13 @@ export class TaskAttachmentListComponent implements OnChanges {
             this.loadAttachmentsByTaskId(changes['taskId'].currentValue);
         }
     }
+
+    ngAfterViewInit() {
+        if (this.customTemplateRef && this.customTemplateRef.nativeElement &&
+            this.customTemplateRef.nativeElement.children && this.customTemplateRef.nativeElement.children.length > 0) {
+                this.hasCustomTemplate = true;
+            }
+      }
 
     reset(): void {
         this.attachments = [];
@@ -110,7 +117,7 @@ export class TaskAttachmentListComponent implements OnChanges {
         }
     }
 
-    private deleteAttachmentById(contentId: number) {
+    deleteAttachmentById(contentId: number) {
         if (contentId) {
             this.activitiContentService.deleteRelatedContent(contentId).subscribe(
                 (res: any) => {
@@ -126,6 +133,10 @@ export class TaskAttachmentListComponent implements OnChanges {
 
     isEmpty(): boolean {
         return this.attachments && this.attachments.length === 0;
+    }
+
+    isCustomTemplateDefined(): boolean {
+        return this.hasCustomTemplate;
     }
 
     onShowRowActionsMenu(event: any) {
