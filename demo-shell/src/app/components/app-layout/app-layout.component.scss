@@ -20,10 +20,6 @@
       }
     }
 
-    .adf-search-bar-overflow {
-        overflow: hidden;
-    }
-
     &-user-profile {
       margin-right: 10px;
     }
@@ -58,16 +54,9 @@
     .adf-userinfo-name {
       display: none;
     }
-
-    .adf-search-bar-overflow {
-        padding-right: 4px;
-    }
   }
 
   @media screen and ($mat-xsmall) {
-      .adf-search-bar-overflow {
-          padding-right: 16px;
-      }
   }
 
 }
