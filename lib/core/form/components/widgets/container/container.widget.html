@@ -1,4 +1,4 @@
-<div [ngClass]="{'hidden':!(content?.isGroup() && content?.isVisible)}" class="container-widget__header">
+<div [hidden]="!(content?.isGroup() && content?.isVisible)" class="container-widget__header">
     <h4 class="container-widget__header-text" id="container-header"
         [class.collapsible]="content?.isCollapsible()">
         <button *ngIf="content?.isCollapsible()"
