@@ -33,11 +33,6 @@ export class SearchBarComponent {
     @Output()
     expand = new EventEmitter();
 
-    fileNodeId: string;
-    fileShowed: boolean = false;
-    searchTerm: string = '';
-    subscriptAnimationState: string;
-
     constructor(public router: Router,
                 public authService: AuthenticationService) {
     }
@@ -60,8 +55,7 @@ export class SearchBarComponent {
 
   onItemClicked(event: MinimalNodeEntity) {
       if (event.entry.isFile) {
-          this.fileNodeId = event.entry.id;
-          this.fileShowed = true;
+        this.router.navigate(['/files', event.entry.id, 'view']);
       } else if (event.entry.isFolder) {
           this.router.navigate(['/files', event.entry.id]);
       }
