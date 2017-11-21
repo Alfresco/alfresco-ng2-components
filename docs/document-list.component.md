@@ -761,6 +761,7 @@ That will give the following output:
 - [Datatable component](datatable.component.md)
 - [Data column component](data-column.component.md)
 - [Pagination component](pagination.component.md)
+- [Infinite pagination component](infinite-pagination.component.md)
 - [Sites dropdown component](sites-dropdown.component.md)
 - [Metadata indicators](metadata-indicators.md)
 - [Document library model](document-library.model.md)
