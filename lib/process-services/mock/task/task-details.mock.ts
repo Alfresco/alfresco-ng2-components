@@ -52,6 +52,28 @@ export let taskDetailsMock = new TaskDetailsModel({
     'memberOfCandidateGroup': false
 });
 
+export let taskDetailsWithOutProcessInstanceMock = new TaskDetailsModel({
+    'id': '91',
+    'name': 'Request translation',
+    'description': null,
+    'category': null,
+    'assignee': {'id': 1001, 'firstName': 'Wilbur', 'lastName': 'Adams', 'email': 'wilbur@app.activiti.com'},
+    'created': '2016-11-03T15:25:42.749+0000',
+    'dueDate': null,
+    'endDate': null,
+    'duration': null,
+    'priority': 50,
+    'parentTaskId': null,
+    'parentTaskName': null,
+    'processInstanceId': null,
+    'processInstanceName': null,
+    'processDefinitionId': 'TranslationProcess:2:8',
+    'processDefinitionName': 'Translation Process',
+    'involvedGroups': [],
+    'involvedPeople': [{'id': 1001, 'firstName': 'Wilbur', 'lastName': 'Adams', 'email': 'wilbur@app.activiti.com'},
+                       {'id': 111, 'firstName': 'fake-first-name', 'lastName': 'fake-last-name', 'email': 'fake@app.activiti.com'}]
+});
+
 export let completedTaskDetailsMock = new TaskDetailsModel({
     'id': '91',
     'name': 'Request translation',

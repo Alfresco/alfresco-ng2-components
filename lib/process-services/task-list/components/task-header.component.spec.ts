@@ -28,7 +28,8 @@ import {
     taskDetailsWithAssigneeMock,
     taskDetailsWithInvolvedGroupMock,
     taskDetailsWithInvolvedPeopleMock,
-    taskDetailsWithOutAssigneeMock } from '../../mock';
+    taskDetailsWithOutAssigneeMock,
+    taskDetailsWithOutProcessInstanceMock } from '../../mock';
 
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
@@ -141,12 +142,22 @@ describe('TaskHeaderComponent', () => {
             expect(claimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.CLAIM');
         });
 
-        it('should display the claim button to the invovled group', () => {
+        it('should display the claim button if the task has invovled group/people', () => {
             component.taskDetails = new TaskDetailsModel(taskDetailsWithOutAssigneeMock);
             component.ngOnChanges({});
             fixture.detectChanges();
             let claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
             expect(claimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.CLAIM');
+        });
+
+        it('should not display the claim/requeue button if the task does not have processInstanceId ', () => {
+            component.taskDetails = new TaskDetailsModel(taskDetailsWithOutProcessInstanceMock);
+            component.ngOnChanges({});
+            fixture.detectChanges();
+            let claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
+            let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
+            expect(unclaimButton).toBeNull();
+            expect(claimButton).toBeNull();
         });
     });
 

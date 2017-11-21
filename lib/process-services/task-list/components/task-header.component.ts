@@ -211,17 +211,24 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
     }
 
     /**
+     * Return true if the task has ProcessInstance
+     */
+    public hasProcessInstance() {
+        return !!this.taskDetails.processInstanceId;
+    }
+
+    /**
      * Return true if the task claimable
      */
     public isTaskClaimable(): boolean {
-        return !this.isCompleted() && (this.hasInvolvedGroup() || this.hasInvolvedPeople()) && !this.hasAssignee() ;
+        return !this.isCompleted() && (this.hasInvolvedGroup() || this.hasInvolvedPeople()) && !this.hasAssignee() && this.hasProcessInstance();
     }
 
     /**
      * Return true if the task claimed by currentUser
      */
     public isTaskClaimedByCurrentUser(): boolean {
-        return !this.isCompleted() && (this.hasInvolvedGroup() || this.hasInvolvedPeople()) && this.isAssignedToCurrentUser();
+        return !this.isCompleted() && (this.hasInvolvedGroup() || this.hasInvolvedPeople()) && this.isAssignedToCurrentUser() && this.hasProcessInstance();
     }
 
     /**
