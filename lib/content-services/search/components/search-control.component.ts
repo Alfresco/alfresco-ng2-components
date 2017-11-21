@@ -17,7 +17,7 @@
 
 import { AuthenticationService, ThumbnailService } from '@alfresco/adf-core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { MinimalNodeEntity, QueryBody } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -36,7 +36,9 @@ import { Subject } from 'rxjs/Subject';
             transition('active => inactive',
                 animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)'))
         ])
-    ]
+    ],
+    encapsulation: ViewEncapsulation.None,
+    host: { class: 'adf-search-control' }
 })
 export class SearchControlComponent implements OnInit, OnDestroy {
 
