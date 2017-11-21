@@ -297,7 +297,21 @@ export class ContentNodeSelectorComponent implements OnInit {
      * Emit event with the chosen node
      */
     choose(): void {
-        this.select.next([this.chosenNode]);
+        const entry: any = this.chosenNode;
+
+        if (entry && entry.guid) {
+            const options = {
+                include: ['path', 'properties', 'allowableOperations']
+            };
+            this.apiService.nodesApi.getNode(entry.guid, options)
+                .then(chosenSiteNode => {
+                    this.select.next([chosenSiteNode.entry]);
+                });
+
+        } else {
+            this.select.next([this.chosenNode]);
+
+        }
     }
 
     /**
