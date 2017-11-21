@@ -28,9 +28,9 @@ import { Subject } from 'rxjs/Subject';
     styleUrls: ['./search-control.component.scss'],
     animations: [
         trigger('transitionMessages', [
-            state('active', style({transform: 'translateX(0%)'})),
-            state('inactive', style({transform: 'translateX(83%)', overflow: 'hidden'})),
-            state('no-animation', style({transform: 'translateX(0%)', width: '100%'})),
+            state('active', style({ transform: 'translateX(0%)' })),
+            state('inactive', style({ transform: 'translateX(83%)', overflow: 'hidden' })),
+            state('no-animation', style({ transform: 'translateX(0%)', width: '100%' })),
             transition('inactive => active',
                 animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)')),
             transition('active => inactive',
@@ -79,7 +79,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     private focusSubject = new Subject<FocusEvent>();
 
     constructor(public authService: AuthenticationService,
-                private thumbnailService: ThumbnailService) {
+        private thumbnailService: ThumbnailService) {
 
         this.toggleSearch.asObservable().debounceTime(100).subscribe(() => {
             if (this.expandable) {
@@ -98,8 +98,15 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.focusSubject.unsubscribe();
-        this.toggleSearch.unsubscribe();
+        if (this.focusSubject) {
+            this.focusSubject.unsubscribe();
+            this.focusSubject = null;
+        }
+
+        if (this.toggleSearch) {
+            this.toggleSearch.unsubscribe();
+            this.toggleSearch = null;
+        }
     }
 
     isLoggedIn(): boolean {
@@ -120,55 +127,57 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     }
 
     getMimeTypeIcon(node: MinimalNodeEntity): string {
-      let mimeType;
+        let mimeType;
 
-      if (node.entry.content && node.entry.content.mimeType) {
-          mimeType = node.entry.content.mimeType;
-      }
-      if (node.entry.isFolder) {
-          mimeType = 'folder';
-      }
+        if (node.entry.content && node.entry.content.mimeType) {
+            mimeType = node.entry.content.mimeType;
+        }
+        if (node.entry.isFolder) {
+            mimeType = 'folder';
+        }
 
-      return this.thumbnailService.getMimeTypeIcon(mimeType);
-  }
+        return this.thumbnailService.getMimeTypeIcon(mimeType);
+    }
 
-  isSearchBarActive() {
-      return this.subscriptAnimationState === 'active' && this.liveSearchEnabled;
-  }
+    isSearchBarActive() {
+        return this.subscriptAnimationState === 'active' && this.liveSearchEnabled;
+    }
 
-  toggleSearchBar() {
-    this.toggleSearch.next();
-  }
+    toggleSearchBar() {
+        if (this.toggleSearch) {
+            this.toggleSearch.next();
+        }
+    }
 
-  elementClicked(item: any) {
-      if (item.entry) {
-          this.optionClicked.next(item);
-          this.toggleSearchBar();
-      }
-  }
+    elementClicked(item: any) {
+        if (item.entry) {
+            this.optionClicked.next(item);
+            this.toggleSearchBar();
+        }
+    }
 
-  onFocus($event): void {
-      this.focusSubject.next($event);
-  }
+    onFocus($event): void {
+        this.focusSubject.next($event);
+    }
 
-  onBlur($event): void {
-     this.focusSubject.next($event);
-  }
+    onBlur($event): void {
+        this.focusSubject.next($event);
+    }
 
-  activateToolbar($event) {
-      if ( !this.isSearchBarActive() ) {
-          this.toggleSearchBar();
-      }
-  }
+    activateToolbar($event) {
+        if (!this.isSearchBarActive()) {
+            this.toggleSearchBar();
+        }
+    }
 
-  private setupFocusEventHandlers() {
-      let focusEvents: Observable<FocusEvent> = this.focusSubject.asObservable()
-                                                    .distinctUntilChanged().debounceTime(50);
-      focusEvents.filter(($event: any) => {
-          return this.isSearchBarActive() && ($event.type === 'blur' ||  $event.type === 'focusout');
-      }).subscribe(() => {
-        this.toggleSearchBar();
-      });
-  }
+    private setupFocusEventHandlers() {
+        let focusEvents: Observable<FocusEvent> = this.focusSubject.asObservable()
+            .distinctUntilChanged().debounceTime(50);
+        focusEvents.filter(($event: any) => {
+            return this.isSearchBarActive() && ($event.type === 'blur' || $event.type === 'focusout');
+        }).subscribe(() => {
+            this.toggleSearchBar();
+        });
+    }
 
 }
