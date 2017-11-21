@@ -17,7 +17,7 @@
 
 import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
-import { Component, DebugElement } from '@angular/core';
+import { Component } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AlfrescoApiService, RenditionsService } from '../../services';
 
@@ -37,6 +37,7 @@ import { ViewerOpenWithComponent } from './viewer-open-with.component';
 import { ViewerSidebarComponent } from './viewer-sidebar.component';
 import { ViewerToolbarComponent } from './viewer-toolbar.component';
 import { ViewerComponent } from './viewer.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 declare let jasmine: any;
 
@@ -114,7 +115,6 @@ describe('ViewerComponent', () => {
 
     let component: ViewerComponent;
     let fixture: ComponentFixture<ViewerComponent>;
-    let debug: DebugElement;
     let alfrescoApiService: AlfrescoApiService;
     let element: HTMLElement;
 
@@ -122,7 +122,8 @@ describe('ViewerComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 ToolbarModule,
-                MaterialModule
+                MaterialModule,
+                FlexLayoutModule
             ],
             declarations: [
                 ViewerComponent,
@@ -156,7 +157,6 @@ describe('ViewerComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(ViewerComponent);
 
-        debug = fixture.debugElement;
         element = fixture.nativeElement;
         component = fixture.componentInstance;
 
@@ -207,22 +207,28 @@ describe('ViewerComponent', () => {
         expect(customElement.querySelector('.adf-viewer-container-more-actions')).toBeDefined();
     });
 
-    it('should display left sidebar', () => {
+    it('should display sidebar on the left side', () => {
+        component.showSidebar = true;
         component.sidebarPosition = 'left';
         fixture.detectChanges();
-        expect(element.querySelector('.adf-viewer__sidebar-left')).toBeDefined();
+        let sidebar = element.querySelector('.adf-viewer__sidebar');
+        expect(getComputedStyle(sidebar).order).toEqual('1');
     });
 
-    it('should display right sidebar', () => {
+    it('should display sidebar on the right side', () => {
+        component.showSidebar = true;
         component.sidebarPosition = 'right';
         fixture.detectChanges();
-        expect(element.querySelector('.adf-viewer__sidebar-right')).toBeDefined();
+        let sidebar = element.querySelector('.adf-viewer__sidebar');
+        expect(getComputedStyle(sidebar).order).toEqual('2');
     });
 
-    it('should display right sidebar as fallback', () => {
+    it('should display sidebar on the right side as fallback', () => {
+        component.showSidebar = true;
         component.sidebarPosition = 'unknown-value';
         fixture.detectChanges();
-        expect(element.querySelector('.adf-viewer__sidebar-right')).toBeDefined();
+        let sidebar = element.querySelector('.adf-viewer__sidebar');
+        expect(getComputedStyle(sidebar).order).toEqual('2');
     });
 
     describe('Toolbar', () => {
