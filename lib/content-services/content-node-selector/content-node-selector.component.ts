@@ -99,7 +99,7 @@ export class ContentNodeSelectorComponent implements OnInit {
                 @Optional() private containingDialog?: MatDialogRef<ContentNodeSelectorComponent>) {
         if (data) {
             this.title = data.title;
-            this.actionName = data.actionName ? data.actionName : 'Choose';
+            this.actionName = data.actionName;
             this.select = data.select;
             this.currentFolderId = data.currentFolderId;
             this.dropdownHideMyFiles = data.dropdownHideMyFiles;
@@ -107,7 +107,7 @@ export class ContentNodeSelectorComponent implements OnInit {
             this.rowFilter = data.rowFilter;
             this.imageResolver = data.imageResolver;
         }
-        this.buttonActionName = `NODE_SELECTOR.${this.actionName.toUpperCase()}`;
+        this.buttonActionName = this.actionName ? `NODE_SELECTOR.${this.actionName.toUpperCase()}` : 'NODE_SELECTOR.CHOOSE';
 
         if (this.containingDialog) {
             this.inDialog = true;
