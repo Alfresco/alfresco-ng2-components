@@ -79,7 +79,10 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
                 @Optional() @Inject(DOCUMENT) private document: any) { }
 
     ngOnDestroy() {
-        this.escapeEventStream.unsubscribe();
+        if (this.escapeEventStream) {
+            this.escapeEventStream.unsubscribe();
+            this.escapeEventStream = null;
+        }
         if ( this.closingActionsSubscription ) {
             this.closingActionsSubscription.unsubscribe();
         }

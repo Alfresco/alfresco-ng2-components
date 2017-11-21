@@ -5,6 +5,10 @@
     $accent: map-get($theme, accent);
     $mat-menu-border-radius: 2px !default;
 
+    .adf-search-container {
+        overflow: hidden;
+    }
+
     .adf {
 
         &-search-fixed-text {
