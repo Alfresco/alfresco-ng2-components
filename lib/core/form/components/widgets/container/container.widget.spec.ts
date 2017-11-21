@@ -169,7 +169,7 @@ describe('ContainerWidgetComponent', () => {
             fixture.detectChanges();
             fixture.whenStable()
                 .then(() => {
-                    expect(element.querySelector('.container-widget__header').classList.contains('hidden')).toBe(true);
+                    expect(element.querySelector('.container-widget__header').getAttribute('hidden')).not.toBeNull();
                 });
         });
 
@@ -181,7 +181,7 @@ describe('ContainerWidgetComponent', () => {
                 fixture.detectChanges();
                 fixture.whenStable()
                     .then(() => {
-                        expect(element.querySelector('.container-widget__header').classList.contains('hidden')).toBe(true);
+                        expect(element.querySelector('.container-widget__header').getAttribute('hidden')).not.toBeNull();
                     });
             });
             widget.onFieldChanged(null);
