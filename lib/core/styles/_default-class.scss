@@ -1,4 +1,4 @@
-@mixin adf-default-class($theme) {
+@mixin adf-default-class-theme($theme) {
 
     .adf-hide-small {
         @media screen and ($mat-small) {
