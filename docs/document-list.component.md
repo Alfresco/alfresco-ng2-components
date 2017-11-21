@@ -768,6 +768,8 @@ That will give the following output:
 - [Nodes api service](nodes-api.service.md)
 - [Breadcrumb component](breadcrumb.component.md)
 - [Content action component](content-action.component.md)
+- [Content node selector component](content-node-selector.component.md)
+- [Document list service](document-list.service.md)
 - [Dropdown breadcrumb component](dropdown-breadcrumb.component.md)
 - [Permissions style model](permissions-style.model.md)
 - [Version manager component](version-manager.component.md)

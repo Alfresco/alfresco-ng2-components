@@ -93,6 +93,7 @@ for more information about installing and using the source code.
 ### Services
 
 - [App config service](app-config.service.md)
+- [Activiti alfresco service](activiti-alfresco.service.md)
 - [Form rendering service](form-rendering.service.md)
 - [Form service](form.service.md)
 - [Node service](node.service.md)
@@ -128,7 +129,6 @@ for more information about installing and using the source code.
 - [User preferences service](user-preferences.service.md)
 - [Bpm user service](bpm-user.service.md)
 - [Ecm user service](ecm-user.service.md)
-- [*Activiti alfresco service](../lib/core/form/services/activiti-alfresco.service.ts)
 
 ### Widgets
 
@@ -154,6 +154,7 @@ for more information about installing and using the source code.
 
 - [Breadcrumb component](breadcrumb.component.md)
 - [Dropdown breadcrumb component](dropdown-breadcrumb.component.md)
+- [Content node selector component](content-node-selector.component.md)
 - [Content action component](content-action.component.md)
 - [Document list component](document-list.component.md)
 - [Search control component](search-control.component.md)
@@ -172,17 +173,12 @@ for more information about installing and using the source code.
 - [Webscript component](webscript.component.md)
 - [*Content metadata card component](../lib/content-services/content-metadata/content-metadata-card.component.ts)
 - [*Content metadata component](../lib/content-services/content-metadata/content-metadata.component.ts)
-- [*Content node selector component](../lib/content-services/content-node-selector/content-node-selector.component.ts)
-- [*File uploading list row component](../lib/content-services/upload/components/file-uploading-list-row.component.ts)
-- [*File uploading list component](../lib/content-services/upload/components/file-uploading-list.component.ts)
-- [*Version upload component](../lib/content-services/version-manager/version-upload.component.ts)
 
 ### Directives
 
 - [Folder create directive](folder-create.directive.md)
 - [Folder edit directive](folder-edit.directive.md)
 - [File draggable directive](file-draggable.directive.md)
-- [*Search trigger directive](../lib/content-services/search/components/search-trigger.directive.ts)
 
 ### Models
 
@@ -192,13 +188,11 @@ for more information about installing and using the source code.
 ### Services
 
 - [Document actions service](document-actions.service.md)
+- [Document list service](document-list.service.md)
 - [Folder actions service](folder-actions.service.md)
+- [Rating service](rating.service.md)
+- [Tag service](tag.service.md)
 - [*Content metadata service](../lib/content-services/content-metadata/content-metadata.service.ts)
-- [*Content node selector service](../lib/content-services/content-node-selector/content-node-selector.service.ts)
-- [*Document list service](../lib/content-services/document-list/services/document-list.service.ts)
-- [*Node actions service](../lib/content-services/document-list/services/node-actions.service.ts)
-- [*Rating service](../lib/content-services/social/services/rating.service.ts)
-- [*Tag service](../lib/content-services/tag/services/tag.service.ts)
 <!-- content-services end -->
 
 [(Back to Contents)](#contents)
