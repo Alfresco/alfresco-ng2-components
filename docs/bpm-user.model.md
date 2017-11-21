@@ -7,7 +7,7 @@ Contains information about a Process Services user.
 Instances of this class are returned by the methods of the
 [Bpm User service](bpm-user.service.md). It implements the
 `UserRepresentation` interface, which is defined in the
-[Alfresco JS API]h(ttps://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/UserRepresentation.md).
+[Alfresco JS API](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/UserRepresentation.md).
 
 Note that the Typescript class for this model is in active development;
 it is likely to change and so its properties are not listed here. For the
