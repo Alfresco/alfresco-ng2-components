@@ -83,7 +83,8 @@
         "LOGIN_FOOTER": "Login footer"
     },
     "SEARCH": {
-        "RESULTS": "Search results"
+        "RESULTS": "Search results",
+        "NO_RESULT": "No results found"
     },
     "SOCIAL": {
         "LIKE":"Like component",
