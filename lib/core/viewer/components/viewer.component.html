@@ -103,14 +103,14 @@
 
         <div *ngIf="!isLoading" fxLayout="row" fxFlex="1 1 auto">
 
-            <div *ngIf="showSidebar" fxFlexOrder="{{sidebarPosition === 'left'? 1: 2 }}" >
-                <div class="adf-viewer__sidebar">
+            <ng-container *ngIf="showSidebar">
+                <div class="adf-viewer__sidebar" fxFlexOrder="{{sidebarPosition === 'left'? 1: 2 }}">
                     <ng-container *ngIf="sidebarTemplate">
                         <ng-container *ngTemplateOutlet="sidebarTemplate;context:sidebarTemplateContext"></ng-container>
                     </ng-container>
                     <ng-content *ngIf="!sidebarTemplate" select="adf-viewer-sidebar"></ng-content>
                 </div>
-            </div>
+            </ng-container>
 
             <div fxFlexOrder="{{sidebarPosition !== 'left'? 1: 2}}" fxFlex="1 1 auto">
                 <div class="adf-viewer-layout-content">

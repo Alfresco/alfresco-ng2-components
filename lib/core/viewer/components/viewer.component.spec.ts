@@ -17,7 +17,7 @@
 
 import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
-import { Component, DebugElement } from '@angular/core';
+import { Component } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AlfrescoApiService, RenditionsService } from '../../services';
 
@@ -115,7 +115,6 @@ describe('ViewerComponent', () => {
 
     let component: ViewerComponent;
     let fixture: ComponentFixture<ViewerComponent>;
-    let debug: DebugElement;
     let alfrescoApiService: AlfrescoApiService;
     let element: HTMLElement;
 
@@ -158,7 +157,6 @@ describe('ViewerComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(ViewerComponent);
 
-        debug = fixture.debugElement;
         element = fixture.nativeElement;
         component = fixture.componentInstance;
 
@@ -210,6 +208,7 @@ describe('ViewerComponent', () => {
     });
 
     it('should display sidebar on the left side', () => {
+        component.showSidebar = true;
         component.sidebarPosition = 'left';
         fixture.detectChanges();
         let sidebar = element.querySelector('.adf-viewer__sidebar');
@@ -217,6 +216,7 @@ describe('ViewerComponent', () => {
     });
 
     it('should display sidebar on the right side', () => {
+        component.showSidebar = true;
         component.sidebarPosition = 'right';
         fixture.detectChanges();
         let sidebar = element.querySelector('.adf-viewer__sidebar');
@@ -224,6 +224,7 @@ describe('ViewerComponent', () => {
     });
 
     it('should display sidebar on the right side as fallback', () => {
+        component.showSidebar = true;
         component.sidebarPosition = 'unknown-value';
         fixture.detectChanges();
         let sidebar = element.querySelector('.adf-viewer__sidebar');
