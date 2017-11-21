@@ -96,6 +96,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     pagination: Pagination;
 
+    @Input()
+    disableDragArea: boolean = false;
+
     @Output()
     documentListReady: EventEmitter<any> = new EventEmitter();
 
@@ -177,6 +180,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             });
         }
 
+        // this.disableDragArea = false;
         this.uploadService.fileUploadComplete.asObservable().debounceTime(300).subscribe(value => this.onFileUploadEvent(value));
         this.uploadService.fileUploadDeleted.subscribe((value) => this.onFileUploadEvent(value));
         this.contentService.folderCreated.subscribe(value => this.onFolderCreated(value));
@@ -194,9 +198,21 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.nodeResult && changes.nodeResult.currentValue) {
-            this.nodeResult = <NodePaging> changes.nodeResult.currentValue;
+            this.nodeResult = <NodePaging>changes.nodeResult.currentValue;
             this.pagination = this.nodeResult.list.pagination;
         }
+        if (!this.pagination) {
+            this.giveDefaultPaginationWhenNotDefined();
+        }
+    }
+
+    giveDefaultPaginationWhenNotDefined() {
+        this.pagination =  <Pagination> {
+            maxItems: this.preference.paginationSize,
+            skipCount: 0,
+            totalItems: 0,
+            hasMoreItems: false
+        };
     }
 
     getCurrentDocumentListNode(): MinimalNodeEntity[] {
