@@ -1,6 +1,6 @@
 @import '../form';
 
-@mixin mat-dynamic-table-theme($theme) {
+@mixin adf-dynamic-table-theme($theme) {
     $foreground: map-get($theme, foreground);
     $dynamic-table-font-size: 14px !default;
     $dynamic-table-header-font-size: 12px !default;

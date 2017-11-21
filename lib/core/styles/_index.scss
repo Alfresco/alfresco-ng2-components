@@ -2,38 +2,45 @@
 @import './default-class';
 @import './theming';
 
-@import '../collapsable/accordion-group.component';
-@import '../card-view/card-view-textitem.component';
+
 @import '../card-view/card-view-dateitem.component';
+@import '../card-view/card-view-textitem.component';
 @import '../card-view/card-view.component';
-@import '../toolbar/toolbar.component';
-@import '../pagination/pagination.component';
-@import '../info-drawer/info-drawer-layout.component';
-@import '../settings/host-settings.component';
-@import '../userinfo/components/user-info.component';
-@import '../login/components/login.component';
+@import '../collapsable/accordion-group.component';
 @import '../datatable/components/datatable/datatable.component';
+@import '../form/components/widgets/container/container.widget';
+@import '../form/components/widgets/dynamic-table/dynamic-table.widget';
 @import '../form/components/widgets/form';
+@import '../form/components/widgets/hyperlink/hyperlink.widget';
+@import '../form/components/widgets/people/people.widget';
+@import '../info-drawer/info-drawer-layout.component';
+@import '../login/components/login.component';
+@import '../pagination/pagination.component';
+@import '../settings/host-settings.component';
+@import '../toolbar/toolbar.component';
+@import '../userinfo/components/user-info.component';
 @import '../viewer/components/viewer.component';
-@import '../form/components/widgets/container/container.widget.scss';
 
 @mixin adf-core-theme($theme) {
-    @include adf-form-theme($theme);
-    @include adf-host-settings-theme($theme);
-    @include adf-accordion-theme($theme);
-    @include adf-card-view-textitem-theme($theme);
-    @include adf-card-view-dateitem-theme($theme);
-    @include adf-card-view-theme($theme);
-    @include adf-toolbar-theme($theme);
-    @include adf-info-drawer-theme($theme);
-    @include adf-pagination-theme($theme);
     @include adf-colors-theme($theme);
-    @include adf-default-class($theme);
-    @include adf-userinfo-theme($theme);
-    @include adf-login-theme($theme);
+    @include adf-default-class-theme($theme);
+    @include adf-card-view-dateitem-theme($theme);
+    @include adf-card-view-textitem-theme($theme);
+    @include adf-card-view-theme($theme);
+    @include adf-accordion-theme($theme);
     @include adf-datatable-theme($theme);
-    @include adf-viewer-theme($theme);
     @include adf-form-container-widget-theme($theme);
+    @include adf-dynamic-table-theme($theme);
+    @include adf-form-theme($theme);
+    @include adf-hyperlink-widget-theme($theme);
+    @include adf-form-people-widget-theme($theme);
+    @include adf-info-drawer-theme($theme);
+    @include adf-login-theme($theme);
+    @include adf-pagination-theme($theme);
+    @include adf-host-settings-theme($theme);
+    @include adf-toolbar-theme($theme);
+    @include adf-userinfo-theme($theme);
+    @include adf-viewer-theme($theme);
 }
 
 
