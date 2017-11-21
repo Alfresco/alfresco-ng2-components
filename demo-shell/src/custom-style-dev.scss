@@ -30,3 +30,7 @@ body, html {
     font-family: mat-font-family($alfresco-typography);
     line-height: mat-line-height($alfresco-typography, body-1);
 }
+
+body {
+    overflow: auto;
+}

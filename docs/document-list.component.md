@@ -51,30 +51,30 @@ The properties currentFolderId, folderNode and node are the entry initialization
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| selectionMode | string | 'single' | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows.  |
-| selection | Array<MinimalNodeEntity> | [] | Contains selected nodes |
-| rowStyle | string | | The inline style to apply to every row, see [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html) docs for more details and usage examples |
-| rowStyleClass | string | | The CSS class to apply to every row |
-| currentFolderId | string | null | The ID of the folder node to display or a reserved string alias for special sources (see **Data Sources**) |
-| folderNode | [MinimalNodeEntryEntity](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md) | null | Currently displayed folder node | 
 | permissionsStyle | [PermissionStyleModel[]](permissions-style.model.md) | null | Define a set of CSS styles styles to apply depending on the permission of the user on that node. See the [Permission Style model](permissions-style.model.md) page for further details and examples. | 
-| paginationStrategy | PaginationStrategy | PaginationStrategy.Finite | The pagination type to be shown, can be Finite or Infinite |
-| node | [NodePaging](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodePaging.md) | null | Document list will show all the nodes contained in the NodePaging entity  | 
+| locationFormat | string | '/' | The default route for all the location-based columns (if declared). |
 | navigate | boolean | true | Toggles navigation to folder content or file preview |
-| loading | boolean | false | Toggles the loading state and animated spinners for the component. Used in combination with `navigate=false` to perform custom navigation and loading state indication. |
 | navigationMode | string (click,dblclick) | dblclick | User interaction for folder navigation or file preview |
 | thumbnails | boolean | false | Show document thumbnails rather than icons |
+| selectionMode | string | 'single' | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows.  |
 | multiselect | boolean | false | Toggles multiselect mode |
 | contentActions | boolean | false | Toggles content actions for each row |
 | contentActionsPosition | string (left\|right) | right | Position of the content actions dropdown menu. |
 | contextMenuActions | boolean | false | Toggles context menus for each row |
-| enablePagination | boolean | true | Shows pagination |
-| rowFilter | `RowFilter` | | Custom row filter, [see more](#custom-row-filter). |
-| imageResolver | `ImageResolver` | | Custom image resolver, [see more](#custom-image-resolver). |
+| emptyFolderImageUrl | string | assets/images/empty_doc_lib.svg | Custom image for empty folder |
 | allowDropFiles | boolean | false | Toggle file drop support for rows (see **ng2-alfresco-core/UploadDirective** for more details) |
 | sorting | string[] | | Defines default sorting. The format is an array of 2 strings `[key, direction]` i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want to override default sorting detected by the component based on columns. |
-| locationFormat | string | '/' | The default route for all the location-based columns (if declared). |
-| supportedPageSizes | number[] | [5, 10, 15, 20] | Supported page sizes for the pagination component. You can also use application configuration file to set it as a global setting using `document-list.supportedPageSizes` key. |
+| rowStyle | string | | The inline style to apply to every row, see [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html) docs for more details and usage examples |
+| rowStyleClass | string | | The CSS class to apply to every row |
+| loading | boolean | false | Toggles the loading state and animated spinners for the component. Used in combination with `navigate=false` to perform custom navigation and loading state indication. |
+| rowFilter | `RowFilter` | | Custom row filter, [see more](#custom-row-filter). |
+| imageResolver | `ImageResolver` | | Custom image resolver, [see more](#custom-image-resolver). |
+| currentFolderId | string | null | The ID of the folder node to display or a reserved string alias for special sources (see **Data Sources**) |
+| folderNode | [MinimalNodeEntryEntity](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md) | null | Currently displayed folder node | 
+| node | [NodePaging](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodePaging.md) | null | Document list will show all the nodes contained in the NodePaging entity  | 
+| maxItems | number | Default value is stored into user preference settings | determine the size of the page for the element into document list |
+| skipCount | number | 0 | element to skip over for pagination purpose |
+| enableInfiniteScrolling | boolean | true | Enable documentlist to work into infinite scrolling mode |
 
 ### Events
 
@@ -132,8 +132,8 @@ Below is a basic example of handling DOM events in the parent elements.
 
 The Document List by default supports 2 type of pagination, the **finite** and the **infinite** pagination. 
 
-- With the **finite** pagination you got a normal pagination ui with information about the result's count, pages, and stepper arrows. On every pagination event the results will replace the previous list.
-- With the **infinite** pagination there is only a "Load more" button at the end of your document list, and on every click (pagination event), the new results will be appended to the previous list.
+- With the **finite** pagination you must provide document list with 2 parameters : maxItems and skipCount.
+- With the **infinite** pagination you must provide documentlist with 3 parameters : enableInfiniteScrolling, maxItems and skipCount.
 
 ### Data Sources
 

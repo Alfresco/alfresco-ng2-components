@@ -25,7 +25,8 @@ import { MinimalNodeEntity, NodePaging, Pagination } from 'alfresco-js-api';
 import {
     AlfrescoApiService, ContentService, TranslationService,
     FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
-    SiteModel, UploadService, DataColumn, DataRow, UserPreferencesService
+    SiteModel, UploadService, DataColumn, DataRow, UserPreferencesService,
+    PaginationComponent
 } from '@alfresco/adf-core';
 
 import { DocumentListComponent, PermissionStyleModel, DownloadZipDialogComponent } from '@alfresco/adf-content-services';
@@ -116,6 +117,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     @ViewChild(DocumentListComponent)
     documentList: DocumentListComponent;
 
+    @ViewChild(PaginationComponent)
+    standardPagination: PaginationComponent;
+
     permissionsStyle: PermissionStyleModel[] = [];
     supportedPages: number[] = [5, 10, 15, 20];
     infiniteScrolling: boolean;
@@ -133,9 +137,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 private dialog: MatDialog,
                 private translateService: TranslationService,
                 private router: Router,
-                @Optional() private route: ActivatedRoute,
                 private logService: LogService,
-                private preference: UserPreferencesService) {
+                private preference: UserPreferencesService,
+                @Optional() private route: ActivatedRoute) {
     }
 
     showFile(event) {
@@ -191,6 +195,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     ngOnChanges(changes: SimpleChanges) {
         if (changes.nodeResult && changes.nodeResult.currentValue) {
             this.nodeResult = <NodePaging> changes.nodeResult.currentValue;
+            this.pagination = this.nodeResult.list.pagination;
         }
     }
 
@@ -254,8 +259,16 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     emitReadyEvent(event: any) {
-        this.documentListReady.emit(event);
-        this.pagination = event.list.pagination;
+        if (this.pageIsEmpty(event)) {
+            this.standardPagination.goPrevious();
+        } else {
+            this.documentListReady.emit(event);
+            this.pagination = event.list.pagination;
+        }
+    }
+
+    pageIsEmpty(node: NodePaging) {
+        return node && node.list && node.list.entries.length === 0;
     }
 
     onContentActionError(errors) {

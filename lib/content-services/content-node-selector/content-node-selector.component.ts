@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Inject, Input, OnInit, Optional, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import { ContentService, HighlightDirective, SiteModel, UserPreferencesService } from '@alfresco/adf-core';
+import { AlfrescoApiService, ContentService, HighlightDirective, SiteModel, UserPreferencesService } from '@alfresco/adf-core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { MinimalNodeEntryEntity, NodePaging, Pagination } from 'alfresco-js-api';
 import { DocumentListComponent, PaginationStrategy  } from '../document-list/components/document-list.component';
@@ -29,6 +29,8 @@ export interface ContentNodeSelectorComponentData {
     title: string;
     actionName?: string;
     currentFolderId?: string;
+    dropdownHideMyFiles?: boolean;
+    dropdownSiteList?: any[];
     rowFilter?: RowFilter;
     imageResolver?: ImageResolver;
     select: EventEmitter<MinimalNodeEntryEntity[]>;
@@ -66,6 +68,12 @@ export class ContentNodeSelectorComponent implements OnInit {
     currentFolderId: string | null = null;
 
     @Input()
+    dropdownHideMyFiles: boolean = false;
+
+    @Input()
+    dropdownSiteList: any[] = null;
+
+    @Input()
     rowFilter: RowFilter = null;
 
     @Input()
@@ -85,6 +93,7 @@ export class ContentNodeSelectorComponent implements OnInit {
 
     constructor(private contentNodeSelectorService: ContentNodeSelectorService,
                 private contentService: ContentService,
+                private apiService: AlfrescoApiService,
                 private preferences: UserPreferencesService,
                 @Optional() @Inject(MAT_DIALOG_DATA) data?: ContentNodeSelectorComponentData,
                 @Optional() private containingDialog?: MatDialogRef<ContentNodeSelectorComponent>) {
@@ -93,6 +102,8 @@ export class ContentNodeSelectorComponent implements OnInit {
             this.actionName = data.actionName ? data.actionName : 'Choose';
             this.select = data.select;
             this.currentFolderId = data.currentFolderId;
+            this.dropdownHideMyFiles = data.dropdownHideMyFiles;
+            this.dropdownSiteList = data.dropdownSiteList;
             this.rowFilter = data.rowFilter;
             this.imageResolver = data.imageResolver;
         }
@@ -301,5 +312,22 @@ export class ContentNodeSelectorComponent implements OnInit {
      */
     close(): void {
         this.containingDialog.close();
+    }
+
+    onNodeDoubleClick(e: CustomEvent) {
+        const node: any = e.detail.node.entry;
+
+        if (node && node.guid) {
+            const options = {
+                maxItems: this.pageSize,
+                skipCount: this.skipCount,
+                include: ['path', 'properties', 'allowableOperations']
+            };
+
+            this.apiService.nodesApi.getNode(node.guid, options)
+                .then(documentLibrary => {
+                    this.documentList.performCustomSourceNavigation(documentLibrary);
+                });
+        }
     }
 }
