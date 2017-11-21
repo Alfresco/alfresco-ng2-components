@@ -19,6 +19,7 @@ import { PeopleProcessService, UserProcessModel } from '@alfresco/adf-core';
 import { Component, Directive, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-people-search',
@@ -51,9 +52,10 @@ export class PeopleSearchComponent implements OnInit {
     selectedUser: UserProcessModel;
 
     constructor(public peopleProcessService: PeopleProcessService) {
-        this.searchUser
-            .valueChanges
-            .debounceTime(200)
+        this.searchUser.valueChanges
+            .pipe(
+                debounceTime(200)
+            )
             .subscribe((event: string) => {
                 if (event && event.trim()) {
                     this.searchPeople.emit(event);
