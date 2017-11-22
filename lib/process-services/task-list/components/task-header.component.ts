@@ -197,31 +197,24 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
     }
 
     /**
-     * Return true if the task has involvedGroup
+     * Return true if the user is a candidate member
      */
-    public hasInvolvedGroup(): boolean {
-        return this.taskDetails.involvedGroups.length > 0 ? true : false;
-    }
-
-    /**
-     * Return true if the task has involvedPeople
-     */
-    public hasInvolvedPeople(): boolean {
-        return this.taskDetails.involvedPeople.length > 0 ? true : false;
+    isCandidateMember() {
+        return this.taskDetails.managerOfCandidateGroup || this.taskDetails.memberOfCandidateGroup || this.taskDetails.memberOfCandidateUsers;
     }
 
     /**
      * Return true if the task claimable
      */
     public isTaskClaimable(): boolean {
-        return !this.isCompleted() && (this.hasInvolvedGroup() || this.hasInvolvedPeople()) && !this.hasAssignee() ;
+        return !this.hasAssignee() && this.isCandidateMember();
     }
 
     /**
-     * Return true if the task claimed by currentUser
+     * Return true if the task claimed by candidate member.
      */
-    public isTaskClaimedByCurrentUser(): boolean {
-        return !this.isCompleted() && (this.hasInvolvedGroup() || this.hasInvolvedPeople()) && this.isAssignedToCurrentUser();
+    public isTaskClaimedByCandidateMember(): boolean {
+        return this.isCandidateMember() && this.isAssignedToCurrentUser() && !this.isCompleted();
     }
 
     /**
