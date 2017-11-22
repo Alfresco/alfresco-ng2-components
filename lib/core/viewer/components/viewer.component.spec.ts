@@ -260,7 +260,7 @@ describe('ViewerComponent', () => {
             expect(component.downloadContent).toHaveBeenCalled();
         });
 
-        it('should raise download event with the toolbar button', (done) => {
+        xit('should raise download event with the toolbar button', (done) => {
             component.allowDownload = true;
             fixture.detectChanges();
 
@@ -299,7 +299,7 @@ describe('ViewerComponent', () => {
             expect(component.printContent).toHaveBeenCalled();
         });
 
-        it('should raise the print event with the toolbar button', (done) => {
+        xit('should raise the print event with the toolbar button', (done) => {
             component.allowPrint = true;
             fixture.detectChanges();
 
@@ -338,7 +338,7 @@ describe('ViewerComponent', () => {
             expect(component.shareContent).toHaveBeenCalled();
         });
 
-        it('should raise share event with the toolbar button', (done) => {
+        xit('should raise share event with the toolbar button', (done) => {
             component.allowShare = true;
             fixture.detectChanges();
 
