@@ -49,7 +49,7 @@ describe('ProcessInstanceDetailsComponent', () => {
             providers: [
                 ProcessService
             ],
-            schemas: [ NO_ERRORS_SCHEMA ]
+            schemas: [NO_ERRORS_SCHEMA]
         }).compileComponents();
     }));
 
@@ -132,12 +132,41 @@ describe('ProcessInstanceDetailsComponent', () => {
 
         it('should display cancel button if process is running', () => {
             component.processInstanceDetails = new ProcessInstance({
-                ended : null
+                ended: null
             });
             fixture.detectChanges();
             let buttonEl = fixture.debugElement.query(By.css('[data-automation-id="header-status"] button'));
             expect(buttonEl).not.toBeNull();
         });
-    });
 
+        describe('Diagram', () => {
+
+            it('should diagram button be enabled if the process is running', () => {
+                component.processInstanceDetails = new ProcessInstance({
+                    ended: null
+                });
+                fixture.detectChanges();
+
+                fixture.whenStable().then(() => {
+                    let diagramButton = fixture.debugElement.query(By.css('#show-diagram-button'));
+                    expect(diagramButton).not.toBeNull();
+                    expect(diagramButton.nativeElement.disabled).toBe(false);
+                });
+            });
+
+            it('should diagram button be enabled if the process is running', () => {
+                component.processInstanceDetails = new ProcessInstance({
+                    ended: new Date()
+                });
+
+                fixture.detectChanges();
+
+                fixture.whenStable().then(() => {
+                    let diagramButton = fixture.debugElement.query(By.css('#show-diagram-button'));
+                    expect(diagramButton).not.toBeNull();
+                    expect(diagramButton.nativeElement.disabled).toBe(true);
+                });
+            });
+        });
+    });
 });
