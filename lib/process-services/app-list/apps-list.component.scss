@@ -87,13 +87,22 @@ $themes: (
             }
 
             &-actions {
-                padding: 16px;
+                padding: 0 16px 16px 16px;
                 border-top: 1px solid rgba(0,0,0,.1);
-                min-height: 64px;
+                min-height: 48px;
                 box-sizing: border-box;
 
                 &-icon {
                     color: #e9f1f3;
+                }
+
+                &.mat-card-actions {
+                    margin-left: 0px;
+                    margin-right: 0px;
+
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
                 }
             }
         }
