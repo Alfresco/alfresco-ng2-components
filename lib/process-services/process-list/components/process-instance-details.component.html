@@ -9,7 +9,7 @@
             (showProcessDiagram)="onShowProcessDiagram($event)">
         </adf-process-instance-header>
 
-        <button class="adf-in-medias-res-button" mat-button id="show-diagram-button" type="button" mat-button mat-raised-button [disabled]="isDiagramDisabled()" (click)="onShowProcessDiagram(processInstanceId)">{{ 'ADF_PROCESS_LIST.DETAILS.BUTTON.SHOW_DIAGRAM' | translate }}</button>
+        <button class="adf-in-medias-res-button" mat-button id="show-diagram-button" type="button" mat-button mat-raised-button [disabled]="!isRunning()" (click)="onShowProcessDiagram(processInstanceId)">{{ 'ADF_PROCESS_LIST.DETAILS.BUTTON.SHOW_DIAGRAM' | translate }}</button>
 
         <mat-card>
             <mat-card-content>
