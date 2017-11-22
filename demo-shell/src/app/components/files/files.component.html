@@ -34,8 +34,10 @@
                 <adf-toolbar-divider fxFlex="0 0 auto"></adf-toolbar-divider>
 
                 <div fxFlex="0 0 auto" class="adf-document-action-buttons" fxShow fxHide.lt-sm="true">
-                    <button mat-icon-button
-                            [adf-create-folder]="getDocumentListCurrentFolderId()">
+                    <button
+                        mat-icon-button
+                        [disabled]="!canCreateContent(documentList.folderNode)"
+                        [adf-create-folder]="getDocumentListCurrentFolderId()">
                         <mat-icon>create_new_folder</mat-icon>
                     </button>
                     <button mat-icon-button

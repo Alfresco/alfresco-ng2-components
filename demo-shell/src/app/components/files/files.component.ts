@@ -21,7 +21,7 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { MinimalNodeEntity, NodePaging, Pagination } from 'alfresco-js-api';
+import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity } from 'alfresco-js-api';
 import {
     AlfrescoApiService, ContentService, TranslationService,
     FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
@@ -433,6 +433,13 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             if (entry && entry.isFolder) {
                 return this.contentService.hasPermission(entry, 'update');
             }
+        }
+        return false;
+    }
+
+    canCreateContent(parentNode: MinimalNodeEntryEntity): boolean {
+        if (parentNode) {
+            return this.contentService.hasPermission(parentNode, 'create');
         }
         return false;
     }
