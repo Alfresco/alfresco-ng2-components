@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { DebugElement, SimpleChange } from '@angular/core';
+import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MaterialModule } from '../../material.module';
 import { ContentService, UploadService, TranslationService } from '@alfresco/adf-core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { UploadButtonComponent } from './upload-button.component';
 import { TranslationMock } from '@alfresco/adf-core';
 
@@ -54,8 +54,6 @@ describe('UploadButtonComponent', () => {
 
     let component: UploadButtonComponent;
     let fixture: ComponentFixture<UploadButtonComponent>;
-    let debug: DebugElement;
-    let element: HTMLElement;
     let uploadService: UploadService;
     let contentService: ContentService;
 
@@ -79,8 +77,6 @@ describe('UploadButtonComponent', () => {
         uploadService = TestBed.get(UploadService);
         contentService = TestBed.get(ContentService);
 
-        debug = fixture.debugElement;
-        element = fixture.nativeElement;
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

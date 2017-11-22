@@ -15,7 +15,10 @@
  * limitations under the License.
  */
 
+export * from './insights.module';
+
+export * from './diagram/diagram.module';
+export * from './analytics-process/analytics-process.module';
+
 export * from './diagram';
 export * from './analytics-process';
-
-export * from './insights.module';

@@ -18,9 +18,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TranslationService } from '../../index';
-import { DataTableModule } from '../../datatable';
-import { DataColumnModule } from '../../data-column';
-import { Observable } from 'rxjs/Rx';
+import { DataTableModule } from '../../datatable/datatable.module';
+import { DataColumnModule } from '../../data-column/data-column.module';
+import { Observable } from 'rxjs/Observable';
 import { EcmModelService } from '../services/ecm-model.service';
 import { FormService } from '../services/form.service';
 import { FormListComponent } from './form-list.component';

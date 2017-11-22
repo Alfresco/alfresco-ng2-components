@@ -17,7 +17,7 @@
 
 import { async, TestBed } from '@angular/core/testing';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
-import { DirectiveModule } from '../directives';
+import { DirectiveModule } from '../directives/directive.module';
 
 import { AppConfigService } from '../app-config/app-config.service';
 import { AppConfigModule } from '../app-config/app-config.module';

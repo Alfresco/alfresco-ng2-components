@@ -19,7 +19,11 @@ export * from './components/analytics.component';
 export * from './components/analytics-generator.component';
 export * from './components/analytics-report-list.component';
 export * from './components/analytics-report-parameters.component';
-export * from './services/analytics.service';
-export * from './components/widgets/index';
 
-export * from './analytics-process.module';
+export * from './components/widgets/checkbox/checkbox.widget';
+export * from './components/widgets/date-range/date-range.widget';
+export * from './components/widgets/dropdown/dropdown.widget';
+export * from './components/widgets/duration/duration.widget';
+export * from './components/widgets/number/number.widget';
+
+export * from './services/analytics.service';

@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { ContentService } from '../../services';
+import { ContentService } from '../../services/content.service';
 
 @Component({
     selector: 'adf-media-player',

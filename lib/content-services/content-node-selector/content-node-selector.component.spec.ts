@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA, DebugElement, EventEmitter } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, EventEmitter } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AlfrescoApiService, ContentService, TranslationService, SearchService, SiteModel, SitesApiService, UserPreferencesService } from '@alfresco/adf-core';
 import { DataTableModule } from '@alfresco/adf-core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { MaterialModule } from '../material.module';
 import { EmptyFolderContentDirective, DocumentListComponent, DocumentListService } from '../document-list';
 import { DropdownSitesComponent } from '../site-dropdown';
@@ -50,13 +50,11 @@ const ONE_FOLDER_RESULT = {
 describe('ContentNodeSelectorComponent', () => {
     let component: ContentNodeSelectorComponent;
     let fixture: ComponentFixture<ContentNodeSelectorComponent>;
-    let element: DebugElement;
     let data: any;
     let searchService: SearchService;
     let searchSpy: jasmine.Spy;
 
     let _resolve: Function;
-    let _reject: Function;
 
     function typeToSearchBox(searchTerm = 'string-to-search') {
         let searchInput = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-input"]'));
@@ -119,7 +117,6 @@ describe('ContentNodeSelectorComponent', () => {
 
         beforeEach(() => {
             fixture = TestBed.createComponent(ContentNodeSelectorComponent);
-            element = fixture.debugElement;
             component = fixture.componentInstance;
             fixture.detectChanges();
         });
@@ -198,15 +195,13 @@ describe('ContentNodeSelectorComponent', () => {
 
         beforeEach(() => {
             fixture = TestBed.createComponent(ContentNodeSelectorComponent);
-            element = fixture.debugElement;
             component = fixture.componentInstance;
 
             searchService = TestBed.get(SearchService);
             searchSpy = spyOn(searchService, 'getQueryNodesPromise').and.callFake(() => {
                 return new Promise((resolve, reject) => {
                     _resolve = resolve;
-                    _reject = reject;
-                });
+                 });
             });
         });
 

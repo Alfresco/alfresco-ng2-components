@@ -15,37 +15,27 @@
  * limitations under the License.
  */
 
-import { DebugElement, SimpleChange } from '@angular/core';
+import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReportParametersModel } from '../../diagram';
 import * as analyticParamsMock from '../../mock';
 import { AnalyticsReportParametersComponent } from '../components/analytics-report-parameters.component';
-import { WIDGET_ANALYTICS_DIRECTIVES } from '../components/widgets/index';
+import { AnalyticsProcessModule } from '../analytics-process.module';
 import { MaterialModule } from '../../material.module';
-import { AnalyticsService } from '../services/analytics.service';
-import { DateRangeWidgetComponent } from './widgets/date-range/date-range.widget';
 
 declare let jasmine: any;
 
-describe('AnalyticsReportParametersComponent', () => {
+fdescribe('AnalyticsReportParametersComponent', () => {
 
     let component: AnalyticsReportParametersComponent;
     let fixture: ComponentFixture<AnalyticsReportParametersComponent>;
-    let debug: DebugElement;
     let element: HTMLElement;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                MaterialModule
-            ],
-            declarations: [
-                DateRangeWidgetComponent,
-                AnalyticsReportParametersComponent,
-                ...WIDGET_ANALYTICS_DIRECTIVES
-            ],
-            providers: [
-                AnalyticsService
+                MaterialModule,
+                AnalyticsProcessModule
             ]
         }).compileComponents();
     }));
@@ -53,7 +43,6 @@ describe('AnalyticsReportParametersComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(AnalyticsReportParametersComponent);
         component = fixture.componentInstance;
-        debug = fixture.debugElement;
         element = fixture.nativeElement;
         fixture.detectChanges();
     });

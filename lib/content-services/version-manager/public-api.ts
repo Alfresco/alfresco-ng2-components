@@ -18,5 +18,3 @@
 export * from './version-list.component';
 export * from './version-manager.component';
 export * from './version-upload.component';
-
-export * from './version-manager.module';

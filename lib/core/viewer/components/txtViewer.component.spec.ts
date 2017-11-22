@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DebugElement, SimpleChange } from '@angular/core';
+import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import {
     AlfrescoApiService,
@@ -26,11 +26,10 @@ import { TxtViewerComponent } from './txtViewer.component';
 
 declare var require: any;
 
-describe('Test ng2-alfresco-viewer Text View component', () => {
+describe('Text View component', () => {
 
     let component: TxtViewerComponent;
     let fixture: ComponentFixture<TxtViewerComponent>;
-    let debug: DebugElement;
     let element: HTMLElement;
 
     beforeEach(async(() => {
@@ -47,7 +46,6 @@ describe('Test ng2-alfresco-viewer Text View component', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(TxtViewerComponent);
 
-        debug = fixture.debugElement;
         element = fixture.nativeElement;
         component = fixture.componentInstance;
     });

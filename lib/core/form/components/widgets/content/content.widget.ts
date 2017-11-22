@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-import { ContentService, LogService } from '../../../../services';
+import { ContentService } from '../../../../services/content.service';
+import { LogService } from '../../../../services/log.service';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { ProcessContentService } from '../../../services/process-content.service';
 import { ContentLinkModel } from '../core/content-link.model';
 import { FormService } from './../../../services/form.service';

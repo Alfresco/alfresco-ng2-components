@@ -44,7 +44,7 @@ export let fakeSearch = {
     }
 };
 
-export let fakeError = {
+export let mockError = {
     error: {
         errorKey: 'Search failed',
         statusCode: 400,
@@ -54,7 +54,7 @@ export let fakeError = {
     }
 };
 
-export let fakeApi = {
+export let searchMockApi = {
     core: {
         queriesApi: {
             findNodes: (term, opts) => Promise.resolve(fakeSearch)

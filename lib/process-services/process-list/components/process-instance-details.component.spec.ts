@@ -19,10 +19,10 @@ import { DebugElement, NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MaterialModule } from '../../material.module';
 import { By } from '@angular/platform-browser';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 
-import { FormModule, FormService } from '@alfresco/adf-core';
-import { TaskListModule } from '../../task-list';
+import { FormModule } from '@alfresco/adf-core';
+import { TaskListModule } from '../../task-list/task-list.module';
 
 import { ProcessInstance } from '../models/process-instance.model';
 import { exampleProcess, exampleProcessNoName } from './../../mock';
@@ -32,7 +32,6 @@ import { ProcessInstanceDetailsComponent } from './process-instance-details.comp
 describe('ProcessInstanceDetailsComponent', () => {
 
     let service: ProcessService;
-    let formService: FormService;
     let component: ProcessInstanceDetailsComponent;
     let fixture: ComponentFixture<ProcessInstanceDetailsComponent>;
     let getProcessSpy: jasmine.Spy;
@@ -59,7 +58,6 @@ describe('ProcessInstanceDetailsComponent', () => {
         fixture = TestBed.createComponent(ProcessInstanceDetailsComponent);
         component = fixture.componentInstance;
         service = fixture.debugElement.injector.get(ProcessService);
-        formService = fixture.debugElement.injector.get(FormService);
 
         getProcessSpy = spyOn(service, 'getProcess').and.returnValue(Observable.of(exampleProcess));
     });

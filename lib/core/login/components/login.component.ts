@@ -18,14 +18,16 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthenticationService, LogService,
-    SettingsService, TranslationService, UserPreferencesService } from '../../services';
+
+import { AuthenticationService } from '../../services/authentication.service';
+import { LogService } from '../../services/log.service';
+import { SettingsService } from '../../services/settings.service';
+import { TranslationService } from '../../services/translation.service';
+import { UserPreferencesService } from '../../services/user-preferences.service';
 
 import { LoginErrorEvent } from '../models/login-error.event';
 import { LoginSubmitEvent } from '../models/login-submit.event';
 import { LoginSuccessEvent } from '../models/login-success.event';
-
-declare var require: any;
 
 enum LoginSteps {
     Landing = 0,
@@ -57,10 +59,10 @@ export class LoginComponent implements OnInit {
     registerLink: string = '';
 
     @Input()
-    logoImageUrl: string = require('../../assets/images/alfresco-logo.svg');
+    logoImageUrl: string = './assets/images/alfresco-logo.svg';
 
     @Input()
-    backgroundImageUrl: string = require('../../assets/images/background.svg');
+    backgroundImageUrl: string = './assets/images/background.svg';
 
     @Input()
     copyrightText: string = '\u00A9 2016 Alfresco Software, Inc. All Rights Reserved.';

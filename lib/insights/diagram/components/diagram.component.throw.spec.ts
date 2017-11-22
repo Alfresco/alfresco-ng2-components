@@ -17,11 +17,9 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DebugElement } from '@angular/core';
 import * as throwEventMock from '../../mock/diagram/diagramThrow.mock';
-import { DiagramComponent } from './index';
-import { DIAGRAM_DIRECTIVES, DIAGRAM_PROVIDERS } from './index';
-import { RAPHAEL_DIRECTIVES, RAPHAEL_PROVIDERS } from './raphael/index';
+import { DiagramComponent } from './diagram.component';
+import { DiagramsModule } from '../diagram.module';
 
 declare let jasmine: any;
 
@@ -29,19 +27,16 @@ describe('Diagrams throw', () => {
 
     let component: any;
     let fixture: ComponentFixture<DiagramComponent>;
-    let debug: DebugElement;
     let element: HTMLElement;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [],
             declarations: [
-                ...DIAGRAM_DIRECTIVES,
-                ...RAPHAEL_DIRECTIVES
+                DiagramsModule
             ],
             providers: [
-                ...DIAGRAM_PROVIDERS,
-                ...RAPHAEL_PROVIDERS
+
             ]
         }).compileComponents();
     }));
@@ -49,7 +44,6 @@ describe('Diagrams throw', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(DiagramComponent);
         component = fixture.componentInstance;
-        debug = fixture.debugElement;
         element = fixture.nativeElement;
         fixture.detectChanges();
     });

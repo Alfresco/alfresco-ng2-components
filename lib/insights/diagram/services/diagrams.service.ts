@@ -17,7 +17,8 @@
 
 import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class DiagramsService {

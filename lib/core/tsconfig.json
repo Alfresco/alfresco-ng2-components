@@ -18,6 +18,7 @@
     "declaration": true,
     "outDir": "./",
     "baseUrl" :  "./",
+    "allowSyntheticDefaultImports": true,
     "paths": {
       "@alfresco/adf-process-services": ["../process-services"],
       "@alfresco/adf-content-services": ["../content-services"],

@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FileModel, LogService, UploadService } from '@alfresco/adf-core';
 
@@ -59,10 +58,7 @@ describe('UploadDragAreaComponent', () => {
 
     let component: UploadDragAreaComponent;
     let fixture: ComponentFixture<UploadDragAreaComponent>;
-    let debug: DebugElement;
-    let element: HTMLElement;
     let uploadService: UploadService;
-    let logService: LogService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -79,12 +75,9 @@ describe('UploadDragAreaComponent', () => {
     }));
 
     beforeEach(() => {
-        logService = TestBed.get(LogService);
         fixture = TestBed.createComponent(UploadDragAreaComponent);
         uploadService = TestBed.get(UploadService);
 
-        debug = fixture.debugElement;
-        element = fixture.nativeElement;
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

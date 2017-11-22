@@ -19,7 +19,7 @@ import { MOMENT_DATE_FORMATS, MomentDateAdapter, UserPreferencesService } from '
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
-import * as moment from 'moment';
+import moment from 'moment-es6';
 import { Moment } from 'moment';
 
 @Component({

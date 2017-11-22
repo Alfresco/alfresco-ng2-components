@@ -18,15 +18,8 @@
 /** Base cancellable event implementation */
 export class BaseEvent<T> {
 
-    private isDefaultPrevented: boolean = false;
+    defaultPrevented: boolean = false;
 
     value: T;
 
-    get defaultPrevented() {
-        return this.isDefaultPrevented;
-    }
-
-    preventDefault() {
-        this.isDefaultPrevented = true;
-    }
 }

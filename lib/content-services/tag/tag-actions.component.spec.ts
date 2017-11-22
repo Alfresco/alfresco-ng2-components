@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigService, CoreModule } from '@alfresco/adf-core';
 import { TagActionsComponent } from './tag-actions.component';
@@ -28,7 +27,6 @@ describe('TagActionsComponent', () => {
 
     let component: any;
     let fixture: ComponentFixture<TagActionsComponent>;
-    let debug: DebugElement;
     let element: HTMLElement;
 
     beforeEach(async(() => {
@@ -52,7 +50,6 @@ describe('TagActionsComponent', () => {
 
         fixture = TestBed.createComponent(TagActionsComponent);
 
-        debug = fixture.debugElement;
         element = fixture.nativeElement;
         component = fixture.componentInstance;
         fixture.detectChanges();

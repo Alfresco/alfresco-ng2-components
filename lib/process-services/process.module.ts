@@ -23,12 +23,12 @@ import { CoreModule, TRANSLATION_PROVIDER } from '@alfresco/adf-core';
 
 import { MaterialModule } from './material.module';
 
-import { ProcessListModule } from './process-list';
-import { TaskListModule } from './task-list';
-import { AppsListModule } from './app-list';
-import { CommentsModule } from './comments';
-import { AttachmentModule } from './attachment';
-import { PeopleModule } from './people';
+import { ProcessListModule } from './process-list/process-list.module';
+import { TaskListModule } from './task-list/task-list.module';
+import { AppsListModule } from './app-list/apps-list.module';
+import { CommentsModule } from './comments/comments.module';
+import { AttachmentModule } from './attachment/attachment.module';
+import { PeopleModule } from './people/people.module';
 
 @NgModule({
     imports: [
@@ -56,18 +56,17 @@ import { PeopleModule } from './people';
         }
     ],
     exports: [
-        CoreModule,
         CommonModule,
         CommentsModule,
         FormsModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
-        MaterialModule,
         ProcessListModule,
         TaskListModule,
         AppsListModule,
         AttachmentModule,
-        PeopleModule
+        PeopleModule,
+        MaterialModule
     ]
 })
 export class ProcessModule {

@@ -17,9 +17,11 @@
 
 import { Injectable } from '@angular/core';
 import { AppDefinitionRepresentation } from 'alfresco-js-api';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { LogService } from './log.service';
+import 'rxjs/add/observable/fromPromise';
+import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class AppsProcessService {

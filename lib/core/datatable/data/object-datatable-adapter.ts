@@ -16,33 +16,14 @@
  */
 
 import { DatePipe } from '@angular/common';
-import { TemplateRef } from '@angular/core';
 
 import { TimeAgoPipe } from '../../pipes';
-import { ObjectUtils } from '../../utils';
 import { DataColumn } from './data-column.model';
 import { DataRow } from './data-row.model';
+import { ObjectDataRow } from './object-datarow.model';
+import { ObjectDataColumn } from './object-datacolumn.model';
 import { DataSorting } from './data-sorting.model';
 import { DataTableAdapter } from './datatable-adapter';
-
-// Simple implementation of the DataRow interface.
-export class ObjectDataRow implements DataRow {
-
-    constructor(private obj: any, public isSelected: boolean = false) {
-        if (!obj) {
-            throw new Error('Object source not found');
-        }
-
-    }
-
-    getValue(key: string): any {
-        return ObjectUtils.getValue(this.obj, key);
-    }
-
-    hasValue(key: string): boolean {
-        return this.getValue(key) !== undefined;
-    }
-}
 
 // Simple implementation of the DataTableAdapter interface.
 export class ObjectDataTableAdapter implements DataTableAdapter {
@@ -194,29 +175,5 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
             sorting.direction = direction || 'asc';
         }
         this.setSorting(sorting);
-    }
-}
-
-// Simple implementation of the DataColumn interface.
-export class ObjectDataColumn implements DataColumn {
-
-    key: string;
-    type: string; // text|image
-    format: string;
-    sortable: boolean;
-    title: string;
-    srTitle: string;
-    cssClass: string;
-    template?: TemplateRef<any>;
-
-    constructor(obj: any) {
-        this.key = obj.key;
-        this.type = obj.type || 'text';
-        this.format = obj.format;
-        this.sortable = obj.sortable;
-        this.title = obj.title;
-        this.srTitle = obj.srTitle;
-        this.cssClass = obj.cssClass;
-        this.template = obj.template;
     }
 }

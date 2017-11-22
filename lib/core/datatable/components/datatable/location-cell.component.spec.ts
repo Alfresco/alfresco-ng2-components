@@ -17,10 +17,9 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import {
-    ObjectDataColumn,
-    ObjectDataTableAdapter
-} from './../../data/index';
+import { ObjectDataTableAdapter } from './../../data/object-datatable-adapter';
+import { ObjectDataColumn } from './../../data/object-datacolumn.model';
+
 import { LocationCellComponent } from './location-cell.component';
 
 describe('LocationCellComponent', () => {

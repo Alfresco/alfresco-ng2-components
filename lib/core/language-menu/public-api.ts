@@ -16,5 +16,3 @@
  */
 
 export * from './language-menu.component';
-
-export * from './language-menu.module';

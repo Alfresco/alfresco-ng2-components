@@ -19,10 +19,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { TranslateLoader } from '@ngx-translate/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { ComponentTranslationModel } from '../models/component.model';
 import { ObjectUtils } from '../utils/object-utils';
 import { LogService } from './log.service';
+import 'rxjs/observable/forkJoin';
+import 'rxjs/add/observable/forkJoin';
 
 @Injectable()
 export class TranslateLoaderService implements TranslateLoader {

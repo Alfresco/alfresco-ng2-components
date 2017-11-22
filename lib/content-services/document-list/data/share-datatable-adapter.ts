@@ -21,8 +21,6 @@ import { DatePipe } from '@angular/common';
 import { NodePaging } from 'alfresco-js-api';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { DocumentListService } from './../services/document-list.service';
-import { ImageResolver } from './image-resolver.model';
-import { RowFilter } from './row-filter.model';
 import { ShareDataRow } from './share-data-row.model';
 
 export class ShareDataTableAdapter implements DataTableAdapter {
@@ -33,10 +31,9 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     private sorting: DataSorting;
     private rows: DataRow[];
     private columns: DataColumn[];
-    private page: NodePaging;
 
-    private filter: RowFilter;
-    private imageResolver: ImageResolver;
+    private filter: any;
+    private imageResolver: any;
 
     thumbnails: boolean = false;
     permissionsStyle: PermissionStyleModel[];
@@ -169,11 +166,11 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         this.setSorting(sorting);
     }
 
-    setFilter(filter: RowFilter) {
+    setFilter(filter: any) {
         this.filter = filter;
     }
 
-    setImageResolver(resolver: ImageResolver) {
+    setImageResolver(resolver: any) {
         this.imageResolver = resolver;
     }
 
@@ -213,8 +210,6 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     }
 
     public loadPage(page: NodePaging, merge: boolean = false) {
-        this.page = page;
-
         let rows = [];
 
         if (page && page.list) {

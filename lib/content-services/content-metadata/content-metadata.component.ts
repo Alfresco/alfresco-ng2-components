@@ -17,7 +17,7 @@
 
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, ViewEncapsulation } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { CardViewItem, CardViewUpdateService, FileSizePipe, NodesApiService } from '@alfresco/adf-core';
 import { ContentMetadataService } from './content-metadata.service';
 

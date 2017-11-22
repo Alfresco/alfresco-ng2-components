@@ -17,8 +17,8 @@
 
 import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
-import { DirectiveModule } from '../directives';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { DirectiveModule } from '../directives/directive.module';
 import { MaterialModule } from '../material.module';
 import { AppConfigService } from '../app-config/app-config.service';
 import { TranslateLoaderService } from '../services/translate-loader.service';
@@ -31,7 +31,6 @@ describe('LanguageMenuComponent', () => {
     let fixture: ComponentFixture<LanguageMenuComponent>;
     let component: LanguageMenuComponent;
     let appConfig: AppConfigService;
-    let translate: TranslateService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -60,7 +59,6 @@ describe('LanguageMenuComponent', () => {
         fixture = TestBed.createComponent(LanguageMenuComponent);
         component = fixture.componentInstance;
         appConfig = TestBed.get(AppConfigService);
-        translate = TestBed.get(TranslateService);
     });
 
     it('should have the default language', () => {

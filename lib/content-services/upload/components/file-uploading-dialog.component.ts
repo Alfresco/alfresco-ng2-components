@@ -18,8 +18,10 @@
 import { FileModel, FileUploadCompleteEvent, FileUploadDeleteEvent,
          FileUploadErrorEvent, FileUploadStatus, UploadService } from '@alfresco/adf-core';
 import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Observable, Subscription } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import { FileUploadingListComponent } from './file-uploading-list.component';
+import 'rxjs/add/observable/merge';
 
 @Component({
     selector: 'adf-file-uploading-dialog, file-uploading-dialog',

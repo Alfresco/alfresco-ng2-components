@@ -20,7 +20,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AlfrescoApiService, TranslationService } from '@alfresco/adf-core';
 import { DataColumn, DataTableComponent } from '@alfresco/adf-core';
 import { DataTableModule } from '@alfresco/adf-core';
-import { Observable, Subject } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import { FileNode, FolderNode } from '../../mock';
 import {
     fakeNodeAnswerWithEntries,

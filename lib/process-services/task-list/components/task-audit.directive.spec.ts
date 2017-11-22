@@ -22,7 +22,7 @@ import {
     fakeAsync,
     TestBed
 } from '@angular/core/testing';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { TaskListService } from './../services/tasklist.service';
 import { TaskAuditDirective } from './task-audit.directive';
 

@@ -19,7 +19,7 @@ import { DatePipe } from '@angular/common';
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatInputModule } from '@angular/material';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 
 import { CommentListComponent, CommentsComponent } from '../index';
 import { CommentProcessService, PeopleProcessService } from '@alfresco/adf-core';

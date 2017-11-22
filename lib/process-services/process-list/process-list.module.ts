@@ -24,9 +24,9 @@ import { FormModule } from '@alfresco/adf-core';
 import { MaterialModule } from '../material.module';
 
 import { CardViewModule, CardViewUpdateService, DataColumnModule, DataTableModule, DirectiveModule, PipeModule } from '@alfresco/adf-core';
-import { TaskListModule } from '../task-list';
-import { PeopleModule } from '../people';
-import { CommentsModule } from '../comments';
+import { TaskListModule } from '../task-list/task-list.module';
+import { PeopleModule } from '../people/people.module';
+import { CommentsModule } from '../comments/comments.module';
 
 import { ProcessAuditDirective } from './components/process-audit.directive';
 import { ProcessFiltersComponent } from './components/process-filters.component';

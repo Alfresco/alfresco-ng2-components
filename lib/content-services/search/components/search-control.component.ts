@@ -21,6 +21,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsul
 import { MinimalNodeEntity, QueryBody } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/distinctUntilChanged';
 
 @Component({
     selector: 'adf-search-control',

@@ -21,13 +21,12 @@ import { MatCheckboxChange } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DataTableModule } from '../../datatable.module';
 import { MaterialModule } from '../../../material.module';
-import {
-    DataColumn,
-    DataRow,
-    DataSorting,
-    ObjectDataColumn,
-    ObjectDataTableAdapter
-} from './../../data/index';
+import { DataColumn } from '../../data/data-column.model';
+import { DataRow } from '../../data/data-row.model';
+import { DataSorting } from '../../data/data-sorting.model';
+import { ObjectDataColumn } from '../../data/object-datacolumn.model';
+import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
+
 import { DataTableComponent } from './datatable.component';
 
 describe('DataTable', () => {
@@ -35,7 +34,6 @@ describe('DataTable', () => {
     let fixture: ComponentFixture<DataTableComponent>;
     let dataTable: DataTableComponent;
     let element: any;
-    let eventMock: any;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -51,13 +49,6 @@ describe('DataTable', () => {
         fixture = TestBed.createComponent(DataTableComponent);
         dataTable = fixture.componentInstance;
         element = fixture.debugElement.nativeElement;
-    });
-
-    beforeEach(() => {
-        eventMock = {
-            preventDefault: function () {
-            }
-        };
     });
 
     it('should change the rows on changing of the data', () => {

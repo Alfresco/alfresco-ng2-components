@@ -34,7 +34,6 @@ export let presetsDefaultModel = {
             key: 'path',
             type: 'location',
             title: 'ADF-DOCUMENT-LIST.LAYOUT.LOCATION',
-            format: this.locationFormat,
             sortable: true
         },
         {
@@ -117,7 +116,6 @@ export let presetsDefaultModel = {
             key: 'path',
             type: 'location',
             title: 'ADF-DOCUMENT-LIST.LAYOUT.LOCATION',
-            format: this.locationFormat,
             sortable: true
         },
         {
@@ -159,7 +157,6 @@ export let presetsDefaultModel = {
             type: 'location',
             title: 'ADF-DOCUMENT-LIST.LAYOUT.LOCATION',
             cssClass: 'ellipsis-cell',
-            format: this.locationFormat,
             sortable: true
         },
         {
@@ -195,7 +192,6 @@ export let presetsDefaultModel = {
             type: 'location',
             title: 'ADF-DOCUMENT-LIST.LAYOUT.LOCATION',
             cssClass: 'ellipsis-cell',
-            format: this.locationFormat,
             sortable: true
         },
         {

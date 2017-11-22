@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { ActivitiContentService } from '../../../services/activiti-alfresco.service';
 import { MaterialModule } from '../../../../material.module';
 import { ExternalContent } from '../core/external-content';
@@ -33,7 +33,6 @@ describe('AttachWidgetComponent', () => {
 
     let widget: AttachWidgetComponent;
     let fixture: ComponentFixture<AttachWidgetComponent>;
-    let element: HTMLElement;
     let contentService: ActivitiContentService;
 
     beforeEach(async(() => {
@@ -57,7 +56,6 @@ describe('AttachWidgetComponent', () => {
         fixture = TestBed.createComponent(AttachWidgetComponent);
         contentService = TestBed.get(ActivitiContentService);
 
-        element = fixture.nativeElement;
         widget = fixture.componentInstance;
     });
 

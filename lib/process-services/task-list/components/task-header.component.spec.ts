@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CardViewUpdateService, UserProcessModel } from '@alfresco/adf-core';
 import { BpmUserService } from '@alfresco/adf-core';
 import { MaterialModule } from '../../material.module';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import {
     completedTaskDetailsMock,
     taskDetailsMock,
@@ -39,9 +38,7 @@ describe('TaskHeaderComponent', () => {
     let service: TaskListService;
     let component: TaskHeaderComponent;
     let fixture: ComponentFixture<TaskHeaderComponent>;
-    let debugElement: DebugElement;
     let userBpmService: BpmUserService;
-    let getCurrentUserInfoSpy: jasmine.Spy;
 
     let fakeBpmAssignedUser = {
         id: 1001,
@@ -78,8 +75,7 @@ describe('TaskHeaderComponent', () => {
         component = fixture.componentInstance;
         service = TestBed.get(TaskListService);
         userBpmService = TestBed.get(BpmUserService);
-        debugElement = fixture.debugElement;
-        getCurrentUserInfoSpy = spyOn(userBpmService, 'getCurrentUserInfo').and.returnValue(Observable.of(fakeBpmAssignedUser));
+        spyOn(userBpmService, 'getCurrentUserInfo').and.returnValue(Observable.of(fakeBpmAssignedUser));
         component.taskDetails = new TaskDetailsModel(taskDetailsMock);
     });
 

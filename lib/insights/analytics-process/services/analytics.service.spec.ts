@@ -16,7 +16,6 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { AlfrescoApiService } from '@alfresco/adf-core';
 import { fakeReportList } from '../../mock';
 import { AnalyticsService } from './analytics.service';
 
@@ -25,17 +24,14 @@ declare let jasmine: any;
 describe('Activiti Analytics Service', () => {
 
     let service: AnalyticsService;
-    let apiService: AlfrescoApiService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-
             providers: [
                 AnalyticsService
             ]
         });
         service = TestBed.get(AnalyticsService);
-        apiService = TestBed.get(AlfrescoApiService);
     });
 
     beforeEach(() => {

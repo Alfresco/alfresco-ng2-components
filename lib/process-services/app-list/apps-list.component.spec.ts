@@ -19,7 +19,7 @@ import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AppsProcessService, CoreModule } from '@alfresco/adf-core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 
 import { MaterialModule } from '../material.module';
 import { defaultApp, deployedApps, nonDeployedApps } from '../mock/apps-list.mock';

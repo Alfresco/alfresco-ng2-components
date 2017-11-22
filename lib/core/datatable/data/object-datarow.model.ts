@@ -15,16 +15,24 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+import { ObjectUtils } from '../../utils';
+import { DataRow } from './data-row.model';
 
-import { DiagramBoundaryEventComponent } from './diagram-boundary-event.component';
-import { DiagramThrowEventComponent } from './diagram-throw-event.component';
+// Simple implementation of the DataRow interface.
+export class ObjectDataRow implements DataRow {
 
-// primitives
-export * from './diagram-boundary-event.component';
-export * from './diagram-throw-event.component';
+    constructor(private obj: any, public isSelected: boolean = false) {
+        if (!obj) {
+            throw new Error('Object source not found');
+        }
 
-export const DIAGRAM_BOUNDARY_EVENTS_DIRECTIVES: any[] = [
-    DiagramBoundaryEventComponent,
-    DiagramThrowEventComponent
-];
+    }
+
+    getValue(key: string): any {
+        return ObjectUtils.getValue(this.obj, key);
+    }
+
+    hasValue(key: string): boolean {
+        return this.getValue(key) !== undefined;
+    }
+}

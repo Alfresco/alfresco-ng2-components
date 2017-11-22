@@ -15,13 +15,11 @@
  * limitations under the License.
  */
 
-import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { DiagramsModule } from '../../diagram';
+import { DiagramsModule } from '../../diagram/diagram.module';
 import { AnalyticsReportHeatMapComponent } from '../components/analytics-report-heat-map.component';
-import { WIDGET_ANALYTICS_DIRECTIVES } from '../components/widgets/index';
+import { AnalyticsProcessModule } from '../analytics-process.module';
 import { MaterialModule } from '../../material.module';
-import { AnalyticsService } from '../services/analytics.service';
 
 declare let jasmine: any;
 
@@ -29,7 +27,6 @@ describe('AnalyticsReportHeatMapComponent', () => {
 
     let component: AnalyticsReportHeatMapComponent;
     let fixture: ComponentFixture<AnalyticsReportHeatMapComponent>;
-    let debug: DebugElement;
     let element: HTMLElement;
 
     let totalCountPerc: any = { 'sid-fake-id': 0, 'fake-start-event': 100 };
@@ -44,14 +41,8 @@ describe('AnalyticsReportHeatMapComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 DiagramsModule,
-                MaterialModule
-            ],
-            declarations: [
-                AnalyticsReportHeatMapComponent,
-                ...WIDGET_ANALYTICS_DIRECTIVES
-            ],
-            providers: [
-                AnalyticsService
+                MaterialModule,
+                AnalyticsProcessModule
             ]
         }).compileComponents();
 
@@ -60,7 +51,6 @@ describe('AnalyticsReportHeatMapComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(AnalyticsReportHeatMapComponent);
         component = fixture.componentInstance;
-        debug = fixture.debugElement;
         element = fixture.nativeElement;
 
         component.report = {

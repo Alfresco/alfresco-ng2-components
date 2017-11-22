@@ -16,12 +16,16 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
 import { StorageService } from './storage.service';
 import { UserPreferencesService } from './user-preferences.service';
+import 'rxjs/add/observable/fromPromise';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
 
 const REMEMBER_ME_COOKIE_KEY = 'ALFRESCO_REMEMBER_ME';
 const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30 ;

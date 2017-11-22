@@ -17,7 +17,8 @@
 
 import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { EventEmitter, Injectable, Output } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/throw';
 
 /**
  * @returns {TagService}
