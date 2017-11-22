@@ -1,21 +1,21 @@
-<adf-datatable [rows]="attachments" 
-               [actions]="true" 
-               [loading]="isLoading" 
-               (rowDblClick)="openContent($event)" 
+<adf-datatable [rows]="attachments"
+               [actions]="true"
+               [loading]="isLoading"
+               (rowDblClick)="openContent($event)"
                (showRowActionsMenu)="onShowRowActionsMenu($event)"
                (executeRowAction)="onExecuteRowAction($event)">
 
             <adf-empty-list *ngIf="isEmpty()">
                 <div adf-empty-list-header class="adf-empty-list-header" *ngIf="!isCustomTemplateDefined()">
-                    {{'ADF_TASK_LIST.ATTACHMENT.EMPTY.HEADER' | translate}} 
+                    {{'ADF_TASK_LIST.ATTACHMENT.EMPTY.HEADER' | translate}}
                 </div>
                 <div *ngIf="!isDisabled()" #customEmptyListTemplate class="adf-custom-empty-template">
                     <ng-content select="[adf-empty-list]"></ng-content>
-                </div>    
+                </div>
             </adf-empty-list>
 
             <data-columns>
-                <data-column key="icon" type="icon" srTitle="ADF_TASK_LIST.PROPERTIES.THUMBNAIL" [sortable]="false"></data-column>
+                <data-column key="icon" type="image" srTitle="ADF_TASK_LIST.PROPERTIES.THUMBNAIL" [sortable]="false"></data-column>
                 <data-column key="name" type="text" title="ADF_TASK_LIST.PROPERTIES.NAME" class="full-width ellipsis-cell" [sortable]="true"></data-column>
                 <data-column key="created" type="date" format="shortDate" title="ADF_TASK_LIST.PROPERTIES.CREATED"></data-column>
             </data-columns>
