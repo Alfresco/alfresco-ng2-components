@@ -29,7 +29,7 @@ import { PdfViewerComponent } from './pdfViewer.component';
 
 declare var require: any;
 
-describe('Test ng2-alfresco-viewer PdfViewer component', () => {
+describe('Test PdfViewer component', () => {
 
     let component: PdfViewerComponent;
     let fixture: ComponentFixture<PdfViewerComponent>;

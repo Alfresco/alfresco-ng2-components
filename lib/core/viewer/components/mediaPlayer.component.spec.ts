@@ -26,7 +26,7 @@ import {
     SettingsService
 } from '../../services';
 
-describe('Test ng2-alfresco-viewer Media player component ', () => {
+describe('Test Media player component ', () => {
 
     let component: MediaPlayerComponent;
     let service: ContentService;

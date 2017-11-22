@@ -93,12 +93,11 @@ describe('TaskAttachmentList', () => {
             mockAttachment
         ));
 
-        spyOn(service, 'deleteRelatedContent').and.returnValue(Observable.of({ successCode: true }));
+        deleteContentSpy = spyOn(service, 'deleteRelatedContent').and.returnValue(Observable.of({successCode: true}));
 
         let blobObj = new Blob();
-        spyOn(service, 'getFileRawContent').and.returnValue(Observable.of(
-            blobObj
-        ));
+        getFileRawContentSpy = spyOn(service, 'getFileRawContent').and.returnValue(Observable.of(
+            blobObj;
 
     });
 

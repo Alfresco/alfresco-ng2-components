@@ -26,7 +26,7 @@ import { TxtViewerComponent } from './txtViewer.component';
 
 declare var require: any;
 
-describe('Test ng2-alfresco-viewer Text View component', () => {
+describe('Text View component', () => {
 
     let component: TxtViewerComponent;
     let fixture: ComponentFixture<TxtViewerComponent>;

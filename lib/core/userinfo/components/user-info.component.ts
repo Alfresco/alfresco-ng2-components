@@ -23,7 +23,7 @@ import { BpmUserService } from './../services/bpm-user.service';
 import { EcmUserService } from './../services/ecm-user.service';
 
 @Component({
-    selector: 'adf-userinfo, ng2-alfresco-userinfo',
+    selector: 'adf-userinfo',
     styleUrls: ['./user-info.component.scss'],
     templateUrl: './user-info.component.html',
     encapsulation: ViewEncapsulation.None

@@ -24,7 +24,7 @@ import { SettingsService } from '../../services/settings.service';
 
 import { ImgViewerComponent } from './imgViewer.component';
 
-describe('Test ng2-alfresco-viewer Img viewer component ', () => {
+describe('Test Img viewer component ', () => {
 
     let component: ImgViewerComponent;
     let service: ContentService;
