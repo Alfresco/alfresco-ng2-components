@@ -43,6 +43,10 @@ export class AuthGuardEcm implements CanActivate {
             .catch(() => false);
     }
 
+    canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
+        return this.canActivate(route, state);
+    }
+
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
 
         return this.isLoggedIn().then(isLoggedIn => {

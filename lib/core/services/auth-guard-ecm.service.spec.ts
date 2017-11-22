@@ -214,4 +214,62 @@ describe('CanActivateLoggedIn', () => {
             expect(this.auth.setRedirectUrl).toHaveBeenCalledWith('some-url');
         });
     });
+
+    describe('canActivateChild', () => {
+        describe('user is not logged in', () => {
+            beforeEach(async(() => {
+                this.test = new TestConfig({
+                    isLoggedIn: false
+                });
+
+                const { guard } = this.test;
+
+                guard.canActivateChild(null, { url: '' }).then((activate) => {
+                    this.activate = activate;
+                });
+            }));
+
+            it('should not allow route to activate', () => {
+                expect(this.activate).toBe(false);
+            });
+        });
+
+        describe('user is logged in but ticket is invalid', () => {
+            beforeEach(async(() => {
+                this.test = new TestConfig({
+                    isLoggedIn: true,
+                    validateTicket: false
+                });
+
+                const { guard } = this.test;
+
+                guard.canActivateChild(null, { url: '' }).then((activate) => {
+                    this.activate = activate;
+                });
+            }));
+
+            it('should not allow route to activate', () => {
+                expect(this.activate).toBe(false);
+            });
+        });
+
+        describe('user is logged in and ticket is valid', () => {
+            beforeEach(async(() => {
+                this.test = new TestConfig({
+                    isLoggedIn: true,
+                    validateTicket: true
+                });
+
+                const { guard } = this.test;
+
+                guard.canActivateChild(null, { url: '' }).then((activate) => {
+                    this.activate = activate;
+                });
+            }));
+
+            it('should allow route to activate', () => {
+                expect(this.activate).toBe(true);
+            });
+        });
+    });
 });
