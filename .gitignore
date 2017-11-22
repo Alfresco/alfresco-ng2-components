@@ -16,7 +16,7 @@ src/environments/
 *.npmrc
 /demo-shell-ng2/ng2-components/
 .happypack/
-.happypack/
 .history
 package-lock.*
 /ng2-components/ng2-alfresco-core/prebuilt-themes/
+.ng_pkg_build/
