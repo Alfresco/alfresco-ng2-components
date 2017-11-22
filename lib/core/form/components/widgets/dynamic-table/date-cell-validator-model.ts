@@ -41,7 +41,7 @@ export class DateCellValidator implements CellValidator {
             if (!dateValue.isValid()) {
                 if (summary) {
                     summary.isValid = false;
-                    summary.text = `Invalid '${column.name}' format.`;
+                    summary.message = `Invalid '${column.name}' format.`;
                 }
                 return false;
             }

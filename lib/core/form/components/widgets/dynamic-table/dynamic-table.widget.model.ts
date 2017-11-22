@@ -145,10 +145,10 @@ export class DynamicTableModel extends FormWidgetModel {
     }
 
     validateRow(row: DynamicTableRow): DynamicRowValidationSummary {
-        const summary = <DynamicRowValidationSummary> {
+        const summary = new DynamicRowValidationSummary( {
             isValid: true,
-            text: null
-        };
+            message: null
+        });
 
         const event = new ValidateDynamicTableRowEvent(this.form, this.field, row, summary);
         this.formService.validateDynamicTableRow.next(event);

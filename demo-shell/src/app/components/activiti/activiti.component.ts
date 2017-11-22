@@ -179,7 +179,7 @@ export class ActivitiComponent implements AfterViewInit, OnDestroy, OnInit {
                 const row: DynamicTableRow = e.row;
                 if (row && row.value && row.value.name === 'admin') {
                     e.summary.isValid = false;
-                    e.summary.text = 'Sorry, wrong value. You cannot use "admin".';
+                    e.summary.message = 'Sorry, wrong value. You cannot use "admin".';
                     e.preventDefault();
                 }
             }
