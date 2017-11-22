@@ -18,7 +18,7 @@
 import { Component, EventEmitter, Inject, Input, OnInit, Optional, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { AlfrescoApiService, ContentService, HighlightDirective, SiteModel, UserPreferencesService } from '@alfresco/adf-core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { MinimalNodeEntryEntity, NodePaging, Pagination } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity, NodePaging, Pagination, Site } from 'alfresco-js-api';
 import { DocumentListComponent, PaginationStrategy  } from '../document-list/components/document-list.component';
 import { RowFilter } from '../document-list/data/row-filter.model';
 import { ImageResolver } from '../document-list/data/image-resolver.model';
@@ -40,7 +40,7 @@ export class ContentNodeSelectorComponent implements OnInit {
     showingSearchResults: boolean = false;
     loadingSearchResults: boolean = false;
     inDialog: boolean = false;
-    chosenNode: MinimalNodeEntryEntity | null = null;
+    chosenNode: MinimalNodeEntryEntity | Site | null = null;
     folderIdToShow: string | null = null;
     paginationStrategy: PaginationStrategy;
     pagination: Pagination;
@@ -288,7 +288,21 @@ export class ContentNodeSelectorComponent implements OnInit {
      * Emit event with the chosen node
      */
     choose(): void {
-        this.select.next([this.chosenNode]);
+        const entry: any = this.chosenNode;
+
+        if (entry && entry.guid) {
+            const options = {
+                include: ['path', 'properties', 'allowableOperations']
+            };
+            this.apiService.nodesApi.getNode(entry.guid, options)
+                .then(chosenSiteNode => {
+                    this.select.next([chosenSiteNode.entry]);
+                });
+
+        } else {
+            this.select.next([this.chosenNode]);
+
+        }
     }
 
     /**

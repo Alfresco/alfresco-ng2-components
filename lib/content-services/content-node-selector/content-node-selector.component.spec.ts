@@ -53,6 +53,8 @@ describe('ContentNodeSelectorComponent', () => {
     let data: any;
     let searchService: SearchService;
     let searchSpy: jasmine.Spy;
+    let apiService: AlfrescoApiService;
+    let nodesApi;
 
     let _resolve: Function;
 
@@ -203,6 +205,10 @@ describe('ContentNodeSelectorComponent', () => {
                     _resolve = resolve;
                  });
             });
+
+            apiService = TestBed.get(AlfrescoApiService);
+            nodesApi = apiService.nodesApi;
+
         });
 
         describe('Parameters', () => {
@@ -670,6 +676,32 @@ describe('ContentNodeSelectorComponent', () => {
                 let chooseButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
                 expect(chooseButton.nativeElement.disabled).toBe(true);
             });
+
+            it('should make the call to get the corresponding node entry to emit when a site node is selected as destination', () => {
+                spyOn(nodesApi, 'getNode').and.callFake((nodeId) => {
+                    return new Promise(resolve => {
+                        resolve({entry: {id: nodeId}});
+                    });
+                });
+
+                const siteNode1 = {title: 'my files', guid: '-my-'};
+                const siteNode2 = {title: 'my sites', guid: '-mysites-'};
+
+                component.dropdownSiteList = [siteNode1, siteNode2];
+                fixture.detectChanges();
+                component.chosenNode = siteNode1;
+                fixture.detectChanges();
+                component.choose();
+
+                const options = {
+                    include: ['path', 'properties', 'allowableOperations']
+                };
+                expect(nodesApi.getNode).toHaveBeenCalledWith(
+                    '-my-',
+                    options
+                );
+            });
+
         });
     });
 });
