@@ -6,9 +6,7 @@ Manage Process Instances, filters, variables, and audit log.
 ```ts
 import { ProcessService, ProcessInstance, ProcessInstanceVariable, 
          ProcessDefinitionRepresentation, FilterProcessRepresentationModel,
-         ProcessFilterParamRepresentationModel } from 'ng2-activiti-processlist';
-
-import { TaskDetailsModel } from 'ng2-activiti-tasklist';
+         ProcessFilterParamRepresentationModel, TaskDetailsModel } from '@alfresco/adf-process-services';
 
 export class SomePageComponent implements OnInit {
 
@@ -523,7 +521,7 @@ The response is an array of `TaskDetailsModel` objects as in this example:
     "start":0,
     "data":[
         {"id":"75010",
-        "name":"Approve Invoice  - [UNKNOWN]",
+        "name":"Approve Invoice  - [Invoice 123]",
         "description":null,
         "category":null,
         "assignee":{"id":1,"firstName":null,"lastName":"Administrator","email":"admin@app.activiti.com"},
