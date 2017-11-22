@@ -42,9 +42,10 @@ export class TaskAttachmentListComponent implements OnChanges, AfterViewInit {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    hasCustomTemplate: boolean;
+    hasCustomTemplate: boolean = false;
 
-    @ViewChild('customEmptyListTemplate') customTemplateRef: ElementRef;
+    @ViewChild('customEmptyListTemplate')
+    customTemplateRef: ElementRef;
 
     attachments: any[] = [];
     isLoading: boolean = true;
@@ -66,7 +67,7 @@ export class TaskAttachmentListComponent implements OnChanges, AfterViewInit {
             this.customTemplateRef.nativeElement.children && this.customTemplateRef.nativeElement.children.length > 0) {
                 this.hasCustomTemplate = true;
             }
-      }
+    }
 
     reset(): void {
         this.attachments = [];
