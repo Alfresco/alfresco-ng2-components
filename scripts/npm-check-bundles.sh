@@ -58,14 +58,14 @@ do
  npm pack '@alfresco/'$PACKAGE@$VERSION
  tar zxf 'alfresco-'$PACKAGE-$VERSION.tgz
 
- if [ ! -f package/bundles/$PACKAGE.js ]; then
+ if [ ! -f package/bundles/$PACKAGE'.umd.js' ]; then
     error_out '31;1' "$PACKAGE bundles not found!" >&2
     exit 1
  else
      echo "bundles ok!"
  fi
 
- if [ ! -f package/bundles/$PACKAGE.js.map ]; then
+ if [ ! -f package/bundles/$PACKAGE'.umd.js.map' ]; then
     error_out '31;1' "$PACKAGE js.map not found!" >&2
     exit 1
  else
@@ -97,7 +97,6 @@ do
 done
  cd ..
 
-rm -rf temp
 
 set_npm_registry
 
