@@ -20,7 +20,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import * as moment from 'moment';
+import moment from 'moment-es6';
 import { AppConfigService } from '../index';
 import { CardViewDateItemModel } from '../models/card-view-dateitem.model';
 import { CardViewUpdateService } from '../services/card-view-update.service';

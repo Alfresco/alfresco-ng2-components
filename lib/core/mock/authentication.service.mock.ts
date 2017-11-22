@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/throw';
 
 // TODO: should be extending AuthenticationService
 export class AuthenticationMock /*extends AuthenticationService*/ {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DebugElement } from '@angular/core';
+import { Component } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MaterialModule } from '../material.module';
@@ -23,7 +23,6 @@ import { InfoDrawerLayoutComponent } from './info-drawer-layout.component';
 import { InfoDrawerComponent } from './info-drawer.component';
 
 describe('InfoDrawerComponent', () => {
-    let debugElement: DebugElement;
     let element: HTMLElement;
     let component: InfoDrawerComponent;
     let fixture: ComponentFixture<InfoDrawerComponent>;
@@ -42,9 +41,8 @@ describe('InfoDrawerComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(InfoDrawerComponent);
-        component = fixture.componentInstance;
         element = fixture.nativeElement;
-        debugElement = fixture.debugElement;
+        component = fixture.componentInstance;
     });
 
     it('should create instance of InfoDrawerComponent', () => {
@@ -85,7 +83,6 @@ class CustomInfoDrawerComponent {
 
 describe('Custom InfoDrawer', () => {
     let fixture: ComponentFixture<CustomInfoDrawerComponent>;
-    let component: CustomInfoDrawerComponent;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -102,7 +99,6 @@ describe('Custom InfoDrawer', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(CustomInfoDrawerComponent);
-        component = fixture.componentInstance;
         fixture.detectChanges();
     });
 

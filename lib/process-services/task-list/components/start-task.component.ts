@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { LogService, MOMENT_DATE_FORMATS,
-    MomentDateAdapter, PeopleProcessService, UserPreferencesService, UserProcessModel } from '@alfresco/adf-core';
+import { LogService, PeopleProcessService, UserPreferencesService, UserProcessModel } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
-import * as moment from 'moment';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import { MOMENT_DATE_FORMATS, MomentDateAdapter } from '@alfresco/adf-core';
+import moment from 'moment-es6';
 import { Moment } from 'moment';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { Form } from '../models/form.model';
 import { StartTaskModel } from '../models/start-task.model';
 import { TaskDetailsModel } from '../models/task-details.model';
@@ -32,13 +32,13 @@ import { TaskListService } from './../services/tasklist.service';
     templateUrl: './start-task.component.html',
     styleUrls: ['./start-task.component.scss'],
     providers: [
-        {provide: DateAdapter, useClass: MomentDateAdapter},
-        {provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS}],
+        { provide: DateAdapter, useClass: MomentDateAdapter },
+        { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }],
     encapsulation: ViewEncapsulation.None
 })
 export class StartTaskComponent implements OnInit {
 
-    public  FORMAT_DATE: string = 'DD/MM/YYYY';
+    public FORMAT_DATE: string = 'DD/MM/YYYY';
 
     @Input()
     appId: number;
@@ -72,16 +72,15 @@ export class StartTaskComponent implements OnInit {
      * @param translate
      * @param taskService
      */
-    constructor(
-        private taskService: TaskListService,
-        private peopleService: PeopleProcessService,
-        private dateAdapter: DateAdapter<Moment>,
-        private preferences: UserPreferencesService,
-        private logService: LogService) {
+    constructor(private taskService: TaskListService,
+                private peopleService: PeopleProcessService,
+                private dateAdapter: DateAdapter<Moment>,
+                private preferences: UserPreferencesService,
+                private logService: LogService) {
     }
 
     ngOnInit() {
-        this.preferences.locale$.subscribe( (locale) => {
+        this.preferences.locale$.subscribe((locale) => {
             this.dateAdapter.setLocale(locale);
         });
         this.loadFormsTask();

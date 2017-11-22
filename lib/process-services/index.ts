@@ -15,11 +15,18 @@
  * limitations under the License.
  */
 
+export * from './process.module';
+
+export * from './process-list/process-list.module';
+export * from './task-list/task-list.module';
+export * from './app-list/apps-list.module';
+export * from './attachment/attachment.module';
+export * from './comments/comments.module';
+export * from './people/people.module';
+
 export * from './process-list';
 export * from './task-list';
 export * from './app-list';
 export * from './attachment';
 export * from './comments';
 export * from './people';
-
-export * from './process.module';

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import * as moment from 'moment';
+import moment from 'moment-es6';
 
 export class Chart {
     id: string;

@@ -18,7 +18,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MaterialModule } from '../../material.module';
 import { PeopleProcessService } from '@alfresco/adf-core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { startTaskMock } from '../../mock';
 import { StartTaskModel } from '../models/start-task.model';
 import { TaskListService } from '../services/tasklist.service';
@@ -35,8 +35,6 @@ describe('StartTaskComponent', () => {
     let getFormlistSpy: jasmine.Spy;
     let getWorkflowUsersSpy: jasmine.Spy;
     let createNewTaskSpy: jasmine.Spy;
-    let attachFormSpy: jasmine.Spy;
-    let assignUserSpy: jasmine.Spy;
     let fakeForms =    [
         {
             id: 123,
@@ -173,7 +171,7 @@ describe('StartTaskComponent', () => {
                     assignee: null
                 }
             ));
-            attachFormSpy = spyOn(service, 'attachFormToATask').and.returnValue(Observable.of(
+            spyOn(service, 'attachFormToATask').and.returnValue(Observable.of(
                 {
                     id: 91,
                     name: 'fakeName',
@@ -234,7 +232,7 @@ describe('StartTaskComponent', () => {
                     assignee: null
                 }
             ));
-            assignUserSpy = spyOn(service, 'assignTaskByUserId').and.returnValue(Observable.of(
+            spyOn(service, 'assignTaskByUserId').and.returnValue(Observable.of(
                 {
                     id: 91,
                     name: 'fakeName',

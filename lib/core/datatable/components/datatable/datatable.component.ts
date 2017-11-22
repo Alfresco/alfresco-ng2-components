@@ -20,17 +20,23 @@ import {
     IterableDiffers, OnChanges, Output, SimpleChange, SimpleChanges, TemplateRef, ViewEncapsulation
 } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material';
-import { Observable, Observer, Subscription } from 'rxjs/Rx';
-import { DataColumnListComponent } from '../../../data-column';
+import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
+import { Observer } from 'rxjs/Observer';
+import { DataColumnListComponent } from '../../../data-column/data-column-list.component';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRowEvent } from '../../data/data-row-event.model';
 import { DataRow } from '../../data/data-row.model';
 import { DataSorting } from '../../data/data-sorting.model';
 import { DataTableAdapter } from '../../data/datatable-adapter';
 
-import { ObjectDataRow, ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
+import { ObjectDataRow } from '../../data/object-datarow.model';
+import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 import { DataCellEvent } from './data-cell.event';
 import { DataRowActionEvent } from './data-row-action.event';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/buffer';
+import 'rxjs/add/operator/filter';
 
 @Component({
     selector: 'adf-datatable',
@@ -40,7 +46,8 @@ import { DataRowActionEvent } from './data-row-action.event';
 })
 export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck {
 
-    @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
+    @ContentChild(DataColumnListComponent)
+    columnList: DataColumnListComponent;
 
     @Input()
     data: DataTableAdapter;

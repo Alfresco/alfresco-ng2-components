@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MaterialModule } from '../material.module';
@@ -25,7 +25,6 @@ import { AlfrescoApiService, CoreModule } from '@alfresco/adf-core';
 describe('VersionListComponent', () => {
     let component: VersionListComponent;
     let fixture: ComponentFixture<VersionListComponent>;
-    let element: DebugElement;
 
     const nodeId = 'test-id';
     const versionId = '1.0';
@@ -53,7 +52,7 @@ describe('VersionListComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(VersionListComponent);
-        element = fixture.debugElement;
+
         component = fixture.componentInstance;
         component.id = nodeId;
     });

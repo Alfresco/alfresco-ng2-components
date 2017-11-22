@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import * as moment from 'moment';
+import moment from 'moment-es6';
 import { MaterialModule } from '../../../../../../material.module';
 import { FormFieldModel, FormModel } from '../../../index';
 import { DynamicTableColumn  } from './../../dynamic-table-column.model';
@@ -27,8 +26,6 @@ import { DynamicTableModel } from './../../dynamic-table.widget.model';
 import { DateEditorComponent } from './date.editor';
 
 describe('DateEditorComponent', () => {
-    let debugElement: DebugElement;
-    let element: HTMLElement;
     let component: DateEditorComponent;
     let fixture: ComponentFixture<DateEditorComponent>;
     let row: DynamicTableRow;
@@ -49,8 +46,6 @@ describe('DateEditorComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(DateEditorComponent);
         component = fixture.componentInstance;
-        element = fixture.nativeElement;
-        debugElement = fixture.debugElement;
 
         row = <DynamicTableRow> { value: { date: '1879-03-14T00:00:00.000Z' } };
         column = <DynamicTableColumn> { id: 'date', type: 'Date' };

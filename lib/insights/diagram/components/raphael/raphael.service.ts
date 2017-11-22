@@ -45,7 +45,7 @@ export class RaphaelService implements OnDestroy {
 
     public getPaperBuilder(ctx: any): any {
         if (typeof Raphael === 'undefined') {
-            throw new Error('ng2-charts configuration issue: Embedding Chart.js lib is mandatory');
+            throw new Error('insights configuration issue: Embedding Chart.js lib is mandatory');
         }
         let paper = new Raphael(ctx, this.width, this.height);
         // paper.setViewBox(0, 0, 583, 344.08374193550003, false);

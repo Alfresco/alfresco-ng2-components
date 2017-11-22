@@ -15,7 +15,16 @@
  * limitations under the License.
  */
 
-export * from './data/index';
+export * from './data/datatable-adapter';
+
+export * from './data/data-row.model';
+export * from './data/data-row-event.model';
+export * from './data/data-column.model';
+export * from './data/data-sorting.model';
+
+export * from './data/object-datarow.model';
+export * from './data/object-datatable-adapter';
+export * from './data/object-datacolumn.model';
 
 export * from './components/datatable/data-cell.event';
 export * from './components/datatable/data-row-action.event';
@@ -30,5 +39,3 @@ export * from './components/datatable/location-cell.component';
 export * from './directives/loading-template.directive';
 export * from './directives/no-content-template.directive';
 export * from './directives/no-permission-template.directive';
-
-export * from './datatable.module';

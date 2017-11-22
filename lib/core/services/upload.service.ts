@@ -16,12 +16,14 @@
  */
 
 import { EventEmitter, Injectable } from '@angular/core';
-import * as minimatch from 'minimatch';
-import { Subject } from 'rxjs/Rx';
+import * as minimatch_ from 'minimatch';
+import { Subject } from 'rxjs/Subject';
 import { AppConfigService } from '../app-config/app-config.service';
 import { FileUploadCompleteEvent, FileUploadDeleteEvent, FileUploadErrorEvent, FileUploadEvent } from '../events/file.event';
 import { FileModel, FileUploadProgress, FileUploadStatus } from '../models/file.model';
 import { AlfrescoApiService } from './alfresco-api.service';
+
+let minimatch: any = (<any> minimatch_).default || minimatch_;
 
 @Injectable()
 export class UploadService {
@@ -86,6 +88,7 @@ export class UploadService {
 
     private filterElement(file: FileModel) {
         let isAllowed = true;
+
         if (this.excludedFileList) {
             isAllowed = this.excludedFileList.filter(expr => minimatch(file.name, expr)).length === 0;
         }

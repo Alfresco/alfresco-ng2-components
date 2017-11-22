@@ -18,5 +18,3 @@
 export * from './people.component';
 export * from './people-list.component';
 export * from './people-search.component';
-
-export * from './people.module';

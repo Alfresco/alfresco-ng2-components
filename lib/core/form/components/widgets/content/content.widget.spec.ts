@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { DebugElement, SimpleChange } from '@angular/core';
+import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MaterialModule } from '../../../../material.module';
 import { By } from '@angular/platform-browser';
 import { TranslationService, ContentService } from '../../../../services';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 
 import { EcmModelService } from '../../../services/ecm-model.service';
 import { FormService } from '../../../services/form.service';
@@ -34,10 +34,8 @@ describe('ContentWidgetComponent', () => {
 
     let component: ContentWidgetComponent;
     let fixture: ComponentFixture<ContentWidgetComponent>;
-    let debug: DebugElement;
     let element: HTMLElement;
 
-    let serviceForm: FormService;
     let processContentService: ProcessContentService;
     let serviceContent: ContentService;
 
@@ -80,7 +78,6 @@ describe('ContentWidgetComponent', () => {
             ]
         }).compileComponents();
 
-        serviceForm = TestBed.get(FormService);
         serviceContent = TestBed.get(ContentService);
         processContentService = TestBed.get(ProcessContentService);
 
@@ -94,7 +91,6 @@ describe('ContentWidgetComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(ContentWidgetComponent);
         component = fixture.componentInstance;
-        debug = fixture.debugElement;
         element = fixture.nativeElement;
         fixture.detectChanges();
     });

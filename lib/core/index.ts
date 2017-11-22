@@ -15,6 +15,28 @@
  * limitations under the License.
  */
 
+export * from './core.module';
+
+export * from './viewer/viewer.module';
+export * from './userinfo/userinfo.module';
+export * from './toolbar/toolbar.module';
+export * from './settings/host-settings.module';
+export * from './pagination/pagination.module';
+export * from './login/login.module';
+export * from './language-menu/language-menu.module';
+export * from './info-drawer/info-drawer.module';
+export * from './data-column/data-column.module';
+export * from './datatable/datatable.module';
+export * from './context-menu/context-menu.module';
+export * from './collapsable/collapsable.module';
+export * from './card-view/card-view.module';
+export * from './app-config/app-config.module';
+export * from './form/form.module';
+
+export * from './pipes/pipe.module';
+export * from './services/service.module';
+export * from './directives/directive.module';
+
 export * from './viewer';
 export * from './userinfo';
 export * from './toolbar';
@@ -34,10 +56,9 @@ export * from './form';
 export * from './pipes';
 export * from './services';
 export * from './directives';
+
 export * from './utils';
 export * from './interface';
 export * from './models';
 export * from './events';
 export * from './mock';
-
-export * from './core.module';

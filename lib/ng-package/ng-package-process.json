@@ -1,0 +1,26 @@
+{
+  "$schema": "./node_modules/ng-packagr/ng-package.schema.json",
+  "workingDirectory": "./ng_work",
+  "src": "../process-services/",
+  "dest": "../process-services/dist/",
+  "lib": {
+    "entryFile": "./public-api.ts",
+    "externals": {
+      "alfresco-js-api": "alfresco-js-api",
+      "flatModuleFile": "adf-process-services",
+      "minimatch": "minimatch",
+      "@angular/platform-browser/animations": "@angular/platform-browser/animations",
+      "@angular/material": "@angular/material",
+      "@angular/flex-layout": "@angular/flex-layout",
+      "@alfresco/adf-core": "@alfresco/adf-core",
+      "@angular/material-moment-adapter": "@angular/material-moment-adapter",
+      "@angular/animations": "@angular/animations",
+      "@angular/cdk/platform": "@angular/cdk/platform",
+      "@angular/material/core": "@angular/material/core",
+      "moment": "moment",
+      "moment-es6": "moment-es6",
+      "moment/src/moment": "moment/src/moment",
+      "@ngx-translate/core": "@ngx-translate/core"
+    }
+  }
+}

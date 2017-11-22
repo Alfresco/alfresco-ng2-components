@@ -15,33 +15,17 @@
  * limitations under the License.
  */
 
-import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ChartsModule } from 'ng2-charts';
 
 import { MaterialModule } from '../../material.module';
 
-import { DiagramsModule } from '../../diagram';
+import { DiagramsModule } from '../../diagram/diagram.module';
 import { Chart } from '../../diagram';
 import { ReportQuery } from '../../diagram';
 import * as analyticMock from '../../mock';
 import { AnalyticsGeneratorComponent } from '../components/analytics-generator.component';
-import { AnalyticsReportHeatMapComponent } from '../components/analytics-report-heat-map.component';
-import { AnalyticsReportListComponent } from '../components/analytics-report-list.component';
-import { AnalyticsReportParametersComponent } from '../components/analytics-report-parameters.component';
-import { WIDGET_ANALYTICS_DIRECTIVES } from '../components/widgets/index';
-import { AnalyticsService } from '../services/analytics.service';
-
-export const ANALYTICS_DIRECTIVES: any[] = [
-    AnalyticsGeneratorComponent,
-    AnalyticsReportParametersComponent,
-    AnalyticsReportListComponent,
-    AnalyticsReportHeatMapComponent,
-    WIDGET_ANALYTICS_DIRECTIVES
-];
-export const ANALYTICS_PROVIDERS: any[] = [
-    AnalyticsService
-];
+import { AnalyticsProcessModule } from '../analytics-process.module';
 
 declare let jasmine: any;
 
@@ -49,21 +33,14 @@ describe('AnalyticsGeneratorComponent', () => {
 
     let component: any;
     let fixture: ComponentFixture<AnalyticsGeneratorComponent>;
-    let debug: DebugElement;
-    let element: HTMLElement;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
                 ChartsModule,
-                DiagramsModule
-            ],
-            declarations: [
-                ...ANALYTICS_DIRECTIVES
-            ],
-            providers: [
-                ...ANALYTICS_PROVIDERS
+                DiagramsModule,
+                AnalyticsProcessModule
             ]
         }).compileComponents();
     }));
@@ -71,8 +48,6 @@ describe('AnalyticsGeneratorComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(AnalyticsGeneratorComponent);
         component = fixture.componentInstance;
-        debug = fixture.debugElement;
-        element = fixture.nativeElement;
 
         fixture.detectChanges();
 

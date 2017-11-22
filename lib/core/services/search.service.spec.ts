@@ -17,11 +17,11 @@
 
 import { async, TestBed } from '@angular/core/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { fakeApi, fakeError, fakeSearch } from '../mock/search.service.mock';
+import { searchMockApi, mockError, fakeSearch } from '../mock/search.service.mock';
 import { CookieServiceMock } from './../mock/cookie.service.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { SettingsService } from './settings.service';
-import { AppConfigModule } from '../app-config';
+import { AppConfigModule } from '../app-config/app-config.module';
 import { AuthenticationService } from './authentication.service';
 import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
@@ -63,15 +63,15 @@ describe('SearchService', () => {
     beforeEach(() => {
         service = TestBed.get(SearchService);
         apiService = TestBed.get(AlfrescoApiService);
-        spyOn(apiService, 'getInstance').and.returnValue(fakeApi);
+        spyOn(apiService, 'getInstance').and.returnValue(searchMockApi);
     });
 
     it('should call search API with no additional options', (done) => {
         let searchTerm = 'searchTerm63688';
-        spyOn(fakeApi.core.queriesApi, 'findNodes').and.returnValue(Promise.resolve(fakeSearch));
+        spyOn(searchMockApi.core.queriesApi, 'findNodes').and.returnValue(Promise.resolve(fakeSearch));
         service.getNodeQueryResults(searchTerm).subscribe(
             () => {
-                expect(fakeApi.core.queriesApi.findNodes).toHaveBeenCalledWith(searchTerm, undefined);
+                expect(searchMockApi.core.queriesApi.findNodes).toHaveBeenCalledWith(searchTerm, undefined);
                 done();
             }
         );
@@ -83,10 +83,10 @@ describe('SearchService', () => {
             rootNodeId: '-root-',
             nodeType: 'cm:content'
         };
-        spyOn(fakeApi.core.queriesApi, 'findNodes').and.returnValue(Promise.resolve(fakeSearch));
+        spyOn(searchMockApi.core.queriesApi, 'findNodes').and.returnValue(Promise.resolve(fakeSearch));
         service.getNodeQueryResults(searchTerm, options).subscribe(
             () => {
-                expect(fakeApi.core.queriesApi.findNodes).toHaveBeenCalledWith(searchTerm, options);
+                expect(searchMockApi.core.queriesApi.findNodes).toHaveBeenCalledWith(searchTerm, options);
                 done();
             }
         );
@@ -103,19 +103,19 @@ describe('SearchService', () => {
     });
 
     it('should notify errors returned from the API', (done) => {
-        spyOn(fakeApi.core.queriesApi, 'findNodes').and.returnValue(Promise.reject(fakeError));
+        spyOn(searchMockApi.core.queriesApi, 'findNodes').and.returnValue(Promise.reject(mockError));
         service.getNodeQueryResults('').subscribe(
             () => {},
             (res: any) => {
                 expect(res).toBeDefined();
-                expect(res).toEqual(fakeError);
+                expect(res).toEqual(mockError);
                 done();
             }
         );
     });
 
     it('should notify a general error if the API does not return a specific error', (done) => {
-        spyOn(fakeApi.core.queriesApi, 'findNodes').and.returnValue(Promise.reject(null));
+        spyOn(searchMockApi.core.queriesApi, 'findNodes').and.returnValue(Promise.reject(null));
         service.getNodeQueryResults('').subscribe(
             () => {},
             (res: any) => {

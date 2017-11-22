@@ -15,8 +15,12 @@
  * limitations under the License.
  */
 
-export * from './components/index';
-export * from './components/raphael/index';
-export * from './models/index';
+export * from './components/diagram-sequence-flow.component';
+export * from './components/diagram.component';
 
-export * from './diagram.module';
+export * from './services/diagram-color.service';
+export * from './services/diagrams.service';
+
+export * from './models/diagram.model';
+export * from './models/chart.model';
+export * from './models/report.model';

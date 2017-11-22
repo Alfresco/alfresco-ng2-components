@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { DiagramsModule } from '../diagram';
+import { DiagramsModule } from '../diagram/diagram.module';
 import { MaterialModule } from '../material.module';
 
 import { ChartsModule } from 'ng2-charts';
@@ -30,21 +30,14 @@ import { AnalyticsReportHeatMapComponent } from './components/analytics-report-h
 import { AnalyticsReportListComponent } from './components/analytics-report-list.component';
 import { AnalyticsReportParametersComponent } from './components/analytics-report-parameters.component';
 import { AnalyticsComponent } from './components/analytics.component';
-import { WIDGET_ANALYTICS_DIRECTIVES } from './components/widgets/index';
+
+import { CheckboxWidgetAanalyticsComponent } from './components/widgets/checkbox/checkbox.widget';
+import { DateRangeWidgetComponent } from './components/widgets/date-range/date-range.widget';
+import { DropdownWidgetAanalyticsComponent } from './components/widgets/dropdown/dropdown.widget';
+import { DurationWidgetComponent } from './components/widgets/duration/duration.widget';
+import { NumberWidgetAanlyticsComponent } from './components/widgets/number/number.widget';
+
 import { AnalyticsService } from './services/analytics.service';
-
-export const ANALYTICS_DIRECTIVES: any[] = [
-    AnalyticsComponent,
-    AnalyticsReportListComponent,
-    AnalyticsReportParametersComponent,
-    AnalyticsGeneratorComponent,
-    AnalyticsReportHeatMapComponent,
-    WIDGET_ANALYTICS_DIRECTIVES
-];
-
-export const ANALYTICS_PROVIDERS: any[] = [
-    AnalyticsService
-];
 
 @NgModule({
     imports: [
@@ -58,14 +51,31 @@ export const ANALYTICS_PROVIDERS: any[] = [
         ToolbarModule
     ],
     declarations: [
-        ...ANALYTICS_DIRECTIVES
+        AnalyticsComponent,
+        AnalyticsReportListComponent,
+        AnalyticsReportParametersComponent,
+        AnalyticsGeneratorComponent,
+        AnalyticsReportHeatMapComponent,
+        DropdownWidgetAanalyticsComponent,
+        NumberWidgetAanlyticsComponent,
+        DurationWidgetComponent,
+        CheckboxWidgetAanalyticsComponent,
+        DateRangeWidgetComponent
     ],
     providers: [
-        ...ANALYTICS_PROVIDERS
+        AnalyticsService
     ],
     exports: [
-        ...ANALYTICS_DIRECTIVES,
-        MaterialModule
+        AnalyticsComponent,
+        AnalyticsReportListComponent,
+        AnalyticsReportParametersComponent,
+        AnalyticsGeneratorComponent,
+        AnalyticsReportHeatMapComponent,
+        DropdownWidgetAanalyticsComponent,
+        NumberWidgetAanlyticsComponent,
+        DurationWidgetComponent,
+        CheckboxWidgetAanalyticsComponent,
+        DateRangeWidgetComponent
     ]
 })
 export class AnalyticsProcessModule {}

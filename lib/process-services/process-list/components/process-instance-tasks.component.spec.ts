@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { DebugElement, NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
+import { NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 
 import { TaskDetailsModel } from '../../task-list';
 
@@ -31,7 +31,6 @@ describe('ProcessInstanceTasksComponent', () => {
 
     let component: ProcessInstanceTasksComponent;
     let fixture: ComponentFixture<ProcessInstanceTasksComponent>;
-    let debugElement: DebugElement;
     let service: ProcessService;
     let getProcessTasksSpy: jasmine.Spy;
 
@@ -54,7 +53,6 @@ describe('ProcessInstanceTasksComponent', () => {
 
         fixture = TestBed.createComponent(ProcessInstanceTasksComponent);
         component = fixture.componentInstance;
-        debugElement = fixture.debugElement;
         service = fixture.debugElement.injector.get(ProcessService);
         getProcessTasksSpy = spyOn(service, 'getProcessTasks').and.returnValue(Observable.of([new TaskDetailsModel(taskDetailsMock)]));
 

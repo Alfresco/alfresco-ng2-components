@@ -23,6 +23,7 @@ import { ProcessFilterParamRepresentationModel } from '../models/filter-process.
 import { ProcessDefinitionRepresentation } from '../models/process-definition.model';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessInstance } from '../models/process-instance.model';
+import 'rxjs/add/observable/throw';
 
 declare let moment: any;
 

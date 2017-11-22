@@ -15,12 +15,14 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService } from '../../services';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { LogService } from '../../services/log.service';
 import { Injectable } from '@angular/core';
 import { AlfrescoApi } from 'alfresco-js-api';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { ExternalContent } from '../components/widgets/core/external-content';
 import { ExternalContentLink } from '../components/widgets/core/external-content-link';
+import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class ActivitiContentService {

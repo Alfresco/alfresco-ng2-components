@@ -1,13 +1,9 @@
-@import './hyperlink/hyperlink.widget';
-@import './container/container.widget';
-@import './people/people.widget';
-
 @mixin adf-form-theme($theme) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
     $warn: map-get($theme, warn);
 
-    @include mat-hyperlink-widget-theme($theme);
+    @include adf-hyperlink-widget-theme($theme);
 
     ul > li > form-field > .adf-focus {
         .adf-label {

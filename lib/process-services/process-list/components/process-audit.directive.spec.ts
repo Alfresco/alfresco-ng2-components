@@ -17,7 +17,7 @@
 
 import { Component } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { ProcessService } from './../services/process.service';
 import { ProcessAuditDirective } from './process-audit.directive';
 

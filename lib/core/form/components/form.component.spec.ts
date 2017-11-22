@@ -16,8 +16,8 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { LogService } from '../../services';
-import { Observable } from 'rxjs/Rx';
+import { LogService } from '../../services/log.service';
+import { Observable } from 'rxjs/Observable';
 import { fakeForm } from '../../mock';
 import { FormService } from './../services/form.service';
 import { NodeService } from './../services/node.service';

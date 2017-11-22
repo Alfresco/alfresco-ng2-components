@@ -17,7 +17,7 @@
 
 import { async, TestBed } from '@angular/core/testing';
 import { Response, ResponseOptions } from '@angular/http';
-import { AlfrescoApiService, LogService } from '../../index';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { FormDefinitionModel } from '../models/form-definition.model';
 import { formModelTabs } from '../../mock';
 import { EcmModelService } from './ecm-model.service';
@@ -54,7 +54,6 @@ describe('Form service', () => {
 
     let service: FormService;
     let apiService: AlfrescoApiService;
-    let logService: LogService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -69,7 +68,6 @@ describe('Form service', () => {
     beforeEach(() => {
         service = TestBed.get(FormService);
         apiService = TestBed.get(AlfrescoApiService);
-        logService = TestBed.get(LogService);
     });
 
     beforeEach(() => {

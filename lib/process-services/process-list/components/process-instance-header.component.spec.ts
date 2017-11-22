@@ -26,7 +26,6 @@ import { ProcessInstanceHeaderComponent } from './process-instance-header.compon
 
 describe('ProcessInstanceHeaderComponent', () => {
 
-    let service: ProcessService;
     let component: ProcessInstanceHeaderComponent;
     let fixture: ComponentFixture<ProcessInstanceHeaderComponent>;
 
@@ -46,10 +45,8 @@ describe('ProcessInstanceHeaderComponent', () => {
     }));
 
     beforeEach(() => {
-
         fixture = TestBed.createComponent(ProcessInstanceHeaderComponent);
         component = fixture.componentInstance;
-        service = TestBed.get(ProcessService);
 
         component.processInstance = new ProcessInstance(exampleProcess);
     });

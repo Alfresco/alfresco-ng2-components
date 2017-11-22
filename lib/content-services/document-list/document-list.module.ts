@@ -22,7 +22,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { DataTableModule, PaginationModule, ToolbarModule } from '@alfresco/adf-core';
 
 import { MaterialModule } from '../material.module';
-import { UploadModule } from '../upload';
+import { UploadModule } from '../upload/upload.module';
 
 import { ContentActionListComponent } from './components/content-action/content-action-list.component';
 import { ContentActionComponent } from './components/content-action/content-action.component';

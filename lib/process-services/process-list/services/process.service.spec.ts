@@ -20,7 +20,7 @@ import { async } from '@angular/core/testing';
 import { AlfrescoApi } from 'alfresco-js-api';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { exampleProcess, fakeProcessInstances } from '../../mock';
-import { fakeError, fakeProcessDef, fakeTasksList } from '../../mock';
+import { mockError, fakeProcessDef, fakeTasksList } from '../../mock';
 import { ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessService } from './process.service';
@@ -101,11 +101,11 @@ describe('ProcessService', () => {
         });
 
         it('should pass on any error that is returned by the API', async(() => {
-            getProcessInstances = getProcessInstances.and.returnValue(Promise.reject(fakeError));
+            getProcessInstances = getProcessInstances.and.returnValue(Promise.reject(mockError));
             service.getProcessInstances(null).subscribe(
                 () => {},
                 (res) => {
-                    expect(res).toBe(fakeError);
+                    expect(res).toBe(mockError);
                 }
             );
         }));
@@ -152,11 +152,11 @@ describe('ProcessService', () => {
         });
 
         it('should pass on any error that is returned by the API', async(() => {
-            getProcessInstance = getProcessInstance.and.returnValue(Promise.reject(fakeError));
+            getProcessInstance = getProcessInstance.and.returnValue(Promise.reject(mockError));
             service.getProcess(null).subscribe(
                 () => {},
                 (res) => {
-                    expect(res).toBe(fakeError);
+                    expect(res).toBe(mockError);
                 }
             );
         }));
@@ -215,12 +215,12 @@ describe('ProcessService', () => {
         }));
 
         it('should pass on any error that is returned by the API', async(() => {
-            startNewProcessInstance = startNewProcessInstance.and.returnValue(Promise.reject(fakeError));
+            startNewProcessInstance = startNewProcessInstance.and.returnValue(Promise.reject(mockError));
 
             service.startProcess(processDefId, processName).subscribe(
                 () => {},
                 (res) => {
-                    expect(res).toBe(fakeError);
+                    expect(res).toBe(mockError);
                 }
             );
         }));
@@ -265,11 +265,11 @@ describe('ProcessService', () => {
         });
 
         it('should pass on any error that is returned by the API', async(() => {
-            deleteProcessInstance = deleteProcessInstance.and.returnValue(Promise.reject(fakeError));
+            deleteProcessInstance = deleteProcessInstance.and.returnValue(Promise.reject(mockError));
             service.cancelProcess(null).subscribe(
                 () => {},
                 (res) => {
-                    expect(res).toBe(fakeError);
+                    expect(res).toBe(mockError);
                 }
             );
         }));
@@ -327,11 +327,11 @@ describe('ProcessService', () => {
         });
 
         it('should pass on any error that is returned by the API', async(() => {
-            getProcessDefinitions = getProcessDefinitions.and.returnValue(Promise.reject(fakeError));
+            getProcessDefinitions = getProcessDefinitions.and.returnValue(Promise.reject(mockError));
             service.getProcessDefinitions().subscribe(
                 () => {},
                 (res) => {
-                    expect(res).toBe(fakeError);
+                    expect(res).toBe(mockError);
                 }
             );
         }));
@@ -396,11 +396,11 @@ describe('ProcessService', () => {
         });
 
         it('should pass on any error that is returned by the API', async(() => {
-            listTasks = listTasks.and.returnValue(Promise.reject(fakeError));
+            listTasks = listTasks.and.returnValue(Promise.reject(mockError));
             service.getProcessTasks(processId).subscribe(
                 () => {},
                 (res) => {
-                    expect(res).toBe(fakeError);
+                    expect(res).toBe(mockError);
                 }
             );
         }));
@@ -447,11 +447,11 @@ describe('ProcessService', () => {
             });
 
             it('should pass on any error that is returned by the API', async(() => {
-                getVariablesSpy = getVariablesSpy.and.returnValue(Promise.reject(fakeError));
+                getVariablesSpy = getVariablesSpy.and.returnValue(Promise.reject(mockError));
                 service.getProcessInstanceVariables(null).subscribe(
                     () => {},
                     (res) => {
-                        expect(res).toBe(fakeError);
+                        expect(res).toBe(mockError);
                     }
                 );
             }));
@@ -484,11 +484,11 @@ describe('ProcessService', () => {
             });
 
             it('should pass on any error that is returned by the API', async(() => {
-                createOrUpdateProcessInstanceVariablesSpy = createOrUpdateProcessInstanceVariablesSpy.and.returnValue(Promise.reject(fakeError));
+                createOrUpdateProcessInstanceVariablesSpy = createOrUpdateProcessInstanceVariablesSpy.and.returnValue(Promise.reject(mockError));
                 service.createOrUpdateProcessInstanceVariables('123', updatedVariables).subscribe(
                     () => {},
                     (res) => {
-                        expect(res).toBe(fakeError);
+                        expect(res).toBe(mockError);
                     }
                 );
             }));
@@ -513,11 +513,11 @@ describe('ProcessService', () => {
             });
 
             it('should pass on any error that is returned by the API', async(() => {
-                deleteProcessInstanceVariableSpy = deleteProcessInstanceVariableSpy.and.returnValue(Promise.reject(fakeError));
+                deleteProcessInstanceVariableSpy = deleteProcessInstanceVariableSpy.and.returnValue(Promise.reject(mockError));
                 service.deleteProcessInstanceVariable('123', 'myVar').subscribe(
                     () => {},
                     (res) => {
-                        expect(res).toBe(fakeError);
+                        expect(res).toBe(mockError);
                     }
                 );
             }));

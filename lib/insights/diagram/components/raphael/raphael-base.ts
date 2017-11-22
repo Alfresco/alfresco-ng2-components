@@ -22,7 +22,7 @@ export class RaphaelBase {
 
     paper: any;
 
-    private element: ElementRef;
+    public element: ElementRef;
 
     public constructor(element: ElementRef,
                        private raphaelService: RaphaelService) {

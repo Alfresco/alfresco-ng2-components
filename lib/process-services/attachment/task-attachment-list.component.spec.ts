@@ -19,7 +19,7 @@ import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MaterialModule } from '../material.module';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { TaskAttachmentListComponent } from './task-attachment-list.component';
 import { ProcessContentService } from '@alfresco/adf-core';
 
@@ -29,9 +29,9 @@ describe('TaskAttachmentList', () => {
     let fixture: ComponentFixture<TaskAttachmentListComponent>;
     let service: ProcessContentService;
     let getTaskRelatedContentSpy: jasmine.Spy;
+    let mockAttachment: any;
     let deleteContentSpy: jasmine.Spy;
     let getFileRawContentSpy: jasmine.Spy;
-    let mockAttachment: any;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -64,7 +64,7 @@ describe('TaskAttachmentList', () => {
                     id: 8,
                     name: 'fake.zip',
                     created: 1494595697381,
-                    createdBy: {id: 2, firstName: 'user', lastName: 'user', email: 'user@user.com'},
+                    createdBy: { id: 2, firstName: 'user', lastName: 'user', email: 'user@user.com' },
                     relatedContent: true,
                     contentAvailable: true,
                     link: false,
@@ -77,7 +77,7 @@ describe('TaskAttachmentList', () => {
                     id: 9,
                     name: 'fake.jpg',
                     created: 1494595655381,
-                    createdBy: {id: 2, firstName: 'user', lastName: 'user', email: 'user@user.com'},
+                    createdBy: { id: 2, firstName: 'user', lastName: 'user', email: 'user@user.com' },
                     relatedContent: true,
                     contentAvailable: true,
                     link: false,
@@ -97,14 +97,13 @@ describe('TaskAttachmentList', () => {
 
         let blobObj = new Blob();
         getFileRawContentSpy = spyOn(service, 'getFileRawContent').and.returnValue(Observable.of(
-            blobObj
-        ));
+            blobObj;
 
     });
 
     it('should load attachments when taskId specified', () => {
         let change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({'taskId': change});
+        component.ngOnChanges({ 'taskId': change });
         expect(getTaskRelatedContentSpy).toHaveBeenCalled();
     });
 
@@ -112,7 +111,7 @@ describe('TaskAttachmentList', () => {
         let emitSpy = spyOn(component.error, 'emit');
         getTaskRelatedContentSpy.and.returnValue(Observable.throw({}));
         let change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({'taskId': change});
+        component.ngOnChanges({ 'taskId': change });
         expect(emitSpy).toHaveBeenCalled();
     });
 
@@ -123,7 +122,7 @@ describe('TaskAttachmentList', () => {
             expect(attachments[0].id).toEqual(mockAttachment.data[0].id);
         });
 
-        component.ngOnChanges({'taskId': change});
+        component.ngOnChanges({ 'taskId': change });
     });
 
     it('should not attach when no taskId is specified', () => {
@@ -133,7 +132,7 @@ describe('TaskAttachmentList', () => {
 
     it('should display attachments when the task has attachments', async(() => {
         let change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({'taskId': change});
+        component.ngOnChanges({ 'taskId': change });
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
@@ -141,9 +140,56 @@ describe('TaskAttachmentList', () => {
         });
     }));
 
-    it('should display all actions if attachements are not read only', () => {
+    it('emit document when a user wants to view the document', () => {
+        component.emitDocumentContent(mockAttachment.data[1]);
+        fixture.detectChanges();
+        expect(getFileRawContentSpy).toHaveBeenCalled();
+    });
+
+    it('download document when a user wants to view the document', () => {
+        component.downloadContent(mockAttachment.data[1]);
+        fixture.detectChanges();
+        expect(getFileRawContentSpy).toHaveBeenCalled();
+    });
+
+    it('should show the empty list drag and drop component when the task is not completed', async(() => {
+        getTaskRelatedContentSpy.and.returnValue(Observable.of({
+            'size': 0,
+            'total': 0,
+            'start': 0,
+            'data': []
+        }));
         let change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({'taskId': change});
+        component.ngOnChanges({ 'taskId': change });
+        component.disabled = false;
+
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(fixture.nativeElement.querySelector('.adf-custom-empty-template')).not.toBeNull();
+        });
+    }));
+
+    it('should not show the empty list drag and drop component when is disabled', async(() => {
+        getTaskRelatedContentSpy.and.returnValue(Observable.of({
+            'size': 0,
+            'total': 0,
+            'start': 0,
+            'data': []
+        }));
+        let change = new SimpleChange(null, '123', true);
+        component.ngOnChanges({ 'taskId': change });
+        component.disabled = true;
+
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(fixture.nativeElement.querySelector('.adf-custom-empty-template')).toBeNull();
+            expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual('ADF_TASK_LIST.ATTACHMENT.EMPTY.HEADER');
+        });
+    }));
+
+    it('should display all actions if attachments are not read only', () => {
+        let change = new SimpleChange(null, '123', true);
+        component.ngOnChanges({ 'taskId': change });
         fixture.detectChanges();
 
         let actionButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="action_menu_0"]');
@@ -159,7 +205,7 @@ describe('TaskAttachmentList', () => {
 
     it('should not display remove action if attachments are read only', () => {
         let change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({'taskId': change});
+        component.ngOnChanges({ 'taskId': change });
         component.disabled = true;
         fixture.detectChanges();
 
@@ -182,44 +228,10 @@ describe('TaskAttachmentList', () => {
             'data': []
         }));
         let change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({'taskId': change});
+        component.ngOnChanges({ 'taskId': change });
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual('ADF_TASK_LIST.ATTACHMENT.EMPTY.HEADER');
-        });
-    }));
-
-    it('should show the empty list drag and drop component when the task is not completed', async(() => {
-        getTaskRelatedContentSpy.and.returnValue(Observable.of({
-            'size': 0,
-            'total': 0,
-            'start': 0,
-            'data': []
-        }));
-        let change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({'taskId': change});
-
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('adf-empty-list .adf-empty-list-drag_drop').innerText.trim()).toEqual('ADF_TASK_LIST.ATTACHMENT.EMPTY.DRAG-AND-DROP.TITLE');
-        });
-    }));
-
-    it('should not show the empty list drag and drop component when is disabled', async(() => {
-        getTaskRelatedContentSpy.and.returnValue(Observable.of({
-            'size': 0,
-            'total': 0,
-            'start': 0,
-            'data': []
-        }));
-        let change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({'taskId': change});
-        component.disabled = true;
-
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('adf-empty-list .adf-empty-list-drag_drop')).toBeNull();
             expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual('ADF_TASK_LIST.ATTACHMENT.EMPTY.HEADER');
         });
     }));
@@ -232,7 +244,7 @@ describe('TaskAttachmentList', () => {
             'data': []
         }));
         let change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({'taskId': change});
+        component.ngOnChanges({ 'taskId': change });
         component.disabled = true;
 
         fixture.whenStable().then(() => {
@@ -244,7 +256,7 @@ describe('TaskAttachmentList', () => {
     it('should not show the empty list component when the attachments list is not empty for completed task', async(() => {
         getTaskRelatedContentSpy.and.returnValue(Observable.of(mockAttachment));
         let change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({'taskId': change});
+        component.ngOnChanges({ 'taskId': change });
         component.disabled = true;
 
         fixture.whenStable().then(() => {
@@ -266,17 +278,17 @@ describe('TaskAttachmentList', () => {
         }));
 
         it('should fetch new attachments when taskId changed', () => {
-            component.ngOnChanges({'taskId': change});
+            component.ngOnChanges({ 'taskId': change });
             expect(getTaskRelatedContentSpy).toHaveBeenCalledWith('456');
         });
 
-        it('should NOT fetch new attachments when empty changeset made', () => {
+        it('should NOT fetch new attachments when empty change set made', () => {
             component.ngOnChanges({});
             expect(getTaskRelatedContentSpy).not.toHaveBeenCalled();
         });
 
         it('should NOT fetch new attachments when taskId changed to null', () => {
-            component.ngOnChanges({'taskId': nullChange});
+            component.ngOnChanges({ 'taskId': nullChange });
             expect(getTaskRelatedContentSpy).not.toHaveBeenCalled();
         });
     });
@@ -290,6 +302,12 @@ describe('TaskAttachmentList', () => {
 
         it('should display a dialog to the user when the Add button clicked', () => {
             expect(true).toBe(true);
+        });
+
+        it('delete content by contentId', () => {
+            component.deleteAttachmentById(5);
+            fixture.detectChanges();
+            expect(deleteContentSpy).toHaveBeenCalled();
         });
 
     });

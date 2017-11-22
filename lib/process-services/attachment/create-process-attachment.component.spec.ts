@@ -26,7 +26,6 @@ declare let jasmine: any;
 
 describe('Activiti Process Create Attachment', () => {
 
-    let service: ProcessContentService;
     let component: CreateProcessAttachmentComponent;
     let fixture: ComponentFixture<CreateProcessAttachmentComponent>;
     let element: HTMLElement;
@@ -67,7 +66,6 @@ describe('Activiti Process Create Attachment', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(CreateProcessAttachmentComponent);
         component = fixture.componentInstance;
-        service = fixture.debugElement.injector.get(ProcessContentService);
         element = fixture.nativeElement;
 
         component.processInstanceId = '9999';

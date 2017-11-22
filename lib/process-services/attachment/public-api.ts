@@ -19,5 +19,3 @@ export * from './task-attachment-list.component';
 export * from './process-attachment-list.component';
 export * from './create-process-attachment.component';
 export * from './create-task-attachment.component';
-
-export * from './attachment.module';

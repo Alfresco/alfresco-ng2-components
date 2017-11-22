@@ -49,10 +49,12 @@ import {
     TaskDetailsEvent,
     TaskFiltersComponent,
     TaskListComponent,
-    TaskListService
+    TaskListService,
+    TaskAttachmentListComponent,
+    ProcessUploadService
 } from '@alfresco/adf-process-services';
 import { LogService } from '@alfresco/adf-core';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService, UploadService } from '@alfresco/adf-core';
 import {
     DataSorting,
     ObjectDataRow,
@@ -69,6 +71,9 @@ const currentTaskIdNew = '__NEW__';
     selector: 'adf-activiti',
     templateUrl: './activiti.component.html',
     styleUrls: ['./activiti.component.scss'],
+    providers: [
+                { provide: UploadService, useClass: ProcessUploadService }
+               ],
     encapsulation: ViewEncapsulation.None
 })
 export class ActivitiComponent implements AfterViewInit, OnDestroy, OnInit {
@@ -78,6 +83,9 @@ export class ActivitiComponent implements AfterViewInit, OnDestroy, OnInit {
 
     @ViewChild(TaskListComponent)
     taskList: TaskListComponent;
+
+    @ViewChild(TaskAttachmentListComponent)
+    taskAttachList: TaskAttachmentListComponent;
 
     @ViewChild(ProcessFiltersComponent)
     activitiprocessfilter: ProcessFiltersComponent;
@@ -147,7 +155,8 @@ export class ActivitiComponent implements AfterViewInit, OnDestroy, OnInit {
                 private apiService: AlfrescoApiService,
                 private logService: LogService,
                 formRenderingService: FormRenderingService,
-                formService: FormService) {
+                formService: FormService,
+                private uploadService: UploadService) {
         this.dataTasks = new ObjectDataTableAdapter();
         this.dataTasks.setSorting(new DataSorting('created', 'desc'));
 
@@ -247,6 +256,7 @@ export class ActivitiComponent implements AfterViewInit, OnDestroy, OnInit {
             this.currentProcessInstanceId = null;
         });
         this.layoutType = AppsListComponent.LAYOUT_GRID;
+        this.uploadService.fileUploadComplete.subscribe(value => this.onTaskFileUploadComplete(value.data));
 
     }
 
@@ -479,5 +489,9 @@ export class ActivitiComponent implements AfterViewInit, OnDestroy, OnInit {
     onAssignTask() {
         this.taskList.reload();
         this.currentTaskId = null;
+    }
+
+    onTaskFileUploadComplete(content: any) {
+        this.taskAttachList.add(content);
     }
 }

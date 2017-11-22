@@ -15,25 +15,21 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { MaterialModule } from '../material.module';
+import { MatDateFormats } from '@angular/material';
 
-import { FolderCreateDirective } from './folder-create.directive';
-import { FolderEditDirective } from './folder-edit.directive';
+export const MOMENT_DATE_FORMATS: MatDateFormats = {
+    parse: {
+        dateInput: 'DD/MM/YYYY'
+    },
+    display: {
+        dateInput: 'DD/MM/YYYY',
+        monthYearLabel: 'MMMM Y',
+        dateA11yLabel: 'LL',
+        monthYearA11yLabel: 'MMMM Y'
+    }
+};
 
-@NgModule({
-    imports: [
-        CommonModule,
-        MaterialModule
-    ],
-    declarations: [
-        FolderCreateDirective,
-        FolderEditDirective
-    ],
-    exports: [
-        FolderCreateDirective,
-        FolderEditDirective
-    ]
-})
-export class DirectiveModule {}
+const dateNames: string[] = [];
+for (let date = 1; date <= 31; date++) {
+    dateNames.push(String(date));
+}

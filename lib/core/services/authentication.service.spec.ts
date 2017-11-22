@@ -20,7 +20,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { CookieServiceMock } from './../mock/cookie.service.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { SettingsService } from './settings.service';
-import { AppConfigModule } from '../app-config';
+import { AppConfigModule } from '../app-config/app-config.module';
 import { AuthenticationService } from './authentication.service';
 import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
@@ -33,7 +33,6 @@ declare let jasmine: any;
 describe('AuthenticationService', () => {
     let apiService: AlfrescoApiService;
     let authService: AuthenticationService;
-    let settingsService: SettingsService;
     let preferences: UserPreferencesService;
     let storage: StorageService;
     let cookie: CookieService;
@@ -64,7 +63,6 @@ describe('AuthenticationService', () => {
     beforeEach(() => {
         apiService = TestBed.get(AlfrescoApiService);
         authService = TestBed.get(AuthenticationService);
-        settingsService = TestBed.get(SettingsService);
         preferences = TestBed.get(UserPreferencesService);
         cookie = TestBed.get(CookieService);
         storage = TestBed.get(StorageService);

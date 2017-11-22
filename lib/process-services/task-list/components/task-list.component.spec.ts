@@ -78,7 +78,7 @@ describe('TaskListComponent', () => {
         ]
     };
 
-    let fakeErrorTaskList = {
+    let mockErrorTaskList = {
         error: 'wrong request'
     };
 
@@ -124,7 +124,6 @@ describe('TaskListComponent', () => {
 
     let component: TaskListComponent;
     let fixture: ComponentFixture<TaskListComponent>;
-    let taskListService: TaskListService;
     let appConfig: AppConfigService;
 
     beforeEach(async(() => {
@@ -149,7 +148,6 @@ describe('TaskListComponent', () => {
         fixture = TestBed.createComponent(TaskListComponent);
         component = fixture.componentInstance;
 
-        taskListService = TestBed.get(TaskListService);
         appConfig.config = Object.assign(appConfig.config, {
             'adf-task-list': {
                 'presets': {
@@ -385,7 +383,7 @@ describe('TaskListComponent', () => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             'status': 404,
             contentType: 'application/json',
-            responseText: JSON.stringify(fakeErrorTaskList)
+            responseText: JSON.stringify(mockErrorTaskList)
         });
     });
 

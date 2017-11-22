@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService } from '../../services';
+import { LogService } from '../../services/log.service';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { FormModel } from '../components/widgets/core/form.model';
+import 'rxjs/add/observable/fromPromise';
 
 @Injectable()
 export class EcmModelService {

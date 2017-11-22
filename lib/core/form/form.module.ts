@@ -20,9 +20,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { TranslateModule } from '@ngx-translate/core';
-import { DataTableModule } from '../datatable';
-import { DataColumnModule } from '../data-column';
-import { PipeModule } from '../pipes';
+import { DataTableModule } from '../datatable/datatable.module';
+import { DataColumnModule } from '../data-column/data-column.module';
+import { PipeModule } from '../pipes/pipe.module';
 
 import { MaterialModule } from '../material.module';
 

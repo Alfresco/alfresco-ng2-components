@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DynamicComponentMapper, DynamicComponentResolveFunction, DynamicComponentResolver } from '../../services';
+import { DynamicComponentMapper, DynamicComponentResolveFunction, DynamicComponentResolver } from '../../services/dynamic-component-mapper.service';
 import { Injectable, Type } from '@angular/core';
 
 import {

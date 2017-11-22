@@ -19,6 +19,7 @@ import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
+import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class ProcessFilterService {

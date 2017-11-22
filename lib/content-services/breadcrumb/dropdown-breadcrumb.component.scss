@@ -27,6 +27,10 @@
             overflow: hidden;
             margin-top: 35px;
             margin-left: -$dropdownHorizontalOffset;
+
+            &.mat-select {
+                width: 0;
+            }
         }
 
         &-current-folder {

@@ -23,7 +23,7 @@
  * @returns {CardViewDateItemModel} .
  */
 
-import * as moment from 'moment';
+import moment from 'moment-es6';
 import { CardViewItem } from '../interface/card-view-item.interface';
 import { DynamicComponentModel } from '../services/dynamic-component-mapper.service';
 import { CardViewBaseItemModel, CardViewItemProperties } from './card-view-baseitem.model';

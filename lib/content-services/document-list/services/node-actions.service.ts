@@ -20,8 +20,9 @@ import { ContentService } from '@alfresco/adf-core';
 import { EventEmitter, Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { Subject } from 'rxjs/Rx';
-import { ContentNodeSelectorComponent, ContentNodeSelectorComponentData } from '../../content-node-selector/content-node-selector.component';
+import { Subject } from 'rxjs/Subject';
+import { ContentNodeSelectorComponent } from '../../content-node-selector/content-node-selector.component';
+import { ContentNodeSelectorComponentData } from '../../content-node-selector/content-node-selector.component-data.interface';
 import { ShareDataRow } from '../data/share-data-row.model';
 import { DocumentListService } from './document-list.service';
 

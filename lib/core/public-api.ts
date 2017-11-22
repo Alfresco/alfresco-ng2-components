@@ -15,19 +15,4 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { DiagramEndEventComponent } from './diagram-end-event.component';
-import { DiagramEventComponent } from './diagram-event.component';
-import { DiagramStartEventComponent } from './diagram-start-event.component';
-
-// primitives
-export * from './diagram-event.component';
-export * from './diagram-start-event.component';
-export * from './diagram-end-event.component';
-
-export const DIAGRAM_EVENTS_DIRECTIVES: any[] = [
-    DiagramEventComponent,
-    DiagramStartEventComponent,
-    DiagramEndEventComponent
-];
+export * from './index';

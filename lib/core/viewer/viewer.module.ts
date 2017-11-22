@@ -20,8 +20,8 @@ import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { MaterialModule } from '../material.module';
-import { ToolbarModule } from '../toolbar';
-import { PipeModule } from '../pipes';
+import { ToolbarModule } from '../toolbar/toolbar.module';
+import { PipeModule } from '../pipes/pipe.module';
 import { ImgViewerComponent } from './components/imgViewer.component';
 import { MediaPlayerComponent } from './components/mediaPlayer.component';
 import { PdfViewerComponent } from './components/pdfViewer.component';
@@ -33,6 +33,7 @@ import { ViewerSidebarComponent } from './components/viewer-sidebar.component';
 import { ViewerToolbarComponent } from './components/viewer-toolbar.component';
 import { ViewerComponent } from './components/viewer.component';
 import { ViewerExtensionDirective } from './directives/viewer-extension.directive';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
     imports: [
@@ -40,7 +41,8 @@ import { ViewerExtensionDirective } from './directives/viewer-extension.directiv
         MaterialModule,
         TranslateModule,
         ToolbarModule,
-        PipeModule
+        PipeModule,
+        FlexLayoutModule
     ],
     declarations: [
         ViewerComponent,

@@ -16,8 +16,11 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AppConfigService, AlfrescoApiService, EcmModelService, LogService, FormFieldOption, FormService, FormValues, FormModel, FormOutcomeModel } from '@alfresco/adf-core';
+import { AppConfigService, AlfrescoApiService, EcmModelService, LogService,
+         FormFieldOption, FormService, FormValues, FormModel,
+         FormOutcomeModel, FormOutcomeEvent } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 
 interface ActivitiData {
     rest: {
@@ -37,6 +40,8 @@ interface ActivitiData {
 export class InMemoryFormService extends FormService {
 
     private data: ActivitiData;
+
+    executeOutcome = new Subject<FormOutcomeEvent>();
 
     constructor(appConfig: AppConfigService,
                 ecmModelService: EcmModelService,

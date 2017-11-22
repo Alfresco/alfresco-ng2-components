@@ -17,7 +17,7 @@
 
 /* tslint:disable:component-selector  */
 
-import { PeopleProcessService } from '../../../../services';
+import { PeopleProcessService } from '../../../../services/people-process.service';
 import { UserProcessModel } from '../../../../models';
 import { ENTER, ESCAPE } from '@angular/cdk/keycodes';
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';

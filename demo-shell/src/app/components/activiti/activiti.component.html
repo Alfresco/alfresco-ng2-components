@@ -85,10 +85,20 @@
                     </div>
                     <mat-card>
                         <mat-card-content>
-                            <adf-task-attachment-list
-                                [taskId]="currentTaskId"
-                                (attachmentClick)="onContentClick($event)">
-                            </adf-task-attachment-list>
+                                <adf-upload-drag-area
+                                   [parentId]="currentTaskId"
+                                   [showNotificationBar]="false">
+                                   <adf-task-attachment-list #taskAttachList  
+                                       [taskId]="currentTaskId">
+                                       <div adf-empty-list>
+                                           <div adf-empty-list-header class="adf-empty-list-header"> {{'ADF_TASK_LIST.ATTACHMENT.EMPTY.HEADER' | translate}} </div>
+                                               <div adf-empty-list-body>
+                                                   <div fxHide.lt-md="true" class="adf-empty-list-drag_drop">{{'ADF_TASK_LIST.ATTACHMENT.EMPTY.DRAG-AND-DROP.TITLE' | translate}}</div>
+                                                   <div fxHide.lt-md="true" class="adf-empty-list__any-files-here-to-add"> {{'ADF_TASK_LIST.ATTACHMENT.EMPTY.DRAG-AND-DROP.SUBTITLE' | translate}} </div> 
+                                            </div>        
+                                        </div>
+                                   </adf-task-attachment-list>
+                                </adf-upload-drag-area>
                         </mat-card-content>
                     </mat-card>
                 </div>
@@ -149,7 +159,7 @@
                             <data-column key="name" title="ADF_PROCESS_LIST.PROPERTIES.NAME" class="full-width name-column"></data-column>
                             <data-column key="created" title="ADF_PROCESS_LIST.PROPERTIES.CREATED" class="hidden"></data-column>
                         </data-columns> -->
-                        
+
                     </adf-process-instance-list>
                 </div>
                 <div class="activiti-grid-item activiti-processes-details" *ngIf="!isStartProcessMode()" fxFlex.gt-md="1 1 auto">

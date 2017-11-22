@@ -17,8 +17,13 @@
 
 import { Injectable } from '@angular/core';
 import { RenditionEntry, RenditionPaging } from 'alfresco-js-api';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { AlfrescoApiService } from './alfresco-api.service';
+import 'rxjs/add/observable/fromPromise';
+import 'rxjs/add/operator/concatMap';
+import 'rxjs/add/operator/combineAll';
+import 'rxjs/add/observable/interval';
+import 'rxjs/add/operator/takeWhile';
 
 /**
  * RenditionsService

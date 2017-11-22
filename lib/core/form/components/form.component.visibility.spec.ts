@@ -16,8 +16,8 @@
  */
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { DebugElement, SimpleChange } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { SimpleChange } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -36,13 +36,9 @@ const SELECT_OPEN_ANIMATION = 200;
 const SELECT_CLOSE_ANIMATION = 500;
 
 describe('FormComponent UI and visibiltiy', () => {
-    let debugElement: DebugElement;
-    let element: HTMLElement;
     let component: FormComponent;
     let service: FormService;
     let fixture: ComponentFixture<FormComponent>;
-    let formDefinitionSpy: jasmine.Spy;
-    let taskSpy: jasmine.Spy;
 
     function openSelect() {
         let trigger: HTMLElement;
@@ -63,8 +59,6 @@ describe('FormComponent UI and visibiltiy', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(FormComponent);
         component = fixture.componentInstance;
-        element = fixture.nativeElement;
-        debugElement = fixture.debugElement;
         service = fixture.debugElement.injector.get(FormService);
     });
 
@@ -75,8 +69,8 @@ describe('FormComponent UI and visibiltiy', () => {
     describe('form definition', () => {
 
         it('should display two text fields form definition', () => {
-            taskSpy = spyOn(service, 'getTask').and.returnValue(Observable.of({}));
-            formDefinitionSpy = spyOn(service, 'getTaskForm').and.returnValue(Observable.of(formDefinitionTwoTextFields));
+            spyOn(service, 'getTask').and.returnValue(Observable.of({}));
+            spyOn(service, 'getTaskForm').and.returnValue(Observable.of(formDefinitionTwoTextFields));
 
             let change = new SimpleChange(null, 1, true);
             component.ngOnChanges({ 'taskId': change });
@@ -92,8 +86,8 @@ describe('FormComponent UI and visibiltiy', () => {
         });
 
         it('should display dropdown field', fakeAsync(() => {
-            taskSpy = spyOn(service, 'getTask').and.returnValue(Observable.of({}));
-            formDefinitionSpy = spyOn(service, 'getTaskForm').and.returnValue(Observable.of(formDefinitionDropdownField));
+            spyOn(service, 'getTask').and.returnValue(Observable.of({}));
+            spyOn(service, 'getTaskForm').and.returnValue(Observable.of(formDefinitionDropdownField));
 
             let change = new SimpleChange(null, 1, true);
             component.ngOnChanges({ 'taskId': change });
@@ -123,8 +117,8 @@ describe('FormComponent UI and visibiltiy', () => {
         describe('Visibility conditions', () => {
 
             it('should hide the field based on the next one', () => {
-                taskSpy = spyOn(service, 'getTask').and.returnValue(Observable.of({}));
-                formDefinitionSpy = spyOn(service, 'getTaskForm').and.returnValue(Observable.of(formDefVisibilitiFieldDependsOnNextOne));
+                spyOn(service, 'getTask').and.returnValue(Observable.of({}));
+                spyOn(service, 'getTaskForm').and.returnValue(Observable.of(formDefVisibilitiFieldDependsOnNextOne));
 
                 let change = new SimpleChange(null, 1, true);
                 component.ngOnChanges({ 'taskId': change });
@@ -139,8 +133,8 @@ describe('FormComponent UI and visibiltiy', () => {
             });
 
             it('should hide the field based on the previous one', () => {
-                taskSpy = spyOn(service, 'getTask').and.returnValue(Observable.of({}));
-                formDefinitionSpy = spyOn(service, 'getTaskForm').and.returnValue(Observable.of(formDefVisibilitiFieldDependsOnPreviousOne));
+                spyOn(service, 'getTask').and.returnValue(Observable.of({}));
+                spyOn(service, 'getTaskForm').and.returnValue(Observable.of(formDefVisibilitiFieldDependsOnPreviousOne));
 
                 let change = new SimpleChange(null, 1, true);
                 component.ngOnChanges({ 'taskId': change });
@@ -155,8 +149,8 @@ describe('FormComponent UI and visibiltiy', () => {
             });
 
             it('should show the hidden field when the visibility condition change to true', () => {
-                taskSpy = spyOn(service, 'getTask').and.returnValue(Observable.of({}));
-                formDefinitionSpy = spyOn(service, 'getTaskForm').and.returnValue(Observable.of(formDefVisibilitiFieldDependsOnNextOne));
+                spyOn(service, 'getTask').and.returnValue(Observable.of({}));
+                spyOn(service, 'getTaskForm').and.returnValue(Observable.of(formDefVisibilitiFieldDependsOnNextOne));
 
                 let change = new SimpleChange(null, 1, true);
                 component.ngOnChanges({ 'taskId': change });
@@ -181,8 +175,8 @@ describe('FormComponent UI and visibiltiy', () => {
 
         describe('Readonly Form', () => {
             it('should display two text fields readonly', () => {
-                taskSpy = spyOn(service, 'getTask').and.returnValue(Observable.of({}));
-                formDefinitionSpy = spyOn(service, 'getTaskForm').and.returnValue(Observable.of(formReadonlyTwoTextFields));
+                spyOn(service, 'getTask').and.returnValue(Observable.of({}));
+                spyOn(service, 'getTaskForm').and.returnValue(Observable.of(formReadonlyTwoTextFields));
 
                 let change = new SimpleChange(null, 1, true);
                 component.ngOnChanges({ 'taskId': change });

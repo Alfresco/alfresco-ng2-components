@@ -32,7 +32,6 @@ describe('PeopleListComponent', () => {
 
     let peopleListComponent: PeopleListComponent;
     let fixture: ComponentFixture<PeopleListComponent>;
-    let element: HTMLElement;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -46,7 +45,6 @@ describe('PeopleListComponent', () => {
 
             fixture = TestBed.createComponent(PeopleListComponent);
             peopleListComponent = fixture.componentInstance;
-            element = fixture.nativeElement;
             fixture.detectChanges();
         });
     }));

@@ -17,8 +17,10 @@
 
 import { Directive, EventEmitter, HostListener, Input, OnChanges, Output } from '@angular/core';
 import { FavoriteBody, MinimalNodeEntity } from 'alfresco-js-api';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
+import 'rxjs/add/observable/fromPromise';
+import 'rxjs/observable/forkJoin';
 
 @Directive({
     selector: '[adf-node-favorite]',
@@ -37,7 +39,8 @@ export class NodeFavoriteDirective implements OnChanges {
         this.toggleFavorite();
     }
 
-    constructor(private alfrescoApiService: AlfrescoApiService) {}
+    constructor(private alfrescoApiService: AlfrescoApiService) {
+    }
 
     ngOnChanges(changes) {
         if (!changes.selection.currentValue.length) {
@@ -111,7 +114,7 @@ export class NodeFavoriteDirective implements OnChanges {
         // shared files have nodeId
         const id = (<any> selected).entry.nodeId || selected.entry.id;
 
-        const promise =  this.alfrescoApiService.getInstance()
+        const promise = this.alfrescoApiService.getInstance()
             .core.favoritesApi.getFavorite('-me-', id);
 
         return Observable.from(promise)

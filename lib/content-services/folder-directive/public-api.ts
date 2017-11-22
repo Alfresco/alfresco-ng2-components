@@ -15,6 +15,5 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-export * from './diagram-tooltip.component';
+export * from './folder-create.directive';
+export * from './folder-edit.directive';

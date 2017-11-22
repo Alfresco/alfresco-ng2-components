@@ -21,10 +21,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule, TRANSLATION_PROVIDER } from '@alfresco/adf-core';
 
-import { MaterialModule } from './material.module';
+import { DiagramsModule } from './diagram/diagram.module';
+import { AnalyticsProcessModule } from './analytics-process/analytics-process.module';
 
-import { AnalyticsProcessModule } from './analytics-process';
-import { DiagramsModule } from './diagram';
+import { MaterialModule } from './material.module';
 
 @NgModule({
     imports: [
@@ -34,8 +34,8 @@ import { DiagramsModule } from './diagram';
         ReactiveFormsModule,
         BrowserAnimationsModule,
         MaterialModule,
-        AnalyticsProcessModule,
-        DiagramsModule
+        DiagramsModule,
+        AnalyticsProcessModule
     ],
     providers: [
         {
@@ -54,8 +54,8 @@ import { DiagramsModule } from './diagram';
         ReactiveFormsModule,
         BrowserAnimationsModule,
         MaterialModule,
-        AnalyticsProcessModule,
-        DiagramsModule
+        DiagramsModule,
+        AnalyticsProcessModule
     ]
 })
 export class InsightsModule {

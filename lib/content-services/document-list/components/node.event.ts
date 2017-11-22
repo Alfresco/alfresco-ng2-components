@@ -19,6 +19,11 @@ import { BaseEvent } from '@alfresco/adf-core';
 import { MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
 
 export class NodeEntityEvent extends BaseEvent<MinimalNodeEntity> {
+
+    value: MinimalNodeEntity;
+
+    defaultPrevented: boolean;
+
     constructor(entity: MinimalNodeEntity) {
         super();
         this.value = entity;
@@ -26,6 +31,11 @@ export class NodeEntityEvent extends BaseEvent<MinimalNodeEntity> {
 }
 
 export class NodeEntryEvent extends BaseEvent<MinimalNodeEntryEntity> {
+
+    value: MinimalNodeEntryEntity;
+
+    defaultPrevented: boolean;
+
     constructor(entity: MinimalNodeEntryEntity) {
         super();
         this.value = entity;

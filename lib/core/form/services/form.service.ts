@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService } from '../../services';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { LogService } from '../../services/log.service';
 import { UserProcessModel } from '../../models';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import { FormDefinitionModel } from '../models/form-definition.model';
 import { ContentLinkModel } from './../components/widgets/core/content-link.model';
 import { GroupModel } from './../components/widgets/core/group.model';
@@ -28,6 +30,10 @@ import {
     ValidateDynamicTableRowEvent, ValidateFormEvent, ValidateFormFieldEvent
 } from './../events/index';
 import { EcmModelService } from './ecm-model.service';
+import 'rxjs/add/observable/fromPromise';
+import 'rxjs/add/operator/defaultIfEmpty';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class FormService {

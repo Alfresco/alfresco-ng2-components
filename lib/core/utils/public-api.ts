@@ -17,4 +17,5 @@
 
 export * from './object-utils';
 export * from './file-utils';
+export * from './moment-date-formats.model';
 export * from './momentDateAdapter';

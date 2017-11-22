@@ -37,7 +37,6 @@ describe('ContainerWidgetComponent', () => {
     let widget: ContainerWidgetComponent;
     let fixture: ComponentFixture<ContainerWidgetComponent>;
     let element: HTMLElement;
-    let contentService: ActivitiContentService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -55,7 +54,6 @@ describe('ContainerWidgetComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(ContainerWidgetComponent);
-        contentService = TestBed.get(ActivitiContentService);
 
         element = fixture.nativeElement;
         widget = fixture.componentInstance;
@@ -169,7 +167,7 @@ describe('ContainerWidgetComponent', () => {
             fixture.detectChanges();
             fixture.whenStable()
                 .then(() => {
-                    expect(element.querySelector('.container-widget__header').classList.contains('hidden')).toBe(true);
+                    expect(element.querySelector('.container-widget__header').getAttribute('hidden')).not.toBeNull();
                 });
         });
 
@@ -181,7 +179,7 @@ describe('ContainerWidgetComponent', () => {
                 fixture.detectChanges();
                 fixture.whenStable()
                     .then(() => {
-                        expect(element.querySelector('.container-widget__header').classList.contains('hidden')).toBe(true);
+                        expect(element.querySelector('.container-widget__header').getAttribute('hidden')).not.toBeNull();
                     });
             });
             widget.onFieldChanged(null);
