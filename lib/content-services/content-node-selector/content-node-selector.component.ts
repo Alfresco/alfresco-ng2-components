@@ -200,12 +200,10 @@ export class ContentNodeSelectorComponent implements OnInit {
      * Perform the call to searchService with the proper parameters
      */
     private querySearch(): void {
-        if (this.isSearchTermLongEnough()) {
             this.loadingSearchResults = true;
 
             this.contentNodeSelectorService.search(this.searchTerm, this.siteId, this.skipCount, this.pageSize)
                 .subscribe(this.showSearchResults.bind(this));
-        }
     }
 
     /**
@@ -226,13 +224,6 @@ export class ContentNodeSelectorComponent implements OnInit {
 
         this.pagination = results.list.pagination;
         this.highlight();
-    }
-
-    /**
-     * Predicate method to decide whether searchTerm fulfills the necessary criteria
-     */
-    isSearchTermLongEnough(): boolean {
-        return this.searchTerm.length > 3;
     }
 
     /**
