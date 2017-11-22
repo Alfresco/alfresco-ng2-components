@@ -43,7 +43,7 @@ export class RequiredCellValidator implements CellValidator {
                 if (value === null || value === undefined || value === '') {
                     if (summary) {
                         summary.isValid = false;
-                        summary.text = `Field '${column.name}' is required.`;
+                        summary.message = `Field '${column.name}' is required.`;
                     }
                     return false;
                 }

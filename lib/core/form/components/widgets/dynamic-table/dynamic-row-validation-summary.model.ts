@@ -17,9 +17,14 @@
 
 /* tslint:disable:component-selector  */
 
-export interface DynamicRowValidationSummary {
+import { ErrorMessageModel } from '../core/index';
+
+export class DynamicRowValidationSummary extends ErrorMessageModel {
 
     isValid: boolean;
-    text: string;
 
+    constructor(json?: any) {
+        super(json);
+        this.isValid = json.isValid;
+    }
 }
