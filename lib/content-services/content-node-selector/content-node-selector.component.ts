@@ -46,9 +46,13 @@ export class ContentNodeSelectorComponent implements OnInit {
     pagination: Pagination;
     skipCount: number = 0;
     infiniteScroll: boolean = false;
+    buttonActionName: string;
 
     @Input()
     title: string;
+
+    @Input()
+    actionName: string;
 
     @Input()
     currentFolderId: string | null = null;
@@ -85,6 +89,7 @@ export class ContentNodeSelectorComponent implements OnInit {
                 @Optional() private containingDialog?: MatDialogRef<ContentNodeSelectorComponent>) {
         if (data) {
             this.title = data.title;
+            this.actionName = data.actionName;
             this.select = data.select;
             this.currentFolderId = data.currentFolderId;
             this.dropdownHideMyFiles = data.dropdownHideMyFiles;
@@ -92,6 +97,7 @@ export class ContentNodeSelectorComponent implements OnInit {
             this.rowFilter = data.rowFilter;
             this.imageResolver = data.imageResolver;
         }
+        this.buttonActionName = this.actionName ? `NODE_SELECTOR.${this.actionName.toUpperCase()}` : 'NODE_SELECTOR.CHOOSE';
 
         if (this.containingDialog) {
             this.inDialog = true;

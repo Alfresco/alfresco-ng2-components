@@ -31,6 +31,9 @@ export class DropdownSitesComponent implements OnInit {
     @Input()
     siteList: any[] = null;
 
+    @Input()
+    placeholder: string = 'DROPDOWN.PLACEHOLDER_LABEL';
+
     @Output()
     change: EventEmitter<SiteModel> = new EventEmitter();
 
