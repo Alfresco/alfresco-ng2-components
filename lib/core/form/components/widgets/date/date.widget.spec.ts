@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import * as moment from 'moment';
+import moment from 'moment-es6';
 import { ActivitiContentService } from '../../../services/activiti-alfresco.service';
 import { MaterialModule } from '../../../../material.module';
 import { ErrorWidgetComponent } from '../error/error.component';
@@ -30,7 +30,6 @@ describe('DateWidgetComponent', () => {
 
     let widget: DateWidgetComponent;
     let fixture: ComponentFixture<DateWidgetComponent>;
-    let nativeElement: any;
     let element: HTMLElement;
 
     beforeEach(async(() => {
@@ -51,12 +50,6 @@ describe('DateWidgetComponent', () => {
     }));
 
     beforeEach(() => {
-        nativeElement = {
-            querySelector: function () {
-                return null;
-            }
-        };
-
         fixture = TestBed.createComponent(DateWidgetComponent);
 
         element = fixture.nativeElement;

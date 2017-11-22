@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReportParametersModel } from '../../diagram';
+import { DiagramsModule } from '../../diagram/diagram.module';
+import { AnalyticsProcessModule } from '../analytics-process.module';
 import { AnalyticsReportListComponent } from '../components/analytics-report-list.component';
 import { MaterialModule } from '../../material.module';
-import { AnalyticsService } from '../services/analytics.service';
+import { ReportParametersModel } from '../../diagram/models/report.model';
 
 declare let jasmine: any;
 
@@ -38,19 +38,14 @@ describe('AnalyticsReportListComponent', () => {
 
     let component: AnalyticsReportListComponent;
     let fixture: ComponentFixture<AnalyticsReportListComponent>;
-    let debug: DebugElement;
     let element: HTMLElement;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                MaterialModule
-            ],
-            declarations: [
-                AnalyticsReportListComponent
-            ],
-            providers: [
-                AnalyticsService
+                MaterialModule,
+                DiagramsModule,
+                AnalyticsProcessModule
             ]
         }).compileComponents();
     }));
@@ -58,7 +53,6 @@ describe('AnalyticsReportListComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(AnalyticsReportListComponent);
         component = fixture.componentInstance;
-        debug = fixture.debugElement;
         element = fixture.nativeElement;
     });
 

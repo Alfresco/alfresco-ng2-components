@@ -18,7 +18,7 @@
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatProgressSpinnerModule } from '@angular/material';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { ProcessInstanceListComponent } from './process-list.component';
 
 import { AppConfigService } from '@alfresco/adf-core';
@@ -281,13 +281,13 @@ describe('ProcessInstanceListComponent', () => {
 
     it('should throw an exception when the response is wrong', fakeAsync(() => {
         let emitSpy: jasmine.Spy = spyOn(component.error, 'emit');
-        let fakeError = 'Fake server error';
-        getProcessInstancesSpy.and.returnValue(Observable.throw(fakeError));
+        let mockError = 'Fake server error';
+        getProcessInstancesSpy.and.returnValue(Observable.throw(mockError));
         component.appId = 1;
         component.state = 'open';
         fixture.detectChanges();
         tick();
-        expect(emitSpy).toHaveBeenCalledWith(fakeError);
+        expect(emitSpy).toHaveBeenCalledWith(mockError);
     }));
 
     it('should emit onSuccess event when reload() called', fakeAsync(() => {

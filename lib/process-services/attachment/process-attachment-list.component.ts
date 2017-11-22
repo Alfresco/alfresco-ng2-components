@@ -19,8 +19,6 @@ import { ContentService, ThumbnailService } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, NgZone, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ProcessContentService } from '@alfresco/adf-core';
 
-declare var require: any;
-
 @Component({
     selector: 'adf-process-attachment-list',
     styleUrls: ['./process-attachment-list.component.scss'],
@@ -44,7 +42,7 @@ export class ProcessAttachmentListComponent implements OnChanges {
     error: EventEmitter<any> = new EventEmitter<any>();
 
     @Input()
-    emptyListImageUrl: string = require('../assets/images/empty_doc_lib.svg');
+    emptyListImageUrl: string = './assets/images/empty_doc_lib.svg';
 
     attachments: any[] = [];
     isLoading: boolean = true;

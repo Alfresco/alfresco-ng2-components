@@ -15,16 +15,4 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { DiagramEventSubprocessComponent } from './diagram-event-subprocess.component';
-import { DiagramSubprocessComponent } from './diagram-subprocess.component';
-
-// primitives
-export * from './diagram-subprocess.component';
-export * from './diagram-event-subprocess.component';
-
-export const DIAGRAM_STRUCTURAL_DIRECTIVES: any[] = [
-    DiagramSubprocessComponent,
-    DiagramEventSubprocessComponent
-];
+export * from './index';

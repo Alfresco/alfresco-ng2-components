@@ -36,10 +36,9 @@ import {
     PersonEntry,
     SitePaging
 } from 'alfresco-js-api';
-import { Observable, Subject } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import { presetsDefaultModel } from '../models/preset.model';
-import { ImageResolver } from './../data/image-resolver.model';
-import { RowFilter } from './../data/row-filter.model';
 import { ShareDataRow } from './../data/share-data-row.model';
 import { ShareDataTableAdapter } from './../data/share-datatable-adapter';
 
@@ -47,8 +46,6 @@ import { ContentActionModel } from './../models/content-action.model';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { DocumentListService } from './../services/document-list.service';
 import { NodeEntityEvent, NodeEntryEvent } from './node.event';
-
-declare var require: any;
 
 export enum PaginationStrategy {
     Finite,

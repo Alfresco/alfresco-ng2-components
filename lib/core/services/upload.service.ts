@@ -16,8 +16,8 @@
  */
 
 import { EventEmitter, Injectable } from '@angular/core';
-import * as minimatch from 'minimatch';
-import { Subject } from 'rxjs/Rx';
+import { Minimatch } from 'minimatch';
+import { Subject } from 'rxjs/Subject';
 import { AppConfigService } from '../app-config/app-config.service';
 import { FileUploadCompleteEvent, FileUploadDeleteEvent, FileUploadErrorEvent, FileUploadEvent } from '../events/file.event';
 import { FileModel, FileUploadProgress, FileUploadStatus } from '../models/file.model';
@@ -87,7 +87,7 @@ export class UploadService {
     private filterElement(file: FileModel) {
         let isAllowed = true;
         if (this.excludedFileList) {
-            isAllowed = this.excludedFileList.filter(expr => minimatch(file.name, expr)).length === 0;
+            isAllowed = this.excludedFileList.filter(expr => Minimatch(file.name, expr)).length === 0;
         }
         return isAllowed;
     }

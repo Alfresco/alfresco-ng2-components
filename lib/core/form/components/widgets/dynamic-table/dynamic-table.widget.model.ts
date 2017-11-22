@@ -17,7 +17,7 @@
 
  /* tslint:disable:component-selector  */
 
-import * as moment from 'moment';
+import moment from 'moment-es6';
 import { ValidateDynamicTableRowEvent } from '../../../events/validate-dynamic-table-row.event';
 import { FormService } from './../../../services/form.service';
 import { FormFieldModel } from './../core/form-field.model';

@@ -23,19 +23,19 @@ import { CoreModule, TRANSLATION_PROVIDER } from '@alfresco/adf-core';
 
 import { MaterialModule } from './material.module';
 
-import { SocialModule } from './social';
-import { TagModule } from './tag';
-import { WebScriptModule } from './webscript';
-import { DocumentListModule } from './document-list';
-import { UploadModule } from './upload';
-import { SearchModule } from './search';
-import { SitesDropdownModule } from './site-dropdown';
-import { BreadcrumbModule } from './breadcrumb';
-import { VersionManagerModule } from './version-manager';
-import { ContentNodeSelectorModule } from './content-node-selector';
-import { DialogModule } from './dialogs';
-import { DirectiveModule } from './directive';
-import { ContentMetadataModule } from './content-metadata';
+import { SocialModule } from './social/social.module';
+import { TagModule } from './tag/tag.module';
+import { WebScriptModule } from './webscript/webscript.module';
+import { DocumentListModule } from './document-list/document-list.module';
+import { UploadModule } from './upload/upload.module';
+import { SearchModule } from './search/search.module';
+import { SitesDropdownModule } from './site-dropdown/sites-dropdown.module';
+import { BreadcrumbModule } from './breadcrumb/breadcrumb.module';
+import { VersionManagerModule } from './version-manager/version-manager.module';
+import { ContentNodeSelectorModule } from './content-node-selector/content-node-selector.module';
+import { DialogModule } from './dialogs/dialog.module';
+import { FolderDirectiveModule } from './folder-directive/folder-directive.module';
+import { ContentMetadataModule } from './content-metadata/content-metadata.module';
 
 @NgModule({
     imports: [
@@ -57,7 +57,7 @@ import { ContentMetadataModule } from './content-metadata';
         ContentNodeSelectorModule,
         ContentMetadataModule,
         DialogModule,
-        DirectiveModule
+        FolderDirectiveModule
     ],
     providers: [
         {
@@ -83,7 +83,8 @@ import { ContentMetadataModule } from './content-metadata';
         ContentNodeSelectorModule,
         ContentMetadataModule,
         DialogModule,
-        DirectiveModule
+        FolderDirectiveModule,
+        MaterialModule
     ]
 })
 export class ContentModule {

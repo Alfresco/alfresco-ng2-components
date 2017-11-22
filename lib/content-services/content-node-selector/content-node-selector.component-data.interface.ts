@@ -15,7 +15,13 @@
  * limitations under the License.
  */
 
-export * from './folder-create.directive';
-export * from './folder-edit.directive';
+import { EventEmitter } from '@angular/core';
+import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 
-export * from './directive.module';
+export interface ContentNodeSelectorComponentData {
+    title: string;
+    currentFolderId?: string;
+    rowFilter?: any;
+    imageResolver?: any;
+    select: EventEmitter<MinimalNodeEntryEntity[]>;
+}

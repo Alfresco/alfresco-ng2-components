@@ -16,13 +16,11 @@
  */
 
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { AuthenticationService } from '../../services';
+import { AuthenticationService } from '../../services/authentication.service';
 import { BpmUserModel } from './../models/bpm-user.model';
 import { EcmUserModel } from './../models/ecm-user.model';
 import { BpmUserService } from './../services/bpm-user.service';
 import { EcmUserService } from './../services/ecm-user.service';
-
-declare var require: any;
 
 @Component({
     selector: 'adf-userinfo, ng2-alfresco-userinfo',
@@ -33,10 +31,10 @@ declare var require: any;
 export class UserInfoComponent implements OnInit {
 
     @Input()
-    ecmBackgroundImage: string = require('../../assets/images/ecm-background.png');
+    ecmBackgroundImage: string = './assets/images/ecm-background.png';
 
     @Input()
-    bpmBackgroundImage: string = require('../../assets/images/bpm-background.png');
+    bpmBackgroundImage: string = './assets/images/bpm-background.png';
 
     @Input()
     menuPositionX: string = 'after';

@@ -15,13 +15,4 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { DiagramIntermediateCatchingEventComponent } from './diagram-intermediate-catching-event.component';
-
-// primitives
-export * from './diagram-intermediate-catching-event.component';
-
-export const DIAGRAM_INTERMEDIATE_EVENTS_DIRECTIVES: any[] = [
-    DiagramIntermediateCatchingEventComponent
-];
+export * from './index';

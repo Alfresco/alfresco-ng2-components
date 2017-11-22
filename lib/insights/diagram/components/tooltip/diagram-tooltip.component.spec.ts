@@ -112,8 +112,6 @@ describe('DiagramTooltipComponent', () => {
     describe('Tooltip functionality', () => {
 
         let fixture: ComponentFixture<TestHostComponent>;
-        let component: TestHostComponent;
-        let event: MouseEvent;
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
@@ -123,8 +121,6 @@ describe('DiagramTooltipComponent', () => {
 
         beforeEach(() => {
             fixture  = TestBed.createComponent(TestHostComponent);
-            component = fixture.componentInstance;
-            event = new MouseEvent('mouseenter');
 
             fixture.detectChanges();
         });

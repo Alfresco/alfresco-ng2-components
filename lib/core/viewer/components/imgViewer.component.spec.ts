@@ -15,14 +15,13 @@
  * limitations under the License.
  */
 
-import { DebugElement, SimpleChange } from '@angular/core';
+import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import {
-    AlfrescoApiService,
-    AuthenticationService,
-    ContentService,
-    SettingsService
-} from '../../services';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { AuthenticationService } from '../../services/authentication.service';
+import { ContentService } from '../../services/content.service';
+import { SettingsService } from '../../services/settings.service';
+
 import { ImgViewerComponent } from './imgViewer.component';
 
 describe('Test ng2-alfresco-viewer Img viewer component ', () => {
@@ -30,7 +29,6 @@ describe('Test ng2-alfresco-viewer Img viewer component ', () => {
     let component: ImgViewerComponent;
     let service: ContentService;
     let fixture: ComponentFixture<ImgViewerComponent>;
-    let debug: DebugElement;
     let element: HTMLElement;
 
     function createFakeBlob() {
@@ -54,7 +52,6 @@ describe('Test ng2-alfresco-viewer Img viewer component ', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(ImgViewerComponent);
 
-        debug = fixture.debugElement;
         element = fixture.nativeElement;
         component = fixture.componentInstance;
         fixture.detectChanges();

@@ -20,8 +20,8 @@ import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { MaterialModule } from '../material.module';
-import { ToolbarModule } from '../toolbar';
-import { PipeModule } from '../pipes';
+import { ToolbarModule } from '../toolbar/toolbar.module';
+import { PipeModule } from '../pipes/pipe.module';
 import { ImgViewerComponent } from './components/imgViewer.component';
 import { MediaPlayerComponent } from './components/mediaPlayer.component';
 import { PdfViewerComponent } from './components/pdfViewer.component';

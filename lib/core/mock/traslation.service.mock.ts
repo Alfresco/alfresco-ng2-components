@@ -16,7 +16,7 @@
  */
 
 import { EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 
 export interface LangChangeEvent {
     lang: string;

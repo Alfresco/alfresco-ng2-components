@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RatingComponent } from './rating.component';
 import { MaterialModule } from '../material.module';
@@ -27,7 +26,6 @@ describe('Rating component', () => {
 
     let component: any;
     let fixture: ComponentFixture<RatingComponent>;
-    let debug: DebugElement;
     let element: HTMLElement;
 
     beforeEach(async(() => {
@@ -47,7 +45,6 @@ describe('Rating component', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(RatingComponent);
 
-        debug = fixture.debugElement;
         element = fixture.nativeElement;
         component = fixture.componentInstance;
         component.nodeId = 'test-id';

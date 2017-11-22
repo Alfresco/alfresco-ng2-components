@@ -21,7 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
 import { MaterialModule } from '../material.module';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 
 import { NodesApiService, NotificationService, TranslationService } from '@alfresco/adf-core';
 import { FolderDialogComponent } from './folder.dialog';

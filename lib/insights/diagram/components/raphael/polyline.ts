@@ -148,13 +148,11 @@ export class Polyline {
     }
 
     pushAnchor(type, x, y) {
-        var index, typeIndex;
+        var index;
         if (type === Anchor.ANCHOR_TYPE.first) {
             index = 0;
-            typeIndex = 0;
         } else if (type === Anchor.ANCHOR_TYPE.last) {
             index = this.getAnchorsCount();
-            typeIndex = 0;
         } else if (!index) {
             index = this.anchors.length;
         } else {

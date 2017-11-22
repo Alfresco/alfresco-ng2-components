@@ -18,17 +18,18 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDatepicker } from '@angular/material';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
-import * as moment from 'moment';
+import moment from 'moment-es6';
 import { Moment } from 'moment';
 import { CardViewDateItemModel } from '../models/card-view-dateitem.model';
 import { CardViewUpdateService } from '../services/card-view-update.service';
 import { UserPreferencesService } from '../services/user-preferences.service';
-import { MOMENT_DATE_FORMATS, MomentDateAdapter } from '../utils/momentDateAdapter';
+import { MomentDateAdapter } from '../utils/momentDateAdapter';
+import { MOMENT_DATE_FORMATS } from '../utils/moment-date-formats.model';
 
 @Component({
     providers: [
-        {provide: DateAdapter, useClass: MomentDateAdapter},
-        {provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS}],
+        { provide: DateAdapter, useClass: MomentDateAdapter },
+        { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }],
     selector: 'adf-card-view-dateitem',
     templateUrl: './card-view-dateitem.component.html',
     styleUrls: ['./card-view-dateitem.component.scss']
@@ -48,14 +49,13 @@ export class CardViewDateItemComponent implements OnInit {
 
     valueDate: Moment;
 
-    constructor(
-        private cardViewUpdateService: CardViewUpdateService,
-        private dateAdapter: DateAdapter<Moment>,
-        private preferences: UserPreferencesService) {
+    constructor(private cardViewUpdateService: CardViewUpdateService,
+                private dateAdapter: DateAdapter<Moment>,
+                private preferences: UserPreferencesService) {
     }
 
     ngOnInit() {
-        this.preferences.locale$.subscribe( (locale) => {
+        this.preferences.locale$.subscribe((locale) => {
             this.dateAdapter.setLocale(locale);
         });
         let momentDateAdapter = <MomentDateAdapter> this.dateAdapter;

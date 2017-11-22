@@ -17,15 +17,13 @@
 
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
-import { AlfrescoApiService, ContentService, LogService } from '../../services';
+import { Observable } from 'rxjs/Observable';
+import { ContentService } from '../../services/content.service';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { LogService } from '../../services/log.service';
 import { EcmUserModel } from '../models/ecm-user.model';
-/**
- *
- * ECMUserService retrieve all the information of an Ecm user.
- *
- * @returns {ECMUserService} .
- */
+import 'rxjs/add/observable/throw';
+
 @Injectable()
 export class EcmUserService {
 

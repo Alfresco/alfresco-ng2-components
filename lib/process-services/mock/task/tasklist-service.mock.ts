@@ -108,7 +108,7 @@ export let secondFakeTaskList = {
     ]
 };
 
-export let fakeErrorTaskList = {
+export let mockErrorTaskList = {
     error: 'wrong request'
 };
 

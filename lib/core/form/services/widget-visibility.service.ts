@@ -15,13 +15,15 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService } from '../../services';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { LogService } from '../../services/log.service';
 import { Injectable } from '@angular/core';
-import * as moment from 'moment';
-import { Observable } from 'rxjs/Rx';
+import moment from 'moment-es6';
+import { Observable } from 'rxjs/Observable';
 import { FormFieldModel, FormModel, TabModel } from '../components/widgets/core/index';
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
 import { WidgetVisibilityModel } from '../models/widget-visibility.model';
+import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class WidgetVisibilityService {

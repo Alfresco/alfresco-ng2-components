@@ -16,5 +16,3 @@
  */
 
 export * from './apps-list.component';
-
-export * from './apps-list.module';

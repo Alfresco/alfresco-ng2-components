@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 
 import { NodePaging } from 'alfresco-js-api';
 import { AlfrescoApiService } from './alfresco-api.service';

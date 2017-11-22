@@ -25,8 +25,8 @@ import { CardViewModule, DataColumnModule,  DataTableModule, DirectiveModule, In
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MaterialModule } from '../material.module';
-import { PeopleModule } from '../people';
-import { CommentsModule } from '../comments';
+import { PeopleModule } from '../people/people.module';
+import { CommentsModule } from '../comments/comments.module';
 import { ProcessUploadService } from './services/process-upload.service';
 import { TaskListService } from './services/tasklist.service';
 import { TaskFilterService } from './services/task-filter.service';

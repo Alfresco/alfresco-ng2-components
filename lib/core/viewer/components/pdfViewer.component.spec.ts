@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import {
     AlfrescoApiService,
@@ -23,7 +22,7 @@ import {
     SettingsService
 } from '../../services';
 import { MaterialModule } from '../../material.module';
-import { ToolbarModule } from '../../toolbar';
+import { ToolbarModule } from '../../toolbar/toolbar.module';
 import { EventMock } from '../../mock/event.mock';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { PdfViewerComponent } from './pdfViewer.component';
@@ -34,7 +33,6 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
 
     let component: PdfViewerComponent;
     let fixture: ComponentFixture<PdfViewerComponent>;
-    let debug: DebugElement;
     let element: HTMLElement;
 
     beforeEach(async(() => {
@@ -74,7 +72,6 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(PdfViewerComponent);
 
-        debug = fixture.debugElement;
         element = fixture.nativeElement;
         component = fixture.componentInstance;
 

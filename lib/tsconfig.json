@@ -19,6 +19,7 @@
         "outDir": "./dist",
         "baseUrl" :  "./",
         "types": ["jasmine"],
+        "allowSyntheticDefaultImports": true,
         "paths": {
             "@alfresco/adf-process-services": ["./process-services/"],
             "@alfresco/adf-content-services": ["./content-services/"],

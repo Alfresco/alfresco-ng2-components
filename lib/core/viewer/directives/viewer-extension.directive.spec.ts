@@ -32,7 +32,6 @@ export class MockElementRef extends ElementRef {
 describe('ExtensionViewerDirective', () => {
     let injector: Injector;
     let extensionViewerDirective: ViewerExtensionDirective;
-    let viewerComponent: ViewerComponent;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -45,7 +44,6 @@ describe('ExtensionViewerDirective', () => {
         });
         injector = getTestBed();
         extensionViewerDirective = injector.get(ViewerExtensionDirective);
-        viewerComponent = injector.get(ViewerComponent);
         extensionViewerDirective.templateModel = {template: '', isVisible: false};
     }));
 

@@ -22,10 +22,10 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
 import { ContentNodeSelectorService } from './content-node-selector.service';
-import { SitesDropdownModule } from '../site-dropdown';
-import { BreadcrumbModule } from '../breadcrumb';
+import { SitesDropdownModule } from '../site-dropdown/sites-dropdown.module';
+import { BreadcrumbModule } from '../breadcrumb/breadcrumb.module';
 import { PaginationModule, ToolbarModule } from '@alfresco/adf-core';
-import { DocumentListModule } from '../document-list';
+import { DocumentListModule } from '../document-list/document-list.module';
 
 @NgModule({
     imports: [

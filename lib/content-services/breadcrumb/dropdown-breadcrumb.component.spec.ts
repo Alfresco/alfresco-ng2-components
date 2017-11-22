@@ -28,7 +28,6 @@ describe('DropdownBreadcrumb', () => {
 
     let component: DropdownBreadcrumbComponent;
     let fixture: ComponentFixture<DropdownBreadcrumbComponent>;
-    let element: HTMLElement;
     let documentList: DocumentListComponent;
 
     beforeEach(async(() => {
@@ -52,7 +51,6 @@ describe('DropdownBreadcrumb', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(DropdownBreadcrumbComponent);
-        element = fixture.nativeElement;
         component = fixture.componentInstance;
 
         documentList = TestBed.createComponent<DocumentListComponent>(DocumentListComponent).componentInstance;

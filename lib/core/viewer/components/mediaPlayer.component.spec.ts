@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DebugElement, SimpleChange } from '@angular/core';
+import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MediaPlayerComponent } from './mediaPlayer.component';
 
@@ -31,8 +31,6 @@ describe('Test ng2-alfresco-viewer Media player component ', () => {
     let component: MediaPlayerComponent;
     let service: ContentService;
     let fixture: ComponentFixture<MediaPlayerComponent>;
-    let debug: DebugElement;
-    let element: HTMLElement;
 
     function createFakeBlob() {
         let data = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
@@ -55,8 +53,6 @@ describe('Test ng2-alfresco-viewer Media player component ', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(MediaPlayerComponent);
 
-        debug = fixture.debugElement;
-        element = fixture.nativeElement;
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

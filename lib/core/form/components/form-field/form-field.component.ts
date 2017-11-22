@@ -32,7 +32,7 @@ import {
 
 import { FormRenderingService } from './../../services/form-rendering.service';
 import { WidgetVisibilityService } from './../../services/widget-visibility.service';
-import { FormFieldModel } from './../widgets/core/index';
+import { FormFieldModel } from './../widgets/core/form-field.model';
 import { WidgetComponent } from './../widgets/widget.component';
 
 declare var adf: any;

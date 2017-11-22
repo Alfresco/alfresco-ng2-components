@@ -19,7 +19,7 @@ import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MaterialModule } from '../material.module';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { TaskAttachmentListComponent } from './task-attachment-list.component';
 import { ProcessContentService } from '@alfresco/adf-core';
 
@@ -29,8 +29,6 @@ describe('TaskAttachmentList', () => {
     let fixture: ComponentFixture<TaskAttachmentListComponent>;
     let service: ProcessContentService;
     let getTaskRelatedContentSpy: jasmine.Spy;
-    let deleteContentSpy: jasmine.Spy;
-    let getFileRawContentSpy: jasmine.Spy;
     let mockAttachment: any;
 
     beforeEach(async(() => {
@@ -93,10 +91,10 @@ describe('TaskAttachmentList', () => {
             mockAttachment
         ));
 
-        deleteContentSpy = spyOn(service, 'deleteRelatedContent').and.returnValue(Observable.of({successCode: true}));
+        spyOn(service, 'deleteRelatedContent').and.returnValue(Observable.of({successCode: true}));
 
         let blobObj = new Blob();
-        getFileRawContentSpy = spyOn(service, 'getFileRawContent').and.returnValue(Observable.of(
+        spyOn(service, 'getFileRawContent').and.returnValue(Observable.of(
             blobObj
         ));
 

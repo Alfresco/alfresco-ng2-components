@@ -23,6 +23,7 @@ import { DocumentListComponent, PaginationStrategy  } from '../document-list/com
 import { RowFilter } from '../document-list/data/row-filter.model';
 import { ImageResolver } from '../document-list/data/image-resolver.model';
 
+import { ContentNodeSelectorComponentData } from './content-node-selector.component-data.interface';
 import { ContentNodeSelectorService } from './content-node-selector.service';
 
 export interface ContentNodeSelectorComponentData {
