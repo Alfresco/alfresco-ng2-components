@@ -6,10 +6,10 @@
                (executeRowAction)="onExecuteRowAction($event)">
 
             <adf-empty-list *ngIf="isEmpty()">
-                <div adf-empty-list-header class="adf-empty-list-header" *ngIf="!isCustomTemplateDefined()">
+                <div *ngIf="!isCustomTemplateDefined()" adf-empty-list-header class="adf-empty-list-header">
                     {{'ADF_TASK_LIST.ATTACHMENT.EMPTY.HEADER' | translate}}
                 </div>
-                <div *ngIf="!isDisabled()" #customEmptyListTemplate class="adf-custom-empty-template">
+                <div *ngIf="isCustomTemplateDefined()" #customEmptyListTemplate class="adf-custom-empty-template">
                     <ng-content select="[adf-empty-list]"></ng-content>
                 </div>
             </adf-empty-list>

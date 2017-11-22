@@ -96,9 +96,7 @@ describe('TaskAttachmentList', () => {
         deleteContentSpy = spyOn(service, 'deleteRelatedContent').and.returnValue(Observable.of({successCode: true}));
 
         let blobObj = new Blob();
-        getFileRawContentSpy = spyOn(service, 'getFileRawContent').and.returnValue(Observable.of(
-            blobObj;
-
+        getFileRawContentSpy = spyOn(service, 'getFileRawContent').and.returnValue(Observable.of(blobObj));
     });
 
     it('should load attachments when taskId specified', () => {
@@ -152,7 +150,7 @@ describe('TaskAttachmentList', () => {
         expect(getFileRawContentSpy).toHaveBeenCalled();
     });
 
-    it('should show the empty list drag and drop component when the task is not completed', async(() => {
+    it('should show the empty default message when has no custom template', async(() => {
         getTaskRelatedContentSpy.and.returnValue(Observable.of({
             'size': 0,
             'total': 0,
@@ -161,29 +159,29 @@ describe('TaskAttachmentList', () => {
         }));
         let change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'taskId': change });
-        component.disabled = false;
-
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('.adf-custom-empty-template')).not.toBeNull();
-        });
-    }));
-
-    it('should not show the empty list drag and drop component when is disabled', async(() => {
-        getTaskRelatedContentSpy.and.returnValue(Observable.of({
-            'size': 0,
-            'total': 0,
-            'start': 0,
-            'data': []
-        }));
-        let change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ 'taskId': change });
-        component.disabled = true;
+        component.hasCustomTemplate = false;
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(fixture.nativeElement.querySelector('.adf-custom-empty-template')).toBeNull();
             expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual('ADF_TASK_LIST.ATTACHMENT.EMPTY.HEADER');
+        });
+    }));
+
+    it('should not show the custom empty message when has custom template', async(() => {
+        getTaskRelatedContentSpy.and.returnValue(Observable.of({
+            'size': 0,
+            'total': 0,
+            'start': 0,
+            'data': []
+        }));
+        let change = new SimpleChange(null, '123', true);
+        component.ngOnChanges({ 'taskId': change });
+        component.hasCustomTemplate = true;
+
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(fixture.nativeElement.querySelector('.adf-custom-empty-template')).not.toBeNull();
         });
     }));
 
