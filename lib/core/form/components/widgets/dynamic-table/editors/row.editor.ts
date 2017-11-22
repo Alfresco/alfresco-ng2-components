@@ -16,7 +16,6 @@
  */
 
  /* tslint:disable:component-selector  */
- /* tslint:disable:no-console  */
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DynamicRowValidationSummary } from './../dynamic-row-validation-summary.model';
@@ -49,7 +48,6 @@ export class RowEditorComponent {
     validationSummary: DynamicRowValidationSummary;
 
     constructor() {
-        console.log('TEST');
         this.validationSummary = new DynamicRowValidationSummary({ isValid: true, message: '' });
     }
 
