@@ -197,38 +197,24 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
     }
 
     /**
-     * Return true if the task has involvedGroup
+     * Return true if the user is a candidate user
      */
-    public hasInvolvedGroup(): boolean {
-        return this.taskDetails.involvedGroups.length > 0 ? true : false;
-    }
-
-    /**
-     * Return true if the task has involvedPeople
-     */
-    public hasInvolvedPeople(): boolean {
-        return this.taskDetails.involvedPeople.length > 0 ? true : false;
-    }
-
-    /**
-     * Return true if the task has ProcessInstance
-     */
-    public hasProcessInstance() {
-        return !!this.taskDetails.processInstanceId;
+    isCandidateUser() {
+        return this.taskDetails.managerOfCandidateGroup || this.taskDetails.memberOfCandidateGroup || this.taskDetails.memberOfCandidateUsers;
     }
 
     /**
      * Return true if the task claimable
      */
     public isTaskClaimable(): boolean {
-        return !this.isCompleted() && (this.hasInvolvedGroup() || this.hasInvolvedPeople()) && !this.hasAssignee() && this.hasProcessInstance();
+        return !this.hasAssignee() && this.isCandidateUser();
     }
 
     /**
-     * Return true if the task claimed by currentUser
+     * Return true if the task claimed by candidate user
      */
-    public isTaskClaimedByCurrentUser(): boolean {
-        return !this.isCompleted() && (this.hasInvolvedGroup() || this.hasInvolvedPeople()) && this.isAssignedToCurrentUser() && this.hasProcessInstance();
+    public isTaskClaimedByCandidateUser(): boolean {
+        return this.isCandidateUser() && this.isAssignedToCurrentUser() && !this.isCompleted();
     }
 
     /**
