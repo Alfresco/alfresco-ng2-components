@@ -24,7 +24,7 @@
     "copy-i18n": "mkdir -p core/dist/bundles/assets/adf-core/i18n && cp -R core/i18n/ core/dist/bundles/assets/adf-core/i18n && mkdir -p content-services/dist/bundles/assets/adf-content-services/i18n && cp -R content-services/i18n/ content-services/dist/bundles/assets/adf-content-services/i18n && mkdir -p process-services/dist/bundles/assets/adf-process-services/i18n && cp -R process-services/i18n/ process-services/dist/bundles/assets/adf-process-services/i18n && mkdir -p insights/dist/bundles/assets/adf-insights/i18n && cp -R insights/i18n/ insights/dist/bundles/assets/adf-insights/i18n",
     "copy-assets": "cp -R core/assets/ core/dist/bundles/assets && cp -R content-services/assets/ content-services/dist/bundles/assets && cp -R process-services/assets/ process-services/dist/bundles/assets",
     "new-build": "npm run build-bundles && npm run bundle-scss-new && npm run copy-i18n && npm run copy-assets && npm run mv-es5",
-    "build-bundles": "npm run build-core && mkdir -p ./node_modules/@alfresco/adf-core/ && cp -R ./core/dist/ ./node_modules/@alfresco/adf-core && npm run build-content && npm run build-process && npm run build-insights",
+    "build-bundles": "npm run build-core && mkdir -p ./node_modules/@alfresco/adf-core/ && cp -R ./core/dist/* ./node_modules/@alfresco/adf-core/ && npm run build-content && npm run build-process && npm run build-insights",
     "build-core": "ng-packagr -p ./ng-package/ng-package-core.json",
     "build-content": "ng-packagr -p ./ng-package/ng-package-content.json",
     "build-process": "ng-packagr -p ./ng-package/ng-package-process.json",
