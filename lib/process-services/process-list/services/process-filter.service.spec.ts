@@ -19,7 +19,7 @@ import { TestBed } from '@angular/core/testing';
 import { async } from '@angular/core/testing';
 import { AlfrescoApi } from 'alfresco-js-api';
 import { AlfrescoApiService } from '@alfresco/adf-core';
-import { fakeError, fakeProcessFilters } from '../../mock';
+import { mockError, fakeProcessFilters } from '../../mock';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterService } from './process-filter.service';
 
@@ -116,12 +116,12 @@ describe('Process filter', () => {
             });
 
             it('should pass on any error that is returned by the API', async(() => {
-                getFilters = getFilters.and.returnValue(Promise.reject(fakeError));
+                getFilters = getFilters.and.returnValue(Promise.reject(mockError));
 
                 service.getProcessFilters(null).subscribe(
                     () => {},
                     (res) => {
-                        expect(res).toBe(fakeError);
+                        expect(res).toBe(mockError);
                     }
                 );
             }));
@@ -144,12 +144,12 @@ describe('Process filter', () => {
             }));
 
             it('should pass on any error that is returned by the API', async(() => {
-                createFilter = createFilter.and.returnValue(Promise.reject(fakeError));
+                createFilter = createFilter.and.returnValue(Promise.reject(mockError));
 
                 service.addProcessFilter(filter).subscribe(
                     () => {},
                     (res) => {
-                        expect(res).toBe(fakeError);
+                        expect(res).toBe(mockError);
                     }
                 );
             }));

@@ -21,7 +21,6 @@ export * from './components/widgets/content/content.widget';
 export * from './components/start-form.component';
 export * from './components/widgets/index';
 export * from './components/widgets/dynamic-table/dynamic-table-row.model';
-export { FORM_FIELD_VALIDATORS } from './components/widgets/core/form-field-validator';
 
 export * from './services/form.service';
 export * from './services/ecm-model.service';
@@ -30,5 +29,3 @@ export * from './services/form-rendering.service';
 export * from './services/process-content.service';
 
 export * from './events/index';
-
-export * from './form.module';

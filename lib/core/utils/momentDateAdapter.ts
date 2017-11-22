@@ -15,21 +15,9 @@
  * limitations under the License.
  */
 
-import { DateAdapter, MatDateFormats } from '@angular/material';
+import { DateAdapter } from '@angular/material';
 import { isMoment, Moment } from 'moment';
-import * as moment from 'moment';
-
-export const MOMENT_DATE_FORMATS: MatDateFormats = {
-    parse: {
-        dateInput: 'DD/MM/YYYY'
-    },
-    display: {
-        dateInput: 'DD/MM/YYYY',
-        monthYearLabel: 'MMMM Y',
-        dateA11yLabel: 'LL',
-        monthYearA11yLabel: 'MMMM Y'
-    }
-};
+import moment from 'moment-es6';
 
 const dateNames: string[] = [];
 for (let date = 1; date <= 31; date++) {

@@ -17,9 +17,11 @@
 
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { SiteModel } from '../models/site.model';
 import { AlfrescoApiService } from './alfresco-api.service';
+import 'rxjs/add/observable/fromPromise';
+import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class SitesApiService {

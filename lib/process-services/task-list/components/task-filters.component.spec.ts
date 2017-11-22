@@ -18,7 +18,7 @@
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigService, AppsProcessService } from '@alfresco/adf-core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
 import { TaskListService } from '../services/tasklist.service';
 import { TaskFilterService } from '../services/task-filter.service';
@@ -52,12 +52,12 @@ describe('TaskFiltersComponent', () => {
         resolve(fakeGlobalFilter);
     });
 
-    let fakeErrorFilterList = {
+    let mockErrorFilterList = {
         error: 'wrong request'
     };
 
-    let fakeErrorFilterPromise = new Promise(function (resolve, reject) {
-        reject(fakeErrorFilterList);
+    let mockErrorFilterPromise = new Promise(function (resolve, reject) {
+        reject(mockErrorFilterList);
     });
 
     let component: TaskFiltersComponent;
@@ -92,7 +92,7 @@ describe('TaskFiltersComponent', () => {
     });
 
     it('should emit an error with a bad response', (done) => {
-        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeErrorFilterPromise));
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(mockErrorFilterPromise));
 
         const appId = '1';
         let change = new SimpleChange(null, appId, true);

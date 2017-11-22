@@ -41,5 +41,3 @@ export * from './models/content-action.model';
 export * from './models/document-library.model';
 export * from './models/permissions.model';
 export * from './models/permissions-style.model';
-
-export * from './document-list.module';

@@ -38,8 +38,10 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { Observable, Subject } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import { PermissionModel } from '../../document-list/models/permissions.model';
+import 'rxjs/add/observable/throw';
 
 @Component({
     selector: 'adf-upload-button',

@@ -21,5 +21,3 @@ export * from './card-view-item-dispatcher.component';
 export * from './card-view-mapitem.component';
 export * from './card-view-textitem.component';
 export * from './card-view.component';
-
-export * from './card-view.module';

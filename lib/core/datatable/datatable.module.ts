@@ -21,10 +21,10 @@ import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { MaterialModule } from '../material.module';
-import { ContextMenuModule } from '../context-menu';
-import { PipeModule } from '../pipes';
+import { ContextMenuModule } from '../context-menu/context-menu.module';
+import { PipeModule } from '../pipes/pipe.module';
 
-import { DirectiveModule } from '../directives';
+import { DirectiveModule } from '../directives/directive.module';
 import { DataTableCellComponent } from './components/datatable/datatable-cell.component';
 import { DataTableComponent } from './components/datatable/datatable.component';
 import { DateCellComponent } from './components/datatable/date-cell.component';

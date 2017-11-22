@@ -17,7 +17,7 @@
 
 import { async, TestBed } from '@angular/core/testing';
 import { TranslationService, AppConfigService, NotificationService } from '@alfresco/adf-core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { FileNode, FolderNode } from '../../mock';
 import { ContentActionHandler } from '../models/content-action.model';
 import { DocumentListService } from './document-list.service';

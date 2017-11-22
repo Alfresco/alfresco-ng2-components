@@ -17,7 +17,7 @@
 
 import { FileModel, FileUploadStatus, NodesApiService, NotificationService, TranslationService, UploadService } from '@alfresco/adf-core';
 import { Component, ContentChild, Input, TemplateRef } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
     selector: 'adf-file-uploading-list',

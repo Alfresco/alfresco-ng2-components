@@ -26,25 +26,27 @@ import { TRANSLATION_PROVIDER, TranslationService } from './services/translation
 
 import { MaterialModule } from './material.module';
 
-import { AppConfigModule } from './app-config';
-import { CardViewModule } from './card-view';
-import { CollapsableModule } from './collapsable';
-import { ContextMenuModule } from './context-menu';
-import { DataColumnModule } from './data-column';
-import { DataTableModule } from './datatable';
-import { InfoDrawerModule } from './info-drawer';
-import { LanguageMenuModule } from './language-menu';
-import { LoginModule } from './login';
-import { PaginationModule } from './pagination';
-import { HostSettingsModule } from './settings';
-import { ToolbarModule } from './toolbar';
-import { UserInfoModule } from './userinfo';
-import { ViewerModule } from './viewer';
-import { FormModule } from './form';
+import { AppConfigModule } from './app-config/app-config.module';
+import { CardViewModule } from './card-view/card-view.module';
+import { CollapsableModule } from './collapsable/collapsable.module';
+import { ContextMenuModule } from './context-menu/context-menu.module';
+import { DataColumnModule } from './data-column/data-column.module';
+import { DataTableModule } from './datatable/datatable.module';
+import { InfoDrawerModule } from './info-drawer/info-drawer.module';
+import { LanguageMenuModule } from './language-menu/language-menu.module';
+import { LoginModule } from './login/login.module';
+import { PaginationModule } from './pagination/pagination.module';
+import { HostSettingsModule } from './settings/host-settings.module';
+import { ToolbarModule } from './toolbar/toolbar.module';
+import { UserInfoModule } from './userinfo/userinfo.module';
+import { ViewerModule } from './viewer/viewer.module';
+import { FormModule } from './form/form.module';
 
-import { DirectiveModule } from './directives';
-import { PipeModule } from './pipes';
-import { LogService , ServiceModule, TranslateLoaderService } from './services';
+import { DirectiveModule } from './directives/directive.module';
+import { PipeModule } from './pipes/pipe.module';
+import { ServiceModule } from './services/service.module';
+import { LogService } from './services/log.service';
+import { TranslateLoaderService } from './services/translate-loader.service';
 
 export function createTranslateLoader(http: HttpClient, logService: LogService) {
     return new TranslateLoaderService(http, logService);
@@ -80,7 +82,6 @@ export function createTranslateLoader(http: HttpClient, logService: LogService) 
         })
     ],
     providers: [
-        TranslationService,
         {
             provide: TRANSLATION_PROVIDER,
             multi: true,
@@ -88,7 +89,8 @@ export function createTranslateLoader(http: HttpClient, logService: LogService) 
                 name: 'adf-core',
                 source: 'assets/adf-core'
             }
-        }
+        },
+        TranslationService
     ],
     exports: [
         AppConfigModule,
@@ -96,7 +98,6 @@ export function createTranslateLoader(http: HttpClient, logService: LogService) 
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        HttpClientModule,
         TranslateModule,
         ContextMenuModule,
         CardViewModule,
@@ -114,7 +115,8 @@ export function createTranslateLoader(http: HttpClient, logService: LogService) 
         ViewerModule,
         PipeModule,
         DirectiveModule,
-        FormModule
+        FormModule,
+        MaterialModule
     ]
 })
 export class CoreModule {

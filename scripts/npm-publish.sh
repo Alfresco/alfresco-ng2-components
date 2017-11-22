@@ -135,12 +135,12 @@ if $EXEC_VERSION_JSAPI == true; then
 fi
 
 echo "====== Build ADF ===== "
-npm run build
+npm run new-build
 
 for PACKAGE in ${projects[@]}
 do
 
-  DESTDIR="$DIR/../lib/${PACKAGE}"
+  DESTDIR="$DIR/../lib/${PACKAGE}/dist"
   echo "====== MOVE DIR: ${DESTDIR} ===== "
   cd ${DESTDIR}
 

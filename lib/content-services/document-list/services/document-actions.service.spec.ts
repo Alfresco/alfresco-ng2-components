@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ContentService, TranslationService, NotificationService } from '@alfresco/adf-core';
+import { ContentService } from '@alfresco/adf-core';
 import { FileNode, FolderNode, DocumentListServiceMock } from '../../mock';
 import { ContentActionHandler } from '../models/content-action.model';
 import { DocumentActionsService } from './document-actions.service';
@@ -27,16 +27,12 @@ describe('DocumentActionsService', () => {
     let service: DocumentActionsService;
     let documentListService: DocumentListService;
     let contentService: ContentService;
-    let translateService: TranslationService;
-    let notificationService: NotificationService;
     let nodeActionsService: NodeActionsService;
 
     beforeEach(() => {
         documentListService = new DocumentListServiceMock();
         contentService = new ContentService(null, null, null, null);
-        translateService = <TranslationService> { addTranslationFolder: () => {}};
         nodeActionsService = new NodeActionsService(null, null, null);
-        notificationService = new NotificationService(null);
         service = new DocumentActionsService(nodeActionsService, documentListService, contentService);
     });
 

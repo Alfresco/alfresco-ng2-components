@@ -18,10 +18,13 @@
 import { Directive, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { DeletedNodeEntry, DeletedNodesPaging, PathInfoEntity } from 'alfresco-js-api';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { NotificationService } from '../services/notification.service';
 import { TranslationService } from '../services/translation.service';
+import 'rxjs/add/observable/from';
+import 'rxjs/add/observable/zip';
+import 'rxjs/add/operator/mergeMap';
 
 @Directive({
     selector: '[adf-restore]'
@@ -73,7 +76,7 @@ export class NodeRestoreDirective {
                 this.restoreProcessStatus.fail.push(...status.fail);
                 this.restoreProcessStatus.success.push(...status.success);
             })
-            .flatMap(() => this.getDeletedNodes())
+            .mergeMap(() => this.getDeletedNodes())
             .subscribe(
                 (deletedNodesList: any) => {
                     const { entries: nodelist } = deletedNodesList.list;

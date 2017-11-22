@@ -15,60 +15,29 @@
  * limitations under the License.
  */
 
-import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { DiagramsModule } from '../../diagram';
+import { DiagramsModule } from '../../diagram/diagram.module';
 import { ChartsModule } from 'ng2-charts';
 
-import { AnalyticsGeneratorComponent } from '../components/analytics-generator.component';
-import { AnalyticsReportHeatMapComponent } from '../components/analytics-report-heat-map.component';
-import { AnalyticsReportListComponent } from '../components/analytics-report-list.component';
-import { AnalyticsReportParametersComponent } from '../components/analytics-report-parameters.component';
 import { AnalyticsComponent } from '../components/analytics.component';
-import { WIDGET_ANALYTICS_DIRECTIVES } from '../components/widgets/index';
-import { AnalyticsService } from '../services/analytics.service';
-
-export const ANALYTICS_DIRECTIVES: any[] = [
-    AnalyticsComponent,
-    AnalyticsGeneratorComponent,
-    AnalyticsReportParametersComponent,
-    AnalyticsReportListComponent,
-    AnalyticsReportHeatMapComponent,
-    WIDGET_ANALYTICS_DIRECTIVES
-];
-export const ANALYTICS_PROVIDERS: any[] = [
-    AnalyticsService
-];
 
 declare let jasmine: any;
 
 describe('AnalyticsComponent', () => {
 
-    let component: any;
     let fixture: ComponentFixture<AnalyticsComponent>;
-    let debug: DebugElement;
-    let element: HTMLElement;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
                 ChartsModule,
                 DiagramsModule
-            ],
-            declarations: [
-                ...ANALYTICS_DIRECTIVES
-            ],
-            providers: [
-                ...ANALYTICS_PROVIDERS
             ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
         fixture = TestBed.createComponent(AnalyticsComponent);
-        component = fixture.componentInstance;
-        debug = fixture.debugElement;
-        element = fixture.nativeElement;
         fixture.detectChanges();
     });
 

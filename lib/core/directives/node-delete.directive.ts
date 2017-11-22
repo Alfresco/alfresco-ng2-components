@@ -17,10 +17,13 @@
 
 import { Directive, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output } from '@angular/core';
 import { MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { NotificationService } from '../services/notification.service';
 import { TranslationService } from '../services/translation.service';
+import 'rxjs/add/observable/fromPromise';
+import 'rxjs/observable/forkJoin';
+import 'rxjs/add/operator/catch';
 
 interface ProcessedNodeData {
     entry: MinimalNodeEntryEntity;
@@ -108,7 +111,7 @@ export class NodeDeleteDirective implements OnChanges {
     private deleteNode(node: MinimalNodeEntity): Observable<ProcessedNodeData> {
         const id = (<any> node.entry).nodeId || node.entry.id;
 
-        const promise = this.alfrescoApiService.getInstance().nodes.deleteNode(id, {permanent: this.permanent});
+        const promise = this.alfrescoApiService.getInstance().nodes.deleteNode(id, { permanent: this.permanent });
 
         return Observable.fromPromise(promise)
             .map(() => ({
@@ -169,14 +172,14 @@ export class NodeDeleteDirective implements OnChanges {
         if (status.allFailed && !status.oneFailed) {
             return this.translation.get(
                 'CORE.DELETE_NODE.ERROR_PLURAL',
-                {number: status.failed.length}
+                { number: status.failed.length }
             );
         }
 
         if (status.allSucceeded && !status.oneSucceeded) {
             return this.translation.get(
                 'CORE.DELETE_NODE.PLURAL',
-                {number: status.success.length}
+                { number: status.success.length }
             );
         }
 
@@ -203,14 +206,14 @@ export class NodeDeleteDirective implements OnChanges {
         if (status.oneFailed && !status.someSucceeded) {
             return this.translation.get(
                 'CORE.DELETE_NODE.ERROR_SINGULAR',
-                {name: status.failed[0].entry.name}
+                { name: status.failed[0].entry.name }
             );
         }
 
         if (status.oneSucceeded && !status.someFailed) {
             return this.translation.get(
                 'CORE.DELETE_NODE.SINGULAR',
-                {name: status.success[0].entry.name}
+                { name: status.success[0].entry.name }
             );
         }
     }

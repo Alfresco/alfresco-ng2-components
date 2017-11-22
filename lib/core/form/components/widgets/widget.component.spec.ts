@@ -28,7 +28,6 @@ describe('WidgetComponent', () => {
     let widget: WidgetComponent;
     let fixture: ComponentFixture<WidgetComponent>;
     let element: HTMLElement;
-    let formService: FormService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -44,7 +43,6 @@ describe('WidgetComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(WidgetComponent);
-        formService = TestBed.get(FormService);
 
         element = fixture.nativeElement;
         widget = fixture.componentInstance;

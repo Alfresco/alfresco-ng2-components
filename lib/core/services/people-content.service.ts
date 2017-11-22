@@ -16,8 +16,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { AlfrescoApiService } from './alfresco-api.service';
+import 'rxjs/add/observable/fromPromise';
 
 @Injectable()
 export class PeopleContentService {

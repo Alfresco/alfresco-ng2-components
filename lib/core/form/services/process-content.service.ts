@@ -15,10 +15,14 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService } from '../../services';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { LogService } from '../../services/log.service';
 import { Injectable } from '@angular/core';
 import { RelatedContentRepresentation } from 'alfresco-js-api';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/fromPromise';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class ProcessContentService {

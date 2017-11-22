@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigService, CoreModule } from '@alfresco/adf-core';
 import { DataTableModule } from '@alfresco/adf-core';
@@ -27,7 +26,6 @@ describe('WebscriptComponent', () => {
 
     let component: WebscriptComponent;
     let fixture: ComponentFixture<WebscriptComponent>;
-    let debug: DebugElement;
     let element: HTMLElement;
 
     beforeEach(async(() => {
@@ -49,7 +47,6 @@ describe('WebscriptComponent', () => {
         fixture = TestBed.createComponent(WebscriptComponent);
         component = fixture.componentInstance;
 
-        debug = fixture.debugElement;
         element = fixture.nativeElement;
         component = fixture.componentInstance;
         component.scriptPath = 'fakePath';

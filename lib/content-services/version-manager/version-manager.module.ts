@@ -23,7 +23,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { VersionUploadComponent } from './version-upload.component';
 import { VersionManagerComponent } from './version-manager.component';
 import { VersionListComponent } from './version-list.component';
-import { UploadModule } from '../upload';
+import { UploadModule } from '../upload/upload.module';
 
 @NgModule({
     imports: [

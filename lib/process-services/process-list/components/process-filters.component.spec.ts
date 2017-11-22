@@ -17,7 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { AppsProcessService } from '@alfresco/adf-core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterService } from '../services/process-filter.service';
 import { ProcessFiltersComponent } from './process-filters.component';
@@ -47,12 +47,12 @@ describe('ActivitiFilters', () => {
         resolve(fakeGlobalFilter);
     });
 
-    let fakeErrorFilterList = {
+    let mockErrorFilterList = {
         error: 'wrong request'
     };
 
-    let fakeErrorFilterPromise = new Promise(function (resolve, reject) {
-        reject(fakeErrorFilterList);
+    let mockErrorFilterPromise = new Promise(function (resolve, reject) {
+        reject(mockErrorFilterList);
     });
 
     beforeEach(() => {
@@ -120,7 +120,7 @@ describe('ActivitiFilters', () => {
     });
 
     it('should emit an error with a bad response', (done) => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeErrorFilterPromise));
+        spyOn(processFilterService, 'getProcessFilters').and.returnValue(Observable.fromPromise(mockErrorFilterPromise));
 
         const appId = '1';
         let change = new SimpleChange(null, appId, true);
@@ -135,7 +135,7 @@ describe('ActivitiFilters', () => {
     });
 
     it('should emit an error with a bad response', (done) => {
-        spyOn(appsProcessService, 'getDeployedApplicationsByName').and.returnValue(Observable.fromPromise(fakeErrorFilterPromise));
+        spyOn(appsProcessService, 'getDeployedApplicationsByName').and.returnValue(Observable.fromPromise(mockErrorFilterPromise));
 
         const appId = 'fake-app';
         let change = new SimpleChange(null, appId, true);

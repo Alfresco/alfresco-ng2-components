@@ -21,7 +21,7 @@ import { MatProgressSpinnerModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { ProcessContentService } from '@alfresco/adf-core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 
 import { ProcessAttachmentListComponent } from './process-attachment-list.component';
 
@@ -31,8 +31,6 @@ describe('ProcessAttachmentListComponent', () => {
     let component: ProcessAttachmentListComponent;
     let fixture: ComponentFixture<ProcessAttachmentListComponent>;
     let getProcessRelatedContentSpy: jasmine.Spy;
-    let deleteContentSpy: jasmine.Spy;
-    let getFileRawContentSpy: jasmine.Spy;
     let mockAttachment: any;
 
     beforeEach(async(() => {
@@ -109,11 +107,10 @@ describe('ProcessAttachmentListComponent', () => {
         };
 
         getProcessRelatedContentSpy = spyOn(service, 'getProcessRelatedContent').and.returnValue(Observable.of(mockAttachment));
-
-        deleteContentSpy = spyOn(service, 'deleteRelatedContent').and.returnValue(Observable.of({successCode: true}));
+        spyOn(service, 'deleteRelatedContent').and.returnValue(Observable.of({successCode: true}));
 
         let blobObj = new Blob();
-        getFileRawContentSpy = spyOn(service, 'getFileRawContent').and.returnValue(Observable.of(
+        spyOn(service, 'getFileRawContent').and.returnValue(Observable.of(
             blobObj
         ));
     });

@@ -19,7 +19,7 @@ import { NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule, MatInputModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 
 import { FormModule, FormModel, FormOutcomeEvent, FormOutcomeModel, FormService } from '@alfresco/adf-core';
 import { CommentProcessService, LogService } from '@alfresco/adf-core';
@@ -47,10 +47,8 @@ describe('TaskDetailsComponent', () => {
     let component: TaskDetailsComponent;
     let fixture: ComponentFixture<TaskDetailsComponent>;
     let getTaskDetailsSpy: jasmine.Spy;
-    let getFormSpy: jasmine.Spy;
     let getTasksSpy: jasmine.Spy;
     let assignTaskSpy: jasmine.Spy;
-    let getFormTaskSpy: jasmine.Spy;
     let completeTaskSpy: jasmine.Spy;
     let logService: LogService;
     let commentProcessService: CommentProcessService;
@@ -87,9 +85,9 @@ describe('TaskDetailsComponent', () => {
         commentProcessService = TestBed.get(CommentProcessService);
 
         getTaskDetailsSpy = spyOn(service, 'getTaskDetails').and.returnValue(Observable.of(taskDetailsMock));
-        getFormSpy = spyOn(formService, 'getTaskForm').and.returnValue(Observable.of(taskFormMock));
+        spyOn(formService, 'getTaskForm').and.returnValue(Observable.of(taskFormMock));
         taskDetailsMock.processDefinitionId = null;
-        getFormTaskSpy = spyOn(formService, 'getTask').and.returnValue(Observable.of(taskDetailsMock));
+        spyOn(formService, 'getTask').and.returnValue(Observable.of(taskDetailsMock));
 
         getTasksSpy = spyOn(service, 'getTasks').and.returnValue(Observable.of(tasksMock));
         assignTaskSpy = spyOn(service, 'assignTask').and.returnValue(Observable.of(fakeUser));

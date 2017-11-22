@@ -19,5 +19,3 @@ export * from './rating.component';
 export * from './like.component';
 
 export * from './services/rating.service';
-
-export * from './social.module';

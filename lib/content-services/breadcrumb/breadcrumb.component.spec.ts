@@ -30,7 +30,6 @@ describe('Breadcrumb', () => {
 
     let component: BreadcrumbComponent;
     let fixture: ComponentFixture<BreadcrumbComponent>;
-    let element: HTMLElement;
     let documentList: DocumentListComponent;
 
     beforeEach(async(() => {
@@ -55,7 +54,6 @@ describe('Breadcrumb', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(BreadcrumbComponent);
 
-        element = fixture.nativeElement;
         component = fixture.componentInstance;
 
         documentList = TestBed.createComponent<DocumentListComponent>(DocumentListComponent).componentInstance;

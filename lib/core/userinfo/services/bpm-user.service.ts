@@ -17,9 +17,12 @@
 
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
-import { AlfrescoApiService, LogService } from '../../services';
+import { Observable } from 'rxjs/Observable';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { LogService } from '../../services/log.service';
 import { BpmUserModel } from '../models/bpm-user.model';
+import 'rxjs/add/observable/throw';
+
 /**
  *
  * BPMUserService retrieve all the information of an Ecm user.

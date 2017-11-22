@@ -31,7 +31,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
-import * as moment from 'moment';
+import moment from 'moment-es6';
 import { ParameterValueModel, ReportParameterDetailsModel, ReportParametersModel, ReportQuery } from '../../diagram';
 import { AnalyticsService } from '../services/analytics.service';
 
@@ -96,7 +96,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     private paramOpts;
     private reportParamQuery: ReportQuery;
     private hideParameters: boolean = true;
-    private formValidState: boolean = false;
+    formValidState: boolean = false;
 
     constructor(private analyticsService: AnalyticsService,
                 private formBuilder: FormBuilder,

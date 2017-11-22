@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigService, CoreModule } from '@alfresco/adf-core';
 import { TagService } from './services/tag.service';
@@ -45,7 +44,6 @@ describe('TagList', () => {
 
     let component: any;
     let fixture: ComponentFixture<TagListComponent>;
-    let debug: DebugElement;
     let element: HTMLElement;
 
     beforeEach(async(() => {
@@ -69,7 +67,6 @@ describe('TagList', () => {
 
         fixture = TestBed.createComponent(TagListComponent);
 
-        debug = fixture.debugElement;
         element = fixture.nativeElement;
         component = fixture.componentInstance;
         fixture.detectChanges();

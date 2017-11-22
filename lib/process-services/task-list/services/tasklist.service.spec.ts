@@ -17,10 +17,10 @@
 
 import { async, TestBed } from '@angular/core/testing';
 import { UserProcessModel } from '@alfresco/adf-core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import {
     fakeCompletedTaskList,
-    fakeErrorTaskList,
+    mockErrorTaskList,
     fakeFilter,
     fakeFormList,
     fakeOpenTaskList,
@@ -125,7 +125,7 @@ xdescribe('Activiti TaskList Service', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 'status': 404,
                 contentType: 'application/json',
-                responseText: JSON.stringify(fakeErrorTaskList)
+                responseText: JSON.stringify(mockErrorTaskList)
             });
         });
 

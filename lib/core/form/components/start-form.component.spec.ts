@@ -17,7 +17,7 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { EntryComponentMockModule } from '../../mock/form/entry-module.mock';
 import { startFormDateWidgetMock, startFormDropdownDefinitionMock, startFormTextDefinitionMock, startMockForm, startMockFormWithTab } from '../../mock';
 import { startFormAmountWidgetMock, startFormNumberWidgetMock, startFormRadioButtonWidgetMock } from '../../mock';
@@ -37,7 +37,6 @@ describe('ActivitiStartForm', () => {
 
     let formService: FormService;
     let component: StartFormComponent;
-    let element: HTMLElement;
     let fixture: ComponentFixture<StartFormComponent>;
     let getStartFormSpy: jasmine.Spy;
 
@@ -72,7 +71,6 @@ describe('ActivitiStartForm', () => {
         fixture = TestBed.createComponent(StartFormComponent);
         component = fixture.componentInstance;
         formService = fixture.debugElement.injector.get(FormService);
-        element = fixture.nativeElement;
 
         getStartFormSpy = spyOn(formService, 'getStartFormDefinition').and.returnValue(Observable.of({
             processDefinitionName: 'my:process'

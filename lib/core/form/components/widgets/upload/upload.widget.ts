@@ -17,13 +17,15 @@
 
 /* tslint:disable:component-selector  */
 
-import { LogService, ThumbnailService } from '../../../../services';
+import { LogService } from '../../../../services/log.service';
+import { ThumbnailService } from '../../../../services/thumbnail.service';
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { FormService } from '../../../services/form.service';
 import { ProcessContentService } from '../../../services/process-content.service';
 import { ContentLinkModel } from '../core/content-link.model';
 import { baseHost, WidgetComponent } from './../widget.component';
+import 'rxjs/add/operator/mergeMap';
 
 @Component({
     selector: 'upload-widget',
@@ -73,7 +75,7 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
         }
 
         if (files && files.length > 0) {
-            Observable.from(files).flatMap(file => this.uploadRawContent(file)).subscribe((res) => {
+            Observable.from(files).mergeMap(file => this.uploadRawContent(file)).subscribe((res) => {
                     filesSaved.push(res);
                 },
                 (error) => {

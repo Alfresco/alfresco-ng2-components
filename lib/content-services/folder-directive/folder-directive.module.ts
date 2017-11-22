@@ -15,9 +15,25 @@
  * limitations under the License.
  */
 
-export { DataTableAdapter } from './datatable-adapter';
-export { ObjectDataColumn, ObjectDataRow, ObjectDataTableAdapter } from './object-datatable-adapter';
-export { DataRow } from './data-row.model';
-export { DataRowEvent } from './data-row-event.model';
-export { DataColumn } from './data-column.model';
-export { DataSorting } from './data-sorting.model';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { MaterialModule } from '../material.module';
+
+import { FolderCreateDirective } from './folder-create.directive';
+import { FolderEditDirective } from './folder-edit.directive';
+
+@NgModule({
+    imports: [
+        CommonModule,
+        MaterialModule
+    ],
+    declarations: [
+        FolderCreateDirective,
+        FolderEditDirective
+    ],
+    exports: [
+        FolderCreateDirective,
+        FolderEditDirective
+    ]
+})
+export class FolderDirectiveModule {}

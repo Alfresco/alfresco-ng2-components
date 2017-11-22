@@ -35,7 +35,7 @@ describe('ChecklistComponent', () => {
     let checklistComponent: ChecklistComponent;
     let fixture: ComponentFixture<ChecklistComponent>;
     let element: HTMLElement;
-    let showChecklistDialog, closeCheckDialogButton;
+    let showChecklistDialog;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -77,7 +77,6 @@ describe('ChecklistComponent', () => {
 
             fixture.detectChanges();
             showChecklistDialog = <HTMLElement> element.querySelector('#add-checklist');
-            closeCheckDialogButton = <HTMLElement> element.querySelector('#close-check-dialog');
         });
 
         it('should NOT show add checklist button', () => {
@@ -98,7 +97,6 @@ describe('ChecklistComponent', () => {
 
             fixture.detectChanges();
             showChecklistDialog = <HTMLElement> element.querySelector('#add-checklist');
-            closeCheckDialogButton = <HTMLElement> element.querySelector('#close-check-dialog');
         });
 
         it('should show add checklist button', () => {
@@ -118,7 +116,6 @@ describe('ChecklistComponent', () => {
 
             fixture.detectChanges();
             showChecklistDialog = <HTMLElement> element.querySelector('#add-checklist');
-            closeCheckDialogButton = <HTMLElement> element.querySelector('#close-check-dialog');
         });
 
         it('should show dialog when clicked on add', () => {

@@ -17,7 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 
 import { FormModule } from '@alfresco/adf-core';
 import { CommentProcessService } from '@alfresco/adf-core';
@@ -31,7 +31,6 @@ import { CommentsComponent } from './comments.component';
 
 describe('CommentsComponent', () => {
 
-    let service: TaskListService;
     let component: CommentsComponent;
     let fixture: ComponentFixture<CommentsComponent>;
     let getCommentsSpy: jasmine.Spy;
@@ -61,7 +60,6 @@ describe('CommentsComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(CommentsComponent);
         component = fixture.componentInstance;
-        service = fixture.debugElement.injector.get(TaskListService);
         commentProcessService = fixture.debugElement.injector.get(CommentProcessService);
 
         getCommentsSpy = spyOn(commentProcessService, 'getTaskComments').and.returnValue(Observable.of([

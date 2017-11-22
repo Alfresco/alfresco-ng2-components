@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Validators } from '@angular/forms';
 
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { UserPreferencesService, AuthenticationService } from '../../services';
+import { UserPreferencesService } from '../../services/user-preferences.service';
+import { AuthenticationService } from '../../services/authentication.service';
 
 import { MaterialModule } from '../../material.module';
 import { LoginErrorEvent } from '../models/login-error.event';
@@ -32,7 +32,6 @@ import { LoginComponent } from './login.component';
 describe('LoginComponent', () => {
     let component: LoginComponent;
     let fixture: ComponentFixture<LoginComponent>;
-    let debug: DebugElement;
     let element: any;
     let authService: AuthenticationService;
     let router: Router;
@@ -73,7 +72,6 @@ describe('LoginComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(LoginComponent);
 
-        debug = fixture.debugElement;
         element = fixture.nativeElement;
         component = fixture.componentInstance;
         component.showRememberMe = true;

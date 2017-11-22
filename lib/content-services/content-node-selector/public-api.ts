@@ -17,5 +17,3 @@
 
 export * from './content-node-selector.component';
 export * from './content-node-selector.service';
-
-export * from './content-node-selector.module';

@@ -18,5 +18,3 @@
 export * from './components/search.component';
 export * from './components/search-control.component';
 export * from './components/search-trigger.directive';
-
-export * from './search.module';

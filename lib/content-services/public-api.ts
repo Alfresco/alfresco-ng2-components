@@ -15,5 +15,4 @@
  * limitations under the License.
  */
 
-export * from './chart.model';
-export * from './report.model';
+export * from './index';

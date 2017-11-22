@@ -17,5 +17,3 @@
 
 export * from './download-zip.dialog';
 export * from './folder.dialog';
-
-export * from './dialog.module';

@@ -36,7 +36,7 @@ export let fakeEmptyFilters = {
     data: []
 };
 
-export let fakeError = {
+export let mockError = {
     message: null,
     messageKey: 'GENERAL.ERROR.FORBIDDEN'
 };

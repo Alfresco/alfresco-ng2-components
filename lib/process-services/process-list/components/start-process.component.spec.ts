@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DebugElement, SimpleChange } from '@angular/core';
+import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import {
     MatButtonModule,
@@ -24,7 +24,7 @@ import {
     MatSelectModule
 } from '@angular/material';
 import { FormModule, FormService } from '@alfresco/adf-core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessService } from '../services/process.service';
@@ -40,7 +40,6 @@ describe('StartProcessInstanceComponent', () => {
     let getDefinitionsSpy: jasmine.Spy;
     let getStartFormDefinitionSpy: jasmine.Spy;
     let startProcessSpy: jasmine.Spy;
-    let debugElement: DebugElement;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -65,7 +64,6 @@ describe('StartProcessInstanceComponent', () => {
 
         fixture = TestBed.createComponent(StartProcessInstanceComponent);
         component = fixture.componentInstance;
-        debugElement = fixture.debugElement;
         processService = fixture.debugElement.injector.get(ProcessService);
         formService = fixture.debugElement.injector.get(FormService);
 
