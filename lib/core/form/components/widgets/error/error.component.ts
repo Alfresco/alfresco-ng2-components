@@ -60,7 +60,7 @@ export class ErrorWidgetComponent extends WidgetComponent implements OnChanges {
             this.required = changes.required.currentValue;
             this._subscriptAnimationState = 'enter';
         }
-        if (changes['error']) {
+        if (changes['error'] && changes['error'].currentValue) {
             if (changes.error.currentValue.isActive()) {
                 this.error = changes.error.currentValue;
                 this.translateParameters = this.error.getAttributesAsJsonObj();

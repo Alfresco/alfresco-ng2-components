@@ -45,7 +45,11 @@ export class RowEditorComponent {
     @Output()
     cancel: EventEmitter<any> = new EventEmitter<any>();
 
-    validationSummary: DynamicRowValidationSummary = <DynamicRowValidationSummary> { isValid: true, text: null };
+    validationSummary: DynamicRowValidationSummary;
+
+    constructor() {
+        this.validationSummary = new DynamicRowValidationSummary({ isValid: true, message: '' });
+    }
 
     onCancelChanges() {
         this.cancel.emit({

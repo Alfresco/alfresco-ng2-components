@@ -37,7 +37,7 @@ describe('RowEditorComponent', () => {
 
     it('should be valid upon init', () => {
         expect(component.validationSummary.isValid).toBeTruthy();
-        expect(component.validationSummary.text).toBeNull();
+        expect(component.validationSummary.message).toBe('');
     });
 
     it('should emit [cancel] event', (done) => {
@@ -58,7 +58,7 @@ describe('RowEditorComponent', () => {
 
     it('should emit [save] event', (done) => {
         spyOn(component.table, 'validateRow').and.returnValue(
-            <DynamicRowValidationSummary> {isValid: true, text: null}
+            <DynamicRowValidationSummary> {isValid: true, message: null}
         );
         component.save.subscribe(e => {
             expect(e.table).toBe(component.table);
@@ -71,7 +71,7 @@ describe('RowEditorComponent', () => {
 
     it('should not emit [save] event for invalid row', () => {
         spyOn(component.table, 'validateRow').and.returnValue(
-            <DynamicRowValidationSummary> {isValid: false, text: 'error'}
+            <DynamicRowValidationSummary> {isValid: false, message: 'error'}
         );
         let raised = false;
         component.save.subscribe(e => raised = true);

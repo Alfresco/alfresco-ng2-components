@@ -54,7 +54,7 @@ export class NumberCellValidator implements CellValidator {
 
             if (summary) {
                 summary.isValid = false;
-                summary.text = `Field '${column.name}' must be a number.`;
+                summary.message = `Field '${column.name}' must be a number.`;
             }
             return false;
         }
