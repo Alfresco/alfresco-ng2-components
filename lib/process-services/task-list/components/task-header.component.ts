@@ -197,9 +197,9 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
     }
 
     /**
-     * Return true if the user is a candidate user
+     * Return true if the user is a candidate member
      */
-    isCandidateUser() {
+    isCandidateMember() {
         return this.taskDetails.managerOfCandidateGroup || this.taskDetails.memberOfCandidateGroup || this.taskDetails.memberOfCandidateUsers;
     }
 
@@ -207,14 +207,14 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
      * Return true if the task claimable
      */
     public isTaskClaimable(): boolean {
-        return !this.hasAssignee() && this.isCandidateUser();
+        return !this.hasAssignee() && this.isCandidateMember();
     }
 
     /**
-     * Return true if the task claimed by candidate user
+     * Return true if the task claimed by candidate member.
      */
-    public isTaskClaimedByCandidateUser(): boolean {
-        return this.isCandidateUser() && this.isAssignedToCurrentUser() && !this.isCompleted();
+    public isTaskClaimedByCandidateMember(): boolean {
+        return this.isCandidateMember() && this.isAssignedToCurrentUser() && !this.isCompleted();
     }
 
     /**

@@ -4,7 +4,7 @@
     </mat-card-content>
 
     <mat-card-actions class="adf-controls">
-        <button *ngIf="isTaskClaimedByCandidateUser()" mat-button data-automation-id="header-unclaim-button" id="unclaim-task" (click)="unclaimTask(taskDetails.id)" class="adf-claim-controls">{{ 'ADF_TASK_LIST.DETAILS.BUTTON.UNCLAIM' | translate }}
+        <button *ngIf="isTaskClaimedByCandidateMember()" mat-button data-automation-id="header-unclaim-button" id="unclaim-task" (click)="unclaimTask(taskDetails.id)" class="adf-claim-controls">{{ 'ADF_TASK_LIST.DETAILS.BUTTON.UNCLAIM' | translate }}
         </button>
         <button *ngIf="isTaskClaimable()" mat-button data-automation-id="header-claim-button" id="claim-task" (click)="claimTask(taskDetails.id)" class="adf-claim-controls">{{ 'ADF_TASK_LIST.DETAILS.BUTTON.CLAIM' | translate }}
         </button>

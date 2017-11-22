@@ -157,7 +157,7 @@ describe('TaskHeaderComponent', () => {
             let claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
             let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
             expect(component.isTaskClaimable()).toBeFalsy();
-            expect(component.isTaskClaimedByCandidateUser()).toBeFalsy();
+            expect(component.isTaskClaimedByCandidateMember()).toBeFalsy();
             expect(unclaimButton).toBeNull();
             expect(claimButton).toBeNull();
         });
@@ -168,26 +168,26 @@ describe('TaskHeaderComponent', () => {
         component.ngOnChanges({});
         fixture.detectChanges();
         let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
-        expect(component.isTaskClaimedByCandidateUser()).toBeTruthy();
+        expect(component.isTaskClaimedByCandidateMember()).toBeTruthy();
         expect(unclaimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.UNCLAIM');
     });
 
-    it('should not display the requeue button if task is claimed by others', () => {
+    it('should not display the requeue button to logged in user if task is claimed by other candidate member', () => {
         component.taskDetails = new TaskDetailsModel(claimedByGroupMemberMock);
         component.ngOnChanges({});
         fixture.detectChanges();
         let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
-        expect(component.isTaskClaimedByCandidateUser()).toBeFalsy();
+        expect(component.isTaskClaimedByCandidateMember()).toBeFalsy();
         expect(unclaimButton).toBeNull();
     });
 
-    it('should display the claime button if the task is claimable by the current logged-in user', () => {
+    it('should display the claime button if the task is claimable by candidates members', () => {
         component.taskDetails = new TaskDetailsModel(claimableTaskDetailsMock);
         component.ngOnChanges({});
         fixture.detectChanges();
         let claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
         expect(component.isTaskClaimable()).toBeTruthy();
-        expect(component.isTaskClaimedByCandidateUser()).toBeFalsy();
+        expect(component.isTaskClaimedByCandidateMember()).toBeFalsy();
         expect(claimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.CLAIM');
     });
 
