@@ -57,7 +57,7 @@ import { LogService } from '@alfresco/adf-core';
 import { AlfrescoApiService, UploadService } from '@alfresco/adf-core';
 import {
     DataSorting,
-    // ObjectDataRow,
+    ObjectDataRow,
     ObjectDataTableAdapter
 } from '@alfresco/adf-core';
 import { Subscription } from 'rxjs/Rx';
@@ -441,21 +441,21 @@ export class ActivitiComponent implements AfterViewInit, OnDestroy, OnInit {
     }
 
     onProcessDetailsTaskClick(event: TaskDetailsEvent): void {
-        // event.preventDefault();
-        // this.activeTab = this.tabs.tasks;
-        //
-        // const taskId = event.value.id;
-        // const processTaskDataRow = new ObjectDataRow({
-        //     id: taskId,
-        //     name: event.value.name || 'No name',
-        //     created: event.value.created
-        // });
-        // this.activitifilter.selectFilter(null);
-        // if (this.taskList) {
-        //     this.taskList.setCustomDataSource([processTaskDataRow]);
-        //     this.taskList.selectTask(taskId);
-        // }
-        // this.currentTaskId = taskId;
+        event.preventDefault();
+        this.activeTab = this.tabs.tasks;
+
+        const taskId = event.value.id;
+        const processTaskDataRow = new ObjectDataRow({
+            id: taskId,
+            name: event.value.name || 'No name',
+            created: event.value.created
+        });
+        this.activitifilter.selectFilter(null);
+        if (this.taskList) {
+            this.taskList.setCustomDataSource([processTaskDataRow]);
+            this.taskList.selectTask(taskId);
+        }
+        this.currentTaskId = taskId;
     }
 
     private resetProcessFilters(): void {
