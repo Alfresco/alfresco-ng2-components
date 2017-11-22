@@ -1,8 +1,8 @@
 {
   "$schema": "./node_modules/ng-packagr/ng-package.schema.json",
   "workingDirectory" : "./ng_work",
-  "src": "./core/",
-  "dest": "core/dist/",
+  "src": "../core/",
+  "dest": "../core/dist/",
   "lib": {
     "entryFile": "./public-api.ts",
     "flatModuleFile": "adf-core",

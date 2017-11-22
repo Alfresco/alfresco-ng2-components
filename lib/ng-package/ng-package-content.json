@@ -1,8 +1,8 @@
 {
   "$schema": "./node_modules/ng-packagr/ng-package.schema.json",
   "workingDirectory" : "./ng_work",
-  "src": "./content-services/",
-  "dest": "content-services/dist/",
+  "src": "../content-services/",
+  "dest": "../content-services/dist/",
   "lib": {
     "entryFile": "./public-api.ts",
     "flatModuleFile": "adf-content-services",
