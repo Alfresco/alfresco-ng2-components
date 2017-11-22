@@ -6,7 +6,14 @@
     $mat-menu-border-radius: 2px !default;
 
     .adf-search-container {
-        overflow: hidden;
+        overflow: hidden !important;
+        adf-search-bar {
+            width: 200px;
+        }
+    }
+
+    .adf-search-button {
+        left: -13px;
     }
 
     .adf {
@@ -38,7 +45,6 @@
             color: mat-color($foreground, text);
             background-color: mat-color($background, card);
             border-radius: $mat-menu-border-radius;
-
 
             @media screen and ($mat-small) {
                 width: 160px;

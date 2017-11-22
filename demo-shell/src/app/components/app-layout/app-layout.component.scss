@@ -3,6 +3,13 @@
   $minimumAppWidth: 320px;
   $toolbarHeight: 64px;
 
+
+   @media screen and ($mat-small) {
+       adf-search-bar {
+           width: 200px;
+       }
+   }
+
   .adf-app-layout {
     display: block;
     min-width: $minimumAppWidth;
