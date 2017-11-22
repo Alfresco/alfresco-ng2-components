@@ -107,6 +107,7 @@ describe('ContentNodeSelectorComponent', () => {
         beforeEach(async(() => {
             data = {
                 title: 'Move along citizen...',
+                actionName: 'move',
                 select: new EventEmitter<MinimalNodeEntryEntity>(),
                 rowFilter: () => {},
                 imageResolver: () => 'piccolo',
@@ -129,6 +130,12 @@ describe('ContentNodeSelectorComponent', () => {
                 const titleElement = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-title"]'));
                 expect(titleElement).not.toBeNull();
                 expect(titleElement.nativeElement.innerText).toBe('Move along citizen...');
+            });
+
+            it('should have the INJECTED actionName on the name of the choose button', () => {
+                const actionButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
+                expect(actionButton).not.toBeNull();
+                expect(actionButton.nativeElement.innerText).toBe('NODE_SELECTOR.MOVE');
             });
 
             it('should pass through the injected currentFolderId to the documentlist', () => {
@@ -595,7 +602,7 @@ describe('ContentNodeSelectorComponent', () => {
             });
         });
 
-        describe('Choose button', () => {
+        describe('Action button for the chosen node', () => {
 
             const entry: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {};
             let hasPermission;
@@ -608,8 +615,8 @@ describe('ContentNodeSelectorComponent', () => {
             it('should be disabled by default', () => {
                 fixture.detectChanges();
 
-                let chooseButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
-                expect(chooseButton.nativeElement.disabled).toBe(true);
+                let actionButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
+                expect(actionButton.nativeElement.disabled).toBe(true);
             });
 
             it('should become enabled after loading node with the necessary permissions', () => {
@@ -618,8 +625,8 @@ describe('ContentNodeSelectorComponent', () => {
                 component.documentList.ready.emit();
                 fixture.detectChanges();
 
-                let chooseButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
-                expect(chooseButton.nativeElement.disabled).toBe(false);
+                let actionButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
+                expect(actionButton.nativeElement.disabled).toBe(false);
             });
 
             it('should remain disabled after loading node without the necessary permissions', () => {
@@ -628,8 +635,8 @@ describe('ContentNodeSelectorComponent', () => {
                 component.documentList.ready.emit();
                 fixture.detectChanges();
 
-                let chooseButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
-                expect(chooseButton.nativeElement.disabled).toBe(true);
+                let actionButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
+                expect(actionButton.nativeElement.disabled).toBe(true);
             });
 
             it('should be enabled when clicking on a node (with the right permissions) in the list (onNodeSelect)', () => {
@@ -638,8 +645,8 @@ describe('ContentNodeSelectorComponent', () => {
                 component.onNodeSelect({ detail: { node: { entry } } });
                 fixture.detectChanges();
 
-                let chooseButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
-                expect(chooseButton.nativeElement.disabled).toBe(false);
+                let actionButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
+                expect(actionButton.nativeElement.disabled).toBe(false);
             });
 
             it('should remain disabled when clicking on a node (with the WRONG permissions) in the list (onNodeSelect)', () => {
@@ -648,8 +655,8 @@ describe('ContentNodeSelectorComponent', () => {
                 component.onNodeSelect({ detail: { node: { entry } } });
                 fixture.detectChanges();
 
-                let chooseButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
-                expect(chooseButton.nativeElement.disabled).toBe(true);
+                let actionButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
+                expect(actionButton.nativeElement.disabled).toBe(true);
             });
 
             it('should become disabled when clicking on a node (with the WRONG permissions) after previously selecting a right node', () => {
@@ -661,8 +668,8 @@ describe('ContentNodeSelectorComponent', () => {
                 component.onNodeSelect({ detail: { node: { entry } } });
                 fixture.detectChanges();
 
-                let chooseButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
-                expect(chooseButton.nativeElement.disabled).toBe(true);
+                let actionButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
+                expect(actionButton.nativeElement.disabled).toBe(true);
             });
 
             it('should be disabled when resetting the chosen node', () => {
@@ -673,8 +680,8 @@ describe('ContentNodeSelectorComponent', () => {
                 component.resetChosenNode();
                 fixture.detectChanges();
 
-                let chooseButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
-                expect(chooseButton.nativeElement.disabled).toBe(true);
+                let actionButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
+                expect(actionButton.nativeElement.disabled).toBe(true);
             });
 
             it('should make the call to get the corresponding node entry to emit when a site node is selected as destination', () => {

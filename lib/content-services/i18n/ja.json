@@ -60,6 +60,8 @@
   "NODE_SELECTOR": {
     "CANCEL": "キャンセル",
     "CHOOSE": "選択",
+    "COPY": "コピー",
+    "MOVE": "移動",
     "NO_RESULTS": "一致するアイテムはありません"
   },
   "OPERATION": {

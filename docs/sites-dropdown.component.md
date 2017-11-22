@@ -30,6 +30,7 @@ Displays a dropdown menu to show and interact with the sites of the current user
 | --- | --- | --- | --- |
 | hideMyFiles | boolean | false | Hide the "My Files" option added to the list by default |
 | siteList | any[] | null | A custom list of sites to be displayed by the dropdown. If no value is given, the sites of the current user are displayed by default. A list of objects only with properties 'title' and 'guid' is enough to be able to display the dropdown. |
+| placeholder | string  | 'DROPDOWN.PLACEHOLDER_LABEL' | The placeholder text/the key from translation files for the placeholder text to be shown by default|
 
 ### Events
 

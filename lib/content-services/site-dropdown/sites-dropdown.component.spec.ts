@@ -102,7 +102,7 @@ describe('DropdownSitesComponent', () => {
             TestBed.resetTestingModule();
         });
 
-        it('Dropdown sites should be renedered', async(() => {
+        it('Dropdown sites should be rendered', async(() => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -145,24 +145,78 @@ describe('DropdownSitesComponent', () => {
             });
         }));
 
-        // todo: something wrong with the test itself
-        xit('should load sites on init', async(() => {
+        it('should show the default placeholder label by default', async(() => {
+            fixture.detectChanges();
+            jasmine.Ajax.requests.mostRecent().respondWith({ status: 200, contentType: 'json', responseText: sitesList });
+
+            openSelectbox();
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(fixture.nativeElement.innerText.trim()).toBe('DROPDOWN.PLACEHOLDER_LABEL');
+            });
+        }));
+
+        it('should show custom placeholder label when the \'placeholder\' input property is given a value', async(() => {
+            component.placeholder = 'NODE_SELECTOR.SELECT_LOCATION';
+            fixture.detectChanges();
+            jasmine.Ajax.requests.mostRecent().respondWith({ status: 200, contentType: 'json', responseText: sitesList });
+
+            openSelectbox();
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(fixture.nativeElement.innerText.trim()).toBe('NODE_SELECTOR.SELECT_LOCATION');
+            });
+        }));
+
+        it('should load custom sites when the \'siteList\' input property is given a value', async(() => {
+            component.siteList = [{title: 'PERSONAL_FILES', guid: '-my-'}, {title: 'FILE_LIBRARIES', guid: '-mysites-'}];
+            fixture.detectChanges();
+
+            openSelectbox();
+
+            let options: any = [];
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                options = debug.queryAll(By.css('mat-option'));
+                options[0].triggerEventHandler('click', null);
+                fixture.detectChanges();
+            });
+
+            component.change.subscribe(() => {
+                expect(options[0].attributes['ng-reflect-value']).toBe('default');
+                expect(options[1].attributes['ng-reflect-value']).toBe('-my-');
+                expect(options[2].attributes['ng-reflect-value']).toBe('-mysites-');
+            });
+        }));
+
+        it('should load sites by default', (done) => {
             fixture.detectChanges();
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
                 responseText: sitesList
             });
+
+            openSelectbox();
+
+            let options: any = [];
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                debug.query(By.css('.mat-select-trigger')).triggerEventHandler('click', null);
+                options = debug.queryAll(By.css('mat-option'));
+                options[0].triggerEventHandler('click', null);
                 fixture.detectChanges();
-                let options: any = debug.queryAll(By.css('mat-option'));
+            });
+
+            component.change.subscribe(() => {
                 expect(options[0].attributes['ng-reflect-value']).toBe('default');
                 expect(options[1].attributes['ng-reflect-value']).toBe('fake-1');
                 expect(options[2].attributes['ng-reflect-value']).toBe('fake-2');
+
+                done();
             });
-        }));
+        });
 
         it('should raise an event when a site is selected', (done) => {
             fixture.detectChanges();

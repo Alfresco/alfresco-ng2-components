@@ -60,7 +60,10 @@
   "NODE_SELECTOR": {
     "CANCEL": "Cancel",
     "CHOOSE": "Choose",
-    "NO_RESULTS": "No results found"
+    "COPY": "Copy",
+    "MOVE": "Move",
+    "NO_RESULTS": "No results found",
+    "SELECT_LOCATION": "Select Location"
   },
   "OPERATION": {
     "SUCCES": {
