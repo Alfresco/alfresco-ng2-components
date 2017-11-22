@@ -29,8 +29,8 @@ import 'rxjs/add/operator/distinctUntilChanged';
     styleUrls: ['./search-control.component.scss'],
     animations: [
         trigger('transitionMessages', [
-            state('active', style({ transform: 'translateX(0%)' })),
-            state('inactive', style({ transform: 'translateX(83%)', overflow: 'hidden' })),
+            state('active', style({ transform: 'translateX(0%)', 'margin-left': '13px' })),
+            state('inactive', style({ transform: 'translateX(81%)'})),
             state('no-animation', style({ transform: 'translateX(0%)', width: '100%' })),
             transition('inactive => active',
                 animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)')),
@@ -80,7 +80,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     private focusSubject = new Subject<FocusEvent>();
 
     constructor(public authService: AuthenticationService,
-        private thumbnailService: ThumbnailService) {
+                private thumbnailService: ThumbnailService) {
 
         this.toggleSearch.asObservable().debounceTime(100).subscribe(() => {
             if (this.expandable) {
