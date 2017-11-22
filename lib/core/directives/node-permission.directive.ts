@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-import { Directive, ElementRef, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Directive, ElementRef, Host, Inject, Input, OnChanges, Optional, Renderer2,  SimpleChanges } from '@angular/core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
 import { ContentService } from './../services/content.service';
+import { EXTENDIBLE_COMPONENT } from './../interface/injection.tokens';
 
 export interface NodePermissionSubject {
     disabled: boolean;
@@ -29,13 +30,19 @@ export interface NodePermissionSubject {
 export class NodePermissionDirective implements OnChanges {
 
     @Input('adf-node-permission')
-    permission: string = null;
+    permission: string  = null;
 
     @Input('adf-nodes')
     nodes: MinimalNodeEntity[] = [];
 
     constructor(private elementRef: ElementRef,
-                private contentService: ContentService) {
+                private renderer: Renderer2,
+                private contentService: ContentService,
+                private changeDetector: ChangeDetectorRef,
+
+                @Host()
+                @Optional()
+                @Inject(EXTENDIBLE_COMPONENT) private parentComponent?: NodePermissionSubject) {
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -45,17 +52,57 @@ export class NodePermissionDirective implements OnChanges {
     }
 
     /**
-     * Updates disabled state for the decorated element
+     * Updates disabled state for the decorated elememtn
+     *
+     * @returns {boolean} True if decorated element got disabled, otherwise False
+     * @memberof NodePermissionDirective
+     */
+    updateElement(): boolean {
+        let enable = this.hasPermission(this.nodes, this.permission);
+
+        if (enable) {
+            this.enable();
+        } else {
+            this.disable();
+        }
+
+        return enable;
+    }
+
+    private enable(): void {
+        if (this.parentComponent) {
+            this.parentComponent.disabled = false;
+            this.changeDetector.detectChanges();
+        } else {
+            this.enableElement();
+        }
+    }
+
+    private disable(): void {
+        if (this.parentComponent) {
+            this.parentComponent.disabled = true;
+            this.changeDetector.detectChanges();
+        } else {
+            this.disableElement();
+        }
+    }
+
+    /**
+     * Enables decorated element
      *
      * @memberof NodePermissionDirective
      */
-    updateElement(): void {
-        let hasPermission = this.hasPermission(this.nodes, this.permission);
-        this.setDisableAttribute(!hasPermission);
+    enableElement(): void {
+        this.renderer.removeAttribute(this.elementRef.nativeElement, 'disabled');
     }
 
-    private setDisableAttribute(disable: boolean) {
-        this.elementRef.nativeElement.disabled = disable;
+    /**
+     * Disables decorated element
+     *
+     * @memberof NodePermissionDirective
+     */
+    disableElement(): void {
+        this.renderer.setAttribute(this.elementRef.nativeElement, 'disabled', 'true');
     }
 
     /**
@@ -73,5 +120,4 @@ export class NodePermissionDirective implements OnChanges {
 
         return false;
     }
-
 }

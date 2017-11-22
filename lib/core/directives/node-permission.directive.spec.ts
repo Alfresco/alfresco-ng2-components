@@ -15,94 +15,150 @@
  * limitations under the License.
  */
 
-import { Component, DebugElement } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
+import { ChangeDetectorRef, Component, ElementRef, SimpleChange } from '@angular/core';
 import { ContentService } from './../services/content.service';
-import { NodePermissionDirective } from './node-permission.directive';
+import { NodePermissionDirective, NodePermissionSubject } from './node-permission.directive';
 
 @Component({
-    template: `
-        <div [adf-node-permission]="'delete'" [adf-nodes]="selection">
-        </div>`
+    selector: 'adf-text-subject'
 })
-class TestComponent {
-    selection = [];
-    disabled = false;
-    done = jasmine.createSpy('done');
+class TestComponent implements NodePermissionSubject {
+    disabled: boolean = false;
 }
 
 describe('NodePermissionDirective', () => {
-    let fixture: ComponentFixture<TestComponent>;
-    let element: DebugElement;
-    let component: TestComponent;
-    let alfrescoContentService: ContentService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
+    let changeDetectorMock: ChangeDetectorRef;
 
-            declarations: [
-                TestComponent
-            ]
-        })
-            .compileComponents()
-            .then(() => {
-                fixture = TestBed.createComponent(TestComponent);
-                alfrescoContentService = TestBed.get(ContentService);
-                component = fixture.componentInstance;
-                element = fixture.debugElement.query(By.directive(NodePermissionDirective));
-            });
-    }));
-
-    it('Should be disabled if no nodes are passed', () => {
-        component.selection = undefined;
-
-        fixture.detectChanges();
-
-        component.selection = null;
-
-        fixture.detectChanges();
-
-        expect(element.nativeElement.disabled).toEqual(true);
+    beforeEach(() => {
+        changeDetectorMock = <ChangeDetectorRef> { detectChanges: () => {} };
     });
 
-    it('Should be disabled if nodes is an empty array', () => {
-        component.selection = null;
+    describe('HTML nativeElement as subject', () => {
 
-        fixture.detectChanges();
+        it('updates element once it is loaded', () => {
+            const directive = new NodePermissionDirective(null, null, null, changeDetectorMock);
+            spyOn(directive, 'updateElement').and.stub();
 
-        component.selection = [];
+            const nodes = [{}, {}];
+            const change = new SimpleChange([], nodes, false);
+            directive.ngOnChanges({ nodes: change });
 
-        fixture.detectChanges();
+            expect(directive.updateElement).toHaveBeenCalled();
+        });
 
-        expect(element.nativeElement.disabled).toEqual(true);
+        it('updates element on nodes change', () => {
+            const directive = new NodePermissionDirective(null, null, null, changeDetectorMock);
+            spyOn(directive, 'updateElement').and.stub();
+
+            const nodes = [{}, {}];
+            const change = new SimpleChange([], nodes, false);
+            directive.ngOnChanges({ nodes: change });
+
+            expect(directive.updateElement).toHaveBeenCalled();
+        });
+
+        it('updates element only on subsequent change', () => {
+            const directive = new NodePermissionDirective(null, null, null, changeDetectorMock);
+            spyOn(directive, 'updateElement').and.stub();
+
+            const nodes = [{}, {}];
+            const change = new SimpleChange([], nodes, true);
+            directive.ngOnChanges({ nodes: change });
+
+            expect(directive.updateElement).not.toHaveBeenCalled();
+        });
+
+        it('enables decorated element', () => {
+            const renderer = jasmine.createSpyObj('renderer', ['removeAttribute']);
+            const elementRef = new ElementRef({});
+            const directive = new NodePermissionDirective(elementRef, renderer, null, changeDetectorMock);
+
+            directive.enableElement();
+
+            expect(renderer.removeAttribute).toHaveBeenCalledWith(elementRef.nativeElement, 'disabled');
+        });
+
+        it('disables decorated element', () => {
+            const renderer = jasmine.createSpyObj('renderer', ['setAttribute']);
+            const elementRef = new ElementRef({});
+            const directive = new NodePermissionDirective(elementRef, renderer, null, changeDetectorMock);
+
+            directive.disableElement();
+
+            expect(renderer.setAttribute).toHaveBeenCalledWith(elementRef.nativeElement, 'disabled', 'true');
+        });
+
+        it('disables element when nodes not available', () => {
+            const directive = new NodePermissionDirective(null, null, null, changeDetectorMock);
+            spyOn(directive, 'disableElement').and.stub();
+
+            directive.nodes = null;
+            expect(directive.updateElement()).toBeFalsy();
+
+            directive.nodes = [];
+            expect(directive.updateElement()).toBeFalsy();
+        });
+
+        it('enables element when all nodes have expected permission', () => {
+            const contentService = new ContentService(null, null, null, null);
+            spyOn(contentService, 'hasPermission').and.returnValue(true);
+
+            const directive = new NodePermissionDirective(null, null, contentService, changeDetectorMock);
+            spyOn(directive, 'enableElement').and.stub();
+
+            directive.nodes = <any> [{}, {}];
+
+            expect(directive.updateElement()).toBeTruthy();
+            expect(directive.enableElement).toHaveBeenCalled();
+        });
+
+        it('disables element when one of the nodes have no permission', () => {
+            const contentService = new ContentService(null, null, null, null);
+            spyOn(contentService, 'hasPermission').and.returnValue(false);
+
+            const directive = new NodePermissionDirective(null, null, contentService, changeDetectorMock);
+            spyOn(directive, 'disableElement').and.stub();
+
+            directive.nodes = <any> [{}, {}];
+
+            expect(directive.updateElement()).toBeFalsy();
+            expect(directive.disableElement).toHaveBeenCalled();
+        });
     });
 
-    it('enables element when all nodes have expected permission', () => {
-        spyOn(alfrescoContentService, 'hasPermission').and.returnValue(true);
+    describe('Angular component as subject', () => {
 
-        component.selection = null;
+        it('disables decorated component', () => {
+            const contentService = new ContentService(null, null, null, null);
+            spyOn(contentService, 'hasPermission').and.returnValue(false);
+            spyOn(changeDetectorMock, 'detectChanges');
 
-        fixture.detectChanges();
+            let testComponent = new TestComponent();
+            testComponent.disabled = false;
+            const directive = new NodePermissionDirective(null, null, contentService, changeDetectorMock, testComponent);
+            directive.nodes = <any> [{}, {}];
 
-        component.selection = <any> [{entry: {id: '1', name: 'name1'}}];
+            directive.updateElement();
 
-        fixture.detectChanges();
+            expect(testComponent.disabled).toBeTruthy();
+            expect(changeDetectorMock.detectChanges).toHaveBeenCalledTimes(1);
+        });
 
-        expect(element.nativeElement.disabled).toEqual(false);
-    });
+        it('enables decorated component', () => {
+            const contentService = new ContentService(null, null, null, null);
+            spyOn(contentService, 'hasPermission').and.returnValue(true);
+            spyOn(changeDetectorMock, 'detectChanges');
 
-    it('disables element when one of the nodes have no permission', () => {
-        spyOn(alfrescoContentService, 'hasPermission').and.returnValue(false);
+            let testComponent = new TestComponent();
+            testComponent.disabled = true;
+            const directive = new NodePermissionDirective(null, null, contentService, changeDetectorMock, testComponent);
+            directive.nodes = <any> [{}, {}];
 
-        component.selection = null;
+            directive.updateElement();
 
-        fixture.detectChanges();
-
-        component.selection = <any> [{entry: {id: '1', name: 'name1'}}];
-
-        fixture.detectChanges();
-
-        expect(element.nativeElement.disabled).toEqual(true);
+            expect(testComponent.disabled).toBeFalsy();
+            expect(changeDetectorMock.detectChanges).toHaveBeenCalledTimes(1);
+        });
     });
 });
