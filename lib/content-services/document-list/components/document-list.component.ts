@@ -97,7 +97,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     contextMenuActions: boolean = false;
 
     @Input()
-    emptyFolderImageUrl: string = require('../../assets/images/empty_doc_lib.svg');
+    emptyFolderImageUrl: string = './assets/images/empty_doc_lib.svg';
 
     @Input()
     allowDropFiles: boolean = false;
@@ -115,10 +115,10 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     loading: boolean = false;
 
     @Input()
-    rowFilter: RowFilter | null = null;
+    rowFilter: any | null = null;
 
     @Input()
-    imageResolver: ImageResolver | null = null;
+    imageResolver: any | null = null;
 
     // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
     @Input()

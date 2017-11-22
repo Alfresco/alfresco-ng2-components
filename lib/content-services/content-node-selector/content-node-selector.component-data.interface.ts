@@ -21,6 +21,8 @@ import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 export interface ContentNodeSelectorComponentData {
     title: string;
     currentFolderId?: string;
+    dropdownHideMyFiles?: boolean;
+    dropdownSiteList?: any[];
     rowFilter?: any;
     imageResolver?: any;
     select: EventEmitter<MinimalNodeEntryEntity[]>;
