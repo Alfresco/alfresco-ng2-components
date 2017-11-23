@@ -432,6 +432,19 @@ describe('SearchControlComponent', () => {
             }, 100);
         });
 
+        it('click on the search button should apply focus on input', (done) => {
+            fixture.detectChanges();
+            let searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
+            let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
+
+            searchButton.triggerEventHandler('click', null);
+            window.setTimeout(() => {
+                fixture.detectChanges();
+                expect(document.activeElement.id).toBe(inputDebugElement.nativeElement.id);
+                done();
+            }, 100);
+        });
+
         it('Search button should not change the input state too often', async(() => {
             fixture.detectChanges();
             let searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
