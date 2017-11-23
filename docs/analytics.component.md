@@ -1,6 +1,8 @@
 # Activiti Analytics Component
 
-The component shows the charts related to the reportId passed as input
+Shows the charts related to the reportId passed as input
+
+![Analytics-without-parameters](docassets/images/analytics-without-parameters.png)
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
 
