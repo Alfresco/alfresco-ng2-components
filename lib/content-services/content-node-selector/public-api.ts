@@ -15,5 +15,6 @@
  * limitations under the License.
  */
 
+export * from './content-node-selector.component-data.interface';
 export * from './content-node-selector.component';
 export * from './content-node-selector.service';
