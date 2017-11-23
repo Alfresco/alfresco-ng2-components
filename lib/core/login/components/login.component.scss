@@ -10,7 +10,7 @@
         background-size: cover;
         background-position: center;
         min-height: 100%;
-        min-width: 450px;
+        min-width: 320px;
         display: flex;
         justify-content: center;
         flex-direction: column;
@@ -26,7 +26,7 @@
 
         .ie11FixerParent {
             margin-top: 16px;
-            min-width: 350px;
+            min-width: 320px;
 
             // IE11 vertical centering
             @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
@@ -68,7 +68,7 @@
             background-color: mat-color($background, dialog);
             box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12);
             width: 450px;
-            min-width: 350px;
+            min-width: 320px;
             padding: 21px 64px 34px 64px;
             box-sizing: border-box;
         }
@@ -207,7 +207,7 @@
         }
 
         .copyright {
-            width: 450px;
+            min-width: 320px;
             text-align: center;
             padding: 16px 0;
             font-size: 12px;
