@@ -152,7 +152,7 @@
 
         .adf-data-table-cell {
             text-align: left;
-            height: 100%;
+            height: 100%;            
 
             &--text {
                 text-align: left;
@@ -177,6 +177,11 @@
                 img {
                     height: 100%;
                 }
+            }
+
+            .cell-container {
+                display: flex;
+                align-items: center;    
             }
         }
 
