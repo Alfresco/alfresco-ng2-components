@@ -7,7 +7,7 @@ Shows a list of comments.
 Populate the comments in the component class:
 
 ```ts
-import { CommentProcessModel } from 'ng2-alfresco-core';
+import { CommentProcessModel } from '@alfresco/adf-core';
 
 export class SomeComponent implements OnInit {
 
