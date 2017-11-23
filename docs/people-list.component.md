@@ -9,7 +9,7 @@ Shows a list of users (people).
 Populate the users in the component class:
 
 ```ts
-import { UserProcessModel } from 'ng2-alfresco-core';
+import { UserProcessModel } from '@alfresco/adf-core';
 
 export class SomeComponent implements OnInit {
 
