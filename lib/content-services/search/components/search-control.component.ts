@@ -17,8 +17,12 @@
 
 import { AuthenticationService, ThumbnailService } from '@alfresco/adf-core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+<<<<<<< HEAD
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output,
          QueryList, ViewEncapsulation, ViewChild, ViewChildren, ElementRef, Renderer } from '@angular/core';
+=======
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation, ViewChild , ElementRef } from '@angular/core';
+>>>>>>> removed deprecated render dependency
 import { MinimalNodeEntity, QueryBody } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -91,7 +95,6 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     private focusSubject = new Subject<FocusEvent>();
 
     constructor(public authService: AuthenticationService,
-                private renderer: Renderer,
                 private thumbnailService: ThumbnailService) {
 
         this.toggleSearch.asObservable().debounceTime(100).subscribe(() => {
@@ -99,7 +102,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
                 this.subscriptAnimationState = this.subscriptAnimationState === 'inactive' ? 'active' : 'inactive';
 
                 if(this.subscriptAnimationState === 'active') {
-                    this.renderer.invokeElementMethod(this.searchInput.nativeElement, 'focus');
+                    this.searchInput.nativeElement.focus()
                 }
 
                 if (this.subscriptAnimationState === 'inactive') {
