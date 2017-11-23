@@ -20,7 +20,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 
 @Component({
-    selector: 'adf-file-view',
+    selector: 'app-file-view',
     templateUrl: 'file-view.component.html'
 })
 export class FileViewComponent implements OnInit {
@@ -33,6 +33,10 @@ export class FileViewComponent implements OnInit {
         private apiService: AlfrescoApiService) {}
 
     ngOnInit() {
+        this.route
+            .data
+            .subscribe(v => console.log(v));
+
         this.route.params.subscribe(params => {
             const id = params.nodeId;
             if (id) {

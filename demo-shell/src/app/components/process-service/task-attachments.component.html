@@ -1,0 +1,39 @@
+<div id="attachment-task-list" *ngIf="taskId">
+    <div class="adf-no-form-container">
+        <adf-upload-drag-area
+            [parentId]="currentTaskId"
+            [showNotificationBar]="false">
+
+            <adf-task-attachment-list #taskAttachList
+                                      [disabled]="isCompletedTask()"
+                                      (attachmentClick)="onAttachmentClick($event)"
+                                      [taskId]="currentTaskId">
+                <div adf-empty-list>
+                    <div adf-empty-list-header class="adf-empty-list-header"> {{'ADF_TASK_LIST.ATTACHMENT.EMPTY.HEADER' | translate}} </div>
+                    <div adf-empty-list-body>
+                        <div fxHide.lt-md="true" class="adf-empty-list-drag_drop">{{'ADF_TASK_LIST.ATTACHMENT.EMPTY.DRAG-AND-DROP.TITLE' | translate}}</div>
+                        <div fxHide.lt-md="true" class="adf-empty-list__any-files-here-to-add"> {{'ADF_TASK_LIST.ATTACHMENT.EMPTY.DRAG-AND-DROP.SUBTITLE' | translate}} </div>
+                    </div>
+                </div>
+            </adf-task-attachment-list>
+
+        </adf-upload-drag-area>
+
+
+        <adf-create-task-attachment
+            *ngIf="!isCompletedTask()"
+            [taskId]="taskId"
+            (success)="onFileUploadComplete($event)">
+        </adf-create-task-attachment>
+
+    </div>
+</div>
+
+<div *ngIf="fileShowed">
+    <adf-viewer
+        [(showViewer)]="fileShowed"
+        [blobFile]="content"
+        [displayName]="contentName"
+        [overlayMode]="true">
+    </adf-viewer>
+</div>
