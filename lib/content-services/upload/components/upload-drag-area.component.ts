@@ -38,31 +38,6 @@ import { Component, EventEmitter, forwardRef, Input, Output, ViewEncapsulation }
 })
 export class UploadDragAreaComponent implements NodePermissionSubject {
 
-    /** @deprecated Deprecated in favor of disabled input property */
-    @Input()
-    set enabled(enabled: boolean) {
-        console.warn('Deprecated: enabled input property should not be used for UploadDragAreaComponent. Please use disabled instead.');
-        this.disabled = !enabled;
-    }
-
-    /** @deprecated Deprecated in favor of disabled input property */
-    get enabled(): boolean {
-        console.warn('Deprecated: enabled input property should not be used for UploadDragAreaComponent. Please use disabled instead.');
-        return !this.disabled;
-    }
-
-    /** @deprecated Deprecated in 1.6.0, you can use UploadService events and NotificationService api instead. */
-    @Input()
-    showNotificationBar: boolean = true;
-
-    /** @deprecated Deprecated in 1.6.0, this property is not used for couple of releases already. Use rootFolderId instead. */
-    @Input()
-    currentFolderPath: string = '/';
-
-    /** @deprecated Deprecated in 1.6.2, this property is not used for couple of releases already. Use parentId instead. */
-    @Input()
-    rootFolderId: string = '-root-';
-
     @Input()
     disabled: boolean = false;
 
@@ -90,14 +65,10 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
             const fileModels = files.map(file => new FileModel(file, {
                 newVersion: this.versioning,
                 path: '/',
-                parentId: this.parentId || this.rootFolderId
+                parentId: this.parentId
             }));
             this.uploadService.addToQueue(...fileModels);
             this.uploadService.uploadFilesInTheQueue(this.success);
-            let latestFilesAdded = this.uploadService.getQueue();
-            if (this.showNotificationBar) {
-                this.showUndoNotificationBar(latestFilesAdded);
-            }
         }
     }
 
@@ -111,15 +82,12 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
             item.file((file: File) => {
                 const fileModel = new FileModel(file, {
                     newVersion: this.versioning,
-                    parentId: this.parentId || this.rootFolderId,
+                    parentId: this.parentId,
                     path: item.fullPath.replace(item.name, '')
                 });
                 this.uploadService.addToQueue(fileModel);
                 this.uploadService.uploadFilesInTheQueue(this.success);
             });
-            if (this.showNotificationBar) {
-                this.showUndoNotificationBar(item);
-            }
         }
     }
 
@@ -134,16 +102,11 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
                 let files = entries.map(entry => {
                     return new FileModel(entry.file, {
                         newVersion: this.versioning,
-                        parentId: this.parentId || this.rootFolderId,
+                        parentId: this.parentId,
                         path: entry.relativeFolder
                     });
                 });
                 this.uploadService.addToQueue(...files);
-                /* @deprecated in 1.6.0 */
-                if (this.showNotificationBar) {
-                    let latestFilesAdded = this.uploadService.getQueue();
-                    this.showUndoNotificationBar(latestFilesAdded);
-                }
                 this.uploadService.uploadFilesInTheQueue(this.success);
             });
         }
@@ -191,9 +154,9 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
         if (isAllowed) {
             let files: FileInfo[] = event.detail.files;
             if (files && files.length > 0) {
-                let parentId = this.parentId || this.rootFolderId;
+                let parentId = this.parentId;
                 if (event.detail.data && event.detail.data.obj.entry.isFolder) {
-                    parentId = event.detail.data.obj.entry.id || this.parentId || this.rootFolderId;
+                    parentId = event.detail.data.obj.entry.id || this.parentId;
                 }
                 const fileModels = files.map(fileInfo => new FileModel(fileInfo.file, {
                     newVersion: this.versioning,
@@ -214,10 +177,6 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
         if (files.length) {
             this.uploadService.addToQueue(...files);
             this.uploadService.uploadFilesInTheQueue(this.success);
-            let latestFilesAdded = this.uploadService.getQueue();
-            if (this.showNotificationBar) {
-                this.showUndoNotificationBar(latestFilesAdded);
-            }
         }
     }
 

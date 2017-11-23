@@ -17,16 +17,13 @@
 
 import { Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { ProcessInstance, ProcessService ,
-    ProcessAttachmentListComponent, ProcessUploadService } from '@alfresco/adf-process-services';
+    ProcessAttachmentListComponent } from '@alfresco/adf-process-services';
 import { UploadService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'app-process-attachments',
     templateUrl: './process-attachments.component.html',
-    styleUrls: ['./process-attachments.component.css'],
-    providers: [
-        {provide: UploadService, useClass: ProcessUploadService}
-    ]
+    styleUrls: ['./process-attachments.component.css']
 })
 
 export class ProcessAttachmentsComponent implements OnInit, OnChanges {

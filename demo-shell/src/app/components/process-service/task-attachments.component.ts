@@ -16,19 +16,19 @@
  */
 
 import { Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
-import { ProcessUploadService, TaskListService, TaskAttachmentListComponent } from '@alfresco/adf-process-services';
+import { TaskListService, TaskAttachmentListComponent } from '@alfresco/adf-process-services';
 import { UploadService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'app-task-attachments',
     templateUrl: './task-attachments.component.html',
-    styleUrls: ['./task-attachments.component.css'],
-    providers: [
-        { provide: UploadService, useClass: ProcessUploadService }
-    ]
+    styleUrls: ['./task-attachments.component.css']
 })
 
 export class TaskAttachmentsComponent implements OnInit, OnChanges {
+
+    @ViewChild(TaskAttachmentListComponent)
+    taskAttachList: TaskAttachmentListComponent;
 
     @Input()
     taskId: string;
@@ -73,4 +73,5 @@ export class TaskAttachmentsComponent implements OnInit, OnChanges {
     isCompletedTask(): boolean {
         return this.taskDetails && this.taskDetails.endDate !== undefined && this.taskDetails.endDate !== null;
     }
+
 }
