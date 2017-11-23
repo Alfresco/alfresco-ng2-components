@@ -48,7 +48,7 @@ export class TaskAttachmentListComponent implements OnChanges, AfterViewInit {
     customTemplateRef: ElementRef;
 
     attachments: any[] = [];
-    isLoading: boolean = true;
+    isLoading: boolean = false;
 
     constructor(private activitiContentService: ProcessContentService,
                 private contentService: ContentService,
