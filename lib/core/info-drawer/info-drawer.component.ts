@@ -47,7 +47,6 @@ export class InfoDrawerComponent {
     }
 
     onTabChange(event: any) {
-        const tab = event.tab;
-        this.currentTab.emit(tab.textLabel);
+        this.currentTab.emit(event.tab);
     }
 }

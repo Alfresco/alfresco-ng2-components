@@ -59,7 +59,7 @@ describe('InfoDrawerComponent', () => {
         let event = {index: 1, tab: {textLabel: 'DETAILS'}};
         component.onTabChange(event);
         expect(tabEmitSpy).toHaveBeenCalled();
-        expect(tabEmitSpy).toHaveBeenCalledWith('DETAILS');
+        expect(tabEmitSpy).toHaveBeenCalledWith(event.tab);
     });
 
     it('should render the title', () => {
