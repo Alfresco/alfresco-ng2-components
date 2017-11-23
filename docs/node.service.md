@@ -1,35 +1,36 @@
 # Node Service
-
 Get Alfresco Repository node metadata and create nodes with metadata. 
 This service cannot be used to create nodes with content.
 
-## Methods
-
-#### getNodeMetadata(nodeId: string): Observable<NodeMetadata>
-Get the metadata and type for passed in node ID (e.g. 3062d73b-fe47-4040-89d2-79efae63869c): 
+## Importing
 
 ```ts
-import { NodeService } from 'ng2-activiti-form';
+import { NodeService } from '@alfresco/adf-core';
 
 export class SomePageComponent implements OnInit {
 
   constructor(private nodeService: NodeService) {
   }
+```
 
-  ngOnInit() {
-    // Get the node reference from somewhere...
-    const nodeId = '3062d73b-fe47-4040-89d2-79efae63869c';
+## Methods
 
-    this.nodeService.getNodeMetadata(nodeId).subscribe(data => {
-        const nodeMetadata = data.metadata;
-        const nodeType = data.nodeType;
-      },
-      this.handleError);
-  }
+#### getNodeMetadata(nodeId: string): Observable`<NodeMetadata>`
+Get the metadata and type for passed in node ID (e.g. 3062d73b-fe47-4040-89d2-79efae63869c): 
 
-  private handleError(err: any): any {
-    console.log('Error: ', err);
-  }
+```ts
+// Get the node reference from somewhere...
+const nodeId = '3062d73b-fe47-4040-89d2-79efae63869c';
+
+this.nodeService2.getNodeMetadata(nodeId).subscribe(data => {
+    const nodeMetadata = data.metadata;
+    const nodeType = data.nodeType;
+
+    console.log('nodeMetadata', nodeMetadata);
+    console.log('nodeType', nodeType);
+  }, error => {
+    console.log('Error: ', error);
+});
 ```
 
 The metadata response doesn't include the `cm:auditable` properties (i.e. created, creator, modified, modifier, last access) 
@@ -51,37 +52,25 @@ such as `cm:content`.
 
 Executing this method on a folder node returns no metadata, just the type.
 
-#### createNode(name: string, nodeType: string, properties: any, path: string): Observable<any>
+#### createNode(name: string, nodeType: string, properties: any, path: string): Observable`<any>`
 Creates a node in the Alfresco Repository with passed in `name`, `nodeType`, and metadata `properties`.
 It will be created in the folder `path` that is passed in. 
 
 ```ts
-import { NodeService } from 'ng2-activiti-form';
-
-export class SomePageComponent implements OnInit {
-
-  constructor(private nodeService: NodeService) {
-  }
-
-  ngOnInit() {
-    const nodePath = '/Guest Home';
-    const nodeName = 'someFolder';
-    const nodeType = 'cm:folder';
-    const properties = {
-      'cm:title': 'Some title',
-      'cm:description': 'Some description'
-    }
-    this.nodeService.createNode(nodeName, nodeType, properties, nodePath).subscribe(nodeInfo => {
-        console.log('Node info: ', nodeInfo);
-      },
-      this.handleError);
-  }
-
-  private handleError(err: any): any {
-    console.log('Error: ', err);
-  }
+const nodePath = '/Guest Home';
+const nodeName = 'someFolder';
+const nodeType = 'cm:folder';
+const properties = {
+  'cm:title': 'Some title',
+  'cm:description': 'Some description'
+};
+this.nodeService2.createNode(nodeName, nodeType, properties, nodePath).subscribe(nodeInfo => {
+    console.log('New Node info: ', nodeInfo);
+  }, error => {
+  console.log('Error: ', error);
+});
 ```
-Note that the `path` property should not include **/Company Home**.
+Note that the `path` property should not include the **/Company Home** bit.
 
 The response includes all metadata about the new node:
 
@@ -101,37 +90,25 @@ entry:
     properties: {cm:title: "Some title", cm:description: "Some description"}
 ```
 
-#### createNodeMetadata(nodeType: string, nameSpace: any, data: any, path: string, name?: string): Observable<any>
+#### createNodeMetadata(nodeType: string, nameSpace: any, data: any, path: string, name?: string): Observable`<any>`
 This is a convenience method if your property list is missing namespace prefix for property names. 
 The namespace prefix can then be supplied separately and this method will prepend it automatically.
 This method calls the `createNode` method internally: 
 
 ```ts
-import { NodeService } from 'ng2-activiti-form';
-
-export class SomePageComponent implements OnInit {
-
-  constructor(private nodeService: NodeService) {
-  }
-
-  ngOnInit() {
-    const nodePath = '/Guest Home';
-    const nodeName = 'someFolder';
-    const nodeType = 'cm:folder';
-    const propNamespacePrefix = 'cm';
-    const properties = {
-      'title': 'Some title',
-      'description': 'Some description'
-    }
-    this.nodeService.createNodeMetadata(nodeType, propNamespacePrefix, properties, nodePath, nodeName).subscribe(nodeInfo => {
-        console.log('Node info: ', nodeInfo);
-      },
-      this.handleError);
-  }
-
-  private handleError(err: any): any {
-    console.log('Error: ', err);
-  }
+const nodePath = '/Guest Home';
+const nodeName = 'someOtherFolder';
+const nodeType = 'cm:folder';
+const propNamespacePrefix = 'cm';
+const properties = {
+  'title': 'Some title',
+  'description': 'Some description'
+};
+this.nodeService2.createNodeMetadata(nodeType, propNamespacePrefix, properties, nodePath, nodeName).subscribe(nodeInfo => {
+    console.log('New Node info: ', nodeInfo);
+  }, error => {
+  console.log('Error: ', error);
+});
 ```
 
 See the `createNode` method for information about the response object.
