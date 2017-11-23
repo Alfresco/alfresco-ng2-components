@@ -36,5 +36,7 @@
     "version-upload",
     "search-trigger",
     "node-actions",
-    "content-node-selector.service"
+    "content-node-selector.service",
+    "analytics",
+    "process-upload"
 ]
