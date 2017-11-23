@@ -20,10 +20,10 @@ import { Router } from '@angular/router';
 import { AppDefinitionRepresentationModel } from '@alfresco/adf-process-services';
 
 @Component({
-    selector: 'activiti-apps-view',
+    selector: 'app-process-list-view',
     templateUrl: './apps-view.component.html'
 })
-export class ActivitiAppsViewComponent {
+export class AppsViewComponent {
 
     constructor(private router: Router) {
     }

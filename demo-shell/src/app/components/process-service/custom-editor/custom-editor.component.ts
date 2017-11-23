@@ -35,7 +35,7 @@ export class CustomEditorComponent extends WidgetComponent {
 
 @Component({
     selector: 'custom-stencil-01',
-    template: `<div style="color: green">ADF version of custom Activiti stencil</div>`
+    template: `<div style="color: green">ADF version of custom ProcessService stencil</div>`
 })
 export class CustomStencil01 extends WidgetComponent {
 

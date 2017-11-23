@@ -5,24 +5,24 @@
     font-size: 18px;
 }
 
-.activiti-grid {
+.adf-grid {
 
-    .activiti-grid-item {
+    .adf-grid-item {
         margin: 4px;
         box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
         padding: 10px;
     }
 
-    .activiti-list-buttons {
+    .adf-list-buttons {
         margin-bottom: 24px;
     }
 
-    .activiti-list-buttons-start {
+    .adf-list-buttons-start {
         width: 100%;
     }
 
-    .activiti-tasks-list.small-pagination,
-    .activiti-processes-list.small-pagination {
+    .adf-tasks-list.small-pagination,
+    .adf-processes-list.small-pagination {
         .adf-pagination {
 
             flex-wrap: wrap;
@@ -68,7 +68,7 @@
         }
     }
 
-    .activiti-list {
+    .adf-list {
         .adf-data-table {
             border: none;
         }

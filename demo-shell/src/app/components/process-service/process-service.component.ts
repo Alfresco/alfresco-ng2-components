@@ -68,15 +68,15 @@ const currentProcessIdNew = '__NEW__';
 const currentTaskIdNew = '__NEW__';
 
 @Component({
-    selector: 'adf-activiti',
-    templateUrl: './activiti.component.html',
-    styleUrls: ['./activiti.component.scss'],
+    selector: 'app-process-service',
+    templateUrl: './process-service.component.html',
+    styleUrls: ['./process-service.component.scss'],
     providers: [
                 { provide: UploadService, useClass: ProcessUploadService }
                ],
     encapsulation: ViewEncapsulation.None
 })
-export class ActivitiComponent implements AfterViewInit, OnDestroy, OnInit {
+export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit {
 
     @ViewChild(TaskFiltersComponent)
     activitifilter: TaskFiltersComponent;
@@ -422,10 +422,10 @@ export class ActivitiComponent implements AfterViewInit, OnDestroy, OnInit {
     }
 
     ngAfterViewInit() {
-        this.loadStencilScriptsInPageFromActiviti();
+        this.loadStencilScriptsInPageFromProcessService();
     }
 
-    loadStencilScriptsInPageFromActiviti() {
+    loadStencilScriptsInPageFromProcessService() {
         this.apiService.getInstance().activiti.scriptFileApi.getControllers().then(response => {
             if (response) {
                 let s = document.createElement('script');
