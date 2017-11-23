@@ -231,11 +231,23 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
     /**
      * Select the task given in input if present
      */
-    selectTask(taskIdToSelect: string): void {
+    selectTask(taskIdSelected: string): void {
         if (!this.isListEmpty()) {
             let rows = this.data.getRows();
             if (rows.length > 0) {
-                let dataRow = rows.find(row => row.getValue('id') === taskIdToSelect) || rows[0];
+                let dataRow;
+                if (taskIdSelected) {
+                    dataRow = rows.find((currentRow: any) => {
+                        return currentRow.getValue('id') === taskIdSelected;
+                    });
+
+                    if (!dataRow) {
+                        dataRow = rows[0];
+                    }
+                } else {
+                    dataRow = rows[0];
+                }
+
                 this.data.selectedRow = dataRow;
                 dataRow.isSelected = true;
                 this.currentInstanceId = dataRow.getValue('id');
@@ -244,6 +256,7 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
             if (this.data) {
                 this.data.selectedRow = null;
             }
+
             this.currentInstanceId = null;
         }
     }

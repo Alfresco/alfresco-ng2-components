@@ -24,6 +24,9 @@ import { Form } from '../models/form.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListModel } from '../models/task-list.model';
 import 'rxjs/add/observable/throw';
+import 'rxjs/add/observable/forkJoin';
+import 'rxjs/add/observable/fromPromise';
+import 'rxjs/operator/switchMap';
 
 @Injectable()
 export class TaskListService {

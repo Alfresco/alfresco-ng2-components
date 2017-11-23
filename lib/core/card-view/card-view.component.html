@@ -1,7 +1,8 @@
 <div class="adf-property-list">
-    <ng-container *ngFor="let property of properties">
+    <div *ngFor="let property of properties">
         <div [attr.data-automation-id]="'header-'+property.key" class="adf-property">
             <adf-card-view-item-dispatcher [property]="property" [editable]="editable"></adf-card-view-item-dispatcher>
         </div>
-    </ng-container>
+    </div>
 </div>
+
