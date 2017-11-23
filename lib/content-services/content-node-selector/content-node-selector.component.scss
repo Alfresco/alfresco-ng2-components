@@ -1,3 +1,5 @@
+@import '~@angular/material/theming';
+
 @mixin adf-content-node-selector-theme($theme) {
     $primary: map-get($theme, primary);
     $foreground: map-get($theme, foreground);
@@ -89,6 +91,20 @@
                             padding-bottom: 8px;
                             border-top: none;
                             height: 30px;
+
+                            .cell-container {
+                                display: flex;
+                                align-items: center;    
+                            }
+
+                            &--image {
+                                padding-left: 16px;
+                                padding-right: 8px;                                
+                            }
+
+                            &--text {
+                                padding-left: 8px;
+                            }
                         }
 
                         tbody tr {
