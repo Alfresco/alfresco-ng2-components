@@ -2,6 +2,8 @@
 
 Displays the documents from a repository.
 
+![Custom columns](docassets/images/custom-columns.png)
+
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
 
 <!-- toc -->
