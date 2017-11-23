@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
 import { RatingService } from './services/rating.service';
 
 @Component({
@@ -25,7 +25,7 @@ import { RatingService } from './services/rating.service';
     providers: [RatingService],
     encapsulation: ViewEncapsulation.None
 })
-export class LikeComponent implements OnInit {
+export class LikeComponent implements OnChanges {
 
     @Input()
     nodeId: string;
@@ -39,7 +39,7 @@ export class LikeComponent implements OnInit {
 
     constructor(private ratingService: RatingService) {}
 
-    ngOnInit() {
+    ngOnChanges() {
         this.clean();
 
         this.ratingService.getRating(this.nodeId, this.ratingType).subscribe(
