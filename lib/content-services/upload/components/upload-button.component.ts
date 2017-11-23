@@ -22,7 +22,6 @@ import {
     FileUtils,
     LogService,
     NodePermissionSubject,
-    NotificationService,
     TranslationService,
     UploadService
 } from '@alfresco/adf-core';
@@ -53,18 +52,6 @@ import 'rxjs/add/observable/throw';
     encapsulation: ViewEncapsulation.None
 })
 export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionSubject {
-
-    /** @deprecated Deprecated in 1.6.0, you can use UploadService events and NotificationService api instead. */
-    @Input()
-    showNotificationBar: boolean = true;
-
-    /** @deprecated Deprecated in 1.6.0, this property is not used for couple of releases already. */
-    @Input()
-    currentFolderPath: string = '/';
-
-    /** @deprecated Deprecated in 1.8.0, use the button with combination of adf-node-permission directive */
-    @Input()
-    disableWithNoPermission: boolean = false;
 
     @Input()
     disabled: boolean = false;
@@ -112,7 +99,6 @@ export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionS
     constructor(private uploadService: UploadService,
                 private translateService: TranslationService,
                 private logService: LogService,
-                private notificationService: NotificationService,
                 private apiService: AlfrescoApiService) {
     }
 
@@ -130,16 +116,7 @@ export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionS
     }
 
     isButtonDisabled(): boolean {
-        return this.isForceDisable() || this.isDisableWithNoPermission();
-    }
-
-    isForceDisable(): boolean {
         return this.disabled ? true : undefined;
-    }
-
-    /** @deprecated Deprecated in 1.8.0, use the button with combination of adf-node-permission directive */
-    isDisableWithNoPermission(): boolean {
-        return !this.hasPermission && this.disableWithNoPermission ? true : undefined;
     }
 
     onFilesAdded($event: any): void {
@@ -179,9 +156,6 @@ export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionS
         if (latestFilesAdded.length > 0) {
             this.uploadService.addToQueue(...latestFilesAdded);
             this.uploadService.uploadFilesInTheQueue(this.success);
-            if (this.showNotificationBar) {
-                this.showUndoNotificationBar(latestFilesAdded);
-            }
         }
     }
 
@@ -236,21 +210,6 @@ export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionS
         }
 
         return acceptableSize;
-    }
-
-    /**
-     * Show undo notification bar.
-     *
-     * @param {FileModel[]} latestFilesAdded - files in the upload queue enriched with status flag and xhr object.
-     */
-    private showUndoNotificationBar(latestFilesAdded: FileModel[]): void {
-        let messageTranslate: any, actionTranslate: any;
-        messageTranslate = this.translateService.get('FILE_UPLOAD.MESSAGES.PROGRESS');
-        actionTranslate = this.translateService.get('FILE_UPLOAD.ACTION.UNDO');
-
-        this.notificationService.openSnackMessageAction(messageTranslate.value, actionTranslate.value, 3000).onAction().subscribe(() => {
-            this.uploadService.cancelUpload(...latestFilesAdded);
-        });
     }
 
     checkPermission() {
