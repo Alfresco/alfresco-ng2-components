@@ -16,33 +16,35 @@
  */
 
 import { Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
-import { ProcessInstance, ProcessService ,
-    ProcessAttachmentListComponent, ProcessUploadService } from '@alfresco/adf-process-services';
+import { ProcessUploadService, TaskListService, TaskAttachmentListComponent } from '@alfresco/adf-process-services';
 import { UploadService } from '@alfresco/adf-core';
 
 @Component({
-    selector: 'activiti-process-attachments',
-    templateUrl: './activiti-process-attachments.component.html',
-    styleUrls: ['./activiti-process-attachments.component.css'],
+    selector: 'app-task-attachments',
+    templateUrl: './task-attachments.component.html',
+    styleUrls: ['./task-attachments.component.css'],
     providers: [
-        {provide: UploadService, useClass: ProcessUploadService}
+        { provide: UploadService, useClass: ProcessUploadService }
     ]
 })
 
-export class ActivitiProcessAttachmentsComponent implements OnInit, OnChanges {
+export class TaskAttachmentsComponent implements OnInit, OnChanges {
 
     @Input()
-    processId: string;
+    taskId: string;
 
-    @ViewChild(ProcessAttachmentListComponent)
-    processAttachList: ProcessAttachmentListComponent;
+    @ViewChild(TaskAttachmentListComponent)
+    taskAttachList: TaskAttachmentListComponent;
 
     fileShowed: boolean = false;
     content: Blob;
     contentName: string;
-    processInstance: ProcessInstance;
 
-    constructor(private uploadService: UploadService, private processService: ProcessService) {
+    taskDetails: any;
+
+    constructor(private uploadService: UploadService,
+                private activitiTaskList: TaskListService) {
+
     }
 
     ngOnInit() {
@@ -50,15 +52,16 @@ export class ActivitiProcessAttachmentsComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges() {
-        if (this.processId) {
-            this.processService.getProcess(this.processId).subscribe((processInstance: ProcessInstance) => {
-                this.processInstance = processInstance;
-            });
+        if (this.taskId) {
+            this.activitiTaskList.getTaskDetails(this.taskId).map((res) => res).subscribe(
+                (res: any) => {
+                    this.taskDetails = res;
+                });
         }
     }
 
     onFileUploadComplete(content: any) {
-        this.processAttachList.add(content);
+        this.taskAttachList.add(content);
     }
 
     onAttachmentClick(content: any): void {
@@ -67,8 +70,7 @@ export class ActivitiProcessAttachmentsComponent implements OnInit, OnChanges {
         this.contentName = content.name;
     }
 
-    isCompletedProcess(): boolean {
-        return this.processInstance && this.processInstance.ended !== undefined && this.processInstance.ended !== null;
+    isCompletedTask(): boolean {
+        return this.taskDetails && this.taskDetails.endDate !== undefined && this.taskDetails.endDate !== null;
     }
-
 }

@@ -23,11 +23,11 @@ import { LoginComponent } from './components/login/login.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
-import { ActivitiComponent } from './components/activiti/activiti.component';
-import { ActivitiShowDiagramComponent } from './components/activiti/activiti-show-diagram.component';
-import { FormViewerComponent } from './components/activiti/form-viewer.component';
-import { FormNodeViewerComponent } from './components/activiti/form-node-viewer.component';
-import { ActivitiAppsViewComponent } from './components/activiti/apps-view.component';
+import { ProcessServiceComponent } from './components/process-service/process-service.component';
+import { ShowDiagramComponent } from './components/process-service/show-diagram.component';
+import { FormViewerComponent } from './components/process-service/form-viewer.component';
+import { FormNodeViewerComponent } from './components/process-service/form-node-viewer.component';
+import { AppsViewComponent } from './components/process-service/apps-view.component';
 import { SearchResultComponent } from './components/search/search-result.component';
 
 import { DataTableComponent } from './components/datatable/datatable.component';
@@ -91,33 +91,33 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'activiti',
-                component: ActivitiAppsViewComponent,
+                component: AppsViewComponent,
                 canActivate: [AuthGuardBpm]
             },
             {
                 path: 'activiti/apps',
-                component: ActivitiAppsViewComponent,
+                component: AppsViewComponent,
                 canActivate: [AuthGuardBpm]
             },
             {
                 path: 'activiti/apps/:appId/tasks',
-                component: ActivitiComponent,
+                component: ProcessServiceComponent,
                 canActivate: [AuthGuardBpm]
             },
             {
                 path: 'activiti/apps/:appId/processes',
-                component: ActivitiComponent,
+                component: ProcessServiceComponent,
                 canActivate: [AuthGuardBpm]
             },
             {
                 path: 'activiti/apps/:appId/diagram/:processDefinitionId',
-                component: ActivitiShowDiagramComponent,
+                component: ShowDiagramComponent,
                 canActivate: [AuthGuardBpm]
             },
             // TODO: check if neeeded
             {
                 path: 'activiti/appId/:appId',
-                component: ActivitiComponent,
+                component: ProcessServiceComponent,
                 canActivate: [AuthGuardBpm]
             },
             // TODO: check if needed

@@ -19,11 +19,11 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-    selector: 'activiti-show-diagram',
-    templateUrl: './activiti-show-diagram.component.html',
-    styleUrls: ['./activiti-show-diagram.component.css']
+    selector: 'app-show-diagram',
+    templateUrl: './show-diagram.component.html',
+    styleUrls: ['./show-diagram.component.css']
 })
-export class ActivitiShowDiagramComponent {
+export class ShowDiagramComponent {
 
     processDefinitionId: string;
     appId: string;

@@ -22,13 +22,11 @@ import { FormComponent } from './components/form/form.component';
 import { FormListComponent } from './components/form/form-list.component';
 import { CustomSourcesComponent } from './components/files/custom-sources.component';
 
-import { ActivitiComponent } from './components/activiti/activiti.component';
-import { ActivitiTaskAttachmentsComponent } from './components/activiti/activiti-task-attachments.component';
-import { ActivitiProcessAttachmentsComponent } from './components/activiti/activiti-process-attachments.component';
-import { ActivitiShowDiagramComponent } from './components/activiti/activiti-show-diagram.component';
-import { FormViewerComponent } from './components/activiti/form-viewer.component';
-import { FormNodeViewerComponent } from './components/activiti/form-node-viewer.component';
-import { ActivitiAppsViewComponent } from './components/activiti/apps-view.component';
+import { ProcessServiceComponent } from './components/process-service/process-service.component';
+import { ShowDiagramComponent } from './components/process-service/show-diagram.component';
+import { FormViewerComponent } from './components/process-service/form-viewer.component';
+import { FormNodeViewerComponent } from './components/process-service/form-node-viewer.component';
+import { AppsViewComponent } from './components/process-service/apps-view.component';
 import { DataTableComponent } from './components/datatable/datatable.component';
 import { FilesComponent } from './components/files/files.component';
 import { FileViewComponent } from './components/file-view/file-view.component';
@@ -43,6 +41,8 @@ import { DebugAppConfigService } from './services/debug-app-config.service';
 import { routing } from './app.routes';
 import { TranslateModule } from '@ngx-translate/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TaskAttachmentsComponent } from './components/process-service/task-attachments.component';
+import { ProcessAttachmentsComponent } from './components/process-service/process-attachments.component';
 
 
 @NgModule({
@@ -69,13 +69,11 @@ import { ReactiveFormsModule } from '@angular/forms';
         SearchBarComponent,
         SearchResultComponent,
         AboutComponent,
-        ActivitiComponent,
-        ActivitiTaskAttachmentsComponent,
-        ActivitiProcessAttachmentsComponent,
-        ActivitiShowDiagramComponent,
+        ProcessServiceComponent,
+        ShowDiagramComponent,
         FormViewerComponent,
         FormNodeViewerComponent,
-        ActivitiAppsViewComponent,
+        AppsViewComponent,
         DataTableComponent,
         FilesComponent,
         FileViewComponent,
@@ -85,7 +83,9 @@ import { ReactiveFormsModule } from '@angular/forms';
         TagComponent,
         SocialComponent,
         CustomSourcesComponent,
-        VersionManagerDialogAdapterComponent
+        VersionManagerDialogAdapterComponent,
+        TaskAttachmentsComponent,
+        ProcessAttachmentsComponent
     ],
     providers: [
         TranslateService,

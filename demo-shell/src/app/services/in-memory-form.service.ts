@@ -22,7 +22,7 @@ import { AppConfigService, AlfrescoApiService, EcmModelService, LogService,
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
-interface ActivitiData {
+interface ProcessServiceData {
     rest: {
         fields: Array<{
             processId?: string,
@@ -39,7 +39,7 @@ interface ActivitiData {
 @Injectable()
 export class InMemoryFormService extends FormService {
 
-    private data: ActivitiData;
+    private data: ProcessServiceData;
 
     executeOutcome = new Subject<FormOutcomeEvent>();
 
@@ -48,7 +48,7 @@ export class InMemoryFormService extends FormService {
                 apiService: AlfrescoApiService,
                 protected logService: LogService) {
         super(ecmModelService, apiService, logService);
-        this.data = appConfig.get<ActivitiData>('activiti');
+        this.data = appConfig.get<ProcessServiceData>('activiti');
     }
 
     /** @override */
