@@ -10,19 +10,15 @@
 <div *ngIf="taskDetails" class="adf-task-details">
 
     <div *ngIf="showHeader" class="adf-task-details-header">
-        <h2 class="activiti-task-details__header" (click)="toggleHeaderContent()">
+        <h2 class="activiti-task-details__header">
             <span>{{taskDetails.name || 'No name'}}</span>
         </h2>
-        <div matRipple [matRippleUnbounded]="true" [matRippleCentered]="true" class="adf-task-details-header-toggle">
-            <mat-icon *ngIf="!showHeaderContent" (click)="toggleHeaderContent()">web</mat-icon>
-            <mat-icon *ngIf="showHeaderContent" (click)="toggleHeaderContent()">web_asset</mat-icon>
-        </div>
     </div>
 
     <div class="adf-task-details-core"
-    fxLayout="column"
-    fxLayoutGap="8px"
-    fxLayout.lt-lg="column">
+        fxLayout="column"
+        fxLayoutGap="8px"
+        fxLayout.lt-lg="column">
 
         <div class="adf-task-details-core-form">
             <div *ngIf="isAssigned()">
@@ -54,11 +50,7 @@
             </button>
         </div>
         <div class="adf-task-details-core-sidebar">
-            <adf-info-drawer *ngIf="showHeaderContent" title="{{ 'ADF_TASK_LIST.DETAILS.LABELS.INFO_DRAWER_TITLE' | translate }}" class="adf-task-details-core-sidebar-drawer">
-                <div info-drawer-buttons>
-                    <mat-icon (click)="toggleHeaderContent()">clear</mat-icon>
-                </div>
-
+            <adf-info-drawer title="{{ 'ADF_TASK_LIST.DETAILS.LABELS.INFO_DRAWER_TITLE' | translate }}" class="adf-task-details-core-sidebar-drawer">
                 <adf-info-drawer-tab label="{{ 'ADF_TASK_LIST.DETAILS.LABELS.INFO_DRAWER_TAB_DETAILS_TITLE' | translate }}">
                     <div class="assignment-container" *ngIf="showAssignee">
                         <adf-people-search
@@ -99,7 +91,7 @@
 
             </adf-info-drawer>
 
-            <div *ngIf="showHeaderContent" class="adf-task-details-core-sidebar-checklist">
+            <div class="adf-task-details-core-sidebar-checklist">
                 <div *ngIf="showChecklist">
                     <adf-checklist #activitichecklist
                                    [readOnly]="readOnlyForm"
