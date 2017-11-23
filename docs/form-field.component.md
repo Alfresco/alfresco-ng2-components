@@ -25,7 +25,7 @@ is mapped to a form field component (i.e. UI widget) implementation.
 ### Field Type -> Form Field Component mappings
 Forms defined in APS have the following default mappings for the form fields:
 
-APS Form Designer Widget | Field Type | Component Type |
+| APS Form Designer Widget | Field Type | Component Type |
 | --- | --- | --- |
 | Text | text | TextWidgetComponent |
 | Multi-line text | multi-line-text | MultilineTextWidgetComponentComponent |
