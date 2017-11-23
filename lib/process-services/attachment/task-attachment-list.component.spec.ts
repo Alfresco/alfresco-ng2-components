@@ -263,6 +263,10 @@ describe('TaskAttachmentList', () => {
         });
     }));
 
+    it('loading should be false by default', () => {
+        expect(component.isLoading).toBeFalsy();
+    });
+
     describe('change detection', () => {
 
         let change = new SimpleChange('123', '456', true);
