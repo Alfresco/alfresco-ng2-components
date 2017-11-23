@@ -60,6 +60,8 @@ describe('Like component', () => {
     }
 
     it('should load the likes by default on onChanges', async(() => {
+        component.ngOnChanges();
+
         simulateResponseWithLikes(2);
 
         fixture.whenStable().then(() => {
