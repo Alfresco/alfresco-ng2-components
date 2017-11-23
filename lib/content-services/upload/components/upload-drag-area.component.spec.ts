@@ -90,7 +90,7 @@ describe('UploadDragAreaComponent', () => {
     describe('When disabled', () => {
 
         it('should NOT upload the list of files dropped', () => {
-            component.enabled = false;
+            component.disabled = true;
             spyOn(uploadService, 'addToQueue');
             spyOn(uploadService, 'uploadFilesInTheQueue');
             fixture.detectChanges();
@@ -104,7 +104,7 @@ describe('UploadDragAreaComponent', () => {
         });
 
         it('should NOT upload the file dropped', () => {
-            component.enabled = false;
+            component.disabled = true;
             spyOn(uploadService, 'addToQueue');
             spyOn(uploadService, 'uploadFilesInTheQueue');
             fixture.detectChanges();
@@ -126,7 +126,7 @@ describe('UploadDragAreaComponent', () => {
         });
 
         it('should NOT upload the folder dropped', (done) => {
-            component.enabled = false;
+            component.disabled = true;
             spyOn(uploadService, 'addToQueue');
             spyOn(uploadService, 'uploadFilesInTheQueue');
             fixture.detectChanges();
@@ -151,7 +151,7 @@ describe('UploadDragAreaComponent', () => {
         });
 
         it('should NOT upload the files', () => {
-            component.enabled = false;
+            component.disabled = true;
             spyOn(uploadService, 'addToQueue');
             spyOn(uploadService, 'uploadFilesInTheQueue');
 
@@ -178,9 +178,7 @@ describe('UploadDragAreaComponent', () => {
     });
 
     it('should upload the list of files dropped', (done) => {
-        component.currentFolderPath = '/root-fake-/sites-fake/folder-fake';
         component.success = null;
-        component.showNotificationBar = false;
         uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
 
         fixture.detectChanges();
@@ -195,24 +193,7 @@ describe('UploadDragAreaComponent', () => {
         component.onFilesDropped(filesList);
     });
 
-    it('should show the loading messages in the notification bar when the files are dropped', () => {
-        component.currentFolderPath = '/root-fake-/sites-fake/folder-fake';
-        component.success = null;
-        component.showNotificationBar = true;
-        uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
-        component.showUndoNotificationBar = jasmine.createSpy('_showUndoNotificationBar');
-
-        fixture.detectChanges();
-        let fileFake = <File> {name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json'};
-        let filesList = [fileFake];
-
-        component.onFilesDropped(filesList);
-        expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith(null);
-        expect(component.showUndoNotificationBar).toHaveBeenCalled();
-    });
-
     it('should upload a file when dropped', () => {
-        component.currentFolderPath = '/root-fake-/sites-fake/document-library-fake';
         component.success = null;
 
         fixture.detectChanges();
@@ -234,8 +215,6 @@ describe('UploadDragAreaComponent', () => {
     });
 
     it('should upload a file with a custom root folder ID when dropped', () => {
-        component.currentFolderPath = '/root-fake-/sites-fake/document-library-fake';
-        component.rootFolderId = '-my-';
         component.success = null;
 
         fixture.detectChanges();
@@ -257,10 +236,6 @@ describe('UploadDragAreaComponent', () => {
     });
 
     it('should upload a file when user has create permission on target folder', async(() => {
-        component.currentFolderPath = '/root-fake-/sites-fake/document-library-fake';
-        component.rootFolderId = '-my-';
-        component.enabled = false;
-
         let fakeItem = {
             fullPath: '/folder-fake/file-fake.png',
             isDirectory: false,
@@ -287,29 +262,4 @@ describe('UploadDragAreaComponent', () => {
 
         component.onUploadFiles(fakeCustomEvent);
     }));
-
-    it('should show notification bar when a file is dropped', () => {
-        component.currentFolderPath = '/root-fake-/sites-fake/document-library-fake';
-        component.rootFolderId = '-my-';
-        component.success = null;
-
-        fixture.detectChanges();
-        spyOn(uploadService, 'uploadFilesInTheQueue');
-
-        let itemEntity = {
-            fullPath: '/folder-fake/file-fake.png',
-            isDirectory: false,
-            isFile: true,
-            name: 'file-fake.png',
-            file: (callbackFile) => {
-                let fileFake = new File(['fakefake'], 'file-fake.png', {type: 'image/png'});
-                callbackFile(fileFake);
-            }
-        };
-
-        component.onFilesEntityDropped(itemEntity);
-        fixture.detectChanges();
-        expect(document.querySelector('snack-bar-container > simple-snack-bar')).not.toBeNull();
-    });
-
 });
