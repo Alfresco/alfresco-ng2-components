@@ -25,21 +25,12 @@ import { TranslationMock } from '@alfresco/adf-core';
 
 describe('UploadButtonComponent', () => {
 
-    let file = {name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json'};
+    let file = { name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json' };
     let fakeEvent = {
         currentTarget: {
             files: [file]
         },
-        target: {value: 'fake-name-1'}
-    };
-
-    let fakeFolderNodeWithoutPermission = {
-        allowableOperations: [
-            'update'
-        ],
-        isFolder: true,
-        name: 'Folder Fake Name',
-        nodeType: 'cm:folder'
+        target: { value: 'fake-name-1' }
     };
 
     let fakeFolderNodeWithPermission = {
@@ -67,7 +58,7 @@ describe('UploadButtonComponent', () => {
             ],
             providers: [
                 UploadService,
-                {provide: TranslationService, useClass: TranslationMock}
+                { provide: TranslationService, useClass: TranslationMock }
             ]
         }).compileComponents();
     }));
@@ -107,74 +98,13 @@ describe('UploadButtonComponent', () => {
         expect(compiled.querySelector('#uploadFolder')).toBeDefined();
     });
 
-    it('should emit the permissionEvent, without permission and disableWithNoPermission false', (done) => {
-        component.rootFolderId = '-my-';
-        component.disableWithNoPermission = false;
-
-        spyOn(component, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithoutPermission));
-
-        fixture.detectChanges();
-
-        component.permissionEvent.subscribe(permission => {
-            expect(permission).toBeDefined();
-            expect(permission.type).toEqual('content');
-            expect(permission.action).toEqual('upload');
-            expect(permission.permission).toEqual('create');
-            done();
-        });
-
-        component.onFilesAdded(fakeEvent);
-    });
-
-    it('should show the disabled button, without permission and disableWithNoPermission true', () => {
-        component.rootFolderId = '-my-';
-        component.disableWithNoPermission = true;
-
-        spyOn(component, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithoutPermission));
-
-        component.onFilesAdded(fakeEvent);
-        let compiled = fixture.debugElement.nativeElement;
-        fixture.detectChanges();
-        expect(compiled.querySelector('#upload-single-file')).toBeDefined();
-        expect(compiled.querySelector('#upload-single-file').disabled).toBe(true);
-    });
-
-    it('should show the enabled button with permission and disableWithNoPermission true', () => {
-        component.rootFolderId = '-my-';
-        component.disableWithNoPermission = true;
-
-        spyOn(component, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
-
-        component.ngOnChanges({rootFolderId: new SimpleChange(null, component.rootFolderId, true)});
-        component.onFilesAdded(fakeEvent);
-        let compiled = fixture.debugElement.nativeElement;
-        fixture.detectChanges();
-        expect(compiled.querySelector('#upload-single-file')).toBeDefined();
-        expect(compiled.querySelector('#upload-single-file').disabled).toBe(false);
-    });
-
-    it('should show the enabled button with permission and disableWithNoPermission false', () => {
-        component.rootFolderId = '-my-';
-        component.disableWithNoPermission = false;
-
-        spyOn(component, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
-
-        component.ngOnChanges({rootFolderId: new SimpleChange(null, component.rootFolderId, true)});
-        component.onFilesAdded(fakeEvent);
-        let compiled = fixture.debugElement.nativeElement;
-        fixture.detectChanges();
-        expect(compiled.querySelector('#upload-single-file')).toBeDefined();
-        expect(compiled.querySelector('#upload-single-file').disabled).toBe(false);
-    });
-
     it('should call uploadFile with the default root folder', () => {
         component.rootFolderId = '-root-';
-        component.currentFolderPath = '/root-fake-/sites-fake/folder-fake';
         component.success = null;
 
         spyOn(component, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
 
-        component.ngOnChanges({rootFolderId: new SimpleChange(null, component.rootFolderId, true)});
+        component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
         uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
 
         fixture.detectChanges();
@@ -184,12 +114,11 @@ describe('UploadButtonComponent', () => {
     });
 
     it('should call uploadFile with a custom root folder', () => {
-        component.currentFolderPath = '/root-fake-/sites-fake/folder-fake';
         component.rootFolderId = '-my-';
         component.success = null;
 
         spyOn(component, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
-        component.ngOnChanges({rootFolderId: new SimpleChange(null, component.rootFolderId, true)});
+        component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
 
         uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
 
@@ -201,12 +130,11 @@ describe('UploadButtonComponent', () => {
 
     it('should create a folder and emit an File uploaded event', (done) => {
         component.rootFolderId = '-my-';
-        component.currentFolderPath = '/fake-root-path';
 
         spyOn(contentService, 'createFolder').and.returnValue(Observable.of(true));
         spyOn(component, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
 
-        component.ngOnChanges({rootFolderId: new SimpleChange(null, component.rootFolderId, true)});
+        component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
         fixture.detectChanges();
 
         component.success.subscribe(e => {
@@ -260,8 +188,8 @@ describe('UploadButtonComponent', () => {
     describe('filesize', () => {
 
         const files: File[] = [
-            <File> {name: 'bigFile.png', size: 1000},
-            <File> {name: 'smallFile.png', size: 10}
+            <File> { name: 'bigFile.png', size: 1000 },
+            <File> { name: 'smallFile.png', size: 10 }
         ];
 
         let addToQueueSpy;
@@ -319,9 +247,9 @@ describe('UploadButtonComponent', () => {
     describe('uploadFiles', () => {
 
         const files: File[] = [
-            <File> {name: 'phobos.jpg'},
-            <File> {name: 'deimos.png'},
-            <File> {name: 'ganymede.bmp'}
+            <File> { name: 'phobos.jpg' },
+            <File> { name: 'deimos.png' },
+            <File> { name: 'ganymede.bmp' }
         ];
 
         let addToQueueSpy;

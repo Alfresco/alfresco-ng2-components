@@ -9,7 +9,7 @@
             [parentId]="getDocumentListCurrentFolderId()"
             [versioning]="versioning"
             [adf-node-permission]="'create'"
-            [adf-nodes]="getCurrentDocumentListNode()">
+            [adf-nodes]="disableDragArea ? getCurrentDocumentListNode() : []">
             <div *ngIf="errorMessage" class="error-message">
                 <button (click)="resetError()" mat-icon-button>
                     <mat-icon>highlight_off</mat-icon>
@@ -394,7 +394,7 @@
                 (error)="handleUploadError($event)"
                 [versioning]="versioning"
                 [adf-node-permission]="'create'"
-                [adf-nodes]="getCurrentDocumentListNode()"
+                [adf-nodes]="enableUpload ? getCurrentDocumentListNode() : []"
                 (permissionEvent)="handlePermissionError($event)">
             </adf-upload-button>
         </div>
@@ -411,7 +411,7 @@
                 [versioning]="versioning"
                 (error)="handleUploadError($event)"
                 [adf-node-permission]="'create'"
-                [adf-nodes]="getCurrentDocumentListNode()"
+                [adf-nodes]="enableUpload ? getCurrentDocumentListNode() : []"
                 (permissionEvent)="handlePermissionError($event)">
             </adf-upload-button>
         </div>
