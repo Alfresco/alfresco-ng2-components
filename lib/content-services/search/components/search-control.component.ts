@@ -111,7 +111,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     }
 
     isLoggedIn(): boolean {
-        return this.authService.isLoggedIn();
+        return this.authService.isEcmLoggedIn();
     }
 
     searchSubmit(event: any) {

@@ -61,7 +61,7 @@ describe('SearchControlComponent', () => {
     }));
 
     beforeEach(async(() => {
-        spyOn(authService, 'isLoggedIn').and.returnValue(true);
+        spyOn(authService, 'isEcmLoggedIn').and.returnValue(true);
     }));
 
     afterEach(async(() => {
