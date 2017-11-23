@@ -8,3 +8,9 @@ adf-datatable ::ng-deep .custom-row-style.alfresco-datatable__row:focus {
 adf-datatable ::ng-deep .custom-row-style.alfresco-datatable__row--selected {
     color: green;
 }
+
+adf-datatable ::ng-deep table {
+    max-width: 100%;
+    overflow: hidden;
+    white-space: normal !important;
+}

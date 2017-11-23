@@ -83,10 +83,10 @@ export class DataTableComponent {
             ],
             [
                 { type: 'image', key: 'icon', title: '', srTitle: 'Thumbnail' },
-                { type: 'text', key: 'id', title: 'Id', sortable: true },
+                { type: 'text', key: 'id', title: 'Id', sortable: true , cssClass: 'desktop-only'},
                 { type: 'text', key: 'createdOn', title: 'Created On', sortable: true },
                 { type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true },
-                { type: 'text', key: 'createdBy.name', title: 'Created By', sortable: true }
+                { type: 'text', key: 'createdBy.name', title: 'Created By', sortable: true, cssClass: 'desktop-only'}
             ]
         );
 
