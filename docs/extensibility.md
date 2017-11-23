@@ -62,7 +62,7 @@ formRenderingService.setComponentTypeResolver('text', customResolver, true);
 
 ### Default component mappings
 
-Stencil Name | Field Type | Component Type |
+| Stencil Name | Field Type | Component Type |
 | --- | --- | --- |
 | Text | text | TextWidgetComponent |
 | Number | integer | NumberWidgetComponent |
