@@ -18,7 +18,7 @@
 import { AuthenticationService, ThumbnailService } from '@alfresco/adf-core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output,
-         QueryList, ViewEncapsulation, ViewChild, ViewChildren, ElementRef } from '@angular/core';
+         QueryList, ViewEncapsulation, ViewChild, ViewChildren, ElementRef, Renderer } from '@angular/core';
 import { MinimalNodeEntity, QueryBody } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -78,8 +78,8 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     @ViewChild(SearchComponent)
     searchAutocomplete: SearchComponent;
 
-    @ViewChild('inputSearch')
-    inputSearch: ElementRef;
+    @ViewChild('searchInput')
+    searchInput: ElementRef;
 
     @ViewChildren(MatListItem)
     private listResultElement: QueryList<MatListItem>;
@@ -91,17 +91,22 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     private focusSubject = new Subject<FocusEvent>();
 
     constructor(public authService: AuthenticationService,
+                private renderer: Renderer,
                 private thumbnailService: ThumbnailService) {
 
         this.toggleSearch.asObservable().debounceTime(100).subscribe(() => {
             if (this.expandable) {
                 this.subscriptAnimationState = this.subscriptAnimationState === 'inactive' ? 'active' : 'inactive';
 
+                if(this.subscriptAnimationState === 'active') {
+                    this.renderer.invokeElementMethod(this.searchInput.nativeElement, 'focus');
+                }
+
                 if (this.subscriptAnimationState === 'inactive') {
                     this.searchTerm = '';
                     this.searchAutocomplete.resetResults();
-                    if ( document.activeElement.id === this.inputSearch.nativeElement.id) {
-                        this.inputSearch.nativeElement.blur();
+                    if ( document.activeElement.id === this.searchInput.nativeElement.id) {
+                        this.searchInput.nativeElement.blur();
                     }
                 }
             }
@@ -205,7 +210,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
         if (previousElement) {
             previousElement.focus();
         }else {
-            this.inputSearch.nativeElement.focus();
+            this.searchInput.nativeElement.focus();
             this.focusSubject.next(new FocusEvent('focus'));
         }
     }
