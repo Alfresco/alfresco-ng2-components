@@ -33,9 +33,6 @@ export class TaskAttachmentsComponent implements OnInit, OnChanges {
     @Input()
     taskId: string;
 
-    @ViewChild(TaskAttachmentListComponent)
-    taskAttachList: TaskAttachmentListComponent;
-
     fileShowed: boolean = false;
     content: Blob;
     contentName: string;
