@@ -243,11 +243,10 @@ for more information about installing and using the source code.
 
 ### Services
 
+- [Process filter service](process-filter.service.md)
 - [Process service](process.service.md)
-- [*Process filter service](../lib/process-services/process-list/services/process-filter.service.ts)
-- [*Process upload service](../lib/process-services/task-list/services/process-upload.service.ts)
-- [*Task filter service](../lib/process-services/task-list/services/task-filter.service.ts)
-- [*Tasklist service](../lib/process-services/task-list/services/tasklist.service.ts)
+- [Task filter service](task-filter.service.md)
+- [Tasklist service](tasklist.service.md)
 <!-- process-services end -->
 
 [(Back to Contents)](#contents)
@@ -267,12 +266,6 @@ for more information about installing and using the source code.
 - [Analytics component](analytics.component.md)
 - [Widget component](widget.component.md)
 - [Diagram component](diagram.component.md)
-- [*Analytics report heat map component](../lib/insights/analytics-process/components/analytics-report-heat-map.component.ts)
-- [*Analytics report parameters component](../lib/insights/analytics-process/components/analytics-report-parameters.component.ts)
-
-### Services
-
-- [*Analytics service](../lib/insights/analytics-process/services/analytics.service.ts)
 <!-- insights end -->
 
 [(Back to Contents)](#contents)

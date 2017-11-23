@@ -1,21 +1,8 @@
-# InfoDrawerComponent
+# InfoDrawer component
 
 Displays a sidebar-style information panel with tabs.
 
 ![Info drawer screenshot](docassets/images/activities-infodrawer.png)
-
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic usage](#basic-usage)
-  * [Properties](#properties)
-- [Details](#details)
-- [See also](#see-also)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
 
 ## Basic usage
 
