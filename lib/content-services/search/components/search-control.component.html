@@ -10,13 +10,15 @@
         </a>
         <mat-form-field class="adf-input-form-field-divider">
             <input matInput
+                #inputSearch
                 [type]="inputType"
                 [autocomplete]="getAutoComplete()"
                 id="adf-control-input"
                 [(ngModel)]="searchTerm"
-                (focus)="activateToolbar()"
+                (focus)="onFocus($event)"
                 (blur)="onBlur($event)"
                 (keyup.escape)="toggleSearchBar()"
+                (keyup.arrowdown)="selectFirstResult()"
                 (ngModelChange)="inputChange($event)"
                 [searchAutocomplete]="auto"
                 (keyup.enter)="searchSubmit($event)">
@@ -36,6 +38,8 @@
                 [tabindex]="0"
                 (focus)="onFocus($event)"
                 (blur)="onBlur($event)"
+                (keyup.arrowdown)="onRowArrowDown($event)"
+                (keyup.arrowup)="onRowArrowUp($event)"
                 class="adf-search-autocomplete-item"
                 (click)="elementClicked(item)"
                 (keyup.enter)="elementClicked(item)">

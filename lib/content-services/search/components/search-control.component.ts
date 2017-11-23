@@ -17,11 +17,14 @@
 
 import { AuthenticationService, ThumbnailService } from '@alfresco/adf-core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output,
+         QueryList, ViewEncapsulation, ViewChild, ViewChildren, ElementRef } from '@angular/core';
 import { MinimalNodeEntity, QueryBody } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/distinctUntilChanged';
+// import 'rxjs/add/operator/distinctUntilChanged';
+import { SearchComponent } from './search.component';
+import { MatListItem } from '@angular/material';
 
 @Component({
     selector: 'adf-search-control',
@@ -73,6 +76,15 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     @Output()
     optionClicked: EventEmitter<any> = new EventEmitter();
 
+    @ViewChild(SearchComponent)
+    searchAutocomplete: SearchComponent;
+
+    @ViewChild('inputSearch')
+    inputSearch: ElementRef;
+
+    @ViewChildren(MatListItem)
+    private listResultElement: QueryList<MatListItem>;
+
     searchTerm: string = '';
     subscriptAnimationState: string;
 
@@ -88,6 +100,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
 
                 if (this.subscriptAnimationState === 'inactive') {
                     this.searchTerm = '';
+                    this.searchAutocomplete.resetResults();
                 }
             }
         });
@@ -116,7 +129,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
 
     searchSubmit(event: any) {
         this.submit.emit(event);
-        this.toggleSearchBar();
+        this.disableToolbar();
     }
 
     inputChange(event: any) {
@@ -153,7 +166,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     elementClicked(item: any) {
         if (item.entry) {
             this.optionClicked.next(item);
-            this.toggleSearchBar();
+            this.disableToolbar();
         }
     }
 
@@ -165,20 +178,51 @@ export class SearchControlComponent implements OnInit, OnDestroy {
         this.focusSubject.next($event);
     }
 
-    activateToolbar($event) {
-        if (!this.isSearchBarActive()) {
+    disableToolbar() {
+        if (this.isSearchBarActive()) {
             this.toggleSearchBar();
+        }
+    }
+
+    selectFirstResult() {
+        if ( this.listResultElement && this.listResultElement.length > 0) {
+            let firstElement: MatListItem = <MatListItem> this.listResultElement.first;
+            firstElement._getHostElement().focus();
+        }
+    }
+
+    onRowArrowDown($event: KeyboardEvent): void {
+        let nextElement: any = this.getNextElementSibling(<Element> $event.target);
+        if (nextElement) {
+            nextElement.focus();
+        }
+    }
+
+    onRowArrowUp($event: KeyboardEvent): void {
+        let previousElement: any = this.getPreviousElementSibling(<Element> $event.target);
+        if (previousElement) {
+            previousElement.focus();
+        }else {
+            this.inputSearch.nativeElement.focus();
         }
     }
 
     private setupFocusEventHandlers() {
         let focusEvents: Observable<FocusEvent> = this.focusSubject.asObservable()
-            .distinctUntilChanged().debounceTime(50);
+            .debounceTime(50);
         focusEvents.filter(($event: any) => {
-            return this.isSearchBarActive() && ($event.type === 'blur' || $event.type === 'focusout');
+            return $event.type === 'blur' || $event.type === 'focusout';
         }).subscribe(() => {
             this.toggleSearchBar();
         });
+    }
+
+    private getNextElementSibling(node: Element): Element {
+        return node.nextElementSibling;
+    }
+
+    private getPreviousElementSibling(node: Element): Element {
+        return node.previousElementSibling;
     }
 
 }
