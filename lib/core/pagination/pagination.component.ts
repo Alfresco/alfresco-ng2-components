@@ -22,11 +22,13 @@ import {
     Input,
     OnInit,
     Output,
-    ViewEncapsulation
+    ViewEncapsulation,
+    ChangeDetectorRef
 } from '@angular/core';
 
 import { Pagination } from 'alfresco-js-api';
 import { PaginationQueryParams } from './pagination-query-params.interface';
+import { PaginatedComponent } from './paginated-component.interface';
 
 @Component({
     selector: 'adf-pagination',
@@ -54,6 +56,9 @@ export class PaginationComponent implements OnInit {
     };
 
     @Input()
+    target: PaginatedComponent;
+
+    @Input()
     supportedPageSizes: number[] = [ 25, 50, 100 ];
 
     @Input()
@@ -74,7 +79,16 @@ export class PaginationComponent implements OnInit {
     @Output()
     prevPage: EventEmitter<Pagination> = new EventEmitter<Pagination>();
 
+    constructor(private cdr: ChangeDetectorRef) {
+    }
+
     ngOnInit() {
+        if (this.target) {
+            this.target.pagination.subscribe(page => {
+                this.pagination = page;
+                this.cdr.detectChanges();
+            });
+        }
         if (!this.pagination) {
             this.pagination = PaginationComponent.DEFAULT_PAGINATION;
         }
@@ -201,5 +215,9 @@ export class PaginationComponent implements OnInit {
         }
 
         change.emit(params);
+
+        if (this.target) {
+            this.target.updatePagination(params);
+        }
     }
 }
