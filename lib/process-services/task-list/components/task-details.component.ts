@@ -68,9 +68,6 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     showHeader: boolean = true;
 
     @Input()
-    showHeaderContent: boolean = true;
-
-    @Input()
     showInvolvePeople: boolean = true;
 
     @Input()
@@ -321,10 +318,6 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
     onClaimAction(taskId: string): void {
         this.loadDetails(taskId);
-    }
-
-    toggleHeaderContent(): void {
-        this.showHeaderContent = !this.showHeaderContent;
     }
 
     isCompletedTask(): boolean {

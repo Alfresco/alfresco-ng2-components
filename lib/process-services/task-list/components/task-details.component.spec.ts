@@ -278,7 +278,6 @@ describe('TaskDetailsComponent', () => {
 
         it('should comments be readonly if the task is complete and no user are involved', () => {
             component.showComments = true;
-            component.showHeaderContent = true;
             component.ngOnChanges({'taskId': new SimpleChange('123', '456', true)});
             component.taskPeople = [];
             component.taskDetails = new TaskDetailsModel(taskDetailsMock);
@@ -290,7 +289,6 @@ describe('TaskDetailsComponent', () => {
 
         it('should comments be readonly if the task is complete and user are NOT involved', () => {
             component.showComments = true;
-            component.showHeaderContent = true;
             component.ngOnChanges({'taskId': new SimpleChange('123', '456', true)});
             component.taskPeople = [];
             component.taskDetails = new TaskDetailsModel(taskDetailsMock);
@@ -302,7 +300,6 @@ describe('TaskDetailsComponent', () => {
 
         it('should comments NOT be readonly if the task is NOT complete and user are NOT involved', () => {
             component.showComments = true;
-            component.showHeaderContent = true;
             component.ngOnChanges({'taskId': new SimpleChange('123', '456', true)});
             component.taskPeople = [fakeUser];
             component.taskDetails = new TaskDetailsModel(taskDetailsMock);
@@ -314,7 +311,6 @@ describe('TaskDetailsComponent', () => {
 
         it('should comments NOT be readonly if the task is complete and user are involved', () => {
             component.showComments = true;
-            component.showHeaderContent = true;
             component.ngOnChanges({'taskId': new SimpleChange('123', '456', true)});
             component.taskPeople = [fakeUser];
             component.taskDetails = new TaskDetailsModel(taskDetailsMock);
@@ -326,7 +322,6 @@ describe('TaskDetailsComponent', () => {
 
         it('should comments be present if showComments is true', () => {
             component.showComments = true;
-            component.showHeaderContent = true;
             component.ngOnChanges({'taskId': new SimpleChange('123', '456', true)});
             component.taskPeople = [];
             component.taskDetails = new TaskDetailsModel(taskDetailsMock);

@@ -37,7 +37,6 @@ Shows the details of the task id passed in input
 | showFormCompleteButton | boolean | true | Toggle rendering of the Form `Complete` outcome button |
 | peopleIconImageUrl | string | | Define a custom people icon image |
 | showHeader | boolean | true | Toggle task details Header component |
-| showHeaderContent | boolean | true | Toggle collapsed/expanded state of the Header component |
 | showInvolvePeople | boolean | true | Toggle `Involve People` feature for Header component |
 | showComments | boolean | true | Toggle `Comments` feature for Header component |
 | showChecklist | boolean | true | Toggle `Checklist` feature for Header component |
