@@ -50,7 +50,6 @@ import {
     TaskFiltersComponent,
     TaskListComponent,
     TaskListService,
-    TaskAttachmentListComponent,
     ProcessUploadService
 } from '@alfresco/adf-process-services';
 import { LogService } from '@alfresco/adf-core';
@@ -72,8 +71,8 @@ const currentTaskIdNew = '__NEW__';
     templateUrl: './process-service.component.html',
     styleUrls: ['./process-service.component.scss'],
     providers: [
-                { provide: UploadService, useClass: ProcessUploadService }
-               ],
+        { provide: UploadService, useClass: ProcessUploadService }
+    ],
     encapsulation: ViewEncapsulation.None
 })
 export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit {
@@ -83,9 +82,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     @ViewChild(TaskListComponent)
     taskList: TaskListComponent;
-
-    @ViewChild(TaskAttachmentListComponent)
-    taskAttachList: TaskAttachmentListComponent;
 
     @ViewChild(ProcessFiltersComponent)
     activitiprocessfilter: ProcessFiltersComponent;
@@ -155,8 +151,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
                 private apiService: AlfrescoApiService,
                 private logService: LogService,
                 formRenderingService: FormRenderingService,
-                formService: FormService,
-                private uploadService: UploadService) {
+                formService: FormService) {
         this.dataTasks = new ObjectDataTableAdapter();
         this.dataTasks.setSorting(new DataSorting('created', 'desc'));
 
@@ -256,8 +251,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
             this.currentProcessInstanceId = null;
         });
         this.layoutType = AppsListComponent.LAYOUT_GRID;
-        this.uploadService.fileUploadComplete.subscribe(value => this.onTaskFileUploadComplete(value.data));
-
     }
 
     ngOnDestroy() {
@@ -378,10 +371,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.processList.reload();
     }
 
-    onSuccessNewProcess(data: any): void {
-        this.processList.reload();
-    }
-
     onFormCompleted(form): void {
         this.currentTaskId = null;
         this.taskPagination.totalItems--;
@@ -482,16 +471,9 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.logService.log(event);
     }
 
-    isTaskCompleted(): boolean {
-        return this.activitidetails.isCompletedTask();
-    }
-
     onAssignTask() {
         this.taskList.reload();
         this.currentTaskId = null;
     }
 
-    onTaskFileUploadComplete(content: any) {
-        this.taskAttachList.add(content);
-    }
 }
