@@ -101,10 +101,6 @@ export class SearchControlComponent implements OnInit, OnDestroy {
             if (this.expandable) {
                 this.subscriptAnimationState = this.subscriptAnimationState === 'inactive' ? 'active' : 'inactive';
 
-                if(this.subscriptAnimationState === 'active') {
-                    this.searchInput.nativeElement.focus()
-                }
-
                 if (this.subscriptAnimationState === 'inactive') {
                     this.searchTerm = '';
                     this.searchAutocomplete.resetResults();
@@ -114,6 +110,12 @@ export class SearchControlComponent implements OnInit, OnDestroy {
                 }
             }
         });
+    }
+
+    applySearchFocus(animationDoneEvent) {
+        if(animationDoneEvent.toState === 'active') {
+            this.searchInput.nativeElement.focus();
+        }
     }
 
     ngOnInit() {
