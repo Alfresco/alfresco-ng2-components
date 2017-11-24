@@ -158,6 +158,7 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
                 this.searchPanel.keyPressedStream.next(inputValue);
                 this.openPanel();
             } else {
+                this.searchPanel.resetResults();
                 this.closePanel();
             }
         }

@@ -15,7 +15,7 @@
                 [autocomplete]="getAutoComplete()"
                 id="adf-control-input"
                 [(ngModel)]="searchTerm"
-                (focus)="onFocus($event)"
+                (focus)="activateToolbar($event)"
                 (blur)="onBlur($event)"
                 (keyup.escape)="toggleSearchBar()"
                 (keyup.arrowdown)="selectFirstResult()"

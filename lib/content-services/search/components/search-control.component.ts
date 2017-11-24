@@ -22,7 +22,6 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output,
 import { MinimalNodeEntity, QueryBody } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-// import 'rxjs/add/operator/distinctUntilChanged';
 import { SearchComponent } from './search.component';
 import { MatListItem } from '@angular/material';
 
@@ -101,6 +100,9 @@ export class SearchControlComponent implements OnInit, OnDestroy {
                 if (this.subscriptAnimationState === 'inactive') {
                     this.searchTerm = '';
                     this.searchAutocomplete.resetResults();
+                    if ( document.activeElement.id === this.inputSearch.nativeElement.id) {
+                        this.inputSearch.nativeElement.blur();
+                    }
                 }
             }
         });
@@ -129,7 +131,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
 
     searchSubmit(event: any) {
         this.submit.emit(event);
-        this.disableToolbar();
+        this.toggleSearchBar();
     }
 
     inputChange(event: any) {
@@ -166,7 +168,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     elementClicked(item: any) {
         if (item.entry) {
             this.optionClicked.next(item);
-            this.disableToolbar();
+            this.toggleSearchBar();
         }
     }
 
@@ -178,8 +180,8 @@ export class SearchControlComponent implements OnInit, OnDestroy {
         this.focusSubject.next($event);
     }
 
-    disableToolbar() {
-        if (this.isSearchBarActive()) {
+    activateToolbar() {
+        if (!this.isSearchBarActive()) {
             this.toggleSearchBar();
         }
     }
@@ -204,6 +206,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
             previousElement.focus();
         }else {
             this.inputSearch.nativeElement.focus();
+            this.focusSubject.next(new FocusEvent('focus'));
         }
     }
 
@@ -211,7 +214,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
         let focusEvents: Observable<FocusEvent> = this.focusSubject.asObservable()
             .debounceTime(50);
         focusEvents.filter(($event: any) => {
-            return $event.type === 'blur' || $event.type === 'focusout';
+            return this.isSearchBarActive() && ($event.type === 'blur' || $event.type === 'focusout');
         }).subscribe(() => {
             this.toggleSearchBar();
         });
