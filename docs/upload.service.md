@@ -38,7 +38,7 @@ Provides access to various APIs related to file upload features.
 
 Is possible add an ignore list for files that you don't want to allow upload on your CS.
 The configuration of this service is saved in the ***app.config.json file***.If you want more details about the configuration service follow this [link](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-alfresco-core#appconfigservice).
-In the example below you can see how filtered out the : '.git', '.DS_Store' and 'desktop.ini'.
+In the example below you can see how filtered out the : '.git', '.DS_Store' and 'desktop.ini'. **Every element is a glob pattern string.** So, if you want to exclude all the txt files, you can add the "*.txt". (notice the asterisk at the beginning of the pattern!)
 
 **app.config.json**
 
@@ -50,7 +50,7 @@ In the example below you can see how filtered out the : '.git', '.DS_Store' and 
         "name": "Alfresco"
     },
     "files": {
-          "excluded": [".DS_Store", "desktop.ini", ".git"]
+          "excluded": [".DS_Store", "desktop.ini", ".git", "*.txt"]
     }
 }
 ```
