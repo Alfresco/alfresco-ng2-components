@@ -2,22 +2,11 @@
 Manipulate content related to a Process Instance or Task Instance in APS. Related content can be 
 uploaded to APS via for example a file upload dialog. 
 
-<aside class="warning">
-At the moment you must provide the `ProcessContentService` class from your `NgModule` for it to work:
-```ts
-@NgModule({
-...
-  providers: [ProcessContentService] 
-})
-```
-And also import it in the way shown below.
-</aside>
-
 ## Importing
 
 ```ts
 import { RelatedContentRepresentation } from 'alfresco-js-api';
-import { ProcessContentService } from 'ng2-activiti-form/src/services/process-content.service';
+import { ProcessContentService } from '@alfresco/adf-core';
 
 export class SomePageComponent implements OnInit {
 
@@ -27,7 +16,7 @@ export class SomePageComponent implements OnInit {
 
 ## Methods
 
-#### createProcessRelatedContent(processInstanceId: string, content: any, opts?: any): Observable<any> 
+#### createProcessRelatedContent(processInstanceId: string, content: any, opts?: any): Observable`<any>`
 Associate an uploaded file with a Process Instance.
 
 Let's say we have an upload button as follows: 
@@ -116,7 +105,7 @@ onUploadFile() {
 
 For more information see the docs for `createProcessRelatedContent`. 
  
-#### createTemporaryRawRelatedContent(file: any): Observable<RelatedContentRepresentation> 
+#### createTemporaryRawRelatedContent(file: any): Observable`<RelatedContentRepresentation>` 
 Create temporary related content from an uploaded file. This means that the related content
 is not yet associated with a process instance or a task instance.
 
@@ -137,7 +126,7 @@ is not yet associated with a process instance or a task instance.
 
 For more information see the docs for `createProcessRelatedContent`. 
 
-#### deleteRelatedContent(contentId: number): Observable<any> 
+#### deleteRelatedContent(contentId: number): Observable`<any>` 
 Delete related content via the content identifier: 
 
 ```ts
@@ -153,41 +142,20 @@ The response is going to be `null` if the delete was successful.
 
 See `getProcessRelatedContent` and `getTaskRelatedContent` for how to get to the `contentId`.
 
-#### getContentThumbnail(contentId: number): Observable<Blob>
-Get the thumbnail URL for related content (currently does not return this): 
-
-```ts
- const contentId = 6008;
- this.contentService.getContentThumbnail(contentId).subscribe(
-   res  => {
-     console.log('Response: ', res);
-   }, error => {
-     console.log('Error: ', error);
-   });
-```
-
-The response looks like in this sample:
-
-```
-Blob {size: 3020946, type: "image/png"}
-```
- 
-See `getProcessRelatedContent` and `getTaskRelatedContent` for how to get to the `contentId`.
- 
-#### getFileContent(contentId: number): Observable<RelatedContentRepresentation>
+#### getFileContent(contentId: number): Observable`<RelatedContentRepresentation>`
 Get the metadata for a related content item in the format of a `RelatedContentRepresentation` object: 
 
 ```ts
 const contentId = 6008;
 this.contentService.getFileContent(contentId).subscribe(
    res  => {
-     console.log('Response: ', res);
+     console.log('Response Metadata: ', res);
    }, error => {
      console.log('Error: ', error);
    });
 ```
 
-The response looks like in this example:
+The metadata response looks like in this example:
 
 ```
 contentAvailable: true
@@ -222,7 +190,69 @@ This URL can be used to directly access the content file, such as from a browser
 
 See `getProcessRelatedContent` and `getTaskRelatedContent` for how to get to the `contentId`.
 
-#### getProcessRelatedContent(processId: string): Observable<any>
+#### getFileRawContent(contentId: number): Observable`<Blob>`
+Get the raw content bytes as a BLOB for a related content file:
+
+```ts
+const contentId = 5006;
+this.contentService.getFileRawContent(contentId).subscribe(
+   res  => {
+     console.log('Response BLOB: ', res);
+   }, error => {
+     console.log('Error: ', error);
+   });
+```
+
+The BLOB response looks something like this:
+
+`Blob(205824) {size: 205824, type: "application/msword"}`
+
+See `getProcessRelatedContent` and `getTaskRelatedContent` for how to get to the `contentId`.
+
+#### getContentPreview(contentId: number): Observable`<Blob>`
+Get the preview file for a related content file. A content file might be for example a  
+MS Word document. This method would give you the PDF preview for this document, 
+if it has been generated:
+
+```ts
+const contentId = 5006;
+this.contentService.getContentPreview(contentId).subscribe(
+   res  => {
+     console.log('Response Preview BLOB: ', res);
+   }, error => {
+     console.log('Error: ', error);
+   });
+```
+
+The preview BLOB response looks something like this:
+
+`Blob(44101) {size: 44101, type: "application/pdf"}`
+
+See `getProcessRelatedContent` and `getTaskRelatedContent` for how to get to the `contentId`.
+
+#### getContentThumbnail(contentId: number): Observable`<Blob>`
+Get the thumbnail file for a related content file. A content file might be for example a  
+MS Word document. This method would give you the image thumbnail for this document, 
+if it has been generated:
+
+
+```ts
+ const contentId = 5006;
+ this.contentService.getContentThumbnail(contentId).subscribe(
+   res  => {
+     console.log('Response thumbnail BLOB: ', res);
+   }, error => {
+     console.log('Error: ', error);
+   });
+```
+
+The response looks like in this sample:
+
+`Blob(13780) {size: 13780, type: "image/png"}`
+ 
+See `getProcessRelatedContent` and `getTaskRelatedContent` for how to get to the `contentId`.
+
+#### getProcessRelatedContent(processId: string): Observable`<any>`
 Get related content items for passed in Process Instance ID, only metadata for related content is returned: 
 
 ```ts
@@ -265,7 +295,7 @@ data:
 
 The `id` property corresponds to the `contentId` property used in many of the other methods of this service.
 
-#### getTaskRelatedContent(taskId: string): Observable<any> 
+#### getTaskRelatedContent(taskId: string): Observable`<any>` 
 Get related content items for passed in Task Instance ID, only metadata for related content is returned: 
 
 ```ts
