@@ -46,11 +46,11 @@ export class ProcessInstanceHeaderComponent implements OnChanges {
                     }),
                 new CardViewDateItemModel(
                     {
-                        label: 'ADF_PROCESS_LIST.PROPERTIES.DUE_DATE',
+                        label: 'ADF_PROCESS_LIST.PROPERTIES.END_DATE',
                         value: this.processInstance.ended,
                         format: 'MMM DD YYYY',
-                        key: 'dueDate',
-                        default: 'ADF_PROCESS_LIST.PROPERTIES.DUE_DATE_DEFAULT'
+                        key: 'ended',
+                        default: 'ADF_PROCESS_LIST.PROPERTIES.END_DATE_DEFAULT'
                     }),
                 new CardViewTextItemModel(
                     {
