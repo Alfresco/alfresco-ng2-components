@@ -370,9 +370,11 @@
 
         <h5>Upload</h5>
         <section *ngIf="acceptedFilesTypeShow">
-            <mat-form-field>
-                <input matInput placeholder="Extension accepted" [(ngModel)]="acceptedFilesType"
-                       data-automation-id="accepted-files-type">
+            <mat-form-field floatPlaceholder="float">
+                <input  matInput
+                        placeholder="Extension accepted"
+                        [(ngModel)]="acceptedFilesType"
+                        data-automation-id="accepted-files-type">
             </mat-form-field>
         </section>
         <section *ngIf="maxSizeShow">
