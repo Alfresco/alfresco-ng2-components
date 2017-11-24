@@ -69,6 +69,13 @@ describe('SearchControlComponent', () => {
         TestBed.resetTestingModule();
     }));
 
+    function typeWordIntoSearchInput(word: string): void {
+        let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
+        inputDebugElement.nativeElement.value = word;
+        inputDebugElement.nativeElement.focus();
+        inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
+    }
+
     describe('when input values are inserted', () => {
 
         beforeEach(async(() => {
@@ -83,18 +90,12 @@ describe('SearchControlComponent', () => {
                 expect(value).toBe('customSearchTerm');
             });
 
-            let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
-            inputDebugElement.nativeElement.value = 'customSearchTerm';
-            inputDebugElement.nativeElement.focus();
-            inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
+            typeWordIntoSearchInput('customSearchTerm');
             fixture.detectChanges();
         }));
 
         it('should update FAYT search when user inputs a valid term', async(() => {
-            let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
-            inputDebugElement.nativeElement.value = 'customSearchTerm';
-            inputDebugElement.nativeElement.focus();
-            inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
+            typeWordIntoSearchInput('customSearchTerm');
             spyOn(component, 'isSearchBarActive').and.returnValue(true);
             spyOn(searchService, 'search').and.returnValue(Observable.of(results));
 
@@ -108,10 +109,7 @@ describe('SearchControlComponent', () => {
         }));
 
         it('should NOT update FAYT term when user inputs an empty string as search term ', async(() => {
-            let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
-            inputDebugElement.nativeElement.value = '';
-            inputDebugElement.nativeElement.focus();
-            inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
+            typeWordIntoSearchInput('');
             spyOn(component, 'isSearchBarActive').and.returnValue(true);
             spyOn(searchService, 'search').and.returnValue(Observable.of(results));
 
@@ -126,10 +124,7 @@ describe('SearchControlComponent', () => {
             component.searchChange.subscribe(value => {
                 expect(value).toBe('cu');
             });
-            let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
-            inputDebugElement.nativeElement.value = 'cu';
-            inputDebugElement.nativeElement.focus();
-            inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
+            typeWordIntoSearchInput('cu');
             fixture.detectChanges();
         }));
     });
@@ -188,9 +183,7 @@ describe('SearchControlComponent', () => {
 
             fixture.detectChanges();
             let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
-            inputDebugElement.nativeElement.value = 'TEST';
-            inputDebugElement.nativeElement.focus();
-            inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
+            typeWordIntoSearchInput('TEST');
             let enterKeyEvent: any = new Event('keyup');
             enterKeyEvent.keyCode = '13';
             inputDebugElement.nativeElement.dispatchEvent(enterKeyEvent);
@@ -209,10 +202,7 @@ describe('SearchControlComponent', () => {
             spyOn(searchService, 'search').and.returnValue(Observable.of(results));
             fixture.detectChanges();
 
-            let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
-            inputDebugElement.nativeElement.value = 'TEST';
-            inputDebugElement.nativeElement.focus();
-            inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
+            typeWordIntoSearchInput('TEST');
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -227,10 +217,7 @@ describe('SearchControlComponent', () => {
             spyOn(searchService, 'search').and.returnValue(Observable.of(noResult));
             fixture.detectChanges();
 
-            let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
-            inputDebugElement.nativeElement.value = 'NO RES';
-            inputDebugElement.nativeElement.focus();
-            inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
+            typeWordIntoSearchInput('NO RES');
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -245,9 +232,7 @@ describe('SearchControlComponent', () => {
             fixture.detectChanges();
 
             let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
-            inputDebugElement.nativeElement.value = 'NO RES';
-            inputDebugElement.nativeElement.focus();
-            inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
+            typeWordIntoSearchInput('NO RES');
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -268,9 +253,7 @@ describe('SearchControlComponent', () => {
             fixture.detectChanges();
 
             let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
-            inputDebugElement.nativeElement.value = 'TEST';
-            inputDebugElement.nativeElement.focus();
-            inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
+            typeWordIntoSearchInput('TEST');
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -290,9 +273,7 @@ describe('SearchControlComponent', () => {
             fixture.detectChanges();
 
             let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
-            inputDebugElement.nativeElement.value = 'TEST';
-            inputDebugElement.nativeElement.focus();
-            inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
+            typeWordIntoSearchInput('TEST');
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -315,9 +296,7 @@ describe('SearchControlComponent', () => {
             fixture.detectChanges();
 
             let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
-            inputDebugElement.nativeElement.value = 'TEST';
-            inputDebugElement.nativeElement.focus();
-            inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
+            typeWordIntoSearchInput('TEST');
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -356,15 +335,75 @@ describe('SearchControlComponent', () => {
             component.liveSearchEnabled = false;
             fixture.detectChanges();
 
-            let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
-            inputDebugElement.nativeElement.value = 'TEST';
-            inputDebugElement.nativeElement.focus();
-            inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
+            typeWordIntoSearchInput('TEST');
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('#autocomplete-search-result-list')).toBeNull();
             });
         }));
+
+        it('should select the first item on autocomplete list when ARROW DOWN is pressed on input', async(() => {
+            spyOn(searchService, 'search').and.returnValue(Observable.of(results));
+            fixture.detectChanges();
+            typeWordIntoSearchInput('TEST');
+            let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#autocomplete-search-result-list')).not.toBeNull();
+
+                inputDebugElement.triggerEventHandler('keyup.arrowdown', {});
+                fixture.detectChanges();
+                expect(document.activeElement.id).toBe('result_option_0');
+            });
+        }));
+
+        it('should select the second item on autocomplete list when ARROW DOWN is pressed on list', async(() => {
+            spyOn(searchService, 'search').and.returnValue(Observable.of(results));
+            fixture.detectChanges();
+            let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
+            typeWordIntoSearchInput('TEST');
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#autocomplete-search-result-list')).not.toBeNull();
+
+                inputDebugElement.triggerEventHandler('keyup.arrowdown', {});
+                fixture.detectChanges();
+                expect(document.activeElement.id).toBe('result_option_0');
+
+                let firstElement = debugElement.query(By.css('#result_option_0'));
+                firstElement.triggerEventHandler('keyup.arrowdown', { target : firstElement.nativeElement});
+                fixture.detectChanges();
+                expect(document.activeElement.id).toBe('result_option_1');
+            });
+        }));
+
+        it('should focus the input search when ARROW UP is pressed on the first list item', async(() => {
+            spyOn(searchService, 'search').and.returnValue(Observable.of(results));
+            fixture.detectChanges();
+            let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
+            typeWordIntoSearchInput('TEST');
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#autocomplete-search-result-list')).not.toBeNull();
+
+                inputDebugElement.triggerEventHandler('keyup.arrowdown', {});
+                fixture.detectChanges();
+                expect(document.activeElement.id).toBe('result_option_0');
+
+                let firstElement = debugElement.query(By.css('#result_option_0'));
+                firstElement.triggerEventHandler('keyup.arrowup', { target : firstElement.nativeElement});
+                fixture.detectChanges();
+
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    expect(document.activeElement.id).toBe('adf-control-input');
+                });
+            });
+        }));
+
     });
 
     describe('search button', () => {
@@ -434,10 +473,7 @@ describe('SearchControlComponent', () => {
                 expect(item.entry.id).toBe('123');
             });
             fixture.detectChanges();
-            let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
-            inputDebugElement.nativeElement.value = 'TEST';
-            inputDebugElement.nativeElement.focus();
-            inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
+            typeWordIntoSearchInput('TEST');
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -456,10 +492,7 @@ describe('SearchControlComponent', () => {
             });
             fixture.detectChanges();
 
-            let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
-            inputDebugElement.nativeElement.value = 'TEST';
-            inputDebugElement.nativeElement.focus();
-            inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
+            typeWordIntoSearchInput('TEST');
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -476,10 +509,7 @@ describe('SearchControlComponent', () => {
                 expect(component.searchTerm).toBe('TEST');
             });
             fixture.detectChanges();
-            let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
-            inputDebugElement.nativeElement.value = 'TEST';
-            inputDebugElement.nativeElement.focus();
-            inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
+            typeWordIntoSearchInput('TEST');
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {

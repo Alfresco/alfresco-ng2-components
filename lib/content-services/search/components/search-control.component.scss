@@ -56,7 +56,7 @@
 
         &-search-autocomplete-item {
 
-            &.active, &:hover {
+            &:hover {
                 background-color: mat-color($background, 'hover');
                 opacity: 1;
             }
