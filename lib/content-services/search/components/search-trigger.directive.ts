@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DOWN_ARROW, ENTER, ESCAPE, UP_ARROW } from '@angular/cdk/keycodes';
+import { ENTER, ESCAPE } from '@angular/cdk/keycodes';
 import {
     ChangeDetectorRef,
     Directive,
@@ -35,10 +35,6 @@ import { merge } from 'rxjs/observable/merge';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
 import { SearchComponent } from './search.component';
-
-export const AUTOCOMPLETE_OPTION_HEIGHT = 48;
-
-export const AUTOCOMPLETE_PANEL_HEIGHT = 256;
 
 export const SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
@@ -150,14 +146,8 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
         } else if (keyCode === ENTER) {
             this.escapeEventStream.next();
             event.preventDefault();
-        }else {
-            let isArrowKey = keyCode === UP_ARROW || keyCode === DOWN_ARROW;
-            if ( isArrowKey ) {
-                if ( !this.panelOpen ) {
-                    this.openPanel();
-                }
-            }
         }
+
     }
 
     handleInput(event: KeyboardEvent): void {
@@ -168,6 +158,7 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
                 this.searchPanel.keyPressedStream.next(inputValue);
                 this.openPanel();
             } else {
+                this.searchPanel.resetResults();
                 this.closePanel();
             }
         }
