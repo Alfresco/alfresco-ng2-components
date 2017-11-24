@@ -7,7 +7,7 @@
     <ng-container info-drawer-content *ngIf="showTabLayout(); then tabLayout else singleLayout"></ng-container>
 
     <ng-template #tabLayout>
-        <mat-tab-group class="adf-info-drawer-tabs" (selectChange)="onTabChange($event)">
+        <mat-tab-group class="adf-info-drawer-tabs" (selectedTabChange)="onTabChange($event)">
             <ng-container *ngFor="let contentBlock of contentBlocks">
                 <mat-tab [label]="contentBlock.label" class="adf-info-drawer-tab">
                     <ng-container *ngTemplateOutlet="contentBlock.content"></ng-container>
