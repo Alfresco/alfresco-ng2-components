@@ -149,7 +149,6 @@ export class ContentNodeSelectorComponent implements OnInit {
         this.updateResults();
     }
 
-
     /**
      * Updates the searchTerm attribute and starts a new search
      *

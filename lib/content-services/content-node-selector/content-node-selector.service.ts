@@ -17,7 +17,7 @@
 
 import { SearchService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { NodePaging, QueryBody } from 'alfresco-js-api';
+import { NodePaging } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 
 /**
@@ -26,7 +26,8 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class ContentNodeSelectorService {
 
-    constructor(private searchService: SearchService) {}
+    constructor(private searchService: SearchService) {
+    }
 
     /**
      * Performs a search for content node selection
@@ -38,8 +39,7 @@ export class ContentNodeSelectorService {
      */
     public search(searchTerm: string, rootNodeId: string, skipCount: number, maxItems: number): Observable<NodePaging> {
 
-
-        let defaultSearchNode: QueryBody = {
+        let defaultSearchNode: any = {
             query: {
                 query: searchTerm ? `${searchTerm}* OR name:${searchTerm}*` : searchTerm
             },
@@ -53,8 +53,7 @@ export class ContentNodeSelectorService {
                 { query: 'NOT cm:creator:System' }]
         };
 
-
-        if(rootNodeId){
+        if (rootNodeId) {
             defaultSearchNode.scope = rootNodeId;
         }
 
