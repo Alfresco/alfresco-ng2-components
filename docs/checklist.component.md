@@ -2,17 +2,6 @@
 
 Shows the checklist task functionality.
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-  * [Properties](#properties)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
-
 ## Basic Usage
 
 ```html

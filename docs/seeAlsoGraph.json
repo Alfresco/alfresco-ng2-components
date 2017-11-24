@@ -55,7 +55,7 @@
     "ecm-user.model": ["ecm-user.service", "people-content.service"],
     "ecm-user.service": [],
     "extensibility": [],
-    "file-uploading-dialog.component": [],
+    "file-uploading-dialog.component": ["upload-button.component","upload-drag-area.component"],
     "filter.model": ["process-filters.component", "task-filters.component"],
     "folder-actions.service": ["document-actions.service"],
     "form-list.component": [],

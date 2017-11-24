@@ -4,18 +4,6 @@ Shows the charts related to the reportId passed as input
 
 ![Analytics-without-parameters](docassets/images/analytics-without-parameters.png)
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-  * [Properties](#properties)
-  * [Events](#events)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
-
 ## Basic Usage
 
 ```html
@@ -53,3 +41,10 @@ You can also hide chart parameters UI by setting the `hideParameters` to `true`:
 | error | The event is emitted when an error occurs during the loading |
 | reportSaved | The event is emitted when a report is saved |
 | reportDeleted | The event is emitted when a report is deleted |
+
+<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
+<!-- seealso start -->
+## See also
+
+
+<!-- seealso end -->

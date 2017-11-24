@@ -4,20 +4,6 @@ Creates a collapsible accordion menu.
 
 ![Accordion menu screenshot](docassets/images/accordion-menu.png)
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-  * [Properties](#properties)
-- [Details](#details)
-  * [Example](#example)
-- [See also](#see-also)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
-
 ## Basic Usage
 
 ```html

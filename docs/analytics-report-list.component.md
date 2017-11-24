@@ -1,18 +1,6 @@
 # Activiti Analytics List Component
 
-The component shows the list of all the available reports
-
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-  * [Properties](#properties)
-  * [Events](#events)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
+Shows a list of all available reports
 
 ## Basic Usage
 
@@ -37,3 +25,10 @@ The component shows the list of all the available reports
 | success | The event is emitted when the report list is loaded |
 | error | The event is emitted when an error occurs during the loading |
 | reportClick | The event is emitted when the report in the list is selected |
+
+<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
+<!-- seealso start -->
+## See also
+
+
+<!-- seealso end -->

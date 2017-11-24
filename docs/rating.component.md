@@ -1,6 +1,6 @@
 # ADF Rating component
 
-![Custom columns](docassets/images/social2.png)
+![Rating component screenshot](docassets/images/social2.png)
 
 ## Basic Usage
 
@@ -21,3 +21,11 @@
 | Name | Description |
 | --- | --- |
 | changeVote | Raised when vote gets changed |
+
+<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
+<!-- seealso start -->
+## See also
+
+- [Like component](like.component.md)
+- [Rating service](rating.service.md)
+<!-- seealso end -->
