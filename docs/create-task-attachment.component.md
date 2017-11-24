@@ -1,20 +1,8 @@
 # Create Task Attachment Component
 
-Displays Upload Component(Drag and Click) to upload the attachment to a specified task
+Displays Upload Component (Drag and Click) to upload the attachment to a specified task
 
 ![task-create-attachment](docassets/images/task-create-attachment.png)
-
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-  * [Properties](#properties)
-  * [Events](#events)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
 
 ## Basic Usage
 
