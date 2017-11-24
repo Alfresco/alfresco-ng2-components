@@ -16,6 +16,7 @@
  */
 
 import { Component, ContentChildren, EventEmitter, Input, Output, QueryList, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
+import { MatTabChangeEvent } from '@angular/material';
 @Component({
     selector: 'adf-info-drawer-tab',
     template: '<ng-template><ng-content></ng-content></ng-template>'
@@ -37,7 +38,7 @@ export class InfoDrawerComponent {
     title: string|null = null;
 
     @Output()
-    currentTab: EventEmitter<any> = new EventEmitter<any>();
+    currentTab: EventEmitter<number> = new EventEmitter<number>();
 
     @ContentChildren(InfoDrawerTabComponent)
     contentBlocks: QueryList<InfoDrawerTabComponent>;
@@ -46,8 +47,7 @@ export class InfoDrawerComponent {
         return this.contentBlocks.length > 0;
     }
 
-    onTabChange(event: any) {
-        const tab = event.tab;
-        this.currentTab.emit(tab.textLabel);
+    onTabChange(event: MatTabChangeEvent) {
+        this.currentTab.emit(event.index);
     }
 }
