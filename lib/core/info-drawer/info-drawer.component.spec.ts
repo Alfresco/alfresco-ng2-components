@@ -17,6 +17,7 @@
 
 import { Component } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatTabChangeEvent } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { MaterialModule } from '../material.module';
 import { InfoDrawerLayoutComponent } from './info-drawer-layout.component';
@@ -57,9 +58,8 @@ describe('InfoDrawerComponent', () => {
     it('should emit when tab is changed', () => {
         let tabEmitSpy = spyOn(component.currentTab, 'emit');
         let event = {index: 1, tab: {textLabel: 'DETAILS'}};
-        component.onTabChange(event);
-        expect(tabEmitSpy).toHaveBeenCalled();
-        expect(tabEmitSpy).toHaveBeenCalledWith(event.tab);
+        component.onTabChange(<MatTabChangeEvent> event);
+        expect(tabEmitSpy).toHaveBeenCalledWith(1);
     });
 
     it('should render the title', () => {
