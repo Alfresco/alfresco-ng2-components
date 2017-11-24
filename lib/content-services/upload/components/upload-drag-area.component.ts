@@ -31,7 +31,7 @@ import { Component, EventEmitter, forwardRef, Input, Output, ViewEncapsulation }
     selector: 'adf-upload-drag-area',
     templateUrl: './upload-drag-area.component.html',
     styleUrls: ['./upload-drag-area.component.css'],
-    providers: [
+    viewProviders: [
         { provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadDragAreaComponent)}
     ],
     encapsulation: ViewEncapsulation.None
