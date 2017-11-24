@@ -69,12 +69,12 @@ export class DocumentActionsService {
         this.handlers['delete'] = this.deleteNode.bind(this);
     }
 
-    private download(obj: any): Observable<boolean> {
-        if (this.canExecuteAction(obj) && this.contentService) {
+    private download(node: MinimalNodeEntity): Observable<boolean> {
+        if (this.canExecuteAction(node) && this.contentService) {
             let link = document.createElement('a');
             document.body.appendChild(link);
-            link.setAttribute('download', 'download');
-            link.href = this.contentService.getContentUrl(obj);
+            link.setAttribute('download', node.entry.name);
+            link.href = this.contentService.getContentUrl(node);
             link.click();
             document.body.removeChild(link);
             return Observable.of(true);
@@ -82,14 +82,14 @@ export class DocumentActionsService {
         return Observable.of(false);
     }
 
-    private copyNode(obj: MinimalNodeEntity, target?: any, permission?: string) {
-        const actionObservable = this.nodeActionsService.copyContent(obj.entry, permission);
+    private copyNode(node: MinimalNodeEntity, target?: any, permission?: string) {
+        const actionObservable = this.nodeActionsService.copyContent(node.entry, permission);
         this.prepareHandlers(actionObservable, 'content', 'copy', target, permission);
         return actionObservable;
     }
 
-    private moveNode(obj: MinimalNodeEntity, target?: any, permission?: string) {
-        const actionObservable = this.nodeActionsService.moveContent(obj.entry, permission);
+    private moveNode(node: MinimalNodeEntity, target?: any, permission?: string) {
+        const actionObservable = this.nodeActionsService.moveContent(node.entry, permission);
         this.prepareHandlers(actionObservable, 'content', 'move', target, permission);
         return actionObservable;
     }
@@ -106,17 +106,17 @@ export class DocumentActionsService {
         );
     }
 
-    private deleteNode(obj: any, target?: any, permission?: string): Observable<any> {
+    private deleteNode(node: any, target?: any, permission?: string): Observable<any> {
         let handlerObservable;
 
-        if (this.canExecuteAction(obj)) {
-            if (this.contentService.hasPermission(obj.entry, permission)) {
-                handlerObservable = this.documentListService.deleteNode(obj.entry.id);
+        if (this.canExecuteAction(node)) {
+            if (this.contentService.hasPermission(node.entry, permission)) {
+                handlerObservable = this.documentListService.deleteNode(node.entry.id);
                 handlerObservable.subscribe(() => {
                     if (target && typeof target.reload === 'function') {
                         target.reload();
                     }
-                    this.success.next(obj.entry.id);
+                    this.success.next(node.entry.id);
                 });
                 return handlerObservable;
             } else {
