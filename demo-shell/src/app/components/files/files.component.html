@@ -398,7 +398,7 @@
                 [rootFolderId]="documentList.currentFolderId"
                 [multipleFiles]="multipleFileUpload"
                 [uploadFolders]="folderUpload"
-                [maxFilesSize]="maxFilesSize"
+                [maxFilesSize]="maxSizeShow ? maxFilesSize : null"
                 (error)="handleUploadError($event)"
                 [versioning]="versioning"
                 [adf-node-permission]="'create'"
