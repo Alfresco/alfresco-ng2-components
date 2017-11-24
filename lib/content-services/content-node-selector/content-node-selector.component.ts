@@ -15,16 +15,34 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Inject, Input, OnInit, Optional, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import { AlfrescoApiService, ContentService, HighlightDirective, SiteModel, UserPreferencesService } from '@alfresco/adf-core';
+import {
+    Component,
+    EventEmitter,
+    Inject,
+    Input,
+    OnInit,
+    Optional,
+    Output,
+    ViewChild,
+    ViewEncapsulation
+} from '@angular/core';
+import {
+    AlfrescoApiService,
+    ContentService,
+    HighlightDirective,
+    SiteModel,
+    UserPreferencesService
+} from '@alfresco/adf-core';
+import { FormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { MinimalNodeEntryEntity, NodePaging, Pagination, Site } from 'alfresco-js-api';
-import { DocumentListComponent, PaginationStrategy  } from '../document-list/components/document-list.component';
+import { DocumentListComponent, PaginationStrategy } from '../document-list/components/document-list.component';
 import { RowFilter } from '../document-list/data/row-filter.model';
 import { ImageResolver } from '../document-list/data/image-resolver.model';
 
 import { ContentNodeSelectorComponentData } from './content-node-selector.component-data.interface';
 import { ContentNodeSelectorService } from './content-node-selector.service';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-content-node-selector',
@@ -81,6 +99,8 @@ export class ContentNodeSelectorComponent implements OnInit {
     @ViewChild(HighlightDirective)
     highlighter: HighlightDirective;
 
+    searchInput: FormControl = new FormControl();
+
     constructor(private contentNodeSelectorService: ContentNodeSelectorService,
                 private contentService: ContentService,
                 private apiService: AlfrescoApiService,
@@ -102,6 +122,15 @@ export class ContentNodeSelectorComponent implements OnInit {
         if (this.containingDialog) {
             this.inDialog = true;
         }
+
+        this.searchInput.valueChanges
+            .pipe(
+                debounceTime(200)
+            )
+            .subscribe((searchValue) => {
+                this.search(searchValue);
+            });
+
         this.pageSize = this.preferences.paginationSize;
     }
 
@@ -119,6 +148,7 @@ export class ContentNodeSelectorComponent implements OnInit {
         this.siteId = chosenSite.guid;
         this.updateResults();
     }
+
 
     /**
      * Updates the searchTerm attribute and starts a new search
@@ -200,12 +230,10 @@ export class ContentNodeSelectorComponent implements OnInit {
      * Perform the call to searchService with the proper parameters
      */
     private querySearch(): void {
-        if (this.isSearchTermLongEnough()) {
-            this.loadingSearchResults = true;
+        this.loadingSearchResults = true;
 
-            this.contentNodeSelectorService.search(this.searchTerm, this.siteId, this.skipCount, this.pageSize)
-                .subscribe(this.showSearchResults.bind(this));
-        }
+        this.contentNodeSelectorService.search(this.searchTerm, this.siteId, this.skipCount, this.pageSize)
+            .subscribe(this.showSearchResults.bind(this));
     }
 
     /**
@@ -226,13 +254,6 @@ export class ContentNodeSelectorComponent implements OnInit {
 
         this.pagination = results.list.pagination;
         this.highlight();
-    }
-
-    /**
-     * Predicate method to decide whether searchTerm fulfills the necessary criteria
-     */
-    isSearchTermLongEnough(): boolean {
-        return this.searchTerm.length > 3;
     }
 
     /**

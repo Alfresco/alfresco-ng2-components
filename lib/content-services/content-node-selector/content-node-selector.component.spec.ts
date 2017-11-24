@@ -380,18 +380,6 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(component.chosenNode).toBeNull();
             });
 
-            it('should NOT call the search api if the searchTerm length is less than 4 characters', () => {
-                typeToSearchBox('1');
-                typeToSearchBox('12');
-                typeToSearchBox('123');
-
-                expect(searchSpy).not.toHaveBeenCalled();
-            });
-
-            xit('should debounce the search call by 500 ms', () => {
-
-            });
-
             it('should call the search api on changing the site selectbox\'s value', () => {
                 typeToSearchBox('vegeta');
                 expect(searchSpy.calls.count()).toBe(1, 'Search count should be one after only one search');

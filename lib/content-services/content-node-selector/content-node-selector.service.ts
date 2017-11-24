@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { SearchOptions, SearchService } from '@alfresco/adf-core';
+import { SearchService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { NodePaging } from 'alfresco-js-api';
+import { NodePaging, QueryBody } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 
 /**
@@ -38,17 +38,26 @@ export class ContentNodeSelectorService {
      */
     public search(searchTerm: string, rootNodeId: string, skipCount: number, maxItems: number): Observable<NodePaging> {
 
-        searchTerm = searchTerm + '*';
 
-        let searchOpts: SearchOptions = {
+        let defaultSearchNode: QueryBody = {
+            query: {
+                query: searchTerm ? `${searchTerm}* OR name:${searchTerm}*` : searchTerm
+            },
             include: ['path', 'allowableOperations'],
-            skipCount,
-            rootNodeId,
-            nodeType: 'cm:folder',
-            maxItems,
-            orderBy: null
+            paging: {
+                maxItems: maxItems.toString(),
+                skipCount: skipCount.toString()
+            },
+            filterQueries: [
+                { query: "TYPE:'cm:folder'" },
+                { query: 'NOT cm:creator:System' }]
         };
 
-        return this.searchService.getNodeQueryResults(searchTerm, searchOpts);
+
+        if(rootNodeId){
+            defaultSearchNode.scope = rootNodeId;
+        }
+
+        return this.searchService.search(defaultSearchNode);
     }
 }

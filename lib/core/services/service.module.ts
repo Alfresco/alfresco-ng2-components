@@ -39,7 +39,6 @@ import { PageTitleService } from './page-title.service';
 import { PeopleContentService } from './people-content.service';
 import { PeopleProcessService } from './people-process.service';
 import { RenditionsService } from './renditions.service';
-import { SearchApiService } from './search-api.service';
 import { SearchService } from './search.service';
 import { SettingsService } from './settings.service';
 import { SharedLinksApiService } from './shared-links-api.service';
@@ -82,7 +81,6 @@ import { UserPreferencesService } from './user-preferences.service';
         NodesApiService,
         PeopleContentService,
         PeopleProcessService,
-        SearchApiService,
         SearchService,
         SharedLinksApiService,
         SitesApiService,
