@@ -46,8 +46,8 @@ import 'rxjs/add/observable/throw';
     selector: 'adf-upload-button',
     templateUrl: './upload-button.component.html',
     styleUrls: ['./upload-button.component.scss'],
-    providers: [
-        {provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadButtonComponent)}
+    viewProviders: [
+        { provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadButtonComponent) }
     ],
     encapsulation: ViewEncapsulation.None
 })

@@ -90,16 +90,23 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
 
 ### Defining your components as an EXTENDIBLE_COMPONENT parent component
 
-The directive will look up the component in the dependency injection tree, up to at most one step above the current DI level (@Host). Because of this, you have to provide your component with forward referencing as the EXTENDIBLE_COMPONENT.
+The directive will look up the component in the dependency injection tree, up to the @Host() component.
+
+> "The host component is typically the component requesting the dependency. **But when this component is projected into a parent component, that parent component becomes the host.**"
+
+- because of this, you have to provide your component with forward referencing as the EXTENDIBLE_COMPONENT.
+- because of the emphasized second sentence you have to provide your component as a viewProvider.
 
 ```js
 import { EXTENDIBLE_COMPONENT } from 'ng2-alfresco-core';
 
 @Component({
     ...
-    providers: [
+    viewProviders: [
         { provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadDragAreaComponent)}
     ]
 })
 export class UploadDragAreaComponent implements NodePermissionSubject { ... }
 ```
+
+**Notice the usage of viewProviders (instead of providers)! This part is very important, especially if you want to use this directive on a transcluded component!**
