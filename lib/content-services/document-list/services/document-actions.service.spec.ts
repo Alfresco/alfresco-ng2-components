@@ -162,6 +162,7 @@ describe('DocumentActionsService', () => {
 
     it('should execute download action and cleanup', () => {
         let file = new FileNode();
+        file.entry.name = 'test.png';
         let url = 'http://<address>';
 
         spyOn(contentService, 'getContentUrl').and.returnValue(url);
@@ -179,7 +180,7 @@ describe('DocumentActionsService', () => {
 
         expect(contentService.getContentUrl).toHaveBeenCalledWith(file);
         expect(document.createElement).toHaveBeenCalledWith('a');
-        expect(link.setAttribute).toHaveBeenCalledWith('download', 'download');
+        expect(link.setAttribute).toHaveBeenCalledWith('download', 'test.png');
         expect(document.body.appendChild).toHaveBeenCalledWith(link);
         expect(link.click).toHaveBeenCalled();
         expect(document.body.removeChild).toHaveBeenCalledWith(link);

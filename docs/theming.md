@@ -7,7 +7,7 @@ include all of the styles for core (styles common to all components), so you onl
 single css file for Angular Material in your app.
 
 You can include a theme file directly into your application from
-`ng2-alfresco-core/prebuilt-themes`
+`@alfresco/adf-core/prebuilt-themes`
 
 Available pre-built themes:
 * `adf-blue-orange.css`
@@ -38,21 +38,14 @@ When you want more customization than a pre-built theme offers, you can create y
 /*
  *  Include only packages that you are using (and core by default)
  */
-@import '~@angular/material/theming';
-@import '~ng2-alfresco-core/styles/theming';
-@import '~ng2-alfresco-core/styles/index';
-@import '~ng2-activiti-analytics/styles/index';
-@import '~ng2-activiti-diagrams/styles/index';
-@import '~ng2-activiti-form/styles/index';
-@import '~ng2-activiti-processlist/styles/index';
-@import '~ng2-activiti-tasklist/styles/index';
-@import '~ng2-alfresco-datatable/styles/index';
-@import '~ng2-alfresco-documentlist/styles/index';
-@import '~ng2-alfresco-login/styles/index';
-//@import '~ng2-alfresco-upload/styles/index';
-//@import '~ng2-alfresco-userinfo/styles/index';
+@import '~@alfresco/adf-content-services/theming';
+@import '~@alfresco/adf-process-services/theming';
+@import '~@alfresco/adf-insights/theming';
+@import '~@alfresco/adf-core/theming';
 
-@include mat-core();
+@import '~@angular/material/theming';
+
+@include mat-core($alfresco-typography);
 
 $primary: mat-palette($alfresco-accent-orange);
 $accent:  mat-palette($alfresco-accent-purple);
@@ -61,18 +54,10 @@ $theme:   mat-light-theme($primary, $accent, $warn);
 
 @include angular-material-theme($theme);
 
-@include alfresco-core-theme($theme);
-@include adf-analytics-theme($theme);
-@include adf-diagrams-theme($theme);
-@include adf-form-theme($theme);
-@include adf-processlist-theme($theme);
-@include adf-tasklist-theme($theme);
-@include alfresco-datatable-theme($theme);
-@include alfresco-documentlist-theme($theme);
-@include alfresco-login-theme($theme);
-//@include alfresco-upload-theme($theme);
-//@include alfresco-userinfo-theme($theme);
-
+@include adf-content-services-theme($theme);
+@include adf-process-services-theme($theme);
+@include adf-insights-theme($theme);
+@include adf-core-theme($theme);
 ```
 
 Notes: if you are using the Generator or the demo shell you need only to change the`/src/custom-style.scss` with your set of colors
@@ -84,9 +69,11 @@ You can create multiple themes for your application:
 #### Example of defining multiple themes
 
 ```scss
+@import '~@alfresco/adf-content-services/theming';
+@import '~@alfresco/adf-process-services/theming';
+@import '~@alfresco/adf-insights/theming';
+@import '~@alfresco/adf-core/theming';
 @import '~@angular/material/theming';
-@import '~ng2-alfresco-core/styles/theming';
-@import '~ng2-alfresco-core/styles/index';
 ...
 
 @include mat-core();
@@ -98,11 +85,11 @@ $warn:    mat-palette($alfresco-warn);
 $theme:   mat-light-theme($primary, $accent, $warn);
 $dark-theme:   mat-dark-theme($primary, $accent, $warn);
 
-@include alfresco-core-theme($theme);
+@include adf-core-theme($theme);
 ...like above
 
 .adf-dark-theme {
-    @include alfresco-core-theme($dark-theme);
+    @include adf-core-theme($dark-theme);
     ...like above
 }
 ```
