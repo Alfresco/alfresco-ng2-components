@@ -2,18 +2,6 @@
 
 Shows a dialog listing all the files uploaded with the Upload Button or Drag Area components.
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-  * [Properties](#properties)
-- [Details](#details)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
-
 ## Basic Usage
 
 ```html
@@ -28,4 +16,14 @@ Shows a dialog listing all the files uploaded with the Upload Button or Drag Are
 
 ## Details
 
-This component should be used in combination with upload button or drag-and-drop area.
+This component should be used in combination with the
+[Upload Button component](upload-button.component.md) or the
+[Drag Area component](drag-area.component.md).
+
+<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
+<!-- seealso start -->
+## See also
+
+- [Upload button component](upload-button.component.md)
+- [Upload drag area component](upload-drag-area.component.md)
+<!-- seealso end -->

@@ -4,19 +4,6 @@ Adds a collapsible panel to an [accordion menu](accordion.component.md).
 
 ![Accordion menu screenshot](docassets/images/accordion-menu.png)
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-  * [Properties](#properties)
-- [Details](#details)
-- [See also](#see-also)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
-
 ## Basic Usage
 
 ```html
@@ -54,8 +41,7 @@ export class MyComponent implements OnInit {
 
 ## Details
 
-Place one or more accordion groups within an [Accordion component](accordion.component.md) to define
-a menu. 
+Place one or more accordion groups within an [Accordion component](accordion.component.md) to define a menu. 
 
 <!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
 <!-- seealso start -->

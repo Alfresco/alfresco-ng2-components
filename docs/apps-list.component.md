@@ -4,20 +4,6 @@ Shows all available apps.
 
 ![how-filter-apps](docassets/images/how-filter-apps.png)
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-  * [Properties](#properties)
-  * [Events](#events)
-- [Details](#details)
-  * [How filter the activiti apps](#how-filter-the-activiti-apps)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
-
 ## Basic Usage
 
 ```html

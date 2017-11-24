@@ -1,18 +1,6 @@
 # Analytics Generator Component
 
-The component generates and shows the charts
-
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-  * [Properties](#properties)
-  * [Events](#events)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
+Generates and shows charts
 
 ## Basic Usage
 
@@ -36,3 +24,10 @@ The component generates and shows the charts
 | --- | --- |
 | success | Raised when the charts are loaded |
 | error | Raised when an error occurs during the loading |
+
+<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
+<!-- seealso start -->
+## See also
+
+
+<!-- seealso end -->
