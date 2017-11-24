@@ -28,10 +28,9 @@ export class UserPreferencesService {
 
     private defaults = {
         paginationSize: 25,
+        supportedPageSizes: [5, 10, 15, 20],
         locale: 'en'
     };
-
-    differentPageSizes: [5, 10, 15, 20];
 
     private localeSubject: BehaviorSubject<string> ;
     locale$: Observable<string>;
@@ -45,8 +44,8 @@ export class UserPreferencesService {
         const currentLocale = this.locale || this.getDefaultLocale();
         this.localeSubject = new BehaviorSubject(currentLocale);
         this.locale$ = this.localeSubject.asObservable();
-        this.defaults.paginationSize = this.appConfig.get('pagination.size');
-        this.differentPageSizes = this.appConfig.get('pagination.supportedPageSizes', this.differentPageSizes);
+        this.defaults.paginationSize = this.appConfig.get('pagination.size', this.defaults.paginationSize);
+        this.defaults.supportedPageSizes = this.appConfig.get('pagination.supportedPageSizes', this.defaults.supportedPageSizes);
     }
 
     get(property: string, defaultValue?: string): string {
@@ -80,7 +79,7 @@ export class UserPreferencesService {
     } 
 
     getDifferentPageSizes(): number[] {
-        return this.differentPageSizes;
+        return this.defaults.supportedPageSizes;
     }
 
     set authType(value: string) {
