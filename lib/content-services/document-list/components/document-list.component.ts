@@ -858,8 +858,13 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     updatePagination(params: PaginationQueryParams) {
+        const needsReload = this.maxItems !== params.maxItems || this.skipCount !== params.skipCount;
+
         this.maxItems = params.maxItems;
         this.skipCount = params.skipCount;
-        this.reload(this.enableInfiniteScrolling);
+
+        if (needsReload) {
+            this.reload(this.enableInfiniteScrolling);
+        }
     }
 }
