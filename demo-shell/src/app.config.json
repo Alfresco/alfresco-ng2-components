@@ -51,7 +51,8 @@
         }
     ],
     "pagination": {
-        "size": 25
+        "size": 25,
+        "supportedPageSizes": [ 5, 10, 15, 20 ]
     },
     "files": {
         "excluded": [".DS_Store", "desktop.ini", ".git"]
@@ -83,7 +84,6 @@
         }
     },
     "document-list": {
-        "supportedPageSizes": [ 5, 10, 15, 25 ],
         "presets": {
             "-trashcan-": [
                 {
@@ -330,7 +330,6 @@
         }
     },
     "adf-task-list": {
-        "supportedPageSizes": [ 5, 10, 15, 25 ],
         "presets": {
             "default": [
                 {
