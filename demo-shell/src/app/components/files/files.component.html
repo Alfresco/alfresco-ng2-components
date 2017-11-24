@@ -253,6 +253,12 @@
                         (execute)="onManageVersions($event)">
                     </content-action>
                     <content-action
+                        icon="file_download"
+                        target="document"
+                        title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DOWNLOAD' | translate}}"
+                        handler="download">
+                    </content-action>
+                    <content-action
                         icon="delete"
                         target="document"
                         permission="delete"
