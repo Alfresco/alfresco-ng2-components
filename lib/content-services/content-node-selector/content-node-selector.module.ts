@@ -17,6 +17,7 @@
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -29,6 +30,8 @@ import { DocumentListModule } from '../document-list/document-list.module';
 
 @NgModule({
     imports: [
+        FormsModule,
+        ReactiveFormsModule,
         DirectiveModule,
         CommonModule,
         MaterialModule,

@@ -121,7 +121,7 @@ for more information about installing and using the source code.
 - [Renditions service](renditions.service.md)
 - [Search api service](search-api.service.md)
 - [Shared links api service](shared-links-api.service.md)
-- [Sites api service](sites-api.service.md)
+- [Sites api service](sites.service.md)
 - [Storage service](storage.service.md)
 - [Thumbnail service](thumbnail.service.md)
 - [Translation service](translation.service.md)
