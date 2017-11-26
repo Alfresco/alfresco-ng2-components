@@ -37,16 +37,16 @@ export class ContentNodeSelectorService {
      * @param rootNodeId    The root is to start the search from
      * @param maxItems      How many items to load
      */
-    public search(searchTerm: string, rootNodeId: string, skipCount: number, maxItems: number): Observable<NodePaging> {
+    public search(searchTerm: string, rootNodeId: string, skipCount: number = 0, maxItems: number = 25): Observable<NodePaging> {
 
         let defaultSearchNode: any = {
             query: {
-                query: searchTerm ? `${searchTerm}* OR name:${searchTerm}*` : searchTerm
+                query: `${searchTerm}* OR name:${searchTerm}*`
             },
             include: ['path', 'allowableOperations'],
             paging: {
-                maxItems: maxItems.toString(),
-                skipCount: skipCount.toString()
+                maxItems: `${maxItems}`,
+                skipCount: `${skipCount}`
             },
             filterQueries: [
                 { query: "TYPE:'cm:folder'" },

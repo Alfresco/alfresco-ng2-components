@@ -33,13 +33,9 @@ export class SearchService {
     }
 
     getNodeQueryResults(term: string, options?: SearchOptions): Observable<NodePaging> {
-        return Observable.fromPromise(this.getQueryNodesPromise(term, options))
+        return Observable.fromPromise(this.apiService.getInstance().core.queriesApi.findNodes(term, options))
             .map(res => <NodePaging> res)
             .catch(err => this.handleError(err));
-    }
-
-    getQueryNodesPromise(term: string, opts: SearchOptions): Promise<NodePaging> {
-        return this.apiService.getInstance().core.queriesApi.findNodes(term, opts);
     }
 
     search(query: QueryBody): Observable<NodePaging> {

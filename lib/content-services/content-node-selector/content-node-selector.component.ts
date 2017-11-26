@@ -99,6 +99,8 @@ export class ContentNodeSelectorComponent implements OnInit {
     @ViewChild(HighlightDirective)
     highlighter: HighlightDirective;
 
+    debounceSearch: number= 200;
+
     searchInput: FormControl = new FormControl();
 
     constructor(private contentNodeSelectorService: ContentNodeSelectorService,
@@ -125,7 +127,7 @@ export class ContentNodeSelectorComponent implements OnInit {
 
         this.searchInput.valueChanges
             .pipe(
-                debounceTime(200)
+                debounceTime(this.debounceSearch)
             )
             .subscribe((searchValue) => {
                 this.search(searchValue);

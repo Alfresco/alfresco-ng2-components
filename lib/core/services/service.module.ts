@@ -42,7 +42,7 @@ import { RenditionsService } from './renditions.service';
 import { SearchService } from './search.service';
 import { SettingsService } from './settings.service';
 import { SharedLinksApiService } from './shared-links-api.service';
-import { SitesApiService } from './sites-api.service';
+import { SitesService } from './sites.service';
 import { StorageService } from './storage.service';
 import { ThumbnailService } from './thumbnail.service';
 import { TranslateLoaderService } from './translate-loader.service';
@@ -83,7 +83,7 @@ import { UserPreferencesService } from './user-preferences.service';
         PeopleProcessService,
         SearchService,
         SharedLinksApiService,
-        SitesApiService,
+        SitesService,
         DiscoveryApiService,
         CommentProcessService
     ],
