@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SearchApiService } from '@alfresco/adf-core';
+import { SearchService } from '@alfresco/adf-core';
 import {
     AfterContentInit,
     ChangeDetectionStrategy,
@@ -101,7 +101,7 @@ export class SearchComponent implements AfterContentInit, OnChanges {
     _classList: { [key: string]: boolean } = {};
 
     constructor(
-        private searchService: SearchApiService,
+        private searchService: SearchService,
         private changeDetectorRef: ChangeDetectorRef,
         private _elementRef: ElementRef) {
         this.keyPressedStream.asObservable()
@@ -148,7 +148,6 @@ export class SearchComponent implements AfterContentInit, OnChanges {
         let searchOpts: QueryBody = this.getSearchNode(searchTerm);
 
         if (this.hasValidSearchQuery(searchOpts)) {
-            searchTerm = searchTerm + '*';
             this.searchService
                 .search(searchOpts)
                 .subscribe(

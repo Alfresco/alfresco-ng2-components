@@ -65,8 +65,7 @@
         "../node_modules/pdfjs-dist/build/pdf.js",
         "../node_modules/pdfjs-dist/web/pdf_viewer.js",
         "../node_modules/raphael/raphael.min.js",
-        "../node_modules/moment/min/moment.min.js",
-        "../node_modules/three/build/three.min.js"
+        "../node_modules/moment/min/moment.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
@@ -149,8 +148,7 @@
         "../node_modules/pdfjs-dist/build/pdf.js",
         "../node_modules/pdfjs-dist/web/pdf_viewer.js",
         "../node_modules/raphael/raphael.min.js",
-        "../node_modules/moment/min/moment.min.js",
-        "../node_modules/three/build/three.min.js"
+        "../node_modules/moment/min/moment.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

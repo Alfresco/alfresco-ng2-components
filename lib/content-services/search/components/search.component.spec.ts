@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { SearchApiService } from '@alfresco/adf-core';
+import { SearchService } from '@alfresco/adf-core';
 import { QueryBody } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { SearchModule } from '../../index';
@@ -37,7 +37,7 @@ describe('SearchComponent', () => {
 
     let fixture: ComponentFixture<SimpleSearchTestComponent>, element: HTMLElement;
     let component: SimpleSearchTestComponent;
-    let searchService: SearchApiService;
+    let searchService: SearchService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -49,7 +49,7 @@ describe('SearchComponent', () => {
             fixture = TestBed.createComponent(SimpleSearchTestComponent);
             component = fixture.componentInstance;
             element = fixture.nativeElement;
-            searchService = TestBed.get(SearchApiService);
+            searchService = TestBed.get(SearchService);
         });
     }));
 

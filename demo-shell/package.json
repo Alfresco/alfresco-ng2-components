@@ -87,7 +87,6 @@
     "minimatch": "3.0.4",
     "moment-es6": "^1.0.0",
     "moment": "2.15.2",
-    "ng2-3d-editor": "0.0.18",
     "ng2-charts": "1.6.0",
     "pdfjs-dist": "1.5.404",
     "raphael": "2.2.7",

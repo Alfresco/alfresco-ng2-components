@@ -106,7 +106,7 @@
     "search-control.component": ["search.component"],
     "search.component": [],
     "site.model": [],
-    "sites-api.service": ["site.model"],
+    "sites.service": ["site.model"],
     "sites-dropdown.component": [],
     "start-process.component": [],
     "start-task.component": [],

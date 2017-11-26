@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SiteModel, SitesApiService } from '@alfresco/adf-core';
+import { SiteModel, SitesService } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
@@ -41,7 +41,7 @@ export class DropdownSitesComponent implements OnInit {
 
     public siteSelected: string;
 
-    constructor(private sitesService: SitesApiService) {}
+    constructor(private sitesService: SitesService) {}
 
     ngOnInit() {
         if (!this.siteList) {

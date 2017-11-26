@@ -23,7 +23,7 @@ import { AppConfigService } from '../app-config/app-config.service';
 import { AppConfigModule } from '../app-config/app-config.module';
 import { AuthenticationService } from './authentication.service';
 import { LogService } from './log.service';
-import { SitesApiService } from './sites-api.service';
+import { SitesService } from './sites.service';
 import { StorageService } from './storage.service';
 import { TranslateLoaderService } from './translate-loader.service';
 import { UserPreferencesService } from './user-preferences.service';
@@ -46,7 +46,7 @@ describe('Sites service', () => {
                 })
             ],
             providers: [
-                SitesApiService,
+                SitesService,
                 AlfrescoApiService,
                 UserPreferencesService,
                 AuthenticationService,
@@ -66,7 +66,7 @@ describe('Sites service', () => {
             }
         };
 
-        service = TestBed.get(SitesApiService);
+        service = TestBed.get(SitesService);
         jasmine.Ajax.install();
     });
 

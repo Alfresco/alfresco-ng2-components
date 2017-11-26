@@ -19,7 +19,7 @@ import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MaterialModule } from '../../material.module';
 import { By } from '@angular/platform-browser';
-import { AuthenticationService, SearchApiService } from '@alfresco/adf-core';
+import { AuthenticationService, SearchService } from '@alfresco/adf-core';
 import { ThumbnailService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { noResult, results } from '../../mock';
@@ -33,7 +33,7 @@ describe('SearchControlComponent', () => {
     let component: SearchControlComponent;
     let element: HTMLElement;
     let debugElement: DebugElement;
-    let searchService: SearchApiService;
+    let searchService: SearchService;
     let authService: AuthenticationService;
 
     beforeEach(async(() => {
@@ -48,12 +48,12 @@ describe('SearchControlComponent', () => {
             ],
             providers: [
                 ThumbnailService,
-                SearchApiService
+                SearchService
             ]
         }).compileComponents().then(() => {
             fixture = TestBed.createComponent(SearchControlComponent);
             debugElement = fixture.debugElement;
-            searchService = TestBed.get(SearchApiService);
+            searchService = TestBed.get(SearchService);
             authService = TestBed.get(AuthenticationService);
             component = fixture.componentInstance;
             element = fixture.nativeElement;

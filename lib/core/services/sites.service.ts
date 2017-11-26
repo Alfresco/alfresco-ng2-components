@@ -24,7 +24,7 @@ import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/operator/catch';
 
 @Injectable()
-export class SitesApiService {
+export class SitesService {
 
     constructor(
         private apiService: AlfrescoApiService) { }

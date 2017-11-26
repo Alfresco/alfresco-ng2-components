@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { NodePaging } from 'alfresco-js-api';
+import { NodePaging, QueryBody } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AuthenticationService } from './authentication.service';
@@ -32,21 +32,19 @@ export class SearchService {
                 private apiService: AlfrescoApiService) {
     }
 
-    /**
-     * Execute a search against the repository
-     *
-     * @param term Search term
-     * @param options Additional options passed to the search
-     * @returns {Observable<NodePaging>} Search results
-     */
     getNodeQueryResults(term: string, options?: SearchOptions): Observable<NodePaging> {
-        return Observable.fromPromise(this.getQueryNodesPromise(term, options))
+        return Observable.fromPromise(this.apiService.getInstance().core.queriesApi.findNodes(term, options))
             .map(res => <NodePaging> res)
             .catch(err => this.handleError(err));
     }
 
-    getQueryNodesPromise(term: string, opts: SearchOptions): Promise<NodePaging> {
-        return this.apiService.getInstance().core.queriesApi.findNodes(term, opts);
+    search(query: QueryBody): Observable<NodePaging> {
+        const searchQuery = Object.assign(query);
+        const promise = this.apiService.getInstance().search.searchApi.search(searchQuery);
+
+        return Observable
+            .fromPromise(promise)
+            .catch(err => this.handleError(err));
     }
 
     private handleError(error: any): Observable<any> {

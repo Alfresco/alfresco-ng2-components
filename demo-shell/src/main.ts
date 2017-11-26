@@ -6,8 +6,6 @@ import { environment } from './environments/environment';
 import 'hammerjs';
 import 'chart.js';
 import 'ng2-charts';
-// import 'ng2-3d-editor';
-import 'three';
 
 import pdfjsLib from 'pdfjs-dist';
 pdfjsLib.PDFJS.workerSrc = 'pdf.worker.js';
