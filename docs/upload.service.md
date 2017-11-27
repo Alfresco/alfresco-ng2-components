@@ -2,19 +2,6 @@
 
 Provides access to various APIs related to file upload features.
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-  * [Events](#events)
-- [Details](#details)
-  * [Ignore list configuration](#ignore-list-configuration)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
-
 ## Basic Usage
 
 ### Events

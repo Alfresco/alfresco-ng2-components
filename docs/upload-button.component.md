@@ -1,24 +1,10 @@
 # Upload Button Component
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-  * [Properties](#properties)
-  * [Events](#events)
-- [Details](#details)
-  * [How to show notification message with no permission](#how-to-show-notification-message-with-no-permission)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
-
 ## Basic Usage
 
 ```html
 <adf-upload-button 
-    [parentId]="-my-"
+    [rootFolderId]="-my-"
     [uploadFolders]="true"
     [multipleFiles]="false"
     [acceptedFilesType]=".jpg,.gif,.png,.svg"
@@ -37,7 +23,7 @@
 | multipleFiles | boolean | false | Allow/disallow multiple files |
 | acceptedFilesType | string | * |  array of allowed file extensions , example: ".jpg,.gif,.png,.svg" |
 | maxFilesSize | number |  |  if defined allow to upload files only with this max file size. the size of a file is in bytes  |
-| parentId | string | empty | The ID of the root. It can be the nodeId if you are using the upload for the Content Service or taskId/processId for the Process Service. |
+| rootFolderId | string | '-root-' | The ID of the root. It can be the nodeId if you are using the upload for the Content Service or taskId/processId for the Process Service. |
 | versioning | boolean | false | Versioning false is the default uploader behaviour and it renames the file using an integer suffix if there is a name clash. Versioning true to indicate that a major version should be created |
 | staticTitle | string | (predefined) | define the text of the upload button |
 | tooltip | string | | Custom tooltip |
@@ -59,7 +45,7 @@ You can subscribe to this event from your component and use the NotificationServ
 
 ```html
 <adf-upload-button
-    [parentId]="currentFolderId"
+    [rootFolderId]="currentFolderId"
     (permissionEvent)="onUploadPermissionFailed($event)">
 </adf-upload-button>
 ```
