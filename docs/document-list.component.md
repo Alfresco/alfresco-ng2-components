@@ -295,7 +295,7 @@ For the sake of simplicity example below shows only main points you may need to 
 
 ```ts
 import { ChangeDetectorRef } from '@angular/core';
-import { AlfrescoApiService } from 'lib/core/services';
+import { AlfrescoApiService } from '@alfresco/adf-core';
 
 export class FilesComponent implements OnInit {
 
@@ -368,7 +368,7 @@ Note the `#documentList` ID we've just added to be able referencing this compone
 
 ```ts
 import { ViewChild, AfterViewInit } from '@angular/core';
-import { DocumentListComponent } from 'lib/content-services/document-list/components';
+import { DocumentListComponent } from '@alfresco/adf-content-services';
 
 @Component({...})
 export class MyAppComponent implements AfterViewInit {
@@ -624,7 +624,7 @@ _Note that for the sake of simplicity the example code below was reduced to the 
 **View1.component.ts**
 
 ```ts
-import { RowFilter, ShareDataRow } from 'lib/content-services/document-list/data';
+import { RowFilter, ShareDataRow } from '@alfresco/adf-content-services';
 
 export class View1 {
 
@@ -682,8 +682,8 @@ _Note that for the sake of simplicity the example code below was reduced to the 
 **View1.component.ts**
 
 ```ts
-import { DataColumn, DataRow } from 'lib/core/datatable/data';
-import { ImageResolver } from 'lib/content-services/document-list/data';
+import { DataColumn, DataRow } from '@alfresco/adf-core';
+import { ImageResolver } from '@alfresco/adf-content-services';
 
 export class View1 {
 

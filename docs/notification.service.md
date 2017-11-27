@@ -18,7 +18,7 @@ The Notification Service is implemented on top of the Angular 2 Material Design 
 Use this service to show a notification message, and optionally get feedback from it.
 
 ```ts
-import { NotificationService } from 'lib/core/services';
+import { NotificationService } from '@alfresco/adf-core';
 
 export class MyComponent implements OnInit {
 
@@ -34,7 +34,7 @@ export class MyComponent implements OnInit {
 ```
 
 ```ts
-import { NotificationService } from 'lib/core/services';
+import { NotificationService } from '@alfresco/adf-core';
 
 export class MyComponent implements OnInit {
 

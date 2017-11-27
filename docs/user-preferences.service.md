@@ -9,7 +9,7 @@ The preferences are bound to a particular `prefix` so the application can switch
 For example upon login you can set the `prefix` as current username:
 
 ```ts
-import { UserPreferencesService, AuthenticationService } from 'lib/core/services';
+import { UserPreferencesService, AuthenticationService } from '@alfresco/adf-core';
 
 @Component({...})
 class AppComponent {
