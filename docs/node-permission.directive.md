@@ -80,7 +80,7 @@ When designing a component you want to work this directive with, you have two im
 The component has to implement the NodePermissionSubject interface which basically means it has to have a boolean **disabled** property. This is the property which will be set by the directive.
 
 ```js
-import { NodePermissionSubject } from 'lib/core/directives';
+import { NodePermissionSubject } from '@alfresco/adf-core';
 
 @Component({...})
 export class UploadDragAreaComponent implements NodePermissionSubject {
@@ -98,7 +98,7 @@ The directive will look up the component in the dependency injection tree, up to
 - because of the emphasized second sentence you have to provide your component as a viewProvider.
 
 ```js
-import { EXTENDIBLE_COMPONENT } from 'lib/core/interface';
+import { EXTENDIBLE_COMPONENT } from '@alfresco/adf-core';
 
 @Component({
     ...

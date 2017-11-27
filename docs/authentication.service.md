@@ -19,7 +19,7 @@ Provides authentication for use with the Login component.
 **app.component.ts**
 
 ```ts
-import { AuthenticationService } from 'lib/core/services';
+import { AuthenticationService } from '@alfresco/adf-core';
 
 @Component({...})
 export class AppComponent {

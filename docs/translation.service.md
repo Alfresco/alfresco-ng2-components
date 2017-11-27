@@ -12,7 +12,7 @@ and register its parent `i18n` folder with your component or application module.
 For example:
 
 ```ts
-import { TRANSLATION_PROVIDER } from 'lib/core/services';
+import { TRANSLATION_PROVIDER } from '@alfresco/adf-core';
 
 @NgModule({
     ...

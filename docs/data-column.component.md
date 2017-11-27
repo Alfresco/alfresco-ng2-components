@@ -81,7 +81,7 @@ You can create custom tooltips for the table cells by providing a `formatTooltip
 And the code in this case will be similar to the following:
 
 ```ts
-import { DataColumn, DataRow } from 'lib/core/data-column';
+import { DataColumn, DataRow } from '@alfresco/adf-core';
 
 @Component({...})
 export class MyComponent {
