@@ -101,7 +101,7 @@ use the Nodes Api service to "decode" the ID string into a MinimalNodeEntryEntit
 ```ts
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { NodesApiService } from 'lib/core/services';
+import { NodesApiService } from '@alfresco/adf-core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
     ...
 

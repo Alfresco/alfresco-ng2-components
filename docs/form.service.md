@@ -5,8 +5,7 @@ Implements Process Services form methods
 ## Basic Usage
 
 ```ts
-import { FormService } from 'lib/core/form/services';
-import { FormEvent, FormFieldEvent } from 'lib/core/form/events';
+import { FormService, FormEvent, FormFieldEvent } from '@alfresco/adf-core';
 
 @Component(...)
 class MyComponent {

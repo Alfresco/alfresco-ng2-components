@@ -10,7 +10,7 @@ Defines how the input fields of [ADF Form](form.component.md) and
 ```
 
 ```ts
-import { FORM_FIELD_VALIDATORS } from 'lib/core/form/components/widgets/core';
+import { FORM_FIELD_VALIDATORS } from '@alfresco/adf-core';
 
 @Component({...})
 export class AppComponent {
@@ -85,7 +85,7 @@ The validator in the example
 below simply checks that "admin" is not entered into a text field:
 
 ```ts
-import { FormFieldModel, FormFieldTypes, FormFieldValidator } from 'lib/core/form/components/widgets/core';
+import { FormFieldModel, FormFieldTypes, FormFieldValidator } from '@alfresco/adf-core';
 
 export class DemoFieldValidator implements FormFieldValidator {
 

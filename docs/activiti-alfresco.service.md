@@ -20,7 +20,7 @@ And also import it in the way shown below.
 ## Importing
 
 ```ts
-import { ActivitiAlfrescoContentService } from 'lib/core/form/services/activiti-alfresco.service';
+import { ActivitiAlfrescoContentService } from '@alfresco/adf-core';
 
 export class SomePageComponent implements OnInit {
 

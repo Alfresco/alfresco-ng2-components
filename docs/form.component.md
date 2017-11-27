@@ -201,7 +201,7 @@ Alternatively you may want just running additional code on outcome execution wit
 **MyView.component.ts**
 
 ```ts
-import { FormOutcomeEvent } from 'lib/core/form/components/widgets/core';
+import { FormOutcomeEvent } from '@alfresco/adf-core';
 
 export class MyView {
 

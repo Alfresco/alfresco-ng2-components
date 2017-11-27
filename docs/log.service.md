@@ -7,7 +7,7 @@ Provide a log functionality for your ADF application.
 **app.component.ts**
 
 ```ts
-import { LogService } from 'lib/core/services';
+import { LogService } from '@alfresco/adf-core';
 
 @Component({...})
 export class AppComponent {

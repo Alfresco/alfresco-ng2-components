@@ -18,7 +18,7 @@ This action will invoke the `myFolderActionHandler` function each time it is sel
 from the Document List menu.
 
 ```ts
-import { FolderActionsService } from 'lib/content-services/document-list/services';
+import { FolderActionsService } from '@alfresco/adf-content-services';
 
 export class MyView {
 

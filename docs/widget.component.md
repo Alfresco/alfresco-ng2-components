@@ -6,7 +6,7 @@ Base class for standard and custom widget classes.
 
 ```ts
 import { Component } from '@angular/core';
-import { WidgetComponent } from 'lib/core/form/components/widgets';
+import { WidgetComponent } from '@alfresco/adf-core';
 
 @Component({
     selector: 'custom-editor',
