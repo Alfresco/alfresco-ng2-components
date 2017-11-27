@@ -42,11 +42,9 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class PaginationComponent implements OnInit, OnDestroy {
 
-    static DEFAULT_PAGE_SIZE: number = 25;
-
     static DEFAULT_PAGINATION: Pagination = {
         skipCount: 0,
-        maxItems: PaginationComponent.DEFAULT_PAGE_SIZE,
+        maxItems: 25,
         totalItems: 0
     };
 
@@ -88,10 +86,10 @@ export class PaginationComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         if (this.target) {
+            this.supportedPageSizes = this.target.supportedPageSizes;
             this.paginationSubscription = this.target.pagination.subscribe(page => {
                 this.pagination = page;
                 this.cdr.detectChanges();
-
             });
         }
 
@@ -117,8 +115,7 @@ export class PaginationComponent implements OnInit, OnDestroy {
     }
 
     get isLastPage(): boolean {
-        const { current, lastPage } = this;
-        return current === lastPage;
+        return this.current === this.lastPage;
     }
 
     get isFirstPage(): boolean {
@@ -126,13 +123,15 @@ export class PaginationComponent implements OnInit, OnDestroy {
     }
 
     get next(): number {
-        const { isLastPage, current } = this;
-        return isLastPage ? current : current + 1;
+        return this.isLastPage ? this.current : this.current + 1;
     }
 
     get previous(): number {
-        const { isFirstPage, current } = this;
-        return isFirstPage ? 1 : current - 1;
+        return this.isFirstPage ? 1 : this.current - 1;
+    }
+
+    get hasItems(): boolean {
+        return this.pagination && this.pagination.count > 0;
     }
 
     get range(): number[] {
@@ -152,30 +151,39 @@ export class PaginationComponent implements OnInit, OnDestroy {
     }
 
     goNext() {
-        const { next, pagination: { maxItems } } = this;
+        if (this.hasItems) {
+            const maxItems = this.pagination.maxItems;
+            const skipCount = (this.next - 1) * maxItems;
 
-        this.handlePaginationEvent(PaginationComponent.ACTIONS.NEXT_PAGE, {
-            skipCount: (next - 1) * maxItems,
-            maxItems
-        });
+            this.handlePaginationEvent(PaginationComponent.ACTIONS.NEXT_PAGE, {
+                skipCount,
+                maxItems
+            });
+        }
     }
 
     goPrevious() {
-        const { previous, pagination: { maxItems } } = this;
+        if (this.hasItems) {
+            const maxItems = this.pagination.maxItems;
+            const skipCount = (this.previous - 1) * maxItems;
 
-        this.handlePaginationEvent(PaginationComponent.ACTIONS.PREV_PAGE, {
-            skipCount: (previous - 1) * maxItems,
-            maxItems
-        });
+            this.handlePaginationEvent(PaginationComponent.ACTIONS.PREV_PAGE, {
+                skipCount,
+                maxItems
+            });
+        }
     }
 
     onChangePageNumber(pageNumber: number) {
-        const { pagination: { maxItems } } = this;
+        if (this.hasItems) {
+            const maxItems = this.pagination.maxItems;
+            const skipCount = (pageNumber - 1) * maxItems;
 
-        this.handlePaginationEvent(PaginationComponent.ACTIONS.CHANGE_PAGE_NUMBER, {
-            skipCount: (pageNumber - 1) * maxItems,
-            maxItems
-        });
+            this.handlePaginationEvent(PaginationComponent.ACTIONS.CHANGE_PAGE_NUMBER, {
+                skipCount,
+                maxItems
+            });
+        }
     }
 
     onChangePageSize(maxItems: number) {
