@@ -41,6 +41,7 @@ import { UploadButtonComponent } from '@alfresco/adf-content-services';
 import { FileViewComponent } from './components/file-view/file-view.component';
 import { CustomSourcesComponent } from './components/files/custom-sources.component';
 import { FormListComponent } from './components/form/form-list.component';
+import { OverlayViewerComponent } from './components/overlay-viewer/overlay-viewer.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -149,7 +150,12 @@ export const appRoutes: Routes = [
             },
             { path: 'about', component: AboutComponent },
             { path: 'form', component: FormComponent },
-            { path: 'form-list', component: FormListComponent }
+            { path: 'form-list', component: FormListComponent },
+            {
+                path: 'overlay-viewer',
+                component: OverlayViewerComponent,
+                canActivate: [AuthGuardEcm]
+            }
         ]
     }
 ];
