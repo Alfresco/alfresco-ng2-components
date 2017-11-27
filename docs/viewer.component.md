@@ -67,6 +67,42 @@ Using with file url:
 | print | any | Yes | Raised when user clicks the 'Print' button. |
 | share | any | Yes | Raised when user clicks the 'Share' button. |
 
+## Integrating with DocumentList component
+
+Below is the most simple integration of Pagination and DocumentList components within your custom component:
+
+```html
+<adf-document-list
+    currentFolderId="-my-"
+    (preview)="showPreview($event)">
+</adf-document-list>
+
+<adf-viewer
+    [(showViewer)]="showViewer"
+    [overlayMode]="true"
+    [fileNodeId]="nodeId">
+</adf-viewer>
+```
+
+And the component controller class implementation can look like the following:
+
+```ts
+export class OverlayViewerComponent {
+
+    @Input()
+    showViewer: boolean = false;
+
+    nodeId: string;
+
+    showPreview(event) {
+        if (event.value.entry.isFile) {
+            this.nodeId = event.value.entry.id;
+            this.showViewer = true;
+        }
+    }
+}
+```
+
 ## Details
 
 ### Supported file formats
