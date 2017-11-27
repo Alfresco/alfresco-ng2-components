@@ -274,7 +274,6 @@
                 *ngIf="!infiniteScrolling"
                 class="adf-documentlist-pagination"
                 [target]="documentList"
-                [supportedPageSizes]="supportedPages"
                 (changePageSize)="onChangePageSize($event)"
                 (changePageNumber)="onChangePageNumber($event)"
                 (nextPage)="onNextPage($event)"

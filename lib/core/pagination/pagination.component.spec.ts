@@ -30,13 +30,13 @@ import { PaginatedComponent } from './public-api';
 import { Subject } from 'rxjs/Subject';
 
 class FakePaginationInput implements Pagination {
-    count: number;
+    count: number = 25;
     hasMoreItems: boolean;
     totalItems: number = null;
     skipCount: number = null;
     maxItems: number = 25;
 
-    constructor(pagesCount, currentPage, lastPageItems) {
+    constructor(pagesCount: number, currentPage: number, lastPageItems: number) {
         this.totalItems = ((pagesCount - 1) * this.maxItems) + lastPageItems;
         this.skipCount = (currentPage - 1) * this.maxItems;
     }
@@ -305,12 +305,15 @@ describe('PaginationComponent', () => {
         it('should send pagination event to paginated component', () => {
             const customComponent = <PaginatedComponent> {
                 pagination: new Subject<Pagination>(),
-                updatePagination() {}
+                updatePagination() {},
+                supportedPageSizes: []
             };
             spyOn(customComponent, 'updatePagination').and.stub();
 
             component.target = customComponent;
             component.ngOnInit();
+
+            customComponent.pagination.next(new FakePaginationInput(2, 0, 25));
 
             component.goNext();
             expect(customComponent.updatePagination).toHaveBeenCalled();

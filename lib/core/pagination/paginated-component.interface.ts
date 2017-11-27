@@ -23,6 +23,7 @@ import { PaginationQueryParams } from './pagination-query-params.interface';
 export interface PaginatedComponent {
 
     pagination: Subject<Pagination>;
+    supportedPageSizes: number[];
     updatePagination(params: PaginationQueryParams);
 
 }
