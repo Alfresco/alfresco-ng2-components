@@ -97,7 +97,7 @@ Every custom widget must inherit `WidgetComponent` class in order to function pr
 
 ```ts
 import { Component } from '@angular/core';
-import { WidgetComponent } from 'ng2-activiti-form';
+import { WidgetComponent } from 'lib/core/form/components/widgets';
 
 @Component({
     selector: 'custom-editor',
@@ -196,7 +196,7 @@ Let's create an Angular 2 component to render missing content:
 
 ```ts
 import { Component } from '@angular/core';
-import { WidgetComponent } from 'ng2-activiti-form';
+import { WidgetComponent } from 'lib/core/form/components/widgets';
 
 @Component({
     selector: 'custom-stencil-01',

@@ -45,7 +45,7 @@ See it live: [DataTable Quickstart](https://embed.plnkr.co/80qr4YFBeHjLMdAV0F6l/
 **app.component.ts**
 
 ```ts
-import { ObjectDataTableAdapter }  from 'ng2-alfresco-datatable';
+import { ObjectDataTableAdapter }  from 'lib/core/datatable/data';
 
 @Component({...})
 export class DataTableDemo {
@@ -94,7 +94,7 @@ You can also use HTML-based schema declaration like shown below:
 ```
 
 ```ts
-import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
+import { ObjectDataTableAdapter } from 'lib/core/datatable/data';
 
 @Component({...})
 export class DataTableDemo {
@@ -430,7 +430,7 @@ corresponding menu item.
 ```
 
 ```ts
-import { DataCellEvent, DataRowActionEvent } from 'ng2-alfresco-datatable';
+import { DataCellEvent, DataRowActionEvent } from 'lib/core/datatable/components/datatable';
 
 onShowRowActionsMenu(event: DataCellEvent) {
     let myAction = {

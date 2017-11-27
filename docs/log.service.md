@@ -2,23 +2,12 @@
 
 Provide a log functionality for your ADF application.
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-  * [Log levels](#log-levels)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
-
 ## Basic Usage
 
 **app.component.ts**
 
 ```ts
-import { LogService } from 'ng2-alfresco-core';
+import { LogService } from 'lib/core/services';
 
 @Component({...})
 export class AppComponent {

@@ -65,7 +65,7 @@ Below is a simple example of using the AppConfigService in practice.
 **app.component.ts**
 
 ```ts
-import { AppConfigService } from 'ng2-alfresco-core';
+import { AppConfigService } from 'lib/core/app-config';
 
 @Component({...})
 export class AppComponent {
