@@ -18,7 +18,7 @@
 import { Location } from '@angular/common';
 import {
     Component, ContentChild, EventEmitter, HostListener,
-    Input, OnChanges, OnDestroy, Output, TemplateRef, ViewEncapsulation
+    Input, OnChanges, Output, SimpleChanges, TemplateRef, ViewEncapsulation
 } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { BaseEvent } from '../../events';
@@ -37,7 +37,7 @@ import { ViewerToolbarComponent } from './viewer-toolbar.component';
     host: { 'class': 'adf-viewer' },
     encapsulation: ViewEncapsulation.None
 })
-export class ViewerComponent implements OnDestroy, OnChanges {
+export class ViewerComponent implements OnChanges {
 
     @ContentChild(ViewerToolbarComponent)
     toolbar: ViewerToolbarComponent;
@@ -146,7 +146,7 @@ export class ViewerComponent implements OnDestroy, OnChanges {
                 private renditionService: RenditionsService) {
     }
 
-    ngOnChanges(changes) {
+    ngOnChanges(changes: SimpleChanges) {
         if (this.showViewer) {
             if (!this.urlFile && !this.blobFile && !this.fileNodeId) {
                 throw new Error('Attribute urlFile or fileNodeId or blobFile is required');
@@ -308,24 +308,8 @@ export class ViewerComponent implements OnDestroy, OnChanges {
         if (this.otherMenu) {
             this.otherMenu.hidden = false;
         }
-        this.cleanup();
         this.showViewer = false;
         this.showViewerChange.emit(this.showViewer);
-    }
-
-    /**
-     * cleanup before the close
-     */
-    cleanup() {
-        this.urlFileContent = '';
-        this.displayName = '';
-        this.fileNodeId = null;
-        this.extension = null;
-        this.mimeType = null;
-    }
-
-    ngOnDestroy() {
-        this.cleanup();
     }
 
     /**

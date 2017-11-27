@@ -21,6 +21,7 @@ import { AboutComponent } from './components/about/about.component';
 import { FormComponent } from './components/form/form.component';
 import { FormListComponent } from './components/form/form-list.component';
 import { CustomSourcesComponent } from './components/files/custom-sources.component';
+import { OverlayViewerComponent } from './components/overlay-viewer/overlay-viewer.component';
 
 import { ProcessServiceComponent } from './components/process-service/process-service.component';
 import { ShowDiagramComponent } from './components/process-service/show-diagram.component';
@@ -85,7 +86,8 @@ import { ProcessAttachmentsComponent } from './components/process-service/proces
         CustomSourcesComponent,
         VersionManagerDialogAdapterComponent,
         TaskAttachmentsComponent,
-        ProcessAttachmentsComponent
+        ProcessAttachmentsComponent,
+        OverlayViewerComponent
     ],
     providers: [
         TranslateService,

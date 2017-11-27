@@ -1,0 +1,12 @@
+<h1>Overlay Viewer</h1>
+
+<adf-document-list
+    currentFolderId="-my-"
+    (preview)="showPreview($event)">
+</adf-document-list>
+
+<adf-viewer
+    [(showViewer)]="showViewer"
+    [overlayMode]="true"
+    [fileNodeId]="nodeId">
+</adf-viewer>
