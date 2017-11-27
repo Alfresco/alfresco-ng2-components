@@ -58,11 +58,11 @@ export class InMemoryFormService extends FormService {
 
         this.logService.log(`getRestFieldValues: ${taskId} => ${field}`);
         return new Observable<FormFieldOption[]>(observer => {
-            let field = this.data.rest.fields.find(
+            const currentField = this.data.rest.fields.find(
                 f => f.taskId === taskId && f.fieldId === field
             );
-            if ( field ) {
-                let values: FormFieldOption[] = field.values || [];
+            if ( currentField ) {
+                const values: FormFieldOption[] = currentField.values || [];
                 this.logService.log(values);
                 observer.next(values);
             }
@@ -71,7 +71,7 @@ export class InMemoryFormService extends FormService {
 
     parseForm(json: any, data?: FormValues, readOnly: boolean = false): FormModel {
         if (json) {
-            let form = new FormModel(json, data, readOnly, this);
+            const form = new FormModel(json, data, readOnly, this);
             if (!json.fields) {
                 form.outcomes = [
                     new FormOutcomeModel(form, {
@@ -93,10 +93,10 @@ export class InMemoryFormService extends FormService {
 
         this.logService.log(`getRestFieldValuesByProcessId: ${processDefinitionId} => ${fieldId}`);
         return new Observable<FormFieldOption[]>(observer => {
-            let field = this.data.rest.fields.find(
+            const field = this.data.rest.fields.find(
                 f => f.processId === processDefinitionId && f.fieldId === fieldId
             );
-            let values: FormFieldOption[] = field.values || [];
+            const values: FormFieldOption[] = field.values || [];
             this.logService.log(values);
             observer.next(values);
         });

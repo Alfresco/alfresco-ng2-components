@@ -15,7 +15,16 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
+import {
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+    TemplateRef,
+    ViewEncapsulation
+} from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -39,7 +48,7 @@ enum LoginSteps {
     selector: 'adf-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
-    host: {'(blur)': 'onBlur($event)'},
+    host: { '(blur)': 'onBlur($event)' },
     encapsulation: ViewEncapsulation.None
 })
 export class LoginComponent implements OnInit {
@@ -137,9 +146,11 @@ export class LoginComponent implements OnInit {
      * @param event
      */
     onSubmit(values: any) {
+
         if (!this.checkRequiredParams()) {
             return false;
         }
+
         this.settingsService.setProviders(this.providers);
         this.settingsService.csrfDisabled = this.disableCsrf;
 
@@ -195,10 +206,7 @@ export class LoginComponent implements OnInit {
                     if (redirectUrl) {
                         this.authService.setRedirectUrl(null);
                         this.router.navigate([redirectUrl]);
-                        return false;
-                    }
-
-                    if (this.successRoute) {
+                    } else if (this.successRoute) {
                         this.router.navigate([this.successRoute]);
                     }
                 },
@@ -216,22 +224,17 @@ export class LoginComponent implements OnInit {
      * Check and display the right error message in the UI
      */
     private displayErrorMessage(err: any): void {
+
         if (err.error && err.error.crossDomain && err.error.message.indexOf('Access-Control-Allow-Origin') !== -1) {
             this.errorMsg = err.error.message;
-            return;
-        }
-
-        if (err.status === 403 && err.message.indexOf('Invalid CSRF-token') !== -1) {
+        } else if (err.status === 403 && err.message.indexOf('Invalid CSRF-token') !== -1) {
             this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-CSRF';
-            return;
-        }
-
-        if (err.status === 403 && err.message.indexOf('The system is currently in read-only mode') !== -1) {
+        } else if (err.status === 403 && err.message.indexOf('The system is currently in read-only mode') !== -1) {
             this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ECM-LICENSE';
-            return;
-        }
+        } else {
+            this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS';
 
-        this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS';
+        }
     }
 
     /**
@@ -239,15 +242,19 @@ export class LoginComponent implements OnInit {
      * @returns {boolean}
      */
     private checkRequiredParams(): boolean {
+
+        let isAllParamPresent: boolean = true;
+
         if (this.providers === undefined || this.providers === null || this.providers === '') {
             this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-PROVIDERS';
             this.enableError();
             let messageProviders: any;
             messageProviders = this.translateService.get(this.errorMsg);
             this.error.emit(new LoginErrorEvent(messageProviders.value));
-            return false;
+            isAllParamPresent = false;
         }
-        return true;
+
+        return isAllParamPresent;
     }
 
     /**
@@ -332,7 +339,7 @@ export class LoginComponent implements OnInit {
             }
         };
 
-        this.translateService.get('LOGIN.MESSAGES.USERNAME-MIN', {minLength: this.minLength}).subscribe((res: string) => {
+        this.translateService.get('LOGIN.MESSAGES.USERNAME-MIN', { minLength: this.minLength }).subscribe((res: string) => {
             this._message['username']['minlength'] = res;
         });
     }

@@ -6,10 +6,10 @@
   "scripts": {
     "ng": "ng",
     "start": "npm run server-versions && rimraf dist && ng serve --host 0.0.0.0 --app dist --open --aot=false",
-    "start:dev": "npm run style:dev & npm run clean-lib-angular && npm run server-versions && rimraf dist && ng serve --host 0.0.0.0 --disable-host-check --app dev pp-dev --proxy-config proxy.conf.js --open",
+    "start:dev": "npm run lint && npm run style:dev & npm run clean-lib-angular && npm run server-versions && rimraf dist && ng serve --host 0.0.0.0 --disable-host-check --app dev pp-dev --proxy-config proxy.conf.js --open",
     "start:dist": "npm run server-versions && rimraf dist && node --max_old_space_size=30000 node_modules/.bin/ng serve --prod --build-optimizer=false  --aot=false --host 0.0.0.0 --disable-host-check --app dist",
     "build": "npm run server-versions && rimraf dist && ng build  --app dist",
-    "build:dev": "npm run style:dev & npm run server-versions && rimraf dist && ng build --app dev",
+    "build:dev": "npm run lint && npm run style:dev & npm run server-versions && rimraf dist && ng build --app dev",
     "build:dist": "npm run style:dev & npm run server-versions && rimraf dist && node --max_old_space_size=30000 node_modules/.bin/ng build --prod  --build-optimizer=false  --aot=false --app dist",
     "style:dev": "npm run webpack -- --config  config/webpack.style.js --progress --profile --bail --watch",
     "test": "ng test",
@@ -114,7 +114,7 @@
     "protractor": "~5.1.2",
     "rimraf": "^2.6.2",
     "ts-node": "~3.2.0",
-    "tslint": "~5.7.0",
+    "tslint": "^5.7.0",
     "typescript": "~2.4.2"
   }
 }

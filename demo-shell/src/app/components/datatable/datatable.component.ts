@@ -21,13 +21,13 @@ import { DataCellEvent, DataRowActionEvent, DataSorting, ObjectDataColumn, Objec
 import { Observable } from 'rxjs/Observable';
 
 @Component({
-    selector: 'datatable',
+    selector: 'app-datatable',
     templateUrl: './datatable.component.html',
     styleUrls: ['./datatable.component.scss']
 })
 export class DataTableComponent {
 
-    multiselect: boolean = false;
+    multiselect = false;
     data: ObjectDataTableAdapter;
 
     @Input()
@@ -39,7 +39,7 @@ export class DataTableComponent {
         { value: 'multiple', viewValue: 'Multiple' }
     ];
 
-    private _imageUrl: string = 'http://placehold.it/140x100';
+    private _imageUrl = 'http://placehold.it/140x100';
     private _createdBy: any = {
         name: 'Denys Vuika',
         email: 'denys.vuika@alfresco.com'
@@ -94,8 +94,8 @@ export class DataTableComponent {
     }
 
     addRow() {
-        let id = this.data.getRows().length + 1;
-        let row = new ObjectDataRow({
+        const id = this.data.getRows().length + 1;
+        const row = new ObjectDataRow({
             id: id,
             name: 'Name ' + id,
             createdOn: new Date(),
@@ -107,7 +107,7 @@ export class DataTableComponent {
     }
 
     replaceRows() {
-        let objects = [
+        const objects = [
             {
                 id: 10,
                 name: 'Name 10',
@@ -137,21 +137,21 @@ export class DataTableComponent {
                 icon: this._imageUrl
             }
         ];
-        let rows = objects.map(obj => new ObjectDataRow(obj));
+        const rows = objects.map(obj => new ObjectDataRow(obj));
         this.data.setRows(rows);
     }
 
     replaceColumns() {
-        let schema = [
+        const schema = [
             { type: 'text', key: 'id', title: 'Id', sortable: true },
             { type: 'text', key: 'name', title: 'Name', sortable: true, cssClass: 'full-width name-column' }
         ];
-        let columns = schema.map(col => new ObjectDataColumn(col));
+        const columns = schema.map(col => new ObjectDataColumn(col));
         this.data.setColumns(columns);
     }
 
     onShowRowActionsMenu(event: DataCellEvent) {
-        let myAction = {
+        const myAction = {
             title: 'Hello'
             // you custom metadata needed for onExecuteRowAction
         };
@@ -161,7 +161,7 @@ export class DataTableComponent {
     }
 
     onExecuteRowAction(event: DataRowActionEvent) {
-        let args = event.value;
+        const args = event.value;
         this.logService.log(args.row);
         this.logService.log(args.action);
         window.alert(`My custom action: ${args.action.title}`);
@@ -176,7 +176,7 @@ export class DataTableComponent {
     }
 
     getRowForNode() {
-        let opts: any = {
+        const opts: any = {
             includeSource: true,
             include: ['path', 'properties', 'allowableOperations']
         };

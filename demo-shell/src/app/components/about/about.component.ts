@@ -27,7 +27,7 @@ import {
 } from '@alfresco/adf-core';
 
 @Component({
-    selector: 'adf-about-page',
+    selector: 'app-about-page',
     templateUrl: './about.component.html',
     styleUrls: ['./about.component.css']
 })
@@ -37,11 +37,11 @@ export class AboutComponent implements OnInit {
     status: ObjectDataTableAdapter;
     license: ObjectDataTableAdapter;
     modules: ObjectDataTableAdapter;
-    githubUrlCommitAlpha: string = 'https://github.com/Alfresco/alfresco-ng2-components/commits/';
+    githubUrlCommitAlpha = 'https://github.com/Alfresco/alfresco-ng2-components/commits/';
 
-    configFile: string = 'app.config.json';
-    ecmHost: string = '';
-    bpmHost: string = '';
+    configFile = 'app.config.json';
+    ecmHost = '';
+    bpmHost = '';
 
     ecmVersion: EcmProductVersionModel = null;
     bpmVersion: BpmProductVersionModel = null;
@@ -94,13 +94,13 @@ export class AboutComponent implements OnInit {
         }
 
         this.http.get('/versions.json').subscribe(response => {
-            let regexp = new RegExp('^(@alfresco)');
+            const regexp = new RegExp('^(@alfresco)');
 
-            let alfrescoPackages = Object.keys(response.json().dependencies).filter((val) => {
+            const alfrescoPackages = Object.keys(response.json().dependencies).filter((val) => {
                 return regexp.test(val);
             });
 
-            let alfrescoPackagesTableRepresentation = [];
+            const alfrescoPackagesTableRepresentation = [];
             alfrescoPackages.forEach((val) => {
                 alfrescoPackagesTableRepresentation.push({
                     name: val,
@@ -122,12 +122,12 @@ export class AboutComponent implements OnInit {
     }
 
     private gitHubLinkCreation(alfrescoPackagesTableRepresentation): void {
-        let corePackage = alfrescoPackagesTableRepresentation.find((packageUp) => {
+        const corePackage = alfrescoPackagesTableRepresentation.find((packageUp) => {
             return packageUp.name === '@alfresco/adf-core';
         });
 
         if (corePackage) {
-            let commitIsh = corePackage.version.split('-');
+            const commitIsh = corePackage.version.split('-');
             if (commitIsh.length > 1) {
                 this.githubUrlCommitAlpha = this.githubUrlCommitAlpha + commitIsh[1];
             } else {

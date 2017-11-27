@@ -26,7 +26,7 @@ import { SettingsService, PageTitleService, StorageService, TranslationService }
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
-  searchTerm: string = '';
+  searchTerm = '';
 
   constructor(private settingsService: SettingsService,
               private storage: StorageService,

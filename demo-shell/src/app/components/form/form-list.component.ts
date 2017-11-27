@@ -19,7 +19,7 @@ import { Component, ViewChild } from '@angular/core';
 import { FormComponent, FormModel, FormService, LogService } from '@alfresco/adf-core';
 
 @Component({
-    selector: 'form-list',
+    selector: 'app-form-list',
     templateUrl: 'form-list.component.html',
     styleUrls: ['form-list.component.scss']
 })
@@ -45,10 +45,10 @@ export class FormListComponent {
     }
 
     onRowDblClick(event: CustomEvent) {
-        let rowForm = event.detail.value.obj;
+        const rowForm = event.detail.value.obj;
 
         this.formService.getFormDefinitionById(rowForm.id).subscribe((formModel) => {
-            let form = this.formService.parseForm(formModel.formDefinition);
+            const form = this.formService.parseForm(formModel.formDefinition);
             this.form = form;
         });
 
@@ -68,7 +68,7 @@ export class FormListComponent {
     }
 
     clone(objToCopyFrom, objToCopyTo) {
-        for (let attribute in objToCopyFrom) {
+        for (const attribute in objToCopyFrom) {
             if (objToCopyFrom.hasOwnProperty(attribute)) {
                 objToCopyTo[attribute] = objToCopyFrom[attribute];
             }

@@ -22,7 +22,7 @@ import { SearchComponent } from '@alfresco/adf-content-services';
 import { UserPreferencesService } from '@alfresco/adf-core';
 
 @Component({
-    selector: 'adf-search-result-component',
+    selector: 'app-search-result-component',
     templateUrl: './search-result.component.html',
     styleUrls: ['./search-result.component.scss']
 })
@@ -33,12 +33,12 @@ export class SearchResultComponent implements OnInit {
 
     fileNodeId: string;
     queryParamName = 'q';
-    searchedWord: string = '';
-    fileShowed: boolean = false;
-    navigationMode: string = 'dblclick';
+    searchedWord = '';
+    fileShowed = false;
+    navigationMode = 'dblclick';
     resultNodePageList: NodePaging;
     maxItems: number;
-    skipCount: number = 0;
+    skipCount = 0;
     paging: Pagination;
 
     constructor(public router: Router,

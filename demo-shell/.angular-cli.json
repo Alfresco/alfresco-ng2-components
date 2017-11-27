@@ -5,7 +5,7 @@
   },
   "apps": [
     {
-      "name" : "dist",
+      "name": "dist",
       "root": "src",
       "outDir": "dist",
       "assets": [
@@ -43,7 +43,11 @@
           "input": "../node_modules/@alfresco/adf-content-services/bundles/assets",
           "output": "./assets/"
         },
-        { "glob": "pdf.worker.js", "input": "../node_modules/pdfjs-dist/build", "output": "./" }
+        {
+          "glob": "pdf.worker.js",
+          "input": "../node_modules/pdfjs-dist/build",
+          "output": "./"
+        }
       ],
       "index": "index.html",
       "main": "main.ts",
@@ -74,7 +78,7 @@
       }
     },
     {
-      "name" :"dev",
+      "name": "dev",
       "root": "src",
       "outDir": "dist",
       "assets": [
@@ -126,7 +130,11 @@
           "input": "../../lib/insights/i18n",
           "output": "./assets/adf-insights/i18n"
         },
-        { "glob": "pdf.worker.js", "input": "../node_modules/pdfjs-dist/build", "output": "./" }
+        {
+          "glob": "pdf.worker.js",
+          "input": "../node_modules/pdfjs-dist/build",
+          "output": "./"
+        }
       ],
       "index": "index.html",
       "main": "main.ts",
@@ -140,9 +148,9 @@
         "custom-style-dev.scss"
       ],
       "stylePreprocessorOptions": {
-      "includePaths": [
-        "../../lib/"
-      ]
+        "includePaths": [
+          "../../lib/"
+        ]
       },
       "scripts": [
         "../node_modules/pdfjs-dist/build/pdf.js",
@@ -164,13 +172,16 @@
   },
   "lint": [
     {
-      "project": "src/tsconfig.app.json"
+      "project": "src/tsconfig.app.json",
+      "exclude": "**/node_modules/**/*"
     },
     {
-      "project": "src/tsconfig.spec.json"
+      "project": "src/tsconfig.spec.json",
+      "exclude": "**/node_modules/**/*"
     },
     {
-      "project": "e2e/tsconfig.e2e.json"
+      "project": "e2e/tsconfig.e2e.json",
+      "exclude": "**/node_modules/**/*"
     }
   ],
   "test": {

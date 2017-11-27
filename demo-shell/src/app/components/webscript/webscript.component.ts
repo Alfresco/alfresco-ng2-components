@@ -19,18 +19,17 @@ import { Component } from '@angular/core';
 import { LogService } from '@alfresco/adf-core';
 
 @Component({
-    selector: 'alfresco-webscript',
+    selector: 'app-webscript',
     templateUrl: 'webscript.component.html'
 })
 export class WebscriptComponent {
 
-    currentPath: string = '/';
-    authenticated: boolean;
-    host: string = 'http://127.0.0.1:8080';
-    scriptPath: string = 'sample/folder/Company%20Home';
-    contextRoot: string = 'alfresco';
-    servicePath: string = 'service';
-    scriptArgs: string = '';
+    currentPath = '/';
+    host = 'http://127.0.0.1:8080';
+    scriptPath = 'sample/folder/Company%20Home';
+    contextRoot = 'alfresco';
+    servicePath = 'service';
+    scriptArgs = '';
 
     constructor(private logService: LogService) {
     }

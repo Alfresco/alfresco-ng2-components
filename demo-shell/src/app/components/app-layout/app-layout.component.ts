@@ -44,5 +44,6 @@ export class AppLayoutComponent {
         { href: '/about', icon: 'info_outline', title: 'APP_LAYOUT.ABOUT' }
     ];
 
-    constructor(){};
+    constructor() {
+    }
 }

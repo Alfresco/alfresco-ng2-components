@@ -5,7 +5,7 @@
             #search>
 </adf-search>
 
-<adf-files-component
+<app-files-component
         [currentFolderId]="null"
         [nodeResult]="resultNodePageList"
         [disableDragArea]="true"
@@ -15,4 +15,4 @@
         (turnedNextPage)="refreshPage($event)"
         (loadNext)="refreshPage($event)"
         (turnedPreviousPage)="refreshPage($event)">
-</adf-files-component>
+</app-files-component>

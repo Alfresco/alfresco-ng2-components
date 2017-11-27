@@ -19,7 +19,7 @@ import { Component, Input, ViewChild } from '@angular/core';
 import { DocumentListComponent } from '@alfresco/adf-content-services';
 
 @Component({
-    selector: 'adf-custom-sources',
+    selector: 'app-custom-sources',
     templateUrl: 'custom-sources.component.html'
 })
 export class CustomSourcesComponent {

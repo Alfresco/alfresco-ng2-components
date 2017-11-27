@@ -24,10 +24,10 @@ import { LogService } from '@alfresco/adf-core';
 })
 export class SettingsComponent {
 
-  constructor(public logService: LogService){
-  }
+    constructor(public logService: LogService) {
+    }
 
-  onError(error: string){
-    this.logService.log(error)
-  }
+    onError(error: string) {
+        this.logService.log(error)
+    }
 }
