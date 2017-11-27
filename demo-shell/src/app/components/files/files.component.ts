@@ -124,7 +124,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     standardPagination: PaginationComponent;
 
     permissionsStyle: PermissionStyleModel[] = [];
-    supportedPages: number[] = [5, 10, 15, 25];
     infiniteScrolling: boolean;
 
     private onCreateFolder: Subscription;

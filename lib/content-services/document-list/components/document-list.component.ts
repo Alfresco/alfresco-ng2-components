@@ -173,6 +173,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     infiniteLoading: boolean = false;
     noPermission: boolean = false;
     selection = new Array<MinimalNodeEntity>();
+
+    // PaginatedComponent implementation
     pagination = new Subject<Pagination>();
 
     private layoutPresets = {};
@@ -860,6 +862,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
     }
 
+    // PaginatedComponent implementation
     updatePagination(params: PaginationQueryParams) {
         const needsReload = this.maxItems !== params.maxItems || this.skipCount !== params.skipCount;
 
@@ -871,9 +874,15 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
     }
 
+    // PaginatedComponent implementation
+    get supportedPageSizes(): number[] {
+        return this.appConfig.get('document-list.supportedPageSizes', [5, 10, 15, 25]);
+    }
+
     ngOnDestroy() {
         if (this.contextActionHandlerSubscription) {
             this.contextActionHandlerSubscription.unsubscribe();
+            this.contextActionHandlerSubscription = null;
         }
     }
 }
