@@ -19,18 +19,19 @@ import { HttpClientModule } from '@angular/common/http';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { Pagination } from 'alfresco-js-api';
 import { MaterialModule } from '../material.module';
 import { AppConfigService } from '../app-config/app-config.service';
 import { LogService } from '../services/log.service';
 import { TranslateLoaderService } from '../services/translate-loader.service';
 import { TranslationService } from '../services/translation.service';
 import { PaginationComponent } from './pagination.component';
+import { PaginatedComponent } from './public-api';
+import { Subject } from 'rxjs/Subject';
 
-declare let jasmine: any;
-
-class FakePaginationInput {
-    count: string = 'Not applicable / not used';
-    hasMoreItems: string = 'Not applicable / not used';
+class FakePaginationInput implements Pagination {
+    count: number;
+    hasMoreItems: boolean;
     totalItems: number = null;
     skipCount: number = null;
     maxItems: number = 25;
@@ -44,14 +45,12 @@ class FakePaginationInput {
 describe('PaginationComponent', () => {
 
     let fixture: ComponentFixture<PaginationComponent>;
+    let component: PaginationComponent;
 
-    beforeEach(() => {
-        jasmine.Ajax.install();
-    });
-
-    afterEach(() => {
-        jasmine.Ajax.uninstall();
-    });
+    let changePageNumberSpy: jasmine.Spy;
+    let changePageSizeSpy: jasmine.Spy;
+    let nextPageSpy: jasmine.Spy;
+    let prevPageSpy: jasmine.Spy;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -77,19 +76,16 @@ describe('PaginationComponent', () => {
         }).compileComponents()
             .then(() => {
                 fixture = TestBed.createComponent(PaginationComponent);
-                const component: PaginationComponent = fixture.componentInstance;
+                component = fixture.componentInstance;
 
                 (<any> component).ngAfterViewInit = jasmine
                     .createSpy('ngAfterViewInit').and
                     .callThrough();
 
-                spyOn(component.changePageNumber, 'emit');
-                spyOn(component.changePageSize, 'emit');
-                spyOn(component.nextPage, 'emit');
-                spyOn(component.prevPage, 'emit');
-
-                this.fixture = fixture;
-                this.component = component;
+                changePageNumberSpy = spyOn(component.changePageNumber, 'emit');
+                changePageSizeSpy = spyOn(component.changePageSize, 'emit');
+                nextPageSpy = spyOn(component.nextPage, 'emit');
+                prevPageSpy = spyOn(component.prevPage, 'emit');
 
                 fixture.detectChanges();
             });
@@ -97,38 +93,38 @@ describe('PaginationComponent', () => {
 
     describe('Single page', () => {
         beforeEach(() => {
-            this.component.pagination = new FakePaginationInput(1, 1, 10);
+            component.pagination = new FakePaginationInput(1, 1, 10);
         });
 
         it('has a single page', () => {
-            expect(this.component.pages.length).toBe(1);
+            expect(component.pages.length).toBe(1);
         });
 
         it('has current page 1', () => {
-            expect(this.component.current).toBe(1);
+            expect(component.current).toBe(1);
         });
 
         it('is first and last page', () => {
-            expect(this.component.isFirstPage).toBe(true);
-            expect(this.component.isLastPage).toBe(true);
+            expect(component.isFirstPage).toBe(true);
+            expect(component.isLastPage).toBe(true);
         });
 
         it('has range', () => {
-            expect(this.component.range).toEqual([ 1, 10 ]);
+            expect(component.range).toEqual([ 1, 10 ]);
         });
     });
 
     describe('Single full page', () => {
         beforeEach(() => {
-            this.component.pagination = new FakePaginationInput(1, 1, 25);
+            component.pagination = new FakePaginationInput(1, 1, 25);
         });
 
         it('has a single page', () => {
-            expect(this.component.pages.length).toBe(1);
+            expect(component.pages.length).toBe(1);
         });
 
         it('has range', () => {
-            expect(this.component.range).toEqual([ 1, 25 ]);
+            expect(component.range).toEqual([ 1, 25 ]);
         });
     });
 
@@ -138,74 +134,63 @@ describe('PaginationComponent', () => {
         // and last page has 5 items
 
         beforeEach(() => {
-            this.component.pagination = new FakePaginationInput(6, 3, 5);
+            component.pagination = new FakePaginationInput(6, 3, 5);
         });
 
         it('has more pages', () => {
-            expect(this.component.pages.length).toBe(6);
+            expect(component.pages.length).toBe(6);
         });
 
         it('has the last page', () => {
-            expect(this.component.lastPage).toBe(6);
+            expect(component.lastPage).toBe(6);
         });
 
         it('is on the 3rd page', () => {
-            expect(this.component.current).toBe(3);
+            expect(component.current).toBe(3);
         });
 
         it('has previous and next page', () => {
-            expect(this.component.previous).toBe(2);
-            expect(this.component.next).toBe(4);
+            expect(component.previous).toBe(2);
+            expect(component.next).toBe(4);
         });
 
         it('is not first, nor last', () => {
-            expect(this.component.isFirstPage).toBe(false);
-            expect(this.component.isLastPage).toBe(false);
+            expect(component.isFirstPage).toBe(false);
+            expect(component.isLastPage).toBe(false);
         });
 
         it('has range', () => {
-            expect(this.component.range).toEqual([ 51, 75 ]);
+            expect(component.range).toEqual([ 51, 75 ]);
         });
 
         it('goes next', () => {
-            const { component } = this;
-
             component.goNext();
 
-            const { emit: { calls } } = component.nextPage;
-            const { skipCount } = calls.mostRecent().args[0];
+            const { skipCount } = nextPageSpy.calls.mostRecent().args[0];
 
             expect(skipCount).toBe(75);
         });
 
         it('goes previous', () => {
-            const { component } = this;
-
             component.goPrevious();
 
-            const { emit: { calls } } = component.prevPage;
-            const { skipCount } = calls.mostRecent().args[0];
+            const { skipCount } = prevPageSpy.calls.mostRecent().args[0];
 
             expect(skipCount).toBe(25);
         });
 
         it('changes page size', () => {
-            const { component } = this;
             component.onChangePageSize(50);
 
-            const { emit: { calls } } = component.changePageSize;
-            const { maxItems } = calls.mostRecent().args[0];
+            const { maxItems } = changePageSizeSpy.calls.mostRecent().args[0];
 
             expect(maxItems).toBe(50);
         });
 
         it('changes page number', () => {
-            const { component } = this;
-
             component.onChangePageNumber(5);
 
-            const { emit: { calls } } = component.changePageNumber;
-            const { skipCount } = calls.mostRecent().args[0];
+            const { skipCount } = changePageNumberSpy.calls.mostRecent().args[0];
 
             expect(skipCount).toBe(100);
         });
@@ -216,24 +201,24 @@ describe('PaginationComponent', () => {
         // This test describes 10 pages being on the first page
 
         beforeEach(() => {
-            this.component.pagination = new FakePaginationInput(10, 1, 5);
+            component.pagination = new FakePaginationInput(10, 1, 5);
         });
 
         it('is on the first page', () => {
-            expect(this.component.current).toBe(1);
-            expect(this.component.isFirstPage).toBe(true);
+            expect(component.current).toBe(1);
+            expect(component.isFirstPage).toBe(true);
         });
 
         it('has the same, previous page', () => {
-            expect(this.component.previous).toBe(1);
+            expect(component.previous).toBe(1);
         });
 
         it('has next page', () => {
-            expect(this.component.next).toBe(2);
+            expect(component.next).toBe(2);
         });
 
         it('has range', () => {
-            expect(this.component.range).toEqual([ 1, 25 ]);
+            expect(component.range).toEqual([ 1, 25 ]);
         });
     });
 
@@ -242,24 +227,24 @@ describe('PaginationComponent', () => {
         // This test describes 10 pages being on the last page
 
         beforeEach(() => {
-            this.component.pagination = new FakePaginationInput(10, 10, 5);
+            component.pagination = new FakePaginationInput(10, 10, 5);
         });
 
         it('is on the last page', () => {
-            expect(this.component.current).toBe(10);
-            expect(this.component.isLastPage).toBe(true);
+            expect(component.current).toBe(10);
+            expect(component.isLastPage).toBe(true);
         });
 
         it('has the same, next page', () => {
-            expect(this.component.next).toBe(10);
+            expect(component.next).toBe(10);
         });
 
         it('has previous page', () => {
-            expect(this.component.previous).toBe(9);
+            expect(component.previous).toBe(9);
         });
 
         it('has range', () => {
-            expect(this.component.range).toEqual([ 226, 230 ]);
+            expect(component.range).toEqual([ 226, 230 ]);
         });
     });
 
@@ -268,7 +253,7 @@ describe('PaginationComponent', () => {
             const {
                 current, lastPage, isFirstPage, isLastPage,
                 next, previous, range, pages
-            } = this.component;
+            } = component;
 
             expect(lastPage).toBe(1, 'lastPage');
             expect(previous).toBe(1, 'previous');
@@ -281,5 +266,55 @@ describe('PaginationComponent', () => {
             expect(range).toEqual([ 0, 0 ], 'range');
             expect(pages).toEqual([ 1 ], 'pages');
         });
+    });
+
+    describe('with paginated component', () => {
+
+        it('should take pagination from the external component', () => {
+            const pagination: Pagination = {};
+
+            const customComponent = <PaginatedComponent> {
+                pagination: new Subject<Pagination>()
+            };
+
+            component.target = customComponent;
+            component.ngOnInit();
+
+            customComponent.pagination.next(pagination);
+            expect(component.pagination).toBe(pagination);
+        });
+
+        it('should update pagination by subscription', () => {
+            const pagination1: Pagination = {};
+            const pagination2: Pagination = {};
+
+            const customComponent = <PaginatedComponent> {
+                pagination: new Subject<Pagination>()
+            };
+
+            component.target = customComponent;
+            component.ngOnInit();
+
+            customComponent.pagination.next(pagination1);
+            expect(component.pagination).toBe(pagination1);
+
+            customComponent.pagination.next(pagination2);
+            expect(component.pagination).toBe(pagination2);
+        });
+
+        it('should send pagination event to paginated component', () => {
+            const customComponent = <PaginatedComponent> {
+                pagination: new Subject<Pagination>(),
+                updatePagination() {}
+            };
+            spyOn(customComponent, 'updatePagination').and.stub();
+
+            component.target = customComponent;
+            component.ngOnInit();
+
+            component.goNext();
+            expect(customComponent.updatePagination).toHaveBeenCalled();
+        });
+
     });
 });

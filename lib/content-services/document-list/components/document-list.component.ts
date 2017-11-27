@@ -21,7 +21,9 @@ import {
     DataRowActionEvent,
     DataSorting,
     DataTableComponent,
-    ObjectDataColumn
+    ObjectDataColumn,
+    PaginatedComponent,
+    PaginationQueryParams
 } from '@alfresco/adf-core';
 import { AlfrescoApiService, AppConfigService, DataColumnListComponent, UserPreferencesService } from '@alfresco/adf-core';
 import {
@@ -34,7 +36,8 @@ import {
     MinimalNodeEntryEntity,
     NodePaging,
     PersonEntry,
-    SitePaging
+    SitePaging,
+    Pagination
 } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -58,7 +61,7 @@ export enum PaginationStrategy {
     templateUrl: './document-list.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class DocumentListComponent implements OnInit, OnChanges, AfterContentInit {
+export class DocumentListComponent implements OnInit, OnChanges, AfterContentInit, PaginatedComponent {
 
     static SINGLE_CLICK_NAVIGATION: string = 'click';
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
@@ -169,6 +172,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     infiniteLoading: boolean = false;
     noPermission: boolean = false;
     selection = new Array<MinimalNodeEntity>();
+    pagination = new Subject<Pagination>();
 
     private layoutPresets = {};
     private currentNodeAllowableOperations: string[] = [];
@@ -180,7 +184,14 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                 private apiService: AlfrescoApiService,
                 private appConfig: AppConfigService,
                 private preferences: UserPreferencesService) {
-            this.maxItems = this.preferences.paginationSize;
+        this.maxItems = this.preferences.paginationSize;
+
+        this.pagination.next(<Pagination> {
+            maxItems: this.preferences.paginationSize,
+            skipCount: 0,
+            totalItems: 0,
+            hasMoreItems: false
+        });
     }
 
     getContextActions(node: MinimalNodeEntity) {
@@ -287,7 +298,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                 this.loadFolderByNodeId(this.currentFolderId, merge);
             } else if (this.node) {
                 this.data.loadPage(this.node);
-                this.ready.emit(this.node);
+                this.onDataReady(this.node);
             }
         });
     }
@@ -487,7 +498,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                     this.data.loadPage(<NodePaging> val, merge);
                     this.loading = false;
                     this.infiniteLoading = false;
-                    this.ready.emit(val);
+                    this.onDataReady(val);
                     resolve(true);
                 },
                 error => {
@@ -643,7 +654,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         if (page) {
             this.data.loadPage(page, merge);
             this.loading = false;
-            this.ready.emit(page);
+            this.onDataReady(page);
         }
     }
 
@@ -830,10 +841,30 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         } else {
             this.layoutPresets = presetsDefaultModel;
         }
-
     }
 
     private getLayoutPreset(name: string = 'default'): DataColumn[] {
         return (this.layoutPresets[name] || this.layoutPresets['default']).map(col => new ObjectDataColumn(col));
+    }
+
+    private onDataReady(page: NodePaging) {
+        this.ready.emit(page);
+
+        if (page && page.list && page.list.pagination) {
+            this.pagination.next(page.list.pagination);
+        } else {
+            this.pagination.next(null);
+        }
+    }
+
+    updatePagination(params: PaginationQueryParams) {
+        const needsReload = this.maxItems !== params.maxItems || this.skipCount !== params.skipCount;
+
+        this.maxItems = params.maxItems;
+        this.skipCount = params.skipCount;
+
+        if (needsReload) {
+            this.reload(this.enableInfiniteScrolling);
+        }
     }
 }

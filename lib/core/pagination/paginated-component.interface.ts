@@ -15,7 +15,14 @@
  * limitations under the License.
  */
 
-export * from './pagination.component';
-export * from './infinite-pagination.component';
-export * from './paginated-component.interface';
-export * from './pagination-query-params.interface';
+import { Pagination } from 'alfresco-js-api';
+import { Subject } from 'rxjs/Subject';
+
+import { PaginationQueryParams } from './pagination-query-params.interface';
+
+export interface PaginatedComponent {
+
+    pagination: Subject<Pagination>;
+    updatePagination(params: PaginationQueryParams);
+
+}

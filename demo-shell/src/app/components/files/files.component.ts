@@ -126,8 +126,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     permissionsStyle: PermissionStyleModel[] = [];
     supportedPages: number[] = [5, 10, 15, 20];
     infiniteScrolling: boolean;
-    currentMaxItems: number;
-    currentSkipCount: number = 0;
 
     private onCreateFolder: Subscription;
     private onEditFolder: Subscription;
@@ -169,7 +167,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 maxItems: this.preference.paginationSize,
                 skipCount: 0
             };
-            this.currentMaxItems = this.preference.paginationSize;
         }
         if (this.route) {
             this.route.params.forEach((params: Params) => {
@@ -446,32 +443,22 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     onChangePageSize(event: Pagination): void {
         this.preference.paginationSize = event.maxItems;
-        this.currentMaxItems = event.maxItems;
-        this.currentSkipCount = event.skipCount;
         this.changedPageSize.emit(event);
     }
 
     onChangePageNumber(event: Pagination): void {
-        this.currentMaxItems = event.maxItems;
-        this.currentSkipCount = event.skipCount;
         this.changedPageNumber.emit(event);
     }
 
     onNextPage(event: Pagination): void {
-        this.currentMaxItems = event.maxItems;
-        this.currentSkipCount = event.skipCount;
         this.turnedNextPage.emit(event);
     }
 
     loadNextBatch(event: Pagination) {
-        this.currentMaxItems = event.maxItems;
-        this.currentSkipCount = event.skipCount;
         this.loadNext.emit(event);
     }
 
     onPrevPage(event: Pagination): void {
-        this.currentMaxItems = event.maxItems;
-        this.currentSkipCount = event.skipCount;
         this.turnedPreviousPage.emit(event);
     }
 }
