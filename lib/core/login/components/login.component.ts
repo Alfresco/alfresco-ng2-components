@@ -231,7 +231,7 @@ export class LoginComponent implements OnInit {
             this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-CSRF';
         } else if (err.status === 403 && err.message.indexOf('The system is currently in read-only mode') !== -1) {
             this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ECM-LICENSE';
-        } else{
+        } else {
             this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS';
 
         }
@@ -251,7 +251,7 @@ export class LoginComponent implements OnInit {
             let messageProviders: any;
             messageProviders = this.translateService.get(this.errorMsg);
             this.error.emit(new LoginErrorEvent(messageProviders.value));
-            isAllParamPresent =false;
+            isAllParamPresent = false;
         }
 
         return isAllParamPresent;

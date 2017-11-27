@@ -28,7 +28,7 @@ import {
 import { AlfrescoApiService, AppConfigService, DataColumnListComponent, UserPreferencesService } from '@alfresco/adf-core';
 import {
     AfterContentInit, Component, ContentChild, ElementRef, EventEmitter, HostListener, Input, NgZone,
-    OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild, ViewEncapsulation
+    OnChanges, OnDestroy, OnInit, Output, SimpleChanges, TemplateRef, ViewChild, ViewEncapsulation
 } from '@angular/core';
 import {
     DeletedNodesPaging,
@@ -62,7 +62,7 @@ export enum PaginationStrategy {
     templateUrl: './document-list.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class DocumentListComponent implements OnInit, OnChanges, AfterContentInit, PaginatedComponent {
+export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, AfterContentInit, PaginatedComponent {
 
     static SINGLE_CLICK_NAVIGATION: string = 'click';
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
@@ -872,7 +872,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     ngOnDestroy() {
-        if(this.contextActionHandlerSubscription) {
+        if (this.contextActionHandlerSubscription) {
             this.contextActionHandlerSubscription.unsubscribe();
         }
     }

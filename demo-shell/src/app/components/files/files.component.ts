@@ -124,7 +124,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     standardPagination: PaginationComponent;
 
     permissionsStyle: PermissionStyleModel[] = [];
-    supportedPages: number[] = [5, 10, 15, 20];
+    supportedPages: number[] = [5, 10, 15, 25];
     infiniteScrolling: boolean;
 
     private onCreateFolder: Subscription;
@@ -269,6 +269,19 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             event,
             4000
         );
+    }
+
+    emitReadyEvent(event: any) {
+        if (this.pageIsEmpty(event)) {
+            this.standardPagination.goPrevious();
+        } else {
+            this.documentListReady.emit(event);
+            this.pagination = event.list.pagination;
+        }
+    }
+
+    pageIsEmpty(node: NodePaging) {
+        return node && node.list && node.list.entries.length === 0;
     }
 
     onContentActionError(errors) {

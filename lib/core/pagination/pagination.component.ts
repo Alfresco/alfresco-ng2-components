@@ -92,7 +92,6 @@ export class PaginationComponent implements OnInit, OnDestroy {
                 this.pagination = page;
                 this.cdr.detectChanges();
 
-
             });
         }
 
