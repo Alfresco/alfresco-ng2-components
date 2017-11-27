@@ -31,12 +31,22 @@ Adds pagination to the component it is used with.
 </adf-pagination>
 ```
 
+## Integrating with Document List
+
+```html
+<adf-document-list #documentList ...></adf-document-list>
+
+<adf-pagination [target]="documentList" ...>
+</adf-pagination>
+```
+
 ### Properties
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | pagination | Pagination | | Pagination object |
 | supportedPageSizes | Array&lt;number&gt; | [ 25, 50, 100 ] | An array of page sizes |
+| target | PaginatedComponent | | Component that provides custom pagination support |
 
 ### Events
 
@@ -54,6 +64,23 @@ The pagination object is a generic component to paginate component. The Alfresco
 
 Each event helps to detect the certain action that user have made using the component.
 
-For `change` event, a [PaginationQueryParams](https://github.com/Alfresco/alfresco-ng2-components/blob/development/ng2-components/ng2-alfresco-core/src/components/pagination/pagination-query-params.interface.ts) (including the query params supported by the REST API, `skipCount` and `maxItems`) is returned.
+For `change` event, a [PaginationQueryParams](https://github.com/Alfresco/alfresco-ng2-components/blob/development/ng2-components/ng2-alfresco-core/src/components/pagination/pagination-query-params.interface.ts) (including the query parameters supported by the REST API, `skipCount` and `maxItems`) is returned.
 
-For all events other than `change`, a new Pagination object is returned as in the folowing example, with updated properties to be used to query further.
+For all events other than `change`, a new Pagination object is returned as in the following example, with updated properties to be used to query further.
+
+### Custom pagination
+
+The component also provides light integration with external implementations of the pagination.
+Any component can implement the `PaginatedComponent` and be used as a value for the `target` property.
+
+```js
+export interface PaginatedComponent {
+
+    pagination: Subject<Pagination>;
+    updatePagination(params: PaginationQueryParams);
+
+}
+```
+
+Your component needs to provide a `pagination` subject to allow Pagination component to reflect to changes.
+Every time user interacts with the Pagination, it will call the `updatePagination` method and pass the parameters.

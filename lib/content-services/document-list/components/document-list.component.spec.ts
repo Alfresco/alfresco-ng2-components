@@ -1103,4 +1103,47 @@ describe('DocumentList', () => {
 
         expect(documentList.folderNode).toBeNull();
     });
+
+    it('should update pagination settings', () => {
+        spyOn(documentList, 'reload').and.stub();
+
+        documentList.maxItems = 0;
+        documentList.skipCount = 0;
+
+        documentList.updatePagination({
+            maxItems: 10,
+            skipCount: 10
+        });
+
+        expect(documentList.maxItems).toBe(10);
+        expect(documentList.skipCount).toBe(10);
+    });
+
+    it('should reload data upon changing pagination settings', () => {
+        spyOn(documentList, 'reload').and.stub();
+
+        documentList.maxItems = 0;
+        documentList.skipCount = 0;
+
+        documentList.updatePagination({
+            maxItems: 10,
+            skipCount: 10
+        });
+
+        expect(documentList.reload).toHaveBeenCalled();
+    });
+
+    it('should not reload data if pagination settings are same', () => {
+        spyOn(documentList, 'reload').and.stub();
+
+        documentList.maxItems = 10;
+        documentList.skipCount = 10;
+
+        documentList.updatePagination({
+            maxItems: 10,
+            skipCount: 10
+        });
+
+        expect(documentList.reload).not.toHaveBeenCalled();
+    });
 });

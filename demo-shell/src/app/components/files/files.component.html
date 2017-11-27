@@ -116,10 +116,9 @@
                     </button>
                 </mat-menu>
             </adf-toolbar>
+
             <adf-document-list
                 #documentList
-                [maxItems]="currentMaxItems"
-                [skipCount]="currentSkipCount"
                 [enableInfiniteScrolling]="infiniteScrolling"
                 [permissionsStyle]="permissionsStyle"
                 [currentFolderId]="currentFolderId"
@@ -274,7 +273,7 @@
                 #standardPagination
                 *ngIf="!infiniteScrolling"
                 class="adf-documentlist-pagination"
-                [pagination]="pagination"
+                [target]="documentList"
                 [supportedPageSizes]="supportedPages"
                 (changePageSize)="onChangePageSize($event)"
                 (changePageNumber)="onChangePageNumber($event)"
