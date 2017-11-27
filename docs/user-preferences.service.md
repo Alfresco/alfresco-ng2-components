@@ -2,16 +2,6 @@
 
 Stores preferences for components.
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Details](#details)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
-
 ## Details
 
 The preferences are bound to a particular `prefix` so the application can switch between different profiles on demand.
@@ -19,7 +9,7 @@ The preferences are bound to a particular `prefix` so the application can switch
 For example upon login you can set the `prefix` as current username:
 
 ```ts
-import { UserPreferencesService, AuthenticationService } from 'ng2-alfresco-core';
+import { UserPreferencesService, AuthenticationService } from 'lib/core/services';
 
 @Component({...})
 class AppComponent {

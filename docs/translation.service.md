@@ -24,7 +24,7 @@ and register its parent `i18n` folder with your component or application module.
 For example:
 
 ```ts
-import { TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
+import { TRANSLATION_PROVIDER } from 'lib/core/services';
 
 @NgModule({
     ...

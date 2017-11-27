@@ -201,7 +201,7 @@ Alternatively you may want just running additional code on outcome execution wit
 **MyView.component.ts**
 
 ```ts
-import { FormOutcomeEvent } from 'ng2-activiti-form';
+import { FormOutcomeEvent } from 'lib/core/form/components/widgets/core';
 
 export class MyView {
 

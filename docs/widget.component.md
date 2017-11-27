@@ -6,7 +6,7 @@ Base class for standard and custom widget classes.
 
 ```ts
 import { Component } from '@angular/core';
-import { WidgetComponent } from 'ng2-activiti-form';
+import { WidgetComponent } from 'lib/core/form/components/widgets';
 
 @Component({
     selector: 'custom-editor',
