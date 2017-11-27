@@ -26,7 +26,7 @@ import { StorageService } from './storage.service';
 @Injectable()
 export class UserPreferencesService {
 
-    private defaults = {
+    defaults = {
         paginationSize: 25,
         supportedPageSizes: [5, 10, 15, 20],
         locale: 'en'
@@ -76,7 +76,7 @@ export class UserPreferencesService {
 
     getPropertyKey(property: string): string {
         return `${this.getStoragePrefix()}__${property}`;
-    } 
+    }
 
     getDifferentPageSizes(): number[] {
         return this.defaults.supportedPageSizes;
