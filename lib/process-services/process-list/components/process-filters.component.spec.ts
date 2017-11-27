@@ -56,7 +56,7 @@ describe('ActivitiFilters', () => {
     });
 
     beforeEach(() => {
-        processFilterService = new ProcessFilterService(null, null);
+        processFilterService = new ProcessFilterService(null);
         appsProcessService = new AppsProcessService(null, null);
         filterList = new ProcessFiltersComponent(processFilterService, appsProcessService);
     });
