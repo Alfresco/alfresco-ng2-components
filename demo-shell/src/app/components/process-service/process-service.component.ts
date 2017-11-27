@@ -104,8 +104,8 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     @Input()
     appId: number = null;
 
-    fileShowed: boolean = false;
-    selectFirstReport: boolean = false;
+    fileShowed = false;
+    selectFirstReport = false;
 
     private tabs = { tasks: 0, processes: 1, reports: 2 };
 
@@ -122,7 +122,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         maxItems: 10,
         totalItems: 0
     };
-    taskPage: number = 0;
+    taskPage = 0;
     processSchemaColumns: any[] = [];
 
     activeTab: number = this.tabs.tasks; // tasks|processes|reports
@@ -133,11 +133,11 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     sub: Subscription;
     blobFile: any;
-    flag: boolean = true;
+    flag = true;
 
     dataTasks: ObjectDataTableAdapter;
     dataProcesses: ObjectDataTableAdapter;
-    presetColoum: string = 'default';
+    presetColoum = 'default';
 
     fieldValidators = [
         ...FORM_FIELD_VALIDATORS,
@@ -170,12 +170,12 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         });
 
         formService.validateDynamicTableRow.subscribe(
-            (e: ValidateDynamicTableRowEvent) => {
-                const row: DynamicTableRow = e.row;
+            (validateDynamicTableRowEvent: ValidateDynamicTableRowEvent) => {
+                const row: DynamicTableRow = validateDynamicTableRowEvent.row;
                 if (row && row.value && row.value.name === 'admin') {
-                    e.summary.isValid = false;
-                    e.summary.message = 'Sorry, wrong value. You cannot use "admin".';
-                    e.preventDefault();
+                    validateDynamicTableRowEvent.summary.isValid = false;
+                    validateDynamicTableRowEvent.summary.message = 'Sorry, wrong value. You cannot use "admin".';
+                    validateDynamicTableRowEvent.preventDefault();
                 }
             }
         );
@@ -240,7 +240,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
             this.activeTab = this.tabs.processes;
         }
         this.sub = this.route.params.subscribe(params => {
-            let applicationId = params['appId'];
+            const applicationId = params['appId'];
             if (applicationId && applicationId !== '0') {
                 this.appId = params['appId'];
             }
@@ -417,10 +417,10 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     loadStencilScriptsInPageFromProcessService() {
         this.apiService.getInstance().activiti.scriptFileApi.getControllers().then(response => {
             if (response) {
-                let s = document.createElement('script');
-                s.type = 'text/javascript';
-                s.text = response;
-                this.elementRef.nativeElement.appendChild(s);
+                const stencilSript = document.createElement('script');
+                stencilSript.type = 'text/javascript';
+                stencilSript.text = response;
+                this.elementRef.nativeElement.appendChild(stencilSript);
             }
         });
     }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
@@ -24,8 +24,7 @@ import 'rxjs/add/observable/throw';
 @Injectable()
 export class ProcessFilterService {
 
-    constructor(private alfrescoApiService: AlfrescoApiService,
-                private logService: LogService) {
+    constructor(private alfrescoApiService: AlfrescoApiService) {
     }
 
     getProcessFilters(appId: number): Observable<FilterProcessRepresentationModel[]> {
@@ -72,7 +71,7 @@ export class ProcessFilterService {
      * @param appId
      * @returns {FilterProcessRepresentationModel[]}
      */
-    public createDefaultFilters(appId: number): Observable<any[]> {
+    public createDefaultFilters(appId: number): Observable<FilterProcessRepresentationModel[]> {
         let runningFilter = this.getRunningFilterInstance(appId);
         let runningObservable = this.addProcessFilter(runningFilter);
 
@@ -103,7 +102,7 @@ export class ProcessFilterService {
                     observer.complete();
                 },
                 (err: any) => {
-                    this.logService.error(err);
+                    this.handleProcessError(err)
                 });
         });
     }

@@ -126,24 +126,24 @@ export class ProcessService {
             .catch(err => this.handleProcessError(err));
     }
 
-    getProcessInstanceVariables(processDefinitionId: string): Observable<ProcessInstanceVariable[]> {
+    getProcessInstanceVariables(processInstanceId: string): Observable<ProcessInstanceVariable[]> {
         return Observable.fromPromise(
-            this.alfrescoApiService.getInstance().activiti.processInstanceVariablesApi.getProcessInstanceVariables(processDefinitionId)
+            this.alfrescoApiService.getInstance().activiti.processInstanceVariablesApi.getProcessInstanceVariables(processInstanceId)
         )
             .map((processVars: any[]) => processVars.map((pd) => new ProcessInstanceVariable(pd)))
             .catch(err => this.handleProcessError(err));
     }
 
-    createOrUpdateProcessInstanceVariables(processDefinitionId: string, variables: ProcessInstanceVariable[]): Observable<ProcessInstanceVariable[]> {
+    createOrUpdateProcessInstanceVariables(processInstanceId: string, variables: ProcessInstanceVariable[]): Observable<ProcessInstanceVariable[]> {
         return Observable.fromPromise(
-            this.alfrescoApiService.getInstance().activiti.processInstanceVariablesApi.createOrUpdateProcessInstanceVariables(processDefinitionId, variables)
+            this.alfrescoApiService.getInstance().activiti.processInstanceVariablesApi.createOrUpdateProcessInstanceVariables(processInstanceId, variables)
         )
             .catch(err => this.handleProcessError(err));
     }
 
-    deleteProcessInstanceVariable(processDefinitionId: string, variableName: string): Observable<void> {
+    deleteProcessInstanceVariable(processInstanceId: string, variableName: string): Observable<void> {
         return Observable.fromPromise(
-            this.alfrescoApiService.getInstance().activiti.processInstanceVariablesApi.deleteProcessInstanceVariable(processDefinitionId, variableName)
+            this.alfrescoApiService.getInstance().activiti.processInstanceVariablesApi.deleteProcessInstanceVariable(processInstanceId, variableName)
         )
             .catch(err => this.handleProcessError(err));
     }
