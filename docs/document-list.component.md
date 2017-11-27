@@ -295,7 +295,7 @@ For the sake of simplicity example below shows only main points you may need to 
 
 ```ts
 import { ChangeDetectorRef } from '@angular/core';
-import { AlfrescoApiService } from 'ng2-alfresco-core';
+import { AlfrescoApiService } from 'lib/core/services';
 
 export class FilesComponent implements OnInit {
 
@@ -368,7 +368,7 @@ Note the `#documentList` ID we've just added to be able referencing this compone
 
 ```ts
 import { ViewChild, AfterViewInit } from '@angular/core';
-import { DocumentListComponent } from 'ng2-alfresco-documentlist';
+import { DocumentListComponent } from 'lib/content-services/document-list/components';
 
 @Component({...})
 export class MyAppComponent implements AfterViewInit {
@@ -624,7 +624,7 @@ _Note that for the sake of simplicity the example code below was reduced to the 
 **View1.component.ts**
 
 ```ts
-import { RowFilter, ShareDataRow } from 'ng2-alfresco-documentlist';
+import { RowFilter, ShareDataRow } from 'lib/content-services/document-list/data';
 
 export class View1 {
 
@@ -682,8 +682,8 @@ _Note that for the sake of simplicity the example code below was reduced to the 
 **View1.component.ts**
 
 ```ts
-import { DataColumn, DataRow } from 'ng2-alfresco-datatable';
-import { ImageResolver } from 'ng2-alfresco-documentlist';
+import { DataColumn, DataRow } from 'lib/core/datatable/data';
+import { ImageResolver } from 'lib/content-services/document-list/data';
 
 export class View1 {
 

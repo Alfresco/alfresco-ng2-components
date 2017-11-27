@@ -1,21 +1,12 @@
-# FormService Service
+# Form service
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-  * [Events](#events)
-  * [Methods](#methods)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
+Implements Process Services form methods
 
 ## Basic Usage
 
 ```ts
-import { FormService, FormEvent, FormFieldEvent } from 'ng2-activiti-form';
+import { FormService } from 'lib/core/form/services';
+import { FormEvent, FormFieldEvent } from 'lib/core/form/events';
 
 @Component(...)
 class MyComponent {

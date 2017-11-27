@@ -197,7 +197,7 @@ Your model has to extend the **CardViewBaseItemModel** and implement the **CardV
 *(You can check how the CardViewTextItemModel is implemented for further guidance.)*
 
 ```js
-import { CardViewBaseItemModel, CardViewItem, DynamicComponentModel } from 'ng2-alfresco-core';
+import { CardViewBaseItemModel, CardViewItem, DynamicComponentModel } from 'lib/core/card-view';
 
 export class CardViewStarDateItemModel extends CardViewBaseItemModel implements
 CardViewItem, DynamicComponentModel {

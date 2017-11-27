@@ -18,7 +18,7 @@ This action will invoke the `myDocumentActionHandler` function each time it is s
 from the Document List menu.
 
 ```ts
-import { DocumentActionsService } from 'ng2-alfresco-documentlist';
+import { DocumentActionsService } from 'lib/content-services/document-list/services';
 
 export class MyView {
 
