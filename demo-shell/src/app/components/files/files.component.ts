@@ -37,7 +37,7 @@ import { Subscription } from 'rxjs/Rx';
 const DEFAULT_FOLDER_TO_SHOW = '-my-';
 
 @Component({
-    selector: 'adf-files-component',
+    selector: 'app-files-component',
     templateUrl: './files.component.html',
     styleUrls: ['./files.component.scss']
 })
@@ -45,8 +45,8 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     errorMessage: string = null;
     fileNodeId: any;
-    showViewer: boolean = false;
-    showVersions: boolean = false;
+    showViewer = false;
+    showVersions = false;
 
     toolbarColor = 'default';
 
@@ -67,28 +67,28 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     multiselect = false;
 
     @Input()
-    multipleFileUpload: boolean = false;
+    multipleFileUpload = false;
 
     @Input()
-    folderUpload: boolean = false;
+    folderUpload = false;
 
     @Input()
-    acceptedFilesTypeShow: boolean = false;
+    acceptedFilesTypeShow = false;
 
     @Input()
-    maxSizeShow: boolean = false;
+    maxSizeShow = false;
 
     @Input()
-    versioning: boolean = false;
+    versioning = false;
 
     @Input()
-    acceptedFilesType: string = '.jpg,.pdf,.js';
+    acceptedFilesType = '.jpg,.pdf,.js';
 
     @Input()
     maxFilesSize: number = null;
 
     @Input()
-    enableUpload: boolean = true;
+    enableUpload = true;
 
     @Input()
     nodeResult: NodePaging;
@@ -97,7 +97,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     pagination: Pagination;
 
     @Input()
-    disableDragArea: boolean = false;
+    disableDragArea = false;
 
     @Output()
     documentListReady: EventEmitter<any> = new EventEmitter();
@@ -124,7 +124,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     standardPagination: PaginationComponent;
 
     permissionsStyle: PermissionStyleModel[] = [];
-    supportedPages: number[] = [5, 10, 15, 20];
+    supportedPages: number[] = [5, 10, 15, 25];
     infiniteScrolling: boolean;
 
     private onCreateFolder: Subscription;
@@ -303,7 +303,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onContentActionSuccess(message) {
-        let translatedMessage: any = this.translateService.get(message);
+        const translatedMessage: any = this.translateService.get(message);
         this.notificationService.openSnackMessage(translatedMessage.value, 4000);
     }
 

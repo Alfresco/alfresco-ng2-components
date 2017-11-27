@@ -16,14 +16,14 @@
 */
 
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormModel, FormService } from '@alfresco/adf-core';
+import { FormModel, FormService, FormOutcomeEvent } from '@alfresco/adf-core';
 import { InMemoryFormService } from '../../services/in-memory-form.service';
 import { DemoForm } from './demo-form';
 
 @Component({
-    selector: 'form',
+    selector: 'app-form',
     templateUrl: 'form.component.html',
-    styleUrls: [ 'form.component.css' ],
+    styleUrls: ['form.component.css'],
     providers: [
         { provide: FormService, useClass: InMemoryFormService }
     ]
@@ -33,14 +33,13 @@ export class FormComponent implements OnInit {
     form: FormModel;
 
     constructor(@Inject(FormService) private formService: InMemoryFormService) {
-        formService.executeOutcome.subscribe(e => {
-            e.preventDefault();
-            console.log(e.outcome);
+        formService.executeOutcome.subscribe((formOutcomeEvent: FormOutcomeEvent) => {
+            formOutcomeEvent.preventDefault();
         });
     }
 
     ngOnInit() {
-        let formDefinitionJSON: any = DemoForm.getDefinition();
+        const formDefinitionJSON: any = DemoForm.getDefinition();
         this.form = this.formService.parseForm(formDefinitionJSON);
     }
 

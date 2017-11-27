@@ -83,7 +83,7 @@
         }
     },
     "document-list": {
-        "supportedPageSizes": [ 5, 10, 15, 20 ],
+        "supportedPageSizes": [ 5, 10, 15, 25 ],
         "presets": {
             "-trashcan-": [
                 {
@@ -330,7 +330,7 @@
         }
     },
     "adf-task-list": {
-        "supportedPageSizes": [ 5, 10, 15, 20 ],
+        "supportedPageSizes": [ 5, 10, 15, 25 ],
         "presets": {
             "default": [
                 {

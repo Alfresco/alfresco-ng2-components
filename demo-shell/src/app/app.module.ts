@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
-// import { Editor3DModule } from 'ng2-3d-editor';
 import { ChartsModule } from 'ng2-charts';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
@@ -56,7 +55,6 @@ import { ProcessAttachmentsComponent } from './components/process-service/proces
         MaterialModule,
         ThemePickerModule,
         FlexLayoutModule,
-        //Editor3DModule,
         ChartsModule,
         HttpClientModule
     ],

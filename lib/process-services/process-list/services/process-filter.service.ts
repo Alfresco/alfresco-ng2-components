@@ -102,7 +102,7 @@ export class ProcessFilterService {
                     observer.complete();
                 },
                 (err: any) => {
-                    this.handleProcessError(err)
+                    this.handleProcessError(err);
                 });
         });
     }

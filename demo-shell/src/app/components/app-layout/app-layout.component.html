@@ -23,14 +23,14 @@
 
         <div class="adf-app-layout-menu-spacer"></div>
 
-        <adf-search-bar fxFlex="0 1 auto"></adf-search-bar>
+        <app-search-bar fxFlex="0 1 auto"></app-search-bar>
 
         <a fxFlex="0 0 auto" class="adf-toolbar-link" fxShow fxHide.lt-md="true" mat-button data-automation-id="home" href="" routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">{{'APP_LAYOUT.HOME' | translate }}</a>
         <a fxFlex="0 0 auto" class="adf-toolbar-link" fxShow fxHide.lt-md="true" mat-button data-automation-id="files" href="" routerLink="/files" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">{{'APP_LAYOUT.CONTENT_SERVICES' | translate }}</a>
         <a fxFlex="0 0 auto" class="adf-toolbar-link" fxShow fxHide.lt-md="true"  mat-button data-automation-id="activiti" href="" routerLink="/activiti" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">{{'APP_LAYOUT.PROCESS_SERVICES' | translate }}</a>
         <a fxFlex="0 0 auto" class="adf-toolbar-link" fxShow fxHide.lt-md="true" mat-button data-automation-id="login" href="" routerLink="/login">Login</a>
 
-        <theme-picker></theme-picker>
+        <app-theme-picker></app-theme-picker>
         <button mat-icon-button [matMenuTriggerFor]="langMenu">
             <mat-icon>language</mat-icon>
         </button>

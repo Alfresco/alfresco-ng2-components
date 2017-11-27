@@ -28,7 +28,7 @@ import {
 import { AlfrescoApiService, AppConfigService, DataColumnListComponent, UserPreferencesService } from '@alfresco/adf-core';
 import {
     AfterContentInit, Component, ContentChild, ElementRef, EventEmitter, HostListener, Input, NgZone,
-    OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild, ViewEncapsulation
+    OnChanges, OnDestroy, OnInit, Output, SimpleChanges, TemplateRef, ViewChild, ViewEncapsulation
 } from '@angular/core';
 import {
     DeletedNodesPaging,
@@ -49,6 +49,7 @@ import { ContentActionModel } from './../models/content-action.model';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { DocumentListService } from './../services/document-list.service';
 import { NodeEntityEvent, NodeEntryEvent } from './node.event';
+import { Subscription } from 'rxjs/Subscription';
 
 export enum PaginationStrategy {
     Finite,
@@ -61,7 +62,7 @@ export enum PaginationStrategy {
     templateUrl: './document-list.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class DocumentListComponent implements OnInit, OnChanges, AfterContentInit, PaginatedComponent {
+export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, AfterContentInit, PaginatedComponent {
 
     static SINGLE_CLICK_NAVIGATION: string = 'click';
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
@@ -178,6 +179,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     private currentNodeAllowableOperations: string[] = [];
     private CREATE_PERMISSION = 'create';
 
+    private contextActionHandlerSubscription: Subscription;
+
     constructor(private documentListService: DocumentListService,
                 private ngZone: NgZone,
                 private elementRef: ElementRef,
@@ -234,7 +237,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             this.data.setImageResolver(this.imageResolver);
         }
 
-        this.contextActionHandler.subscribe(val => this.contextActionCallback(val));
+        this.contextActionHandlerSubscription = this.contextActionHandler.subscribe(val => this.contextActionCallback(val));
 
         this.enforceSingleClickNavigationForMobile();
     }
@@ -865,6 +868,12 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
         if (needsReload) {
             this.reload(this.enableInfiniteScrolling);
+        }
+    }
+
+    ngOnDestroy() {
+        if (this.contextActionHandlerSubscription) {
+            this.contextActionHandlerSubscription.unsubscribe();
         }
     }
 }

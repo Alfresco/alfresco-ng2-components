@@ -21,7 +21,7 @@ import { Router } from '@angular/router';
 import { LogService, StorageService } from '@alfresco/adf-core';
 
 @Component({
-    selector: 'login',
+    selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css']
 })
@@ -30,27 +30,27 @@ export class LoginComponent implements OnInit {
     @ViewChild('alfrescologin')
     alfrescologin: any;
 
-    providers: string = 'ECM';
+    providers = 'ECM';
     customValidation: any;
 
-    disableCsrf: boolean = false;
-    isECM: boolean = true;
-    isBPM: boolean = false;
-    showFooter: boolean = true;
-    customMinLenght: number = 2;
+    disableCsrf = false;
+    isECM = true;
+    isBPM = false;
+    showFooter = true;
+    customMinLength = 2;
 
     constructor(private router: Router,
                 private storage: StorageService,
                 private logService: LogService) {
         this.customValidation = {
-            username: ['', Validators.compose([Validators.required, Validators.minLength(this.customMinLenght)])],
+            username: ['', Validators.compose([Validators.required, Validators.minLength(this.customMinLength)])],
             password: ['', Validators.required]
         };
     }
 
     ngOnInit() {
         this.alfrescologin.addCustomValidationError('username', 'required', 'LOGIN.MESSAGES.USERNAME-REQUIRED');
-        this.alfrescologin.addCustomValidationError('username', 'minlength', 'LOGIN.MESSAGES.USERNAME-MIN', {minLenght: this.customMinLenght});
+        this.alfrescologin.addCustomValidationError('username', 'minlength', 'LOGIN.MESSAGES.USERNAME-MIN', {minLength: this.customMinLength});
         this.alfrescologin.addCustomValidationError('password', 'required', 'LOGIN.MESSAGES.PASSWORD-REQUIRED');
 
         if (this.storage.hasItem('providers')) {
