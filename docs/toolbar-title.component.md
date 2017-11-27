@@ -4,17 +4,6 @@ Supplies custom HTML to be included in a Toolbar component title.
 
 ![](docassets/images/adf-toolbar-02.png)
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-- [Details](#details)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
-
 ## Basic Usage
 
 ```html

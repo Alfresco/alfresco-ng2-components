@@ -2,18 +2,6 @@
 
 Supports localisation.
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Details](#details)
-  * [Registering translation sources](#registering-translation-sources)
-  * [Switching languages](#switching-languages)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
-
 ## Details
 
 ### Registering translation sources

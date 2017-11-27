@@ -4,18 +4,6 @@ Displays Start Process, allowing the user to specify some basic details needed t
 
 ![adf-start-process ](docassets/images/startProcess.png)
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-  * [Properties](#properties)
-  * [Events](#events)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
-
 ## Basic Usage
 
 ```html

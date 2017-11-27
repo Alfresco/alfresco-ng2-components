@@ -169,7 +169,7 @@ You can enable custom "Open With" menu by providing at least one action inside t
         </button>
     </adf-viewer-open-with>
 
-</adv-viewer>
+</adf-viewer>
 ```
 
 ![Open with](docassets/images/viewer-open-with.png)
