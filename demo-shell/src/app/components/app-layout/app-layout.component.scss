@@ -5,8 +5,14 @@
 
 
    @media screen and ($mat-xsmall) {
-       adf-search-bar {
+       app-search-bar {
            width: 150px;
+       }
+   }
+
+    @media screen and (max-width: 350px) {
+       app-search-bar {
+           width: 100px;
        }
    }
 
