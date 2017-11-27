@@ -20,7 +20,7 @@ import { Router } from '@angular/router';
 import { MinimalNodeEntity } from 'alfresco-js-api';
 
 @Component({
-    selector: 'adf-search-bar',
+    selector: 'app-search-bar',
     templateUrl: './search-bar.component.html',
     styleUrls: ['./search-bar.component.scss']
 })

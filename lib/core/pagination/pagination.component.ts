@@ -23,22 +23,24 @@ import {
     OnInit,
     Output,
     ViewEncapsulation,
-    ChangeDetectorRef
+    ChangeDetectorRef,
+    OnDestroy
 } from '@angular/core';
 
 import { Pagination } from 'alfresco-js-api';
 import { PaginationQueryParams } from './pagination-query-params.interface';
 import { PaginatedComponent } from './paginated-component.interface';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
     selector: 'adf-pagination',
     host: { 'class': 'adf-pagination' },
     templateUrl: './pagination.component.html',
-    styleUrls: [ './pagination.component.scss' ],
+    styleUrls: ['./pagination.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
-export class PaginationComponent implements OnInit {
+export class PaginationComponent implements OnInit, OnDestroy {
 
     static DEFAULT_PAGE_SIZE: number = 25;
 
@@ -59,7 +61,7 @@ export class PaginationComponent implements OnInit {
     target: PaginatedComponent;
 
     @Input()
-    supportedPageSizes: number[] = [ 25, 50, 100 ];
+    supportedPageSizes: number[] = [5, 25, 50, 100];
 
     @Input()
     pagination: Pagination;
@@ -79,16 +81,21 @@ export class PaginationComponent implements OnInit {
     @Output()
     prevPage: EventEmitter<Pagination> = new EventEmitter<Pagination>();
 
+    private paginationSubscription: Subscription;
+
     constructor(private cdr: ChangeDetectorRef) {
     }
 
     ngOnInit() {
         if (this.target) {
-            this.target.pagination.subscribe(page => {
+            this.paginationSubscription = this.target.pagination.subscribe(page => {
                 this.pagination = page;
                 this.cdr.detectChanges();
+
+
             });
         }
+
         if (!this.pagination) {
             this.pagination = PaginationComponent.DEFAULT_PAGINATION;
         }
@@ -136,7 +143,7 @@ export class PaginationComponent implements OnInit {
         const start = totalItems ? skipCount + 1 : 0;
         const end = isLastPage ? totalItems : skipCount + maxItems;
 
-        return [ start, end ];
+        return [start, end];
     }
 
     get pages(): number[] {
@@ -218,6 +225,12 @@ export class PaginationComponent implements OnInit {
 
         if (this.target) {
             this.target.updatePagination(params);
+        }
+    }
+
+    ngOnDestroy() {
+        if (this.paginationSubscription) {
+            this.paginationSubscription.unsubscribe();
         }
     }
 }

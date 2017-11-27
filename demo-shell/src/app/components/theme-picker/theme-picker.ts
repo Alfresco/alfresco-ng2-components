@@ -8,7 +8,7 @@ import { StyleManager } from './style-manager/style-manager';
 import { DocsSiteTheme, ThemeStorage } from './theme-storage/theme-storage';
 
 @Component({
-    selector: 'theme-picker',
+    selector: 'app-theme-picker',
     templateUrl: 'theme-picker.html',
     styleUrls: ['theme-picker.css'],
     changeDetection: ChangeDetectionStrategy.OnPush,

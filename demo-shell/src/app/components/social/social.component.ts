@@ -18,11 +18,11 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'alfresco-social',
+    selector: 'app-social',
     templateUrl: 'social.component.html',
     styleUrls: ['social.component.scss']
 })
 export class SocialComponent {
 
-    nodeId: string = '74cd8a96-8a21-47e5-9b3b-a1b3e296787d';
+    nodeId = '74cd8a96-8a21-47e5-9b3b-a1b3e296787d';
 }

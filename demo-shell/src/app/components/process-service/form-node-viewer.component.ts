@@ -20,7 +20,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
 @Component({
-    selector: 'form-node-viewer',
+    selector: 'app-form-node-viewer',
     templateUrl: './form-node-viewer.component.html',
     styleUrls: ['./form-node-viewer.component.css']
 })
