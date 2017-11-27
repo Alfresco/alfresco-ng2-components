@@ -21,7 +21,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 
 @Injectable()
-export class ProcessUploadService extends UploadService {
+export class TaskUploadService extends UploadService {
 
     instanceApi: AlfrescoApiService;
 
@@ -34,8 +34,8 @@ export class ProcessUploadService extends UploadService {
         let opts = {
             isRelatedContent: true
         };
-        let processInstanceId = file.options.parentId;
-        let promise = this.instanceApi.getInstance().activiti.contentApi.createRelatedContentOnProcessInstance(processInstanceId, file.file, opts);
+        let taskId = file.options.parentId;
+        let promise = this.instanceApi.getInstance().activiti.contentApi.createRelatedContentOnTask(taskId, file.file, opts);
 
         promise.catch(err => this.handleError(err));
 

@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
-import { TaskListService, TaskAttachmentListComponent } from '@alfresco/adf-process-services';
+import { TaskListService, TaskAttachmentListComponent, TaskDetailsModel } from '@alfresco/adf-process-services';
 import { UploadService } from '@alfresco/adf-core';
 
 @Component({
@@ -33,15 +33,13 @@ export class TaskAttachmentsComponent implements OnInit, OnChanges {
     @Input()
     taskId: string;
 
-    fileShowed: boolean = false;
+    fileShowed = false;
     content: Blob;
     contentName: string;
 
     taskDetails: any;
 
-    constructor(private uploadService: UploadService,
-                private activitiTaskList: TaskListService) {
-
+    constructor(private uploadService: UploadService, private activitiTaskList: TaskListService) {
     }
 
     ngOnInit() {
@@ -50,9 +48,9 @@ export class TaskAttachmentsComponent implements OnInit, OnChanges {
 
     ngOnChanges() {
         if (this.taskId) {
-            this.activitiTaskList.getTaskDetails(this.taskId).map((res) => res).subscribe(
-                (res: any) => {
-                    this.taskDetails = res;
+            this.activitiTaskList.getTaskDetails(this.taskId).map((res) => res)
+                .subscribe((taskDetails: TaskDetailsModel) => {
+                    this.taskDetails = taskDetails;
                 });
         }
     }

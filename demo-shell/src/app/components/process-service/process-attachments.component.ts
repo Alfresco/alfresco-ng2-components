@@ -28,15 +28,16 @@ import { UploadService } from '@alfresco/adf-core';
 
 export class ProcessAttachmentsComponent implements OnInit, OnChanges {
 
-    @Input()
-    processInstanceId: string;
-
     @ViewChild(ProcessAttachmentListComponent)
     processAttachList: ProcessAttachmentListComponent;
 
-    fileShowed: boolean = false;
+    @Input()
+    processInstanceId: string;
+
+    fileShowed = false;
     content: Blob;
     contentName: string;
+
     processInstance: ProcessInstance;
 
     constructor(private uploadService: UploadService, private processService: ProcessService) {
@@ -48,7 +49,8 @@ export class ProcessAttachmentsComponent implements OnInit, OnChanges {
 
     ngOnChanges() {
         if (this.processInstanceId) {
-            this.processService.getProcess(this.processInstanceId).subscribe((processInstance: ProcessInstance) => {
+            this.processService.getProcess(this.processInstanceId)
+                .subscribe((processInstance: ProcessInstance) => {
                 this.processInstance = processInstance;
             });
         }
