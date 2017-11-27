@@ -2,20 +2,6 @@
 
 Shows the details of the task id passed in input
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-  * [Properties](#properties)
-  * [Events](#events)
-- [Details](#details)
-  * [Custom 'empty Activiti Task Details' template](#custom-empty-activiti-task-details-template)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
-
 ## Basic Usage
 
 ```html
