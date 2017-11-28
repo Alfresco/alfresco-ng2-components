@@ -4,15 +4,18 @@
                (rowDblClick)="openContent($event)"
                (showRowActionsMenu)="onShowRowActionsMenu($event)"
                (executeRowAction)="onExecuteRowAction($event)">
-
-            <adf-empty-list *ngIf="isEmpty()">
-                <div *ngIf="!isCustomTemplateDefined()" adf-empty-list-header class="adf-empty-list-header">
-                    {{'ADF_TASK_LIST.ATTACHMENT.EMPTY.HEADER' | translate}}
-                </div>
-                <div *ngIf="isCustomTemplateDefined()" #customEmptyListTemplate class="adf-custom-empty-template">
-                    <ng-content select="[adf-empty-list]"></ng-content>
-                </div>
-            </adf-empty-list>
+            <no-content-template>
+                <ng-template>
+                    <ng-content *ngIf="hasCustomTemplate; else defaulEmptyList" class="adf-custom-empty-template"></ng-content>
+                    <ng-template #defaulEmptyList>
+                        <adf-empty-list>
+                            <div adf-empty-list-header class="adf-empty-list-header">
+                                {{'ADF_TASK_LIST.ATTACHMENT.EMPTY.HEADER' | translate}}
+                            </div>
+                        </adf-empty-list>
+                    </ng-template>
+                </ng-template>
+            </no-content-template>
 
             <data-columns>
                 <data-column key="icon" type="image" srTitle="ADF_TASK_LIST.PROPERTIES.THUMBNAIL" [sortable]="false"></data-column>

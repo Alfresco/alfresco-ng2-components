@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SimpleChange } from '@angular/core';
+import { SimpleChange, Component } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MaterialModule } from '../material.module';
@@ -168,23 +168,6 @@ describe('TaskAttachmentList', () => {
         });
     }));
 
-    it('should not show the custom empty message when has custom template', async(() => {
-        getTaskRelatedContentSpy.and.returnValue(Observable.of({
-            'size': 0,
-            'total': 0,
-            'start': 0,
-            'data': []
-        }));
-        let change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ 'taskId': change });
-        component.hasCustomTemplate = true;
-
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('.adf-custom-empty-template')).not.toBeNull();
-        });
-    }));
-
     it('should display all actions if attachments are not read only', () => {
         let change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'taskId': change });
@@ -312,5 +295,45 @@ describe('TaskAttachmentList', () => {
             expect(deleteContentSpy).toHaveBeenCalled();
         });
 
+    });
+});
+
+@Component({
+    template: `
+    <adf-task-attachment-list>
+        <adf-empty-list>
+            <div adf-empty-list-header class="adf-empty-list-header">Custom header</div>
+        </adf-empty-list>
+    </adf-task-attachment-list>
+       `
+})
+class CustomEmptyTemplateComponent {
+}
+
+describe('Custom CustomEmptyTemplateComponent', () => {
+    let fixture: ComponentFixture<CustomEmptyTemplateComponent>;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [
+                TaskAttachmentListComponent,
+                CustomEmptyTemplateComponent
+            ],
+            imports: [
+                MaterialModule
+            ]
+        }).compileComponents();
+    }));
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(CustomEmptyTemplateComponent);
+        fixture.detectChanges();
+    });
+
+    it('should render the custom template', () => {
+        fixture.detectChanges();
+        let title: any = fixture.debugElement.queryAll(By.css('[adf-empty-list-header]'));
+        expect(title.length).toBe(1);
+        expect(title[0].nativeElement.innerText).toBe('Custom header');
     });
 });

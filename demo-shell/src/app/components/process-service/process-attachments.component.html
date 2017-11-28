@@ -6,10 +6,10 @@
             [disabled]="isCompletedProcess()">
 
             <adf-process-attachment-list #processAttachList
-                                         *ngIf="processInstanceId"
-                                         [disabled]="isCompletedProcess()"
-                                         [processInstanceId]="processInstanceId"
-                                         (attachmentClick)="onAttachmentClick($event)">
+                                            *ngIf="processInstanceId"
+                                            [disabled]="isCompletedProcess()"
+                                            [processInstanceId]="processInstanceId"
+                                            (attachmentClick)="onAttachmentClick($event)">
             </adf-process-attachment-list>
 
         </adf-upload-drag-area>
