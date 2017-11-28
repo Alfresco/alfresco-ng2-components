@@ -45,7 +45,7 @@ export class MyComponent {
 ## Details
 
 The `NodeFavoriteDirective` instance can be bound to a template variable through **adfFavorite** reference,
-wich provides a method to help further style the element.
+which provides a method to help further style the element.
 
 ```html
 <button

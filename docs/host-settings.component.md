@@ -1,6 +1,6 @@
 # Host settings component
 
-This component is a form that allow you to validate and set the url of your content service and process service saving 
+This component is a form that allows you to validate and set the url of your content service and process service saving 
 it in the user local storage
 
 ![Host settings](docassets/images/host-settings-component.png)
