@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { ContentService, ThumbnailService } from '@alfresco/adf-core';
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, NgZone, OnChanges, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ContentService, ThumbnailService, EmptyListComponent } from '@alfresco/adf-core';
+import { AfterContentInit, ContentChild, Component, ElementRef, EventEmitter, Input, NgZone, OnChanges, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ProcessContentService, UploadService } from '@alfresco/adf-core';
 import { TaskUploadService } from '../task-list/services/task-upload.service';
 
@@ -29,7 +29,10 @@ import { TaskUploadService } from '../task-list/services/task-upload.service';
         { provide: UploadService, useClass: TaskUploadService }
     ]
 })
-export class TaskAttachmentListComponent implements OnChanges, AfterViewInit {
+export class TaskAttachmentListComponent implements OnChanges, AfterContentInit {
+
+    @ContentChild(EmptyListComponent)
+    emptyTemplate: EmptyListComponent;
 
     @Input()
     taskId: string;
@@ -51,6 +54,8 @@ export class TaskAttachmentListComponent implements OnChanges, AfterViewInit {
     @ViewChild('customEmptyListTemplate')
     customTemplateRef: ElementRef;
 
+    curret: any;
+
     attachments: any[] = [];
     isLoading: boolean = false;
 
@@ -66,15 +71,18 @@ export class TaskAttachmentListComponent implements OnChanges, AfterViewInit {
         }
     }
 
-    ngAfterViewInit() {
-        if (this.customTemplateRef && this.customTemplateRef.nativeElement &&
-            this.customTemplateRef.nativeElement.children && this.customTemplateRef.nativeElement.children.length > 0) {
-                this.hasCustomTemplate = true;
-            }
+    ngAfterContentInit() {
+        if (this.emptyTemplate) {
+            this.hasCustomTemplate = true;
+        }
     }
 
     reset(): void {
         this.attachments = [];
+    }
+
+    hasCutomEmptyTemplate() {
+        return !!this.emptyTemplate;
     }
 
     reload(): void {
@@ -138,10 +146,6 @@ export class TaskAttachmentListComponent implements OnChanges, AfterViewInit {
 
     isEmpty(): boolean {
         return this.attachments && this.attachments.length === 0;
-    }
-
-    isCustomTemplateDefined(): boolean {
-        return this.hasCustomTemplate;
     }
 
     onShowRowActionsMenu(event: any) {
