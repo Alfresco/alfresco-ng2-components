@@ -162,7 +162,7 @@ At runtime it should look similar to the following:
 
 ## Replacing custom stencils with custom components
 
-This is a short walkthrough on rendering custom Alfresco Activiti stencils by means of custom Angular 2 components.
+This is a short walkthrough on rendering custom Alfresco Activiti stencils by means of custom Angular components.
 
 ### Creating custom stencil
 
@@ -192,7 +192,7 @@ If you load previously created task into ADF `<activiti-form>` component you wil
 
 ![adf stencil](docassets/images/adf-stencil-01.png)
 
-Let's create an Angular 2 component to render missing content:
+Let's create an Angular component to render missing content:
 
 ```ts
 import { Component } from '@angular/core';
@@ -250,6 +250,6 @@ export class MyView {
 }
 ```
 
-At runtime you should now see your custom Angular 2 component rendered in place of the stencils:
+At runtime you should now see your custom Angular component rendered in place of the stencils:
 
 ![adf stencil runtime](docassets/images/adf-stencil-02.png)

@@ -43,7 +43,7 @@ You will find examples of basic interaction for both BPM and ECM sets of widgets
 
 ## Yeoman generators
 
-To speed up the development of your Alfresco Angular 2 application, or Alfresco Angular 2 component, use one of the Yeoman generators. 
+To speed up the development of your Alfresco Angular application, or Alfresco Angular component, use one of the Yeoman generators. 
 
 These generators will create a full working project with all the right libraries and tools.
 
@@ -53,16 +53,16 @@ These generators will create a full working project with all the right libraries
 
 ### Generate an Alfresco web component starter project
 
-To generate your Alfresco Angular 2 component you can use the following Yeoman generator:
+To generate your Alfresco Angular component you can use the following Yeoman generator:
 
-- [Yeoman Generator Angular 2 Alfresco component](https://github.com/Alfresco/generator-ng2-alfresco-component)
+- [Yeoman Generator Angular Alfresco component](https://github.com/Alfresco/generator-ng2-alfresco-component)
 
 
 ### Generate an Alfresco web application starter project
 
-To generate your Alfresco Angular 2 application you can use the following Yeoman generator:
+To generate your Alfresco Angular application you can use the following Yeoman generator:
 
-- [Yeoman Generator Angular 2 Alfresco application](https://github.com/Alfresco/generator-ng2-alfresco-app)
+- [Yeoman Generator Angular Alfresco application](https://github.com/Alfresco/generator-ng2-alfresco-app)
 
 ## Amazon AWS Elastic Beanstalk fast deploy
 

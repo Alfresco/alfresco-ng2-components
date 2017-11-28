@@ -1,6 +1,6 @@
 # Introduction to the Alfresco Application Development Framework
 
-The Alfresco application development framework is based on the [Angular 2 JavaScript library](https://angular.io/).
+The Alfresco application development framework is based on the [Angular framework](https://angular.io/).
 The framework is provided by Alfresco to make it easy to build custom web applications that 
 should manage and view content in the [Alfresco Platform Repository](http://docs.alfresco.com/5.1/concepts/content-repo-about.html) in a custom way.
 

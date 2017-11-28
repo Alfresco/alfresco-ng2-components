@@ -14,7 +14,7 @@ Shows a notification message with optional feedback.
 
 ## Details
 
-The Notification Service is implemented on top of the Angular 2 Material Design snackbar.
+The Notification Service is implemented on top of the Angular Material Design snackbar.
 Use this service to show a notification message, and optionally get feedback from it.
 
 ```ts
