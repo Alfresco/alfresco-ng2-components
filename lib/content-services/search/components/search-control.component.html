@@ -1,5 +1,5 @@
 <div class="adf-search-container">
-    <div *ngIf="isLoggedIn()" [@transitionMessages]="subscriptAnimationState">
+    <div *ngIf="isLoggedIn()" [@transitionMessages]="subscriptAnimationState" (@transitionMessages.done)="applySearchFocus($event)">
         <a mat-icon-button
             *ngIf="expandable"
             id="adf-search-button"
@@ -9,8 +9,7 @@
             <mat-icon aria-label="search button">search</mat-icon>
         </a>
         <mat-form-field class="adf-input-form-field-divider">
-            <input matInput
-                #inputSearch
+            <input matInput #searchInput
                 [type]="inputType"
                 [autocomplete]="getAutoComplete()"
                 id="adf-control-input"

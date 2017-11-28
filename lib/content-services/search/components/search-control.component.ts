@@ -78,8 +78,8 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     @ViewChild(SearchComponent)
     searchAutocomplete: SearchComponent;
 
-    @ViewChild('inputSearch')
-    inputSearch: ElementRef;
+    @ViewChild('searchInput')
+    searchInput: ElementRef;
 
     @ViewChildren(MatListItem)
     private listResultElement: QueryList<MatListItem>;
@@ -100,12 +100,18 @@ export class SearchControlComponent implements OnInit, OnDestroy {
                 if (this.subscriptAnimationState === 'inactive') {
                     this.searchTerm = '';
                     this.searchAutocomplete.resetResults();
-                    if ( document.activeElement.id === this.inputSearch.nativeElement.id) {
-                        this.inputSearch.nativeElement.blur();
+                    if ( document.activeElement.id === this.searchInput.nativeElement.id) {
+                        this.searchInput.nativeElement.blur();
                     }
                 }
             }
         });
+    }
+
+    applySearchFocus(animationDoneEvent) {
+        if (animationDoneEvent.toState === 'active') {
+            this.searchInput.nativeElement.focus();
+        }
     }
 
     ngOnInit() {
@@ -205,7 +211,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
         if (previousElement) {
             previousElement.focus();
         }else {
-            this.inputSearch.nativeElement.focus();
+            this.searchInput.nativeElement.focus();
             this.focusSubject.next(new FocusEvent('focus'));
         }
     }

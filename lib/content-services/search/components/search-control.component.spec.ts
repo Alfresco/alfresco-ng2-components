@@ -16,7 +16,8 @@
  */
 
 import { DebugElement } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, discardPeriodicTasks, fakeAsync, ComponentFixture, TestBed, tick } from '@angular/core/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '../../material.module';
 import { By } from '@angular/platform-browser';
 import { AuthenticationService, SearchService } from '@alfresco/adf-core';
@@ -39,7 +40,8 @@ describe('SearchControlComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                MaterialModule
+                MaterialModule,
+                NoopAnimationsModule
             ],
             declarations: [
                 SearchControlComponent,
@@ -408,48 +410,70 @@ describe('SearchControlComponent', () => {
 
     describe('search button', () => {
 
-        it('should NOT display a autocomplete list control when configured not to', async(() => {
+        it('should NOT display a autocomplete list control when configured not to', fakeAsync(() => {
+            fixture.detectChanges();
+            let searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
+            component.subscriptAnimationState = 'active';
+            fixture.detectChanges();
+            expect(component.subscriptAnimationState).toBe('active');
+
+            searchButton.triggerEventHandler('click', null);
+            fixture.detectChanges();
+
+            tick(100);
+            fixture.detectChanges();
+            expect(component.subscriptAnimationState).toBe('inactive');
+            discardPeriodicTasks();
+        }));
+
+        it('click on the search button should open the input box when is close', fakeAsync(() => {
+            fixture.detectChanges();
+
+            let searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
+            searchButton.triggerEventHandler('click', null);
+
+            tick(100);
+            fixture.detectChanges();
+            expect(component.subscriptAnimationState).toBe('active');
+            discardPeriodicTasks();
+        }));
+
+        it('click on the search button should apply focus on input', fakeAsync(() => {
+            fixture = TestBed.createComponent(SearchControlComponent);
+            debugElement = fixture.debugElement;
+            fixture.detectChanges();
+            let searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
+            let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
+
+            searchButton.triggerEventHandler('click', null);
+
+            tick(100);
+            fixture.detectChanges();
+
+            tick(300);
+            fixture.detectChanges();
+            expect(document.activeElement.id).toBe(inputDebugElement.nativeElement.id);
+            discardPeriodicTasks();
+        }));
+
+        it('Search button should not change the input state too often', fakeAsync(() => {
             fixture.detectChanges();
             let searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
             component.subscriptAnimationState = 'active';
             fixture.detectChanges();
             expect(component.subscriptAnimationState).toBe('active');
             searchButton.triggerEventHandler('click', null);
-            window.setTimeout(() => {
-                fixture.detectChanges();
-                expect(component.subscriptAnimationState).toBe('inactive');
-            }, 100);
+            fixture.detectChanges();
+            searchButton.triggerEventHandler('click', null);
+            fixture.detectChanges();
+
+            tick(100);
+            fixture.detectChanges();
+            expect(component.subscriptAnimationState).toBe('inactive');
+            discardPeriodicTasks();
         }));
 
-        it('click on the search button should open the input box when is close', (done) => {
-            fixture.detectChanges();
-            let searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
-            searchButton.triggerEventHandler('click', null);
-            window.setTimeout(() => {
-                fixture.detectChanges();
-                expect(component.subscriptAnimationState).toBe('active');
-                done();
-            }, 100);
-        });
-
-        it('Search button should not change the input state too often', async(() => {
-            fixture.detectChanges();
-            let searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
-            component.subscriptAnimationState = 'active';
-            fixture.detectChanges();
-            expect(component.subscriptAnimationState).toBe('active');
-            searchButton.triggerEventHandler('click', null);
-            fixture.detectChanges();
-            searchButton.triggerEventHandler('click', null);
-            fixture.detectChanges();
-
-            window.setTimeout(() => {
-                fixture.detectChanges();
-                expect(component.subscriptAnimationState).toBe('inactive');
-            }, 100);
-        }));
-
-        it('Search bar should close when user press ESC button', async(() => {
+        it('Search bar should close when user press ESC button', fakeAsync(() => {
             fixture.detectChanges();
             let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
             component.subscriptAnimationState = 'active';
@@ -457,10 +481,11 @@ describe('SearchControlComponent', () => {
             expect(component.subscriptAnimationState).toBe('active');
 
             inputDebugElement.triggerEventHandler('keyup.escape', {});
-            window.setTimeout(() => {
-                fixture.detectChanges();
-                expect(component.subscriptAnimationState).toBe('inactive');
-            }, 100);
+
+            tick(100);
+            fixture.detectChanges();
+            expect(component.subscriptAnimationState).toBe('inactive');
+            discardPeriodicTasks();
         }));
     });
 
