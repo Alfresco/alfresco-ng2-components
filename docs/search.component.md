@@ -32,7 +32,7 @@
 | maxResults | number  | 20 | Maximum number of results to show in the search. |
 | skipResults | number  | 0 | Number of results to skip from the results pagination. |
 | displayWith | function | | Function that maps an option's value to its display value in the trigger |
-| searchNode | [QueryBody](https://github.com/Alfresco/alfresco-js-api/blob/1.6.0/src/alfresco-search-rest-api/docs/QueryBody.md) | | object which allow you to perform more elaborated query from the search api |
+| queryBody| [QueryBody](https://github.com/Alfresco/alfresco-js-api/blob/1.6.0/src/alfresco-search-rest-api/docs/QueryBody.md) | | object which allow you to perform more elaborated query from the search api |
 
 ### Events
 

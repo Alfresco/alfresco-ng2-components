@@ -23,7 +23,7 @@ import { Component, Input } from '@angular/core';
 export class OverlayViewerComponent {
 
     @Input()
-    showViewer: boolean = false;
+    showViewer = false;
 
     nodeId: string;
 
