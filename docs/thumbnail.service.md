@@ -36,6 +36,26 @@ and icons is shown in the table below:
 | Keynote presentation | ![Keynote thumbnail](docassets/images/ft_ic_presentation.png) | 'application/vnd.apple.keynote' |
 | Numbers spreadsheet | ![Numbers thumbnail](docassets/images/ft_ic_spreadsheet.png) | 'application/vnd.apple.numbers' |
 
+## Mat-icon
+
+All the MIME types ADF icon are now registered into the MatIconRegistry, this will allow you to use all the icon through the mat-icon tag:
+
+```javascript
+import { ThumbnailService } from '@alfresco/adf-core';
+
+constructor(public thumbnailService: ThumbnailService) {
+}‍‍‍‍‍‍‍‍
+```
+
+```html
+MP4 <mat-icon svgIcon="video/mp4"></mat-icon>
+PDF <mat-icon svgIcon="application/pdf"></mat-icon>
+GIF <mat-icon svgIcon="image/gif"></mat-icon>
+.....
+```
+
+
+
 <!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
 <!-- seealso start -->
 ## See also

@@ -27,14 +27,12 @@ If we want user to be able to upload attachments for empty lists, We can wrap ou
     <adf-task-attachment-list  
         [taskId]="YOUR_TASK_ID"
         (attachmentClick)="YOUR_HANDLER">
-            <div adf-empty-list> //no content template
-                <adf-empty-list>
-                    <div adf-empty-list-header>{{This List is empty}}</div>
-                    <div adf-empty-list-body>{{Drag and drop to upload}}</div>
-                    <div adf-empty-list-footer>
-                        <img [src]="Your custom image URL"></div> 
-                </adf-empty-list>
-            </div>
+        <adf-empty-list>
+            <div adf-empty-list-header>{{This List is empty}}</div>
+            <div adf-empty-list-body>{{Drag and drop to upload}}</div>
+            <div adf-empty-list-footer>
+                <img [src]="Your custom image URL"></div> 
+        </adf-empty-list>
     </adf-task-attachment-list>
 </adf-upload-drag-area>
 ```
