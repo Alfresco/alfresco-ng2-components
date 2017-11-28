@@ -67,7 +67,7 @@ export class SearchComponent implements AfterContentInit, OnChanges {
     searchTerm: string = '';
 
     @Input()
-    searchNode: QueryBody;
+    queryBody: QueryBody;
 
     @Input('class')
     set classList(classList: string) {
@@ -100,14 +100,13 @@ export class SearchComponent implements AfterContentInit, OnChanges {
 
     _classList: { [key: string]: boolean } = {};
 
-    constructor(
-        private searchService: SearchService,
-        private changeDetectorRef: ChangeDetectorRef,
-        private _elementRef: ElementRef) {
+    constructor(private searchService: SearchService,
+                private changeDetectorRef: ChangeDetectorRef,
+                private _elementRef: ElementRef) {
         this.keyPressedStream.asObservable()
             .debounceTime(200)
             .subscribe((searchedWord: string) => {
-                this.displaySearchResults(searchedWord);
+                this.loadSearchResults(searchedWord);
             });
     }
 
@@ -117,11 +116,13 @@ export class SearchComponent implements AfterContentInit, OnChanges {
 
     ngOnChanges(changes) {
         this.resetResults();
+
         if (changes.searchTerm && changes.searchTerm.currentValue) {
-            this.displaySearchResults(changes.searchTerm.currentValue);
-        }
-        if (changes.searchNode && changes.searchNode.currentValue) {
-            this.displaySearchResults();
+            this.loadSearchResults(changes.searchTerm.currentValue);
+        } else if (changes.queryBody && changes.queryBody.currentValue) {
+            this.loadSearchResults();
+        } else {
+            this.loadSearchResults(this.searchTerm);
         }
     }
 
@@ -131,7 +132,7 @@ export class SearchComponent implements AfterContentInit, OnChanges {
     }
 
     reload() {
-        this.displaySearchResults(this.searchTerm);
+        this.loadSearchResults(this.searchTerm);
     }
 
     private cleanResults() {
@@ -144,43 +145,43 @@ export class SearchComponent implements AfterContentInit, OnChanges {
         return searchOpts && searchOpts.query && searchOpts.query.query;
     }
 
-    private displaySearchResults(searchTerm?: string) {
-        let searchOpts: QueryBody = this.getSearchNode(searchTerm);
+    private loadSearchResults(searchTerm?: string) {
+        let searchOpts: QueryBody = this.getQueryBody(searchTerm);
 
         if (this.hasValidSearchQuery(searchOpts)) {
             this.searchService
                 .search(searchOpts)
                 .subscribe(
-                results => {
-                    this.results = <NodePaging> results;
-                    this.resultLoaded.emit(this.results);
-                    this.isOpen = true;
-                    this.setVisibility();
-                },
-                error => {
-                    if (error.status !== 400) {
-                        this.results = null;
-                        this.error.emit(error);
-                    }
-                });
+                    results => {
+                        this.results = <NodePaging> results;
+                        this.resultLoaded.emit(this.results);
+                        this.isOpen = true;
+                        this.setVisibility();
+                    },
+                    error => {
+                        if (error.status !== 400) {
+                            this.results = null;
+                            this.error.emit(error);
+                        }
+                    });
         } else {
             this.cleanResults();
         }
     }
 
-    private getSearchNode(searchTerm: string): QueryBody {
-        if (this.searchNode) {
-            if (!this.searchNode.query.query && searchTerm) {
-                this.searchNode.query.query = searchTerm;
+    private getQueryBody(searchTerm: string): QueryBody {
+        if (this.queryBody) {
+            if (!this.queryBody.query.query && searchTerm) {
+                this.queryBody.query.query = searchTerm;
             }
-            return this.searchNode;
+            return this.queryBody;
         } else {
             return this.generateDefaultSearchNode(searchTerm);
         }
     }
 
     private generateDefaultSearchNode(searchTerm: string): QueryBody {
-        let defaultSearchNode: QueryBody = {
+        let defaultQueryBody: QueryBody = {
             query: {
                 query: searchTerm ? `${searchTerm}* OR name:${searchTerm}*` : searchTerm
             },
@@ -193,7 +194,8 @@ export class SearchComponent implements AfterContentInit, OnChanges {
                 { query: "TYPE:'cm:folder' OR TYPE:'cm:content'" },
                 { query: 'NOT cm:creator:System' }]
         };
-        return defaultSearchNode;
+
+        return defaultQueryBody;
     }
 
     hidePanel() {

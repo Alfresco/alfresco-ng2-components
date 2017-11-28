@@ -24,8 +24,6 @@ import { LogService } from '@alfresco/adf-core';
 })
 export class WebscriptComponent {
 
-    currentPath = '/';
-    host = 'http://127.0.0.1:8080';
     scriptPath = 'sample/folder/Company%20Home';
     contextRoot = 'alfresco';
     servicePath = 'service';

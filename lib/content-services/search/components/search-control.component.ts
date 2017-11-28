@@ -64,7 +64,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     liveSearchMaxResults: number = 5;
 
     @Input()
-    customSearchNode: QueryBody;
+    customQueryBody: QueryBody;
 
     @Output()
     submit: EventEmitter<any> = new EventEmitter();

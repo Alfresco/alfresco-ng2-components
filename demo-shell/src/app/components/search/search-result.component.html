@@ -1,7 +1,7 @@
 <adf-search [searchTerm]="searchedWord"
             [maxResults]="maxItems"
             [skipResults]="skipCount"
-            (resultLoaded)="showSearchResult($event)"
+            (resultLoaded)="onSearchResultLoaded($event)"
             #search>
 </adf-search>
 
@@ -9,10 +9,11 @@
         [currentFolderId]="null"
         [nodeResult]="resultNodePageList"
         [disableDragArea]="true"
-        (documentListReady)="refreshResults($event)"
-        (changedPageSize)="refreshPage($event)"
-        (changedPageNumber)="refreshPage($event)"
-        (turnedNextPage)="refreshPage($event)"
-        (loadNext)="refreshPage($event)"
-        (turnedPreviousPage)="refreshPage($event)">
+        [pagination]="pagination"
+        (documentListReady)="onDocumentListReady($event)"
+        (changedPageSize)="onRefreshPagination($event)"
+        (changedPageNumber)="onRefreshPagination($event)"
+        (turnedNextPage)="onRefreshPagination($event)"
+        (loadNext)="onRefreshPagination($event)"
+        (turnedPreviousPage)="onRefreshPagination($event)">
 </app-files-component>
