@@ -35,8 +35,9 @@
         &-search-result-autocomplete {
             @include mat-menu-base(2);
             transform-origin: top left;
+            transform:translateX(-40px);
             position: absolute;
-            max-width: 200px;
+            max-width: 235px;
             max-height: 400px;
             margin-left: 45px;
             margin-top: -22px;
@@ -47,7 +48,6 @@
             border-radius: $mat-menu-border-radius;
 
             @media screen and ($mat-small) {
-                width: 160px;
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 overflow: hidden;
