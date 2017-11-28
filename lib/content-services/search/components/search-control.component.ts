@@ -17,12 +17,8 @@
 
 import { AuthenticationService, ThumbnailService } from '@alfresco/adf-core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-<<<<<<< HEAD
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output,
-         QueryList, ViewEncapsulation, ViewChild, ViewChildren, ElementRef, Renderer } from '@angular/core';
-=======
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation, ViewChild , ElementRef } from '@angular/core';
->>>>>>> removed deprecated render dependency
+         QueryList, ViewEncapsulation, ViewChild, ViewChildren, ElementRef } from '@angular/core';
 import { MinimalNodeEntity, QueryBody } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -113,13 +109,8 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     }
 
     applySearchFocus(animationDoneEvent) {
-<<<<<<< HEAD
-        if(animationDoneEvent.toState === 'active') {
-            this.searchInput.nativeElement.focus();
-=======
         if (animationDoneEvent.toState === 'active') {
-            this.inputSearch.nativeElement.focus();
->>>>>>> Fix search control component tests
+            this.searchInput.nativeElement.focus();
         }
     }
 
