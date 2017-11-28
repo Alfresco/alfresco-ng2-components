@@ -69,7 +69,7 @@ Using with file url:
 
 ## Integrating with DocumentList component
 
-Below is the most simple integration of Pagination and DocumentList components within your custom component:
+Below is the most simple integration of Viewer and DocumentList components within your custom component:
 
 ```html
 <adf-document-list
