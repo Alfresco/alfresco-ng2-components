@@ -1,30 +1,60 @@
-@import 'variables';
+@import "variables";
 
 @mixin no-select {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
-@mixin typo-icon() {
-  font-family: 'Material Icons';
-  font-weight: normal;
-  font-style: normal;
-  font-size: 24px;
-  line-height: 1;
-  letter-spacing: normal;
-  text-transform: none;
-  display: inline-block;
-  word-wrap: normal;
-  font-feature-settings: 'liga';
-  -webkit-font-feature-settings: 'liga';
-  -webkit-font-smoothing: antialiased;
+@mixin typo-icon {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    word-wrap: normal;
+    font-feature-settings: 'liga';
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
 }
 
-@mixin material-animation-default($duration:0.2s) {
-  transition-duration: $duration;
-  transition-timing-function: $animation-curve-default;
+@mixin material-animation-default($duration: 0.2s) {
+    transition-duration: $duration;
+    transition-timing-function: $animation-curve-default;
+}
+
+@mixin line-clamp($line-height: 1.25, $lines: 3) {
+    display: block;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    position: relative;
+    line-height: $line-height;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 !important;
+    -webkit-line-clamp: $lines;
+    height: calc(0.99em * #{$line-height} * #{$lines});
+
+    &:after {
+        content: '...';
+        text-align: right;
+        bottom: 0;
+        right: 0;
+        width: 25%;
+        display: block;
+        position: absolute;
+        height: calc(0.99em * #{$line-height});
+    }
+}
+
+@supports (-webkit-line-clamp: 1) {
+    .line-clamp:after  {
+        display: none !important;
+    }
 }
