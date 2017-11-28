@@ -113,8 +113,13 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     }
 
     applySearchFocus(animationDoneEvent) {
+<<<<<<< HEAD
         if(animationDoneEvent.toState === 'active') {
             this.searchInput.nativeElement.focus();
+=======
+        if (animationDoneEvent.toState === 'active') {
+            this.inputSearch.nativeElement.focus();
+>>>>>>> Fix search control component tests
         }
     }
 
