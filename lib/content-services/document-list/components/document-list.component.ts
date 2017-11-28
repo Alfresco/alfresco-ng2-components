@@ -174,7 +174,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     noPermission: boolean = false;
     selection = new Array<MinimalNodeEntity>();
 
-    // PaginatedComponent implementation
     pagination = new Subject<Pagination>();
 
     private layoutPresets = {};
@@ -282,6 +281,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             if (changes.node && changes.node.currentValue) {
                 this.resetSelection();
                 this.data.loadPage(changes.node.currentValue);
+                this.pagination.next(changes.node.currentValue.list.pagination);
             } else if (changes.rowFilter) {
                 this.data.setFilter(changes.rowFilter.currentValue);
                 if (this.currentFolderId) {
@@ -862,7 +862,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
     }
 
-    // PaginatedComponent implementation
     updatePagination(params: PaginationQueryParams) {
         const needsReload = this.maxItems !== params.maxItems || this.skipCount !== params.skipCount;
 
@@ -874,7 +873,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
     }
 
-    // PaginatedComponent implementation
     get supportedPageSizes(): number[] {
         return this.appConfig.get('document-list.supportedPageSizes', [5, 10, 15, 25]);
     }

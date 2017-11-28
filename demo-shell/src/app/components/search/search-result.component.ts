@@ -31,15 +31,12 @@ export class SearchResultComponent implements OnInit {
     @ViewChild('search')
     search: SearchComponent;
 
-    fileNodeId: string;
     queryParamName = 'q';
     searchedWord = '';
-    fileShowed = false;
-    navigationMode = 'dblclick';
     resultNodePageList: NodePaging;
     maxItems: number;
     skipCount = 0;
-    paging: Pagination;
+    pagination: Pagination;
 
     constructor(public router: Router,
                 private preferences: UserPreferencesService,
@@ -56,17 +53,17 @@ export class SearchResultComponent implements OnInit {
         this.maxItems = this.preferences.paginationSize;
     }
 
-    showSearchResult(event: NodePaging) {
-        this.resultNodePageList = event;
-        this.paging = event.list.pagination;
+    onSearchResultLoaded(nodePaging: NodePaging) {
+        this.resultNodePageList = nodePaging;
+        this.pagination = nodePaging.list.pagination;
     }
 
-    refreshResults(event: any) {
-        this.search.reload();
+    onDocumentListReady() {
+       // this.search.reload();
     }
 
-    refreshPage(event: Pagination) {
-        this.maxItems = event.maxItems;
-        this.skipCount = event.skipCount;
+    onRefreshPagination(pagination: Pagination) {
+         this.maxItems = pagination.maxItems;
+         this.skipCount = pagination.skipCount;
     }
 }
