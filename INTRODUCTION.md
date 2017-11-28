@@ -18,22 +18,21 @@ However, there are use-cases that Share does not fit very well, such as:
 This is where this application development framework comes into play, it can be used to create exactly the user interface 
 (i.e. web client) that the requirements demand.  
  
-The framework consists of several components that can be combined to form a customized content management application.
-Here is a list of some of the available web components:
+The framework consists of several libraries that can be used to form a customized content management application. The available libraries are:
 
-- [Core library](ng2-components/ng2-alfresco-core/README.md)
-- [DataTable](ng2-components/ng2-alfresco-datatable/README.md)
-- [DocumentList](ng2-components/ng2-alfresco-documentlist/README.md)
-- [Viewer](ng2-components/ng2-alfresco-viewer/README.md)
-- [Login](ng2-components/ng2-alfresco-login/README.md)
-- [Upload](ng2-components/ng2-alfresco-upload/README.md)
+- [Core](lib/core/README.md)
+- [Content Services](lib/content-services/README.md)
+- [Process Services](lib/process-services/README.md)
+- [Insights](lib/insights/README.md)
 
-You can browse all the components at this [page](http://devproducts.alfresco.com/).
+
+You can browse all the components at the
+[ADF Component Catalog](https://alfresco.github.io/adf-component-catalog/).
 
 An architecture overview looks like this:
 
 <p align="center">
-  <img title="alfresco-ng2-components-architecture" alt='alfresco' src='assets/alfresco-app-dev-framework-architecture.png'></img>
+  <img title="alfresco-angular-components-architecture" alt='alfresco' src='assets/alfresco-app-dev-framework-architecture.png'></img>
 </p>
 
 Here we can also see that there is an Alfresco JavaScript framework in use that wraps the Alfresco REST API, to make things easier for the client developer.
