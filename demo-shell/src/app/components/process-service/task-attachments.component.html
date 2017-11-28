@@ -5,12 +5,11 @@
             [parentId]="taskId">
 
             <adf-task-attachment-list #taskAttachList
-                                      [disabled]="isCompletedTask()"
-                                      [taskId]="taskId"
-                                      (attachmentClick)="onAttachmentClick($event)">
-                <div adf-empty-list>
-                    <div adf-empty-list-header class="adf-empty-list-header"> {{'ADF_TASK_LIST.ATTACHMENT.EMPTY.HEADER'
-                        | translate}}
+                [disabled]="isCompletedTask()"
+                [taskId]="taskId"
+                (attachmentClick)="onAttachmentClick($event)">
+                <adf-empty-list>
+                    <div adf-empty-list-header class="adf-empty-list-header">{{'ADF_TASK_LIST.ATTACHMENT.EMPTY.HEADER' | translate}}
                     </div>
                     <div adf-empty-list-body>
                         <div fxHide.lt-md="true" class="adf-empty-list-drag_drop">
@@ -20,7 +19,7 @@
                             {{'ADF_TASK_LIST.ATTACHMENT.EMPTY.DRAG-AND-DROP.SUBTITLE' | translate}}
                         </div>
                     </div>
-                </div>
+                </adf-empty-list>
             </adf-task-attachment-list>
 
         </adf-upload-drag-area>
