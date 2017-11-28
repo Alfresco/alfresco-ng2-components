@@ -1,4 +1,4 @@
-# Form Stencils with Angular 2
+# Form Stencils
 
 Form component provides basic support for custom stencils created with Activiti stencil editor.
 
@@ -22,8 +22,8 @@ Where `<activiti-app-root>` should be replaced with a valid url pointing to your
     provides all stencil controllers stored within Activiti
 
 - `runtime.ng1.js`
-    provides a compatibility layer for controllers created with Angular 1
-    (this is to avoid runtime errors when loading Angular 1 code into `<activiti-form>` component)
+    provides a compatibility layer for controllers created with AngularJS (aka Angular 1x)
+    (this is to avoid runtime errors when loading AngularJS code into `<activiti-form>` component)
 
 - `runtime.adf.js`
     provides API for stencil management and registration,
@@ -38,11 +38,11 @@ This value will be used as field type when form gets rendered.
 
 ## Form runtime template
 
-This should be a valid Angular 2 component template that you want to render in `<activiti-form>` component:
+This should be a valid Angular component template that you want to render in `<activiti-form>` component:
 
 ```html
 <div>
-    <div>Angular2 Component</div>
+    <div>Angular Component</div>
     <div>Created by: {{name}}</div>
 </div>
 ```
@@ -54,14 +54,14 @@ This can be any html layout to be rendered as a component placeholder in Activit
 ```html
 <div>
     <div style="color: blue">
-        Angular2 Component 01
+        Angular Component 01
     </div>
 </div>
 ```
 
 ## Custom component controller
 
-This field should contain JavaScript code for Angular 2 component class.
+This field should contain JavaScript code for Angular component class.
 
 _Note: If you are using TypeScript then you should be putting transpiled JavaScript code here,
 you can try official [TypeScript playground](http://www.typescriptlang.org/play/)
@@ -137,8 +137,8 @@ if (adf) {
 When rendered on the form this stencil item should look like the following:
 
 ```html
-Angular2 Component
+Angular Component
 Created by: Denys
 ```
 
-ADF Form component will automatically assemble and compile a valid Angular 2 component on the fly.
+ADF Form component will automatically assemble and compile a valid Angular component on the fly.

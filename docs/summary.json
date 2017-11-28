@@ -1,6 +1,6 @@
 [
     { "title": "Form Extensibility and Customisation", "file": "extensibility.md" },
-    { "title": "Form Stencils with Angular 2", "file": "stencils.md" },
+    { "title": "Form Stencils", "file": "stencils.md" },
     { "title": "Angular Material Design", "file": "angular-material-design.md" },
     { "title": "Theming", "file": "theming.md" },
     { "title": "Typography", "file": "typography.md" },

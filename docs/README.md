@@ -17,7 +17,7 @@ to the appropriate source file.
 
 <!-- guide start -->
 - [Form Extensibility and Customisation](extensibility.md)
-- [Form Stencils with Angular 2](stencils.md)
+- [Form Stencils](stencils.md)
 - [Angular Material Design](angular-material-design.md)
 - [Theming](theming.md)
 - [Typography](typography.md)

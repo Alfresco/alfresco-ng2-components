@@ -1,6 +1,6 @@
 # Prerequisites for building and running apps with the Alfresco Application Development Framework
 
-The [Angular 2](https://angular.io/) based application development framework requires the following:
+The [Angular](https://angular.io/) based application development framework requires the following:
 
 - An Alfresco Platform Repository (version [201609 Early Access](https://community.alfresco.com/docs/DOC-6372-alfresco-community-edition-file-list-201609-ea) or newer) 
 - [Download and install the process service](https://www.alfresco.com/products/bpm/alfresco-activiti/trial)
