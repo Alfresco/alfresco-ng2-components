@@ -1,15 +1,17 @@
 <div id="attachment-process-list" *ngIf="processInstanceId">
-    <h5>Attachments</h5>
     <div class="adf-no-form-container">
+
         <adf-upload-drag-area
             [parentId]="processInstanceId"
             [disabled]="isCompletedProcess()">
-        <adf-process-attachment-list #processAttachList
-                *ngIf="processInstanceId"
-                [disabled]="isCompletedProcess()"
-                [processInstanceId]="processInstanceId"
-                (attachmentClick)="onAttachmentClick($event)">
+
+            <adf-process-attachment-list #processAttachList
+                                            *ngIf="processInstanceId"
+                                            [disabled]="isCompletedProcess()"
+                                            [processInstanceId]="processInstanceId"
+                                            (attachmentClick)="onAttachmentClick($event)">
             </adf-process-attachment-list>
+
         </adf-upload-drag-area>
 
         <adf-create-process-attachment
