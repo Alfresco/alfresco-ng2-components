@@ -15,8 +15,24 @@
  * limitations under the License.
  */
 
-export * from './insights.module';
-//
-export * from './analytics-process/analytics-process.module';
-//
-export * from './analytics-process';
+import { ParameterValueModel } from './parameterValue.model';
+
+export class ReportParameterDetailsModel {
+    id: string;
+    name: string;
+    nameKey: string;
+    type: string;
+    value: any;
+    options: ParameterValueModel[];
+    dependsOn: string;
+
+    constructor(obj?: any) {
+        this.id = obj && obj.id;
+        this.name = obj && obj.name || null;
+        this.nameKey = obj && obj.nameKey || null;
+        this.type = obj && obj.type || null;
+        this.value = obj && obj.value || null;
+        this.options = obj && obj.options || null;
+        this.dependsOn = obj && obj.dependsOn || null;
+    }
+}

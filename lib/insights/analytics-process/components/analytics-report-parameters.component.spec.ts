@@ -17,7 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReportParametersModel } from '../../diagram';
+import { ReportParametersModel } from '../../diagram/models/report/reportParameters.model';
 import * as analyticParamsMock from '../../mock';
 import { AnalyticsReportParametersComponent } from '../components/analytics-report-parameters.component';
 import { AnalyticsProcessModule } from '../analytics-process.module';
