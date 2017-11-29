@@ -73,7 +73,7 @@
                     </adf-task-details>
                     <hr>
                     <div *ngIf="currentTaskId">
-                        {{'PS-TAB.AUDIT-LOG' | translate}}
+                        {{'PS-TAB.TASK-AUDIT-LOG' | translate}}
                         <button
                             adf-task-audit
                             [task-id]="currentTaskId"
@@ -158,7 +158,7 @@
                     </adf-process-instance-details>
                     <hr>
                     <div *ngIf="currentProcessInstanceId">
-                        {{'PS-TAB.AUDIT-LOG' | translate}}
+                        {{'PS-TAB.PROCESS-AUDIT-LOG' | translate}}
                         <button adf-process-audit
                                 [process-id]="currentProcessInstanceId"
                                 [download]="true" mat-icon-button

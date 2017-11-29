@@ -17,16 +17,12 @@
 
 import { ContentService, ThumbnailService } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, NgZone, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ProcessContentService, UploadService } from '@alfresco/adf-core';
-import { ProcessUploadService } from '../task-list/services/process-upload.service';
+import { ProcessContentService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-process-attachment-list',
     styleUrls: ['./process-attachment-list.component.scss'],
-    templateUrl: './process-attachment-list.component.html',
-    providers: [
-        { provide: UploadService, useClass: ProcessUploadService }
-    ]
+    templateUrl: './process-attachment-list.component.html'
 })
 export class ProcessAttachmentListComponent implements OnChanges {
 

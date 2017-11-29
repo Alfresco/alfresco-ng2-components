@@ -27,6 +27,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 import { PeopleModule } from '../people/people.module';
 import { CommentsModule } from '../comments/comments.module';
+import { TaskUploadService } from './services/task-upload.service';
 import { ProcessUploadService } from './services/process-upload.service';
 import { TaskListService } from './services/tasklist.service';
 import { TaskFilterService } from './services/task-filter.service';
@@ -70,6 +71,7 @@ import { TaskListComponent } from './components/task-list.component';
     providers: [
         TaskListService,
         TaskFilterService,
+        TaskUploadService,
         ProcessUploadService,
         DatePipe
     ],
