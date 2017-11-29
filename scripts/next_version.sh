@@ -51,7 +51,7 @@ done
 
 if [[ "${EXEC_MINOR}" == true ]]
 then
-    ADF_VERSION=$(npm view ng2-alfresco-core version)
+    ADF_VERSION=$(npm view @alfresco/adf-core version)
     NEXT_VERSION=( ${ADF_VERSION//./ } )
     ((NEXT_VERSION[1]++))
     NEXT_VERSION[2]=0
@@ -60,7 +60,7 @@ fi
 
 if [[ "${EXEC_MAJOR}" == true ]]
 then
-    ADF_VERSION=$(npm view ng2-alfresco-core version)
+    ADF_VERSION=$(npm view @alfresco/adf-core version)
     NEXT_VERSION=( ${ADF_VERSION//./ } )
     ((NEXT_VERSION[0]++))
     NEXT_VERSION[1]=0

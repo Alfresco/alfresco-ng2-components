@@ -23,6 +23,8 @@ show_help() {
     echo "-vj or -versionjsapi  to use a different version of js-api"
     echo "-demoshell execute the change version only in the demo shell "
     echo "-v or -version  version to update"
+    echo "-nextalpha update next alpha version of js-api and lib automatically"
+    echo "-nextbeta update next beta version of js-api and lib automatically"
     echo "-alpha update last alpha version of js-api and lib automatically"
     echo "-beta update beta alpha version of js-api and lib automatically"
     echo "-gnu for gnu"
@@ -47,7 +49,7 @@ last_alpha_mode() {
 
 next_alpha_mode() {
     echo "====== Auto find next ALPHA version ====="
-    VERSION=$(./next_version.sh -major -alpha)
+    VERSION=$(./next_version.sh -minor -alpha)
 
     echo "====== version lib ${VERSION} ====="
 
@@ -59,7 +61,7 @@ next_alpha_mode() {
 
 next_beta_mode() {
     echo "====== Auto find next BETA version ====="
-    VERSION=$(./next_version.sh -major -beta)
+    VERSION=$(./next_version.sh -minor -beta)
 
     echo "====== version lib ${VERSION} ====="
 
@@ -71,7 +73,7 @@ next_beta_mode() {
 
 last_beta_mode() {
     echo "====== Auto find last BETA version ====="
-    VERSION=$(npm view ng2-alfresco-core@beta version)
+    VERSION=$(npm view @alfresco/adf-core@beta version)
 
     echo "====== version lib ${VERSION} ====="
 
