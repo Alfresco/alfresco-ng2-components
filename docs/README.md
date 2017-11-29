@@ -17,7 +17,6 @@ to the appropriate source file.
 
 <!-- guide start -->
 - [Form Extensibility and Customisation](extensibility.md)
-- [Form Stencils](stencils.md)
 - [Angular Material Design](angular-material-design.md)
 - [Theming](theming.md)
 - [Typography](typography.md)
@@ -119,9 +118,7 @@ for more information about installing and using the source code.
 - [People content service](people-content.service.md)
 - [People process service](people-process.service.md)
 - [Renditions service](renditions.service.md)
-- [Search api service](search-api.service.md)
 - [Shared links api service](shared-links-api.service.md)
-- [Sites api service](sites.service.md)
 - [Storage service](storage.service.md)
 - [Thumbnail service](thumbnail.service.md)
 - [Translation service](translation.service.md)
@@ -129,6 +126,7 @@ for more information about installing and using the source code.
 - [User preferences service](user-preferences.service.md)
 - [Bpm user service](bpm-user.service.md)
 - [Ecm user service](ecm-user.service.md)
+- [*Sites service](../lib/core/services/sites.service.ts)
 
 ### Widgets
 
@@ -247,6 +245,7 @@ for more information about installing and using the source code.
 - [Process service](process.service.md)
 - [Task filter service](task-filter.service.md)
 - [Tasklist service](tasklist.service.md)
+- [*Task upload service](../lib/process-services/task-list/services/task-upload.service.ts)
 <!-- process-services end -->
 
 [(Back to Contents)](#contents)
