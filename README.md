@@ -30,10 +30,10 @@ necessary configuration, see this [page](PREREQUISITES.md).
 
 ## Components
 
-To view the complete list of all the components that you can use to build your custom Alfresco (ECM,BPM) client follow this link:
-[Components](/ng2-components).
+To view the sources of all components that you can use to build your custom Alfresco (Content Services or Process Services) client follow this link:
+[Components](/lib).
 
-You can browse all the components at the following [page](http://devproducts.alfresco.com/).
+You can browse all the components at the [ADF Component Catalog](https://alfresco.github.io/adf-component-catalog/).
 
 ## Demo Application
 
