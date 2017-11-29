@@ -15,8 +15,11 @@
  * limitations under the License.
  */
 
-export * from './insights.module';
-//
-export * from './analytics-process/analytics-process.module';
-//
-export * from './analytics-process';
+import { BarChart } from './barChart.model';
+
+export class MultiBarChart extends BarChart {
+
+    constructor(obj?: any) {
+        super(obj);
+    }
+}

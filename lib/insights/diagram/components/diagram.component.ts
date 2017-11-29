@@ -16,7 +16,8 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { DiagramElementModel, DiagramModel } from '../models/diagram.model';
+import { DiagramElementModel } from '../models/diagram/diagramElement.model';
+import { DiagramModel } from '../models/diagram/diagram.model';
 import { DiagramColorService } from '../services/diagram-color.service';
 import { DiagramsService } from '../services/diagrams.service';
 import { RaphaelService } from './raphael/raphael.service';

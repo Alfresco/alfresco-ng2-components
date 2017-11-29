@@ -15,8 +15,20 @@
  * limitations under the License.
  */
 
-export * from './insights.module';
-//
-export * from './analytics-process/analytics-process.module';
-//
-export * from './analytics-process';
+import { TableChart } from './tableChart.model';
+
+export class DetailsTableChart extends TableChart {
+    detailsTable: any;
+    showDetails: boolean = false;
+
+    constructor(obj?: any) {
+        super(obj);
+        if (obj.detailTables) {
+            this.detailsTable = new TableChart(obj.detailTables[0]);
+        }
+    }
+
+    hasDetailsTable() {
+        return this.detailsTable ? true : false;
+    }
+}

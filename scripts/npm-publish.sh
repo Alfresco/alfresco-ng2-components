@@ -14,8 +14,10 @@ eval EXEC_SLEEP=false
 eval SLEEP_TIME="0"
 eval EXEC_VERSION_JSAPI=false
 eval JSAPI_VERSION=""
+eval EXEC_BUILD=true
 
-eval projects=( "core"
+eval projects=(
+    "core"
     "insights"
     "content-services"
     "process-services" )
@@ -29,6 +31,7 @@ show_help() {
     echo "-r or --registry to publish in an alternative npm registry -registry 'http://npm.local.me:8080/' "
     echo "-token auth token for publish in the npm registry"
     echo "-t or --tag to add a tag when publish a package"
+    echo "-sb skip build"
     echo "--sleep add a sleep before any publish"
     echo "-gitjsapi to build all the components against a commit-ish version of the JS-API"
     echo "-vjsapi <commit-ish>      Install different version from npm of JS-API defined in the package.json"
@@ -46,6 +49,10 @@ enable_change_registry(){
 set_sleep(){
     SLEEP_TIME=$1
     EXEC_SLEEP=true
+}
+
+skip_build(){
+    EXEC_BUILD=false
 }
 
 get_token_registry(){
@@ -109,6 +116,7 @@ while [[ $1 == -* ]]; do
       -f|--force)  enable_force; shift;;
       -token) get_token_registry $2; shift 2;;
       --sleep) set_sleep $2; shift 2;;
+      -sb) skip_build; shift;;
       -r|--registry) enable_change_registry $2; shift 2;;
       -gitjsapi)  enable_js_api_git_link $2; shift 2;;
       -vjsapi)  version_js_api $2; shift 2;;
@@ -116,10 +124,12 @@ while [[ $1 == -* ]]; do
     esac
 done
 
+if $EXEC_BUILD == true; then
 echo "====== INSTALL AND CLEAN ${PACKAGE} ===== "
-npm install rimraf
-npm run clean
-npm install
+    npm install rimraf
+    npm run clean
+    npm install
+fi
 
 if $EXEC_GIT_NPM_INSTALL_JSAPI == true; then
     echo "====== Use the alfresco JS-API  '$GIT_ISH'====="
@@ -134,8 +144,10 @@ if $EXEC_VERSION_JSAPI == true; then
   npm install alfresco-js-api@${JSAPI_VERSION} --no-save
 fi
 
-echo "====== Build ADF ===== "
-npm run new-build
+if $EXEC_BUILD == true; then
+    echo "====== Build ADF ===== "
+    npm run new-build
+fi
 
 for PACKAGE in ${projects[@]}
 do

@@ -15,8 +15,14 @@
  * limitations under the License.
  */
 
-export * from './insights.module';
-//
-export * from './analytics-process/analytics-process.module';
-//
-export * from './analytics-process';
+export class DiagramEventDefinitionModel {
+    timeCycle: string;
+    type: string;
+
+    constructor(obj?: any) {
+        if (obj) {
+            this.timeCycle = obj.timeCycle;
+            this.type = obj.type;
+        }
+    }
+}

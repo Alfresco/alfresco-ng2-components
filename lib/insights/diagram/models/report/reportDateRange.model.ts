@@ -15,8 +15,15 @@
  * limitations under the License.
  */
 
-export * from './insights.module';
-//
-export * from './analytics-process/analytics-process.module';
-//
-export * from './analytics-process';
+export class ReportDateRange {
+    startDate: string;
+    endDate: string;
+    rangeId: string;
+
+    constructor(obj?: any) {
+        this.startDate = obj && obj.startDate || null;
+        this.endDate = obj && obj.endDate || null;
+        this.rangeId = obj && obj.rangeId || null;
+    }
+
+}
