@@ -58,10 +58,6 @@ export class SearchResultComponent implements OnInit {
         this.pagination = nodePaging.list.pagination;
     }
 
-    onDocumentListReady() {
-       // this.search.reload();
-    }
-
     onRefreshPagination(pagination: Pagination) {
          this.maxItems = pagination.maxItems;
          this.skipCount = pagination.skipCount;
