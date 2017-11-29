@@ -20,7 +20,7 @@ import { DiagramsModule } from '../../diagram/diagram.module';
 import { AnalyticsProcessModule } from '../analytics-process.module';
 import { AnalyticsReportListComponent } from '../components/analytics-report-list.component';
 import { MaterialModule } from '../../material.module';
-import { ReportParametersModel } from '../../diagram/models/report.model';
+import { ReportParametersModel } from '../../diagram/models/report/reportParameters.model';
 
 declare let jasmine: any;
 

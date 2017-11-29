@@ -15,8 +15,22 @@
  * limitations under the License.
  */
 
-export * from './insights.module';
-//
-export * from './analytics-process/analytics-process.module';
-//
-export * from './analytics-process';
+import { ReportParameterDetailsModel } from './reportParameterDetails.model';
+
+export class ReportDefinitionModel {
+    parameters: ReportParameterDetailsModel[] = [];
+
+    constructor(obj?: any) {
+        obj.parameters.forEach((params: any) => {
+            let reportParamsModel = new ReportParameterDetailsModel(params);
+            this.parameters.push(reportParamsModel);
+        });
+    }
+
+    findParam(name: string): ReportParameterDetailsModel {
+        this.parameters.forEach((param) => {
+            return param.type === name ? param : null;
+        });
+        return null;
+    }
+}

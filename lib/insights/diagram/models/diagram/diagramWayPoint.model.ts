@@ -15,8 +15,14 @@
  * limitations under the License.
  */
 
-export * from './insights.module';
-//
-export * from './analytics-process/analytics-process.module';
-//
-export * from './analytics-process';
+export class DiagramWayPointModel {
+    x: number;
+    y: number;
+
+    constructor(obj?: any) {
+        if (obj) {
+            this.x = obj.x;
+            this.y = obj.y;
+        }
+    }
+}

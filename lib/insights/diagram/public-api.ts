@@ -21,6 +21,27 @@ export * from './components/diagram.component';
 export * from './services/diagram-color.service';
 export * from './services/diagrams.service';
 
-export * from './models/diagram.model';
-export * from './models/chart.model';
-export * from './models/report.model';
+export * from './models/diagram/diagram.model';
+export * from './models/diagram/diagramElement.model';
+export * from './models/diagram/diagramElementProperty.model';
+export * from './models/diagram/diagramEventDefinition.model';
+export * from './models/diagram/diagramFlowElement.model';
+export * from './models/diagram/diagramLaneElement.model';
+export * from './models/diagram/diagramPoolElement.model';
+export * from './models/diagram/diagramWayPoint.model';
+
+export * from './models/chart/barChart.model';
+export * from './models/chart/chart.model';
+export * from './models/chart/detailsTableChart.model';
+export * from './models/chart/heatMapChart.model';
+export * from './models/chart/lineChart.model';
+export * from './models/chart/multiBarChart.model';
+export * from './models/chart/pieChart.model';
+export * from './models/chart/tableChart.model';
+
+export * from './models/report/parameterValue.model';
+export * from './models/report/reportDateRange.model';
+export * from './models/report/reportDefinition.model';
+export * from './models/report/reportParameterDetails.model';
+export * from './models/report/reportParameters.model';
+export * from './models/report/reportQuery.model';
