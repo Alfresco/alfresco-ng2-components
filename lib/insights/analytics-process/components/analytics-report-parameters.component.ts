@@ -32,7 +32,10 @@ import {
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import moment from 'moment-es6';
-import { ParameterValueModel, ReportParameterDetailsModel, ReportParametersModel, ReportQuery } from '../../diagram';
+import { ParameterValueModel } from '../../diagram/models/report/parameterValue.model';
+import { ReportParameterDetailsModel } from '../../diagram/models/report/reportParameterDetails.model';
+import { ReportParametersModel } from '../../diagram/models/report/reportParameters.model';
+import { ReportQuery } from '../../diagram/models/report/reportQuery.model';
 import { AnalyticsService } from '../services/analytics.service';
 
 @Component({
@@ -147,37 +150,37 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                 case 'processDefinition':
                     formBuilderGroup.processDefGroup = new FormGroup({
                         processDefinitionId: new FormControl(null, Validators.required, null)
-                    },                                               Validators.required);
+                    }, Validators.required);
                     break;
                 case 'duration':
                     formBuilderGroup.durationGroup = new FormGroup({
                         duration: new FormControl(null, Validators.required, null)
-                    },                                             Validators.required);
+                    }, Validators.required);
                     break;
                 case 'dateInterval':
                     formBuilderGroup.dateIntervalGroup = new FormGroup({
                         dateRangeInterval: new FormControl(null, Validators.required, null)
-                    },                                                 Validators.required);
+                    }, Validators.required);
                     break;
                 case 'boolean':
                     formBuilderGroup.typeFilteringGroup = new FormGroup({
                         typeFiltering: new FormControl(null, Validators.required, null)
-                    },                                                  Validators.required);
+                    }, Validators.required);
                     break;
                 case 'task':
                     formBuilderGroup.taskGroup = new FormGroup({
                         taskName: new FormControl(null, Validators.required, null)
-                    },                                         Validators.required);
+                    }, Validators.required);
                     break;
                 case 'integer':
                     formBuilderGroup.processInstanceGroup = new FormGroup({
                         slowProcessInstanceInteger: new FormControl(null, Validators.required, null)
-                    },                                                    Validators.required);
+                    }, Validators.required);
                     break;
                 case 'status':
                     formBuilderGroup.statusGroup = new FormGroup({
                         status: new FormControl(null, Validators.required, null)
-                    },                                           Validators.required);
+                    }, Validators.required);
                     break;
                 default:
                     return;
@@ -245,7 +248,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
 
     public convertMomentDate(date: string) {
         return moment(date, AnalyticsReportParametersComponent.FORMAT_DATE_ACTIVITI, true)
-                .format(AnalyticsReportParametersComponent.FORMAT_DATE_ACTIVITI) + 'T00:00:00.000Z';
+            .format(AnalyticsReportParametersComponent.FORMAT_DATE_ACTIVITI) + 'T00:00:00.000Z';
     }
 
     public getTodayDate() {
@@ -351,7 +354,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     doExport(paramQuery: ReportQuery) {
         this.analyticsService.exportReportToCsv(this.reportId, paramQuery).subscribe(
             (data: any) => {
-                let blob: Blob = new Blob([data], {type: 'text/csv'});
+                let blob: Blob = new Blob([data], { type: 'text/csv' });
                 this.contentService.downloadBlob(blob, paramQuery.reportName + '.csv');
             });
     }
@@ -365,7 +368,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     deleteReport(reportId: string) {
         this.analyticsService.deleteReport(reportId).subscribe(() => {
             this.deleteReportSuccess.emit(reportId);
-        },                                                     error => this.logService.error(error));
+        }, error => this.logService.error(error));
     }
 
     ngAfterContentChecked() {

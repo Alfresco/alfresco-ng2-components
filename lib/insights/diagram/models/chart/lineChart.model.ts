@@ -15,8 +15,22 @@
  * limitations under the License.
  */
 
-export * from './insights.module';
-//
-export * from './analytics-process/analytics-process.module';
-//
-export * from './analytics-process';
+import { Chart } from './chart.model';
+
+export class LineChart extends Chart {
+    title: string;
+    titleKey: string;
+    labels: string[] = [];
+    datasets: any[] = [];
+
+    constructor(obj?: any) {
+        super(obj);
+        this.title = obj && obj.title || null;
+        this.titleKey = obj && obj.titleKey || null;
+        this.labels = obj && obj.columnNames.slice(1, obj.columnNames.length);
+
+        obj.rows.forEach((value: any) => {
+            this.datasets.push({data: value.slice(1, value.length), label: value[0]});
+        });
+    }
+}

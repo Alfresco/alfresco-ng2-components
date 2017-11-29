@@ -20,8 +20,8 @@
 /* tslint:disable::no-access-missing-member */
 import { Component, ElementRef, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ParameterValueModel } from '../../../../diagram/models/report.model';
-import { ReportParameterDetailsModel } from '../../../../diagram/models/report.model';
+import { ParameterValueModel } from '../../../../diagram/models/report/parameterValue.model';
+import { ReportParameterDetailsModel } from '../../../../diagram/models/report/reportParameterDetails.model';
 import { NumberWidgetAanlyticsComponent } from './../number/number.widget';
 
 @Component({

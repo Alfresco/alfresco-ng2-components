@@ -16,8 +16,8 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
-import { ReportQuery } from '../../diagram';
-import { Chart } from '../../diagram';
+import { ReportQuery } from '../../diagram/models/report/reportQuery.model';
+import { Chart } from '../../diagram/models/chart/chart.model';
 import { AnalyticsService } from '../services/analytics.service';
 
 @Component({

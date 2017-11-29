@@ -15,8 +15,16 @@
  * limitations under the License.
  */
 
-export * from './insights.module';
-//
-export * from './analytics-process/analytics-process.module';
-//
-export * from './analytics-process';
+export class DiagramElementPropertyModel {
+    name: string;
+    type: string;
+    value: any;
+
+    constructor(obj?: any) {
+        if (obj) {
+            this.name = obj.name;
+            this.type = obj.type;
+            this.value = obj.value;
+        }
+    }
+}

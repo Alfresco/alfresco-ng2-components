@@ -19,16 +19,16 @@ import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { ParameterValueModel, ReportParametersModel } from '../../diagram';
-import {
-    BarChart,
-    Chart,
-    DetailsTableChart,
-    HeatMapChart,
-    MultiBarChart,
-    PieChart,
-    TableChart
-} from '../../diagram';
+import { ParameterValueModel } from '../../diagram/models/report/parameterValue.model';
+import { ReportParametersModel } from '../../diagram/models/report/reportParameters.model';
+import { BarChart } from '../../diagram/models/chart/barChart.model';
+import { Chart } from '../../diagram/models/chart/chart.model';
+import { DetailsTableChart } from '../../diagram/models/chart/detailsTableChart.model';
+import { HeatMapChart } from '../../diagram/models/chart/heatMapChart.model';
+import { MultiBarChart } from '../../diagram/models/chart/multiBarChart.model';
+import { PieChart } from '../../diagram/models/chart/pieChart.model';
+import { TableChart } from '../../diagram/models/chart/tableChart.model';
+
 import 'rxjs/add/observable/throw';
 
 @Injectable()
@@ -107,9 +107,9 @@ export class AnalyticsService {
     getProcessStatusValues(): Observable<any> {
         let paramOptions: ParameterValueModel[] = [];
 
-        paramOptions.push(new ParameterValueModel({id: 'All', name: 'All'}));
-        paramOptions.push(new ParameterValueModel({id: 'Active', name: 'Active'}));
-        paramOptions.push(new ParameterValueModel({id: 'Complete', name: 'Complete'}));
+        paramOptions.push(new ParameterValueModel({ id: 'All', name: 'All' }));
+        paramOptions.push(new ParameterValueModel({ id: 'Active', name: 'Active' }));
+        paramOptions.push(new ParameterValueModel({ id: 'Complete', name: 'Complete' }));
 
         return Observable.create(observer => {
             observer.next(paramOptions);
@@ -120,11 +120,11 @@ export class AnalyticsService {
     getDateIntervalValues(): Observable<any> {
         let paramOptions: ParameterValueModel[] = [];
 
-        paramOptions.push(new ParameterValueModel({id: 'byHour', name: 'By hour'}));
-        paramOptions.push(new ParameterValueModel({id: 'byDay', name: 'By day'}));
-        paramOptions.push(new ParameterValueModel({id: 'byWeek', name: 'By week'}));
-        paramOptions.push(new ParameterValueModel({id: 'byMonth', name: 'By month'}));
-        paramOptions.push(new ParameterValueModel({id: 'byYear', name: 'By year'}));
+        paramOptions.push(new ParameterValueModel({ id: 'byHour', name: 'By hour' }));
+        paramOptions.push(new ParameterValueModel({ id: 'byDay', name: 'By day' }));
+        paramOptions.push(new ParameterValueModel({ id: 'byWeek', name: 'By week' }));
+        paramOptions.push(new ParameterValueModel({ id: 'byMonth', name: 'By month' }));
+        paramOptions.push(new ParameterValueModel({ id: 'byYear', name: 'By year' }));
 
         return Observable.create(observer => {
             observer.next(paramOptions);
@@ -135,9 +135,9 @@ export class AnalyticsService {
     getMetricValues(): Observable<any> {
         let paramOptions: ParameterValueModel[] = [];
 
-        paramOptions.push(new ParameterValueModel({id: 'totalCount', name: 'Number of times a step is executed'}));
-        paramOptions.push(new ParameterValueModel({id: 'totalTime', name: 'Total time spent in a process step'}));
-        paramOptions.push(new ParameterValueModel({id: 'avgTime', name: 'Average time spent in a process step'}));
+        paramOptions.push(new ParameterValueModel({ id: 'totalCount', name: 'Number of times a step is executed' }));
+        paramOptions.push(new ParameterValueModel({ id: 'totalTime', name: 'Total time spent in a process step' }));
+        paramOptions.push(new ParameterValueModel({ id: 'avgTime', name: 'Average time spent in a process step' }));
 
         return Observable.create(observer => {
             observer.next(paramOptions);
@@ -157,7 +157,7 @@ export class AnalyticsService {
     }
 
     getProcessDefinitionsValues(appId: number): Observable<any> {
-        let options = {'appDefinitionId': appId};
+        let options = { 'appDefinitionId': appId };
         return Observable.fromPromise(this.apiService.getInstance().activiti.processDefinitionsApi.getProcessDefinitions(options))
             .map((res: any) => {
                 let paramOptions: ParameterValueModel[] = [];
@@ -173,7 +173,7 @@ export class AnalyticsService {
             .map((res: any) => {
                 let paramOptions: ParameterValueModel[] = [];
                 res.forEach((opt) => {
-                    paramOptions.push(new ParameterValueModel({id: opt, name: opt}));
+                    paramOptions.push(new ParameterValueModel({ id: opt, name: opt }));
                 });
                 return paramOptions;
             }).catch(err => this.handleError(err));

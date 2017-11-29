@@ -15,8 +15,20 @@
  * limitations under the License.
  */
 
-export * from './insights.module';
-//
-export * from './analytics-process/analytics-process.module';
-//
-export * from './analytics-process';
+export class ParameterValueModel {
+    id: string;
+    name: string;
+    version: string;
+    value: string;
+
+    constructor(obj?: any) {
+        this.id = obj && obj.id;
+        this.name = obj && obj.name || null;
+        this.value = obj && obj.value || null;
+        this.version = obj && obj.version || null;
+    }
+
+    get label () {
+        return this.version ? `${this.name} (v ${this.version}) ` : this.name;
+    }
+}

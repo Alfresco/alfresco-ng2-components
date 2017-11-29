@@ -21,8 +21,8 @@ import { ChartsModule } from 'ng2-charts';
 import { MaterialModule } from '../../material.module';
 
 import { DiagramsModule } from '../../diagram/diagram.module';
-import { Chart } from '../../diagram';
-import { ReportQuery } from '../../diagram';
+import { Chart } from '../../diagram/models/chart/chart.model';
+import { ReportQuery } from '../../diagram/models/report/reportQuery.model';
 import * as analyticMock from '../../mock';
 import { AnalyticsGeneratorComponent } from '../components/analytics-generator.component';
 import { AnalyticsProcessModule } from '../analytics-process.module';

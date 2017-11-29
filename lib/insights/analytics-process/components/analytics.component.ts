@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
-import { ReportQuery } from '../../diagram';
+import { ReportQuery } from '../../diagram/models/report/reportQuery.model';
 import { AnalyticsGeneratorComponent } from './analytics-generator.component';
 
 @Component({

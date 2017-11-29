@@ -15,8 +15,22 @@
  * limitations under the License.
  */
 
-export * from './insights.module';
-//
-export * from './analytics-process/analytics-process.module';
-//
-export * from './analytics-process';
+export class DiagramLaneElementModel {
+    height: number;
+    id: string;
+    name: string;
+    width: number;
+    x: number;
+    y: number;
+
+    constructor(obj?: any) {
+        if (obj) {
+            this.height = obj.height;
+            this.id = obj.id;
+            this.name = obj.name;
+            this.width = obj.width;
+            this.x = obj.x;
+            this.y = obj.y;
+        }
+    }
+}
