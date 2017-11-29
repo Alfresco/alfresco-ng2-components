@@ -17,17 +17,13 @@
 
 import { ContentService, ThumbnailService, EmptyListComponent } from '@alfresco/adf-core';
 import { AfterContentInit, ContentChild, Component, ElementRef, EventEmitter, Input, NgZone, OnChanges, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
-import { ProcessContentService, UploadService } from '@alfresco/adf-core';
-import { TaskUploadService } from '../task-list/services/task-upload.service';
+import { ProcessContentService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-task-attachment-list',
     styleUrls: ['./task-attachment-list.component.scss'],
     templateUrl: './task-attachment-list.component.html',
-    encapsulation: ViewEncapsulation.None,
-    providers: [
-        { provide: UploadService, useClass: TaskUploadService }
-    ]
+    encapsulation: ViewEncapsulation.None
 })
 export class TaskAttachmentListComponent implements OnChanges, AfterContentInit {
 

@@ -37,6 +37,9 @@ If we want user to be able to upload attachments for empty lists, We can wrap ou
 </adf-upload-drag-area>
 ```
 
+import { UploadService } from '@alfresco/adf-core';
+import { TaskUploadService } from '@alfresco/adf-process-services';
+
 Make sure to override the UploadService with the TaskUploadService
 ```ts
 @Component({
