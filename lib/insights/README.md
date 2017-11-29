@@ -17,7 +17,7 @@ Contains a variety of components, directives and services used throughout ADF
 
 ## Documentation
 
-See the [ADF Core](../../docs/README.md#process-services) section of the [docs index](../../docs/README.md)
+See the [ADF Insights](../../docs/README.md#insights) section of the [docs index](../../docs/README.md)
 for all available documentation on this library.
 
 ## Prerequisites

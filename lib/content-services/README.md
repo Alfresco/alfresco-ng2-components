@@ -17,7 +17,7 @@ Contains a variety of components, directives and services used throughout ADF
 
 ## Documentation
 
-See the [ADF Content service](../../docs/README.md#content-services) section of the [docs index](../../docs/README.md)
+See the [ADF Content Services](../../docs/README.md#content-services) section of the [docs index](../../docs/README.md)
 for all available documentation on this library.
 
 ## Prerequisites
