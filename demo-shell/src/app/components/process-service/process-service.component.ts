@@ -49,11 +49,10 @@ import {
     TaskDetailsEvent,
     TaskFiltersComponent,
     TaskListComponent,
-    TaskListService,
-    ProcessUploadService
+    TaskListService
 } from '@alfresco/adf-process-services';
 import { LogService } from '@alfresco/adf-core';
-import { AlfrescoApiService, UploadService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '@alfresco/adf-core';
 import {
     DataSorting,
     ObjectDataRow,
@@ -70,9 +69,6 @@ const currentTaskIdNew = '__NEW__';
     selector: 'app-process-service',
     templateUrl: './process-service.component.html',
     styleUrls: ['./process-service.component.scss'],
-    providers: [
-        { provide: UploadService, useClass: ProcessUploadService }
-    ],
     encapsulation: ViewEncapsulation.None
 })
 export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit {

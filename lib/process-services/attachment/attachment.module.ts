@@ -25,7 +25,6 @@ import { TaskAttachmentListComponent } from './task-attachment-list.component';
 import { ProcessAttachmentListComponent } from './process-attachment-list.component';
 import { CreateProcessAttachmentComponent } from './create-process-attachment.component';
 import { AttachmentComponent } from './create-task-attachment.component';
-import { ProcessUploadService } from '../task-list/services/process-upload.service';
 
 @NgModule({
     imports: [
@@ -35,9 +34,6 @@ import { ProcessUploadService } from '../task-list/services/process-upload.servi
         CommonModule,
         TranslateModule,
         DirectiveModule
-    ],
-    providers: [
-        ProcessUploadService
     ],
     declarations: [
         TaskAttachmentListComponent,

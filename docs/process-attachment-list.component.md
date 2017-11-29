@@ -11,6 +11,23 @@ Displays attached documents on a specified process instance
 </adf-process-attachment-list>
 ```
 
+Make sure to override the UploadService with the ProcessUploadService
+```ts
+
+import { UploadService } from '@alfresco/adf-core';
+import { ProcessUploadService } from '@alfresco/adf-process-services';
+
+@Component({
+    selector: 'my-custom-process-attachment',
+    providers: [
+        { provide: UploadService, useClass: ProcessUploadService }
+    ]
+})
+export class MyCustomProcessAttachmentComponent {
+    constructor() {}
+}
+```
+
 ### Properties
 
 | Name | Type | Description |

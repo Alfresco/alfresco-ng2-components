@@ -72,7 +72,8 @@
         "REPORTS-TAB": "Reports",
         "START-TASK": "Start task",
         "START-PROCESS": "Start process",
-        "AUDIT-LOG": "Process Audit log"
+        "PROCESS-AUDIT-LOG": "Process Audit log",
+        "TASK-AUDIT-LOG": "Task Audit log"
     },
     "FORM-LIST": {
         "STORE": "Store",
