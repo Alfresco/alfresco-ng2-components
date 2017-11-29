@@ -16,13 +16,16 @@
  */
 
 import { Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
-import { TaskListService, TaskAttachmentListComponent, TaskDetailsModel } from '@alfresco/adf-process-services';
+import { TaskListService, TaskAttachmentListComponent, TaskDetailsModel, TaskUploadService } from '@alfresco/adf-process-services';
 import { UploadService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'app-task-attachments',
     templateUrl: './task-attachments.component.html',
-    styleUrls: ['./task-attachments.component.css']
+    styleUrls: ['./task-attachments.component.css'],
+    providers: [
+        { provide: UploadService, useClass: TaskUploadService }
+    ]
 })
 
 export class TaskAttachmentsComponent implements OnInit, OnChanges {

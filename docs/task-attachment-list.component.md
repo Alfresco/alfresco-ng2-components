@@ -37,6 +37,19 @@ If we want user to be able to upload attachments for empty lists, We can wrap ou
 </adf-upload-drag-area>
 ```
 
+Make sure to override the UploadService with the TaskUploadService
+```ts
+@Component({
+    selector: 'my-custom-task-attachment',
+    providers: [
+        { provide: UploadService, useClass: TaskUploadService }
+    ]
+})
+export class MyCustomTaskAttachmentComponent {
+    constructor() {}
+}
+```
+
 [Upload Drag Area Component](./upload-drag-area.component.md)
 
 If the List is empty, the custom no-content template we passed is displayed. 
