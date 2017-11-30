@@ -20,7 +20,7 @@ to the appropriate source file.
 - [Angular Material Design](angular-material-design.md)
 - [Theming](theming.md)
 - [Typography](typography.md)
-- [Walkthrough: adding indicators to highlight information about a node](metadata-indicators.md)
+- [Walkthrough - adding indicators to highlight information about a node](metadata-indicators.md)
 
 <!-- guide end -->
 [(Back to Contents)](#contents)
