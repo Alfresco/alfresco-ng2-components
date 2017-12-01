@@ -71,7 +71,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
     /** Define a set of CSS styles to apply depending on the permission of the
-     *  user on that node. */
+     *  user on that node.
+     */
     @Input()
     permissionsStyle: PermissionStyleModel[] = [];
 
@@ -93,7 +94,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     /** Row selection mode. Can be none, `single` or `multiple`. For `multiple`
      * mode you can use Cmd (macOS) or Ctrl (Win) modifier keys to toggle 
-     * selection of multiple rows. */
+     * selection of multiple rows.
+     */
     @Input()
     selectionMode: string = 'single'; // null|single|multiple
 
@@ -123,13 +125,15 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     /** Defines default sorting. The format is an array of 2 strings `[key, direction]`
      *  i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want
-     * to override default sorting detected by the component based on columns. */
+     * to override default sorting detected by the component based on columns.
+     */
     @Input()
     sorting: string[];
 
     /** The inline style to apply to every row, see
      * [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html)
-     * docs for more details and usage examples */
+     * docs for more details and usage examples 
+     */
     @Input()
     rowStyle: string;
 
@@ -139,7 +143,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     /** Toggles the loading state and animated spinners for the component. Used in
      * combination with `navigate=false` to perform custom navigation and loading state
-     * indication. */
+     * indication.
+     */
     @Input()
     loading: boolean = false;
 
@@ -188,7 +193,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     folderChange: EventEmitter<NodeEntryEvent> = new EventEmitter<NodeEntryEvent>();
 
     /** Emitted when the user acts upon files with either single or double click
-     * (depends on `navigation-mode`). Useful integration with the Viewer Component. */
+     * (depends on `navigation-mode`). Useful integration with the Viewer Component.
+     */
     @Output()
     preview: EventEmitter<NodeEntityEvent> = new EventEmitter<NodeEntityEvent>();
 

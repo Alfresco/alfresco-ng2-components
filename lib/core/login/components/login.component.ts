@@ -83,7 +83,10 @@ export class LoginComponent implements OnInit {
     @Input()
     copyrightText: string = '\u00A9 2016 Alfresco Software, Inc. All Rights Reserved.';
 
-    /** Possible valid values are ECM, BPM or ALL. The default behaviour of this component will log in only in the ECM . If you want to log in in both systems the correct value to use is ALL. */
+    /** Possible valid values are ECM, BPM or ALL. The default behaviour of this component
+     * will log in only in the ECM . If you want to log in in both systems the correct value
+     * to use is ALL.
+     */
     @Input()
     providers: string;
 

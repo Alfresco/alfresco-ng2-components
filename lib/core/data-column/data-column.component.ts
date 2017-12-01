@@ -26,12 +26,14 @@ import { Component, ContentChild, Input, OnInit, TemplateRef } from '@angular/co
 export class DataColumnComponent implements OnInit {
 
     /** Data source key, can be either column/property key like `title`
-     *  or property path like `createdBy.name` */
+     *  or property path like `createdBy.name`
+     */
     @Input()
     key: string;
 
     /** Value type for the column. Possible settings are 'text', 'image', 'date',
-     *  'fileSize' and 'location'. */
+     *  'fileSize' and 'location'.
+     */
     @Input()
     type: string = 'text';
 
@@ -44,7 +46,8 @@ export class DataColumnComponent implements OnInit {
     sortable: boolean = true;
 
     /** Display title of the column, typically used for column headers. You can use the
-     *  i18n resouce key to get it translated automatically. */
+     *  i18n resouce key to get it translated automatically.
+     */
     @Input()
     title: string = '';
 
