@@ -59,12 +59,14 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
 
     /** Row selection mode. Can be none, `single` or `multiple`. For `multiple`
      * mode you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection
-     * for multiple rows. */
+     * for multiple rows.
+     */
     @Input()
     selectionMode: string = 'single'; // none|single|multiple
 
     /** Toggles multiple row selection, renders checkboxes at the beginning of
-     * each row */
+     * each row
+     */
     @Input()
     multiselect: boolean = false;
 
@@ -90,7 +92,8 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
 
     /** The inline style to apply to every row, see
      * [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html)
-     * docs for more details and usage examples */
+     * docs for more details and usage examples
+     */
     @Input()
     rowStyle: string;
 
@@ -123,7 +126,8 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     executeRowAction = new EventEmitter<DataRowActionEvent>();
 
     /** Indicates when the datatable is in the loading state and needs to show the
-     * loading template. */
+     * loading template.
+     */
     @Input()
     loading: boolean = false;
 
