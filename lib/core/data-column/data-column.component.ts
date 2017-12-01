@@ -59,7 +59,6 @@ export class DataColumnComponent implements OnInit {
     @Input()
     formatTooltip: Function;
 
-    
     /** Title to be used for screen readers. */
     @Input('sr-title')
     srTitle: string;

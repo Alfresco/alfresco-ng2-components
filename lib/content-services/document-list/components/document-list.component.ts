@@ -93,7 +93,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     thumbnails: boolean = false;
 
     /** Row selection mode. Can be none, `single` or `multiple`. For `multiple`
-     * mode you can use Cmd (macOS) or Ctrl (Win) modifier keys to toggle 
+     * mode you can use Cmd (macOS) or Ctrl (Win) modifier keys to toggle
      * selection of multiple rows.
      */
     @Input()
@@ -132,7 +132,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     /** The inline style to apply to every row, see
      * [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html)
-     * docs for more details and usage examples 
+     * docs for more details and usage examples
      */
     @Input()
     rowStyle: string;
