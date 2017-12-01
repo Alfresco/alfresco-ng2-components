@@ -7,7 +7,7 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
 <!-- toc -->
 
 - [Basic Usage](#basic-usage)
-  * [Properties](#properties)
+  * [Properties and events](#properties-and-events)
 - [Details](#details)
   * [Automatic column header translation](#automatic-column-header-translation)
   * [Custom tooltips](#custom-tooltips)
@@ -35,19 +35,13 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
 </adf-datatable>
 ```
 
-### Properties
+### Properties and events
 
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| key | string | | Data source key, can be either column/property key like `title` or property path like `createdBy.name` |
-| type | string | text | Value type for the column. Possible settings are 'text', 'image', 'date', 'fileSize' and 'location'. |
-| format | string | | Value format (if supported by components), for example format of the date |
-| sortable | boolean | true | Toggles ability to sort by this column, for example by clicking the column header |
-| title | string | | Display title of the column, typically used for column headers. You can use the i18n resouce key to get it translated automatically. |
-| template | `TemplateRef` | | Custom column template |
-| sr-title | string | | Screen reader title, used for accessibility purposes |
-| class | string | | Additional CSS class to be applied to column (header and cells) |
-| formatTooltip | Function | | Custom tooltip formatter function. |
+<!-- propsection start -->
+See the documentation comments in the
+[source file](../lib/core/data-column/data-column.component.ts)
+for full descriptions of properties and events.
+<!-- propsection end -->
 
 ## Details
 

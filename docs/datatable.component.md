@@ -11,15 +11,14 @@ See it live: [DataTable Quickstart](https://embed.plnkr.co/80qr4YFBeHjLMdAV0F6l/
 <!-- toc -->
 
 - [Basic usage](#basic-usage)
-  * [Properties](#properties)
-  * [Events](#events)
+  * [Properties and events](#properties-and-events)
 - [Details](#details)
   * [Supplying data for the table](#supplying-data-for-the-table)
   * [Customizing columns](#customizing-columns)
   * [DataTable DOM Events](#datatable-dom-events)
   * [Custom Empty content template](#custom-empty-content-template)
   * [Loading content template](#loading-content-template)
-  * [Events](#events-1)
+  * [Events](#events)
     + [row-keyup DOM event](#row-keyup-dom-event)
     + [rowClick event](#rowclick-event)
     + [rowDblClick event](#rowdblclick-event)
@@ -124,34 +123,13 @@ export class DataTableDemo {
 }
 ```
 
-### Properties
+### Properties and events
 
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| selectionMode | string | 'single' | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows.  |
-| rowStyle | string | | The inline style to apply to every row, see [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html) docs for more details and usage examples |
-| rowStyleClass | string | | The CSS class to apply to every row |
-| data | DataTableAdapter | instance of **ObjectDataTableAdapter** | data source |
-| rows | Object[] | [] | The rows that the datatable should show |
-| multiselect | boolean | false | Toggles multiple row selection, renders checkboxes at the beginning of each row |
-| actions | boolean | false | Toggles data actions column |
-| actionsPosition | string (left\|right) | right | Position of the actions dropdown menu. | 
-| fallbackThumbnail | string |  | Fallback image for row where thumbnail is missing|
-| contextMenu | boolean | false | Toggles custom context menu for the component |
-| allowDropFiles | boolean | false | Toggle file drop support for rows (see **ng2-alfresco-core/UploadDirective** for more details) |
-| loading | boolean | false | Flag that indicates if the datatable is in loading state and needs to show the loading template. Read the documentation above to see how to configure a loading template  |
-| showHeader | boolean | true | Toggles header visibility |
-| selection | DataRow[] | [] | Contains selected rows |
-
-### Events
-
-| Name | Description
-| --- | --- |
-| [rowClick](#rowclick-event) | Emitted when user clicks the row |
-| [rowDblClick](#rowdblclick-event) | Emitted when user double-clicks the row |
-| [showRowContextMenu](#showrowcontextmenu-event) | Emitted before context menu is displayed for a row |
-| [showRowActionsMenu](#showrowactionsmenu-event) | Emitted before actions menu is displayed for a row |
-| [executeRowAction](#executerowaction-event) | Emitted when row action is executed by user |
+<!-- propsection start -->
+See the documentation comments in the
+[source file](../lib/core/datatable/components/datatable/datatable.component.ts)
+for full descriptions of properties and events.
+<!-- propsection end -->
 
 ## Details
 

@@ -9,8 +9,7 @@ Authenticates to Alfresco Content Services and Alfresco Process Services.
 <!-- toc -->
 
 - [Basic usage](#basic-usage)
-  * [Properties](#properties)
-  * [Events](#events)
+  * [Properties and events](#properties-and-events)
 - [Details](#details)
   * [Handling events](#handling-events)
   * [Change footer content](#change-footer-content)
@@ -33,30 +32,13 @@ Authenticates to Alfresco Content Services and Alfresco Process Services.
 </adf-login>
 ```
 
-### Properties
+### Properties and events
 
-| Name | Type | Default Value | Description |
-| --- | --- | --- | --- |
-| providers | string | | Possible valid values are ECM, BPM or ALL. The default behaviour of this component will log in only in the ECM . If you want to log in in both systems the correct value to use is ALL. |
-| successRoute | string | | Route to redirect to upon successful login. |
-| disableCsrf | boolean | false | To prevent the CSRF Token from being submitted. Only for Alfresco Process Services call |
-| needHelpLink | string | | It will change the url of the NEED HELP link in the footer  |
-| registerLink | string | | It will change the url of the REGISTER link in the footer |
-| logoImageUrl | string | \<ADF logo image> | To change the logo image with a customised image |
-| copyrightText | string | \<ADF copyright string> | The copyright text below the login box |
-| backgroundImageUrl | string | \<ADF background image> | To change the background image with a customised image |
-| fieldsValidation | { [key: string]: any; }, extra?: { [key: string]: any; } |  | Use it to customise the validation rules of the login form |
-| showRememberMe | boolean | false | Toggle `Remember me` checkbox visibility |
-| showLoginActions | boolean | false | Toggle extra actions visibility (`Need Help`, `Register`, etc.) |
-
-### Events
-
-| Name | Description |
-| --- | --- |
-| success | Raised when the login is done |
-| error | Raised when the login fails |
-| executeSubmit | Raised when the form is submitted |
-
+<!-- propsection start -->
+See the documentation comments in the
+[source file](../lib/core/login/components/login.component.ts)
+for full descriptions of properties and events.
+<!-- propsection end -->
 ## Details
 
 ### Handling events
