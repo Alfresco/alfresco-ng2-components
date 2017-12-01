@@ -70,94 +70,133 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
+    /** Define a set of CSS styles to apply depending on the permission of the
+     *  user on that node. */
     @Input()
     permissionsStyle: PermissionStyleModel[] = [];
 
+    /** The default route for all the location-based columns (if declared). */
     @Input()
     locationFormat: string = '/';
 
+    /** Toggles navigation to folder content or file preview */
     @Input()
     navigate: boolean = true;
 
+    /** User interaction for folder navigation or file preview */
     @Input()
     navigationMode: string = DocumentListComponent.DOUBLE_CLICK_NAVIGATION; // click|dblclick
 
+    /** Show document thumbnails rather than icons */
     @Input()
     thumbnails: boolean = false;
 
+    /** Row selection mode. Can be none, `single` or `multiple`. For `multiple`
+     * mode you can use Cmd (macOS) or Ctrl (Win) modifier keys to toggle 
+     * selection of multiple rows. */
     @Input()
     selectionMode: string = 'single'; // null|single|multiple
 
+    /** Toggles multiselect mode */
     @Input()
     multiselect: boolean = false;
 
+    /** Toggles content actions for each row */
     @Input()
     contentActions: boolean = false;
 
+    /** Position of the content actions dropdown menu (can be 'left' or 'right') */
     @Input()
     contentActionsPosition: string = 'right'; // left|right
 
+    /** Toggles context menus for each row */
     @Input()
     contextMenuActions: boolean = false;
 
+    /** Custom image for empty folder */
     @Input()
     emptyFolderImageUrl: string = './assets/images/empty_doc_lib.svg';
 
+    /** Toggle file drop support for rows (see UploadDirective for more details) */
     @Input()
     allowDropFiles: boolean = false;
 
+    /** Defines default sorting. The format is an array of 2 strings `[key, direction]`
+     *  i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want
+     * to override default sorting detected by the component based on columns. */
     @Input()
     sorting: string[];
 
+    /** The inline style to apply to every row, see
+     * [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html)
+     * docs for more details and usage examples */
     @Input()
     rowStyle: string;
 
+    /** CSS class to apply to every row */
     @Input()
     rowStyleClass: string;
 
+    /** Toggles the loading state and animated spinners for the component. Used in
+     * combination with `navigate=false` to perform custom navigation and loading state
+     * indication. */
     @Input()
     loading: boolean = false;
 
+    /** Custom row filter */
     @Input()
     rowFilter: any | null = null;
 
+    /** Custom image resolver */
     @Input()
     imageResolver: any | null = null;
 
-    // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
+    /** The ID of the folder node to display or a reserved string alias for special sources */
     @Input()
     currentFolderId: string = null;
 
+    /** Currently displayed folder node */
     @Input()
     folderNode: MinimalNodeEntryEntity = null;
 
+    /** DocumentList will show all the nodes contained in the NodePaging entity */
     @Input()
     node: NodePaging = null;
 
+    /** The page size for the document list */
     @Input()
     maxItems: number;
 
+    /** The start offset of the current page's first item (for pagination purposes) */
     @Input()
     skipCount: number = 0;
 
+    /** Enable infinite scrolling mode */
     @Input()
     enableInfiniteScrolling: boolean = false;
 
+    /** Emitted when the user clicks a list node */
     @Output()
     nodeClick: EventEmitter<NodeEntityEvent> = new EventEmitter<NodeEntityEvent>();
 
+    /** Emitted when the user double-clicks a list node */
     @Output()
     nodeDblClick: EventEmitter<NodeEntityEvent> = new EventEmitter<NodeEntityEvent>();
 
+    /** Emitted when the current display folder changes */
     @Output()
     folderChange: EventEmitter<NodeEntryEvent> = new EventEmitter<NodeEntryEvent>();
 
+    /** Emitted when the user acts upon files with either single or double click
+     * (depends on `navigation-mode`). Useful integration with the Viewer Component. */
     @Output()
     preview: EventEmitter<NodeEntityEvent> = new EventEmitter<NodeEntityEvent>();
 
+    /** Emitted when the DocumentList is ready and has loaded all the elements */
     @Output()
     ready: EventEmitter<NodePaging> = new EventEmitter();
 
+    /** Emitted when the API fails to get the data for the DocumentList */
     @Output()
     error: EventEmitter<any> = new EventEmitter();
 

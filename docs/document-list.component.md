@@ -9,9 +9,9 @@ Displays the documents from a repository.
 <!-- toc -->
 
 - [Basic Usage](#basic-usage)
-  * [Properties](#properties)
-  * [Events](#events)
+  * [Properties and events](#properties-and-events)
 - [Details](#details)
+  * [Properties](#properties)
   * [DOM Events](#dom-events)
   * [Pagination strategy](#pagination-strategy)
   * [Data Sources](#data-sources)
@@ -30,6 +30,7 @@ Displays the documents from a repository.
   * [Custom row filter](#custom-row-filter)
   * [Custom image resolver](#custom-image-resolver)
   * [Custom 'empty folder' template](#custom-empty-folder-template)
+  * [Custom 'permission denied' template](#custom-permission-denied-template)
 - [See also](#see-also)
 
 <!-- tocstop -->
@@ -47,50 +48,19 @@ Displays the documents from a repository.
 </adf-document-list>
 ```
 
-### Properties
+### Properties and events
 
-The properties currentFolderId, folderNode and node are the entry initialization properties of the document list. They cannot be used together, choose the one that suites more your use case.
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| permissionsStyle | [PermissionStyleModel[]](permissions-style.model.md) | null | Define a set of CSS styles styles to apply depending on the permission of the user on that node. See the [Permission Style model](permissions-style.model.md) page for further details and examples. | 
-| locationFormat | string | '/' | The default route for all the location-based columns (if declared). |
-| navigate | boolean | true | Toggles navigation to folder content or file preview |
-| navigationMode | string (click,dblclick) | dblclick | User interaction for folder navigation or file preview |
-| thumbnails | boolean | false | Show document thumbnails rather than icons |
-| selectionMode | string | 'single' | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows.  |
-| multiselect | boolean | false | Toggles multiselect mode |
-| contentActions | boolean | false | Toggles content actions for each row |
-| contentActionsPosition | string (left\|right) | right | Position of the content actions dropdown menu. |
-| contextMenuActions | boolean | false | Toggles context menus for each row |
-| emptyFolderImageUrl | string | assets/images/empty_doc_lib.svg | Custom image for empty folder |
-| allowDropFiles | boolean | false | Toggle file drop support for rows (see **ng2-alfresco-core/UploadDirective** for more details) |
-| sorting | string[] | | Defines default sorting. The format is an array of 2 strings `[key, direction]` i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want to override default sorting detected by the component based on columns. |
-| rowStyle | string | | The inline style to apply to every row, see [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html) docs for more details and usage examples |
-| rowStyleClass | string | | The CSS class to apply to every row |
-| loading | boolean | false | Toggles the loading state and animated spinners for the component. Used in combination with `navigate=false` to perform custom navigation and loading state indication. |
-| rowFilter | `RowFilter` | | Custom row filter, [see more](#custom-row-filter). |
-| imageResolver | `ImageResolver` | | Custom image resolver, [see more](#custom-image-resolver). |
-| currentFolderId | string | null | The ID of the folder node to display or a reserved string alias for special sources (see **Data Sources**) |
-| folderNode | [MinimalNodeEntryEntity](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md) | null | Currently displayed folder node | 
-| node | [NodePaging](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodePaging.md) | null | Document list will show all the nodes contained in the NodePaging entity  | 
-| maxItems | number | Default value is stored into user preference settings | determine the size of the page for the element into document list |
-| skipCount | number | 0 | element to skip over for pagination purpose |
-| enableInfiniteScrolling | boolean | true | Enable documentlist to work into infinite scrolling mode |
-
-### Events
-
-| Name | Description |
-| --- | --- |
-| nodeClick | emitted when user clicks a list node |
-| nodeDblClick | emitted when user double-clicks list node |
-| folderChange | emitted once current display folder has changed |
-| preview | emitted when user acts upon files with either single or double click (depends on `navigation-mode`), recommended for Viewer components integration  |
-| permissionError | emitted when user is attempting to create a folder via action menu without having the permission to do it |
-| ready | emitted when the documentList is ready and loads all the elements|
-| error | emitted when API fails to get documentList data|
+<!-- propsection start -->
+See the documentation comments in the
+[source file](../lib/content-services/document-list/components/document-list.component.ts)
+for full descriptions of properties and events.
+<!-- propsection end -->
 
 ## Details
+
+### Properties
+
+The properties `currentFolderId`, `folderNode` and `node` are the entry initialization properties of the document list. They cannot be used together, so choose the one that best suits your use case.
 
 ### DOM Events
 
