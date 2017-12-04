@@ -57,7 +57,7 @@
                         (nextPage)="onNextPage($event)"
                         (prevPage)="onPrevPage($event)"
                         [pagination]="taskPagination"
-                        [supportedPageSizes]="[2, 4, 6, 8, 10, 12]">
+                        [supportedPageSizes]="supportedPages">
                     </adf-pagination>
                 </div>
                 <div class="adf-grid-item adf-tasks-details" *ngIf="!isStartTaskMode()" fxFlex.gt-md="1 1 auto">

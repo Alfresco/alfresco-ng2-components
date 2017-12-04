@@ -26,8 +26,9 @@ import { StorageService } from './storage.service';
 @Injectable()
 export class UserPreferencesService {
 
-    private defaults = {
+    defaults = {
         paginationSize: 25,
+        supportedPageSizes: [5, 10, 15, 20],
         locale: 'en'
     };
 
@@ -43,7 +44,8 @@ export class UserPreferencesService {
         const currentLocale = this.locale || this.getDefaultLocale();
         this.localeSubject = new BehaviorSubject(currentLocale);
         this.locale$ = this.localeSubject.asObservable();
-        this.defaults.paginationSize = appConfig.get('pagination.size', 25);
+        this.defaults.paginationSize = this.appConfig.get('pagination.size', this.defaults.paginationSize);
+        this.defaults.supportedPageSizes = this.appConfig.get('pagination.supportedPageSizes', this.defaults.supportedPageSizes);
     }
 
     get(property: string, defaultValue?: string): string {
@@ -74,6 +76,10 @@ export class UserPreferencesService {
 
     getPropertyKey(property: string): string {
         return `${this.getStoragePrefix()}__${property}`;
+    }
+
+    getDifferentPageSizes(): number[] {
+        return this.defaults.supportedPageSizes;
     }
 
     set authType(value: string) {
