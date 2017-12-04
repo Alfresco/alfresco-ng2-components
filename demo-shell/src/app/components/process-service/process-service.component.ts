@@ -52,7 +52,7 @@ import {
     TaskListService
 } from '@alfresco/adf-process-services';
 import { LogService } from '@alfresco/adf-core';
-import { AlfrescoApiService, UploadService, UserPreferencesService } from '@alfresco/adf-core';
+import { AlfrescoApiService, UserPreferencesService } from '@alfresco/adf-core';
 import {
     DataSorting,
     ObjectDataRow,
@@ -153,7 +153,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
                 private preferenceService: UserPreferencesService) {
         this.dataTasks = new ObjectDataTableAdapter();
         this.dataTasks.setSorting(new DataSorting('created', 'desc'));
-        
         this.supportedPages = this.preferenceService.getDifferentPageSizes();
         this.taskPagination.maxItems = this.preferenceService.paginationSize;
 
