@@ -45,6 +45,7 @@ Using with file url:
 | --- | --- | --- | --- |
 | fileNodeId | string | | Node Id of the file to load |
 | urlFile | string | | If you want to load an external file that does not come from ECM you can use this Url where to load the file |
+| urlFileViewer | string | null | Viewer to use with the `urlFile` address (`pdf`, `image`, `media`, `text`). Used when `urlFile` has no filename and extension. |
 | urlBlob | Blob | | If you want to load a Blob File |
 | overlayMode | boolean | false | If `true` show the Viewer full page over the present content otherwise will fit the parent div |
 | showViewer | boolean | true | Hide or show the viewer |
