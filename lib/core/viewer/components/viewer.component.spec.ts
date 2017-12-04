@@ -112,7 +112,7 @@ class ViewerWithCustomOpenWithComponent {}
 })
 class ViewerWithCustomMoreActionsComponent {}
 
-describe('ViewerComponent', () => {
+fdescribe('ViewerComponent', () => {
 
     let component: ViewerComponent;
     let fixture: ComponentFixture<ViewerComponent>;
@@ -208,8 +208,18 @@ describe('ViewerComponent', () => {
         expect(customElement.querySelector('.adf-viewer-container-more-actions')).toBeDefined();
     });
 
+    it('should NOT display sidebar if is not allowed', () => {
+        component.showSidebar = true;
+        component.allowSidebar = false;
+        component.sidebarPosition = 'left';
+        fixture.detectChanges();
+        let sidebar = element.querySelector('.adf-viewer__sidebar');
+        expect(sidebar).toBeNull();
+    });
+
     it('should display sidebar on the left side', () => {
         component.showSidebar = true;
+        component.allowSidebar = true;
         component.sidebarPosition = 'left';
         fixture.detectChanges();
         let sidebar = element.querySelector('.adf-viewer__sidebar');
@@ -218,6 +228,7 @@ describe('ViewerComponent', () => {
 
     it('should display sidebar on the right side', () => {
         component.showSidebar = true;
+        component.allowSidebar = true;
         component.sidebarPosition = 'right';
         fixture.detectChanges();
         let sidebar = element.querySelector('.adf-viewer__sidebar');
@@ -226,6 +237,7 @@ describe('ViewerComponent', () => {
 
     it('should display sidebar on the right side as fallback', () => {
         component.showSidebar = true;
+        component.allowSidebar = true;
         component.sidebarPosition = 'unknown-value';
         fixture.detectChanges();
         let sidebar = element.querySelector('.adf-viewer__sidebar');
