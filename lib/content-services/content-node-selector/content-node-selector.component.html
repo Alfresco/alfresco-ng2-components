@@ -1,31 +1,31 @@
 <header matDialogTitle
-        class="adf-content-node-selector-title"
-        data-automation-id="content-node-selector-title">{{title}}
+    class="adf-content-node-selector-title"
+    data-automation-id="content-node-selector-title">{{title}}
 </header>
 
 <section matDialogContent
-         class="adf-content-node-selector-content"
-         (node-select)="onNodeSelect($event)">
+    class="adf-content-node-selector-content"
+    (node-select)="onNodeSelect($event)">
 
     <mat-form-field floatPlaceholder="never" class="adf-content-node-selector-content-input">
         <input matInput
-               id="searchInput"
-               [formControl]="searchInput"
-               type="text"
-               placeholder="Search"
-               [value]="searchTerm"
-               data-automation-id="content-node-selector-search-input">
+            id="searchInput"
+            [formControl]="searchInput"
+            type="text"
+            placeholder="Search"
+            [value]="searchTerm"
+            data-automation-id="content-node-selector-search-input">
 
         <mat-icon *ngIf="searchTerm.length > 0"
-                  matSuffix (click)="clear()"
-                  class="adf-content-node-selector-content-input-icon"
-                  data-automation-id="content-node-selector-search-clear">clear
+            matSuffix (click)="clear()"
+            class="adf-content-node-selector-content-input-icon"
+            data-automation-id="content-node-selector-search-clear">clear
         </mat-icon>
 
         <mat-icon *ngIf="searchTerm.length === 0"
-                  matSuffix
-                  class="adf-content-node-selector-content-input-icon"
-                  data-automation-id="content-node-selector-search-icon">search
+            matSuffix
+            class="adf-content-node-selector-content-input-icon"
+            data-automation-id="content-node-selector-search-icon">search
         </mat-icon>
 
     </mat-form-field>
@@ -40,11 +40,11 @@
     <adf-toolbar>
         <adf-toolbar-title>
             <adf-dropdown-breadcrumb *ngIf="needBreadcrumbs()"
-                                     class="adf-content-node-selector-content-breadcrumb"
-                                     (navigate)="clear()"
-                                     [target]="documentList"
-                                     [folderNode]="breadcrumbFolderNode"
-                                     data-automation-id="content-node-selector-content-breadcrumb">
+                class="adf-content-node-selector-content-breadcrumb"
+                (navigate)="clear()"
+                [target]="documentList"
+                [folderNode]="breadcrumbFolderNode"
+                data-automation-id="content-node-selector-content-breadcrumb">
             </adf-dropdown-breadcrumb>
         </adf-toolbar-title>
     </adf-toolbar>
@@ -82,25 +82,11 @@
                 <data-column key="$thumbnail" type="image"></data-column>
                 <data-column key="name" type="text" class="full-width ellipsis-cell">
                     <ng-template let-context="$implicit">
-                        <adf-name-location-cell
-                            [data]="context.data"
-                            [column]="context.col"
-                            [row]="context.row"
-                            format="/files">
-                        </adf-name-location-cell>                        
+                        <adf-name-location-cell [data]="context.data" [column]="context.col" [row]="context.row"></adf-name-location-cell>                        
                     </ng-template>
                 </data-column>
-                <data-column 
-                    key="modifiedAt" 
-                    type="date" 
-                    title="ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_ON" 
-                    format="timeAgo"
-                    class="adf-content-selector-modified-cell"></data-column>
-                <data-column 
-                    key="modifiedByUser.displayName" 
-                    type="text" 
-                    title="ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_BY"
-                    class="adf-content-selector-modifier-cell"></data-column>
+                <data-column key="modifiedAt" type="date" format="timeAgo" class="adf-content-selector-modified-cell"></data-column>
+                <data-column key="modifiedByUser.displayName" type="text" class="adf-content-selector-modifier-cell"></data-column>
             </data-columns>
 
         </adf-document-list>
@@ -120,17 +106,17 @@
 <footer matDialogActions class="adf-content-node-selector-actions">
 
     <button *ngIf="inDialog"
-            mat-button
-            class="adf-content-node-selector-actions-cancel"
-            (click)="close()"
-            data-automation-id="content-node-selector-actions-cancel">{{ 'NODE_SELECTOR.CANCEL' | translate }}
+        mat-button
+        class="adf-content-node-selector-actions-cancel"
+        (click)="close()"
+        data-automation-id="content-node-selector-actions-cancel">{{ 'NODE_SELECTOR.CANCEL' | translate }}
     </button>
 
     <button mat-button
-            [disabled]="!chosenNode"
-            class="adf-content-node-selector-actions-choose"
-            (click)="choose()"
-            data-automation-id="content-node-selector-actions-choose">{{ buttonActionName | translate }}
+        [disabled]="!chosenNode"
+        class="adf-content-node-selector-actions-choose"
+        (click)="choose()"
+        data-automation-id="content-node-selector-actions-choose">{{ buttonActionName | translate }}
     </button>
 
 </footer>

@@ -16,12 +16,14 @@
  */
 
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { PathInfoEntity } from 'alfresco-js-api';
 import { DataTableCellComponent } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-name-location-cell',
-    templateUrl: './name-location-cell.component.html',
+    template: `
+    <div class="adf-name-location-cell-name">{{ name }}</div>
+    <div class="adf-name-location-cell-location" [title]="path?.name">{{ path?.name }}</div>
+    `,
     styleUrls: ['./name-location-cell.component.scss'],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -29,33 +31,13 @@ import { DataTableCellComponent } from '@alfresco/adf-core';
 })
 export class NameLocationCellComponent extends DataTableCellComponent implements OnInit {
 
-    link: any[];
-    location: string = '';
-    fileName: string = '';
+    path: string = '';
+    name: string = '';
 
     ngOnInit() {
         if (this.row) {
-            this.extractName();
-            this.extractLocation();
+            this.path = this.row.getValue('path');
+            this.name = this.row.getValue('name');
         }
-    }
-
-    private extractName() {
-        this.fileName = this.data.getValue(this.row, this.column);
-    }
-
-    private extractLocation() {
-        const path: PathInfoEntity = this.row.getValue('path');
-        
-        if (path && path.name && path.elements) {
-            this.location = path.name;
-
-            if (!this.tooltip) {
-                this.tooltip = path.name;
-            }
-
-            const parent = path.elements[path.elements.length - 1];
-            this.link = [ this.column.format, parent.id ];
-        }        
     }
 }

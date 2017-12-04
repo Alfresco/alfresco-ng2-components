@@ -3,11 +3,11 @@
 
     .adf-name-location-cell {        
         &-location {
-            a {
-                color: mat-color($foreground, base, 0.5);
-                text-decoration: none;
-                font-size: 12px;
-            }
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;                
+            color: mat-color($foreground, base, 0.5);
+            font-size: 12px;
         }
     }
 }

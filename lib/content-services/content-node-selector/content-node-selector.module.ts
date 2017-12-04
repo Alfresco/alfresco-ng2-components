@@ -18,7 +18,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../material.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -44,7 +43,6 @@ import { NameLocationCellComponent } from './name-location-cell/name-location-ce
         DocumentListModule,
         DataColumnModule,
         DataTableModule,
-        RouterModule,
         PaginationModule
     ],
     exports: [
