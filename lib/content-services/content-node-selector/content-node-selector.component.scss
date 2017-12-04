@@ -68,6 +68,23 @@
                     }
                 }
 
+                &-breadcrumb {
+                    .adf-dropdown-breadcumb-trigger {
+                        outline: none;
+                        .mat-icon {
+                            color: mat-color($foreground, base, 0.45);
+
+                            &:hover {
+                                color: mat-color($foreground, base, 0.65);
+                            }
+                        }
+                    }
+
+                    .adf-dropddown-breadcrumb-item-chevron {
+                        color: mat-color($foreground, base, 0.45);
+                    }
+                }
+
                 &-list {
                     height: 200px;
                     overflow: auto;
