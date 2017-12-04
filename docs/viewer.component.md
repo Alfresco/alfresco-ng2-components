@@ -58,6 +58,7 @@ Using with file url:
 | allowSidebar | boolean |false | Toggle sidebar feature |
 | showSidebar | boolean | false | Toggles sidebar visibility. Requires `allowSidebar` to be set to `true`. |
 | sidebarPosition | string | right | The position of the sidebar. Can be `left` or `right`. |
+| sidebarTemplate | TemplateRef<any> | null | The template intended to be used as a sidebar. The template context contains the loaded node data. |
 
 ## Events
 
@@ -174,6 +175,12 @@ Everything you put inside the "adf-viewer-toolbar" tags is going to be rendered 
 The Viewer component also supports custom sidebar components and layouts.
 The `allowSidebar` property should be set to `true` to enable this feature.
 
+Custom sidebar for the viewer can be injected in two different ways:
+- using transclusion
+- using template **(only works when using the viewer with fileNodeId)**
+
+#### Using transclusion
+
 ```html
 <adf-viewer [allowSidebar]="true">
     <adf-viewer-sidebar>
@@ -182,7 +189,16 @@ The `allowSidebar` property should be set to `true` to enable this feature.
 </adf-viewer>
 ```
 
-Everything you put inside the "adf-viewer-sidebar" tags is going to be rendered instead of the default sidebar.
+Everything you put inside the "adf-viewer-sidebar" tags is going to be rendered.
+
+#### Using template injection (only works when using the viewer with fileNodeId)
+
+```html
+<ng-template let-node="node" #sidebarTemplate>
+    <adf-content-metadata-card [node]="node"></adf-content-metadata-card>
+</ng-template>
+<adf-viewer [allowSidebar]="true" [sidebarTemplate]="sidebarTemplate"></adf-viewer>
+```
 
 ### Custom "Open With" menu
 
