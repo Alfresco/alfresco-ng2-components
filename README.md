@@ -1,5 +1,6 @@
 # ALFRESCO ANGULAR COMPONENTS
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d9eb873741da403bb3284778102372e7)](https://www.codacy.com/app/Alfresco/alfresco-ng2-components?utm_source=github.com&utm_medium=referral&utm_content=Alfresco/alfresco-ng2-components&utm_campaign=badger)
 [![Join the chat at https://gitter.im/Alfresco/alfresco-ng2-components](https://badges.gitter.im/Alfresco/alfresco-ng2-components.svg)](https://gitter.im/Alfresco/alfresco-ng2-components?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 <p>
