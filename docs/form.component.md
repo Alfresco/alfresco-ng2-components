@@ -1,15 +1,15 @@
-# Activiti Form component
+# Form component
 
-The component shows a Form from Activiti (see it live: [Form Quickstart](https://embed.plnkr.co/YSLXTqb3DtMhVJSqXKkE/))
+Shows a Process Services form.
+
+(See it live: [Form Quickstart](https://embed.plnkr.co/YSLXTqb3DtMhVJSqXKkE/))
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
 
 <!-- toc -->
 
 - [Basic Usage](#basic-usage)
-  * [Properties](#properties)
-  * [Advanced properties](#advanced-properties)
-  * [Events](#events)
+  * [Properties and events](#properties-and-events)
 - [Details](#details)
   * [Custom empty form template](#custom-empty-form-template)
   * [Controlling outcome execution behaviour](#controlling-outcome-execution-behaviour)
@@ -101,48 +101,13 @@ and store the form field as metadata. The param nameNode is optional.
 </adf-form>
 ```
 
-### Properties
+### Properties and events
 
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| taskId | string | | Task id to fetch corresponding form and values. |
-| formId | string | | The id of the form definition to load and display with custom values. |
-| formName | string | | Name of the form definition to load and display with custom values. |
-| data | FormValues | | Custom form values map to be used with the rendered form. |
-| showTitle | boolean | true | Toggle rendering of the form title. |
-| showCompleteButton | boolean | true | Toggle rendering of the `Complete` outcome button. |
-| disableCompleteButton | boolean | false | The `Complete` outcome button is shown but it will be disabled. |
-| disableStartProcessButton | boolean | false | The `Start Process` outcome button is shown but it will be disabled. |
-| showSaveButton | boolean | true | Toggle rendering of the `Save` outcome button. |
-| readOnly | boolean | false | Toggle readonly state of the form. Enforces all form widgets render readonly if enabled. |
-| showRefreshButton | boolean | true | Toggle rendering of the `Refresh` button. |
-| showValidationIcon | boolean | true | Toggle rendering of the validation icon next form title. |
-| saveMetadata | boolean | false | Store the value of the form as metadata. |
-| path | string |  |  Path of the folder where to store the metadata. |
-| nameNode | string | true | Name to assign to the new node where the metadata are stored. |
-| fieldValidators | FormFieldValidator[] | See [Field Validators](#field-validators) section below | Contains a list of form field validator instances. |
-
-### Advanced properties
-
- The following properties are for complex customisation purposes:
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| form | FormModel | | Underlying form model instance. |
-| showDebugButton | boolean | false | Toggle debug options. |
-| debugMode | boolean | false | Toggle debug mode, allows displaying additional data for development and debugging purposes. |
-
-### Events
-
-| Name |  Return Type | Description |
-| --- | --- | --- |
-| formLoaded | [FormModel](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-activiti-form/src/components/widgets/core/form.model.ts) | Invoked when form is loaded or reloaded. |
-| formSaved | [FormModel](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-activiti-form/src/components/widgets/core/form.model.ts)  | Invoked when form is submitted with `Save` or custom outcomes.  |
-| formCompleted | [FormModel](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-activiti-form/src/components/widgets/core/form.model.ts)  | Invoked when form is submitted with `Complete` outcome.  |
-| formDataRefreshed | [FormModel](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-activiti-form/src/components/widgets/core/form.model.ts) | Invoked when form values are refreshed due to a data property change  |
-| executeOutcome | [FormOutcomeEvent](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-activiti-form/src/components/widgets/core/form-outcome-event.model.ts) | Invoked when any outcome is executed, default behaviour can be prevented via `event.preventDefault()` |
-| error | any | Invoked at any error |
-
+<!-- propsection start -->
+See the documentation comments in the
+[source file](../lib/core/form/components/form.component.ts)
+for full descriptions of properties and events.
+<!-- propsection end -->
 ## Details
 
 All `form*` events receive an instance of the `FormModel` as event argument for ease of development:

@@ -49,60 +49,89 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     @ContentChild(DataColumnListComponent)
     columnList: DataColumnListComponent;
 
+    /** Data source for the table */
     @Input()
     data: DataTableAdapter;
 
+    /** The rows that the datatable shows */
     @Input()
     rows: any[] = [];
 
+    /** Row selection mode. Can be none, `single` or `multiple`. For `multiple`
+     * mode you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection
+     * for multiple rows.
+     */
     @Input()
     selectionMode: string = 'single'; // none|single|multiple
 
+    /** Toggles multiple row selection, renders checkboxes at the beginning of
+     * each row
+     */
     @Input()
     multiselect: boolean = false;
 
+    /** Toggles data actions column */
     @Input()
     actions: boolean = false;
 
+    /** Position of the actions dropdown menu (can be 'left' or 'right') */
     @Input()
     actionsPosition: string = 'right'; // left|right
 
+    /** Fallback image for rows where the thumbnail is missing */
     @Input()
     fallbackThumbnail: string;
 
+    /** Toggles the custom context menu for the component */
     @Input()
     contextMenu: boolean = false;
 
+    /** Toggle file drop support for rows (see UploadDirective for more details) */
     @Input()
     allowDropFiles: boolean = false;
 
+    /** The inline style to apply to every row, see
+     * [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html)
+     * docs for more details and usage examples
+     */
     @Input()
     rowStyle: string;
 
+    /** The CSS class to apply to every row */
     @Input()
     rowStyleClass: string = '';
 
+    /** Toggles header visibility */
     @Input()
     showHeader: boolean = true;
 
+    /** Emitted when the user clicks a row */
     @Output()
     rowClick = new EventEmitter<DataRowEvent>();
 
+    /** Emitted when the user double-clicks a row */
     @Output()
     rowDblClick = new EventEmitter<DataRowEvent>();
 
+    /** Emitted just before the context menu is displayed for a row */
     @Output()
     showRowContextMenu = new EventEmitter<DataCellEvent>();
 
+    /** Emitted just before the actions menu is displayed for a row */
     @Output()
     showRowActionsMenu = new EventEmitter<DataCellEvent>();
 
+    /** Emitted when a row action is executed by the user */
     @Output()
     executeRowAction = new EventEmitter<DataRowActionEvent>();
 
+    /** Indicates when the datatable is in the loading state and needs to show the
+     * loading template.
+     */
     @Input()
     loading: boolean = false;
 
+    /** Indicates when the datatable needs to show the no permission template */
     @Input()
     noPermission: boolean = false;
 
