@@ -34,6 +34,7 @@
             <mat-list-item
                 *ngFor="let item of data?.list?.entries; let idx = index"
                 id="result_option_{{idx}}"
+                [attr.data-automation-id]="'autocomplete_for_' + item.entry.name"
                 [tabindex]="0"
                 (focus)="onFocus($event)"
                 (blur)="onBlur($event)"
