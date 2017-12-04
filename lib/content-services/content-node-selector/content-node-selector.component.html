@@ -49,11 +49,14 @@
         </adf-toolbar-title>
     </adf-toolbar>
 
-    <div class="adf-content-node-selector-content-list" data-automation-id="content-node-selector-content-list">
+    <div 
+        class="adf-content-node-selector-content-list"
+        [class.adf-content-node-selector-content-list-searchLayout]="showingSearchResults"
+        data-automation-id="content-node-selector-content-list">
         <adf-document-list
             #documentList
             adf-highlight
-            adf-highlight-selector=".cell-value adf-datatable-cell .adf-datatable-cell-value"
+            adf-highlight-selector="adf-name-location-cell .adf-name-location-cell-name"
             [node]="nodes"
             [maxItems]="pageSize"
             [skipCount]="skipCount"
@@ -74,6 +77,32 @@
                     <div>{{ 'NODE_SELECTOR.NO_RESULTS' | translate }}</div>
                 </ng-template>
             </empty-folder-content>
+
+            <data-columns>
+                <data-column key="$thumbnail" type="image"></data-column>
+                <data-column key="name" type="text" class="full-width ellipsis-cell">
+                    <ng-template let-context="$implicit">
+                        <adf-name-location-cell
+                            [data]="context.data"
+                            [column]="context.col"
+                            [row]="context.row"
+                            format="/files">
+                        </adf-name-location-cell>                        
+                    </ng-template>
+                </data-column>
+                <data-column 
+                    key="modifiedAt" 
+                    type="date" 
+                    title="ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_ON" 
+                    format="timeAgo"
+                    class="adf-content-selector-modified-cell"></data-column>
+                <data-column 
+                    key="modifiedByUser.displayName" 
+                    type="text" 
+                    title="ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_BY"
+                    class="adf-content-selector-modifier-cell"></data-column>
+            </data-columns>
+
         </adf-document-list>
 
         <adf-infinite-pagination
