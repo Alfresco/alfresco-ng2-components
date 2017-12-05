@@ -20,3 +20,4 @@ src/environments/
 package-lock.*
 /ng2-components/ng2-alfresco-core/prebuilt-themes/
 .ng_pkg_build/
+docs/documentation.json

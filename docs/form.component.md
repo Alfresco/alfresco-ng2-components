@@ -1,6 +1,8 @@
-# Activiti Form component
+# Form component
 
-The component shows a Form from Activiti (see it live: [Form Quickstart](https://embed.plnkr.co/YSLXTqb3DtMhVJSqXKkE/))
+Shows a Process Services form.
+
+(See it live: [Form Quickstart](https://embed.plnkr.co/YSLXTqb3DtMhVJSqXKkE/))
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
 
@@ -8,7 +10,6 @@ The component shows a Form from Activiti (see it live: [Form Quickstart](https:/
 
 - [Basic Usage](#basic-usage)
   * [Properties](#properties)
-  * [Advanced properties](#advanced-properties)
   * [Events](#events)
 - [Details](#details)
   * [Custom empty form template](#custom-empty-form-template)
@@ -101,47 +102,43 @@ and store the form field as metadata. The param nameNode is optional.
 </adf-form>
 ```
 
+<!-- propsection start -->
 ### Properties
 
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| taskId | string | | Task id to fetch corresponding form and values. |
-| formId | string | | The id of the form definition to load and display with custom values. |
-| formName | string | | Name of the form definition to load and display with custom values. |
-| data | FormValues | | Custom form values map to be used with the rendered form. |
-| showTitle | boolean | true | Toggle rendering of the form title. |
-| showCompleteButton | boolean | true | Toggle rendering of the `Complete` outcome button. |
-| disableCompleteButton | boolean | false | The `Complete` outcome button is shown but it will be disabled. |
-| disableStartProcessButton | boolean | false | The `Start Process` outcome button is shown but it will be disabled. |
-| showSaveButton | boolean | true | Toggle rendering of the `Save` outcome button. |
-| readOnly | boolean | false | Toggle readonly state of the form. Enforces all form widgets render readonly if enabled. |
-| showRefreshButton | boolean | true | Toggle rendering of the `Refresh` button. |
-| showValidationIcon | boolean | true | Toggle rendering of the validation icon next form title. |
-| saveMetadata | boolean | false | Store the value of the form as metadata. |
-| path | string |  |  Path of the folder where to store the metadata. |
-| nameNode | string | true | Name to assign to the new node where the metadata are stored. |
-| fieldValidators | FormFieldValidator[] | See [Field Validators](#field-validators) section below | Contains a list of form field validator instances. |
-
-### Advanced properties
-
- The following properties are for complex customisation purposes:
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| form | FormModel | | Underlying form model instance. |
-| showDebugButton | boolean | false | Toggle debug options. |
-| debugMode | boolean | false | Toggle debug mode, allows displaying additional data for development and debugging purposes. |
+| Name | Type | Default value | Description |
+| -- | -- | -- | -- |
+| data | FormValues |  | <p>Custom form values map to be used with the rendered form. </p> |
+| disableCompleteButton | boolean | false | <p>Toggles whether the <code>Complete</code> outcome button is disabled (but still shown). </p> |
+| disableStartProcessButton | boolean | false | <p>Toggles whether the <code>Start Process</code> outcome button is disabled (but still shown). </p> |
+| fieldValidators | FormFieldValidator[] | [] | <p>Contains a list of form field validator instances. </p> |
+| form | FormModel |  | <p>Underlying form model instance. </p> |
+| formId | string |  | <p>The id of the form definition to load and display with custom values. </p> |
+| formName | string |  | <p>Name of the form definition to load and display with custom values. </p> |
+| nameNode | string |  | <p>Name to assign to the new node where the metadata is stored. </p> |
+| nodeId | string |  | <p>Content Services node to fetch corresponding form for </p> |
+| path | string |  | <p>Path of the folder where the metadata is stored. </p> |
+| readOnly | boolean | false | <p>Toggle readonly state of the form. All form widgets are rendered as readonly if enabled. </p> |
+| saveMetadata | boolean | false | <p>Toggles storing the value of the form as metadata. </p> |
+| showCompleteButton | boolean | true | <p>Toggle rendering of the <code>Complete</code> outcome button. </p> |
+| showDebugButton | boolean | false | <p>Toggle debug options. </p> |
+| showRefreshButton | boolean | true | <p>Toggle rendering of the <code>Refresh</code> button. </p> |
+| showSaveButton | boolean | true | <p>Toggle rendering of the <code>Save</code> outcome button. </p> |
+| showTitle | boolean | true | <p>Toggle rendering of the form title. </p> |
+| showValidationIcon | boolean | true | <p>Toggle rendering of the validation icon next to the form title. </p> |
+| taskId | string |  | <p>Task id to fetch corresponding form and values. </p> |
 
 ### Events
 
-| Name |  Return Type | Description |
-| --- | --- | --- |
-| formLoaded | [FormModel](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-activiti-form/src/components/widgets/core/form.model.ts) | Invoked when form is loaded or reloaded. |
-| formSaved | [FormModel](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-activiti-form/src/components/widgets/core/form.model.ts)  | Invoked when form is submitted with `Save` or custom outcomes.  |
-| formCompleted | [FormModel](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-activiti-form/src/components/widgets/core/form.model.ts)  | Invoked when form is submitted with `Complete` outcome.  |
-| formDataRefreshed | [FormModel](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-activiti-form/src/components/widgets/core/form.model.ts) | Invoked when form values are refreshed due to a data property change  |
-| executeOutcome | [FormOutcomeEvent](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-activiti-form/src/components/widgets/core/form-outcome-event.model.ts) | Invoked when any outcome is executed, default behaviour can be prevented via `event.preventDefault()` |
-| error | any | Invoked at any error |
+| Name | Type | Description |
+| -- | -- | -- |
+| executeOutcome | EventEmitter<FormOutcomeEvent> | <p>Emitted when any outcome is executed. Default behaviour can be prevented via <code>event.preventDefault()</code> </p> |
+| formCompleted | EventEmitter<FormModel> | <p>Emitted when the form is submitted with <code>Complete</code> outcome. </p> |
+| formContentClicked | EventEmitter<ContentLinkModel> | <p>Emitted when form content is clicked. </p> |
+| formDataRefreshed | EventEmitter<FormModel> | <p>Emitted when form values are refreshed due to a data property change </p> |
+| formLoaded | EventEmitter<FormModel> | <p>Emitted when the form is loaded or reloaded. </p> |
+| formSaved | EventEmitter<FormModel> | <p>Emitted when the form is submitted with <code>Save</code> or custom outcomes. </p> |
+| onError | EventEmitter<any> | <p>Emitted when any error occurs </p> |
+<!-- propsection end -->
 
 ## Details
 

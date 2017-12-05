@@ -35,19 +35,20 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
 </adf-datatable>
 ```
 
+<!-- propsection start -->
 ### Properties
 
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| key | string | | Data source key, can be either column/property key like `title` or property path like `createdBy.name` |
-| type | string | text | Value type for the column. Possible settings are 'text', 'image', 'date', 'fileSize' and 'location'. |
-| format | string | | Value format (if supported by components), for example format of the date |
-| sortable | boolean | true | Toggles ability to sort by this column, for example by clicking the column header |
-| title | string | | Display title of the column, typically used for column headers. You can use the i18n resouce key to get it translated automatically. |
-| template | `TemplateRef` | | Custom column template |
-| sr-title | string | | Screen reader title, used for accessibility purposes |
-| class | string | | Additional CSS class to be applied to column (header and cells) |
-| formatTooltip | Function | | Custom tooltip formatter function. |
+| Name | Type | Default value | Description |
+| -- | -- | -- | -- |
+| class | string |  | <p>Additional CSS class to be applied to column (header and cells) </p> |
+| format | string |  | <p>Value format (if supported by components), for example format of the date </p> |
+| formatTooltip | Function |  | <p>Custom tooltip formatter function. </p> |
+| key | string |  | <p>Data source key, can be either column/property key like <code>title</code> or property path like <code>createdBy.name</code></p> |
+| sortable | boolean | true | <p>Toggles ability to sort by this column, for example by clicking the column header </p> |
+| sr-title | string |  | <p>Title to be used for screen readers. </p> |
+| title | string | '' | <p>Display title of the column, typically used for column headers. You can use the i18n resouce key to get it translated automatically.</p> |
+| type | string | 'text' | <p>Value type for the column. Possible settings are &#39;text&#39;, &#39;image&#39;, &#39;date&#39;, &#39;fileSize&#39; and &#39;location&#39;.</p> |
+<!-- propsection end -->
 
 ## Details
 
