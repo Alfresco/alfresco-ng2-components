@@ -1,6 +1,7 @@
 @import '../breadcrumb/breadcrumb.component';
 @import '../breadcrumb/dropdown-breadcrumb.component';
 @import '../content-node-selector/content-node-selector.component';
+@import '../content-node-selector/name-location-cell/name-location-cell.component';
 @import '../document-list/components/document-list.component';
 
 @import '../upload/components/file-uploading-list-row.component';
@@ -18,6 +19,7 @@
     @include adf-breadcrumb-theme($theme);
     @include adf-breadcrumb-dropdown-theme($theme);
     @include adf-content-node-selector-theme($theme) ;
+    @include adf-name-location-cell-theme($theme);
     @include adf-document-list-theme($theme) ;
     @include adf-file-uploading-row-theme($theme);
     @include adf-upload-dialog-theme($theme);

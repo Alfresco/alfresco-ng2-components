@@ -25,8 +25,9 @@ import { ContentNodeSelectorComponent } from './content-node-selector.component'
 import { ContentNodeSelectorService } from './content-node-selector.service';
 import { SitesDropdownModule } from '../site-dropdown/sites-dropdown.module';
 import { BreadcrumbModule } from '../breadcrumb/breadcrumb.module';
-import { PaginationModule, ToolbarModule, DirectiveModule } from '@alfresco/adf-core';
+import { PaginationModule, ToolbarModule, DirectiveModule, DataColumnModule, DataTableModule } from '@alfresco/adf-core';
 import { DocumentListModule } from '../document-list/document-list.module';
+import { NameLocationCellComponent } from './name-location-cell/name-location-cell.component';
 
 @NgModule({
     imports: [
@@ -40,6 +41,8 @@ import { DocumentListModule } from '../document-list/document-list.module';
         BreadcrumbModule,
         ToolbarModule,
         DocumentListModule,
+        DataColumnModule,
+        DataTableModule,
         PaginationModule
     ],
     exports: [
@@ -49,7 +52,8 @@ import { DocumentListModule } from '../document-list/document-list.module';
         ContentNodeSelectorComponent
     ],
     declarations: [
-        ContentNodeSelectorComponent
+        ContentNodeSelectorComponent,
+        NameLocationCellComponent
     ],
     providers: [
         ContentNodeSelectorService
