@@ -86,7 +86,8 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
                     {
                         label: 'ADF_TASK_LIST.PROPERTIES.PRIORITY',
                         value: this.taskDetails.priority,
-                        key: 'priority'
+                        key: 'priority',
+                        editable: true
                     }
                 ),
                 new CardViewDateItemModel(
