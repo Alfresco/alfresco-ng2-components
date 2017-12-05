@@ -16,7 +16,9 @@
  */
 
 export * from './insights.module';
-//
+
 export * from './analytics-process/analytics-process.module';
-//
+export * from './diagram/diagram.module';
+
 export * from './analytics-process';
+export * from './diagram';
