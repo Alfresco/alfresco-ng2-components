@@ -1,0 +1,13 @@
+@mixin adf-name-location-cell-theme($theme) {
+    $foreground: map-get($theme, foreground);
+
+    .adf-name-location-cell {        
+        &-location {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;                
+            color: mat-color($foreground, base, 0.5);
+            font-size: 12px;
+        }
+    }
+}
