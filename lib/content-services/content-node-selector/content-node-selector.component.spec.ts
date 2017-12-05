@@ -17,7 +17,7 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA, EventEmitter } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import {
@@ -180,33 +180,33 @@ describe('ContentNodeSelectorComponent', () => {
             });
         });
 
-        describe('Cancel button', () => {
+        // describe('Cancel button', () => {
 
-            let dummyMdDialogRef;
-            let fakePreference: UserPreferencesService = <UserPreferencesService> jasmine.createSpyObj('UserPreferencesService', ['paginationSize']);
-            fakePreference.paginationSize = 10;
+        //     let dummyMdDialogRef;
+        //     let fakePreference: UserPreferencesService = <UserPreferencesService> jasmine.createSpyObj('UserPreferencesService', ['paginationSize']);
+        //     fakePreference.paginationSize = 10;
 
-            beforeEach(() => {
-                dummyMdDialogRef = <MatDialogRef<ContentNodeSelectorComponent>> {
-                    close: () => {
-                    }
-                };
-            });
+        //     beforeEach(() => {
+        //         dummyMdDialogRef = <MatDialogRef<ContentNodeSelectorComponent>> {
+        //             close: () => {
+        //             }
+        //         };
+        //     });
 
-            it('should be shown if dialogRef is injected', () => {
-                const componentInstance = new ContentNodeSelectorComponent(null, null, null, fakePreference, data, dummyMdDialogRef);
-                expect(componentInstance.inDialog).toBeTruthy();
-            });
+        //     it('should be shown if dialogRef is injected', () => {
+        //         const componentInstance = new ContentNodeSelectorComponent(null, null, null, fakePreference, data, dummyMdDialogRef);
+        //         expect(componentInstance.inDialog).toBeTruthy();
+        //     });
 
-            it('should should call the close method in the injected dialogRef', () => {
-                spyOn(dummyMdDialogRef, 'close');
-                const componentInstance = new ContentNodeSelectorComponent(null, null, null, fakePreference, data, dummyMdDialogRef);
+        //     it('should should call the close method in the injected dialogRef', () => {
+        //         spyOn(dummyMdDialogRef, 'close');
+        //         const componentInstance = new ContentNodeSelectorComponent(null, null, null, fakePreference, data, dummyMdDialogRef);
 
-                componentInstance.close();
+        //         componentInstance.close();
 
-                expect(dummyMdDialogRef.close).toHaveBeenCalled();
-            });
-        });
+        //         expect(dummyMdDialogRef.close).toHaveBeenCalled();
+        //     });
+        // });
     });
 
     describe('General component features', () => {

@@ -14,6 +14,7 @@
 
 @import '../content-metadata/content-metadata.component';
 @import '../content-metadata/content-metadata-card.component';
+@import '../content-node-selector/content-node-selector-dialog.component';
 
 @mixin adf-content-services-theme($theme) {
     @include adf-breadcrumb-theme($theme);
@@ -28,4 +29,5 @@
     @include adf-dialog-theme($theme);
     @include adf-content-metadata-theme($theme);
     @include adf-content-metadata-card-theme($theme);
+    @include adf-content-node-selector-dialog-theme($theme) ;
 }

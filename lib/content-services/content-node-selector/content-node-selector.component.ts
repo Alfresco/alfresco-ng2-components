@@ -18,10 +18,8 @@
 import {
     Component,
     EventEmitter,
-    Inject,
     Input,
     OnInit,
-    Optional,
     Output,
     ViewChild,
     ViewEncapsulation
@@ -34,13 +32,10 @@ import {
     UserPreferencesService
 } from '@alfresco/adf-core';
 import { FormControl } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { MinimalNodeEntryEntity, NodePaging, Pagination, Site } from 'alfresco-js-api';
 import { DocumentListComponent, PaginationStrategy } from '../document-list/components/document-list.component';
 import { RowFilter } from '../document-list/data/row-filter.model';
 import { ImageResolver } from '../document-list/data/image-resolver.model';
-
-import { ContentNodeSelectorComponentData } from './content-node-selector.component-data.interface';
 import { ContentNodeSelectorService } from './content-node-selector.service';
 import { debounceTime } from 'rxjs/operators';
 
@@ -64,7 +59,6 @@ export class ContentNodeSelectorComponent implements OnInit {
     pagination: Pagination;
     skipCount: number = 0;
     infiniteScroll: boolean = false;
-    buttonActionName: string;
 
     @Input()
     title: string;
@@ -73,7 +67,7 @@ export class ContentNodeSelectorComponent implements OnInit {
     actionName: string;
 
     @Input()
-    currentFolderId: string | null = null;
+    currentFolderId: string = null;
 
     @Input()
     dropdownHideMyFiles: boolean = false;
@@ -106,25 +100,7 @@ export class ContentNodeSelectorComponent implements OnInit {
     constructor(private contentNodeSelectorService: ContentNodeSelectorService,
                 private contentService: ContentService,
                 private apiService: AlfrescoApiService,
-                private preferences: UserPreferencesService,
-                @Optional() @Inject(MAT_DIALOG_DATA) data?: ContentNodeSelectorComponentData,
-                @Optional() private containingDialog?: MatDialogRef<ContentNodeSelectorComponent>) {
-        if (data) {
-            this.title = data.title;
-            this.actionName = data.actionName;
-            this.select = data.select;
-            this.currentFolderId = data.currentFolderId;
-            this.dropdownHideMyFiles = data.dropdownHideMyFiles;
-            this.dropdownSiteList = data.dropdownSiteList;
-            this.rowFilter = data.rowFilter;
-            this.imageResolver = data.imageResolver;
-        }
-        this.buttonActionName = this.actionName ? `NODE_SELECTOR.${this.actionName.toUpperCase()}` : 'NODE_SELECTOR.CHOOSE';
-
-        if (this.containingDialog) {
-            this.inDialog = true;
-        }
-
+                private preferences: UserPreferencesService) {
         this.searchInput.valueChanges
             .pipe(
                 debounceTime(this.debounceSearch)
@@ -267,15 +243,6 @@ export class ContentNodeSelectorComponent implements OnInit {
     }
 
     /**
-     * Invoked when user selects a node
-     *
-     * @param event CustomEvent for node-select
-     */
-    onNodeSelect(event: any): void {
-        this.attemptNodeSelection(event.detail.node.entry);
-    }
-
-    /**
      * Sets showingSearchResults state to be able to differentiate between search results or folder results
      */
     onFolderChange(): void {
@@ -334,10 +301,12 @@ export class ContentNodeSelectorComponent implements OnInit {
     }
 
     /**
-     * Close the dialog
+     * Invoked when user selects a node
+     *
+     * @param event CustomEvent for node-select
      */
-    close(): void {
-        this.containingDialog.close();
+    onNodeSelect(event: any): void {
+        this.attemptNodeSelection(event.detail.node.entry);
     }
 
     onNodeDoubleClick(e: CustomEvent) {

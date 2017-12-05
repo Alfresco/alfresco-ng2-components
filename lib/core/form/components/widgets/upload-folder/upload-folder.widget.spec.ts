@@ -14,17 +14,3 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import { EventEmitter } from '@angular/core';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-
-export interface ContentNodeSelectorComponentData {
-    title: string;
-    actionName?: string;
-    currentFolderId: string;
-    dropdownHideMyFiles?: boolean;
-    dropdownSiteList?: any[];
-    rowFilter?: any;
-    imageResolver?: any;
-    select: EventEmitter<MinimalNodeEntryEntity[]>;
-}

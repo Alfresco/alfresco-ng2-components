@@ -21,7 +21,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { Subject } from 'rxjs/Subject';
-import { ContentNodeSelectorComponent } from '../../content-node-selector/content-node-selector.component';
+import { ContentNodeSelectorDialogComponent } from '../../content-node-selector/content-node-selector-dialog.component';
 import { ContentNodeSelectorComponentData } from '../../content-node-selector/content-node-selector.component-data.interface';
 import { ShareDataRow } from '../data/share-data-row.model';
 import { DocumentListService } from './document-list.service';
@@ -94,7 +94,7 @@ export class NodeActionsService {
                 select: new EventEmitter<MinimalNodeEntryEntity[]>()
             };
 
-            this.dialog.open(ContentNodeSelectorComponent, { data, panelClass: 'adf-content-node-selector-dialog', width: '630px' });
+            this.dialog.open(ContentNodeSelectorDialogComponent, { data, panelClass: 'adf-content-node-selector-dialog', width: '630px' });
 
             data.select.subscribe((selections: MinimalNodeEntryEntity[]) => {
                 const selection = selections[0];

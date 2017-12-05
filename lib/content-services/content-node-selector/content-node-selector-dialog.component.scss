@@ -1,0 +1,58 @@
+@mixin adf-content-node-selector-dialog-theme($theme) {
+    $primary: map-get($theme, primary);
+    $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
+
+    .mat-dialog-container {
+        padding: 0;
+    }
+
+    .adf-content-node-selector-dialog {
+        &-title,
+        &-content,
+        &-actions {
+            padding: 16px;
+            margin: 0;
+        }
+
+        &-content{
+            padding-top: 0;
+        }
+
+        &-title::first-letter {
+            text-transform: uppercase;
+        }
+
+        &-actions {
+            padding: 8px;
+            background-color: mat-color($background, background);
+            display: flex;
+            justify-content: flex-end;
+            color: mat-color($foreground, secondary-text);
+
+            button {
+                text-transform: uppercase;
+            }
+
+            &:last-child {
+                margin-bottom: 0px;
+            }
+
+            &-cancel {
+                font-weight: normal;
+            }
+
+            &-choose {
+                font-weight: normal;
+
+                &[disabled] {
+                    opacity: 0.6;
+                }
+
+                &:enabled {
+                    color: mat-color($primary);
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,35 @@
+<header matDialogTitle
+        class="adf-content-node-selector-dialog-title"
+        data-automation-id="content-node-selector-title">{{data.title}}
+</header>
+
+<section matDialogContent
+         class="adf-content-node-selector-dialog-content">
+    <adf-content-node-selector #contentNodeSelector
+        [currentFolderId]="data.currentFolderId"
+        [dropdownHideMyFiles]="data.dropdownHideMyFiles"
+        [dropdownSiteList]="data.dropdownSiteList"
+        [rowFilter]="data.rowFilter"
+        [imageResolver]="data.dropdownSiteList"
+        [pageSize]="data.dropdownSiteList"
+        (select)="onSelect($event)">
+    </adf-content-node-selector>
+</section>
+
+<footer matDialogActions class="adf-content-node-selector-actions">
+    <button
+        mat-button
+        class="adf-content-node-selector-actions-cancel"
+        (click)="close()"
+        data-automation-id="content-node-selector-actions-cancel">{{ 'NODE_SELECTOR.CANCEL' | translate }}
+    </button>
+
+    <button mat-button
+        [disabled]="!chosenNode"
+        class="adf-content-node-selector-actions-choose"
+        (click)="onClick()"
+        data-automation-id="content-node-selector-actions-choose">{{ buttonActionName | translate }}
+    </button>
+
+</footer>
+

@@ -22,6 +22,7 @@ import { MaterialModule } from '../material.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
+import { ContentNodeSelectorDialogComponent } from './content-node-selector-dialog.component';
 import { ContentNodeSelectorService } from './content-node-selector.service';
 import { SitesDropdownModule } from '../site-dropdown/sites-dropdown.module';
 import { BreadcrumbModule } from '../breadcrumb/breadcrumb.module';
@@ -46,14 +47,15 @@ import { NameLocationCellComponent } from './name-location-cell/name-location-ce
         PaginationModule
     ],
     exports: [
-        ContentNodeSelectorComponent
+        ContentNodeSelectorComponent, ContentNodeSelectorDialogComponent
     ],
     entryComponents: [
-        ContentNodeSelectorComponent
+        ContentNodeSelectorComponent, ContentNodeSelectorDialogComponent
     ],
     declarations: [
         ContentNodeSelectorComponent,
-        NameLocationCellComponent
+        NameLocationCellComponent,
+        ContentNodeSelectorDialogComponent
     ],
     providers: [
         ContentNodeSelectorService
