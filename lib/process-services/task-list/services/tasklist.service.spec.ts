@@ -40,26 +40,20 @@ import { TaskListService } from './tasklist.service';
 
 declare let jasmine: any;
 
-xdescribe('Activiti TaskList Service', () => {
+describe('Activiti TaskList Service', () => {
 
     let service: TaskListService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-
             providers: [
                 TaskListService
             ]
-        }).compileComponents();
+        }).compileComponents().then(() => {
+            service = TestBed.get(TaskListService);
+            jasmine.Ajax.install();
+        });
     }));
-
-    beforeEach(() => {
-        service = TestBed.get(TaskListService);
-    });
-
-    beforeEach(() => {
-        jasmine.Ajax.install();
-    });
 
     afterEach(() => {
         jasmine.Ajax.uninstall();

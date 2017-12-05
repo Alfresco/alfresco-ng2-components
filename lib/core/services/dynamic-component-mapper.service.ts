@@ -16,14 +16,13 @@
  */
 
 import { Type } from '@angular/core';
+import { getType } from './get-type';
 
 export interface DynamicComponentModel { type: string; }
 export type DynamicComponentResolveFunction = (model: DynamicComponentModel) => Type<{}>;
 export class DynamicComponentResolver {
     static fromType(type: Type<{}>): DynamicComponentResolveFunction {
-        return (model: DynamicComponentModel) => {
-            return type;
-        };
+        return getType(type);
     }
 }
 

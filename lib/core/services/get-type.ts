@@ -15,26 +15,6 @@
  * limitations under the License.
  */
 
-import { HttpClientModule } from '@angular/common/http';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
-import { AppConfigService } from './app-config.service';
-import { startupServiceFactory } from './startup-service-factory';
-
-@NgModule({
-    imports: [
-        HttpClientModule
-    ],
-    providers: [
-        AppConfigService,
-        {
-            provide: APP_INITIALIZER,
-            useFactory: startupServiceFactory,
-            deps: [
-                AppConfigService
-            ],
-            multi: true
-        }
-    ]
-})
-export class AppConfigModule {
+export function getType(type: any): any {
+    return () => type;
 }
