@@ -9,7 +9,8 @@ Shows a Process Services form.
 <!-- toc -->
 
 - [Basic Usage](#basic-usage)
-  * [Properties and events](#properties-and-events)
+  * [Properties](#properties)
+  * [Events](#events)
 - [Details](#details)
   * [Custom empty form template](#custom-empty-form-template)
   * [Controlling outcome execution behaviour](#controlling-outcome-execution-behaviour)
@@ -101,13 +102,44 @@ and store the form field as metadata. The param nameNode is optional.
 </adf-form>
 ```
 
-### Properties and events
-
 <!-- propsection start -->
-See the documentation comments in the
-[source file](../lib/core/form/components/form.component.ts)
-for full descriptions of properties and events.
+### Properties
+
+| Name | Type | Default value | Description |
+| -- | -- | -- | -- |
+| data | FormValues |  | <p>Custom form values map to be used with the rendered form. </p> |
+| disableCompleteButton | boolean | false | <p>Toggles whether the <code>Complete</code> outcome button is disabled (but still shown). </p> |
+| disableStartProcessButton | boolean | false | <p>Toggles whether the <code>Start Process</code> outcome button is disabled (but still shown). </p> |
+| fieldValidators | FormFieldValidator[] | [] | <p>Contains a list of form field validator instances. </p> |
+| form | FormModel |  | <p>Underlying form model instance. </p> |
+| formId | string |  | <p>The id of the form definition to load and display with custom values. </p> |
+| formName | string |  | <p>Name of the form definition to load and display with custom values. </p> |
+| nameNode | string |  | <p>Name to assign to the new node where the metadata is stored. </p> |
+| nodeId | string |  | <p>Content Services node to fetch corresponding form for </p> |
+| path | string |  | <p>Path of the folder where the metadata is stored. </p> |
+| readOnly | boolean | false | <p>Toggle readonly state of the form. All form widgets are rendered as readonly if enabled. </p> |
+| saveMetadata | boolean | false | <p>Toggles storing the value of the form as metadata. </p> |
+| showCompleteButton | boolean | true | <p>Toggle rendering of the <code>Complete</code> outcome button. </p> |
+| showDebugButton | boolean | false | <p>Toggle debug options. </p> |
+| showRefreshButton | boolean | true | <p>Toggle rendering of the <code>Refresh</code> button. </p> |
+| showSaveButton | boolean | true | <p>Toggle rendering of the <code>Save</code> outcome button. </p> |
+| showTitle | boolean | true | <p>Toggle rendering of the form title. </p> |
+| showValidationIcon | boolean | true | <p>Toggle rendering of the validation icon next to the form title. </p> |
+| taskId | string |  | <p>Task id to fetch corresponding form and values. </p> |
+
+### Events
+
+| Name | Type | Description |
+| -- | -- | -- |
+| executeOutcome | EventEmitter<FormOutcomeEvent> | <p>Emitted when any outcome is executed. Default behaviour can be prevented via <code>event.preventDefault()</code> </p> |
+| formCompleted | EventEmitter<FormModel> | <p>Emitted when the form is submitted with <code>Complete</code> outcome. </p> |
+| formContentClicked | EventEmitter<ContentLinkModel> | <p>Emitted when form content is clicked. </p> |
+| formDataRefreshed | EventEmitter<FormModel> | <p>Emitted when form values are refreshed due to a data property change </p> |
+| formLoaded | EventEmitter<FormModel> | <p>Emitted when the form is loaded or reloaded. </p> |
+| formSaved | EventEmitter<FormModel> | <p>Emitted when the form is submitted with <code>Save</code> or custom outcomes. </p> |
+| onError | EventEmitter<any> | <p>Emitted when any error occurs </p> |
 <!-- propsection end -->
+
 ## Details
 
 All `form*` events receive an instance of the `FormModel` as event argument for ease of development:

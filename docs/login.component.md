@@ -9,7 +9,8 @@ Authenticates to Alfresco Content Services and Alfresco Process Services.
 <!-- toc -->
 
 - [Basic usage](#basic-usage)
-  * [Properties and events](#properties-and-events)
+  * [Properties](#properties)
+  * [Events](#events)
 - [Details](#details)
   * [Handling events](#handling-events)
   * [Change footer content](#change-footer-content)
@@ -32,13 +33,33 @@ Authenticates to Alfresco Content Services and Alfresco Process Services.
 </adf-login>
 ```
 
-### Properties and events
-
 <!-- propsection start -->
-See the documentation comments in the
-[source file](../lib/core/login/components/login.component.ts)
-for full descriptions of properties and events.
+### Properties
+
+| Name | Type | Default value | Description |
+| -- | -- | -- | -- |
+| backgroundImageUrl | string | './assets/images/background.svg' | <p>Sets a custom background image </p> |
+| copyrightText | string | '\u00A9 2016 Alfresco Software, Inc. All Rights Reserved.' | <p>Copyright message shown below the login box </p> |
+| disableCsrf | boolean |  | <p>Prevents CSRF Token from being submitted (Process Services only) </p> |
+| fieldsValidation | any |  | <p>Supplies custom validation rules for the login form </p> |
+| logoImageUrl | string | './assets/images/alfresco-logo.svg' | <p>Sets a custom logo image </p> |
+| needHelpLink | string | '' | <p>Sets the URL of the &#39;need help&#39; link in the footer </p> |
+| providers | string |  | <p>Possible valid values are ECM, BPM or ALL. The default behaviour of this component will log in only in the ECM . If you want to log in in both systems the correct value
+to use is ALL.</p> |
+| registerLink | string | '' | <p>Sets the URL of the &#39;register&#39; link in the footer </p> |
+| showLoginActions | boolean | true | <p>Toggle extra actions visibility (<code>Need Help</code>, <code>Register</code>, etc.) </p> |
+| showRememberMe | boolean | true | <p>Toggle <code>Remember me</code> checkbox visibility </p> |
+| successRoute | string | null | <p>Route to redirect to upon successful login. </p> |
+
+### Events
+
+| Name | Type | Description |
+| -- | -- | -- |
+| error | EventEmitter | <p>Emitted when the login fails </p> |
+| executeSubmit | EventEmitter | <p>Emitted when the login form is submitted </p> |
+| success | EventEmitter | <p>Emitted when a successful login occurs </p> |
 <!-- propsection end -->
+
 ## Details
 
 ### Handling events

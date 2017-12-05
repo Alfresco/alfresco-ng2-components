@@ -9,9 +9,10 @@ Displays the documents from a repository.
 <!-- toc -->
 
 - [Basic Usage](#basic-usage)
-  * [Properties and events](#properties-and-events)
-- [Details](#details)
   * [Properties](#properties)
+  * [Events](#events)
+- [Details](#details)
+  * [Properties](#properties-1)
   * [DOM Events](#dom-events)
   * [Pagination strategy](#pagination-strategy)
   * [Data Sources](#data-sources)
@@ -48,12 +49,50 @@ Displays the documents from a repository.
 </adf-document-list>
 ```
 
-### Properties and events
-
 <!-- propsection start -->
-See the documentation comments in the
-[source file](../lib/content-services/document-list/components/document-list.component.ts)
-for full descriptions of properties and events.
+### Properties
+
+| Name | Type | Default value | Description |
+| -- | -- | -- | -- |
+| allowDropFiles | boolean | false | <p>Toggle file drop support for rows (see UploadDirective for more details) </p> |
+| contentActions | boolean | false | <p>Toggles content actions for each row </p> |
+| contentActionsPosition | string | 'right' | <p>Position of the content actions dropdown menu (can be &#39;left&#39; or &#39;right&#39;) </p> |
+| contextMenuActions | boolean | false | <p>Toggles context menus for each row </p> |
+| currentFolderId | string | null | <p>The ID of the folder node to display or a reserved string alias for special sources </p> |
+| emptyFolderImageUrl | string | './assets/images/empty_doc_lib.svg' | <p>Custom image for empty folder </p> |
+| enableInfiniteScrolling | boolean | false | <p>Enable infinite scrolling mode </p> |
+| folderNode | MinimalNodeEntryEntity | null | <p>Currently displayed folder node </p> |
+| imageResolver | any | null | null | <p>Custom image resolver </p> |
+| loading | boolean | false | <p>Toggles the loading state and animated spinners for the component. Used in combination with <code>navigate=false</code> to perform custom navigation and loading state
+indication.</p> |
+| locationFormat | string | '/' | <p>The default route for all the location-based columns (if declared). </p> |
+| maxItems | number |  | <p>The page size for the document list </p> |
+| multiselect | boolean | false | <p>Toggles multiselect mode </p> |
+| navigate | boolean | true | <p>Toggles navigation to folder content or file preview </p> |
+| navigationMode | string | DocumentListComponent.DOUBLE_CLICK_NAVIGATION | <p>User interaction for folder navigation or file preview </p> |
+| node | NodePaging | null | <p>DocumentList will show all the nodes contained in the NodePaging entity </p> |
+| permissionsStyle | PermissionStyleModel[] | [] | <p>Define a set of CSS styles to apply depending on the permission of the user on that node.</p> |
+| rowFilter | any | null | null | <p>Custom row filter </p> |
+| rowStyle | string |  | <p>The inline style to apply to every row, see <a href="https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html">NgStyle</a>
+docs for more details and usage examples</p> |
+| rowStyleClass | string |  | <p>CSS class to apply to every row </p> |
+| selectionMode | string | 'single' | <p>Row selection mode. Can be none, <code>single</code> or <code>multiple</code>. For <code>multiple</code> mode you can use Cmd (macOS) or Ctrl (Win) modifier keys to toggle
+selection of multiple rows.</p> |
+| skipCount | number | 0 | <p>The start offset of the current page&#39;s first item (for pagination purposes) </p> |
+| sorting | string[] |  | <p>Defines default sorting. The format is an array of 2 strings <code>[key, direction]</code> i.e. <code>[&#39;name&#39;, &#39;desc&#39;]</code> or <code>[&#39;name&#39;, &#39;asc&#39;]</code>. Set this value only if you want
+to override default sorting detected by the component based on columns.</p> |
+| thumbnails | boolean | false | <p>Show document thumbnails rather than icons </p> |
+
+### Events
+
+| Name | Type | Description |
+| -- | -- | -- |
+| error | EventEmitter<any> | <p>Emitted when the API fails to get the data for the DocumentList </p> |
+| folderChange | EventEmitter<NodeEntryEvent> | <p>Emitted when the current display folder changes </p> |
+| nodeClick | EventEmitter<NodeEntityEvent> | <p>Emitted when the user clicks a list node </p> |
+| nodeDblClick | EventEmitter<NodeEntityEvent> | <p>Emitted when the user double-clicks a list node </p> |
+| preview | EventEmitter<NodeEntityEvent> | <p>Emitted when the user acts upon files with either single or double click (depends on <code>navigation-mode</code>). Useful integration with the Viewer Component.</p> |
+| ready | EventEmitter<NodePaging> | <p>Emitted when the DocumentList is ready and has loaded all the elements </p> |
 <!-- propsection end -->
 
 ## Details
