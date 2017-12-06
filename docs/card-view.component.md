@@ -231,7 +231,7 @@ export class CardViewStarDateItemComponent {
 
     constructor(private cardViewUpdateService: CardViewUpdateService) {}
 
-    isEditble() {
+    isEditable() {
         return this.editable && this.property.editable;
     }
 
