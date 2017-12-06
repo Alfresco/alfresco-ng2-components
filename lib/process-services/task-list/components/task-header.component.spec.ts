@@ -107,7 +107,7 @@ describe('TaskHeaderComponent', () => {
         expect(formNameEl.nativeElement.innerText).toBe('Wilbur Adams');
     });
 
-    fit('should display priority', () => {
+    it('should display priority', () => {
         component.taskDetails.priority = 27;
         component.ngOnChanges({});
         fixture.detectChanges();
