@@ -43,7 +43,7 @@ export class CardViewTextItemComponent implements OnChanges {
         this.editedValue = this.property.value;
     }
 
-    isEditble() {
+    isEditable() {
         return this.editable && this.property.editable;
     }
 
