@@ -558,7 +558,7 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        it('should return the filters if it contains task id', async(() => {
+        it('should return the filters if it contains task id', (done) => {
             let taskId = '1';
 
             let fakeFilterList: FilterRepresentationModel[] = [];
@@ -571,6 +571,7 @@ describe('Activiti TaskList Service', () => {
                 expect(resultFilter).toBeDefined();
                 expect(resultFilter).not.toBeNull();
                 expect(resultFilter.name).toBe('CONTAIN FILTER');
+                done
             });
 
             jasmine.Ajax.requests.at(0).respondWith({
@@ -584,7 +585,7 @@ describe('Activiti TaskList Service', () => {
                 contentType: 'application/json',
                 responseText: JSON.stringify(secondFakeTaskList)
             });
-        }));
+        });
 
         it('should get possibile form list', (done) => {
             service.getFormList().subscribe((res: any) => {
