@@ -233,20 +233,6 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        it('should tasksList$ event be emitted', (done) => {
-            spyOn(service, 'getTasks').and.returnValue(Observable.of(fakeTaskList));
-            spyOn(service, 'getTotalTasks').and.returnValue(Observable.of(fakeTaskList));
-
-            service.tasksList$.subscribe((res) => {
-                expect(res).toBeDefined();
-                expect(res.data).toBeDefined();
-                expect(res.data.length).toEqual(2);
-                expect(res.data[0].name).toEqual('FakeNameTask');
-                expect(res.data[1].assignee.email).toEqual('fake-email@dom.com');
-                done();
-            });
-        });
-
         it('should add  the task list to the tasklistSubject with all tasks filtered without state', (done) => {
             spyOn(service, 'getTasks').and.returnValue(Observable.of(fakeTaskList));
             spyOn(service, 'getTotalTasks').and.returnValue(Observable.of(fakeTaskList));
@@ -568,7 +554,7 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        it('should get possibile form list', (done) => {
+        it('should get possible form list', (done) => {
             service.getFormList().subscribe((res: any) => {
                 expect(res).toBeDefined();
                 expect(res.length).toBe(2);
