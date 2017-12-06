@@ -1,13 +1,13 @@
-adf-datatable >>> .column-header {
+adf-datatable ::ng-deep .column-header {
     color: #232323;
     font-size: 15px;
 }
 
-adf-datatable >>> .data-cell {
+adf-datatable ::ng-deep .data-cell {
     cursor: pointer !important;
 }
 
-adf-datatable >>> .cell-value{
+adf-datatable ::ng-deep .cell-value{
     width: 250px;
     white-space: nowrap;
     overflow: hidden;
