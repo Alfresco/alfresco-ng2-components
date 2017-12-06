@@ -107,14 +107,13 @@ describe('TaskHeaderComponent', () => {
         expect(formNameEl.nativeElement.innerText).toBe('Wilbur Adams');
     });
 
-    it('should display priority', () => {
+    fit('should display priority', () => {
         component.taskDetails.priority = 27;
         component.ngOnChanges({});
         fixture.detectChanges();
-        let formNameEl = fixture.debugElement.query(By.css('[data-automation-id="header-priority"] .adf-property-value'));
-        expect(formNameEl.nativeElement.innerText.trim()).toBe('27');
+        let formNameEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-priority"]'));
+        expect(formNameEl.nativeElement.innerText).toBe('27');
     });
-
 
     it('should set editable to false if the task has already completed', () => {
         component.taskDetails.endDate = new Date('05/05/2002');
