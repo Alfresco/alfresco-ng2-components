@@ -571,7 +571,7 @@ describe('Activiti TaskList Service', () => {
                 expect(resultFilter).toBeDefined();
                 expect(resultFilter).not.toBeNull();
                 expect(resultFilter.name).toBe('CONTAIN FILTER');
-                done
+                done();
             });
 
             jasmine.Ajax.requests.at(0).respondWith({
