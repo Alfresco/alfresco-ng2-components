@@ -345,7 +345,7 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        it('should return the total number of tasks', (done) => {
+        xit('should return the total number of tasks', (done) => {
             service.getTotalTasks(<TaskQueryRequestRepresentationModel> fakeFilter).subscribe((res: any) => {
                 expect(res).toBeDefined();
                 expect(res.size).toEqual(1);
@@ -360,7 +360,7 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        it('should create a new standalone task ', (done) => {
+        xit('should create a new standalone task ', (done) => {
             let taskFake = new TaskDetailsModel({
                 name: 'FakeNameTask',
                 description: 'FakeDescription',
@@ -391,7 +391,7 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        it('should assign task to a user', (done) => {
+        xit('should assign task to a user', (done) => {
             let testTaskId = '8888';
             service.assignTask(testTaskId, fakeUser2).subscribe((res: TaskDetailsModel) => {
                 expect(res).toBeDefined();
@@ -425,7 +425,7 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        it('should assign task to a userId', (done) => {
+        xit('should assign task to a userId', (done) => {
             let testTaskId = '8888';
             service.assignTaskByUserId(testTaskId, fakeUser2.id).subscribe((res: TaskDetailsModel) => {
                 expect(res).toBeDefined();
@@ -457,7 +457,7 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        it('should claim a task', (done) => {
+        xit('should claim a task', (done) => {
             let taskId = '111';
 
             service.claimTask(taskId).subscribe(() => {
@@ -471,7 +471,7 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        it('should unclaim a task', (done) => {
+        xit('should unclaim a task', (done) => {
             let taskId = '111';
 
             service.unclaimTask(taskId).subscribe(() => {
