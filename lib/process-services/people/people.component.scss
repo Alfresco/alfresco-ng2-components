@@ -51,10 +51,18 @@
         padding: 0px;
     }
 
-    adf-people-list ::ng-deep adf-datatable ::ng-deep {
+    
+
+    adf-people-list adf-datatable {
         thead {
             display: none;
         }
+        
+        .adf-data-table .adf-data-table-cell .cell-container {
+            flex-direction: column;
+            align-items: left;
+        }
+
         .people-email {
             opacity: 0.54;
         }
