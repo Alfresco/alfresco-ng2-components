@@ -15,6 +15,7 @@ env:
     - MODULE=process-services
     - MODULE=content-services
     - MODULE=demo-shell
+    - MODULE=packaging
 
 install:
     - if ([ "$MODULE" != "demo-shell" ]); then
@@ -40,6 +41,10 @@ script:
 
     - if ([ "$MODULE" == "content-services" ]); then
             (./scripts/npm-build-all.sh -si -sb -t "content-services" || exit 1;);
+      fi
+
+    - if ([ "$MODULE" == "packaging" ]); then
+            (cd lib && npm run new-build || exit 1;);
       fi
 
     - if ([ "$MODULE" == "demo-shell" ]); then

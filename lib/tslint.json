@@ -9,7 +9,11 @@
             "parameters",
             "statements"
         ],
-        "ban": false,
+        "ban": [
+          true,
+          "eval",
+          "fdescribe"
+        ],
         "class-name": true,
         "comment-format": [
             true,
