@@ -26,8 +26,7 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class ContentNodeSelectorService {
 
-    constructor(private searchService: SearchService) {
-    }
+    constructor(private searchService: SearchService) {}
 
     /**
      * Performs a search for content node selection
@@ -37,7 +36,9 @@ export class ContentNodeSelectorService {
      * @param rootNodeId    The root is to start the search from
      * @param maxItems      How many items to load
      */
-    public search(searchTerm: string, rootNodeId: string, skipCount: number = 0, maxItems: number = 25): Observable<NodePaging> {
+    public search(searchTerm: string, rootNodeId: string = null, skipCount: number = 0, maxItems: number = 25): Observable<NodePaging> {
+
+        const parentFiltering = rootNodeId ? [ { query: `ANCESTOR:'workspace://SpacesStore/${rootNodeId}'` } ] : [];
 
         let defaultSearchNode: any = {
             query: {
@@ -50,12 +51,13 @@ export class ContentNodeSelectorService {
             },
             filterQueries: [
                 { query: "TYPE:'cm:folder'" },
-                { query: 'NOT cm:creator:System' }]
+                { query: 'NOT cm:creator:System' },
+                ...parentFiltering
+            ],
+            scope: {
+                locations: ['nodes']
+            }
         };
-
-        if (rootNodeId) {
-            defaultSearchNode.scope = rootNodeId;
-        }
 
         return this.searchService.search(defaultSearchNode);
     }
