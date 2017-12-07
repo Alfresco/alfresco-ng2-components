@@ -373,6 +373,9 @@ describe('ContentNodeSelectorComponent', () => {
         describe('Search functionality', () => {
 
             function defaultSearchOptions(searchTerm, rootNodeId = undefined, skipCount = 0) {
+
+                const parentFiltering = rootNodeId ? [ { query: `ANCESTOR:'workspace://SpacesStore/${rootNodeId}'` } ] : [];
+
                 let defaultSearchNode: any = {
                     query: {
                         query: searchTerm ? `${searchTerm}* OR name:${searchTerm}*` : searchTerm
@@ -384,12 +387,13 @@ describe('ContentNodeSelectorComponent', () => {
                     },
                     filterQueries: [
                         { query: "TYPE:'cm:folder'" },
-                        { query: 'NOT cm:creator:System' }]
+                        { query: 'NOT cm:creator:System' },
+                        ...parentFiltering
+                    ],
+                    scope: {
+                        locations: ['nodes']
+                    }
                 };
-
-                if (rootNodeId) {
-                    defaultSearchNode.scope = rootNodeId;
-                }
 
                 return defaultSearchNode;
             }
