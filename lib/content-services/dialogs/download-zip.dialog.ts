@@ -34,32 +34,17 @@ export class DownloadZipDialogComponent implements OnInit {
 
     constructor(private apiService: AlfrescoApiService,
                 private dialogRef: MatDialogRef<DownloadZipDialogComponent>,
-                @Inject(MAT_DIALOG_DATA) private data: { nodeIds?: string[] },
+                @Inject(MAT_DIALOG_DATA) private data: any,
                 private logService: LogService) {
-    }
-
-    private get downloadsApi() {
-        return this.apiService.getInstance().core.downloadsApi;
-    }
-
-    private get nodesApi() {
-        return this.apiService.getInstance().core.nodesApi;
-    }
-
-    private get contentApi() {
-        return this.apiService.getInstance().content;
     }
 
     ngOnInit() {
         if (this.data && this.data.nodeIds && this.data.nodeIds.length > 0) {
-            // change timeout to have a delay for demo purposes
-            setTimeout(() => {
-                if (!this.cancelled) {
-                    this.downloadZip(this.data.nodeIds);
-                } else {
-                    this.logService.log('Cancelled');
-                }
-            }, 0);
+            if (!this.cancelled) {
+                this.downloadZip(this.data.nodeIds);
+            } else {
+                this.logService.log('Cancelled');
+            }
         }
     }
 
@@ -71,7 +56,7 @@ export class DownloadZipDialogComponent implements OnInit {
     downloadZip(nodeIds: string[]) {
         if (nodeIds && nodeIds.length > 0) {
 
-            const promise: any = this.downloadsApi.createDownload({ nodeIds });
+            const promise: any = this.apiService.getInstance().core.downloadsApi.createDownload({ nodeIds });
 
             promise.on('progress', progress => this.logService.log('Progress', progress));
             promise.on('error', error => this.logService.error('Error', error));
@@ -79,9 +64,9 @@ export class DownloadZipDialogComponent implements OnInit {
 
             promise.on('success', (data: DownloadEntry) => {
                 if (data && data.entry && data.entry.id) {
-                    const url = this.contentApi.getContentUrl(data.entry.id, true);
-                    // the call is needed only to get the name of the package
-                    this.nodesApi.getNode(data.entry.id).then((downloadNode: MinimalNodeEntity) => {
+                    const url = this.apiService.getInstance().content.getContentUrl(data.entry.id, true);
+
+                    this.apiService.getInstance().core.nodesApi.getNode(data.entry.id).then((downloadNode: MinimalNodeEntity) => {
                         this.logService.log(downloadNode);
                         const fileName = downloadNode.entry.name;
                         this.waitAndDownload(data.entry.id, url, fileName);
@@ -96,9 +81,9 @@ export class DownloadZipDialogComponent implements OnInit {
             return;
         }
 
-        this.downloadsApi.getDownload(downloadId).then((d: DownloadEntry) => {
-            if (d.entry) {
-                if (d.entry.status === 'DONE') {
+        this.apiService.getInstance().core.downloadsApi.getDownload(downloadId).then((downloadEntry: DownloadEntry) => {
+            if (downloadEntry.entry) {
+                if (downloadEntry.entry.status === 'DONE') {
                     this.download(url, fileName);
                 } else {
                     setTimeout(() => {

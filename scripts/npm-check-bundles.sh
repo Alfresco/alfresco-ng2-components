@@ -82,6 +82,20 @@ do
      echo "js.map ok!"
  fi
 
+ if [ ! -f package/esm5/$PACKAGE'.js' ]; then
+    error_out '31;1' "esm5/$PACKAGE.js not found!" >&2
+    exit 1
+ else
+     echo "esm5 ok!"
+ fi
+
+ if [ ! -f package/esm2015/$PACKAGE'.js' ]; then
+    error_out '31;1' "esm2015/$PACKAGE.js not found!" >&2
+    exit 1
+ else
+     echo "esm2015 ok!"
+ fi
+
   if [ ! -f package/_theming.scss ]; then
     error_out '31;1' "$PACKAGE style not found!" >&2
     exit 1

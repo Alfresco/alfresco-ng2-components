@@ -37,22 +37,20 @@ describe('WebscriptComponent', () => {
             declarations: [
                 WebscriptComponent
             ]
-        }).compileComponents();
+        }).compileComponents().then(()=>{
+            let appConfig: AppConfigService = TestBed.get(AppConfigService);
+            appConfig.config.ecmHost = 'http://localhost:9876/ecm';
+
+            fixture = TestBed.createComponent(WebscriptComponent);
+            component = fixture.componentInstance;
+
+            element = fixture.nativeElement;
+            component = fixture.componentInstance;
+            component.scriptPath = 'fakePath';
+            component.showData = true;
+            fixture.detectChanges();
+        });
     }));
-
-    beforeEach(() => {
-        let appConfig: AppConfigService = TestBed.get(AppConfigService);
-        appConfig.config.ecmHost = 'http://localhost:9876/ecm';
-
-        fixture = TestBed.createComponent(WebscriptComponent);
-        component = fixture.componentInstance;
-
-        element = fixture.nativeElement;
-        component = fixture.componentInstance;
-        component.scriptPath = 'fakePath';
-        component.showData = true;
-        fixture.detectChanges();
-    });
 
     describe('View', () => {
         it('html wrapper should be present', () => {

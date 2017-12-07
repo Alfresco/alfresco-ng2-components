@@ -304,7 +304,7 @@ describe('DropdownWidgetComponent', () => {
                         fixture.detectChanges();
                         expect(element.querySelector('#dropdown-id')).not.toBeNull();
                         const option = fixture.debugElement.query(By.css('.mat-option')).nativeElement;
-                        expect(option.innerText).toEqual('FakeValue');
+                        expect(option.innerText.trim()).toEqual('FakeValue');
                     });
             }));
         });
