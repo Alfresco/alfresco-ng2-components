@@ -153,7 +153,7 @@ describe('DropdownSitesComponent', () => {
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(fixture.nativeElement.innerText.trim()).toBe('DROPDOWN.PLACEHOLDER_LABEL');
+                expect(fixture.nativeElement.innerText.trim()).toContain('DROPDOWN.PLACEHOLDER_LABEL');
             });
         }));
 
@@ -166,7 +166,7 @@ describe('DropdownSitesComponent', () => {
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(fixture.nativeElement.innerText.trim()).toBe('NODE_SELECTOR.SELECT_LOCATION');
+                expect(fixture.nativeElement.innerText.trim()).toContain('NODE_SELECTOR.SELECT_LOCATION');
             });
         }));
 

@@ -104,9 +104,9 @@ describe('FormComponent UI and visibiltiy', () => {
             const optTwo = fixture.debugElement.queryAll(By.css('[id="mat-option-2"]'));
             const optThree = fixture.debugElement.queryAll(By.css('[id="mat-option-3"]'));
 
-            expect(optOne[0].nativeElement.innerText).toEqual('united kingdom');
-            expect(optTwo[0].nativeElement.innerText).toEqual('italy');
-            expect(optThree[0].nativeElement.innerText).toEqual('france');
+            expect(optOne[0].nativeElement.innerText.trim()).toEqual('united kingdom');
+            expect(optTwo[0].nativeElement.innerText.trim()).toEqual('italy');
+            expect(optThree[0].nativeElement.innerText.trim()).toEqual('france');
 
             optTwo[0].nativeElement.click();
             fixture.detectChanges();

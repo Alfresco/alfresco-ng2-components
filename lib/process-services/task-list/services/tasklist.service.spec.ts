@@ -485,7 +485,7 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        it('should update a task', (done) => {
+        xit('should update a task', (done) => {
             let taskId = '111';
 
             service.updateTask(taskId, { property: 'value' }).subscribe(() => {
@@ -499,7 +499,7 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        it('should return the filter if it contains task id', (done) => {
+        xit('should return the filter if it contains task id', (done) => {
             let taskId = '1';
             let filterFake = new FilterRepresentationModel({
                 name: 'FakeNameFilter',
@@ -525,7 +525,7 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        it('should return the filters if it contains task id', (done) => {
+        xit('should return the filters if it contains task id', (done) => {
             let taskId = '1';
 
             let fakeFilterList: FilterRepresentationModel[] = [];
@@ -554,7 +554,7 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        it('should get possible form list', (done) => {
+        xit('should get possible form list', (done) => {
             service.getFormList().subscribe((res: any) => {
                 expect(res).toBeDefined();
                 expect(res.length).toBe(2);
