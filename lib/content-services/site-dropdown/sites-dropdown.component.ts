@@ -61,7 +61,6 @@ export class DropdownSitesComponent implements OnInit {
     }
 
     setDefaultSiteList() {
-        this.siteList;
         this.sitesService.getSites().subscribe((result) => {
                 this.siteList = result;
             },
