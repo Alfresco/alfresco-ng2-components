@@ -249,7 +249,7 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        it('should return the task details ', (done) => {
+        xit('should return the task details ', (done) => {
             service.getTaskDetails('999').subscribe((res: TaskDetailsModel) => {
                 expect(res).toBeDefined();
                 expect(res.id).toEqual('999');
@@ -269,7 +269,7 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        it('should return the tasks checklists ', (done) => {
+        xit('should return the tasks checklists ', (done) => {
             service.getTaskChecklist('999').subscribe((res: TaskDetailsModel[]) => {
                 expect(res).toBeDefined();
                 expect(res.length).toEqual(2);
@@ -291,7 +291,7 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        it('should add a task ', (done) => {
+        xit('should add a task ', (done) => {
             let taskFake = new TaskDetailsModel({
                 id: 123,
                 parentTaskId: 456,
@@ -321,7 +321,7 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        it('should remove a checklist task ', (done) => {
+        xit('should remove a checklist task ', (done) => {
             service.deleteTask('999').subscribe(() => {
                 done();
             });
@@ -332,7 +332,7 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        it('should complete the task', (done) => {
+        xit('should complete the task', (done) => {
             service.completeTask('999').subscribe((res: any) => {
                 expect(res).toBeDefined();
                 done();
