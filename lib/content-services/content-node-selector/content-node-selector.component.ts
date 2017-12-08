@@ -224,7 +224,10 @@ export class ContentNodeSelectorComponent implements OnInit {
     getNextPageOfSearch(event: Pagination): void {
         this.infiniteScroll = true;
         this.skipCount = event.skipCount;
-        this.querySearch();
+
+        if (this.searchTerm.length > 0) {
+            this.querySearch();
+        }
     }
 
     /**
