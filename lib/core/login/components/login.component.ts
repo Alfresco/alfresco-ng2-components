@@ -55,45 +55,62 @@ export class LoginComponent implements OnInit {
 
     isPasswordShow: boolean = false;
 
+    /** Toggle `Remember me` checkbox visibility */
     @Input()
     showRememberMe: boolean = true;
 
+    /** Toggle extra actions visibility (`Need Help`, `Register`, etc.) */
     @Input()
     showLoginActions: boolean = true;
 
+    /** Sets the URL of the 'need help' link in the footer */
     @Input()
     needHelpLink: string = '';
 
+    /** Sets the URL of the 'register' link in the footer */
     @Input()
     registerLink: string = '';
 
+    /** Sets a custom logo image */
     @Input()
     logoImageUrl: string = './assets/images/alfresco-logo.svg';
 
+    /** Sets a custom background image */
     @Input()
     backgroundImageUrl: string = './assets/images/background.svg';
 
+    /** Copyright message shown below the login box */
     @Input()
     copyrightText: string = '\u00A9 2016 Alfresco Software, Inc. All Rights Reserved.';
 
+    /** Possible valid values are ECM, BPM or ALL. The default behaviour of this component
+     * will log in only in the ECM . If you want to log in in both systems the correct value
+     * to use is ALL.
+     */
     @Input()
     providers: string;
 
+    /** Supplies custom validation rules for the login form */
     @Input()
     fieldsValidation: any;
 
+    /** Prevents CSRF Token from being submitted (Process Services only) */
     @Input()
     disableCsrf: boolean;
 
+    /** Route to redirect to upon successful login. */
     @Input()
     successRoute: string = null;
 
+    /** Emitted when a successful login occurs */
     @Output()
     success = new EventEmitter<LoginSuccessEvent>();
 
+    /** Emitted when the login fails */
     @Output()
     error = new EventEmitter<LoginErrorEvent>();
 
+    /** Emitted when the login form is submitted */
     @Output()
     executeSubmit = new EventEmitter<LoginSubmitEvent>();
 
