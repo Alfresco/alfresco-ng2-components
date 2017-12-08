@@ -33,29 +33,32 @@ Authenticates to Alfresco Content Services and Alfresco Process Services.
 </adf-login>
 ```
 
+<!-- propsection start -->
 ### Properties
 
-| Name | Type | Default Value | Description |
-| --- | --- | --- | --- |
-| providers | string | | Possible valid values are ECM, BPM or ALL. The default behaviour of this component will log in only in the ECM . If you want to log in in both systems the correct value to use is ALL. |
-| successRoute | string | | Route to redirect to upon successful login. |
-| disableCsrf | boolean | false | To prevent the CSRF Token from being submitted. Only for Alfresco Process Services call |
-| needHelpLink | string | | It will change the url of the NEED HELP link in the footer  |
-| registerLink | string | | It will change the url of the REGISTER link in the footer |
-| logoImageUrl | string | \<ADF logo image> | To change the logo image with a customised image |
-| copyrightText | string | \<ADF copyright string> | The copyright text below the login box |
-| backgroundImageUrl | string | \<ADF background image> | To change the background image with a customised image |
-| fieldsValidation | { [key: string]: any; }, extra?: { [key: string]: any; } |  | Use it to customise the validation rules of the login form |
-| showRememberMe | boolean | false | Toggle `Remember me` checkbox visibility |
-| showLoginActions | boolean | false | Toggle extra actions visibility (`Need Help`, `Register`, etc.) |
+| Name | Type | Default value | Description |
+| -- | -- | -- | -- |
+| backgroundImageUrl | string | './assets/images/background.svg' | <p>Sets a custom background image </p> |
+| copyrightText | string | '\u00A9 2016 Alfresco Software, Inc. All Rights Reserved.' | <p>Copyright message shown below the login box </p> |
+| disableCsrf | boolean |  | <p>Prevents CSRF Token from being submitted (Process Services only) </p> |
+| fieldsValidation | any |  | <p>Supplies custom validation rules for the login form </p> |
+| logoImageUrl | string | './assets/images/alfresco-logo.svg' | <p>Sets a custom logo image </p> |
+| needHelpLink | string | '' | <p>Sets the URL of the &#39;need help&#39; link in the footer </p> |
+| providers | string |  | <p>Possible valid values are ECM, BPM or ALL. The default behaviour of this component will log in only in the ECM . If you want to log in in both systems the correct value
+to use is ALL.</p> |
+| registerLink | string | '' | <p>Sets the URL of the &#39;register&#39; link in the footer </p> |
+| showLoginActions | boolean | true | <p>Toggle extra actions visibility (<code>Need Help</code>, <code>Register</code>, etc.) </p> |
+| showRememberMe | boolean | true | <p>Toggle <code>Remember me</code> checkbox visibility </p> |
+| successRoute | string | null | <p>Route to redirect to upon successful login. </p> |
 
 ### Events
 
-| Name | Description |
-| --- | --- |
-| success | Raised when the login is done |
-| error | Raised when the login fails |
-| executeSubmit | Raised when the form is submitted |
+| Name | Type | Description |
+| -- | -- | -- |
+| error | EventEmitter | <p>Emitted when the login fails </p> |
+| executeSubmit | EventEmitter | <p>Emitted when the login form is submitted </p> |
+| success | EventEmitter | <p>Emitted when a successful login occurs </p> |
+<!-- propsection end -->
 
 ## Details
 
