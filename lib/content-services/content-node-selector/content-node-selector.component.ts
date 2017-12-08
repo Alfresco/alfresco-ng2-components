@@ -147,6 +147,7 @@ export class ContentNodeSelectorComponent implements OnInit {
      * @param chosenSite Sitemodel to search within
      */
     siteChanged(chosenSite: SiteModel): void {
+        this.clear();
         this.siteId = chosenSite.guid;
         this.updateResults();
     }
