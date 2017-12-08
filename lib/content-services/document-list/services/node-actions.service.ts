@@ -103,8 +103,11 @@ export class NodeActionsService {
                         observable.next.bind(observable, `OPERATION.SUCCES.${type.toUpperCase()}.${action.toUpperCase()}`),
                         observable.error.bind(observable)
                     );
+            },
+              () => {},
+              () => {
                 this.dialog.closeAll();
-            });
+              });
 
             return observable;
         } else {

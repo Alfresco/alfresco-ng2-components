@@ -5,13 +5,12 @@
 
 <section matDialogContent
          class="adf-content-node-selector-dialog-content">
-    <adf-content-node-selector #contentNodeSelector
+    <adf-content-node-selector
         [currentFolderId]="data.currentFolderId"
         [dropdownHideMyFiles]="data.dropdownHideMyFiles"
         [dropdownSiteList]="data.dropdownSiteList"
         [rowFilter]="data.rowFilter"
-        [imageResolver]="data.dropdownSiteList"
-        [pageSize]="data.dropdownSiteList"
+        [imageResolver]="data.imageResolver"
         (select)="onSelect($event)">
     </adf-content-node-selector>
 </section>

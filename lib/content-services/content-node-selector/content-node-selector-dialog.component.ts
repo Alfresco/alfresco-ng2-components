@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, Inject, ViewEncapsulation, Output, EventEmitter, ViewChild } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { ContentNodeSelectorComponent } from './content-node-selector.component';
+import { Component, Inject, ViewEncapsulation } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { ContentNodeSelectorComponentData } from './content-node-selector.component-data.interface';
 
@@ -28,28 +27,23 @@ import { ContentNodeSelectorComponentData } from './content-node-selector.compon
 })
 export class ContentNodeSelectorDialogComponent {
 
-    @Output()
-    selectedNodes: EventEmitter<MinimalNodeEntryEntity[]> = new EventEmitter<MinimalNodeEntryEntity[]>();
-
-    @ViewChild(ContentNodeSelectorComponent)
-    contentNodeSelector: ContentNodeSelectorComponent
-
     buttonActionName: string;
+    private chosenNode: MinimalNodeEntryEntity[];
 
-    constructor(@Inject(MAT_DIALOG_DATA) public data: ContentNodeSelectorComponentData,
-                private containingDialog: MatDialogRef<ContentNodeSelectorDialogComponent>) {
+    constructor(@Inject(MAT_DIALOG_DATA) public data: ContentNodeSelectorComponentData) {
         this.buttonActionName = data.actionName ? `NODE_SELECTOR.${data.actionName.toUpperCase()}` : 'NODE_SELECTOR.CHOOSE';
     }
 
     close() {
-        this.containingDialog.close();
+        this.data.select.complete();
     }
 
     onSelect(nodeList: MinimalNodeEntryEntity[]) {
-        this.selectedNodes.next(nodeList);
+        this.chosenNode = nodeList;
     }
 
     onClick(): void {
-        this.contentNodeSelector.choose();
+        this.data.select.next(this.chosenNode);
+        this.data.select.complete();
     }
 }

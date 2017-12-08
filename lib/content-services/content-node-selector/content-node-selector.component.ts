@@ -28,11 +28,10 @@ import {
     AlfrescoApiService,
     ContentService,
     HighlightDirective,
-    SiteModel,
     UserPreferencesService
 } from '@alfresco/adf-core';
 import { FormControl } from '@angular/forms';
-import { MinimalNodeEntryEntity, NodePaging, Pagination, Site } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity, NodePaging, Pagination, SiteEntry, SitePaging } from 'alfresco-js-api';
 import { DocumentListComponent, PaginationStrategy } from '../document-list/components/document-list.component';
 import { RowFilter } from '../document-list/data/row-filter.model';
 import { ImageResolver } from '../document-list/data/image-resolver.model';
@@ -53,18 +52,12 @@ export class ContentNodeSelectorComponent implements OnInit {
     showingSearchResults: boolean = false;
     loadingSearchResults: boolean = false;
     inDialog: boolean = false;
-    chosenNode: MinimalNodeEntryEntity | Site | null = null;
+    _chosenNode: MinimalNodeEntryEntity = null;
     folderIdToShow: string | null = null;
     paginationStrategy: PaginationStrategy;
     pagination: Pagination;
     skipCount: number = 0;
     infiniteScroll: boolean = false;
-
-    @Input()
-    title: string;
-
-    @Input()
-    actionName: string;
 
     @Input()
     currentFolderId: string = null;
@@ -73,7 +66,7 @@ export class ContentNodeSelectorComponent implements OnInit {
     dropdownHideMyFiles: boolean = false;
 
     @Input()
-    dropdownSiteList: any[] = null;
+    dropdownSiteList: SitePaging = null;
 
     @Input()
     rowFilter: RowFilter = null;
@@ -112,6 +105,15 @@ export class ContentNodeSelectorComponent implements OnInit {
         this.pageSize = this.preferences.paginationSize;
     }
 
+    set chosenNode(value: MinimalNodeEntryEntity) {
+        this._chosenNode = value;
+        this.select.next([value]);
+    }
+
+    get chosenNode() {
+        return this._chosenNode;
+    }
+
     ngOnInit() {
         this.folderIdToShow = this.currentFolderId;
         this.paginationStrategy = PaginationStrategy.Infinite;
@@ -120,10 +122,10 @@ export class ContentNodeSelectorComponent implements OnInit {
     /**
      * Updates the site attribute and starts a new search
      *
-     * @param chosenSite Sitemodel to search within
+     * @param chosenSite SiteEntry to search within
      */
-    siteChanged(chosenSite: SiteModel): void {
-        this.siteId = chosenSite.guid;
+    siteChanged(chosenSite: SiteEntry): void {
+        this.siteId = chosenSite.entry.guid;
         this.updateResults();
     }
 
@@ -277,27 +279,6 @@ export class ContentNodeSelectorComponent implements OnInit {
      */
     resetChosenNode(): void {
         this.chosenNode = null;
-    }
-
-    /**
-     * Emit event with the chosen node
-     */
-    choose(): void {
-        const entry: any = this.chosenNode;
-
-        if (entry && entry.guid) {
-            const options = {
-                include: ['path', 'properties', 'allowableOperations']
-            };
-            this.apiService.nodesApi.getNode(entry.guid, options)
-                .then(chosenSiteNode => {
-                    this.select.next([chosenSiteNode.entry]);
-                });
-
-        } else {
-            this.select.next([this.chosenNode]);
-
-        }
     }
 
     /**

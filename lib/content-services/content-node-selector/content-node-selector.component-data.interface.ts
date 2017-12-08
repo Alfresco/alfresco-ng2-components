@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import { EventEmitter } from '@angular/core';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity, SitePaging } from 'alfresco-js-api';
+import { Subject } from 'rxjs/Subject';
 
 export interface ContentNodeSelectorComponentData {
     title: string;
     actionName?: string;
     currentFolderId: string;
     dropdownHideMyFiles?: boolean;
-    dropdownSiteList?: any[];
+    dropdownSiteList?: SitePaging;
     rowFilter?: any;
     imageResolver?: any;
-    select: EventEmitter<MinimalNodeEntryEntity[]>;
+    select: Subject<MinimalNodeEntryEntity[]>;
 }

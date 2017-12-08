@@ -15,17 +15,15 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA, EventEmitter } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MAT_DIALOG_DATA } from '@angular/material';
 import { By } from '@angular/platform-browser';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity, SiteEntry } from 'alfresco-js-api';
 import {
     AlfrescoApiService,
     ContentService,
     TranslationService,
     SearchService,
-    SiteModel,
     SitesService,
     UserPreferencesService
 } from '@alfresco/adf-core';
@@ -60,11 +58,8 @@ const ONE_FOLDER_RESULT = {
 describe('ContentNodeSelectorComponent', () => {
     let component: ContentNodeSelectorComponent;
     let fixture: ComponentFixture<ContentNodeSelectorComponent>;
-    let data: any;
     let searchService: SearchService;
     let searchSpy: jasmine.Spy;
-    let apiService: AlfrescoApiService;
-    let nodesApi;
 
     let _observer: Observer<NodePaging>;
 
@@ -112,103 +107,6 @@ describe('ContentNodeSelectorComponent', () => {
         TestBed.resetTestingModule();
     });
 
-    describe('Dialog features', () => {
-
-        beforeEach(async(() => {
-            data = {
-                title: 'Move along citizen...',
-                actionName: 'move',
-                select: new EventEmitter<MinimalNodeEntryEntity>(),
-                rowFilter: () => {
-                },
-                imageResolver: () => 'piccolo',
-                currentFolderId: 'cat-girl-nuku-nuku'
-            };
-
-            setupTestbed([{ provide: MAT_DIALOG_DATA, useValue: data }]);
-            TestBed.compileComponents();
-        }));
-
-        beforeEach(() => {
-            fixture = TestBed.createComponent(ContentNodeSelectorComponent);
-            component = fixture.componentInstance;
-            fixture.detectChanges();
-        });
-
-        describe('Data injecting with the "Material dialog way"', () => {
-
-            it('should show the INJECTED title', () => {
-                const titleElement = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-title"]'));
-                expect(titleElement).not.toBeNull();
-                expect(titleElement.nativeElement.innerText).toBe('Move along citizen...');
-            });
-
-            it('should have the INJECTED actionName on the name of the choose button', () => {
-                const actionButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
-                expect(actionButton).not.toBeNull();
-                expect(actionButton.nativeElement.innerText).toBe('NODE_SELECTOR.MOVE');
-            });
-
-            it('should pass through the injected currentFolderId to the documentlist', () => {
-                let documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
-                expect(documentList).not.toBeNull('Document list should be shown');
-                expect(documentList.componentInstance.currentFolderId).toBe('cat-girl-nuku-nuku');
-            });
-
-            it('should pass through the injected rowFilter to the documentlist', () => {
-                let documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
-                expect(documentList).not.toBeNull('Document list should be shown');
-                expect(documentList.componentInstance.rowFilter).toBe(data.rowFilter);
-            });
-
-            it('should pass through the injected imageResolver to the documentlist', () => {
-                let documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
-                expect(documentList).not.toBeNull('Document list should be shown');
-                expect(documentList.componentInstance.imageResolver).toBe(data.imageResolver);
-            });
-
-            it('should trigger the INJECTED select event when selection has been made', (done) => {
-                const expectedNode = <MinimalNodeEntryEntity> {};
-                data.select.subscribe((nodes) => {
-                    expect(nodes.length).toBe(1);
-                    expect(nodes[0]).toBe(expectedNode);
-                    done();
-                });
-
-                component.chosenNode = expectedNode;
-                component.choose();
-            });
-        });
-
-        // describe('Cancel button', () => {
-
-        //     let dummyMdDialogRef;
-        //     let fakePreference: UserPreferencesService = <UserPreferencesService> jasmine.createSpyObj('UserPreferencesService', ['paginationSize']);
-        //     fakePreference.paginationSize = 10;
-
-        //     beforeEach(() => {
-        //         dummyMdDialogRef = <MatDialogRef<ContentNodeSelectorComponent>> {
-        //             close: () => {
-        //             }
-        //         };
-        //     });
-
-        //     it('should be shown if dialogRef is injected', () => {
-        //         const componentInstance = new ContentNodeSelectorComponent(null, null, null, fakePreference, data, dummyMdDialogRef);
-        //         expect(componentInstance.inDialog).toBeTruthy();
-        //     });
-
-        //     it('should should call the close method in the injected dialogRef', () => {
-        //         spyOn(dummyMdDialogRef, 'close');
-        //         const componentInstance = new ContentNodeSelectorComponent(null, null, null, fakePreference, data, dummyMdDialogRef);
-
-        //         componentInstance.close();
-
-        //         expect(dummyMdDialogRef.close).toHaveBeenCalled();
-        //     });
-        // });
-    });
-
     describe('General component features', () => {
 
         beforeEach(async(() => {
@@ -227,22 +125,9 @@ describe('ContentNodeSelectorComponent', () => {
                     _observer = observer;
                 });
             });
-
-            apiService = TestBed.get(AlfrescoApiService);
-            nodesApi = apiService.nodesApi;
-
         });
 
         describe('Parameters', () => {
-
-            it('should show the title', () => {
-                component.title = 'Move along citizen...';
-                fixture.detectChanges();
-
-                const titleElement = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-title"]'));
-                expect(titleElement).not.toBeNull();
-                expect(titleElement.nativeElement.innerText).toBe('Move along citizen...');
-            });
 
             it('should trigger the select event when selection has been made', (done) => {
                 const expectedNode = <MinimalNodeEntryEntity> {};
@@ -253,7 +138,6 @@ describe('ContentNodeSelectorComponent', () => {
                 });
 
                 component.chosenNode = expectedNode;
-                component.choose();
             });
         });
 
@@ -269,7 +153,7 @@ describe('ContentNodeSelectorComponent', () => {
                 sitesService = TestBed.get(SitesService);
                 spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.resolve(expectedDefaultFolderNode));
                 spyOn(documentListService, 'getFolder').and.returnValue(Observable.throw('No results for test'));
-                spyOn(sitesService, 'getSites').and.returnValue(Observable.of([]));
+                spyOn(sitesService, 'getSites').and.returnValue(Observable.of({ list: { entries : [] }}));
                 spyOn(component.documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.resolve());
                 component.currentFolderId = 'cat-girl-nuku-nuku';
                 fixture.detectChanges();
@@ -434,7 +318,7 @@ describe('ContentNodeSelectorComponent', () => {
                 setTimeout(() => {
                     expect(searchSpy.calls.count()).toBe(1, 'Search count should be one after only one search');
 
-                    component.siteChanged(<SiteModel> { guid: 'namek' });
+                    component.siteChanged(<SiteEntry> { entry: { guid: 'namek' } });
 
                     expect(searchSpy.calls.count()).toBe(2, 'Search count should be two after the site change');
                     expect(searchSpy.calls.argsFor(1)).toEqual([defaultSearchOptions('vegeta', 'namek')]);
@@ -591,13 +475,13 @@ describe('ContentNodeSelectorComponent', () => {
             });
 
             it('should set the folderIdToShow to the default "currentFolderId" if siteId is undefined', (done) => {
-                component.siteChanged(<SiteModel> { guid: 'Kame-Sennin Muten Roshi' });
+                component.siteChanged(<SiteEntry> { entry: { guid: 'Kame-Sennin Muten Roshi' } });
                 fixture.detectChanges();
 
                 let documentList = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-document-list"]'));
                 expect(documentList.componentInstance.currentFolderId).toBe('Kame-Sennin Muten Roshi');
 
-                component.siteChanged(<SiteModel> { guid: undefined });
+                component.siteChanged(<SiteEntry> { entry: { guid: undefined } });
                 fixture.detectChanges();
 
                 documentList = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-document-list"]'));
@@ -674,123 +558,6 @@ describe('ContentNodeSelectorComponent', () => {
                     }, 300);
                 });
             });
-        });
-
-        describe('Cancel button', () => {
-
-            it('should not be shown if dialogRef is NOT injected', () => {
-                const closeButton = fixture.debugElement.query(By.css('[content-node-selector-actions-cancel]'));
-                expect(closeButton).toBeNull();
-            });
-        });
-
-        describe('Action button for the chosen node', () => {
-
-            const entry: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {};
-            let hasPermission;
-
-            beforeEach(() => {
-                const alfrescoContentService = TestBed.get(ContentService);
-                spyOn(alfrescoContentService, 'hasPermission').and.callFake(() => hasPermission);
-            });
-
-            it('should be disabled by default', () => {
-                fixture.detectChanges();
-
-                let actionButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
-                expect(actionButton.nativeElement.disabled).toBe(true);
-            });
-
-            it('should become enabled after loading node with the necessary permissions', () => {
-                hasPermission = true;
-                component.documentList.folderNode = entry;
-                component.documentList.ready.emit();
-                fixture.detectChanges();
-
-                let actionButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
-                expect(actionButton.nativeElement.disabled).toBe(false);
-            });
-
-            it('should remain disabled after loading node without the necessary permissions', () => {
-                hasPermission = false;
-                component.documentList.folderNode = entry;
-                component.documentList.ready.emit();
-                fixture.detectChanges();
-
-                let actionButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
-                expect(actionButton.nativeElement.disabled).toBe(true);
-            });
-
-            it('should be enabled when clicking on a node (with the right permissions) in the list (onNodeSelect)', () => {
-                hasPermission = true;
-
-                component.onNodeSelect({ detail: { node: { entry } } });
-                fixture.detectChanges();
-
-                let actionButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
-                expect(actionButton.nativeElement.disabled).toBe(false);
-            });
-
-            it('should remain disabled when clicking on a node (with the WRONG permissions) in the list (onNodeSelect)', () => {
-                hasPermission = false;
-
-                component.onNodeSelect({ detail: { node: { entry } } });
-                fixture.detectChanges();
-
-                let actionButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
-                expect(actionButton.nativeElement.disabled).toBe(true);
-            });
-
-            it('should become disabled when clicking on a node (with the WRONG permissions) after previously selecting a right node', () => {
-                hasPermission = true;
-                component.onNodeSelect({ detail: { node: { entry } } });
-                fixture.detectChanges();
-
-                hasPermission = false;
-                component.onNodeSelect({ detail: { node: { entry } } });
-                fixture.detectChanges();
-
-                let actionButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
-                expect(actionButton.nativeElement.disabled).toBe(true);
-            });
-
-            it('should be disabled when resetting the chosen node', () => {
-                hasPermission = true;
-                component.onNodeSelect({ detail: { node: { entry: <MinimalNodeEntryEntity> {} } } });
-                fixture.detectChanges();
-
-                component.resetChosenNode();
-                fixture.detectChanges();
-
-                let actionButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
-                expect(actionButton.nativeElement.disabled).toBe(true);
-            });
-
-            it('should make the call to get the corresponding node entry to emit when a site node is selected as destination', () => {
-                spyOn(nodesApi, 'getNode').and.callFake((nodeId) => {
-                    return new Promise(resolve => {
-                        resolve({ entry: { id: nodeId } });
-                    });
-                });
-
-                const siteNode1 = { title: 'my files', guid: '-my-' };
-                const siteNode2 = { title: 'my sites', guid: '-mysites-' };
-
-                component.dropdownSiteList = [siteNode1, siteNode2];
-                fixture.detectChanges();
-                component.chosenNode = siteNode1;
-                fixture.detectChanges();
-                component.choose();
-
-                const options = {
-                    include: ['path', 'properties', 'allowableOperations']
-                };
-                expect(nodesApi.getNode).toHaveBeenCalledWith(
-                    '-my-',
-                    options
-                );
-            });
-
         });
     });
 });
