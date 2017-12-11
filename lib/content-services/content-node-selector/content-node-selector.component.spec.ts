@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/* tslint:disable:ban */
+
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -153,7 +155,7 @@ describe('ContentNodeSelectorComponent', () => {
                 sitesService = TestBed.get(SitesService);
                 spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.resolve(expectedDefaultFolderNode));
                 spyOn(documentListService, 'getFolder').and.returnValue(Observable.throw('No results for test'));
-                spyOn(sitesService, 'getSites').and.returnValue(Observable.of({ list: { entries : [] }}));
+                spyOn(sitesService, 'getSites').and.returnValue(Observable.of({ list: { entries: [] } }));
                 spyOn(component.documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.resolve());
                 component.currentFolderId = 'cat-girl-nuku-nuku';
                 fixture.detectChanges();
@@ -258,7 +260,7 @@ describe('ContentNodeSelectorComponent', () => {
 
             function defaultSearchOptions(searchTerm, rootNodeId = undefined, skipCount = 0) {
 
-                const parentFiltering = rootNodeId ? [ { query: `ANCESTOR:'workspace://SpacesStore/${rootNodeId}'` } ] : [];
+                const parentFiltering = rootNodeId ? [{ query: `ANCESTOR:'workspace://SpacesStore/${rootNodeId}'` }] : [];
 
                 let defaultSearchNode: any = {
                     query: {
@@ -557,6 +559,97 @@ describe('ContentNodeSelectorComponent', () => {
                         });
                     }, 300);
                 });
+            });
+        });
+
+        fdescribe('Action button for the chosen node', () => {
+
+            const entry: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> { list: {entries: [{}]}};
+            const nodePage: NodePaging = <NodePaging> {list: {}, pagination: {}};
+            let hasPermission;
+
+            beforeEach(() => {
+                const alfrescoContentService = TestBed.get(ContentService);
+                spyOn(alfrescoContentService, 'hasPermission').and.callFake(() => hasPermission);
+            });
+
+            it('should become enabled after loading node with the necessary permissions', async(() => {
+                hasPermission = true;
+                component.documentList.folderNode = entry;
+
+                component.select.subscribe((nodes) => {
+                    expect(nodes).toBeDefined();
+                    expect(nodes).not.toBeNull();
+                });
+
+                component.documentList.ready.emit(nodePage);
+                fixture.detectChanges();
+            }));
+
+            it('should remain disabled after loading node without the necessary permissions', () => {
+                hasPermission = false;
+                component.documentList.folderNode = entry;
+
+                component.select.subscribe((nodes) => {
+                    expect(nodes).toBeDefined();
+                    expect(nodes).not.toBeNull();
+                });
+
+                component.documentList.ready.emit(nodePage);
+                fixture.detectChanges();
+            });
+
+            it('should be enabled when clicking on a node (with the right permissions) in the list (onNodeSelect)', () => {
+                hasPermission = true;
+
+                component.select.subscribe((nodes) => {
+                    expect(nodes).toBeDefined();
+                    expect(nodes).not.toBeNull();
+                });
+
+                component.onNodeSelect({ detail: { node: { entry } } });
+                fixture.detectChanges();
+            });
+
+            it('should remain disabled when clicking on a node (with the WRONG permissions) in the list (onNodeSelect)', () => {
+                hasPermission = false;
+
+                component.select.subscribe((nodes) => {
+                    expect(nodes).toBeDefined();
+                    expect(nodes).not.toBeNull();
+                });
+
+                component.onNodeSelect({ detail: { node: { entry } } });
+                fixture.detectChanges();
+            });
+
+            it('should become disabled when clicking on a node (with the WRONG permissions) after previously selecting a right node', () => {
+                component.select.subscribe((nodes) => {
+                    expect(nodes).toBeDefined();
+                    expect(nodes).not.toBeNull();
+                });
+
+                hasPermission = true;
+                component.onNodeSelect({ detail: { node: { entry } } });
+                fixture.detectChanges();
+
+                hasPermission = false;
+                component.onNodeSelect({ detail: { node: { entry } } });
+                fixture.detectChanges();
+            });
+
+            it('should be disabled when resetting the chosen node', () => {
+                hasPermission = true;
+                component.onNodeSelect({ detail: { node: { entry: <MinimalNodeEntryEntity> {} } } });
+                fixture.detectChanges();
+
+                component.select.subscribe((nodes) => {
+                    expect(nodes).toBeDefined();
+                    expect(nodes).not.toBeNull();
+                });
+
+                component.resetChosenNode();
+                fixture.detectChanges();
             });
         });
     });

@@ -24,6 +24,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
 import { ContentNodeSelectorDialogComponent } from './content-node-selector-dialog.component';
 import { ContentNodeSelectorService } from './content-node-selector.service';
+import { ContentNodeDialogService } from './content-node-dialog.service';
 import { SitesDropdownModule } from '../site-dropdown/sites-dropdown.module';
 import { BreadcrumbModule } from '../breadcrumb/breadcrumb.module';
 import { PaginationModule, ToolbarModule, DirectiveModule, DataColumnModule, DataTableModule } from '@alfresco/adf-core';
@@ -58,7 +59,8 @@ import { NameLocationCellComponent } from './name-location-cell/name-location-ce
         ContentNodeSelectorDialogComponent
     ],
     providers: [
-        ContentNodeSelectorService
+        ContentNodeSelectorService,
+        ContentNodeDialogService
     ]
 })
 export class ContentNodeSelectorModule {}
