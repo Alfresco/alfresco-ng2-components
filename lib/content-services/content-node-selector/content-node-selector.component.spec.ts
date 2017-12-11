@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/* tslint:disable:ban */
-
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -562,7 +560,7 @@ describe('ContentNodeSelectorComponent', () => {
             });
         });
 
-        fdescribe('Action button for the chosen node', () => {
+        describe('Action button for the chosen node', () => {
 
             const entry: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> { list: {entries: [{}]}};
             const nodePage: NodePaging = <NodePaging> {list: {}, pagination: {}};

@@ -23,7 +23,7 @@ import { ContentActionHandler } from '../models/content-action.model';
 import { DocumentListService } from './document-list.service';
 import { FolderActionsService } from './folder-actions.service';
 import { NodeActionsService } from './node-actions.service';
-import { ContentNodeDialogService } from './content-node-dialog.service';
+import { ContentNodeDialogService } from '../../content-node-selector/content-node-dialog.service';
 
 describe('FolderActionsService', () => {
 
