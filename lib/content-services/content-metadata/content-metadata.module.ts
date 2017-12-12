@@ -21,9 +21,13 @@ import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
 import { CardViewModule } from '@alfresco/adf-core';
-
 import { ContentMetadataComponent } from './content-metadata.component';
 import { ContentMetadataCardComponent } from './content-metadata-card.component';
+import { AspectProperties } from './services/aspect-properties.service';
+
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './spike/token.interceptor';
+import { AspectsApi } from './spike/aspects-api.service';
 
 @NgModule({
     imports: [
@@ -31,6 +35,7 @@ import { ContentMetadataCardComponent } from './content-metadata-card.component'
         MaterialModule,
         TranslateModule,
         FlexLayoutModule,
+        HttpClientModule,
         CardViewModule
     ],
     exports: [
@@ -40,6 +45,12 @@ import { ContentMetadataCardComponent } from './content-metadata-card.component'
     declarations: [
         ContentMetadataComponent,
         ContentMetadataCardComponent
+    ],
+    providers: [
+        AspectProperties,
+
+        { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+        AspectsApi
     ]
 })
 export class ContentMetadataModule {}

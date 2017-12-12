@@ -15,6 +15,17 @@
  * limitations under the License.
  */
 
-export * from './content-metadata.component';
-export * from './services/content-metadata.service';
-export * from './services/aspect-properties.service'
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
+
+@Injectable()
+export class AspectsApi {
+
+    constructor(private http: HttpClient) {}
+
+    fetchAspect(aspectName: string): Observable<any> {
+        const aspectApiName = aspectName.replace(':', '_');
+        return this.http.get(`/alfresco/s/api/classes/${aspectApiName}`);
+    }
+}
