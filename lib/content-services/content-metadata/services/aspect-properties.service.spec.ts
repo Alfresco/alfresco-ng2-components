@@ -16,26 +16,26 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { AspectProperties } from './aspect-properties.service';
+import { AspectPropertiesService } from './aspect-properties.service';
 import { AspectsApi } from '../spike/aspects-api.service';
 import { Observable } from 'rxjs/Observable';
 
-describe('AspectProperties', () => {
+describe('AspectPropertiesService', () => {
 
-    let aspectProperties: AspectProperties,
+    let aspectProperties: AspectPropertiesService,
         aspectsApi: AspectsApi;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             providers: [
-                AspectProperties,
+                AspectPropertiesService,
                 AspectsApi
             ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
-        aspectProperties = TestBed.get(AspectProperties);
+        aspectProperties = TestBed.get(AspectPropertiesService);
         aspectsApi = TestBed.get(AspectsApi);
     });
 

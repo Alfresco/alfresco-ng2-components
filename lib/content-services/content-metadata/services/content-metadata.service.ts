@@ -18,11 +18,35 @@
 import { Injectable } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { CardViewDateItemModel, CardViewTextItemModel, FileSizePipe } from '@alfresco/adf-core';
+import { AspectPropertiesService } from './aspect-properties.service';
+import { AppConfigService } from '@alfresco/adf-core';
 
 @Injectable()
 export class ContentMetadataService {
 
-    constructor(private fileSizePipe: FileSizePipe) {}
+    constructor(private appConfigService: AppConfigService,
+                private fileSizePipe: FileSizePipe,
+                private aspectPropertiesService: AspectPropertiesService) {}
+
+    getAspects(node: MinimalNodeEntryEntity, preset: string = 'default') {
+        this.loadAspects(node, preset);
+    }
+
+    private loadAspects(node: MinimalNodeEntryEntity, preset: string) {
+        let aspectsWhiteList;
+
+        try {
+            aspectsWhiteList = Object.keys(this.appConfigService.config['content-metadata'].presets[preset]);
+        } catch (e) {
+            throw new Error(`No content-metadata preset for: ${preset}`);
+        }
+
+        const aspectsToLoad = node.aspectNames.filter(
+            (aspectName) => aspectsWhiteList.indexOf(aspectName) !== -1
+        );
+
+        this.aspectPropertiesService.load(aspectsToLoad);
+    }
 
     getBasicProperties(node: MinimalNodeEntryEntity) {
         return [

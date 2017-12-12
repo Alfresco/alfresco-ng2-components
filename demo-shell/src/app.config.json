@@ -359,5 +359,12 @@
                 }
             ]
         }
+    },
+    "content-metadata": {
+        "presets": {
+            "default": {
+
+            }
+        }
     }
 }

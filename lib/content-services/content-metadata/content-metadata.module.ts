@@ -20,10 +20,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
-import { CardViewModule } from '@alfresco/adf-core';
+import { CardViewModule , FileSizePipe } from '@alfresco/adf-core';
 import { ContentMetadataComponent } from './content-metadata.component';
 import { ContentMetadataCardComponent } from './content-metadata-card.component';
-import { AspectProperties } from './services/aspect-properties.service';
+import { ContentMetadataService } from './services/content-metadata.service';
+import { AspectPropertiesService } from './services/aspect-properties.service';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './spike/token.interceptor';
@@ -47,7 +48,9 @@ import { AspectsApi } from './spike/aspects-api.service';
         ContentMetadataCardComponent
     ],
     providers: [
-        AspectProperties,
+        ContentMetadataService,
+        AspectPropertiesService,
+        FileSizePipe,
 
         { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
         AspectsApi

@@ -21,7 +21,7 @@ import { forkJoin } from 'rxjs/observable/forkJoin';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
-export class AspectProperties {
+export class AspectPropertiesService {
 
     constructor(private aspectsApi: AspectsApi) {}
 

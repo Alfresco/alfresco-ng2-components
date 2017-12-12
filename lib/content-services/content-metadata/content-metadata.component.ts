@@ -18,9 +18,9 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, ViewEncapsulation } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
-import { CardViewItem, CardViewUpdateService, FileSizePipe, NodesApiService } from '@alfresco/adf-core';
+import { CardViewItem, CardViewUpdateService, NodesApiService } from '@alfresco/adf-core';
 import { ContentMetadataService } from './services/content-metadata.service';
-import { AspectProperties } from './services/aspect-properties.service';
+import { AspectPropertiesService } from './services/aspect-properties.service';
 
 @Component({
     selector: 'adf-content-metadata',
@@ -29,8 +29,7 @@ import { AspectProperties } from './services/aspect-properties.service';
     host: { 'class': 'adf-content-metadata' },
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
-    providers: [ CardViewUpdateService ],
-    viewProviders: [ ContentMetadataService, FileSizePipe ]
+    providers: [ CardViewUpdateService ]
 })
 export class ContentMetadataComponent implements OnChanges, OnInit {
 
@@ -48,7 +47,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
     constructor(private contentMetadataService: ContentMetadataService,
                 private cardViewUpdateService: CardViewUpdateService,
                 private nodesApi: NodesApiService,
-                private aspectProperties: AspectProperties) {}
+                private aspectProperties: AspectPropertiesService) {}
 
     ngOnInit(): void {
         this.cardViewUpdateService.itemUpdated$

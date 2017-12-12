@@ -17,4 +17,4 @@
 
 export * from './content-metadata.component';
 export * from './services/content-metadata.service';
-export * from './services/aspect-properties.service'
+export * from './services/aspect-properties.service';
