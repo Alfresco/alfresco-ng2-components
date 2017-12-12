@@ -16,9 +16,10 @@
  */
 
 import { MatDialog } from '@angular/material';
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ContentService } from '@alfresco/adf-core';
 import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
 import { ShareDataRow } from '../document-list/data/share-data-row.model';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { DataColumn } from '@alfresco/adf-core';
@@ -29,42 +30,30 @@ import { ContentNodeSelectorComponentData } from './content-node-selector.compon
 @Injectable()
 export class ContentNodeDialogService {
 
-    select: EventEmitter<MinimalNodeEntryEntity[]>;
-
     constructor(private dialog: MatDialog,
                 private contentService?: ContentService,
                 private documentListService?: DocumentListService) { }
 
-    openCopyMoveDialog(action: string, contentEntry: MinimalNodeEntryEntity, permission?: string) {
-        this.select = new EventEmitter<MinimalNodeEntryEntity[]>();
+    openCopyMoveDialog(action: string, contentEntry: MinimalNodeEntryEntity, permission?: string): Observable<MinimalNodeEntryEntity[]> {
         if (this.contentService.hasPermission(contentEntry, permission)) {
+            const select = new Subject<MinimalNodeEntryEntity[]>();
+            select.subscribe({
+                complete: this.close.bind(this)
+            });
+
             const data: ContentNodeSelectorComponentData = {
                 title: `${action} '${contentEntry.name}' to ...`,
                 actionName: action,
                 currentFolderId: contentEntry.parentId,
                 rowFilter: this.rowFilter.bind(this, contentEntry.id),
                 imageResolver: this.imageResolver.bind(this),
-                select: new Subject<MinimalNodeEntryEntity[]>()
+                select: select
             };
             this.dialog.open(ContentNodeSelectorDialogComponent, { data, panelClass: 'adf-content-node-selector-dialog', width: '630px' });
-            this.bubbleSelectDataEvent(data);
+            return select;
         } else {
-            this.select.error(new Error(JSON.stringify({ error: { statusCode: 403 } })));
+            return Observable.throw({ statusCode: 403 });
         }
-    }
-
-    private bubbleSelectDataEvent(data: ContentNodeSelectorComponentData) {
-        data.select.subscribe(
-            (nodeList) => {
-                this.select.next(nodeList);
-            },
-            (error) => {
-                this.select.error(error);
-            },
-            () => {
-                this.close();
-                this.select.complete();
-            });
     }
 
     private imageResolver(row: ShareDataRow, col: DataColumn): string | null {

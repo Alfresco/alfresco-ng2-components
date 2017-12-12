@@ -78,15 +78,15 @@ export class NodeActionsService {
     private doFileOperation(action: string, type: string, contentEntry: MinimalNodeEntryEntity, permission?: string): Subject<string> {
         const observable: Subject<string> = new Subject<string>();
 
-        this.contentDialogService.openCopyMoveDialog(action, contentEntry, permission);
-
-        this.contentDialogService.select.subscribe((selections: MinimalNodeEntryEntity[]) => {
-            const selection = selections[0];
-            this.documentListService[`${action}Node`].call(this.documentListService, contentEntry.id, selection.id)
-                .subscribe(
+        this.contentDialogService
+            .openCopyMoveDialog(action, contentEntry, permission)
+            .subscribe((selections: MinimalNodeEntryEntity[]) => {
+                const selection = selections[0];
+                this.documentListService[`${action}Node`].call(this.documentListService, contentEntry.id, selection.id)
+                    .subscribe(
                     observable.next.bind(observable, `OPERATION.SUCCES.${type.toUpperCase()}.${action.toUpperCase()}`),
                     observable.error.bind(observable)
-                );
+                    );
             },
             (error) => {
                 observable.error(error);
