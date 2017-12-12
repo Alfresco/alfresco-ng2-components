@@ -89,7 +89,7 @@ export class NodeActionsService {
                 );
             },
             (error) => {
-                observable.error(new Error(JSON.stringify({ error: { statusCode: 403 } })));
+                observable.error(error);
                 return observable;
             });
         return observable;

@@ -36,6 +36,7 @@ export class ContentNodeDialogService {
                 private documentListService?: DocumentListService) { }
 
     openCopyMoveDialog(action: string, contentEntry: MinimalNodeEntryEntity, permission?: string) {
+        this.select = new EventEmitter<MinimalNodeEntryEntity[]>();
         if (this.contentService.hasPermission(contentEntry, permission)) {
             const data: ContentNodeSelectorComponentData = {
                 title: `${action} '${contentEntry.name}' to ...`,
@@ -45,9 +46,7 @@ export class ContentNodeDialogService {
                 imageResolver: this.imageResolver.bind(this),
                 select: new Subject<MinimalNodeEntryEntity[]>()
             };
-
             this.dialog.open(ContentNodeSelectorDialogComponent, { data, panelClass: 'adf-content-node-selector-dialog', width: '630px' });
-            this.select = new EventEmitter<MinimalNodeEntryEntity[]>();
             this.bubbleSelectDataEvent(data);
         } else {
             this.select.error(new Error(JSON.stringify({ error: { statusCode: 403 } })));
