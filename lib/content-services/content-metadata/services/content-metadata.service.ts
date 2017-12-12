@@ -20,6 +20,7 @@ import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { CardViewDateItemModel, CardViewTextItemModel, FileSizePipe } from '@alfresco/adf-core';
 import { AspectPropertiesService } from './aspect-properties.service';
 import { AppConfigService } from '@alfresco/adf-core';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class ContentMetadataService {
@@ -28,24 +29,48 @@ export class ContentMetadataService {
                 private fileSizePipe: FileSizePipe,
                 private aspectPropertiesService: AspectPropertiesService) {}
 
-    getAspects(node: MinimalNodeEntryEntity, preset: string = 'default') {
-        this.loadAspects(node, preset);
+    getAspects(node: MinimalNodeEntryEntity, preset: string = 'default'): Observable<any> {
+
+        const whiteListedAspects = this.getWhiteListByPreset(preset);
+
+        return this.loadAspects(whiteListedAspects, node.aspectNames)
+            .map(this.filterByWhitelist.bind(this, whiteListedAspects));
     }
 
-    private loadAspects(node: MinimalNodeEntryEntity, preset: string) {
-        let aspectsWhiteList;
+    private getWhiteListByPreset(preset: string): any[] {
+        let whiteListedAspects = this.appConfigService.config['content-metadata'].presets[preset];
 
-        try {
-            aspectsWhiteList = Object.keys(this.appConfigService.config['content-metadata'].presets[preset]);
-        } catch (e) {
+        if (!whiteListedAspects) {
             throw new Error(`No content-metadata preset for: ${preset}`);
         }
 
-        const aspectsToLoad = node.aspectNames.filter(
-            (aspectName) => aspectsWhiteList.indexOf(aspectName) !== -1
+        return whiteListedAspects;
+    }
+
+    private loadAspects(whiteListedAspects: object, nodeAspectNames: string[]): Observable<any> {
+        const whiteListedAspectNames = Object.keys(whiteListedAspects);
+        const aspectsToLoad = nodeAspectNames.filter(
+            (aspectName) => whiteListedAspectNames.indexOf(aspectName) !== -1
         );
 
-        this.aspectPropertiesService.load(aspectsToLoad);
+        return this.aspectPropertiesService.load(aspectsToLoad);
+    }
+
+    private filterByWhitelist(whiteListedAspects: object, aspectDescriptors: object) {
+        const whiteListedAspectNames = Object.keys(whiteListedAspects);
+        const aspectNames = Object.keys(aspectDescriptors);
+
+        return whiteListedAspectNames
+            .filter(whiteListedAspectName => aspectNames.indexOf(whiteListedAspectName) !== -1)
+            .reduce((accumulator, aspectName) => {
+                const whiteListedPropertyNames = whiteListedAspects[aspectName];
+
+                return whiteListedPropertyNames.reduce((properties, propertyName) => {
+                    return Object.assign(properties, {
+                        [propertyName]: aspectDescriptors[aspectName].properties[propertyName]
+                    });
+                }, accumulator);
+            }, {});
     }
 
     getBasicProperties(node: MinimalNodeEntryEntity) {
