@@ -30,38 +30,45 @@ import { ImageResolver } from '../document-list/data/image-resolver.model';
 })
 export class ContentNodeSelectorComponent {
 
+
     /**
-     * @deprecated
+     * @deprecated in 2.1.0
+     */
+    @Input()
+    title: string = null;
+
+    /**
+     * @deprecated in 2.1.0
      */
     @Input()
     currentFolderId: string = null;
 
     /**
-     * @deprecated
+     * @deprecated in 2.1.0
      */
     @Input()
     dropdownHideMyFiles: boolean = false;
 
     /**
-     * @deprecated
+     * @deprecated in 2.1.0
      */
     @Input()
     dropdownSiteList: SitePaging = null;
 
     /**
-     * @deprecated
+     * @deprecated in 2.1.0
      */
     @Input()
     rowFilter: RowFilter = null;
 
     /**
-     * @deprecated
+     * @deprecated in 2.1.0
      */
     @Input()
     imageResolver: ImageResolver = null;
 
     /**
-     * @deprecated
+     * @deprecated in 2.1.0
      */
     @Input()
     pageSize: number;

@@ -6,6 +6,25 @@ Allows a user to select items from a Content Services repository.
 
 ## Basic Usage
 
+# Using Content node dialog service - recommended
+
+```ts
+import { ContentNodeDialogService } from '@adf/content-services'
+
+
+constructor(private contentDialogService: ContentNodeDialogService,...)
+
+        this.contentDialogService
+            .openCopyMoveDialog(actionName, minimalNode, permission)
+            .subscribe((selections: MinimalNodeEntryEntity[]) => {
+
+                ...
+            });
+
+```
+
+# Using ContentNodeSelectorComponent
+
 ```ts
 import { MatDialog } from '@angular/material';
  ...

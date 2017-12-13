@@ -1,16 +1,16 @@
 <header matDialogTitle
         class="adf-content-node-selector-dialog-title"
-        data-automation-id="content-node-selector-title">{{data.title}}
+        data-automation-id="content-node-selector-title">{{title || data?.title}}
 </header>
 
 <section matDialogContent
          class="adf-content-node-selector-dialog-content">
     <adf-content-node-selector-panel
-        [currentFolderId]="data.currentFolderId"
-        [dropdownHideMyFiles]="data.dropdownHideMyFiles"
-        [dropdownSiteList]="data.dropdownSiteList"
-        [rowFilter]="data.rowFilter"
-        [imageResolver]="data.imageResolver"
+        [currentFolderId]="currentFolderId || data?.currentFolderId"
+        [dropdownHideMyFiles]="dropdownHideMyFiles || data?.dropdownHideMyFiles"
+        [dropdownSiteList]="dropdownSiteList || data?.dropdownSiteList"
+        [rowFilter]="rowFilter || data?.rowFilter"
+        [imageResolver]="imageResolver || data?.imageResolver"
         (select)="onSelect($event)">
     </adf-content-node-selector-panel>
 </section>
