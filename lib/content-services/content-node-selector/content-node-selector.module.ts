@@ -21,8 +21,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 import { TranslateModule } from '@ngx-translate/core';
 
+import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
-import { ContentNodeSelectorDialogComponent } from './content-node-selector-dialog.component';
 import { ContentNodeSelectorService } from './content-node-selector.service';
 import { ContentNodeDialogService } from './content-node-dialog.service';
 import { SitesDropdownModule } from '../site-dropdown/sites-dropdown.module';
@@ -48,15 +48,15 @@ import { NameLocationCellComponent } from './name-location-cell/name-location-ce
         PaginationModule
     ],
     exports: [
-        ContentNodeSelectorComponent, ContentNodeSelectorDialogComponent
+        ContentNodeSelectorPanelComponent, ContentNodeSelectorComponent
     ],
     entryComponents: [
-        ContentNodeSelectorComponent, ContentNodeSelectorDialogComponent
+        ContentNodeSelectorPanelComponent, ContentNodeSelectorComponent
     ],
     declarations: [
-        ContentNodeSelectorComponent,
+        ContentNodeSelectorPanelComponent,
         NameLocationCellComponent,
-        ContentNodeSelectorDialogComponent
+        ContentNodeSelectorComponent
     ],
     providers: [
         ContentNodeSelectorService,

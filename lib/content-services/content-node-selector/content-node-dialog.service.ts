@@ -24,7 +24,7 @@ import { ShareDataRow } from '../document-list/data/share-data-row.model';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { DataColumn } from '@alfresco/adf-core';
 import { DocumentListService } from '../document-list/services/document-list.service';
-import { ContentNodeSelectorDialogComponent } from './content-node-selector-dialog.component';
+import { ContentNodeSelectorComponent } from './content-node-selector.component';
 import { ContentNodeSelectorComponentData } from './content-node-selector.component-data.interface';
 
 @Injectable()
@@ -49,7 +49,7 @@ export class ContentNodeDialogService {
                 imageResolver: this.imageResolver.bind(this),
                 select: select
             };
-            this.dialog.open(ContentNodeSelectorDialogComponent, { data, panelClass: 'adf-content-node-selector-dialog', width: '630px' });
+            this.dialog.open(ContentNodeSelectorComponent, { data, panelClass: 'adf-content-node-selector-dialog', width: '630px' });
             return select;
         } else {
             return Observable.throw({ statusCode: 403 });

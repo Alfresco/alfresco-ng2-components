@@ -1,161 +1,58 @@
-@mixin adf-content-node-selector-theme($theme) {
+@mixin adf-content-node-selector-dialog-theme($theme) {
     $primary: map-get($theme, primary);
     $foreground: map-get($theme, foreground);
     $background: map-get($theme, background);
 
-    .adf-content-node-selector {
+    .mat-dialog-container {
+        padding: 0;
+    }
 
-        &-content {
+    .adf-content-node-selector-dialog {
+        &-title,
+        &-content,
+        &-actions {
+            padding: 16px;
+            margin: 0;
+        }
+
+        &-content{
             padding-top: 0;
+        }
 
-            &-input {
-                width: 100%;
+        &-title::first-letter {
+            text-transform: uppercase;
+        }
 
-                &-icon {
-                    color: mat-color($foreground, disabled-button);
-                    cursor: pointer;
+        &-actions {
+            padding: 8px;
+            background-color: mat-color($background, background);
+            display: flex;
+            justify-content: flex-end;
+            color: mat-color($foreground, secondary-text);
 
-                    &:hover {
-                        color: mat-color($foreground, base);
-                    }
-                }
+            button {
+                text-transform: uppercase;
             }
 
-            .mat-input-underline .mat-input-ripple {
-                height: 1px;
-                transition: none;
+            &:last-child {
+                margin-bottom: 0px;
             }
 
-            .adf-site-dropdown-container {
-                .mat-form-field {
-                    display: block;
-                    margin-bottom: 15px;
-                }
+            &-cancel {
+                font-weight: normal;
             }
 
-            .adf-site-dropdown-list-element {
-                width: 100%;
-                margin-bottom: 0;
+            &-choose {
+                font-weight: normal;
 
-                .mat-select-trigger {
-                    font-size: 14px;
+                &[disabled] {
+                    opacity: 0.6;
                 }
 
-            }
-
-            .adf-toolbar .mat-toolbar {
-                border-bottom-width: 0;
-                font-size: 14px;
-
-                &.mat-toolbar-single-row {
-                    height: auto;
-                }
-            }
-
-            &-breadcrumb {
-                .adf-dropdown-breadcumb-trigger {
-                    outline: none;
-                    .mat-icon {
-                        color: mat-color($foreground, base, 0.45);
-
-                        &:hover {
-                            color: mat-color($foreground, base, 0.65);
-                        }
-                    }
-                }
-
-                .adf-dropddown-breadcrumb-item-chevron {
-                    color: mat-color($foreground, base, 0.45);
-                }
-            }
-
-            &-list {
-                height: 200px;
-                overflow: auto;
-                border: 1px solid mat-color($foreground, base, 0.07);
-
-                .adf-highlight {
+                &:enabled {
                     color: mat-color($primary);
-                }
-
-                .adf-data-table {
-                    border: none;
-
-                    .adf-no-content-container {
-                        text-align: center;
-                    }
-
-                    thead {
-                        display: none;
-                    }
-
-                    .adf-data-table-cell {
-                        padding-top: 8px;
-                        padding-bottom: 8px;
-                        height: 30px;
-
-                        & .adf-name-location-cell-location {
-                            display: none;
-                        }
-
-                        & .adf-name-location-cell-name {
-                            padding: 0;
-                        }
-
-                        &--image {
-                            padding-left: 16px;
-                            padding-right: 8px;
-                        }
-
-                        &--text {
-                            padding-left: 8px;
-                        }
-                    }
-
-                    tbody tr {
-                        height: auto !important;
-
-                        &:first-child {
-                            .adf-data-table-cell {
-                                border-top: none;
-                            }
-                        }
-
-                        &:last-child {
-                            .adf-data-table-cell {
-                                border-bottom: none;
-                            }
-                        }
-                    }
-                }
-
-                &-searchLayout {
-
-                    .adf-data-table {
-                        .adf-data-table-cell {
-                            height: 56px;
-                            padding-bottom: 24px;
-
-                            & .adf-name-location-cell-location {
-                                display: block
-                            }
-
-                            & .adf-name-location-cell-name {
-                                padding: 18px 0 2px 0;
-                            }
-
-                            &.adf-content-selector-modified-cell {
-                                display: none;
-                            }
-
-                            &.adf-content-selector-modifier-cell {
-                                display: none;
-                            }
-                        }
-                    }
                 }
             }
         }
     }
-
 }

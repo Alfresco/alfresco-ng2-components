@@ -1,6 +1,6 @@
 @import '../breadcrumb/breadcrumb.component';
 @import '../breadcrumb/dropdown-breadcrumb.component';
-@import '../content-node-selector/content-node-selector.component';
+@import '../content-node-selector/content-node-selector-panel.component';
 @import '../content-node-selector/name-location-cell/name-location-cell.component';
 @import '../document-list/components/document-list.component';
 
@@ -14,7 +14,7 @@
 
 @import '../content-metadata/content-metadata.component';
 @import '../content-metadata/content-metadata-card.component';
-@import '../content-node-selector/content-node-selector-dialog.component';
+@import '../content-node-selector/content-node-selector.component';
 
 @mixin adf-content-services-theme($theme) {
     @include adf-breadcrumb-theme($theme);
