@@ -12,8 +12,7 @@
                             <mat-icon>refresh</mat-icon>
                         </button>
                     </div>
-                    <mat-icon>{{ form.isValid ? 'event_available' : 'event_busy' }}</mat-icon>
-                    <span>{{form.taskName}}</span>
+                    <span class="adf-form-title">{{form.taskName}}</span>
 
                 </h4>
             </mat-card-title>
@@ -31,7 +30,8 @@
         </mat-card-content>
         <mat-card-actions *ngIf="form.hasOutcomes()">
             <!--[class.mdl-button--colored]="!outcome.isSystem"-->
-            <button *ngFor="let outcome of form.outcomes"
+            <button *ngFor="let outcome of form.outcomes" 
+                    [color]="setCompleteButtonColor(outcome.name)"
                     mat-button
                     [disabled]="!isOutcomeButtonEnabled(outcome)"
                     [class.adf-form-hide-button]="!isOutcomeButtonVisible(outcome, form.readOnly)"

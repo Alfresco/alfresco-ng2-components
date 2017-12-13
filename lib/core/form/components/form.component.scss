@@ -5,6 +5,11 @@
         overflow: visible;
     }
 
+    &-form-title {
+        font-weight: 600;
+        font-size: 20px;
+    }
+
     &-form-debug-container {
         padding: 10px;
     }
@@ -30,6 +35,17 @@
 
     &-task-title {
         text-align: center
+    }
+}
+
+mat {
+
+    &-card {
+        overflow: hidden;
+
+        &-actions {
+            float: right;
+        }
     }
 }
 
