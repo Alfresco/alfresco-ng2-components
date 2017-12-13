@@ -29,13 +29,23 @@ export class AspectPropertiesService {
         const aspectFetchStreams = aspects.map((aspect) => this.aspectsApi.fetchAspect(aspect));
 
         return forkJoin(aspectFetchStreams)
-            .map(this.transformToAspectsObject);
+            .map(this.flattenResponse);
     }
 
-    private transformToAspectsObject(aspects) {
-        return aspects.reduce((aspectsObject, aspect: any) => {
-            aspectsObject[aspect.name] = aspect;
-            return aspectsObject;
-        }, {});
+    private flattenResponse(aspects) {
+        const properties = [];
+
+        aspects.forEach((aspectObject) => {
+            const aspectName = aspectObject.name;
+            const aspectPropertyNames = Object.keys(aspectObject.properties);
+
+            aspectPropertyNames.forEach((propertyName) => {
+                const property = aspectObject.properties[propertyName];
+                property.aspectName = aspectName;
+                properties.push(property);
+            });
+        });
+
+        return properties;
     }
 }

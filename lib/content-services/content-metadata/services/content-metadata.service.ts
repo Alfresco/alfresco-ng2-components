@@ -19,73 +19,37 @@ import { Injectable } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { CardViewDateItemModel, CardViewTextItemModel, FileSizePipe } from '@alfresco/adf-core';
 import { AspectPropertiesService } from './aspect-properties.service';
-import { AppConfigService, LogService } from '@alfresco/adf-core';
+import { AspectWhiteListService } from './aspect-whitelist.service';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class ContentMetadataService {
 
-    constructor(private appConfigService: AppConfigService,
-                private fileSizePipe: FileSizePipe,
-                private aspectPropertiesService: AspectPropertiesService,
-                private logService: LogService) {}
+    constructor(private fileSizePipe: FileSizePipe,
+                private aspectWhiteListService: AspectWhiteListService,
+                private aspectPropertiesService: AspectPropertiesService) {}
 
-    getAspects(node: MinimalNodeEntryEntity, preset: string = 'default'): Observable<any> {
+    getAspects(node: MinimalNodeEntryEntity, presetName: string = 'default'): Observable<any> {
+        this.aspectWhiteListService.choosePreset(presetName);
 
-        const whiteListedAspects = this.getWhiteListByPreset(preset);
-
-        return this.loadAspects(whiteListedAspects, node.aspectNames)
-            .map(this.filterPropertiesByWhitelist.bind(this, whiteListedAspects));
+        return this.loadAspectDescriptors(node.aspectNames)
+            .map(this.filterPropertiesByWhitelist.bind(this));
     }
 
-    private getWhiteListByPreset(preset: string): object | string {
-        let whiteListedAspects: object | string;
-
-        try {
-            whiteListedAspects = this.appConfigService.config['content-metadata'].presets[preset];
-            Object.keys(whiteListedAspects);
-        } catch (e) {
-            if (preset !== 'default') {
-                this.logService.error(`No content-metadata preset for: ${preset}`);
-            }
-        }
-
-        return whiteListedAspects || '*';
-    }
-
-    private loadAspects(whiteListedAspects: object | string, nodeAspectNames: string[]): Observable<any> {
-        let aspectsToLoad;
-
-        if (typeof whiteListedAspects === 'string' && whiteListedAspects === '*') {
-            aspectsToLoad = nodeAspectNames;
-        } else {
-            const whiteListedAspectNames = Object.keys(whiteListedAspects);
-            aspectsToLoad = nodeAspectNames.filter(
-                (aspectName) => whiteListedAspectNames.indexOf(aspectName) !== -1
-            );
-        }
+    private loadAspectDescriptors(aspectsAssignedToNode: string[]): Observable<any> {
+        const aspectsToLoad = aspectsAssignedToNode
+            .filter(nodeAspectName => this.aspectWhiteListService.isAspectAllowed(nodeAspectName));
 
         return this.aspectPropertiesService.load(aspectsToLoad);
     }
 
-    private filterPropertiesByWhitelist(whiteListedAspects: object, aspectDescriptors: object) {
-        const whiteListedAspectNames = Object.keys(whiteListedAspects);
-        const aspectNames = Object.keys(aspectDescriptors);
-
-        return whiteListedAspectNames
-            .filter(whiteListedAspectName => aspectNames.indexOf(whiteListedAspectName) !== -1)
-            .reduce((accumulator, aspectName) => {
-                const whiteListedPropertyNames = whiteListedAspects[aspectName];
-
-                if (typeof whiteListedPropertyNames === 'string' && whiteListedPropertyNames === '*') {
-                    return aspectDescriptors[aspectName].properties;
-                } else {
-                    return whiteListedPropertyNames.reduce((properties, propertyName) => {
-                        return Object.assign(properties, {
-                            [propertyName]: aspectDescriptors[aspectName].properties[propertyName]
-                        });
-                    }, accumulator);
-                }
+    private filterPropertiesByWhitelist(aspectPropertyDescriptors: any[]) {
+        return aspectPropertyDescriptors
+            .filter(property => this.aspectWhiteListService.isPropertyAllowed(property.aspectName, property.name))
+            .reduce((properties, property) => {
+                return Object.assign({}, properties, {
+                    [property.name]: property
+                });
             }, {});
     }
 

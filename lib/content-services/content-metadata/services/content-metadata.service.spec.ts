@@ -20,6 +20,7 @@ import { ContentMetadataService } from './content-metadata.service';
 import { AspectPropertiesService } from './aspect-properties.service';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AspectsApi } from '../spike/aspects-api.service';
+import { AspectWhiteListService } from './aspect-whitelist.service';
 import { AppConfigService, LogService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 
@@ -38,6 +39,7 @@ describe('ContentMetadataService', () => {
                 ContentMetadataService,
                 AspectPropertiesService,
                 AppConfigService,
+                AspectWhiteListService,
                 { provide: LogService, useValue: { error: () => {} }},
                 AspectsApi
             ]
@@ -116,21 +118,17 @@ describe('ContentMetadataService', () => {
 
         it('should filter out properties which are not defined in the particular aspect', () => {
             spyOn(aspectProperties, 'load').and.callFake(() => {
-                return Observable.of({
-                    'exif:exif': {
-                        properties: {
-                            'exif:1': { id: 'exif:1:id' },
-                            'exif:2': { id: 'exif:2:id' }
-                        }
-                    }
-                });
+                return Observable.of([
+                    { name: 'exif:1', aspectName: 'exif:exif', id: 'exif:1:id' },
+                    { name: 'exif:2', aspectName: 'exif:exif', id: 'exif:2:id' }
+                ]);
             });
 
             testPresets.default = { 'exif:exif': ['exif:2'] };
 
             contentMetadataService.getAspects(node).subscribe({
                 next: (properties) => {
-                    expect(properties['exif:2']).toEqual({ id: 'exif:2:id' });
+                    expect(properties['exif:2']).toEqual({ name: 'exif:2', aspectName: 'exif:exif', id: 'exif:2:id' });
                     expect(properties['exif:1']).toBeUndefined();
                 }
             });
@@ -138,20 +136,12 @@ describe('ContentMetadataService', () => {
 
         it('should accept "*" wildcard for aspect properties', () => {
             spyOn(aspectProperties, 'load').and.callFake(() => {
-                return Observable.of({
-                    'exif:exif': {
-                        properties: {
-                            'exif:1': { id: 'exif:1:id' },
-                            'exif:2': { id: 'exif:2:id' }
-                        }
-                    },
-                    'custom:custom': {
-                        properties: {
-                            'custom:1': { id: 'custom:1:id' },
-                            'custom:2': { id: 'custom:2:id' }
-                        }
-                    }
-                });
+                return Observable.of([
+                    { name: 'exif:1', aspectName: 'exif:exif', id: 'exif:1:id' },
+                    { name: 'exif:2', aspectName: 'exif:exif', id: 'exif:2:id' },
+                    { name: 'custom:1', aspectName: 'custom:custom', id: 'custom:1:id' },
+                    { name: 'custom:2', aspectName: 'custom:custom', id: 'custom:2:id' }
+                ]);
             });
 
             testPresets.default = {
@@ -161,9 +151,9 @@ describe('ContentMetadataService', () => {
 
             contentMetadataService.getAspects(node).subscribe({
                 next: (properties) => {
-                    expect(properties['exif:2']).toEqual({ id: 'exif:2:id' });
-                    expect(properties['exif:1']).toEqual({ id: 'exif:1:id' });
-                    expect(properties['custom:1']).toEqual({ id: 'custom:1:id' });
+                    expect(properties['exif:1']).toEqual({ name: 'exif:1', aspectName: 'exif:exif', id: 'exif:1:id' });
+                    expect(properties['exif:2']).toEqual({ name: 'exif:2', aspectName: 'exif:exif', id: 'exif:2:id' });
+                    expect(properties['custom:1']).toEqual({ name: 'custom:1', aspectName: 'custom:custom', id: 'custom:1:id' });
                     expect(properties['custom:2']).toBeUndefined();
                 }
             });
@@ -171,14 +161,10 @@ describe('ContentMetadataService', () => {
 
         it('should filter out properties which are not defined amongst all aspects', () => {
             spyOn(aspectProperties, 'load').and.callFake(() => {
-                return Observable.of({
-                    'exif:exif': {
-                        properties: { 'exif:1': { id: 'exif:1:id' } }
-                    },
-                    'custom:custom': {
-                        properties: { 'custom:1': { id: 'custom:1:id' } }
-                    }
-                });
+                return Observable.of([
+                    { name: 'exif:1', aspectName: 'exif:exif', id: 'exif:1:id' },
+                    { name: 'custom:1', aspectName: 'custom:custom', id: 'custom:1:id' }
+                ]);
             });
 
             testPresets.default = {
@@ -188,19 +174,17 @@ describe('ContentMetadataService', () => {
 
             contentMetadataService.getAspects(node).subscribe({
                 next: (properties) => {
-                    expect(properties['exif:1']).toEqual({ id: 'exif:1:id' });
-                    expect(properties['custom:1']).toEqual({ id: 'custom:1:id' });
+                    expect(properties['exif:1']).toEqual({ name: 'exif:1', aspectName: 'exif:exif', id: 'exif:1:id' });
+                    expect(properties['custom:1']).toEqual({ name: 'custom:1', aspectName: 'custom:custom', id: 'custom:1:id' });
                 }
             });
         });
 
         it('should filter out aspects which are not present in app config preset', () => {
             spyOn(aspectProperties, 'load').and.callFake(() => {
-                return Observable.of({
-                    'exif:exif': {
-                        properties: { 'exif:1': { id: 'exif:1:id' } }
-                    }
-                });
+                return Observable.of([
+                    { name: 'exif:1', aspectName: 'exif:exif', id: 'exif:1:id' }
+                ]);
             });
 
             testPresets.default = {
@@ -210,7 +194,7 @@ describe('ContentMetadataService', () => {
 
             contentMetadataService.getAspects(node).subscribe({
                 next: (properties) => {
-                    expect(properties['exif:1']).toEqual({ id: 'exif:1:id' });
+                    expect(properties['exif:1']).toEqual({ name: 'exif:1', aspectName: 'exif:exif', id: 'exif:1:id' });
                     expect(properties['banana:1']).toBeUndefined();
                 }
             });

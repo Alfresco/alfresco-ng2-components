@@ -54,20 +54,38 @@ describe('AspectPropertiesService', () => {
         expect(aspectsApi.fetchAspect).toHaveBeenCalledWith('custom:custom');
     });
 
-    it('should emit forked value of fetchings', (done) => {
+    it('should flatten the forked values', (done) => {
 
-        const expectations = [ { name: 'exif:exif', id: 1 }, { name: 'cm:content', id: 2 } ];
+        const apiResponses = [
+            {
+                name: 'exif:exif',
+                id: 1,
+                properties: {
+                    'exif:1': { id: 'exif:1:id', name: 'exif:1' },
+                    'exif:2': { id: 'exif:2:id', name: 'exif:2' }
+                }
+            },
+            {
+                name: 'cm:content',
+                id: 2,
+                properties: {
+                    'cm:content': { id: 'cm:content:id', name: 'cm:content' }
+                }
+
+            }
+        ];
         let counter = 0;
 
         spyOn(aspectsApi, 'fetchAspect').and.callFake(() => {
-            return Observable.of(expectations[counter++]);
+            return Observable.of(apiResponses[counter++]);
         });
 
         aspectProperties.load(['exif:exif', 'cm:content'])
             .subscribe({
                 next: (data) => {
-                    expect(data['exif:exif']).toBe(expectations[0]);
-                    expect(data['cm:content']).toBe(expectations[1]);
+                    expect(data[0]).toEqual({ id: 'exif:1:id', name: 'exif:1', aspectName: 'exif:exif'});
+                    expect(data[1]).toEqual({ id: 'exif:2:id', name: 'exif:2', aspectName: 'exif:exif'});
+                    expect(data[2]).toEqual({ id: 'cm:content:id', name: 'cm:content', aspectName: 'cm:content'});
                 },
                 complete: done
             });
