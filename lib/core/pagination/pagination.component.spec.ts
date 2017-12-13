@@ -91,6 +91,11 @@ describe('PaginationComponent', () => {
             });
     }));
 
+    it('should have an "empty" class if no items present', () => {
+        fixture.detectChanges();
+        expect(fixture.nativeElement.classList.contains('adf-pagination__empty')).toBeTruthy();
+    });
+
     describe('Single page', () => {
         beforeEach(() => {
             component.pagination = new FakePaginationInput(1, 1, 10);
