@@ -20,7 +20,7 @@ import { ContentMetadataService } from './content-metadata.service';
 import { AspectPropertiesService } from './aspect-properties.service';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AspectsApi } from '../spike/aspects-api.service';
-import { AppConfigService } from '@alfresco/adf-core';
+import { AppConfigService, LogService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 
 describe('ContentMetadataService', () => {
@@ -28,6 +28,7 @@ describe('ContentMetadataService', () => {
     let contentMetadataService: ContentMetadataService,
         aspectProperties: AspectPropertiesService,
         appConfigService: AppConfigService,
+        logService: LogService,
         node: MinimalNodeEntryEntity,
         testPresets: any;
 
@@ -36,6 +37,8 @@ describe('ContentMetadataService', () => {
             providers: [
                 ContentMetadataService,
                 AspectPropertiesService,
+                AppConfigService,
+                { provide: LogService, useValue: { error: () => {} }},
                 AspectsApi
             ]
         }).compileComponents();
@@ -45,6 +48,7 @@ describe('ContentMetadataService', () => {
         contentMetadataService = TestBed.get(ContentMetadataService);
         aspectProperties = TestBed.get(AspectPropertiesService);
         appConfigService = TestBed.get(AppConfigService);
+        logService = TestBed.get(LogService);
     });
 
     afterEach(() => {
@@ -80,25 +84,65 @@ describe('ContentMetadataService', () => {
             expect(aspectProperties.load).toHaveBeenCalledWith(['cm:content', 'custom:custom']);
         });
 
-        it('should throw meaningful error when invalid preset are given', () => {
+        it('should call the aspect properties loading for all the node aspectNames if the "*" widecard is used for the preset', () => {
             spyOn(aspectProperties, 'load').and.callFake(x => Observable.of({}));
-            testPresets.pink = { 'cm:content': {}, 'custom:custom': {} };
+            testPresets.default = '*';
 
-            function sut() {
-                contentMetadataService.getAspects(node, 'blue');
-            }
+            contentMetadataService.getAspects(node);
 
-            expect(sut).toThrowError('No content-metadata preset for: blue');
+            expect(aspectProperties.load).toHaveBeenCalledWith(['exif:exif', 'cm:content', 'custom:custom']);
         });
 
-        it('should filter out properties which are not defined in the application config', () => {
+        it('should call the aspect properties loading for all the node aspectNames if there is no preset data defined in the app config', () => {
+            spyOn(aspectProperties, 'load').and.callFake(x => Observable.of({}));
+            spyOn(logService, 'error').and.stub();
+            appConfigService.config['content-metadata'] = undefined;
+
+            contentMetadataService.getAspects(node);
+
+            expect(logService.error).not.toHaveBeenCalled();
+            expect(aspectProperties.load).toHaveBeenCalledWith(['exif:exif', 'cm:content', 'custom:custom']);
+        });
+
+        it('should show meaningful error when invalid preset are given', () => {
+            spyOn(aspectProperties, 'load').and.callFake(x => Observable.of({}));
+            spyOn(logService, 'error').and.stub();
+            testPresets.pink = { 'cm:content': {}, 'custom:custom': {} };
+
+            contentMetadataService.getAspects(node, 'blue');
+
+            expect(logService.error).toHaveBeenCalledWith('No content-metadata preset for: blue');
+        });
+
+        it('should filter out properties which are not defined in the particular aspect', () => {
             spyOn(aspectProperties, 'load').and.callFake(() => {
                 return Observable.of({
                     'exif:exif': {
                         properties: {
                             'exif:1': { id: 'exif:1:id' },
-                            'exif:2': { id: 'exif:2:id' },
-                            'exif:3': { id: 'exif:3:id' }
+                            'exif:2': { id: 'exif:2:id' }
+                        }
+                    }
+                });
+            });
+
+            testPresets.default = { 'exif:exif': ['exif:2'] };
+
+            contentMetadataService.getAspects(node).subscribe({
+                next: (properties) => {
+                    expect(properties['exif:2']).toEqual({ id: 'exif:2:id' });
+                    expect(properties['exif:1']).toBeUndefined();
+                }
+            });
+        });
+
+        it('should accept "*" wildcard for aspect properties', () => {
+            spyOn(aspectProperties, 'load').and.callFake(() => {
+                return Observable.of({
+                    'exif:exif': {
+                        properties: {
+                            'exif:1': { id: 'exif:1:id' },
+                            'exif:2': { id: 'exif:2:id' }
                         }
                     },
                     'custom:custom': {
@@ -111,22 +155,66 @@ describe('ContentMetadataService', () => {
             });
 
             testPresets.default = {
-                'exif:exif': ['exif:2', 'exif:1'],
-                'custom:custom': ['custom:2'],
+                'exif:exif': '*',
+                'custom:custom': ['custom:1']
+            };
+
+            contentMetadataService.getAspects(node).subscribe({
+                next: (properties) => {
+                    expect(properties['exif:2']).toEqual({ id: 'exif:2:id' });
+                    expect(properties['exif:1']).toEqual({ id: 'exif:1:id' });
+                    expect(properties['custom:1']).toEqual({ id: 'custom:1:id' });
+                    expect(properties['custom:2']).toBeUndefined();
+                }
+            });
+        });
+
+        it('should filter out properties which are not defined amongst all aspects', () => {
+            spyOn(aspectProperties, 'load').and.callFake(() => {
+                return Observable.of({
+                    'exif:exif': {
+                        properties: { 'exif:1': { id: 'exif:1:id' } }
+                    },
+                    'custom:custom': {
+                        properties: { 'custom:1': { id: 'custom:1:id' } }
+                    }
+                });
+            });
+
+            testPresets.default = {
+                'exif:exif': ['exif:1'],
+                'custom:custom': ['custom:1']
+            };
+
+            contentMetadataService.getAspects(node).subscribe({
+                next: (properties) => {
+                    expect(properties['exif:1']).toEqual({ id: 'exif:1:id' });
+                    expect(properties['custom:1']).toEqual({ id: 'custom:1:id' });
+                }
+            });
+        });
+
+        it('should filter out aspects which are not present in app config preset', () => {
+            spyOn(aspectProperties, 'load').and.callFake(() => {
+                return Observable.of({
+                    'exif:exif': {
+                        properties: { 'exif:1': { id: 'exif:1:id' } }
+                    }
+                });
+            });
+
+            testPresets.default = {
+                'exif:exif': ['exif:1'],
                 'banana:banana': ['banana:1']
             };
 
             contentMetadataService.getAspects(node).subscribe({
                 next: (properties) => {
                     expect(properties['exif:1']).toEqual({ id: 'exif:1:id' });
-                    expect(properties['exif:2']).toEqual({ id: 'exif:2:id' });
-                    expect(properties['exif:3']).toBeUndefined();
-                    expect(properties['custom:1']).toBeUndefined();
-                    expect(properties['custom:2']).toEqual({ id: 'custom:2:id' });
                     expect(properties['banana:1']).toBeUndefined();
                 }
             });
         });
-    });
 
+    });
 });

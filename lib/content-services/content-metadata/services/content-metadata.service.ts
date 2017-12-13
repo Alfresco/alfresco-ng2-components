@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { CardViewDateItemModel, CardViewTextItemModel, FileSizePipe } from '@alfresco/adf-core';
 import { AspectPropertiesService } from './aspect-properties.service';
-import { AppConfigService } from '@alfresco/adf-core';
+import { AppConfigService, LogService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
@@ -27,36 +27,48 @@ export class ContentMetadataService {
 
     constructor(private appConfigService: AppConfigService,
                 private fileSizePipe: FileSizePipe,
-                private aspectPropertiesService: AspectPropertiesService) {}
+                private aspectPropertiesService: AspectPropertiesService,
+                private logService: LogService) {}
 
     getAspects(node: MinimalNodeEntryEntity, preset: string = 'default'): Observable<any> {
 
         const whiteListedAspects = this.getWhiteListByPreset(preset);
 
         return this.loadAspects(whiteListedAspects, node.aspectNames)
-            .map(this.filterByWhitelist.bind(this, whiteListedAspects));
+            .map(this.filterPropertiesByWhitelist.bind(this, whiteListedAspects));
     }
 
-    private getWhiteListByPreset(preset: string): any[] {
-        let whiteListedAspects = this.appConfigService.config['content-metadata'].presets[preset];
+    private getWhiteListByPreset(preset: string): object | string {
+        let whiteListedAspects: object | string;
 
-        if (!whiteListedAspects) {
-            throw new Error(`No content-metadata preset for: ${preset}`);
+        try {
+            whiteListedAspects = this.appConfigService.config['content-metadata'].presets[preset];
+            Object.keys(whiteListedAspects);
+        } catch (e) {
+            if (preset !== 'default') {
+                this.logService.error(`No content-metadata preset for: ${preset}`);
+            }
         }
 
-        return whiteListedAspects;
+        return whiteListedAspects || '*';
     }
 
-    private loadAspects(whiteListedAspects: object, nodeAspectNames: string[]): Observable<any> {
-        const whiteListedAspectNames = Object.keys(whiteListedAspects);
-        const aspectsToLoad = nodeAspectNames.filter(
-            (aspectName) => whiteListedAspectNames.indexOf(aspectName) !== -1
-        );
+    private loadAspects(whiteListedAspects: object | string, nodeAspectNames: string[]): Observable<any> {
+        let aspectsToLoad;
+
+        if (typeof whiteListedAspects === 'string' && whiteListedAspects === '*') {
+            aspectsToLoad = nodeAspectNames;
+        } else {
+            const whiteListedAspectNames = Object.keys(whiteListedAspects);
+            aspectsToLoad = nodeAspectNames.filter(
+                (aspectName) => whiteListedAspectNames.indexOf(aspectName) !== -1
+            );
+        }
 
         return this.aspectPropertiesService.load(aspectsToLoad);
     }
 
-    private filterByWhitelist(whiteListedAspects: object, aspectDescriptors: object) {
+    private filterPropertiesByWhitelist(whiteListedAspects: object, aspectDescriptors: object) {
         const whiteListedAspectNames = Object.keys(whiteListedAspects);
         const aspectNames = Object.keys(aspectDescriptors);
 
@@ -65,11 +77,15 @@ export class ContentMetadataService {
             .reduce((accumulator, aspectName) => {
                 const whiteListedPropertyNames = whiteListedAspects[aspectName];
 
-                return whiteListedPropertyNames.reduce((properties, propertyName) => {
-                    return Object.assign(properties, {
-                        [propertyName]: aspectDescriptors[aspectName].properties[propertyName]
-                    });
-                }, accumulator);
+                if (typeof whiteListedPropertyNames === 'string' && whiteListedPropertyNames === '*') {
+                    return aspectDescriptors[aspectName].properties;
+                } else {
+                    return whiteListedPropertyNames.reduce((properties, propertyName) => {
+                        return Object.assign(properties, {
+                            [propertyName]: aspectDescriptors[aspectName].properties[propertyName]
+                        });
+                    }, accumulator);
+                }
             }, {});
     }
 
