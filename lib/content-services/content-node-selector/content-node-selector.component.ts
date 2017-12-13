@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, Inject, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, ViewEncapsulation, Input } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity, SitePaging } from 'alfresco-js-api';
 import { ContentNodeSelectorComponentData } from './content-node-selector.component-data.interface';
+import { RowFilter } from '../document-list/data/row-filter.model';
+import { ImageResolver } from '../document-list/data/image-resolver.model';
 
 @Component({
     selector: 'adf-content-node-selector',
@@ -27,6 +29,42 @@ import { ContentNodeSelectorComponentData } from './content-node-selector.compon
     encapsulation: ViewEncapsulation.None
 })
 export class ContentNodeSelectorComponent {
+
+    /**
+     * @deprecated
+     */
+    @Input()
+    currentFolderId: string = null;
+
+    /**
+     * @deprecated
+     */
+    @Input()
+    dropdownHideMyFiles: boolean = false;
+
+    /**
+     * @deprecated
+     */
+    @Input()
+    dropdownSiteList: SitePaging = null;
+
+    /**
+     * @deprecated
+     */
+    @Input()
+    rowFilter: RowFilter = null;
+
+    /**
+     * @deprecated
+     */
+    @Input()
+    imageResolver: ImageResolver = null;
+
+    /**
+     * @deprecated
+     */
+    @Input()
+    pageSize: number;
 
     buttonActionName: string;
     private chosenNode: MinimalNodeEntryEntity[];
