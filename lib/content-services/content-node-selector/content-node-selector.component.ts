@@ -15,345 +15,81 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    EventEmitter,
-    Inject,
-    Input,
-    OnInit,
-    Optional,
-    Output,
-    ViewChild,
-    ViewEncapsulation
-} from '@angular/core';
-import {
-    AlfrescoApiService,
-    ContentService,
-    HighlightDirective,
-    SiteModel,
-    UserPreferencesService
-} from '@alfresco/adf-core';
-import { FormControl } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { MinimalNodeEntryEntity, NodePaging, Pagination, Site } from 'alfresco-js-api';
-import { DocumentListComponent, PaginationStrategy } from '../document-list/components/document-list.component';
+import { Component, Inject, ViewEncapsulation, Input } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material';
+import { MinimalNodeEntryEntity, SitePaging } from 'alfresco-js-api';
+import { ContentNodeSelectorComponentData } from './content-node-selector.component-data.interface';
 import { RowFilter } from '../document-list/data/row-filter.model';
 import { ImageResolver } from '../document-list/data/image-resolver.model';
 
-import { ContentNodeSelectorComponentData } from './content-node-selector.component-data.interface';
-import { ContentNodeSelectorService } from './content-node-selector.service';
-import { debounceTime } from 'rxjs/operators';
-
 @Component({
     selector: 'adf-content-node-selector',
-    styleUrls: ['./content-node-selector.component.scss'],
     templateUrl: './content-node-selector.component.html',
+    styleUrls: ['./content-node-selector.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class ContentNodeSelectorComponent implements OnInit {
+export class ContentNodeSelectorComponent {
 
-    nodes: NodePaging | null = null;
-    siteId: null | string;
-    searchTerm: string = '';
-    showingSearchResults: boolean = false;
-    loadingSearchResults: boolean = false;
-    inDialog: boolean = false;
-    chosenNode: MinimalNodeEntryEntity | Site | null = null;
-    folderIdToShow: string | null = null;
-    paginationStrategy: PaginationStrategy;
-    pagination: Pagination;
-    skipCount: number = 0;
-    infiniteScroll: boolean = false;
-    buttonActionName: string;
 
+    /**
+     * @deprecated in 2.1.0
+     */
     @Input()
-    title: string;
+    title: string = null;
 
+    /**
+     * @deprecated in 2.1.0
+     */
     @Input()
-    actionName: string;
+    currentFolderId: string = null;
 
-    @Input()
-    currentFolderId: string | null = null;
-
+    /**
+     * @deprecated in 2.1.0
+     */
     @Input()
     dropdownHideMyFiles: boolean = false;
 
+    /**
+     * @deprecated in 2.1.0
+     */
     @Input()
-    dropdownSiteList: any[] = null;
+    dropdownSiteList: SitePaging = null;
 
+    /**
+     * @deprecated in 2.1.0
+     */
     @Input()
     rowFilter: RowFilter = null;
 
+    /**
+     * @deprecated in 2.1.0
+     */
     @Input()
     imageResolver: ImageResolver = null;
 
+    /**
+     * @deprecated in 2.1.0
+     */
     @Input()
     pageSize: number;
 
-    @Output()
-    select: EventEmitter<MinimalNodeEntryEntity[]> = new EventEmitter<MinimalNodeEntryEntity[]>();
+    buttonActionName: string;
+    private chosenNode: MinimalNodeEntryEntity[];
 
-    @ViewChild(DocumentListComponent)
-    documentList: DocumentListComponent;
-
-    @ViewChild(HighlightDirective)
-    highlighter: HighlightDirective;
-
-    debounceSearch: number= 200;
-
-    searchInput: FormControl = new FormControl();
-
-    constructor(private contentNodeSelectorService: ContentNodeSelectorService,
-                private contentService: ContentService,
-                private apiService: AlfrescoApiService,
-                private preferences: UserPreferencesService,
-                @Optional() @Inject(MAT_DIALOG_DATA) data?: ContentNodeSelectorComponentData,
-                @Optional() private containingDialog?: MatDialogRef<ContentNodeSelectorComponent>) {
-        if (data) {
-            this.title = data.title;
-            this.actionName = data.actionName;
-            this.select = data.select;
-            this.currentFolderId = data.currentFolderId;
-            this.dropdownHideMyFiles = data.dropdownHideMyFiles;
-            this.dropdownSiteList = data.dropdownSiteList;
-            this.rowFilter = data.rowFilter;
-            this.imageResolver = data.imageResolver;
-        }
-        this.buttonActionName = this.actionName ? `NODE_SELECTOR.${this.actionName.toUpperCase()}` : 'NODE_SELECTOR.CHOOSE';
-
-        if (this.containingDialog) {
-            this.inDialog = true;
-        }
-
-        this.searchInput.valueChanges
-            .pipe(
-                debounceTime(this.debounceSearch)
-            )
-            .subscribe((searchValue) => {
-                this.search(searchValue);
-            });
-
-        this.pageSize = this.preferences.paginationSize;
+    constructor(@Inject(MAT_DIALOG_DATA) public data: ContentNodeSelectorComponentData) {
+        this.buttonActionName = data.actionName ? `NODE_SELECTOR.${data.actionName.toUpperCase()}` : 'NODE_SELECTOR.CHOOSE';
     }
 
-    ngOnInit() {
-        this.folderIdToShow = this.currentFolderId;
-        this.paginationStrategy = PaginationStrategy.Infinite;
+    close() {
+        this.data.select.complete();
     }
 
-    /**
-     * Updates the site attribute and starts a new search
-     *
-     * @param chosenSite Sitemodel to search within
-     */
-    siteChanged(chosenSite: SiteModel): void {
-        this.siteId = chosenSite.guid;
-        this.updateResults();
+    onSelect(nodeList: MinimalNodeEntryEntity[]) {
+        this.chosenNode = nodeList;
     }
 
-    /**
-     * Updates the searchTerm attribute and starts a new search
-     *
-     * @param searchTerm string value to search against
-     */
-    search(searchTerm: string): void {
-        this.searchTerm = searchTerm;
-        this.updateResults();
-    }
-
-    /**
-     * Returns whether breadcrumb has to be shown or not
-     */
-    needBreadcrumbs() {
-        const whenInFolderNavigation = !this.showingSearchResults,
-            whenInSelectingSearchResult = this.showingSearchResults && this.chosenNode;
-
-        return whenInFolderNavigation || whenInSelectingSearchResult;
-    }
-
-    /**
-     * Returns the actually selected|entered folder node or null in case of searching for the breadcrumb
-     */
-    get breadcrumbFolderNode(): MinimalNodeEntryEntity | null {
-        if (this.showingSearchResults && this.chosenNode) {
-            return this.chosenNode;
-        } else {
-            return this.documentList.folderNode;
-        }
-    }
-
-    /**
-     * Clear the search input
-     */
-    clear(): void {
-        this.searchTerm = '';
-        this.nodes = null;
-        this.skipCount = 0;
-        this.chosenNode = null;
-        this.showingSearchResults = false;
-        this.folderIdToShow = this.currentFolderId;
-    }
-
-    /**
-     * Update the result list depending on the criterias
-     */
-    private updateResults(): void {
-        if (this.searchTerm.length === 0) {
-            this.folderIdToShow = this.siteId || this.currentFolderId;
-        } else {
-            this.startNewSearch();
-        }
-    }
-
-    /**
-     * Load the first page of a new search result
-     */
-    private startNewSearch(): void {
-        this.nodes = null;
-        this.skipCount = 0;
-        this.chosenNode = null;
-        this.folderIdToShow = null;
-        this.querySearch();
-    }
-
-    /**
-     * Loads the next batch of search results
-     *
-     * @param event Pagination object
-     */
-    getNextPageOfSearch(event: Pagination): void {
-        this.infiniteScroll = true;
-        this.skipCount = event.skipCount;
-        this.querySearch();
-    }
-
-    /**
-     * Perform the call to searchService with the proper parameters
-     */
-    private querySearch(): void {
-        this.loadingSearchResults = true;
-
-        this.contentNodeSelectorService.search(this.searchTerm, this.siteId, this.skipCount, this.pageSize)
-            .subscribe(this.showSearchResults.bind(this));
-    }
-
-    /**
-     * Show the results of the search
-     *
-     * @param results Search results
-     */
-    private showSearchResults(results: NodePaging): void {
-        this.showingSearchResults = true;
-        this.loadingSearchResults = false;
-
-        // Documentlist hack, since data displaying for preloaded nodes is a little bit messy there
-        if (!this.nodes) {
-            this.nodes = results;
-        } else {
-            this.documentList.data.loadPage(results, true);
-        }
-
-        this.pagination = results.list.pagination;
-        this.highlight();
-    }
-
-    /**
-     * Hightlight the actual searchterm in the next frame
-     */
-    highlight(): void {
-        setTimeout(() => {
-            this.highlighter.highlight(this.searchTerm);
-        }, 0);
-    }
-
-    /**
-     * Invoked when user selects a node
-     *
-     * @param event CustomEvent for node-select
-     */
-    onNodeSelect(event: any): void {
-        this.attemptNodeSelection(event.detail.node.entry);
-    }
-
-    /**
-     * Sets showingSearchResults state to be able to differentiate between search results or folder results
-     */
-    onFolderChange(): void {
-        this.skipCount = 0;
-        this.infiniteScroll = false;
-        this.showingSearchResults = false;
-    }
-
-    /**
-     * Attempts to set the currently loaded node
-     */
-    onFolderLoaded(nodePage: NodePaging): void {
-        this.attemptNodeSelection(this.documentList.folderNode);
-        this.pagination = nodePage.list.pagination;
-    }
-
-    /**
-     * Selects node as chosen if it has the right permission, clears the selection otherwise
-     *
-     * @param entry
-     */
-    private attemptNodeSelection(entry: MinimalNodeEntryEntity): void {
-        if (this.contentService.hasPermission(entry, 'create')) {
-            this.chosenNode = entry;
-        } else {
-            this.resetChosenNode();
-        }
-    }
-
-    /**
-     * Clears the chosen node
-     */
-    resetChosenNode(): void {
-        this.chosenNode = null;
-    }
-
-    /**
-     * Emit event with the chosen node
-     */
-    choose(): void {
-        const entry: any = this.chosenNode;
-
-        if (entry && entry.guid) {
-            const options = {
-                include: ['path', 'properties', 'allowableOperations']
-            };
-            this.apiService.nodesApi.getNode(entry.guid, options)
-                .then(chosenSiteNode => {
-                    this.select.next([chosenSiteNode.entry]);
-                });
-
-        } else {
-            this.select.next([this.chosenNode]);
-
-        }
-    }
-
-    /**
-     * Close the dialog
-     */
-    close(): void {
-        this.containingDialog.close();
-    }
-
-    onNodeDoubleClick(e: CustomEvent) {
-        const node: any = e.detail.node.entry;
-
-        if (node && node.guid) {
-            const options = {
-                maxItems: this.pageSize,
-                skipCount: this.skipCount,
-                include: ['path', 'properties', 'allowableOperations']
-            };
-
-            this.apiService.nodesApi.getNode(node.guid, options)
-                .then(documentLibrary => {
-                    this.documentList.performCustomSourceNavigation(documentLibrary);
-                });
-        }
+    onClick(): void {
+        this.data.select.next(this.chosenNode);
+        this.data.select.complete();
     }
 }

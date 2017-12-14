@@ -32,7 +32,7 @@ describe('DocumentActionsService', () => {
     beforeEach(() => {
         documentListService = new DocumentListServiceMock();
         contentService = new ContentService(null, null, null, null);
-        nodeActionsService = new NodeActionsService(null, null, null);
+        nodeActionsService = new NodeActionsService(null, null);
         service = new DocumentActionsService(nodeActionsService, documentListService, contentService);
     });
 

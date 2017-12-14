@@ -76,7 +76,7 @@ describe('Sites service', () => {
 
     it('Should get a list of users sites', (done) => {
         service.getSites().subscribe((data) => {
-            expect(data[0].title).toBe('FAKE');
+            expect(data.list.entries[0].entry.title).toBe('FAKE');
             done();
         });
 
@@ -111,7 +111,7 @@ describe('Sites service', () => {
 
     it('Should get single sites via siteId', (done) => {
         service.getSite('fake-site-id').subscribe((data) => {
-            expect(data.title).toBe('FAKE-SINGLE-TITLE');
+            expect(data.entry.title).toBe('FAKE-SINGLE-TITLE');
             done();
         });
 

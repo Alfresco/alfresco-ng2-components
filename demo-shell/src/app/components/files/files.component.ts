@@ -21,11 +21,11 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity, SiteEntry } from 'alfresco-js-api';
 import {
     AlfrescoApiService, ContentService, TranslationService,
     FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
-    SiteModel, UploadService, DataColumn, DataRow, UserPreferencesService,
+    UploadService, DataColumn, DataRow, UserPreferencesService,
     PaginationComponent
 } from '@alfresco/adf-core';
 
@@ -325,8 +325,8 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    getSiteContent(site: SiteModel) {
-        this.currentFolderId = site && site.guid ? site.guid : DEFAULT_FOLDER_TO_SHOW;
+    getSiteContent(site: SiteEntry) {
+        this.currentFolderId = site && site.entry.guid ? site.entry.guid : DEFAULT_FOLDER_TO_SHOW;
     }
 
     getDocumentListCurrentFolderId() {
