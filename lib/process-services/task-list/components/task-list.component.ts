@@ -152,8 +152,7 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
         }
 
         if (!this.data) {
-            this.data = new ObjectDataTableAdapter([], schema.length > 0 ? this.getCustomSchema(schema) :  this.presetColumn  ? this.getLayoutPreset(this.presetColumn) : this.getLayoutPreset());
-
+            this.data = new ObjectDataTableAdapter([], this.getCustomSchema(schema));
         } else {
             if (schema && schema.length > 0) {
                 this.data.setColumns(this.getCustomSchema(schema));
@@ -341,17 +340,19 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
         return new TaskQueryRequestRepresentationModel(requestNode);
     }
 
-    getCustomSchema(customSchem: any): any {
-        let preColumns: any[] = [];
-        if (this.presetColumn) {
-            preColumns = this.getLayoutPreset(this.presetColumn);
-            customSchem.forEach((col) => {
-                preColumns.push(col);
+    getCustomSchema(schema: any): any {
+        let customSchema = [];
+        if (this.presetColumn && schema && schema.length > 0) {
+            customSchema = this.getLayoutPreset(this.presetColumn);
+            schema.forEach((col) => {
+                customSchema.push(col);
             });
+        } else if (this.presetColumn) {
+            customSchema = this.getLayoutPreset(this.presetColumn);
         } else {
-            preColumns = customSchem
+            customSchema = schema;
         }
-        return preColumns;
+        return customSchema;
     }
 
     setupDefaultColumns(preset: string = 'default'): void {
