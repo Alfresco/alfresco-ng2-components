@@ -152,11 +152,11 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
         }
 
         if (!this.data) {
-            this.data = new ObjectDataTableAdapter([], schema.length > 0 ? schema :  this.presetColumn  ? this.getLayoutPreset(this.presetColumn) : this.getLayoutPreset());
+            this.data = new ObjectDataTableAdapter([], schema.length > 0 ? this.getCustomSchema(schema) :  this.presetColumn  ? this.getLayoutPreset(this.presetColumn) : this.getLayoutPreset());
 
         } else {
             if (schema && schema.length > 0) {
-                this.data.setColumns(schema);
+                this.data.setColumns(this.getCustomSchema(schema));
             } else if (this.data.getColumns().length === 0) {
                 this.presetColumn ? this.setupDefaultColumns(this.presetColumn) : this.setupDefaultColumns();
             }
@@ -339,6 +339,19 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
             start: 0
         };
         return new TaskQueryRequestRepresentationModel(requestNode);
+    }
+
+    getCustomSchema(customSchem: any): any {
+        let preColumns: any[] = [];
+        if (this.presetColumn) {
+            preColumns = this.getLayoutPreset(this.presetColumn);
+            customSchem.forEach((col) => {
+                preColumns.push(col);
+            });
+        } else {
+            preColumns = customSchem
+        }
+        return preColumns;
     }
 
     setupDefaultColumns(preset: string = 'default'): void {
