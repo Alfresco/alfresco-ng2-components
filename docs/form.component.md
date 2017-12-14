@@ -282,7 +282,6 @@ formService.formEvents.subscribe((event: Event) => {
 <!-- seealso start -->
 ## See also
 
-- [Stencils](stencils.md)
 - [FormFieldValidator](FormFieldValidator.md)
 - [Extensibility](extensibility.md)
 - [Form rendering service](form-rendering.service.md)

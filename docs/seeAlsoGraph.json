@@ -62,7 +62,6 @@
     "form-field.model": ["extensibility", "FormFieldValidator", "form-rendering.service"],
     "form-rendering.service": ["extensibility"],
     "form.component": [
-        "stencils",
         "FormFieldValidator",
         "extensibility",
         "form-rendering.service",
@@ -110,7 +109,6 @@
     "sites-dropdown.component": [],
     "start-process.component": [],
     "start-task.component": [],
-    "stencils": [],
     "storage.service": ["cookie.service"],
     "tag-actions.component": [],
     "tag-list.component": [],
