@@ -33,3 +33,5 @@ export * from './form-outcome-event.model';
 export * from './form-field-validator';
 export * from './content-link.model';
 export * from './error-message.model';
+export * from './external-content';
+export * from './external-content-link';

@@ -37,7 +37,7 @@ describe('WebscriptComponent', () => {
             declarations: [
                 WebscriptComponent
             ]
-        }).compileComponents().then(()=>{
+        }).compileComponents().then(() => {
             let appConfig: AppConfigService = TestBed.get(AppConfigService);
             appConfig.config.ecmHost = 'http://localhost:9876/ecm';
 
