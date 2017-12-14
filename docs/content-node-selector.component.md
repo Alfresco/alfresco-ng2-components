@@ -6,27 +6,44 @@ Allows a user to select items from a Content Services repository.
 
 ## Basic Usage
 
-# Using Content node dialog service - recommended
+The component is showed within a material [dialog window](https://material.angular.io/components/dialog/overview) with two action available and it can be opened with the following ways: 
+
+### Using Content node dialog service - recommended
 
 ```ts
 import { ContentNodeDialogService } from '@adf/content-services'
 
 
-constructor(private contentDialogService: ContentNodeDialogService,...)
+constructor(private contentDialogService: ContentNodeDialogService){}
 
+yourFunctionOnCopyOrMove(){
         this.contentDialogService
-            .openCopyMoveDialog(actionName, minimalNode, permission)
+            .openCopyMoveDialog(actionName, targetNode, neededPermissionForAction)
             .subscribe((selections: MinimalNodeEntryEntity[]) => {
-
-                ...
+                // place your action here on operation success!
             });
+}
 
 ```
 
-# Using ContentNodeSelectorComponent
+#### Required parameters
+The dialog needs this information to be correctly opened :
+
+| Name | Type | Description |
+| --- | --- | --- |
+| actionName | string | This will be the label for the confirm button of the dialog |
+| targetNode | [MinimalNodeEntryEntity](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/MinimalNode.md) | the node on which we are asking for copy/move action |
+| neededPermissionForAction |  string | needed permission to check to perform the relative action (es: copy will need the 'update' permission ) |
+
+
+the `openCopyMoveDialog` method will return an [observable](http://reactivex.io/rxjs/manual/overview.html#observable) that can where you can subscribe to get the selection result and apply the custom actions.
+
+### Using ContentNodeSelectorComponent
 
 ```ts
 import { MatDialog } from '@angular/material';
+import { ContentNodeSelectorComponentData, ContentNodeSelectorComponent} from '@adf/content-services'
+import { Subject } from 'rxjs/Subject';
  ...
 
 constructor(dialog: MatDialog ... ) {}
@@ -35,7 +52,7 @@ openSelectorDialog() {
     data: ContentNodeSelectorComponentData = {
         title: "Choose an item",
         currentFolderId: someFolderId,
-        select: new EventEmitter<MinimalNodeEntryEntity[]>()
+        select: new Subject<MinimalNodeEntryEntity[]>()
     };
 
     this.dialog.open(
@@ -48,12 +65,19 @@ openSelectorDialog() {
 
     data.select.subscribe((selections: MinimalNodeEntryEntity[]) => {
         // Use or store selection...
-
+    }, 
+    (error)=>{
+        //your error handling
+    }, 
+    ()=>{
+        //action called when an action or cancel is clicked on the dialog
         this.dialog.closeAll();
     });
 }
 
 ```
+With this system your function has to take care of opening/closing the dialog. All the results will be streamed on the select [subject](http://reactivex.io/rxjs/manual/overview.html#subject) present into the `ContentNodeSelectorComponentData` object given to the dialog.
+When clicked on the action the data.select stream will be completed.
 
 ### Properties
 
@@ -61,8 +85,44 @@ openSelectorDialog() {
 | --- | --- | --- | --- |
 | title | string | "" | Text shown at the top of the selector |
 | currentFolderId | string | null | Node ID of the folder currently listed |
-| rowFilter | RowFilter | null | Custom row filter function |
-| imageResolver | ImageResolver | null | Custom image resolver function |
+| dropdownHideMyFiles | boolean | false | Hide the "My Files" option added to the site list by default. [See More](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/sites-dropdown.component.md)|
+| dropdownSiteList | [SitePaging](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md) |  | custom site for site dropdown same as siteList. [See More](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/sites-dropdown.component.md#properties) | 
+| rowFilter | RowFilter | null | Custom row filter function. [See More](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/document-list.component.md#custom-row-filter)|
+| imageResolver | ImageResolver | null | Custom image resolver function. [See More](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/document-list.component.md#custom-image-resolver) |
+| pageSize | number | 10 | Number of items shown per page in the list |
+
+
+### Events
+
+| Name | Description |
+| --- | --- |
+| select | Emitted when the user has selected an item |
+
+
+### Using ContentNodeSelectorPanelComponent
+
+```html 
+    <adf-content-node-selector-panel
+        [currentFolderId]="currentFolderId"
+        [dropdownHideMyFiles]="dropdownHideMyFiles"
+        [dropdownSiteList]="dropdownSiteList"
+        [rowFilter]="rowFilter"
+        [imageResolver]="imageResolver"
+        (select)="onSelect($event)">
+    </adf-content-node-selector-panel>
+```
+
+This will allow you to use the content node selector without the material dialog.
+
+### Properties
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| currentFolderId | string | null | Node ID of the folder currently listed |
+| dropdownHideMyFiles | boolean | false | Hide the "My Files" option added to the site list by default. [See More](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/sites-dropdown.component.md)|
+| dropdownSiteList | [SitePaging](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md) |  | custom site for site dropdown same as siteList. [See More](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/sites-dropdown.component.md#properties) | 
+| rowFilter | RowFilter | null | Custom row filter function. [See More](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/document-list.component.md#custom-row-filter)|
+| imageResolver | ImageResolver | null | Custom image resolver function. [See More](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/document-list.component.md#custom-image-resolver) |
 | pageSize | number | 10 | Number of items shown per page in the list |
 
 ### Events
