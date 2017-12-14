@@ -15,23 +15,17 @@
  * limitations under the License.
  */
 
-import { DataColumn } from '@alfresco/adf-core';
-import { ContentService } from '@alfresco/adf-core';
-import { EventEmitter, Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { Injectable } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { Subject } from 'rxjs/Subject';
-import { ContentNodeSelectorComponent } from '../../content-node-selector/content-node-selector.component';
-import { ContentNodeSelectorComponentData } from '../../content-node-selector/content-node-selector.component-data.interface';
-import { ShareDataRow } from '../data/share-data-row.model';
 import { DocumentListService } from './document-list.service';
+import { ContentNodeDialogService } from '../../content-node-selector/content-node-dialog.service';
 
 @Injectable()
 export class NodeActionsService {
 
-    constructor(private dialog: MatDialog,
-                private documentListService?: DocumentListService,
-                private contentService?: ContentService) {}
+    constructor(private contentDialogService: ContentNodeDialogService,
+                private documentListService?: DocumentListService) {}
 
     /**
      * Copy content node
@@ -84,51 +78,20 @@ export class NodeActionsService {
     private doFileOperation(action: string, type: string, contentEntry: MinimalNodeEntryEntity, permission?: string): Subject<string> {
         const observable: Subject<string> = new Subject<string>();
 
-        if (this.contentService.hasPermission(contentEntry, permission)) {
-            const data: ContentNodeSelectorComponentData = {
-                title: `${action} '${contentEntry.name}' to ...`,
-                actionName: action,
-                currentFolderId: contentEntry.parentId,
-                rowFilter: this.rowFilter.bind(this, contentEntry.id),
-                imageResolver: this.imageResolver.bind(this),
-                select: new EventEmitter<MinimalNodeEntryEntity[]>()
-            };
-
-            this.dialog.open(ContentNodeSelectorComponent, { data, panelClass: 'adf-content-node-selector-dialog', width: '630px' });
-
-            data.select.subscribe((selections: MinimalNodeEntryEntity[]) => {
+        this.contentDialogService
+            .openCopyMoveDialog(action, contentEntry, permission)
+            .subscribe((selections: MinimalNodeEntryEntity[]) => {
                 const selection = selections[0];
                 this.documentListService[`${action}Node`].call(this.documentListService, contentEntry.id, selection.id)
                     .subscribe(
-                        observable.next.bind(observable, `OPERATION.SUCCES.${type.toUpperCase()}.${action.toUpperCase()}`),
-                        observable.error.bind(observable)
+                    observable.next.bind(observable, `OPERATION.SUCCES.${type.toUpperCase()}.${action.toUpperCase()}`),
+                    observable.error.bind(observable)
                     );
-                this.dialog.closeAll();
+            },
+            (error) => {
+                observable.error(error);
+                return observable;
             });
-
-            return observable;
-        } else {
-            observable.error(new Error(JSON.stringify({ error: { statusCode: 403 } })));
-            return observable;
-        }
-    }
-
-    private rowFilter(currentNodeId, row: ShareDataRow): boolean {
-        const node: MinimalNodeEntryEntity = row.node.entry;
-
-        if (node.id === currentNodeId || node.isFile) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    private imageResolver(row: ShareDataRow, col: DataColumn): string|null {
-        const entry: MinimalNodeEntryEntity = row.node.entry;
-        if (!this.contentService.hasPermission(entry, 'create')) {
-            return this.documentListService.getMimeTypeIcon('disable/folder');
-        }
-
-        return null;
+        return observable;
     }
 }

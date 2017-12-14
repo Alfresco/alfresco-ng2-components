@@ -171,7 +171,25 @@ describe('DropdownSitesComponent', () => {
         }));
 
         it('should load custom sites when the \'siteList\' input property is given a value', async(() => {
-            component.siteList = [{title: 'PERSONAL_FILES', guid: '-my-'}, {title: 'FILE_LIBRARIES', guid: '-mysites-'}];
+            component.siteList = {
+                'list': {
+                    'entries': [
+                        {
+                            'entry': {
+                                'guid': '-my-',
+                                'title': 'PERSONAL_FILES'
+                            }
+                        },
+                        {
+                            'entry': {
+                                'guid': '-mysites-',
+                                'title': 'FILE_LIBRARIES'
+                            }
+                        }
+                    ]
+                }
+            };
+
             fixture.detectChanges();
 
             openSelectbox();
@@ -236,7 +254,7 @@ describe('DropdownSitesComponent', () => {
             });
 
             component.change.subscribe((site) => {
-                expect(site.guid).toBe('fake-1');
+                expect(site.entry.guid).toBe('fake-1');
                 done();
             });
         });

@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { SiteModel, SitesService } from '@alfresco/adf-core';
+import { SitesService } from '@alfresco/adf-core';
+import { SitePaging, SiteEntry } from 'alfresco-js-api';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
@@ -29,13 +30,13 @@ export class DropdownSitesComponent implements OnInit {
     hideMyFiles: boolean = false;
 
     @Input()
-    siteList: any[] = null;
+    siteList: SitePaging = null;
 
     @Input()
     placeholder: string = 'DROPDOWN.PLACEHOLDER_LABEL';
 
     @Output()
-    change: EventEmitter<SiteModel> = new EventEmitter();
+    change: EventEmitter<SiteEntry> = new EventEmitter();
 
     public MY_FILES_VALUE = 'default';
 
@@ -52,15 +53,14 @@ export class DropdownSitesComponent implements OnInit {
     selectedSite() {
         let siteFound;
         if (this.siteSelected === this.MY_FILES_VALUE) {
-            siteFound = new SiteModel();
+           siteFound = { entry: {}};
         }else {
-           siteFound = this.siteList.find( site => site.guid === this.siteSelected);
+           siteFound = this.siteList.list.entries.find( site => site.entry.guid === this.siteSelected);
         }
         this.change.emit(siteFound);
     }
 
     setDefaultSiteList() {
-        this.siteList = [];
         this.sitesService.getSites().subscribe((result) => {
                 this.siteList = result;
             },

@@ -14,17 +14,3 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import { MinimalNodeEntryEntity, SitePaging } from 'alfresco-js-api';
-import { Subject } from 'rxjs/Subject';
-
-export interface ContentNodeSelectorComponentData {
-    title: string;
-    actionName?: string;
-    currentFolderId: string;
-    dropdownHideMyFiles?: boolean;
-    dropdownSiteList?: SitePaging;
-    rowFilter?: any;
-    imageResolver?: any;
-    select: Subject<MinimalNodeEntryEntity[]>;
-}
