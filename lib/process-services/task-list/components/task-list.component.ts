@@ -19,6 +19,7 @@ import { DataColumn, DataRowEvent, DataTableAdapter, ObjectDataColumn, ObjectDat
 import { AppConfigService, DataColumnListComponent } from '@alfresco/adf-core';
 import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import * as _ from 'lodash';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskListModel } from '../models/task-list.model';
 import { taskPresetsDefaultModel } from '../models/task-preset.model';
@@ -343,35 +344,24 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
 
     getSchema(): any {
         let customSchemaColumns = [];
-        let schemaConfig = this.presetColumn ? this.getSchemaFromConfig(this.presetColumn) : [];
-        let schemHtml = this.getSchemaFromHtml();
-        if (this.hasSchema(schemaConfig) && this.hasSchema(schemHtml)) {
-            schemHtml.forEach((col) => {
-                schemaConfig.push(col);
-                customSchemaColumns = schemaConfig;
-            });
-        } else if (this.hasSchema(schemHtml)) {
-            customSchemaColumns = schemHtml;
-        } else if (this.hasSchema(schemaConfig)) {
-            customSchemaColumns = schemaConfig;
-        } else {
+        customSchemaColumns = _.concat(customSchemaColumns, this.getSchemaFromConfig(this.presetColumn));
+        customSchemaColumns = _.concat(customSchemaColumns, this.getSchemaFromHtml());
+        if (customSchemaColumns.length === 0) {
             customSchemaColumns = this.getDefaultLayoutPreset();
         }
         return customSchemaColumns;
     }
 
-    hasSchema(schema: any) {
-        return schema && schema.length > 0;
-    }
-
     getSchemaFromHtml(): any {
+        let schema = [];
         if (this.columnList && this.columnList.columns && this.columnList.columns.length > 0) {
-            return this.columnList.columns.map(c => <DataColumn> c);
+            schema = this.columnList.columns.map(c => <DataColumn> c);
         }
+        return schema;
     }
 
     private getSchemaFromConfig(name: string): DataColumn[] {
-        return (this.layoutPresets[name]).map(col => new ObjectDataColumn(col));
+        return name ? (this.layoutPresets[name]).map(col => new ObjectDataColumn(col)) : [];
     }
 
     private getDefaultLayoutPreset(): DataColumn[] {
