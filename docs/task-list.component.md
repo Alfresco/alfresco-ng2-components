@@ -11,6 +11,38 @@ Renders a list containing all the tasks matched by the parameters specified.
     [assignment]="'assignee'">
 </adf-tasklist>
 ```
+You can pass schema as data adapter for the tasklist like shown below :
+
+```ts
+let data = new ObjectDataTableAdapter(
+    // Row data
+    [
+        { id: 1, name: 'Name 1' },
+        { id: 2, name: 'Name 2' }
+    ],
+    // Column schema
+    [
+        { 
+            type: 'text', 
+            key: 'id', 
+            title: 'Id', 
+            sortable: true 
+        },
+        {
+            type: 'text', 
+            key: 'name', 
+            title: 'Name', 
+            sortable: true
+        }
+    ]
+);
+```
+
+```html
+<adf-tasklist
+    [data]="'data'">
+</adf-tasklist>
+```
 
 You can also use HTML-based schema declaration like shown below:
 
