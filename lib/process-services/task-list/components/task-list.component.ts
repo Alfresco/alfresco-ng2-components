@@ -19,6 +19,7 @@ import { DataColumn, DataRowEvent, DataTableAdapter, ObjectDataColumn, ObjectDat
 import { AppConfigService, DataColumnListComponent } from '@alfresco/adf-core';
 import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import * as _ from 'lodash';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskListModel } from '../models/task-list.model';
 import { taskPresetsDefaultModel } from '../models/task-preset.model';
@@ -145,21 +146,11 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
      * If component is assigned with an empty data adater the default schema settings applied.
      */
     setupSchema(): void {
-        let schema: DataColumn[] = [];
-
-        if (this.columnList && this.columnList.columns && this.columnList.columns.length > 0) {
-            schema = this.columnList.columns.map(c => <DataColumn> c);
-        }
-
+        let schema = this.getSchema();
         if (!this.data) {
-            this.data = new ObjectDataTableAdapter([], schema.length > 0 ? schema :  this.presetColumn  ? this.getLayoutPreset(this.presetColumn) : this.getLayoutPreset());
-
-        } else {
-            if (schema && schema.length > 0) {
-                this.data.setColumns(schema);
-            } else if (this.data.getColumns().length === 0) {
-                this.presetColumn ? this.setupDefaultColumns(this.presetColumn) : this.setupDefaultColumns();
-            }
+            this.data = new ObjectDataTableAdapter([], schema);
+        } else if (this.data.getColumns().length === 0) {
+            this.data.setColumns(schema);
         }
     }
 
@@ -341,13 +332,6 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
         return new TaskQueryRequestRepresentationModel(requestNode);
     }
 
-    setupDefaultColumns(preset: string = 'default'): void {
-        if (this.data) {
-            const columns = this.getLayoutPreset(preset);
-            this.data.setColumns(columns);
-        }
-    }
-
     private loadLayoutPresets(): void {
         const externalSettings = this.appConfig.get('adf-task-list.presets', null);
 
@@ -356,10 +340,31 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
         } else {
             this.layoutPresets = taskPresetsDefaultModel;
         }
-
     }
 
-    private getLayoutPreset(name: string = 'default'): DataColumn[] {
-        return (this.layoutPresets[name] || this.layoutPresets['default']).map(col => new ObjectDataColumn(col));
+    getSchema(): any {
+        let customSchemaColumns = [];
+        customSchemaColumns = _.concat(customSchemaColumns, this.getSchemaFromConfig(this.presetColumn));
+        customSchemaColumns = _.concat(customSchemaColumns, this.getSchemaFromHtml());
+        if (customSchemaColumns.length === 0) {
+            customSchemaColumns = this.getDefaultLayoutPreset();
+        }
+        return customSchemaColumns;
+    }
+
+    getSchemaFromHtml(): any {
+        let schema = [];
+        if (this.columnList && this.columnList.columns && this.columnList.columns.length > 0) {
+            schema = this.columnList.columns.map(c => <DataColumn> c);
+        }
+        return schema;
+    }
+
+    private getSchemaFromConfig(name: string): DataColumn[] {
+        return name ? (this.layoutPresets[name]).map(col => new ObjectDataColumn(col)) : [];
+    }
+
+    private getDefaultLayoutPreset(): DataColumn[] {
+        return (this.layoutPresets['default']).map(col => new ObjectDataColumn(col));
     }
 }
