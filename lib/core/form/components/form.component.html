@@ -2,7 +2,7 @@
     <ng-content select="[empty-form]">
     </ng-content>
 </div>
-<div *ngIf="hasForm()" class="{{form.className}}">
+<div *ngIf="hasForm()" class="{{form.className}} adf-form-container">
     <mat-card>
         <mat-card-header>
             <mat-card-title>
@@ -28,10 +28,10 @@
                 </div>
             </div>
         </mat-card-content>
-        <mat-card-actions *ngIf="form.hasOutcomes()">
+        <mat-card-actions *ngIf="form.hasOutcomes()" class="adf-form-mat-card-actions">
             <!--[class.mdl-button--colored]="!outcome.isSystem"-->
             <button *ngFor="let outcome of form.outcomes" 
-                    [color]="setCompleteButtonColor(outcome.name)"
+                    [color]="getColorForOutcome(outcome.name)"
                     mat-button
                     [disabled]="!isOutcomeButtonEnabled(outcome)"
                     [class.adf-form-hide-button]="!isOutcomeButtonVisible(outcome, form.readOnly)"

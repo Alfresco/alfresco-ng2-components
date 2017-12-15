@@ -1,13 +1,44 @@
 .adf {
     &-form-container {
-        width: 100%;
-        min-height: 100px;
-        overflow: visible;
-    }
+        width: 576px !important;
+        min-height: 814px !important;
+
+        & .mat-card {
+            padding: 16px 24px;
+            overflow: hidden;
+        }
+
+        & .mat-card-header-text {
+            margin: 0px !important;
+        }
+
+        & .mat-tab-body-content {
+            overflow: hidden;
+        }
+
+        & .mat-tab-label {
+            font-size: 16px;
+            line-height: 1.5;
+            letter-spacing: -0.4px;
+            text-align: left;
+            color: rgba(0, 0, 0, 0.54);
+            text-transform: uppercase;
+        }
+
+        & .mat-ink-bar {
+            height: 4px;
+        }
+
+        & .mat-input-wrapper {
+            margin: 0px 10px;
+        }
+    }    
 
     &-form-title {
         font-weight: 600;
         font-size: 20px;
+        letter-spacing: -0.5px;
+        line-height: 32px;
     }
 
     &-form-debug-container {
@@ -25,8 +56,8 @@
 
     &-form-reload-button {
         position: absolute;
-        right: 0;
-        top: 0;
+        right: 12px;
+        top: 30px;
     }
 
     &-form-hide-button {
@@ -36,15 +67,34 @@
     &-task-title {
         text-align: center
     }
-}
 
-mat {
+    &-label {
+        width: 32px;
+        height: 16px;
+        font-size: 12px;
+        line-height: 1.33;
+        text-align: left;
+        white-space: nowrap;
+    }
 
-    &-card {
-        overflow: hidden;
+    &-form-mat-card-actions {
+        float: right;
+        padding-bottom: 25px !important;
+        padding-right: 25px !important; 
 
-        &-actions {
-            float: right;
+        & .mat-button {
+            width: 74px;
+            height: 36px;
+            border-radius: 5px;
+    
+        }
+
+        & .mat-button-wrapper {
+            width: 58px;
+            height: 20px;
+            opacity: 0.54;
+            font-size: 14px;
+            font-weight: bold;
         }
     }
 }
