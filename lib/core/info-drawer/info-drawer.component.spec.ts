@@ -22,6 +22,7 @@ import { By } from '@angular/platform-browser';
 import { MaterialModule } from '../material.module';
 import { InfoDrawerLayoutComponent } from './info-drawer-layout.component';
 import { InfoDrawerComponent } from './info-drawer.component';
+import { InfoDrawerTabComponent } from './info-drawer.component';
 
 describe('InfoDrawerComponent', () => {
     let element: HTMLElement;
@@ -75,19 +76,25 @@ describe('InfoDrawerComponent', () => {
     template: `
     <adf-info-drawer>
         <div info-drawer-title>Fake Title Custom</div>
+        <adf-info-drawer-tab label="Tab1">
+        </adf-info-drawer-tab>
+        <adf-info-drawer-tab label="Tab2">
+        </adf-info-drawer-tab>
     </adf-info-drawer>
        `
 })
-class CustomInfoDrawerComponent {
+class CustomInfoDrawerComponent extends InfoDrawerComponent {
 }
 
 describe('Custom InfoDrawer', () => {
     let fixture: ComponentFixture<CustomInfoDrawerComponent>;
+    let component: CustomInfoDrawerComponent;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
                 InfoDrawerComponent,
+                InfoDrawerTabComponent,
                 InfoDrawerLayoutComponent,
                 CustomInfoDrawerComponent
             ],
@@ -100,6 +107,7 @@ describe('Custom InfoDrawer', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(CustomInfoDrawerComponent);
         fixture.detectChanges();
+        component = fixture.componentInstance;
     });
 
     it('should render the title', () => {
@@ -107,5 +115,20 @@ describe('Custom InfoDrawer', () => {
         let title: any = fixture.debugElement.queryAll(By.css('[info-drawer-title]'));
         expect(title.length).toBe(1);
         expect(title[0].nativeElement.innerText).toBe('Fake Title Custom');
+    });
+
+    it('should select the tab 1 (index 0) as default', () => {
+        fixture.detectChanges();
+        let tab: any = fixture.debugElement.queryAll(By.css('.mat-tab-label-active'));
+        expect(tab.length).toBe(1);
+        expect(tab[0].nativeElement.innerText).toBe('Tab1');
+    });
+
+    it('should select the tab 2 (index 1)', () => {
+        component.selectedIndex = 1;
+        fixture.detectChanges();
+        let tab: any = fixture.debugElement.queryAll(By.css('.mat-tab-label-active'));
+        expect(tab.length).toBe(1);
+        expect(tab[0].nativeElement.innerText).toBe('Tab2');
     });
 });

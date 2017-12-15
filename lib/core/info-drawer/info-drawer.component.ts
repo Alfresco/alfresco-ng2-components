@@ -37,6 +37,9 @@ export class InfoDrawerComponent {
     @Input()
     title: string|null = null;
 
+    @Input()
+    selectedIndex: number = 1;
+
     @Output()
     currentTab: EventEmitter<number> = new EventEmitter<number>();
 
