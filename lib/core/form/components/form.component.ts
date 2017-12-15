@@ -38,6 +38,8 @@ export class FormComponent implements OnInit, OnChanges {
     static COMPLETE_OUTCOME_ID: string = '$complete';
     static START_PROCESS_OUTCOME_ID: string = '$startProcess';
     static CUSTOM_OUTCOME_ID: string = '$custom';
+    static COMPLETE_BUTTON_COLOR: string = 'primary';
+    static COMPLETE_OUTCOME_NAME: string ='Complete'
 
     @Input()
     form: FormModel;
@@ -136,6 +138,10 @@ export class FormComponent implements OnInit, OnChanges {
             }
         }
         return false;
+    }
+
+    getColorForOutcome(outcomeName: string): string {
+        return outcomeName === FormComponent.COMPLETE_OUTCOME_NAME ? FormComponent.COMPLETE_BUTTON_COLOR : '';
     }
 
     isOutcomeButtonEnabled(outcome: FormOutcomeModel): boolean {
