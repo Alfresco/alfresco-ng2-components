@@ -206,10 +206,10 @@ describe('TaskListComponent', () => {
     });
 
     it('should fetch custom schemaColumn when the input presetColumn is defined', () => {
-        component.presetColumn = 'fakeCutomColumns';
+        component.presetColumn = 'fakeCutomSchema';
         fixture.detectChanges();
         expect(component.data.getColumns()).toBeDefined();
-        expect(component.data.getColumns().length).toEqual(3);
+        expect(component.data.getColumns().length).toEqual(2);
     });
 
     it('should return an empty task list when no input parameters are passed', () => {

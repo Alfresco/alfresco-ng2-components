@@ -337,48 +337,6 @@
                     "type": "text",
                     "title": "ADF_TASK_LIST.PROPERTIES.NAME",
                     "sortable": true
-                },
-                {
-                    "key": "noassignee",
-                    "type": "text",
-                    "title": "ADF_TASK_LIST.PROPERTIES.ASSIGNEE_DEFAULT",
-                    "cssClass": "hidden",
-                    "sortable": true
-                },
-                {
-                    "key": "nodueDate",
-                    "type": "text",
-                    "title": "ADF_TASK_LIST.PROPERTIES.DUE_DATE_DEFAULT",
-                    "cssClass": "hidden",
-                    "sortable": true
-                },
-                {
-                    "key": "nocategory",
-                    "type": "text",
-                    "title": "ADF_TASK_LIST.PROPERTIES.CATEGORY_DEFAULT",
-                    "cssClass": "hidden",
-                    "sortable": true
-                },
-                {
-                    "key": "noparentname",
-                    "type": "text",
-                    "title": "ADF_TASK_LIST.PROPERTIES.PARENT_NAME_DEFAULT",
-                    "cssClass": "hidden",
-                    "sortable": true
-                },
-                {
-                    "key": "nodescription",
-                    "type": "date",
-                    "title": "ADF_TASK_LIST.PROPERTIES.DESCRIPTION_DEFAULT",
-                    "cssClass": "hidden",
-                    "sortable": true
-                },
-                {
-                    "key": "noformName",
-                    "type": "date",
-                    "title": "ADF_TASK_LIST.PROPERTIES.FORM_NAME_DEFAULT",
-                    "cssClass": "hidden",
-                    "sortable": true
                 }
             ]
         }
