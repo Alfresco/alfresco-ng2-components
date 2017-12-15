@@ -23,9 +23,9 @@ You can also use HTML-based schema declaration like shown below:
 </adf-tasklist>
 ```
 
-You can also use custom schema declaration as shown below:
+You can also use static custom schema declaration as shown below:
 
-define custom schema in the app.config.json as shown below json format.
+define static custom schema in the app.config.json as shown below json format.
 
 ```json
 "adf-task-list": {
@@ -53,6 +53,42 @@ define custom schema in the app.config.json as shown below json format.
     [presetColumn]="'customSchema'">
 </adf-tasklist>
 ```
+You can also use both HTML-based and app.config.json custom schema declaration at same time like shown below:
+
+```json
+"adf-task-list": {
+        "presets": {
+            "customSchema": [
+            {
+                    "key": "id",
+                    "type": "text",
+                    "title": "Id",
+                    "sortable": true         
+            }],
+            "default": [
+                {
+                    "key": "name",
+                    "type": "text",
+                    "title": "name",
+                    "sortable": true
+            }],
+        }
+}
+```
+```html
+<adf-tasklist
+    [appId]="'1'" 
+    [presetColumn]="'customSchema'">
+    <data-columns>
+        <data-column key="assignee" title="Assignee" class="full-width name-column">
+            <ng-template let-entry="$implicit">
+                    <div>{{getFullName(entry.row.obj.assignee)}}</div>
+            </ng-template>
+        </data-column>
+    </data-columns>
+</adf-tasklist>
+```
+
 ### Properties
 
 | Name | Type | Default | Description |
