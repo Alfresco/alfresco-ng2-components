@@ -77,6 +77,9 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     @Input()
     pageSize: number;
 
+    @Input()
+    onlyFileSelectionMode: boolean = false;
+
     @Output()
     select: EventEmitter<MinimalNodeEntryEntity[]> = new EventEmitter<MinimalNodeEntryEntity[]>();
 
@@ -107,7 +110,11 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
 
     set chosenNode(value: MinimalNodeEntryEntity) {
         this._chosenNode = value;
-        this.select.next([value]);
+        let valuesArray = null;
+        if (value) {
+            valuesArray = [value];
+        }
+        this.select.next(valuesArray);
     }
 
     get chosenNode() {
@@ -270,11 +277,23 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
      * @param entry
      */
     private attemptNodeSelection(entry: MinimalNodeEntryEntity): void {
-        if (this.contentService.hasPermission(entry, 'create')) {
+        if (this.checkSelectionCondition(entry, 'create')) {
             this.chosenNode = entry;
         } else {
             this.resetChosenNode();
         }
+    }
+
+    private checkSelectionCondition(entry: MinimalNodeEntryEntity, permission: string) {
+        if ( this.onlyFileSelectionMode) {
+            return this.isFile(entry);
+        }else {
+            return this.contentService.hasPermission(entry, 'create');
+        }
+    }
+
+    private isFile(entry: MinimalNodeEntryEntity) {
+        return entry.isFile;
     }
 
     /**

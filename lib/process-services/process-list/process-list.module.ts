@@ -35,6 +35,7 @@ import { ProcessInstanceHeaderComponent } from './components/process-instance-he
 import { ProcessInstanceTasksComponent } from './components/process-instance-tasks.component';
 import { ProcessInstanceListComponent } from './components/process-list.component';
 import { StartProcessInstanceComponent } from './components/start-process.component';
+import { ShareAttachWidgetComponent } from './components/share-attach-widget.component';
 
 import { ProcessService } from './services/process.service';
 import { ProcessFilterService } from './services/process-filter.service';
@@ -64,7 +65,11 @@ import { ProcessFilterService } from './services/process-filter.service';
         ProcessAuditDirective,
         ProcessInstanceHeaderComponent,
         ProcessInstanceTasksComponent,
-        StartProcessInstanceComponent
+        StartProcessInstanceComponent,
+        ShareAttachWidgetComponent
+    ],
+    entryComponents: [
+        ShareAttachWidgetComponent
     ],
     providers: [
         ProcessService,
@@ -78,7 +83,8 @@ import { ProcessFilterService } from './services/process-filter.service';
         ProcessAuditDirective,
         ProcessInstanceHeaderComponent,
         ProcessInstanceTasksComponent,
-        StartProcessInstanceComponent
+        StartProcessInstanceComponent,
+        ShareAttachWidgetComponent
     ]
 })
 export class ProcessListModule {}

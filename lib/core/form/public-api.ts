@@ -27,5 +27,6 @@ export * from './services/ecm-model.service';
 export * from './services/node.service';
 export * from './services/form-rendering.service';
 export * from './services/process-content.service';
+export * from './services/activiti-alfresco.service';
 
 export * from './events/index';

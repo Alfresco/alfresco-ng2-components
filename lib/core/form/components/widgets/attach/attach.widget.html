@@ -1,4 +1,4 @@
-<div class="attach-widget {{field.className}}">
+<!-- <div class="attach-widget {{field.className}}">
     <label [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
     <div>
         <span *ngIf="hasFile()" class="attach-widget__file mdl-chip"><span class="mdl-chip__text">{{getLinkedFileName()}}</span></span>
@@ -29,4 +29,17 @@
     <div class="mdl-dialog__actions">
         <button type="button" (click)="cancel()" class="mdl-button close">Cancel</button>
     </div>
-</dialog>
+</dialog> -->
+
+<div class="adf-attach-widget {{field.className}}"
+    [class.adf-invalid]="!field.isValid"
+    [class.adf-readonly]="field.readOnly">
+    <label class="adf-label" [attr.for]="field.id">{{field.name}}
+        <span *ngIf="isRequired()">*</span>
+    </label>
+    <div class="adf-attach-widget-container">
+        <button mat-raised-button color="primary">{{field?.params?.fileSource?.name}}</button>
+    </div>
+    <error-widget [error]="field.validationSummary"></error-widget>
+    <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
+</div>

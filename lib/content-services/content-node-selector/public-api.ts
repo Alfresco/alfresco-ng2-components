@@ -19,3 +19,4 @@ export * from './content-node-selector.component-data.interface';
 export * from './content-node-selector-panel.component';
 export * from './content-node-selector.component';
 export * from './content-node-selector.service';
+export * from './content-node-dialog.service';

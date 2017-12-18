@@ -30,9 +30,19 @@ import { ContentNodeSelectorComponentData } from './content-node-selector.compon
 @Injectable()
 export class ContentNodeDialogService {
 
+    private onlyFileSelectionMode = false;
+
     constructor(private dialog: MatDialog,
                 private contentService?: ContentService,
                 private documentListService?: DocumentListService) { }
+
+    openBrowseDialog(folderNodeId: string): Observable<MinimalNodeEntryEntity[]> {
+        this.onlyFileSelectionMode = true;
+        return Observable.fromPromise(this.documentListService.getFolderNode(folderNodeId))
+            .flatMap((node: MinimalNodeEntryEntity)=> {
+                return this.openCopyMoveDialog('Upload', node, 'update');
+        });
+    }
 
     openCopyMoveDialog(action: string, contentEntry: MinimalNodeEntryEntity, permission?: string): Observable<MinimalNodeEntryEntity[]> {
         if (this.contentService.hasPermission(contentEntry, permission)) {
@@ -45,10 +55,15 @@ export class ContentNodeDialogService {
                 title: `${action} '${contentEntry.name}' to ...`,
                 actionName: action,
                 currentFolderId: contentEntry.parentId,
-                rowFilter: this.rowFilter.bind(this, contentEntry.id),
                 imageResolver: this.imageResolver.bind(this),
+                onlyFileSelectionMode: this.onlyFileSelectionMode,
                 select: select
             };
+
+            if (!this.onlyFileSelectionMode) {
+                data.rowFilter = this.rowFilter.bind(this, contentEntry.id);
+            }
+
             this.dialog.open(ContentNodeSelectorComponent, { data, panelClass: 'adf-content-node-selector-dialog', width: '630px' });
             return select;
         } else {

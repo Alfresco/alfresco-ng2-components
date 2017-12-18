@@ -11,6 +11,7 @@
         [dropdownSiteList]="dropdownSiteList || data?.dropdownSiteList"
         [rowFilter]="rowFilter || data?.rowFilter"
         [imageResolver]="imageResolver || data?.imageResolver"
+        [onlyFileSelectionMode]="data?.onlyFileSelectionMode"
         (select)="onSelect($event)">
     </adf-content-node-selector-panel>
 </section>

@@ -24,11 +24,12 @@ import { ExternalContentLink } from '../core/external-content-link';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormService } from './../../../services/form.service';
 import { baseHost , WidgetComponent } from './../widget.component';
+// import { ContentNodeDialogService } from '';
 
 @Component({
     selector: 'attach-widget',
     templateUrl: './attach.widget.html',
-    styleUrls: ['./attach.widget.css'],
+    styleUrls: ['./attach.widget.scss'],
     host: baseHost,
     encapsulation: ViewEncapsulation.None
 })
@@ -58,15 +59,13 @@ export class AttachWidgetComponent extends WidgetComponent implements OnInit {
 
     ngOnInit() {
         if (this.field) {
+
             let params = this.field.params;
 
             if (params &&
                 params.fileSource &&
                 params.fileSource.selectedFolder) {
-                this.selectedFolderSiteId = params.fileSource.selectedFolder.siteId;
-                this.selectedFolderSiteName = params.fileSource.selectedFolder.site;
-                this.setupFileBrowser();
-                this.getExternalContentNodes();
+                    console.log(params.fileSource);
             }
         }
     }
@@ -112,7 +111,7 @@ export class AttachWidgetComponent extends WidgetComponent implements OnInit {
                 this.selectedFile = node;
                 this.field.value = [link];
                 this.field.json.value = [link];
-                this.closeDialog();
+                // this.closeDialog();
                 this.fieldChanged.emit(this.field);
             }
         );
@@ -121,27 +120,6 @@ export class AttachWidgetComponent extends WidgetComponent implements OnInit {
     selectFolder(node: ExternalContent, $event: any) {
         this.selectedFolderPathId = node.id;
         this.getExternalContentNodes();
-    }
-
-    showDialog(): boolean {
-        this.setupFileBrowser();
-        this.getExternalContentNodes();
-
-        if (this.dialog) {
-            // todo: show dialog
-            return true;
-        }
-        return false;
-    }
-
-    private closeDialog() {
-        if (this.dialog) {
-            this.dialog.nativeElement.close();
-        }
-    }
-
-    cancel() {
-        this.closeDialog();
     }
 
     reset() {

@@ -53,9 +53,6 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges {
     message: string;
     processId: string;
 
-    // @ViewChild('dialog')
-    // dialog: any;
-
     @ViewChild('startDialog')
     startDialog: any;
 
