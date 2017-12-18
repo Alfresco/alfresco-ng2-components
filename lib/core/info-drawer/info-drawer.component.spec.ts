@@ -74,7 +74,7 @@ describe('InfoDrawerComponent', () => {
 
 @Component({
     template: `
-    <adf-info-drawer>
+    <adf-info-drawer [selectedIndex]="tabIndex">
         <div info-drawer-title>Fake Title Custom</div>
         <adf-info-drawer-tab label="Tab1">
         </adf-info-drawer-tab>
@@ -84,6 +84,7 @@ describe('InfoDrawerComponent', () => {
        `
 })
 class CustomInfoDrawerComponent extends InfoDrawerComponent {
+    tabIndex: number;
 }
 
 describe('Custom InfoDrawer', () => {
@@ -125,7 +126,7 @@ describe('Custom InfoDrawer', () => {
     });
 
     it('should select the tab 2 (index 1)', () => {
-        component.selectedIndex = 1;
+        component.tabIndex = 1;
         fixture.detectChanges();
         let tab: any = fixture.debugElement.queryAll(By.css('.mat-tab-label-active'));
         expect(tab.length).toBe(1);
