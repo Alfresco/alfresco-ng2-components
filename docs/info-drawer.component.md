@@ -29,6 +29,7 @@ Displays a sidebar-style information panel with tabs.
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | title | string | null | The title of the info drawer |
+| selectedIndex | number | 0 | The selected index tab |
 | currentTab | any | null | The currently active tab |
 
 ## Details
