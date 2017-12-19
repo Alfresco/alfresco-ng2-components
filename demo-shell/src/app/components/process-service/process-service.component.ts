@@ -153,7 +153,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
                 private preferenceService: UserPreferencesService) {
         this.dataTasks = new ObjectDataTableAdapter();
         this.dataTasks.setSorting(new DataSorting('created', 'desc'));
-        this.supportedPages = this.preferenceService.getDifferentPageSizes();
+       // this.supportedPages = this.preferenceService.getDifferentPageSizes();
         this.taskPagination.maxItems = this.preferenceService.paginationSize;
 
         // Uncomment this line to replace all 'text' field editors with custom component

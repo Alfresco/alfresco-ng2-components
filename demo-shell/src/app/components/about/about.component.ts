@@ -39,7 +39,6 @@ export class AboutComponent implements OnInit {
     modules: ObjectDataTableAdapter;
     githubUrlCommitAlpha = 'https://github.com/Alfresco/alfresco-ng2-components/commits/';
 
-    configFile = 'app.config.json';
     ecmHost = '';
     bpmHost = '';
 
