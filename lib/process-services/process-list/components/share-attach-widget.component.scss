@@ -4,6 +4,8 @@
 
     &-attach-widget-container {
         margin-bottom: 15px;
+        display: flex;
+        align-items: center;
 
         input {
             cursor: pointer;
@@ -14,6 +16,18 @@
             top: 0;
             width: 300px;
             z-index: 4;
+        }
+    }
+
+    &-attach-widget-repo-button{
+        padding-left: 10px;
+
+        .mat-button-wrapper {
+            display: inline;
+        }
+
+        .mat-mini-fab.mat-accent {
+            background-color: inherit;
         }
     }
 

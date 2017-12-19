@@ -4,11 +4,11 @@
     <label class="adf-label" [attr.for]="field.id">{{field.name}}
         <span *ngIf="isRequired()">*</span>
     </label>
-    <div class="adf-upload-widget-container">
+    <div class="adf-attach-widget-container">
         <div>
-            <mat-list *ngIf="hasFile">
-                <mat-list-item class="adf-upload-files-row" *ngFor="let file of field.value">
-                    <img mat-list-icon class="adf-upload-widget__icon"
+            <mat-list *ngIf="hasFile">∫
+                <mat-list-item class="adf-attach-files-row" *ngFor="let file of field.value">
+                    <img mat-list-icon class="adf-attach-widget__icon"
                          [id]="'file-'+file.id+'-icon'"
                          [src]="getIcon(file.mimeType)"
                          [alt]="mimeTypeIcon"
@@ -26,7 +26,7 @@
             </mat-list>
         </div>
 
-        <div class="button-row" *ngIf="(!hasFile || multipleOption) && !field.readOnly">
+        <div class="button-row" *ngIf="(!hasFile || multipleOption) && !field.readOnly && isAllFileSourceAllowed()">
             <a mat-raised-button color="primary">
                 {{ 'FORM.FIELD.UPLOAD' | translate }}<mat-icon>file_upload</mat-icon>
                 <input #uploadFiles
@@ -35,6 +35,14 @@
                        [id]="field.id"
                        (change)="onFileChanged($event)"/>
             </a>
+        </div>
+        <div *ngIf="!hasFile && field?.params?.fileSource && !field.readOnly" class="adf-attach-widget-repo-button">
+            <button mat-mini-fab
+                    (click)="openSelectDialog()"
+                    [attr.aria-label]="field?.params?.fileSource?.name">
+                    <img class="adf-img-logo" [src]="alfrescoLogoUrl">
+                </button>
+            <label *ngIf="!isAllFileSourceAllowed()">Select source of content</label>
         </div>
     </div>
     <error-widget [error]="field.validationSummary"></error-widget>
@@ -48,6 +56,4 @@
 
 
 
-    <!-- <div *ngIf="field?.params?.fileSource" class="adf-attach-widget-container">
-        <button mat-raised-button color="primary" (click)="openSelectDialog()">{{field?.params?.fileSource?.name}}</button>
-    </div> -->
+

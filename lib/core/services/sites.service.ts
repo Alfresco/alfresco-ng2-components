@@ -21,6 +21,7 @@ import { Observable } from 'rxjs/Observable';
 import { AlfrescoApiService } from './alfresco-api.service';
 import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/operator/catch';
+import { SitePaging, SiteEntry } from 'alfresco-js-api';
 
 @Injectable()
 export class SitesService {
@@ -28,7 +29,7 @@ export class SitesService {
     constructor(
         private apiService: AlfrescoApiService) { }
 
-    getSites(opts: any = {}): any {
+    getSites(opts: any = {}): Observable<SitePaging> {
         const defaultOptions = {
             skipCount: 0,
             include: ['properties']
@@ -38,23 +39,23 @@ export class SitesService {
             .catch(this.handleError);
     }
 
-    getSite(siteId: string, opts?: any): any {
+    getSite(siteId: string, opts?: any): Observable<SiteEntry> {
         return Observable.fromPromise(this.apiService.getInstance().core.sitesApi.getSite(siteId, opts))
             .catch(this.handleError);
     }
 
-    deleteSite(siteId: string, permanentFlag: boolean = true): any {
+    deleteSite(siteId: string, permanentFlag: boolean = true): Observable<any> {
         let options: any = {};
         options.permanent = permanentFlag;
         return Observable.fromPromise(this.apiService.getInstance().core.sitesApi.deleteSite(siteId, options)
             .catch(this.handleError));
     }
 
-    getSiteContent(siteId: string): Observable<any> {
+    getSiteContent(siteId: string): Observable<SiteEntry> {
         return this.getSite(siteId, { relations: ['containers'] });
     }
 
-    getSiteMembers(siteId: string): Observable<any> {
+    getSiteMembers(siteId: string): Observable<SiteEntry> {
         return this.getSite(siteId, { relations: ['members'] });
     }
 

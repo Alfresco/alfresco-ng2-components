@@ -21,31 +21,37 @@ import { ContentService } from '@alfresco/adf-core';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import { ShareDataRow } from '../document-list/data/share-data-row.model';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { DataColumn } from '@alfresco/adf-core';
+import { MinimalNodeEntryEntity, SitePaging, SiteEntry } from 'alfresco-js-api';
+import { DataColumn, SitesService } from '@alfresco/adf-core';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
 import { ContentNodeSelectorComponentData } from './content-node-selector.component-data.interface';
 
+
 @Injectable()
 export class ContentNodeDialogService {
 
-    private onlyFileSelectionMode = false;
-
     constructor(private dialog: MatDialog,
-                private contentService?: ContentService,
-                private documentListService?: DocumentListService) { }
+                private contentService: ContentService,
+                private documentListService: DocumentListService,
+                private siteService: SitesService) { }
 
-    openBrowseDialog(folderNodeId: string): Observable<MinimalNodeEntryEntity[]> {
-        this.onlyFileSelectionMode = true;
+    openFileBrowseDialogByFolderId(folderNodeId: string): Observable<MinimalNodeEntryEntity[]> {
         return Observable.fromPromise(this.documentListService.getFolderNode(folderNodeId))
-            .flatMap((node: MinimalNodeEntryEntity)=> {
-                return this.openCopyMoveDialog('Upload', node, 'update');
+            .switchMap((node: MinimalNodeEntryEntity)=> {
+                return this.openUploadFileDialog('Upload', node);
+        });
+    }
+
+    openFileBrowseDialogBySite(): Observable<MinimalNodeEntryEntity[]> {
+       return this.siteService.getSites().switchMap((response: SitePaging) => {
+            return this.openFileBrowseDialogByFolderId(response.list.entries[0].entry.guid);
         });
     }
 
     openCopyMoveDialog(action: string, contentEntry: MinimalNodeEntryEntity, permission?: string): Observable<MinimalNodeEntryEntity[]> {
         if (this.contentService.hasPermission(contentEntry, permission)) {
+
             const select = new Subject<MinimalNodeEntryEntity[]>();
             select.subscribe({
                 complete: this.close.bind(this)
@@ -56,19 +62,41 @@ export class ContentNodeDialogService {
                 actionName: action,
                 currentFolderId: contentEntry.parentId,
                 imageResolver: this.imageResolver.bind(this),
-                onlyFileSelectionMode: this.onlyFileSelectionMode,
+                rowFilter : this.rowFilter.bind(this, contentEntry.id),
                 select: select
             };
 
-            if (!this.onlyFileSelectionMode) {
-                data.rowFilter = this.rowFilter.bind(this, contentEntry.id);
-            }
+            this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px')
 
-            this.dialog.open(ContentNodeSelectorComponent, { data, panelClass: 'adf-content-node-selector-dialog', width: '630px' });
             return select;
         } else {
             return Observable.throw({ statusCode: 403 });
         }
+    }
+
+
+    openUploadFileDialog(action: string, contentEntry: MinimalNodeEntryEntity): Observable<MinimalNodeEntryEntity[]> {
+            const select = new Subject<MinimalNodeEntryEntity[]>();
+            select.subscribe({
+                complete: this.close.bind(this)
+            });
+
+            const data: ContentNodeSelectorComponentData = {
+                title: `${action} '${contentEntry.name}' to ...`,
+                actionName: action,
+                currentFolderId: contentEntry.id,
+                imageResolver: this.imageResolver.bind(this),
+                onlyFileSelectionMode: true,
+                select: select
+            };
+
+            this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px')
+
+            return select;
+    }
+
+    private openContentNodeDialog(data: ContentNodeSelectorComponentData, currentPanelClass: string, chosenWidth: string) {
+        this.dialog.open(ContentNodeSelectorComponent, { data, panelClass: currentPanelClass, width: chosenWidth });
     }
 
     private imageResolver(row: ShareDataRow, col: DataColumn): string | null {

@@ -27,8 +27,8 @@ import {
     ProcessContentService,
     //  ExternalContentLink,
     ActivitiContentService,
-    ContentLinkModel,
-    ExternalContent
+    ContentLinkModel
+    // ExternalContent
 } from '@alfresco/adf-core';
 import { ContentNodeDialogService } from '@alfresco/adf-content-services';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
@@ -50,6 +50,7 @@ export class ShareAttachWidgetComponent extends WidgetComponent implements OnIni
     displayText: string;
     multipleOption: string = '';
     mimeTypeIcon: string;
+    alfrescoLogoUrl: string ='../assets/images/alfresco-flower.svg';
 
     constructor(public formService: FormService,
                 private logService: LogService,
@@ -69,17 +70,30 @@ export class ShareAttachWidgetComponent extends WidgetComponent implements OnIni
         this.getMultipleFileParam();
     }
 
+    isAllFileSourceAllowed(){
+        return this.field.params &&
+               this.field.params.fileSource &&
+               this.field.params.fileSource.serviceId === 'all-file-sources';
+    }
+
     openSelectDialog() {
         if (this.field) {
             let params = this.field.params;
             if (params &&
                 params.fileSource &&
                 params.fileSource.selectedFolder) {
-                this.contentDialog.openBrowseDialog(params.fileSource.selectedFolder.pathId).subscribe(
+                this.contentDialog.openFileBrowseDialogByFolderId(params.fileSource.selectedFolder.pathId).subscribe(
                     (selections: MinimalNodeEntryEntity[]) => {
                         this.activitiContentService.applyAlfrescoNode(selections,
                             params.fileSource.selectedFolder.siteId,
-                            params.fileSource.selectedFolder.accountId);
+                            params.fileSource.selectedFolder.accountId).subscribe;
+                    });
+            } else {
+                this.contentDialog.openFileBrowseDialogBySite().subscribe(
+                    (selections: MinimalNodeEntryEntity[]) => {
+                        this.activitiContentService.applyAlfrescoNode(selections,
+                            params.fileSource.selectedFolder.siteId,
+                            params.fileSource.selectedFolder.accountId).subscribe;
                     });
             }
         }
@@ -173,25 +187,4 @@ export class ShareAttachWidgetComponent extends WidgetComponent implements OnIni
         );
     }
 
-    getExternalContentNodes() {
-        //  this.contentService.getAlfrescoNodes(this.selectedFolderAccountId, this.selectedFolderPathId)
-        //      .subscribe(
-        //          nodes => this.selectedFolderNodes = nodes,
-        //          (err) => {
-        //              this.error.emit(err);
-        //          }
-        //      );
-    }
-
-    selectFile(node: ExternalContent, $event: any) {
-        //  this.contentService.linkAlfrescoNode(this.selectedFolderAccountId, node, this.selectedFolderSiteId).subscribe(
-        //      (link: ExternalContentLink) => {
-        //          this.selectedFile = node;
-        //          this.field.value = [link];
-        //          this.field.json.value = [link];
-        //          // this.closeDialog();
-        //          this.fieldChanged.emit(this.field);
-        //      }
-        //  );
-    }
 }

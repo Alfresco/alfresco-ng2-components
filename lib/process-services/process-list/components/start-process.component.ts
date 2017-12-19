@@ -60,7 +60,7 @@ export class StartProcessInstanceComponent implements OnChanges {
     constructor(private activitiProcess: ProcessService,
                 private formRenderingService: FormRenderingService) {
 
-        // this.formRenderingService.setComponentTypeResolver('upload', () => ShareAttachWidgetComponent, true);
+        this.formRenderingService.setComponentTypeResolver('upload', () => ShareAttachWidgetComponent, true);
     }
 
     ngOnChanges(changes: SimpleChanges) {
