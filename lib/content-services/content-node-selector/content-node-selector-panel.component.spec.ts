@@ -522,6 +522,34 @@ describe('ContentNodeSelectorComponent', () => {
                     expect(searchSpy).toHaveBeenCalledWith(defaultSearchOptions('kakarot', undefined, skipCount));
                 });
 
+                it('should be shown when pagination\'s hasMoreItems is true', () => {
+                    component.pagination = {
+                        hasMoreItems: true
+                    };
+                    fixture.detectChanges();
+
+                    const pagination = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-pagination"]'));
+                    expect(pagination).not.toBeNull();
+                });
+
+                it('button\'s callback should load the next batch of folder results when there is no searchTerm', () => {
+                    const skipCount = 5;
+
+                    component.searchTerm = '';
+                    component.pagination = {
+                        hasMoreItems: true
+                    };
+                    fixture.detectChanges();
+
+                    component.getNextPageOfSearch({skipCount});
+                    fixture.detectChanges();
+                    expect(component.searchTerm).toBe('');
+
+                    expect(component.infiniteScroll).toBeTruthy();
+                    expect(component.skipCount).toBe(skipCount);
+                    expect(searchSpy).not.toHaveBeenCalled();
+                });
+
                 it('should set its loading state to true after search was started', (done) => {
                     component.showingSearchResults = true;
                     component.pagination = { hasMoreItems: true };
