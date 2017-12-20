@@ -26,7 +26,7 @@ import { TaskFilterService } from './task-filter.service';
 
 declare let jasmine: any;
 
-describe('Activiti Tas filter Service', () => {
+describe('Activiti Task filter Service', () => {
 
     let service: TaskFilterService;
 
@@ -131,9 +131,13 @@ describe('Activiti Tas filter Service', () => {
                 expect(res).toBeDefined();
                 expect(res.length).toEqual(4);
                 expect(res[0].name).toEqual('Involved Tasks');
+                expect(res[0].id).toEqual(111);
                 expect(res[1].name).toEqual('My Tasks');
+                expect(res[1].id).toEqual(222);
                 expect(res[2].name).toEqual('Queued Tasks');
+                expect(res[2].id).toEqual(333);
                 expect(res[3].name).toEqual('Completed Tasks');
+                expect(res[3].id).toEqual(444);
                 done();
             });
 
@@ -141,7 +145,7 @@ describe('Activiti Tas filter Service', () => {
                 'status': 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify({
-                    id: '111', name: 'Involved Tasks', filter: { assignment: 'fake-involved' }
+                    appId: 1001, id: '111', name: 'Involved Tasks', icon: 'fake-icon', recent: false
                 })
             });
 
@@ -149,7 +153,7 @@ describe('Activiti Tas filter Service', () => {
                 'status': 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify({
-                    id: '222', name: 'My Tasks', filter: { assignment: 'fake-assignee' }
+                    appId: 1001, id: '222', name: 'My Tasks', icon: 'fake-icon', recent: false
                 })
             });
 
@@ -157,7 +161,7 @@ describe('Activiti Tas filter Service', () => {
                 'status': 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify({
-                    id: '333', name: 'Queued Tasks', filter: { assignment: 'fake-candidate' }
+                    appId: 1001, id: '333', name: 'Queued Tasks', icon: 'fake-icon', recent: false
                 })
             });
 
@@ -165,7 +169,7 @@ describe('Activiti Tas filter Service', () => {
                 'status': 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify({
-                    id: '444', name: 'Completed Tasks', filter: { assignment: 'fake-involved' }
+                    appId: 1001, id: '444', name: 'Completed Tasks', icon: 'fake-icon', recent: false
                 })
             });
         });
