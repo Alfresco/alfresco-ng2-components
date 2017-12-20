@@ -1,13 +1,13 @@
 <div class="adf-metadata-properties">
     <adf-card-view
         class="adf-node-basic-properties"
-        [properties]="basicProperties | slice:0:maxPropertiesToShow"
+        [properties]="basicProperties$ | async | slice:0:maxPropertiesToShow"
         [editable]="editable">
     </adf-card-view>
 
-    <adf-card-view ngFor="let aspectProperties of aspects"
+    <!-- <adf-card-view *ngFor="let aspectProperties of aspects$ | async"
         class="adf-node-aspect-properties"
         [properties]="aspectProperties"
         [editable]="editable">
-    </adf-card-view>
+    </adf-card-view> -->
 </div>

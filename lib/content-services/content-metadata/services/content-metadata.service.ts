@@ -17,21 +17,22 @@
 
 import { Injectable } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { PropertyDescriptorLoaderService } from './properties-loader.service';
+import { PropertyDescriptorsService } from './property-descriptors.service';
 import { BasicPropertiesService } from './basic-properties.service';
+import { CardViewItem } from '@alfresco/adf-core';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class ContentMetadataService {
 
     constructor(private basicPropertiesService: BasicPropertiesService,
-                private aspectProperties: PropertyDescriptorLoaderService) {}
+                private propertyDescriptorsService: PropertyDescriptorsService) {}
 
-    getProperties(node: MinimalNodeEntryEntity): any {
-        this.aspectProperties.load(node.aspectNames).subscribe((data) => {
-            /*tslint:disable-next-line*/
-            console.log(data);
-        });
+    getBasicProperties(node: MinimalNodeEntryEntity): Observable<CardViewItem[]> {
+        return Observable.of(this.basicPropertiesService.getBasicProperties(node));
+    }
 
-        return this.basicPropertiesService.getBasicProperties(node);
+    getAspectProperties(node: MinimalNodeEntryEntity): Observable<CardViewItem[][]> {
+        return this.propertyDescriptorsService.getAspects(node);
     }
 }

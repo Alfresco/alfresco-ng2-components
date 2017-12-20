@@ -363,7 +363,7 @@
     "content-metadata": {
         "presets": {
             "default": {
-
+                "exif:exif": "*"
             }
         }
     }

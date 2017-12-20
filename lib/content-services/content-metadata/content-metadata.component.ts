@@ -41,8 +41,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
     @Input()
     maxPropertiesToShow: number = Infinity;
 
-    basicProperties: CardViewItem[] = [];
-    aspects: CardViewItem[][];
+    basicProperties$: Observable<CardViewItem[]>;
+    aspects$: Observable<CardViewItem[][]>;
 
     constructor(private contentMetadataService: ContentMetadataService,
                 private cardViewUpdateService: CardViewUpdateService,
@@ -61,16 +61,13 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
     ngOnChanges(changes: SimpleChanges): void {
         const nodeChange: SimpleChange = changes['node'];
         if (nodeChange) {
-            this.recalculateProperties(nodeChange.currentValue);
+            const node = nodeChange.currentValue;
+            this.basicProperties$ = this.contentMetadataService.getBasicProperties(node);
+            this.aspects$ = this.contentMetadataService.getAspectProperties(node);
         }
     }
 
     private saveNode({ changed: nodeBody }): Observable<MinimalNodeEntryEntity> {
         return this.nodesApi.updateNode(this.node.id, nodeBody);
-    }
-
-    private recalculateProperties(node: MinimalNodeEntryEntity): void {
-        this.basicProperties = this.contentMetadataService.getProperties(node);
-        this.aspects = [];
     }
 }
