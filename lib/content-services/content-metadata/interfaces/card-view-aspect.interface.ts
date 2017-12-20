@@ -1,7 +1,6 @@
 import { CardViewItem} from '@alfresco/adf-core';
-import { Aspect } from './aspect.interface';
 
-export interface CardViewAspect extends Aspect {
+export interface CardViewAspect {
     name: string;
     properties: CardViewItem[]
 }

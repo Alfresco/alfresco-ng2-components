@@ -34,6 +34,6 @@ export class ContentMetadataService {
     }
 
     getAspectProperties(node: MinimalNodeEntryEntity): Observable<CardViewAspect[]> {
-        return this.propertyDescriptorsService.getAspects(node);
+        return <any> this.propertyDescriptorsService.getAspects(node);
     }
 }

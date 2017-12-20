@@ -21,6 +21,7 @@ import { PropertyDescriptorLoaderService } from './properties-loader.service';
 import { AspectWhiteListService } from './aspect-whitelist.service';
 import { Observable } from 'rxjs/Observable';
 import { Aspect } from '../interfaces/aspect.interface';
+import { AspectProperty } from '../interfaces/aspect-property.interface';
 
 @Injectable()
 export class PropertyDescriptorsService {
@@ -50,7 +51,7 @@ export class PropertyDescriptorsService {
         });
     }
 
-    private getFilteredPropertiesArray(aspectDescriptor): any[] {
+    private getFilteredPropertiesArray(aspectDescriptor): AspectProperty[] {
         const aspectName = aspectDescriptor.name;
 
         return Object.keys(aspectDescriptor.properties)
