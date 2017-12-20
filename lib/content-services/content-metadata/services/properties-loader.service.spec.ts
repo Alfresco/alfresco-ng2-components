@@ -54,26 +54,26 @@ describe('PropertyDescriptorLoaderService', () => {
         expect(aspectsApi.fetchAspect).toHaveBeenCalledWith('custom:custom');
     });
 
-    it('should flatten the forked values', (done) => {
+    it('should merge the forked values', (done) => {
 
-        const apiResponses = [
-            {
-                name: 'exif:exif',
-                id: 1,
-                properties: {
-                    'exif:1': { id: 'exif:1:id', name: 'exif:1' },
-                    'exif:2': { id: 'exif:2:id', name: 'exif:2' }
-                }
-            },
-            {
-                name: 'cm:content',
-                id: 2,
-                properties: {
-                    'cm:content': { id: 'cm:content:id', name: 'cm:content' }
-                }
-
+        const exifResponse = {
+            name: 'exif:exif',
+            id: 1,
+            properties: {
+                'exif:1': { id: 'exif:1:id', name: 'exif:1' },
+                'exif:2': { id: 'exif:2:id', name: 'exif:2' }
             }
-        ];
+        };
+
+        const contentResponse = {
+            name: 'cm:content',
+            id: 2,
+            properties: {
+                'cm:content': { id: 'cm:content:id', name: 'cm:content' }
+            }
+        };
+
+        const apiResponses = [ exifResponse, contentResponse ];
         let counter = 0;
 
         spyOn(aspectsApi, 'fetchAspect').and.callFake(() => {
@@ -83,9 +83,8 @@ describe('PropertyDescriptorLoaderService', () => {
         aspectProperties.load(['exif:exif', 'cm:content'])
             .subscribe({
                 next: (data) => {
-                    expect(data[0]).toEqual({ id: 'exif:1:id', name: 'exif:1', aspectName: 'exif:exif'});
-                    expect(data[1]).toEqual({ id: 'exif:2:id', name: 'exif:2', aspectName: 'exif:exif'});
-                    expect(data[2]).toEqual({ id: 'cm:content:id', name: 'cm:content', aspectName: 'cm:content'});
+                    expect(data[0]).toBe(exifResponse);
+                    expect(data[1]).toBe(contentResponse);
                 },
                 complete: done
             });

@@ -21,6 +21,7 @@ import { PropertyDescriptorsService } from './property-descriptors.service';
 import { BasicPropertiesService } from './basic-properties.service';
 import { CardViewItem } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
+import { CardViewAspect } from '../interfaces/card-view-aspect.interface';
 
 @Injectable()
 export class ContentMetadataService {
@@ -32,7 +33,7 @@ export class ContentMetadataService {
         return Observable.of(this.basicPropertiesService.getBasicProperties(node));
     }
 
-    getAspectProperties(node: MinimalNodeEntryEntity): Observable<CardViewItem[][]> {
+    getAspectProperties(node: MinimalNodeEntryEntity): Observable<CardViewAspect[]> {
         return this.propertyDescriptorsService.getAspects(node);
     }
 }

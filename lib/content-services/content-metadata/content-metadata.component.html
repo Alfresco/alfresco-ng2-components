@@ -5,9 +5,12 @@
         [editable]="editable">
     </adf-card-view>
 
-    <!-- <adf-card-view *ngFor="let aspectProperties of aspects$ | async"
-        class="adf-node-aspect-properties"
-        [properties]="aspectProperties"
-        [editable]="editable">
-    </adf-card-view> -->
+    <div *ngFor="let aspect of aspects$ | async">
+        <h3>{{aspect.name}}</h3>
+        <adf-card-view
+            class="adf-node-aspect-properties"
+            [properties]="aspect.properties"
+            [editable]="editable">
+        </adf-card-view>
+    </div>
 </div>

@@ -27,25 +27,6 @@ export class PropertyDescriptorLoaderService {
 
     load(aspects: string[]): Observable<any> {
         const aspectFetchStreams = aspects.map((aspect) => this.aspectsApi.fetchAspect(aspect));
-
-        return forkJoin(aspectFetchStreams)
-            .map(this.flattenResponse);
-    }
-
-    private flattenResponse(aspects) {
-        const properties = [];
-
-        aspects.forEach((aspectObject) => {
-            const aspectName = aspectObject.name;
-            const aspectPropertyNames = Object.keys(aspectObject.properties);
-
-            aspectPropertyNames.forEach((propertyName) => {
-                const property = aspectObject.properties[propertyName];
-                property.aspectName = aspectName;
-                properties.push(property);
-            });
-        });
-
-        return properties;
+        return forkJoin(aspectFetchStreams);
     }
 }

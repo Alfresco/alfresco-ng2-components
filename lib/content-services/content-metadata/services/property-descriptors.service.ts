@@ -20,6 +20,7 @@ import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { PropertyDescriptorLoaderService } from './properties-loader.service';
 import { AspectWhiteListService } from './aspect-whitelist.service';
 import { Observable } from 'rxjs/Observable';
+import { Aspect } from '../interfaces/aspect.interface';
 
 @Injectable()
 export class PropertyDescriptorsService {
@@ -27,7 +28,7 @@ export class PropertyDescriptorsService {
     constructor(private aspectWhiteListService: AspectWhiteListService,
                 private aspectPropertiesService: PropertyDescriptorLoaderService) {}
 
-    getAspects(node: MinimalNodeEntryEntity, presetName: string = 'default'): Observable<any> {
+    getAspects(node: MinimalNodeEntryEntity, presetName: string = 'default'): Observable<Aspect[]> {
         this.aspectWhiteListService.choosePreset(presetName);
 
         return this.loadAspectDescriptors(node.aspectNames)
@@ -41,13 +42,19 @@ export class PropertyDescriptorsService {
         return this.aspectPropertiesService.load(aspectsToLoad);
     }
 
-    private filterPropertiesByWhitelist(aspectPropertyDescriptors: any[]) {
-        return aspectPropertyDescriptors
-            .filter(property => this.aspectWhiteListService.isPropertyAllowed(property.aspectName, property.name))
-            .reduce((properties, property) => {
-                return Object.assign({}, properties, {
-                    [property.name]: property
-                });
-            }, {});
+    private filterPropertiesByWhitelist(aspectDescriptors): Aspect[] {
+        return aspectDescriptors.map((aspectDescriptor) => {
+            return Object.assign({}, aspectDescriptor, {
+                properties: this.getFilteredPropertiesArray(aspectDescriptor)
+            });
+        });
+    }
+
+    private getFilteredPropertiesArray(aspectDescriptor): any[] {
+        const aspectName = aspectDescriptor.name;
+
+        return Object.keys(aspectDescriptor.properties)
+            .map(propertyName => aspectDescriptor.properties[propertyName])
+            .filter(property => this.aspectWhiteListService.isPropertyAllowed(aspectName, property.name));
     }
 }

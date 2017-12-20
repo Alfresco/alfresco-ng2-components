@@ -119,17 +119,23 @@ describe('PropertyDescriptorsService', () => {
         it('should filter out properties which are not defined in the particular aspect', () => {
             spyOn(aspectProperties, 'load').and.callFake(() => {
                 return Observable.of([
-                    { name: 'exif:1', aspectName: 'exif:exif', id: 'exif:1:id' },
-                    { name: 'exif:2', aspectName: 'exif:exif', id: 'exif:2:id' }
+                    {
+                        name: 'exif:exif',
+                        properties: [
+                            { name: 'exif:1', id: 'exif:1:id' },
+                            { name: 'exif:2', id: 'exif:2:id' }
+                        ]
+                    }
                 ]);
             });
 
             testPresets.default = { 'exif:exif': ['exif:2'] };
 
             contentMetadataService.getAspects(node).subscribe({
-                next: (properties) => {
-                    expect(properties['exif:2']).toEqual({ name: 'exif:2', aspectName: 'exif:exif', id: 'exif:2:id' });
-                    expect(properties['exif:1']).toBeUndefined();
+                next: (aspects) => {
+                    expect(aspects[0].name).toBe('exif:exif');
+                    expect(aspects[0].properties).toContain({ name: 'exif:2', id: 'exif:2:id' });
+                    expect(aspects[0].properties).not.toContain({ name: 'exif:1', id: 'exif:1:id' });
                 }
             });
         });
@@ -137,10 +143,20 @@ describe('PropertyDescriptorsService', () => {
         it('should accept "*" wildcard for aspect properties', () => {
             spyOn(aspectProperties, 'load').and.callFake(() => {
                 return Observable.of([
-                    { name: 'exif:1', aspectName: 'exif:exif', id: 'exif:1:id' },
-                    { name: 'exif:2', aspectName: 'exif:exif', id: 'exif:2:id' },
-                    { name: 'custom:1', aspectName: 'custom:custom', id: 'custom:1:id' },
-                    { name: 'custom:2', aspectName: 'custom:custom', id: 'custom:2:id' }
+                    {
+                        name: 'exif:exif',
+                        properties: [
+                            { name: 'exif:1', id: 'exif:1:id' },
+                            { name: 'exif:2', id: 'exif:2:id' }
+                        ]
+                    },
+                    {
+                        name: 'custom:custom',
+                        properties: [
+                            { name: 'custom:1', id: 'custom:1:id' },
+                            { name: 'custom:2', id: 'custom:2:id' }
+                        ]
+                    }
                 ]);
             });
 
@@ -150,32 +166,15 @@ describe('PropertyDescriptorsService', () => {
             };
 
             contentMetadataService.getAspects(node).subscribe({
-                next: (properties) => {
-                    expect(properties['exif:1']).toEqual({ name: 'exif:1', aspectName: 'exif:exif', id: 'exif:1:id' });
-                    expect(properties['exif:2']).toEqual({ name: 'exif:2', aspectName: 'exif:exif', id: 'exif:2:id' });
-                    expect(properties['custom:1']).toEqual({ name: 'custom:1', aspectName: 'custom:custom', id: 'custom:1:id' });
-                    expect(properties['custom:2']).toBeUndefined();
-                }
-            });
-        });
+                next: (aspects) => {
+                    expect(aspects.length).toBe(2);
+                    expect(aspects[0].name).toBe('exif:exif');
+                    expect(aspects[0].properties).toContain({ name: 'exif:1', id: 'exif:1:id' });
+                    expect(aspects[0].properties).toContain({ name: 'exif:2', id: 'exif:2:id' });
 
-        it('should filter out properties which are not defined amongst all aspects', () => {
-            spyOn(aspectProperties, 'load').and.callFake(() => {
-                return Observable.of([
-                    { name: 'exif:1', aspectName: 'exif:exif', id: 'exif:1:id' },
-                    { name: 'custom:1', aspectName: 'custom:custom', id: 'custom:1:id' }
-                ]);
-            });
-
-            testPresets.default = {
-                'exif:exif': ['exif:1'],
-                'custom:custom': ['custom:1']
-            };
-
-            contentMetadataService.getAspects(node).subscribe({
-                next: (properties) => {
-                    expect(properties['exif:1']).toEqual({ name: 'exif:1', aspectName: 'exif:exif', id: 'exif:1:id' });
-                    expect(properties['custom:1']).toEqual({ name: 'custom:1', aspectName: 'custom:custom', id: 'custom:1:id' });
+                    expect(aspects[1].name).toBe('custom:custom');
+                    expect(aspects[1].properties).toContain({ name: 'custom:1', id: 'custom:1:id' });
+                    expect(aspects[1].properties).not.toContain({ name: 'custom:2', id: 'custom:2:id' });
                 }
             });
         });
@@ -183,7 +182,12 @@ describe('PropertyDescriptorsService', () => {
         it('should filter out aspects which are not present in app config preset', () => {
             spyOn(aspectProperties, 'load').and.callFake(() => {
                 return Observable.of([
-                    { name: 'exif:1', aspectName: 'exif:exif', id: 'exif:1:id' }
+                    {
+                        name: 'exif:exif',
+                        properties: [
+                            { name: 'exif:1', id: 'exif:1:id' }
+                        ]
+                    }
                 ]);
             });
 
@@ -193,12 +197,12 @@ describe('PropertyDescriptorsService', () => {
             };
 
             contentMetadataService.getAspects(node).subscribe({
-                next: (properties) => {
-                    expect(properties['exif:1']).toEqual({ name: 'exif:1', aspectName: 'exif:exif', id: 'exif:1:id' });
-                    expect(properties['banana:1']).toBeUndefined();
+                next: (aspects) => {
+                    expect(aspects.length).toBe(1);
+                    expect(aspects[0].name).toBe('exif:exif');
+                    expect(aspects[0].properties).toContain({ name: 'exif:1', id: 'exif:1:id' });
                 }
             });
         });
-
     });
 });

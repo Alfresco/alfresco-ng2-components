@@ -20,6 +20,7 @@ import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { CardViewItem, CardViewUpdateService, NodesApiService, LogService } from '@alfresco/adf-core';
 import { ContentMetadataService } from './services/content-metadata.service';
+import { CardViewAspect } from './interfaces/card-view-aspect.interface';
 
 @Component({
     selector: 'adf-content-metadata',
@@ -42,7 +43,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
     maxPropertiesToShow: number = Infinity;
 
     basicProperties$: Observable<CardViewItem[]>;
-    aspects$: Observable<CardViewItem[][]>;
+    aspects$: Observable<CardViewAspect[]>;
 
     constructor(private contentMetadataService: ContentMetadataService,
                 private cardViewUpdateService: CardViewUpdateService,
