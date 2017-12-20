@@ -40,7 +40,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
     editable: boolean = false;
 
     @Input()
-    maxPropertiesToShow: number = Infinity;
+    expanded: boolean = false;
 
     basicProperties$: Observable<CardViewItem[]>;
     aspects$: Observable<CardViewAspect[]>;

@@ -23,6 +23,7 @@ import { AspectsApi } from '../spike/aspects-api.service';
 import { AspectWhiteListService } from './aspect-whitelist.service';
 import { AppConfigService, LogService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
+import { AspectProperty } from '../interfaces/content-metadata.interfaces';
 
 describe('PropertyDescriptorsService', () => {
 
@@ -122,8 +123,8 @@ describe('PropertyDescriptorsService', () => {
                     {
                         name: 'exif:exif',
                         properties: [
-                            { name: 'exif:1', id: 'exif:1:id' },
-                            { name: 'exif:2', id: 'exif:2:id' }
+                            { name: 'exif:1' },
+                            { name: 'exif:2' }
                         ]
                     }
                 ]);
@@ -134,8 +135,8 @@ describe('PropertyDescriptorsService', () => {
             contentMetadataService.getAspects(node).subscribe({
                 next: (aspects) => {
                     expect(aspects[0].name).toBe('exif:exif');
-                    expect(aspects[0].properties).toContain({ name: 'exif:2', id: 'exif:2:id' });
-                    expect(aspects[0].properties).not.toContain({ name: 'exif:1', id: 'exif:1:id' });
+                    expect(aspects[0].properties).toContain(<AspectProperty>{ name: 'exif:2' });
+                    expect(aspects[0].properties).not.toContain(<AspectProperty>{ name: 'exif:1' });
                 }
             });
         });
@@ -146,15 +147,15 @@ describe('PropertyDescriptorsService', () => {
                     {
                         name: 'exif:exif',
                         properties: [
-                            { name: 'exif:1', id: 'exif:1:id' },
-                            { name: 'exif:2', id: 'exif:2:id' }
+                            { name: 'exif:1' },
+                            { name: 'exif:2' }
                         ]
                     },
                     {
                         name: 'custom:custom',
                         properties: [
-                            { name: 'custom:1', id: 'custom:1:id' },
-                            { name: 'custom:2', id: 'custom:2:id' }
+                            { name: 'custom:1' },
+                            { name: 'custom:2' }
                         ]
                     }
                 ]);
@@ -169,12 +170,12 @@ describe('PropertyDescriptorsService', () => {
                 next: (aspects) => {
                     expect(aspects.length).toBe(2);
                     expect(aspects[0].name).toBe('exif:exif');
-                    expect(aspects[0].properties).toContain({ name: 'exif:1', id: 'exif:1:id' });
-                    expect(aspects[0].properties).toContain({ name: 'exif:2', id: 'exif:2:id' });
+                    expect(aspects[0].properties).toContain(<AspectProperty>{ name: 'exif:1' });
+                    expect(aspects[0].properties).toContain(<AspectProperty>{ name: 'exif:2' });
 
                     expect(aspects[1].name).toBe('custom:custom');
-                    expect(aspects[1].properties).toContain({ name: 'custom:1', id: 'custom:1:id' });
-                    expect(aspects[1].properties).not.toContain({ name: 'custom:2', id: 'custom:2:id' });
+                    expect(aspects[1].properties).toContain(<AspectProperty>{ name: 'custom:1' });
+                    expect(aspects[1].properties).not.toContain(<AspectProperty>{ name: 'custom:2' });
                 }
             });
         });
@@ -185,7 +186,7 @@ describe('PropertyDescriptorsService', () => {
                     {
                         name: 'exif:exif',
                         properties: [
-                            { name: 'exif:1', id: 'exif:1:id' }
+                            { name: 'exif:1' }
                         ]
                     }
                 ]);
@@ -200,7 +201,7 @@ describe('PropertyDescriptorsService', () => {
                 next: (aspects) => {
                     expect(aspects.length).toBe(1);
                     expect(aspects[0].name).toBe('exif:exif');
-                    expect(aspects[0].properties).toContain({ name: 'exif:1', id: 'exif:1:id' });
+                    expect(aspects[0].properties).toContain(<AspectProperty>{ name: 'exif:1' });
                 }
             });
         });

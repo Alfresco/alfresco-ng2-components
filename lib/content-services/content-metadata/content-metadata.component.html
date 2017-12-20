@@ -1,6 +1,6 @@
 <div class="adf-metadata-properties">
     <mat-accordion displayMode="flat">
-        <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel [expanded]="!expanded" [hideToggle]="!expanded">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     {{ 'CORE.METADATA.BASIC.HEADER' | translate }}
@@ -9,25 +9,27 @@
 
             <adf-card-view
                 class="adf-metadata-properties-basic"
-                [properties]="basicProperties$ | async | slice:0:maxPropertiesToShow"
+                [properties]="basicProperties$ | async"
                 [editable]="editable">
             </adf-card-view>
         </mat-expansion-panel>
 
-        <div *ngFor="let aspect of aspects$ | async" class="adf-metadata-properties-aspects">
-            <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        {{aspect.title}}
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
+        <ng-container *ngIf="expanded">
+            <div *ngFor="let aspect of aspects$ | async" class="adf-metadata-properties-aspects">
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{aspect.title}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
 
-                <adf-card-view
-                    class="adf-node-aspect-properties"
-                    [properties]="aspect.properties"
-                    [editable]="editable">
-                </adf-card-view>
-            </mat-expansion-panel>
-        </div>
+                    <adf-card-view
+                        class="adf-node-aspect-properties"
+                        [properties]="aspect.properties"
+                        [editable]="editable">
+                    </adf-card-view>
+                </mat-expansion-panel>
+            </div>
+        </ng-container>
     </mat-accordion>
 </div>

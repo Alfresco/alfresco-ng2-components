@@ -35,7 +35,7 @@ export class ContentMetadataService {
 
     getAspectProperties(node: MinimalNodeEntryEntity): Observable<CardViewAspect[]> {
         return this.propertyDescriptorsService.getAspects(node)
-            .map(aspects => aspects.map(aspect => Object.assign({}, aspect, { properties: this.translateProperties(aspect.properties) })))
+            .map(aspects => aspects.map(aspect => Object.assign({}, aspect, { properties: this.translateProperties(aspect.properties) })));
     }
 
     private translateProperties(aspectProperties: AspectProperty[]): CardViewItem[] {
