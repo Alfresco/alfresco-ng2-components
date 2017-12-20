@@ -29,6 +29,9 @@
         float: left;
         width: calc(100% - 40px);
         text-align: right;
+        .mat-button {
+            text-transform: uppercase !important;
+        }
     }
 
     .adf-start-task-input-container {
