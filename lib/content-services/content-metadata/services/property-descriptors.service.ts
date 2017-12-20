@@ -20,8 +20,7 @@ import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { PropertyDescriptorLoaderService } from './properties-loader.service';
 import { AspectWhiteListService } from './aspect-whitelist.service';
 import { Observable } from 'rxjs/Observable';
-import { Aspect } from '../interfaces/aspect.interface';
-import { AspectProperty } from '../interfaces/aspect-property.interface';
+import { Aspect, AspectProperty } from '../interfaces/content-metadata.interfaces';
 
 @Injectable()
 export class PropertyDescriptorsService {

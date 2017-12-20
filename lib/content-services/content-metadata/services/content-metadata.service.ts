@@ -19,9 +19,9 @@ import { Injectable } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { PropertyDescriptorsService } from './property-descriptors.service';
 import { BasicPropertiesService } from './basic-properties.service';
-import { CardViewItem } from '@alfresco/adf-core';
+import { CardViewItem, CardViewTextItemModel } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
-import { CardViewAspect } from '../interfaces/card-view-aspect.interface';
+import { AspectProperty, CardViewAspect } from '../interfaces/content-metadata.interfaces';
 
 @Injectable()
 export class ContentMetadataService {
@@ -34,6 +34,20 @@ export class ContentMetadataService {
     }
 
     getAspectProperties(node: MinimalNodeEntryEntity): Observable<CardViewAspect[]> {
-        return <any> this.propertyDescriptorsService.getAspects(node);
+        return this.propertyDescriptorsService.getAspects(node)
+            .map(aspects => aspects.map(aspect => Object.assign({}, aspect, { properties: this.translateProperties(aspect.properties) })))
+    }
+
+    private translateProperties(aspectProperties: AspectProperty[]): CardViewItem[] {
+        return aspectProperties.map((aspectProperty) => this.translateProperty(aspectProperty));
+    }
+
+    private translateProperty(aspectProperty: AspectProperty): CardViewItem {
+        return new CardViewTextItemModel({
+            label: aspectProperty.title,
+            value: '1',
+            key: '',
+            editable: true
+        });
     }
 }

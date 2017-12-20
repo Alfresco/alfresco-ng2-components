@@ -1,16 +1,33 @@
 <div class="adf-metadata-properties">
-    <adf-card-view
-        class="adf-node-basic-properties"
-        [properties]="basicProperties$ | async | slice:0:maxPropertiesToShow"
-        [editable]="editable">
-    </adf-card-view>
+    <mat-accordion displayMode="flat">
+        <mat-expansion-panel [expanded]="true">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{ 'CORE.METADATA.BASIC.HEADER' | translate }}
+                </mat-panel-title>
+            </mat-expansion-panel-header>
 
-    <div *ngFor="let aspect of aspects$ | async">
-        <h3>{{aspect.name}}</h3>
-        <adf-card-view
-            class="adf-node-aspect-properties"
-            [properties]="aspect.properties"
-            [editable]="editable">
-        </adf-card-view>
-    </div>
+            <adf-card-view
+                class="adf-metadata-properties-basic"
+                [properties]="basicProperties$ | async | slice:0:maxPropertiesToShow"
+                [editable]="editable">
+            </adf-card-view>
+        </mat-expansion-panel>
+
+        <div *ngFor="let aspect of aspects$ | async" class="adf-metadata-properties-aspects">
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        {{aspect.title}}
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <adf-card-view
+                    class="adf-node-aspect-properties"
+                    [properties]="aspect.properties"
+                    [editable]="editable">
+                </adf-card-view>
+            </mat-expansion-panel>
+        </div>
+    </mat-accordion>
 </div>

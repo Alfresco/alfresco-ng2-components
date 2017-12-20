@@ -3,9 +3,18 @@
     $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);
 
-    .adf-viewer-default-sidebar {
+    .adf-content-metadata-card {
 
-        &-card-footer.mat-card-footer {
+        .mat-card {
+            padding: 0;
+
+            .mat-card-content {
+                margin-bottom: 0;
+            }
+        }
+
+        &-footer.mat-card-footer {
+            margin: 0;
             padding: 8px 12px;
             border-top: 1px solid mat-color($foreground, text, 0.07);
 

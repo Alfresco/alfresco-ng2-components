@@ -6,6 +6,10 @@
     .adf {
         &-metadata-properties {
 
+            .mat-expansion-panel:not([class*=mat-elevation-z]) {
+                box-shadow: none;
+            }
+
             .adf-property {
                 display: block;
                 margin-bottom: 20px;

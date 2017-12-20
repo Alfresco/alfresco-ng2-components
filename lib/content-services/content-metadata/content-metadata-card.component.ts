@@ -25,7 +25,7 @@ const PROPERTY_COUNTER_WHILE_COLLAPSED = 5;
     templateUrl: './content-metadata-card.component.html',
     styleUrls: ['./content-metadata-card.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    host: { 'class': 'adf-viewer-default-sidebar' }
+    host: { 'class': 'adf-content-metadata-card' }
 })
 export class ContentMetadataCardComponent {
     @Input()
