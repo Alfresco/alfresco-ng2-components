@@ -19,7 +19,6 @@ import { DataColumn, DataRowEvent, DataTableAdapter, ObjectDataColumn, ObjectDat
 import { AppConfigService, DataColumnListComponent } from '@alfresco/adf-core';
 import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import * as _ from 'lodash';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskListModel } from '../models/task-list.model';
 import { taskPresetsDefaultModel } from '../models/task-preset.model';
@@ -344,8 +343,7 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
 
     getSchema(): any {
         let customSchemaColumns = [];
-        customSchemaColumns = _.concat(customSchemaColumns, this.getSchemaFromConfig(this.presetColumn));
-        customSchemaColumns = _.concat(customSchemaColumns, this.getSchemaFromHtml());
+        customSchemaColumns = this.getSchemaFromConfig(this.presetColumn).concat(this.getSchemaFromHtml());
         if (customSchemaColumns.length === 0) {
             customSchemaColumns = this.getDefaultLayoutPreset();
         }
