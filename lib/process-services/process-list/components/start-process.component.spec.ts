@@ -154,6 +154,18 @@ describe('StartProcessInstanceComponent', () => {
             });
         }));
 
+        it('should auto-select process def from dropdown if there is just one process def', () => {
+            let change = new SimpleChange(null, '123', true);
+            component.ngOnChanges({'appId': change});
+            component.processDefinitions[0] = testProcessDefRepr;
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                let selectElement = fixture.nativeElement.querySelector('mat-select > .mat-select-trigger');
+                expect(selectElement).not.toBeNull();
+                expect(selectElement).toBeDefined();
+                expect(selectElement.innerText).toBe('My Process 1');
+            });
+        });
     });
 
     describe('input changes', () => {
@@ -321,35 +333,39 @@ describe('StartProcessInstanceComponent', () => {
                 let change = new SimpleChange(null, '123', true);
                 component.ngOnChanges({'appId': change});
                 fixture.detectChanges();
-                component.onProcessDefChange('my:process1');
-                fixture.whenStable();
-                startBtn = fixture.nativeElement.querySelector('#button-start');
             }));
 
             it('should have start button disabled when name not filled out', async(() => {
                 component.name = '';
                 fixture.detectChanges();
-                expect(startBtn.disabled).toBe(true);
+                fixture.whenStable().then(() => {
+                    startBtn = fixture.nativeElement.querySelector('#button-start');
+                    expect(startBtn.disabled).toBe(true);
+                });
             }));
 
-            it('should have start button disabled when no process is selected', async(() => {
+            it('should have start button disabled when no process is selected', () => {
                 component.onProcessDefChange('');
                 fixture.detectChanges();
+                startBtn = fixture.nativeElement.querySelector('#button-start');
                 expect(startBtn.disabled).toBe(true);
-            }));
+            });
 
-            it('should enable start button when name and process filled out', async(() => {
+            it('should enable start button when name and process filled out', () => {
+                component.onProcessDefChange('my:process1');
                 fixture.detectChanges();
-                let startButton = fixture.nativeElement.querySelector('#button-start');
-                expect(startButton.disabled).toBeFalsy();
-            }));
+                fixture.whenStable().then(() => {
+                    startBtn = fixture.nativeElement.querySelector('#button-start');
+                    expect(startBtn.disabled).toBe(false);
+                });
+            });
 
-            it('should disable the start process button when process name is empty', async(() => {
+            it('should disable the start process button when process name is empty', () => {
                 component.name = '';
                 fixture.detectChanges();
                 let startButton = fixture.nativeElement.querySelector('#button-start');
-                expect(startButton.disabled).toBeTruthy();
-            }));
+                expect(startButton.disabled).toBe(true);
+            });
 
         });
 

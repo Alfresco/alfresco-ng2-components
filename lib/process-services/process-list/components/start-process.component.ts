@@ -95,6 +95,13 @@ export class StartProcessInstanceComponent implements OnChanges {
         }
     }
 
+    matSelectCompareFn = (processDefId) => {
+        if (this.processDefinitions && this.processDefinitions.length === 1 && processDefId === this.processDefinitions[0].id) {
+            this.onProcessDefChange(processDefId);
+            return true;
+        }
+    }
+
     onProcessDefChange(processDefinitionId) {
         let processDef = this.processDefinitions.find((processDefinition) => {
             return processDefinition.id === processDefinitionId;
