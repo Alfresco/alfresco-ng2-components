@@ -23,8 +23,10 @@ import { MaterialModule } from '../material.module';
 import { CardViewModule , FileSizePipe } from '@alfresco/adf-core';
 import { ContentMetadataComponent } from './content-metadata.component';
 import { ContentMetadataCardComponent } from './content-metadata-card.component';
-import { ContentMetadataService } from './services/content-metadata.service';
-import { AspectPropertiesService } from './services/aspect-properties.service';
+import { PropertyDescriptorsService } from './services/property-descriptors.service';
+import { PropertyDescriptorLoaderService } from './services/properties-loader.service';
+import { AspectWhiteListService } from './services/aspect-whitelist.service';
+import { BasicPropertiesService } from './services/basic-properties.service';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './spike/token.interceptor';
@@ -48,8 +50,10 @@ import { AspectsApi } from './spike/aspects-api.service';
         ContentMetadataCardComponent
     ],
     providers: [
-        ContentMetadataService,
-        AspectPropertiesService,
+        PropertyDescriptorsService,
+        PropertyDescriptorLoaderService,
+        AspectWhiteListService,
+        BasicPropertiesService,
         FileSizePipe,
 
         { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

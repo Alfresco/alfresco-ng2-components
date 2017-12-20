@@ -18,40 +18,11 @@
 import { Injectable } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { CardViewDateItemModel, CardViewTextItemModel, FileSizePipe } from '@alfresco/adf-core';
-import { AspectPropertiesService } from './aspect-properties.service';
-import { AspectWhiteListService } from './aspect-whitelist.service';
-import { Observable } from 'rxjs/Observable';
 
 @Injectable()
-export class ContentMetadataService {
+export class BasicPropertiesService {
 
-    constructor(private fileSizePipe: FileSizePipe,
-                private aspectWhiteListService: AspectWhiteListService,
-                private aspectPropertiesService: AspectPropertiesService) {}
-
-    getAspects(node: MinimalNodeEntryEntity, presetName: string = 'default'): Observable<any> {
-        this.aspectWhiteListService.choosePreset(presetName);
-
-        return this.loadAspectDescriptors(node.aspectNames)
-            .map(this.filterPropertiesByWhitelist.bind(this));
-    }
-
-    private loadAspectDescriptors(aspectsAssignedToNode: string[]): Observable<any> {
-        const aspectsToLoad = aspectsAssignedToNode
-            .filter(nodeAspectName => this.aspectWhiteListService.isAspectAllowed(nodeAspectName));
-
-        return this.aspectPropertiesService.load(aspectsToLoad);
-    }
-
-    private filterPropertiesByWhitelist(aspectPropertyDescriptors: any[]) {
-        return aspectPropertyDescriptors
-            .filter(property => this.aspectWhiteListService.isPropertyAllowed(property.aspectName, property.name))
-            .reduce((properties, property) => {
-                return Object.assign({}, properties, {
-                    [property.name]: property
-                });
-            }, {});
-    }
+    constructor(private fileSizePipe: FileSizePipe) {}
 
     getBasicProperties(node: MinimalNodeEntryEntity) {
         return [

@@ -16,18 +16,18 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { ContentMetadataService } from './content-metadata.service';
-import { AspectPropertiesService } from './aspect-properties.service';
+import { PropertyDescriptorsService } from './property-descriptors.service';
+import { PropertyDescriptorLoaderService } from './properties-loader.service';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AspectsApi } from '../spike/aspects-api.service';
 import { AspectWhiteListService } from './aspect-whitelist.service';
 import { AppConfigService, LogService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 
-describe('ContentMetadataService', () => {
+describe('PropertyDescriptorsService', () => {
 
-    let contentMetadataService: ContentMetadataService,
-        aspectProperties: AspectPropertiesService,
+    let contentMetadataService: PropertyDescriptorsService,
+        aspectProperties: PropertyDescriptorLoaderService,
         appConfigService: AppConfigService,
         logService: LogService,
         node: MinimalNodeEntryEntity,
@@ -36,8 +36,8 @@ describe('ContentMetadataService', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             providers: [
-                ContentMetadataService,
-                AspectPropertiesService,
+                PropertyDescriptorsService,
+                PropertyDescriptorLoaderService,
                 AppConfigService,
                 AspectWhiteListService,
                 { provide: LogService, useValue: { error: () => {} }},
@@ -47,8 +47,8 @@ describe('ContentMetadataService', () => {
     }));
 
     beforeEach(() => {
-        contentMetadataService = TestBed.get(ContentMetadataService);
-        aspectProperties = TestBed.get(AspectPropertiesService);
+        contentMetadataService = TestBed.get(PropertyDescriptorsService);
+        aspectProperties = TestBed.get(PropertyDescriptorLoaderService);
         appConfigService = TestBed.get(AppConfigService);
         logService = TestBed.get(LogService);
     });
