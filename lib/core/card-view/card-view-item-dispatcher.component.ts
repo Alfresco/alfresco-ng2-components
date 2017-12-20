@@ -20,6 +20,8 @@ import {
     ComponentFactoryResolver,
     Input,
     OnChanges,
+    SimpleChange,
+    SimpleChanges,
     ViewChild
 } from '@angular/core';
 import { CardViewItem } from '../interface/card-view-item.interface';
@@ -63,13 +65,19 @@ export class CardViewItemDispatcherComponent implements OnChanges {
         });
     }
 
-    ngOnChanges(...args) {
+    ngOnChanges(changes: SimpleChanges) {
         if (!this.loaded) {
             this.loadComponent();
             this.loaded = true;
         }
 
-        this.proxy('ngOnChanges', ...args);
+        Object.keys(changes)
+            .map(changeName => [changeName, changes[changeName]])
+            .forEach(([inputParamName, simpleChange]: [string, SimpleChange]) => {
+                this.componentReference.instance[inputParamName] = simpleChange.currentValue;
+            });
+
+        this.proxy('ngOnChanges', changes);
     }
 
     private loadComponent() {

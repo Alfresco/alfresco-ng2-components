@@ -27,6 +27,7 @@ import { PropertyDescriptorsService } from './services/property-descriptors.serv
 import { PropertyDescriptorLoaderService } from './services/properties-loader.service';
 import { AspectWhiteListService } from './services/aspect-whitelist.service';
 import { BasicPropertiesService } from './services/basic-properties.service';
+import { ContentMetadataService } from './services/content-metadata.service';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './spike/token.interceptor';
@@ -50,6 +51,7 @@ import { AspectsApi } from './spike/aspects-api.service';
         ContentMetadataCardComponent
     ],
     providers: [
+        ContentMetadataService,
         PropertyDescriptorsService,
         PropertyDescriptorLoaderService,
         AspectWhiteListService,

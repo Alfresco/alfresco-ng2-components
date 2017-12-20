@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges, SimpleChange, ViewEncapsulation } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
-import { CardViewItem, CardViewUpdateService, NodesApiService } from '@alfresco/adf-core';
-import { PropertyDescriptorLoaderService } from './services/properties-loader.service';
-import { BasicPropertiesService } from './services/basic-properties.service';
+import { CardViewItem, CardViewUpdateService, NodesApiService, LogService } from '@alfresco/adf-core';
+import { ContentMetadataService } from './services/content-metadata.service';
 
 @Component({
     selector: 'adf-content-metadata',
@@ -42,46 +41,36 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
     @Input()
     maxPropertiesToShow: number = Infinity;
 
-    properties: CardViewItem[] = [];
+    basicProperties: CardViewItem[] = [];
+    aspects: CardViewItem[][];
 
-    constructor(private basicPropertiesService: BasicPropertiesService,
+    constructor(private contentMetadataService: ContentMetadataService,
                 private cardViewUpdateService: CardViewUpdateService,
                 private nodesApi: NodesApiService,
-                private aspectProperties: PropertyDescriptorLoaderService) {}
+                private logService: LogService) {}
 
     ngOnInit(): void {
         this.cardViewUpdateService.itemUpdated$
             .switchMap(this.saveNode.bind(this))
             .subscribe(
                 node => this.node = node,
-                error => this.handleError(error)
+                error => this.logService.error
             );
     }
 
-    ngOnChanges(): void {
-        this.recalculateProperties();
-        this.aspectProperties.load(this.node.aspectNames).subscribe((data) => {
-            /*tslint:disable-next-line*/
-            console.log(data);
-        });
+    ngOnChanges(changes: SimpleChanges): void {
+        const nodeChange: SimpleChange = changes['node'];
+        if (nodeChange) {
+            this.recalculateProperties(nodeChange.currentValue);
+        }
     }
 
     private saveNode({ changed: nodeBody }): Observable<MinimalNodeEntryEntity> {
         return this.nodesApi.updateNode(this.node.id, nodeBody);
     }
 
-    private handleError(error): void {
-        /*tslint:disable-next-line*/
-        console.log(error);
-    }
-
-    private recalculateProperties(): void {
-        let basicProperties = this.basicPropertiesService.getBasicProperties(this.node);
-
-        if (this.maxPropertiesToShow) {
-            basicProperties = basicProperties.slice(0, this.maxPropertiesToShow);
-        }
-
-        this.properties = [...basicProperties];
+    private recalculateProperties(node: MinimalNodeEntryEntity): void {
+        this.basicProperties = this.contentMetadataService.getProperties(node);
+        this.aspects = [];
     }
 }

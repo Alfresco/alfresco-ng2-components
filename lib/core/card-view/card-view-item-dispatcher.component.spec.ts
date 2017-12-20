@@ -17,7 +17,7 @@
 
 /* tslint:disable:component-selector  */
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
@@ -81,7 +81,7 @@ describe('CardViewItemDispatcherComponent', () => {
         component.editable = true;
 
         fixture.detectChanges();
-        component.ngOnChanges(null);
+        component.ngOnChanges({});
     });
 
     afterEach(() => {
@@ -97,9 +97,9 @@ describe('CardViewItemDispatcherComponent', () => {
         });
 
         it('should load the CardViewShinyCustomElementItemComponent only ONCE', () => {
-            component.ngOnChanges();
-            component.ngOnChanges();
-            component.ngOnChanges();
+            component.ngOnChanges({});
+            component.ngOnChanges({});
+            component.ngOnChanges({});
             fixture.detectChanges();
 
             const shinyCustomElementItemComponent = fixture.debugElement.queryAll(By.css('whatever-you-want-to-have'));
@@ -112,6 +112,23 @@ describe('CardViewItemDispatcherComponent', () => {
 
             expect(shinyCustomElementItemComponent.property).toBe(component.property);
             expect(shinyCustomElementItemComponent.editable).toBe(component.editable);
+        });
+
+        it('should update the subcomponent\'s input parameters', () => {
+            const expectedEditable = false,
+                expectedProperty = <CardViewItem> {},
+                expectedCustomInput = 1;
+
+            component.ngOnChanges({
+                editable: new SimpleChange(true, expectedEditable, false),
+                property: new SimpleChange(null, expectedProperty, false),
+                customInput: new SimpleChange(0, expectedCustomInput, false)
+            });
+
+            const shinyCustomElementItemComponent = fixture.debugElement.query(By.css('whatever-you-want-to-have')).componentInstance;
+            expect(shinyCustomElementItemComponent.property).toBe(expectedProperty);
+            expect(shinyCustomElementItemComponent.editable).toBe(expectedEditable);
+            expect(shinyCustomElementItemComponent.customInput).toBe(expectedCustomInput);
         });
     });
 
@@ -138,21 +155,21 @@ describe('CardViewItemDispatcherComponent', () => {
             lifeCycleMethods.forEach((lifeCycleMethod) => {
                 shinyCustomElementItemComponent[lifeCycleMethod] = () => {};
                 spyOn(shinyCustomElementItemComponent, lifeCycleMethod);
-                const param1 = {};
-                const param2 = {};
+                const param = {};
 
-                component[lifeCycleMethod].call(component, param1, param2);
+                component[lifeCycleMethod].call(component, param);
 
-                expect(shinyCustomElementItemComponent[lifeCycleMethod]).toHaveBeenCalledWith(param1, param2);
+                expect(shinyCustomElementItemComponent[lifeCycleMethod]).toHaveBeenCalledWith(param);
             });
         });
 
         it('should NOT call through the lifecycle methods if the method does not exist (no error should be thrown)', () => {
+            const param = {};
             lifeCycleMethods.forEach((lifeCycleMethod) => {
                 shinyCustomElementItemComponent[lifeCycleMethod] = undefined;
 
                 const execution = () => {
-                    component[lifeCycleMethod].call(component);
+                    component[lifeCycleMethod].call(component, param);
                 };
 
                 expect(execution).not.toThrowError();
