@@ -130,12 +130,12 @@
                 <div class="adf-grid-item adf-processes-list adf-list" fxFlex.gt-md="335px" [ngClass.gt-md]="{'small-pagination': true}"
                      *ngIf="processFilter && !isStartProcessMode()">
                     <adf-process-instance-list
-                        *ngIf="processFilter?.hasFilter()" [appId]="processFilter.appId"
-                        [processDefinitionKey]="processFilter.filter.processDefinitionKey"
-                        [name]="processFilter.filter.name"
+                        *ngIf="processFilter?.filter" [appId]="processFilter?.appId"
+                        [processDefinitionKey]="processFilter?.filter?.processDefinitionKey"
+                        [name]="processFilter?.filter?.name"
                         [presetColumn]="presetColoum"
-                        [state]="processFilter.filter.state"
-                        [sort]="processFilter.filter.sort"
+                        [state]="processFilter?.filter?.state"
+                        [sort]="processFilter?.filter?.sort"
                         [data]="dataProcesses"
                         (rowClick)="onProcessRowClick($event)"
                         (row-dblclick)="onProcessRowDblClick($event)"
