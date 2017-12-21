@@ -9,7 +9,7 @@
 			<input matInput placeholder="{{'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.NAME'|translate}}" [(ngModel)]="name" id="processName" required />
 		</mat-form-field>
         <mat-form-field>
-            <mat-select [compareWith]="selectDefaultProcessDef" placeholder="{{'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.TYPE'|translate}}" [(ngModel)]="currentProcessDef.id" (ngModelChange)="onProcessDefChange($event)" required>
+            <mat-select [compareWith]="compareProcessDef" placeholder="{{'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.TYPE'|translate}}" [(ngModel)]="currentProcessDef.id" (ngModelChange)="onProcessDefChange($event)" required>
                 <mat-option>{{'ADF_PROCESS_LIST.START_PROCESS.FORM.TYPE_PLACEHOLDER' | translate}}</mat-option>
                 <mat-option *ngFor="let processDef of processDefinitions" [value]="processDef.id">
                     {{ processDef.name }}
