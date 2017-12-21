@@ -135,8 +135,8 @@ describe('PropertyDescriptorsService', () => {
             contentMetadataService.getAspects(node).subscribe({
                 next: (aspects) => {
                     expect(aspects[0].name).toBe('exif:exif');
-                    expect(aspects[0].properties).toContain(<AspectProperty>{ name: 'exif:2' });
-                    expect(aspects[0].properties).not.toContain(<AspectProperty>{ name: 'exif:1' });
+                    expect(aspects[0].properties).toContain(<AspectProperty> { name: 'exif:2' });
+                    expect(aspects[0].properties).not.toContain(<AspectProperty> { name: 'exif:1' });
                 }
             });
         });
@@ -170,12 +170,12 @@ describe('PropertyDescriptorsService', () => {
                 next: (aspects) => {
                     expect(aspects.length).toBe(2);
                     expect(aspects[0].name).toBe('exif:exif');
-                    expect(aspects[0].properties).toContain(<AspectProperty>{ name: 'exif:1' });
-                    expect(aspects[0].properties).toContain(<AspectProperty>{ name: 'exif:2' });
+                    expect(aspects[0].properties).toContain(<AspectProperty> { name: 'exif:1' });
+                    expect(aspects[0].properties).toContain(<AspectProperty> { name: 'exif:2' });
 
                     expect(aspects[1].name).toBe('custom:custom');
-                    expect(aspects[1].properties).toContain(<AspectProperty>{ name: 'custom:1' });
-                    expect(aspects[1].properties).not.toContain(<AspectProperty>{ name: 'custom:2' });
+                    expect(aspects[1].properties).toContain(<AspectProperty> { name: 'custom:1' });
+                    expect(aspects[1].properties).not.toContain(<AspectProperty> { name: 'custom:2' });
                 }
             });
         });
@@ -201,7 +201,7 @@ describe('PropertyDescriptorsService', () => {
                 next: (aspects) => {
                     expect(aspects.length).toBe(1);
                     expect(aspects[0].name).toBe('exif:exif');
-                    expect(aspects[0].properties).toContain(<AspectProperty>{ name: 'exif:1' });
+                    expect(aspects[0].properties).toContain(<AspectProperty> { name: 'exif:1' });
                 }
             });
         });

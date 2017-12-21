@@ -19,15 +19,27 @@ import { Injectable } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { PropertyDescriptorsService } from './property-descriptors.service';
 import { BasicPropertiesService } from './basic-properties.service';
-import { CardViewItem, CardViewTextItemModel } from '@alfresco/adf-core';
+import { CardViewItemProperties, CardViewItem, CardViewTextItemModel, CardViewDateItemModel, LogService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { AspectProperty, CardViewAspect } from '../interfaces/content-metadata.interfaces';
+
+const D_TEXT = 'd:text';
+const D_MLTEXT = 'd:mltext';
+const D_DATE = 'd:date';
+// const D_DATETIME = 'd:datetime';
+// const D_INT = 'd:int';
+// const D_LONG = 'd:long';
+// const D_FLOAT = 'd:float';
+// const D_DOUBLE = 'd:double';
+// const D_BOOLEAN = 'd:boolean';
+const RECOGNISED_ECM_TYPES = [ D_TEXT, D_MLTEXT, D_DATE/*, D_DATETIME, D_INT, D_LONG, D_FLOAT, D_DOUBLE, D_BOOLEAN*/ ];
 
 @Injectable()
 export class ContentMetadataService {
 
     constructor(private basicPropertiesService: BasicPropertiesService,
-                private propertyDescriptorsService: PropertyDescriptorsService) {}
+                private propertyDescriptorsService: PropertyDescriptorsService,
+                private logService: LogService) {}
 
     getBasicProperties(node: MinimalNodeEntryEntity): Observable<CardViewItem[]> {
         return Observable.of(this.basicPropertiesService.getBasicProperties(node));
@@ -35,19 +47,54 @@ export class ContentMetadataService {
 
     getAspectProperties(node: MinimalNodeEntryEntity): Observable<CardViewAspect[]> {
         return this.propertyDescriptorsService.getAspects(node)
-            .map(aspects => aspects.map(aspect => Object.assign({}, aspect, { properties: this.translateProperties(aspect.properties) })));
+            .map(aspects => aspects.map(aspect => Object.assign({}, aspect, { properties: this.translateProperties(aspect.properties, node.properties) })));
     }
 
-    private translateProperties(aspectProperties: AspectProperty[]): CardViewItem[] {
-        return aspectProperties.map((aspectProperty) => this.translateProperty(aspectProperty));
+    private translateProperties(aspectProperties: AspectProperty[], nodeProperties: any): CardViewItem[] {
+        return aspectProperties.map((aspectProperty) => this.translateProperty(aspectProperty, nodeProperties[aspectProperty.name]));
     }
 
-    private translateProperty(aspectProperty: AspectProperty): CardViewItem {
-        return new CardViewTextItemModel({
+    private translateProperty(aspectProperty: AspectProperty, nodeProperty: any): CardViewItem {
+        this.checkECMTypeValidity(aspectProperty.dataType);
+
+        let propertyDefinition: CardViewItemProperties = {
             label: aspectProperty.title,
-            value: '1',
-            key: '',
+            value: nodeProperty,
+            key: this.getAspectPropertyKey(aspectProperty.name),
+            default: aspectProperty.defaultValue,
             editable: true
-        });
+        };
+        let property;
+
+        switch (aspectProperty.dataType) {
+
+            case D_MLTEXT:
+                property = new CardViewTextItemModel(Object.assign(propertyDefinition, {
+                    multiline: true
+                }));
+                break;
+
+            case D_DATE:
+                property = new CardViewDateItemModel(propertyDefinition);
+                break;
+
+            case D_TEXT:
+            default:
+                property = new CardViewTextItemModel(Object.assign(propertyDefinition, {
+                    multiline: false
+                }));
+        }
+
+        return property;
+    }
+
+    private checkECMTypeValidity(ecmPropertyType) {
+        if (RECOGNISED_ECM_TYPES.indexOf(ecmPropertyType) === -1) {
+            this.logService.error(`Unknown type for mapping: ${ecmPropertyType}`);
+        }
+    }
+
+    private getAspectPropertyKey(propertyName) {
+        return `properties.${propertyName}`;
     }
 }
