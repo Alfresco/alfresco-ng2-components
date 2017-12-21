@@ -33,11 +33,12 @@ import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { TranslateLoaderService } from '../../../services/translate-loader.service';
 import { CardViewContentProxyDirective } from '../../directives/card-view-content-proxy.directive';
 import { CardViewDateItemComponent } from '../card-view-dateitem/card-view-dateitem.component';
+import { CardItemTypeService } from '../../services/card-item-types.service';
 import { CardViewItemDispatcherComponent } from '../card-view-item-dispatcher/card-view-item-dispatcher.component';
 import { CardViewTextItemComponent } from '../card-view-textitem/card-view-textitem.component';
 import { CardViewComponent } from './card-view.component';
 
-describe('AdfCardView', () => {
+describe('CardViewComponent', () => {
 
     let fixture: ComponentFixture<CardViewComponent>;
     let component: CardViewComponent;
@@ -66,6 +67,7 @@ describe('AdfCardView', () => {
                 CardViewDateItemComponent
             ],
             providers: [
+                CardItemTypeService,
                 CardViewUpdateService,
                 AppConfigService
             ]

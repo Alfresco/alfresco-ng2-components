@@ -32,7 +32,6 @@ import { CardViewComponent } from './components/card-view/card-view.component';
 import { CardItemTypeService } from './services/card-item-types.service';
 import { CardViewUpdateService } from './services/card-view-update.service';
 
-
 @NgModule({
     imports: [
         CommonModule,
