@@ -85,6 +85,7 @@
     },
     "METADATA": {
       "BASIC": {
+          "HEADER": "Properties",
           "NAME": "Name",
           "TITLE": "Title",
           "DESCRIPTION": "Description",

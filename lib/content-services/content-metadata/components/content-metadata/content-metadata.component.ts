@@ -19,8 +19,8 @@ import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleCha
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { CardViewItem, CardViewUpdateService, NodesApiService, LogService } from '@alfresco/adf-core';
-import { ContentMetadataService } from './services/content-metadata.service';
-import { CardViewAspect } from './interfaces/content-metadata.interfaces';
+import { ContentMetadataService } from '../../services/content-metadata.service';
+import { CardViewAspect } from '../../interfaces/content-metadata.interfaces';
 
 @Component({
     selector: 'adf-content-metadata',

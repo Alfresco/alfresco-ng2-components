@@ -15,6 +15,7 @@
         </mat-expansion-panel>
 
         <ng-container *ngIf="expanded">
+            <mat-progress-bar *ngIf="!(aspects$ | async)" mode="indeterminate"></mat-progress-bar>
             <div *ngFor="let aspect of aspects$ | async" class="adf-metadata-properties-aspects">
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>

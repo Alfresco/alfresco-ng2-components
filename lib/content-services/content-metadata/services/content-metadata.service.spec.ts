@@ -15,4 +15,26 @@
  * limitations under the License.
  */
 
-export * from './components/content-metadata-card/content-metadata-card.component';
+import { async, TestBed } from '@angular/core/testing';
+import { ContentMetadataService } from './content-metadata.service';
+
+describe('PropertyDescriptorLoaderService', () => {
+
+    let service: ContentMetadataService;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            providers: [
+                ContentMetadataService
+            ]
+        }).compileComponents();
+    }));
+
+    beforeEach(() => {
+        service = TestBed.get(ContentMetadataService);
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
+    });
+});

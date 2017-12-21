@@ -12,9 +12,8 @@
 
 @import '../dialogs/folder.dialog';
 
-@import '../content-metadata/content-metadata.component';
-@import '../content-metadata/content-metadata-card.component';
 @import '../content-node-selector/content-node-selector.component';
+@import '../content-metadata/content-metadata';
 
 @mixin adf-content-services-theme($theme) {
     @include adf-breadcrumb-theme($theme);
@@ -27,7 +26,6 @@
     @include adf-search-control-theme($theme);
     @include adf-search-autocomplete-theme($theme);
     @include adf-dialog-theme($theme);
-    @include adf-content-metadata-theme($theme);
-    @include adf-content-metadata-card-theme($theme);
     @include adf-content-node-selector-dialog-theme($theme) ;
+    @include adf-content-metadata-module-theme($theme);
 }
