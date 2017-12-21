@@ -68,6 +68,10 @@ export class FormFieldComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        const w: any = window;
+        if (w.adf === undefined) {
+            w.adf = {};
+        }
         let originalField = this.getField();
         if (originalField) {
             let customTemplate = this.field.form.customFieldTemplates[originalField.type];
