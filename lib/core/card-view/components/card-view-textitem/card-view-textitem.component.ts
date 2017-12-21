@@ -16,8 +16,8 @@
  */
 
 import { Component, Input, OnChanges, ViewChild } from '@angular/core';
-import { CardViewTextItemModel } from '../models/card-view-textitem.model';
-import { CardViewUpdateService } from '../services/card-view-update.service';
+import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
+import { CardViewUpdateService } from '../../services/card-view-update.service';
 
 @Component({
     selector: 'adf-card-view-textitem',
@@ -54,7 +54,7 @@ export class CardViewTextItemComponent implements OnChanges {
     setEditMode(editStatus: boolean): void {
         this.inEdit = editStatus;
         setTimeout(() => {
-            if (this.editorInput) {
+            if(this.editorInput) {
                 this.editorInput.nativeElement.click();
             }
         }, 0);

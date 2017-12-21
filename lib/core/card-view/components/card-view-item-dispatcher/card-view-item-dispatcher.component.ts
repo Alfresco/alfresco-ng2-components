@@ -24,9 +24,9 @@ import {
     SimpleChanges,
     ViewChild
 } from '@angular/core';
-import { CardViewItem } from '../interface/card-view-item.interface';
-import { CardItemTypeService } from '../services/card-item-types.service';
-import { CardViewContentProxyDirective } from './card-view-content-proxy.directive';
+import { CardViewItem } from '../../interfaces/card-view-item.interface';
+import { CardItemTypeService } from '../../services/card-item-types.service';
+import { CardViewContentProxyDirective } from '../../directives/card-view-content-proxy.directive';
 
 @Component({
     selector: 'adf-card-view-item-dispatcher',

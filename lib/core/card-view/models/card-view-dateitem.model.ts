@@ -24,8 +24,8 @@
  */
 
 import moment from 'moment-es6';
-import { CardViewItem } from '../interface/card-view-item.interface';
-import { DynamicComponentModel } from '../services/dynamic-component-mapper.service';
+import { CardViewItem } from '../interfaces/card-view-item.interface';
+import { DynamicComponentModel } from '../../services/dynamic-component-mapper.service';
 import { CardViewBaseItemModel, CardViewItemProperties } from './card-view-baseitem.model';
 
 export interface CardViewDateItemProperties extends CardViewItemProperties {

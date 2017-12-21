@@ -20,11 +20,11 @@ import { MatDatepicker } from '@angular/material';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
-import { CardViewDateItemModel } from '../models/card-view-dateitem.model';
-import { CardViewUpdateService } from '../services/card-view-update.service';
-import { UserPreferencesService } from '../services/user-preferences.service';
-import { MomentDateAdapter } from '../utils/momentDateAdapter';
-import { MOMENT_DATE_FORMATS } from '../utils/moment-date-formats.model';
+import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
+import { CardViewUpdateService } from '../../services/card-view-update.service';
+import { UserPreferencesService } from '../../../services/user-preferences.service';
+import { MomentDateAdapter } from '../../../utils/momentDateAdapter';
+import { MOMENT_DATE_FORMATS } from '../../../utils/moment-date-formats.model';
 
 @Component({
     providers: [

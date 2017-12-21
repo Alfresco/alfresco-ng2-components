@@ -24,17 +24,17 @@ import { By } from '@angular/platform-browser';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { AppConfigService } from '../app-config/app-config.service';
+import { AppConfigService } from '../../../app-config/app-config.service';
 
-import { CardViewDateItemModel } from '../models/card-view-dateitem.model';
-import { CardViewTextItemModel } from '../models/card-view-textitem.model';
-import { CardViewUpdateService } from '../services/card-view-update.service';
+import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
+import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
+import { CardViewUpdateService } from '../../services/card-view-update.service';
 
-import { TranslateLoaderService } from '../services/translate-loader.service';
-import { CardViewContentProxyDirective } from './card-view-content-proxy.directive';
-import { CardViewDateItemComponent } from './card-view-dateitem.component';
-import { CardViewItemDispatcherComponent } from './card-view-item-dispatcher.component';
-import { CardViewTextItemComponent } from './card-view-textitem.component';
+import { TranslateLoaderService } from '../../../services/translate-loader.service';
+import { CardViewContentProxyDirective } from '../../directives/card-view-content-proxy.directive';
+import { CardViewDateItemComponent } from '../card-view-dateitem/card-view-dateitem.component';
+import { CardViewItemDispatcherComponent } from '../card-view-item-dispatcher/card-view-item-dispatcher.component';
+import { CardViewTextItemComponent } from '../card-view-textitem/card-view-textitem.component';
 import { CardViewComponent } from './card-view.component';
 
 describe('AdfCardView', () => {

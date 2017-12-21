@@ -22,12 +22,16 @@ import { MatButtonModule, MatDatepickerModule, MatIconModule, MatInputModule, Ma
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { CardViewContentProxyDirective } from './card-view-content-proxy.directive';
-import { CardViewDateItemComponent } from './card-view-dateitem.component';
-import { CardViewItemDispatcherComponent } from './card-view-item-dispatcher.component';
-import { CardViewMapItemComponent } from './card-view-mapitem.component';
-import { CardViewTextItemComponent } from './card-view-textitem.component';
-import { CardViewComponent } from './card-view.component';
+import { CardViewContentProxyDirective } from './directives/card-view-content-proxy.directive';
+import { CardViewDateItemComponent } from './components/card-view-dateitem/card-view-dateitem.component';
+import { CardViewItemDispatcherComponent } from './components/card-view-item-dispatcher/card-view-item-dispatcher.component';
+import { CardViewMapItemComponent } from './components/card-view-mapitem/card-view-mapitem.component';
+import { CardViewTextItemComponent } from './components/card-view-textitem/card-view-textitem.component';
+import { CardViewComponent } from './components/card-view/card-view.component';
+
+import { CardItemTypeService } from './services/card-item-types.service';
+import { CardViewUpdateService } from './services/card-view-update.service';
+
 
 @NgModule({
     imports: [
@@ -59,6 +63,10 @@ import { CardViewComponent } from './card-view.component';
         CardViewTextItemComponent,
         CardViewMapItemComponent,
         CardViewDateItemComponent
+    ],
+    providers: [
+        CardItemTypeService,
+        CardViewUpdateService
     ]
 })
 export class CardViewModule {}

@@ -16,10 +16,10 @@
  */
 
 import { Injectable, Type } from '@angular/core';
-import { CardViewDateItemComponent } from '../card-view/card-view-dateitem.component';
-import { CardViewMapItemComponent } from '../card-view/card-view-mapitem.component';
-import { CardViewTextItemComponent } from '../card-view/card-view-textitem.component';
-import { DynamicComponentMapper, DynamicComponentResolveFunction, DynamicComponentResolver } from '../services/dynamic-component-mapper.service';
+import { CardViewDateItemComponent } from '../components/card-view-dateitem/card-view-dateitem.component';
+import { CardViewMapItemComponent } from '../components/card-view-mapitem/card-view-mapitem.component';
+import { CardViewTextItemComponent } from '../components/card-view-textitem/card-view-textitem.component';
+import { DynamicComponentMapper, DynamicComponentResolveFunction, DynamicComponentResolver } from '../../services/dynamic-component-mapper.service';
 
 @Injectable()
 export class CardItemTypeService extends DynamicComponentMapper {

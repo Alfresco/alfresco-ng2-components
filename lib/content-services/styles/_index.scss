@@ -13,7 +13,7 @@
 @import '../dialogs/folder.dialog';
 
 @import '../content-node-selector/content-node-selector.component';
-@import '../content-metadata/content-metadata';
+@import '../content-metadata/content-metadata.module';
 
 @mixin adf-content-services-theme($theme) {
     @include adf-breadcrumb-theme($theme);

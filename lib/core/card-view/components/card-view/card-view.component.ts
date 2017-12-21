@@ -16,26 +16,17 @@
  */
 
 import { Component, Input } from '@angular/core';
-import { CardViewMapItemModel } from '../models/card-view-mapitem.model';
-import { CardViewUpdateService } from '../services/card-view-update.service';
+import { CardViewItem } from '../../interfaces/card-view-item.interface';
 
 @Component({
-    selector: 'adf-card-view-mapitem',
-    templateUrl: './card-view-mapitem.component.html',
-    styleUrls: ['./card-view-mapitem.component.scss']
+    selector: 'adf-card-view',
+    templateUrl: './card-view.component.html',
+    styleUrls: ['./card-view.component.scss']
 })
-
-export class CardViewMapItemComponent {
+export class CardViewComponent {
     @Input()
-    property: CardViewMapItemModel;
+    properties: CardViewItem [];
 
-    constructor(private cardViewUpdateService: CardViewUpdateService) {}
-
-    isClickable() {
-        return this.property.clickable;
-    }
-
-    clicked(): void {
-        this.cardViewUpdateService.clicked(this.property);
-    }
+    @Input()
+    editable: boolean;
 }

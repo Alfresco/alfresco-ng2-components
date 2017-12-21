@@ -15,10 +15,6 @@
  * limitations under the License.
  */
 
-export * from './card-view-baseitem.model';
-export * from './card-view-textitem.model';
-export * from './card-view-mapitem.model';
-export * from './card-view-dateitem.model';
 export * from './file.model';
 export * from './permissions.enum';
 export * from './product-version.model';
