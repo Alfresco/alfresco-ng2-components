@@ -95,7 +95,7 @@ export class StartProcessInstanceComponent implements OnChanges {
         }
     }
 
-    selectDefaultProcessDef = (processDefId) => {
+    compareProcessDef = (processDefId) => {
         if (this.processDefinitions && this.processDefinitions.length === 1 && processDefId === this.processDefinitions[0].id) {
             this.onProcessDefChange(processDefId);
             return true;
