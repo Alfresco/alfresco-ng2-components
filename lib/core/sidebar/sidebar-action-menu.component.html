@@ -4,18 +4,18 @@
       <mat-icon>{{titleIcon}}</mat-icon>
   </button>
   <mat-menu #menu="matMenu" [overlapTrigger]="false" yPosition="below">
-    <button *ngFor="let menuOption of menuList" class="adf-sidebar-menu-action-options" id="dw-new-task-menu" mat-menu-item (click)="onMenuOptionClick(menuOption.name)">
-        <mat-icon>{{menuOption.icon}}</mat-icon>
+    <button *ngFor="let menuOption of menuList" class="adf-sidebar-menu-action-options" id="dw-new-task-menu" mat-menu-item (click)="onMenuOptionClick(menuOption.type)">
+        <mat-icon *ngIf="menuOption.icon">{{menuOption.icon}}</mat-icon>
         <span>{{menuOption.name}}</span>
     </button>
   </mat-menu>
 </div>
 
 <ng-template #iconSidebarMenu>
-    <mat-icon matTooltip="{{title}}" [matMenuTriggerFor]="iconMenu">queue</mat-icon>
-    <mat-menu #iconMenu="matMenu" [overlapTrigger]="false" yPosition="below">
-        <button *ngFor="let menuOption of menuList" class="adf-sidebar-menu-action-options" id="dw-new-task-menu" mat-menu-item (click)="onMenuOptionClick(menuOption.name)">
-            <span>{{menuOption.name}}</span>
-        </button>
-    </mat-menu>
+        <mat-icon matTooltip="{{title}}" [matMenuTriggerFor]="iconMenu">queue</mat-icon>
+        <mat-menu #iconMenu="matMenu" [overlapTrigger]="false" yPosition="below">
+            <button *ngFor="let menuOption of menuList" class="adf-sidebar-menu-action-options" id="dw-new-task-menu" mat-menu-item (click)="onMenuOptionClick(menuOption.type)">
+                <span>{{menuOption.name}}</span>
+            </button>
+        </mat-menu>
 </ng-template>

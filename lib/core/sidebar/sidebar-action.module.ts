@@ -16,6 +16,7 @@
  */
 
 import { CommonModule } from '@angular/common';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
 
@@ -24,7 +25,8 @@ import { SidebarActionMenuComponent } from './sidebar-action-menu.component';
 @NgModule({
     imports: [
         CommonModule,
-        MaterialModule
+        MaterialModule,
+        FlexLayoutModule
     ],
     declarations: [
         SidebarActionMenuComponent
