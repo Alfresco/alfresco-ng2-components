@@ -17,7 +17,8 @@
 
 import { CardViewItem } from '../interfaces/card-view-item.interface';
 import { DynamicComponentModel } from '../../services/dynamic-component-mapper.service';
-import { CardViewBaseItemModel, CardViewItemProperties } from './card-view-baseitem.model';
+import { CardViewBaseItemModel } from './card-view-baseitem.model';
+import { CardViewItemProperties } from '../interfaces/card-view.interfaces';
 
 export class CardViewMapItemModel extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
     type: string = 'map';

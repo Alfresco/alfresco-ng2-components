@@ -17,7 +17,8 @@
 
 import { CardViewItem } from '../interfaces/card-view-item.interface';
 import { DynamicComponentModel } from '../../services/dynamic-component-mapper.service';
-import { CardViewTextItemModel, CardViewTextItemProperties } from './card-view-textitem.model';
+import { CardViewTextItemModel } from './card-view-textitem.model';
+import { CardViewTextItemProperties } from '../interfaces/card-view.interfaces';
 
 export class CardViewIntItemModel extends CardViewTextItemModel implements CardViewItem, DynamicComponentModel {
     type: string = 'int';

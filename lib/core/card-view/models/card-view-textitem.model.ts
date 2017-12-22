@@ -15,23 +15,15 @@
  * limitations under the License.
  */
 
-import { PipeTransform } from '@angular/core';
 import { CardViewItem } from '../interfaces/card-view-item.interface';
 import { DynamicComponentModel } from '../../services/dynamic-component-mapper.service';
-import { CardViewBaseItemModel, CardViewItemProperties } from './card-view-baseitem.model';
+import { CardViewBaseItemModel } from './card-view-baseitem.model';
+import { CardViewTextItemPipeProperty, CardViewTextItemProperties } from '../interfaces/card-view.interfaces';
 
-export interface CardViewTextItemPipeProperty {
-    pipe: PipeTransform;
-    params?: Array<any>;
-}
-export interface CardViewTextItemProperties extends CardViewItemProperties {
-    multiline?: boolean;
-    pipes?: Array<CardViewTextItemPipeProperty>;
-}
 export class CardViewTextItemModel extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
     type: string = 'text';
     multiline?: boolean;
-    pipes?: Array<CardViewTextItemPipeProperty>;
+    pipes?: CardViewTextItemPipeProperty[];
 
     constructor(obj: CardViewTextItemProperties) {
         super(obj);

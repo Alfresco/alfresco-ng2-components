@@ -15,14 +15,7 @@
  * limitations under the License.
  */
 
-export interface CardViewItemProperties {
-    label: string;
-    value: any;
-    key: any;
-    default?: string;
-    editable?: boolean;
-    clickable?: boolean;
-}
+import { CardViewItemProperties } from '../interfaces/card-view.interfaces';
 
 export abstract class CardViewBaseItemModel {
     label: string;
@@ -43,5 +36,9 @@ export abstract class CardViewBaseItemModel {
 
     isEmpty(): boolean {
         return this.value === undefined || this.value === null || this.value === '';
+    }
+
+    isValid(newValue: any): boolean {
+        return true;
     }
 }

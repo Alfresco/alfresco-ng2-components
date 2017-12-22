@@ -18,11 +18,8 @@
 import moment from 'moment-es6';
 import { CardViewItem } from '../interfaces/card-view-item.interface';
 import { DynamicComponentModel } from '../../services/dynamic-component-mapper.service';
-import { CardViewBaseItemModel, CardViewItemProperties } from './card-view-baseitem.model';
-
-export interface CardViewDateItemProperties extends CardViewItemProperties {
-    format?: string;
-}
+import { CardViewBaseItemModel } from './card-view-baseitem.model';
+import { CardViewDateItemProperties } from '../interfaces/card-view.interfaces';
 
 export class CardViewDateItemModel extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
     type: string = 'date';

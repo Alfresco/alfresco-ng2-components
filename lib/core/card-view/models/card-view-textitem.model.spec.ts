@@ -16,7 +16,8 @@
  */
 
 import { PipeTransform } from '@angular/core';
-import { CardViewTextItemModel, CardViewTextItemProperties } from './card-view-textitem.model';
+import { CardViewTextItemModel } from './card-view-textitem.model';
+import { CardViewTextItemProperties } from '../interfaces/card-view.interfaces';
 
 class TestPipe implements PipeTransform {
     transform(value: string, pipeParam: string): string {
@@ -40,27 +41,27 @@ describe('CardViewTextItemModel', () => {
     describe('displayValue', () => {
 
         it('should return the extension if file has it', () => {
-            const file = new CardViewTextItemModel(properties);
+            const itemModel = new CardViewTextItemModel(properties);
 
-            expect(file.displayValue).toBe('Banuk');
+            expect(itemModel.displayValue).toBe('Banuk');
         });
 
         it('should apply a pipe on the value if it is present', () => {
             properties.pipes = [
                 { pipe: new TestPipe() }
             ];
-            const file = new CardViewTextItemModel(properties);
+            const itemModel = new CardViewTextItemModel(properties);
 
-            expect(file.displayValue).toBe('testpiped-Banuk');
+            expect(itemModel.displayValue).toBe('testpiped-Banuk');
         });
 
         it('should apply a pipe on the value with parameters if those are present', () => {
             properties.pipes = [
                 { pipe: new TestPipe(), params: ['withParams'] }
             ];
-            const file = new CardViewTextItemModel(properties);
+            const itemModel = new CardViewTextItemModel(properties);
 
-            expect(file.displayValue).toBe('testpiped-Banuk-withParams');
+            expect(itemModel.displayValue).toBe('testpiped-Banuk-withParams');
         });
 
         it('should apply more pipes on the value with parameters if those are present', () => {
@@ -70,9 +71,9 @@ describe('CardViewTextItemModel', () => {
                 { pipe, params: ['2'] },
                 { pipe, params: ['3'] }
             ];
-            const file = new CardViewTextItemModel(properties);
+            const itemModel = new CardViewTextItemModel(properties);
 
-            expect(file.displayValue).toBe('testpiped-testpiped-testpiped-Banuk-1-2-3');
+            expect(itemModel.displayValue).toBe('testpiped-testpiped-testpiped-Banuk-1-2-3');
         });
     });
 });

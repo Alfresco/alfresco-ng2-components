@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export * from './interfaces/card-view-item.interface';
+export * from './interfaces/card-view.interfaces';
 
 export * from './models/card-view-baseitem.model';
 export * from './models/card-view-textitem.model';

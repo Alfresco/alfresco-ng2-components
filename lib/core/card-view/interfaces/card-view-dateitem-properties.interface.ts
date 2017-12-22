@@ -15,27 +15,8 @@
  * limitations under the License.
  */
 
-import { CardViewFloatItemModel } from './card-view-floatitem.model';
-import { CardViewTextItemProperties } from '../interfaces/card-view.interfaces';
+import { CardViewItemProperties } from './card-view-item-properties.interface';
 
-describe('CardViewFloatItemModel', () => {
-
-    let properties: CardViewTextItemProperties;
-
-    beforeEach(() => {
-        properties = {
-            label: 'Tribe',
-            value: '42.42',
-            key: 'tribe'
-        };
-    });
-
-    describe('value', () => {
-
-        it('should be parsed as float', () => {
-            const itemModel = new CardViewFloatItemModel(properties);
-
-            expect(itemModel.value).toBe(42.42);
-        });
-    });
-});
+export interface CardViewDateItemProperties extends CardViewItemProperties {
+    format?: string;
+}

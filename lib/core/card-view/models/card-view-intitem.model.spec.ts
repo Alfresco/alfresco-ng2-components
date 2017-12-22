@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { CardViewTextItemProperties } from './card-view-textitem.model';
 import { CardViewIntItemModel } from './card-view-intitem.model';
+import { CardViewTextItemProperties } from '../interfaces/card-view.interfaces';
 
 describe('CardViewIntItemModel', () => {
 
@@ -33,9 +33,9 @@ describe('CardViewIntItemModel', () => {
     describe('value', () => {
 
         it('should be parsed as integer', () => {
-            const file = new CardViewIntItemModel(properties);
+            const itemModel = new CardViewIntItemModel(properties);
 
-            expect(file.value).toBe(42);
+            expect(itemModel.value).toBe(42);
         });
     });
 });
