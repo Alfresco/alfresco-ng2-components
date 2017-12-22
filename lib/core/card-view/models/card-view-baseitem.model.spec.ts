@@ -23,8 +23,7 @@ class CarViewCustomItemModel extends CardViewBaseItemModel {}
 
 describe('CardViewBaseItemModel', () => {
 
-    let properties: CardViewItemProperties,
-        itemModel: CarViewCustomItemModel;
+    let properties: CardViewItemProperties;
 
     beforeEach(() => {
         properties = {
@@ -36,24 +35,48 @@ describe('CardViewBaseItemModel', () => {
 
     describe('isValid', () => {
 
-        beforeEach(() => {
-            itemModel = new CarViewCustomItemModel(properties);
-        });
-
         it('should be true when no validators are set', () => {
+            const itemModel = new CarViewCustomItemModel(properties);
+
             const isValid = itemModel.isValid(null);
 
             expect(isValid).toBe(true);
         });
 
-        it('should call the registered validator to validate', () => {
-            const validator: CardViewItemValidator = { isValid: () => true };
-            spyOn(validator, 'isValid');
-            properties.validators = [ validator ];
+        it('should call the registered validators to validate', () => {
+            const validator1: CardViewItemValidator = { isValid: () => true };
+            const validator2: CardViewItemValidator = { isValid: () => true };
+            spyOn(validator1, 'isValid');
+            spyOn(validator2, 'isValid');
+            properties.validators = [ validator1, validator2 ];
+            const itemModel = new CarViewCustomItemModel(properties);
 
-            itemModel.isValid(null);
+            itemModel.isValid('test-against-this');
 
-            expect(validator.isValid).toHaveBeenCalled();
+            expect(validator1.isValid).toHaveBeenCalledWith('test-against-this');
+            expect(validator2.isValid).toHaveBeenCalledWith('test-against-this');
+        });
+
+        it('should return the registered validators\' common decision (case true)', () => {
+            const validator1: CardViewItemValidator = { isValid: () => true };
+            const validator2: CardViewItemValidator = { isValid: () => true };
+            properties.validators = [ validator1, validator2 ];
+            const itemModel = new CarViewCustomItemModel(properties);
+
+            const isValid = itemModel.isValid('test-against-this');
+
+            expect(isValid).toBe(true);
+        });
+
+        it('should return the registered validators\' common decision (case false)', () => {
+            const validator1: CardViewItemValidator = { isValid: () => true };
+            const validator2: CardViewItemValidator = { isValid: () => false };
+            properties.validators = [ validator1, validator2 ];
+            const itemModel = new CarViewCustomItemModel(properties);
+
+            const isValid = itemModel.isValid('test-against-this');
+
+            expect(isValid).toBe(false);
         });
     });
 });

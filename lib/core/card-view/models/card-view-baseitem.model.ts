@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CardViewItemProperties } from '../interfaces/card-view.interfaces';
+import { CardViewItemProperties, CardViewItemValidator } from '../interfaces/card-view.interfaces';
 
 export abstract class CardViewBaseItemModel {
     label: string;
@@ -24,6 +24,7 @@ export abstract class CardViewBaseItemModel {
     default: string;
     editable: boolean;
     clickable: boolean;
+    validators?: CardViewItemValidator[];
 
     constructor(obj: CardViewItemProperties) {
         this.label = obj.label || '';
@@ -32,6 +33,7 @@ export abstract class CardViewBaseItemModel {
         this.default = obj.default;
         this.editable = !!obj.editable;
         this.clickable = !!obj.clickable;
+        this.validators = obj.validators || [];
     }
 
     isEmpty(): boolean {
@@ -39,6 +41,12 @@ export abstract class CardViewBaseItemModel {
     }
 
     isValid(newValue: any): boolean {
-        return true;
+        if (!this.validators.length) {
+            return true;
+        }
+
+        return this.validators
+            .map((validator) => validator.isValid(newValue))
+            .reduce((isValidUntilNow, isValid) => isValidUntilNow && isValid, true);
     }
 }
