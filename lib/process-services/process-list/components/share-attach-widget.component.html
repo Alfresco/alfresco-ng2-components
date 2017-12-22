@@ -5,55 +5,73 @@
         <span *ngIf="isRequired()">*</span>
     </label>
     <div class="adf-attach-widget-container">
-        <div>
-            <mat-list *ngIf="hasFile">∫
-                <mat-list-item class="adf-attach-files-row" *ngFor="let file of field.value">
-                    <img mat-list-icon class="adf-attach-widget__icon"
-                         [id]="'file-'+file.id+'-icon'"
-                         [src]="getIcon(file.mimeType)"
-                         [alt]="mimeTypeIcon"
-                         (click)="fileClicked(file)"
-                         (keyup.enter)="fileClicked(file)"
-                         role="button"
-                         tabindex="0"/>
-                    <span matLine id="{{'file-'+file.id}}" (click)="fileClicked(file)" (keyup.enter)="fileClicked(file)"
-                          role="button" tabindex="0" class="adf-file">{{file.name}}</span>
-                    <button *ngIf="!field.readOnly" mat-icon-button [id]="'file-'+file.id+'-remove'"
-                            (click)="removeFile(file);" (keyup.enter)="removeFile(file);">
-                        <mat-icon class="mat-24">highlight_off</mat-icon>
-                    </button>
-                </mat-list-item>
-            </mat-list>
-        </div>
-
-        <div class="button-row" *ngIf="(!hasFile || multipleOption) && !field.readOnly && isAllFileSourceAllowed()">
-            <a mat-raised-button color="primary">
-                {{ 'FORM.FIELD.UPLOAD' | translate }}<mat-icon>file_upload</mat-icon>
+        <div id="adf-attach-widget-simple-upload" *ngIf="isUploadButtonVisible() && !isFileSourceConfigured()">
+            <a mat-raised-button color="primary" [matMenuTriggerFor]="menu">
+                {{ 'FORM.FIELD.UPLOAD' | translate }}
+                <mat-icon>file_upload</mat-icon>
                 <input #uploadFiles
-                       [multiple]="multipleOption"
-                       type="file"
-                       [id]="field.id"
-                       (change)="onFileChanged($event)"/>
+                        [multiple]="multipleOption"
+                        type="file"
+                        [id]="field.id"
+                        (change)="onFileChanged($event)" />
             </a>
         </div>
-        <div *ngIf="!hasFile && field?.params?.fileSource && !field.readOnly" class="adf-attach-widget-repo-button">
-            <button mat-mini-fab
-                    (click)="openSelectDialog()"
-                    [attr.aria-label]="field?.params?.fileSource?.name">
-                    <img class="adf-img-logo" [src]="alfrescoLogoUrl">
+        <div class="adf-attach-widget__menu-upload" *ngIf="isUploadButtonVisible() && isMultipleSourceUpload()">
+            <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">
+                    {{ 'FORM.FIELD.UPLOAD' | translate }}
+            </button>
+            <mat-menu #menu="matMenu" class="adf-attach-widget__menu-content">
+                <button mat-menu-item (click)="uploadFile.click()" *ngIf="isAllFileSourceAllowed()">
+                    From HD
+                    <mat-icon>file_upload</mat-icon>
+                    <input #uploadFile
+                            class="adf-attach-widget__input-type"
+                            [multiple]="multipleOption"
+                            type="file"
+                            [id]="field.id"
+                            (change)="onFileChanged($event)" />
                 </button>
-            <label *ngIf="!isAllFileSourceAllowed()">Select source of content</label>
+                <button mat-menu-item
+                        *ngIf="isDefinedSourceFolder()"
+                        (click)="openSelectDialog('1', '2')">
+                        From {{field.params?.fileSource?.name}}
+                        <mat-icon>
+                            <img class="adf-attach-widget__image-logo" [src]="alfrescoLogoUrl">
+                        </mat-icon>
+                </button>
+                <div *ngIf="!isDefinedSourceFolder()">
+                    <button mat-menu-item *ngFor="let repo of repositoryList" (click)="openSelectDialog(repo.id, repo.name)">
+                            From {{repo.name}}
+                            <mat-icon>
+                                <img class="adf-attach-widget__image-logo" [src]="alfrescoLogoUrl">
+                            </mat-icon>
+                    </button>
+                </div>
+            </mat-menu>
         </div>
     </div>
-    <error-widget [error]="field.validationSummary"></error-widget>
-    <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
 </div>
 
+<div id="adf-attach-widget-readonly-list">
+    <mat-list *ngIf="hasFile">
+        <mat-list-item class="adf-attach-files-row" *ngFor="let file of field.value">
+            <img mat-list-icon class="adf-attach-widget__icon"
+                 [id]="'file-'+file.id+'-icon'"
+                 [src]="getIcon(file.mimeType)"
+                 [alt]="mimeTypeIcon"
+                 (click)="fileClicked(file)"
+                 (keyup.enter)="fileClicked(file)"
+                 role="button"
+                 tabindex="0"/>
+            <span matLine id="{{'file-'+file.id}}" (click)="fileClicked(file)" (keyup.enter)="fileClicked(file)"
+                  role="button" tabindex="0" class="adf-file">{{file.name}}</span>
+            <button *ngIf="!field.readOnly" mat-icon-button [id]="'file-'+file.id+'-remove'"
+                    (click)="removeFile(file);" (keyup.enter)="removeFile(file);">
+                <mat-icon class="mat-24">highlight_off</mat-icon>
+            </button>
+        </mat-list-item>
+    </mat-list>
+</div>
 
-
-
-
-
-
-
-
+<error-widget [error]="field.validationSummary"></error-widget>
+<error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>

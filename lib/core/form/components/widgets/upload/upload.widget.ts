@@ -98,7 +98,7 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
             });
     }
 
-    private getMultipleFileParam() {
+    getMultipleFileParam() {
         if (this.field &&
             this.field.params &&
             this.field.params.multiple) {

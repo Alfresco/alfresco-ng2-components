@@ -26,7 +26,6 @@ import {
 } from '@angular/core';
 import {
     AlfrescoApiService,
-    ContentService,
     HighlightDirective,
     UserPreferencesService
 } from '@alfresco/adf-core';
@@ -78,7 +77,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     pageSize: number;
 
     @Input()
-    onlyFileSelectionMode: boolean = false;
+    isSelectionValid = (entry: MinimalNodeEntryEntity) => true;
 
     @Output()
     select: EventEmitter<MinimalNodeEntryEntity[]> = new EventEmitter<MinimalNodeEntryEntity[]>();
@@ -94,7 +93,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     searchInput: FormControl = new FormControl();
 
     constructor(private contentNodeSelectorService: ContentNodeSelectorService,
-                private contentService: ContentService,
                 private apiService: AlfrescoApiService,
                 private preferences: UserPreferencesService) {
         this.searchInput.valueChanges
@@ -277,23 +275,11 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
      * @param entry
      */
     private attemptNodeSelection(entry: MinimalNodeEntryEntity): void {
-        if (this.checkSelectionCondition(entry, 'create')) {
+        if (this.isSelectionValid(entry)) {
             this.chosenNode = entry;
         } else {
             this.resetChosenNode();
         }
-    }
-
-    private checkSelectionCondition(entry: MinimalNodeEntryEntity, permission: string) {
-        if ( this.onlyFileSelectionMode) {
-            return this.isFile(entry);
-        }else {
-            return this.contentService.hasPermission(entry, 'create');
-        }
-    }
-
-    private isFile(entry: MinimalNodeEntryEntity) {
-        return entry.isFile;
     }
 
     /**

@@ -50,6 +50,24 @@ export class ActivitiContentService {
     }
 
     /**
+     * Returns a list of all the repositories configured
+     *
+     * @param accountId
+     * @param folderId
+     * @returns {null}
+     */
+    getAlfrescoRepositories(tenantId: number, includeAccount: boolean): Observable<[ExternalContent]> {
+        let apiService: AlfrescoApi = this.apiService.getInstance();
+        const opts = {
+            tenantId: tenantId,
+            includeAccounts: includeAccount
+        };
+        return Observable.fromPromise(apiService.activiti.alfrescoApi.getRepositories(opts))
+            .map(this.toJsonArray)
+            .catch(err => this.handleError(err));
+    }
+
+    /**
      * Returns a list of child nodes below the specified folder
      *
      * @param accountId
@@ -68,12 +86,12 @@ export class ActivitiContentService {
         })).map(this.toJson).catch(err => this.handleError(err));
     }
 
-    applyAlfrescoNode(node: MinimalNodeEntryEntity[], siteId: string, accountId: string) {
+    applyAlfrescoNode(node: MinimalNodeEntryEntity, siteId: string, accountId: string) {
         let apiService: AlfrescoApi = this.apiService.getInstance();
         let params: any = {
             source: accountId,
-            sourceId: node[0].id +';1.0@'+ siteId,
-            name: node[0].name,
+            sourceId: node.id +';1.0@'+ siteId,
+            name: node.name,
             link: false
         };
         return Observable.fromPromise(

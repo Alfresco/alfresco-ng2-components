@@ -21,7 +21,7 @@ import { ContentService } from '@alfresco/adf-core';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import { ShareDataRow } from '../document-list/data/share-data-row.model';
-import { MinimalNodeEntryEntity, SitePaging, SiteEntry } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity, SitePaging } from 'alfresco-js-api';
 import { DataColumn, SitesService } from '@alfresco/adf-core';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
@@ -63,17 +63,17 @@ export class ContentNodeDialogService {
                 currentFolderId: contentEntry.parentId,
                 imageResolver: this.imageResolver.bind(this),
                 rowFilter : this.rowFilter.bind(this, contentEntry.id),
+                isSelectionValid: this.hasEntityCreatePermission.bind(this),
                 select: select
             };
 
-            this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px')
+            this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');
 
             return select;
         } else {
             return Observable.throw({ statusCode: 403 });
         }
     }
-
 
     openUploadFileDialog(action: string, contentEntry: MinimalNodeEntryEntity): Observable<MinimalNodeEntryEntity[]> {
             const select = new Subject<MinimalNodeEntryEntity[]>();
@@ -86,11 +86,11 @@ export class ContentNodeDialogService {
                 actionName: action,
                 currentFolderId: contentEntry.id,
                 imageResolver: this.imageResolver.bind(this),
-                onlyFileSelectionMode: true,
+                isSelectionValid: this.isEntityAFile.bind(this),
                 select: select
             };
 
-            this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px')
+            this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');
 
             return select;
     }
@@ -118,7 +118,16 @@ export class ContentNodeDialogService {
         }
     }
 
+    private isEntityAFile(entry: MinimalNodeEntryEntity): boolean {
+        return entry.isFile;
+    }
+
+    private hasEntityCreatePermission(entry: MinimalNodeEntryEntity): boolean {
+        return this.contentService.hasPermission(entry,'create');
+    }
+
     close() {
         this.dialog.closeAll();
     }
+
 }

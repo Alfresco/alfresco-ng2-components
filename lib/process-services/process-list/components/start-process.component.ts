@@ -16,7 +16,9 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges,  ViewChild, ViewEncapsulation } from '@angular/core';
-import { StartFormComponent, FormRenderingService } from '@alfresco/adf-core';
+import { StartFormComponent
+    , FormRenderingService
+} from '@alfresco/adf-core';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessDefinitionRepresentation } from './../models/process-definition.model';
 import { ProcessInstance } from './../models/process-instance.model';
@@ -57,8 +59,9 @@ export class StartProcessInstanceComponent implements OnChanges {
 
     errorMessageId: string = '';
 
-    constructor(private activitiProcess: ProcessService,
-                private formRenderingService: FormRenderingService) {
+    constructor(private activitiProcess: ProcessService
+        ,private formRenderingService: FormRenderingService
+    ) {
 
         this.formRenderingService.setComponentTypeResolver('upload', () => ShareAttachWidgetComponent, true);
     }

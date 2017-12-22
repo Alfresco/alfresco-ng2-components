@@ -26,6 +26,6 @@ export interface ContentNodeSelectorComponentData {
     dropdownSiteList?: SitePaging;
     rowFilter?: any;
     imageResolver?: any;
-    onlyFileSelectionMode?:boolean;
+    isSelectionValid?: (entry: MinimalNodeEntryEntity) => boolean;
     select: Subject<MinimalNodeEntryEntity[]>;
 }
