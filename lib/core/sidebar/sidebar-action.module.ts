@@ -21,6 +21,7 @@ import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
 
 import { SidebarActionMenuComponent } from './sidebar-action-menu.component';
+import { SidebarActionMenuOptionsComponent } from './sidebar-action-menu-options.component';
 
 @NgModule({
     imports: [
@@ -29,10 +30,12 @@ import { SidebarActionMenuComponent } from './sidebar-action-menu.component';
         FlexLayoutModule
     ],
     declarations: [
-        SidebarActionMenuComponent
+        SidebarActionMenuComponent,
+        SidebarActionMenuOptionsComponent
     ],
     exports: [
-        SidebarActionMenuComponent
+        SidebarActionMenuComponent,
+        SidebarActionMenuOptionsComponent
     ]
 })
 export class SideBarActionModule {}

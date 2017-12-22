@@ -29,12 +29,6 @@ export class SidebarActionMenuComponent {
     title: string;
 
     @Input()
-    titleIcon: string;
-
-    @Input()
-    menuList: any[];
-
-    @Input()
     expanded = true;
 
     @Output()

@@ -10,9 +10,8 @@
     $sidebar-menu-action-font-weight: 600;
     $sidebar-menu-action-opacity: 0.54;
 
-.adf {
-    &-sidebar-menu-action {
-        &-title {
+    .adf {
+        &-sidebar-menu-action-button {
             width: $sidebar-menu-action-button-width;
             height: $sidebar-menu-action-button-height;
             background-color: mat-color($primary);
@@ -33,19 +32,27 @@
                 opacity: $sidebar-menu-action-opacity;
             }
         }
-        &-options {
+    }
+ 
+    .adf-sidebar-menu-options {
+        width: $sidebar-menu-action-button-width;
+        opacity: 0.87;
+        text-align: left;
+        letter-spacing: -0.4px;
+        color: #000000;
+        .mat-menu-item {
             width: $sidebar-menu-action-button-width;
             opacity: 0.87;
             text-align: left;
             letter-spacing: -0.4px;
             color: #000000;
         }
-        &-options:hover {
+        .mat-menu-item:hover {
             color: mat-color($primary);
             opacity: inherit;
         }
     }
-}
+
     .mat-menu-panel {
         margin-top: 7.5px;
         border-radius: 2px;
