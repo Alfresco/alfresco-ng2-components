@@ -15,14 +15,6 @@
  * limitations under the License.
  */
 
-/**
- *
- * This object represent the basic structure of a card view.
- *
- *
- * @returns {CardViewBaseItemModel} .
- */
-
 export interface CardViewItemProperties {
     label: string;
     value: any;

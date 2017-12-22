@@ -19,6 +19,8 @@ export * from './interfaces/card-view-item.interface';
 
 export * from './models/card-view-baseitem.model';
 export * from './models/card-view-textitem.model';
+export * from './models/card-view-intitem.model';
+export * from './models/card-view-floatitem.model';
 export * from './models/card-view-mapitem.model';
 export * from './models/card-view-dateitem.model';
 

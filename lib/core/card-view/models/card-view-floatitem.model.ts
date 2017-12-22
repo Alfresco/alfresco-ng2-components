@@ -15,29 +15,15 @@
  * limitations under the License.
  */
 
-import moment from 'moment-es6';
 import { CardViewItem } from '../interfaces/card-view-item.interface';
 import { DynamicComponentModel } from '../../services/dynamic-component-mapper.service';
-import { CardViewBaseItemModel, CardViewItemProperties } from './card-view-baseitem.model';
+import { CardViewTextItemModel, CardViewTextItemProperties } from './card-view-textitem.model';
 
-export interface CardViewDateItemProperties extends CardViewItemProperties {
-    format?: string;
-}
+export class CardViewFloatItemModel extends CardViewTextItemModel implements CardViewItem, DynamicComponentModel {
+    type: string = 'float';
 
-export class CardViewDateItemModel extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
-    type: string = 'date';
-    format: string;
-
-    constructor(obj: CardViewDateItemProperties) {
+    constructor(obj: CardViewTextItemProperties) {
         super(obj);
-        this.format = obj.format || 'MMM DD YYYY';
-    }
-
-    get displayValue() {
-        if (!this.value) {
-            return this.default;
-        } else {
-            return moment(this.value).format(this.format);
-        }
+        this.value = parseFloat(this.value);
     }
 }

@@ -25,7 +25,13 @@ import { AspectsApi } from '../spike/aspects-api.service';
 import { Observable } from 'rxjs/Observable';
 import { Aspect, AspectProperty } from '../interfaces/content-metadata.interfaces';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { CardViewTextItemModel, CardViewDateItemModel, LogService } from '@alfresco/adf-core';
+import {
+    CardViewTextItemModel,
+    CardViewDateItemModel,
+    CardViewIntItemModel,
+    CardViewFloatItemModel,
+    LogService
+} from '@alfresco/adf-core';
 
 describe('PropertyDescriptorLoaderService', () => {
 
@@ -55,7 +61,14 @@ describe('PropertyDescriptorLoaderService', () => {
         descriptorsService = TestBed.get(PropertyDescriptorsService);
 
         node = <MinimalNodeEntryEntity> { properties: {} };
-        aspectProperty = { name: '', title: '', dataType: '', defaultValue: '', mandatory: false, multiValued: false };
+        aspectProperty = {
+            name: 'FAS:PLAGUE',
+            title: 'The Faro Plague',
+            dataType: '',
+            defaultValue: '',
+            mandatory: false,
+            multiValued: false
+        };
         aspect = {
             name: 'FAS:FAS',
             title: 'Faro Automated Solutions',
@@ -162,13 +175,30 @@ describe('PropertyDescriptorLoaderService', () => {
         });
     });
 
-    describe('Different types', () => {
+    describe('Different types\'s attributes', () => {
 
-        it('should translate singleline property type properly', () => {
-            aspectProperty.name = 'FAS:PLAGUE';
-            aspectProperty.title = 'The Faro Plague';
+        ContentMetadataService.RECOGNISED_ECM_TYPES.forEach((dataType) => {
+            it(`should translate properly the basic attributes of a property for ${dataType}`, () => {
+                aspectProperty.name = 'prefix:name';
+                aspectProperty.title = 'title';
+                aspectProperty.defaultValue = 'default value';
+                aspectProperty.dataType = dataType;
+                aspects.push(aspect);
+
+                node.properties = { 'prefix:name': null };
+
+                service.getAspectProperties(node).subscribe((cardViewAspect) => {
+                    const property = cardViewAspect[0].properties[0];
+                    expect(property.label).toBe(aspectProperty.title);
+                    expect(property.key).toBe('properties.prefix:name');
+                    expect(property.default).toBe(aspectProperty.defaultValue);
+                    expect(property.editable).toBeTruthy('Property should be editable');
+                });
+            });
+        });
+
+        it('should translate properly the multiline and value attributes for d:text', () => {
             aspectProperty.dataType = 'd:text';
-            aspectProperty.defaultValue = 'define a plague';
             aspects.push(aspect);
 
             node.properties = { 'FAS:PLAGUE': 'The Chariot Line' };
@@ -176,20 +206,13 @@ describe('PropertyDescriptorLoaderService', () => {
             service.getAspectProperties(node).subscribe((cardViewAspect) => {
                 const property: CardViewTextItemModel = <CardViewTextItemModel> cardViewAspect[0].properties[0];
                 expect(property instanceof CardViewTextItemModel).toBeTruthy('Property should be instance of CardViewTextItemModel');
-                expect(property.label).toBe(aspectProperty.title);
-                expect(property.key).toBe('properties.FAS:PLAGUE');
-                expect(property.value).toBe(node.properties['FAS:PLAGUE']);
-                expect(property.default).toBe(aspectProperty.defaultValue);
+                expect(property.value).toBe('The Chariot Line');
                 expect(property.multiline).toBeFalsy('Property should be singleline');
-                expect(property.editable).toBeTruthy('Property should be editable');
             });
         });
 
-        it('should translate multiline text property properly', () => {
-            aspectProperty.name = 'FAS:PLAGUE';
-            aspectProperty.title = 'The Faro Plague';
+        it('should translate properly the multiline and value attributes for d:mltext', () => {
             aspectProperty.dataType = 'd:mltext';
-            aspectProperty.defaultValue = 'define a plague';
             aspects.push(aspect);
 
             node.properties = { 'FAS:PLAGUE': 'The Chariot Line' };
@@ -197,20 +220,13 @@ describe('PropertyDescriptorLoaderService', () => {
             service.getAspectProperties(node).subscribe((cardViewAspect) => {
                 const property: CardViewTextItemModel = <CardViewTextItemModel> cardViewAspect[0].properties[0];
                 expect(property instanceof CardViewTextItemModel).toBeTruthy('Property should be instance of CardViewTextItemModel');
-                expect(property.label).toBe(aspectProperty.title);
-                expect(property.key).toBe('properties.FAS:PLAGUE');
-                expect(property.value).toBe(node.properties['FAS:PLAGUE']);
-                expect(property.default).toBe(aspectProperty.defaultValue);
+                expect(property.value).toBe('The Chariot Line');
                 expect(property.multiline).toBeTruthy('Property should be multiline');
-                expect(property.editable).toBeTruthy('Property should be editable');
             });
         });
 
-        it('should translate date property type properly', () => {
-            aspectProperty.name = 'FAS:PLAGUE';
-            aspectProperty.title = 'The date of Faro Plague';
+        it('should translate properly the value attribute for d:date', () => {
             aspectProperty.dataType = 'd:date';
-            aspectProperty.defaultValue = 'enter date';
             aspects.push(aspect);
 
             node.properties = { 'FAS:PLAGUE': 'The Chariot Line' };
@@ -218,11 +234,59 @@ describe('PropertyDescriptorLoaderService', () => {
             service.getAspectProperties(node).subscribe((cardViewAspect) => {
                 const property: CardViewDateItemModel = <CardViewDateItemModel> cardViewAspect[0].properties[0];
                 expect(property instanceof CardViewDateItemModel).toBeTruthy('Property should be instance of CardViewDateItemModel');
-                expect(property.label).toBe(aspectProperty.title);
-                expect(property.key).toBe('properties.FAS:PLAGUE');
-                expect(property.value).toBe(node.properties['FAS:PLAGUE']);
-                expect(property.default).toBe(aspectProperty.defaultValue);
-                expect(property.editable).toBeTruthy('Property should be editable');
+                expect(property.value).toBe('The Chariot Line');
+            });
+        });
+
+        it('should translate properly the value attribute for d:int', () => {
+            aspectProperty.dataType = 'd:int';
+            aspects.push(aspect);
+
+            node.properties = { 'FAS:PLAGUE': '1024' };
+
+            service.getAspectProperties(node).subscribe((cardViewAspect) => {
+                const property: CardViewIntItemModel = <CardViewIntItemModel> cardViewAspect[0].properties[0];
+                expect(property instanceof CardViewIntItemModel).toBeTruthy('Property should be instance of CardViewIntItemModel');
+                expect(property.value).toBe(1024);
+            });
+        });
+
+        it('should translate properly the value attribute for d:long', () => {
+            aspectProperty.dataType = 'd:long';
+            aspects.push(aspect);
+
+            node.properties = { 'FAS:PLAGUE': '1024' };
+
+            service.getAspectProperties(node).subscribe((cardViewAspect) => {
+                const property: CardViewIntItemModel = <CardViewIntItemModel> cardViewAspect[0].properties[0];
+                expect(property instanceof CardViewIntItemModel).toBeTruthy('Property should be instance of CardViewIntItemModel');
+                expect(property.value).toBe(1024);
+            });
+        });
+
+        it('should translate properly the value attribute for d:float', () => {
+            aspectProperty.dataType = 'd:float';
+            aspects.push(aspect);
+
+            node.properties = { 'FAS:PLAGUE': '1024.24' };
+
+            service.getAspectProperties(node).subscribe((cardViewAspect) => {
+                const property: CardViewFloatItemModel = <CardViewFloatItemModel> cardViewAspect[0].properties[0];
+                expect(property instanceof CardViewFloatItemModel).toBeTruthy('Property should be instance of CardViewFloatItemModel');
+                expect(property.value).toBe(1024.24);
+            });
+        });
+
+        it('should translate properly the value attribute for d:double', () => {
+            aspectProperty.dataType = 'd:double';
+            aspects.push(aspect);
+
+            node.properties = { 'FAS:PLAGUE': '1024.24' };
+
+            service.getAspectProperties(node).subscribe((cardViewAspect) => {
+                const property: CardViewFloatItemModel = <CardViewFloatItemModel> cardViewAspect[0].properties[0];
+                expect(property instanceof CardViewFloatItemModel).toBeTruthy('Property should be instance of CardViewFloatItemModel');
+                expect(property.value).toBe(1024.24);
             });
         });
     });

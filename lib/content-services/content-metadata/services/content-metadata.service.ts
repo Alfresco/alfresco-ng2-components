@@ -19,7 +19,15 @@ import { Injectable } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { PropertyDescriptorsService } from './property-descriptors.service';
 import { BasicPropertiesService } from './basic-properties.service';
-import { CardViewItemProperties, CardViewItem, CardViewTextItemModel, CardViewDateItemModel, LogService } from '@alfresco/adf-core';
+import {
+    CardViewItemProperties,
+    CardViewItem,
+    CardViewTextItemModel,
+    CardViewDateItemModel,
+    CardViewIntItemModel,
+    CardViewFloatItemModel,
+    LogService
+} from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { AspectProperty, CardViewAspect } from '../interfaces/content-metadata.interfaces';
 
@@ -27,15 +35,16 @@ const D_TEXT = 'd:text';
 const D_MLTEXT = 'd:mltext';
 const D_DATE = 'd:date';
 // const D_DATETIME = 'd:datetime';
-// const D_INT = 'd:int';
-// const D_LONG = 'd:long';
-// const D_FLOAT = 'd:float';
-// const D_DOUBLE = 'd:double';
+const D_INT = 'd:int';
+const D_LONG = 'd:long';
+const D_FLOAT = 'd:float';
+const D_DOUBLE = 'd:double';
 // const D_BOOLEAN = 'd:boolean';
-const RECOGNISED_ECM_TYPES = [ D_TEXT, D_MLTEXT, D_DATE/*, D_DATETIME, D_INT, D_LONG, D_FLOAT, D_DOUBLE, D_BOOLEAN*/ ];
 
 @Injectable()
 export class ContentMetadataService {
+
+    static readonly RECOGNISED_ECM_TYPES = [ D_TEXT, D_MLTEXT, D_DATE, D_INT, D_LONG , D_FLOAT, D_DOUBLE/*, D_DATETIME, D_BOOLEAN*/ ];
 
     constructor(private basicPropertiesService: BasicPropertiesService,
                 private propertyDescriptorsService: PropertyDescriptorsService,
@@ -74,6 +83,16 @@ export class ContentMetadataService {
                 }));
                 break;
 
+            case D_INT:
+            case D_LONG:
+                property = new CardViewIntItemModel(propertyDefinition);
+                break;
+
+            case D_FLOAT:
+            case D_DOUBLE:
+                property = new CardViewFloatItemModel(propertyDefinition);
+                break;
+
             case D_DATE:
                 property = new CardViewDateItemModel(propertyDefinition);
                 break;
@@ -89,7 +108,7 @@ export class ContentMetadataService {
     }
 
     private checkECMTypeValidity(ecmPropertyType) {
-        if (RECOGNISED_ECM_TYPES.indexOf(ecmPropertyType) === -1) {
+        if (ContentMetadataService.RECOGNISED_ECM_TYPES.indexOf(ecmPropertyType) === -1) {
             this.logService.error(`Unknown type for mapping: ${ecmPropertyType}`);
         }
     }

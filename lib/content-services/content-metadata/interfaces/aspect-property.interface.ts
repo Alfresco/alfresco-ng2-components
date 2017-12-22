@@ -3,7 +3,7 @@ export interface AspectProperty {
     title: string;
     description?: string;
     dataType: string;
-    defaultValue?: string;
+    defaultValue?: any;
     mandatory: boolean;
     multiValued: boolean;
 }

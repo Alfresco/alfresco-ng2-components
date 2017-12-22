@@ -15,14 +15,6 @@
  * limitations under the License.
  */
 
-/**
- *
- * This object represent the basic structure of a card view.
- *
- *
- * @returns {CardViewTextItemModel} .
- */
-
 import { PipeTransform } from '@angular/core';
 import { CardViewItem } from '../interfaces/card-view-item.interface';
 import { DynamicComponentModel } from '../../services/dynamic-component-mapper.service';
