@@ -10,7 +10,7 @@
 @import '../datatable/components/datatable/datatable.component';
 @import '../form/components/widgets/container/container.widget';
 @import '../form/components/widgets/dynamic-table/dynamic-table.widget';
-@import '../form/components/widgets/form';
+// @import '../form/components/widgets/form';
 @import '../form/components/widgets/hyperlink/hyperlink.widget';
 @import '../form/components/widgets/people/people.widget';
 @import '../info-drawer/info-drawer-layout.component';
@@ -20,6 +20,7 @@
 @import '../toolbar/toolbar.component';
 @import '../userinfo/components/user-info.component';
 @import '../viewer/components/viewer.component';
+@import '../form/components/form.component';
 
 @mixin adf-core-theme($theme) {
     @include adf-colors-theme($theme);
@@ -31,7 +32,7 @@
     @include adf-datatable-theme($theme);
     @include adf-form-container-widget-theme($theme);
     @include adf-dynamic-table-theme($theme);
-    @include adf-form-theme($theme);
+   // @include adf-form-theme($theme);
     @include adf-hyperlink-widget-theme($theme);
     @include adf-form-people-widget-theme($theme);
     @include adf-info-drawer-theme($theme);
@@ -41,6 +42,7 @@
     @include adf-toolbar-theme($theme);
     @include adf-userinfo-theme($theme);
     @include adf-viewer-theme($theme);
+    @include adf-form-component-theme($theme)
 }
 
 
