@@ -22,4 +22,5 @@ import { Component } from '@angular/core';
     template: '<ng-content></ng-content>',
     host: { 'class': 'adf-sidebar-menu-options' }
 })
+    
 export class SidebarActionMenuOptionsComponent {}

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 
 @Component({
     selector: 'adf-sidebar-action-menu',
@@ -25,21 +25,14 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEn
     encapsulation: ViewEncapsulation.None,
     host: { 'class': 'adf-sidebar-action-menu' }
 })
+    
 export class SidebarActionMenuComponent {
 
     @Input()
     title: string;
 
     @Input()
-    expanded = true;
-
-    @Output()
-    menuOption: EventEmitter<string> = new EventEmitter<string>();
-
-   onMenuButtonClick(action: string): void {
-        this.menuOption.emit(action)
-        console.log(action);
-    }
+    expanded: boolean;
 
     isExpanded(): boolean {
         return this.expanded;
