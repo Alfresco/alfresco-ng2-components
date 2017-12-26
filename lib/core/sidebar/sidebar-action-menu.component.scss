@@ -1,62 +1,138 @@
-@mixin adf-sidebar-action-menu-theme($theme) { 
-
-    $primary: map-get($theme, primary);
-    $foreground: map-get($theme, foreground);
-    $background: map-get($theme, background);
-
-    $sidebar-menu-action-button-width: 100%;
-    $sidebar-menu-action-button-height: 37.5px;
-    $sidebar-menu-action-button-border-radius: 4px;
-    $sidebar-menu-action-font-weight: 600;
-    $sidebar-menu-action-opacity: 0.54;
-
-    .adf {
-        &-sidebar-menu-action-button {
-            width: $sidebar-menu-action-button-width;
-            height: $sidebar-menu-action-button-height;
-            background-color: mat-color($primary);
+.adf {
+    &-sidebar-action-menu {
+        & .mat-raised-button {
+            width: 272px;
+            height: 37.5px;
+            background-color: #ff9100;
             color: #ffffff !important;
-            border-radius: $sidebar-menu-action-button-border-radius;
-
-            & mat-icon {
-                width: 24px;
-                height: 25px;
-                opacity: $sidebar-menu-action-opacity;
-                color: #ffffff !important;
-            }
-
-            &-text {
-                width: 100%;
-                height: 20px;
-                text-align: left;
-                opacity: $sidebar-menu-action-opacity;
-            }
+            border-radius: 4px;
+            ;
+        }
+        & mat-icon {
+            width: 24px;
+            height: 25px;
+            opacity: 0.54;
+            color: #ffffff !important;
+        }
+        &-text {
+            width: 100%;
+            height: 20px;
+            text-align: left;
+            opacity: 0.54;
+        }
+        .mat-menu-panel {
+            margin-top: 7.5px;
+            border-radius: 2px;
+            background-color: #ffffff;
+            box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.26), 0 0 8px 0 rgba(0, 0, 0, 0.12);
         }
     }
- 
-    .adf-sidebar-menu-options {
-        width: $sidebar-menu-action-button-width;
+}
+.adf-sidebar-menu-options {
+    width: 272px;
+    opacity: 0.87;
+    text-align: left;
+    letter-spacing: -0.4px;
+    color: #000000;
+    .mat-menu-item {
+        width: 272px;
         opacity: 0.87;
         text-align: left;
         letter-spacing: -0.4px;
         color: #000000;
-        .mat-menu-item {
-            width: $sidebar-menu-action-button-width;
-            opacity: 0.87;
-            text-align: left;
-            letter-spacing: -0.4px;
-            color: #000000;
-        }
-        .mat-menu-item:hover {
-            color: mat-color($primary);
-            opacity: inherit;
-        }
     }
-
-    .mat-menu-panel {
-        margin-top: 7.5px;
-        border-radius: 2px;
-        background-color: #ffffff;
-        box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.26), 0 0 8px 0 rgba(0, 0, 0, 0.12);
+    .mat-menu-item:hover {
+        color: #ff9100 !important;
+        opacity: inherit;
     }
 }
+
+
+
+// @mixin adf-sidebar-action-menu-theme($theme) {
+
+
+//     .adf-sidebar-action-menu {
+//         & .mat-raised-button {
+//             width: 278px;
+//             // height: $sidebar-menu-action-button-height;
+//             background-color: red;
+//             color: #ffffff !important;
+//             border-radius: 4px;
+//         }
+//     }
+// }
+
+
+// @mixin adf-sidebar-action-menu-theme($theme) { 
+
+//     $primary: map-get($theme, primary);
+//     $foreground: map-get($theme, foreground);
+//     $background: map-get($theme, background);
+
+//     $sidebar-menu-action-button-width: 278px;
+//     $sidebar-menu-action-button-height: 37.5px;
+//     $sidebar-menu-action-button-border-radius: 4px;
+//     $sidebar-menu-action-font-weight: 600;
+//     $sidebar-menu-action-opacity: 0.54;
+
+//             .mat-raised-button {
+//             width: $sidebar-menu-action-button-width;
+//             height: $sidebar-menu-action-button-height;
+//             background-color: mat-color($primary);
+//             color: #ffffff !important;
+//             border-radius: $sidebar-menu-action-button-border-radius;
+//             }
+
+//     .adf {
+//         &-sidebar-menu-action-button {
+//             .mat-button {
+//             width: $sidebar-menu-action-button-width;
+//             height: $sidebar-menu-action-button-height;
+//             background-color: mat-color($primary);
+//             color: #ffffff !important;
+//             border-radius: $sidebar-menu-action-button-border-radius;
+//             }
+
+//             & mat-icon {
+//                 width: 24px;
+//                 height: 25px;
+//                 opacity: $sidebar-menu-action-opacity;
+//                 color: #ffffff !important;
+//             }
+
+//             &-text {
+//                 width: 100%;
+//                 height: 20px;
+//                 text-align: left;
+//                 opacity: $sidebar-menu-action-opacity;
+//             }
+//         }
+//     }
+ 
+//     .adf-sidebar-menu-options {
+//         width: $sidebar-menu-action-button-width;
+//         opacity: 0.87;
+//         text-align: left;
+//         letter-spacing: -0.4px;
+//         color: #000000;
+//         .mat-menu-item {
+//             width: $sidebar-menu-action-button-width;
+//             opacity: 0.87;
+//             text-align: left;
+//             letter-spacing: -0.4px;
+//             color: #000000;
+//         }
+//         .mat-menu-item:hover {
+//             color: mat-color($primary);
+//             opacity: inherit;
+//         }
+//     }
+
+//     .mat-menu-panel {
+//         margin-top: 7.5px;
+//         border-radius: 2px;
+//         background-color: #ffffff;
+//         box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.26), 0 0 8px 0 rgba(0, 0, 0, 0.12);
+//     }
+// }

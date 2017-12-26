@@ -1,7 +1,7 @@
 
-<button mat-raised-button id="dw-create-btn" class="adf-sidebar-menu-action-button" [matMenuTriggerFor]="adfSidebarMenu">
-    <span *ngIf="title" id="dw-create-text" class="adf-sidebar-menu-action-button-text">{{ title }}</span>
-    <mat-icon>arrow_drop_down</mat-icon>
+<button mat-raised-button class="adf-sidebar-menu-action-button" [matMenuTriggerFor]="adfSidebarMenu">
+    <span *ngIf="title" class="adf-sidebar-menu-action-button-text">{{ title }}</span>
+    <ng-content select=".side-bar-action-button-icon"></ng-content>
 </button>
 <mat-menu #adfSidebarMenu="matMenu" [overlapTrigger]="false" yPosition="below">
     <ng-content select="adf-sidebar-menu-options"></ng-content>
