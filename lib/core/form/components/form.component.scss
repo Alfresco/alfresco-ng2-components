@@ -98,56 +98,6 @@
                 font-weight: bold;
             }
         }
-
-        &-error-text-container {
-            height: 20px;
-            margin-top: -12px;
-        }
-
-        &-error-text {
-            padding: 1px;
-            height: 16px;
-            font-size: mat-font-size($config, caption);
-            line-height: mat-line-height($config, headline);
-            float: left;
-            color: mat-color($warn);
-        }
-
-        &-error-icon {
-            float: right;
-            font-size: 17px;
-            color: mat-color($warn);
-        }
-
-        &-label {
-            color: rgb(186, 186, 186);;
-        }
-
-        &-invalid {
-
-            .mat-input-underline {
-                background-color: #f44336 !important;
-            }
-
-            .adf-file {
-                border-color: mat-color($warn);
-            }
-
-            .mat-input-prefix {
-                color: mat-color($warn);
-            }
-
-            .adf-input {
-                border-color: mat-color($warn);
-            }
-
-            .adf-label {
-                color: mat-color($warn);
-                &:after {
-                    background-color: mat-color($warn);
-                }
-            }
-        }    
     }
     
     form-field {
