@@ -20,6 +20,7 @@
 @import '../toolbar/toolbar.component';
 @import '../userinfo/components/user-info.component';
 @import '../viewer/components/viewer.component';
+@import '../form/components/form.component';
 
 @mixin adf-core-theme($theme) {
     @include adf-colors-theme($theme);
@@ -41,6 +42,7 @@
     @include adf-toolbar-theme($theme);
     @include adf-userinfo-theme($theme);
     @include adf-viewer-theme($theme);
+    @include adf-form-component-theme($theme)
 }
 
 
