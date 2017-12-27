@@ -28,6 +28,8 @@ export class CardItemTypeService extends DynamicComponentMapper {
 
     protected types: { [key: string]: DynamicComponentResolveFunction } = {
         'text': DynamicComponentResolver.fromType(CardViewTextItemComponent),
+        'int': DynamicComponentResolver.fromType(CardViewTextItemComponent),
+        'float': DynamicComponentResolver.fromType(CardViewTextItemComponent),
         'date': DynamicComponentResolver.fromType(CardViewDateItemComponent),
         'map': DynamicComponentResolver.fromType(CardViewMapItemComponent)
     };

@@ -19,12 +19,15 @@ import { CardViewItem } from '../interfaces/card-view-item.interface';
 import { DynamicComponentModel } from '../../services/dynamic-component-mapper.service';
 import { CardViewTextItemModel } from './card-view-textitem.model';
 import { CardViewTextItemProperties } from '../interfaces/card-view.interfaces';
+import { CardViewItemIntValidator } from '../validators/card-view.validators';
 
 export class CardViewIntItemModel extends CardViewTextItemModel implements CardViewItem, DynamicComponentModel {
     type: string = 'int';
 
     constructor(obj: CardViewTextItemProperties) {
         super(obj);
+
+        this.validators.push(new CardViewItemIntValidator());
         this.value = parseInt(this.value, 10);
     }
 }

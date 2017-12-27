@@ -30,12 +30,23 @@ describe('CardViewIntItemModel', () => {
         };
     });
 
-    describe('value', () => {
+    it('value should be parsed as integer', () => {
+        const itemModel = new CardViewIntItemModel(properties);
 
-        it('should be parsed as integer', () => {
-            const itemModel = new CardViewIntItemModel(properties);
+        expect(itemModel.value).toBe(42);
+    });
 
-            expect(itemModel.value).toBe(42);
-        });
+    it('isValid should return the validator\'s value', () => {
+        const itemModel = new CardViewIntItemModel(properties);
+
+        expect(itemModel.isValid(42)).toBe(true, 'For 42 it should be true');
+        expect(itemModel.isValid(42.0)).toBe(true, 'For 42.0 it should be true');
+        expect(itemModel.isValid('42')).toBe(true, 'For "42" it should be true');
+        expect(itemModel.isValid('42.0')).toBe(true, 'For "42.0" it should be true');
+        expect(itemModel.isValid('4e2')).toBe(true, 'For "4e2" it should be true');
+        expect(itemModel.isValid('4g2')).toBe(false, 'For "4g2" it should be false');
+        expect(itemModel.isValid(42.3)).toBe(false, 'For 42.3 it should be false');
+        expect(itemModel.isValid('42.3')).toBe(false, 'For "42.3" it should be false');
+        expect(itemModel.isValid('test')).toBe(false, 'For "test" it should be false');
     });
 });

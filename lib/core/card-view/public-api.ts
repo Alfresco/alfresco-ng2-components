@@ -16,6 +16,7 @@
  */
 
 export * from './interfaces/card-view.interfaces';
+export * from './validators/card-view.validators';
 
 export * from './models/card-view-baseitem.model';
 export * from './models/card-view-textitem.model';
