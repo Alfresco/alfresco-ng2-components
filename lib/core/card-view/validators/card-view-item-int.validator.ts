@@ -19,6 +19,8 @@ import { CardViewItemValidator } from '../interfaces/card-view.interfaces';
 
 export class CardViewItemIntValidator implements CardViewItemValidator {
 
+    message = 'CORE.CARDVIEW.VALIDATORS.INT_VALIDATION_ERROR';
+
     isValid(value: any): boolean {
         return !isNaN(value) && (function(x) { return (x | 0) === x; })(parseFloat(value));
     }

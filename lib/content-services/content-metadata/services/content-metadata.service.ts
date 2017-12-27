@@ -70,7 +70,7 @@ export class ContentMetadataService {
             label: aspectProperty.title,
             value: nodeProperty,
             key: this.getAspectPropertyKey(aspectProperty.name),
-            default: aspectProperty.defaultValue,
+            default: aspectProperty.defaultValue || aspectProperty.title,
             editable: true
         };
         let property;

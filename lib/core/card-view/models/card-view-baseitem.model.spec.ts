@@ -33,7 +33,7 @@ describe('CardViewBaseItemModel', () => {
         };
     });
 
-    describe('isValid', () => {
+    describe('isValid & Validation errors', () => {
 
         it('should be true when no validators are set', () => {
             const itemModel = new CarViewCustomItemModel(properties);
@@ -44,8 +44,8 @@ describe('CardViewBaseItemModel', () => {
         });
 
         it('should call the registered validators to validate', () => {
-            const validator1: CardViewItemValidator = { isValid: () => true };
-            const validator2: CardViewItemValidator = { isValid: () => true };
+            const validator1: CardViewItemValidator = { isValid: () => true, message: 'validator 1' };
+            const validator2: CardViewItemValidator = { isValid: () => true, message: 'validator 2' };
             spyOn(validator1, 'isValid');
             spyOn(validator2, 'isValid');
             properties.validators = [ validator1, validator2 ];
@@ -58,25 +58,28 @@ describe('CardViewBaseItemModel', () => {
         });
 
         it('should return the registered validators\' common decision (case true)', () => {
-            const validator1: CardViewItemValidator = { isValid: () => true };
-            const validator2: CardViewItemValidator = { isValid: () => true };
+            const validator1: CardViewItemValidator = { isValid: () => true, message: 'validator 1' };
+            const validator2: CardViewItemValidator = { isValid: () => true, message: 'validator 2' };
             properties.validators = [ validator1, validator2 ];
             const itemModel = new CarViewCustomItemModel(properties);
 
             const isValid = itemModel.isValid('test-against-this');
 
             expect(isValid).toBe(true);
+            expect(itemModel.getValidationErrors('test-against-this')).toEqual([]);
         });
 
         it('should return the registered validators\' common decision (case false)', () => {
-            const validator1: CardViewItemValidator = { isValid: () => true };
-            const validator2: CardViewItemValidator = { isValid: () => false };
-            properties.validators = [ validator1, validator2 ];
+            const validator1: CardViewItemValidator = { isValid: () => false, message: 'validator 1' };
+            const validator2: CardViewItemValidator = { isValid: () => true, message: 'validator 2' };
+            const validator3: CardViewItemValidator = { isValid: () => false, message: 'validator 3' };
+            properties.validators = [ validator1, validator2, validator3 ];
             const itemModel = new CarViewCustomItemModel(properties);
 
             const isValid = itemModel.isValid('test-against-this');
 
             expect(isValid).toBe(false);
+            expect(itemModel.getValidationErrors('test-against-this')).toEqual(['validator 1', 'validator 3']);
         });
     });
 });

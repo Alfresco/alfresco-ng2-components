@@ -49,4 +49,14 @@ export abstract class CardViewBaseItemModel {
             .map((validator) => validator.isValid(newValue))
             .reduce((isValidUntilNow, isValid) => isValidUntilNow && isValid, true);
     }
+
+    getValidationErrors(value): string[] {
+        if (!this.validators.length) {
+            return [];
+        }
+
+        return this.validators
+            .filter((validator) => !validator.isValid(value))
+            .map((validator) => validator.message);
+    }
 }

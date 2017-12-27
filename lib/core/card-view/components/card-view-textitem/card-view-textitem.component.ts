@@ -36,7 +36,7 @@ export class CardViewTextItemComponent implements OnChanges {
 
     inEdit: boolean = false;
     editedValue: string;
-    errorMessage: string;
+    errorMessages: string[];
 
     constructor(private cardViewUpdateService: CardViewUpdateService) {}
 
@@ -50,6 +50,10 @@ export class CardViewTextItemComponent implements OnChanges {
 
     isClickable() {
         return this.property.clickable;
+    }
+
+    hasErrors() {
+        return this.errorMessages && this.errorMessages.length;
     }
 
     setEditMode(editStatus: boolean): void {
@@ -72,7 +76,7 @@ export class CardViewTextItemComponent implements OnChanges {
             this.property.value = this.editedValue;
             this.setEditMode(false);
         } else {
-            this.errorMessage = 'invalid test message';
+            this.errorMessages = this.property.getValidationErrors(this.editedValue);
         }
     }
 

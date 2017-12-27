@@ -232,6 +232,16 @@ describe('CardViewTextItemComponent', () => {
             expect(cardViewUpdateService.update).not.toHaveBeenCalled();
         });
 
+        it('should set the errorMessages properly if the editedValue is invalid', () => {
+            const expectedErrorMessages = ['Something went wrong'];
+            component.property.isValid = () => false;
+            component.property.getValidationErrors = () => expectedErrorMessages;
+
+            component.update();
+
+            expect(component.errorMessages).toBe(expectedErrorMessages);
+        });
+
         it('should update the propery\'s value after a succesful update attempt', async(() => {
             component.property.isValid = () => true;
             component.update();

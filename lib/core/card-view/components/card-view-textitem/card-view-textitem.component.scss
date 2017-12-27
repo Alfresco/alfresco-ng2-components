@@ -52,7 +52,22 @@
             &-error {
                 font-size: 12px;
                 padding-top: 4px;
+
+                ul {
+                    margin: 0;
+                    padding: 0;
+                    list-style-type: none;
+
+                    li {
+                        margin: 0;
+                        padding: 0;
+                    }
+                }
             }
+        }
+
+        &-textitem-default-value {
+            color: mat-color($foreground, text, 0.54);
         }
 
         &-textitem-editable .mat-input-wrapper {
@@ -75,7 +90,7 @@
         }
 
         &-textitem-editable .mat-input-placeholder {
-            top: 0;
+            top: 4px;
         }
 
         &-textitem-editable .mat-input-element {

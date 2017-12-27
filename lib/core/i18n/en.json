@@ -83,6 +83,12 @@
       "APPLY": "APPLY",
       "NOT_VALID": "http(s)://host|ip:port(/path) not recognized, try a different URL."
     },
+    "CARDVIEW": {
+      "VALIDATORS": {
+        "FLOAT_VALIDATION_ERROR": "The value has to be number",
+        "INT_VALIDATION_ERROR": "The value has to be integer"
+      }
+    },
     "METADATA": {
       "BASIC": {
           "HEADER": "Properties",
