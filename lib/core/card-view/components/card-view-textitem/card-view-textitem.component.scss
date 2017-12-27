@@ -30,20 +30,28 @@
         }
 
         &-textitem-editable {
-            display: flex;
 
-            mat-icon:hover {
-                opacity: 1;
-                cursor: pointer;
+            &-controls {
+                display: flex;
+
+                mat-icon:hover {
+                    opacity: 1;
+                    cursor: pointer;
+                }
+
+                mat-form-field {
+                    width: 100%;
+                }
+
+                input:focus,
+                textarea:focus {
+                    border: 1px solid mat-color($foreground, text, 0.15);
+                }
             }
 
-            mat-form-field {
-                width: 100%;
-            }
-
-            input:focus,
-            textarea:focus {
-                border: 1px solid mat-color($foreground, text, 0.15);
+            &-error {
+                font-size: 12px;
+                padding-top: 4px;
             }
         }
 

@@ -94,7 +94,7 @@ describe('CardViewTextItemComponent', () => {
             expect(value.nativeElement.innerText.trim()).toBe('Lorem ipsum');
         });
 
-        it('should render the default as value if the value is empty and editable false', () => {
+        it('should NOT render the default as value if the value is empty and editable false', () => {
             component.property = new CardViewTextItemModel ({
                 label: 'Text label',
                 value: '',
@@ -106,7 +106,7 @@ describe('CardViewTextItemComponent', () => {
 
             let value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
             expect(value).not.toBeNull();
-            expect(value.nativeElement.innerText.trim()).toBe('FAKE-DEFAULT-KEY');
+            expect(value.nativeElement.innerText.trim()).toBe('');
         });
 
         it('should render the default as value if the value is empty and editable true', () => {
@@ -117,6 +117,7 @@ describe('CardViewTextItemComponent', () => {
                 default: 'FAKE-DEFAULT-KEY',
                 editable: true
             });
+            component.editable = true;
             fixture.detectChanges();
 
             let value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
@@ -124,7 +125,7 @@ describe('CardViewTextItemComponent', () => {
             expect(value.nativeElement.innerText.trim()).toBe('FAKE-DEFAULT-KEY');
         });
 
-        it('should render the default as value if the value is empty and clickable false', () => {
+        it('should NOT render the default as value if the value is empty and clickable false', () => {
             component.property = new CardViewTextItemModel ({
                 label: 'Text label',
                 value: '',
@@ -136,7 +137,7 @@ describe('CardViewTextItemComponent', () => {
 
             let value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
             expect(value).not.toBeNull();
-            expect(value.nativeElement.innerText.trim()).toBe('FAKE-DEFAULT-KEY');
+            expect(value.nativeElement.innerText.trim()).toBe('');
         });
 
         it('should render the default as value if the value is empty and clickable true', () => {

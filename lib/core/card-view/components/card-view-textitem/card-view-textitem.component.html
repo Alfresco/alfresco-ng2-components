@@ -1,8 +1,8 @@
-<div class="adf-property-label">{{ property.label | translate }}</div>
+<div class="adf-property-label" *ngIf="!property.isEmpty() || isEditable()">{{ property.label | translate }}</div>
 <div class="adf-property-value">
     <span *ngIf="!isEditable()">
         <span *ngIf="!isClickable(); else elseBlock" [attr.data-automation-id]="'card-textitem-value-' + property.key">
-            <span *ngIf="!property.isEmpty(); else elseEmptyValueBlock">{{ property.displayValue }}</span>
+            <span *ngIf="!property.isEmpty()">{{ property.displayValue }}</span>
         </span>
         <ng-template #elseBlock>
             <span class="adf-textitem-clickable-value" (click)="clicked()" [attr.data-automation-id]="'card-textitem-value-' + property.key">
@@ -18,31 +18,36 @@
             <mat-icon fxFlex="0 0 auto" [attr.data-automation-id]="'card-textitem-edit-icon-' + property.key" class="adf-textitem-icon">create</mat-icon>
         </div>
         <div *ngIf="inEdit" class="adf-textitem-editable">
-            <mat-form-field floatPlaceholder="never" class="adf-input-container">
-                <input *ngIf="!property.multiline" #editorInput
-                    matInput
-                    class="adf-input"
-                    [placeholder]="property.default | translate"
-                    [(ngModel)]="editedValue"
-                    [attr.data-automation-id]="'card-textitem-editinput-' + property.key">
-                <textarea *ngIf="property.multiline" #editorInput
-                    matInput
-                    matTextareaAutosize
-                    matAutosizeMaxRows="1"
-                    matAutosizeMaxRows="5"
-                    class="adf-textarea"
-                    [placeholder]="property.default | translate"
-                    [(ngModel)]="editedValue"
-                    [attr.data-automation-id]="'card-textitem-edittextarea-' + property.key"></textarea>
-            </mat-form-field>
-            <mat-icon
-                class="adf-textitem-icon adf-update-icon"
-                (click)="update()"
-                [attr.data-automation-id]="'card-textitem-update-' + property.key">done</mat-icon>
-            <mat-icon
-                class="adf-textitem-icon adf-reset-icon"
-                (click)="reset()"
-                [attr.data-automation-id]="'card-textitem-reset-' + property.key">clear</mat-icon>
+            <div class="adf-textitem-editable-controls">
+                <mat-form-field floatPlaceholder="never" class="adf-input-container">
+                    <input *ngIf="!property.multiline" #editorInput
+                        matInput
+                        class="adf-input"
+                        [placeholder]="property.default | translate"
+                        [(ngModel)]="editedValue"
+                        [attr.data-automation-id]="'card-textitem-editinput-' + property.key">
+                    <textarea *ngIf="property.multiline" #editorInput
+                        matInput
+                        matTextareaAutosize
+                        matAutosizeMaxRows="1"
+                        matAutosizeMaxRows="5"
+                        class="adf-textarea"
+                        [placeholder]="property.default | translate"
+                        [(ngModel)]="editedValue"
+                        [attr.data-automation-id]="'card-textitem-edittextarea-' + property.key"></textarea>
+                </mat-form-field>
+                <mat-icon
+                    class="adf-textitem-icon adf-update-icon"
+                    (click)="update()"
+                    [attr.data-automation-id]="'card-textitem-update-' + property.key">done</mat-icon>
+                <mat-icon
+                    class="adf-textitem-icon adf-reset-icon"
+                    (click)="reset()"
+                    [attr.data-automation-id]="'card-textitem-reset-' + property.key">clear</mat-icon>
+            </div>
+            <mat-error class="adf-textitem-editable-error" *ngIf="errorMessage">
+                {{errorMessage}}
+            </mat-error>
         </div>
     </span>
     <ng-template #elseEmptyValueBlock>

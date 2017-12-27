@@ -137,14 +137,40 @@ describe('CardViewComponent', () => {
         });
     }));
 
-    it('should render the default value if the value is empty', async(() => {
+    it('should NOT render anything if the value is empty and not editable', async(() => {
         component.properties = [new CardViewTextItemModel({
             label: 'My default label',
             value: null,
             default: 'default value',
-            key: 'some key'
+            key: 'some-key',
+            editable: false
         })];
+        component.editable = true;
         fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+
+            let labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
+            expect(labelValue).toBeNull();
+
+            let value = fixture.debugElement.query(By.css('.adf-property-value'));
+            expect(value).not.toBeNull();
+            expect(value.nativeElement.innerText.trim()).toBe('');
+        });
+    }));
+
+    it('should render the default value if the value is empty and is editable', async(() => {
+        component.properties = [new CardViewTextItemModel({
+            label: 'My default label',
+            value: null,
+            default: 'default value',
+            key: 'some-key',
+            editable: true
+        })];
+        component.editable = true;
+        fixture.detectChanges();
+
         fixture.whenStable().then(() => {
             fixture.detectChanges();
 
@@ -152,9 +178,9 @@ describe('CardViewComponent', () => {
             expect(labelValue).not.toBeNull();
             expect(labelValue.nativeElement.innerText).toBe('My default label');
 
-            let value = fixture.debugElement.query(By.css('.adf-property-value'));
+            let value = fixture.debugElement.query(By.css('.adf-property-value [data-automation-id="card-textitem-value-some-key"]'));
             expect(value).not.toBeNull();
-            expect(value.nativeElement.innerText).toBe('default value');
+            expect(value.nativeElement.innerText.trim()).toBe('default value');
         });
     }));
 });

@@ -36,6 +36,7 @@ export class CardViewTextItemComponent implements OnChanges {
 
     inEdit: boolean = false;
     editedValue: string;
+    errorMessage: string;
 
     constructor(private cardViewUpdateService: CardViewUpdateService) {}
 
@@ -70,6 +71,8 @@ export class CardViewTextItemComponent implements OnChanges {
             this.cardViewUpdateService.update(this.property, this.editedValue );
             this.property.value = this.editedValue;
             this.setEditMode(false);
+        } else {
+            this.errorMessage = 'invalid test message';
         }
     }
 
