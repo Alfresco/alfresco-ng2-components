@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-import { NgZone, SimpleChange } from '@angular/core';
+import { NgZone, SimpleChange, Component } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatProgressSpinnerModule } from '@angular/material';
+import { MaterialModule } from '../material.module';
 import { By } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { ProcessContentService } from '@alfresco/adf-core';
@@ -202,22 +203,6 @@ describe('ProcessAttachmentListComponent', () => {
         });
     }));
 
-    it('should show the empty list drag and drop component when the process is not completed', async(() => {
-        getProcessRelatedContentSpy.and.returnValue(Observable.of({
-            'size': 0,
-            'total': 0,
-            'start': 0,
-            'data': []
-        }));
-        let change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({'processInstanceId': change});
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('adf-empty-list .adf-empty-list-drag_drop').innerText.trim())
-            .toEqual('ADF_PROCESS_LIST.PROCESS-ATTACHMENT.EMPTY.DRAG-AND-DROP.TITLE');
-        });
-    }));
-
     it('should not show the empty list drag and drop component when is disabled', async(() => {
         getProcessRelatedContentSpy.and.returnValue(Observable.of({
             'size': 0,
@@ -307,4 +292,45 @@ describe('ProcessAttachmentListComponent', () => {
 
     });
 
+});
+
+@Component({
+    template: `
+    <adf-process-attachment-list>
+        <adf-empty-list>
+            <div adf-empty-list-header class="adf-empty-list-header">Custom header</div>
+        </adf-empty-list>
+        // <div class="test-div">mansa</div>
+    </adf-process-attachment-list>
+    // <div class="test-div1">mansa1</div>
+       `
+})
+class CustomEmptyTemplateComponent {
+}
+
+describe('Custom CustomEmptyTemplateComponent', () => {
+    let fixture: ComponentFixture<CustomEmptyTemplateComponent>;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [
+                ProcessAttachmentListComponent,
+                CustomEmptyTemplateComponent
+            ],
+            imports: [
+                MaterialModule
+            ]
+        }).compileComponents();
+    }));
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(CustomEmptyTemplateComponent);
+        fixture.detectChanges();
+    });
+
+    it('should render the custom template', () => {
+        fixture.detectChanges();
+        let title: any = fixture.nativeElement.querySelector('adf-process-attachment-list > .adf-empty-list-header');
+        expect(title).toBeDefined();
+    });
 });
