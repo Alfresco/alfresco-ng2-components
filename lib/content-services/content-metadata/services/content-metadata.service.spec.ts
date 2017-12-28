@@ -30,7 +30,8 @@ import {
     CardViewDateItemModel,
     CardViewIntItemModel,
     CardViewFloatItemModel,
-    LogService
+    LogService,
+    CardViewBoolItemModel
 } from '@alfresco/adf-core';
 
 describe('PropertyDescriptorLoaderService', () => {
@@ -287,6 +288,19 @@ describe('PropertyDescriptorLoaderService', () => {
                 const property: CardViewFloatItemModel = <CardViewFloatItemModel> cardViewAspect[0].properties[0];
                 expect(property instanceof CardViewFloatItemModel).toBeTruthy('Property should be instance of CardViewFloatItemModel');
                 expect(property.value).toBe(1024.24);
+            });
+        });
+
+        it('should translate properly the value attribute for d:boolean', () => {
+            aspectProperty.dataType = 'd:boolean';
+            aspects.push(aspect);
+
+            node.properties = { 'FAS:PLAGUE': true };
+
+            service.getAspectProperties(node).subscribe((cardViewAspect) => {
+                const property: CardViewBoolItemModel = <CardViewBoolItemModel> cardViewAspect[0].properties[0];
+                expect(property instanceof CardViewBoolItemModel).toBeTruthy('Property should be instance of CardViewBoolItemModel');
+                expect(property.value).toBe(true);
             });
         });
     });

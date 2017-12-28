@@ -20,4 +20,5 @@ export * from './card-view-item-validator.interface';
 export * from './card-view-item.interface';
 export * from './card-view-textitem-properties.interface';
 export * from './card-view-dateitem-properties.interface';
+export * from './card-view-boolitem-properties.interface';
 export * from './card-view-textitem-pipe-property.interface';

@@ -18,50 +18,69 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatButtonModule, MatDatepickerModule, MatIconModule, MatInputModule, MatNativeDateModule } from '@angular/material';
+import {
+    MatButtonModule,
+    MatDatepickerModule,
+    MatIconModule,
+    MatInputModule,
+    MatCheckboxModule,
+    MatNativeDateModule
+} from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { CardViewContentProxyDirective } from './directives/card-view-content-proxy.directive';
-import { CardViewDateItemComponent } from './components/card-view-dateitem/card-view-dateitem.component';
-import { CardViewItemDispatcherComponent } from './components/card-view-item-dispatcher/card-view-item-dispatcher.component';
-import { CardViewMapItemComponent } from './components/card-view-mapitem/card-view-mapitem.component';
-import { CardViewTextItemComponent } from './components/card-view-textitem/card-view-textitem.component';
-import { CardViewComponent } from './components/card-view/card-view.component';
+import {
+    CardViewBoolItemComponent,
+    CardViewDateItemComponent,
+    CardViewItemDispatcherComponent,
+    CardViewMapItemComponent,
+    CardViewTextItemComponent,
+    CardViewComponent
+} from './components/card-view.components';
 
 import { CardItemTypeService } from './services/card-item-types.service';
 import { CardViewUpdateService } from './services/card-view-update.service';
 
+const MATERIAL_MODULES = [
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCheckboxModule,
+    MatInputModule,
+    MatIconModule,
+    MatButtonModule
+];
+
+const CARD_VIEW_ITEM_COMPONENTS = [
+    CardViewBoolItemComponent,
+    CardViewDateItemComponent,
+    CardViewMapItemComponent,
+    CardViewTextItemComponent
+];
+
+const PUBLIC_COMPONENTS = [
+    CardViewComponent,
+    ...CARD_VIEW_ITEM_COMPONENTS
+];
+
 @NgModule({
     imports: [
         CommonModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatInputModule,
-        MatIconModule,
-        MatButtonModule,
         FormsModule,
         FlexLayoutModule,
-        TranslateModule
+        TranslateModule,
+        ...MATERIAL_MODULES
     ],
     declarations: [
-        CardViewComponent,
+        ...PUBLIC_COMPONENTS,
         CardViewItemDispatcherComponent,
-        CardViewContentProxyDirective,
-        CardViewTextItemComponent,
-        CardViewMapItemComponent,
-        CardViewDateItemComponent
+        CardViewContentProxyDirective
     ],
     entryComponents: [
-        CardViewTextItemComponent,
-        CardViewMapItemComponent,
-        CardViewDateItemComponent
+        ...CARD_VIEW_ITEM_COMPONENTS
     ],
     exports: [
-        CardViewComponent,
-        CardViewTextItemComponent,
-        CardViewMapItemComponent,
-        CardViewDateItemComponent
+        ...PUBLIC_COMPONENTS
     ],
     providers: [
         CardItemTypeService,

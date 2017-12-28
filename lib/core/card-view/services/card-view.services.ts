@@ -15,12 +15,5 @@
  * limitations under the License.
  */
 
-export interface CardViewItem {
-    label: string;
-    value: any;
-    key: string;
-    default?: any;
-    type: string;
-    displayValue: any;
-    editable?: boolean;
-}
+export * from './card-item-types.service';
+export * from './card-view-update.service';

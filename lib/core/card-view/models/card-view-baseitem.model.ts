@@ -21,7 +21,7 @@ export abstract class CardViewBaseItemModel {
     label: string;
     value: any;
     key: any;
-    default: string;
+    default: any;
     editable: boolean;
     clickable: boolean;
     validators?: CardViewItemValidator[];

@@ -18,16 +18,23 @@
 import { CardViewItem } from '../interfaces/card-view-item.interface';
 import { DynamicComponentModel } from '../../services/dynamic-component-mapper.service';
 import { CardViewBaseItemModel } from './card-view-baseitem.model';
+import { CardViewBoolItemProperties } from '../interfaces/card-view.interfaces';
 
-export class CardViewMapItemModel extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
-    type: string = 'map';
-    value: Map<string, string>;
+export class CardViewBoolItemModel extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
+    type: string = 'bool';
+    value: boolean;
+    default: boolean;
+
+    constructor(obj: CardViewBoolItemProperties) {
+        super(obj);
+        this.value = !!JSON.parse(obj.value);
+    }
 
     get displayValue() {
-        if (this.value && this.value.size > 0) {
-            return this.value.values().next().value;
-        } else {
+        if (this.isEmpty()) {
             return this.default;
+        } else {
+            return this.value;
         }
     }
 }

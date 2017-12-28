@@ -26,6 +26,7 @@ export class CardViewFloatItemModel extends CardViewTextItemModel implements Car
 
     constructor(obj: CardViewTextItemProperties) {
         super(obj);
+
         this.validators.push(new CardViewItemFloatValidator());
         this.value = parseFloat(this.value);
     }

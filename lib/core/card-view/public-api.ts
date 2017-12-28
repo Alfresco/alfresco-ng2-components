@@ -15,22 +15,16 @@
  * limitations under the License.
  */
 
+export {
+    CardViewComponent,
+    CardViewBoolItemComponent,
+    CardViewDateItemComponent,
+    CardViewMapItemComponent,
+    CardViewTextItemComponent
+} from './components/card-view.components';
+
 export * from './interfaces/card-view.interfaces';
 export * from './validators/card-view.validators';
-
-export * from './models/card-view-baseitem.model';
-export * from './models/card-view-textitem.model';
-export * from './models/card-view-intitem.model';
-export * from './models/card-view-floatitem.model';
-export * from './models/card-view-mapitem.model';
-export * from './models/card-view-dateitem.model';
-
-export * from './services/card-item-types.service';
-export * from './services/card-view-update.service';
-
+export * from './models/card-view.models';
+export * from './services/card-view.services';
 export * from './directives/card-view-content-proxy.directive';
-export * from './components/card-view-dateitem/card-view-dateitem.component';
-export * from './components/card-view-item-dispatcher/card-view-item-dispatcher.component';
-export * from './components/card-view-mapitem/card-view-mapitem.component';
-export * from './components/card-view-textitem/card-view-textitem.component';
-export * from './components/card-view/card-view.component';

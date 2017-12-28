@@ -15,12 +15,9 @@
  * limitations under the License.
  */
 
-export interface CardViewItem {
-    label: string;
-    value: any;
-    key: string;
-    default?: any;
-    type: string;
-    displayValue: any;
-    editable?: boolean;
-}
+export * from './card-view/card-view.component';
+export * from './card-view-boolitem/card-view-boolitem.component';
+export * from './card-view-dateitem/card-view-dateitem.component';
+export * from './card-view-item-dispatcher/card-view-item-dispatcher.component';
+export * from './card-view-mapitem/card-view-mapitem.component';
+export * from './card-view-textitem/card-view-textitem.component';

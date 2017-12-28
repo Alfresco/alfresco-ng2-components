@@ -19,6 +19,7 @@ import { Injectable, Type } from '@angular/core';
 import { CardViewDateItemComponent } from '../components/card-view-dateitem/card-view-dateitem.component';
 import { CardViewMapItemComponent } from '../components/card-view-mapitem/card-view-mapitem.component';
 import { CardViewTextItemComponent } from '../components/card-view-textitem/card-view-textitem.component';
+import { CardViewBoolItemComponent } from '../components/card-view-boolitem/card-view-boolitem.component';
 import { DynamicComponentMapper, DynamicComponentResolveFunction, DynamicComponentResolver } from '../../services/dynamic-component-mapper.service';
 
 @Injectable()
@@ -31,6 +32,7 @@ export class CardItemTypeService extends DynamicComponentMapper {
         'int': DynamicComponentResolver.fromType(CardViewTextItemComponent),
         'float': DynamicComponentResolver.fromType(CardViewTextItemComponent),
         'date': DynamicComponentResolver.fromType(CardViewDateItemComponent),
+        'bool': DynamicComponentResolver.fromType(CardViewBoolItemComponent),
         'map': DynamicComponentResolver.fromType(CardViewMapItemComponent)
     };
 }

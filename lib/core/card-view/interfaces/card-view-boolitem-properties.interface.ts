@@ -15,12 +15,9 @@
  * limitations under the License.
  */
 
-export interface CardViewItem {
-    label: string;
+import { CardViewItemProperties } from './card-view-item-properties.interface';
+
+export interface CardViewBoolItemProperties extends CardViewItemProperties {
     value: any;
-    key: string;
-    default?: any;
-    type: string;
-    displayValue: any;
-    editable?: boolean;
+    default?: boolean;
 }
