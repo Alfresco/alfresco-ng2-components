@@ -87,7 +87,7 @@ describe('CardViewDateItemComponent', () => {
         expect(value.nativeElement.innerText.trim()).toBe('Jul 10 2017');
     });
 
-    it('should render the default as value if the value is empty and editable:false', () => {
+    it('should NOT render the default as value if the value is empty and editable:false', () => {
         component.property = new CardViewDateItemModel ({
             label: 'Date label',
             value: '',
@@ -96,11 +96,12 @@ describe('CardViewDateItemComponent', () => {
             format: '',
             editable: false
         });
+        component.editable = true;
         fixture.detectChanges();
 
         let value = fixture.debugElement.query(By.css('.adf-property-value'));
         expect(value).not.toBeNull();
-        expect(value.nativeElement.innerText.trim()).toBe('FAKE-DEFAULT-KEY');
+        expect(value.nativeElement.innerText.trim()).toBe('');
     });
 
     it('should render the default as value if the value is empty and editable:true', () => {
@@ -112,6 +113,7 @@ describe('CardViewDateItemComponent', () => {
             format: '',
             editable: true
         });
+        component.editable = true;
         fixture.detectChanges();
 
         let value = fixture.debugElement.query(By.css('.adf-property-value'));
@@ -190,4 +192,20 @@ describe('CardViewDateItemComponent', () => {
 
         component.onDateChanged({value: expectedDate});
     });
+
+    it('should update the propery\'s value after a succesful update attempt', async(() => {
+        component.editable = true;
+        component.property.editable = true;
+        component.property.value = null;
+        const expectedDate = moment('Jul 10 2017', 'MMM DD YY');
+        fixture.detectChanges();
+
+        component.onDateChanged({value: expectedDate});
+
+        fixture.whenStable().then(
+            (updateNotification) => {
+                expect(component.property.value).toEqual(expectedDate.toDate());
+            }
+        );
+    }));
 });

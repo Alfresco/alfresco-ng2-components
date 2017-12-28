@@ -29,7 +29,7 @@ import {
     LogService
 } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
-import { AspectProperty, CardViewAspect } from '../interfaces/content-metadata.interfaces';
+import { AspectProperty, CardViewAspect, Aspect } from '../interfaces/content-metadata.interfaces';
 
 const D_TEXT = 'd:text';
 const D_MLTEXT = 'd:mltext';
@@ -56,11 +56,21 @@ export class ContentMetadataService {
 
     getAspectProperties(node: MinimalNodeEntryEntity): Observable<CardViewAspect[]> {
         return this.propertyDescriptorsService.getAspects(node)
-            .map(aspects => aspects.map(aspect => Object.assign({}, aspect, { properties: this.translateProperties(aspect.properties, node.properties) })));
+            .map(aspects => this.translateAspects(aspects, node.properties));
+    }
+
+    private translateAspects(aspects: Aspect[], nodeProperties): CardViewAspect[] {
+        return aspects.map(aspect => {
+            const translatedAspect: any = Object.assign({}, aspect);
+            translatedAspect.properties = this.translateProperties(aspect.properties, nodeProperties);
+            return translatedAspect;
+        });
     }
 
     private translateProperties(aspectProperties: AspectProperty[], nodeProperties: any): CardViewItem[] {
-        return aspectProperties.map((aspectProperty) => this.translateProperty(aspectProperty, nodeProperties[aspectProperty.name]));
+        return aspectProperties.map(aspectProperty => {
+            return this.translateProperty(aspectProperty, nodeProperties[aspectProperty.name])
+        });
     }
 
     private translateProperty(aspectProperty: AspectProperty, nodeProperty: any): CardViewItem {
@@ -70,7 +80,7 @@ export class ContentMetadataService {
             label: aspectProperty.title,
             value: nodeProperty,
             key: this.getAspectPropertyKey(aspectProperty.name),
-            default: aspectProperty.defaultValue || aspectProperty.title,
+            default: aspectProperty.defaultValue,
             editable: true
         };
         let property;

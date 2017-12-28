@@ -2,28 +2,30 @@
 <div class="adf-property-value">
     <span *ngIf="!isEditable()">
         <span [attr.data-automation-id]="'card-dateitem-' + property.key">
-            <span *ngIf="!property.isEmpty(); else elseEmptyValueBlock">{{ property.displayValue }}</span>
+            <span *ngIf="!property.isEmpty()">{{ property.displayValue }}</span>
         </span>
     </span>
-    <span *ngIf="isEditable()" class="adf-dateitem-editable">
-        <input class="adf-invisible-date-input" [matDatepicker]="picker" [value]="valueDate"
-               (dateChange)="onDateChanged($event)">
-        <span
-            class="adf-datepicker-toggle"
-            [attr.data-automation-id]="'datepicker-label-toggle-' + property.key"
-            (click)="showDatePicker($event)">
-            <span *ngIf="!property.isEmpty(); else elseEmptyValueBlock">{{ property.displayValue }}</span>
-        </span>
-        <mat-datepicker-toggle
-            [attr.data-automation-id]="'datepickertoggle-' + property.key"
-            [for]="picker">
-        </mat-datepicker-toggle>
+    <div *ngIf="isEditable()" class="adf-dateitem-editable">
+        <div class="adf-dateitem-editable-controls">
+            <input class="adf-invisible-date-input" [matDatepicker]="picker" [value]="valueDate"
+                (dateChange)="onDateChanged($event)">
+            <span
+                class="adf-datepicker-toggle"
+                [attr.data-automation-id]="'datepicker-label-toggle-' + property.key"
+                (click)="showDatePicker($event)">
+                <span *ngIf="!property.isEmpty(); else elseEmptyValueBlock">{{ property.displayValue }}</span>
+            </span>
+            <mat-datepicker-toggle
+                [attr.data-automation-id]="'datepickertoggle-' + property.key"
+                [for]="picker">
+            </mat-datepicker-toggle>
+        </div>
         <mat-datepicker #picker
-                       [attr.data-automation-id]="'datepicker-' + property.key"
-                       [startAt]="valueDate"
-                       [touchUi]="true">
+            [attr.data-automation-id]="'datepicker-' + property.key"
+            [startAt]="valueDate"
+            [touchUi]="true">
         </mat-datepicker>
-    </span>
+    </div>
     <ng-template #elseEmptyValueBlock>
         {{ property.default | translate }}
     </ng-template>
