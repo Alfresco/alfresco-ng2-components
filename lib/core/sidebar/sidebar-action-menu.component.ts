@@ -25,7 +25,7 @@ import { ChangeDetectionStrategy, Component, Directive, Input, ViewEncapsulation
     encapsulation: ViewEncapsulation.None,
     host: { 'class': 'adf-sidebar-action-menu' }
 })
-    
+
 export class SidebarActionMenuComponent {
 
     @Input()
