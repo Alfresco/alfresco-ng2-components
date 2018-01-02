@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Directive, Input, ViewEncapsulation } from '@angular/core';
 
 @Component({
     selector: 'adf-sidebar-action-menu',
@@ -38,3 +38,7 @@ export class SidebarActionMenuComponent {
         return this.expanded;
     }
 }
+
+@Directive({ selector: '[sidebar-menu-options]' }) export class SidebarMenuDirective {}
+@Directive({ selector: '[sidebar-menu-title-icon]' }) export class SidebarMenuTitleIconDirective { }
+@Directive({ selector: '[sidebar-menu-expand-icon]' }) export class SidebarMenuExpandIconDirective {}
