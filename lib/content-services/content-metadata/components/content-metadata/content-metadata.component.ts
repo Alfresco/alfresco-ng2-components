@@ -42,6 +42,9 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
     @Input()
     expanded: boolean = false;
 
+    @Input()
+    preset: string;
+
     basicProperties$: Observable<CardViewItem[]>;
     aspects$: Observable<CardViewAspect[]>;
 
@@ -64,7 +67,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
         if (nodeChange) {
             const node = nodeChange.currentValue;
             this.basicProperties$ = this.contentMetadataService.getBasicProperties(node);
-            this.aspects$ = this.contentMetadataService.getAspectProperties(node);
+            this.aspects$ = this.contentMetadataService.getAspectProperties(node, this.preset);
         }
     }
 

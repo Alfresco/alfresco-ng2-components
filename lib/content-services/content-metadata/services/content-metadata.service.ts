@@ -56,8 +56,8 @@ export class ContentMetadataService {
         return Observable.of(this.basicPropertiesService.getBasicProperties(node));
     }
 
-    getAspectProperties(node: MinimalNodeEntryEntity): Observable<CardViewAspect[]> {
-        return this.propertyDescriptorsService.getAspects(node)
+    getAspectProperties(node: MinimalNodeEntryEntity, preset: string): Observable<CardViewAspect[]> {
+        return this.propertyDescriptorsService.getAspects(node, preset)
             .map(aspects => this.translateAspects(aspects, node.properties));
     }
 
