@@ -17,7 +17,6 @@
 
 import { Component } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { MaterialModule } from '../material.module';
 import { SidebarActionMenuComponent } from './sidebar-action-menu.component';
 
@@ -47,18 +46,23 @@ describe('SidebarActionMenuComponent', () => {
         expect(fixture.componentInstance instanceof SidebarActionMenuComponent).toBe(true, 'should create SidebarActionMenuComponent');
     });
 
-    it('should render the title', () => {
-        component.title = 'FakeTitle';
+    it('should display title', () => {
+        component.title = 'Fake-Title';
+        component.expanded = true;
         fixture.detectChanges();
-        let title: any = fixture.debugElement.queryAll(By.css('.adf-sidebar-menu-action-button-text'));
-        expect(title.nativeElement.innerText).toBe('FakeTitle');
+        const title = element.querySelector('.adf-sidebar-menu-action-button-text');
+        fixture.detectChanges();
+        expect(title.textContent).toBe('Fake-Title');
     });
 });
 
 @Component({
     template: `
-    <adf-sidebar-action-menu>
+    <adf-sidebar-action-menu [expanded]="expanded" [title]="title">
     <mat-icon sidebar-menu-title-icon>arrow_drop_down</mat-icon>
+    <div sidebar-menu-expand-icon>
+        <mat-icon>queue</mat-icon>
+    </div>
     <div sidebar-menu-options>
         <button mat-menu-item>
             <mat-icon>assignment</mat-icon>
@@ -73,7 +77,8 @@ describe('SidebarActionMenuComponent', () => {
        `
 })
 class CustomSidebarActionMenuComponent {
-    tittle: string = 'Fake title';
+    title: string = 'Fake title';
+    expanded: boolean = true;
 }
 
 describe('Custom SidebarActionMenuComponent', () => {
@@ -101,27 +106,44 @@ describe('Custom SidebarActionMenuComponent', () => {
     });
 
     it('should create instance of CustomSidebarActionMenuComponent', () => {
-        expect(fixture.componentInstance instanceof CustomSidebarActionMenuComponent).toBe(true, 'should create CustomSidebarActionMenuComponent');
+        expect(component instanceof CustomSidebarActionMenuComponent).toBe(true, 'should create CustomSidebarActionMenuComponent');
     });
 
-    it('should adf-sidebar-action-menu', () => {
+    it('should defined adf-sidebar-action-menu', () => {
         fixture.detectChanges();
         element = fixture.nativeElement.querySelector('adf-sidebar-action-menu');
         expect(element).toBeDefined();
     });
 
-    it('should render the options sidebar-menu-options', () => {
+    it('should display the title', () => {
+        component.title = 'FakeTitle';
         fixture.detectChanges();
-        let title: any = fixture.nativeElement.querySelector('[sidebar-menu-options]');
-        expect(title.length).toBe(1);
-        expect(title[0].nativeElement.innerText).toBe('Fake Option');
+        const title = element.querySelector('.adf-sidebar-menu-action-button-text');
+        fixture.detectChanges();
+        expect(title.textContent).toBe('FakeTitle');
     });
 
-    // it('should expand icon', () => {
-    //     fixture.detectChanges();
-    //     let title: any = fixture.debugElement.queryAll(By.css('[sidebar-menu-expand-icon]'));
-    //     expect(title.length).toBe(1);
-    //     expect(title[0].nativeElement.innerText).toBe('queue');
-    // });
+    it('should render the sidebar-menu-options', () => {
+        fixture.detectChanges();
+        const actionButton = fixture.nativeElement.querySelector('.adf-sidebar-menu-action-button');
+        const options = fixture.nativeElement.querySelectorAll('.adf-sidebar-action-menu-options');
+        actionButton.click();
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            expect(actionButton).not.toBeNull();
+            expect(actionButton).toBeDefined();
+            expect(options).toBeDefined();
+            expect(actionButton.innerText.trim()).toBe('Fake title arrow_drop_down');
+        });
+    });
 
+    it('should show icon on icon menu', () => {
+        component.title = 'FakeTitle';
+        component.expanded = false;
+        fixture.detectChanges();
+        const actionIcon = fixture.nativeElement.querySelector('.adf-sidebar-menu-action-icon');
+        expect(actionIcon).not.toBeNull();
+        expect(actionIcon).toBeDefined();
+        expect(actionIcon.innerText.trim()).toBe('queue');
+    });
 });

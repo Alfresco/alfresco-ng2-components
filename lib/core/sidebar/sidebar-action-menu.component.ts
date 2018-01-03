@@ -41,4 +41,4 @@ export class SidebarActionMenuComponent {
 
 @Directive({ selector: '[sidebar-menu-options]' }) export class SidebarMenuDirective {}
 @Directive({ selector: '[sidebar-menu-title-icon]' }) export class SidebarMenuTitleIconDirective { }
-@Directive({ selector: '[sidebar-menu-expand-icon]' }) export class SidebarMenuExpandIconDirective {}
+@Directive({ selector: '[sidebar-menu-expand-icon]' }) export class SidebarMenuExpandIconDirective { }
