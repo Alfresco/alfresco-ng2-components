@@ -16,7 +16,7 @@
  */
 
 import { ContentService, EmptyListComponent , ThumbnailService } from '@alfresco/adf-core';
-import { AfterContentInit, ContentChild, Component, ElementRef, EventEmitter, Input, NgZone, OnChanges, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, ContentChild, Component, EventEmitter, Input, NgZone, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { ProcessContentService } from '@alfresco/adf-core';
 
 @Component({
@@ -46,9 +46,6 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
     error: EventEmitter<any> = new EventEmitter<any>();
 
     hasCustomTemplate: boolean = false;
-
-    @ViewChild('customEmptyListTemplate')
-    customTemplateRef: ElementRef;
 
     attachments: any[] = [];
     isLoading: boolean = true;
