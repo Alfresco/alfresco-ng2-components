@@ -22,12 +22,15 @@ import { CardViewBoolItemProperties } from '../interfaces/card-view.interfaces';
 
 export class CardViewBoolItemModel extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
     type: string = 'bool';
-    value: boolean;
+    value: boolean = false;
     default: boolean;
 
     constructor(obj: CardViewBoolItemProperties) {
         super(obj);
-        this.value = !!JSON.parse(obj.value);
+
+        if (obj.value !== undefined) {
+            this.value = !!JSON.parse(obj.value);
+        }
     }
 
     get displayValue() {

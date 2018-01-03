@@ -7,8 +7,6 @@
     </span>
     <div *ngIf="isEditable()" class="adf-dateitem-editable">
         <div class="adf-dateitem-editable-controls">
-            <input class="adf-invisible-date-input" [matDatetimepicker]="datetimePicker" [value]="valueDate"
-                (dateChange)="onDateChanged($event)">
             <span
                 class="adf-datepicker-toggle"
                 [attr.data-automation-id]="'datepicker-label-toggle-' + property.key"
@@ -20,6 +18,12 @@
                 [for]="datetimePicker">
             </mat-datetimepicker-toggle>
         </div>
+
+        <input class="adf-invisible-date-input"
+            [matDatetimepicker]="datetimePicker"
+            [value]="valueDate"
+            (dateChange)="onDateChanged($event)">
+
         <mat-datetimepicker #datetimePicker
             [type]="property.type"
             timeInterval="5"

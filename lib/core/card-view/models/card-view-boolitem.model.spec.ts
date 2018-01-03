@@ -71,4 +71,18 @@ describe('CardViewFloatItemModel', () => {
 
         expect(itemModel.value).toBe(false);
     });
+
+    it('undefined should be parsed as false', () => {
+        properties.value = undefined;
+        const itemModel = new CardViewBoolItemModel(properties);
+
+        expect(itemModel.value).toBe(false);
+    });
+
+    it('null should be parsed as false', () => {
+        properties.value = null;
+        const itemModel = new CardViewBoolItemModel(properties);
+
+        expect(itemModel.value).toBe(false);
+    });
 });
