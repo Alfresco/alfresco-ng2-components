@@ -31,6 +31,6 @@
 	</mat-card-content>
 	<mat-card-actions *ngIf="!hasStartForm()">
 		<button mat-button *ngIf="!hasStartForm()" (click)="cancelStartProcess()" id="cancle_process" class=""> {{'ADF_PROCESS_LIST.START_PROCESS.FORM.ACTION.CANCEL'| translate}} </button>
-		<button mat-button *ngIf="!hasStartForm()" [disabled]="!validateForm()" (click)="startProcess()" data-automation-id="btn-start" id="button-start" class="btn-start"> {{'ADF_PROCESS_LIST.START_PROCESS.FORM.ACTION.START' | translate}} </button>
+		<button color="primary" mat-button *ngIf="!hasStartForm()" [disabled]="!validateForm()" (click)="startProcess()" data-automation-id="btn-start" id="button-start" class="btn-start"> {{'ADF_PROCESS_LIST.START_PROCESS.FORM.ACTION.START' | translate}} </button>
 	</mat-card-actions>
 </mat-card>

@@ -74,7 +74,7 @@
                     <button mat-button (click)="onCancel()" id="button-cancle">
                         {{'ADF_TASK_LIST.START_TASK.FORM.ACTION.CANCEL'|translate}}
                     </button>
-                    <button mat-button [disabled]="!startTaskmodel.name || dateError" (click)="start()" id="button-start">
+                    <button color="primary" mat-button [disabled]="!startTaskmodel.name || dateError" (click)="start()" id="button-start">
                         {{'ADF_TASK_LIST.START_TASK.FORM.ACTION.START'|translate}}
                     </button>
                 </div>
