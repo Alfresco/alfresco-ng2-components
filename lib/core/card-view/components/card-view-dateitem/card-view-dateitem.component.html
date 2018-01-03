@@ -7,7 +7,7 @@
     </span>
     <div *ngIf="isEditable()" class="adf-dateitem-editable">
         <div class="adf-dateitem-editable-controls">
-            <input class="adf-invisible-date-input" [matDatepicker]="picker" [value]="valueDate"
+            <input class="adf-invisible-date-input" [matDatetimepicker]="datetimePicker" [value]="valueDate"
                 (dateChange)="onDateChanged($event)">
             <span
                 class="adf-datepicker-toggle"
@@ -15,16 +15,17 @@
                 (click)="showDatePicker($event)">
                 <span *ngIf="!property.isEmpty(); else elseEmptyValueBlock">{{ property.displayValue }}</span>
             </span>
-            <mat-datepicker-toggle
+            <mat-datetimepicker-toggle
                 [attr.data-automation-id]="'datepickertoggle-' + property.key"
-                [for]="picker">
-            </mat-datepicker-toggle>
+                [for]="datetimePicker">
+            </mat-datetimepicker-toggle>
         </div>
-        <mat-datepicker #picker
+        <mat-datetimepicker #datetimePicker
+            [type]="property.type"
+            timeInterval="5"
             [attr.data-automation-id]="'datepicker-' + property.key"
-            [startAt]="valueDate"
-            [touchUi]="true">
-        </mat-datepicker>
+            [startAt]="valueDate">
+        </mat-datetimepicker>
     </div>
     <ng-template #elseEmptyValueBlock>
         {{ property.default | translate }}

@@ -16,8 +16,8 @@
  */
 
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { MatDatepicker } from '@angular/material';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
+import { MatDatetimepicker } from '@mat-datetimepicker/core';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
@@ -44,8 +44,8 @@ export class CardViewDateItemComponent implements OnInit {
     @Input()
     editable: boolean;
 
-    @ViewChild(MatDatepicker)
-    public datepicker: MatDatepicker<any>;
+    @ViewChild(MatDatetimepicker)
+    public datepicker: MatDatetimepicker<any>;
 
     valueDate: Moment;
 

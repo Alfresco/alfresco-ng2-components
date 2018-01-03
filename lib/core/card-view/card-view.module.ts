@@ -26,6 +26,7 @@ import {
     MatCheckboxModule,
     MatNativeDateModule
 } from '@angular/material';
+import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -48,7 +49,9 @@ const MATERIAL_MODULES = [
     MatCheckboxModule,
     MatInputModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDatetimepickerModule,
+    MatNativeDatetimeModule
 ];
 
 const CARD_VIEW_ITEM_COMPONENTS = [

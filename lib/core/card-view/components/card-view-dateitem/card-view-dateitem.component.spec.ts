@@ -18,6 +18,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material';
+import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
 import { By } from '@angular/platform-browser';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import moment from 'moment-es6';
@@ -40,6 +41,8 @@ describe('CardViewDateItemComponent', () => {
                 MatDatepickerModule,
                 MatInputModule,
                 MatNativeDateModule,
+                MatNativeDatetimeModule,
+                MatDatetimepickerModule,
                 TranslateModule.forRoot({
                     loader: {
                         provide: TranslateLoader,
@@ -163,7 +166,7 @@ describe('CardViewDateItemComponent', () => {
         expect(datePickerToggle).toBeNull('Datepicker toggle should NOT be shown');
     });
 
-    it('should open the datetimepicker when clicking on the label', () => {
+    it('should open the dateXXXpicker when clicking on the label', () => {
         component.editable = true;
         component.property.editable = true;
         fixture.detectChanges();
