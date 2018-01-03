@@ -25,6 +25,7 @@ import {
     CardViewTextItemModel,
     CardViewBoolItemModel,
     CardViewDateItemModel,
+    CardViewDatetimeItemModel,
     CardViewIntItemModel,
     CardViewFloatItemModel,
     LogService
@@ -35,7 +36,7 @@ import { AspectProperty, CardViewAspect, Aspect } from '../interfaces/content-me
 const D_TEXT = 'd:text';
 const D_MLTEXT = 'd:mltext';
 const D_DATE = 'd:date';
-// const D_DATETIME = 'd:datetime';
+const D_DATETIME = 'd:datetime';
 const D_INT = 'd:int';
 const D_LONG = 'd:long';
 const D_FLOAT = 'd:float';
@@ -45,7 +46,7 @@ const D_BOOLEAN = 'd:boolean';
 @Injectable()
 export class ContentMetadataService {
 
-    static readonly RECOGNISED_ECM_TYPES = [ D_TEXT, D_MLTEXT, D_DATE, D_INT, D_LONG , D_FLOAT, D_DOUBLE, D_BOOLEAN/*, D_DATETIME*/ ];
+    static readonly RECOGNISED_ECM_TYPES = [ D_TEXT, D_MLTEXT, D_DATE, D_DATETIME, D_INT, D_LONG , D_FLOAT, D_DOUBLE, D_BOOLEAN ];
 
     constructor(private basicPropertiesService: BasicPropertiesService,
                 private propertyDescriptorsService: PropertyDescriptorsService,
@@ -106,6 +107,10 @@ export class ContentMetadataService {
 
             case D_DATE:
                 property = new CardViewDateItemModel(propertyDefinition);
+                break;
+
+            case D_DATETIME:
+                property = new CardViewDatetimeItemModel(propertyDefinition);
                 break;
 
             case D_BOOLEAN:

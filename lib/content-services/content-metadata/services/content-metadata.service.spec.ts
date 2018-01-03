@@ -31,7 +31,8 @@ import {
     CardViewIntItemModel,
     CardViewFloatItemModel,
     LogService,
-    CardViewBoolItemModel
+    CardViewBoolItemModel,
+    CardViewDatetimeItemModel
 } from '@alfresco/adf-core';
 
 describe('PropertyDescriptorLoaderService', () => {
@@ -227,15 +228,30 @@ describe('PropertyDescriptorLoaderService', () => {
         });
 
         it('should translate properly the value attribute for d:date', () => {
+            const expectedValue = new Date().toISOString();
             aspectProperty.dataType = 'd:date';
             aspects.push(aspect);
 
-            node.properties = { 'FAS:PLAGUE': 'The Chariot Line' };
+            node.properties = { 'FAS:PLAGUE': expectedValue };
 
             service.getAspectProperties(node).subscribe((cardViewAspect) => {
                 const property: CardViewDateItemModel = <CardViewDateItemModel> cardViewAspect[0].properties[0];
                 expect(property instanceof CardViewDateItemModel).toBeTruthy('Property should be instance of CardViewDateItemModel');
-                expect(property.value).toBe('The Chariot Line');
+                expect(property.value).toBe(expectedValue);
+            });
+        });
+
+        it('should translate properly the value attribute for d:date', () => {
+            const expectedValue = new Date().toISOString();
+            aspectProperty.dataType = 'd:datetime';
+            aspects.push(aspect);
+
+            node.properties = { 'FAS:PLAGUE': expectedValue };
+
+            service.getAspectProperties(node).subscribe((cardViewAspect) => {
+                const property: CardViewDatetimeItemModel = <CardViewDatetimeItemModel> cardViewAspect[0].properties[0];
+                expect(property instanceof CardViewDatetimeItemModel).toBeTruthy('Property should be instance of CardViewDatetimeItemModel');
+                expect(property.value).toBe(expectedValue);
             });
         });
 
