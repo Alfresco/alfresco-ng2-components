@@ -46,6 +46,12 @@
     adf-start-task {
         .adf {
 
+            &-new-task-footer {
+                .mat-button {
+                    text-transform: uppercase !important;
+                }
+            }
+
             &-start-task-input-container .mat-input-wrapper {
                 padding-top: 8px;
             }
