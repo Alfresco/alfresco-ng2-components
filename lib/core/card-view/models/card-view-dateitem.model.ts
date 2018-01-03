@@ -23,11 +23,15 @@ import { CardViewDateItemProperties } from '../interfaces/card-view.interfaces';
 
 export class CardViewDateItemModel extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
     type: string = 'date';
-    format: string;
+    format: string = 'MMM DD YYYY';
 
     constructor(obj: CardViewDateItemProperties) {
         super(obj);
-        this.format = obj.format || 'MMM DD YYYY';
+
+        if (obj.format) {
+            this.format = obj.format;
+        }
+
     }
 
     get displayValue() {

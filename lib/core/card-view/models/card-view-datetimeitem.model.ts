@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-export * from './card-view-baseitem.model';
-export * from './card-view-boolitem.model';
-export * from './card-view-dateitem.model';
-export * from './card-view-datetimeitem.model';
-export * from './card-view-floatitem.model';
-export * from './card-view-intitem.model';
-export * from './card-view-mapitem.model';
-export * from './card-view-textitem.model';
+import { CardViewItem } from '../interfaces/card-view-item.interface';
+import { DynamicComponentModel } from '../../services/dynamic-component-mapper.service';
+import { CardViewDateItemModel } from './card-view-dateitem.model';
+
+export class CardViewDatetimeItemModel extends CardViewDateItemModel implements CardViewItem, DynamicComponentModel {
+    type: string = 'datetime';
+    format: string = 'MMM DD YYYY HH:mm';
+}
