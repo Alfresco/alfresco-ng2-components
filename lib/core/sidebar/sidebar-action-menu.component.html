@@ -1,16 +1,16 @@
-<button *ngIf="isExpanded()" mat-raised-button class="adf-sidebar-menu-action-button" [matMenuTriggerFor]="adfSidebarMenu">
-    <span *ngIf="title" class="adf-sidebar-menu-action-button-text">{{ title }}</span>
-    <ng-content select="[sidebar-menu-title-icon]"></ng-content>
-</button>
+<div class="adf-sidebar-action-menu">
+    <button *ngIf="isExpanded()" mat-raised-button class="adf-sidebar-action-menu-button" [matMenuTriggerFor]="adfSidebarMenu">
+        <span *ngIf="title" class="adf-sidebar-action-menu-text">{{ title }}</span>
+        <ng-content select="[sidebar-menu-title-icon]"></ng-content>
+    </button>
 
-<button mat-icon-button *ngIf="!isExpanded()" class="adf-sidebar-menu-action-icon" [matMenuTriggerFor]="adfSidebarMenu" disableRipple>
-    <div class="adf-side-bar-action-expand-icon">
+    <div *ngIf="!isExpanded()" class="adf-sidebar-action-menu-icon" [matMenuTriggerFor]="adfSidebarMenu">
         <ng-content select="[sidebar-menu-expand-icon]"></ng-content>
     </div>
-</button>
 
-<mat-menu #adfSidebarMenu="matMenu" [overlapTrigger]="false" yPosition="below">
-    <div class="adf-sidebar-action-menu-options">
-        <ng-content select="[sidebar-menu-options]"></ng-content>
-    </div>
-</mat-menu>
+    <mat-menu #adfSidebarMenu="matMenu" [overlapTrigger]="false" yPosition="below">
+        <div class="adf-sidebar-action-menu-options">
+            <ng-content select="[sidebar-menu-options]"></ng-content>
+        </div>
+    </mat-menu>
+</div>

@@ -3,13 +3,13 @@
         & .mat-raised-button {
             width: 272px;
             height: 37.5px;
+            font-weight: bold;
             background-color: #ff9100;
             color: #ffffff !important;
             border-radius: 4px;
             & mat-icon {
                 width: 24px;
                 height: 25px;
-                opacity: 0.54;
                 color: #ffffff !important;
             }
         }
@@ -17,40 +17,40 @@
             width: 100%;
             height: 20px;
             text-align: left;
-            opacity: 0.54;
-        }
-        .mat-menu-panel {
-            margin-top: 7.5px;
-            border-radius: 2px;
-            background-color: #ffffff;
-            box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.26), 0 0 8px 0 rgba(0, 0, 0, 0.12);
         }
     }
-}
-.adf-sidebar-menu-action-icon {
-    margin: 12px 0px 0px 12px;
-    opacity: 0.54;
-    cursor: pointer;
-    &:hover {
-        color: #ff9100;
-        opacity: inherit;
+    &-sidebar-action-menu-icon {
+        margin: 18px 0px 0px 20px;
+        opacity: 0.54;
+        cursor: pointer;
+        &:hover {
+            color: #ff9100;
+            opacity: inherit;
+        }
     }
-}
-.adf-sidebar-action-menu-options {
-    width: 272px;
-    opacity: 0.87;
-    text-align: left;
-    letter-spacing: -0.4px;
-    color: #000000;
-    .mat-menu-item {
+    &-sidebar-action-menu-options {
         width: 272px;
         opacity: 0.87;
         text-align: left;
         letter-spacing: -0.4px;
         color: #000000;
+        .mat-menu-item {
+            width: 272px;
+            opacity: 0.87;
+            text-align: left;
+            letter-spacing: -0.4px;
+            color: #000000;
+        }
+        .mat-menu-item:hover {
+            color: #ff9100 !important;
+            opacity: inherit;
+        }
     }
-    .mat-menu-item:hover {
-        color: #ff9100 !important;
-        opacity: inherit;
-    }
+}
+
+.mat-menu-panel {
+    margin-top: 7.5px;
+    border-radius: 2px;
+    background-color: #ffffff;
+    box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.26), 0 0 8px 0 rgba(0, 0, 0, 0.12);
 }

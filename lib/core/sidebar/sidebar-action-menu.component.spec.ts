@@ -50,7 +50,7 @@ describe('SidebarActionMenuComponent', () => {
         component.title = 'Fake-Title';
         component.expanded = true;
         fixture.detectChanges();
-        const title = element.querySelector('.adf-sidebar-menu-action-button-text');
+        const title = element.querySelector('.adf-sidebar-action-menu-text');
         fixture.detectChanges();
         expect(title.textContent).toBe('Fake-Title');
     });
@@ -118,14 +118,14 @@ describe('Custom SidebarActionMenuComponent', () => {
     it('should display the title', () => {
         component.title = 'FakeTitle';
         fixture.detectChanges();
-        const title = element.querySelector('.adf-sidebar-menu-action-button-text');
+        const title = element.querySelector('.adf-sidebar-action-menu-text');
         fixture.detectChanges();
         expect(title.textContent).toBe('FakeTitle');
     });
 
     it('should render the sidebar-menu-options', () => {
         fixture.detectChanges();
-        const actionButton = fixture.nativeElement.querySelector('.adf-sidebar-menu-action-button');
+        const actionButton = fixture.nativeElement.querySelector('.adf-sidebar-action-menu-button');
         const options = fixture.nativeElement.querySelectorAll('.adf-sidebar-action-menu-options');
         actionButton.click();
         fixture.detectChanges();
@@ -141,7 +141,7 @@ describe('Custom SidebarActionMenuComponent', () => {
         component.title = 'FakeTitle';
         component.expanded = false;
         fixture.detectChanges();
-        const actionIcon = fixture.nativeElement.querySelector('.adf-sidebar-menu-action-icon');
+        const actionIcon = fixture.nativeElement.querySelector('.adf-sidebar-action-menu-icon');
         expect(actionIcon).not.toBeNull();
         expect(actionIcon).toBeDefined();
         expect(actionIcon.innerText.trim()).toBe('queue');
