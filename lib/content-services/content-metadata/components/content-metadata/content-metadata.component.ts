@@ -53,16 +53,16 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
                 private nodesApi: NodesApiService,
                 private logService: LogService) {}
 
-    ngOnInit(): void {
+    ngOnInit() {
         this.cardViewUpdateService.itemUpdated$
             .switchMap(this.saveNode.bind(this))
             .subscribe(
                 node => this.node = node,
-                error => this.logService.error
+                error => this.logService.error(error)
             );
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
+    ngOnChanges(changes: SimpleChanges) {
         const nodeChange: SimpleChange = changes['node'];
         if (nodeChange) {
             const node = nodeChange.currentValue;

@@ -9,6 +9,7 @@
 
             <adf-card-view
                 class="adf-metadata-properties-basic"
+                data-automation-id="adf-metadata-properties-basic"
                 [properties]="basicProperties$ | async"
                 [editable]="editable">
             </adf-card-view>
@@ -16,7 +17,7 @@
 
         <ng-container *ngIf="expanded">
             <mat-progress-bar *ngIf="!(aspects$ | async)" mode="indeterminate"></mat-progress-bar>
-            <div *ngFor="let aspect of aspects$ | async" class="adf-metadata-properties-aspects">
+            <div *ngFor="let aspect of aspects$ | async" class="adf-metadata-properties-aspect">
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
                         <mat-panel-title>
