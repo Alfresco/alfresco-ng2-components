@@ -9,17 +9,17 @@
     </mat-card-content>
     <mat-card-footer class="adf-content-metadata-card-footer" fxLayout="row" fxLayoutAlign="space-between stretch">
         <div>
-            <button mat-icon-button (click)="toggleEdit()">
+            <button mat-icon-button (click)="toggleEdit()" data-automation-id="mata-data-card-toggle-edit">
                 <mat-icon>mode_edit</mat-icon>
             </button>
         </div>
-        <button mat-button (click)="toggleExpanded()">
+        <button mat-button (click)="toggleExpanded()" data-automation-id="mata-data-card-toggle-expand">
             <ng-container *ngIf="!expanded">
-                <span>{{ 'ADF_VIEWER.SIDEBAR.METADATA.MORE_INFORMATION' | translate }}</span>
+                <span data-automation-id="mata-data-card-toggle-expand-label">{{ 'ADF_VIEWER.SIDEBAR.METADATA.MORE_INFORMATION' | translate }}</span>
                 <mat-icon>keyboard_arrow_down</mat-icon>
             </ng-container>
             <ng-container *ngIf="expanded">
-                <span>{{ 'ADF_VIEWER.SIDEBAR.METADATA.LESS_INFORMATION' | translate }}</span>
+                <span data-automation-id="mata-data-card-toggle-expand-label">{{ 'ADF_VIEWER.SIDEBAR.METADATA.LESS_INFORMATION' | translate }}</span>
                 <mat-icon>keyboard_arrow_up</mat-icon>
             </ng-container>
         </button>
