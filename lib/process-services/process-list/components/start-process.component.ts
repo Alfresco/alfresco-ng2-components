@@ -59,10 +59,8 @@ export class StartProcessInstanceComponent implements OnChanges {
 
     errorMessageId: string = '';
 
-    constructor(private activitiProcess: ProcessService
-        ,private formRenderingService: FormRenderingService
-    ) {
-
+    constructor(private activitiProcess: ProcessService,
+                private formRenderingService: FormRenderingService) {
         this.formRenderingService.setComponentTypeResolver('upload', () => ShareAttachWidgetComponent, true);
     }
 

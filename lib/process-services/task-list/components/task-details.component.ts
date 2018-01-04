@@ -16,7 +16,7 @@
  */
 
 import { PeopleProcessService, UserProcessModel } from '@alfresco/adf-core';
-import { AuthenticationService, CardViewUpdateService, ClickNotification, LogService, UpdateNotification } from '@alfresco/adf-core';
+import { AuthenticationService, CardViewUpdateService, ClickNotification, LogService, UpdateNotification, FormRenderingService } from '@alfresco/adf-core';
 import { Component,
     EventEmitter,
     Input,
@@ -35,6 +35,7 @@ import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 import { CommentsComponent } from '../../comments';
+import { ShareAttachWidgetComponent } from '../../process-list/components/share-attach-widget.component';
 
 @Component({
     selector: 'adf-task-details',
@@ -141,9 +142,12 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     constructor(private taskListService: TaskListService,
                 private authService: AuthenticationService,
                 private peopleProcessService: PeopleProcessService,
+                private formRenderingService: FormRenderingService,
                 private logService: LogService,
                 private cardViewUpdateService: CardViewUpdateService,
                 private dialog: MatDialog) {
+
+        this.formRenderingService.setComponentTypeResolver('upload', () => ShareAttachWidgetComponent, true);
         this.peopleSearch$ = new Observable<UserProcessModel[]>(observer => this.peopleSearchObserver = observer).share();
     }
 

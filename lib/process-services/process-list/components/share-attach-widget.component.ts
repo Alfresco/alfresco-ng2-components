@@ -70,17 +70,29 @@ export class ShareAttachWidgetComponent extends UploadWidgetComponent implements
         return !!this.field.params && !!this.field.params.fileSource;
     }
 
-    isMultipleSourceUpload(){
-        return  !this.field.readOnly && this.isFileSourceConfigured();
+    isMultipleSourceUpload() {
+        return !this.field.readOnly && this.isFileSourceConfigured() && !this.isOnlyLocalSourceSelected();
     }
 
-    isAllFileSourceAllowed() {
+    isAllFileSourceSelected() {
         return this.field.params &&
             this.field.params.fileSource &&
             this.field.params.fileSource.serviceId === 'all-file-sources';
     }
 
-    isUploadButtonVisible(){
+    isOnlyLocalSourceSelected() {
+        return this.field.params &&
+            this.field.params.fileSource &&
+            this.field.params.fileSource.serviceId === 'local-file';
+    }
+
+    isSimpleUploadButton() {
+        return this.isUploadButtonVisible() &&
+               !this.isFileSourceConfigured() ||
+                this.isOnlyLocalSourceSelected();
+    }
+
+    isUploadButtonVisible() {
         return (!this.hasFile || this.multipleOption) && !this.field.readOnly;
     }
 
@@ -90,10 +102,24 @@ export class ShareAttachWidgetComponent extends UploadWidgetComponent implements
                !!this.field.params.fileSource.selectedFolder;
     }
 
+    openSelectDialogFromFileSource() {
+        let params = this.field.params;
+        if (params &&
+            params.fileSource &&
+            params.fileSource.selectedFolder) {
+            this.contentDialog.openFileBrowseDialogByFolderId(params.fileSource.selectedFolder.pathId).subscribe(
+                (selections: MinimalNodeEntryEntity[]) => {
+                    this.uploadFileFromShare(selections,
+                        this.field.params.fileSource.selectedFolder.accountId,
+                        this.field.params.fileSource.selectedFolder.siteId);
+                });
+        }
+    }
+
     openSelectDialog(repoId: string, repoName: string) {
         if (this.field) {
             let params = this.field.params;
-            const accountIdentifier = 'alfresco-'+repoId+repoName;
+        const accountIdentifier = 'alfresco-' + repoId + repoName;
             if (params &&
                 params.fileSource &&
                 params.fileSource.selectedFolder) {
@@ -104,15 +130,15 @@ export class ShareAttachWidgetComponent extends UploadWidgetComponent implements
                                 accountIdentifier);
                     });
             } else {
-                this.contentDialog.openFileBrowseDialogBySite().subscribe(
-                    (selections: MinimalNodeEntryEntity[]) => {
-                        this.uploadFileFromShare(selections,null,accountIdentifier);
-                    });
+        this.contentDialog.openFileBrowseDialogBySite().subscribe(
+            (selections: MinimalNodeEntryEntity[]) => {
+                this.uploadFileFromShare(selections, accountIdentifier);
+            });
             }
         }
     }
 
-    uploadFileFromShare(fileNodeList: MinimalNodeEntryEntity[], siteId: string, accountId: string) {
+    uploadFileFromShare(fileNodeList: MinimalNodeEntryEntity[], accountId: string, siteId?: string) {
         let filesSaved = [];
         Observable.from(fileNodeList)
             .mergeMap(node =>
@@ -122,12 +148,12 @@ export class ShareAttachWidgetComponent extends UploadWidgetComponent implements
             ).subscribe((res) => {
                 filesSaved.push(res);
             },
-            (error) => { this.logger.error(error) },
+            (error) => { this.logger.error(error); },
             () => {
                 this.field.value = filesSaved;
                 this.field.json.value = filesSaved;
             });
-            this.hasFile = true;
+        this.hasFile = true;
     }
 
 }

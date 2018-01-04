@@ -5,8 +5,8 @@
         <span *ngIf="isRequired()">*</span>
     </label>
     <div class="adf-attach-widget-container">
-        <div id="adf-attach-widget-simple-upload" *ngIf="isUploadButtonVisible() && !isFileSourceConfigured()">
-            <a mat-raised-button color="primary" [matMenuTriggerFor]="menu">
+        <div id="adf-attach-widget-simple-upload" *ngIf="isSimpleUploadButton() && isUploadButtonVisible()">
+            <a mat-raised-button color="primary">
                 {{ 'FORM.FIELD.UPLOAD' | translate }}
                 <mat-icon>file_upload</mat-icon>
                 <input #uploadFiles
@@ -19,9 +19,10 @@
         <div class="adf-attach-widget__menu-upload" *ngIf="isUploadButtonVisible() && isMultipleSourceUpload()">
             <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">
                     {{ 'FORM.FIELD.UPLOAD' | translate }}
+                    <mat-icon>attach_file</mat-icon>
             </button>
             <mat-menu #menu="matMenu" class="adf-attach-widget__menu-content">
-                <button mat-menu-item (click)="uploadFile.click()" *ngIf="isAllFileSourceAllowed()">
+                <button mat-menu-item (click)="uploadFile.click()" *ngIf="isAllFileSourceSelected()">
                     From HD
                     <mat-icon>file_upload</mat-icon>
                     <input #uploadFile
