@@ -54,6 +54,9 @@ export class StartProcessInstanceComponent implements OnChanges {
     processName: string;
 
     @Input()
+    processDefinitionId: any;
+
+    @Input()
     variables: ProcessInstanceVariable[];
 
     @Input()
@@ -155,9 +158,12 @@ export class StartProcessInstanceComponent implements OnChanges {
     }
 
     compareProcessDef = (processDefId) => {
-        if (this.processDefinitions && this.processDefinitions.length === 1 && processDefId === this.processDefinitions[0].id) {
+        if (this.compareProcessDefinitionId(processDefId)) {
             this.onProcessDefChange(processDefId);
             this.selectPanelClass = 'hidden';
+            return true;
+        } else if (this.processDefinitionId) {
+            this.onProcessDefChange(this.processDefinitionId);
             return true;
         }
     }
@@ -171,6 +177,10 @@ export class StartProcessInstanceComponent implements OnChanges {
         } else {
             this.resetSelectedProcessDefinition();
         }
+    }
+
+    public compareProcessDefinitionId(processDefId: any): boolean {
+        return this.processDefinitions && this.processDefinitions.length === 1 && processDefId === this.processDefinitions[0].id;
     }
 
     public cancelStartProcess() {

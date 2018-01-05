@@ -170,6 +170,33 @@ describe('StartProcessInstanceComponent', () => {
                 expect(selectElement.innerText).toBe('My Process 1');
             });
         });
+
+        it('should select processDefinition based on processDefinitionId input', () => {
+            let change = new SimpleChange(null, '123', true);
+            component.ngOnChanges({ 'appId': change });
+            component.processDefinitionId = 'my:process1';
+            component.processDefinitions = testProcessDefs;
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                let selectElement = fixture.nativeElement.querySelector('mat-select > .mat-select-trigger');
+                expect(selectElement).not.toBeNull();
+                expect(selectElement).toBeDefined();
+                expect(selectElement.innerText).toBe('My Process 1');
+            });
+        });
+
+        it('should hide the process dropdown if the value is already selected', () => {
+            let change = new SimpleChange(null, '123', true);
+            component.ngOnChanges({'appId': change});
+            component.processDefinitions[0] = testProcessDefRepr;
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                let selectElement = fixture.nativeElement.querySelector('mat-select > .mat-select-trigger');
+                expect(selectElement).not.toBeNull();
+                expect(selectElement).toBeDefined();
+                expect(selectElement.nativeElement.hide).toBeTruthy();
+            });
+        });
     });
 
     describe('input changes', () => {
