@@ -57,7 +57,3 @@ app/**/*.d.ts
 
 dist/
 coverage/
-
-# docker files
-docker-compose.yml
-Dockerfile
