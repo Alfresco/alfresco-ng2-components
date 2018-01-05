@@ -102,8 +102,11 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
             .subscribe((searchValue) => {
                 this.search(searchValue);
             });
-
         this.pageSize = this.preferences.paginationSize;
+    }
+
+    defaultSelectionValidation(entry: MinimalNodeEntryEntity) {
+        return true;
     }
 
     set chosenNode(value: MinimalNodeEntryEntity) {
@@ -122,6 +125,9 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     ngOnInit() {
         this.folderIdToShow = this.currentFolderId;
         this.paginationStrategy = PaginationStrategy.Infinite;
+        if (!this.isSelectionValid) {
+            this.isSelectionValid = this.defaultSelectionValidation.bind(this);
+        }
     }
 
     /**

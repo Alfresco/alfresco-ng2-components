@@ -20,7 +20,6 @@ import { Injectable, Type } from '@angular/core';
 
 import {
     AmountWidgetComponent,
-    // AttachWidgetComponent,
     CheckboxWidgetComponent,
     ContainerWidgetComponent,
     DateWidgetComponent,
@@ -28,7 +27,6 @@ import {
     DocumentWidgetComponent,
     DropdownWidgetComponent,
     DynamicTableWidgetComponent,
-    // FormFieldModel,
     FunctionalGroupWidgetComponent,
     HyperlinkWidgetComponent,
     MultilineTextWidgetComponentComponent,

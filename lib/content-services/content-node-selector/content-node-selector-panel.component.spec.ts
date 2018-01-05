@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /*tslint:disable: ban*/
+
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -72,6 +74,10 @@ describe('ContentNodeSelectorComponent', () => {
 
     function respondWithSearchResults(result) {
         _observer.next(result);
+    }
+
+    function returnAlwaysTrue(entry: MinimalNodeEntryEntity) {
+        return true;
     }
 
     function setupTestbed(plusProviders) {
@@ -597,6 +603,7 @@ describe('ContentNodeSelectorComponent', () => {
             beforeEach(() => {
                 const alfrescoContentService = TestBed.get(ContentService);
                 spyOn(alfrescoContentService, 'hasPermission').and.callFake(() => hasPermission);
+                component.isSelectionValid = returnAlwaysTrue.bind(this);
             });
 
             it('should become enabled after loading node with the necessary permissions', async(() => {
@@ -664,14 +671,14 @@ describe('ContentNodeSelectorComponent', () => {
                 fixture.detectChanges();
             });
 
-            it('should be disabled when resetting the chosen node', () => {
+            it('should emit null when the chosenNode is reset', () => {
                 hasPermission = true;
                 component.onNodeSelect({ detail: { node: { entry: <MinimalNodeEntryEntity> {} } } });
                 fixture.detectChanges();
 
                 component.select.subscribe((nodes) => {
                     expect(nodes).toBeDefined();
-                    expect(nodes).not.toBeNull();
+                    expect(nodes).toBeNull();
                 });
 
                 component.resetChosenNode();

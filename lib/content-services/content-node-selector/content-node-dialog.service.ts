@@ -91,7 +91,6 @@ export class ContentNodeDialogService {
             };
 
             this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');
-
             return select;
     }
 
