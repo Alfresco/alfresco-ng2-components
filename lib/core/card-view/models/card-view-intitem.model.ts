@@ -28,6 +28,8 @@ export class CardViewIntItemModel extends CardViewTextItemModel implements CardV
         super(obj);
 
         this.validators.push(new CardViewItemIntValidator());
-        this.value = parseInt(this.value, 10);
+        if (obj.value) {
+            this.value = parseInt(obj.value, 10);
+        }
     }
 }

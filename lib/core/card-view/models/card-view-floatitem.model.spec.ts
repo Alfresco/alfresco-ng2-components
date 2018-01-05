@@ -36,6 +36,13 @@ describe('CardViewFloatItemModel', () => {
         expect(itemModel.value).toBe(42.42);
     });
 
+    it('value should be parsed as float only if there is a value', () => {
+        properties.value = undefined;
+        const itemModel = new CardViewFloatItemModel(properties);
+
+        expect(itemModel.value).toBe(undefined);
+    });
+
     it('isValid should return the validator\'s value', () => {
         const itemModel = new CardViewFloatItemModel(properties);
 

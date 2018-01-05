@@ -28,6 +28,8 @@ export class CardViewFloatItemModel extends CardViewTextItemModel implements Car
         super(obj);
 
         this.validators.push(new CardViewItemFloatValidator());
-        this.value = parseFloat(this.value);
+        if (obj.value) {
+            this.value = parseFloat(obj.value);
+        }
     }
 }

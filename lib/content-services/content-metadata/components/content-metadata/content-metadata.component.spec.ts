@@ -138,32 +138,30 @@ describe('ContentMetadataComponent', () => {
         beforeEach(() => {
             expectedNode = Object.assign({}, node, { name: 'some-modified-value' });
             contentMetadataService = TestBed.get(ContentMetadataService);
+            fixture.detectChanges();
         });
 
         it('should load the basic properties on node change', () => {
             spyOn(contentMetadataService, 'getBasicProperties');
 
-            component.ngOnChanges({
-                node: new SimpleChange(node, expectedNode, false)
-            });
+            component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
             expect(contentMetadataService.getBasicProperties).toHaveBeenCalledWith(expectedNode);
         });
 
         it('should pass through the loaded basic properties to the card view', async(() => {
             const expectedProperties = [];
-            spyOn(contentMetadataService, 'getBasicProperties').and.returnValue(Observable.of(expectedProperties));
-
-            component.ngOnChanges({
-                node: new SimpleChange(node, expectedNode, false)
-            });
+            component.expanded = false;
             fixture.detectChanges();
+            spyOn(contentMetadataService, 'getBasicProperties').and.callFake(() => {
+                return Observable.of(expectedProperties);
+            });
 
-            fixture.whenStable().then(() => {
+            component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
+
+            component.basicProperties$.subscribe(() => {
                 fixture.detectChanges();
-                const basicPropertiesComponent = fixture.debugElement.query(By.css('[data-automation-id="adf-metadata-properties-basic"]')).componentInstance;
-                /*tslint:disable-next-line*/
-                console.log(basicPropertiesComponent);
+                const basicPropertiesComponent = fixture.debugElement.query(By.directive(CardViewComponent)).componentInstance;
                 expect(basicPropertiesComponent.properties).toBe(expectedProperties);
             });
         }));
@@ -171,11 +169,26 @@ describe('ContentMetadataComponent', () => {
         it('should load the aspect properties on node change', () => {
             spyOn(contentMetadataService, 'getAspectProperties');
 
-            component.ngOnChanges({
-                node: new SimpleChange(node, expectedNode, false)
-            });
+            component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
             expect(contentMetadataService.getAspectProperties).toHaveBeenCalledWith(expectedNode, 'custom-preset');
         });
+
+        it('should pass through the loaded aspect properties to the card view', async(() => {
+            const expectedProperties = [];
+            component.expanded = true;
+            fixture.detectChanges();
+            spyOn(contentMetadataService, 'getAspectProperties').and.callFake(() => {
+                return Observable.of([{ properties: expectedProperties }]);
+            });
+
+            component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
+
+            component.basicProperties$.subscribe(() => {
+                fixture.detectChanges();
+                const firstAspectPropertiesComponent = fixture.debugElement.query(By.css('.adf-metadata-properties-aspect adf-card-view')).componentInstance;
+                expect(firstAspectPropertiesComponent.properties).toBe(expectedProperties);
+            });
+        }));
     });
 });

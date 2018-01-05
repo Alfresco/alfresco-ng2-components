@@ -36,6 +36,13 @@ describe('CardViewIntItemModel', () => {
         expect(itemModel.value).toBe(42);
     });
 
+    it('value should be parsed as integer only if there is a value', () => {
+        properties.value = undefined;
+        const itemModel = new CardViewIntItemModel(properties);
+
+        expect(itemModel.value).toBe(undefined);
+    });
+
     it('isValid should return the validator\'s value', () => {
         const itemModel = new CardViewIntItemModel(properties);
 

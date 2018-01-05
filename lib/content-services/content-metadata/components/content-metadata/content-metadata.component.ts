@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges, SimpleChange, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, SimpleChange, ViewEncapsulation } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { CardViewItem, CardViewUpdateService, NodesApiService, LogService } from '@alfresco/adf-core';
@@ -27,7 +27,6 @@ import { CardViewAspect } from '../../interfaces/content-metadata.interfaces';
     templateUrl: './content-metadata.component.html',
     styleUrls: ['./content-metadata.component.scss'],
     host: { 'class': 'adf-content-metadata' },
-    changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [ CardViewUpdateService ]
 })
