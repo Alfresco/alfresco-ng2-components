@@ -22,7 +22,23 @@ describe('FileSizePipe', () => {
     let pipe: FileSizePipe;
 
     beforeEach(() => {
-        pipe = new FileSizePipe();
+        const translation: any = {
+            instant(key) {
+                const enUs = {
+                    'CORE.FILE_SIZE.BYTES': 'Bytes',
+                    'CORE.FILE_SIZE.KB': 'KB',
+                    'CORE.FILE_SIZE.MB': 'MB',
+                    'CORE.FILE_SIZE.GB': 'GB',
+                    'CORE.FILE_SIZE.TB': 'TB',
+                    'CORE.FILE_SIZE.PB': 'PB',
+                    'CORE.FILE_SIZE.EB': 'EB',
+                    'CORE.FILE_SIZE.ZB': 'ZB',
+                    'CORE.FILE_SIZE.YB': 'YB'
+                };
+                return enUs[key];
+            }
+        };
+        pipe = new FileSizePipe(translation);
     });
 
     it('returns empty string with invalid input', () => {

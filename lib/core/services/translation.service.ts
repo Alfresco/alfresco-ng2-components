@@ -91,4 +91,8 @@ export class TranslationService {
     get(key: string|Array<string>, interpolateParams?: Object): Observable<string|any> {
         return this.translate.get(key, interpolateParams);
     }
+
+    instant(key: string | Array<string>, interpolateParams?: Object): string | any {
+        return this.translate.instant(key, interpolateParams);
+    }
 }
