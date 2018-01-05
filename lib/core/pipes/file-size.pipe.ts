@@ -16,11 +16,16 @@
  */
 
 import { Pipe, PipeTransform } from '@angular/core';
+import { TranslationService } from '../services/translation.service';
 
 @Pipe({
-    name: 'adfFileSize'
+    name: 'adfFileSize',
+    pure: false
 })
 export class FileSizePipe implements PipeTransform {
+
+    constructor(private translation: TranslationService) {
+    }
 
     transform(bytes: number, decimals: number = 2): string {
         if (bytes == null || bytes === undefined) {
@@ -33,10 +38,12 @@ export class FileSizePipe implements PipeTransform {
 
         const k = 1024,
             dm = decimals || 2,
-            sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+            sizes = ['BYTES', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
             i = Math.floor(Math.log(bytes) / Math.log(k));
 
-        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+        const i18nSize = this.translation.instant(`CORE.FILE_SIZE.${sizes[i]}`);
+
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + i18nSize;
     }
 
 }

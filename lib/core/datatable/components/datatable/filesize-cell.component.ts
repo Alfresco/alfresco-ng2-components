@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { DataTableCellComponent } from './datatable-cell.component';
 
 @Component({
     selector: 'adf-filesize-cell',
-    changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <ng-container>
             <span [title]="tooltip">{{ value | adfFileSize }}</span>
