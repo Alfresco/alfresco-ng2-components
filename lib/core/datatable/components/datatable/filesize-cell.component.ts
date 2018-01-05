@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { DataTableCellComponent } from './datatable-cell.component';
 
 @Component({
