@@ -20,6 +20,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MatDatepickerModule, MatIconModule, MatInputModule, MatNativeDateModule } from '@angular/material';
+import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
 import { By } from '@angular/platform-browser';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 
@@ -51,6 +52,8 @@ describe('CardViewComponent', () => {
                 MatIconModule,
                 MatInputModule,
                 MatNativeDateModule,
+                MatDatetimepickerModule,
+                MatNativeDatetimeModule,
                 FormsModule,
                 TranslateModule.forRoot({
                     loader: {
