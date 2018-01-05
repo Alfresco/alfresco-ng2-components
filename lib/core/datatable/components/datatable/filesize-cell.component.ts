@@ -20,7 +20,6 @@ import { DataTableCellComponent } from './datatable-cell.component';
 
 @Component({
     selector: 'adf-filesize-cell',
-    changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <ng-container>
             <span [title]="tooltip">{{ value | adfFileSize }}</span>

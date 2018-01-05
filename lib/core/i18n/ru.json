@@ -1,5 +1,16 @@
 {
   "CORE": {
+    "FILE_SIZE": {
+      "BYTES": "Б",
+      "KB": "кБ",
+      "MB": "МБ",
+      "GB": "ГБ",
+      "TB": "ТБ",
+      "PB": "ПБ",
+      "EB": "ЭБ",
+      "ZB": "ЗБ",
+      "YB": "ЙБ"
+    },
     "PAGINATION": {
       "ITEMS_RANGE": "Отображается {{ range }} из {{ total }}",
       "ITEMS_PER_PAGE": "Элементов на странице",
