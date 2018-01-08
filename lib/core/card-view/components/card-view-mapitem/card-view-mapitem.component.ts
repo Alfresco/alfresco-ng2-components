@@ -29,7 +29,14 @@ export class CardViewMapItemComponent {
     @Input()
     property: CardViewMapItemModel;
 
+    @Input()
+    displayEmpty: boolean = true;
+
     constructor(private cardViewUpdateService: CardViewUpdateService) {}
+
+    showProperty() {
+        return this.displayEmpty || !this.property.isEmpty();
+    }
 
     isClickable() {
         return this.property.clickable;

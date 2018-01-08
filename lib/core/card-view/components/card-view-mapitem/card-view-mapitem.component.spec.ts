@@ -77,14 +77,15 @@ describe('CardViewMapItemComponent', () => {
         TestBed.resetTestingModule();
     });
 
-    it('should render the default if the value is empty', () => {
+    it('should render the default if the value is empty and displayEmpty is true', () => {
         component.property = new CardViewMapItemModel({
             label: 'Map label',
             value: null,
             key: 'mapkey',
-            default: 'Fake default'
+            default: 'Fake default',
+            clickable: false
         });
-
+        component.displayEmpty = true;
         fixture.detectChanges();
 
         let labelValue = debug.query(By.css('.adf-property-label'));
@@ -94,6 +95,25 @@ describe('CardViewMapItemComponent', () => {
         let value = debug.query(By.css(`[data-automation-id="card-mapitem-value-${component.property.key}"]`));
         expect(value).not.toBeNull();
         expect(value.nativeElement.innerText.trim()).toBe('Fake default');
+    });
+
+    it('should NOT render the default if the value is empty and displayEmpty is false', () => {
+        component.property = new CardViewMapItemModel({
+            label: 'Map label',
+            value: null,
+            key: 'mapkey',
+            default: 'Fake default',
+            clickable: false
+        });
+        component.displayEmpty = false;
+        fixture.detectChanges();
+
+        let labelValue = debug.query(By.css('.adf-property-label'));
+        expect(labelValue).toBeNull();
+
+        let value = debug.query(By.css(`[data-automation-id="card-mapitem-value-${component.property.key}"]`));
+        expect(value).not.toBeNull();
+        expect(value.nativeElement.innerText.trim()).toBe('');
     });
 
     it('should render the label and value', () => {

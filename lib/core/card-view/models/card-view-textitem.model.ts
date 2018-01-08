@@ -32,7 +32,11 @@ export class CardViewTextItemModel extends CardViewBaseItemModel implements Card
     }
 
     get displayValue() {
-        return this.applyPipes(this.value);
+        if (this.isEmpty()) {
+            return this.default;
+        } else {
+            return this.applyPipes(this.value);
+        }
     }
 
     private applyPipes(displayValue) {

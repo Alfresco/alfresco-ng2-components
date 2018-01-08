@@ -29,7 +29,10 @@ export class CardViewTextItemComponent implements OnChanges {
     property: CardViewTextItemModel;
 
     @Input()
-    editable: boolean;
+    editable: boolean = false;
+
+    @Input()
+    displayEmpty: boolean = true;
 
     @ViewChild('editorInput')
     private editorInput: any;
@@ -42,6 +45,10 @@ export class CardViewTextItemComponent implements OnChanges {
 
     ngOnChanges() {
         this.editedValue = this.property.value;
+    }
+
+    showProperty() {
+        return this.displayEmpty || !this.property.isEmpty();
     }
 
     isEditable() {

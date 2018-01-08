@@ -29,4 +29,7 @@ export class CardViewComponent {
 
     @Input()
     editable: boolean;
+
+    @Input()
+    displayEmpty: boolean;
 }

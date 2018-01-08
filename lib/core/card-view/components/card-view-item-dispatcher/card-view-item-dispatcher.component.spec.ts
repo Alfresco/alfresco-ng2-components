@@ -79,6 +79,7 @@ describe('CardViewItemDispatcherComponent', () => {
             }
         };
         component.editable = true;
+        component.displayEmpty = true;
 
         fixture.detectChanges();
         component.ngOnChanges({});
@@ -107,20 +108,23 @@ describe('CardViewItemDispatcherComponent', () => {
             expect(shinyCustomElementItemComponent.length).toEqual(1);
         });
 
-        it('should pass through the property and editable parameters', () => {
+        it('should pass through the property, editable and displayEmpty parameters', () => {
             const shinyCustomElementItemComponent = fixture.debugElement.query(By.css('whatever-you-want-to-have')).componentInstance;
 
             expect(shinyCustomElementItemComponent.property).toBe(component.property);
             expect(shinyCustomElementItemComponent.editable).toBe(component.editable);
+            expect(shinyCustomElementItemComponent.displayEmpty).toBe(component.displayEmpty);
         });
 
         it('should update the subcomponent\'s input parameters', () => {
             const expectedEditable = false,
+                expectedDisplayEmpty = true,
                 expectedProperty = <CardViewItem> {},
                 expectedCustomInput = 1;
 
             component.ngOnChanges({
                 editable: new SimpleChange(true, expectedEditable, false),
+                displayEmpty: new SimpleChange(false, expectedDisplayEmpty, false),
                 property: new SimpleChange(null, expectedProperty, false),
                 customInput: new SimpleChange(0, expectedCustomInput, false)
             });
@@ -128,6 +132,7 @@ describe('CardViewItemDispatcherComponent', () => {
             const shinyCustomElementItemComponent = fixture.debugElement.query(By.css('whatever-you-want-to-have')).componentInstance;
             expect(shinyCustomElementItemComponent.property).toBe(expectedProperty);
             expect(shinyCustomElementItemComponent.editable).toBe(expectedEditable);
+            expect(shinyCustomElementItemComponent.displayEmpty).toBe(expectedDisplayEmpty);
             expect(shinyCustomElementItemComponent.customInput).toBe(expectedCustomInput);
         });
     });

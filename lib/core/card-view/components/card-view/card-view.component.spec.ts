@@ -140,7 +140,7 @@ describe('CardViewComponent', () => {
         });
     }));
 
-    it('should NOT render anything if the value is empty and not editable', async(() => {
+    it('should NOT render anything if the value is empty, not editable and displayEmpty is false', async(() => {
         component.properties = [new CardViewTextItemModel({
             label: 'My default label',
             value: null,
@@ -149,6 +149,7 @@ describe('CardViewComponent', () => {
             editable: false
         })];
         component.editable = true;
+        component.displayEmpty = false;
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
@@ -163,6 +164,31 @@ describe('CardViewComponent', () => {
         });
     }));
 
+    it('should render the default value if the value is empty, not editable and displayEmpty is true', async(() => {
+        component.properties = [new CardViewTextItemModel({
+            label: 'My default label',
+            value: null,
+            default: 'default value',
+            key: 'some-key',
+            editable: false
+        })];
+        component.editable = true;
+        component.displayEmpty = true;
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+
+            let labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
+            expect(labelValue).not.toBeNull();
+            expect(labelValue.nativeElement.innerText).toBe('My default label');
+
+            let value = fixture.debugElement.query(By.css('.adf-property-value [data-automation-id="card-textitem-value-some-key"]'));
+            expect(value).not.toBeNull();
+            expect(value.nativeElement.innerText.trim()).toBe('default value');
+        });
+    }));
+
     it('should render the default value if the value is empty and is editable', async(() => {
         component.properties = [new CardViewTextItemModel({
             label: 'My default label',
@@ -172,6 +198,7 @@ describe('CardViewComponent', () => {
             editable: true
         })];
         component.editable = true;
+        component.displayEmpty = false;
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {

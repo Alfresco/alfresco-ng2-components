@@ -90,7 +90,7 @@ describe('CardViewDateItemComponent', () => {
         expect(value.nativeElement.innerText.trim()).toBe('Jul 10 2017');
     });
 
-    it('should NOT render the default as value if the value is empty and editable:false', () => {
+    it('should NOT render the default as value if the value is empty, editable:false and displayEmpty is false', () => {
         component.property = new CardViewDateItemModel ({
             label: 'Date label',
             value: '',
@@ -100,11 +100,30 @@ describe('CardViewDateItemComponent', () => {
             editable: false
         });
         component.editable = true;
+        component.displayEmpty = false;
         fixture.detectChanges();
 
         let value = fixture.debugElement.query(By.css('.adf-property-value'));
         expect(value).not.toBeNull();
         expect(value.nativeElement.innerText.trim()).toBe('');
+    });
+
+    it('should render the default as value if the value is empty, editable:false and displayEmpty is true', () => {
+        component.property = new CardViewDateItemModel ({
+            label: 'Date label',
+            value: '',
+            key: 'datekey',
+            default: 'FAKE-DEFAULT-KEY',
+            format: '',
+            editable: false
+        });
+        component.editable = true;
+        component.displayEmpty = true;
+        fixture.detectChanges();
+
+        let value = fixture.debugElement.query(By.css('.adf-property-value'));
+        expect(value).not.toBeNull();
+        expect(value.nativeElement.innerText.trim()).toBe('FAKE-DEFAULT-KEY');
     });
 
     it('should render the default as value if the value is empty and editable:true', () => {

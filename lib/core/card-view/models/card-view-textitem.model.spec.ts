@@ -40,10 +40,18 @@ describe('CardViewTextItemModel', () => {
 
     describe('displayValue', () => {
 
-        it('should return the extension if file has it', () => {
+        it('should return the value if it is present', () => {
             const itemModel = new CardViewTextItemModel(properties);
 
             expect(itemModel.displayValue).toBe('Banuk');
+        });
+
+        it('should return the default value if the value is not present', () => {
+            properties.value = undefined;
+            properties.default = 'default-value';
+            const itemModel = new CardViewTextItemModel(properties);
+
+            expect(itemModel.displayValue).toBe('default-value');
         });
 
         it('should apply a pipe on the value if it is present', () => {

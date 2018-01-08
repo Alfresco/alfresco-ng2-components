@@ -39,6 +39,9 @@ export class CardViewItemDispatcherComponent implements OnChanges {
     @Input()
     editable: boolean;
 
+    @Input()
+    displayEmpty: boolean;
+
     @ViewChild(CardViewContentProxyDirective)
     private content: CardViewContentProxyDirective;
 
@@ -88,6 +91,7 @@ export class CardViewItemDispatcherComponent implements OnChanges {
 
         this.componentReference.instance.editable = this.editable;
         this.componentReference.instance.property = this.property;
+        this.componentReference.instance.displayEmpty = this.displayEmpty;
     }
 
     private proxy(methodName, ...args) {

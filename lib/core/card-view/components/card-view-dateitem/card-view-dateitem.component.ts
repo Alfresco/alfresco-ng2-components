@@ -42,7 +42,10 @@ export class CardViewDateItemComponent implements OnInit {
     property: CardViewDateItemModel;
 
     @Input()
-    editable: boolean;
+    editable: boolean = false;
+
+    @Input()
+    displayEmpty: boolean = true;
 
     @ViewChild(MatDatetimepicker)
     public datepicker: MatDatetimepicker<any>;
@@ -64,7 +67,10 @@ export class CardViewDateItemComponent implements OnInit {
         if (this.property.value) {
             this.valueDate = moment(this.property.value, this.SHOW_FORMAT);
         }
+    }
 
+    showProperty() {
+        return this.displayEmpty || !this.property.isEmpty();
     }
 
     isEditable() {
