@@ -49,7 +49,8 @@ import {
     TaskDetailsEvent,
     TaskFiltersComponent,
     TaskListComponent,
-    TaskListService
+    TaskListService,
+    ProcessService
 } from '@alfresco/adf-process-services';
 import { LogService } from '@alfresco/adf-core';
 import { AlfrescoApiService, UserPreferencesService } from '@alfresco/adf-core';
@@ -118,7 +119,15 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         maxItems: 10,
         totalItems: 0
     };
+
+    processPagination: Pagination = {
+        skipCount: 0,
+        maxItems: 10,
+        totalItems: 0
+    };
+
     taskPage = 0;
+    processPage = 0;
     processSchemaColumns: any[] = [];
 
     supportedPages: number[];
@@ -146,6 +155,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
                 private route: ActivatedRoute,
                 private router: Router,
                 private taskListService: TaskListService,
+                private processListService: ProcessService,
                 private apiService: AlfrescoApiService,
                 private logService: LogService,
                 formRenderingService: FormRenderingService,
@@ -155,6 +165,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.dataTasks.setSorting(new DataSorting('created', 'desc'));
         this.supportedPages = this.preferenceService.getDifferentPageSizes();
         this.taskPagination.maxItems = this.preferenceService.paginationSize;
+        this.processPagination.maxItems = this.preferenceService.paginationSize;
 
         // Uncomment this line to replace all 'text' field editors with custom component
         // formRenderingService.setComponentTypeResolver('text', () => CustomEditorComponent, true);
@@ -194,10 +205,18 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.taskPagination.skipCount = pagination.skipCount;
         this.taskPage--;
     }
+    onProcessPrevPage(pagination: Pagination): void {
+        this.processPagination.skipCount = pagination.skipCount;
+        this.processPage--;
+    }
 
     onNextPage(pagination: Pagination): void {
         this.taskPagination.skipCount = pagination.skipCount;
         this.taskPage++;
+    }
+    onProcessNextPage(pagination: Pagination): void {
+        this.processPagination.skipCount = pagination.skipCount;
+        this.processPage++;
     }
 
     onChangePageSize(pagination: Pagination): void {
@@ -207,12 +226,26 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.taskPagination.skipCount = skipCount;
         this.preferenceService.paginationSize = maxItems;
     }
+    onProcessChangePageSize(pagination: Pagination): void {
+        const { skipCount, maxItems } = pagination;
+        this.processPage = this.currentPage(skipCount, maxItems);
+        this.processPagination.maxItems = maxItems;
+        this.processPagination.skipCount = skipCount;
+        this.preferenceService.paginationSize = maxItems;
+    }
 
     onChangePageNumber(pagination: Pagination): void {
         const { maxItems, skipCount } = pagination;
         this.taskPage = this.currentPage(skipCount, maxItems);
         this.taskPagination.maxItems = maxItems;
         this.taskPagination.skipCount = skipCount;
+    }
+
+    onProcessChangePageNumber(pagination: Pagination): void {
+        const { maxItems, skipCount } = pagination;
+        this.processPage = this.currentPage(skipCount, maxItems);
+        this.processPagination.maxItems = maxItems;
+        this.processPagination.skipCount = skipCount;
     }
 
     currentPage(skipCount: number, maxItems: number): number {
@@ -233,6 +266,24 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
                     maxItems: this.taskPagination.maxItems,
                     skipCount: this.taskPagination.skipCount,
                     totalItems: tasks.total
+                });
+            }, (err) => {
+                this.logService.log('err' + err);
+            });
+
+        this.processListService.processList$.subscribe(
+            (processes) => {
+                this.processPagination = {
+                    count: processes.data.length,
+                    maxItems: this.processPagination.maxItems,
+                    skipCount: this.processPagination.skipCount,
+                    totalItems: processes.total
+                };
+                this.logService.log({
+                    count: processes.data.length,
+                    maxItems: this.processPagination.maxItems,
+                    skipCount: this.processPagination.skipCount,
+                    totalItems: processes.total
                 });
             }, (err) => {
                 this.logService.log('err' + err);
@@ -262,6 +313,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     onTaskFilterClick(filter: FilterRepresentationModel): void {
         this.applyTaskFilter(filter);
+        this.resetTaskPaginationPage();
     }
 
     onReportClick(event: any): void {
@@ -277,6 +329,11 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         if (filter && this.taskList) {
             this.taskList.hasCustomDataSource = false;
         }
+    }
+
+    resetTaskPaginationPage() {
+        this.taskPage = 0;
+        this.taskPagination.skipCount = 0;
     }
 
     onStartTaskSuccess(event: any): void {
@@ -296,6 +353,12 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     onProcessFilterClick(event: ProcessInstanceFilterRepresentation): void {
         this.currentProcessInstanceId = null;
         this.processFilter = event;
+        this.resetProcessPaginationPage();
+    }
+
+    resetProcessPaginationPage() {
+        this.processPage = 0;
+        this.processPagination.skipCount = 0;
     }
 
     onSuccessProcessFilterList(event: ProcessInstanceFilterRepresentation[]): void {

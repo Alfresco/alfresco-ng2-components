@@ -16,13 +16,13 @@
  */
 
 import { DataColumn, DataRowEvent, DataSorting, DataTableAdapter, ObjectDataColumn, ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/adf-core';
-import { AppConfigService, DataColumnListComponent } from '@alfresco/adf-core';
+import { AppConfigService, DataColumnListComponent, PaginationComponent } from '@alfresco/adf-core';
 import { DatePipe } from '@angular/common';
 import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
-import { ProcessInstance } from '../models/process-instance.model';
 import { processPresetsDefaultModel } from '../models/process-preset.model';
 import { ProcessService } from '../services/process.service';
+import { ProcessListModel } from '../models/process-list.model';
 
 @Component({
     selector: 'adf-process-instance-list',
@@ -56,11 +56,17 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     @Input()
     data: DataTableAdapter;
 
+    @Input()
+    page: number = 0;
+
+    @Input()
+    size: number = PaginationComponent.DEFAULT_PAGINATION.maxItems;
+
     @Output()
     rowClick: EventEmitter<string> = new EventEmitter<string>();
 
     @Output()
-    success: EventEmitter<ProcessInstance[]> = new EventEmitter<ProcessInstance[]>();
+    success: EventEmitter<ProcessListModel> = new EventEmitter<ProcessListModel>();
 
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
@@ -68,6 +74,8 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     currentInstanceId: string;
     isLoading: boolean = true;
     layoutPresets = {};
+
+    isStreamLoaded = false;
 
     constructor(private processService: ProcessService,
                 private appConfig: AppConfigService) {
@@ -104,33 +112,29 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
         }
     }
 
-    ngOnChanges(changes: SimpleChanges) {
-        if (this.isPropertyChanged(changes)) {
-            this.reload();
-        }
+    ngOnInit() {
+        this.initStream();
     }
 
-    private isPropertyChanged(changes: SimpleChanges): boolean {
-        let changed: boolean = false;
+    ngOnChanges(changes: SimpleChanges) {
+        this.initStream();
+    }
 
-        let appId = changes['appId'];
-        let processDefinitionKey = changes['processDefinitionKey'];
-        let state = changes['state'];
-        let sort = changes['sort'];
-        let name = changes['name'];
-
-        if (appId && appId.currentValue) {
-            changed = true;
-        } else if (processDefinitionKey && processDefinitionKey.currentValue) {
-            changed = true;
-        } else if (state && state.currentValue) {
-            changed = true;
-        } else if (sort && sort.currentValue) {
-            changed = true;
-        } else if (name && name.currentValue) {
-            changed = true;
+    initStream() {
+        if (!this.isStreamLoaded) {
+            this.isStreamLoaded = true;
+            this.processService.processList$.subscribe(
+                (processes) => {
+                    let instancesRow = this.createDataRow(processes.data);
+                    this.renderInstances(instancesRow);
+                    this.selectFirst();
+                    this.success.emit(processes);
+                    this.isLoading = false;
+                }, (error) => {
+                    this.error.emit(error);
+                    this.isLoading = false;
+                });
         }
-        return changed;
     }
 
     public reload() {
@@ -141,18 +145,7 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     private load(requestNode: ProcessFilterParamRepresentationModel) {
         this.isLoading = true;
         this.processService.getProcessInstances(requestNode, this.processDefinitionKey)
-            .subscribe(
-                (response) => {
-                    let instancesRow = this.createDataRow(response);
-                    this.renderInstances(instancesRow);
-                    this.selectFirst();
-                    this.success.emit(response);
-                    this.isLoading = false;
-                },
-                error => {
-                    this.error.emit(error);
-                    this.isLoading = false;
-                });
+            .subscribe();
     }
 
     /**
@@ -285,7 +278,10 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
         let requestNode = {
             appDefinitionId: this.appId,
             state: this.state,
-            sort: this.sort
+            sort: this.sort,
+            page: this.page,
+            size: this.size,
+            start: 0
         };
         return new ProcessFilterParamRepresentationModel(requestNode);
     }
