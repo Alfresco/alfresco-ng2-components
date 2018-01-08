@@ -30,6 +30,9 @@ export class ContentMetadataCardComponent {
     node: MinimalNodeEntryEntity;
 
     @Input()
+    displayEmpty: boolean = false;
+
+    @Input()
     preset: string;
 
     editable: boolean = false;

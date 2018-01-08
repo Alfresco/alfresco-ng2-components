@@ -85,49 +85,67 @@ describe('ContentMetadataComponent', () => {
         TestBed.resetTestingModule();
     });
 
-    it('should save the node on itemUpdate', () => {
-        const property = <CardViewBaseItemModel> { key: 'property-key', value: 'original-value' },
-            updateService: CardViewUpdateService = fixture.debugElement.injector.get(CardViewUpdateService),
-            nodesApiService: NodesApiService = TestBed.get(NodesApiService);
-        spyOn(nodesApiService, 'updateNode');
+    describe('Default input param values', () => {
 
-        updateService.update(property, 'updated-value');
+        it('should have editable input param as false by default', () => {
+            expect(component.editable).toBe(false);
+        });
 
-        expect(nodesApiService.updateNode).toHaveBeenCalledWith('node-id', {
-            'property-key': 'updated-value'
+        it('should have displayEmpty input param as false by default', () => {
+            expect(component.displayEmpty).toBe(false);
+        });
+
+        it('should have expanded input param as false by default', () => {
+            expect(component.expanded).toBe(false);
         });
     });
 
-    it('should update the node on successful save', async(() => {
-        const property = <CardViewBaseItemModel> { key: 'property-key', value: 'original-value' },
-            updateService: CardViewUpdateService = fixture.debugElement.injector.get(CardViewUpdateService),
-            nodesApiService: NodesApiService = TestBed.get(NodesApiService),
-            expectedNode = Object.assign({}, node, { name: 'some-modified-value' });
+    describe('Saving', () => {
 
-        spyOn(nodesApiService, 'updateNode').and.callFake(() => {
-            return Observable.of(expectedNode);
+        it('should save the node on itemUpdate', () => {
+            const property = <CardViewBaseItemModel> { key: 'property-key', value: 'original-value' },
+                updateService: CardViewUpdateService = fixture.debugElement.injector.get(CardViewUpdateService),
+                nodesApiService: NodesApiService = TestBed.get(NodesApiService);
+            spyOn(nodesApiService, 'updateNode');
+
+            updateService.update(property, 'updated-value');
+
+            expect(nodesApiService.updateNode).toHaveBeenCalledWith('node-id', {
+                'property-key': 'updated-value'
+            });
         });
 
-        updateService.update(property, 'updated-value');
+        it('should update the node on successful save', async(() => {
+            const property = <CardViewBaseItemModel> { key: 'property-key', value: 'original-value' },
+                updateService: CardViewUpdateService = fixture.debugElement.injector.get(CardViewUpdateService),
+                nodesApiService: NodesApiService = TestBed.get(NodesApiService),
+                expectedNode = Object.assign({}, node, { name: 'some-modified-value' });
 
-        fixture.whenStable().then(() => {
-            expect(component.node).toBe(expectedNode);
+            spyOn(nodesApiService, 'updateNode').and.callFake(() => {
+                return Observable.of(expectedNode);
+            });
+
+            updateService.update(property, 'updated-value');
+
+            fixture.whenStable().then(() => {
+                expect(component.node).toBe(expectedNode);
+            });
+        }));
+
+        it('should throw error on unsuccessful save', () => {
+            const property = <CardViewBaseItemModel> { key: 'property-key', value: 'original-value' },
+                updateService: CardViewUpdateService = fixture.debugElement.injector.get(CardViewUpdateService),
+                nodesApiService: NodesApiService = TestBed.get(NodesApiService),
+                logService: LogService = TestBed.get(LogService);
+
+            spyOn(nodesApiService, 'updateNode').and.callFake(() => {
+                return ErrorObservable.create(new Error('My bad'));
+            });
+
+            updateService.update(property, 'updated-value');
+
+            expect(logService.error).toHaveBeenCalledWith(new Error('My bad'));
         });
-    }));
-
-    it('should throw error on unsuccessful save', () => {
-        const property = <CardViewBaseItemModel> { key: 'property-key', value: 'original-value' },
-            updateService: CardViewUpdateService = fixture.debugElement.injector.get(CardViewUpdateService),
-            nodesApiService: NodesApiService = TestBed.get(NodesApiService),
-            logService: LogService = TestBed.get(LogService);
-
-        spyOn(nodesApiService, 'updateNode').and.callFake(() => {
-            return ErrorObservable.create(new Error('My bad'));
-        });
-
-        updateService.update(property, 'updated-value');
-
-        expect(logService.error).toHaveBeenCalledWith(new Error('My bad'));
     });
 
     describe('Properties loading', () => {
@@ -166,6 +184,20 @@ describe('ContentMetadataComponent', () => {
             });
         }));
 
+        it('should pass through the displayEmpty to the card view of basic properties', async(() => {
+            component.displayEmpty = false;
+            fixture.detectChanges();
+            spyOn(contentMetadataService, 'getBasicProperties').and.returnValue(Observable.of([]));
+
+            component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
+
+            component.basicProperties$.subscribe(() => {
+                fixture.detectChanges();
+                const basicPropertiesComponent = fixture.debugElement.query(By.directive(CardViewComponent)).componentInstance;
+                expect(basicPropertiesComponent.displayEmpty).toBe(false);
+            });
+        }));
+
         it('should load the aspect properties on node change', () => {
             spyOn(contentMetadataService, 'getAspectProperties');
 
@@ -188,6 +220,21 @@ describe('ContentMetadataComponent', () => {
                 fixture.detectChanges();
                 const firstAspectPropertiesComponent = fixture.debugElement.query(By.css('.adf-metadata-properties-aspect adf-card-view')).componentInstance;
                 expect(firstAspectPropertiesComponent.properties).toBe(expectedProperties);
+            });
+        }));
+
+        it('should pass through the displayEmpty to the card view of aspect properties', async(() => {
+            component.expanded = true;
+            component.displayEmpty = false;
+            fixture.detectChanges();
+            spyOn(contentMetadataService, 'getAspectProperties').and.returnValue(Observable.of([{ properties: [] }]));
+
+            component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
+
+            component.basicProperties$.subscribe(() => {
+                fixture.detectChanges();
+                const basicPropertiesComponent = fixture.debugElement.query(By.css('.adf-metadata-properties-aspect adf-card-view')).componentInstance;
+                expect(basicPropertiesComponent.displayEmpty).toBe(false);
             });
         }));
     });

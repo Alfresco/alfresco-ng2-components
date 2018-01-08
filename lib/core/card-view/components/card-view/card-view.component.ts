@@ -31,5 +31,5 @@ export class CardViewComponent {
     editable: boolean;
 
     @Input()
-    displayEmpty: boolean;
+    displayEmpty: boolean = true;
 }

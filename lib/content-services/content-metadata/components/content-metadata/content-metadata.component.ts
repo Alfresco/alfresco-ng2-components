@@ -39,6 +39,9 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
     editable: boolean = false;
 
     @Input()
+    displayEmpty: boolean = false;
+
+    @Input()
     expanded: boolean = false;
 
     @Input()

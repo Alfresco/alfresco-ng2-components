@@ -40,7 +40,7 @@ export class CardViewItemDispatcherComponent implements OnChanges {
     editable: boolean;
 
     @Input()
-    displayEmpty: boolean;
+    displayEmpty: boolean = true;
 
     @ViewChild(CardViewContentProxyDirective)
     private content: CardViewContentProxyDirective;

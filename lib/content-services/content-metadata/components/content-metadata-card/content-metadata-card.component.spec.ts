@@ -81,6 +81,10 @@ describe('ContentMetadataCardComponent', () => {
         TestBed.resetTestingModule();
     });
 
+    it('should have displayEmpty input param as false by default', () => {
+        expect(component.displayEmpty).toBe(false);
+    });
+
     it('should pass through the node to the underlying component', () => {
         const contentMetadataComponent = fixture.debugElement.query(By.directive(ContentMetadataComponent)).componentInstance;
 
@@ -91,6 +95,14 @@ describe('ContentMetadataCardComponent', () => {
         const contentMetadataComponent = fixture.debugElement.query(By.directive(ContentMetadataComponent)).componentInstance;
 
         expect(contentMetadataComponent.preset).toBe(preset);
+    });
+
+    it('should pass through the preset to the underlying component', () => {
+        component.displayEmpty = true;
+        fixture.detectChanges();
+        const contentMetadataComponent = fixture.debugElement.query(By.directive(ContentMetadataComponent)).componentInstance;
+
+        expect(contentMetadataComponent.displayEmpty).toBe(true);
     });
 
     it('should pass through the editable to the underlying component', () => {
