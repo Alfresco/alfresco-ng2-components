@@ -17,12 +17,14 @@
             </a>
         </div>
         <div class="adf-attach-widget__menu-upload" *ngIf="isUploadButtonVisible() && isMultipleSourceUpload()">
-            <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">
+            <button mat-raised-button color="primary" [matMenuTriggerFor]="menu" [id]="field.id">
                     {{ 'FORM.FIELD.UPLOAD' | translate }}
                     <mat-icon>attach_file</mat-icon>
             </button>
             <mat-menu #menu="matMenu" class="adf-attach-widget__menu-content">
-                <button mat-menu-item (click)="uploadFile.click()" *ngIf="isAllFileSourceSelected()">
+                <button mat-menu-item (click)="uploadFile.click()"
+                        id="attach-local-file"
+                        *ngIf="isAllFileSourceSelected()">
                     From HD
                     <mat-icon>file_upload</mat-icon>
                     <input #uploadFile
@@ -34,14 +36,17 @@
                 </button>
                 <button mat-menu-item
                         *ngIf="isDefinedSourceFolder()"
-                        (click)="openSelectDialog('1', '2')">
+                        id="attach-{{field.params?.fileSource?.name}}"
+                        (click)="openSelectDialogFromFileSource()">
                         From {{field.params?.fileSource?.name}}
                         <mat-icon>
                             <img class="adf-attach-widget__image-logo" [src]="alfrescoLogoUrl">
                         </mat-icon>
                 </button>
                 <div *ngIf="!isDefinedSourceFolder()">
-                    <button mat-menu-item *ngFor="let repo of repositoryList" (click)="openSelectDialog(repo.id, repo.name)">
+                    <button mat-menu-item *ngFor="let repo of repositoryList"
+                            id="attach-{{repo?.name}}"
+                           (click)="openSelectDialog(repo.id, repo.name)">
                             From {{repo.name}}
                             <mat-icon>
                                 <img class="adf-attach-widget__image-logo" [src]="alfrescoLogoUrl">

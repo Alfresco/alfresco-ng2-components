@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector, no-console  */
+/* tslint:disable:component-selector */
 
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import {
@@ -40,21 +40,21 @@ import { Observable } from 'rxjs/Observable';
 })
 export class ShareAttachWidgetComponent extends UploadWidgetComponent implements OnInit {
 
-    alfrescoLogoUrl: string ='../assets/images/alfresco-flower.svg';
+    alfrescoLogoUrl: string = '../assets/images/alfresco-flower.svg';
+    repositoryList = [];
 
-    private repositoryList = [];
-
-    constructor(public formService: FormService,
-        private logger: LogService,
-        public thumbnails: ThumbnailService,
-        public processContentService: ProcessContentService,
-        private activitiContentService: ActivitiContentService,
-        private contentDialog: ContentNodeDialogService) {
+    constructor(
+                public formService: FormService,
+                private logger: LogService,
+                public thumbnails: ThumbnailService,
+                public processContentService: ProcessContentService,
+                private activitiContentService: ActivitiContentService,
+                private contentDialog: ContentNodeDialogService
 
         super(formService, logger, thumbnails, processContentService);
     }
 
-    ngOnInit(){
+    ngOnInit() {
         if (this.field &&
             this.field.value &&
             this.field.value.length > 0) {
@@ -96,7 +96,7 @@ export class ShareAttachWidgetComponent extends UploadWidgetComponent implements
         return (!this.hasFile || this.multipleOption) && !this.field.readOnly;
     }
 
-    isDefinedSourceFolder(){
+    isDefinedSourceFolder() {
         return !!this.field.params &&
                !!this.field.params.fileSource &&
                !!this.field.params.fileSource.selectedFolder;
@@ -117,28 +117,14 @@ export class ShareAttachWidgetComponent extends UploadWidgetComponent implements
     }
 
     openSelectDialog(repoId: string, repoName: string) {
-        if (this.field) {
-            let params = this.field.params;
         const accountIdentifier = 'alfresco-' + repoId + repoName;
-            if (params &&
-                params.fileSource &&
-                params.fileSource.selectedFolder) {
-                this.contentDialog.openFileBrowseDialogByFolderId(params.fileSource.selectedFolder.pathId).subscribe(
-                    (selections: MinimalNodeEntryEntity[]) => {
-                        this.uploadFileFromShare(selections,
-                                this.field.params.fileSource.selectedFolder.siteId,
-                                accountIdentifier);
-                    });
-            } else {
         this.contentDialog.openFileBrowseDialogBySite().subscribe(
             (selections: MinimalNodeEntryEntity[]) => {
                 this.uploadFileFromShare(selections, accountIdentifier);
             });
-            }
-        }
     }
 
-    uploadFileFromShare(fileNodeList: MinimalNodeEntryEntity[], accountId: string, siteId?: string) {
+    private uploadFileFromShare(fileNodeList: MinimalNodeEntryEntity[], accountId: string, siteId?: string) {
         let filesSaved = [];
         Observable.from(fileNodeList)
             .mergeMap(node =>
