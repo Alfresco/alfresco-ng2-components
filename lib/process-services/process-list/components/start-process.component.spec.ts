@@ -409,7 +409,6 @@ describe('StartProcessInstanceComponent', () => {
                 let change = new SimpleChange(123, '123', true);
                 component.ngOnChanges({ 'appId': change });
                 component.currentProcessDef.id = 'my:process1';
-                component.currentProcessDef.hasStartForm = true;
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     startBtn = fixture.nativeElement.querySelector('#button-start');

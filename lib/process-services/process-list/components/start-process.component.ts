@@ -159,11 +159,14 @@ export class StartProcessInstanceComponent implements OnChanges {
     }
 
     selectDefaultOption() {
-        if (this.hasProcessDefinitions()) {
+        if (this.hasSingleProcessDefinitions()) {
             this.currentProcessDef.id = this.processDefinitions[0].id;
             this.selectPanelClass = 'hidden';
+            this.onProcessDefChange();
         } else if (this.processDefinitionId) {
             this.currentProcessDef.id = this.processDefinitionId;
+            this.onProcessDefChange();
+
         }
     }
 
@@ -178,7 +181,7 @@ export class StartProcessInstanceComponent implements OnChanges {
         }
     }
 
-    public hasProcessDefinitions(): boolean {
+    public hasSingleProcessDefinitions(): boolean {
         return this.processDefinitions && this.processDefinitions.length === 1;
     }
 
