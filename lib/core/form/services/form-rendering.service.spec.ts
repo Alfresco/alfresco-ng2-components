@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/*tslint:disable:ban*/
+
 import { DynamicComponentResolver } from '../../index';
 import {
     AttachWidgetComponent,
@@ -25,7 +27,7 @@ import {
 } from './../components/widgets/index';
 import { FormRenderingService } from './form-rendering.service';
 
-describe('FormRenderingService', () => {
+fdescribe('FormRenderingService', () => {
 
     let service: FormRenderingService;
 
@@ -55,10 +57,10 @@ describe('FormRenderingService', () => {
         expect(type).toBe(UploadWidgetComponent);
     });
 
-    it('should resolve Unknown widget for Upload field', () => {
+    it('should resolve Upload widget for Upload field', () => {
         let resolver = service.getComponentTypeResolver(FormFieldTypes.UPLOAD);
         let type = resolver(null);
-        expect(type).toBe(UnknownWidgetComponent);
+        expect(type).toBe(UploadWidgetComponent);
     });
 
     it('should resolve Uknown widget for unknown field type', () => {
