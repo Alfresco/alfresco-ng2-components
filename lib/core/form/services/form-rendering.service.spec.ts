@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/*tslint:disable:ban*/
-
 import { DynamicComponentResolver } from '../../index';
 import {
     AttachWidgetComponent,
@@ -27,7 +25,7 @@ import {
 } from './../components/widgets/index';
 import { FormRenderingService } from './form-rendering.service';
 
-fdescribe('FormRenderingService', () => {
+describe('FormRenderingService', () => {
 
     let service: FormRenderingService;
 
