@@ -1,6 +1,6 @@
 # Form Extensibility and Customisation
 
-_Note: it is assumed you are familiar with Alfresco Activiti form definition structure._
+_Note: it is assumed you are familiar with Alfresco Process Services (powered by Activiti) form definition structure._
 
 - How components and widgets are rendered on a Form
 - Replacing default form widgets with custom components
@@ -86,10 +86,10 @@ formRenderingService.setComponentTypeResolver('text', customResolver, true);
 
 ## Replacing default form widgets with custom components
 
-This is a short walkthrough on replacing a standard `Text` widget with a custom component for all Alfresco Activiti forms
-rendered within `<activiti-form>` component.
+This is a short walkthrough on replacing a standard `Text` widget with a custom component for all APS forms
+rendered within `<adf-form>` component.
 
-First let's create a simple Alfresco Activiti form with `Text` widgets:
+First let's create a simple APS form with `Text` widgets:
 
 ![default text widget](docassets/images/text-default-widget.png)
 
@@ -162,7 +162,7 @@ At runtime it should look similar to the following:
 
 ## Replacing custom stencils with custom components
 
-This is a short walkthrough on rendering custom Alfresco Activiti stencils by means of custom Angular components.
+This is a short walkthrough on rendering custom APS stencils by means of custom Angular components.
 
 ### Creating custom stencil
 
@@ -182,13 +182,13 @@ Now you are ready to design a test form based on your custom stencil:
 
 ![custom stencil form](docassets/images/activiti-stencil-02.png)
 
-Once wired with a new task it should look like the following within Alfresco Activiti web application:
+Once wired with a new task it should look like the following within APS web application:
 
 ![custom stencil task](docassets/images/activiti-stencil-03.png)
 
 ### Creating custom widget
 
-If you load previously created task into ADF `<activiti-form>` component you will see something like the following:
+If you load previously created task into ADF `<adf-form>` component you will see something like the following:
 
 ![adf stencil](docassets/images/adf-stencil-01.png)
 
