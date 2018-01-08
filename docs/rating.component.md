@@ -1,5 +1,7 @@
 # ADF Rating component
 
+Allows a user to add ratings to an item.
+
 ![Rating component screenshot](docassets/images/social2.png)
 
 ## Basic Usage

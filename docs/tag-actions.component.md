@@ -1,5 +1,7 @@
 # Alfresco Tag Node Actions List component
 
+Shows available actions for tags.
+
 ![Custom columns](docassets/images/tag3.png)
 
 ## Basic Usage
