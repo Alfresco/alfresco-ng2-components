@@ -133,7 +133,7 @@
                         </ng-container>
 
                         <ng-container *ngSwitchCase="'custom'">
-                            <span *ngFor="let extensionTemplate of extensionTemplates">
+                            <span class="adf-viewer-custom-content" *ngFor="let extensionTemplate of extensionTemplates">
                                 <ng-template *ngIf="extensionTemplate.isVisible" [ngTemplateOutlet]="extensionTemplate.template" [ngTemplateOutletContext]="{ urlFileContent: urlFileContent, extension:extension }">
                                 </ng-template>
                             </span>
