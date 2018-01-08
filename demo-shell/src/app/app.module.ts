@@ -5,6 +5,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { ChartsModule } from 'ng2-charts';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppConfigService, TRANSLATION_PROVIDER } from '@alfresco/adf-core';
 import { AppComponent } from './app.component';
@@ -49,6 +50,7 @@ import { SharedLinkViewComponent } from './components/shared-link-view/shared-li
 
 @NgModule({
     imports: [
+        BrowserAnimationsModule,
         ReactiveFormsModule,
         TranslateModule,
         BrowserModule,

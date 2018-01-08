@@ -19,7 +19,6 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { TRANSLATION_PROVIDER, TranslationService } from './services/translation.service';
@@ -63,7 +62,6 @@ export function createTranslateLoader(http: HttpClient, logService: LogService) 
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
-        BrowserAnimationsModule,
         HostSettingsModule,
         UserInfoModule,
         MaterialModule,
@@ -96,7 +94,6 @@ export function createTranslateLoader(http: HttpClient, logService: LogService) 
     ],
     exports: [
         AppConfigModule,
-        BrowserAnimationsModule,
         CommonModule,
         FormsModule,
         ReactiveFormsModule,

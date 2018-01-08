@@ -18,7 +18,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule, TRANSLATION_PROVIDER } from '@alfresco/adf-core';
 
 import { MaterialModule } from './material.module';
@@ -37,7 +36,6 @@ import { PeopleModule } from './people/people.module';
         CommentsModule,
         FormsModule,
         ReactiveFormsModule,
-        BrowserAnimationsModule,
         MaterialModule,
         ProcessListModule,
         TaskListModule,
@@ -60,7 +58,6 @@ import { PeopleModule } from './people/people.module';
         CommentsModule,
         FormsModule,
         ReactiveFormsModule,
-        BrowserAnimationsModule,
         ProcessListModule,
         TaskListModule,
         AppsListModule,
