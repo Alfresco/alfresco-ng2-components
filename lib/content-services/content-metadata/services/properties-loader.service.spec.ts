@@ -17,26 +17,28 @@
 
 import { async, TestBed } from '@angular/core/testing';
 import { PropertyDescriptorLoaderService } from './properties-loader.service';
-import { AspectsApi } from '../spike/aspects-api.service';
+import { AlfrescoApiService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
+import { ClassesApi } from 'alfresco-js-api';
 
 describe('PropertyDescriptorLoaderService', () => {
 
     let aspectProperties: PropertyDescriptorLoaderService,
-        aspectsApi: AspectsApi;
+        classesApi: ClassesApi;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             providers: [
                 PropertyDescriptorLoaderService,
-                AspectsApi
+                AlfrescoApiService
             ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
         aspectProperties = TestBed.get(PropertyDescriptorLoaderService);
-        aspectsApi = TestBed.get(AspectsApi);
+        const alfrescoApiService = TestBed.get(AlfrescoApiService);
+        classesApi = alfrescoApiService.classesApi;
     });
 
     afterEach(() => {
@@ -44,14 +46,15 @@ describe('PropertyDescriptorLoaderService', () => {
     });
 
     it('should load the aspects passed by paramter', () => {
-        spyOn(aspectsApi, 'fetchAspect');
+        spyOn(classesApi, 'getClass');
 
-        aspectProperties.load(['exif:exif', 'cm:content', 'custom:custom']);
+        aspectProperties.load(['exif:exif', 'cm:content', 'custom:custom'])
+            .subscribe(() => {});
 
-        expect(aspectsApi.fetchAspect).toHaveBeenCalledTimes(3);
-        expect(aspectsApi.fetchAspect).toHaveBeenCalledWith('exif:exif');
-        expect(aspectsApi.fetchAspect).toHaveBeenCalledWith('cm:content');
-        expect(aspectsApi.fetchAspect).toHaveBeenCalledWith('custom:custom');
+        expect(classesApi.getClass).toHaveBeenCalledTimes(3);
+        expect(classesApi.getClass).toHaveBeenCalledWith('exif_exif');
+        expect(classesApi.getClass).toHaveBeenCalledWith('cm_content');
+        expect(classesApi.getClass).toHaveBeenCalledWith('custom_custom');
     });
 
     it('should merge the forked values', (done) => {
@@ -76,7 +79,7 @@ describe('PropertyDescriptorLoaderService', () => {
         const apiResponses = [ exifResponse, contentResponse ];
         let counter = 0;
 
-        spyOn(aspectsApi, 'fetchAspect').and.callFake(() => {
+        spyOn(classesApi, 'getClass').and.callFake(() => {
             return Observable.of(apiResponses[counter++]);
         });
 

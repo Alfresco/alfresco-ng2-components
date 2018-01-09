@@ -16,17 +16,21 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AspectsApi } from '../spike/aspects-api.service';
+import { AlfrescoApiService } from '@alfresco/adf-core';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { Observable } from 'rxjs/Observable';
+import { defer } from 'rxjs/observable/defer';
 
 @Injectable()
 export class PropertyDescriptorLoaderService {
 
-    constructor(private aspectsApi: AspectsApi) {}
+    constructor(private alfrescoApiService: AlfrescoApiService) {}
 
     load(aspects: string[]): Observable<any> {
-        const aspectFetchStreams = aspects.map((aspect) => this.aspectsApi.fetchAspect(aspect));
+        const aspectFetchStreams = aspects
+            .map(aspectName => aspectName.replace(':', '_'))
+            .map(aspectName => defer( () => this.alfrescoApiService.classesApi.getClass(aspectName)) );
+
         return forkJoin(aspectFetchStreams);
     }
 }
