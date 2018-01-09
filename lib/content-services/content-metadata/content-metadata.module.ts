@@ -29,17 +29,12 @@ import { AspectWhiteListService } from './services/aspect-whitelist.service';
 import { BasicPropertiesService } from './services/basic-properties.service';
 import { ContentMetadataService } from './services/content-metadata.service';
 
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TokenInterceptor } from './spike/token.interceptor';
-import { AspectsApi } from './spike/aspects-api.service';
-
 @NgModule({
     imports: [
         CommonModule,
         MaterialModule,
         TranslateModule,
         FlexLayoutModule,
-        HttpClientModule,
         CardViewModule
     ],
     exports: [
@@ -56,10 +51,7 @@ import { AspectsApi } from './spike/aspects-api.service';
         PropertyDescriptorLoaderService,
         AspectWhiteListService,
         BasicPropertiesService,
-        FileSizePipe,
-
-        { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
-        AspectsApi
+        FileSizePipe
     ]
 })
 export class ContentMetadataModule {}
