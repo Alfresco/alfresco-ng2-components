@@ -1,5 +1,6 @@
 # Node Service
-Get Alfresco Repository node metadata and create nodes with metadata. 
+Gets Alfresco Repository node metadata and creates nodes with metadata. 
+
 This service cannot be used to create nodes with content.
 
 ## Importing

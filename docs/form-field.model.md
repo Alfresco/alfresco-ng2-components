@@ -1,7 +1,6 @@
 # Form Field model
 
-Contains the value and metadata for a field of an
-[ADF Form](form.component.md).
+Contains the value and metadata for a field of an [ADF Form](form.component.md).
 
 ## Properties
 

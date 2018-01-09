@@ -1,5 +1,7 @@
 # Node Restore directive
 
+Restores deleted nodes to their original location.
+
 ## Basic Usage
 
 ```html

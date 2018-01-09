@@ -1,5 +1,7 @@
 # Alfresco User Info component
 
+Shows user information.
+
 ## Basic usage
 
 ```html
