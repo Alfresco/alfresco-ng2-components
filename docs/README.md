@@ -61,13 +61,13 @@ for more information about installing and using the source code.
 | [Toolbar title component](toolbar-title.component.md)             | Supplies custom HTML to be included in a Toolbar component title.                                                       | [Source](../lib/core/toolbar/toolbar-title.component.ts)                    |
 | [Toolbar component](toolbar.component.md)                         | Simple container for headers, titles, actions and breadcrumbs.                                                          | [Source](../lib/core/toolbar/toolbar.component.ts)                          |
 | [User info component](user-info.component.md)                     | Shows user information.                                                                                                 | [Source](../lib/core/userinfo/components/user-info.component.ts)            |
-| [Viewer component](viewer.component.md)                           | See it live: [Viewer Quickstart](https://embed.plnkr.co/iTuG1lFIXfsP95l6bDW6/)                                          | [Source](../lib/core/viewer/components/viewer.component.ts)                 |
+| [Viewer component](viewer.component.md)                           | Displays content from an ACS repository.                                                                                | [Source](../lib/core/viewer/components/viewer.component.ts)                 |
 
 ## Directives
 
 | Name                                                      | Description                                                                                               | Source link                                                   |
 | --------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| [Context menu directive](context-menu.directive.md)       | See **Demo Shell** or **DocumentList** implementation for more details and use cases.                     | [Source](../lib/core/context-menu/context-menu.directive.ts)  |
+| [Context menu directive](context-menu.directive.md)       | Adds a context menu to a component.                                                                       | [Source](../lib/core/context-menu/context-menu.directive.ts)  |
 | [Highlight directive](highlight.directive.md)             | Adds highlighting to selected sections of an HTML element's content.                                      | [Source](../lib/core/directives/highlight.directive.ts)       |
 | [Logout directive](logout.directive.md)                   | Logs the user out when the decorated element is clicked.                                                  | [Source](../lib/core/directives/logout.directive.ts)          |
 | [Node delete directive](node-delete.directive.md)         | Deletes multiple files and folders.                                                                       | [Source](../lib/core/directives/node-delete.directive.ts)     |
@@ -93,7 +93,7 @@ for more information about installing and using the source code.
 | --------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------- |
 | [File size pipe](file-size.pipe.md)                 | Converts a number of bytes to the equivalent in KB, MB, etc.                              | [Source](../lib/core/pipes/file-size.pipe.ts)         |
 | [Mime type icon pipe](mime-type-icon.pipe.md)       | Retrieves an icon to represent a MIME type.                                               | [Source](../lib/core/pipes/mime-type-icon.pipe.ts)    |
-| [Node name tooltip pipe](node-name-tooltip.pipe.md) | Formats the tooltip of the underlying Node based on the following rules:                  | [Source](../lib/core/pipes/node-name-tooltip.pipe.ts) |
+| [Node name tooltip pipe](node-name-tooltip.pipe.md) | Formats the tooltip for a Node.                                                           | [Source](../lib/core/pipes/node-name-tooltip.pipe.ts) |
 | [Text highlight pipe](text-highlight.pipe.md)       | Adds highlighting to words or sections of text that match a search string.                | [Source](../lib/core/pipes/text-highlight.pipe.ts)    |
 | [Time ago pipe](time-ago.pipe.md)                   | Converts a recent past date into a number of days ago.                                    | [Source](../lib/core/pipes/time-ago.pipe.ts)          |
 | [User initial pipe](user-initial.pipe.md)           | Takes the name fields of a UserProcessModel object and extracts and formats the initials. | [Source](../lib/core/pipes/user-initial.pipe.ts)      |
@@ -148,9 +148,9 @@ for more information about installing and using the source code.
 
 ### Other classes and interfaces
 
-| Name | Description | Source link |
-| -- | -- | -- |
-| [Data Table Adapter interface](DataTableAdapter.md) | Defines how table data is supplied to [DataTable](datatable.component.md) and [Tasklist](task-list.component.md) components. | [Source](../core/datatable/data/datatable-adapter.ts) |
+| Name                                                    | Description                                                                                                                               | Source link                                                            |
+| ------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| [Data Table Adapter interface](DataTableAdapter.md)     | Defines how table data is supplied to [DataTable](datatable.component.md) and [Tasklist](task-list.component.md) components.              | [Source](../core/datatable/data/datatable-adapter.ts)                  |
 | [Form Field Validator interface](FormFieldValidator.md) | Defines how the input fields of [ADF Form](form.component.md) and [ADF Task Details](task-details.component.md) components are validated. | [Source](../core/form/components/widgets/core/form-field-validator.ts) |
 
 [(Back to Contents)](#contents)
@@ -174,7 +174,7 @@ for more information about installing and using the source code.
 | [Content action component](content-action.component.md)               | Adds options to a Document List actions menu for a particular content type.                           | [Source](../lib/content-services/document-list/components/content-action/content-action.component.ts) |
 | [Document list component](document-list.component.md)                 | Displays the documents from a repository.                                                             | [Source](../lib/content-services/document-list/components/document-list.component.ts)                 |
 | [Search control component](search-control.component.md)               | Displays a input text which shows find-as-you-type suggestions.                                       | [Source](../lib/content-services/search/components/search-control.component.ts)                       |
-| [Search component](search.component.md)                               | You have to add a template that will be shown when the results are loaded.                            | [Source](../lib/content-services/search/components/search.component.ts)                               |
+| [Search component](search.component.md)                               | Searches items for supplied search terms.                                                             | [Source](../lib/content-services/search/components/search.component.ts)                               |
 | [Sites dropdown component](sites-dropdown.component.md)               | Displays a dropdown menu to show and interact with the sites of the current user.                     | [Source](../lib/content-services/site-dropdown/sites-dropdown.component.ts)                           |
 | [Like component](like.component.md)                                   | Allows a user to add "likes" to an item.                                                              | [Source](../lib/content-services/social/like.component.ts)                                            |
 | [Rating component](rating.component.md)                               | Allows a user to add ratings to an item.                                                              | [Source](../lib/content-services/social/rating.component.ts)                                          |
@@ -186,7 +186,7 @@ for more information about installing and using the source code.
 | [Upload drag area component](upload-drag-area.component.md)           | Adds a drag and drop area to upload files to Alfresco.                                                | [Source](../lib/content-services/upload/components/upload-drag-area.component.ts)                     |
 | [Version list component](version-list.component.md)                   | Displays the version history of a node in a [Version Manager component](version-manager.component.md) | [Source](../lib/content-services/version-manager/version-list.component.ts)                           |
 | [Version manager component](version-manager.component.md)             | Displays the version history of a node with the ability to upload a new version.                      | [Source](../lib/content-services/version-manager/version-manager.component.ts)                        |
-| [Webscript component](webscript.component.md)                         | Another example:                                                                                      | [Source](../lib/content-services/webscript/webscript.component.ts)                                    |
+| [Webscript component](webscript.component.md)                         | Provides access to Webscript features.                                                                | [Source](../lib/content-services/webscript/webscript.component.ts)                                    |
 | _Content metadata card component_                                     | _Not currently documented_                                                                            | [Source](../lib/content-services/content-metadata/content-metadata-card.component.ts)                 |
 | _Content metadata component_                                          | _Not currently documented_                                                                            | [Source](../lib/content-services/content-metadata/content-metadata.component.ts)                      |
 | _Content node selector panel component_                               | _Not currently documented_                                                                            | [Source](../lib/content-services/content-node-selector/content-node-selector-panel.component.ts)      |
