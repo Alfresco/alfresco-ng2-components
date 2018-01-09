@@ -85,7 +85,5 @@ after_success:
 
 cache:
   directories:
-  - ./node_modules/material-design-lite
-  - ./node_modules/material-design-icons
   - demo-shell/node_modules
   - lib/node_modules
