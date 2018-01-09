@@ -1,19 +1,6 @@
 # Search component
 
-
-
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic usage](#basic-usage)
-  * [Properties](#properties)
-  * [Events](#events)
-- [Details](#details)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
+Searches items for supplied search terms. 
 
 ## Basic usage
 
