@@ -1,16 +1,29 @@
+@mixin  adf-sidebar-action-menu-theme($theme) {
+
+    $primary: map-get($theme, primary);
+    $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
+
+    $adf-sidebar-action-menu-button-option-width: 205px;
+    $adf-sidebar-action-menu-button-height: 37.5px;
+    $adf-sidebar-action-menu-button-border-radius: 4px;
+    $adf-sidebar-action-menu-opacity: 0.54;
+    $adf-sidebar-action-menu-item-opacity: 0.87;
+    $adf-sidebar-action-menu-item-line-spacing: -0.4px;
+
 .adf {
     &-sidebar-action-menu {
         & .mat-raised-button {
-            width: 272px;
+            width: 100%;
             height: 37.5px;
             font-weight: bold;
-            background-color: #ff9100;
-            color: #ffffff !important;
-            border-radius: 4px;
+            background-color: mat-color($primary);
+            color: mat-color($primary, default-contrast) !important;
+            border-radius: $adf-sidebar-action-menu-button-border-radius;
             & mat-icon {
                 width: 24px;
                 height: 25px;
-                color: #ffffff !important;
+                color: mat-color($primary, default-contrast) !important;
             }
         }
         &-text {
@@ -21,28 +34,30 @@
     }
     &-sidebar-action-menu-icon {
         margin: 18px 0px 0px 20px;
-        opacity: 0.54;
+        opacity: $adf-sidebar-action-menu-opacity;
         cursor: pointer;
         &:hover {
-            color: #ff9100;
+            color: mat-color($primary);
             opacity: inherit;
         }
     }
     &-sidebar-action-menu-options {
-        width: 272px;
+        width: $adf-sidebar-action-menu-button-option-width;
         opacity: 0.87;
         text-align: left;
         letter-spacing: -0.4px;
         color: #000000;
         .mat-menu-item {
-            width: 272px;
-            opacity: 0.87;
+            width: $adf-sidebar-action-menu-button-option-width;
+            height: 24px;
+            opacity: $adf-sidebar-action-menu-item-opacity;
             text-align: left;
-            letter-spacing: -0.4px;
+            line-height: 1.5;
+            letter-spacing: $adf-sidebar-action-menu-item-line-spacing;
             color: #000000;
         }
         .mat-menu-item:hover {
-            color: #ff9100 !important;
+            color: mat-color($primary);
             opacity: inherit;
         }
     }
@@ -51,6 +66,7 @@
 .mat-menu-panel {
     margin-top: 7.5px;
     border-radius: 2px;
-    background-color: #ffffff;
+    background-color: mat-color($primary, default-contrast) !important;
     box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.26), 0 0 8px 0 rgba(0, 0, 0, 0.12);
+}
 }

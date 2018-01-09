@@ -4,10 +4,14 @@
             <div class="adf-grid" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="stretch">
                 <div class="adf-grid-item adf-tasks-menu" fxFlex.gt-md="225px">
                     <div class="adf-list-buttons">
-                        <button color="primary" mat-raised-button data-automation-id="btn-start-task" class="adf-list-buttons-start" (click)="navigateStartTask()">
-                            <mat-icon>add</mat-icon>
-                            <span>{{'PS-TAB.START-TASK' | translate}}</span>
-                        </button>
+                        <adf-sidebar-action-menu [expanded]="true" [title]="'CREATE'">
+                            <mat-icon sidebar-menu-title-icon >arrow_drop_down</mat-icon>
+                                <div sidebar-menu-options>
+                                    <button mat-menu-item data-automation-id="btn-start-task" (click)="navigateStartTask()">
+                                        <span>{{'PS-TAB.START-TASK' | translate}}</span>
+                                    </button>
+                                </div>
+                        </adf-sidebar-action-menu>
                     </div>
                     <adf-accordion>
                         <adf-accordion-group [heading]="'Tasks'" [isSelected]="true" [isOpen]="true"
@@ -105,15 +109,14 @@
             <div class="adf-grid" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="stretch">
                 <div class="adf-grid-item adf-processes-menu" fxFlex.gt-md="225px">
                     <div class="adf-list-buttons">
-                        <button
-                            color="primary"
-                            mat-raised-button
-                            class="adf-list-buttons-start"
-                            data-automation-id="btn-start-process"
-                            (click)="navigateStartProcess()">
-                            <mat-icon>add</mat-icon>
-                            <span>{{'PS-TAB.START-PROCESS' | translate}}</span>
-                        </button>
+                        <adf-sidebar-action-menu [expanded]="true" [title]="'CREATE'">
+                            <mat-icon sidebar-menu-title-icon >arrow_drop_down</mat-icon>
+                            <div sidebar-menu-options>
+                                <button mat-menu-item data-automation-id="btn-start-process" (click)="navigateStartProcess()">
+                                    <span>{{'PS-TAB.START-PROCESS' | translate}}</span>
+                                </button>
+                            </div>
+                        </adf-sidebar-action-menu>
                     </div>
                     <adf-accordion>
                         <adf-accordion-group [heading]="'Processes'" [isSelected]="true" [isOpen]="true"
