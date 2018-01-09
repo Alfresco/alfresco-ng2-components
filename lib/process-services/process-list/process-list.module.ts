@@ -27,6 +27,7 @@ import { CardViewModule, CardViewUpdateService, DataColumnModule, DataTableModul
 import { TaskListModule } from '../task-list/task-list.module';
 import { PeopleModule } from '../people/people.module';
 import { CommentsModule } from '../comments/comments.module';
+import { ContentWidgetModule } from '../content-widget/content-widget.module';
 
 import { ProcessAuditDirective } from './components/process-audit.directive';
 import { ProcessFiltersComponent } from './components/process-filters.component';
@@ -35,7 +36,6 @@ import { ProcessInstanceHeaderComponent } from './components/process-instance-he
 import { ProcessInstanceTasksComponent } from './components/process-instance-tasks.component';
 import { ProcessInstanceListComponent } from './components/process-list.component';
 import { StartProcessInstanceComponent } from './components/start-process.component';
-import { ShareAttachWidgetComponent } from './components/share-attach-widget.component';
 
 import { ProcessService } from './services/process.service';
 import { ProcessFilterService } from './services/process-filter.service';
@@ -56,7 +56,8 @@ import { ProcessFilterService } from './services/process-filter.service';
         DataColumnModule,
         DirectiveModule,
         PeopleModule,
-        CommentsModule
+        CommentsModule,
+        ContentWidgetModule
     ],
     declarations: [
         ProcessInstanceListComponent,
@@ -65,11 +66,7 @@ import { ProcessFilterService } from './services/process-filter.service';
         ProcessAuditDirective,
         ProcessInstanceHeaderComponent,
         ProcessInstanceTasksComponent,
-        StartProcessInstanceComponent,
-        ShareAttachWidgetComponent
-    ],
-    entryComponents: [
-        ShareAttachWidgetComponent
+        StartProcessInstanceComponent
     ],
     providers: [
         ProcessService,
@@ -83,8 +80,7 @@ import { ProcessFilterService } from './services/process-filter.service';
         ProcessAuditDirective,
         ProcessInstanceHeaderComponent,
         ProcessInstanceTasksComponent,
-        StartProcessInstanceComponent,
-        ShareAttachWidgetComponent
+        StartProcessInstanceComponent
     ]
 })
 export class ProcessListModule {}

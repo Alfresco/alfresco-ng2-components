@@ -35,7 +35,7 @@ import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 import { CommentsComponent } from '../../comments';
-import { ShareAttachWidgetComponent } from '../../process-list/components/share-attach-widget.component';
+import { ShareAttachWidgetComponent } from '../../content-widget';
 
 @Component({
     selector: 'adf-task-details',
