@@ -294,5 +294,12 @@
         "CREATED-ON": "Opprettet"
       }
     }
+  },
+  "ADF_SIDEBAR_ACTION_MENU": {
+    "BUTTON": {
+      "CREATE": "Opprett",
+      "NEW_TASK": "Ny oppgave",
+      "NEW_PROCESS": "Ny prosess"
+    }
   }
 }

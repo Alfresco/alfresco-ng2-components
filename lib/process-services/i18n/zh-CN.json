@@ -294,5 +294,12 @@
         "CREATED-ON": "创建日期"
       }
     }
+  },
+  "ADF_SIDEBAR_ACTION_MENU": {
+    "BUTTON": {
+      "CREATE": "创建",
+      "NEW_TASK": "新任务",
+      "NEW_PROCESS": "新流程"
+    }
   }
 }

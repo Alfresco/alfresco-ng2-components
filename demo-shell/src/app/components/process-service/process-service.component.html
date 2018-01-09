@@ -4,11 +4,11 @@
             <div class="adf-grid" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="stretch">
                 <div class="adf-grid-item adf-tasks-menu" fxFlex.gt-md="225px">
                     <div class="adf-list-buttons">
-                        <adf-sidebar-action-menu [expanded]="true" [title]="'CREATE'">
+                        <adf-sidebar-action-menu [expanded]="true" title="{{'ADF_SIDEBAR_ACTION_MENU.BUTTON.CREATE' | translate}}">
                             <mat-icon sidebar-menu-title-icon >arrow_drop_down</mat-icon>
                                 <div sidebar-menu-options>
                                     <button mat-menu-item data-automation-id="btn-start-task" (click)="navigateStartTask()">
-                                        <span>{{'PS-TAB.START-TASK' | translate}}</span>
+                                        <span>{{'ADF_SIDEBAR_ACTION_MENU.BUTTON.NEW_TASK' | translate}}</span>
                                     </button>
                                 </div>
                         </adf-sidebar-action-menu>
@@ -109,11 +109,11 @@
             <div class="adf-grid" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="stretch">
                 <div class="adf-grid-item adf-processes-menu" fxFlex.gt-md="225px">
                     <div class="adf-list-buttons">
-                        <adf-sidebar-action-menu [expanded]="true" [title]="'CREATE'">
+                        <adf-sidebar-action-menu [expanded]="true" title="{{'ADF_SIDEBAR_ACTION_MENU.BUTTON.CREATE' | translate}}">
                             <mat-icon sidebar-menu-title-icon >arrow_drop_down</mat-icon>
                             <div sidebar-menu-options>
                                 <button mat-menu-item data-automation-id="btn-start-process" (click)="navigateStartProcess()">
-                                    <span>{{'PS-TAB.START-PROCESS' | translate}}</span>
+                                    <span>{{'ADF_SIDEBAR_ACTION_MENU.BUTTON.NEW_PROCESS' | translate}}</span>
                                 </button>
                             </div>
                         </adf-sidebar-action-menu>

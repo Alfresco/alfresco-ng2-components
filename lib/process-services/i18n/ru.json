@@ -294,5 +294,12 @@
         "CREATED-ON": "Дата создания"
       }
     }
+  },
+  "ADF_SIDEBAR_ACTION_MENU": {
+    "BUTTON": {
+      "CREATE": "Создать",
+      "NEW_TASK": "Новая задача",
+      "NEW_PROCESS": "Нов. процесс"
+    }
   }
 }

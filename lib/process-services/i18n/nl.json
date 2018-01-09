@@ -294,5 +294,12 @@
         "CREATED-ON": "Gemaakt op"
       }
     }
+  },
+  "ADF_SIDEBAR_ACTION_MENU": {
+    "BUTTON": {
+      "CREATE": "Maken",
+      "NEW_TASK": "Nieuwe taak",
+      "NEW_PROCESS": "Nieuw proces"
+    }
   }
 }
