@@ -2,8 +2,9 @@
 
 Below is an index of the documentation for ADF. The [User Guide](#user-guide)
 section discusses particular techniques in depth. The other sections are references for the ADF
-libraries. Items marked with an asterisk (\*) do not currently have documentation - the link leads
-to the appropriate source file.
+libraries. Click the name of an item to see its documentation or click the source link to see
+its main source file. Note that ADF is developed continuously, so the source files for some items
+may be listed here before their documentation is available. 
 
 ## Contents
 
