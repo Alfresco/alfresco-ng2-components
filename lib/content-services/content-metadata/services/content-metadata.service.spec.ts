@@ -21,7 +21,7 @@ import { PropertyDescriptorsService } from './property-descriptors.service';
 import { BasicPropertiesService } from './basic-properties.service';
 import { AspectWhiteListService } from './aspect-whitelist.service';
 import { PropertyDescriptorLoaderService } from './properties-loader.service';
-import { AspectsApi } from '../spike/aspects-api.service';
+import { AlfrescoApiService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { Aspect, AspectProperty } from '../interfaces/content-metadata.interfaces';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
@@ -53,7 +53,7 @@ describe('ContentMetadataService', () => {
                 BasicPropertiesService,
                 AspectWhiteListService,
                 PropertyDescriptorLoaderService,
-                AspectsApi,
+                AlfrescoApiService,
                 { provide: LogService, useValue: { error: () => {} }},
                 PropertyDescriptorsService
             ]

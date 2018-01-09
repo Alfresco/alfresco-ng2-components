@@ -28,7 +28,7 @@ import { BasicPropertiesService } from '../../services/basic-properties.service'
 import { PropertyDescriptorLoaderService } from '../../services/properties-loader.service';
 import { PropertyDescriptorsService } from '../../services/property-descriptors.service';
 import { AspectWhiteListService } from '../../services/aspect-whitelist.service';
-import { AspectsApi } from '../../spike/aspects-api.service';
+import { AlfrescoApiService } from '@alfresco/adf-core';
 import { CardViewBaseItemModel, CardViewComponent, CardViewUpdateService, NodesApiService, LogService } from '@alfresco/adf-core';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { Observable } from 'rxjs/Observable';
@@ -56,7 +56,7 @@ describe('ContentMetadataComponent', () => {
                 PropertyDescriptorLoaderService,
                 PropertyDescriptorsService,
                 AspectWhiteListService,
-                AspectsApi,
+                AlfrescoApiService,
                 NodesApiService,
                 { provide: LogService, useValue: { error: jasmine.createSpy('error') } }
             ]

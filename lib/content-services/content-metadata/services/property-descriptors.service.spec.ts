@@ -19,7 +19,7 @@ import { async, TestBed } from '@angular/core/testing';
 import { PropertyDescriptorsService } from './property-descriptors.service';
 import { PropertyDescriptorLoaderService } from './properties-loader.service';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { AspectsApi } from '../spike/aspects-api.service';
+import { AlfrescoApiService } from '@alfresco/adf-core';
 import { AspectWhiteListService } from './aspect-whitelist.service';
 import { AppConfigService, LogService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
@@ -42,7 +42,7 @@ describe('PropertyDescriptorsService', () => {
                 AppConfigService,
                 AspectWhiteListService,
                 { provide: LogService, useValue: { error: () => {} }},
-                AspectsApi
+                AlfrescoApiService
             ]
         }).compileComponents();
     }));

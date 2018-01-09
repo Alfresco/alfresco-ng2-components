@@ -28,7 +28,7 @@ import { BasicPropertiesService } from '../../services/basic-properties.service'
 import { PropertyDescriptorLoaderService } from '../../services/properties-loader.service';
 import { PropertyDescriptorsService } from '../../services/property-descriptors.service';
 import { AspectWhiteListService } from '../../services/aspect-whitelist.service';
-import { AspectsApi } from '../../spike/aspects-api.service';
+import { AlfrescoApiService } from '@alfresco/adf-core';
 
 describe('ContentMetadataCardComponent', () => {
 
@@ -55,7 +55,7 @@ describe('ContentMetadataCardComponent', () => {
                 PropertyDescriptorLoaderService,
                 PropertyDescriptorsService,
                 AspectWhiteListService,
-                AspectsApi
+                AlfrescoApiService
             ]
         }).compileComponents();
     }));
