@@ -104,9 +104,7 @@ export class ShareAttachWidgetComponent extends UploadWidgetComponent implements
 
     openSelectDialogFromFileSource() {
         let params = this.field.params;
-        if (params &&
-            params.fileSource &&
-            params.fileSource.selectedFolder) {
+        if (this.isDefinedSourceFolder()) {
             this.contentDialog.openFileBrowseDialogByFolderId(params.fileSource.selectedFolder.pathId).subscribe(
                 (selections: MinimalNodeEntryEntity[]) => {
                     this.uploadFileFromShare(selections,

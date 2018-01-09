@@ -37,6 +37,10 @@ import { ImageResolver } from '../document-list/data/image-resolver.model';
 import { ContentNodeSelectorService } from './content-node-selector.service';
 import { debounceTime } from 'rxjs/operators';
 
+export type ValidationFunction = (entry: MinimalNodeEntryEntity) => boolean;
+
+const defaultValidation = () => true;
+
 @Component({
     selector: 'adf-content-node-selector-panel',
     styleUrls: ['./content-node-selector-panel.component.scss'],
@@ -44,19 +48,6 @@ import { debounceTime } from 'rxjs/operators';
     encapsulation: ViewEncapsulation.None
 })
 export class ContentNodeSelectorPanelComponent implements OnInit {
-
-    nodes: NodePaging | null = null;
-    siteId: null | string;
-    searchTerm: string = '';
-    showingSearchResults: boolean = false;
-    loadingSearchResults: boolean = false;
-    inDialog: boolean = false;
-    _chosenNode: MinimalNodeEntryEntity = null;
-    folderIdToShow: string | null = null;
-    paginationStrategy: PaginationStrategy;
-    pagination: Pagination;
-    skipCount: number = 0;
-    infiniteScroll: boolean = false;
 
     @Input()
     currentFolderId: string = null;
@@ -77,7 +68,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     pageSize: number;
 
     @Input()
-    isSelectionValid = (entry: MinimalNodeEntryEntity) => true;
+    isSelectionValid: ValidationFunction = defaultValidation;
 
     @Output()
     select: EventEmitter<MinimalNodeEntryEntity[]> = new EventEmitter<MinimalNodeEntryEntity[]>();
@@ -88,8 +79,19 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     @ViewChild(HighlightDirective)
     highlighter: HighlightDirective;
 
+    nodes: NodePaging | null = null;
+    siteId: null | string;
+    searchTerm: string = '';
+    showingSearchResults: boolean = false;
+    loadingSearchResults: boolean = false;
+    inDialog: boolean = false;
+    _chosenNode: MinimalNodeEntryEntity = null;
+    folderIdToShow: string | null = null;
+    paginationStrategy: PaginationStrategy;
+    pagination: Pagination;
+    skipCount: number = 0;
+    infiniteScroll: boolean = false;
     debounceSearch: number= 200;
-
     searchInput: FormControl = new FormControl();
 
     constructor(private contentNodeSelectorService: ContentNodeSelectorService,
@@ -103,10 +105,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
                 this.search(searchValue);
             });
         this.pageSize = this.preferences.paginationSize;
-    }
-
-    defaultSelectionValidation(entry: MinimalNodeEntryEntity) {
-        return true;
     }
 
     set chosenNode(value: MinimalNodeEntryEntity) {
@@ -125,9 +123,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     ngOnInit() {
         this.folderIdToShow = this.currentFolderId;
         this.paginationStrategy = PaginationStrategy.Infinite;
-        if (!this.isSelectionValid) {
-            this.isSelectionValid = this.defaultSelectionValidation.bind(this);
-        }
     }
 
     /**

@@ -86,7 +86,7 @@ export class ContentNodeDialogService {
                 actionName: action,
                 currentFolderId: contentEntry.id,
                 imageResolver: this.imageResolver.bind(this),
-                isSelectionValid: this.isEntityAFile.bind(this),
+                isSelectionValid: this.isNodeFile.bind(this),
                 select: select
             };
 
@@ -117,7 +117,7 @@ export class ContentNodeDialogService {
         }
     }
 
-    private isEntityAFile(entry: MinimalNodeEntryEntity): boolean {
+    private isNodeFile(entry: MinimalNodeEntryEntity): boolean {
         return entry.isFile;
     }
 

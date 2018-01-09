@@ -54,9 +54,9 @@ export class ActivitiContentService {
      *
      * @param accountId
      * @param folderId
-     * @returns {null}
+     * @returns {any}
      */
-    getAlfrescoRepositories(tenantId: number, includeAccount: boolean): Observable<[ExternalContent]> {
+    getAlfrescoRepositories(tenantId: number, includeAccount: boolean): Observable<any> {
         let apiService: AlfrescoApi = this.apiService.getInstance();
         const opts = {
             tenantId: tenantId,
