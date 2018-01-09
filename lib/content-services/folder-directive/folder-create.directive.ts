@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/* tslint:disable:no-input-rename  */
+
 import { Directive, HostListener, Input } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';

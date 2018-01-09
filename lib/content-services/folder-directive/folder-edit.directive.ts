@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/* tslint:disable:no-input-rename  */
+
 import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 
