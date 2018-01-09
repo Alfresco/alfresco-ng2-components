@@ -1,0 +1,21 @@
+<div class="adf-sidebar-menu-action" *ngIf="isExpanded(); else iconSidebarMenu">
+  <button mat-raised-button class="adf-sidebar-menu-action-title" id="dw-create-btn" [matMenuTriggerFor]="menu">
+      <span class="adf-sidebar-menu-action-title-text" id="dw-create-text">{{title}}</span>
+      <mat-icon>{{titleIcon}}</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu" [overlapTrigger]="false" yPosition="below">
+    <button *ngFor="let menuOption of menuList" class="adf-sidebar-menu-action-options" id="dw-new-task-menu" mat-menu-item (click)="onMenuOptionClick(menuOption.name)">
+        <mat-icon>{{menuOption.icon}}</mat-icon>
+        <span>{{menuOption.name}}</span>
+    </button>
+  </mat-menu>
+</div>
+
+<ng-template #iconSidebarMenu>
+    <mat-icon matTooltip="{{title}}" [matMenuTriggerFor]="iconMenu">queue</mat-icon>
+    <mat-menu #iconMenu="matMenu" [overlapTrigger]="false" yPosition="below">
+        <button *ngFor="let menuOption of menuList" class="adf-sidebar-menu-action-options" id="dw-new-task-menu" mat-menu-item (click)="onMenuOptionClick(menuOption.name)">
+            <span>{{menuOption.name}}</span>
+        </button>
+    </mat-menu>
+</ng-template>
