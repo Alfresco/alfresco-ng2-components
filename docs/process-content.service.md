@@ -1,6 +1,7 @@
 # Process Content Service
-Manipulate content related to a Process Instance or Task Instance in APS. Related content can be 
-uploaded to APS via for example a file upload dialog. 
+Manipulates content related to a Process Instance or Task Instance in APS.
+
+Related content can be uploaded to APS via for example a file upload dialog. 
 
 ## Importing
 

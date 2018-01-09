@@ -1,5 +1,7 @@
 # ADF Like component
 
+Allows a user to add "likes" to an item.
+
 ![Custom columns](docassets/images/social1.png)
 
 ## Basic Usage
