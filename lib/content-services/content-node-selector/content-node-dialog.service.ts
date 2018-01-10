@@ -27,7 +27,6 @@ import { DocumentListService } from '../document-list/services/document-list.ser
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
 import { ContentNodeSelectorComponentData } from './content-node-selector.component-data.interface';
 
-
 @Injectable()
 export class ContentNodeDialogService {
 
@@ -38,7 +37,7 @@ export class ContentNodeDialogService {
 
     openFileBrowseDialogByFolderId(folderNodeId: string): Observable<MinimalNodeEntryEntity[]> {
         return Observable.fromPromise(this.documentListService.getFolderNode(folderNodeId))
-            .switchMap((node: MinimalNodeEntryEntity)=> {
+            .switchMap((node: MinimalNodeEntryEntity) => {
                 return this.openUploadFileDialog('Choose', node);
         });
     }
@@ -122,7 +121,7 @@ export class ContentNodeDialogService {
     }
 
     private hasEntityCreatePermission(entry: MinimalNodeEntryEntity): boolean {
-        return this.contentService.hasPermission(entry,'create');
+        return this.contentService.hasPermission(entry, 'create');
     }
 
     close() {

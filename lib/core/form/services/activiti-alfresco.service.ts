@@ -90,7 +90,7 @@ export class ActivitiContentService {
         let apiService: AlfrescoApi = this.apiService.getInstance();
         let params: any = {
             source: accountId,
-            sourceId: node.id +';1.0@'+ siteId,
+            sourceId: node.id + ';1.0@' + siteId,
             name: node.name,
             link: false
         };

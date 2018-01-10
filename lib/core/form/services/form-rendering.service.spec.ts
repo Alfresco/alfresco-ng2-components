@@ -17,7 +17,6 @@
 
 import { DynamicComponentResolver } from '../../index';
 import {
-    AttachWidgetComponent,
     FormFieldModel,
     FormFieldTypes,
     UnknownWidgetComponent,
@@ -31,17 +30,6 @@ describe('FormRenderingService', () => {
 
     beforeEach(() => {
         service = new FormRenderingService();
-    });
-
-    it('should resolve Upload field as Attach widget', () => {
-        let field = new FormFieldModel(null, {
-            type: FormFieldTypes.UPLOAD,
-            params: {
-                link: 'link'
-            }
-        });
-        let type = service.resolveComponentType(field);
-        expect(type).toBe(AttachWidgetComponent);
     });
 
     it('should resolve Upload field as Upload widget', () => {
@@ -65,12 +53,6 @@ describe('FormRenderingService', () => {
         let resolver = service.getComponentTypeResolver('missing-type');
         let type = resolver(null);
         expect(type).toBe(UnknownWidgetComponent);
-    });
-
-    it('shoulld resolve custom value for unknown field type', () => {
-        let resolver = service.getComponentTypeResolver('missing-type', AttachWidgetComponent);
-        let type = resolver(null);
-        expect(type).toBe(AttachWidgetComponent);
     });
 
     it('should fallback to default resolver when field type missing', () => {
@@ -123,7 +105,7 @@ describe('FormRenderingService', () => {
     });
 
     it('should return custom value when resolving with no field', () => {
-        expect(service.resolveComponentType(null, AttachWidgetComponent)).toBe(AttachWidgetComponent);
+        expect(service.resolveComponentType(null, UploadWidgetComponent)).toBe(UploadWidgetComponent);
     });
 
 });

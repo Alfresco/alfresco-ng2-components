@@ -20,7 +20,6 @@ import { TabsWidgetComponent } from './tabs/tabs.widget';
 import { UnknownWidgetComponent } from './unknown/unknown.widget';
 
 import { AmountWidgetComponent } from './amount/amount.widget';
-import { AttachWidgetComponent } from './attach/attach.widget';
 import { CheckboxWidgetComponent } from './checkbox/checkbox.widget';
 import { DateWidgetComponent } from './date/date.widget';
 import { DisplayTextWidgetComponentComponent } from './display-text/display-text.widget';
@@ -63,7 +62,6 @@ export * from './hyperlink/hyperlink.widget';
 export * from './radio-buttons/radio-buttons.widget';
 export * from './display-text/display-text.widget';
 export * from './upload/upload.widget';
-export * from './attach/attach.widget';
 export * from './typeahead/typeahead.widget';
 export * from './functional-group/functional-group.widget';
 export * from './people/people.widget';
@@ -95,7 +93,6 @@ export const WIDGET_DIRECTIVES: any[] = [
     RadioButtonsWidgetComponent,
     DisplayTextWidgetComponentComponent,
     UploadWidgetComponent,
-    AttachWidgetComponent,
     TypeaheadWidgetComponent,
     FunctionalGroupWidgetComponent,
     PeopleWidgetComponent,
