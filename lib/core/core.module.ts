@@ -185,12 +185,12 @@ export class CoreModule {
                 },
                 ...providers()
             ]
-        }
+        };
     }
 
     static forChild(): ModuleWithProviders {
         return {
             ngModule: CoreModule
-        }
+        };
     }
 }
