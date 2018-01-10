@@ -1,5 +1,7 @@
 # Alfresco Viewer component
 
+Displays content from an ACS repository.
+
 See it live: [Viewer Quickstart](https://embed.plnkr.co/iTuG1lFIXfsP95l6bDW6/)
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->

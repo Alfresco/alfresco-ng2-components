@@ -1,19 +1,6 @@
 # Alfresco Webscript Get component
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic usage](#basic-usage)
-  * [Properties](#properties)
-- [Details](#details)
-  * [Webscript View HTML example](#webscript-view-html-example)
-  * [Webscript View DATATABLE example](#webscript-view-datatable-example)
-  * [Webscript View JSON example](#webscript-view-json-example)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
+Provides access to Webscript features.
 
 ## Basic usage
 
