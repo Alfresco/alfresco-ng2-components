@@ -156,6 +156,8 @@
         "no-access-missing-member": false,
         "adf-file-name": true,
         "adf-class-name": true,
-        "adf-prefix-name": true
+        "adf-prefix-name": true,
+        "no-input-rename": true,
+        "no-output-rename": true
     }
 }

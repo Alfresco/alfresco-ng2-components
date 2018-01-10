@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector  */
+/* tslint:disable:component-selector no-input-rename */
 
 import { Component, ViewEncapsulation } from '@angular/core';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';

@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/* tslint:disable:no-input-rename  */
+
 import { Directive, EventEmitter, HostListener, Input, OnChanges, Output } from '@angular/core';
 import { FavoriteBody, MinimalNodeEntity } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
