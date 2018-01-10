@@ -1,18 +1,6 @@
 # Activiti Content Component
 
-The component shows the content preview.
-
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-  * [Properties](#properties)
-  * [Events](#events)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
+Shows the content preview.
 
 ## Basic Usage
 
@@ -27,11 +15,11 @@ The component shows the content preview.
 The recommended set of properties can be found in the following table:
 
 | Name | Type | Default | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------- | ----------- |
 | contentId | string |  | The content id to show. |
 
 ### Events
 
 | Name | Description |
-| --- | --- |
+| ---- | ----------- |
 | contentClick | Invoked when the content is clicked. |
