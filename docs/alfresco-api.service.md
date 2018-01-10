@@ -2,17 +2,6 @@
 
 Provides access to initialized **AlfrescoJSApi** instance.
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-- [Details](#details)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
-
 ## Basic Usage
 
 ```ts

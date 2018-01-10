@@ -1,19 +1,6 @@
 # Alfresco Webscript Get component
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic usage](#basic-usage)
-  * [Properties](#properties)
-- [Details](#details)
-  * [Webscript View HTML example](#webscript-view-html-example)
-  * [Webscript View DATATABLE example](#webscript-view-datatable-example)
-  * [Webscript View JSON example](#webscript-view-json-example)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
+Provides access to Webscript features.
 
 ## Basic usage
 
@@ -56,24 +43,23 @@ export class AppComponent {
 ### Properties
 
 | Attribute | Type | Default | Description |
-| --- | --- | --- | --- |
-| scriptPath | string | |  (**mandatory**) path to Web Script (as defined by Web Script) |
-| scriptArgs | Object | | arguments to pass to Web Script |
-| contextRoot | string | | path where application is deployed | 
-| scriptPath | string | alfresco |  path to Web Script (as defined by Web Script) | 
-| contentType | string | service | path where Web Script service is mapped default value | 
+| --------- | ---- | ------- | ----------- |
+| scriptPath | string |  | (**mandatory**) path to Web Script (as defined by Web Script) |
+| scriptArgs | Object |  | arguments to pass to Web Script |
+| contextRoot | string |  | path where application is deployed |
+| scriptPath | string | alfresco | path to Web Script (as defined by Web Script) |
+| contentType | string | service | path where Web Script service is mapped default value |
 | contentType | string | TEXT | how to handle the data received from the web script JSON , HTML , DATATABLE or TEXT |
 | showData | boolean | true | render the webscript data |
-
 
 ### Events
 
 | Name | Description |
-| --- | --- |
+| ---- | ----------- |
 | success | You can get the plain data from the webscript through the **success** event parameter and use it as you need in your application |
 
 **contentType** {string}  
-***data***      {string}  data containing the plain value you get from the webscipt as an output parameter
+**_data_**      {string}  data containing the plain value you get from the webscipt as an output parameter
 
 ## Details
 
@@ -82,7 +68,7 @@ export class AppComponent {
 This sample demonstrates how to implement a Webscript component that renders the HTML contents that come from a webscript
 This sample Web Scripts reside in your Alfresco Server. You can access the folder webscript here:
 
-```http://localhost:8080/alfresco/service/sample/folder/Company%20Home```
+`http://localhost:8080/alfresco/service/sample/folder/Company%20Home`
 
 ```html
 <adf-webscript-get 
@@ -92,7 +78,7 @@ This sample Web Scripts reside in your Alfresco Server. You can access the folde
     [scriptPath]="'Sample/folder/Company%20Home'"
     [contentType]="'HTML'">
 </adf-webscript-get>
-```                          
+```
 
 ![Custom columns](docassets/images/HTML.png)                         
 
@@ -100,7 +86,7 @@ This sample Web Scripts reside in your Alfresco Server. You can access the folde
 
 This sample demonstrates how to implement a Webscript component that renders the JSON contents that come from a webscript
 
-```http://localhost:8080/alfresco/service/sample/folder/DATATABLE```
+`http://localhost:8080/alfresco/service/sample/folder/DATATABLE`
 
 ```html
 <adf-webscript-get 
@@ -110,7 +96,7 @@ This sample demonstrates how to implement a Webscript component that renders the
     [scriptPath]="'Sample/folder/DATATABLE'"
     [contentType]="'DATATABLE'">
 </adf-webscript-get>
-```  
+```
 
 If you want to show the result from a webscript inside a ng2-alfresco-datatable you have to return from the GET of the webscript the datastructure below:
 subdivide in data and schema
@@ -158,7 +144,7 @@ that will render the following table
 This sample demonstrates how to implement a Webscript component that renders the JSON contents that come from a webscript
 This sample Web Scripts reside in your Alfresco Server. You can access the folder webscript here:
 
-```http://localhost:8080/alfresco/service/sample/folder/JSON%EXAMPLE```
+`http://localhost:8080/alfresco/service/sample/folder/JSON%EXAMPLE`
 
 ```html
 <adf-webscript-get 
@@ -170,7 +156,7 @@ This sample Web Scripts reside in your Alfresco Server. You can access the folde
     [showData]="false"
     (success)="logDataExample($event)">
 </adf-webscript-get>
-``` 
+```
 
 You can get the plain data from the webscript through the **success** event parameter and use it as you need in your application
 
