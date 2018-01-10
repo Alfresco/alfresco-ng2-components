@@ -32,7 +32,7 @@ import {
     FormFieldMetadata
 } from '@alfresco/adf-core';
 import { ContentNodeDialogService, DocumentListService } from '@alfresco/adf-content-services';
-import { MaterialModule } from '../../material.module';
+import { MaterialModule } from '../material.module';
 import { Observable } from 'rxjs/Observable';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 
