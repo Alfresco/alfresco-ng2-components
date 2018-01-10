@@ -2,24 +2,20 @@
 
 Defines column properties for DataTable, Tasklist, Document List and other components.
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
+## Contents
 
-<!-- toc -->
+-   [Basic Usage](#basic-usage)
 
-- [Basic Usage](#basic-usage)
-  * [Properties](#properties)
-- [Details](#details)
-  * [Automatic column header translation](#automatic-column-header-translation)
-  * [Custom tooltips](#custom-tooltips)
-  * [Column Template](#column-template)
-  * [Styling Techniques](#styling-techniques)
-    + [Custom icons for selected rows](#custom-icons-for-selected-rows)
-    + [Hiding columns on small screens](#hiding-columns-on-small-screens)
-- [See also](#see-also)
+    -   [Properties](#properties)
 
-<!-- tocstop -->
+-   [Details](#details)
 
-<!-- markdown-toc end -->
+    -   [Automatic column header translation](#automatic-column-header-translation)
+    -   [Custom tooltips](#custom-tooltips)
+    -   [Column Template](#column-template)
+    -   [Styling Techniques](#styling-techniques)
+
+-   [See also](#see-also)
 
 ## Basic Usage
 
@@ -38,16 +34,16 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
 ### Properties
 
 | Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| key | string | | Data source key, can be either column/property key like `title` or property path like `createdBy.name` |
+| ---- | ---- | ------- | ----------- |
+| key | string |  | Data source key, can be either column/property key like `title` or property path like `createdBy.name` |
 | type | string | text | Value type for the column. Possible settings are 'text', 'image', 'date', 'fileSize' and 'location'. |
-| format | string | | Value format (if supported by components), for example format of the date |
+| format | string |  | Value format (if supported by components), for example format of the date |
 | sortable | boolean | true | Toggles ability to sort by this column, for example by clicking the column header |
-| title | string | | Display title of the column, typically used for column headers. You can use the i18n resouce key to get it translated automatically. |
-| template | `TemplateRef` | | Custom column template |
-| sr-title | string | | Screen reader title, used for accessibility purposes |
-| class | string | | Additional CSS class to be applied to column (header and cells) |
-| formatTooltip | Function | | Custom tooltip formatter function. |
+| title | string |  | Display title of the column, typically used for column headers. You can use the i18n resouce key to get it translated automatically. |
+| template | `TemplateRef` |  | Custom column template |
+| sr-title | string |  | Screen reader title, used for accessibility purposes |
+| class | string |  | Additional CSS class to be applied to column (header and cells) |
+| formatTooltip | Function |  | Custom tooltip formatter function. |
 
 ## Details
 
@@ -105,9 +101,9 @@ You can provide custom column/cell templates that may contain other Angular comp
 Every cell in the DataTable component is bound to the dynamic data context containing the following properties:
 
 | Name | Type | Description |
-| --- | --- | --- |
+| ---- | ---- | ----------- |
 | data | [DataTableAdapter](DataTableAdapter.md) | Data adapter instance. |
-| row | [DataRow](DataTableAdapter.md) | Current data row instance.  |
+| row | [DataRow](DataTableAdapter.md) | Current data row instance. |
 | col | [DataColumn](DataTableAdapter.md) | Current data column instance. |
 
 You can use all three properties to gain full access to underlying data from within your custom templates. 
@@ -145,7 +141,7 @@ You may want using **row** api to get raw value access.
 </data-column>
 ```
 
-Use **data** api to get values with post-processing, like datetime/icon conversion._
+Use **data** api to get values with post-processing, like datetime/icon conversion.\_
 
 In the Example below we will prepend `Hi!` to each file and folder name in the list: 
 
@@ -180,7 +176,7 @@ You can add a custom CSS class to a column using its `class` property. This is u
 many purposes - some examples are given below.
 
 #### Custom icons for selected rows
- 
+
 Custom styling can be used to change the look and feel of the icon for the selected rows.
 
 Let's start by assigning an "image-table-cell" class to the thumbnail column:
@@ -272,10 +268,12 @@ Now you can declare columns and assign `desktop-only` class where needed:
 ![Responsive Mobile](docassets/images/responsive-mobile.png)
 
 <!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
+
 <!-- seealso start -->
+
 ## See also
 
-- [Document list component](document-list.component.md)
-- [Datatable component](datatable.component.md)
-- [Task list component](task-list.component.md)
-<!-- seealso end -->
+-   [Document list component](document-list.component.md)
+-   [Datatable component](datatable.component.md)
+-   [Task list component](task-list.component.md)
+    <!-- seealso end -->

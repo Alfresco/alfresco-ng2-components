@@ -4,37 +4,35 @@ Displays the documents from a repository.
 
 ![Custom columns](docassets/images/custom-columns.png)
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
+## Contents
 
-<!-- toc -->
+-   [Basic Usage](#basic-usage)
 
-- [Basic Usage](#basic-usage)
-  * [Properties](#properties)
-  * [Events](#events)
-- [Details](#details)
-  * [DOM Events](#dom-events)
-  * [Pagination strategy](#pagination-strategy)
-  * [Data Sources](#data-sources)
-    + [Node ID](#node-id)
-    + [Repository aliases](#repository-aliases)
-    + [DocumentList aliases](#documentlist-aliases)
-  * [Setting default folder](#setting-default-folder)
-  * [Calling DocumentList api directly](#calling-documentlist-api-directly)
-  * [Underlying node object](#underlying-node-object)
-  * [Custom columns](#custom-columns)
-  * [Date Column](#date-column)
-  * [Location Column](#location-column)
-  * [Actions](#actions)
-  * [Navigation mode](#navigation-mode)
-- [Advanced usage and customization](#advanced-usage-and-customization)
-  * [Custom row filter](#custom-row-filter)
-  * [Custom image resolver](#custom-image-resolver)
-  * [Custom 'empty folder' template](#custom-empty-folder-template)
-- [See also](#see-also)
+    -   [Properties](#properties)
+    -   [Events](#events)
 
-<!-- tocstop -->
+-   [Details](#details)
 
-<!-- markdown-toc end -->
+    -   [DOM Events](#dom-events)
+    -   [Pagination strategy](#pagination-strategy)
+    -   [Data Sources](#data-sources)
+    -   [Setting default folder](#setting-default-folder)
+    -   [Calling DocumentList api directly](#calling-documentlist-api-directly)
+    -   [Underlying node object](#underlying-node-object)
+    -   [Custom columns](#custom-columns)
+    -   [Date Column](#date-column)
+    -   [Location Column](#location-column)
+    -   [Actions](#actions)
+    -   [Navigation mode](#navigation-mode)
+
+-   [Advanced usage and customization](#advanced-usage-and-customization)
+
+    -   [Custom row filter](#custom-row-filter)
+    -   [Custom image resolver](#custom-image-resolver)
+    -   [Custom 'empty folder' template](#custom-empty-folder-template)
+    -   [Custom 'permission denied' template](#custom-permission-denied-template)
+
+-   [See also](#see-also)
 
 ## Basic Usage
 
@@ -52,28 +50,28 @@ Displays the documents from a repository.
 The properties currentFolderId, folderNode and node are the entry initialization properties of the document list. They cannot be used together, choose the one that suites more your use case.
 
 | Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| permissionsStyle | [PermissionStyleModel[]](permissions-style.model.md) | null | Define a set of CSS styles styles to apply depending on the permission of the user on that node. See the [Permission Style model](permissions-style.model.md) page for further details and examples. | 
+| ---- | ---- | ------- | ----------- |
+| permissionsStyle | [PermissionStyleModel\[\]](permissions-style.model.md) | null | Define a set of CSS styles styles to apply depending on the permission of the user on that node. See the [Permission Style model](permissions-style.model.md) page for further details and examples. |
 | locationFormat | string | '/' | The default route for all the location-based columns (if declared). |
 | navigate | boolean | true | Toggles navigation to folder content or file preview |
 | navigationMode | string (click,dblclick) | dblclick | User interaction for folder navigation or file preview |
 | thumbnails | boolean | false | Show document thumbnails rather than icons |
-| selectionMode | string | 'single' | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows.  |
+| selectionMode | string | 'single' | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
 | multiselect | boolean | false | Toggles multiselect mode |
 | contentActions | boolean | false | Toggles content actions for each row |
 | contentActionsPosition | string (left\|right) | right | Position of the content actions dropdown menu. |
 | contextMenuActions | boolean | false | Toggles context menus for each row |
 | emptyFolderImageUrl | string | assets/images/empty_doc_lib.svg | Custom image for empty folder |
 | allowDropFiles | boolean | false | Toggle file drop support for rows (see **ng2-alfresco-core/UploadDirective** for more details) |
-| sorting | string[] | | Defines default sorting. The format is an array of 2 strings `[key, direction]` i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want to override default sorting detected by the component based on columns. |
-| rowStyle | string | | The inline style to apply to every row, see [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html) docs for more details and usage examples |
-| rowStyleClass | string | | The CSS class to apply to every row |
+| sorting | string\[] |  | Defines default sorting. The format is an array of 2 strings `[key, direction]` i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want to override default sorting detected by the component based on columns. |
+| rowStyle | string |  | The inline style to apply to every row, see [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html) docs for more details and usage examples |
+| rowStyleClass | string |  | The CSS class to apply to every row |
 | loading | boolean | false | Toggles the loading state and animated spinners for the component. Used in combination with `navigate=false` to perform custom navigation and loading state indication. |
-| rowFilter | `RowFilter` | | Custom row filter, [see more](#custom-row-filter). |
-| imageResolver | `ImageResolver` | | Custom image resolver, [see more](#custom-image-resolver). |
+| rowFilter | `RowFilter` |  | Custom row filter, [see more](#custom-row-filter). |
+| imageResolver | `ImageResolver` |  | Custom image resolver, [see more](#custom-image-resolver). |
 | currentFolderId | string | null | The ID of the folder node to display or a reserved string alias for special sources (see **Data Sources**) |
-| folderNode | [MinimalNodeEntryEntity](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md) | null | Currently displayed folder node | 
-| node | [NodePaging](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodePaging.md) | null | Document list will show all the nodes contained in the NodePaging entity  | 
+| folderNode | [MinimalNodeEntryEntity](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md) | null | Currently displayed folder node |
+| node | [NodePaging](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodePaging.md) | null | Document list will show all the nodes contained in the NodePaging entity |
 | maxItems | number | Default value is stored into user preference settings | determine the size of the page for the element into document list |
 | skipCount | number | 0 | element to skip over for pagination purpose |
 | enableInfiniteScrolling | boolean | true | Enable documentlist to work into infinite scrolling mode |
@@ -81,14 +79,14 @@ The properties currentFolderId, folderNode and node are the entry initialization
 ### Events
 
 | Name | Description |
-| --- | --- |
+| ---- | ----------- |
 | nodeClick | emitted when user clicks a list node |
 | nodeDblClick | emitted when user double-clicks list node |
 | folderChange | emitted once current display folder has changed |
-| preview | emitted when user acts upon files with either single or double click (depends on `navigation-mode`), recommended for Viewer components integration  |
+| preview | emitted when user acts upon files with either single or double click (depends on `navigation-mode`), recommended for Viewer components integration |
 | permissionError | emitted when user is attempting to create a folder via action menu without having the permission to do it |
-| ready | emitted when the documentList is ready and loads all the elements|
-| error | emitted when API fails to get documentList data|
+| ready | emitted when the documentList is ready and loads all the elements |
+| error | emitted when API fails to get documentList data |
 
 ## Details
 
@@ -98,7 +96,7 @@ Below are the DOM events the DocumentList component emits.
 All of them are `bubbling`, meaning you can handle them in any component up the parent hierarchy, even if DocumentList is wrapped by another component(s).
 
 | Name | Description |
-| --- | --- |
+| ---- | ----------- |
 | node-click | Raised when user clicks the node |
 | node-dblclick | Raised when user double-clicks the node |
 | node-select | Raised when user selects a node |
@@ -134,8 +132,8 @@ Below is a basic example of handling DOM events in the parent elements.
 
 The Document List by default supports 2 type of pagination, the **finite** and the **infinite** pagination. 
 
-- With the **finite** pagination you must provide document list with 2 parameters : maxItems and skipCount.
-- With the **infinite** pagination you must provide documentlist with 3 parameters : enableInfiniteScrolling, maxItems and skipCount.
+-   With the **finite** pagination you must provide document list with 2 parameters : maxItems and skipCount.
+-   With the **infinite** pagination you must provide documentlist with 3 parameters : enableInfiniteScrolling, maxItems and skipCount.
 
 ### Data Sources
 
@@ -149,20 +147,20 @@ The unique identifier of the Node. Gets automatically updated when you perform n
 
 You can use one of the well-known reserved aliases:
 
-- `-root-`
-- `-shared-`
-- `-my-`
+-   `-root-`
+-   `-shared-`
+-   `-my-`
 
 #### DocumentList aliases
 
 The DocumentList component also provides support for the following reserved aliases you can use:
 
-- `-trashcan-`,
-- `-sharedlinks-`
-- `-sites-`
-- `-mysites-`
-- `-favorites-`
-- `-recent-`
+-   `-trashcan-`,
+-   `-sharedlinks-`
+-   `-sites-`
+-   `-mysites-`
+-   `-favorites-`
+-   `-recent-`
 
 Note that due to specific origin of the data the sources above do not support navigation.
 You may want handling single and double clicks yourself to perform navigation to other sources.
@@ -177,13 +175,13 @@ There's a possibility to set the default location format using "locationFormat" 
 
 The default column layout for non-reserved views is:
 
-- Icon
-- Name
-- Size
-- Modified (date)
-- Modified by
+-   Icon
+-   Name
+-   Size
+-   Modified (date)
+-   Modified by
 
-__Trashcan__
+**Trashcan**
 
 ```html
 <adf-document-list
@@ -194,14 +192,14 @@ __Trashcan__
 
 Default layout:
 
-- Icon
-- Name
-- Location
-- Size
-- Deleted
-- Deleted by
+-   Icon
+-   Name
+-   Location
+-   Size
+-   Deleted
+-   Deleted by
 
-__Shared Links__
+**Shared Links**
 
 ```html
 <adf-document-list
@@ -212,15 +210,15 @@ __Shared Links__
 
 Default layout:
 
-- Icon
-- Name
-- Location
-- Size
-- Modified
-- Modified by
-- Shared by
+-   Icon
+-   Name
+-   Location
+-   Size
+-   Modified
+-   Modified by
+-   Shared by
 
-__Sites__
+**Sites**
 
 ```html
 <adf-document-list
@@ -230,11 +228,11 @@ __Sites__
 
 Default layout:
 
-- Icon
-- Title
-- Status
+-   Icon
+-   Title
+-   Status
 
-__My Sites__
+**My Sites**
 
 ```html
 <adf-document-list
@@ -244,11 +242,11 @@ __My Sites__
 
 Default layout:
 
-- Icon
-- Title
-- Status
+-   Icon
+-   Title
+-   Status
 
-__Favorites__
+**Favorites**
 
 ```html
 <adf-document-list
@@ -259,14 +257,14 @@ __Favorites__
 
 Default layout:
 
-- Icon
-- Name
-- Location
-- Size
-- Modified
-- Modified by
+-   Icon
+-   Name
+-   Location
+-   Size
+-   Modified
+-   Modified by
 
-__Recent Files__
+**Recent Files**
 
 ```html
 <adf-document-list
@@ -277,9 +275,9 @@ __Recent Files__
 
 Default layout:
 
-- Icon
-- Name
-- Location
+-   Icon
+-   Name
+-   Location
 
 ### Setting default folder
 
@@ -516,12 +514,12 @@ _For granular permissions, the Location Column may or may not render link locati
 
 You are going to use it with custom navigation or when displaying content from the sources like:
 
-- Sites
-- My Sites
-- Shared Links
-- Recent Files
-- Favorites
-- Trashcan
+-   Sites
+-   My Sites
+-   Shared Links
+-   Recent Files
+-   Favorites
+-   Trashcan
 
 or any other location that needs nagivating to the node parent folder easily.
 
@@ -584,11 +582,11 @@ By default DocumentList component uses 'double-click' mode for navigation.
 That means user will see the contents of the folder by double-clicking its name
 or icon (similar to Google Drive behaviour). However it is possible switching to 
 other modes, like single-click navigation for example.
- 
+
 The following navigation modes are supported:
 
-- **click**
-- **dblclick**
+-   **click**
+-   **dblclick**
 
 The following example switches navigation to single clicks:
 
@@ -756,23 +754,26 @@ This can be changed by means of the custom html template:
 That will give the following output:
 
 ![Custom no permission](docassets/images/no-permission-custom.png)
+
 <!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
+
 <!-- seealso start -->
+
 ## See also
 
-- [Datatable component](datatable.component.md)
-- [Data column component](data-column.component.md)
-- [Pagination component](pagination.component.md)
-- [Infinite pagination component](infinite-pagination.component.md)
-- [Sites dropdown component](sites-dropdown.component.md)
-- [Metadata indicators](metadata-indicators.md)
-- [Document library model](document-library.model.md)
-- [Nodes api service](nodes-api.service.md)
-- [Breadcrumb component](breadcrumb.component.md)
-- [Content action component](content-action.component.md)
-- [Content node selector component](content-node-selector.component.md)
-- [Document list service](document-list.service.md)
-- [Dropdown breadcrumb component](dropdown-breadcrumb.component.md)
-- [Permissions style model](permissions-style.model.md)
-- [Version manager component](version-manager.component.md)
-<!-- seealso end -->
+-   [Datatable component](datatable.component.md)
+-   [Data column component](data-column.component.md)
+-   [Pagination component](pagination.component.md)
+-   [Infinite pagination component](infinite-pagination.component.md)
+-   [Sites dropdown component](sites-dropdown.component.md)
+-   [Metadata indicators](metadata-indicators.md)
+-   [Document library model](document-library.model.md)
+-   [Nodes api service](nodes-api.service.md)
+-   [Breadcrumb component](breadcrumb.component.md)
+-   [Content action component](content-action.component.md)
+-   [Content node selector component](content-node-selector.component.md)
+-   [Document list service](document-list.service.md)
+-   [Dropdown breadcrumb component](dropdown-breadcrumb.component.md)
+-   [Permissions style model](permissions-style.model.md)
+-   [Version manager component](version-manager.component.md)
+    <!-- seealso end -->

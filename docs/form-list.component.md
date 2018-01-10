@@ -1,17 +1,6 @@
 # ADF Form List Component
 
-The component shows the activiti forms as a list.
-
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-  * [Properties](#properties)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
+Shows APS forms as a list.
 
 ## Basic Usage
 
@@ -26,5 +15,5 @@ The component shows the activiti forms as a list.
 The recommended set of properties can be found in the following table:
 
 | Name | Type | Default | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------- | ----------- |
 | forms | any |  | The array that contains the information to show inside the list. |
