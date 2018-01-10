@@ -18,7 +18,7 @@
 import { DataColumn, DataRowEvent, DataSorting, DataTableAdapter, ObjectDataColumn, ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/adf-core';
 import { AppConfigService, DataColumnListComponent, PaginationComponent } from '@alfresco/adf-core';
 import { DatePipe } from '@angular/common';
-import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnInit, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
 import { processPresetsDefaultModel } from '../models/process-preset.model';
 import { ProcessService } from '../services/process.service';
@@ -29,7 +29,7 @@ import { ProcessListModel } from '../models/process-list.model';
     styleUrls: ['./process-list.component.css'],
     templateUrl: './process-list.component.html'
 })
-export class ProcessInstanceListComponent implements OnChanges, AfterContentInit {
+export class ProcessInstanceListComponent implements OnInit, OnChanges, AfterContentInit {
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
