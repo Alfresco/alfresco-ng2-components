@@ -30,7 +30,6 @@ import { ImageResolver } from '../document-list/data/image-resolver.model';
 })
 export class ContentNodeSelectorComponent {
 
-
     /**
      * @deprecated in 2.1.0
      */

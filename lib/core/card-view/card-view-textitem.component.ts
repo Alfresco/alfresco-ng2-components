@@ -54,8 +54,8 @@ export class CardViewTextItemComponent implements OnChanges {
     setEditMode(editStatus: boolean): void {
         this.inEdit = editStatus;
         setTimeout(() => {
-            if(this.editorInput) {
-                this.editorInput.nativeElement.click();    
+            if (this.editorInput) {
+                this.editorInput.nativeElement.click();
             }
         }, 0);
     }
