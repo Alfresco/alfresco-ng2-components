@@ -34,7 +34,6 @@ export * from './app-config/app-config.module';
 export * from './form/form.module';
 
 export * from './pipes/pipe.module';
-export * from './services/service.module';
 export * from './directives/directive.module';
 
 export * from './viewer';

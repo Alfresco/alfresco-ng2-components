@@ -17,14 +17,11 @@
 
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-
-import { TRANSLATION_PROVIDER, TranslationService } from './services/translation.service';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 
 import { MaterialModule } from './material.module';
-
 import { AppConfigModule } from './app-config/app-config.module';
 import { CardViewModule } from './card-view/card-view.module';
 import { CollapsableModule } from './collapsable/collapsable.module';
@@ -44,12 +41,79 @@ import { SideBarActionModule } from './sidebar/sidebar-action.module';
 
 import { DirectiveModule } from './directives/directive.module';
 import { PipeModule } from './pipes/pipe.module';
-import { ServiceModule } from './services/service.module';
+
+import { AlfrescoApiService } from './services/alfresco-api.service';
+import { AppsProcessService } from './services/apps-process.service';
+import { AuthGuardBpm } from './services/auth-guard-bpm.service';
+import { AuthGuardEcm } from './services/auth-guard-ecm.service';
+import { AuthGuard } from './services/auth-guard.service';
+import { AuthenticationService } from './services/authentication.service';
+import { CardItemTypeService } from './services/card-item-types.service';
+import { CardViewUpdateService } from './services/card-view-update.service';
+import { CommentProcessService } from './services/comment-process.service';
+import { ContentService } from './services/content.service';
+import { CookieService } from './services/cookie.service';
+import { DeletedNodesApiService } from './services/deleted-nodes-api.service';
+import { DiscoveryApiService } from './services/discovery-api.service';
+import { FavoritesApiService } from './services/favorites-api.service';
+import { HighlightTransformService } from './services/highlight-transform.service';
 import { LogService } from './services/log.service';
+import { NodesApiService } from './services/nodes-api.service';
+import { NotificationService } from './services/notification.service';
+import { PageTitleService } from './services/page-title.service';
+import { PeopleContentService } from './services/people-content.service';
+import { PeopleProcessService } from './services/people-process.service';
+import { RenditionsService } from './services/renditions.service';
+import { SearchService } from './services/search.service';
+import { SettingsService } from './services/settings.service';
+import { SharedLinksApiService } from './services/shared-links-api.service';
+import { SitesService } from './services/sites.service';
+import { StorageService } from './services/storage.service';
+import { ThumbnailService } from './services/thumbnail.service';
 import { TranslateLoaderService } from './services/translate-loader.service';
+import { TRANSLATION_PROVIDER, TranslationService } from './services/translation.service';
+import { UploadService } from './services/upload.service';
+import { UserPreferencesService } from './services/user-preferences.service';
 
 export function createTranslateLoader(http: HttpClient, logService: LogService) {
     return new TranslateLoaderService(http, logService);
+}
+
+export function providers() {
+    return [
+        AuthenticationService,
+        AlfrescoApiService,
+        SettingsService,
+        ContentService,
+        AuthGuard,
+        AuthGuardEcm,
+        AuthGuardBpm,
+        AppsProcessService,
+        PageTitleService,
+        StorageService,
+        CookieService,
+        RenditionsService,
+        NotificationService,
+        LogService,
+        TranslationService,
+        TranslateLoaderService,
+        ThumbnailService,
+        UploadService,
+        CardItemTypeService,
+        CardViewUpdateService,
+        UserPreferencesService,
+        HighlightTransformService,
+        DeletedNodesApiService,
+        FavoritesApiService,
+        NodesApiService,
+        PeopleContentService,
+        PeopleProcessService,
+        SearchService,
+        SharedLinksApiService,
+        SitesService,
+        DiscoveryApiService,
+        CommentProcessService
+    ];
 }
 
 @NgModule({
@@ -71,7 +135,6 @@ export function createTranslateLoader(http: HttpClient, logService: LogService) 
         ContextMenuModule,
         CardViewModule,
         CollapsableModule,
-        ServiceModule,
         FormModule,
         TranslateModule.forRoot({
             loader: {
@@ -80,17 +143,6 @@ export function createTranslateLoader(http: HttpClient, logService: LogService) 
                 deps: [HttpClient, LogService]
             }
         })
-    ],
-    providers: [
-        {
-            provide: TRANSLATION_PROVIDER,
-            multi: true,
-            useValue: {
-                name: 'adf-core',
-                source: 'assets/adf-core'
-            }
-        },
-        TranslationService
     ],
     exports: [
         AppConfigModule,
@@ -110,7 +162,6 @@ export function createTranslateLoader(http: HttpClient, logService: LogService) 
         DataColumnModule,
         DataTableModule,
         HostSettingsModule,
-        ServiceModule,
         ViewerModule,
         SideBarActionModule,
         PipeModule,
@@ -120,4 +171,26 @@ export function createTranslateLoader(http: HttpClient, logService: LogService) 
     ]
 })
 export class CoreModule {
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: CoreModule,
+            providers: [
+                {
+                    provide: TRANSLATION_PROVIDER,
+                    multi: true,
+                    useValue: {
+                        name: 'adf-core',
+                        source: 'assets/adf-core'
+                    }
+                },
+                ...providers()
+            ]
+        }
+    }
+
+    static forChild(): ModuleWithProviders {
+        return {
+            ngModule: CoreModule
+        }
+    }
 }
