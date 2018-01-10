@@ -49,7 +49,7 @@ export class ShareAttachWidgetComponent extends UploadWidgetComponent implements
                 public thumbnails: ThumbnailService,
                 public processContentService: ProcessContentService,
                 private activitiContentService: ActivitiContentService,
-                private contentDialog: ContentNodeDialogService
+                private contentDialog: ContentNodeDialogService){
 
         super(formService, logger, thumbnails, processContentService);
     }

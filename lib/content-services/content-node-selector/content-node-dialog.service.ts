@@ -39,7 +39,7 @@ export class ContentNodeDialogService {
     openFileBrowseDialogByFolderId(folderNodeId: string): Observable<MinimalNodeEntryEntity[]> {
         return Observable.fromPromise(this.documentListService.getFolderNode(folderNodeId))
             .switchMap((node: MinimalNodeEntryEntity)=> {
-                return this.openUploadFileDialog('Upload', node);
+                return this.openUploadFileDialog('Choose', node);
         });
     }
 
