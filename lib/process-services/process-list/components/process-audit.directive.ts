@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/* tslint:disable:no-input-rename  */
+
 import { ContentService } from '@alfresco/adf-core';
 import { Directive, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ProcessService } from './../services/process.service';

@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+ /* tslint:disable:component-selector no-access-missing-member no-input-rename */
 
-/* tslint:disable::no-access-missing-member */
 import { Component, ElementRef, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { WidgetComponent } from './../widget.component';
