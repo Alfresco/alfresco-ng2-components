@@ -2,18 +2,6 @@
 
 Provides authentication for use with the Login component.
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-  * [Events](#events)
-- [Details](#details)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
-
 ## Basic Usage
 
 **app.component.ts**
@@ -39,7 +27,7 @@ export class AppComponent {
 ### Events
 
 | Name | Description |
-| --- | --- |
+| ---- | ----------- |
 | onLogin | Raised when user logs in |
 | onLogout | Raised when user logs out |
 

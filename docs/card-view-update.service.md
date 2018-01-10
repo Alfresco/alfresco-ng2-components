@@ -2,25 +2,12 @@
 
 Reports edits and clicks within fields of a [Card View component](card-view.component.md).
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Details](#details)
-  * [Responding to updates](#responding-to-updates)
-  * [Responding to clicks](#responding-to-clicks)
-- [See also](#see-also)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
-
 ## Details
 
 You can use the Card View Update service to respond to edits and clicks within items on
 a card view. This might involve updating application data to reflect the changes made to
 the view or could simply be a matter of highlighting a clicked item.
- 
+
 The service is injected into a component using a constructor parameter, which also
 creates a corresponding property in the object:
 
@@ -134,8 +121,10 @@ Note that this function will only be called if the `clickable` property of the m
 for this item.
 
 <!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
+
 <!-- seealso start -->
+
 ## See also
 
-- [Card view component](card-view.component.md)
-<!-- seealso end -->
+-   [Card view component](card-view.component.md)
+    <!-- seealso end -->
