@@ -118,6 +118,7 @@ export class ProcessInstanceListComponent implements OnInit, OnChanges, AfterCon
 
     ngOnChanges(changes: SimpleChanges) {
         this.initStream();
+        this.reload();
     }
 
     initStream() {
