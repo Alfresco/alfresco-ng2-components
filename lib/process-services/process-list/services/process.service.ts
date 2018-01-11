@@ -36,19 +36,21 @@ export class ProcessService {
     public processList$: Observable<ProcessListModel>;
 
     constructor(private alfrescoApiService: AlfrescoApiService,
-        private logService: LogService) {
+                private logService: LogService) {
         this.processList$ = this.processSubject.asObservable();
     }
 
-    getProcessInstances(requestNode: ProcessFilterParamRepresentationModel, processDefinitionKey?: string): Observable<ProcessInstance[]> {
+    getProcessInstances(requestNode: ProcessFilterParamRepresentationModel, processDefinitionKey?: string): Observable<ProcessListModel> {
         return Observable.fromPromise(this.alfrescoApiService.getInstance().activiti.processApi.getProcessInstances(requestNode))
             .map((res: any) => {
                 if (processDefinitionKey) {
-                    return res.data.filter(process => process.processDefinitionKey === processDefinitionKey);
+                    const filtered = res.data.filter(process => process.processDefinitionKey === processDefinitionKey);
+                    res.data = filtered;
+                    this.processSubject.next(res);
                 } else {
                     this.processSubject.next(res);
-                    return res.data;
                 }
+                return res;
             }).catch(err => this.handleProcessError(err));
     }
 

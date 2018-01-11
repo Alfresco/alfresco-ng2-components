@@ -16,9 +16,8 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatProgressSpinnerModule } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
 import { ProcessInstanceListComponent } from './process-list.component';
 
 import { AppConfigService } from '@alfresco/adf-core';
@@ -27,12 +26,12 @@ import { DataRowEvent, DataSorting, ObjectDataRow, ObjectDataTableAdapter } from
 import { fakeProcessInstance, fakeProcessInstancesWithNoName } from '../../mock';
 import { ProcessService } from '../services/process.service';
 
+declare let jasmine: any;
+
 describe('ProcessInstanceListComponent', () => {
 
     let fixture: ComponentFixture<ProcessInstanceListComponent>;
     let component: ProcessInstanceListComponent;
-    let service: ProcessService;
-    let getProcessInstancesSpy: jasmine.Spy;
     let appConfig: AppConfigService;
 
     let fakeCutomSchema = [
@@ -81,9 +80,7 @@ describe('ProcessInstanceListComponent', () => {
             fixture = TestBed.createComponent(ProcessInstanceListComponent);
             component = fixture.componentInstance;
             appConfig = TestBed.get(AppConfigService);
-            service = fixture.debugElement.injector.get(ProcessService);
 
-            getProcessInstancesSpy = spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeProcessInstance));
             appConfig.config = Object.assign(appConfig.config, {
                 'adf-process-list': {
                     'presets': {
@@ -108,6 +105,14 @@ describe('ProcessInstanceListComponent', () => {
 
         });
     }));
+
+    beforeEach(() => {
+        jasmine.Ajax.install();
+    });
+
+    afterEach(() => {
+        jasmine.Ajax.uninstall();
+    });
 
     it('should use the default schemaColumn as default', () => {
         component.ngAfterContentInit();
@@ -148,15 +153,24 @@ describe('ProcessInstanceListComponent', () => {
         expect(component.isListEmpty()).toBeTruthy();
     });
 
-    it('should emit onSuccess event when process instances loaded', fakeAsync(() => {
-        let emitSpy = spyOn(component.success, 'emit');
+    it('should emit onSuccess event when process instances loaded', (done) => {
         component.appId = 1;
         component.state = 'open';
         component.processDefinitionKey = null;
+
+        component.success.subscribe( (res) => {
+            expect(res).toBeDefined();
+            expect(res).toEqual(fakeProcessInstance);
+            done();
+        });
+
         fixture.detectChanges();
-        tick();
-        expect(emitSpy).toHaveBeenCalledWith(fakeProcessInstance);
-    }));
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeProcessInstance)
+        });
+    });
 
     it('should return the process instances list in original order when datalist passed non-existent columns', async(() => {
         component.data = new ObjectDataTableAdapter(
@@ -171,12 +185,18 @@ describe('ProcessInstanceListComponent', () => {
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.data).toBeDefined();
-            expect(component.isListEmpty()).not.toBeTruthy();
+            expect(component.isListEmpty()).toBe(false);
             expect(component.data.getRows().length).toEqual(2);
             expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
             expect(component.data.getRows()[1].getValue('name')).toEqual('Process 382927392');
         });
         fixture.detectChanges();
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeProcessInstance)
+        });
     }));
 
     it('should order the process instances by name column when no sort passed', async(() => {
@@ -186,12 +206,18 @@ describe('ProcessInstanceListComponent', () => {
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.data).toBeDefined();
-            expect(component.isListEmpty()).not.toBeTruthy();
+            expect(component.isListEmpty()).toBe(false);
             expect(component.data.getRows().length).toEqual(2);
             expect(component.data.getRows()[0].getValue('name')).toEqual('Process 382927392');
             expect(component.data.getRows()[1].getValue('name')).toEqual('Process 773443333');
         });
         fixture.detectChanges();
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeProcessInstance)
+        });
     }));
 
     it('should order the process instances by descending column when specified', async(() => {
@@ -202,12 +228,18 @@ describe('ProcessInstanceListComponent', () => {
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.data).toBeDefined();
-            expect(component.isListEmpty()).not.toBeTruthy();
+            expect(component.isListEmpty()).toBe(false);
             expect(component.data.getRows().length).toEqual(2);
             expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
             expect(component.data.getRows()[1].getValue('name')).toEqual('Process 382927392');
         });
         fixture.detectChanges();
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeProcessInstance)
+        });
     }));
 
     it('should order the process instances by ascending column when specified', async(() => {
@@ -224,6 +256,12 @@ describe('ProcessInstanceListComponent', () => {
             expect(component.data.getRows()[1].getValue('name')).toEqual('Process 382927392');
         });
         fixture.detectChanges();
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeProcessInstance)
+        });
     }));
 
     it('should order the process instances by descending start date when specified', async(() => {
@@ -240,19 +278,31 @@ describe('ProcessInstanceListComponent', () => {
             expect(component.data.getRows()[1].getValue('name')).toEqual('Process 773443333');
         });
         fixture.detectChanges();
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeProcessInstance)
+        });
     }));
 
-    it('should return a default name if no name is specified on the process', async(() => {
-        getProcessInstancesSpy = getProcessInstancesSpy.and.returnValue(Observable.of(fakeProcessInstancesWithNoName));
+    it('should return a default name if no name is specified on the process', (done) => {
         component.appId = 1;
         component.state = 'open';
         component.processDefinitionKey = 'fakeprocess';
         component.success.subscribe( (res) => {
             expect(component.data.getRows()[0].getValue('name')).toEqual('Fake Process Name - Nov 9, 2017, 12:36:14 PM');
             expect(component.data.getRows()[1].getValue('name')).toEqual('Fake Process Name - Nov 9, 2017, 12:37:25 PM');
+            done();
         });
         fixture.detectChanges();
-    }));
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeProcessInstancesWithNoName)
+        });
+    });
 
     it('should return a currentId null when the processList is empty', () => {
         component.selectFirst();
@@ -279,28 +329,46 @@ describe('ProcessInstanceListComponent', () => {
         expect(dataRow[1].isSelected).toEqual(false);
     });
 
-    it('should throw an exception when the response is wrong', fakeAsync(() => {
-        let emitSpy: jasmine.Spy = spyOn(component.error, 'emit');
+    it('should throw an exception when the response is wrong', (done) => {
         let mockError = 'Fake server error';
-        getProcessInstancesSpy.and.returnValue(Observable.throw(mockError));
         component.appId = 1;
         component.state = 'open';
-        fixture.detectChanges();
-        tick();
-        expect(emitSpy).toHaveBeenCalledWith(mockError);
-    }));
 
-    it('should emit onSuccess event when reload() called', fakeAsync(() => {
+        component.error.subscribe( (error) => {
+            expect(error).toBeDefined();
+            expect(error.response.body).toEqual('Fake server error');
+            done();
+        });
+
+        fixture.detectChanges();
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 403,
+            contentType: 'application/json',
+            responseText: JSON.stringify(mockError)
+        });
+    });
+
+    it('should emit onSuccess event when reload() called', (done) => {
         component.appId = 1;
         component.state = 'open';
         component.processDefinitionKey = null;
+
+        component.success.subscribe( (res) => {
+            expect(res).toBeDefined();
+            expect(res).toEqual(fakeProcessInstance);
+            done();
+        });
+
         fixture.detectChanges();
-        tick();
-        let emitSpy = spyOn(component.success, 'emit');
         component.reload();
-        tick();
-        expect(emitSpy).toHaveBeenCalledWith(fakeProcessInstance);
-    }));
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeProcessInstance)
+        });
+    });
 
     it('should reload processes when reload() is called', (done) => {
         component.data = new ObjectDataTableAdapter(
@@ -313,12 +381,19 @@ describe('ProcessInstanceListComponent', () => {
         component.success.subscribe( (res) => {
             expect(res).toBeDefined();
             expect(component.data).toBeDefined();
-            expect(component.isListEmpty()).not.toBeTruthy();
+            expect(component.isListEmpty()).toBe(false);
             expect(component.data.getRows().length).toEqual(2);
             expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
             done();
         });
+        fixture.detectChanges();
         component.reload();
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeProcessInstance)
+        });
     });
 
     it('should emit row click event', (done) => {
@@ -394,13 +469,19 @@ describe('ProcessInstanceListComponent', () => {
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(component.data).toBeDefined();
-                expect(component.isListEmpty()).not.toBeTruthy();
+                expect(component.isListEmpty()).toBe(false);
                 expect(component.data.getRows().length).toEqual(2);
                 expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
                 done();
             });
 
-            component.ngOnChanges({'appId': change});
+            component.ngOnChanges({ 'appId': change });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 200,
+                contentType: 'application/json',
+                responseText: JSON.stringify(fakeProcessInstance)
+            });
         });
 
         it('should reload the list when the processDefinitionKey parameter changes', (done) => {
@@ -410,13 +491,19 @@ describe('ProcessInstanceListComponent', () => {
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(component.data).toBeDefined();
-                expect(component.isListEmpty()).not.toBeTruthy();
+                expect(component.isListEmpty()).toBe(false);
                 expect(component.data.getRows().length).toEqual(2);
                 expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
                 done();
             });
 
             component.ngOnChanges({'processDefinitionKey': change});
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 200,
+                contentType: 'application/json',
+                responseText: JSON.stringify(fakeProcessInstance)
+            });
         });
 
         it('should reload the list when the state parameter changes', (done) => {
@@ -426,13 +513,19 @@ describe('ProcessInstanceListComponent', () => {
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(component.data).toBeDefined();
-                expect(component.isListEmpty()).not.toBeTruthy();
+                expect(component.isListEmpty()).toBe(false);
                 expect(component.data.getRows().length).toEqual(2);
                 expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
                 done();
             });
 
             component.ngOnChanges({'state': change});
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 200,
+                contentType: 'application/json',
+                responseText: JSON.stringify(fakeProcessInstance)
+            });
         });
 
         it('should reload the list when the sort parameter changes', (done) => {
@@ -442,13 +535,19 @@ describe('ProcessInstanceListComponent', () => {
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(component.data).toBeDefined();
-                expect(component.isListEmpty()).not.toBeTruthy();
+                expect(component.isListEmpty()).toBe(false);
                 expect(component.data.getRows().length).toEqual(2);
                 expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
                 done();
             });
 
             component.ngOnChanges({'sort': change});
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 200,
+                contentType: 'application/json',
+                responseText: JSON.stringify(fakeProcessInstance)
+            });
         });
 
         it('should sort the list when the sort parameter changes', (done) => {
@@ -464,6 +563,12 @@ describe('ProcessInstanceListComponent', () => {
 
             component.sort = sort;
             component.ngOnChanges({'sort': change});
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 200,
+                contentType: 'application/json',
+                responseText: JSON.stringify(fakeProcessInstance)
+            });
         });
 
         it('should reload the process list when the name parameter changes', (done) => {
@@ -473,13 +578,19 @@ describe('ProcessInstanceListComponent', () => {
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(component.data).toBeDefined();
-                expect(component.isListEmpty()).not.toBeTruthy();
+                expect(component.isListEmpty()).toBe(false);
                 expect(component.data.getRows().length).toEqual(2);
                 expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
                 done();
             });
 
             component.ngOnChanges({'name': change});
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 200,
+                contentType: 'application/json',
+                responseText: JSON.stringify(fakeProcessInstance)
+            });
         });
     });
 });
