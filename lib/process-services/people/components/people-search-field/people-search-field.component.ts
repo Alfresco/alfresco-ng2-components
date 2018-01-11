@@ -19,6 +19,8 @@ import { UserProcessModel } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
+import { Observable } from 'rxjs/Observable';
+import { PerformSearchCallback } from '../../interfaces/perform-search-callback.interface';
 
 @Component({
     selector: 'adf-people-search-field',
@@ -31,27 +33,22 @@ import { debounceTime } from 'rxjs/operators';
 export class PeopleSearchFieldComponent {
 
     @Input()
-    users: UserProcessModel[] = [];
-
-    @Output()
-    searchPeople: EventEmitter<any> = new EventEmitter();
+    performSearch: PerformSearchCallback;
 
     @Output()
     rowClick: EventEmitter<UserProcessModel> = new EventEmitter<UserProcessModel>();
 
+    users$: Observable<UserProcessModel[]>;
     searchUser: FormControl = new FormControl();
-    selectedUser: UserProcessModel;
 
     constructor() {
-        this.searchUser.valueChanges
-            .pipe(
-                debounceTime(200)
-            )
-            .subscribe((event: string) => {
-                if (event && event.trim()) {
-                    this.searchPeople.emit(event);
+        this.users$ = this.searchUser.valueChanges
+            .pipe(debounceTime(200))
+            .switchMap((searchWord: string) => {
+                if (searchWord && searchWord.trim()) {
+                    return this.performSearch(searchWord);
                 } else {
-                    this.users = [];
+                    return Observable.of([]);
                 }
             });
     }
@@ -70,9 +67,5 @@ export class PeopleSearchFieldComponent {
         firstName = (firstName !== null && firstName !== '' ? firstName[0] : '');
         lastName = (lastName !== null && lastName !== '' ? lastName[0] : '');
         return this.getDisplayUser(firstName, lastName, '');
-    }
-
-    hasUsers() {
-        return (this.users && this.users.length > 0);
     }
 }

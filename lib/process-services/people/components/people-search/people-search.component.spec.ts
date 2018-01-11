@@ -83,22 +83,21 @@ describe('PeopleSearchComponent', () => {
     });
 
     it('should show user which can be involved ', (done) => {
-        peopleSearchComponent.searchPeople.subscribe(() => {
-            peopleSearchComponent.results = Observable.of(userArray);
-            peopleSearchComponent.ngOnInit();
-            fixture.detectChanges();
-            fixture.whenStable()
-                .then(() => {
-                    let gatewayElement: any = element.querySelector('#search-people-list tbody');
-                    expect(gatewayElement).not.toBeNull();
-                    expect(gatewayElement.children.length).toBe(2);
-                    done();
-                });
-        });
+        peopleSearchComponent.results = Observable.of(userArray);
+        peopleSearchComponent.ngOnInit();
+        fixture.detectChanges();
+
         searchInput = element.querySelector('#userSearchText');
         searchInput.value = 'fake-search';
-        peopleSearchComponent.searchUser.markAsDirty();
         searchInput.dispatchEvent(new Event('input'));
+
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            let gatewayElement: any = element.querySelector('#search-people-list tbody');
+            expect(gatewayElement).not.toBeNull();
+            expect(gatewayElement.children.length).toBe(2);
+            done();
+        });
     });
 
     it('should send an event when an user is clicked', (done) => {
@@ -122,13 +121,20 @@ describe('PeopleSearchComponent', () => {
         peopleSearchComponent.results = Observable.of(userArray);
         peopleSearchComponent.ngOnInit();
         fixture.detectChanges();
+
+        searchInput = element.querySelector('#userSearchText');
+        searchInput.value = 'fake-search';
+        searchInput.dispatchEvent(new Event('input'));
+        fixture.detectChanges();
+
         peopleSearchComponent.onRowClick(fakeUser);
         let addUserButton = <HTMLElement> element.querySelector('#add-people');
         addUserButton.click();
-
         fixture.detectChanges();
+
         fixture.whenStable()
             .then(() => {
+                fixture.detectChanges();
                 let gatewayElement: any = element.querySelector('#search-people-list tbody');
                 expect(gatewayElement).not.toBeNull();
                 expect(gatewayElement.children.length).toBe(1);

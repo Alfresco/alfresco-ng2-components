@@ -16,9 +16,9 @@
  */
 
 import { UserProcessModel } from '@alfresco/adf-core';
-import { Component, Directive, EventEmitter, OnInit, Input, Output, ViewEncapsulation } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, EventEmitter, OnInit, Input, Output, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { PerformSearchCallback } from '../../interfaces/perform-search-callback.interface';
 
 @Component({
     selector: 'adf-people-search',
@@ -44,20 +44,22 @@ export class PeopleSearchComponent implements OnInit {
     @Output()
     closeSearch = new EventEmitter();
 
-    searchUser: FormControl = new FormControl();
-    users: UserProcessModel[] = [];
-    selectedUser: UserProcessModel;
+    filteredResults$: Observable<UserProcessModel[]>;
+    selectedUser: UserProcessModel = {};
+    performSearch: PerformSearchCallback;
 
     constructor() {}
 
     ngOnInit() {
-        this.results.subscribe((list) => {
-            this.users = list;
+        this.filteredResults$ = this.results.map((users) => {
+            return users.filter(user => user.id !== this.selectedUser.id);
         });
+        this.performSearch = this.performSearchCallback.bind(this);
     }
 
-    onSearchPeople(event) {
+    private performSearchCallback(event): Observable<UserProcessModel[]> {
         this.searchPeople.emit(event);
+        return this.filteredResults$;
     }
 
     onRowClick(user: UserProcessModel) {
@@ -78,12 +80,5 @@ export class PeopleSearchComponent implements OnInit {
             return;
         }
         this.success.emit(this.selectedUser);
-        this.users = this.users.filter((user) => {
-            this.searchUser.reset();
-            return user.id !== this.selectedUser.id;
-        });
     }
 }
-
-@Directive({ selector: 'people-search-title' }) export class PeopleSearchTitleDirective { }
-@Directive({ selector: 'people-search-action-label' }) export class PeopleSearchActionLabelDirective { }

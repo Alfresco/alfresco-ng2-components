@@ -2,11 +2,7 @@
     <ng-content select="[people-search-title]"></ng-content>
 </div>
 
-<adf-people-search-field
-    [users]="users"
-    (searchPeople)="onSearchPeople($event)"
-    (rowClick)="onRowClick($event)">
-</adf-people-search-field>
+<adf-people-search-field [performSearch]="performSearch" (rowClick)="onRowClick($event)"></adf-people-search-field>
 
 <div class="search-list-action-container">
     <button mat-button type="button" id="close-people-search" (click)="closeSearchList()">

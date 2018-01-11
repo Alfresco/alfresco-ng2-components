@@ -15,11 +15,7 @@
  * limitations under the License.
  */
 
-export * from './components/people/people.component';
-export * from './components/people-list/people-list.component';
-export * from './components/people-search/people-search.component';
+import { Directive } from '@angular/core';
 
-export * from './interfaces/perform-search-callback.interface';
-
-export * from './directives/people-search-action-label.directive';
-export * from './directives/people-search-title.directive';
+@Directive({ selector: 'people-search-title' })
+export class PeopleSearchTitleDirective { }
