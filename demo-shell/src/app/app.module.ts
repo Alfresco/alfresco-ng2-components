@@ -108,6 +108,14 @@ import { SharedLinkViewComponent } from './components/shared-link-view/shared-li
                 name: 'app',
                 source: 'resources'
             }
+        },
+        {
+            provide: TRANSLATION_PROVIDER,
+            multi: true,
+            useValue: {
+                name: 'lazy-loading',
+                source: 'resources/lazy-loading'
+            }
         }
     ],
     entryComponents: [
