@@ -294,5 +294,12 @@
         "CREATED-ON": "作成日"
       }
     }
+  },
+  "ADF_SIDEBAR_ACTION_MENU": {
+    "BUTTON": {
+      "CREATE": "作成",
+      "NEW_TASK": "新しいタスク",
+      "NEW_PROCESS": "新しいプロセス"
+    }
   }
 }
