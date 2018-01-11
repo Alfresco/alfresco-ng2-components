@@ -20,6 +20,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateStore } from '@ngx-translate/core/src/translate.store';
 
 import { MaterialModule } from './material.module';
 import { AppConfigModule } from './app-config/app-config.module';
@@ -136,7 +137,7 @@ export function providers() {
         CardViewModule,
         CollapsableModule,
         FormModule,
-        TranslateModule.forRoot({
+        TranslateModule.forChild({
             loader: {
                 provide: TranslateLoader,
                 useFactory: (createTranslateLoader),
@@ -183,6 +184,7 @@ export class CoreModule {
                         source: 'assets/adf-core'
                     }
                 },
+                TranslateStore,
                 ...providers()
             ]
         };

@@ -4,12 +4,11 @@ import { ObjectDataTableAdapter, AuthenticationService } from '@alfresco/adf-cor
 @Component({
     selector: 'app-lazy-component',
     template: `
-        <h1>{{ 'APP_LAYOUT.DATATABLE_LAZY' | translate }}
-        <h5>({{ 'LAZY.TEXT' | translate }})</h5>
-
         <adf-datatable [data]="data"></adf-datatable>
 
         <ul>
+            <li>Global i18n: {{ 'APP_LAYOUT.DATATABLE_LAZY' | translate }}</li>
+            <li>Local i18n (work in progress): {{ 'LAZY.TEXT' | translate }}</li>
             <li>isLoggedIn: {{ isLoggedIn }}</li>
             <li>ECM username: {{ username }}
         </ul>
