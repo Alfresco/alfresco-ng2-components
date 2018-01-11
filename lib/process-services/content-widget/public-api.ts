@@ -15,4 +15,4 @@
  * limitations under the License.
  */
 
-export * from './share-attach-widget.component';
+export * from './attach-file-widget.component';

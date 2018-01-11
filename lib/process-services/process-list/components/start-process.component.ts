@@ -23,7 +23,7 @@ import { ProcessInstanceVariable } from '../models/process-instance-variable.mod
 import { ProcessDefinitionRepresentation } from './../models/process-definition.model';
 import { ProcessInstance } from './../models/process-instance.model';
 import { ProcessService } from './../services/process.service';
-import { ShareAttachWidgetComponent } from '../../content-widget';
+import { AttachFileWidgetComponent } from '../../content-widget';
 
 @Component({
     selector: 'adf-start-process',
@@ -61,7 +61,7 @@ export class StartProcessInstanceComponent implements OnChanges {
 
     constructor(private activitiProcess: ProcessService,
                 private formRenderingService: FormRenderingService) {
-        this.formRenderingService.setComponentTypeResolver('upload', () => ShareAttachWidgetComponent, true);
+        this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileWidgetComponent, true);
     }
 
     ngOnChanges(changes: SimpleChanges) {

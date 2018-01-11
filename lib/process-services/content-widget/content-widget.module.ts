@@ -22,7 +22,7 @@ import { MaterialModule } from '../material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DataColumnModule, DataTableModule, FormModule } from '@alfresco/adf-core';
 
-import { ShareAttachWidgetComponent } from './share-attach-widget.component';
+import { AttachFileWidgetComponent } from './attach-file-widget.component';
 
 @NgModule({
     imports: [
@@ -36,13 +36,13 @@ import { ShareAttachWidgetComponent } from './share-attach-widget.component';
         FormModule
     ],
     entryComponents: [
-        ShareAttachWidgetComponent
+        AttachFileWidgetComponent
     ],
     declarations: [
-        ShareAttachWidgetComponent
+        AttachFileWidgetComponent
     ],
     exports: [
-        ShareAttachWidgetComponent
+        AttachFileWidgetComponent
     ]
 })
 export class ContentWidgetModule {}

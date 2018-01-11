@@ -35,7 +35,7 @@ import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 import { CommentsComponent } from '../../comments';
-import { ShareAttachWidgetComponent } from '../../content-widget';
+import { AttachFileWidgetComponent } from '../../content-widget';
 
 @Component({
     selector: 'adf-task-details',
@@ -147,7 +147,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
                 private cardViewUpdateService: CardViewUpdateService,
                 private dialog: MatDialog) {
 
-        this.formRenderingService.setComponentTypeResolver('upload', () => ShareAttachWidgetComponent, true);
+        this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileWidgetComponent, true);
         this.peopleSearch$ = new Observable<UserProcessModel[]>(observer => this.peopleSearchObserver = observer).share();
     }
 

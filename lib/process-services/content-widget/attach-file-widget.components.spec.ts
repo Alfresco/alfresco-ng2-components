@@ -17,7 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { ShareAttachWidgetComponent } from './share-attach-widget.component';
+import { AttachFileWidgetComponent } from './attach-file-widget.component';
 import {
     FormFieldModel,
     FormModel,
@@ -91,10 +91,10 @@ const fakePngAnswer = {
     'thumbnailStatus': 'queued'
 };
 
-describe('ShareAttachWidgetComponent', () => {
+describe('AttachFileWidgetComponent', () => {
 
-    let widget: ShareAttachWidgetComponent;
-    let fixture: ComponentFixture<ShareAttachWidgetComponent>;
+    let widget: AttachFileWidgetComponent;
+    let fixture: ComponentFixture<AttachFileWidgetComponent>;
     let element: HTMLInputElement;
     let activitiContentService: ActivitiContentService;
     let contentNodeDialogService: ContentNodeDialogService;
@@ -103,7 +103,7 @@ describe('ShareAttachWidgetComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [MaterialModule],
-            declarations: [ShareAttachWidgetComponent],
+            declarations: [AttachFileWidgetComponent],
             providers: [
                         FormService,
                         ProcessContentService,
@@ -116,7 +116,7 @@ describe('ShareAttachWidgetComponent', () => {
                         ContentNodeDialogService
                     ]
         }).compileComponents().then(() => {
-            fixture = TestBed.createComponent(ShareAttachWidgetComponent);
+            fixture = TestBed.createComponent(AttachFileWidgetComponent);
             widget = fixture.componentInstance;
             element = fixture.nativeElement;
             activitiContentService = TestBed.get(ActivitiContentService);

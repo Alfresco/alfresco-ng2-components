@@ -33,12 +33,12 @@ import { Observable } from 'rxjs/Observable';
 
 @Component({
     selector: 'attach-widget',
-    templateUrl: './share-attach-widget.component.html',
-    styleUrls: ['./share-attach-widget.component.scss'],
+    templateUrl: './attach-file-widget.component.html',
+    styleUrls: ['./attach-file-widget.component.scss'],
     host: baseHost,
     encapsulation: ViewEncapsulation.None
 })
-export class ShareAttachWidgetComponent extends UploadWidgetComponent implements OnInit {
+export class AttachFileWidgetComponent extends UploadWidgetComponent implements OnInit {
 
     alfrescoLogoUrl: string = '../assets/images/alfresco-flower.svg';
     repositoryList = [];
