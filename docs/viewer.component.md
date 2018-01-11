@@ -112,6 +112,19 @@ export class OverlayViewerComponent {
 }
 ```
 
+### Custom file parameters
+
+You can provide custom file parameters, for example a value for the `mimeType` or `displayName` when using URL values that have no file names or extensions:
+
+```html
+<adf-viewer
+    [displayName]="fileName"
+    [allowGoBack]="false"
+    [mimeType]="mimeType"
+    [urlFile]="fileUrl">
+</adf-viewer>
+```
+
 ### Supported file formats
 
 | Type | Extension |
