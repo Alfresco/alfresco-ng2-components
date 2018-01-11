@@ -1,22 +1,27 @@
 # Alfresco Viewer component
 
+Displays content from an ACS repository.
+
 See it live: [Viewer Quickstart](https://embed.plnkr.co/iTuG1lFIXfsP95l6bDW6/)
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
+## Contents
 
-<!-- toc -->
+-   [Basic usage](#basic-usage)
 
-- [Basic usage](#basic-usage)
-- [Properties](#properties)
-- [Details](#details)
-  * [Supported file formats](#supported-file-formats)
-  * [PDF Conversion](#pdf-conversion)
-  * [Configuring PDF.js library](#configuring-pdfjs-library)
-  * [Custom extension handler](#custom-extension-handler)
+    -   [Properties](#properties)
+    -   [Events](#events)
 
-<!-- tocstop -->
+-   [Details](#details)
 
-<!-- markdown-toc end -->
+    -   [Integrating with DocumentList component](#integrating-with-documentlist-component)
+    -   [Supported file formats](#supported-file-formats)
+    -   [PDF Conversion](#pdf-conversion)
+    -   [Configuring PDF.js library](#configuring-pdfjs-library)
+    -   [Custom toolbar](#custom-toolbar)
+    -   [Custom sidebar](#custom-sidebar)
+    -   [Custom "Open With" menu](#custom-open-with-menu)
+    -   [Custom "More actions" menu](#custom-more-actions-menu)
+    -   [Extending the Viewer](#extending-the-viewer)
 
 ## Basic usage
 
@@ -39,37 +44,39 @@ Using with file url:
 </adf-viewer>
 ```
 
-## Properties
+### Properties
 
 | Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| fileNodeId | string | | Node Id of the file to load |
-| urlFile | string | | If you want to load an external file that does not come from ECM you can use this Url where to load the file |
+| ---- | ---- | ------- | ----------- |
+| fileNodeId | string |  | Node Id of the file to load |
+| urlFile | string |  | If you want to load an external file that does not come from ECM you can use this Url where to load the file |
 | urlFileViewer | string | null | Viewer to use with the `urlFile` address (`pdf`, `image`, `media`, `text`). Used when `urlFile` has no filename and extension. |
-| urlBlob | Blob | | If you want to load a Blob File |
+| urlBlob | Blob |  | If you want to load a Blob File |
 | overlayMode | boolean | false | If `true` show the Viewer full page over the present content otherwise will fit the parent div |
 | showViewer | boolean | true | Hide or show the viewer |
 | showToolbar | boolean | true | Hide or show the toolbar |
-| displayName | string | | You can specify the name of the file |
+| displayName | string |  | You can specify the name of the file |
 | allowGoBack | boolean | true | Allow `back` navigation |
 | allowDownload | boolean | true | Toggle download feature |
 | allowPrint | boolean | false | Toggle printing feature |
 | allowShare | boolean | false | Toggle sharing feature |
-| allowSidebar | boolean |false | Toggle sidebar feature |
+| allowSidebar | boolean | false | Toggle sidebar feature |
 | showSidebar | boolean | false | Toggles sidebar visibility. Requires `allowSidebar` to be set to `true`. |
 | sidebarPosition | string | right | The position of the sidebar. Can be `left` or `right`. |
 | sidebarTemplate | TemplateRef<any> | null | The template intended to be used as a sidebar. The template context contains the loaded node data. |
 
-## Events
+### Events
 
 | Name | Argument Type | Cancelable | Description |
-| --- | --- | --- | --- |
+| ---- | ------------- | ---------- | ----------- |
 | goBack | any | Yes | Raised when user clicks the 'Back' button. |
 | download | any | Yes | Raised when user clicks the 'Download' button. |
 | print | any | Yes | Raised when user clicks the 'Print' button. |
 | share | any | Yes | Raised when user clicks the 'Share' button. |
 
-## Integrating with DocumentList component
+## Details
+
+### Integrating with DocumentList component
 
 Below is the most simple integration of Viewer and DocumentList components within your custom component:
 
@@ -105,12 +112,10 @@ export class OverlayViewerComponent {
 }
 ```
 
-## Details
-
 ### Supported file formats
 
 | Type | Extension |
-| --- | --- |
+| ---- | --------- |
 | Media | wav, Mp3, Mp4, WebM, Ogv |
 | Images | png, jpg, jpeg, gif, bmp |
 | Text | pdf, txt |
@@ -176,8 +181,9 @@ The Viewer component also supports custom sidebar components and layouts.
 The `allowSidebar` property should be set to `true` to enable this feature.
 
 Custom sidebar for the viewer can be injected in two different ways:
-- using transclusion
-- using template **(only works when using the viewer with fileNodeId)**
+
+-   using transclusion
+-   using template **(only works when using the viewer with fileNodeId)**
 
 #### Using transclusion
 
