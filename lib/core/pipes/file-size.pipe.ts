@@ -33,7 +33,7 @@ export class FileSizePipe implements PipeTransform {
         }
 
         if (bytes === 0) {
-            return '0 Bytes';
+            return '0 ' + this.translation.instant('CORE.FILE_SIZE.BYTES');
         }
 
         const k = 1024,

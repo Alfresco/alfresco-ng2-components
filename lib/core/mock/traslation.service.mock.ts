@@ -25,13 +25,17 @@ export interface LangChangeEvent {
 
 export class TranslationMock {
 
-    public onLangChange: EventEmitter<LangChangeEvent> = new EventEmitter<LangChangeEvent>();
+    onLangChange: EventEmitter<LangChangeEvent> = new EventEmitter<LangChangeEvent>();
 
     addTranslationFolder() {
 
     }
 
-    public get(key: string|Array<string>, interpolateParams?: Object): Observable<string|any> {
+    get(key: string|Array<string>, interpolateParams?: Object): Observable<string|any> {
         return Observable.of(key);
+    }
+
+    instant(key: string | Array<string>, interpolateParams?: Object): string | any {
+        return key;
     }
 }
