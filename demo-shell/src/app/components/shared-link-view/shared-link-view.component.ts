@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 
 @Component({
@@ -17,7 +17,6 @@ export class SharedLinkViewComponent implements OnInit {
     fileUrl = null;
 
     constructor(
-        private router: Router,
         private route: ActivatedRoute,
         private apiService: AlfrescoApiService) {
     }
