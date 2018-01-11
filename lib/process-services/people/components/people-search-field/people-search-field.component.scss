@@ -1,0 +1,47 @@
+@mixin adf-task-list-people-search-field-theme($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+
+    .adf-people-search-field {
+        width: 100%;
+
+        .search-text-container {
+            width: 100%;
+
+            input {
+                line-height: normal;
+            }
+        }
+
+        .search-list-container {
+            max-height: 152px;
+            width: 100%;
+            overflow-y: auto;
+        }
+
+        adf-people-list ::ng-deep adf-datatable ::ng-deep thead {
+            display: none;
+        }
+
+        .people-pic {
+            background: mat-color($primary);
+            width: 30px;
+            padding: 10px 5px;
+            border-radius: 90%;
+            color: #fff;
+            text-align: center;
+            font-weight: bolder;
+            font-size: 18px;
+            text-transform: uppercase;
+            vertical-align: text-bottom;
+        }
+
+        .people-img {
+            border-radius: 90%;
+            width: 40px;
+            height: 40px;
+            vertical-align: middle;
+        }
+    }
+}

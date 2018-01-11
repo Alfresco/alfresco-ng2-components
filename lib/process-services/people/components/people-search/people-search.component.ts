@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { PeopleProcessService, UserProcessModel } from '@alfresco/adf-core';
-import { Component, Directive, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { UserProcessModel } from '@alfresco/adf-core';
+import { Component, Directive, EventEmitter, OnInit, Input, Output, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
-import { debounceTime } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-people-search',
@@ -46,29 +45,19 @@ export class PeopleSearchComponent implements OnInit {
     closeSearch = new EventEmitter();
 
     searchUser: FormControl = new FormControl();
-
     users: UserProcessModel[] = [];
-
     selectedUser: UserProcessModel;
 
-    constructor(public peopleProcessService: PeopleProcessService) {
-        this.searchUser.valueChanges
-            .pipe(
-                debounceTime(200)
-            )
-            .subscribe((event: string) => {
-                if (event && event.trim()) {
-                    this.searchPeople.emit(event);
-                } else {
-                    this.users = [];
-                }
-            });
-    }
+    constructor() {}
 
     ngOnInit() {
         this.results.subscribe((list) => {
             this.users = list;
         });
+    }
+
+    onSearchPeople(event) {
+        this.searchPeople.emit(event);
     }
 
     onRowClick(user: UserProcessModel) {
@@ -93,22 +82,6 @@ export class PeopleSearchComponent implements OnInit {
             this.searchUser.reset();
             return user.id !== this.selectedUser.id;
         });
-    }
-
-    getDisplayUser(firstName: string, lastName: string, delimiter: string = '-'): string {
-        firstName = (firstName !== null ? firstName : '');
-        lastName = (lastName !== null ? lastName : '');
-        return firstName + delimiter + lastName;
-    }
-
-    getInitialUserName(firstName: string, lastName: string) {
-        firstName = (firstName !== null && firstName !== '' ? firstName[0] : '');
-        lastName = (lastName !== null && lastName !== '' ? lastName[0] : '');
-        return this.getDisplayUser(firstName, lastName, '');
-    }
-
-    hasUsers() {
-        return (this.users && this.users.length > 0);
     }
 }
 

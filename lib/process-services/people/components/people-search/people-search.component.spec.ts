@@ -21,6 +21,7 @@ import { UserProcessModel } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { PeopleListComponent } from '../people-list/people-list.component';
 import { PeopleSearchComponent } from './people-search.component';
+import { PeopleSearchFieldComponent } from '../people-search-field/people-search-field.component';
 
 const fakeUser: UserProcessModel = new UserProcessModel({
     id: '1',
@@ -52,6 +53,7 @@ describe('PeopleSearchComponent', () => {
             ],
             declarations: [
                 PeopleSearchComponent,
+                PeopleSearchFieldComponent,
                 PeopleListComponent
             ],
             providers: [
