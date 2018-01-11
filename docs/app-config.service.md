@@ -2,17 +2,6 @@
 
 Supports app configuration settings, stored server side.
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Details](#details)
-  * [Variable substitution in configuration strings](#variable-substitution-in-configuration-strings)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
-
 ## Details
 
 The `AppConfigService` service provides support for loading and accessing global application configuration settings that you store on the server side in the form of a JSON file.
@@ -102,6 +91,6 @@ The `AppConfigService` also supports a limited set of variable substitutions to 
 The supported variables are:
 
 | Variable name | Runtime value |
-| --- | --- |
+| ------------- | ------------- |
 | hostname | `location.hostname` |
 | port | `location.port` |

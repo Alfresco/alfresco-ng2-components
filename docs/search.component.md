@@ -1,19 +1,6 @@
 # Search component
 
-
-
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic usage](#basic-usage)
-  * [Properties](#properties)
-  * [Events](#events)
-- [Details](#details)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
+Searches items for supplied search terms. 
 
 ## Basic usage
 
@@ -27,22 +14,23 @@
 ### Properties
 
 | Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| searchTerm | string | | Search term to use when executing the search. Updating this value will run a new search and update the results  |
-| maxResults | number  | 20 | Maximum number of results to show in the search. |
-| skipResults | number  | 0 | Number of results to skip from the results pagination. |
-| displayWith | function | | Function that maps an option's value to its display value in the trigger |
-| queryBody| [QueryBody](https://github.com/Alfresco/alfresco-js-api/blob/1.6.0/src/alfresco-search-rest-api/docs/QueryBody.md) | | object which allow you to perform more elaborated query from the search api |
+| ---- | ---- | ------- | ----------- |
+| searchTerm | string |  | Search term to use when executing the search. Updating this value will run a new search and update the results |
+| maxResults | number | 20 | Maximum number of results to show in the search. |
+| skipResults | number | 0 | Number of results to skip from the results pagination. |
+| displayWith | function |  | Function that maps an option's value to its display value in the trigger |
+| queryBody | [QueryBody](https://github.com/Alfresco/alfresco-js-api/blob/1.6.0/src/alfresco-search-rest-api/docs/QueryBody.md) |  | object which allow you to perform more elaborated query from the search api |
 
 ### Events
 
 | Name | Description |
-| --- | --- |
+| ---- | ----------- |
 | resultLoaded | Emitted when search results have fully loaded |
 
 ## Details
 
 ### Customise Search Results
+
 You have to add a template that will be shown when the results are loaded.
 
 ```html
@@ -56,6 +44,7 @@ You have to add a template that will be shown when the results are loaded.
     </ng-template>
 </adf-search>
 ```
+
 The results are provided via the [$implicit variable of angular2](https://angular.io/api/common/NgTemplateOutlet) and can be accessed via the sugar sintax 'let-yourChosenName'. As per example above the result will be something like : 
 
 ![adf-search-control](docassets/images/search-component-simple-template.png)
@@ -106,8 +95,8 @@ Which will look like :
 
 ![adf-search-control](docassets/images/search-component-complex-template.png)
 
-
 ### Attach an input field to the search
+
 You can also attach your input field to the adf-search component via the trigger [searchAutocomplete]
 
 ```html
@@ -121,4 +110,5 @@ You can also attach your input field to the adf-search component via the trigger
     </ng-template>
 </adf-search>        
 ```
+
 In this way it is possible to fetch the results from the word typed into the input text straight into the adf-search component via the custom template variable.
