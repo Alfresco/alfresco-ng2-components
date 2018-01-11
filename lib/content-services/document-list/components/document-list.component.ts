@@ -70,7 +70,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
-    /* Define a set of CSS styles styles to apply depending on the permission 
+    /* Define a set of CSS styles styles to apply depending on the permission
      * of the user on that node. See the [Permission Style model](permissions-style.model.md)
      * page for further details and examples.
      */
