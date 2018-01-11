@@ -20,8 +20,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule, MatInputModule } from '@angular/material';
 import { LogService } from '@alfresco/adf-core';
 import { PeopleProcessService, UserProcessModel } from '@alfresco/adf-core';
-import { PeopleListComponent } from './people-list.component';
-import { PeopleSearchComponent } from './people-search.component';
+import { PeopleListComponent } from '../people-list/people-list.component';
+import { PeopleSearchComponent } from '../people-search/people-search.component';
 import { PeopleComponent } from './people.component';
 
 declare let jasmine: any;

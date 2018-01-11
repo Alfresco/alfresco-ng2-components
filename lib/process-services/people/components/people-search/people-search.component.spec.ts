@@ -19,7 +19,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule, MatInputModule } from '@angular/material';
 import { UserProcessModel } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
-import { PeopleListComponent } from './people-list.component';
+import { PeopleListComponent } from '../people-list/people-list.component';
 import { PeopleSearchComponent } from './people-search.component';
 
 const fakeUser: UserProcessModel = new UserProcessModel({

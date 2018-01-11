@@ -20,8 +20,8 @@ import { PeopleProcessService } from '@alfresco/adf-core';
 import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
-import { UserEventModel } from '../task-list/models/user-event.model';
-import { PeopleSearchComponent } from './people-search.component';
+import { UserEventModel } from '../../../task-list/models/user-event.model';
+import { PeopleSearchComponent } from '../people-search/people-search.component';
 
 @Component({
     selector: 'adf-people',

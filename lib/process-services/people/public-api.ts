@@ -15,6 +15,6 @@
  * limitations under the License.
  */
 
-export * from './people.component';
-export * from './people-list.component';
-export * from './people-search.component';
+export * from './components/people/people.component';
+export * from './components/people-list/people-list.component';
+export * from './components/people-search/people-search.component';

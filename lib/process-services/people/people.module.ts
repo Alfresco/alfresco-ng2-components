@@ -22,9 +22,9 @@ import { MaterialModule } from '../material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { DataColumnModule,  DataTableModule } from '@alfresco/adf-core';
-import { PeopleComponent } from './people.component';
-import { PeopleListComponent } from './people-list.component';
-import { PeopleSearchActionLabelDirective, PeopleSearchComponent, PeopleSearchTitleDirective } from './people-search.component';
+import { PeopleComponent } from './components/people/people.component';
+import { PeopleListComponent } from './components/people-list/people-list.component';
+import { PeopleSearchActionLabelDirective, PeopleSearchComponent, PeopleSearchTitleDirective } from './components/people-search/people-search.component';
 
 @NgModule({
     imports: [
