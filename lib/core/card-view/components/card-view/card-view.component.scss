@@ -1,0 +1,22 @@
+
+@mixin adf-card-view-theme($theme) {
+    $primary: map-get($theme, primary);
+    $foreground: map-get($theme, foreground);
+
+    .adf-property-list {
+        .adf-property {
+            margin-bottom: 20px;
+
+            .adf-property-label {
+                font-size: 12px;
+                color: mat-color($foreground, text, 0.4);
+                word-wrap: break-word;
+            }
+
+            .adf-property-value {
+                font-size: 14px;
+                color: mat-color($foreground, text, 0.87);
+            }
+        }
+    }
+}

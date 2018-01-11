@@ -62,6 +62,8 @@
     "@angular/platform-browser": "5.1.1",
     "@angular/platform-browser-dynamic": "5.1.1",
     "@angular/router": "5.1.1",
+    "@mat-datetimepicker/core": "^1.0.1",
+    "@mat-datetimepicker/moment": "^1.0.1",
     "@ngx-translate/core": "8.0.0",
     "alfresco-js-api": "2.0.0",
     "chart.js": "2.5.0",

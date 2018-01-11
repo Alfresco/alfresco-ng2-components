@@ -34,8 +34,6 @@ export * from './translate-loader.service';
 export * from './thumbnail.service';
 export * from './upload.service';
 export * from './dynamic-component-mapper.service';
-export * from './card-item-types.service';
-export * from './card-view-update.service';
 export * from './user-preferences.service';
 export * from './highlight-transform.service';
 export * from './deleted-nodes-api.service';

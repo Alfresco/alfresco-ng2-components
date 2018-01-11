@@ -1,0 +1,10 @@
+<ng-container *ngIf="!property.isEmpty() || isEditable()">
+    <div class="adf-property-label">{{ property.label | translate }}</div>
+    <div class="adf-property-value">
+        <mat-checkbox
+            [checked]="property.displayValue"
+            [disabled]="!isEditable()"
+            (change)="changed($event)">
+        </mat-checkbox>
+    </div>
+</ng-container>

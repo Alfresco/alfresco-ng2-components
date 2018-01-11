@@ -1,0 +1,43 @@
+<div class="adf-metadata-properties">
+    <mat-accordion displayMode="flat">
+        <mat-expansion-panel [expanded]="!expanded" [hideToggle]="!expanded">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{ 'CORE.METADATA.BASIC.HEADER' | translate }}
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <adf-card-view
+                class="adf-metadata-properties-basic"
+                data-automation-id="adf-metadata-properties-basic"
+                [properties]="basicProperties$ | async"
+                [editable]="editable"
+                [displayEmpty]="displayEmpty">
+            </adf-card-view>
+        </mat-expansion-panel>
+
+        <ng-container *ngIf="expanded">
+            <ng-container *ngIf="aspects$ | async; else loading; let aspects">
+                <div *ngFor="let aspect of aspects" class="adf-metadata-properties-aspect">
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                {{aspect.title}}
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+
+                        <adf-card-view
+                            class="adf-node-aspect-properties"
+                            [properties]="aspect.properties"
+                            [editable]="editable"
+                            [displayEmpty]="displayEmpty">
+                        </adf-card-view>
+                    </mat-expansion-panel>
+                </div>
+            </ng-container>
+            <ng-template #loading>
+                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            </ng-template>
+        </ng-container>
+    </mat-accordion>
+</div>

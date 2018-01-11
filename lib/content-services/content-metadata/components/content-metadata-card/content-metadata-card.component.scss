@@ -1,0 +1,30 @@
+@mixin adf-content-metadata-card-theme($theme) {
+    $primary: map-get($theme, primary);
+    $background: map-get($theme, background);
+    $foreground: map-get($theme, foreground);
+
+    .adf-content-metadata-card {
+
+        .mat-card {
+            padding: 0;
+
+            .mat-card-content {
+                margin-bottom: 0;
+            }
+        }
+
+        &-footer.mat-card-footer {
+            margin: 0;
+            padding: 8px 12px;
+            border-top: 1px solid mat-color($foreground, text, 0.07);
+
+            button {
+                color: mat-color($foreground, text, 0.54);
+
+                &:hover {
+                    color: mat-color($foreground, text, 0.87);
+                }
+            }
+        }
+    }
+}

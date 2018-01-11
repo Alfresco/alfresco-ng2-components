@@ -1,0 +1,11 @@
+<div class="adf-property-list">
+    <div *ngFor="let property of properties">
+        <div [attr.data-automation-id]="'header-'+property.key" class="adf-property">
+            <adf-card-view-item-dispatcher
+                [property]="property"
+                [editable]="editable"
+                [displayEmpty]="displayEmpty">
+            </adf-card-view-item-dispatcher>
+        </div>
+    </div>
+</div>

@@ -20,10 +20,14 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
-import { CardViewModule } from '@alfresco/adf-core';
-
-import { ContentMetadataComponent } from './content-metadata.component';
-import { ContentMetadataCardComponent } from './content-metadata-card.component';
+import { CardViewModule , FileSizePipe } from '@alfresco/adf-core';
+import { ContentMetadataComponent } from './components/content-metadata/content-metadata.component';
+import { ContentMetadataCardComponent } from './components/content-metadata-card/content-metadata-card.component';
+import { PropertyDescriptorsService } from './services/property-descriptors.service';
+import { PropertyDescriptorLoaderService } from './services/properties-loader.service';
+import { AspectWhiteListService } from './services/aspect-whitelist.service';
+import { BasicPropertiesService } from './services/basic-properties.service';
+import { ContentMetadataService } from './services/content-metadata.service';
 
 @NgModule({
     imports: [
@@ -40,6 +44,14 @@ import { ContentMetadataCardComponent } from './content-metadata-card.component'
     declarations: [
         ContentMetadataComponent,
         ContentMetadataCardComponent
+    ],
+    providers: [
+        ContentMetadataService,
+        PropertyDescriptorsService,
+        PropertyDescriptorLoaderService,
+        AspectWhiteListService,
+        BasicPropertiesService,
+        FileSizePipe
     ]
 })
 export class ContentMetadataModule {}

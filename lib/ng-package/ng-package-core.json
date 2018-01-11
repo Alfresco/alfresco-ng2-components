@@ -11,6 +11,8 @@
       "minimatch": "minimatch",
       "@angular/platform-browser/animations": "@angular/platform-browser/animations",
       "@angular/material": "@angular/material",
+      "@mat-datetimepicker/core": "@mat-datetimepicker/core",
+      "@mat-datetimepicker/moment": "@mat-datetimepicker/moment",
       "@angular/flex-layout": "@angular/flex-layout",
       "@angular/material-moment-adapter": "@angular/material-moment-adapter",
       "@angular/animations": "@angular/animations",
