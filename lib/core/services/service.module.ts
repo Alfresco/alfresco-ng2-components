@@ -23,8 +23,6 @@ import { AuthGuardBpm } from './auth-guard-bpm.service';
 import { AuthGuardEcm } from './auth-guard-ecm.service';
 import { AuthGuard } from './auth-guard.service';
 import { AuthenticationService } from './authentication.service';
-import { CardItemTypeService } from './card-item-types.service';
-import { CardViewUpdateService } from './card-view-update.service';
 import { CommentProcessService } from './comment-process.service';
 import { ContentService } from './content.service';
 import { CookieService } from './cookie.service';
@@ -72,8 +70,6 @@ import { UserPreferencesService } from './user-preferences.service';
         TranslateLoaderService,
         ThumbnailService,
         UploadService,
-        CardItemTypeService,
-        CardViewUpdateService,
         UserPreferencesService,
         HighlightTransformService,
         DeletedNodesApiService,

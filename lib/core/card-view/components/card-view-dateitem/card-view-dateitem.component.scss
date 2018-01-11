@@ -1,0 +1,41 @@
+@mixin adf-card-view-dateitem-theme($theme) {
+
+    .adf {
+        &-invisible-date-input {
+            height: 2px;
+            width: 0;
+            overflow: hidden;
+            opacity: 0;
+            border: none;
+            margin: 0;
+            padding: 0;
+            float: right;
+        }
+
+        &-dateitem-editable {
+            cursor: pointer;
+
+            &-controls {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                button.mat-icon-button {
+                    line-height: 20px;
+                    height: 20px;
+                    width: 20px;
+                }
+
+                mat-icon {
+                    width: 16px;
+                    height: 16px;
+                    opacity: 0.5;
+                }
+
+                &:hover mat-icon {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}

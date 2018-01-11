@@ -38,10 +38,11 @@ Displays a configurable property list renderer.
 
 ### Properties
 
-| Name | Type | Description |
-| --- | --- | --- |
-| properties | [CardViewItem](#cardviewitem)[] | (**required**) The custom view to render |
-| editable | boolean | If the component editable or not |
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| properties | [CardViewItem](#cardviewitem)[] | - | (**required**) The custom view to render |
+| editable | boolean | - | If the component editable or not |
+| displayEmpty | boolean | true | Whether to show empty properties in non-editable mode |
 
 ## Details
 
@@ -75,11 +76,15 @@ export interface CardViewItem {
 }
 ```
 
-At the moment three models are defined out of the box:
+At the moment these are the models supported:
 
 - **CardViewTextItemModel** - *for text items*
 - **CardViewMapItemModel** - *for map items*
 - **CardViewDateItemModel** - *for date items*
+- **CardViewDatetimeItemModel** - *for datetime items*
+- **CardViewBoolItemModel** - *for bool items (checkbox)*
+- **CardViewIntItemModel** - *for integers items*
+- **CardViewFloatItemModel** - *for float items*
 
 Each of them extends the abstract CardViewBaseItemModel class to add some custom functionality to the basic behaviour.
 
@@ -100,12 +105,38 @@ Each of them extends the abstract CardViewBaseItemModel class to add some custom
         clickable: true
     }),
     new CardViewDateItemModel({
-        label: 'Birth of date',
+        label: 'Date of birth',
         value: someDate,
-        key: 'birth-of-date',
+        key: 'date-of-birth',
         default: new Date(),
         format: '<any format that momentjs accepts>',
         editable: true
+    }),
+    new CardViewDatetimeItemModel({
+        label: 'Datetime of birth',
+        value: someDatetime,
+        key: 'datetime-of-birth',
+        default: new Date(),
+        format: '<any format that momentjs accepts>',
+        editable: true
+    }),
+    new CardViewBoolItemModel({
+        label: 'Vulcanian',
+        value: true,
+        key: 'vulcanian',
+        default: false
+    }),
+    new CardViewIntItemModel({
+        label: 'Intelligence',
+        value: 213,
+        key: 'intelligence',
+        default: 1
+    }),
+    new CardViewFloatItemModel({
+        label: 'Mental stability',
+        value: 9.9,
+        key: 'mental-stability',
+        default: 0.0
     }),
     ...
 ]
@@ -162,7 +193,7 @@ const mapItemProperty = new CardViewMapItemModel(options);
 | --- | --- | --- | --- |
 | label* | string | --- | The label to render |
 | value* | Map | --- | A map that contains the key value pairs |
-| key* | string | --- | the key of the property. Have an important role when editing the property. |
+| key* | string | --- | the key of the property. |
 | default | any | --- | The default value to render in case the value is empty |
 | displayValue* | string | --- | The value to render |
 | clickable | boolean | false | Whether the property clickable or not |
@@ -179,11 +210,80 @@ const dateItemProperty = new CardViewDateItemModel(options);
 | --- | --- | --- | --- |
 | label* | string | --- | The label to render |
 | value* | any | --- | The original value |
-| key* | string | --- | the key of the property. Have an important role when editing the property. |
+| key* | string | --- | the key of the property. |
 | default | any | --- | The default value to render in case the value is empty |
-| displayValue* | string | --- | The value to render |
+| displayValue* | any | --- | The value to render |
 | editable | boolean | false | Whether the property editable or not |
 | format | boolean | "MMM DD YYYY" | any format that momentjs accepts |
+
+#### Card Datetime Item
+
+CardViewDatetimeItemModel is a property type for datetime properties.
+
+```js
+const datetimeItemProperty = new CardViewDatetimeItemModel(options);
+```
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| label* | string | --- | The label to render |
+| value* | any | --- | The original value |
+| key* | string | --- | the key of the property. |
+| default | any | any | The default value to render in case the value is empty |
+| displayValue* | string | --- | The value to render |
+| editable | boolean | false | Whether the property editable or not |
+| format | boolean | "MMM DD YYYY HH:mm" | any format that momentjs accepts |
+
+#### Card Bool Item
+
+CardViewBoolItemModel is a property type for boolean properties.
+
+```js
+const boolItemProperty = new CardViewBoolItemModel(options);
+```
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| label* | string | --- | The label to render |
+| value* | boolean | --- | The original value |
+| key* | string | --- | the key of the property. |
+| default | boolean | false | The default value to render in case the value is empty |
+| displayValue* | boolean | --- | The value to render |
+| editable | boolean | false | Whether the property editable or not |
+
+#### Card Int Item
+
+CardViewIntItemModel is a property type for integer properties.
+
+```js
+const intItemProperty = new CardViewIntItemModel(options);
+```
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| label* | string | --- | The label to render |
+| value* | integer | --- | The original value |
+| key* | string | --- | the key of the property. |
+| default | integer | --- | The default value to render in case the value is empty |
+| displayValue* | integer | --- | The value to render |
+| editable | boolean | false | Whether the property editable or not |
+
+#### Card Float Item
+
+CardViewFloatItemModel is a property type for float properties.
+
+```js
+const floatItemProperty = new CardViewFloatItemModel(options);
+```
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| label* | string | --- | The label to render |
+| value* | float | --- | The original value |
+| key* | string | --- | the key of the property. |
+| default | float | --- | The default value to render in case the value is empty |
+| displayValue* | float | --- | The value to render |
+| editable | boolean | false | Whether the property editable or not |
 
 ### Defining your custom card Item
 
