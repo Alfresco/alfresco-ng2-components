@@ -43,23 +43,23 @@ export class CardViewTextItemComponent implements OnChanges {
 
     constructor(private cardViewUpdateService: CardViewUpdateService) {}
 
-    ngOnChanges() {
+    ngOnChanges(): void {
         this.editedValue = this.property.value;
     }
 
-    showProperty() {
+    showProperty(): boolean {
         return this.displayEmpty || !this.property.isEmpty();
     }
 
-    isEditable() {
+    isEditable(): boolean {
         return this.editable && this.property.editable;
     }
 
-    isClickable() {
+    isClickable(): boolean {
         return this.property.clickable;
     }
 
-    hasErrors() {
+    hasErrors(): number {
         return this.errorMessages && this.errorMessages.length;
     }
 

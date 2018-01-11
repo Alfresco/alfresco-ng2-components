@@ -43,47 +43,42 @@ import {
 import { CardItemTypeService } from './services/card-item-types.service';
 import { CardViewUpdateService } from './services/card-view-update.service';
 
-const MATERIAL_MODULES = [
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatCheckboxModule,
-    MatInputModule,
-    MatIconModule,
-    MatButtonModule,
-    MatDatetimepickerModule,
-    MatNativeDatetimeModule
-];
-
-const CARD_VIEW_ITEM_COMPONENTS = [
-    CardViewBoolItemComponent,
-    CardViewDateItemComponent,
-    CardViewMapItemComponent,
-    CardViewTextItemComponent
-];
-
-const PUBLIC_COMPONENTS = [
-    CardViewComponent,
-    ...CARD_VIEW_ITEM_COMPONENTS
-];
-
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         FlexLayoutModule,
         TranslateModule,
-        ...MATERIAL_MODULES
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatCheckboxModule,
+        MatInputModule,
+        MatIconModule,
+        MatButtonModule,
+        MatDatetimepickerModule,
+        MatNativeDatetimeModule    
     ],
     declarations: [
-        ...PUBLIC_COMPONENTS,
+        CardViewComponent,
+        CardViewBoolItemComponent,
+        CardViewDateItemComponent,
+        CardViewMapItemComponent,
+        CardViewTextItemComponent,
         CardViewItemDispatcherComponent,
         CardViewContentProxyDirective
     ],
     entryComponents: [
-        ...CARD_VIEW_ITEM_COMPONENTS
+        CardViewBoolItemComponent,
+        CardViewDateItemComponent,
+        CardViewMapItemComponent,
+        CardViewTextItemComponent    
     ],
     exports: [
-        ...PUBLIC_COMPONENTS
+        CardViewComponent,
+        CardViewBoolItemComponent,
+        CardViewDateItemComponent,
+        CardViewMapItemComponent,
+        CardViewTextItemComponent
     ],
     providers: [
         CardItemTypeService,
