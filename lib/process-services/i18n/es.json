@@ -294,5 +294,12 @@
         "CREATED-ON": "Creado"
       }
     }
+  },
+  "ADF_SIDEBAR_ACTION_MENU": {
+    "BUTTON": {
+      "CREATE": "Crear",
+      "NEW_TASK": "Nueva tarea",
+      "NEW_PROCESS": "Nuevo proceso"
+    }
   }
 }

@@ -41,6 +41,7 @@ import { ToolbarModule } from './toolbar/toolbar.module';
 import { UserInfoModule } from './userinfo/userinfo.module';
 import { ViewerModule } from './viewer/viewer.module';
 import { FormModule } from './form/form.module';
+import { SideBarActionModule } from './sidebar/sidebar-action.module';
 
 import { DirectiveModule } from './directives/directive.module';
 import { PipeModule } from './pipes/pipe.module';
@@ -55,6 +56,7 @@ export function createTranslateLoader(http: HttpClient, logService: LogService) 
 @NgModule({
     imports: [
         ViewerModule,
+        SideBarActionModule,
         PipeModule,
         CommonModule,
         DirectiveModule,
@@ -113,6 +115,7 @@ export function createTranslateLoader(http: HttpClient, logService: LogService) 
         HostSettingsModule,
         ServiceModule,
         ViewerModule,
+        SideBarActionModule,
         PipeModule,
         DirectiveModule,
         FormModule,
