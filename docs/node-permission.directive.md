@@ -2,30 +2,14 @@
 
 Selectively disables an HTML element or Angular component
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-  * [Properties](#properties)
-- [Details](#details)
-  * [HTML element example](#html-element-example)
-  * [Angular component example](#angular-component-example)
-  * [Implementing the NodePermissionSubject interface](#implementing-the-nodepermissionsubject-interface)
-  * [Defining your components as an EXTENDIBLE_COMPONENT parent component](#defining-your-components-as-an-extendible_component-parent-component)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
-
 ## Basic Usage
 
 ### Properties
 
 | Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| adf-node-permission | [Permissions](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-core/src/models/permissions.enum.ts) | null | Node permission to check (create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions)|
-| adf-nodes | MinimalNodeEntity[] | [] | Nodes to check permission for |
+| ---- | ---- | ------- | ----------- |
+| adf-node-permission | [Permissions](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-core/src/models/permissions.enum.ts) | null | Node permission to check (create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions) |
+| adf-nodes | MinimalNodeEntity\[] | \[] | Nodes to check permission for |
 
 ## Details
 
@@ -34,8 +18,8 @@ by taking a collection of the `MinimalNodeEntity` instances and checking the par
 
 The decorated element will be disabled if:
 
-- there are no nodes in the collection
-- at least one of the nodes has no expected permission
+-   there are no nodes in the collection
+-   at least one of the nodes has no expected permission
 
 ### HTML element example
 
@@ -94,8 +78,8 @@ The directive will look up the component in the dependency injection tree, up to
 
 > "The host component is typically the component requesting the dependency. **But when this component is projected into a parent component, that parent component becomes the host.**"
 
-- because of this, you have to provide your component with forward referencing as the EXTENDIBLE_COMPONENT.
-- because of the emphasized second sentence you have to provide your component as a viewProvider.
+-   because of this, you have to provide your component with forward referencing as the EXTENDIBLE_COMPONENT.
+-   because of the emphasized second sentence you have to provide your component as a viewProvider.
 
 ```js
 import { EXTENDIBLE_COMPONENT } from '@alfresco/adf-core';

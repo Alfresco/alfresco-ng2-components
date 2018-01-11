@@ -2,22 +2,6 @@
 
 Allows your components or common HTML elements reacting on File drag and drop in order to upload content.
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic usage](#basic-usage)
-- [Details](#details)
-  * [Modes](#modes)
-    + [Click mode](#click-mode)
-    + [Drop mode](#drop-mode)
-  * [Events](#events)
-  * [Styling](#styling)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
-
 ## Basic usage
 
 The directive itself does not do any file management process,
@@ -55,8 +39,8 @@ Used by attaching to an element or component.
 
 Directive supports several modes:
 
-- **drop** mode, where decorated element acts like a drop zone for files (**default** mode)
-- **click** mode, where decorated element invokes File Dialog to select files or folders.
+-   **drop** mode, where decorated element acts like a drop zone for files (**default** mode)
+-   **click** mode, where decorated element invokes File Dialog to select files or folders.
 
 It is also possible combining modes together.
 
@@ -70,9 +54,9 @@ It is also possible combining modes together.
 
 For the click mode you can provide additional attributes for the File Dialog:
 
-- **directory**, enables directory selection
-- **multiple**, enables multiple file/folder selection
-- **accept**, filters the content accepted
+-   **directory**, enables directory selection
+-   **multiple**, enables multiple file/folder selection
+-   **accept**, filters the content accepted
 
 ```html
 <div style="width: 50px; height: 50px; background-color: brown"
