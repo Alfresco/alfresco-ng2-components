@@ -31,14 +31,12 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { CardViewContentProxyDirective } from './directives/card-view-content-proxy.directive';
-import {
-    CardViewBoolItemComponent,
-    CardViewDateItemComponent,
-    CardViewItemDispatcherComponent,
-    CardViewMapItemComponent,
-    CardViewTextItemComponent,
-    CardViewComponent
-} from './components/card-view.components';
+import { CardViewComponent } from './components/card-view/card-view.component';
+import { CardViewBoolItemComponent } from './components/card-view-boolitem/card-view-boolitem.component';
+import { CardViewDateItemComponent } from './components/card-view-dateitem/card-view-dateitem.component';
+import { CardViewItemDispatcherComponent } from './components/card-view-item-dispatcher/card-view-item-dispatcher.component';
+import { CardViewMapItemComponent } from './components/card-view-mapitem/card-view-mapitem.component';
+import { CardViewTextItemComponent } from './components/card-view-textitem/card-view-textitem.component';
 
 import { CardItemTypeService } from './services/card-item-types.service';
 import { CardViewUpdateService } from './services/card-view-update.service';
