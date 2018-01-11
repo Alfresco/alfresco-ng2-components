@@ -1,0 +1,8 @@
+<ng-container *ngIf="fileUrl">
+    <adf-viewer
+        [displayName]="fileName"
+        [allowGoBack]="false"
+        [mimeType]="mimeType"
+        [urlFile]="fileUrl">
+    </adf-viewer>
+</ng-container>

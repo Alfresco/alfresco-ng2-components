@@ -99,6 +99,15 @@ export class ViewerComponent implements OnChanges {
     @Input()
     sidebarTemplate: TemplateRef<any> = null;
 
+    @Input()
+    mimeType: string;
+
+    @Input()
+    fileName: string;
+
+    @Input()
+    downloadUrl: string = null;
+
     @Output()
     goBack = new EventEmitter<BaseEvent<any>>();
 
@@ -118,8 +127,6 @@ export class ViewerComponent implements OnChanges {
     extensionChange = new EventEmitter<string>();
 
     viewerType = 'unknown';
-    downloadUrl: string = null;
-    fileName = 'document';
     isLoading = false;
     node: MinimalNodeEntryEntity;
 
@@ -128,7 +135,6 @@ export class ViewerComponent implements OnChanges {
     urlFileContent: string;
     otherMenu: any;
     extension: string;
-    mimeType: string;
     sidebarTemplateContext: { node: MinimalNodeEntryEntity } = { node: null };
 
     private extensions = {

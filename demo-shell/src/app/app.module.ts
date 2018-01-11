@@ -43,6 +43,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TaskAttachmentsComponent } from './components/process-service/task-attachments.component';
 import { ProcessAttachmentsComponent } from './components/process-service/process-attachments.component';
+import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
 
 
 @NgModule({
@@ -85,7 +86,8 @@ import { ProcessAttachmentsComponent } from './components/process-service/proces
         VersionManagerDialogAdapterComponent,
         TaskAttachmentsComponent,
         ProcessAttachmentsComponent,
-        OverlayViewerComponent
+        OverlayViewerComponent,
+        SharedLinkViewComponent
     ],
     providers: [
         TranslateService,

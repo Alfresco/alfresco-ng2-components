@@ -42,11 +42,16 @@ import { FileViewComponent } from './components/file-view/file-view.component';
 import { CustomSourcesComponent } from './components/files/custom-sources.component';
 import { FormListComponent } from './components/form/form-list.component';
 import { OverlayViewerComponent } from './components/overlay-viewer/overlay-viewer.component';
+import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'settings', component: SettingsComponent },
     { path: 'files/:nodeId/view', component: FileViewComponent, canActivate: [ AuthGuardEcm ] },
+    {
+        path: 'preview/s/:id',
+        component: SharedLinkViewComponent
+    },
     {
         path: '',
         component: AppLayoutComponent,
