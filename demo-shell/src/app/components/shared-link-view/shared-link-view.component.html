@@ -1,8 +1,6 @@
-<ng-container *ngIf="fileUrl">
+<ng-container *ngIf="sharedLinkId">
     <adf-viewer
-        [displayName]="fileName"
-        [allowGoBack]="false"
-        [mimeType]="mimeType"
-        [urlFile]="fileUrl">
+        [sharedLinkId]="sharedLinkId"
+        [allowGoBack]="false">
     </adf-viewer>
 </ng-container>
