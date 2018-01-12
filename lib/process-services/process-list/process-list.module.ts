@@ -27,6 +27,7 @@ import { CardViewModule, CardViewUpdateService, DataColumnModule, DataTableModul
 import { TaskListModule } from '../task-list/task-list.module';
 import { PeopleModule } from '../people/people.module';
 import { CommentsModule } from '../comments/comments.module';
+import { ContentWidgetModule } from '../content-widget/content-widget.module';
 
 import { ProcessAuditDirective } from './components/process-audit.directive';
 import { ProcessFiltersComponent } from './components/process-filters.component';
@@ -55,7 +56,8 @@ import { ProcessFilterService } from './services/process-filter.service';
         DataColumnModule,
         DirectiveModule,
         PeopleModule,
-        CommentsModule
+        CommentsModule,
+        ContentWidgetModule
     ],
     declarations: [
         ProcessInstanceListComponent,
