@@ -28,7 +28,7 @@ some cases by viewing it directly in the browser via a special URL that referenc
 the Blob. For example, you could use the Blob interface to construct an image in the
 [PNG format](https://en.wikipedia.org/wiki/Portable_Network_Graphics). Since
 PNG is a format the browser can display, you could use the Blob's URL in an
-&lt;img&gt; element to view the image within the page. Alternatively, you could let
+&lt;img> element to view the image within the page. Alternatively, you could let
 the user download it as a PNG file.
 
 The `downloadBlob` method starts a download of the Blob data to the `filename`
@@ -40,20 +40,14 @@ for details of how a Blob's contents are assembled from the constructor argument
 Use `createdTrustedUrl` to generate a URL string for a Blob. The URL refers to
 the Blob as though it were a file but it is actually an object stored in memory,
 so it does not persist across browser sessions. This URL can be used much like any
-other, so you could use it for the `src` attribute of an &lt;img&gt; element or the
+other, so you could use it for the `src` attribute of an &lt;img> element or the
 `href` of a download link. Note that while the URL is 'trusted', the data it contains
 is not necessarily trustworthy unless you can vouch for it yourself; be careful that
 the data doesn't expose your app to
 [Cross Site Scripting](https://en.wikipedia.org/wiki/Cross-site_scripting)
 attacks.
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
 ## See also
 
-- [Cookie service](cookie.service.md)
-- [Storage service](storage.service.md)
-<!-- seealso end -->
-
-
-
+-   [Cookie service](cookie.service.md)
+-   [Storage service](storage.service.md)
