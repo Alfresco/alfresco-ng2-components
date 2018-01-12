@@ -1,15 +1,16 @@
 language: node_js
 dist: trusty
-sudo: false
+sudo: required
 node_js:
   - "8"
 
 addons:
-  chrome: stable
+    chrome: stable
 
 before_install:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
+    - export CHROME_BIN=chromium-browser
+    - export DISPLAY=:99.0
+    - sh -e /etc/init.d/xvfb start
 
 env:
   matrix:
@@ -31,7 +32,7 @@ install:
 
 script:
     - if ([ "$MODULE" == "core" ]); then
-            (./scripts/npm-build-all.sh -si -sb -t "core*" || exit 1;);
+            (./scripts/npm-build-all.sh -si -sb -t "core" || exit 1;);
       fi
 
     - if ([ "$MODULE" == "process-services" ]); then
