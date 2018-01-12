@@ -18,7 +18,7 @@
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
 import { Injectable } from '@angular/core';
-import { AlfrescoApi } from 'alfresco-js-api';
+import { AlfrescoApi, MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { ExternalContent } from '../components/widgets/core/external-content';
 import { ExternalContentLink } from '../components/widgets/core/external-content-link';
@@ -50,6 +50,24 @@ export class ActivitiContentService {
     }
 
     /**
+     * Returns a list of all the repositories configured
+     *
+     * @param accountId
+     * @param folderId
+     * @returns {any}
+     */
+    getAlfrescoRepositories(tenantId: number, includeAccount: boolean): Observable<any> {
+        let apiService: AlfrescoApi = this.apiService.getInstance();
+        const opts = {
+            tenantId: tenantId,
+            includeAccounts: includeAccount
+        };
+        return Observable.fromPromise(apiService.activiti.alfrescoApi.getRepositories(opts))
+            .map(this.toJsonArray)
+            .catch(err => this.handleError(err));
+    }
+
+    /**
      * Returns a list of child nodes below the specified folder
      *
      * @param accountId
@@ -66,6 +84,20 @@ export class ActivitiContentService {
             source: accountId,
             sourceId: node.id + '@' + siteId
         })).map(this.toJson).catch(err => this.handleError(err));
+    }
+
+    applyAlfrescoNode(node: MinimalNodeEntryEntity, siteId: string, accountId: string) {
+        let apiService: AlfrescoApi = this.apiService.getInstance();
+        let params: any = {
+            source: accountId,
+            sourceId: node.id + ';1.0@' + siteId,
+            name: node.name,
+            link: false
+        };
+        return Observable.fromPromise(
+                apiService.activiti.contentApi.createTemporaryRelatedContent(params))
+                    .map(this.toJson)
+                    .catch(err => this.handleError(err));
     }
 
     toJson(res: any) {

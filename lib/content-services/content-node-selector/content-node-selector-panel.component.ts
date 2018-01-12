@@ -26,7 +26,6 @@ import {
 } from '@angular/core';
 import {
     AlfrescoApiService,
-    ContentService,
     HighlightDirective,
     UserPreferencesService
 } from '@alfresco/adf-core';
@@ -38,6 +37,10 @@ import { ImageResolver } from '../document-list/data/image-resolver.model';
 import { ContentNodeSelectorService } from './content-node-selector.service';
 import { debounceTime } from 'rxjs/operators';
 
+export type ValidationFunction = (entry: MinimalNodeEntryEntity) => boolean;
+
+const defaultValidation = () => true;
+
 @Component({
     selector: 'adf-content-node-selector-panel',
     styleUrls: ['./content-node-selector-panel.component.scss'],
@@ -45,19 +48,6 @@ import { debounceTime } from 'rxjs/operators';
     encapsulation: ViewEncapsulation.None
 })
 export class ContentNodeSelectorPanelComponent implements OnInit {
-
-    nodes: NodePaging | null = null;
-    siteId: null | string;
-    searchTerm: string = '';
-    showingSearchResults: boolean = false;
-    loadingSearchResults: boolean = false;
-    inDialog: boolean = false;
-    _chosenNode: MinimalNodeEntryEntity = null;
-    folderIdToShow: string | null = null;
-    paginationStrategy: PaginationStrategy;
-    pagination: Pagination;
-    skipCount: number = 0;
-    infiniteScroll: boolean = false;
 
     @Input()
     currentFolderId: string = null;
@@ -77,6 +67,9 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     @Input()
     pageSize: number;
 
+    @Input()
+    isSelectionValid: ValidationFunction = defaultValidation;
+
     @Output()
     select: EventEmitter<MinimalNodeEntryEntity[]> = new EventEmitter<MinimalNodeEntryEntity[]>();
 
@@ -86,12 +79,22 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     @ViewChild(HighlightDirective)
     highlighter: HighlightDirective;
 
+    nodes: NodePaging | null = null;
+    siteId: null | string;
+    searchTerm: string = '';
+    showingSearchResults: boolean = false;
+    loadingSearchResults: boolean = false;
+    inDialog: boolean = false;
+    _chosenNode: MinimalNodeEntryEntity = null;
+    folderIdToShow: string | null = null;
+    paginationStrategy: PaginationStrategy;
+    pagination: Pagination;
+    skipCount: number = 0;
+    infiniteScroll: boolean = false;
     debounceSearch: number= 200;
-
     searchInput: FormControl = new FormControl();
 
     constructor(private contentNodeSelectorService: ContentNodeSelectorService,
-                private contentService: ContentService,
                 private apiService: AlfrescoApiService,
                 private preferences: UserPreferencesService) {
         this.searchInput.valueChanges
@@ -101,13 +104,16 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
             .subscribe((searchValue) => {
                 this.search(searchValue);
             });
-
         this.pageSize = this.preferences.paginationSize;
     }
 
     set chosenNode(value: MinimalNodeEntryEntity) {
         this._chosenNode = value;
-        this.select.next([value]);
+        let valuesArray = null;
+        if (value) {
+            valuesArray = [value];
+        }
+        this.select.next(valuesArray);
     }
 
     get chosenNode() {
@@ -270,7 +276,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
      * @param entry
      */
     private attemptNodeSelection(entry: MinimalNodeEntryEntity): void {
-        if (this.contentService.hasPermission(entry, 'create')) {
+        if (this.isSelectionValid(entry)) {
             this.chosenNode = entry;
         } else {
             this.resetChosenNode();

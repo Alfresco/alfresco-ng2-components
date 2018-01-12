@@ -15,25 +15,45 @@
  * limitations under the License.
  */
 
-/*tslint:disable: ban*/
-
-import { async, TestBed } from '@angular/core/testing';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { AppConfigService } from '@alfresco/adf-core';
+import { async, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { MinimalNodeEntryEntity, SitePaging } from 'alfresco-js-api';
+import { AppConfigService, SitesService } from '@alfresco/adf-core';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { ContentNodeDialogService } from './content-node-dialog.service';
 import { MatDialog } from '@angular/material';
+import { Observable } from 'rxjs/Observable';
 
 const fakeNode: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
         id: 'fake',
         name: 'fake-name'
 };
 
+const fakeSiteList: SitePaging = {
+       list: {
+        pagination: {
+            count: 1,
+            hasMoreItems: false,
+            totalItems: 1,
+            skipCount: 0,
+            maxItems: 100
+        },
+        entries: [
+            {
+                entry: {
+                    id: 'FAKE',
+                    guid: 'FAKE-GUID',
+                    title: 'FAKE-SITE-TITLE'
+                }
+            }
+        ]
+    }
+};
+
 describe('ContentNodeDialogService', () => {
 
     let service: ContentNodeDialogService;
-    // let documentListService: DocumentListService;
-    // let contentDialogService: ContentNodeDialogService;
+    let documentListService: DocumentListService;
+    let sitesService: SitesService;
     let materialDialog: MatDialog;
 
     beforeEach(async(() => {
@@ -42,6 +62,7 @@ describe('ContentNodeDialogService', () => {
             providers: [
                 ContentNodeDialogService,
                 DocumentListService,
+                SitesService,
                 MatDialog
             ]
         }).compileComponents();
@@ -52,7 +73,9 @@ describe('ContentNodeDialogService', () => {
         appConfig.config.ecmHost = 'http://localhost:9876/ecm';
 
         service = TestBed.get(ContentNodeDialogService);
+        documentListService = TestBed.get(DocumentListService);
         materialDialog = TestBed.get(MatDialog);
+        sitesService =  TestBed.get(SitesService);
         spyOn(materialDialog, 'open').and.stub();
         spyOn(materialDialog, 'closeAll').and.stub();
 
@@ -67,7 +90,7 @@ describe('ContentNodeDialogService', () => {
         expect(materialDialog.open).toHaveBeenCalled();
     });
 
-    it('should be able to open the dialog when node has NOT permission', () => {
+    it('should NOT be able to open the dialog when node has NOT permission', () => {
         service.openCopyMoveDialog('fake-action', fakeNode, 'noperm').subscribe(
             () => { },
             (error) => {
@@ -75,6 +98,21 @@ describe('ContentNodeDialogService', () => {
                 expect(error.statusCode).toBe(403);
             });
     });
+
+    it('should be able to open the dialog using a folder id', fakeAsync(() => {
+        spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.resolve(fakeNode));
+        service.openFileBrowseDialogByFolderId('fake-folder-id').subscribe();
+        tick();
+        expect(materialDialog.open).toHaveBeenCalled();
+    }));
+
+    it('should be able to open the dialog using the first user site', fakeAsync(() => {
+        spyOn(sitesService, 'getSites').and.returnValue(Observable.of(fakeSiteList));
+        spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.resolve(fakeNode));
+        service.openFileBrowseDialogBySite().subscribe();
+        tick();
+        expect(materialDialog.open).toHaveBeenCalled();
+    }));
 
     it('should be able to close the material dialog', () => {
         service.close();

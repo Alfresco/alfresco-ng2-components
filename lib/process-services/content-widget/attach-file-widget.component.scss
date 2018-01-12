@@ -1,0 +1,73 @@
+.adf {
+
+    &-attach-widget-container {
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+
+        input {
+            cursor: pointer;
+            height: 100%;
+            right: 0;
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            width: 300px;
+            z-index: 4;
+        }
+    }
+
+    &-attach-widget__menu-upload {
+        display: flex;
+        align-items: center;
+    }
+
+    &-attach-widget__input-type {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+    }
+
+    &-attach-widget__image-logo{
+        padding-left: 5px;
+    }
+
+    &-attach-widget-repo-button{
+        padding-left: 10px;
+
+        .mat-button-wrapper {
+            display: inline;
+        }
+
+        .mat-mini-fab.mat-accent {
+            background-color: inherit;
+        }
+    }
+
+    &-attach-widget {
+        width: 100%;
+        word-break: break-all;
+        padding: 0.4375em 0;
+        border-top: 0.84375em solid transparent;
+    }
+
+    &-attach-widget__icon {
+        padding: 6px;
+        float: left;
+        cursor: pointer;
+    }
+
+    &-attach-widget__reset {
+        margin-top: -2px;
+    }
+
+    &-attach-files-row {
+        .mat-line {
+            margin-bottom: 0px;
+        }
+    }
+
+}
