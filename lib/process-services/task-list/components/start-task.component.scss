@@ -20,6 +20,25 @@
         margin-top: 10px;
         margin-bottom: 10px;
         padding: 0px;
+
+        &-content {
+            display: flex;
+            flex-flow: row;
+            flex-wrap: wrap;
+
+            .adf-grid-column {
+                display: flex;
+                flex-flow: column;
+            }
+
+            .adf-grid-full-width {
+                width: 100%;
+            }
+
+            .adf-grid-half-width {
+                width: 50%;
+            }
+        }
     }
 
     .adf-new-task-footer {
