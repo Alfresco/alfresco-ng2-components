@@ -219,7 +219,7 @@ export class ViewerComponent implements OnChanges {
                             }
 
                             if (this.viewerType === 'unknown') {
-                                this.displayNodeAsPdf(data.id);
+                                this.displayNodeRendition(data.id);
                             } else {
                                 this.isLoading = false;
                             }
@@ -253,7 +253,7 @@ export class ViewerComponent implements OnChanges {
                         }
 
                         if (this.viewerType === 'unknown') {
-                            this.displaySharedLinkAsPdf(this.sharedLinkId);
+                            this.displaySharedLinkRendition(this.sharedLinkId);
                         } else {
                             this.isLoading = false;
                         }
@@ -443,60 +443,58 @@ export class ViewerComponent implements OnChanges {
         }
     }
 
-    private displayNodeAsPdf(nodeId: string) {
+    private async displayNodeRendition(nodeId: string) {
         this.isLoading = true;
 
-        this.renditionService.getRendition(nodeId, 'pdf').subscribe(
-            (response) => {
-                const status = response.entry.status.toString();
+        try {
+            const rendition = await this.apiService.renditionsApi.getRendition(nodeId, 'pdf');
+            const status = rendition.entry.status.toString();
 
-                if (status === 'CREATED') {
-                    this.isLoading = false;
-                    this.showPdfRendition(nodeId);
-                } else if (status === 'NOT_CREATED') {
-                    this.renditionService.convert(nodeId, 'pdf').subscribe({
-                        complete: () => {
-                            this.isLoading = false;
-                            this.showPdfRendition(nodeId);
-                        },
-                        error: (error) => {
-                            this.isLoading = false;
-                        }
-                    });
-                } else {
-                    this.isLoading = false;
-                }
-            },
-            (err) => {
-                this.isLoading = false;
-            }
-        );
-    }
-
-    private displaySharedLinkAsPdf(sharedId: string) {
-        this.isLoading = true;
-
-        this.apiService.renditionsApi.getSharedLinkRendition(sharedId, 'pdf').then(
-            (response) => {
-                const status = response.entry.status.toString();
-                if (status === 'CREATED') {
-                    this.isLoading = false;
+            if (status === 'CREATED') {
+                this.viewerType = 'pdf';
+                this.urlFileContent = this.apiService.contentApi.getRenditionUrl(nodeId, 'pdf');
+            } else if (status === 'NOT_CREATED') {
+                try {
+                    await this.renditionService.convert(nodeId, 'pdf').toPromise()
                     this.viewerType = 'pdf';
-                    this.urlFileContent = this.apiService.contentApi.getSharedLinkRenditionUrl(sharedId, 'pdf');
-                } else {
-                    this.isLoading = false;
+                    this.urlFileContent = this.apiService.contentApi.getRenditionUrl(nodeId, 'pdf');
+                } catch {
                 }
-            },
-            (err) => {
-                this.isLoading = false;
             }
-        );
+        } catch {
+            try {
+                const imagePreview = await this.apiService.renditionsApi.getRendition(nodeId, 'imgpreview');
+                if (imagePreview.entry.status.toString() === 'CREATED') {
+                    this.viewerType = 'image';
+                    this.urlFileContent = this.apiService.contentApi.getRenditionUrl(nodeId, 'imgpreview');
+                }
+            } catch {
+            }
+        }
+
+        this.isLoading = false;
     }
 
-    private showPdfRendition(nodeId: string) {
-        if (nodeId) {
-            this.viewerType = 'pdf';
-            this.urlFileContent = this.renditionService.getRenditionUrl(nodeId, 'pdf');
+    private async displaySharedLinkRendition(sharedId: string) {
+        this.isLoading = true;
+
+        try {
+            const rendition = await this.apiService.renditionsApi.getSharedLinkRendition(sharedId, 'pdf');
+            if (rendition.entry.status.toString() === 'CREATED') {
+                this.viewerType = 'pdf';
+                this.urlFileContent = this.apiService.contentApi.getSharedLinkRenditionUrl(sharedId, 'pdf');
+            }
+        } catch {
+            try {
+                const rendition = await this.apiService.renditionsApi.getSharedLinkRendition(sharedId, 'imgpreview');
+                if (rendition.entry.status.toString() === 'CREATED') {
+                    this.viewerType = 'image';
+                    this.urlFileContent = this.apiService.contentApi.getSharedLinkRenditionUrl(sharedId, 'imgpreview');
+                }
+            } catch {
+            }
         }
+
+        this.isLoading = false;
     }
 }
