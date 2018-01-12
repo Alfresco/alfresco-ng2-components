@@ -64,6 +64,9 @@ export class ViewerComponent implements OnChanges {
     fileNodeId: string = null;
 
     @Input()
+    sharedLinkId: string = null;
+
+    @Input()
     overlayMode = false;
 
     @Input()
@@ -99,6 +102,15 @@ export class ViewerComponent implements OnChanges {
     @Input()
     sidebarTemplate: TemplateRef<any> = null;
 
+    @Input()
+    mimeType: string;
+
+    @Input()
+    fileName: string;
+
+    @Input()
+    downloadUrl: string = null;
+
     @Output()
     goBack = new EventEmitter<BaseEvent<any>>();
 
@@ -118,8 +130,6 @@ export class ViewerComponent implements OnChanges {
     extensionChange = new EventEmitter<string>();
 
     viewerType = 'unknown';
-    downloadUrl: string = null;
-    fileName = 'document';
     isLoading = false;
     node: MinimalNodeEntryEntity;
 
@@ -128,7 +138,6 @@ export class ViewerComponent implements OnChanges {
     urlFileContent: string;
     otherMenu: any;
     extension: string;
-    mimeType: string;
     sidebarTemplateContext: { node: MinimalNodeEntryEntity } = { node: null };
 
     private extensions = {
@@ -149,10 +158,14 @@ export class ViewerComponent implements OnChanges {
                 private renditionService: RenditionsService) {
     }
 
+    isSourceDefined(): boolean {
+        return (this.urlFile || this.blobFile || this.fileNodeId || this.sharedLinkId) ? true : false;
+    }
+
     ngOnChanges(changes: SimpleChanges) {
         if (this.showViewer) {
-            if (!this.urlFile && !this.blobFile && !this.fileNodeId) {
-                throw new Error('Attribute urlFile or fileNodeId or blobFile is required');
+            if (!this.isSourceDefined()) {
+                throw new Error('A content source attribute value is missing.');
             }
 
             return new Promise((resolve, reject) => {
@@ -206,7 +219,7 @@ export class ViewerComponent implements OnChanges {
                             }
 
                             if (this.viewerType === 'unknown') {
-                                this.displayAsPdf(data.id);
+                                this.displayNodeAsPdf(data.id);
                             } else {
                                 this.isLoading = false;
                             }
@@ -222,6 +235,33 @@ export class ViewerComponent implements OnChanges {
                             this.logService.error('This node does not exist');
                         }
                     );
+                } else if (this.sharedLinkId) {
+                    this.isLoading = true;
+
+                    this.apiService.sharedLinksApi.getSharedLink(this.sharedLinkId).then(details => {
+                        this.mimeType = details.entry.content.mimeType;
+                        this.displayName = this.getDisplayName(details.entry.name);
+                        this.extension = this.getFileExtension(details.entry.name);
+                        this.fileName = details.entry.name;
+
+                        this.urlFileContent = this.apiService.contentApi.getSharedLinkContentUrl(this.sharedLinkId, false);
+                        this.downloadUrl = this.apiService.contentApi.getSharedLinkContentUrl(this.sharedLinkId, true);
+
+                        this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
+                        if (this.viewerType === 'unknown') {
+                            this.viewerType = this.getViewerTypeByExtension(this.extension);
+                        }
+
+                        if (this.viewerType === 'unknown') {
+                            this.displaySharedLinkAsPdf(this.sharedLinkId);
+                        } else {
+                            this.isLoading = false;
+                        }
+
+                        this.extensionChange.emit(this.extension);
+                        this.isLoading = false;
+                        resolve();
+                    });
                 }
             });
         }
@@ -403,7 +443,7 @@ export class ViewerComponent implements OnChanges {
         }
     }
 
-    private displayAsPdf(nodeId: string) {
+    private displayNodeAsPdf(nodeId: string) {
         this.isLoading = true;
 
         this.renditionService.getRendition(nodeId, 'pdf').subscribe(
@@ -423,6 +463,26 @@ export class ViewerComponent implements OnChanges {
                             this.isLoading = false;
                         }
                     });
+                } else {
+                    this.isLoading = false;
+                }
+            },
+            (err) => {
+                this.isLoading = false;
+            }
+        );
+    }
+
+    private displaySharedLinkAsPdf(sharedId: string) {
+        this.isLoading = true;
+
+        this.apiService.renditionsApi.getSharedLinkRendition(sharedId, 'pdf').then(
+            (response) => {
+                const status = response.entry.status.toString();
+                if (status === 'CREATED') {
+                    this.isLoading = false;
+                    this.viewerType = 'pdf';
+                    this.urlFileContent = this.apiService.contentApi.getSharedLinkRenditionUrl(sharedId, 'pdf');
                 } else {
                     this.isLoading = false;
                 }
