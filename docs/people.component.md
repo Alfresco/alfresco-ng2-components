@@ -1,24 +1,21 @@
-# Task People Component
+# People Component
 
-Displays involved users to a specified task
+Displays users involved with a specified task
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
+## Contents
 
-<!-- toc -->
+-   [Basic Usage](#basic-usage)
 
-- [Basic Usage](#basic-usage)
-  * [Properties](#properties)
-  * [Events](#events)
-- [Details](#details)
-  * [How to customize the people component behavior](#how-to-customize-the-people-component-behavior)
-  * [Involve People single click and close search](#involve-people-single-click-and-close-search)
-  * [Involve People single click without close search](#involve-people-single-click-without-close-search)
-  * [Involve People double click and close search](#involve-people-double-click-and-close-search)
-  * [Involve People double double without close search](#involve-people-double-double-without-close-search)
+    -   [Properties](#properties)
+    -   [Events](#events)
 
-<!-- tocstop -->
+-   [Details](#details)
 
-<!-- markdown-toc end -->
+    -   [How to customize the people component behavior](#how-to-customize-the-people-component-behavior)
+    -   [Involve People single click and close search](#involve-people-single-click-and-close-search)
+    -   [Involve People single click without close search](#involve-people-single-click-without-close-search)
+    -   [Involve People double click and close search](#involve-people-double-click-and-close-search)
+    -   [Involve People double double without close search](#involve-people-double-double-without-close-search)
 
 ## Basic Usage
 
@@ -35,8 +32,8 @@ Displays involved users to a specified task
 ### Properties
 
 | Name | Type | Description |
-| --- | --- | --- |
-| people | User[] | The array of User object to display |
+| ---- | ---- | ----------- |
+| people | User\[] | The array of User object to display |
 | taskId | string | The numeric ID of the task |
 | readOnly | boolean | The boolean flag |
 
@@ -49,8 +46,9 @@ No Events
 ### How to customize the people component behavior
 
 The people component provide two methods to customize the behavior:
-- involveUserAndCloseSearch: The selected user is going to be added and the search section closed
-- involveUserWithoutCloseSearch: The selected user is going to be added without close the search section
+
+-   involveUserAndCloseSearch: The selected user is going to be added and the search section closed
+-   involveUserWithoutCloseSearch: The selected user is going to be added without close the search section
 
 In this way will be easy customize the people component to involve the user with the single or double click event:
 

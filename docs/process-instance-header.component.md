@@ -4,18 +4,6 @@ Sub-component of the process details component, which renders some general infor
 
 ![adf-process-instance-header](docassets/images/adf-process-instance-header-attachment.png)
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-  * [Properties](#properties)
-    + [Events](#events)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
-
 ## Basic Usage
 
 ```html
@@ -26,8 +14,8 @@ Sub-component of the process details component, which renders some general infor
 
 ### Properties
 
-| Name | Type| Description |
-| --- | --- | --- |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
 | processInstance | [ProcessInstanceModel](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-activiti-processlist/src/models/process-instance.model.ts) | (**required**): Full details of the process instance to display information about |
 
 #### Events

@@ -4,19 +4,6 @@ Adds pagination to the component it is used with.
 
 ![](docassets/images/basic.png)
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-  * [Properties](#properties)
-  * [Events](#events)
-- [Details](#details)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
-
 ## Basic Usage
 
 ```html
@@ -43,20 +30,20 @@ Adds pagination to the component it is used with.
 ### Properties
 
 | Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| pagination | Pagination | | Pagination object |
-| supportedPageSizes | Array&lt;number&gt; | [ 25, 50, 100 ] | An array of page sizes |
-| target | PaginatedComponent | | Component that provides custom pagination support |
+| ---- | ---- | ------- | ----------- |
+| pagination | Pagination |  | Pagination object |
+| supportedPageSizes | Array&lt;number> | [ 25, 50, 100 ] | An array of page sizes |
+| target | PaginatedComponent |  | Component that provides custom pagination support |
 
 ### Events
 
 | Name | Type | Description |
-| --- | --- | --- |
-| change | EventEmitter&lt;PaginationQueryParams&gt; | Triggered for any action in pagination |
-| nextPage | EventEmitter&lt;Pagination&gt; | Triggered on next page action |
-| prevPage | EventEmitter&lt;Pagination&gt; | Triggered on previous page action |
-| changePageSize | EventEmitter&lt;Pagination&gt; | Triggered on page size change action |
-| changePageNumber | EventEmitter&lt;Pagination&gt; | Triggered on page change action |
+| ---- | ---- | ----------- |
+| change | EventEmitter&lt;PaginationQueryParams> | Triggered for any action in pagination |
+| nextPage | EventEmitter&lt;Pagination> | Triggered on next page action |
+| prevPage | EventEmitter&lt;Pagination> | Triggered on previous page action |
+| changePageSize | EventEmitter&lt;Pagination> | Triggered on page size change action |
+| changePageNumber | EventEmitter&lt;Pagination> | Triggered on page change action |
 
 ## Details
 

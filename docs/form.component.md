@@ -1,28 +1,26 @@
-# Activiti Form component
+# Form component
 
-The component shows a Form from Activiti (see it live: [Form Quickstart](https://embed.plnkr.co/YSLXTqb3DtMhVJSqXKkE/))
+Shows a Form from APS (see it live: [Form Quickstart](https://embed.plnkr.co/YSLXTqb3DtMhVJSqXKkE/))
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
+## Contents
 
-<!-- toc -->
+-   [Basic Usage](#basic-usage)
 
-- [Basic Usage](#basic-usage)
-  * [Properties](#properties)
-  * [Advanced properties](#advanced-properties)
-  * [Events](#events)
-- [Details](#details)
-  * [Custom empty form template](#custom-empty-form-template)
-  * [Controlling outcome execution behaviour](#controlling-outcome-execution-behaviour)
-  * [Field Validators](#field-validators)
-- [Other documentation](#other-documentation)
-  * [Common scenarios](#common-scenarios)
-    + [Changing field value based on another field](#changing-field-value-based-on-another-field)
-    + [Listen all form Events](#listen-all-form-events)
-- [See also](#see-also)
+    -   [Properties](#properties)
+    -   [Advanced properties](#advanced-properties)
+    -   [Events](#events)
 
-<!-- tocstop -->
+-   [Details](#details)
 
-<!-- markdown-toc end -->
+    -   [Custom empty form template](#custom-empty-form-template)
+    -   [Controlling outcome execution behaviour](#controlling-outcome-execution-behaviour)
+    -   [Field Validators](#field-validators)
+
+-   [Other documentation](#other-documentation)
+
+    -   [Common scenarios](#common-scenarios)
+
+-   [See also](#see-also)
 
 ## Basic Usage
 
@@ -104,11 +102,11 @@ and store the form field as metadata. The param nameNode is optional.
 ### Properties
 
 | Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| taskId | string | | Task id to fetch corresponding form and values. |
-| formId | string | | The id of the form definition to load and display with custom values. |
-| formName | string | | Name of the form definition to load and display with custom values. |
-| data | FormValues | | Custom form values map to be used with the rendered form. |
+| ---- | ---- | ------- | ----------- |
+| taskId | string |  | Task id to fetch corresponding form and values. |
+| formId | string |  | The id of the form definition to load and display with custom values. |
+| formName | string |  | Name of the form definition to load and display with custom values. |
+| data | FormValues |  | Custom form values map to be used with the rendered form. |
 | showTitle | boolean | true | Toggle rendering of the form title. |
 | showCompleteButton | boolean | true | Toggle rendering of the `Complete` outcome button. |
 | disableCompleteButton | boolean | false | The `Complete` outcome button is shown but it will be disabled. |
@@ -118,28 +116,28 @@ and store the form field as metadata. The param nameNode is optional.
 | showRefreshButton | boolean | true | Toggle rendering of the `Refresh` button. |
 | showValidationIcon | boolean | true | Toggle rendering of the validation icon next form title. |
 | saveMetadata | boolean | false | Store the value of the form as metadata. |
-| path | string |  |  Path of the folder where to store the metadata. |
+| path | string |  | Path of the folder where to store the metadata. |
 | nameNode | string | true | Name to assign to the new node where the metadata are stored. |
-| fieldValidators | FormFieldValidator[] | See [Field Validators](#field-validators) section below | Contains a list of form field validator instances. |
+| fieldValidators | FormFieldValidator\[] | See [Field Validators](#field-validators) section below | Contains a list of form field validator instances. |
 
 ### Advanced properties
 
  The following properties are for complex customisation purposes:
 
 | Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| form | FormModel | | Underlying form model instance. |
+| ---- | ---- | ------- | ----------- |
+| form | FormModel |  | Underlying form model instance. |
 | showDebugButton | boolean | false | Toggle debug options. |
 | debugMode | boolean | false | Toggle debug mode, allows displaying additional data for development and debugging purposes. |
 
 ### Events
 
-| Name |  Return Type | Description |
-| --- | --- | --- |
+| Name | Return Type | Description |
+| ---- | ----------- | ----------- |
 | formLoaded | [FormModel](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-activiti-form/src/components/widgets/core/form.model.ts) | Invoked when form is loaded or reloaded. |
-| formSaved | [FormModel](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-activiti-form/src/components/widgets/core/form.model.ts)  | Invoked when form is submitted with `Save` or custom outcomes.  |
-| formCompleted | [FormModel](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-activiti-form/src/components/widgets/core/form.model.ts)  | Invoked when form is submitted with `Complete` outcome.  |
-| formDataRefreshed | [FormModel](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-activiti-form/src/components/widgets/core/form.model.ts) | Invoked when form values are refreshed due to a data property change  |
+| formSaved | [FormModel](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-activiti-form/src/components/widgets/core/form.model.ts) | Invoked when form is submitted with `Save` or custom outcomes. |
+| formCompleted | [FormModel](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-activiti-form/src/components/widgets/core/form.model.ts) | Invoked when form is submitted with `Complete` outcome. |
+| formDataRefreshed | [FormModel](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-activiti-form/src/components/widgets/core/form.model.ts) | Invoked when form values are refreshed due to a data property change |
 | executeOutcome | [FormOutcomeEvent](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-activiti-form/src/components/widgets/core/form-outcome-event.model.ts) | Invoked when any outcome is executed, default behaviour can be prevented via `event.preventDefault()` |
 | error | any | Invoked at any error |
 
@@ -176,7 +174,6 @@ You can add a template that will be show if no form definition has been found
     </div>
 
 </adf-form>
-
 ```
 
 ### Controlling outcome execution behaviour
@@ -225,8 +222,8 @@ export class MyView {
 
 There are two additional functions that can be of a great value when controlling outcomes:
 
-- `saveTaskForm()` - saves current form
-- `completeTaskForm(outcome?: string)` - save and complete form with a given outcome name
+-   `saveTaskForm()` - saves current form
+-   `completeTaskForm(outcome?: string)` - save and complete form with a given outcome name
 
 **Please note that if `event.preventDefault()` is not called then default outcome behaviour
 will also be executed after your custom code.**
@@ -279,12 +276,14 @@ formService.formEvents.subscribe((event: Event) => {
 ```
 
 <!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
+
 <!-- seealso start -->
+
 ## See also
 
-- [Stencils](stencils.md)
-- [FormFieldValidator](FormFieldValidator.md)
-- [Extensibility](extensibility.md)
-- [Form rendering service](form-rendering.service.md)
-- [Form field model](form-field.model.md)
-<!-- seealso end -->
+-   [Stencils](stencils.md)
+-   [FormFieldValidator](FormFieldValidator.md)
+-   [Extensibility](extensibility.md)
+-   [Form rendering service](form-rendering.service.md)
+-   [Form field model](form-field.model.md)
+    <!-- seealso end -->

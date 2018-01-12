@@ -1,19 +1,6 @@
-# Activiti Process Instance List
+# Process Instance List
 
-This component renders a list containing all the process instances matched by the parameters specified.
-
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-  * [Properties](#properties)
-  * [Events](#events)
-- [Details](#details)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
+Renders a list containing all the process instances matched by the parameters specified.
 
 ## Basic Usage
 
@@ -58,27 +45,25 @@ define custom schema in the app.config.json as shown below json format.
     [presetColumn]="'customSchema'">
 </adf-process-instance-list>
 ```
+
 ### Properties
 
-| Name | Description |
-| --- | --- |
-| appId | The id of the app. |
-| processDefinitionKey | The processDefinitionKey of the process. |
-| presetColumn | string || The presetColumn of the custom schema to fetch. |
-| state | Define state of the processes. Possible values are `running`, `completed` and `all` |
-| sort | Define sort of the processes. Possible values are `created-desc`, `created-asc`, `ended-desc`, `ended-asc` |
-| schemaColumn | List of columns to display in the process instances datatable (see the [Details](#details) section below) |
+| Name | Description |  |  |
+| ---- | ----------- | --- | --- |
+| appId | The id of the app. |  |  |
+| processDefinitionKey | The processDefinitionKey of the process. |  |  |
+| presetColumn | string |  | The presetColumn of the custom schema to fetch. |
+| state | Define state of the processes. Possible values are `running`, `completed` and `all` |  |  |
+| sort | Define sort of the processes. Possible values are `created-desc`, `created-asc`, `ended-desc`, `ended-asc` |  |  |
+| schemaColumn | List of columns to display in the process instances datatable (see the [Details](#details) section below) |  |  |
 
 ### Events
 
 | Name | Description |
-| --- | --- |
+| ---- | ----------- |
 | rowClick | Emitted when a row in the process list is clicked |
 | success | Emitted when the list of process instances has been loaded successfully from the server |
 | error | Emitted when an error is encountered loading the list of process instances from the server |
-
-
-
 
 ## Details
 

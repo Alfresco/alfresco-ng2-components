@@ -2,16 +2,6 @@
 
 Shows a notification message with optional feedback.
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Details](#details)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
-
 ## Details
 
 The Notification Service is implemented on top of the Angular Material Design snackbar.
