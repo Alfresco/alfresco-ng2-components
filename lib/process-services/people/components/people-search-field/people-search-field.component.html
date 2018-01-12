@@ -1,5 +1,5 @@
 <mat-form-field class="search-text-container">
-	<input matInput placeholder="{{'ADF_TASK_LIST.PEOPLE.SEARCH_USER'|translate}}" type="text" id="userSearchText" [value]="" [formControl]="searchUser">
+	<input matInput placeholder="{{ searchPlaceholder }}" type="text" id="userSearchText" [value]="" [formControl]="searchUser">
 </mat-form-field>
 <ng-container *ngIf="users$ | async; let users">
     <div class="search-list-container" id="search-people-list" *ngIf="users.length > 0">

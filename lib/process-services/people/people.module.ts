@@ -26,6 +26,7 @@ import { PeopleComponent } from './components/people/people.component';
 import { PeopleListComponent } from './components/people-list/people-list.component';
 import { PeopleSearchComponent } from './components/people-search/people-search.component';
 import { PeopleSearchFieldComponent } from './components/people-search-field/people-search-field.component';
+import { PeopleSelectorComponent } from './components/people-selector/people-selector.component';
 
 import { PeopleSearchActionLabelDirective } from './directives/people-search-action-label.directive';
 import { PeopleSearchTitleDirective } from './directives/people-search-title.directive';
@@ -44,6 +45,7 @@ import { PeopleSearchTitleDirective } from './directives/people-search-title.dir
         PeopleComponent,
         PeopleSearchComponent,
         PeopleSearchFieldComponent,
+        PeopleSelectorComponent,
         PeopleSearchTitleDirective,
         PeopleSearchActionLabelDirective,
         PeopleListComponent
@@ -51,6 +53,8 @@ import { PeopleSearchTitleDirective } from './directives/people-search-title.dir
     exports: [
         PeopleComponent,
         PeopleSearchComponent,
+        PeopleSearchFieldComponent,
+        PeopleSelectorComponent,
         PeopleSearchTitleDirective,
         PeopleSearchActionLabelDirective,
         PeopleListComponent

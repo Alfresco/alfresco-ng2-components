@@ -42,7 +42,9 @@
                 </div>
             </mat-grid-tile>
             <mat-grid-tile>
-              <mat-form-field class="adf-start-task-input-container">
+                <adf-people-selector></adf-people-selector>
+
+              <!-- <mat-form-field class="adf-start-task-input-container">
                 <mat-select placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE'|translate}}" id="assignee_id"
                            class="adf-mat-select" [(ngModel)]="assigneeId">
                     <mat-option>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NONE'|translate}}</mat-option>
@@ -52,7 +54,8 @@
                         </mat-option>
                     </span>
                 </mat-select>
-              </mat-form-field>
+              </mat-form-field> -->
+
             </mat-grid-tile>
         </mat-grid-list>
         <mat-grid-list cols="2" rowHeight="80px">

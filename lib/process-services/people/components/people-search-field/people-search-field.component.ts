@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { UserProcessModel } from '@alfresco/adf-core';
+import { UserProcessModel, TranslationService } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { PerformSearchCallback } from '../../interfaces/perform-search-callback.interface';
+import { getDisplayUser } from '../../helpers/getDisplayUser';
 
 @Component({
     selector: 'adf-people-search-field',
@@ -35,13 +36,18 @@ export class PeopleSearchFieldComponent {
     @Input()
     performSearch: PerformSearchCallback;
 
+    @Input()
+    placeholder: string;
+
     @Output()
     rowClick: EventEmitter<UserProcessModel> = new EventEmitter<UserProcessModel>();
 
     users$: Observable<UserProcessModel[]>;
     searchUser: FormControl = new FormControl();
 
-    constructor() {
+    defaultPlaceholder = 'ADF_TASK_LIST.PEOPLE.SEARCH_USER';
+
+    constructor(private translationService: TranslationService) {
         this.users$ = this.searchUser.valueChanges
             .pipe(debounceTime(200))
             .switchMap((searchWord: string) => {
@@ -51,6 +57,16 @@ export class PeopleSearchFieldComponent {
                     return Observable.of([]);
                 }
             });
+
+        this.defaultPlaceholder = this.translationService.instant(this.defaultPlaceholder);
+    }
+
+    public reset() {
+        this.searchUser.reset();
+    }
+
+    get searchPlaceholder() {
+        return this.placeholder || this.defaultPlaceholder;
     }
 
     onRowClick(event) {
@@ -58,9 +74,7 @@ export class PeopleSearchFieldComponent {
     }
 
     getDisplayUser(firstName: string, lastName: string, delimiter: string = '-'): string {
-        firstName = (firstName !== null ? firstName : '');
-        lastName = (lastName !== null ? lastName : '');
-        return firstName + delimiter + lastName;
+        return getDisplayUser(firstName, lastName, delimiter);
     }
 
     getInitialUserName(firstName: string, lastName: string) {
