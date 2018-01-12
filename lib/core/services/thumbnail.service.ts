@@ -125,8 +125,8 @@ export class ThumbnailService {
      * @param document Node to get URL for.
      * @returns {string} URL address.
      */
-    public getDocumentThumbnailUrl(document: any): string {
-        let thumbnail = this.contentService.getDocumentThumbnailUrl(document);
+    public getDocumentThumbnailUrl(node: any): string {
+        let thumbnail = this.contentService.getDocumentThumbnailUrl(node);
         return thumbnail || this.DEFAULT_ICON;
     }
 
