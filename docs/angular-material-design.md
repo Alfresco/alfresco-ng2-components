@@ -2,7 +2,7 @@
 
 Google's
 [Material Design](https://material.io/guidelines/material-design/introduction.html)
-is an example of a *design language*, a
+is an example of a _design language_, a
 general set of principles and ideas that are used to give designs a
 consistent look and feel. A design language might be used in-house by
 a company to maintain a "family resemblance" between its products or to
@@ -53,9 +53,6 @@ See the Material Design
 [system icon docs](https://material.io/guidelines/style/icons.html#icons-system-icons)
 for further information and to download the set of standard icon images.
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
 ## See also
 
-- [Theming](theming.md)
-<!-- seealso end -->
+-   [Theming](theming.md)

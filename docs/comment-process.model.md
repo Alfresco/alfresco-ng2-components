@@ -19,9 +19,6 @@ class CommentProcessModel implements CommentRepresentation {
 }
 ```
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
 ## See also
 
-- [Comment process service](comment-process.service.md)
-<!-- seealso end -->
+-   [Comment process service](comment-process.service.md)
