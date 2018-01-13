@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService, FormValues } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { TaskDetailsModel } from '../../task-list';
@@ -98,7 +98,7 @@ export class ProcessService {
             .catch(err => this.handleProcessError(err));
     }
 
-    startProcess(processDefinitionId: string, name: string, outcome?: string, startFormValues?: any, variables?: ProcessInstanceVariable[]): Observable<ProcessInstance> {
+    startProcess(processDefinitionId: string, name: string, outcome?: string, startFormValues?: FormValues, variables?: ProcessInstanceVariable[]): Observable<ProcessInstance> {
         let startRequest: any = {
             name: name,
             processDefinitionId: processDefinitionId

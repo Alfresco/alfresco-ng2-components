@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges,  ViewChild, ViewEncapsulation } from '@angular/core';
-import { StartFormComponent, FormRenderingService } from '@alfresco/adf-core';
+import { StartFormComponent , FormRenderingService, FormValues } from '@alfresco/adf-core';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessDefinitionRepresentation } from './../models/process-definition.model';
 import { ProcessInstance } from './../models/process-instance.model';
@@ -36,6 +36,9 @@ export class StartProcessInstanceComponent implements OnChanges {
 
     @Input()
     variables: ProcessInstanceVariable[];
+
+    @Input()
+    startFormValues: FormValues;
 
     @Output()
     start: EventEmitter<ProcessInstance> = new EventEmitter<ProcessInstance>();
