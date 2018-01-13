@@ -564,7 +564,7 @@ actions you have defined in a context menu:
 @Component({
     selector: 'my-view',
     template: `
-        <adf-document-list>...</adf-document-list>
+        <adf-document-list [contextMenuActions]="true">...</adf-document-list>
         <context-menu-holder></context-menu-holder>
     `
 })
