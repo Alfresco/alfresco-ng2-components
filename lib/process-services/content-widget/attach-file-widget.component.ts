@@ -40,11 +40,9 @@ import { Observable } from 'rxjs/Observable';
 })
 export class AttachFileWidgetComponent extends UploadWidgetComponent implements OnInit {
 
-    alfrescoLogoUrl: string = '../assets/images/alfresco-flower.svg';
     repositoryList = [];
 
-    constructor(
-                public formService: FormService,
+    constructor(public formService: FormService,
                 private logger: LogService,
                 public thumbnails: ThumbnailService,
                 public processContentService: ProcessContentService,
@@ -69,36 +67,36 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         return !!this.field.params && !!this.field.params.fileSource;
     }
 
-    isMultipleSourceUpload() {
+    isMultipleSourceUpload(): boolean {
         return !this.field.readOnly && this.isFileSourceConfigured() && !this.isOnlyLocalSourceSelected();
     }
 
-    isAllFileSourceSelected() {
+    isAllFileSourceSelected(): boolean {
         return this.field.params &&
             this.field.params.fileSource &&
             this.field.params.fileSource.serviceId === 'all-file-sources';
     }
 
-    isOnlyLocalSourceSelected() {
+    isOnlyLocalSourceSelected(): boolean {
         return this.field.params &&
             this.field.params.fileSource &&
             this.field.params.fileSource.serviceId === 'local-file';
     }
 
-    isSimpleUploadButton() {
+    isSimpleUploadButton(): boolean {
         return this.isUploadButtonVisible() &&
-               !this.isFileSourceConfigured() ||
-                this.isOnlyLocalSourceSelected();
+            !this.isFileSourceConfigured() ||
+            this.isOnlyLocalSourceSelected();
     }
 
-    isUploadButtonVisible() {
+    isUploadButtonVisible(): boolean {
         return (!this.hasFile || this.multipleOption) && !this.field.readOnly;
     }
 
-    isDefinedSourceFolder() {
+    isDefinedSourceFolder(): boolean {
         return !!this.field.params &&
-               !!this.field.params.fileSource &&
-               !!this.field.params.fileSource.selectedFolder;
+            !!this.field.params.fileSource &&
+            !!this.field.params.fileSource.selectedFolder;
     }
 
     openSelectDialogFromFileSource() {
@@ -131,7 +129,9 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
             ).subscribe((res) => {
                 filesSaved.push(res);
             },
-            (error) => { this.logger.error(error); },
+            (error) => {
+                this.logger.error(error);
+            },
             () => {
                 this.field.value = filesSaved;
                 this.field.json.value = filesSaved;
