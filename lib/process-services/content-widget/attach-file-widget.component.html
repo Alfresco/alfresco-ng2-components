@@ -47,7 +47,7 @@
                     <button mat-menu-item *ngFor="let repo of repositoryList"
                             id="attach-{{repo?.name}}"
                            (click)="openSelectDialog(repo.id, repo.name)">
-                            From {{repo.name}}
+                            {{repo.name}}
                             <mat-icon>
                                 <img class="adf-attach-widget__image-logo" [src]="alfrescoLogoUrl">
                             </mat-icon>
