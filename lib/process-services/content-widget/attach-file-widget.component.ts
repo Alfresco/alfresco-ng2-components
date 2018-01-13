@@ -106,7 +106,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         if (this.isDefinedSourceFolder()) {
             this.contentDialog.openFileBrowseDialogByFolderId(params.fileSource.selectedFolder.pathId).subscribe(
                 (selections: MinimalNodeEntryEntity[]) => {
-                    this.uploadFileFromShare(selections,
+                    this.uploadFileFromCS(selections,
                         this.field.params.fileSource.selectedFolder.accountId,
                         this.field.params.fileSource.selectedFolder.siteId);
                 });
@@ -117,11 +117,11 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         const accountIdentifier = 'alfresco-' + repoId + repoName;
         this.contentDialog.openFileBrowseDialogBySite().subscribe(
             (selections: MinimalNodeEntryEntity[]) => {
-                this.uploadFileFromShare(selections, accountIdentifier);
+                this.uploadFileFromCS(selections, accountIdentifier);
             });
     }
 
-    private uploadFileFromShare(fileNodeList: MinimalNodeEntryEntity[], accountId: string, siteId?: string) {
+    private uploadFileFromCS(fileNodeList: MinimalNodeEntryEntity[], accountId: string, siteId?: string) {
         let filesSaved = [];
         Observable.from(fileNodeList)
             .mergeMap(node =>
