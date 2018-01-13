@@ -1,25 +1,4 @@
 {
-  "FORM": {
-    "START_FORM": {
-      "TITLE": "開始フォーム"
-    },
-    "PREVIEW": {
-      "IMAGE_NOT_AVAILABLE": "プレビューは使用できません"
-    },
-    "FIELD": {
-      "UPLOAD": "アップロード",
-      "REQUIRED": "*必須",
-      "VALIDATOR": {
-        "INVALID_NUMBER": "別の番号形式を使用してください",
-        "INVALID_DATE": "別の日付形式を使用してください",
-        "INVALID_VALUE": "別の値を入力してください",
-        "NOT_GREATER_THAN": "{{ maxValue }} より大きい値にすることはできません",
-        "NOT_LESS_THAN": "{{ minValue }} より小さい値にすることはできません",
-        "AT_LEAST_LONG": "{{ minLength }} 文字以上で入力してください",
-        "NO_LONGER_THAN": "{{ maxLength }} 文字以内で入力してください"
-      }
-    }
-  },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "このフォルダは空です"
