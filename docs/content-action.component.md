@@ -22,7 +22,7 @@ Adds options to a Document List actions menu for a particular content type.
 ## Basic Usage
 
 ```html
-<adf-document-list ...>
+<adf-document-list [contentActions]="true"...>
     <content-actions>
 
         <!-- system handler -->
@@ -144,7 +144,7 @@ You can also implement the `permissionEvent` to handle permission errors
 and use the [Notification service](notification.service.md) to show a message.
 
 ```html
-<adf-document-list ...>
+<adf-document-list [contentActions]="true"...>
     <content-actions>
 
         <content-action
@@ -176,7 +176,7 @@ export class MyComponent {
 This action simply starts a download of the corresponding document file.
 
 ```html
-<adf-document-list ...>
+<adf-document-list [contentActions]="true"...>
     <content-actions>
 
         <content-action
@@ -200,7 +200,7 @@ allow the item being copied/moved to be the destination if it is itself a folder
 ![Copy/move dialog](docassets/images/document-action-copymovedialog.png)
 
 ```html
-<adf-document-list ...>
+<adf-document-list [contentActions]="true"...>
     <content-actions>
 
         <content-action
