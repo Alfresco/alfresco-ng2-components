@@ -17,6 +17,7 @@ Starts a process.
 | Name | Description |
 | --- | --- |
 | appId |  (required): Limit the list of processes which can be started to those contained in the specified app |
+| name | (optional) name to assign to the current process |
 | variables | Variables in input to the process [RestVariable](https://github.com/Alfresco/alfresco-js-api/tree/master/src/alfresco-activiti-rest-api/docs/RestVariable.md)|
 | startFormValues | Parameter to pass form field values in the start form if is associated |
  

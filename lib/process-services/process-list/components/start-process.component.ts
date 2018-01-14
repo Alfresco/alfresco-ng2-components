@@ -40,6 +40,9 @@ export class StartProcessInstanceComponent implements OnChanges {
     @Input()
     startFormValues: FormValues;
 
+    @Input()
+    name: string;
+
     @Output()
     start: EventEmitter<ProcessInstance> = new EventEmitter<ProcessInstance>();
 
@@ -53,8 +56,6 @@ export class StartProcessInstanceComponent implements OnChanges {
     startForm: StartFormComponent;
 
     processDefinitions: ProcessDefinitionRepresentation[] = [];
-
-    name: string;
 
     currentProcessDef: ProcessDefinitionRepresentation = new ProcessDefinitionRepresentation();
 
