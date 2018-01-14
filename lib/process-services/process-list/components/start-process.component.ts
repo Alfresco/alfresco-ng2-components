@@ -15,8 +15,17 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges,  ViewChild, ViewEncapsulation } from '@angular/core';
-import { StartFormComponent , FormRenderingService, FormValues } from '@alfresco/adf-core';
+import {
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    Output,
+    SimpleChanges,
+    ViewChild,
+    ViewEncapsulation
+} from '@angular/core';
+import { ActivitiContentService, AppConfigService, StartFormComponent, FormRenderingService, FormValues } from '@alfresco/adf-core';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessDefinitionRepresentation } from './../models/process-definition.model';
 import { ProcessInstance } from './../models/process-instance.model';
@@ -38,7 +47,7 @@ export class StartProcessInstanceComponent implements OnChanges {
     variables: ProcessInstanceVariable[];
 
     @Input()
-    startFormValues: FormValues;
+    values: FormValues;
 
     @Input()
     name: string;
@@ -62,12 +71,18 @@ export class StartProcessInstanceComponent implements OnChanges {
     errorMessageId: string = '';
 
     constructor(private activitiProcess: ProcessService,
-                private formRenderingService: FormRenderingService) {
+                private formRenderingService: FormRenderingService,
+                private activitiContentService: ActivitiContentService,
+                private appConfig: AppConfigService) {
         this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileWidgetComponent, true);
         this.formRenderingService.setComponentTypeResolver('select-folder', () => AttachFolderWidgetComponent, true);
     }
 
     ngOnChanges(changes: SimpleChanges) {
+        if (changes['values'] && changes['values'].currentValue) {
+            this.moveNodeFromCStoPs();
+        }
+
         let appIdChange = changes['appId'];
         let appId = appIdChange ? appIdChange.currentValue : null;
         this.load(appId);
@@ -84,6 +99,20 @@ export class StartProcessInstanceComponent implements OnChanges {
                 this.errorMessageId = 'ADF_PROCESS_LIST.START_PROCESS.ERROR.LOAD_PROCESS_DEFS';
             }
         );
+    }
+
+    moveNodeFromCStoPs() {
+        let accountIdentifier = this.appConfig.get<string>('logLevel') + 'Alfresco';
+
+        for (let key in this.values) {
+            let currentValue = this.values[key];
+
+            if (currentValue.isFile) {
+                this.activitiContentService.applyAlfrescoNode(currentValue, null, accountIdentifier).subscribe((res) => {
+                    this.values[key] = [res];
+                });
+            }
+        }
     }
 
     public startProcess(outcome?: string) {
@@ -125,7 +154,7 @@ export class StartProcessInstanceComponent implements OnChanges {
         this.cancel.emit();
     }
 
-    hasStartForm() {
+    hasStartForm(): boolean {
         return this.currentProcessDef && this.currentProcessDef.hasStartForm;
     }
 
@@ -133,7 +162,7 @@ export class StartProcessInstanceComponent implements OnChanges {
         return this.processDefinitions ? (this.processDefinitions.length > 0 || this.errorMessageId) : this.errorMessageId;
     }
 
-    isStartFormMissingOrValid() {
+    isStartFormMissingOrValid(): boolean {
         if (this.startForm) {
             return this.startForm.form && this.startForm.form.isValid;
         } else {
@@ -141,7 +170,7 @@ export class StartProcessInstanceComponent implements OnChanges {
         }
     }
 
-    validateForm() {
+    validateForm(): boolean {
         return this.currentProcessDef.id && this.name && this.isStartFormMissingOrValid();
     }
 
@@ -153,7 +182,7 @@ export class StartProcessInstanceComponent implements OnChanges {
         this.errorMessageId = '';
     }
 
-    hasErrorMessage() {
+    hasErrorMessage(): boolean {
         return this.processDefinitions.length === 0 && !this.errorMessageId;
     }
 
