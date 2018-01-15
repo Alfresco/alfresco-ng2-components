@@ -23,12 +23,6 @@ comments returned by the methods of this service. Also, the Comments API section
 [Alfresco JS API docs](https://github.com/Alfresco/alfresco-js-api/tree/master/src/alfresco-activiti-rest-api)
 has further details about the underlying REST API.
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
 ## See also
 
-- [Comment process model](comment-process.model.md)
-<!-- seealso end -->
-
-
-
+-   [Comment process model](comment-process.model.md)
