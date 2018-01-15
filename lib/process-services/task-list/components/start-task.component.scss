@@ -25,6 +25,7 @@
             display: flex;
             flex-flow: row;
             flex-wrap: wrap;
+            justify-content: space-between;
 
             .adf-grid-column {
                 display: flex;
@@ -36,7 +37,7 @@
             }
 
             .adf-grid-half-width {
-                width: 50%;
+                width: 49%;
             }
         }
     }
@@ -48,14 +49,6 @@
         float: left;
         width: calc(100% - 40px);
         text-align: right;
-    }
-
-    .adf-start-task-input-container {
-        width: 80%;
-    }
-
-    .adf-new-task-text-width {
-        width: 90%;
     }
 
     .adf-mat-select {

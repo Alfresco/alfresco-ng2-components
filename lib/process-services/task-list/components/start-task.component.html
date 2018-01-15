@@ -6,7 +6,7 @@
     </mat-grid-list>
     <mat-card-content>
         <div class="adf-new-task-layout-card-content">
-            <mat-form-field class="adf-new-task-text-width adf-grid-full-width">
+            <mat-form-field class="adf-grid-full-width">
                 <input matInput
                     class="adf-grid-column"
                     placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NAME'|translate}}"
@@ -15,7 +15,7 @@
                     id="name_id">
             </mat-form-field>
 
-            <mat-form-field class="adf-new-task-text-width adf-grid-full-width">
+            <mat-form-field class="adf-grid-full-width">
                 <textarea
                     matInput
                     class="adf-grid-column"
@@ -27,7 +27,7 @@
 
             <div class="adf-grid-column adf-grid-half-width">
                 <div class="adf-grid-row">
-                    <mat-form-field class="adf-start-task-input-container">
+                    <mat-form-field class="adf-grid-full-width">
                         <input matInput
                             [matDatepicker]="taskDatePicker"
                             (keydown)="true"
@@ -49,7 +49,7 @@
                     </mat-form-field>
                 </div>
                 <div class="adf-grid-row">
-                    <mat-form-field class="adf-start-task-input-container">
+                    <mat-form-field class="adf-grid-full-width">
                         <mat-select placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.FORM'|translate}}" id="form_id" [(ngModel)]="formKey">
                             <mat-option>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NONE'|translate}}</mat-option>
                             <mat-option *ngFor="let form of forms" [value]="form.id">{{ form.name }}</mat-option>
@@ -62,7 +62,7 @@
                 <div class="adf-grid-row">
                     <adf-people-selector></adf-people-selector>
                 </div>
-                <!-- <mat-form-field class="adf-start-task-input-container">
+                <!-- <mat-form-field>
                 <mat-select placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE'|translate}}" id="assignee_id"
                             class="adf-mat-select" [(ngModel)]="assigneeId">
                     <mat-option>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NONE'|translate}}</mat-option>
