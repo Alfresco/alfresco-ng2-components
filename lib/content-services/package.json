@@ -21,7 +21,7 @@
     "@angular/forms": "5.2",
     "@angular/http": "5.2",
     "@angular/material": "5.0.4",
-    "@angular/material-moment-adapter": "5.0.0",
+    "@angular/material-moment-adapter": "5.0.4",
     "@angular/platform-browser": "5.2",
     "@angular/platform-browser-dynamic": "5.2",
     "@angular/router": "5.2",
