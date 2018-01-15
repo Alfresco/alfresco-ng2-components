@@ -56,6 +56,14 @@ export class PeopleSelectorComponent {
     }
 
     onRowClick(user: UserProcessModel): void {
+        this.updateUserSelection(user);
+    }
+
+    deselectUser(): void {
+        this.updateUserSelection(undefined);
+    }
+
+    private updateUserSelection(user: UserProcessModel): void {
         this.selectedUser = user;
         this.searchFieldComponent.reset();
     }
