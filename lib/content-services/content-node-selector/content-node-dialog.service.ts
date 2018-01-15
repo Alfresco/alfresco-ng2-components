@@ -48,6 +48,12 @@ export class ContentNodeDialogService {
         });
     }
 
+    openFolderBrowseDialogBySite(): Observable<MinimalNodeEntryEntity[]> {
+        return this.siteService.getSites().switchMap((response: SitePaging) => {
+             return this.openFolderBrowseDialogByFolderId(response.list.entries[0].entry.guid);
+         });
+     }
+
     openFolderBrowseDialogByFolderId(folderNodeId: string): Observable<MinimalNodeEntryEntity[]> {
         return Observable.fromPromise(this.documentListService.getFolderNode(folderNodeId))
             .switchMap((node: MinimalNodeEntryEntity) => {
@@ -92,7 +98,7 @@ export class ContentNodeDialogService {
             actionName: action,
             currentFolderId: contentEntry.id,
             imageResolver: this.imageResolver.bind(this),
-            isSelectionValid: this.isNodeFolder.bind(this),
+            isSelectionValid: this.hasPermissionOnNodeFolder.bind(this),
             rowFilter : this.rowFilter.bind(this, contentEntry.id),
             select: select
         };
@@ -145,6 +151,10 @@ export class ContentNodeDialogService {
 
     private isNodeFile(entry: MinimalNodeEntryEntity): boolean {
         return entry.isFile;
+    }
+
+    private hasPermissionOnNodeFolder(entry: MinimalNodeEntryEntity): boolean {
+        return this.isNodeFolder(entry) && this.contentService.hasPermission(entry, 'create');
     }
 
     private isNodeFolder(entry: MinimalNodeEntryEntity): boolean {

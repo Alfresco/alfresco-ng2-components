@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector */
+/* tslint:disable:component-selector*/
 
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import {
@@ -36,7 +36,7 @@ import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 })
 export class AttachFolderWidgetComponent extends WidgetComponent implements OnInit {
 
-    hasFolder: boolean;
+    hasFolder: boolean = false;
     selectedFolderName: string = '';
 
     constructor(private contentDialog: ContentNodeDialogService,
@@ -49,7 +49,7 @@ export class AttachFolderWidgetComponent extends WidgetComponent implements OnIn
         if (this.field &&
             this.field.value) {
             this.hasFolder = true;
-            this.nodeService.getNode(this.field.value).subscribe((node: MinimalNodeEntryEntity)=>{
+            this.nodeService.getNode(this.field.value).subscribe((node: MinimalNodeEntryEntity) => {
                 this.selectedFolderName = node.name;
             });
         }
@@ -65,6 +65,13 @@ export class AttachFolderWidgetComponent extends WidgetComponent implements OnIn
         let params = this.field.params;
         if (this.isDefinedSourceFolder() && !this.hasFolder) {
             this.contentDialog.openFolderBrowseDialogByFolderId(params.folderSource.selectedFolder.pathId).subscribe(
+                (selections: MinimalNodeEntryEntity[]) => {
+                    this.selectedFolderName = selections[0].name;
+                    this.field.value = selections[0].id;
+                    this.hasFolder = true;
+                });
+        } else {
+            this.contentDialog.openFolderBrowseDialogBySite().subscribe(
                 (selections: MinimalNodeEntryEntity[]) => {
                     this.selectedFolderName = selections[0].name;
                     this.field.value = selections[0].id;

@@ -16,14 +16,13 @@
         </div>
 
         <div class="button-row" *ngIf="!hasFolder && !field.readOnly">
-            <a mat-raised-button color="primary">
-                {{ 'FORM.FIELD.UPLOAD' | translate }}
+            <button mat-raised-button
+                color="primary"
+                (click)="openSelectDialogFromFileSource()"
+                [id]="'folder-'+field?.id+'-button'">
+                    {{ 'FORM.FIELD.UPLOAD' | translate }}
                 <mat-icon>cloud_upload</mat-icon>
-                <input #attachFolder
-                       type="folder"
-                       [id]="field.id"
-                       (click)="openSelectDialogFromFileSource()"/>
-            </a>
+            </button>
         </div>
     </div>
     <error-widget [error]="field.validationSummary"></error-widget>
