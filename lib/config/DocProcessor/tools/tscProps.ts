@@ -234,7 +234,7 @@ function buildOutputsTable(outputs: any[]) {
 
         var cells = [
             unist.makeTableCell([unist.makeText(eName)]),
-            unist.makeTableCell([unist.makeText(eType)]),
+            unist.makeTableCell([unist.makeInlineCode(eType)]),
             unist.makeTableCell([unist.makeText(eDesc)])
         ];
 

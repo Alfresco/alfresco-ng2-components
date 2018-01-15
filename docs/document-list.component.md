@@ -78,12 +78,12 @@ Displays the documents from a repository.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| nodeClick | EventEmitter&lt;NodeEntityEvent> | Emitted when the user clicks a list node |
-| nodeDblClick | EventEmitter&lt;NodeEntityEvent> | Emitted when the user double-clicks a list node |
-| folderChange | EventEmitter&lt;NodeEntryEvent> | Emitted when the current display folder changes |
-| preview | EventEmitter&lt;NodeEntityEvent> | Emitted when the user acts upon files with either single or double click (depends on \`navigation-mode\`). Useful for integration with the Viewer component. |
-| ready | EventEmitter&lt;NodePaging> | Emitted when the Document List has loaded all items and is ready for use |
-| error | EventEmitter&lt;any> | Emitted when the API fails to get the Document List data |
+| nodeClick | `EventEmitter<NodeEntityEvent>` | Emitted when the user clicks a list node |
+| nodeDblClick | `EventEmitter<NodeEntityEvent>` | Emitted when the user double-clicks a list node |
+| folderChange | `EventEmitter<NodeEntryEvent>` | Emitted when the current display folder changes |
+| preview | `EventEmitter<NodeEntityEvent>` | Emitted when the user acts upon files with either single or double click (depends on \`navigation-mode\`). Useful for integration with the Viewer component. |
+| ready | `EventEmitter<NodePaging>` | Emitted when the Document List has loaded all items and is ready for use |
+| error | `EventEmitter<any>` | Emitted when the API fails to get the Document List data |
 
 ## Details
 
