@@ -23,18 +23,17 @@ yourFunctionOnCopyOrMove(){
                 // place your action here on operation success!
             });
 }
-
 ```
 
 #### Required parameters
+
 The dialog needs this information to be correctly opened :
 
 | Name | Type | Description |
-| --- | --- | --- |
+| ---- | ---- | ----------- |
 | actionName | string | This will be the label for the confirm button of the dialog |
 | targetNode | [MinimalNodeEntryEntity](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/MinimalNode.md) | the node on which we are asking for copy/move action |
-| neededPermissionForAction |  string | needed permission to check to perform the relative action (es: copy will need the 'update' permission ) |
-
+| neededPermissionForAction | string | needed permission to check to perform the relative action (es: copy will need the 'update' permission ) |
 
 the `openCopyMoveDialog` method will return an [observable](http://reactivex.io/rxjs/manual/overview.html#observable) that can where you can subscribe to get the selection result and apply the custom actions.
 
@@ -74,34 +73,32 @@ openSelectorDialog() {
         this.dialog.closeAll();
     });
 }
-
 ```
+
 With this system your function has to take care of opening/closing the dialog. All the results will be streamed on the select [subject](http://reactivex.io/rxjs/manual/overview.html#subject) present into the `ContentNodeSelectorComponentData` object given to the dialog.
 When clicked on the action the data.select stream will be completed.
 
 ### Properties
 
 | Name | Type | Default | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------- | ----------- |
 | title | string | "" | Text shown at the top of the selector |
 | currentFolderId | string | null | Node ID of the folder currently listed |
-| dropdownHideMyFiles | boolean | false | Hide the "My Files" option added to the site list by default. [See More](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/sites-dropdown.component.md)|
-| dropdownSiteList | [SitePaging](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md) |  | custom site for site dropdown same as siteList. [See More](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/sites-dropdown.component.md#properties) | 
-| rowFilter | RowFilter | null | Custom row filter function. [See More](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/document-list.component.md#custom-row-filter)|
+| dropdownHideMyFiles | boolean | false | Hide the "My Files" option added to the site list by default. [See More](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/sites-dropdown.component.md) |
+| dropdownSiteList | [SitePaging](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md) |  | custom site for site dropdown same as siteList. [See More](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/sites-dropdown.component.md#properties) |
+| rowFilter | RowFilter | null | Custom row filter function. [See More](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/document-list.component.md#custom-row-filter) |
 | imageResolver | ImageResolver | null | Custom image resolver function. [See More](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/document-list.component.md#custom-image-resolver) |
 | pageSize | number | 10 | Number of items shown per page in the list |
-
 
 ### Events
 
 | Name | Description |
-| --- | --- |
+| ---- | ----------- |
 | select | Emitted when the user has selected an item |
-
 
 ### Using ContentNodeSelectorPanelComponent
 
-```html 
+```html
     <adf-content-node-selector-panel
         [currentFolderId]="currentFolderId"
         [dropdownHideMyFiles]="dropdownHideMyFiles"
@@ -117,18 +114,18 @@ This will allow you to use the content node selector without the material dialog
 ### Properties
 
 | Name | Type | Default | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------- | ----------- |
 | currentFolderId | string | null | Node ID of the folder currently listed |
-| dropdownHideMyFiles | boolean | false | Hide the "My Files" option added to the site list by default. [See More](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/sites-dropdown.component.md)|
-| dropdownSiteList | [SitePaging](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md) |  | custom site for site dropdown same as siteList. [See More](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/sites-dropdown.component.md#properties) | 
-| rowFilter | RowFilter | null | Custom row filter function. [See More](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/document-list.component.md#custom-row-filter)|
+| dropdownHideMyFiles | boolean | false | Hide the "My Files" option added to the site list by default. [See More](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/sites-dropdown.component.md) |
+| dropdownSiteList | [SitePaging](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md) |  | custom site for site dropdown same as siteList. [See More](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/sites-dropdown.component.md#properties) |
+| rowFilter | RowFilter | null | Custom row filter function. [See More](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/document-list.component.md#custom-row-filter) |
 | imageResolver | ImageResolver | null | Custom image resolver function. [See More](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/document-list.component.md#custom-image-resolver) |
 | pageSize | number | 10 | Number of items shown per page in the list |
 
 ### Events
 
 | Name | Description |
-| --- | --- |
+| ---- | ----------- |
 | select | Emitted when the user has selected an item |
 
 ## Details
@@ -167,9 +164,6 @@ a row filter to hide document nodes in a folder selector. See the
 [Advanced Usage and Customization](document-list.component.md#advanced-usage-and-customization)
 section of the Document List page to learn how these functions are implemented.
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
 ## See also
 
-- [Document list component](document-list.component.md)
-<!-- seealso end -->
+-   [Document list component](document-list.component.md)

@@ -32,7 +32,7 @@ export class MyComponent implements OnInit {
 ### Properties
 
 | Name | Type | Description |
-| --- | --- | --- |
+| ---- | ---- | ----------- |
 | heading | string | Title heading for the group. |
 | isSelected | boolean | Is this group currently selected? |
 | headingIcon | string | The material design icon. |
@@ -43,9 +43,6 @@ export class MyComponent implements OnInit {
 
 Place one or more accordion groups within an [Accordion component](accordion.component.md) to define a menu. 
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
 ## See also
 
-- [Accordion component](accordion.component.md)
-<!-- seealso end -->
+-   [Accordion component](accordion.component.md)

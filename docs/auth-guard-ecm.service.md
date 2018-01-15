@@ -31,13 +31,7 @@ either APS or ACS. See the
 [ADF custom page tutorial](https://community.alfresco.com/docs/DOC-6628-adf-105-creating-custom-pages-and-components)
 for worked examples of all three guards.
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
 ## See also
 
-- [Auth guard service](auth-guard.service.md)
-- [Auth guard bpm service](auth-guard-bpm.service.md)
-<!-- seealso end -->
-
-
-
+-   [Auth guard service](auth-guard.service.md)
+-   [Auth guard bpm service](auth-guard-bpm.service.md)
