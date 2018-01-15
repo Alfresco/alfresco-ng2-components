@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation, EventEmitter, Input, Output } from '@angular/core';
 import { PerformSearchCallback } from '../../interfaces/perform-search-callback.interface';
 import { PeopleProcessService, UserProcessModel, LogService, TranslationService } from '@alfresco/adf-core';
 import { PeopleSearchFieldComponent } from '../people-search-field/people-search-field.component';
@@ -34,6 +34,13 @@ const DEFAULT_ASSIGNEE_PLACEHOLDER = 'ADF_TASK_LIST.PEOPLE.ASSIGNEE';
 
 export class PeopleSelectorComponent {
 
+    @Input()
+    peopleId: UserProcessModel;
+
+    // Poorly documented Angular magic for [(peopleId)] to work SIMILAR to ngModel
+    @Output()
+    peopleIdChange: EventEmitter<number>;
+
     @ViewChild(PeopleSearchFieldComponent)
     searchFieldComponent: PeopleSearchFieldComponent;
 
@@ -46,6 +53,7 @@ export class PeopleSelectorComponent {
         private logService: LogService,
         private translationService: TranslationService
     ) {
+        this.peopleIdChange = new EventEmitter();
         this.performSearch = this.searchUser.bind(this);
         this.defaultPlaceholder = this.translationService.instant(DEFAULT_ASSIGNEE_PLACEHOLDER);
     }
@@ -65,6 +73,7 @@ export class PeopleSelectorComponent {
 
     private updateUserSelection(user: UserProcessModel): void {
         this.selectedUser = user;
+        this.peopleIdChange.emit(user.id);
         this.searchFieldComponent.reset();
     }
 

@@ -60,19 +60,8 @@
 
             <div class="adf-grid-column adf-grid-half-width">
                 <div class="adf-grid-row">
-                    <adf-people-selector></adf-people-selector>
+                    <adf-people-selector [(peopleId)]="assigneeId"></adf-people-selector>
                 </div>
-                <!-- <mat-form-field>
-                <mat-select placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE'|translate}}" id="assignee_id"
-                            class="adf-mat-select" [(ngModel)]="assigneeId">
-                    <mat-option>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NONE'|translate}}</mat-option>
-                    <span *ngFor="let user of people">
-                        <mat-option [value]="user.id" *ngIf="!isUserNameEmpty(user)">{{ getDisplayUser(user.firstName,
-                            user.lastName, ' ')}}
-                        </mat-option>
-                    </span>
-                </mat-select>
-                </mat-form-field> -->
             </div>
         </div>
     </mat-card-content>
