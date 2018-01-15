@@ -1,0 +1,39 @@
+.adf {
+
+    &-attach-folder-widget-container {
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+
+        input {
+            cursor: pointer;
+            height: 100%;
+            right: 0;
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            width: 300px;
+            z-index: 4;
+        }
+    }
+
+    &-attach-folder-widget {
+        width: 100%;
+        word-break: break-all;
+        padding: 0.4375em 0;
+        border-top: 0.84375em solid transparent;
+    }
+
+    &-attach-folder-files-row {
+        padding-left: 8px;
+        .mat-line {
+            margin-bottom: 0px;
+        }
+    }
+
+    &-attach-folder-result {
+        display: flex;
+        align-items: center;
+    }
+
+}

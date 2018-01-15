@@ -48,6 +48,13 @@ export class ContentNodeDialogService {
         });
     }
 
+    openFolderBrowseDialogByFolderId(folderNodeId: string): Observable<MinimalNodeEntryEntity[]> {
+        return Observable.fromPromise(this.documentListService.getFolderNode(folderNodeId))
+            .switchMap((node: MinimalNodeEntryEntity) => {
+                return this.openUploadFolderDialog('Choose', node);
+        });
+    }
+
     openCopyMoveDialog(action: string, contentEntry: MinimalNodeEntryEntity, permission?: string): Observable<MinimalNodeEntryEntity[]> {
         if (this.contentService.hasPermission(contentEntry, permission)) {
 
@@ -72,6 +79,26 @@ export class ContentNodeDialogService {
         } else {
             return Observable.throw({ statusCode: 403 });
         }
+    }
+
+    openUploadFolderDialog(action: string, contentEntry: MinimalNodeEntryEntity): Observable<MinimalNodeEntryEntity[]> {
+        const select = new Subject<MinimalNodeEntryEntity[]>();
+        select.subscribe({
+            complete: this.close.bind(this)
+        });
+
+        const data: ContentNodeSelectorComponentData = {
+            title: `${action} '${contentEntry.name}' to ...`,
+            actionName: action,
+            currentFolderId: contentEntry.id,
+            imageResolver: this.imageResolver.bind(this),
+            isSelectionValid: this.isNodeFolder.bind(this),
+            rowFilter : this.rowFilter.bind(this, contentEntry.id),
+            select: select
+        };
+
+        this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');
+        return select;
     }
 
     openUploadFileDialog(action: string, contentEntry: MinimalNodeEntryEntity): Observable<MinimalNodeEntryEntity[]> {
@@ -118,6 +145,10 @@ export class ContentNodeDialogService {
 
     private isNodeFile(entry: MinimalNodeEntryEntity): boolean {
         return entry.isFile;
+    }
+
+    private isNodeFolder(entry: MinimalNodeEntryEntity): boolean {
+        return entry.isFolder;
     }
 
     private hasEntityCreatePermission(entry: MinimalNodeEntryEntity): boolean {
