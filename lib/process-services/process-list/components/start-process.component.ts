@@ -105,12 +105,14 @@ export class StartProcessInstanceComponent implements OnChanges {
         let accountIdentifier = this.appConfig.get<string>('logLevel') + 'Alfresco';
 
         for (let key in this.values) {
-            let currentValue = this.values[key];
+            if(this.values.hasOwnProperty(key)) {
+                let currentValue = this.values[key];
 
-            if (currentValue.isFile) {
-                this.activitiContentService.applyAlfrescoNode(currentValue, null, accountIdentifier).subscribe((res) => {
-                    this.values[key] = [res];
-                });
+                if (currentValue.isFile) {
+                    this.activitiContentService.applyAlfrescoNode(currentValue, null, accountIdentifier).subscribe((res) => {
+                        this.values[key] = [res];
+                    });
+                }
             }
         }
     }

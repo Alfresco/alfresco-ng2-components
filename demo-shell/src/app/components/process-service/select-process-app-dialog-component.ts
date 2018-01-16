@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AppsProcessService } from '@alfresco/adf-core';
+import { AppsProcessService, NotificationService, TranslationService } from '@alfresco/adf-core';
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
@@ -30,6 +30,8 @@ export class SelectProcessAppDialogComponent {
     selectedProcess: any;
 
     constructor(private appsProcessService: AppsProcessService,
+                private translateService: TranslationService,
+                private notificationService: NotificationService,
                 public dialogRef: MatDialogRef<SelectProcessAppDialogComponent>,
                 @Inject(MAT_DIALOG_DATA) public data: any) {
 

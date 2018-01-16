@@ -65,7 +65,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
     currentFolderId: string = DEFAULT_FOLDER_TO_SHOW;
 
-    formValues: FormValues;
+    formValues: FormValues = {};
 
     processId;
 
@@ -152,8 +152,8 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 private router: Router,
                 private logService: LogService,
                 private preference: UserPreferencesService,
-                private authenticationService: AuthenticationService,
-                @Optional() private route: ActivatedRoute) {
+                @Optional() private route: ActivatedRoute,
+                public authenticationService: AuthenticationService) {
     }
 
     showFile(event) {
