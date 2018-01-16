@@ -1,4 +1,5 @@
 # File Draggable directive
+
 Provide drag-and-drop features for an element such as a `div`.
 
 ## Basic Usage
@@ -27,7 +28,25 @@ Some sample CSS to show the drag and drop area:
 }
 ```
 
-Event handler implementations:
+### Properties
+
+| Name | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| file-draggable | boolean | true | Toggles between enable/disable of the drag-and-drop functionality. |
+
+### Events
+
+| Name | Description |
+| ---- | ----------- |
+| filesEntityDropped | Emitted when one or more files are dragged and dropped onto the draggable element, such as a `div` |
+| folderEntityDropped | Emitted when a directory is dragged and dropped onto the draggable element, such as a `div` |
+| filesDropped | Emitted when one or more files are dragged and dropped onto the draggable element, such as a `div` |
+
+## Details
+
+Typically you would use the Upload Drag Area component instead of this directive.
+
+### Event handler implementations
 
 ```ts
 export class SomeComponent implements OnInit {
@@ -52,23 +71,6 @@ export class SomeComponent implements OnInit {
   }
 ```
 
-### Properties
+## See also
 
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| file-draggable | boolean | true | Toggles between enable/disable of the drag-and-drop functionality. |
-
-### Events
-
-| Name | Description |
-| --- | --- |
-| filesEntityDropped | Emitted when one or more files are dragged and dropped onto the draggable element, such as a `div` |
-| folderEntityDropped | Emitted when a directory is dragged and dropped onto the draggable element, such as a `div`|
-| filesDropped | Emitted when one or more files are dragged and dropped onto the draggable element, such as a `div`|
-
-## Details
-Typically you would use the Upload Drag Area component instead of this directive.
-
-<!-- seealso start -->
-
-<!-- seealso end -->
+-   [Upload Drag Area component](upload-drag-area.component.md)

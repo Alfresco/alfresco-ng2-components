@@ -20,8 +20,3 @@ person is the currently logged-in user.
 You can specify a number of `options` to modify the search further. See the
 [Alfresco JS API page](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/FavoritesApi.md#getfavorites)
 for `getFavorites` for more information.
-
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
-
-<!-- seealso end -->

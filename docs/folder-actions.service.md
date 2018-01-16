@@ -72,10 +72,7 @@ export class MyView {
 You will probably want to set up all your custom actions at the application root level or
 with a custom application service.
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
 ## See also
 
-- [Document actions service](document-actions.service.md)
-- [Content action component](content-action.component.md)
-<!-- seealso end -->
+-   [Document actions service](document-actions.service.md)
+-   [Content action component](content-action.component.md)
