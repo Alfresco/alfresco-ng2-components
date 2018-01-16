@@ -6,60 +6,65 @@
     </mat-grid-list>
     <mat-card-content>
         <div class="adf-new-task-layout-card-content">
-            <mat-form-field class="adf-grid-full-width">
-                <input matInput
-                    class="adf-grid-column"
-                    placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NAME'|translate}}"
-                    [(ngModel)]="startTaskmodel.name"
-                    required
-                    id="name_id">
-            </mat-form-field>
-
-            <mat-form-field class="adf-grid-full-width">
-                <textarea
-                    matInput
-                    class="adf-grid-column"
-                    placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.DESCRIPTION'|translate}}"
-                    [(ngModel)]="startTaskmodel.description"
-                    id="description_id">
-                </textarea>
-            </mat-form-field>
-
-            <div class="adf-grid-column adf-grid-half-width">
-                <div class="adf-grid-row">
-                    <mat-form-field class="adf-grid-full-width">
-                        <input matInput
-                            [matDatepicker]="taskDatePicker"
-                            (keydown)="true"
-                            (focusout)="onDateChanged($event.srcElement.value)"
-                            placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.DATE'|translate}}"
-                            [(ngModel)]="startTaskmodel.dueDate"
-                            id="date_id">
-                        <mat-datepicker-toggle matSuffix [for]="taskDatePicker"></mat-datepicker-toggle>
-                        <mat-datepicker #taskDatePicker
-                            [touchUi]="true"
-                            (dateChanged)="onDateChanged($event)">
-                        </mat-datepicker>
-                        <div class="adf-error-text-container">
-                            <div *ngIf="dateError">
-                                <div class="adf-error-text">{{'ADF_TASK_LIST.START_TASK.FORM.DATE.ERROR'|translate}}</div>
-                                <mat-icon class="adf-error-icon">warning</mat-icon>
-                            </div>
-                        </div>
-                    </mat-form-field>
-                </div>
-                <div class="adf-grid-row">
-                    <mat-form-field class="adf-grid-full-width">
-                        <mat-select placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.FORM'|translate}}" id="form_id" [(ngModel)]="formKey">
-                            <mat-option>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NONE'|translate}}</mat-option>
-                            <mat-option *ngFor="let form of forms" [value]="form.id">{{ form.name }}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
+            <div class="adf-grid-full-width adf-grid-row">
+                <mat-form-field class="adf-grid-full-width adf-grid-column">
+                    <input matInput
+                        class="adf-grid-full-width"
+                        placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NAME'|translate}}"
+                        [(ngModel)]="startTaskmodel.name"
+                        required
+                        id="name_id">
+                </mat-form-field>
             </div>
 
-            <div class="adf-grid-column adf-grid-half-width">
-                <div class="adf-grid-row">
+            <div class="adf-grid-full-width adf-grid-row">
+                <mat-form-field class="adf-grid-full-width adf-grid-column">
+                    <textarea
+                        matInput
+                        class="adf-grid-full-width"
+                        placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.DESCRIPTION'|translate}}"
+                        [(ngModel)]="startTaskmodel.description"
+                        rows="1"
+                        id="description_id">
+                    </textarea>
+                </mat-form-field>
+            </div>
+
+            <div class="adf-grid-full-width adf-grid-row">
+                <div class="adf-grid-column adf-grid-half-width">
+                    <div class="adf-grid-full-width adf-grid-row">
+                        <mat-form-field class="adf-grid-full-width">
+                            <input matInput
+                                [matDatepicker]="taskDatePicker"
+                                (keydown)="true"
+                                (focusout)="onDateChanged($event.srcElement.value)"
+                                placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.DATE'|translate}}"
+                                [(ngModel)]="startTaskmodel.dueDate"
+                                id="date_id">
+                            <mat-datepicker-toggle matSuffix [for]="taskDatePicker"></mat-datepicker-toggle>
+                            <mat-datepicker #taskDatePicker
+                                [touchUi]="true"
+                                (dateChanged)="onDateChanged($event)">
+                            </mat-datepicker>
+                            <div class="adf-error-text-container">
+                                <div *ngIf="dateError">
+                                    <div class="adf-error-text">{{'ADF_TASK_LIST.START_TASK.FORM.DATE.ERROR'|translate}}</div>
+                                    <mat-icon class="adf-error-icon">warning</mat-icon>
+                                </div>
+                            </div>
+                        </mat-form-field>
+                    </div>
+                    <div class="adf-grid-full-width adf-grid-row">
+                        <mat-form-field class="adf-grid-full-width">
+                            <mat-select placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.FORM'|translate}}" id="form_id" [(ngModel)]="formKey">
+                                <mat-option>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NONE'|translate}}</mat-option>
+                                <mat-option *ngFor="let form of forms" [value]="form.id">{{ form.name }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="adf-grid-column adf-grid-half-width">
                     <adf-people-selector [(peopleId)]="assigneeId" id="assignee_id"></adf-people-selector>
                 </div>
             </div>

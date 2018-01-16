@@ -27,6 +27,14 @@
             flex-wrap: wrap;
             justify-content: space-between;
 
+            .adf-grid-row {
+                display: flex;
+                flex-flow: row;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                margin-bottom: 8px;
+            }
+
             .adf-grid-column {
                 display: flex;
                 flex-flow: column;
@@ -70,22 +78,27 @@
 
             &-error-text-container {
                 position: absolute;
-                width: 81%;
                 height: 20px;
-                margin-top: 30px;
+                margin-top: 12px;
+                width: 100%;
+
+                & > div {
+                    display: flex;
+                    flex-flow: row;
+                    justify-content: flex-start;
+                }
             }
 
             &-error-text {
-                padding: 1px;
+                padding-right: 8px;
                 height: 16px;
                 font-size: 12px;
                 line-height: 1.33;
-                float: left;
                 color: mat-color($warn);
+                width: auto;
             }
 
             &-error-icon {
-                float: right;
                 font-size: 17px;
                 color: mat-color($warn);
             }
