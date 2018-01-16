@@ -101,13 +101,5 @@
         "LIST":"List Tags Content Services",
         "INSERT":"Insert Node ID",
         "NODE_LIST":"Tag list By Node ID"
-    },
-    "PROCESS":{
-      "DIALOG" :{
-        "START" : "Start",
-        "TITLE" : "Select a process",
-        "LIST": "Proces list",
-        "ERROR" : "Possible connection with process service not present"
-      }
     }
 }

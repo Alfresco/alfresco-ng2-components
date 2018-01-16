@@ -55,7 +55,7 @@ describe('AppsListComponent', () => {
         component = fixture.componentInstance;
         debugElement = fixture.debugElement;
 
-        service = fixture.debugElement.injector.get(AppsProcessService);
+        service = TestBed.get(AppsProcessService);
         getAppsSpy = spyOn(service, 'getDeployedApplications').and.returnValue(Observable.of(deployedApps));
     });
 
