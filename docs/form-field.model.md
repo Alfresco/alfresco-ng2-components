@@ -5,7 +5,7 @@ Contains the value and metadata for a field of an [ADF Form](form.component.md).
 ## Properties
 
 | Name | Type | Default | Description |
-|--|--|--|--|
+| ---- | ---- | ------- | ----------- |
 | id | string |  | Field ID |
 | name | string |  | Field name |
 | type | string |  | Field type (see [Form Rendering service](form-rendering.service.md) for a list of available type strings) |
@@ -23,7 +23,7 @@ Contains the value and metadata for a field of an [ADF Form](form.component.md).
 | minValue | string |  | Minimum allowed value (eg, for number or date) |
 | maxValue | string |  | Minimum allowed value (eg, for number or date) |
 | regexPattern | string |  | Regular expression that text data should match |
-| options | FormFieldOption[] | [] | Option items for a dropdown menu |
+| options | FormFieldOption\[] | \[] | Option items for a dropdown menu |
 | restUrl | string |  | URL for a REST call to populate a dropdown menu |
 | restResponsePath | string |  | Path within REST response JSON to the array of dropdown data |
 | restIdProperty | string |  | JSON property name to use for the `id` property of a dropdown item |
@@ -40,8 +40,8 @@ Contains the value and metadata for a field of an [ADF Form](form.component.md).
 | currency | string | null | Currency symbol for Amount widgets |
 | dateDisplayFormat | string |  | Date/time display format template |
 | numberOfColumns | number | 1 | Number of columns defined by a container field |
-| fields | FormFieldModel[] | [] | Fields contained within a container field |
-| columns | ContainerColumnModel[] | [] | Column definitions for a container field |
+| fields | FormFieldModel\[] | \[] | Fields contained within a container field |
+| columns | ContainerColumnModel\[] | \[] | Column definitions for a container field |
 | emptyOption | FormFieldOption |  | Dropdown menu item to use when no option is chosen |
 | validationSummary | string |  | Error/information message added during field validation (see [FormFieldValidator](FormFieldValidator) interface) |
 
@@ -73,26 +73,23 @@ for the user to read. See the [FormFieldValidator](FormFieldValidator.md) page f
 You can set the items shown on a dropdown menu using data returned by a REST call. The
 properties used by the call are:
 
-- `restUrl`: The URL for the REST service
-- `restResponsePath`: Optional path to an array within the JSON object returned by
-the REST call. Each element in the array corresponds to an item on the dropdown.
-- `restIdProperty`: The name of a JSON property present in each element of the array
-selected by `restResponsePath`. Its value will be used for the `id` property of the
-dropdown item.
-`restLabelProperty`: The name of a JSON property present in each element of the array
-selected by `restResponsePath`. Its value will be used for the `label` property of the
-dropdown item (ie, the text visible to the user).
+-   `restUrl`: The URL for the REST service
+-   `restResponsePath`: Optional path to an array within the JSON object returned by
+    the REST call. Each element in the array corresponds to an item on the dropdown.
+-   `restIdProperty`: The name of a JSON property present in each element of the array
+    selected by `restResponsePath`. Its value will be used for the `id` property of the
+    dropdown item.
+    `restLabelProperty`: The name of a JSON property present in each element of the array
+    selected by `restResponsePath`. Its value will be used for the `label` property of the
+    dropdown item (ie, the text visible to the user).
 
 The [REST Call Task 101](https://community.alfresco.com/community/bpm/blog/2016/08/31/rest-integration-101)
 tutorial on the [APS community site](https://community.alfresco.com/community/bpm)
 contains full details about how the REST calls work, along with a worked example.
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
 ## See also
 
-- [Extensibility](extensibility.md)
-- [FormFieldValidator](FormFieldValidator.md)
-- [Form rendering service](form-rendering.service.md)
-- [Form component](form.component.md)
-<!-- seealso end -->
+-   [Extensibility](extensibility.md)
+-   [FormFieldValidator](FormFieldValidator.md)
+-   [Form rendering service](form-rendering.service.md)
+-   [Form component](form.component.md)

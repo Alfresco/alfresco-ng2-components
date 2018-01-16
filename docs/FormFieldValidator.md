@@ -56,7 +56,7 @@ during the validation phase.
 Several validator classes are predefined for you to use:
 
 | Validator name | Checks that: |
-| --- | --- |
+| -------------- | ------------ |
 | `RequiredFieldValidator` | Field is not left blank |
 | `NumberFieldValidator` | Field contains numeric data |
 | `MinLengthFieldValidator` | Field text has at least a minimum number of characters |
@@ -144,10 +144,7 @@ If you now run the application and try to enter "admin" in one of the text field
 
 ![](docassets/images/demo-validator.png)
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
 ## See also
 
-- [Form field model](form-field.model.md)
-- [Form component](form.component.md)
-<!-- seealso end -->
+-   [Form field model](form-field.model.md)
+-   [Form component](form.component.md)
