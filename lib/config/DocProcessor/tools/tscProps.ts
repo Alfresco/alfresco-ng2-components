@@ -6,6 +6,7 @@ import * as program from "commander";
 import * as heading from "mdast-util-heading-range";
 
 import * as unist from "../unistHelpers";
+import { JsxEmit } from "typescript";
 
 export function initPhase(aggData) {
 }
@@ -25,7 +26,7 @@ export function updatePhase(tree, pathname, aggData) {
         if (srcData) {
             let srcPath = srcData.path;
             let className = fixCompodocFilename(fileNameNoSuffix);
-
+            
             let inputs = [];
             let outputs = [];
             getPropDocData(path.resolve(".", srcPath), className, inputs, outputs);
@@ -34,20 +35,20 @@ export function updatePhase(tree, pathname, aggData) {
             let outTable = buildOutputsTable(outputs);
 
             if (inTable) {
-                console.log("Made a props table");
                 heading(tree, "Properties", (before, section, after) => {
                     return [before, inTable, after];
                 });
             }
 
             if (outTable) {
-                console.log("Made an events table");
                 heading(tree, "Events", (before, section, after) => {
                     return [before, outTable, after];
                 });
             }
         }
     }
+
+    return true;
 }
 
 
@@ -81,7 +82,7 @@ function fixCompodocFilename(rawName: string) {
 
 
 function getPropDocData(srcPath: string, docClassName: string, inputs: any[], outputs: any[]) {
-    let prog = ts.createProgram(program.args, {
+    let prog = ts.createProgram([srcPath], {
         target: ts.ScriptTarget.ES5, module: ts.ModuleKind.CommonJS
     });
 
@@ -135,7 +136,9 @@ function getPropDataFromClass(
                     initializer = prop.initializer.getText(sourceFile);
                 }
                 
-                let doc = ts.displayPartsToString(memSymbol.getDocumentationComment());
+                let doc = ts.displayPartsToString(memSymbol.getDocumentationComment(checker));
+                doc = doc.replace(/\r\n/g, " ");
+                
                 let propType = checker.typeToString(checker.getTypeOfSymbolAtLocation(memSymbol, memSymbol.valueDeclaration!));
                 
                 let dec = prop.decorators[0].getText(sourceFile);
@@ -169,7 +172,7 @@ function buildInputsTable(inputs: any[]) {
         unist.makeTableRow([
             unist.makeTableCell([unist.makeText("Name")]),
             unist.makeTableCell([unist.makeText("Type")]),
-            unist.makeTableCell([unist.makeText("Default value")]),
+           // unist.makeTableCell([unist.makeText("Default value")]),
             unist.makeTableCell([unist.makeText("Description")])
         ])
     ];
@@ -177,18 +180,27 @@ function buildInputsTable(inputs: any[]) {
     for (var i = 0; i < inputs.length; i++) {
         var pName = inputs[i].name;
         var pType = inputs[i].type;
-        var pDefault = inputs[i].defaultValue || "";
-        var pDesc = inputs[i].description || "";
+        var pDefault = inputs[i].init || "";
+        var pDesc = inputs[i].docText || "";
 
         if (pDesc) {
-            pDesc = pDesc.trim().replace(/[\n\r]+/, " ");
+            //pDesc = pDesc.trim().replace(/[\n\r]+/, " ");
+            pDesc = pDesc.replace(/[\n\r]+/, " ");
+        }
+
+        var descCellContent = [unist.makeText(pDesc)];
+
+        if (pDefault) {
+            descCellContent.push(unist.makeHTML("<br/>"));
+            descCellContent.push(unist.makeText(" Default value: "));
+            descCellContent.push(unist.makeInlineCode(pDefault));
         }
 
         var cells = [
             unist.makeTableCell([unist.makeText(pName)]),
-            unist.makeTableCell([unist.makeText(pType)]),
-            unist.makeTableCell([unist.makeText(pDefault)]),
-            unist.makeTableCell([unist.makeText(pDesc)])
+            unist.makeTableCell([unist.makeInlineCode(pType)]),
+            //unist.makeTableCell([unist.makeText(pDefault)]),
+            unist.makeTableCell(descCellContent)
         ];
 
         rows.push(unist.makeTableRow(cells));
@@ -214,7 +226,7 @@ function buildOutputsTable(outputs: any[]) {
     for (var i = 0; i < outputs.length; i++){
         var eName = outputs[i].name;
         var eType = outputs[i].type;
-        var eDesc = outputs[i].description || "";
+        var eDesc = outputs[i].docText || "";
 
         if (eDesc) {
             eDesc = eDesc.trim().replace(/[\n\r]+/, ' ');
@@ -222,7 +234,7 @@ function buildOutputsTable(outputs: any[]) {
 
         var cells = [
             unist.makeTableCell([unist.makeText(eName)]),
-            unist.makeTableCell([unist.makeText(eType)]),
+            unist.makeTableCell([unist.makeInlineCode(eType)]),
             unist.makeTableCell([unist.makeText(eDesc)])
         ];
 

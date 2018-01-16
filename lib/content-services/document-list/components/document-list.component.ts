@@ -70,140 +70,140 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
-    /* Define a set of CSS styles styles to apply depending on the permission
-     * of the user on that node. See the [Permission Style model](permissions-style.model.md)
+    /** Define a set of CSS styles styles to apply depending on the permission
+     * of the user on that node. See the Permission Style model
      * page for further details and examples.
      */
     @Input()
     permissionsStyle: PermissionStyleModel[] = [];
 
-    /* The default route for all the location-based columns (if declared). */
+    /** The default route for all the location-based columns (if declared). */
     @Input()
     locationFormat: string = '/';
 
-    /* Toggles navigation to folder content or file preview */
+    /** Toggles navigation to folder content or file preview */
     @Input()
     navigate: boolean = true;
 
-    /* User interaction for folder navigation or file preview. Valid values are "click" and "dblclick". */
+    /** User interaction for folder navigation or file preview. Valid values are "click" and "dblclick". */
     @Input()
     navigationMode: string = DocumentListComponent.DOUBLE_CLICK_NAVIGATION; // click|dblclick
 
-    /* Show document thumbnails rather than icons */
+    /** Show document thumbnails rather than icons */
     @Input()
     thumbnails: boolean = false;
 
-    /* Row selection mode. Can be null, `single` or `multiple`. For `multiple` mode,
+    /** Row selection mode. Can be null, `single` or `multiple`. For `multiple` mode,
      * you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows.
      */
     @Input()
     selectionMode: string = 'single'; // null|single|multiple
 
-    /* Toggles multiselect mode */
+    /** Toggles multiselect mode */
     @Input()
     multiselect: boolean = false;
 
-    /* Toggles content actions for each row */
+    /** Toggles content actions for each row */
     @Input()
     contentActions: boolean = false;
 
-    /* Position of the content actions dropdown menu. Can be set to "left" or "right". */
+    /** Position of the content actions dropdown menu. Can be set to "left" or "right". */
     @Input()
     contentActionsPosition: string = 'right'; // left|right
 
-    /* Toggles context menus for each row */
+    /** Toggles context menus for each row */
     @Input()
     contextMenuActions: boolean = false;
 
-    /* Custom image for empty folder */
+    /** Custom image for empty folder */
     @Input()
     emptyFolderImageUrl: string = './assets/images/empty_doc_lib.svg';
 
-    /* Toggle file drop support for rows (see **UploadDirective** for further details */
+    /** Toggle file drop support for rows (see Upload Directive for further details */
     @Input()
     allowDropFiles: boolean = false;
 
-    /* Defines default sorting. The format is an array of 2 strings `[key, direction]`
+    /** Defines default sorting. The format is an array of 2 strings `[key, direction]`
      * i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want to
      * override the default sorting detected by the component based on columns.
      */
     @Input()
     sorting: string[];
 
-    /* The inline style to apply to every row. See
-     * [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html)
+    /** The inline style to apply to every row. See
+     * the Angular NgStyle
      * docs for more details and usage examples.
      */
     @Input()
     rowStyle: string;
 
-    /* The CSS class to apply to every row */
+    /** The CSS class to apply to every row */
     @Input()
     rowStyleClass: string;
 
-    /* Toggles the loading state and animated spinners for the component. Used in
+    /** Toggles the loading state and animated spinners for the component. Used in
      * combination with `navigate=false` to perform custom navigation and loading
      * state indication.
      */
     @Input()
     loading: boolean = false;
 
-    /* Custom row filter */
+    /** Custom row filter */
     @Input()
     rowFilter: any | null = null;
 
-    /* Custom image resolver */
+    /** Custom image resolver */
     @Input()
     imageResolver: any | null = null;
 
-    /* The ID of the folder node to display or a reserved string alias for special sources */
+    /** The ID of the folder node to display or a reserved string alias for special sources */
     @Input()
     currentFolderId: string = null;
 
-    /* Currently displayed folder node */
+    /** Currently displayed folder node */
     @Input()
     folderNode: MinimalNodeEntryEntity = null;
 
-    /* Document list will show all the nodes contained in the NodePaging entity */
+    /** The Document list will show all the nodes contained in the NodePaging entity */
     @Input()
     node: NodePaging = null;
 
-    /* Default value is stored into user preference settings */
+    /** Default value is stored into user preference settings */
     @Input()
     maxItems: number;
 
-    /* element to skip over for pagination purpose */
+    /** Number of elements to skip over for pagination purposes */
     @Input()
     skipCount: number = 0;
 
-    /* Enable documentlist to work into infinite scrolling mode */
+    /** Set document list to work in infinite scrolling mode */
     @Input()
     enableInfiniteScrolling: boolean = false;
 
-    /* Emitted when the user clicks a list node */
+    /** Emitted when the user clicks a list node */
     @Output()
     nodeClick: EventEmitter<NodeEntityEvent> = new EventEmitter<NodeEntityEvent>();
 
-    /* Emitted when the user double-clicks a list node */
+    /** Emitted when the user double-clicks a list node */
     @Output()
     nodeDblClick: EventEmitter<NodeEntityEvent> = new EventEmitter<NodeEntityEvent>();
 
-    /* Emitted when the current display folder changes */
+    /** Emitted when the current display folder changes */
     @Output()
     folderChange: EventEmitter<NodeEntryEvent> = new EventEmitter<NodeEntryEvent>();
 
-    /* Emitted when the user acts upon files with either single or double click
+    /** Emitted when the user acts upon files with either single or double click
      * (depends on `navigation-mode`). Useful for integration with the
      * Viewer component.
      */
     @Output()
     preview: EventEmitter<NodeEntityEvent> = new EventEmitter<NodeEntityEvent>();
 
-    /* Emitted when the Document List has loaded all items and is ready for use */
+    /** Emitted when the Document List has loaded all items and is ready for use */
     @Output()
     ready: EventEmitter<NodePaging> = new EventEmitter();
 
-    /* Emitted when the API fails to get the Document List data */
+    /** Emitted when the API fails to get the Document List data */
     @Output()
     error: EventEmitter<any> = new EventEmitter();
 
