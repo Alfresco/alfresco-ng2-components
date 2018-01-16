@@ -23,7 +23,7 @@ import {
     MatInputModule,
     MatSelectModule
 } from '@angular/material';
-import { FormModule, FormService } from '@alfresco/adf-core';
+import { ActivitiContentService, AppConfigService, FormModule, FormService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
@@ -33,6 +33,8 @@ import { StartProcessInstanceComponent } from './start-process.component';
 
 describe('StartProcessInstanceComponent', () => {
 
+    let appConfig: AppConfigService;
+    let activitiContentService: ActivitiContentService;
     let component: StartProcessInstanceComponent;
     let fixture: ComponentFixture<StartProcessInstanceComponent>;
     let processService: ProcessService;
@@ -54,6 +56,7 @@ describe('StartProcessInstanceComponent', () => {
                 StartProcessInstanceComponent
             ],
             providers: [
+                ActivitiContentService,
                 ProcessService,
                 FormService
             ]
@@ -61,7 +64,8 @@ describe('StartProcessInstanceComponent', () => {
     }));
 
     beforeEach(() => {
-
+        appConfig = TestBed.get(AppConfigService);
+        activitiContentService = TestBed.get(ActivitiContentService);
         fixture = TestBed.createComponent(StartProcessInstanceComponent);
         component = fixture.componentInstance;
         processService = fixture.debugElement.injector.get(ProcessService);
@@ -70,7 +74,7 @@ describe('StartProcessInstanceComponent', () => {
         getDefinitionsSpy = spyOn(processService, 'getProcessDefinitions').and.returnValue(Observable.of(testProcessDefs));
         startProcessSpy = spyOn(processService, 'startProcess').and.returnValue(Observable.of(newProcess));
         getStartFormDefinitionSpy = spyOn(formService, 'getStartFormDefinition').and.returnValue(Observable.of(taskFormMock));
-
+        spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValue(Observable.of({ id: 1234 }));
     });
 
     it('should create instance of StartProcessInstanceComponent', () => {
@@ -81,7 +85,7 @@ describe('StartProcessInstanceComponent', () => {
 
         it('should call service to fetch process definitions with appId', () => {
             let change = new SimpleChange(null, '123', true);
-            component.ngOnChanges({'appId': change});
+            component.ngOnChanges({ 'appId': change });
             fixture.detectChanges();
 
             expect(getDefinitionsSpy).toHaveBeenCalledWith('123');
@@ -89,7 +93,7 @@ describe('StartProcessInstanceComponent', () => {
 
         it('should call service to fetch process definitions without appId', () => {
             let change = new SimpleChange(null, null, true);
-            component.ngOnChanges({'appId': change});
+            component.ngOnChanges({ 'appId': change });
             fixture.detectChanges();
 
             expect(getDefinitionsSpy).toHaveBeenCalledWith(null);
@@ -97,7 +101,7 @@ describe('StartProcessInstanceComponent', () => {
 
         it('should call service to fetch process definitions with appId when provided', () => {
             let change = new SimpleChange(null, '123', true);
-            component.ngOnChanges({'appId': change});
+            component.ngOnChanges({ 'appId': change });
             fixture.detectChanges();
 
             expect(getDefinitionsSpy).toHaveBeenCalledWith('123');
@@ -105,7 +109,7 @@ describe('StartProcessInstanceComponent', () => {
 
         it('should display the correct number of processes in the select list', () => {
             let change = new SimpleChange(null, '123', true);
-            component.ngOnChanges({'appId': change});
+            component.ngOnChanges({ 'appId': change });
             fixture.detectChanges();
 
             let selectElement = fixture.nativeElement.querySelector('mat-select');
@@ -114,7 +118,7 @@ describe('StartProcessInstanceComponent', () => {
 
         it('should display the option def details', () => {
             let change = new SimpleChange(null, '123', true);
-            component.ngOnChanges({'appId': change});
+            component.ngOnChanges({ 'appId': change });
             component.processDefinitions = testProcessDefs;
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -131,7 +135,7 @@ describe('StartProcessInstanceComponent', () => {
         it('should indicate an error to the user if process defs cannot be loaded', async(() => {
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.throw({}));
             let change = new SimpleChange(null, '123', true);
-            component.ngOnChanges({'appId': change});
+            component.ngOnChanges({ 'appId': change });
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
@@ -144,7 +148,7 @@ describe('StartProcessInstanceComponent', () => {
         it('should show no process available message when no process definition is loaded', async(() => {
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.of([]));
             let change = new SimpleChange(null, '123', true);
-            component.ngOnChanges({'appId': change});
+            component.ngOnChanges({ 'appId': change });
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
@@ -156,7 +160,7 @@ describe('StartProcessInstanceComponent', () => {
 
         it('should auto-select process def from dropdown if there is just one process def', () => {
             let change = new SimpleChange(null, '123', true);
-            component.ngOnChanges({'appId': change});
+            component.ngOnChanges({ 'appId': change });
             component.processDefinitions[0] = testProcessDefRepr;
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -183,17 +187,17 @@ describe('StartProcessInstanceComponent', () => {
         }));
 
         it('should reload processes when appId input changed', () => {
-            component.ngOnChanges({appId: change});
+            component.ngOnChanges({ appId: change });
             expect(getDefinitionsSpy).toHaveBeenCalledWith(456);
         });
 
         it('should reload processes when appId input changed to null', () => {
-            component.ngOnChanges({appId: nullChange});
+            component.ngOnChanges({ appId: nullChange });
             expect(getDefinitionsSpy).toHaveBeenCalledWith(null);
         });
 
         it('should get current processDeff', () => {
-            component.ngOnChanges({appId: change});
+            component.ngOnChanges({ appId: change });
             component.onProcessDefChange('my:Process');
             fixture.detectChanges();
             expect(getDefinitionsSpy).toHaveBeenCalled();
@@ -206,7 +210,7 @@ describe('StartProcessInstanceComponent', () => {
         beforeEach(() => {
             component.name = 'My new process';
             let change = new SimpleChange(null, 123, true);
-            component.ngOnChanges({'appId': change});
+            component.ngOnChanges({ 'appId': change });
         });
 
         it('should call service to start process if required fields provided', async(() => {
@@ -261,7 +265,7 @@ describe('StartProcessInstanceComponent', () => {
 
         it('should throw error event when process cannot be started', async(() => {
             let errorSpy = spyOn(component.error, 'error');
-            let error = {message: 'My error'};
+            let error = { message: 'My error' };
             startProcessSpy = startProcessSpy.and.returnValue(Observable.throw(error));
             component.onProcessDefChange('my:process1');
             component.startProcess();
@@ -331,7 +335,7 @@ describe('StartProcessInstanceComponent', () => {
             beforeEach(async(() => {
                 component.name = 'My new process';
                 let change = new SimpleChange(null, '123', true);
-                component.ngOnChanges({'appId': change});
+                component.ngOnChanges({ 'appId': change });
                 fixture.detectChanges();
             }));
 
@@ -374,7 +378,7 @@ describe('StartProcessInstanceComponent', () => {
             beforeEach(() => {
                 getDefinitionsSpy.and.returnValue(Observable.of(testProcessDefWithForm));
                 let change = new SimpleChange(null, '123', true);
-                component.ngOnChanges({'appId': change});
+                component.ngOnChanges({ 'appId': change });
                 component.onProcessDefChange('my:process1');
                 fixture.detectChanges();
                 fixture.whenStable();
@@ -397,7 +401,7 @@ describe('StartProcessInstanceComponent', () => {
             }));
 
             it('should emit cancel event on cancel Button', () => {
-                let cancelButton =  fixture.nativeElement.querySelector('#cancle_process');
+                let cancelButton = fixture.nativeElement.querySelector('#cancle_process');
                 let cancelSpy: jasmine.Spy = spyOn(component.cancel, 'emit');
                 cancelButton.click();
                 fixture.detectChanges();
@@ -405,6 +409,35 @@ describe('StartProcessInstanceComponent', () => {
             });
         });
 
+        describe('CS content connection', () => {
+
+            fit('alfrescoRepositoryName default configuration property', () => {
+                expect(component.getAlfrescoRepositoryName()).toBe('alfresco-1Alfresco');
+            });
+
+            fit('alfrescoRepositoryName configuration property should be fetched', () => {
+                appConfig.config = Object.assign(appConfig.config, {
+                    'alfrescoRepositoryName': 'alfresco-123'
+                };
+
+                expect(component.getAlfrescoRepositoryName()).toBe('alfresco-123Alfresco');
+            });
+
+            fit('if values in input is a node should be linked in the process service', () => {
+
+                component.values = {};
+                component.values['file'] = {
+                    isFile: true,
+                    name= 'example-file'
+                };
+
+                component.moveNodeFromCStoPS();
+
+                fixture.whenStable().then(() => {
+                    expect(component.values.file[0].id).toBe(1234);
+                });
+            });
+        });
     });
 
 });

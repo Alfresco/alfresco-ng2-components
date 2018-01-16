@@ -25,7 +25,13 @@ import {
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import { ActivitiContentService, AppConfigService, StartFormComponent, FormRenderingService, FormValues } from '@alfresco/adf-core';
+import {
+    ActivitiContentService,
+    AppConfigService,
+    StartFormComponent,
+    FormRenderingService,
+    FormValues
+} from '@alfresco/adf-core';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessDefinitionRepresentation } from './../models/process-definition.model';
 import { ProcessInstance } from './../models/process-instance.model';
@@ -101,8 +107,16 @@ export class StartProcessInstanceComponent implements OnChanges {
         );
     }
 
+    getAlfrescoRepositoryName(): string {
+        let alfrescoRepositoryName = this.appConfig.get<string>('alfrescoRepositoryName');
+        if (!alfrescoRepositoryName) {
+            alfrescoRepositoryName = 'alfresco-1';
+        }
+        return alfrescoRepositoryName + 'Alfresco';
+    }
+
     moveNodeFromCStoPS() {
-        let accountIdentifier = this.appConfig.get<string>('alfrescoRepositoryName') + 'Alfresco';
+        let accountIdentifier = this.getAlfrescoRepositoryName();
 
         for (let key in this.values) {
             if (this.values.hasOwnProperty(key)) {

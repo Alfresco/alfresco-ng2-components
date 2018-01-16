@@ -42,7 +42,7 @@ export class SelectAppsDialogComponent {
                 });
             },
             (err) => {
-                const translatedErrorMessage: any = this.translateService.get('PROCESS.DIALOG.ERROR');
+                const translatedErrorMessage: any = this.translateService.get('APP.DIALOG.ERROR');
                 this.notificationService.openSnackMessage(translatedErrorMessage.value, 4000);
             }
         );
