@@ -104,7 +104,7 @@ describe('CommentsComponent', () => {
         });
     }));
 
-    it('should display comments count when the task has comments', () => {
+    it('should display comments count when the task has comments', async(() => {
         let change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'taskId': change });
         fixture.whenStable().then(() => {
@@ -112,7 +112,7 @@ describe('CommentsComponent', () => {
             let element = fixture.nativeElement.querySelector('#comment-header');
             expect(element.innerText).toBe('ADF_TASK_LIST.DETAILS.COMMENTS.HEADER');
         });
-    });
+    }));
 
     it('should not display comments when the task has no comments', async(() => {
         component.taskId = '123';

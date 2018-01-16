@@ -154,7 +154,7 @@ describe('ProcessAttachmentListComponent', () => {
         });
     }));
 
-    it('should display all actions if attachements are not read only', () => {
+    it('should display all actions if attachements are not read only', async(() => {
         let change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'processInstanceId': change });
 
@@ -168,9 +168,9 @@ describe('ProcessAttachmentListComponent', () => {
             expect(fixture.debugElement.nativeElement.querySelector('[data-automation-id="Remove"]')).not.toBeNull();
             expect(actionMenu).toBe(3);
         });
-    });
+    }));
 
-    it('should not display remove action if attachments are read only', () => {
+    it('should not display remove action if attachments are read only', async(() => {
         let change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'processInstanceId': change });
         component.disabled = true;
@@ -185,7 +185,7 @@ describe('ProcessAttachmentListComponent', () => {
             expect(fixture.debugElement.nativeElement.querySelector('[data-automation-id="Remove"]')).toBeNull();
             expect(actionMenu).toBe(2);
         });
-    });
+    }));
 
     it('should show the empty list component when the attachments list is empty', async(() => {
         getProcessRelatedContentSpy.and.returnValue(Observable.of({
@@ -325,12 +325,12 @@ describe('Custom CustomEmptyTemplateComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should render the custom template', () => {
+    it('should render the custom template', async(() => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             let title: any = fixture.debugElement.queryAll(By.css('[adf-empty-list-header]'));
             expect(title.length).toBe(1);
             expect(title[0].nativeElement.innerText).toBe('Custom header');
         });
-    });
+    }));
 });
