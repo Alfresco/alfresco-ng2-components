@@ -63,7 +63,7 @@ export class SearchResultComponent implements OnInit {
          this.skipCount = pagination.skipCount;
     }
 
-    onDeleteElementSuccess(element:any) {
+    onDeleteElementSuccess(element: any) {
         this.search.reload();
     }
 }
