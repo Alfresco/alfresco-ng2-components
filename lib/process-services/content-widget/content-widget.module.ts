@@ -23,6 +23,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DataColumnModule, DataTableModule, FormModule } from '@alfresco/adf-core';
 
 import { AttachFileWidgetComponent } from './attach-file-widget.component';
+import { AttachFolderWidgetComponent } from './attach-folder-widget.component';
 
 @NgModule({
     imports: [
@@ -36,13 +37,16 @@ import { AttachFileWidgetComponent } from './attach-file-widget.component';
         FormModule
     ],
     entryComponents: [
-        AttachFileWidgetComponent
+        AttachFileWidgetComponent,
+        AttachFolderWidgetComponent
     ],
     declarations: [
-        AttachFileWidgetComponent
+        AttachFileWidgetComponent,
+        AttachFolderWidgetComponent
     ],
     exports: [
-        AttachFileWidgetComponent
+        AttachFileWidgetComponent,
+        AttachFolderWidgetComponent
     ]
 })
 export class ContentWidgetModule {}

@@ -16,14 +16,12 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges,  ViewChild, ViewEncapsulation } from '@angular/core';
-import { StartFormComponent
-    , FormRenderingService
-} from '@alfresco/adf-core';
+import { StartFormComponent, FormRenderingService } from '@alfresco/adf-core';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessDefinitionRepresentation } from './../models/process-definition.model';
 import { ProcessInstance } from './../models/process-instance.model';
 import { ProcessService } from './../services/process.service';
-import { AttachFileWidgetComponent } from '../../content-widget';
+import { AttachFileWidgetComponent, AttachFolderWidgetComponent } from '../../content-widget';
 
 @Component({
     selector: 'adf-start-process',
@@ -62,6 +60,7 @@ export class StartProcessInstanceComponent implements OnChanges {
     constructor(private activitiProcess: ProcessService,
                 private formRenderingService: FormRenderingService) {
         this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileWidgetComponent, true);
+        this.formRenderingService.setComponentTypeResolver('select-folder', () => AttachFolderWidgetComponent, true);
     }
 
     ngOnChanges(changes: SimpleChanges) {
