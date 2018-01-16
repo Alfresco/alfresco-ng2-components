@@ -80,7 +80,7 @@ export class StartProcessInstanceComponent implements OnChanges {
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['values'] && changes['values'].currentValue) {
-            this.moveNodeFromCStoPs();
+            this.moveNodeFromCStoPS();
         }
 
         let appIdChange = changes['appId'];
@@ -101,8 +101,8 @@ export class StartProcessInstanceComponent implements OnChanges {
         );
     }
 
-    moveNodeFromCStoPs() {
-        let accountIdentifier = this.appConfig.get<string>('logLevel') + 'Alfresco';
+    moveNodeFromCStoPS() {
+        let accountIdentifier = this.appConfig.get<string>('alfrescoRepositoryName') + 'Alfresco';
 
         for (let key in this.values) {
             if (this.values.hasOwnProperty(key)) {
