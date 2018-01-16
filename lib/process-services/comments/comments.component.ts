@@ -27,12 +27,15 @@ import { Observer } from 'rxjs/Observer';
 })
 export class CommentsComponent implements OnChanges {
 
+    /** The numeric ID of the task. */
     @Input()
     taskId: string;
 
+    /** Are the comments read only? */
     @Input()
     readOnly: boolean = false;
 
+    /** Emitted when an error occurs while displaying/adding a comment. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
