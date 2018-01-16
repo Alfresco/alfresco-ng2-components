@@ -55,7 +55,7 @@ export class AttachFolderWidgetComponent extends WidgetComponent implements OnIn
         }
     }
 
-    isDefinedSourceFolder() {
+    isDefinedSourceFolder(): boolean {
         return !!this.field.params &&
             !!this.field.params.folderSource &&
             !!this.field.params.folderSource.selectedFolder;
@@ -63,7 +63,7 @@ export class AttachFolderWidgetComponent extends WidgetComponent implements OnIn
 
     openSelectDialogFromFileSource() {
         let params = this.field.params;
-        if (this.isDefinedSourceFolder() && !this.hasFolder) {
+        if (this.isDefinedSourceFolder()) {
             this.contentDialog.openFolderBrowseDialogByFolderId(params.folderSource.selectedFolder.pathId).subscribe(
                 (selections: MinimalNodeEntryEntity[]) => {
                     this.selectedFolderName = selections[0].name;
