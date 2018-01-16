@@ -14,11 +14,8 @@ it is likely to change and so its properties are not listed here. For the
 latest version of the class, see the
 [source file](https://github.com/Alfresco/alfresco-ng2-components/blob/development/lib/core/userinfo/models/bpm-user.model.ts).
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
 ## See also
 
-- [Bpm user service](bpm-user.service.md)
-- [Ecm user model](ecm-user.model.md)
-- [People process service](people-process.service.md)
-<!-- seealso end -->
+-   [Bpm user service](bpm-user.service.md)
+-   [Ecm user model](ecm-user.model.md)
+-   [People process service](people-process.service.md)

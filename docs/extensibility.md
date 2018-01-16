@@ -2,9 +2,9 @@
 
 _Note: it is assumed you are familiar with Alfresco Process Services (powered by Activiti) form definition structure._
 
-- How components and widgets are rendered on a Form
-- Replacing default form widgets with custom components
-- Replacing custom stencils with custom components
+-   How components and widgets are rendered on a Form
+-   Replacing default form widgets with custom components
+-   Replacing custom stencils with custom components
 
 ## How components and widgets are rendered on a Form
 
@@ -63,7 +63,7 @@ formRenderingService.setComponentTypeResolver('text', customResolver, true);
 ### Default component mappings
 
 | Stencil Name | Field Type | Component Type |
-| --- | --- | --- |
+| ------------ | ---------- | -------------- |
 | Text | text | TextWidgetComponent |
 | Number | integer | NumberWidgetComponent |
 | Multi-line text | multi-line-text | MultilineTextWidgetComponentComponent |
@@ -253,3 +253,10 @@ export class MyView {
 At runtime you should now see your custom Angular component rendered in place of the stencils:
 
 ![adf stencil runtime](docassets/images/adf-stencil-02.png)
+
+## See Also
+
+-   [Form field model](form-field.model.md)
+-   [Form rendering service](form-rendering.service.md)
+-   [Form component](form.component.md)
+-   [Widget component](widget.component.md)
