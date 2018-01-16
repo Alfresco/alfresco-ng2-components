@@ -62,11 +62,8 @@ class TaskQueryRequestRepresentationModel implements TaskQueryRequestRepresentat
 }
 ```
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
 ## See also
 
-- [Process filters component](process-filters.component.md)
-- [Task filters component](task-filters.component.md)
-- [Apps process service](apps-process.service.md)
-<!-- seealso end -->
+-   [Process filters component](process-filters.component.md)
+-   [Task filters component](task-filters.component.md)
+-   [Apps process service](apps-process.service.md)

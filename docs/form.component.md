@@ -275,10 +275,6 @@ formService.formEvents.subscribe((event: Event) => {
 });
 ```
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-
-<!-- seealso start -->
-
 ## See also
 
 -   [Stencils](stencils.md)
@@ -286,4 +282,3 @@ formService.formEvents.subscribe((event: Event) => {
 -   [Extensibility](extensibility.md)
 -   [Form rendering service](form-rendering.service.md)
 -   [Form field model](form-field.model.md)
-    <!-- seealso end -->

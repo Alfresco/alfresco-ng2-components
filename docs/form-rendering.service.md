@@ -47,7 +47,7 @@ formRenderingService.setComponentTypeResolver('text', customResolver, true);
 The Form Rendering service is initialized with the mapping shown in the table below:
 
 | Stencil name | Field type string | Component type |
-|---|---|---|
+| ------------ | ----------------- | -------------- |
 | Amount | "amount" | AmountWidgetComponent |
 | Attach | "upload" | AttachWidgetComponent or UploadWidgetComponent (based on metadata) |
 | Checkbox | "boolean" | CheckboxWidgetComponent |
@@ -84,14 +84,8 @@ implements a modified layout or responds differently when the data is entered. S
 [Form Extensibility and Customisation](extensibility.md) guide for further details and examples
 of this technique.
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
 ## See also
 
-- [Extensibility](extensibility.md)
-- [Form field model](form-field.model.md)
-- [Form component](form.component.md)
-<!-- seealso end -->
-
-
-
+-   [Extensibility](extensibility.md)
+-   [Form field model](form-field.model.md)
+-   [Form component](form.component.md)
