@@ -455,7 +455,7 @@ export class ViewerComponent implements OnChanges {
                 this.urlFileContent = this.apiService.contentApi.getRenditionUrl(nodeId, 'pdf');
             } else if (status === 'NOT_CREATED') {
                 try {
-                    await this.renditionService.convert(nodeId, 'pdf').toPromise()
+                    await this.renditionService.convert(nodeId, 'pdf').toPromise();
                     this.viewerType = 'pdf';
                     this.urlFileContent = this.apiService.contentApi.getRenditionUrl(nodeId, 'pdf');
                 } catch {

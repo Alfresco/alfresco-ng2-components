@@ -54,7 +54,7 @@ import { CardViewUpdateService } from './services/card-view-update.service';
         MatIconModule,
         MatButtonModule,
         MatDatetimepickerModule,
-        MatNativeDatetimeModule    
+        MatNativeDatetimeModule
     ],
     declarations: [
         CardViewComponent,
@@ -69,7 +69,7 @@ import { CardViewUpdateService } from './services/card-view-update.service';
         CardViewBoolItemComponent,
         CardViewDateItemComponent,
         CardViewMapItemComponent,
-        CardViewTextItemComponent    
+        CardViewTextItemComponent
     ],
     exports: [
         CardViewComponent,

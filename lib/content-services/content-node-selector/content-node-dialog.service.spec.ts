@@ -106,10 +106,18 @@ describe('ContentNodeDialogService', () => {
         expect(materialDialog.open).toHaveBeenCalled();
     }));
 
-    it('should be able to open the dialog using the first user site', fakeAsync(() => {
+    it('should be able to open the dialog for files using the first user site', fakeAsync(() => {
         spyOn(sitesService, 'getSites').and.returnValue(Observable.of(fakeSiteList));
         spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.resolve(fakeNode));
         service.openFileBrowseDialogBySite().subscribe();
+        tick();
+        expect(materialDialog.open).toHaveBeenCalled();
+    }));
+
+    it('should be able to open the dialog for folder using the first user site', fakeAsync(() => {
+        spyOn(sitesService, 'getSites').and.returnValue(Observable.of(fakeSiteList));
+        spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.resolve(fakeNode));
+        service.openFolderBrowseDialogBySite().subscribe();
         tick();
         expect(materialDialog.open).toHaveBeenCalled();
     }));
