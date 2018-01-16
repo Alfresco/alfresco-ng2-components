@@ -118,7 +118,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     loadNext: EventEmitter<Pagination> = new EventEmitter();
 
     @Output()
-    deleteFolderSuccess: EventEmitter<any> = new EventEmitter();
+    deleteElementSuccess: EventEmitter<any> = new EventEmitter();
 
     @ViewChild(DocumentListComponent)
     documentList: DocumentListComponent;
@@ -311,10 +311,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     onDeleteActionSuccess(message) {
         this.uploadService.fileDeleted.next(message);
-    }
-
-    onFolderDeleteSuccess(element: any) {
-        this.deleteFolderSuccess.emit();
+        this.deleteElementSuccess.emit();
     }
 
     onManageVersions(event) {
