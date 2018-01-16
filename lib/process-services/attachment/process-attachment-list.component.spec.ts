@@ -61,48 +61,48 @@ describe('ProcessAttachmentListComponent', () => {
         });
 
         mockAttachment = {
-            'size': 2,
-            'total': 2,
-            'start': 0,
-            'data': [{
-                'id': 4001,
-                'name': 'Invoice01.pdf',
-                'created': '2017-05-12T12:50:05.522+0000',
-                'createdBy': {
-                    'id': 1,
-                    'firstName': 'Apps',
-                    'lastName': 'Administrator',
-                    'email': 'admin@app.activiti.com',
-                    'company': 'Alfresco.com',
-                    'pictureId': 3003
+            size: 2,
+            total: 2,
+            start: 0,
+            data: [{
+                id: 4001,
+                name: 'Invoice01.pdf',
+                created: '2017-05-12T12:50:05.522+0000',
+                createdBy: {
+                    id: 1,
+                    firstName: 'Apps',
+                    lastName: 'Administrator',
+                    email: 'admin@app.activiti.com',
+                    company: 'Alfresco.com',
+                    pictureId: 3003
                 },
-                'relatedContent': true,
-                'contentAvailable': true,
-                'link': false,
-                'mimeType': 'application/pdf',
-                'simpleType': 'pdf',
-                'previewStatus': 'created',
-                'thumbnailStatus': 'created'
+                relatedContent: true,
+                contentAvailable: true,
+                link: false,
+                mimeType: 'application/pdf',
+                simpleType: 'pdf',
+                previewStatus: 'created',
+                thumbnailStatus: 'created'
             },
                 {
-                    'id': 4002,
-                    'name': 'Invoice02.pdf',
-                    'created': '2017-05-12T12:50:05.522+0000',
-                    'createdBy': {
-                        'id': 1,
-                        'firstName': 'Apps',
-                        'lastName': 'Administrator',
-                        'email': 'admin@app.activiti.com',
-                        'company': 'Alfresco.com',
-                        'pictureId': 3003
+                    id: 4002,
+                    name: 'Invoice02.pdf',
+                    created: '2017-05-12T12:50:05.522+0000',
+                    createdBy: {
+                        id: 1,
+                        firstName: 'Apps',
+                        lastName: 'Administrator',
+                        email: 'admin@app.activiti.com',
+                        company: 'Alfresco.com',
+                        pictureId: 3003
                     },
-                    'relatedContent': true,
-                    'contentAvailable': true,
-                    'link': false,
-                    'mimeType': 'application/pdf',
-                    'simpleType': 'pdf',
-                    'previewStatus': 'created',
-                    'thumbnailStatus': 'created'
+                    relatedContent: true,
+                    contentAvailable: true,
+                    link: false,
+                    mimeType: 'application/pdf',
+                    simpleType: 'pdf',
+                    previewStatus: 'created',
+                    thumbnailStatus: 'created'
                 }]
         };
 
@@ -113,6 +113,14 @@ describe('ProcessAttachmentListComponent', () => {
         spyOn(service, 'getFileRawContent').and.returnValue(Observable.of(
             blobObj
         ));
+    });
+
+    afterEach(() => {
+        const overlayContainers = <any> window.document.querySelectorAll('.cdk-overlay-container');
+
+        overlayContainers.forEach((overlayContainer) => {
+            overlayContainer.innerHTML = '';
+        });
     });
 
     it('should load attachments when processInstanceId specified', () => {
@@ -163,9 +171,10 @@ describe('ProcessAttachmentListComponent', () => {
         actionButton.click();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            let actionMenu = fixture.debugElement.nativeElement.querySelectorAll('button.mat-menu-item').length;
-            expect(fixture.debugElement.nativeElement.querySelector('[data-automation-id="View"]')).not.toBeNull();
-            expect(fixture.debugElement.nativeElement.querySelector('[data-automation-id="Remove"]')).not.toBeNull();
+            let actionMenu = window.document.querySelectorAll('button.mat-menu-item').length;
+            expect(window.document.querySelector('[data-automation-id="ADF_PROCESS_LIST.MENU_ACTIONS.VIEW_CONTENT"]')).not.toBeNull();
+            expect(window.document.querySelector('[data-automation-id="ADF_PROCESS_LIST.MENU_ACTIONS.REMOVE_CONTENT"]')).not.toBeNull();
+            expect(window.document.querySelector('[data-automation-id="ADF_PROCESS_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT"]')).not.toBeNull();
             expect(actionMenu).toBe(3);
         });
     }));
@@ -181,8 +190,9 @@ describe('ProcessAttachmentListComponent', () => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             let actionMenu = fixture.debugElement.nativeElement.querySelectorAll('button.mat-menu-item').length;
-            expect(fixture.debugElement.nativeElement.querySelector('[data-automation-id="View"]')).not.toBeNull();
-            expect(fixture.debugElement.nativeElement.querySelector('[data-automation-id="Remove"]')).toBeNull();
+            expect(window.document.querySelector('[data-automation-id="ADF_PROCESS_LIST.MENU_ACTIONS.VIEW_CONTENT"]')).not.toBeNull();
+            expect(window.document.querySelector('[data-automation-id="ADF_PROCESS_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT"]')).not.toBeNull();
+            expect(window.document.querySelector('[data-automation-id="ADF_PROCESS_LIST.MENU_ACTIONS.REMOVE_CONTENT"]')).toBeNull();
             expect(actionMenu).toBe(2);
         });
     }));

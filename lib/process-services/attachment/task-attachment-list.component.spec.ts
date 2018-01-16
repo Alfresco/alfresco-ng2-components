@@ -99,6 +99,14 @@ describe('TaskAttachmentList', () => {
         getFileRawContentSpy = spyOn(service, 'getFileRawContent').and.returnValue(Observable.of(blobObj));
     });
 
+    afterEach(() => {
+        const overlayContainers = <any> window.document.querySelectorAll('.cdk-overlay-container');
+
+        overlayContainers.forEach((overlayContainer) => {
+            overlayContainer.innerHTML = '';
+        });
+    });
+
     it('should load attachments when taskId specified', () => {
         let change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'taskId': change });
@@ -178,8 +186,9 @@ describe('TaskAttachmentList', () => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             let actionMenu = fixture.debugElement.nativeElement.querySelectorAll('button.mat-menu-item').length;
-            expect(fixture.debugElement.nativeElement.querySelector('[data-automation-id="View"]')).not.toBeNull();
-            expect(fixture.debugElement.nativeElement.querySelector('[data-automation-id="Remove"]')).not.toBeNull();
+            expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.VIEW_CONTENT"]')).not.toBeNull();
+            expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.REMOVE_CONTENT"]')).not.toBeNull();
+            expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT"]')).not.toBeNull();
             expect(actionMenu).toBe(3);
         });
     }));
@@ -195,8 +204,9 @@ describe('TaskAttachmentList', () => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             let actionMenu = fixture.debugElement.nativeElement.querySelectorAll('button.mat-menu-item').length;
-            expect(fixture.debugElement.nativeElement.querySelector('[data-automation-id="View"]')).not.toBeNull();
-            expect(fixture.debugElement.nativeElement.querySelector('[data-automation-id="Remove"]')).toBeNull();
+            expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.VIEW_CONTENT"]')).not.toBeNull();
+            expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT"]')).not.toBeNull();
+            expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.REMOVE_CONTENT"]')).toBeNull();
             expect(actionMenu).toBe(2);
         });
     }));
