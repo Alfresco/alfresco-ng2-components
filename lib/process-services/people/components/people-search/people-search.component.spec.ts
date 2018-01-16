@@ -17,7 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule, MatInputModule } from '@angular/material';
-import { UserProcessModel } from '@alfresco/adf-core';
+import { UserProcessModel, TranslationService, TranslationMock } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { PeopleListComponent } from '../people-list/people-list.component';
 import { PeopleSearchComponent } from './people-search.component';
@@ -57,6 +57,7 @@ describe('PeopleSearchComponent', () => {
                 PeopleListComponent
             ],
             providers: [
+                { provide: TranslationService, useClass: TranslationMock }
             ]
         }).compileComponents().then(() => {
 

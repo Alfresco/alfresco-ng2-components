@@ -18,6 +18,7 @@
 export * from './components/people/people.component';
 export * from './components/people-list/people-list.component';
 export * from './components/people-search/people-search.component';
+export * from './components/people-search-field/people-search-field.component';
 export * from './components/people-selector/people-selector.component';
 
 export * from './interfaces/perform-search-callback.interface';
