@@ -26,7 +26,8 @@ import { Component, ContentChild, Input, OnInit, TemplateRef } from '@angular/co
 export class DataColumnComponent implements OnInit {
 
     /** Data source key. Can be either a column/property key like `title`
-     *  or a property path like `createdBy.name`. */
+     *  or a property path like `createdBy.name`.
+     */
     @Input()
     key: string;
 
