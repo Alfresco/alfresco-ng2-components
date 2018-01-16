@@ -2,7 +2,7 @@
 <section mat-dialog-content>
 
     <mat-select placeholder="{{'PROCESS.DIALOG.LIST' | translate}}" [(value)]="selectedProcess" >
-        <mat-option *ngFor="let currentProcessApp of processApps" [value]="currentProcessApp.id">
+        <mat-option *ngFor="let currentProcessApp of processApps" [value]="currentProcessApp">
             {{ currentProcessApp.name }}
         </mat-option>
     </mat-select>

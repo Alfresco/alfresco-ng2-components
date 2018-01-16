@@ -20,10 +20,10 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 @Component({
-    selector: 'select-process-dialog',
-    templateUrl: 'select-process-app-dialog-component.html'
+    selector: 'adf-select-apps-dialog',
+    templateUrl: 'select-apps-dialog-component.html'
 })
-export class SelectProcessAppDialogComponent {
+export class SelectAppsDialogComponent {
 
     processApps: any;
 
@@ -32,12 +32,12 @@ export class SelectProcessAppDialogComponent {
     constructor(private appsProcessService: AppsProcessService,
                 private translateService: TranslationService,
                 private notificationService: NotificationService,
-                public dialogRef: MatDialogRef<SelectProcessAppDialogComponent>,
+                public dialogRef: MatDialogRef<SelectAppsDialogComponent>,
                 @Inject(MAT_DIALOG_DATA) public data: any) {
 
         this.appsProcessService.getDeployedApplications().subscribe(
             (apps: any[]) => {
-                this.processApps = apps.filter((currentApp)=>{
+                this.processApps = apps.filter((currentApp) => {
                     return currentApp.id;
                 });
             },

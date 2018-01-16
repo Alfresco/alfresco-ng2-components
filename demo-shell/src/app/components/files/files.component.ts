@@ -29,14 +29,11 @@ import {
     PaginationComponent, FormValues
 } from '@alfresco/adf-core';
 
-import {
-    DocumentListComponent,
-    PermissionStyleModel,
-    DownloadZipDialogComponent
-} from '@alfresco/adf-content-services';
+import { DocumentListComponent, PermissionStyleModel, DownloadZipDialogComponent } from '@alfresco/adf-content-services';
+
+import { SelectAppsDialogComponent } from '@alfresco/adf-process-services';
 
 import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-adapter.component';
-import { SelectProcessAppDialogComponent } from '../process-service/select-process-app-dialog-component';
 import { Subscription } from 'rxjs/Rx';
 
 const DEFAULT_FOLDER_TO_SHOW = '-my-';
@@ -459,13 +456,13 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     startProcesAction($event) {
         this.formValues['file'] = $event.value.entry;
 
-        const dialogRef = this.dialog.open(SelectProcessAppDialogComponent, {
+        const dialogRef = this.dialog.open(SelectAppsDialogComponent, {
             width: '630px',
             panelClass: 'adf-version-manager-dialog'
         });
 
-        dialogRef.afterClosed().subscribe(result => {
-            this.processId = result;
+        dialogRef.afterClosed().subscribe(selectedProcess => {
+            this.processId = selectedProcess.id;
         });
 
     }
