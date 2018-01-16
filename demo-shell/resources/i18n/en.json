@@ -3,7 +3,11 @@
     "VERSION": {
       "NO_PERMISSION": "You don't have permission to manage versions of this content",
       "NO_PERMISSION_EVENT": "You don't have ${event.permission} permission to ${event.action} the ${event.type}",
-      "CHOOSE_FILE": "Select a file to see its versions"
+      "CHOOSE_FILE": "Select a file to see its versions",
+      "DIALOG": {
+        "CLOSE": "Close",
+        "TITLE": "Manage versions"
+      }
     },
     "APP_LAYOUT": {
         "APP_NAME": "ADF Demo Application",
@@ -50,7 +54,8 @@
                 "DOWNLOAD": "Download",
                 "COPY": "Copy",
                 "MOVE": "Move",
-                "DELETE": "Delete"
+                "DELETE": "Delete",
+                "PROCESS_ACTION": "Start Process"
             }
         }
     },
@@ -96,5 +101,13 @@
         "LIST":"List Tags Content Services",
         "INSERT":"Insert Node ID",
         "NODE_LIST":"Tag list By Node ID"
+    },
+    "PROCESS":{
+      "DIALOG" :{
+        "START" : "Start",
+        "TITLE" : "Select a process",
+        "LIST": "Proces list",
+        "ERROR" : "Possible connection with process service not present"
+      }
     }
 }

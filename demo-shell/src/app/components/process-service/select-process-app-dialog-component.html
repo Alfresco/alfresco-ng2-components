@@ -1,0 +1,13 @@
+<header mat-dialog-title>{{'PROCESS.DIALOG.TITLE' | translate}}</header>
+<section mat-dialog-content>
+
+    <mat-select placeholder="{{'PROCESS.DIALOG.LIST' | translate}}" [(value)]="selectedProcess" >
+        <mat-option *ngFor="let currentProcessApp of processApps" [value]="currentProcessApp.id">
+            {{ currentProcessApp.name }}
+        </mat-option>
+    </mat-select>
+
+</section>
+<footer mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+    <button mat-button (click)="onStart()">{{'PROCESS.DIALOG.START' | translate}}</button>
+</footer>

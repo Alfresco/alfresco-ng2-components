@@ -34,6 +34,7 @@ import { WebscriptComponent } from './components/webscript/webscript.component';
 import { TagComponent } from './components/tag/tag.component';
 import { SocialComponent } from './components/social/social.component';
 import { VersionManagerDialogAdapterComponent } from './components/files/version-manager-dialog-adapter.component';
+import { SelectProcessAppDialogComponent } from './components/process-service/select-process-app-dialog-component';
 
 import { ThemePickerModule } from './components/theme-picker/theme-picker';
 import { DebugAppConfigService } from './services/debug-app-config.service';
@@ -87,7 +88,8 @@ import { SharedLinkViewComponent } from './components/shared-link-view/shared-li
         TaskAttachmentsComponent,
         ProcessAttachmentsComponent,
         OverlayViewerComponent,
-        SharedLinkViewComponent
+        SharedLinkViewComponent,
+        SelectProcessAppDialogComponent
     ],
     providers: [
         TranslateService,
@@ -102,7 +104,8 @@ import { SharedLinkViewComponent } from './components/shared-link-view/shared-li
         }
     ],
     entryComponents: [
-        VersionManagerDialogAdapterComponent
+        VersionManagerDialogAdapterComponent,
+        SelectProcessAppDialogComponent
     ],
     bootstrap: [AppComponent]
 })

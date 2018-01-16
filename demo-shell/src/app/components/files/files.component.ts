@@ -23,15 +23,20 @@ import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity, SiteEntry } from 'alfresco-js-api';
 import {
-    AlfrescoApiService, ContentService, TranslationService,
+    AlfrescoApiService, AuthenticationService, ContentService, TranslationService,
     FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
     UploadService, DataColumn, DataRow, UserPreferencesService,
-    PaginationComponent
+    PaginationComponent, FormValues
 } from '@alfresco/adf-core';
 
-import { DocumentListComponent, PermissionStyleModel, DownloadZipDialogComponent } from '@alfresco/adf-content-services';
+import {
+    DocumentListComponent,
+    PermissionStyleModel,
+    DownloadZipDialogComponent
+} from '@alfresco/adf-content-services';
 
 import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-adapter.component';
+import { SelectProcessAppDialogComponent } from '../process-service/select-process-app-dialog-component';
 import { Subscription } from 'rxjs/Rx';
 
 const DEFAULT_FOLDER_TO_SHOW = '-my-';
@@ -59,6 +64,10 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
         // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
     currentFolderId: string = DEFAULT_FOLDER_TO_SHOW;
+
+    formValues: FormValues;
+
+    processId;
 
     @Input()
     selectionMode = 'multiple';
@@ -143,6 +152,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 private router: Router,
                 private logService: LogService,
                 private preference: UserPreferencesService,
+                private authenticationService: AuthenticationService,
                 @Optional() private route: ActivatedRoute) {
     }
 
@@ -208,7 +218,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     giveDefaultPaginationWhenNotDefined() {
-        this.pagination =  <Pagination> {
+        this.pagination = <Pagination> {
             maxItems: this.preference.paginationSize,
             skipCount: 0,
             totalItems: 0,
@@ -444,6 +454,20 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             return this.contentService.hasPermission(parentNode, 'create');
         }
         return false;
+    }
+
+    startProcesAction($event) {
+        this.formValues['file'] = $event.value.entry;
+
+        const dialogRef = this.dialog.open(SelectProcessAppDialogComponent, {
+            width: '630px',
+            panelClass: 'adf-version-manager-dialog'
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            this.processId = result;
+        });
+
     }
 
     onChangePageSize(event: Pagination): void {
