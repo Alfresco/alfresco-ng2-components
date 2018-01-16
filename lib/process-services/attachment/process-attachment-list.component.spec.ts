@@ -189,7 +189,7 @@ describe('ProcessAttachmentListComponent', () => {
         actionButton.click();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            let actionMenu = fixture.debugElement.nativeElement.querySelectorAll('button.mat-menu-item').length;
+            let actionMenu = window.document.querySelectorAll('button.mat-menu-item').length;
             expect(window.document.querySelector('[data-automation-id="ADF_PROCESS_LIST.MENU_ACTIONS.VIEW_CONTENT"]')).not.toBeNull();
             expect(window.document.querySelector('[data-automation-id="ADF_PROCESS_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT"]')).not.toBeNull();
             expect(window.document.querySelector('[data-automation-id="ADF_PROCESS_LIST.MENU_ACTIONS.REMOVE_CONTENT"]')).toBeNull();
