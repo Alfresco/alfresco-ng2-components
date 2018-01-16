@@ -37,7 +37,7 @@ export class PeopleSelectorComponent {
     @Input()
     peopleId: UserProcessModel;
 
-    // Poorly documented Angular magic for [(peopleId)] to work SIMILAR to ngModel
+    // Poorly documented Angular magic for [(peopleId)]
     @Output()
     peopleIdChange: EventEmitter<number>;
 
@@ -51,8 +51,8 @@ export class PeopleSelectorComponent {
     constructor(
         private peopleProcessService: PeopleProcessService,
         private logService: LogService,
-        private translationService: TranslationService
-    ) {
+        private translationService: TranslationService) {
+
         this.peopleIdChange = new EventEmitter();
         this.performSearch = this.searchUser.bind(this);
         this.defaultPlaceholder = this.translationService.instant(DEFAULT_ASSIGNEE_PLACEHOLDER);
@@ -60,20 +60,25 @@ export class PeopleSelectorComponent {
 
     searchUser(searchWord: string): Observable<{} | UserProcessModel[]> {
         return this.peopleProcessService.getWorkflowUsers(undefined, searchWord)
-            .catch((error) => this.logService.error(error));
+            .catch(this.onSearchUserError.bind(this));
     }
 
-    onRowClick(user: UserProcessModel): void {
+    private onSearchUserError(): Observable<UserProcessModel[]> {
+        this.logService.error('getWorkflowUsers threw error');
+        return Observable.of([]);
+    }
+
+    userSelected(user: UserProcessModel): void {
         this.updateUserSelection(user);
     }
 
-    deselectUser(): void {
+    userDeselected(): void {
         this.updateUserSelection(undefined);
     }
 
     private updateUserSelection(user: UserProcessModel): void {
         this.selectedUser = user;
-        this.peopleIdChange.emit(user.id);
+        this.peopleIdChange.emit(user && user.id || undefined);
         this.searchFieldComponent.reset();
     }
 
