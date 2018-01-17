@@ -2,6 +2,8 @@
 
 Shows a notification message with optional feedback.
 
+![Notification Service screenshot](docassets/images/NotiService.png)
+
 ## Details
 
 The Notification Service is implemented on top of the Angular Material Design snackbar.
