@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CardViewDateItemModel, CardViewItem, CardViewTextItemModel } from '@alfresco/adf-core';
+import { CardViewDateItemModel, CardViewItem, CardViewTextItemModel, TranslationService } from '@alfresco/adf-core';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ProcessInstance } from '../models/process-instance.model';
 
@@ -30,6 +30,9 @@ export class ProcessInstanceHeaderComponent implements OnChanges {
     processInstance: ProcessInstance;
 
     properties: CardViewItem [];
+
+    constructor(private translationService: TranslationService) {
+    }
 
     ngOnChanges(changes: SimpleChanges) {
         this.refreshData();
@@ -50,28 +53,28 @@ export class ProcessInstanceHeaderComponent implements OnChanges {
                         value: this.processInstance.ended,
                         format: 'MMM DD YYYY',
                         key: 'ended',
-                        default: 'ADF_PROCESS_LIST.PROPERTIES.END_DATE_DEFAULT'
+                        default: this.translationService.instant('ADF_PROCESS_LIST.PROPERTIES.END_DATE_DEFAULT')
                     }),
                 new CardViewTextItemModel(
                     {
                         label: 'ADF_PROCESS_LIST.PROPERTIES.CATEGORY',
                         value: this.processInstance.processDefinitionCategory,
                         key: 'category',
-                        default: 'ADF_PROCESS_LIST.PROPERTIES.CATEGORY_DEFAULT'
+                        default: this.translationService.instant('ADF_PROCESS_LIST.PROPERTIES.CATEGORY_DEFAULT')
                     }),
                 new CardViewTextItemModel(
                     {
                         label: 'ADF_PROCESS_LIST.PROPERTIES.BUSINESS_KEY',
                         value: this.processInstance.businessKey,
                         key: 'businessKey',
-                        default: 'ADF_PROCESS_LIST.PROPERTIES.BUSINESS_KEY_DEFAULT'
+                        default: this.translationService.instant('ADF_PROCESS_LIST.PROPERTIES.BUSINESS_KEY_DEFAULT')
                     }),
                 new CardViewTextItemModel(
                     {
                         label: 'ADF_PROCESS_LIST.PROPERTIES.CREATED_BY',
                         value: this.getStartedByFullName(),
                         key: 'assignee',
-                        default: 'ADF_PROCESS_LIST.PROPERTIES.CREATED_BY_DEFAULT'
+                        default: this.translationService.instant('ADF_PROCESS_LIST.PROPERTIES.CREATED_BY_DEFAULT')
                     }),
                 new CardViewDateItemModel(
                     {
@@ -89,7 +92,7 @@ export class ProcessInstanceHeaderComponent implements OnChanges {
                     {label: 'ADF_PROCESS_LIST.PROPERTIES.DESCRIPTION',
                     value: this.processInstance.processDefinitionDescription,
                     key: 'description',
-                    default: 'ADF_PROCESS_LIST.PROPERTIES.DESCRIPTION_DEFAULT'
+                    default: this.translationService.instant('ADF_PROCESS_LIST.PROPERTIES.DESCRIPTION_DEFAULT')
                 })
             ];
         }
