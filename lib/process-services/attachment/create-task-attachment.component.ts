@@ -25,12 +25,19 @@ import { ProcessContentService } from '@alfresco/adf-core';
 })
 export class AttachmentComponent implements OnChanges {
 
+    /** (required) The numeric ID of the task to display. */
     @Input()
     taskId: string;
 
+    /** Emitted when an error occurs while creating or uploading an
+     *  attachment from the user within the component.
+     */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
+    /** Emitted when an attachment is created or uploaded successfully
+     * from within the component.
+     */
     @Output()
     success: EventEmitter<any> = new EventEmitter<any>();
 

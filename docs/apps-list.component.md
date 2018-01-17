@@ -1,4 +1,4 @@
-# Activiti Apps Component
+# Apps List Component
 
 Shows all available apps.
 
@@ -15,15 +15,16 @@ Shows all available apps.
 ### Properties
 
 | Name | Type | Description |
-| --- | --- | --- |
-| layoutType | string | (**required**) Define the layout of the apps. There are two possible values: GRID or LIST. |
-| filtersAppId | Object | Provide a way to filter the apps to show. |
+| ---- | ---- | ----------- |
+| layoutType | `string` | (\*\*required\*\*) Defines the layout of the apps. There are two possible values, "GRID" and "LIST".<br/> Default value: `AppsListComponent.LAYOUT_GRID` |
+| filtersAppId | `any[]` | Provides a way to filter the apps to show.  |
 
 ### Events
 
-| Name | Description |
-| --- | --- |
-| appClick | Raised when an app entry is clicked |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| appClick | `EventEmitter<AppDefinitionRepresentationModel>` | Emitted when an app entry is clicked. |
+| error | `EventEmitter<any>` | Emitted when an error occurs. |
 
 ## Details
 

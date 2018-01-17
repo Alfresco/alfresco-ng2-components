@@ -54,17 +54,17 @@ Displays the documents from a repository.
 | navigate | `boolean` | Toggles navigation to folder content or file preview <br/> Default value: `true` |
 | navigationMode | `string` | User interaction for folder navigation or file preview. Valid values are "click" and "dblclick". <br/> Default value: `DocumentListComponent.DOUBLE_CLICK_NAVIGATION` |
 | thumbnails | `boolean` | Show document thumbnails rather than icons <br/> Default value: `false` |
-| selectionMode | `string` | Row selection mode. Can be null, \`single\` or \`multiple\`. For \`multiple\` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows.<br/> Default value: `'single'` |
+| selectionMode | `string` | Row selection mode. Can be null, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows.<br/> Default value: `'single'` |
 | multiselect | `boolean` | Toggles multiselect mode <br/> Default value: `false` |
 | contentActions | `boolean` | Toggles content actions for each row <br/> Default value: `false` |
 | contentActionsPosition | `string` | Position of the content actions dropdown menu. Can be set to "left" or "right". <br/> Default value: `'right'` |
 | contextMenuActions | `boolean` | Toggles context menus for each row <br/> Default value: `false` |
 | emptyFolderImageUrl | `string` | Custom image for empty folder <br/> Default value: `'./assets/images/empty_doc_lib.svg'` |
 | allowDropFiles | `boolean` | Toggle file drop support for rows (see Upload Directive for further details <br/> Default value: `false` |
-| sorting | `string[]` | Defines default sorting. The format is an array of 2 strings \`\[key, direction]\` i.e. \`\['name', 'desc']\` or \`\['name', 'asc']\`. Set this value only if you want to override the default sorting detected by the component based on columns. |
+| sorting | `string[]` | Defines default sorting. The format is an array of 2 strings `[key, direction]` i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want to override the default sorting detected by the component based on columns. |
 | rowStyle | `string` | The inline style to apply to every row. See the Angular NgStyle docs for more details and usage examples. |
 | rowStyleClass | `string` | The CSS class to apply to every row  |
-| loading | `boolean` | Toggles the loading state and animated spinners for the component. Used in combination with \`navigate=false\` to perform custom navigation and loading state indication.<br/> Default value: `false` |
+| loading | `boolean` | Toggles the loading state and animated spinners for the component. Used in combination with `navigate=false` to perform custom navigation and loading state indication.<br/> Default value: `false` |
 | rowFilter | `any` | Custom row filter <br/> Default value: `null` |
 | imageResolver | `any` | Custom image resolver <br/> Default value: `null` |
 | currentFolderId | `string` | The ID of the folder node to display or a reserved string alias for special sources <br/> Default value: `null` |
@@ -81,7 +81,7 @@ Displays the documents from a repository.
 | nodeClick | `EventEmitter<NodeEntityEvent>` | Emitted when the user clicks a list node |
 | nodeDblClick | `EventEmitter<NodeEntityEvent>` | Emitted when the user double-clicks a list node |
 | folderChange | `EventEmitter<NodeEntryEvent>` | Emitted when the current display folder changes |
-| preview | `EventEmitter<NodeEntityEvent>` | Emitted when the user acts upon files with either single or double click (depends on \`navigation-mode\`). Useful for integration with the Viewer component. |
+| preview | `EventEmitter<NodeEntityEvent>` | Emitted when the user acts upon files with either single or double click (depends on `navigation-mode`). Useful for integration with the Viewer component. |
 | ready | `EventEmitter<NodePaging>` | Emitted when the Document List has loaded all items and is ready for use |
 | error | `EventEmitter<any>` | Emitted when the API fails to get the Document List data |
 

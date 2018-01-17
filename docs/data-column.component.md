@@ -33,17 +33,16 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
 
 ### Properties
 
-| Name | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| key | string |  | Data source key, can be either column/property key like `title` or property path like `createdBy.name` |
-| type | string | text | Value type for the column. Possible settings are 'text', 'image', 'date', 'fileSize' and 'location'. |
-| format | string |  | Value format (if supported by components), for example format of the date |
-| sortable | boolean | true | Toggles ability to sort by this column, for example by clicking the column header |
-| title | string |  | Display title of the column, typically used for column headers. You can use the i18n resouce key to get it translated automatically. |
-| template | `TemplateRef` |  | Custom column template |
-| sr-title | string |  | Screen reader title, used for accessibility purposes |
-| class | string |  | Additional CSS class to be applied to column (header and cells) |
-| formatTooltip | Function |  | Custom tooltip formatter function. |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| key | `string` | Data source key. Can be either a column/property key like `title` or a property path like `createdBy.name`.  |
+| type | `string` | Value type for the column. Possible settings are 'text', 'image', 'date', 'fileSize' and 'location'.<br/> Default value: `'text'` |
+| format | `string` | Value format (if supported by the parent component), for example format of the date.  |
+| sortable | `boolean` | Toggles ability to sort by this column, for example by clicking the column header. <br/> Default value: `true` |
+| title | `string` | Display title of the column, typically used for column headers. You can use the i18n resource key to get it translated automatically.<br/> Default value: `''` |
+| formatTooltip | `Function` | Custom tooltip formatter function.  |
+| srTitle | `string` | Title to be used for screen readers.  |
+| cssClass | `string` | Additional CSS class to be applied to column (header and cells).  |
 
 ## Details
 

@@ -17,12 +17,12 @@ Displays Upload Component (Drag and Click) to upload the attachment to a specifi
 ### Properties
 
 | Name | Type | Description |
-| --- | --- | --- |
+| ---- | ---- | ----------- |
 | taskId | string | (**required**): The numeric ID of the task to display |
 
 ### Events
 
 | Name | Description |
-| --- | --- |
+| ---- | ----------- |
 | error | Raised when the error occurred while creating/uploading the attachment by the user from within the component |
 | success | Raised when the attachment created/uploaded successfully from within the component |

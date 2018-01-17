@@ -4,6 +4,7 @@ import * as path from "path";
 import * as program from "commander";
 
 import * as heading from "mdast-util-heading-range";
+import * as remark from "remark";
 
 import * as unist from "../unistHelpers";
 import { JsxEmit } from "typescript";
@@ -121,7 +122,9 @@ function getPropDataFromClass(
     for (var i = 0; i < classDec.members.length; i++) {
         let member = classDec.members[i];
 
-        if (ts.isPropertyDeclaration(member)) {
+        if (ts.isPropertyDeclaration(member) ||
+            ts.isGetAccessorDeclaration(member) ||
+            ts.isSetAccessorDeclaration(member)) {
             let prop: ts.PropertyDeclaration = member;
 
             let mods = ts.getCombinedModifierFlags(prop);
@@ -188,7 +191,7 @@ function buildInputsTable(inputs: any[]) {
             pDesc = pDesc.replace(/[\n\r]+/, " ");
         }
 
-        var descCellContent = [unist.makeText(pDesc)];
+        var descCellContent = remark().parse(pDesc).children;
 
         if (pDefault) {
             descCellContent.push(unist.makeHTML("<br/>"));
@@ -235,7 +238,7 @@ function buildOutputsTable(outputs: any[]) {
         var cells = [
             unist.makeTableCell([unist.makeText(eName)]),
             unist.makeTableCell([unist.makeInlineCode(eType)]),
-            unist.makeTableCell([unist.makeText(eDesc)])
+            unist.makeTableCell(remark().parse(eDesc).children)
         ];
 
         rows.push(unist.makeTableRow(cells));
