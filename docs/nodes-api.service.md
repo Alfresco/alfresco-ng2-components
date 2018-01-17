@@ -152,14 +152,9 @@ and
 pages in the Alfresco JS API for further details and options. Note that you can also use the
 [Deleted Nodes Api service](deleted-nodes-api.service.md) get a list of all items currently in the trashcan.
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-
-<!-- seealso start -->
-
 ## See also
 
 -   [Document library model](document-library.model.md)
 -   [Deleted nodes api service](deleted-nodes-api.service.md)
 -   [Document list component](document-list.component.md)
 -   [Node service](node.service.md)
-    <!-- seealso end -->

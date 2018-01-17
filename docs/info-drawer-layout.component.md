@@ -26,13 +26,10 @@ Displays a sidebar-style information panel.
 
 As the name suggests, this is basically just a layout with CSS styling. There are three regions where you can add your own content, as shown in the example:
 
-- info-drawer-title
-- info-drawer-buttons
-- info-drawer-content
+-   info-drawer-title
+-   info-drawer-buttons
+-   info-drawer-content
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
 ## See also
 
-- [Info drawer component](info-drawer.component.md)
-<!-- seealso end -->
+-   [Info drawer component](info-drawer.component.md)

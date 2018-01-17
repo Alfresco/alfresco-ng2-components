@@ -21,10 +21,7 @@ See the
 [getPerson](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/PeopleApi.md#getPerson)
 method in the Alfresco JS API for more information about the REST calls used by this service.
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
 ## See also
 
-- [People process service](people-process.service.md)
-- [Ecm user model](ecm-user.model.md)
-<!-- seealso end -->
+-   [People process service](people-process.service.md)
+-   [Ecm user model](ecm-user.model.md)
