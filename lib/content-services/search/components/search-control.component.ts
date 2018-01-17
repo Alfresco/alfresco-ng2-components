@@ -19,10 +19,10 @@ import { AuthenticationService, ThumbnailService } from '@alfresco/adf-core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output,
          QueryList, ViewEncapsulation, ViewChild, ViewChildren, ElementRef } from '@angular/core';
-import { MinimalNodeEntity, QueryBody } from 'alfresco-js-api';
+import { MinimalNodeEntity } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import { SearchComponent } from './search.component';
+import { SearchComponent, QueryBodyFactoryFunction } from './search.component';
 import { MatListItem } from '@angular/material';
 
 @Component({
@@ -64,7 +64,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     liveSearchMaxResults: number = 5;
 
     @Input()
-    customQueryBody: QueryBody;
+    customQueryBodyBuilder: QueryBodyFactoryFunction;
 
     @Output()
     submit: EventEmitter<any> = new EventEmitter();

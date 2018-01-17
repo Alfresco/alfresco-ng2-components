@@ -34,6 +34,8 @@ import {
 import { NodePaging, QueryBody } from 'alfresco-js-api';
 import { Subject } from 'rxjs/Subject';
 
+export type QueryBodyFactoryFunction = (searchTerm: string) => QueryBody;
+
 @Component({
     selector: 'adf-search',
     templateUrl: './search.component.html',
@@ -67,7 +69,7 @@ export class SearchComponent implements AfterContentInit, OnChanges {
     searchTerm: string = '';
 
     @Input()
-    queryBody: QueryBody;
+    buildQueryBody: QueryBodyFactoryFunction = this.generateDefaultSearchNode.bind(this);
 
     @Input('class')
     set classList(classList: string) {
@@ -119,10 +121,6 @@ export class SearchComponent implements AfterContentInit, OnChanges {
 
         if (changes.searchTerm && changes.searchTerm.currentValue) {
             this.loadSearchResults(changes.searchTerm.currentValue);
-        } else if (changes.queryBody && changes.queryBody.currentValue) {
-            this.loadSearchResults();
-        } else {
-            this.loadSearchResults(this.searchTerm);
         }
     }
 
@@ -146,7 +144,7 @@ export class SearchComponent implements AfterContentInit, OnChanges {
     }
 
     private loadSearchResults(searchTerm?: string) {
-        let searchOpts: QueryBody = this.getQueryBody(searchTerm);
+        let searchOpts: QueryBody = this.buildQueryBody(searchTerm);
 
         if (this.hasValidSearchQuery(searchOpts)) {
             this.searchService
@@ -166,17 +164,6 @@ export class SearchComponent implements AfterContentInit, OnChanges {
                     });
         } else {
             this.cleanResults();
-        }
-    }
-
-    private getQueryBody(searchTerm: string): QueryBody {
-        if (this.queryBody) {
-            if (!this.queryBody.query.query && searchTerm) {
-                this.queryBody.query.query = searchTerm;
-            }
-            return this.queryBody;
-        } else {
-            return this.generateDefaultSearchNode(searchTerm);
         }
     }
 
