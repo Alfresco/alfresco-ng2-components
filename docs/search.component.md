@@ -98,6 +98,7 @@ Which will look like :
 ### Attach an input field to the search
 
 You can also attach your input field to the adf-search component via the trigger [searchAutocomplete]
+Yuo can do this by exporting the adf-search panel instance into a local template variable (here we called it "search"), and binding that variable to the input's searchAutocomplete property.
 
 ```html
 <input type="text" [searchAutocomplete]="search">
