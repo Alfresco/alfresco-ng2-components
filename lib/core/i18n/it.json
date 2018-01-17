@@ -1,4 +1,25 @@
 {
+  "FORM": {
+    "START_FORM": {
+      "TITLE": "Modulo di inizio"
+    },
+    "PREVIEW": {
+      "IMAGE_NOT_AVAILABLE": "Anteprima non disponibile"
+    },
+    "FIELD": {
+      "UPLOAD": "Carica",
+      "REQUIRED": "*Obbligatorio",
+      "VALIDATOR": {
+        "INVALID_NUMBER": "Usa un formato numerico diverso",
+        "INVALID_DATE": "Usa un formato di data diverso",
+        "INVALID_VALUE": "Immetti un valore diverso",
+        "NOT_GREATER_THAN": "Non può essere maggiore di {{ maxValue }}",
+        "NOT_LESS_THAN": "Non può essere inferiore di {{ minValue }}",
+        "AT_LEAST_LONG": "Immetti almeno {{ minLength }} caratteri",
+        "NO_LONGER_THAN": "Immetti non più di {{ maxLength }} caratteri"
+      }
+    }
+  },
   "CORE": {
     "PAGINATION": {
       "ITEMS_RANGE": "Visualizzazione di {{ range }} su {{ total }}",

@@ -1,4 +1,25 @@
 {
+  "FORM": {
+    "START_FORM": {
+      "TITLE": "启动表单"
+    },
+    "PREVIEW": {
+      "IMAGE_NOT_AVAILABLE": "预览不可用"
+    },
+    "FIELD": {
+      "UPLOAD": "上传",
+      "REQUIRED": "*必填项",
+      "VALIDATOR": {
+        "INVALID_NUMBER": "使用其他数字格式",
+        "INVALID_DATE": "使用其他日期格式",
+        "INVALID_VALUE": "输入其他值",
+        "NOT_GREATER_THAN": "不得大于 {{ maxValue }}",
+        "NOT_LESS_THAN": "不得小于 {{ minValue }}",
+        "AT_LEAST_LONG": "输入至少 {{ minLength }} 个字符",
+        "NO_LONGER_THAN": "不得输入超过 {{ maxLength }} 个字符"
+      }
+    }
+  },
   "CORE": {
     "PAGINATION": {
       "ITEMS_RANGE": "显示 {{range}}/{{total}}",

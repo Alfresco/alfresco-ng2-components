@@ -458,17 +458,21 @@ export class ViewerComponent implements OnChanges {
                     await this.renditionService.convert(nodeId, 'pdf').toPromise();
                     this.viewerType = 'pdf';
                     this.urlFileContent = this.apiService.contentApi.getRenditionUrl(nodeId, 'pdf');
-                } catch {
+                } catch (error) {
+                    this.logService.error(error);
                 }
             }
-        } catch {
+        } catch (error) {
+            this.logService.error(error);
+
             try {
                 const imagePreview = await this.apiService.renditionsApi.getRendition(nodeId, 'imgpreview');
                 if (imagePreview.entry.status.toString() === 'CREATED') {
                     this.viewerType = 'image';
                     this.urlFileContent = this.apiService.contentApi.getRenditionUrl(nodeId, 'imgpreview');
                 }
-            } catch {
+            } catch (error) {
+                this.logService.error(error);
             }
         }
 
@@ -484,14 +488,16 @@ export class ViewerComponent implements OnChanges {
                 this.viewerType = 'pdf';
                 this.urlFileContent = this.apiService.contentApi.getSharedLinkRenditionUrl(sharedId, 'pdf');
             }
-        } catch {
+        } catch (error) {
+            this.logService.error(error);
             try {
                 const rendition = await this.apiService.renditionsApi.getSharedLinkRendition(sharedId, 'imgpreview');
                 if (rendition.entry.status.toString() === 'CREATED') {
                     this.viewerType = 'image';
                     this.urlFileContent = this.apiService.contentApi.getSharedLinkRenditionUrl(sharedId, 'imgpreview');
                 }
-            } catch {
+            } catch (error) {
+                this.logService.error(error);
             }
         }
 

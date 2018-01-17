@@ -1,4 +1,25 @@
 {
+  "FORM": {
+    "START_FORM": {
+      "TITLE": "Beginformulier"
+    },
+    "PREVIEW": {
+      "IMAGE_NOT_AVAILABLE": "Preview niet beschikbaar"
+    },
+    "FIELD": {
+      "UPLOAD": "Uploaden",
+      "REQUIRED": "*Verplicht",
+      "VALIDATOR": {
+        "INVALID_NUMBER": "Gebruik een andere getalnotatie",
+        "INVALID_DATE": "Gebruik een andere datumnotatie",
+        "INVALID_VALUE": "Voer een andere waarde in",
+        "NOT_GREATER_THAN": "Mag niet groter zijn dan {{ maxValue }}",
+        "NOT_LESS_THAN": "Mag niet kleiner zijn dan {{ minValue }}",
+        "AT_LEAST_LONG": "Voer minimaal {{ minLength }} tekens in",
+        "NO_LONGER_THAN": "Voer maximaal {{ maxLength }} tekens in"
+      }
+    }
+  },
   "CORE": {
     "PAGINATION": {
       "ITEMS_RANGE": "{{ range }} van {{ total }} wordt weergegeven",

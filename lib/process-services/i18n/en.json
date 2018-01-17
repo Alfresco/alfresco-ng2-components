@@ -302,5 +302,13 @@
       "NEW_TASK": "New Task",
       "NEW_PROCESS": "New Process"
     }
+  },
+  "APP":{
+    "DIALOG" :{
+      "START" : "Start",
+      "TITLE" : "Select a process",
+      "LIST": "Proces list",
+      "ERROR" : "Possible connection with process service not present"
+    }
   }
 }

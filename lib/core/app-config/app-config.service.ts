@@ -30,7 +30,8 @@ export class AppConfigService {
         },
         ecmHost: 'http://{hostname}{:port}/ecm',
         bpmHost: 'http://{hostname}{:port}/bpm',
-        logLevel: 'silent'
+        logLevel: 'silent',
+        alfrescoRepositoryName : 'alfresco-1'
     };
 
     constructor(private http: HttpClient) {
