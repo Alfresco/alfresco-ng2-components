@@ -1,4 +1,4 @@
-# Alfresco Webscript Get component
+# Webscript component
 
 Provides access to Webscript features.
 

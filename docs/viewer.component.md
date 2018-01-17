@@ -1,4 +1,4 @@
-# Alfresco Viewer component
+# Viewer component
 
 Displays content from an ACS repository.
 
@@ -49,7 +49,7 @@ Using with file url:
 | Name | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
 | fileNodeId | string |  | Node Id of the file to load |
-| sharedLinkId | string | | Shared link id (to display shared file) |
+| sharedLinkId | string |  | Shared link id (to display shared file) |
 | urlFile | string |  | If you want to load an external file that does not come from ECM you can use this Url where to load the file |
 | urlFileViewer | string | null | Viewer to use with the `urlFile` address (`pdf`, `image`, `media`, `text`). Used when `urlFile` has no filename and extension. |
 | urlBlob | Blob |  | If you want to load a Blob File |

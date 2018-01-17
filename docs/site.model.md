@@ -40,9 +40,6 @@ class SiteMembersModel {
 }
 ```
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
 ## See also
 
-- [Sites api service](sites.service.md)
-<!-- seealso end -->
+-   [Sites api service](sites-api.service.md)
