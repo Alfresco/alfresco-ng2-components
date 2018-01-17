@@ -17,7 +17,7 @@
 
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 
-import { BpmUserService, CardViewDateItemModel, CardViewItem, CardViewMapItemModel, CardViewTextItemModel, LogService } from '@alfresco/adf-core';
+import { BpmUserService, CardViewDateItemModel, CardViewItem, CardViewMapItemModel, CardViewTextItemModel, LogService, TranslationService } from '@alfresco/adf-core';
 
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
@@ -48,6 +48,7 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
 
     constructor(private activitiTaskService: TaskListService,
                 private bpmUserService: BpmUserService,
+                private translationService: TranslationService,
                 private logService: LogService) {
     }
 
@@ -71,7 +72,7 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
                      label: 'ADF_TASK_LIST.PROPERTIES.ASSIGNEE',
                      value: this.taskDetails.getFullName(),
                      key: 'assignee',
-                     default: 'ADF_TASK_LIST.PROPERTIES.ASSIGNEE_DEFAULT',
+                     default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.ASSIGNEE_DEFAULT'),
                      clickable: !this.isCompleted()
                     }
                 ),
@@ -95,7 +96,7 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
                         label: 'ADF_TASK_LIST.PROPERTIES.DUE_DATE',
                         value: this.taskDetails.dueDate,
                         key: 'dueDate',
-                        default: 'ADF_TASK_LIST.PROPERTIES.DUE_DATE_DEFAULT',
+                        default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.DUE_DATE_DEFAULT'),
                         editable: true
                     }
                 ),
@@ -104,7 +105,7 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
                         label: 'ADF_TASK_LIST.PROPERTIES.CATEGORY',
                         value: this.taskDetails.category,
                         key: 'category',
-                        default: 'ADF_TASK_LIST.PROPERTIES.CATEGORY_DEFAULT'
+                        default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.CATEGORY_DEFAULT')
                     }
                 ),
                 new CardViewMapItemModel(
@@ -141,7 +142,7 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
                         label: 'ADF_TASK_LIST.PROPERTIES.DESCRIPTION',
                         value: this.taskDetails.description,
                         key: 'description',
-                        default: 'ADF_TASK_LIST.PROPERTIES.DESCRIPTION_DEFAULT',
+                        default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.DESCRIPTION_DEFAULT'),
                         multiline: true,
                         editable: true
                     }
@@ -151,7 +152,7 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
                         label: 'ADF_TASK_LIST.PROPERTIES.FORM_NAME',
                         value: this.formName,
                         key: 'formName',
-                        default: 'ADF_TASK_LIST.PROPERTIES.FORM_NAME_DEFAULT'
+                        default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.FORM_NAME_DEFAULT')
                     }
                 )
             ];
