@@ -40,12 +40,6 @@ and
 [getSite](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitesApi.md#getSite)
 for more information about the available options.
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
 ## See also
 
-- [Site model](site.model.md)
-<!-- seealso end -->
-
-
-
+-   [Site model](site.model.md)

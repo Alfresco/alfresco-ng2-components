@@ -18,3 +18,8 @@ Supplies custom HTML to be included in a Toolbar component title.
 ## Details
 
 You can use this component to include any HTML or Angular components in the Toolbar title section.
+
+## See Also
+
+-   [Toolbar component](toolbar.component.md)
+-   [Toolbar divider component](toolbar-divider.component.md)
