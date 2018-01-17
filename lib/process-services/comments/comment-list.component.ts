@@ -27,9 +27,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 export class CommentListComponent {
 
+    /** The comments data used to populate the list. */
     @Input()
     comments: CommentProcessModel[];
 
+    /** Emitted when the user clicks on one of the comment rows. */
     @Output()
     clickRow: EventEmitter<CommentProcessModel> = new EventEmitter<CommentProcessModel>();
 

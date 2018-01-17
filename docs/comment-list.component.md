@@ -54,12 +54,12 @@ In the component template use the comment list component:
 
 ### Properties
 
-| Name | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| comments | CommentProcessModel\[] |  | The comments data used to populate the list |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| comments | `any[]` | The comments data used to populate the list.  |
 
 ### Events
 
-| Name | Description |
-| ---- | ----------- |
-| clickRow | Emitted when the user clicks on one of the comment rows |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| clickRow | `EventEmitter<any>` | Emitted when the user clicks on one of the comment rows. |

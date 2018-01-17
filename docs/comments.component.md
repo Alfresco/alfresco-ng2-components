@@ -1,4 +1,4 @@
-# ADF Comments Component
+# Comments Component
 
 Displays comments from users involved in a specified task and allows an involved user to add a comment to the task.
 
@@ -16,12 +16,12 @@ Displays comments from users involved in a specified task and allows an involved
 ### Properties
 
 | Name | Type | Description |
-| --- | --- | --- |
-| taskId | string | The numeric ID of the task |
-| readOnly | boolean | The boolean flag |
+| ---- | ---- | ----------- |
+| taskId | `string` | The numeric ID of the task.  |
+| readOnly | `boolean` | Are the comments read only? <br/> Default value: `false` |
 
 ### Events
 
-| Name | Description |
-| --- | --- |
-| error | Raised when an error occurs while displaying/adding a comment |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| error | `EventEmitter<any>` | Emitted when an error occurs while displaying/adding a comment. |

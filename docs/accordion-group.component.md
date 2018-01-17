@@ -33,11 +33,18 @@ export class MyComponent implements OnInit {
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| heading | string | Title heading for the group. |
-| isSelected | boolean | Is this group currently selected? |
-| headingIcon | string | The material design icon. |
-| hasAccordionIcon | boolean | Should the (expanded) accordion icon be shown? Defaults to true |
-| headingIconTooltip | string | Tooltip message to be shown for headingIcon |
+| heading | `string` | Title heading for the group.  |
+| headingIcon | `string` | The material design icon.  |
+| headingIconTooltip | `string` | Tooltip message to be shown for headingIcon  |
+| hasAccordionIcon | `boolean` | Should the (expanded) accordion icon be shown? <br/> Default value: `true` |
+| isOpen | `boolean` | Is this group currently open?  |
+| isSelected | `boolean` | Is this group currently selected?  |
+
+### Events
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| headingClick | `EventEmitter<any>` | Emitted when the heading is clicked. |
 
 ## Details
 

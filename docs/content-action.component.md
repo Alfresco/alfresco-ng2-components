@@ -74,24 +74,24 @@ export class MyView {
 
 ### Properties
 
-| Name | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| `target` | string |  | "document" or "folder" |
-| `title` | string |  | The title of the action as shown in the menu |
-| `icon` | string |  | The name of the icon to display next to the menu command (can be left blank) |
-| `handler` | string |  | System type actions. Can be "delete", "download", "copy" or "move" |
-| `permission` | string |  | The name of the permission |
-| `disabled` | boolean |  | Is the menu item disabled? |
-| `disableWithNoPermission` | boolean |  | Should this action be disabled in the menu if the user doesn't have permission for it? |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| title | `string` | The title of the action as shown in the menu. <br/> Default value: `'Action'` |
+| icon | `string` | The name of the icon to display next to the menu command (can be left blank).  |
+| handler | `string` | System actions. Can be "delete", "download", "copy" or "move".  |
+| target | `string` | Type of item that the action appies to. Can be "document" or "folder"  |
+| permission | `string` | The permission type.  |
+| disableWithNoPermission | `boolean` | Should this action be disabled in the menu if the user doesn't have permission for it?  |
+| disabled | `boolean` | Is the menu item disabled? <br/> Default value: `false` |
 
 ### Events
 
-| Name | Handler | Description |
-| ---- | ------- | ----------- |
-| `execute` | All | Emitted when user clicks on the action. For combined handlers see below |
-| `permissionEvent` | All | Emitted when a permission error happens |
-| `success` | copy, move, delete | Emitted on successful action with the success string message |
-| `error` | copy, move | Emitted on unsuccessful action with the error event |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| execute | `EventEmitter<{}>` | Emitted when the user selects the action from the menu. |
+| permissionEvent | `EventEmitter<{}>` | Emitted when a permission error occurs |
+| error | `EventEmitter<{}>` | Emitted when an error occurs during the action. Applies to copy and move actions. |
+| success | `EventEmitter<{}>` | Emitted when the action succeeds with the success string message. Applies to copy, move and delete actions. |
 
 ## Details
 

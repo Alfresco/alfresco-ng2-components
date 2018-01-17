@@ -35,36 +35,51 @@ import { ContentActionListComponent } from './content-action-list.component';
 })
 export class ContentActionComponent implements OnInit, OnChanges {
 
+    /** The title of the action as shown in the menu. */
     @Input()
     title: string = 'Action';
 
+    /** The name of the icon to display next to the menu command (can be left blank). */
     @Input()
     icon: string;
 
+    /** System actions. Can be "delete", "download", "copy" or "move". */
     @Input()
     handler: string;
 
+    /** Type of item that the action appies to. Can be "document" or "folder" */
     @Input()
     target: string;
 
+    /** The permission type. */
     @Input()
     permission: string;
 
+    /** Should this action be disabled in the menu if the user doesn't have permission for it? */
     @Input()
     disableWithNoPermission: boolean;
 
+    /** Is the menu item disabled? */
     @Input()
     disabled: boolean = false;
 
+    /** Emitted when the user selects the action from the menu. */
     @Output()
     execute = new EventEmitter();
 
+    /** Emitted when a permission error occurs */
     @Output()
     permissionEvent = new EventEmitter();
 
+    /** Emitted when an error occurs during the action.
+     * Applies to copy and move actions.
+     */
     @Output()
     error = new EventEmitter();
 
+    /** Emitted when the action succeeds with the success string message.
+     * Applies to copy, move and delete actions.
+     */
     @Output()
     success = new EventEmitter();
 
