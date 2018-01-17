@@ -16,6 +16,7 @@ import { AppLayoutComponent } from './components/app-layout/app-layout.component
 import { HomeComponent } from './components/home/home.component';
 import { SearchBarComponent } from './components/search/search-bar.component';
 import { SearchResultComponent } from './components/search/search-result.component';
+import { SearchExtendedComponent } from './components/search/search-extended.component';
 import { AboutComponent } from './components/about/about.component';
 import { FormComponent } from './components/form/form.component';
 import { FormListComponent } from './components/form/form-list.component';
@@ -68,6 +69,7 @@ import { SharedLinkViewComponent } from './components/shared-link-view/shared-li
         HomeComponent,
         SearchBarComponent,
         SearchResultComponent,
+        SearchExtendedComponent,
         AboutComponent,
         ProcessServiceComponent,
         ShowDiagramComponent,

@@ -1,0 +1,62 @@
+div.search-results-container {
+    padding: 0 20px 20px 20px;
+}
+
+.adf-search-title {
+    font-size: 22px;
+    padding: 15px 0 15px 0;
+}
+
+@media screen and (max-width: 600px) {
+    :host .col-display-name {
+        min-width: 100px;
+    }
+    :host .col-modified-at, :host .col-modified-by {
+        display: none;
+    }
+    :host div.search-results-container table {
+        width: 100%;
+    }
+}
+
+.adf-search-results-content{
+    display: flex;
+}
+
+.search-extended-input-containers {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-evenly;
+}
+
+.search-extended-input-textarea {
+    width: 300px;
+}
+
+.search-extended-label-error {
+    display: flex;
+    flex-direction: column;
+}
+
+.example-card {
+    width: 200px;
+    flex: 0 20%;
+    margin: 15px;
+  }
+
+  .example-card-search-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .example-header-image {
+
+    background-size: cover;
+    margin-bottom: 15px;
+  }
+
+  .example-search-input {
+      width: 100px;
+      border: 1 solid;
+      border-color: black;
+  }

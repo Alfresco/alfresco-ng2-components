@@ -25,7 +25,8 @@
         "SOCIAL": "Social",
         "SETTINGS": "Settings",
         "OVERLAY_VIEWER": "Overlay Viewer",
-        "ABOUT": "About"
+        "ABOUT": "About",
+        "SEARCH": "Extended Search"
     },
     "DOCUMENT_LIST": {
         "MULTISELECT_CHECKBOXES" :"Multiselect (with checkboxes)",
