@@ -42,8 +42,10 @@ export class SelectAppsDialogComponent {
                 });
             },
             (err) => {
-                const translatedErrorMessage: any = this.translateService.get('APP.DIALOG.ERROR');
-                this.notificationService.openSnackMessage(translatedErrorMessage.value, 4000);
+                this.translateService.get('TAG.MESSAGES.EXIST').subscribe((error) => {
+                    this.notificationService.openSnackMessage(error, 4000);
+                    ;
+                });
             }
         );
 
