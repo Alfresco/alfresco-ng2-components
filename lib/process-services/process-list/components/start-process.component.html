@@ -17,6 +17,7 @@
             </mat-select>
         </mat-form-field>
         <adf-start-form *ngIf="hasStartForm()"
+                        [data]="values"
             [disableStartProcessButton]="!hasProcessName()"
 			[processDefinitionId]="currentProcessDef.id"
 			(outcomeClick)="onOutcomeClick($event)"

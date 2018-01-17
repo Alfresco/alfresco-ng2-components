@@ -16,3 +16,4 @@
  */
 
 export * from './apps-list.component';
+export * from './select-apps-dialog-component';

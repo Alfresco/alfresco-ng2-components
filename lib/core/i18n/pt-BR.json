@@ -1,4 +1,25 @@
 {
+  "FORM": {
+    "START_FORM": {
+      "TITLE": "Iniciar formulário"
+    },
+    "PREVIEW": {
+      "IMAGE_NOT_AVAILABLE": "Pré-visualização não disponível"
+    },
+    "FIELD": {
+      "UPLOAD": "Carregar",
+      "REQUIRED": "*Obrigatório",
+      "VALIDATOR": {
+        "INVALID_NUMBER": "Use um formato de número diferente",
+        "INVALID_DATE": "Use um formato de data diferente",
+        "INVALID_VALUE": "Insira um valor diferente",
+        "NOT_GREATER_THAN": "Não pode ser maior do que {{ maxValue }}",
+        "NOT_LESS_THAN": "Não pode ser menor do que {{ minValue }}",
+        "AT_LEAST_LONG": "Insira no mínimo {{ minLength }} caracteres",
+        "NO_LONGER_THAN": "Insira no máximo {{ maxLength }} caracteres"
+      }
+    }
+  },
   "CORE": {
     "PAGINATION": {
       "ITEMS_RANGE": "Mostrando {{ range }} de {{ total }}",

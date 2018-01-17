@@ -191,6 +191,7 @@
                         format="timeAgo"
                         class="desktop-only">
                     </data-column>
+
                 </data-columns>
 
                 <content-actions>
@@ -268,6 +269,13 @@
                         (success)="onDeleteActionSuccess($event)"
                         handler="delete">
                     </content-action>
+                    <content-action
+                        *ngIf="authenticationService.isBpmLoggedIn()"
+                        icon="play_arrow"
+                        target="document" 
+                        title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.PROCESS_ACTION' | translate}}"
+                        (execute)="startProcesAction($event)">
+                    </content-action>
                 </content-actions>
             </adf-document-list>
             <adf-pagination
@@ -290,6 +298,7 @@
                 {{ 'ADF-DOCUMENT-LIST.LAYOUT.LOAD_MORE' | translate }}
             </adf-infinite-pagination>
         </adf-upload-drag-area>
+
         <adf-info-drawer-layout *ngIf="showVersions" class="adf-manage-versions-sidebar" fxFlex="0 0 auto">
             <div info-drawer-content>
                 <ng-container *ngIf="hasOneFileSelected();else choose_document_template">
@@ -317,6 +326,13 @@
 </div>
 
 <context-menu-holder></context-menu-holder>
+
+<div *ngIf="processId" >
+    <adf-start-process
+        [values]="formValues"
+        [appId]="processId">
+    </adf-start-process>
+</div>
 
 <div class="adf-content-service-settings">
 

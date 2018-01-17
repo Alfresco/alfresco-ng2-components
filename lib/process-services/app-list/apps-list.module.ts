@@ -22,6 +22,7 @@ import { MaterialModule } from '../material.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { AppsListComponent } from './apps-list.component';
+import { SelectAppsDialogComponent } from './select-apps-dialog-component';
 
 @NgModule({
     imports: [
@@ -31,11 +32,16 @@ import { AppsListComponent } from './apps-list.component';
         TranslateModule
     ],
     declarations: [
-        AppsListComponent
+        AppsListComponent,
+        SelectAppsDialogComponent
     ],
     providers: [],
     exports: [
-        AppsListComponent
+        AppsListComponent,
+        SelectAppsDialogComponent
+    ],
+    entryComponents: [
+        SelectAppsDialogComponent
     ]
 })
 export class AppsListModule {
