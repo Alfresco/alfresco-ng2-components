@@ -22,16 +22,16 @@ Restores deleted nodes to their original location.
 
 ### Properties
 
-| Name              | Type                | Default | Description                      |
-| ----------------- | ------------------- | ------- | -------------------------------  |
-| adf-restore       | DeletedNodeEntry[]  | []      | Deleted nodes to restore         |
-| location          | string              | ''      | Route path to view restored node |
+| Name | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| adf-restore | DeletedNodeEntry\[] | \[] | Deleted nodes to restore |
+| location | string | '' | Route path to view restored node |
 
 ### Events
 
-| Name      | Description                     |
-| --------- | ------------------------------- |
-| restore   | Raised when the restore is done |
+| Name | Description |
+| ---- | ----------- |
+| restore | Raised when the restore is done |
 
 ## Details
 
@@ -39,3 +39,7 @@ Restores deleted nodes to their original location.
 If the original location doesn't exist anymore, then they remain in the trash list.
 
 For single node restore, there is action to jump to the location where the node has been restored and for this `location` is used to specify the route path where the list of nodes are rendered
+
+## See Also
+
+-   [Node delete directive](node-delete.directive.md)

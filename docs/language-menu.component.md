@@ -39,6 +39,7 @@ This is how the configuration looks like in the the "app.config.json"
         }
     ]
 ```
+
 In case no setting is provided, the component shows only the English language.
 
 ### Nested Menu language
@@ -58,12 +59,9 @@ How to attach an ADF Language Menu as nested menu
     <adf-language-menu></adf-language-menu>
 </mat-menu>
 ```
+
 ![Nested Language Menu screenshot](docassets/images/languages-menu-nested.png)
 
 ### Nested menu details
 
 In the previous example we are using the ADF Language Menu as nested menu.
-
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
-<!-- seealso end -->

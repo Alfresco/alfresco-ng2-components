@@ -17,7 +17,7 @@ Adds "infinite" pagination to the component it is used with.
 ### Properties
 
 | Name | Type | Default | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------- | ----------- |
 | pagination | Pagination | `InfinitePaginationComponent.DEFAULT_PAGINATION` | Pagination object |
 | pageSize | number | `InfinitePaginationComponent.DEFAULT_PAGE_SIZE` | Number of items that are added with each "load more" event |
 | loading | boolean | false |  |
@@ -25,7 +25,7 @@ Adds "infinite" pagination to the component it is used with.
 ### Events
 
 | Name | Description |
-| --- | --- |
+| ---- | ----------- |
 | loadMore | Emitted when the "Load More" button is clicked |
 
 ## Details
@@ -43,10 +43,7 @@ page within the list to be shown, whether there are more items left to show, etc
 
 See the [Pagination component](pagination.component.md) for more information about the alternative "finite" pagination scheme.
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
 ## See also
 
-- [Document list component](document-list.component.md)
-- [Pagination component](pagination.component.md)
-<!-- seealso end -->
+-   [Document list component](document-list.component.md)
+-   [Pagination component](pagination.component.md)
