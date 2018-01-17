@@ -44,7 +44,6 @@ export class SelectAppsDialogComponent {
             (err) => {
                 this.translateService.get('TAG.MESSAGES.EXIST').subscribe((error) => {
                     this.notificationService.openSnackMessage(error, 4000);
-                    ;
                 });
             }
         );
