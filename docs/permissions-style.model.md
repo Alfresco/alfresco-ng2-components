@@ -5,11 +5,11 @@ Sets custom CSS styles for rows of a [Document List](document-list.component.md)
 ## Properties
 
 | Property | Type | Description |
-| --- | --- | --- |
+| -------- | ---- | ----------- |
 | isFile | boolean | Does this style apply to files? |
 | isFolder | boolean | Does this style apply to folders? |
-| permission | Permissions | An enum value defining the permissions that this style applies to (see below) | 
-| css| string | The name of the CSS class to add | 
+| permission | Permissions | An enum value defining the permissions that this style applies to (see below) |
+| css | string | The name of the CSS class to add |
 
 ## Details
 
@@ -48,11 +48,9 @@ adf-document-list ::ng-deep adf-datatable tr.document-list__create {
 If you want to change the style on the folders where the user doesn't have the permission to update: 
 
 ```ts
-
 let permissionsStyle: PermissionStyleModel[] = [];
 
 this.permissionsStyle.push(new PermissionStyleModel('document-list__disable', PermissionsEnum.NOT_UPDATE, false, true));
-
 ```
 
 ```html
@@ -66,9 +64,6 @@ adf-document-list ::ng-deep adf-datatable tr.document-list__disable {
 }
 ```
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
 ## See also
 
-- [Document list component](document-list.component.md)
-<!-- seealso end -->
+-   [Document list component](document-list.component.md)

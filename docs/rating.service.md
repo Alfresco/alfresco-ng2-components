@@ -25,10 +25,7 @@ See the [Ratings API](https://github.com/Alfresco/alfresco-js-api/blob/master/sr
 in the Alfresco JS API for more information about the returned data and the
 REST API that this service is based on.
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
 ## See also
 
-- [Like component](like.component.md)
-- [Rating component](rating.component.md)
-<!-- seealso end -->
+-   [Like component](like.component.md)
+-   [Rating component](rating.component.md)

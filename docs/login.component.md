@@ -227,3 +227,7 @@ export class MyCustomLogin {
 
 **Please note that if `event.preventDefault()` is not called then default behaviour 
 will also be executed after your custom code.**
+
+## See Also
+
+-   [Logout directive](logout.directive.md)

@@ -19,7 +19,7 @@ Removes a user who is currently involved with a task.
 ## Details
 
 Use `getWorkflowUsers` to find users across all tasks, optionally filtering by the `searchWord`
-in the task name. The `taskId` parameter, if used, specifies a task to be *excluded* from the
+in the task name. The `taskId` parameter, if used, specifies a task to be _excluded_ from the
 results. You would typically use this feature to find new users to assign to a task, in which
 case you would want to exclude users already assigned to that task.
 
@@ -34,12 +34,8 @@ You can find more information about the REST API methods used by this service in
 (for `getWorkflowUsers`) and the
 [User API](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/UserApi.md#getuserprofilepictureurl)(for `getUserImage`).
 
-
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
 ## See also
 
-- [User process model](user-process.model.md)
-- [Bpm user model](bpm-user.model.md)
-- [People content service](people-content.service.md)
-<!-- seealso end -->
+-   [User process model](user-process.model.md)
+-   [Bpm user model](bpm-user.model.md)
+-   [People content service](people-content.service.md)

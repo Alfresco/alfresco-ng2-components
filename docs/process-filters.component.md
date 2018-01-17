@@ -13,7 +13,7 @@ Collection of criteria used to filter process instances, which may be customized
 ### Properties
 
 | Name | Type | Description |
-| --- | --- | --- |
+| ---- | ---- | ----------- |
 | filterParam | [FilterParamsModel](#filterparamsmodel) | The params to filter the task filter. If there is no match the default one (first filter of the list) is selected |
 | appId | string | Display filters available to the current user for the application with the specified ID. |
 | appName | string | Display filters available to the current user for the application with the specified name. |
@@ -24,7 +24,7 @@ If both `appId` and `appName` are specified then `appName` will take precedence 
 ### Events
 
 | Name | Description |
-| --- | --- |
+| ---- | ----------- |
 | success | Raised when the list of filters has been successfully loaded from the server |
 | error | Raised when an error occurs |
 | filterClick | Raised when the user selects a filter from the list |
@@ -39,11 +39,11 @@ process instances are displayed in the list.
 
 ### How filter the activiti process filters
 
- ```html
+```html
 <adf-process-instance-filters 
-    [filterParam]="{index: 0}">
+   [filterParam]="{index: 0}">
 </adf-filters>
- ```
+```
 
 You can use inside the filterParam one of the properties defined by [FilterParamsModel](#filterparamsmodel) (see below).
 
@@ -58,7 +58,7 @@ You can use inside the filterParam one of the properties defined by [FilterParam
 ```
 
 | Name | Type | Description |
-| --- | --- | --- |
+| ---- | ---- | ----------- |
 | id | string | The id of the task filter. |
 | name | string | The name of the task filter, lowercase is checked. |
 | index | number | Zero-based position of the filter in the array. |
@@ -68,9 +68,6 @@ You can use inside the filterParam one of the properties defined by [FilterParam
 The process filter often works well as an item in an accordion menu. See the [Accordion component](accordion.component.md)
 page for an example of how to do set this up.
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
 ## See also
 
-- [Filter model](filter.model.md)
-<!-- seealso end -->
+-   [Filter model](filter.model.md)

@@ -16,12 +16,6 @@ a result of the form "PageName - AppName" (see
 is not supplied then just the app name is used; this will default to
 "Alfresco ADF Application" when no app name set in the config file.
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
 ## See also
 
-- [App config service](app-config.service.md)
-<!-- seealso end -->
-
-
-
+-   [App config service](app-config.service.md)

@@ -59,22 +59,19 @@ In the component template use the people list component:
   </data-columns>
 </adf-people-list>
 ```
+
 Note that the people list component is based on the `<adf-datatable` component.
 
 ### Properties
 
 | Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| users | UserProcessModel[] |  | The array of user data that should be used to populate the people list |
+| ---- | ---- | ------- | ----------- |
+| users | UserProcessModel\[] |  | The array of user data that should be used to populate the people list |
 | actions | boolean | false | true if actions should be visible, i.e. the 'Three-Dots' menu |
 
 ### Events
 
 | Name | Description |
-| --- | --- |
+| ---- | ----------- |
 | clickRow | Emitted when the user clicks a row in the people list. |
 | clickAction | Emitted when the user clicks in the 'Three Dots' drop down menu for a row. |
-
-<!-- seealso start -->
-
-<!-- seealso end -->
