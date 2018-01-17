@@ -80,6 +80,34 @@ export function createTranslateLoader(http: HttpClient, logService: LogService) 
     return new TranslateLoaderService(http, logService);
 }
 
+export function modules() {
+    return [
+        ViewerModule,
+        SideBarActionModule,
+        PipeModule,
+        CommonModule,
+        DirectiveModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        HostSettingsModule,
+        UserInfoModule,
+        MaterialModule,
+        AppConfigModule,
+        PaginationModule,
+        ToolbarModule,
+        ContextMenuModule,
+        CardViewModule,
+        CollapsableModule,
+        FormModule,
+        LoginModule,
+        LanguageMenuModule,
+        InfoDrawerModule,
+        DataColumnModule,
+        DataTableModule
+    ];
+}
+
 export function providers() {
     return [
         AuthenticationService,
@@ -119,24 +147,7 @@ export function providers() {
 
 @NgModule({
     imports: [
-        ViewerModule,
-        SideBarActionModule,
-        PipeModule,
-        CommonModule,
-        DirectiveModule,
-        FormsModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        HostSettingsModule,
-        UserInfoModule,
-        MaterialModule,
-        AppConfigModule,
-        PaginationModule,
-        ToolbarModule,
-        ContextMenuModule,
-        CardViewModule,
-        CollapsableModule,
-        FormModule,
+        ...modules(),
         TranslateModule.forChild({
             loader: {
                 provide: TranslateLoader,
@@ -146,29 +157,38 @@ export function providers() {
         })
     ],
     exports: [
-        AppConfigModule,
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        TranslateModule,
-        ContextMenuModule,
-        CardViewModule,
-        CollapsableModule,
-        PaginationModule,
-        ToolbarModule,
-        LoginModule,
-        UserInfoModule,
-        LanguageMenuModule,
-        InfoDrawerModule,
-        DataColumnModule,
-        DataTableModule,
-        HostSettingsModule,
-        ViewerModule,
-        SideBarActionModule,
-        PipeModule,
-        DirectiveModule,
-        FormModule,
-        MaterialModule
+        ...modules(),
+        TranslateModule
+    ]
+})
+export class CoreModuleLazy {
+}
+
+@NgModule({
+    imports: [
+        ...modules(),
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: (createTranslateLoader),
+                deps: [HttpClient, LogService]
+            }
+        })
+    ],
+    exports: [
+        ...modules(),
+        TranslateModule
+    ],
+    providers: [
+        {
+            provide: TRANSLATION_PROVIDER,
+            multi: true,
+            useValue: {
+                name: 'adf-core',
+                source: 'assets/adf-core'
+            }
+        },
+        ...providers()
     ]
 })
 export class CoreModule {
@@ -192,7 +212,7 @@ export class CoreModule {
 
     static forChild(): ModuleWithProviders {
         return {
-            ngModule: CoreModule
+            ngModule: CoreModuleLazy
         };
     }
 }

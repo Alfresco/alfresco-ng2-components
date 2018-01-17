@@ -3,11 +3,10 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ChartsModule } from 'ng2-charts';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { AppConfigService, CoreModule, TRANSLATION_PROVIDER, createTranslateLoader, LogService } from '@alfresco/adf-core';
+import { AppConfigService, CoreModule, TRANSLATION_PROVIDER } from '@alfresco/adf-core';
 import { AppComponent } from './app.component';
 import { AdfModule } from './adf.module';
 import { MaterialModule } from './material.module';
@@ -59,14 +58,7 @@ import { SharedLinkViewComponent } from './components/shared-link-view/shared-li
         FlexLayoutModule,
         ChartsModule,
         HttpClientModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: (createTranslateLoader),
-                deps: [HttpClient, LogService]
-            }
-        }),
-        CoreModule.forRoot(),
+        CoreModule,
         AdfModule
     ],
     declarations: [
