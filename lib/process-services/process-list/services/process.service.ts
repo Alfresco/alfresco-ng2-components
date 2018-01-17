@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { TaskDetailsModel } from '../../task-list';
@@ -23,24 +23,34 @@ import { ProcessFilterParamRepresentationModel } from '../models/filter-process.
 import { ProcessDefinitionRepresentation } from '../models/process-definition.model';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessInstance } from '../models/process-instance.model';
+import { ProcessListModel } from '../models/process-list.model';
 import 'rxjs/add/observable/throw';
+import { Subject } from 'rxjs/Subject';
 
 declare let moment: any;
 
 @Injectable()
 export class ProcessService {
+    private processSubject = new Subject<ProcessListModel>();
 
-    constructor(private alfrescoApiService: AlfrescoApiService) {
+    public processList$: Observable<ProcessListModel>;
+
+    constructor(private alfrescoApiService: AlfrescoApiService,
+                private logService: LogService) {
+        this.processList$ = this.processSubject.asObservable();
     }
 
-    getProcessInstances(requestNode: ProcessFilterParamRepresentationModel, processDefinitionKey?: string): Observable<ProcessInstance[]> {
+    getProcessInstances(requestNode: ProcessFilterParamRepresentationModel, processDefinitionKey?: string): Observable<ProcessListModel> {
         return Observable.fromPromise(this.alfrescoApiService.getInstance().activiti.processApi.getProcessInstances(requestNode))
             .map((res: any) => {
                 if (processDefinitionKey) {
-                    return res.data.filter(process => process.processDefinitionKey === processDefinitionKey);
+                    const filtered = res.data.filter(process => process.processDefinitionKey === processDefinitionKey);
+                    res.data = filtered;
+                    this.processSubject.next(res);
                 } else {
-                    return res.data;
+                    this.processSubject.next(res);
                 }
+                return res;
             }).catch(err => this.handleProcessError(err));
     }
 
@@ -153,6 +163,8 @@ export class ProcessService {
     }
 
     private handleProcessError(error: any) {
+        this.logService.error(error);
+        this.processSubject.error(error);
         return Observable.throw(error || 'Server error');
     }
 }
