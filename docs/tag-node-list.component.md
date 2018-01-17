@@ -1,4 +1,4 @@
-# Alfresco Tag Node List component
+# Tag Node List component
 
 Shows tags for a node.
 
@@ -10,10 +10,10 @@ Shows tags for a node.
 <adf-tag-node-list 
     [nodeId]="nodeId">
 </adf-tag-node-list>
-``` 
+```
 
 ### Properties
 
 | Attribute | Type | Default | Description |
-| --- | --- | --- | --- |
-| nodeId | string | | The identifier of a node |
+| --------- | ---- | ------- | ----------- |
+| nodeId | string |  | The identifier of a node |

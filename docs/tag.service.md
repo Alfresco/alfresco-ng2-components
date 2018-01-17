@@ -35,12 +35,6 @@ in the Alfresco JS API for more information about the types returned by Tag
 service methods and for the implementation of the REST API the service is
 based on.
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
 ## See also
 
-- [Tag list component](tag-list.component.md)
-<!-- seealso end -->
-
-
-
+-   [Tag list component](tag-list.component.md)

@@ -32,10 +32,7 @@ more widely supported by browsers and can be set to expire after a certain date.
 If local storage is not available then non-persistent memory storage within the app is
 used instead.
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
 ## See also
 
-- [Cookie service](cookie.service.md)
-- [Content service](content.service.md)
-<!-- seealso end -->
+-   [Cookie service](cookie.service.md)
+-   [Content service](content.service.md)
