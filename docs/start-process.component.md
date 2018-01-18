@@ -8,7 +8,9 @@ Starts a process.
 
 ```html
 <adf-start-process 
-    appId="YOUR_APP_ID" >
+    [appId]="YOUR_APP_ID"
+    [processName]="PROCESS_NAME"
+    [processDefinitionId]="PROCESS_DEF_ID">
 </adf-start-process>
 ```
 
@@ -17,7 +19,8 @@ Starts a process.
 | Name | Description |
 | --- | --- |
 | appId |  (required): Limit the list of processes which can be started to those contained in the specified app |
-| name | (optional) name to assign to the current process |
+| processName |: | string | The processName of the process |
+| processDefinitionId|: | string | Definition ID of the process to start. |
 | variables | Variables in input to the process [RestVariable](https://github.com/Alfresco/alfresco-js-api/tree/master/src/alfresco-activiti-rest-api/docs/RestVariable.md)|
 | values | Parameter to pass form field values in the start form if is associated |
 
