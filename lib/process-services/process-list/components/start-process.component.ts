@@ -50,6 +50,12 @@ export class StartProcessInstanceComponent implements OnChanges {
     appId: number;
 
     @Input()
+    processName: string;
+
+    @Input()
+    processDefinitionId: any;
+
+    @Input()
     variables: ProcessInstanceVariable[];
 
     @Input()
@@ -69,6 +75,8 @@ export class StartProcessInstanceComponent implements OnChanges {
 
     @ViewChild(StartFormComponent)
     startForm: StartFormComponent;
+
+    selectPanelClass: string;
 
     processDefinitions: ProcessDefinitionRepresentation[] = [];
 
@@ -100,6 +108,7 @@ export class StartProcessInstanceComponent implements OnChanges {
         this.activitiProcess.getProcessDefinitions(appId).subscribe(
             (res) => {
                 this.processDefinitions = res;
+                this.selectDefaultOption();
             },
             () => {
                 this.errorMessageId = 'ADF_PROCESS_LIST.START_PROCESS.ERROR.LOAD_PROCESS_DEFS';
@@ -132,12 +141,12 @@ export class StartProcessInstanceComponent implements OnChanges {
     }
 
     public startProcess(outcome?: string) {
-        if (this.currentProcessDef.id && this.name) {
+        if (this.currentProcessDef.id && this.processName) {
             this.resetErrorMessage();
             let formValues = this.startForm ? this.startForm.form.values : undefined;
-            this.activitiProcess.startProcess(this.currentProcessDef.id, this.name, outcome, formValues, this.variables).subscribe(
+            this.activitiProcess.startProcess(this.currentProcessDef.id, this.processName, outcome, formValues, this.variables).subscribe(
                 (res) => {
-                    this.name = '';
+                    this.processName = '';
                     this.start.emit(res);
                 },
                 (err) => {
@@ -148,22 +157,31 @@ export class StartProcessInstanceComponent implements OnChanges {
         }
     }
 
-    compareProcessDef = (processDefId) => {
-        if (this.processDefinitions && this.processDefinitions.length === 1 && processDefId === this.processDefinitions[0].id) {
-            this.onProcessDefChange(processDefId);
-            return true;
+    selectDefaultOption() {
+        if (this.hasSingleProcessDefinitions()) {
+            this.currentProcessDef.id = this.processDefinitions[0].id;
+            this.selectPanelClass = 'hidden';
+            this.onProcessDefChange();
+        } else if (this.processDefinitionId) {
+            this.currentProcessDef.id = this.processDefinitionId;
+            this.onProcessDefChange();
+
         }
     }
 
-    onProcessDefChange(processDefinitionId) {
+    onProcessDefChange() {
         let processDef = this.processDefinitions.find((processDefinition) => {
-            return processDefinition.id === processDefinitionId;
+            return processDefinition.id === this.currentProcessDef.id;
         });
         if (processDef) {
             this.currentProcessDef = JSON.parse(JSON.stringify(processDef));
         } else {
             this.resetSelectedProcessDefinition();
         }
+    }
+
+    public hasSingleProcessDefinitions(): boolean {
+        return this.processDefinitions && this.processDefinitions.length === 1;
     }
 
     public cancelStartProcess() {
@@ -186,8 +204,8 @@ export class StartProcessInstanceComponent implements OnChanges {
         }
     }
 
-    validateForm(): boolean {
-        return this.currentProcessDef.id && this.name && this.isStartFormMissingOrValid();
+    validateForm() {
+        return this.currentProcessDef.id && this.processName && this.isStartFormMissingOrValid();
     }
 
     private resetSelectedProcessDefinition() {
@@ -208,7 +226,7 @@ export class StartProcessInstanceComponent implements OnChanges {
 
     public reset() {
         this.resetSelectedProcessDefinition();
-        this.name = '';
+        this.processName = '';
         if (this.startForm) {
             this.startForm.data = {};
         }
@@ -216,6 +234,6 @@ export class StartProcessInstanceComponent implements OnChanges {
     }
 
     hasProcessName(): boolean {
-        return this.name ? true : false;
+        return this.processName ? true : false;
     }
 }
