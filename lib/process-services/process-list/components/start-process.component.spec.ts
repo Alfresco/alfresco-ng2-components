@@ -28,7 +28,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessService } from '../services/process.service';
-import { newProcess, taskFormMock, testProcessDefRepr, testProcessDefs, testProcessDefWithForm } from '../../mock';
+import { newProcess, taskFormMock, testProcessDefRepr, testProcessDefs, testProcessDefWithForm, testProcessDefinitions } from '../../mock';
 import { StartProcessInstanceComponent } from './start-process.component';
 
 describe('StartProcessInstanceComponent', () => {
@@ -168,6 +168,33 @@ describe('StartProcessInstanceComponent', () => {
                 expect(selectElement).not.toBeNull();
                 expect(selectElement).toBeDefined();
                 expect(selectElement.innerText).toBe('My Process 1');
+            });
+        });
+
+        it('should select processDefinition based on processDefinitionId input', () => {
+            let change = new SimpleChange(null, '123', true);
+            component.ngOnChanges({ 'appId': change });
+            component.processDefinitionId = 'my:process2';
+            component.processDefinitions = testProcessDefs;
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                let selectElement = fixture.nativeElement.querySelector('mat-select > .mat-select-trigger');
+                expect(selectElement).not.toBeNull();
+                expect(selectElement).toBeDefined();
+                expect(selectElement.innerText).toBe('My Process 2');
+            });
+        });
+
+        it('should hide the process dropdown if the value is already selected', () => {
+            let change = new SimpleChange(null, '123', true);
+            component.ngOnChanges({'appId': change});
+            component.processDefinitions = testProcessDefinitions;
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                let selectElement = fixture.nativeElement.querySelector('mat-select > .mat-select-trigger');
+                expect(selectElement).not.toBeNull();
+                expect(selectElement).toBeDefined();
+                expect(selectElement.nativeElement.hide).toBeTruthy();
             });
         });
     });
@@ -411,11 +438,11 @@ describe('StartProcessInstanceComponent', () => {
 
         describe('CS content connection', () => {
 
-            fit('alfrescoRepositoryName default configuration property', () => {
+            it('alfrescoRepositoryName default configuration property', () => {
                 expect(component.getAlfrescoRepositoryName()).toBe('alfresco-1Alfresco');
             });
 
-            fit('alfrescoRepositoryName configuration property should be fetched', () => {
+            it('alfrescoRepositoryName configuration property should be fetched', () => {
                 appConfig.config = Object.assign(appConfig.config, {
                     'alfrescoRepositoryName': 'alfresco-123'
                 };
@@ -423,7 +450,7 @@ describe('StartProcessInstanceComponent', () => {
                 expect(component.getAlfrescoRepositoryName()).toBe('alfresco-123Alfresco');
             });
 
-            fit('if values in input is a node should be linked in the process service', () => {
+            it('if values in input is a node should be linked in the process service', () => {
 
                 component.values = {};
                 component.values['file'] = {

@@ -50,6 +50,9 @@ export class StartProcessInstanceComponent implements OnChanges {
     appId: number;
 
     @Input()
+    processDefinitionId: string;
+
+    @Input()
     variables: ProcessInstanceVariable[];
 
     @Input()
@@ -89,22 +92,37 @@ export class StartProcessInstanceComponent implements OnChanges {
             this.moveNodeFromCStoPS();
         }
 
-        let appIdChange = changes['appId'];
-        let appId = appIdChange ? appIdChange.currentValue : null;
-        this.load(appId);
+        this.loadStartProcess();
     }
 
-    public load(appId?: number) {
+    public loadStartProcess() {
         this.resetSelectedProcessDefinition();
         this.resetErrorMessage();
-        this.activitiProcess.getProcessDefinitions(appId).subscribe(
-            (res) => {
-                this.processDefinitions = res;
-            },
-            () => {
-                this.errorMessageId = 'ADF_PROCESS_LIST.START_PROCESS.ERROR.LOAD_PROCESS_DEFS';
-            }
-        );
+
+        if (this.appId) {
+            this.activitiProcess.getProcessDefinitions(this.appId).subscribe(
+                (processDefinitionRepresentations: ProcessDefinitionRepresentation[]) => {
+                    this.processDefinitions = processDefinitionRepresentations;
+
+                    if (this.processDefinitions.length === 1) {
+                        this.currentProcessDef = JSON.parse(JSON.stringify(this.processDefinitions[0]));
+                    } else {
+                        if (this.processDefinitionId) {
+                            this.processDefinitions = this.processDefinitions.filter((currentProcessDefinition) => {
+                                return currentProcessDefinition.id === this.processDefinitionId;
+                            });
+                            this.currentProcessDef = JSON.parse(JSON.stringify(this.processDefinitions[0]));
+                        }
+                    }
+                },
+                () => {
+                    this.errorMessageId = 'ADF_PROCESS_LIST.START_PROCESS.ERROR.LOAD_PROCESS_DEFS';
+                });
+        }
+    }
+
+    public hasMultipleProcessDefinitions(): boolean {
+        return this.processDefinitions.length > 1;
     }
 
     getAlfrescoRepositoryName(): string {
