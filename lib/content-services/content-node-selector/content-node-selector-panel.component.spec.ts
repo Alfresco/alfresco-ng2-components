@@ -301,7 +301,7 @@ describe('ContentNodeSelectorComponent', () => {
                 typeToSearchBox('kakarot');
 
                 setTimeout(() => {
-                    expect(searchSpy).toHaveBeenCalledWith(defaultSearchOptions('kakarot'));
+                    expect(searchSpy).toHaveBeenCalledWith(defaultSearchOptions('kakarot', '25', 0 ));
                     done();
                 }, 300);
             });
@@ -523,7 +523,7 @@ describe('ContentNodeSelectorComponent', () => {
 
                     component.getNextPageOfSearch({ skipCount });
 
-                    expect(searchSpy).toHaveBeenCalledWith(defaultSearchOptions('kakarot', undefined, skipCount));
+                    expect(searchSpy).toHaveBeenCalledWith(defaultSearchOptions('kakarot', undefined, skipCount), '25', skipCount);
                 });
 
                 it('should be shown when pagination\'s hasMoreItems is true', () => {
