@@ -74,6 +74,8 @@ export class StartProcessInstanceComponent implements OnChanges {
     @ViewChild(StartFormComponent)
     startForm: StartFormComponent;
 
+    selectPanelClass: string;
+
     processDefinitions: ProcessDefinitionRepresentation[] = [];
 
     currentProcessDef: ProcessDefinitionRepresentation = new ProcessDefinitionRepresentation();
@@ -155,6 +157,7 @@ export class StartProcessInstanceComponent implements OnChanges {
     compareProcessDef = (processDefId) => {
         if (this.processDefinitions && this.processDefinitions.length === 1 && processDefId === this.processDefinitions[0].id) {
             this.onProcessDefChange(processDefId);
+            this.selectPanelClass = 'hidden';
             return true;
         }
     }
@@ -168,11 +171,6 @@ export class StartProcessInstanceComponent implements OnChanges {
         } else {
             this.resetSelectedProcessDefinition();
         }
-    }
-
-    selectionChangeHandler(select: MatSelect) {
-        select.panelClass = 'hidden';
-        select.close();
     }
 
     public cancelStartProcess() {
