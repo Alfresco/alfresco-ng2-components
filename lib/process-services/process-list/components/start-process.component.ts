@@ -109,6 +109,7 @@ export class StartProcessInstanceComponent implements OnChanges {
         this.activitiProcess.getProcessDefinitions(appId).subscribe(
             (res) => {
                 this.processDefinitions = res;
+                this.selectDefaultOption();
             },
             () => {
                 this.errorMessageId = 'ADF_PROCESS_LIST.START_PROCESS.ERROR.LOAD_PROCESS_DEFS';
@@ -157,20 +158,18 @@ export class StartProcessInstanceComponent implements OnChanges {
         }
     }
 
-    compareProcessDef = (processDefId) => {
-        if (this.compareProcessDefinitionId(processDefId)) {
-            this.onProcessDefChange(processDefId);
+    selectDefaultOption() {
+        if (this.hasProcessDefinitions()) {
+            this.currentProcessDef.id = this.processDefinitions[0].id;
             this.selectPanelClass = 'hidden';
-            return true;
         } else if (this.processDefinitionId) {
-            this.onProcessDefChange(this.processDefinitionId);
-            return true;
+            this.currentProcessDef.id = this.processDefinitionId;
         }
     }
 
-    onProcessDefChange(processDefinitionId) {
+    onProcessDefChange() {
         let processDef = this.processDefinitions.find((processDefinition) => {
-            return processDefinition.id === processDefinitionId;
+            return processDefinition.id === this.currentProcessDef.id;
         });
         if (processDef) {
             this.currentProcessDef = JSON.parse(JSON.stringify(processDef));
@@ -179,8 +178,8 @@ export class StartProcessInstanceComponent implements OnChanges {
         }
     }
 
-    public compareProcessDefinitionId(processDefId: any): boolean {
-        return this.processDefinitions && this.processDefinitions.length === 1 && processDefId === this.processDefinitions[0].id;
+    public hasProcessDefinitions(): boolean {
+        return this.processDefinitions && this.processDefinitions.length === 1;
     }
 
     public cancelStartProcess() {
