@@ -208,7 +208,7 @@ describe('StartProcessInstanceComponent', () => {
     describe('start process', () => {
 
         beforeEach(() => {
-            component.name = 'My new process';
+            component.processName = 'My new process';
             let change = new SimpleChange(null, 123, true);
             component.ngOnChanges({ 'appId': change });
         });
@@ -222,7 +222,7 @@ describe('StartProcessInstanceComponent', () => {
         }));
 
         it('should avoid calling service to start process if required fields NOT provided', async(() => {
-            component.name = '';
+            component.processName = '';
             component.startProcess();
             fixture.whenStable().then(() => {
                 expect(startProcessSpy).not.toHaveBeenCalled();
@@ -289,7 +289,7 @@ describe('StartProcessInstanceComponent', () => {
         it('should emit start event when start the process with currentProcessDef and name', () => {
             let startSpy: jasmine.Spy = spyOn(component.start, 'emit');
             component.currentProcessDef.id = '1001';
-            component.name = 'my:Process';
+            component.processName = 'my:Process';
             component.startProcess();
             fixture.detectChanges();
             expect(startSpy).toHaveBeenCalled();
@@ -304,7 +304,7 @@ describe('StartProcessInstanceComponent', () => {
 
         it('should able to start the process when the required fields are filled up', async(() => {
             let startSpy: jasmine.Spy = spyOn(component.start, 'emit');
-            component.name = 'my:process1';
+            component.processName = 'my:process1';
             component.onProcessDefChange('my:process1');
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -316,7 +316,7 @@ describe('StartProcessInstanceComponent', () => {
 
         it('should return true if startFrom defined', async(() => {
             component.currentProcessDef = testProcessDefRepr;
-            component.name = 'my:process1';
+            component.processName = 'my:process1';
             component.currentProcessDef.hasStartForm = true;
             component.hasStartForm();
             fixture.whenStable().then(() => {
@@ -333,14 +333,14 @@ describe('StartProcessInstanceComponent', () => {
         describe('without start form', () => {
 
             beforeEach(async(() => {
-                component.name = 'My new process';
+                component.processName = 'My new process';
                 let change = new SimpleChange(null, '123', true);
                 component.ngOnChanges({ 'appId': change });
                 fixture.detectChanges();
             }));
 
             it('should have start button disabled when name not filled out', async(() => {
-                component.name = '';
+                component.processName = '';
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     startBtn = fixture.nativeElement.querySelector('#button-start');
@@ -365,7 +365,7 @@ describe('StartProcessInstanceComponent', () => {
             });
 
             it('should disable the start process button when process name is empty', () => {
-                component.name = '';
+                component.processName = '';
                 fixture.detectChanges();
                 let startButton = fixture.nativeElement.querySelector('#button-start');
                 expect(startButton.disabled).toBe(true);
@@ -395,7 +395,7 @@ describe('StartProcessInstanceComponent', () => {
             });
 
             it('should not show the start process button', async(() => {
-                component.name = 'My new process';
+                component.processName = 'My new process';
                 fixture.detectChanges();
                 expect(startBtn).toBeNull();
             }));

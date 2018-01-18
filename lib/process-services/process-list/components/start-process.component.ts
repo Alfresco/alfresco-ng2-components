@@ -37,6 +37,7 @@ import { ProcessDefinitionRepresentation } from './../models/process-definition.
 import { ProcessInstance } from './../models/process-instance.model';
 import { ProcessService } from './../services/process.service';
 import { AttachFileWidgetComponent, AttachFolderWidgetComponent } from '../../content-widget';
+import { MatSelect } from '@angular/material';
 
 @Component({
     selector: 'adf-start-process',
@@ -48,6 +49,9 @@ export class StartProcessInstanceComponent implements OnChanges {
 
     @Input()
     appId: number;
+
+    @Input()
+    processName: string;
 
     @Input()
     variables: ProcessInstanceVariable[];
@@ -132,12 +136,12 @@ export class StartProcessInstanceComponent implements OnChanges {
     }
 
     public startProcess(outcome?: string) {
-        if (this.currentProcessDef.id && this.name) {
+        if (this.currentProcessDef.id && this.processName) {
             this.resetErrorMessage();
             let formValues = this.startForm ? this.startForm.form.values : undefined;
-            this.activitiProcess.startProcess(this.currentProcessDef.id, this.name, outcome, formValues, this.variables).subscribe(
+            this.activitiProcess.startProcess(this.currentProcessDef.id, this.processName, outcome, formValues, this.variables).subscribe(
                 (res) => {
-                    this.name = '';
+                    this.processName = '';
                     this.start.emit(res);
                 },
                 (err) => {
@@ -166,6 +170,11 @@ export class StartProcessInstanceComponent implements OnChanges {
         }
     }
 
+    selectionChangeHandler(select: MatSelect) {
+        select.panelClass = 'hidden';
+        select.close();
+    }
+
     public cancelStartProcess() {
         this.cancel.emit();
     }
@@ -186,8 +195,8 @@ export class StartProcessInstanceComponent implements OnChanges {
         }
     }
 
-    validateForm(): boolean {
-        return this.currentProcessDef.id && this.name && this.isStartFormMissingOrValid();
+    validateForm() {
+        return this.currentProcessDef.id && this.processName && this.isStartFormMissingOrValid();
     }
 
     private resetSelectedProcessDefinition() {
@@ -208,7 +217,7 @@ export class StartProcessInstanceComponent implements OnChanges {
 
     public reset() {
         this.resetSelectedProcessDefinition();
-        this.name = '';
+        this.processName = '';
         if (this.startForm) {
             this.startForm.data = {};
         }
@@ -216,6 +225,6 @@ export class StartProcessInstanceComponent implements OnChanges {
     }
 
     hasProcessName(): boolean {
-        return this.name ? true : false;
+        return this.processName ? true : false;
     }
 }
