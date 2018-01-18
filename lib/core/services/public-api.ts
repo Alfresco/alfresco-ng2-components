@@ -46,3 +46,4 @@ export * from './shared-links-api.service';
 export * from './sites.service';
 export * from './discovery-api.service';
 export * from './comment-process.service';
+export * from './search-configuration.service';

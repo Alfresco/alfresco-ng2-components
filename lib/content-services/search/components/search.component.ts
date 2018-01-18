@@ -18,8 +18,6 @@
 import { SearchService } from '@alfresco/adf-core';
 import {
     AfterContentInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
     Component,
     ContentChild,
     ElementRef,
@@ -34,15 +32,12 @@ import {
 import { NodePaging, QueryBody } from 'alfresco-js-api';
 import { Subject } from 'rxjs/Subject';
 
-export type QueryBodyFactoryFunction = (searchTerm: string) => QueryBody;
-
 @Component({
     selector: 'adf-search',
     templateUrl: './search.component.html',
     styleUrls: ['./search.component.scss'],
     encapsulation: ViewEncapsulation.None,
     preserveWhitespaces: false,
-    changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs: 'searchAutocomplete',
     host: {
         'class': 'adf-search'
@@ -65,11 +60,12 @@ export class SearchComponent implements AfterContentInit, OnChanges {
     @Input()
     skipResults: number = 0;
 
+    /** @deprecated */
     @Input()
-    searchTerm: string = '';
+    queryBody: QueryBody;
 
     @Input()
-    buildQueryBody: QueryBodyFactoryFunction = this.generateDefaultSearchNode.bind(this);
+    searchTerm: string = '';
 
     @Input('class')
     set classList(classList: string) {
@@ -103,13 +99,13 @@ export class SearchComponent implements AfterContentInit, OnChanges {
     _classList: { [key: string]: boolean } = {};
 
     constructor(private searchService: SearchService,
-                private changeDetectorRef: ChangeDetectorRef,
                 private _elementRef: ElementRef) {
         this.keyPressedStream.asObservable()
             .debounceTime(200)
             .subscribe((searchedWord: string) => {
                 this.loadSearchResults(searchedWord);
             });
+
     }
 
     ngAfterContentInit() {
@@ -117,8 +113,10 @@ export class SearchComponent implements AfterContentInit, OnChanges {
     }
 
     ngOnChanges(changes) {
-        this.resetResults();
-
+        if (changes.queryBody &&
+            this.hasDifferentQueryBody(changes.queryBody.previousValue, changes.queryBody.currentValue)) {
+            this.loadSearchResults();
+        }
         if (changes.searchTerm && changes.searchTerm.currentValue) {
             this.loadSearchResults(changes.searchTerm.currentValue);
         }
@@ -133,23 +131,27 @@ export class SearchComponent implements AfterContentInit, OnChanges {
         this.loadSearchResults(this.searchTerm);
     }
 
+    private hasDifferentQueryBody(previousQueryBody: QueryBody, currentQueryBody: QueryBody) {
+        return JSON.stringify(previousQueryBody) !== JSON.stringify(currentQueryBody);
+    }
+
     private cleanResults() {
         if (this.results) {
             this.results = {};
         }
     }
 
-    private hasValidSearchQuery(searchOpts: QueryBody) {
-        return searchOpts && searchOpts.query && searchOpts.query.query;
-    }
-
     private loadSearchResults(searchTerm?: string) {
-        let searchOpts: QueryBody = this.buildQueryBody(searchTerm);
-
-        if (this.hasValidSearchQuery(searchOpts)) {
-            this.searchService
-                .search(searchOpts)
-                .subscribe(
+        this.resetResults();
+        if (searchTerm) {
+            let search$;
+            if (this.queryBody) {
+                search$ = this.searchService.searchByQueryBody(this.queryBody);
+            } else {
+                search$ = this.searchService
+                    .search(searchTerm, this.maxResults.toString(), this.skipResults.toString());
+            }
+            search$.subscribe(
                     results => {
                         this.results = <NodePaging> results;
                         this.resultLoaded.emit(this.results);
@@ -167,30 +169,11 @@ export class SearchComponent implements AfterContentInit, OnChanges {
         }
     }
 
-    private generateDefaultSearchNode(searchTerm: string): QueryBody {
-        let defaultQueryBody: QueryBody = {
-            query: {
-                query: searchTerm ? `${searchTerm}* OR name:${searchTerm}*` : searchTerm
-            },
-            include: ['path', 'allowableOperations'],
-            paging: {
-                maxItems: this.maxResults.toString(),
-                skipCount: this.skipResults.toString()
-            },
-            filterQueries: [
-                { query: "TYPE:'cm:folder' OR TYPE:'cm:content'" },
-                { query: 'NOT cm:creator:System' }]
-        };
-
-        return defaultQueryBody;
-    }
-
     hidePanel() {
         if (this.isOpen) {
             this._classList['adf-search-show'] = false;
             this._classList['adf-search-hide'] = true;
             this.isOpen = false;
-            this.changeDetectorRef.markForCheck();
         }
     }
 
@@ -198,6 +181,5 @@ export class SearchComponent implements AfterContentInit, OnChanges {
         this.showPanel = !!this.results && !!this.results.list;
         this._classList['adf-search-show'] = this.showPanel;
         this._classList['adf-search-hide'] = !this.showPanel;
-        this.changeDetectorRef.markForCheck();
     }
 }

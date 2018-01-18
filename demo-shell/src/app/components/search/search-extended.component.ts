@@ -26,7 +26,7 @@ import { ThumbnailService } from '@alfresco/adf-core';
     styleUrls: ['./search-extended.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class SearchExtendedComponent{
+export class SearchExtendedComponent {
 
     @ViewChild('search')
     search: SearchComponent;
@@ -65,6 +65,7 @@ export class SearchExtendedComponent{
             },
             include: ['path', 'allowableOperations'],
             filterQueries: [
+                /*tslint:disable-next-line */
                 { query: "TYPE:'cm:folder' OR TYPE:'cm:content'" },
                 { query: 'NOT cm:creator:System' }]
         };
