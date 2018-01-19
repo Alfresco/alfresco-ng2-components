@@ -1,10 +1,10 @@
 <div>
-    <h3>Extended Search with Query Body</h3>
+    <h3>{{'APP_LAYOUT.EXTENDED_SEARCH_QUERY_BODY' | translate}}</h3>
 
     <div id="container-for-custom-input" class="search-extended-input-containers">
         <mat-form-field>
-            <label>Searched Word</label>
-            <input type="text" matInput placeholder="Searched Word"
+            <label>{{'APP_LAYOUT.WORD_TO_SEARCH' | translate}}</label>
+            <input type="text" matInput
                     id="custom-input" [(ngModel)]="searchedWord" [searchAutocomplete]="auto">
         </mat-form-field>
     </div>
@@ -23,7 +23,7 @@
                 <img mat-card-image [src]="getMimeTypeIcon(item)">
                 <mat-card-content>
                     <p>
-                        Created By: {{item?.entry.createdByUser?.displayName}}
+                        {{'APP_LAYOUT.SEARCH_CREATED_BY' | translate}}: {{item?.entry.createdByUser?.displayName}}
                     </p>
                 </mat-card-content>
             </mat-card>

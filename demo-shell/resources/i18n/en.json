@@ -26,7 +26,10 @@
         "SETTINGS": "Settings",
         "OVERLAY_VIEWER": "Overlay Viewer",
         "ABOUT": "About",
-        "SEARCH": "Extended Search"
+        "SEARCH": "Extended Search",
+        "EXTENDED_SEARCH_QUERY_BODY": "Extended Search with Query Body",
+        "WORD_TO_SEARCH":"Search Word",
+        "SEARCH_CREATED_BY" : "Created By"
     },
     "DOCUMENT_LIST": {
         "MULTISELECT_CHECKBOXES" :"Multiselect (with checkboxes)",

@@ -60,7 +60,7 @@ export class SearchComponent implements AfterContentInit, OnChanges {
     @Input()
     skipResults: number = 0;
 
-    /** @deprecated */
+    /** @deprecated in 2.1.0 */
     @Input()
     queryBody: QueryBody;
 
