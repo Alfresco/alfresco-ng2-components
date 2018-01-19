@@ -21,28 +21,28 @@ install:
   - ps: Install-Product node $env:nodejs_version
   # install module
   - if %COMPONENT_NAME% EQU process-service (
-        echo "PROCESS-SERVICE CONFIGURATION"
+        (echo "PROCESS-SERVICE CONFIGURATION"}
               if %APPVEYOR_REPO_BRANCH EQU master
                 (cd scripts && sh npm-build-all.sh -t "process-services"  || exit 1)
               else
                 (cd scripts && sh npm-build-all.sh -t "process-services" -vjsapi alpha|| exit 1)
     )
   - if %COMPONENT_NAME% EQU content-service (
-        echo "CONTENT-SERVICE CONFIGURATION"
+        (echo "CONTENT-SERVICE CONFIGURATION")
               if %APPVEYOR_REPO_BRANCH EQU master
                 (cd scripts && sh npm-build-all.sh -t "content-services"  || exit 1)
               else
                 (cd scripts && sh npm-build-all.sh -t "content-services" -vjsapi alpha|| exit 1)
     )
   - if %COMPONENT_NAME% EQU insights (
-        echo "INSIGHTS CONFIGURATION"
+        (echo "INSIGHTS CONFIGURATION")
               if %APPVEYOR_REPO_BRANCH EQU master
                 (cd scripts && sh npm-build-all.sh -t "insights"  || exit 1)
               else
                 (cd scripts && sh npm-build-all.sh -t "insights" -vjsapi alpha|| exit 1)
     )
   - if %COMPONENT_NAME% EQU core (
-        echo "CORE CONFIGURATION"
+        (echo "CORE CONFIGURATION")
               if %APPVEYOR_REPO_BRANCH EQU master
                 (cd scripts && sh npm-build-all.sh -t "core"  || exit 1)
               else
