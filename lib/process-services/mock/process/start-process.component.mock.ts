@@ -29,7 +29,13 @@ export let testProcessDefRepr = new ProcessDefinitionRepresentation({
     hasStartForm: false
 });
 
-export let testProcessDefs = [new ProcessDefinitionRepresentation({
+export let testProcessDefinitions = [new ProcessDefinitionRepresentation({
+    id: 'my:process1',
+    name: 'My Process 1',
+    hasStartForm: false
+})];
+
+export let testMultipleProcessDefs = [new ProcessDefinitionRepresentation({
     id: 'my:process1',
     name: 'My Process 1',
     hasStartForm: false
