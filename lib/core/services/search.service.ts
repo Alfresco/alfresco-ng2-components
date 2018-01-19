@@ -15,21 +15,20 @@
  * limitations under the License.
  */
 
-import { Injectable, Inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { NodePaging, QueryBody } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AuthenticationService } from './authentication.service';
 import 'rxjs/add/observable/throw';
-import { SEARCH_CONFIGURATION } from './default-search-configuration.service';
-import { SearchConfigurationInterface } from '../interface/search-configuration.interface';
+import { SearchConfigurationService } from './search-configuration.service';
 
 @Injectable()
 export class SearchService {
 
     constructor(public authService: AuthenticationService,
                 private apiService: AlfrescoApiService,
-                @Inject(SEARCH_CONFIGURATION) private searchConfigurationService: SearchConfigurationInterface) {
+                private searchConfigurationService: SearchConfigurationService) {
     }
 
     getNodeQueryResults(term: string, options?: SearchOptions): Observable<NodePaging> {

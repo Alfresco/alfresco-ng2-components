@@ -34,34 +34,3 @@
       </adf-search>
     </div>
 </div>
-
-
-<!--
-<div class="search-results-container">
-
-
-    <adf-search #auto="searchAutocomplete" >
-        <ng-template let-data>
-            <mat-card class="example-card"
-                      *ngFor="let item of data?.list?.entries; let idx = index"
-                      (click)="onClick(item)">
-                <mat-card-header>
-                  <div mat-card-avatar class="example-header-image"></div>
-                  <mat-card-title>{{ item?.entry.name }}</mat-card-title>
-                  <mat-card-subtitle>{{ item?.entry.createdAt }}</mat-card-subtitle>
-                </mat-card-header>
-                <img mat-card-image [src]="getMimeTypeIcon(item)">
-                <mat-card-content>
-                  <p>
-                      Created By: {{item?.entry.createdByUser.displayName}}
-                  </p>
-                </mat-card-content>
-              </mat-card>
-              <mat-card class="example-card" id="search_no_result"
-                        *ngIf="data?.list?.entries.length === 0">
-                 <p mat-line class="adf-search-fixed-text">{{ 'SEARCH.RESULTS.NONE' | translate:{searchTerm: searchTerm} }}</p>
-              </mat-card>
-        </ng-template>
-    </adf-search>
-</div> -->
-

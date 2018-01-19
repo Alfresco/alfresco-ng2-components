@@ -15,14 +15,12 @@
  * limitations under the License.
  */
 
-import { Injectable, InjectionToken } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { QueryBody } from 'alfresco-js-api';
 import { SearchConfigurationInterface } from '../interface/search-configuration.interface';
 
-export const SEARCH_CONFIGURATION = new InjectionToken<SearchConfigurationInterface>('search.configuration');
-
 @Injectable()
-export class DefaultSearchConfigurationService implements SearchConfigurationInterface {
+export class SearchConfigurationService implements SearchConfigurationInterface {
 
     constructor() {
     }

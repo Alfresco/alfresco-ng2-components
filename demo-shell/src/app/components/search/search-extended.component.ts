@@ -19,13 +19,18 @@ import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NodePaging, Pagination, QueryBody, MinimalNodeEntity } from 'alfresco-js-api';
 import { SearchComponent } from '@alfresco/adf-content-services';
 import { ThumbnailService } from '@alfresco/adf-core';
-// import { TestSearchConfigurationService } from './search-config-test.service';
+import { SearchService, SearchConfigurationService } from '@alfresco/adf-core';
+import { TestSearchConfigurationService } from './search-config-test.service';
 
 @Component({
     selector: 'app-search-extended-component',
     templateUrl: './search-extended.component.html',
     styleUrls: ['./search-extended.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    providers: [
+        { provide: SearchConfigurationService, useClass: TestSearchConfigurationService },
+        SearchService
+    ]
 })
 export class SearchExtendedComponent {
 
