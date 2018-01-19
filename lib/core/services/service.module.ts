@@ -48,7 +48,7 @@ import { TranslationService } from './translation.service';
 import { UploadService } from './upload.service';
 import { UserPreferencesService } from './user-preferences.service';
 import { DefaultSearchConfigurationService,
-         SEARCH_CONFIGURATION } from './search-configuration.service';
+         SEARCH_CONFIGURATION } from './default-search-configuration.service';
 
 @NgModule({
     imports: [],

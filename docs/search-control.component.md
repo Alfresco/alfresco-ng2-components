@@ -25,7 +25,8 @@ Displays a input text which shows find-as-you-type suggestions.
 | expandable | boolean | true | Whether to use an expanding search control, if false then a regular input is used. |
 | liveSearchEnabled | boolean | true | Whether find-as-you-type suggestions should be offered for matching content items. Set to false to disable. |
 | liveSearchMaxResults | number | 5 | Maximum number of results to show in the live search. |
-| customQueryBodyBuilder | function |  | function which allow you to perform more elaborated query from the search api. The function gets as input the searched string and must return a [QueryBody](https://github.com/Alfresco/alfresco-js-api/blob/1.6.0/src/alfresco-search-rest-api/docs/QueryBody.md) object |
+| customQueryBody | [QueryBody](https://github.com/Alfresco/alfresco-js-api/blob/1.6.0/src/alfresco-search-rest-api/docs/QueryBody.md) | | object which allow you to perform more elaborated query from the search api. This input is deprecated, to use the extended query body function please refer to the suggested solution [here](./search.component.md)|
+
 
 ### Events
 

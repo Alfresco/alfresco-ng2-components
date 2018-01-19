@@ -17,6 +17,8 @@ import { HomeComponent } from './components/home/home.component';
 import { SearchBarComponent } from './components/search/search-bar.component';
 import { SearchResultComponent } from './components/search/search-result.component';
 import { SearchExtendedComponent } from './components/search/search-extended.component';
+// import { SEARCH_CONFIGURATION } from '@alfresco/adf-core';
+// import { TestSearchConfigurationService } from './components/search/search-config-test.service';
 import { AboutComponent } from './components/about/about.component';
 import { FormComponent } from './components/form/form.component';
 import { FormListComponent } from './components/form/form-list.component';
@@ -102,6 +104,7 @@ import { SharedLinkViewComponent } from './components/shared-link-view/shared-li
                 source: 'resources'
             }
         }
+        // ,{ provide: SEARCH_CONFIGURATION, useClass:  TestSearchConfigurationService }
     ],
     entryComponents: [
         VersionManagerDialogAdapterComponent

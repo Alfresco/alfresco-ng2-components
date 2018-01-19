@@ -21,7 +21,7 @@ import { Observable } from 'rxjs/Observable';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AuthenticationService } from './authentication.service';
 import 'rxjs/add/observable/throw';
-import { SEARCH_CONFIGURATION } from './search-configuration.service';
+import { SEARCH_CONFIGURATION } from './default-search-configuration.service';
 import { SearchConfigurationInterface } from '../interface/search-configuration.interface';
 
 @Injectable()
