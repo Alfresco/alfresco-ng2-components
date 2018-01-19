@@ -41,6 +41,7 @@ import {
 } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { presetsDefaultModel } from '../models/preset.model';
 import { ShareDataRow } from './../data/share-data-row.model';
 import { ShareDataTableAdapter } from './../data/share-datatable-adapter';
@@ -220,7 +221,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     noPermission: boolean = false;
     selection = new Array<MinimalNodeEntity>();
 
-    pagination = new Subject<Pagination>();
+    pagination: BehaviorSubject<Pagination>;
 
     private layoutPresets = {};
     private currentNodeAllowableOperations: string[] = [];
@@ -236,7 +237,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 private preferences: UserPreferencesService) {
         this.maxItems = this.preferences.paginationSize;
 
-        this.pagination.next(<Pagination> {
+        this.pagination = new BehaviorSubject<Pagination>(<Pagination> {
             maxItems: this.preferences.paginationSize,
             skipCount: 0,
             totalItems: 0,

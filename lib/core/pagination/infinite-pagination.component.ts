@@ -19,15 +19,19 @@
 
 import {
     ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     EventEmitter,
     Input,
     OnInit,
     Output,
+    OnDestroy,
     ViewEncapsulation
 } from '@angular/core';
-
+import { PaginatedComponent } from './paginated-component.interface';
+import { PaginationQueryParams } from './pagination-query-params.interface';
 import { Pagination } from 'alfresco-js-api';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
     selector: 'adf-infinite-pagination',
@@ -37,7 +41,7 @@ import { Pagination } from 'alfresco-js-api';
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
-export class InfinitePaginationComponent implements OnInit {
+export class InfinitePaginationComponent implements OnInit, OnDestroy {
 
     static DEFAULT_PAGE_SIZE: number = 25;
 
@@ -50,6 +54,9 @@ export class InfinitePaginationComponent implements OnInit {
     pagination: Pagination;
 
     @Input()
+    target: PaginatedComponent;
+
+    @Input()
     pageSize: number = InfinitePaginationComponent.DEFAULT_PAGE_SIZE;
 
     @Input('loading')
@@ -58,7 +65,19 @@ export class InfinitePaginationComponent implements OnInit {
     @Output()
     loadMore: EventEmitter<Pagination> = new EventEmitter<Pagination>();
 
+    private paginationSubscription: Subscription;
+
+    constructor(private cdr: ChangeDetectorRef) {}
+
     ngOnInit() {
+        if (this.target) {
+            this.paginationSubscription = this.target.pagination.subscribe(page => {
+                this.pagination = page;
+                this.pageSize = page.maxItems;
+                this.cdr.detectChanges();
+            });
+        }
+
         if (!this.pagination) {
             this.pagination = InfinitePaginationComponent.DEFAULT_PAGINATION;
         }
@@ -67,5 +86,15 @@ export class InfinitePaginationComponent implements OnInit {
     onLoadMore() {
         this.pagination.skipCount += this.pageSize;
         this.loadMore.next(this.pagination);
+
+        if (this.target) {
+            this.target.updatePagination(<PaginationQueryParams> this.pagination);
+        }
+    }
+
+    ngOnDestroy() {
+        if (this.paginationSubscription) {
+            this.paginationSubscription.unsubscribe();
+        }
     }
 }

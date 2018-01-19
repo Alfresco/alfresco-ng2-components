@@ -291,9 +291,9 @@
             </adf-pagination>
             <adf-infinite-pagination
                 *ngIf="infiniteScrolling"
+                [target]="documentList"
                 [pagination]="pagination"
                 [loading]="documentList.infiniteLoading"
-                [pageSize]="currentMaxItems"
                 (loadMore)="loadNextBatch($event)">
                 {{ 'ADF-DOCUMENT-LIST.LAYOUT.LOAD_MORE' | translate }}
             </adf-infinite-pagination>
