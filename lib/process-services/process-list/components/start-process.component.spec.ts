@@ -230,7 +230,6 @@ describe('StartProcessInstanceComponent', () => {
     describe('input changes', () => {
 
         let change = new SimpleChange(123, 456, true);
-        let nullChange = new SimpleChange(123, null, true);
 
         beforeEach(async(() => {
             component.appId = 123;
