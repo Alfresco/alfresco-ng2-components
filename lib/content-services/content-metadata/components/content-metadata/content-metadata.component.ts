@@ -47,6 +47,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
     @Input()
     preset: string;
 
+    nodeHasBeenUpdated: boolean = false;
     basicProperties$: Observable<CardViewItem[]>;
     aspects$: Observable<CardViewAspect[]>;
 
@@ -59,15 +60,20 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
         this.cardViewUpdateService.itemUpdated$
             .switchMap(this.saveNode.bind(this))
             .subscribe(
-                node => this.node = node,
+                (node) => {
+                    this.nodeHasBeenUpdated = true;
+                    this.node = node;
+                },
                 error => this.logService.error(error)
             );
     }
 
     ngOnChanges(changes: SimpleChanges) {
         const nodeChange: SimpleChange = changes['node'];
-        if (nodeChange) {
-            const node = nodeChange.currentValue;
+        if (nodeChange || this.nodeHasBeenUpdated) {
+            const node = nodeChange && nodeChange.currentValue || this.node;
+            this.nodeHasBeenUpdated = false;
+
             this.basicProperties$ = this.contentMetadataService.getBasicProperties(node);
             this.aspects$ = this.contentMetadataService.getAspectProperties(node, this.preset);
         }
