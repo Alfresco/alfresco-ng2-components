@@ -216,6 +216,17 @@ describe('UploadButtonComponent', () => {
             expect(addToQueueSpy.calls.mostRecent()).toBeUndefined();
         });
 
+        it('should allow file of 0 size when the max file size is set to 0', () => {
+            const zeroFiles: File[] = [
+                <File> { name: 'zeroFile.png', size: 0 }
+            ];
+            component.maxFilesSize = 0;
+
+            component.uploadFiles(zeroFiles);
+
+            expect(addToQueueSpy.calls.mostRecent()).toBeDefined();
+        });
+
         it('should filter out all files if maxFilesSize is <0', () => {
             component.maxFilesSize = -2;
 
