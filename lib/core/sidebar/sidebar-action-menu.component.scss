@@ -1,8 +1,6 @@
 @mixin  adf-sidebar-action-menu-theme($theme) {
 
     $primary: map-get($theme, primary);
-    $foreground: map-get($theme, foreground);
-    $background: map-get($theme, background);
 
     $adf-sidebar-action-menu-button-option-width: 205px;
     $adf-sidebar-action-menu-button-height: 37.5px;
@@ -43,10 +41,9 @@
         }
         &-sidebar-action-menu-options {
             width: $adf-sidebar-action-menu-button-option-width;
-            opacity: 0.87;
+            opacity: $adf-sidebar-action-menu-item-opacity;
             text-align: left;
-            letter-spacing: -0.4px;
-            color: #000000;
+            letter-spacing: $adf-sidebar-action-menu-item-line-spacing;
             .mat-menu-item {
                 width: $adf-sidebar-action-menu-button-option-width;
                 opacity: $adf-sidebar-action-menu-item-opacity;
