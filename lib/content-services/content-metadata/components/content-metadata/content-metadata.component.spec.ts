@@ -237,5 +237,22 @@ describe('ContentMetadataComponent', () => {
                 expect(basicPropertiesComponent.displayEmpty).toBe(false);
             });
         }));
+
+        it('should be performed again if property updating occured, since the originally passed node has changed, so the previously calculated properties', () => {
+            const property = <CardViewBaseItemModel> { key: 'property-key', value: 'original-value' },
+                updateService = fixture.debugElement.injector.get(CardViewUpdateService),
+                nodesApiService = TestBed.get(NodesApiService);
+
+            spyOn(nodesApiService, 'updateNode').and.callFake(() => Observable.of(node));
+            spyOn(contentMetadataService, 'getBasicProperties');
+            component.ngOnChanges({ node: new SimpleChange(null, node, true) });
+            updateService.update(property, 'updated-value');
+
+            component.ngOnChanges({ expanded: new SimpleChange(false, true, false) });
+            component.ngOnChanges({ expanded: new SimpleChange(true, false, false) });
+            component.ngOnChanges({ expanded: new SimpleChange(false, true, false) });
+
+            expect(contentMetadataService.getBasicProperties).toHaveBeenCalledTimes(2);
+        });
     });
 });
