@@ -19,7 +19,7 @@
 
         &-toolbar {
             .mat-toolbar {
-                background-color: #ffffff;
+                background-color: mat-color($primary, default-contrast)
             }
         }
 
@@ -40,7 +40,7 @@
                 overflow-y: auto;
                 overflow-x: hidden;
                 z-index: 1;
-                background-color: #f5f5f5;
+                background-color: mat-color($background, background);
 
                 display: flex;
                 flex-direction: row;
