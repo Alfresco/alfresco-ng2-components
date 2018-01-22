@@ -1,5 +1,8 @@
 <div>
     <h3>{{'APP_LAYOUT.EXTENDED_SEARCH_QUERY_BODY' | translate}}</h3>
+    <mat-checkbox [(ngModel)]="useServiceApproach">
+            {{'APP_LAYOUT.SEARCH_SERVICE_APPROACH' | translate}}
+    </mat-checkbox>
 
     <div id="container-for-custom-input" class="search-extended-input-containers">
         <mat-form-field>

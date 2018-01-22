@@ -46,6 +46,7 @@ export class SearchExtendedComponent {
     skipCount = 0;
     pagination: Pagination;
     queryBody: QueryBody;
+    useServiceApproach: boolean = false;
 
     constructor(public thumbnailService: ThumbnailService) {
 
@@ -65,15 +66,19 @@ export class SearchExtendedComponent {
     }
 
     generateQueryBody(searchTerm: string): QueryBody {
-        return {
-            query: {
-                query: searchTerm ? `${searchTerm}* OR name:${searchTerm}*` : searchTerm
-            },
-            include: ['path', 'allowableOperations'],
-            filterQueries: [
-                /*tslint:disable-next-line */
-                { query: "TYPE:'cm:folder' OR TYPE:'cm:content'" },
-                { query: 'NOT cm:creator:System' }]
-        };
+        if (this.useServiceApproach) {
+            return null;
+        } else {
+            return {
+                query: {
+                    query: searchTerm ? `${searchTerm}* OR name:${searchTerm}*` : searchTerm
+                },
+                include: ['path', 'allowableOperations'],
+                filterQueries: [
+                    /*tslint:disable-next-line */
+                    { query: "TYPE:'cm:folder' OR TYPE:'cm:content'" },
+                    { query: 'NOT cm:creator:System' }]
+            };
+        }
     }
 }
