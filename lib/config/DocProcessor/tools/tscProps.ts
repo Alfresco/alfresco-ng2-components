@@ -7,7 +7,7 @@ import * as heading from "mdast-util-heading-range";
 import * as remark from "remark";
 
 import * as unist from "../unistHelpers";
-import { JsxEmit } from "typescript";
+import { JsxEmit, isClassDeclaration } from "typescript";
 
 export function initPhase(aggData) {
 }
@@ -104,16 +104,42 @@ function getPropDocData(srcPath: string, docClassName: string, inputs: any[], ou
             let sourceFile = classDec.getSourceFile();
     
             if (classDec.name.escapedText === docClassName) {
-                getPropDataFromClass(checker, classDec, inputs, outputs);
+                getPropDataFromClassChain(checker, classDec, inputs, outputs);
             }
         }
     }
 }
 
 
+// Get properties/events from main class and all inherited classes.
+function getPropDataFromClassChain(
+    checker: ts.TypeChecker,
+    classDec: ts.ClassDeclaration,
+    inputs: any[],
+    outputs: any[]
+){ 
+    // Main class
+    getPropDataFromClass(checker, classDec, inputs, outputs);
+
+    // Inherited classes
+    for(const hc of classDec.heritageClauses) {
+        let hcType = checker.getTypeFromTypeNode(hc.types[0]);
+        
+        console.log(checker.getFullyQualifiedName(hcType.symbol));
+
+        for (const dec of hcType.symbol.declarations) {
+            if (isClassDeclaration(dec)) {
+                getPropDataFromClassChain(checker, dec, inputs, outputs);
+            }
+        }
+    }
+
+}
+
+
 function getPropDataFromClass(
     checker: ts.TypeChecker,
-    classDec:ts.ClassDeclaration,
+    classDec: ts.ClassDeclaration,
     inputs: any[],
     outputs: any[]
 ){
