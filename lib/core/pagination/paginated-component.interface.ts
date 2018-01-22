@@ -16,14 +16,12 @@
  */
 
 import { Pagination } from 'alfresco-js-api';
-import { Subject } from 'rxjs/Subject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { PaginationQueryParams } from './pagination-query-params.interface';
 
 export interface PaginatedComponent {
-
-    pagination: Subject<Pagination>;
+    pagination: BehaviorSubject<Pagination>;
     supportedPageSizes: number[];
     updatePagination(params: PaginationQueryParams);
-
 }

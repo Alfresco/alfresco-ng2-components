@@ -291,10 +291,8 @@
             </adf-pagination>
             <adf-infinite-pagination
                 *ngIf="infiniteScrolling"
-                [pagination]="pagination"
-                [loading]="documentList.infiniteLoading"
-                [pageSize]="currentMaxItems"
-                (loadMore)="loadNextBatch($event)">
+                [target]="documentList"
+                [loading]="documentList.infiniteLoading">
                 {{ 'ADF-DOCUMENT-LIST.LAYOUT.LOAD_MORE' | translate }}
             </adf-infinite-pagination>
         </adf-upload-drag-area>
