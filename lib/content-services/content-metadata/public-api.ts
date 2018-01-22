@@ -16,3 +16,4 @@
  */
 
 export * from './components/content-metadata-card/content-metadata-card.component';
+export { ContentMetadataModule } from './content-metadata.module';
