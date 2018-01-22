@@ -108,8 +108,45 @@ A number of built-in actions are defined to handle common use cases:
 You can use one of the built-in handlers by assigning its name to the `handler` property.
 (The names are case-insensitive, so `handler="download"` and `handler="DOWNLOAD"`
 will trigger the same action.) You can also add your own handler by implementing the
-`execute` event. Note that you can use _both_ a built-in handler and your own `execute`
-function in the same action.
+`execute` event.
+
+Note that you can use _both_ a built-in handler and your own `execute`
+function in the same action. The `execute` function is passed a `NodeMinimalEntry` as its
+parameter (see the [Document Library model](document-library.model.md) page for more
+information) which contains full details of the item that the action is operating on. For
+example, with `handler="delete"` you could use `execute` to show a message with the name,
+type and other details of the item just deleted:
+
+```html
+ <content-actions>
+    <content-action
+        target="document"
+        title="Delete"
+        permission="delete"
+        disableWithNoPermission="true"
+        handler="delete"
+        (execute)="myCustomActionAfterDelete($event)">
+    </content-action>
+</content-actions>
+```
+
+```ts
+  myCustomActionAfterDelete(event) {
+    let entry = event.value.entry;
+
+    let item = "";
+
+    if (entry.isFile) {
+      item = "file";
+    } else if (entry.isFolder) {
+      item = "folder"
+    }
+
+    this.notificationService.openSnackMessage(`Deleted ${item} "${entry.name}" `, 20000);
+  }
+```
+
+![Custom delete message screenshot](docassets/images/ContentActSnackMessage.png)
 
 ### Built-in action examples
 
