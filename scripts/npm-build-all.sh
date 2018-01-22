@@ -54,7 +54,7 @@ enable_testbrowser(){
 
 test_project() {
     echo "====== test project: $1 ====="
-    npm run test -- --component $1 || exit 1
+    npm run test -- --component $1 --mode coverage || exit 1
 }
 
 debug_project() {
