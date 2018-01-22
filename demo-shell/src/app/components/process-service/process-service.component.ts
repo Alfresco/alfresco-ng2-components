@@ -52,7 +52,7 @@ import {
     TaskListService
 } from '@alfresco/adf-process-services';
 import { LogService } from '@alfresco/adf-core';
-import { AlfrescoApiService, UserPreferencesService } from '@alfresco/adf-core';
+import { AlfrescoApiService, UserPreferencesService, AppConfigService } from '@alfresco/adf-core';
 import {
     DataSorting,
     ObjectDataRow,
@@ -100,6 +100,9 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     @Input()
     appId: number = null;
 
+    defaultProcessDefinitionId: string;
+    defaultProcessName: string;
+
     fileShowed = false;
     selectFirstReport = false;
 
@@ -145,6 +148,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     constructor(private elementRef: ElementRef,
                 private route: ActivatedRoute,
                 private router: Router,
+                private appConfig: AppConfigService,
                 private taskListService: TaskListService,
                 private apiService: AlfrescoApiService,
                 private logService: LogService,
@@ -253,6 +257,8 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
             this.currentProcessInstanceId = null;
         });
         this.layoutType = AppsListComponent.LAYOUT_GRID;
+        this.defaultProcessDefinitionId = this.appConfig.get<string>('adf-start-proces.processDefinitionId');
+        this.defaultProcessName = this.appConfig.get<string>('adf-start-proces.name');
     }
 
     ngOnDestroy() {

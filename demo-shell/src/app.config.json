@@ -329,6 +329,10 @@
             ]
         }
     },
+    "adf-start-proces": {
+      "name": "My cool name",
+      "processDefinitionId": "myprocess:1:2505"
+    },
     "adf-task-list": {
         "presets": {
             "default": [
