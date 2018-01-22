@@ -17,7 +17,8 @@
 
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
-import { MatDatetimepicker } from '@mat-datetimepicker/core';
+import { MatDatetimepicker, DatetimeAdapter, MAT_DATETIME_FORMATS } from '@mat-datetimepicker/core';
+import { MomentDatetimeAdapter, MAT_MOMENT_DATETIME_FORMATS } from '@mat-datetimepicker/moment';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
@@ -29,7 +30,10 @@ import { MOMENT_DATE_FORMATS } from '../../../utils/moment-date-formats.model';
 @Component({
     providers: [
         { provide: DateAdapter, useClass: MomentDateAdapter },
-        { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }],
+        { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS },
+        { provide: DatetimeAdapter, useClass: MomentDatetimeAdapter },
+        { provide: MAT_DATETIME_FORMATS, useValue: MAT_MOMENT_DATETIME_FORMATS }
+    ],
     selector: 'adf-card-view-dateitem',
     templateUrl: './card-view-dateitem.component.html',
     styleUrls: ['./card-view-dateitem.component.scss']
@@ -61,8 +65,7 @@ export class CardViewDateItemComponent implements OnInit {
         this.preferences.locale$.subscribe((locale) => {
             this.dateAdapter.setLocale(locale);
         });
-        let momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
-        momentDateAdapter.overrideDisplyaFormat = this.SHOW_FORMAT;
+        (<MomentDateAdapter> this.dateAdapter).overrideDisplyaFormat = this.SHOW_FORMAT;
 
         if (this.property.value) {
             this.valueDate = moment(this.property.value, this.SHOW_FORMAT);
