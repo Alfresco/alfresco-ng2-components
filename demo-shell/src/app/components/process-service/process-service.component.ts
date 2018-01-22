@@ -294,7 +294,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     onProcessFilterClick(event: ProcessInstanceFilterRepresentation): void {
-        this.currentProcessInstanceId = null;
         this.processFilter = event;
     }
 
