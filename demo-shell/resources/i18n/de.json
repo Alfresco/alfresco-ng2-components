@@ -2,7 +2,7 @@
   "title": "Willkommen",
   "VERSION": {
     "NO_PERMISSION": "Sie verfügen nicht über die nötige Berechtigung, um Versionen dieses Inhalts zu verwalten",
-    "NO_PERMISSION_EVENT": "Sie verfügen nicht über die nötige Berechtigung ('${event.permission}'), um ${event.action} zu ${event.type}",
+    "NO_PERMISSION_EVENT": "Sie verfügen nicht über die nötige Berechtigung {{permission}}, um {{action}} zu {{type}}",
     "CHOOSE_FILE": "Wählen Sie eine Datei aus, um ihre Versionen anzuzeigen"
   },
   "APP_LAYOUT": {

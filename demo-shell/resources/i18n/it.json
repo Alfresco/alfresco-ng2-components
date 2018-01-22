@@ -2,7 +2,7 @@
   "title": "Benvenuto",
   "VERSION": {
     "NO_PERMISSION": "Non hai il permesso di gestire versioni di questo contenuto",
-    "NO_PERMISSION_EVENT": "Non hai il permesso ${event.permission} di ${event.action} ${event.type}",
+    "NO_PERMISSION_EVENT": "Non hai il permesso {{permission}} di {{action}} {{type}}",
     "CHOOSE_FILE": "Seleziona un file per visualizzarne le versioni"
   },
   "APP_LAYOUT": {

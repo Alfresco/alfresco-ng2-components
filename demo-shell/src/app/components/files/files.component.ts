@@ -263,7 +263,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     handlePermissionError(event: any) {
-        this.translateService.get('OPERATION.ERROR.NO_PERMISSION_EVENT', {
+        this.translateService.get('VERSION.NO_PERMISSION_EVENT', {
             permission: event.permission,
             action: event.action,
             type: event.type
