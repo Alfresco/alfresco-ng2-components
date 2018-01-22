@@ -46,7 +46,7 @@ export class SearchExtendedComponent {
     skipCount = 0;
     pagination: Pagination;
     queryBody: QueryBody;
-    useServiceApproach: boolean = false;
+    useServiceApproach = false;
 
     constructor(public thumbnailService: ThumbnailService) {
 
