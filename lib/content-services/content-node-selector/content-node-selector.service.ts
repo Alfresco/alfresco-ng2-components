@@ -59,6 +59,6 @@ export class ContentNodeSelectorService {
             }
         };
 
-        return this.searchService.search(defaultSearchNode);
+        return this.searchService.search(defaultSearchNode, maxItems.toString(), skipCount.toString());
     }
 }

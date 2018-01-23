@@ -19,7 +19,7 @@ Searches items for supplied search terms.
 | maxResults | number | 20 | Maximum number of results to show in the search. |
 | skipResults | number | 0 | Number of results to skip from the results pagination. |
 | displayWith | function |  | Function that maps an option's value to its display value in the trigger |
-| queryBody | [QueryBody](https://github.com/Alfresco/alfresco-js-api/blob/1.6.0/src/alfresco-search-rest-api/docs/QueryBody.md) |  | object which allow you to perform more elaborated query from the search api |
+| queryBody| [QueryBody](https://github.com/Alfresco/alfresco-js-api/blob/1.6.0/src/alfresco-search-rest-api/docs/QueryBody.md) | | object which allow you to perform more elaborated query from the search api. This input is deprecated, to use the extended query body function please refer to the suggested solution [here](./search.component.md#querybody) |
 
 ### Events
 
@@ -113,3 +113,60 @@ Yuo can do this by exporting the adf-search panel instance into a local template
 ```
 
 In this way it is possible to fetch the results from the word typed into the input text straight into the adf-search component via the custom template variable.
+
+## QueryBody 
+This is an example on how you can provide your own class to generate your custom query body without giving it in input to the search component.
+
+1. Service Class
+    You need to create your own service class which will implement the SearchConfigurationInterface this will force you to create the method generateQueryBody that is the one which needs to return the QueryBody object.
+
+    ```ts
+    import { QueryBody } from 'alfresco-js-api';
+    import { SearchConfigurationInterface } from '@alfresco/adf-core';
+
+    export class TestSearchConfigurationService implements SearchConfigurationInterface {
+
+        constructor() {
+        }
+
+        public generateQueryBody(searchTerm: string, maxResults: string, skipCount: string): QueryBody {
+            const defaultQueryBody: QueryBody = {
+                query: {
+                    query: searchTerm ? `${searchTerm}* OR name:${searchTerm}*` : searchTerm
+                },
+                include: ['path', 'allowableOperations'],
+                paging: {
+                    maxItems: maxResults,
+                    skipCount: skipCount
+                },
+                filterQueries: [
+                    { query: "TYPE:'cm:folder'" },
+                    { query: 'NOT cm:creator:System' }]
+            };
+
+            return defaultQueryBody;
+        }
+    }
+    ```
+
+2. Provide your service class to the module
+    Once you have created your service class to provide your custom query body you need to inform the component to use your class instead of the default one. This can be easily achieved via your component providers :
+
+    ```ts
+        import { SearchService, SearchConfigurationService } from '@alfresco/adf-core';
+        import { TestSearchConfigurationService } from './search-config-test.service';
+
+        @Component({
+            selector: 'app-search-extended-component',
+            templateUrl: './search-extended.component.html',
+            styleUrls: ['./search-extended.component.scss'],
+            encapsulation: ViewEncapsulation.None,
+            providers: [
+                { provide: SearchConfigurationService, useClass: TestSearchConfigurationService },
+                SearchService
+            ]
+        })
+    ```
+    You need to add as provider even the SearchService to avoid the override of the module instance. So this component will have his own instance of the SearchService that will use as configuration the class you have provided.
+
+

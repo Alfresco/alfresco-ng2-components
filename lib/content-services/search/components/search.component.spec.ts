@@ -23,10 +23,10 @@ import { SearchModule } from '../../index';
 import { differentResult, folderResult, result, SimpleSearchTestComponent } from '../../mock';
 
 function fakeNodeResultSearch(searchNode: QueryBody): Observable<any> {
-    if (searchNode.query.query === 'FAKE_SEARCH_EXMPL') {
+    if (searchNode && searchNode.query.query === 'FAKE_SEARCH_EXMPL') {
         return Observable.of(differentResult);
     }
-    if (searchNode.filterQueries.length === 1 &&
+    if (searchNode && searchNode.filterQueries.length === 1 &&
         searchNode.filterQueries[0].query === "TYPE:'cm:folder'") {
         return Observable.of(folderResult);
     }
@@ -132,18 +132,18 @@ describe('SearchComponent', () => {
         });
 
         it('should perform a search based on the query node given', async(() => {
-            spyOn(searchService, 'search')
-                .and.callFake((searchObj) => fakeNodeResultSearch(searchObj));
+            spyOn(searchService, 'searchByQueryBody')
+                    .and.callFake((searchObj) => fakeNodeResultSearch(searchObj));
             let fakeSearchNode: QueryBody = {
                 query: {
-                    query: ''
+                    query: 'TEST-FAKE-NODE'
                 },
                 filterQueries: [
                     { 'query': "TYPE:'cm:folder'" }
                 ]
             };
-            component.setSearchNodeTo(fakeSearchNode);
             component.setSearchWordTo('searchTerm');
+            component.setSearchNodeTo(fakeSearchNode);
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -156,7 +156,7 @@ describe('SearchComponent', () => {
 
         it('should perform a search with a defaultNode if no searchnode is given', async(() => {
             spyOn(searchService, 'search')
-                .and.callFake((searchObj) => fakeNodeResultSearch(searchObj));
+                .and.returnValue(Observable.of(result));
             component.setSearchWordTo('searchTerm');
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -169,7 +169,7 @@ describe('SearchComponent', () => {
         }));
 
         it('should perform a search with the searchNode given', async(() => {
-            spyOn(searchService, 'search')
+            spyOn(searchService, 'searchByQueryBody')
                 .and.callFake((searchObj) => fakeNodeResultSearch(searchObj));
             let fakeSearchNode: QueryBody = {
                 query: {
@@ -179,6 +179,7 @@ describe('SearchComponent', () => {
                     { 'query': "TYPE:'cm:folder'" }
                 ]
             };
+            component.setSearchWordTo('searchTerm');
             component.setSearchNodeTo(fakeSearchNode);
             fixture.detectChanges();
             fixture.whenStable().then(() => {
