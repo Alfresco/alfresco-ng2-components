@@ -8,7 +8,7 @@
         <ng-content select="[sidebar-menu-expand-icon]"></ng-content>
     </div>
 
-    <mat-menu #adfSidebarMenu="matMenu" [overlapTrigger]="false" yPosition="below">
+    <mat-menu #adfSidebarMenu="matMenu" class="adf-sidebar-action-menu-panel" [overlapTrigger]="false" yPosition="below">
         <div class="adf-sidebar-action-menu-options">
             <ng-content select="[sidebar-menu-options]"></ng-content>
         </div>
