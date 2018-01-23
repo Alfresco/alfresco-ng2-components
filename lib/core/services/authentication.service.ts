@@ -199,7 +199,10 @@ export class AuthenticationService {
      * @returns {boolean}
      */
     isEcmLoggedIn(): boolean {
-        return this.isRememberMeSet() && this.alfrescoApi.getInstance().ecmAuth && !!this.alfrescoApi.getInstance().ecmAuth.isLoggedIn();
+        if (this.cookie.isEnabled() && !this.isRememberMeSet()) {
+            return false;
+        }
+        return this.alfrescoApi.getInstance().ecmAuth && !!this.alfrescoApi.getInstance().ecmAuth.isLoggedIn();
     }
 
     /**
@@ -208,7 +211,10 @@ export class AuthenticationService {
      * @returns {boolean}
      */
     isBpmLoggedIn(): boolean {
-        return this.isRememberMeSet() && this.alfrescoApi.getInstance().bpmAuth && !!this.alfrescoApi.getInstance().bpmAuth.isLoggedIn();
+        if (this.cookie.isEnabled() && !this.isRememberMeSet()) {
+            return false;
+        }
+        return this.alfrescoApi.getInstance().bpmAuth && !!this.alfrescoApi.getInstance().bpmAuth.isLoggedIn();
     }
 
     /**

@@ -20,6 +20,16 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class CookieService {
 
+    isEnabled(): boolean {
+        // for certain scenarios Chrome may say 'true' but have cookies still disabled
+        if (navigator.cookieEnabled === false) {
+            return false;
+        }
+
+        document.cookie = "test-cookie";
+        return document.cookie.indexOf("test-cookie") > 0;
+    }
+
     /**
      * Retrieve cookie by key.
      *
