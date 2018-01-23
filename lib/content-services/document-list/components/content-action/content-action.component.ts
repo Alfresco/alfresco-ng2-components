@@ -49,7 +49,7 @@ export class ContentActionComponent implements OnInit, OnChanges {
 
     /** Type of item that the action appies to. Can be "document" or "folder" */
     @Input()
-    target: string;
+    target: string = 'all';
 
     /** The permission type. */
     @Input()
@@ -84,6 +84,7 @@ export class ContentActionComponent implements OnInit, OnChanges {
     success = new EventEmitter();
 
     model: ContentActionModel;
+    duplicateModel: ContentActionModel;
 
     constructor(
         private list: ContentActionListComponent,
@@ -101,9 +102,17 @@ export class ContentActionComponent implements OnInit, OnChanges {
             target: this.target,
             disabled: this.disabled
         });
-
+        this.duplicateModel = null;
         if (this.handler) {
-            this.model.handler = this.getSystemHandler(this.target, this.handler);
+            if(this.target === 'all') {
+                this.duplicateModel = Object.assign({}, this.model);
+                this.duplicateModel.handler = this.getSystemHandler('folder', this.handler);
+                this.duplicateModel.target = 'folder';
+                this.model.target = 'document';
+                this.model.handler =  this.getSystemHandler('document', this.handler);
+            }else {
+                this.model.handler = this.getSystemHandler(this.target, this.handler);
+            }
         }
 
         if (this.execute) {
@@ -117,6 +126,9 @@ export class ContentActionComponent implements OnInit, OnChanges {
 
     register(): boolean {
         if (this.list) {
+            if(this.target === 'all' ) {
+                this.list.registerAction(this.duplicateModel);
+            }
             return this.list.registerAction(this.model);
         }
         return false;
@@ -133,8 +145,8 @@ export class ContentActionComponent implements OnInit, OnChanges {
 
             if (ltarget === 'document') {
                 if (this.documentActions) {
-                    this.documentActions.permissionEvent.subscribe((permision) => {
-                        this.permissionEvent.emit(permision);
+                    this.documentActions.permissionEvent.subscribe((permission) => {
+                        this.permissionEvent.emit(permission);
                     });
 
                     this.documentActions.error.subscribe((errors) => {
@@ -152,8 +164,8 @@ export class ContentActionComponent implements OnInit, OnChanges {
 
             if (ltarget === 'folder') {
                 if (this.folderActions) {
-                    this.folderActions.permissionEvent.subscribe((permision) => {
-                        this.permissionEvent.emit(permision);
+                    this.folderActions.permissionEvent.subscribe((permission) => {
+                        this.permissionEvent.emit(permission);
                     });
 
                     this.folderActions.error.subscribe((errors) => {

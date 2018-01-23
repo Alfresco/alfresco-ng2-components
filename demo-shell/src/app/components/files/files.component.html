@@ -198,7 +198,7 @@
                     <!-- folder actions -->
                     <content-action
                         icon="content_copy"
-                        target="folder"
+                        target="all"
                         title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.COPY' | translate}}"
                         permission="update"
                         [disableWithNoPermission]="true"
@@ -206,6 +206,16 @@
                         (success)="onContentActionSuccess($event)"
                         handler="copy">
                     </content-action>
+                    <!-- <content-action
+                        icon="content_copy"
+                        target="document"
+                        title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.COPY' | translate}}"
+                        permission="update"
+                        [disableWithNoPermission]="true"
+                        (error)="onContentActionError($event)"
+                        (success)="onContentActionSuccess($event)"
+                        handler="copy">
+                    </content-action>                     -->
                     <content-action
                         icon="redo"
                         target="folder"
@@ -227,16 +237,7 @@
                         handler="delete">
                     </content-action>
                     <!-- document actions -->
-                    <content-action
-                        icon="content_copy"
-                        target="document"
-                        title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.COPY' | translate}}"
-                        permission="update"
-                        [disableWithNoPermission]="true"
-                        (error)="onContentActionError($event)"
-                        (success)="onContentActionSuccess($event)"
-                        handler="copy">
-                    </content-action>
+
                     <content-action
                         icon="redo"
                         target="document"
