@@ -64,13 +64,13 @@ describe('ProcessService', () => {
 
         it('should return the correct number of instances', async(() => {
             service.getProcessInstances(filter).subscribe((instances) => {
-                expect(instances.length).toBe(1);
+                expect(instances.data.length).toBe(1);
             });
         }));
 
         it('should return the correct instance data', async(() => {
             service.getProcessInstances(filter).subscribe((instances) => {
-                let instance = instances[0];
+                let instance = instances.data[0];
                 expect(instance.id).toBe(exampleProcess.id);
                 expect(instance.name).toBe(exampleProcess.name);
                 expect(instance.started).toBe(exampleProcess.started);
@@ -81,8 +81,8 @@ describe('ProcessService', () => {
             getProcessInstances = getProcessInstances.and.returnValue(Promise.resolve(fakeProcessInstances));
 
             service.getProcessInstances(filter, 'fakeProcessDefinitionKey1').subscribe((instances) => {
-                expect(instances.length).toBe(1);
-                let instance = instances[0];
+                expect(instances.data.length).toBe(1);
+                let instance = instances.data[0];
                 expect(instance.id).toBe('340124');
                 expect(instance.name).toBe('James Franklin EMEA Onboarding');
                 expect(instance.started).toEqual(new Date('2017-10-09T12:19:44.560+0000'));

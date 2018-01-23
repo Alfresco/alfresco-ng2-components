@@ -169,35 +169,43 @@ describe('PaginationComponent', () => {
         });
 
         it('goes next', () => {
+            expect(component.current).toBe(3);
             component.goNext();
 
             const { skipCount } = nextPageSpy.calls.mostRecent().args[0];
 
             expect(skipCount).toBe(75);
+            expect(component.current).toBe(4);
         });
 
         it('goes previous', () => {
+            expect(component.current).toBe(3);
             component.goPrevious();
 
             const { skipCount } = prevPageSpy.calls.mostRecent().args[0];
 
             expect(skipCount).toBe(25);
+            expect(component.current).toBe(2);
         });
 
         it('changes page size', () => {
+            expect(component.current).toBe(3);
             component.onChangePageSize(50);
 
             const { maxItems } = changePageSizeSpy.calls.mostRecent().args[0];
 
             expect(maxItems).toBe(50);
+            expect(component.current).toBe(1);
         });
 
         it('changes page number', () => {
+            expect(component.current).toBe(3);
             component.onChangePageNumber(5);
 
             const { skipCount } = changePageNumberSpy.calls.mostRecent().args[0];
 
             expect(skipCount).toBe(100);
+            expect(component.current).toBe(5);
         });
     });
 
@@ -318,10 +326,12 @@ describe('PaginationComponent', () => {
             component.target = customComponent;
             component.ngOnInit();
 
-            customComponent.pagination.next(new FakePaginationInput(2, 0, 25));
+            customComponent.pagination.next(new FakePaginationInput(2, 1, 25));
+            expect(component.current).toBe(1);
 
             component.goNext();
             expect(customComponent.updatePagination).toHaveBeenCalled();
+            expect(component.current).toBe(2);
         });
 
     });
