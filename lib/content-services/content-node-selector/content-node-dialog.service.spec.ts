@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
- /*tslint:disable:ban*/
-
 import { async, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { MinimalNodeEntryEntity, SitePaging } from 'alfresco-js-api';
 import { AppConfigService, SitesService } from '@alfresco/adf-core';
@@ -51,7 +49,7 @@ const fakeSiteList: SitePaging = {
     }
 };
 
-fdescribe('ContentNodeDialogService', () => {
+describe('ContentNodeDialogService', () => {
 
     let service: ContentNodeDialogService;
     let documentListService: DocumentListService;
