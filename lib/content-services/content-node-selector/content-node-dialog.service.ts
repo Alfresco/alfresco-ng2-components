@@ -83,7 +83,8 @@ export class ContentNodeDialogService {
 
             return select;
         } else {
-            return Observable.throw({ statusCode: 403 });
+            let errors = new Error(JSON.stringify({ error: { statusCode: 403 } } ));
+            return Observable.throw(errors);
         }
     }
 
