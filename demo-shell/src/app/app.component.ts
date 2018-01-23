@@ -17,7 +17,7 @@
 
 import { Component, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SettingsService, PageTitleService, StorageService, TranslationService } from '@alfresco/adf-core';
+import { SettingsService, PageTitleService, StorageService, TranslationService, AuthenticationService } from '@alfresco/adf-core';
 
 @Component({
   selector: 'app-root',
@@ -26,16 +26,21 @@ import { SettingsService, PageTitleService, StorageService, TranslationService }
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
-  searchTerm = '';
+//   searchTerm = '';
 
   constructor(private settingsService: SettingsService,
               private storage: StorageService,
+              private authService: AuthenticationService,
               translationService: TranslationService,
               pageTitleService: PageTitleService,
               route: ActivatedRoute,
               router: Router) {
     this.setProvider();
     pageTitleService.setTitle();
+
+    this.authService.redirectToLogin$.subscribe(() => {
+        router.navigate(['/login']);
+    });
   }
 
   private setProvider() {

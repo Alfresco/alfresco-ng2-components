@@ -26,16 +26,20 @@ import { UserPreferencesService } from './user-preferences.service';
 import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
+import { RedirectionModel } from '../models/redirection.model';
 
 const REMEMBER_ME_COOKIE_KEY = 'ALFRESCO_REMEMBER_ME';
 const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30 ;
 
 @Injectable()
 export class AuthenticationService {
-    private redirectUrl: string = '';
+    private redirectUrl: RedirectionModel = null;
+    redirectToLoginSubject: Subject<any> = new Subject<any>();
 
     onLogin: Subject<any> = new Subject<any>();
     onLogout: Subject<any> = new Subject<any>();
+    public redirectToLogin$: Observable<any>;
+
 
     constructor(
         private preferences: UserPreferencesService,
@@ -43,6 +47,7 @@ export class AuthenticationService {
         private storage: StorageService,
         private cookie: CookieService,
         private logService: LogService) {
+            this.redirectToLogin$ = this.redirectToLoginSubject.asObservable();
     }
 
     /**
@@ -233,12 +238,24 @@ export class AuthenticationService {
         return this.alfrescoApi.getInstance().bpmAuth.username;
     }
 
-    setRedirectUrl(url: string) {
+    setRedirectUrl(url: RedirectionModel) {
         this.redirectUrl = url;
     }
 
-    getRedirectUrl(): string {
-        return this.redirectUrl;
+    redirectToLogin() {
+        this.redirectToLoginSubject.next();
+    }
+
+    getRedirectUrl(provider: string): string {
+        return  this.hasValidRedirection(provider) ? this.redirectUrl.url : null;
+    }
+
+    private hasValidRedirection(provider: string): boolean {
+        return this.redirectUrl && this.redirectUrl.provider === provider || this.hasSelectedProviderAll(provider);
+    }
+
+    private hasSelectedProviderAll(provider: string): boolean {
+        return this.redirectUrl && this.redirectUrl.provider === 'ALL' || provider === 'ALL';
     }
 
     /**
