@@ -15,6 +15,10 @@
  * limitations under the License.
  */
 
-export * from './authentication.interface';
-export * from './injection.tokens';
-export * from './search-configuration.interface';
+import { QueryBody } from 'alfresco-js-api';
+
+export interface SearchConfigurationInterface {
+
+    generateQueryBody(searchTerm: string, maxResults: string, skipCount: string): QueryBody;
+
+}

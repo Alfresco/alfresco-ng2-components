@@ -47,6 +47,7 @@ import { TranslateLoaderService } from './translate-loader.service';
 import { TranslationService } from './translation.service';
 import { UploadService } from './upload.service';
 import { UserPreferencesService } from './user-preferences.service';
+import { SearchConfigurationService } from './search-configuration.service';
 
 @NgModule({
     imports: [],
@@ -81,7 +82,8 @@ import { UserPreferencesService } from './user-preferences.service';
         SharedLinksApiService,
         SitesService,
         DiscoveryApiService,
-        CommentProcessService
+        CommentProcessService,
+        SearchConfigurationService
     ],
     exports: [
     ]

@@ -29,6 +29,7 @@ import { FormViewerComponent } from './components/process-service/form-viewer.co
 import { FormNodeViewerComponent } from './components/process-service/form-node-viewer.component';
 import { AppsViewComponent } from './components/process-service/apps-view.component';
 import { SearchResultComponent } from './components/search/search-result.component';
+import { SearchExtendedComponent } from './components/search/search-extended.component';
 
 import { DataTableComponent } from './components/datatable/datatable.component';
 import { WebscriptComponent } from './components/webscript/webscript.component';
@@ -93,6 +94,11 @@ export const appRoutes: Routes = [
             {
                 path: 'search',
                 component: SearchResultComponent,
+                canActivate: [AuthGuardEcm]
+            },
+            {
+                path: 'extendedSearch',
+                component: SearchExtendedComponent,
                 canActivate: [AuthGuardEcm]
             },
             {

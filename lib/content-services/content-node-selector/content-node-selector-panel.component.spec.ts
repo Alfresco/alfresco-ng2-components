@@ -301,7 +301,7 @@ describe('ContentNodeSelectorComponent', () => {
                 typeToSearchBox('kakarot');
 
                 setTimeout(() => {
-                    expect(searchSpy).toHaveBeenCalledWith(defaultSearchOptions('kakarot'));
+                    expect(searchSpy).toHaveBeenCalledWith(defaultSearchOptions('kakarot'), '25', '0');
                     done();
                 }, 300);
             });
@@ -325,7 +325,7 @@ describe('ContentNodeSelectorComponent', () => {
                     component.siteChanged(<SiteEntry> { entry: { guid: 'namek' } });
 
                     expect(searchSpy.calls.count()).toBe(2, 'Search count should be two after the site change');
-                    expect(searchSpy.calls.argsFor(1)).toEqual([defaultSearchOptions('vegeta', 'namek')]);
+                    expect(searchSpy.calls.argsFor(1)).toEqual([defaultSearchOptions('vegeta', 'namek'), '25', '0'] );
                     done();
                 }, 300);
             });
@@ -523,7 +523,7 @@ describe('ContentNodeSelectorComponent', () => {
 
                     component.getNextPageOfSearch({ skipCount });
 
-                    expect(searchSpy).toHaveBeenCalledWith(defaultSearchOptions('kakarot', undefined, skipCount));
+                    expect(searchSpy).toHaveBeenCalledWith(defaultSearchOptions('kakarot', undefined, skipCount), '25', skipCount.toString());
                 });
 
                 it('should be shown when pagination\'s hasMoreItems is true', () => {
