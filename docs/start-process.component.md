@@ -14,27 +14,34 @@ Starts a process.
 
 ### Properties
 
-| Name | Description |
-| --- | --- |
-| appId |  (required): Limit the list of processes which can be started to those contained in the specified app |
-| name | (optional) name to assign to the current process |
-| processDefinitionId| (optional) definition ID of the process to start |
-| variables | Variables in input to the process [RestVariable](https://github.com/Alfresco/alfresco-js-api/tree/master/src/alfresco-activiti-rest-api/docs/RestVariable.md)|
-| values | Parameter to pass form field values in the start form if is associated |
+| Name | Type | Description |
+| ---- | -- | ----------- |
+| appId | `number` | (required): Limit the list of processes which can be started to those contained in the specified app |
+| name | `string` | (optional) name to assign to the current process |
+| processDefinitionId | `string` | (optional) definition ID of the process to start |
+| variables | `ProcessInstanceVariable[]` |Variables in input to the process [RestVariable](https://github.com/Alfresco/alfresco-js-api/tree/master/src/alfresco-activiti-rest-api/docs/RestVariable.md) |
+| values | `FormValues` | Parameter to pass form field values in the start form if is associated |
 
 ### Events
 
-| Name | Description |
-| --- | --- |
-| start | Raised when the process start |
-| cancel | Raised when the process canceled |
-| error | Raised when the start process fail |
+| Name | Type | Description |
+| ---- | -- | --------- |
+| start | `EventEmitter<ProcessInstance>` | Emitted when the process starts |
+| cancel | `EventEmitter<ProcessInstance>` |  Emitted when the process is canceled |
+| error | `EventEmitter<ProcessInstance>` |  Emitted when the start process operation fails |
 
-### Details
+## Details
 
-- If your app has only one processDefintion it will be automaticaly gather from the ***adf-start-process***.
-- If your app has multiple processDefintion and you didn't define processDefinitionId parameter a drop down will allow you to select which use
-- If your app has multiple processDefintion and you defined the processDefinitionId parameter the ***adf-start-process*** will be automatically instantiated with the selected process.
+Displays the *Start Process* form, allowing the user to specify some details like process name and process definition, which are the most basic requirements to start a new process instance. The following
+options are available for choosing which process to start:
+
+-   If your app has only one `processDefinition` then the `adf-start-process` component will iind and
+    use it automatically.
+-   If your app has multiple `processDefinitions` and you don't define a `processDefinitionId` parameter
+    then a drop down will allow you to select which one to use.
+-   If your app has multiple `processDefinitions` and you do define a `processDefinitionId` parameter then the `adf-start-process` component will be automatically instantiated with the selected process.
+
+An error message will be shown if no process definition at all is available.
 
 ### Start a process with processDefinitionId
 
@@ -46,16 +53,15 @@ Starts a process.
  </adf-start-process>		 
 ```
 
-If you have more then one process in yor app you can in this way preselect which is the process to start
-
+Use this method to preselect which process to start if there is more than one process in your app.
 
 ### Custom data example
 
-Here is an example of how to pass in form field values, these correspond to the start form that has been defined for the process:
-
+Here is an example of how to pass in form field values to initialize the start form that has been
+defined for the process:
 
 ```ts
-const formValues:FormValues  = {
+const formValues: FormValues  = {
     'test_1': 'value_1',
     'test_2': 'value_2',
     'test_3': 'value_1',
@@ -72,13 +78,13 @@ const formValues:FormValues  = {
 </adf-start-process>
 ```
 
-### Attach a File to the start-form of the process
+### Attaching a File to the start form of the process
 
-After the repository is created in APS, you can see your new repository in the Alfresco Repositories list.
-If the ID is set to 1, then all default values are fine. 
-However, if it is set to something else, for example, ***1002*** and the name is ***alfresco***, you must set in your 'app.config.json' the property ***alfrescoRepositoryName*** alfresco-1002:
+After the repository is created in APS, you can it in the Alfresco Repositories list.
+If the ID is set to 1 then all default values are fine. 
+However, if it is set to something else, for example, _1002_ and the name is _alfresco_, you must set the property `alfrescoRepositoryName` in your `app.config.json` file to  _alfresco-1002_:
 
-```ts
+```json
         {
             name: 'Alfresco ADF Application'
         },
@@ -88,11 +94,10 @@ However, if it is set to something else, for example, ***1002*** and the name is
         alfrescoRepositoryName : 'alfresco-1002'
 ```
 
-After you need to pass the node in the input values object with the other properties:
+You then need to pass the node as the input `values` object with the other properties:
 
 ```ts
-
-let node: MinimalNodeEntryEntity = this.odesApiService.getNode(NODE_ID);
+let node: MinimalNodeEntryEntity = this.nodesApiService.getNode(NODE_ID);
 
 const formValues: FormValues  = {
     'file' : node
@@ -100,8 +105,8 @@ const formValues: FormValues  = {
 };
 ```
 
-Note In the object above the key 'file' is the name of the attach file field in the start form of the process.
-The value of the file property has to be a ***MinimalNodeEntryEntity**:
+Note that in the object above, the key `file` is the name of the attach file field in the start form of the process. The value of the `file` property must be a
+[MinimalNodeEntryEntity](document-library.model.md):
 
 ```html
 <adf-start-process 
@@ -110,12 +115,10 @@ The value of the file property has to be a ***MinimalNodeEntryEntity**:
 </adf-start-process>
 ```
 
-The result will be the start form prefilled with the file:
-
+The result will be the start form prefilled with the file data:
 
 ![Start process load file](docassets/images/start_process.png)
 
+## See also
 
-## Details
-
-Displays Start Process, allowing the user to specify some details like process name and process definition, which are the most basic requirement to start a new process instance. The user have to select the process definition from a dropdown if there are more than one process definition available. If there is just one process definition available for the app, then it is auto-selected. There is a error message shown if no process definition is available.
+-   [Select Apps Dialog component](select-apps-dialog.component.md)
