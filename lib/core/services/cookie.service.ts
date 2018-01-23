@@ -26,8 +26,8 @@ export class CookieService {
             return false;
         }
 
-        document.cookie = "test-cookie";
-        return document.cookie.indexOf("test-cookie") > 0;
+        document.cookie = 'test-cookie';
+        return document.cookie.indexOf('test-cookie') > 0;
     }
 
     /**
