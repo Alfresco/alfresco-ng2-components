@@ -84,7 +84,7 @@
                         matTooltip="{{ 'ADF_VIEWER.ACTIONS.INFO' | translate }}"
                         data-automation-id="toolbar-sidebar"
                         [color]="showSidebar ? 'accent' : 'default'"
-                        (click)="showSidebar = !showSidebar">
+                        (click)="toggleSidebar($event)">
                         <mat-icon>info_outline</mat-icon>
                     </button>
                 </ng-container>

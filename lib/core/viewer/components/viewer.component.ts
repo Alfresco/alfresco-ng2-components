@@ -267,6 +267,16 @@ export class ViewerComponent implements OnChanges {
         }
     }
 
+    toggleSidebar() {
+        this.showSidebar = !this.showSidebar;
+        if (this.showSidebar && this.fileNodeId) {
+            this.apiService.getInstance().nodes.getNodeInfo(this.fileNodeId)
+                .then((data: MinimalNodeEntryEntity) => {
+                    this.sidebarTemplateContext.node = data;
+                });
+        }
+    }
+
     private getDisplayName(name) {
         return this.displayName || name;
     }
