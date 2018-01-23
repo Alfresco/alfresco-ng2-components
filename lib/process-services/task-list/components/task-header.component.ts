@@ -112,7 +112,7 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
                     {
                         label: 'ADF_TASK_LIST.PROPERTIES.PARENT_NAME',
                         value: parentInfoMap, key: 'parentName',
-                        default: 'ADF_TASK_LIST.PROPERTIES.PARENT_NAME_DEFAULT',
+                        default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.PARENT_NAME_DEFAULT'),
                         clickable: true
                     }
                 ),
