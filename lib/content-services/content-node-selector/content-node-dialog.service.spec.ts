@@ -95,7 +95,7 @@ describe('ContentNodeDialogService', () => {
             () => { },
             (error) => {
                 expect(materialDialog.open).not.toHaveBeenCalled();
-                expect(error.statusCode).toBe(403);
+                expect(JSON.parse(error.message).error.statusCode).toBe(403);
             });
     });
 
