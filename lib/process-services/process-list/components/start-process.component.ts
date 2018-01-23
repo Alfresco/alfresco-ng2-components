@@ -158,7 +158,7 @@ export class StartProcessInstanceComponent implements OnChanges {
     }
 
     public startProcess(outcome?: string) {
-        if (this.selectedProcessDef.id && this.name) {
+        if (this.selectedProcessDef && this.selectedProcessDef.id && this.name) {
             this.resetErrorMessage();
             let formValues = this.startForm ? this.startForm.form.values : undefined;
             this.activitiProcess.startProcess(this.selectedProcessDef.id, this.name, outcome, formValues, this.variables).subscribe(
@@ -195,7 +195,7 @@ export class StartProcessInstanceComponent implements OnChanges {
     }
 
     validateForm(): boolean {
-        return this.selectedProcessDef.id && this.name && this.isStartFormMissingOrValid();
+        return this.selectedProcessDef && this.selectedProcessDef.id && this.name && this.isStartFormMissingOrValid();
     }
 
     private resetSelectedProcessDefinition() {
