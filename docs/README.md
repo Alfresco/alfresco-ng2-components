@@ -174,6 +174,7 @@ for more information about installing and using the source code.
 | [Breadcrumb component](breadcrumb.component.md) | Indicates the current position within a navigation hierarchy. | [Source](../lib/content-services/breadcrumb/breadcrumb.component.ts) |
 | [Dropdown breadcrumb component](dropdown-breadcrumb.component.md) | Indicates the current position within a navigation hierarchy using a dropdown menu. | [Source](../lib/content-services/breadcrumb/dropdown-breadcrumb.component.ts) |
 | [Content metadata component](content-metadata.component.md) | Allows a user to display and edit metadata related to a node. | [Source](../lib/content-services/content-metadata/components/content-metadata/content-metadata.component.ts) |
+| [Content node selector panel component](content-node-selector-panel.component.md) | Opens a [Content Node Selector](content-node-selector.component.md) in its own dialog window. | [Source](../lib/content-services/content-node-selector/content-node-selector-panel.component.ts) |
 | [Content node selector component](content-node-selector.component.md) | Allows a user to select items from a Content Services repository. | [Source](../lib/content-services/content-node-selector/content-node-selector.component.ts) |
 | [Content action component](content-action.component.md) | Adds options to a Document List actions menu for a particular content type. | [Source](../lib/content-services/document-list/components/content-action/content-action.component.ts) |
 | [Document list component](document-list.component.md) | Displays the documents from a repository. | [Source](../lib/content-services/document-list/components/document-list.component.ts) |
@@ -192,7 +193,6 @@ for more information about installing and using the source code.
 | [Version manager component](version-manager.component.md) | Displays the version history of a node with the ability to upload a new version. | [Source](../lib/content-services/version-manager/version-manager.component.ts) |
 | [Webscript component](webscript.component.md) | Provides access to Webscript features. | [Source](../lib/content-services/webscript/webscript.component.ts) |
 | _Content metadata card component_ | _Not currently documented_ | [Source](../lib/content-services/content-metadata/components/content-metadata-card/content-metadata-card.component.ts) |
-| _Content node selector panel component_ | _Not currently documented_ | [Source](../lib/content-services/content-node-selector/content-node-selector-panel.component.ts) |
 
 ## Directives
 
@@ -213,6 +213,7 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
+| [Content node dialog service](content-node-dialog.service.md) | Displays and manages dialogs for selecting content to open, copy or upload. | [Source](../lib/content-services/content-node-selector/content-node-dialog.service.ts) |
 | [Document actions service](document-actions.service.md) | Implements the document menu actions for the Document List component. | [Source](../lib/content-services/document-list/services/document-actions.service.ts) |
 | [Document list service](document-list.service.md) | Implements node operations used by the Document List component. | [Source](../lib/content-services/document-list/services/document-list.service.ts) |
 | [Folder actions service](folder-actions.service.md) | Implements the folder menu actions for the Document List component. | [Source](../lib/content-services/document-list/services/folder-actions.service.ts) |
@@ -223,7 +224,6 @@ for more information about installing and using the source code.
 | _Content metadata service_ | _Not currently documented_ | [Source](../lib/content-services/content-metadata/services/content-metadata.service.ts) |
 | _Properties loader service_ | _Not currently documented_ | [Source](../lib/content-services/content-metadata/services/properties-loader.service.ts) |
 | _Property descriptors service_ | _Not currently documented_ | [Source](../lib/content-services/content-metadata/services/property-descriptors.service.ts) |
-| _Content node dialog service_ | _Not currently documented_ | [Source](../lib/content-services/content-node-selector/content-node-dialog.service.ts) |
 
 <!--content-services end-->
 
