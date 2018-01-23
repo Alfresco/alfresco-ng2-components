@@ -138,6 +138,7 @@ for more information about installing and using the source code.
 | [Bpm user service](bpm-user.service.md) | Gets information about the current Process Services user. | [Source](../lib/core/userinfo/services/bpm-user.service.ts) |
 | [Ecm user service](ecm-user.service.md) | Gets information about a Content Services user. | [Source](../lib/core/userinfo/services/ecm-user.service.ts) |
 | _Renditions service_ | _Not currently documented_ | [Source](../lib/core/services/renditions.service.ts) |
+| _Search configuration service_ | _Not currently documented_ | [Source](../lib/core/services/search-configuration.service.ts) |
 | _Sites service_ | _Not currently documented_ | [Source](../lib/core/services/sites.service.ts) |
 
 ## Widgets
@@ -168,30 +169,30 @@ for more information about installing and using the source code.
 
 ## Components
 
-| Name                                                                  | Description                                                                                           | Source link                                                                                           |
-| --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| [Breadcrumb component](breadcrumb.component.md)                       | Indicates the current position within a navigation hierarchy.                                         | [Source](../lib/content-services/breadcrumb/breadcrumb.component.ts)                                  |
-| [Dropdown breadcrumb component](dropdown-breadcrumb.component.md)     | Indicates the current position within a navigation hierarchy using a dropdown menu.                   | [Source](../lib/content-services/breadcrumb/dropdown-breadcrumb.component.ts)                         |
+| Name | Description | Source link |
+| ---- | ----------- | ----------- |
+| [Breadcrumb component](breadcrumb.component.md) | Indicates the current position within a navigation hierarchy. | [Source](../lib/content-services/breadcrumb/breadcrumb.component.ts) |
+| [Dropdown breadcrumb component](dropdown-breadcrumb.component.md) | Indicates the current position within a navigation hierarchy using a dropdown menu. | [Source](../lib/content-services/breadcrumb/dropdown-breadcrumb.component.ts) |
 | [Content metadata component](content-metadata.component.md) | Allows a user to display and edit metadata related to a node. | [Source](../lib/content-services/content-metadata/components/content-metadata/content-metadata.component.ts) |
-| [Content node selector component](content-node-selector.component.md) | Allows a user to select items from a Content Services repository.                                     | [Source](../lib/content-services/content-node-selector/content-node-selector.component.ts)            |
-| [Content action component](content-action.component.md)               | Adds options to a Document List actions menu for a particular content type.                           | [Source](../lib/content-services/document-list/components/content-action/content-action.component.ts) |
-| [Document list component](document-list.component.md)                 | Displays the documents from a repository.                                                             | [Source](../lib/content-services/document-list/components/document-list.component.ts)                 |
-| [Search control component](search-control.component.md)               | Displays a input text which shows find-as-you-type suggestions.                                       | [Source](../lib/content-services/search/components/search-control.component.ts)                       |
-| [Search component](search.component.md)                               | Searches items for supplied search terms.                                                             | [Source](../lib/content-services/search/components/search.component.ts)                               |
-| [Sites dropdown component](sites-dropdown.component.md)               | Displays a dropdown menu to show and interact with the sites of the current user.                     | [Source](../lib/content-services/site-dropdown/sites-dropdown.component.ts)                           |
-| [Like component](like.component.md)                                   | Allows a user to add "likes" to an item.                                                              | [Source](../lib/content-services/social/like.component.ts)                                            |
-| [Rating component](rating.component.md)                               | Allows a user to add ratings to an item.                                                              | [Source](../lib/content-services/social/rating.component.ts)                                          |
-| [Tag actions component](tag-actions.component.md)                     | Shows available actions for tags.                                                                     | [Source](../lib/content-services/tag/tag-actions.component.ts)                                        |
-| [Tag list component](tag-list.component.md)                           | Shows tags for an item.                                                                               | [Source](../lib/content-services/tag/tag-list.component.ts)                                           |
-| [Tag node list component](tag-node-list.component.md)                 | Shows tags for a node.                                                                                | [Source](../lib/content-services/tag/tag-node-list.component.ts)                                      |
-| [File uploading dialog component](file-uploading-dialog.component.md) | Shows a dialog listing all the files uploaded with the Upload Button or Drag Area components.         | [Source](../lib/content-services/upload/components/file-uploading-dialog.component.ts)                |
-| [Upload button component](upload-button.component.md)                 | Activates a file upload.                                                                              | [Source](../lib/content-services/upload/components/upload-button.component.ts)                        |
-| [Upload drag area component](upload-drag-area.component.md)           | Adds a drag and drop area to upload files to Alfresco.                                                | [Source](../lib/content-services/upload/components/upload-drag-area.component.ts)                     |
-| [Version list component](version-list.component.md)                   | Displays the version history of a node in a [Version Manager component](version-manager.component.md) | [Source](../lib/content-services/version-manager/version-list.component.ts)                           |
-| [Version manager component](version-manager.component.md)             | Displays the version history of a node with the ability to upload a new version.                      | [Source](../lib/content-services/version-manager/version-manager.component.ts)                        |
-| [Webscript component](webscript.component.md)                         | Provides access to Webscript features.                                                                | [Source](../lib/content-services/webscript/webscript.component.ts)                                    |
-| _Content metadata component_                                          | _Not currently documented_                                                                            | [Source](../lib/content-services/content-metadata/content-metadata.component.ts)                      |
-| _Content node selector panel component_                               | _Not currently documented_                                                                            | [Source](../lib/content-services/content-node-selector/content-node-selector-panel.component.ts)      |
+| [Content node selector component](content-node-selector.component.md) | Allows a user to select items from a Content Services repository. | [Source](../lib/content-services/content-node-selector/content-node-selector.component.ts) |
+| [Content action component](content-action.component.md) | Adds options to a Document List actions menu for a particular content type. | [Source](../lib/content-services/document-list/components/content-action/content-action.component.ts) |
+| [Document list component](document-list.component.md) | Displays the documents from a repository. | [Source](../lib/content-services/document-list/components/document-list.component.ts) |
+| [Search control component](search-control.component.md) | Displays a input text which shows find-as-you-type suggestions. | [Source](../lib/content-services/search/components/search-control.component.ts) |
+| [Search component](search.component.md) | Searches items for supplied search terms.  | [Source](../lib/content-services/search/components/search.component.ts) |
+| [Sites dropdown component](sites-dropdown.component.md) | Displays a dropdown menu to show and interact with the sites of the current user. | [Source](../lib/content-services/site-dropdown/sites-dropdown.component.ts) |
+| [Like component](like.component.md) | Allows a user to add "likes" to an item. | [Source](../lib/content-services/social/like.component.ts) |
+| [Rating component](rating.component.md) | Allows a user to add ratings to an item. | [Source](../lib/content-services/social/rating.component.ts) |
+| [Tag actions component](tag-actions.component.md) | Shows available actions for tags. | [Source](../lib/content-services/tag/tag-actions.component.ts) |
+| [Tag list component](tag-list.component.md) | Shows tags for an item. | [Source](../lib/content-services/tag/tag-list.component.ts) |
+| [Tag node list component](tag-node-list.component.md) | Shows tags for a node. | [Source](../lib/content-services/tag/tag-node-list.component.ts) |
+| [File uploading dialog component](file-uploading-dialog.component.md) | Shows a dialog listing all the files uploaded with the Upload Button or Drag Area components. | [Source](../lib/content-services/upload/components/file-uploading-dialog.component.ts) |
+| [Upload button component](upload-button.component.md) | Activates a file upload. | [Source](../lib/content-services/upload/components/upload-button.component.ts) |
+| [Upload drag area component](upload-drag-area.component.md) | Adds a drag and drop area to upload files to Alfresco. | [Source](../lib/content-services/upload/components/upload-drag-area.component.ts) |
+| [Version list component](version-list.component.md) | Displays the version history of a node in a [Version Manager component](version-manager.component.md) | [Source](../lib/content-services/version-manager/version-list.component.ts) |
+| [Version manager component](version-manager.component.md) | Displays the version history of a node with the ability to upload a new version. | [Source](../lib/content-services/version-manager/version-manager.component.ts) |
+| [Webscript component](webscript.component.md) | Provides access to Webscript features. | [Source](../lib/content-services/webscript/webscript.component.ts) |
+| _Content metadata card component_ | _Not currently documented_ | [Source](../lib/content-services/content-metadata/components/content-metadata-card/content-metadata-card.component.ts) |
+| _Content node selector panel component_ | _Not currently documented_ | [Source](../lib/content-services/content-node-selector/content-node-selector-panel.component.ts) |
 
 ## Directives
 
@@ -242,7 +243,6 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Apps list component](apps-list.component.md) | Shows all available apps. | [Source](../lib/process-services/app-list/apps-list.component.ts) |
-| [Select app dialog component](select-apps-dialog-component.md)                | Shows a dialog listing all the PS apps with a slect box to slect it                                                 | [Source](../lib/process-services/app-list/select-apps-dialog-component.ts)                  |
 | [Create process attachment component](create-process-attachment.component.md) | Displays Upload Component (Drag and Click) to upload the attachment to a specified process instance | [Source](../lib/process-services/attachment/create-process-attachment.component.ts) |
 | [Create task attachment component](create-task-attachment.component.md) | Displays Upload Component (Drag and Click) to upload the attachment to a specified task | [Source](../lib/process-services/attachment/create-task-attachment.component.ts) |
 | [Process attachment list component](process-attachment-list.component.md) | Displays attached documents on a specified process instance | [Source](../lib/process-services/attachment/process-attachment-list.component.ts) |
@@ -266,6 +266,7 @@ for more information about installing and using the source code.
 | [Task header component](task-header.component.md) | Shows all the information related to a task. | [Source](../lib/process-services/task-list/components/task-header.component.ts) |
 | [Task list component](task-list.component.md) | Renders a list containing all the tasks matched by the parameters specified. | [Source](../lib/process-services/task-list/components/task-list.component.ts) |
 | _Attach file widget component_ | _Not currently documented_ | [Source](../lib/process-services/content-widget/attach-file-widget.component.ts) |
+| _Attach folder widget component_ | _Not currently documented_ | [Source](../lib/process-services/content-widget/attach-folder-widget.component.ts) |
 
 ## Directives
 
