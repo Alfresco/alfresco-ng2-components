@@ -2,70 +2,60 @@
 
     $primary: map-get($theme, primary);
     $foreground: map-get($theme, foreground);
-    $background: map-get($theme, background);
 
-    $adf-sidebar-action-menu-button-option-width: 205px;
     $adf-sidebar-action-menu-button-height: 37.5px;
     $adf-sidebar-action-menu-button-border-radius: 4px;
     $adf-sidebar-action-menu-opacity: 0.54;
     $adf-sidebar-action-menu-item-opacity: 0.87;
     $adf-sidebar-action-menu-item-line-spacing: -0.4px;
 
-.adf {
-    &-sidebar-action-menu {
-        & .mat-raised-button {
-            width: 100%;
-            height: 37.5px;
-            font-weight: bold;
-            background-color: mat-color($primary);
-            color: mat-color($primary, default-contrast) !important;
-            border-radius: $adf-sidebar-action-menu-button-border-radius;
-            & mat-icon {
-                width: 24px;
-                height: 25px;
+    .adf {
+        &-sidebar-action-menu {
+            & .mat-raised-button {
+                width: 100%;
+                height: $adf-sidebar-action-menu-button-height;
+                font-weight: bold;
+                background-color: mat-color($primary);
                 color: mat-color($primary, default-contrast) !important;
+                border-radius: $adf-sidebar-action-menu-button-border-radius;
+                & mat-icon {
+                    width: 24px;
+                    height: 25px;
+                    color: mat-color($primary, default-contrast) !important;
+                }
+            }
+            &-text {
+                width: 100%;
+                height: 20px;
+                text-align: left;
             }
         }
-        &-text {
-            width: 100%;
-            height: 20px;
-            text-align: left;
+        &-sidebar-action-menu-icon {
+            margin: 18px 0px 0px 20px;
+            color: mat-color($foreground, text, $adf-sidebar-action-menu-opacity);
+            cursor: pointer;
+            &:hover {
+                color: mat-color($primary);
+            }
         }
-    }
-    &-sidebar-action-menu-icon {
-        margin: 18px 0px 0px 20px;
-        opacity: $adf-sidebar-action-menu-opacity;
-        cursor: pointer;
-        &:hover {
-            color: mat-color($primary);
-            opacity: inherit;
-        }
-    }
-    &-sidebar-action-menu-options {
-        width: $adf-sidebar-action-menu-button-option-width;
-        opacity: 0.87;
-        text-align: left;
-        letter-spacing: -0.4px;
-        color: #000000;
-        .mat-menu-item {
-            width: $adf-sidebar-action-menu-button-option-width;
-            opacity: $adf-sidebar-action-menu-item-opacity;
+        &-sidebar-action-menu-options {
             text-align: left;
-            line-height: 1.5;
             letter-spacing: $adf-sidebar-action-menu-item-line-spacing;
-            color: #000000;
+            .mat-menu-item {
+                color: mat-color($foreground, text, $adf-sidebar-action-menu-item-opacity);
+                text-align: left;
+                line-height: 1.5;
+                letter-spacing: $adf-sidebar-action-menu-item-line-spacing;
+            }
+            .mat-menu-item:hover {
+                color: mat-color($primary);
+                opacity: inherit;
+            }
         }
-        .mat-menu-item:hover {
-            color: mat-color($primary);
-            opacity: inherit;
+        &-sidebar-action-menu-panel {
+            margin-top: 7.5px;
+            border-radius: 2px;
+            box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.26), 0 0 8px 0 rgba(0, 0, 0, 0.12);
         }
     }
-}
-
-.mat-menu-panel {
-    margin-top: 7.5px;
-    border-radius: 2px;
-    background-color: mat-color($primary, default-contrast) !important;
-    box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.26), 0 0 8px 0 rgba(0, 0, 0, 0.12);
-}
 }
