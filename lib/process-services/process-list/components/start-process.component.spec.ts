@@ -88,6 +88,120 @@ describe('StartFormComponent', () => {
         expect(fixture.componentInstance instanceof StartProcessInstanceComponent).toBe(true, 'should create StartProcessInstanceComponent');
     });
 
+    describe('first step', () => {
+
+        describe('without start form', () => {
+
+            beforeEach(() => {
+                component.name = 'My new process';
+                let change = new SimpleChange(null, '123', true);
+                component.ngOnChanges({ 'appId': change });
+            });
+
+            it('should enable start button when name and process filled out', async(() => {
+                component.selectedProcessDef = testProcessDefRepr;
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    let startBtn = fixture.nativeElement.querySelector('#button-start');
+                    expect(startBtn.disabled).toBe(false);
+                });
+            }));
+
+            it('should have start button disabled when name not filled out', async(() => {
+                component.name = '';
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    let startBtn = fixture.nativeElement.querySelector('#button-start');
+                    expect(startBtn.disabled).toBe(true);
+                });
+            }));
+
+            it('should have start button disabled when no process is selected', async(() => {
+                component.selectedProcessDef = null;
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    let startBtn = fixture.nativeElement.querySelector('#button-start');
+                    expect(startBtn.disabled).toBe(true);
+                });
+            }));
+        });
+
+        describe('with start form', () => {
+
+            beforeEach(() => {
+                getDefinitionsSpy.and.returnValue(Observable.of(testProcessDefWithForm));
+                let change = new SimpleChange(null, '123', true);
+                component.ngOnChanges({ 'appId': change });
+            });
+
+            it('should initialize start form', async(() => {
+                fixture.detectChanges();
+
+                fixture.whenStable().then(() => {
+                    expect(component.startForm).toBeDefined();
+                    expect(component.startForm).not.toBeNull();
+                });
+            }));
+
+            it('should load start form from service', async(() => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(getStartFormDefinitionSpy).toHaveBeenCalled();
+                });
+            }));
+
+            it('should have start button disabled if the process is not seleted', async(() => {
+                component.name = 'My new process';
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    let startBtn = fixture.nativeElement.querySelector('#button-start');
+                    expect(startBtn).toBeNull();
+                });
+            }));
+
+            it('should emit cancel event on cancel Button', async(() => {
+                fixture.detectChanges();
+                let cancelButton = fixture.nativeElement.querySelector('#cancle_process');
+                let cancelSpy: jasmine.Spy = spyOn(component.cancel, 'emit');
+                cancelButton.click();
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(cancelSpy).toHaveBeenCalled();
+                });
+            }));
+        });
+
+        describe('CS content connection', () => {
+
+            it('alfrescoRepositoryName default configuration property', () => {
+                expect(component.getAlfrescoRepositoryName()).toBe('alfresco-1Alfresco');
+            });
+
+            it('alfrescoRepositoryName configuration property should be fetched', () => {
+                appConfig.config = Object.assign(appConfig.config, {
+                    'alfrescoRepositoryName': 'alfresco-123'
+                };
+
+                expect(component.getAlfrescoRepositoryName()).toBe('alfresco-123Alfresco');
+            });
+
+            it('if values in input is a node should be linked in the process service', async(() => {
+
+                component.values = {};
+                component.values['file'] = {
+                    isFile: true,
+                    name= 'example-file'
+                };
+
+                component.moveNodeFromCStoPS();
+
+                fixture.whenStable().then(() => {
+                    expect(component.values.file[0].id).toBe(1234);
+                });
+            }));
+        });
+    });
+
     describe('process definitions list', () => {
 
         it('should call service to fetch process definitions with appId', () => {
@@ -431,117 +545,4 @@ describe('StartFormComponent', () => {
 
     });
 
-    describe('first step', () => {
-
-        describe('without start form', () => {
-
-            beforeEach(async(() => {
-                component.name = 'My new process';
-                let change = new SimpleChange(null, '123', true);
-                component.ngOnChanges({ 'appId': change });
-            }));
-
-            it('should enable start button when name and process filled out', async(() => {
-                component.selectedProcessDef = testProcessDefRepr;
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    let startBtn = fixture.nativeElement.querySelector('#button-start');
-                    expect(startBtn.disabled).toBe(false);
-                });
-            }));
-
-            it('should have start button disabled when name not filled out', async(() => {
-                component.name = '';
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    let startBtn = fixture.nativeElement.querySelector('#button-start');
-                    expect(startBtn.disabled).toBe(true);
-                });
-            }));
-
-            it('should have start button disabled when no process is selected', async(() => {
-                component.selectedProcessDef = null;
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    let startBtn = fixture.nativeElement.querySelector('#button-start');
-                    expect(startBtn.disabled).toBe(true);
-                });
-            }));
-        });
-
-        describe('with start form', () => {
-
-            beforeEach(() => {
-                getDefinitionsSpy.and.returnValue(Observable.of(testProcessDefWithForm));
-                let change = new SimpleChange(null, '123', true);
-                component.ngOnChanges({ 'appId': change });
-                component.selectedProcessDef = testProcessDefRepr;
-            });
-
-            it('should initialize start form', () => {
-                fixture.detectChanges();
-                fixture.whenStable();
-
-                expect(component.startForm).toBeDefined();
-                expect(component.startForm).not.toBeNull();
-            });
-
-            it('should load start form from service', () => {
-                fixture.detectChanges();
-                fixture.whenStable();
-
-                expect(getStartFormDefinitionSpy).toHaveBeenCalled();
-            });
-
-            it('should have start button disabled if the process is not seleted', async(() => {
-                component.name = 'My new process';
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    let startBtn = fixture.nativeElement.querySelector('#button-start');
-                    expect(startBtn).toBeNull();
-                });
-            }));
-
-            it('should emit cancel event on cancel Button', async(() => {
-                fixture.detectChanges();
-                let cancelButton = fixture.nativeElement.querySelector('#cancle_process');
-                let cancelSpy: jasmine.Spy = spyOn(component.cancel, 'emit');
-                cancelButton.click();
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    expect(cancelSpy).toHaveBeenCalled();
-                });
-            }));
-        });
-
-        describe('CS content connection', () => {
-
-            it('alfrescoRepositoryName default configuration property', () => {
-                expect(component.getAlfrescoRepositoryName()).toBe('alfresco-1Alfresco');
-            });
-
-            it('alfrescoRepositoryName configuration property should be fetched', () => {
-                appConfig.config = Object.assign(appConfig.config, {
-                    'alfrescoRepositoryName': 'alfresco-123'
-                };
-
-                expect(component.getAlfrescoRepositoryName()).toBe('alfresco-123Alfresco');
-            });
-
-            it('if values in input is a node should be linked in the process service', async(() => {
-
-                component.values = {};
-                component.values['file'] = {
-                    isFile: true,
-                    name= 'example-file'
-                };
-
-                component.moveNodeFromCStoPS();
-
-                fixture.whenStable().then(() => {
-                    expect(component.values.file[0].id).toBe(1234);
-                });
-            }));
-        });
-    });
 });
