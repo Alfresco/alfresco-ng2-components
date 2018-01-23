@@ -13,6 +13,24 @@
 
         &__mimeicon {
             vertical-align: middle;
+            height: 18px;
+            width: 18px;
+        }
+
+        &-toolbar {
+            .mat-toolbar {
+                background-color: mat-color($primary, default-contrast)
+            }
+        }
+
+        &__display-name {
+            font-size: 16px;
+            opacity: 0.87;
+            line-height: 1.5;
+            letter-spacing: -0.4px;
+            font-weight: normal;
+            font-style: normal;
+            font-stretch: normal;
         }
 
         &-container {
@@ -22,6 +40,7 @@
                 overflow-y: auto;
                 overflow-x: hidden;
                 z-index: 1;
+                background-color: mat-color($background, background);
 
                 display: flex;
                 flex-direction: row;
