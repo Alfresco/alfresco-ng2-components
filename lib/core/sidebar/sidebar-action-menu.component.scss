@@ -1,8 +1,8 @@
 @mixin  adf-sidebar-action-menu-theme($theme) {
 
     $primary: map-get($theme, primary);
+    $foreground: map-get($theme, foreground);
 
-    $adf-sidebar-action-menu-button-option-width: 205px;
     $adf-sidebar-action-menu-button-height: 37.5px;
     $adf-sidebar-action-menu-button-border-radius: 4px;
     $adf-sidebar-action-menu-opacity: 0.54;
@@ -13,7 +13,7 @@
         &-sidebar-action-menu {
             & .mat-raised-button {
                 width: 100%;
-                height: 37.5px;
+                height: $adf-sidebar-action-menu-button-height;
                 font-weight: bold;
                 background-color: mat-color($primary);
                 color: mat-color($primary, default-contrast) !important;
@@ -32,21 +32,17 @@
         }
         &-sidebar-action-menu-icon {
             margin: 18px 0px 0px 20px;
-            opacity: $adf-sidebar-action-menu-opacity;
+            color: mat-color($foreground, text, $adf-sidebar-action-menu-opacity);
             cursor: pointer;
             &:hover {
                 color: mat-color($primary);
-                opacity: inherit;
             }
         }
         &-sidebar-action-menu-options {
-            width: $adf-sidebar-action-menu-button-option-width;
-            opacity: $adf-sidebar-action-menu-item-opacity;
             text-align: left;
             letter-spacing: $adf-sidebar-action-menu-item-line-spacing;
             .mat-menu-item {
-                width: $adf-sidebar-action-menu-button-option-width;
-                opacity: $adf-sidebar-action-menu-item-opacity;
+                color: mat-color($foreground, text, $adf-sidebar-action-menu-item-opacity);
                 text-align: left;
                 line-height: 1.5;
                 letter-spacing: $adf-sidebar-action-menu-item-line-spacing;
