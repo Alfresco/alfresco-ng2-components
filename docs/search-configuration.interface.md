@@ -13,6 +13,11 @@ The interface defines a service that generates a custom
 [QueryBody](https://github.com/Alfresco/alfresco-js-api/blob/1.6.0/src/alfresco-search-rest-api/docs/QueryBody.md)
 object. This object can then be supplied to a search operation to refine the search parameters.
 
+A standard implementation, the
+[Search Configuration service](search-configuration.service.md) is provided in the ADF Core library
+source. This works fine in most cases but if you need to, you can implement your own service, as
+described below.
+
 ### How to use the interface
 
 1.  Implement the service class
@@ -22,8 +27,36 @@ object. This object can then be supplied to a search operation to refine the sea
     [QueryBody](https://github.com/Alfresco/alfresco-js-api/blob/1.6.0/src/alfresco-search-rest-api/docs/QueryBody.md)
     page in the Alfresco JS API for further details about the options this object provides.
 
-    A standard implementation called `SearchConfigurationService` is provided in the ADF Core library
-    source. This can be used in its own right or adapted to your specific needs.
+    An example implementation is given below:
+
+    ```ts
+    import { QueryBody } from 'alfresco-js-api';
+    import { SearchConfigurationInterface } from '@alfresco/adf-core';
+
+    export class TestSearchConfigurationService implements SearchConfigurationInterface {
+
+        constructor() {
+        }
+
+        public generateQueryBody(searchTerm: string, maxResults: string, skipCount: string): QueryBody {
+            const defaultQueryBody: QueryBody = {
+                query: {
+                    query: searchTerm ? `${searchTerm}* OR name:${searchTerm}*` : searchTerm
+                },
+                include: ['path', 'allowableOperations'],
+                paging: {
+                    maxItems: maxResults,
+                    skipCount: skipCount
+                },
+                filterQueries: [
+                    { query: "TYPE:'cm:folder'" },
+                    { query: 'NOT cm:creator:System' }]
+            };
+
+            return defaultQueryBody;
+        }
+    }
+    ```
 
 2.  Provide your service class to the module
 
@@ -52,3 +85,4 @@ object. This object can then be supplied to a search operation to refine the sea
 ## See also
 
 -   [Search component](search.component.md)
+-   [Search configuration service](search-configuration.service.md)

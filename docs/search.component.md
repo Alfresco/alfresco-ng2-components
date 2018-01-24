@@ -127,3 +127,4 @@ customize your search.
 ## See Also
 
 -   [Search configuration interface](search-configuration.interface.md)
+-   [Search configuration service](search-configuration.service.md)
