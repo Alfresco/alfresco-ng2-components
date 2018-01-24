@@ -176,8 +176,9 @@
     "PROPERTIES": {
       "PROCESS_NAME": "Prosess",
       "NAME": "Navn",
+      "THUMBNAIL": "Miniatyrbilde",
       "STATUS": "Status",
-      "END_DATE": "Forfallsdato",
+      "END_DATE": "Sluttdato",
       "END_DATE_DEFAULT": "Ingen fristdato",
       "CATEGORY": "Kategori",
       "CATEGORY_DEFAULT": "Ingen kategori",
@@ -300,6 +301,14 @@
       "CREATE": "Opprett",
       "NEW_TASK": "Ny oppgave",
       "NEW_PROCESS": "Ny prosess"
+    }
+  },
+  "APP": {
+    "DIALOG": {
+      "START": "Start",
+      "TITLE": "Velg prosess",
+      "LIST": "Prosessliste",
+      "ERROR": "Kan ikke koble til Process Services"
     }
   }
 }

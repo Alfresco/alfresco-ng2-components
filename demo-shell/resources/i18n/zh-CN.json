@@ -3,7 +3,11 @@
   "VERSION": {
     "NO_PERMISSION": "您没有管理此内容版本的权限",
     "NO_PERMISSION_EVENT": "您没有${event.action}${event.type}的${event.permission}权限",
-    "CHOOSE_FILE": "选择一个文件，查看其版本"
+    "CHOOSE_FILE": "选择一个文件，查看其版本",
+    "DIALOG": {
+      "CLOSE": "关闭",
+      "TITLE": "管理版本"
+    }
   },
   "APP_LAYOUT": {
     "APP_NAME": "ADF 演示应用程序",
@@ -20,6 +24,7 @@
     "TAG": "标签",
     "SOCIAL": "社交",
     "SETTINGS": "设置",
+    "OVERLAY_VIEWER": "重叠查看器",
     "ABOUT": "关于"
   },
   "DOCUMENT_LIST": {
@@ -30,6 +35,7 @@
     "MAX_SIZE": "最大大小过滤器",
     "ENABLE_VERSIONING": "启用版本控制",
     "DESCRIPTION_UPLOAD": "启用上传",
+    "ENABLE_INFINITE_SCROLL": "启用无限滚动",
     "MULTISELECT_DESCRIPTION": "使用 Cmd (Mac) 或 Ctrl (Windows) 切换多个项目的选择",
     "COLUMNS": {
       "DISPLAY_NAME": "显示名称",
@@ -48,7 +54,8 @@
         "DOWNLOAD": "下载",
         "COPY": "复制",
         "MOVE": "移动",
-        "DELETE": "删除"
+        "DELETE": "删除",
+        "PROCESS_ACTION": "启动流程"
       }
     }
   },
@@ -70,7 +77,8 @@
     "REPORTS-TAB": "报告",
     "START-TASK": "启动任务",
     "START-PROCESS": "启动流程",
-    "AUDIT-LOG": "流程审计记录"
+    "PROCESS-AUDIT-LOG": "流程审计日志",
+    "TASK-AUDIT-LOG": "任务审计日志"
   },
   "FORM-LIST": {
     "STORE": "存储",
@@ -82,7 +90,8 @@
     "LOGIN_FOOTER": "登录页脚"
   },
   "SEARCH": {
-    "RESULTS": "搜索结果"
+    "RESULTS": "搜索结果",
+    "NO_RESULT": "未找到结果"
   },
   "SOCIAL": {
     "LIKE": "点赞组件",

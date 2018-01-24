@@ -176,8 +176,9 @@
     "PROPERTIES": {
       "PROCESS_NAME": "流程",
       "NAME": "名称",
+      "THUMBNAIL": "缩略图",
       "STATUS": "状态",
-      "END_DATE": "截止日期",
+      "END_DATE": "结束日期",
       "END_DATE_DEFAULT": "没有日期",
       "CATEGORY": "类别",
       "CATEGORY_DEFAULT": "没有类别",
@@ -299,7 +300,15 @@
     "BUTTON": {
       "CREATE": "创建",
       "NEW_TASK": "新任务",
-      "NEW_PROCESS": "新流程"
+      "NEW_PROCESS": "新建流程"
+    }
+  },
+  "APP": {
+    "DIALOG": {
+      "START": "开始",
+      "TITLE": "选择流程",
+      "LIST": "流程列表",
+      "ERROR": "连接到 Process Services 时出现问题"
     }
   }
 }

@@ -108,8 +108,8 @@
     },
     "CARDVIEW": {
       "VALIDATORS": {
-        "FLOAT_VALIDATION_ERROR": "The value has to be number",
-        "INT_VALIDATION_ERROR": "The value has to be integer"
+        "FLOAT_VALIDATION_ERROR": "Use a number format",
+        "INT_VALIDATION_ERROR": "Use an integer format"
       }
     },
     "METADATA": {

@@ -2,8 +2,12 @@
   "title": "Benvenuto",
   "VERSION": {
     "NO_PERMISSION": "Non hai il permesso di gestire versioni di questo contenuto",
-    "NO_PERMISSION_EVENT": "Non hai il permesso {{permission}} di {{action}} {{type}}",
-    "CHOOSE_FILE": "Seleziona un file per visualizzarne le versioni"
+    "NO_PERMISSION_EVENT": "Non hai il permesso ${event.permission} di ${event.action} ${event.type}",
+    "CHOOSE_FILE": "Seleziona un file per visualizzarne le versioni",
+    "DIALOG": {
+      "CLOSE": "Chiudi",
+      "TITLE": "Gestione versioni"
+    }
   },
   "APP_LAYOUT": {
     "APP_NAME": "Applicazione demo ADF",
@@ -20,6 +24,7 @@
     "TAG": "Tag",
     "SOCIAL": "Social",
     "SETTINGS": "Impostazioni",
+    "OVERLAY_VIEWER": "Visualizzatore overlay",
     "ABOUT": "Informazioni su"
   },
   "DOCUMENT_LIST": {
@@ -30,6 +35,7 @@
     "MAX_SIZE": "Filtro dimensioni max",
     "ENABLE_VERSIONING": "Abilita controllo delle versioni",
     "DESCRIPTION_UPLOAD": "Abilita caricamento",
+    "ENABLE_INFINITE_SCROLL": "Abilita scorrimento infinito",
     "MULTISELECT_DESCRIPTION": "Usa Cmd (Mac) o Ctrl (Windows) per attivare/disattivare la selezione di più elementi",
     "COLUMNS": {
       "DISPLAY_NAME": "Nome visualizzato",
@@ -48,7 +54,8 @@
         "DOWNLOAD": "Download",
         "COPY": "Copia",
         "MOVE": "Sposta",
-        "DELETE": "Elimina"
+        "DELETE": "Elimina",
+        "PROCESS_ACTION": "Avvia processo"
       }
     }
   },
@@ -70,7 +77,8 @@
     "REPORTS-TAB": "Rapporti",
     "START-TASK": "Avvia compito",
     "START-PROCESS": "Avvia processo",
-    "AUDIT-LOG": "Log di audit processo"
+    "PROCESS-AUDIT-LOG": "Registro di audit processo",
+    "TASK-AUDIT-LOG": "Registro di audit compito"
   },
   "FORM-LIST": {
     "STORE": "Memorizza",
@@ -82,7 +90,8 @@
     "LOGIN_FOOTER": "Piè di pagina login"
   },
   "SEARCH": {
-    "RESULTS": "Risultati della ricerca"
+    "RESULTS": "Risultati della ricerca",
+    "NO_RESULT": "Nessun risultato trovato"
   },
   "SOCIAL": {
     "LIKE": "Componente Like",

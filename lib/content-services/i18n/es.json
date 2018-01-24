@@ -41,7 +41,8 @@
     "CHOOSE": "Elegir",
     "COPY": "Copiar",
     "MOVE": "Mover",
-    "NO_RESULTS": "Ningún resultado encontrado"
+    "NO_RESULTS": "Ningún resultado encontrado",
+    "SELECT_LOCATION": "Seleccionar ubicación"
   },
   "OPERATION": {
     "SUCCES": {
@@ -163,5 +164,20 @@
   },
   "PERMISSON": {
     "LACKOF": "No tiene permiso {{permission}} para {{action}} el {{type}}"
+  },
+  "METADATA": {
+    "BASIC": {
+      "HEADER": "Propiedades",
+      "NAME": "Nombre",
+      "TITLE": "Título",
+      "DESCRIPTION": "Descripción",
+      "AUTHOR": "Autor",
+      "MIMETYPE": "Tipo MIME",
+      "SIZE": "Tamaño",
+      "CREATOR": "Creador",
+      "CREATED_DATE": "Fecha de creación",
+      "MODIFIER": "Modificador",
+      "MODIFIED_DATE": "Fecha de modificación"
+    }
   }
 }

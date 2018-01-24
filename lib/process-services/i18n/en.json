@@ -307,8 +307,8 @@
     "DIALOG" :{
       "START" : "Start",
       "TITLE" : "Select a process",
-      "LIST": "Proces list",
-      "ERROR" : "Possible connection with process service not present"
+      "LIST": "Process list",
+      "ERROR" : "There is a problem connecting to Process Services"
     }
   }
 }
