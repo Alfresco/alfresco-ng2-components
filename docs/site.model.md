@@ -42,4 +42,4 @@ class SiteMembersModel {
 
 ## See also
 
--   [Sites api service](sites-api.service.md)
+-   [Sites service](sites.service.md)

@@ -129,7 +129,9 @@ for more information about installing and using the source code.
 | [Page title service](page-title.service.md) | Sets the page title. | [Source](../lib/core/services/page-title.service.ts) |
 | [People content service](people-content.service.md) | Gets information about a Content Services user. | [Source](../lib/core/services/people-content.service.ts) |
 | [People process service](people-process.service.md) | Gets information about Process Services users. | [Source](../lib/core/services/people-process.service.ts) |
+| [Search configuration service](search-configuration.service.md) | Provides fine control of parameters to a search. | [Source](../lib/core/services/search-configuration.service.ts) |
 | [Shared links api service](shared-links-api.service.md) | Finds shared links to Content Services items. | [Source](../lib/core/services/shared-links-api.service.ts) |
+| [Sites service](sites.service.md) | Accesses and manipulates sites from a Content Services repository. | [Source](../lib/core/services/sites.service.ts) |
 | [Storage service](storage.service.md) | Stores items in the form of key-value pairs. | [Source](../lib/core/services/storage.service.ts) |
 | [Thumbnail service](thumbnail.service.md) | Retrieves an SVG thumbnail image to represent a document type. | [Source](../lib/core/services/thumbnail.service.ts) |
 | [Translation service](translation.service.md) | Supports localisation. | [Source](../lib/core/services/translation.service.ts) |
@@ -138,8 +140,6 @@ for more information about installing and using the source code.
 | [Bpm user service](bpm-user.service.md) | Gets information about the current Process Services user. | [Source](../lib/core/userinfo/services/bpm-user.service.ts) |
 | [Ecm user service](ecm-user.service.md) | Gets information about a Content Services user. | [Source](../lib/core/userinfo/services/ecm-user.service.ts) |
 | _Renditions service_ | _Not currently documented_ | [Source](../lib/core/services/renditions.service.ts) |
-| _Search configuration service_ | _Not currently documented_ | [Source](../lib/core/services/search-configuration.service.ts) |
-| _Sites service_ | _Not currently documented_ | [Source](../lib/core/services/sites.service.ts) |
 
 ## Widgets
 
@@ -155,6 +155,7 @@ for more information about installing and using the source code.
 | ---- | ----------- | ----------- |
 | [Data Table Adapter interface](DataTableAdapter.md) | Defines how table data is supplied to [DataTable](datatable.component.md) and [Tasklist](task-list.component.md) components. | [Source](../core/datatable/data/datatable-adapter.ts) |
 | [Form Field Validator interface](FormFieldValidator.md) | Defines how the input fields of [ADF Form](form.component.md) and [ADF Task Details](task-details.component.md) components are validated. | [Source](../core/form/components/widgets/core/form-field-validator.ts) |
+| [Search Configuration interface](search-configuration.interface.md) | Provides fine control of parameters to a search. | [Source](../core/services/search-configuration.service.ts) |
 
 [(Back to Contents)](#contents)
 
@@ -192,7 +193,6 @@ for more information about installing and using the source code.
 | [Version list component](version-list.component.md) | Displays the version history of a node in a [Version Manager component](version-manager.component.md) | [Source](../lib/content-services/version-manager/version-list.component.ts) |
 | [Version manager component](version-manager.component.md) | Displays the version history of a node with the ability to upload a new version. | [Source](../lib/content-services/version-manager/version-manager.component.ts) |
 | [Webscript component](webscript.component.md) | Provides access to Webscript features. | [Source](../lib/content-services/webscript/webscript.component.ts) |
-| _Content metadata card component_ | _Not currently documented_ | [Source](../lib/content-services/content-metadata/components/content-metadata-card/content-metadata-card.component.ts) |
 
 ## Directives
 
@@ -219,11 +219,6 @@ for more information about installing and using the source code.
 | [Folder actions service](folder-actions.service.md) | Implements the folder menu actions for the Document List component. | [Source](../lib/content-services/document-list/services/folder-actions.service.ts) |
 | [Rating service](rating.service.md) | Manages ratings for items in Content Services. | [Source](../lib/content-services/social/services/rating.service.ts) |
 | [Tag service](tag.service.md) | Manages tags in Content Services. | [Source](../lib/content-services/tag/services/tag.service.ts) |
-| _Aspect whitelist service_ | _Not currently documented_ | [Source](../lib/content-services/content-metadata/services/aspect-whitelist.service.ts) |
-| _Basic properties service_ | _Not currently documented_ | [Source](../lib/content-services/content-metadata/services/basic-properties.service.ts) |
-| _Content metadata service_ | _Not currently documented_ | [Source](../lib/content-services/content-metadata/services/content-metadata.service.ts) |
-| _Properties loader service_ | _Not currently documented_ | [Source](../lib/content-services/content-metadata/services/properties-loader.service.ts) |
-| _Property descriptors service_ | _Not currently documented_ | [Source](../lib/content-services/content-metadata/services/property-descriptors.service.ts) |
 
 <!--content-services end-->
 
@@ -265,8 +260,6 @@ for more information about installing and using the source code.
 | [Task filters component](task-filters.component.md) | Shows all available filters. | [Source](../lib/process-services/task-list/components/task-filters.component.ts) |
 | [Task header component](task-header.component.md) | Shows all the information related to a task. | [Source](../lib/process-services/task-list/components/task-header.component.ts) |
 | [Task list component](task-list.component.md) | Renders a list containing all the tasks matched by the parameters specified. | [Source](../lib/process-services/task-list/components/task-list.component.ts) |
-| _Attach file widget component_ | _Not currently documented_ | [Source](../lib/process-services/content-widget/attach-file-widget.component.ts) |
-| _Attach folder widget component_ | _Not currently documented_ | [Source](../lib/process-services/content-widget/attach-folder-widget.component.ts) |
 
 ## Directives
 
@@ -289,7 +282,6 @@ for more information about installing and using the source code.
 | [Process service](process.service.md) | Manage Process Instances, Process Variables, and Process Audit Log.  | [Source](../lib/process-services/process-list/services/process.service.ts) |
 | [Task filter service](task-filter.service.md) | Manage Task Filters, which are pre-configured Task Instance queries.  | [Source](../lib/process-services/task-list/services/task-filter.service.ts) |
 | [Tasklist service](tasklist.service.md) | Manage Task Instances.  | [Source](../lib/process-services/task-list/services/tasklist.service.ts) |
-| _Task upload service_ | _Not currently documented_ | [Source](../lib/process-services/task-list/services/task-upload.service.ts) |
 
 <!--process-services end-->
 
