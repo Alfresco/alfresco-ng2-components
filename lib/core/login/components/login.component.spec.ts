@@ -111,7 +111,7 @@ describe('LoginComponent', () => {
     it('should redirect to previous route state on successful login', () => {
         const redirect = '/home';
         component.successRoute = redirect;
-        authService.setRedirectUrl('redirect-url');
+        authService.setRedirectUrl({ provider: 'ALL', url: 'redirect-url' } );
 
         spyOn(router, 'navigate');
 

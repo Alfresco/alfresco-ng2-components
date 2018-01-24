@@ -18,14 +18,16 @@
 import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot, CanActivate, CanActivateChild,
-  RouterStateSnapshot
+  RouterStateSnapshot, Router
 } from '@angular/router';
-
+import { AppConfigService } from '../app-config/app-config.service';
 import { AuthenticationService } from './authentication.service';
 
 @Injectable()
 export class AuthGuardBpm implements CanActivate, CanActivateChild {
-    constructor(private authService: AuthenticationService) {}
+    constructor(private authService: AuthenticationService,
+                private router: Router,
+                private appConfig: AppConfigService) {}
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         return this.checkLogin(state.url);
@@ -41,8 +43,15 @@ export class AuthGuardBpm implements CanActivate, CanActivateChild {
         }
 
         this.authService.setRedirectUrl({ provider: 'BPM', url: redirectUrl });
-        this.authService.redirectToLogin();
+        const pathToLogin = this.getRouteDestinationForLogin();
+        this.router.navigate([pathToLogin]);
 
         return false;
+    }
+
+    private getRouteDestinationForLogin(): string {
+        return this.appConfig &&
+               this.appConfig.get<string>('loginRoute') ?
+                        this.appConfig.get<string>('loginRoute') : '/login';
     }
 }

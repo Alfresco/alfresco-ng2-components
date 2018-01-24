@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/*tslint:disable:ban*/
+
 import { async, TestBed } from '@angular/core/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { CookieServiceMock } from './../mock/cookie.service.mock';
@@ -30,7 +32,7 @@ import { UserPreferencesService } from './user-preferences.service';
 
 declare let jasmine: any;
 
-describe('AuthenticationService', () => {
+fdescribe('AuthenticationService', () => {
     let apiService: AlfrescoApiService;
     let authService: AuthenticationService;
     let preferences: UserPreferencesService;
@@ -258,6 +260,18 @@ describe('AuthenticationService', () => {
             expect(authService.isLoggedIn()).toBe(false);
             expect(authService.isEcmLoggedIn()).toBe(false);
         });
+
+        it('[ECM] should set/get redirectUrl when provider is ECM', () => {
+            authService.setRedirectUrl({provider: 'ECM', url: 'some-url' } );
+
+            expect(authService.getRedirectUrl(preferences.authType)).toBe('some-url');
+        });
+
+        it('[ECM] should set/get redirectUrl when provider is BPM', () => {
+            authService.setRedirectUrl({provider: 'BPM', url: 'some-url' } );
+
+            expect(authService.getRedirectUrl(preferences.authType)).toBeNull();
+        });
     });
 
     describe('when the setting is BPM', () => {
@@ -367,6 +381,18 @@ describe('AuthenticationService', () => {
                 'status': 403
             });
         });
+
+        it('[BPM] should set/get redirectUrl when provider is BPM', () => {
+            authService.setRedirectUrl({provider: 'BPM', url: 'some-url' } );
+
+            expect(authService.getRedirectUrl(preferences.authType)).toBe('some-url');
+        });
+
+        it('[BPM] should set/get redirectUrl when provider is ECM', () => {
+            authService.setRedirectUrl({provider: 'ECM', url: 'some-url' } );
+
+            expect(authService.getRedirectUrl(preferences.authType)).toBeNull();
+        });
     });
 
     describe('when the setting is both ECM and BPM ', () => {
@@ -396,7 +422,7 @@ describe('AuthenticationService', () => {
             });
         });
 
-        xit('[ALL] should return login fail if only ECM call fail', (done) => {
+        it('[ALL] should return login fail if only ECM call fail', (done) => {
             authService.login('fake-username', 'fake-password').subscribe(
                 (res) => {
                 },
@@ -417,7 +443,7 @@ describe('AuthenticationService', () => {
             });
         });
 
-        xit('[ALL] should return login fail if only BPM call fail', (done) => {
+        it('[ALL] should return login fail if only BPM call fail', (done) => {
             authService.login('fake-username', 'fake-password').subscribe(
                 (res) => {
                 },
@@ -461,11 +487,24 @@ describe('AuthenticationService', () => {
                 'status': 403
             });
         });
+
+        it('[ALL] should set/get redirectUrl when provider is ALL', () => {
+            authService.setRedirectUrl({provider: 'ALL', url: 'some-url' } );
+
+            expect(authService.getRedirectUrl(preferences.authType)).toBe('some-url');
+        });
+
+        it('[ALL] should set/get redirectUrl when provider is BPM', () => {
+            authService.setRedirectUrl({provider: 'BPM', url: 'some-url' } );
+
+            expect(authService.getRedirectUrl(preferences.authType)).toBe('some-url');
+        });
+
+        it('[ALL] should set/get redirectUrl when provider is ECM', () => {
+            authService.setRedirectUrl({provider: 'ECM', url: 'some-url' } );
+
+            expect(authService.getRedirectUrl(preferences.authType)).toBe('some-url');
+        });
     });
 
-    it('should set/get redirectUrl', () => {
-        authService.setRedirectUrl('some-url');
-
-        expect(authService.getRedirectUrl()).toBe('some-url');
-    });
 });

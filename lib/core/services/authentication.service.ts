@@ -34,12 +34,9 @@ const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30 ;
 @Injectable()
 export class AuthenticationService {
     private redirectUrl: RedirectionModel = null;
-    redirectToLoginSubject: Subject<any> = new Subject<any>();
 
     onLogin: Subject<any> = new Subject<any>();
     onLogout: Subject<any> = new Subject<any>();
-    public redirectToLogin$: Observable<any>;
-
 
     constructor(
         private preferences: UserPreferencesService,
@@ -47,7 +44,6 @@ export class AuthenticationService {
         private storage: StorageService,
         private cookie: CookieService,
         private logService: LogService) {
-            this.redirectToLogin$ = this.redirectToLoginSubject.asObservable();
     }
 
     /**
@@ -240,10 +236,6 @@ export class AuthenticationService {
 
     setRedirectUrl(url: RedirectionModel) {
         this.redirectUrl = url;
-    }
-
-    redirectToLogin() {
-        this.redirectToLoginSubject.next();
     }
 
     getRedirectUrl(provider: string): string {
