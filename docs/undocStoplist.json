@@ -38,5 +38,13 @@
     "node-actions",
     "content-node-selector.service",
     "analytics",
-    "process-upload"
+    "process-upload",
+    "properties-loader",
+    "property-descriptors",
+    "attach-file",
+    "attach-folder",
+    "task-upload",
+    "aspect-whitelist",
+    "basic-properties",
+    "content-metadata"
 ]
