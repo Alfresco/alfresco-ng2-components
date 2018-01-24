@@ -81,6 +81,15 @@ Using with file url:
 | navigateBefore | any | No | Raised when user clicks 'Navigate Before' ("<") button. |
 | navigateNext | any | No | Raised when user clicks 'Navigate Next' (">") button. |
 
+### Keyboard shortcuts
+
+| Name | Description |
+| --- | --- |
+| Esc | Close the viewer (overlay mode only). |
+| Left | Invoke 'Navigate before' action. |
+| Right | Invoke 'Navigate next' action. |
+| Ctrl+F | Activate full-screen mode. |
+
 ## Details
 
 ### Integrating with DocumentList component

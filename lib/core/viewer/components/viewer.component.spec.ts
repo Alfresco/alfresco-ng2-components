@@ -457,7 +457,7 @@ describe('ViewerComponent', () => {
             });
 
             it('should Esc button hide the viewer', () => {
-                EventMock.keyDown(27);
+                EventMock.keyUp(27);
                 fixture.detectChanges();
                 expect(element.querySelector('.adf-viewer-content')).toBeNull();
             });

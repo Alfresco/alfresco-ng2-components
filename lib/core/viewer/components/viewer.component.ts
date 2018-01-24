@@ -439,11 +439,31 @@ export class ViewerComponent implements OnChanges {
      * Keyboard event listener
      * @param {KeyboardEvent} event
      */
-    @HostListener('document:keydown', ['$event'])
+    @HostListener('document:keyup', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
-        let key = event.keyCode;
+        const key = event.keyCode;
+
+        // Esc
         if (key === 27 && this.overlayMode) { // esc
             this.close();
+        }
+
+        // Left arrow
+        if (key === 37 && this.canNavigateBefore) {
+            event.preventDefault();
+            this.onNavigateBeforeClick();
+        }
+
+        // Right arrow
+        if (key === 39 && this.canNavigateNext) {
+            event.preventDefault();
+            this.onNavigateNextClick();
+        }
+
+        // Ctrl+F
+        if (key === 70 && event.ctrlKey) {
+            event.preventDefault();
+            this.enterFullScreen();
         }
     }
 
