@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/*tslint:disable:ban*/
-
 import { async, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -35,7 +33,7 @@ import { StorageService } from './storage.service';
 import { TranslateLoaderService } from './translate-loader.service';
 import { UserPreferencesService } from './user-preferences.service';
 
-fdescribe('AuthGuardService', () => {
+describe('AuthGuardService', () => {
     let state;
     let authService: AuthenticationService;
     let router: Router;
@@ -105,7 +103,7 @@ fdescribe('AuthGuardService', () => {
 
     it('should get redirect url from config if there is one configured', async(() => {
         state.url = 'some-url';
-        appConfigService.config.loginRoute = '/fakeLoginRoute';
+        appConfigService.config.loginRoute = 'fakeLoginRoute';
 
         spyOn(router, 'navigate');
         spyOn(authService, 'setRedirectUrl');

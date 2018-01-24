@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/*tslint:disable:ban*/
-
 import { async, TestBed } from '@angular/core/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { CookieServiceMock } from './../mock/cookie.service.mock';
@@ -32,7 +30,7 @@ import { UserPreferencesService } from './user-preferences.service';
 
 declare let jasmine: any;
 
-fdescribe('AuthenticationService', () => {
+describe('AuthenticationService', () => {
     let apiService: AlfrescoApiService;
     let authService: AuthenticationService;
     let preferences: UserPreferencesService;
