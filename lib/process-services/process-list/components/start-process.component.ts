@@ -95,14 +95,6 @@ export class StartProcessInstanceComponent implements OnChanges {
             this.moveNodeFromCStoPS();
         }
 
-        if (changes['appId'] && changes['appId'].currentValue) {
-            this.appId = changes['appId'].currentValue;
-        }
-
-        if (changes['processDefinition'] && changes['processDefinition'].currentValue) {
-            this.processDefinition = changes['processDefinition'].currentValue;
-        }
-
         this.loadStartProcess();
     }
 

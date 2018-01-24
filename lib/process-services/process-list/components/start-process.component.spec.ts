@@ -38,7 +38,7 @@ import {
 } from '../../mock';
 import { StartProcessInstanceComponent } from './start-process.component';
 
-describe('StartFormComponent', () => {
+fdescribe('StartFormComponent', () => {
 
     let appConfig: AppConfigService;
     let activitiContentService: ActivitiContentService;
@@ -94,7 +94,7 @@ describe('StartFormComponent', () => {
 
             beforeEach(() => {
                 component.name = 'My new process';
-                let change = new SimpleChange(null, '123', true);
+                let change = new SimpleChange(null, 123, true);
                 component.ngOnChanges({ 'appId': change });
             });
 
@@ -130,7 +130,7 @@ describe('StartFormComponent', () => {
 
             beforeEach(() => {
                 getDefinitionsSpy.and.returnValue(Observable.of(testProcessDefWithForm));
-                let change = new SimpleChange(null, '123', true);
+                let change = new SimpleChange(null, 123, true);
                 component.ngOnChanges({ 'appId': change });
             });
 
@@ -205,32 +205,24 @@ describe('StartFormComponent', () => {
     describe('process definitions list', () => {
 
         it('should call service to fetch process definitions with appId', () => {
-            let change = new SimpleChange(null, '123', true);
-            component.ngOnChanges({ 'appId': change });
+            component.appId = 123;
+            component.ngOnChanges({});
             fixture.detectChanges();
 
-            expect(getDefinitionsSpy).toHaveBeenCalledWith('123');
-        });
-
-        it('should call service to fetch process definitions without appId', () => {
-            let change = new SimpleChange(null, null, true);
-            component.ngOnChanges({ 'appId': change });
-            fixture.detectChanges();
-
-            expect(getDefinitionsSpy).not.toHaveBeenCalledWith(null);
+            expect(getDefinitionsSpy).toHaveBeenCalledWith(123);
         });
 
         it('should call service to fetch process definitions with appId when provided', () => {
-            let change = new SimpleChange(null, '123', true);
-            component.ngOnChanges({ 'appId': change });
+            component.appId = 123;
+            component.ngOnChanges({});
             fixture.detectChanges();
 
-            expect(getDefinitionsSpy).toHaveBeenCalledWith('123');
+            expect(getDefinitionsSpy).toHaveBeenCalledWith(123);
         });
 
         it('should display the correct number of processes in the select list', () => {
-            let change = new SimpleChange(null, '123', true);
-            component.ngOnChanges({ 'appId': change });
+            component.appId = 123;
+            component.ngOnChanges({});
             fixture.detectChanges();
 
             let selectElement = fixture.nativeElement.querySelector('mat-select');
@@ -238,8 +230,8 @@ describe('StartFormComponent', () => {
         });
 
         it('should display the option def details', () => {
-            let change = new SimpleChange(null, '123', true);
-            component.ngOnChanges({ 'appId': change });
+            component.appId = 123;
+            component.ngOnChanges({});
             component.processDefinitions = testMultipleProcessDefs;
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -255,8 +247,8 @@ describe('StartFormComponent', () => {
 
         it('should indicate an error to the user if process defs cannot be loaded', async(() => {
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.throw({}));
-            let change = new SimpleChange(null, '123', true);
-            component.ngOnChanges({ 'appId': change });
+            component.appId = 123;
+            component.ngOnChanges({});
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
@@ -268,8 +260,8 @@ describe('StartFormComponent', () => {
 
         it('should show no process available message when no process definition is loaded', async(() => {
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.of([]));
-            let change = new SimpleChange(null, '123', true);
-            component.ngOnChanges({ 'appId': change });
+            component.appId = 123;
+            component.ngOnChanges({});
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
@@ -281,10 +273,9 @@ describe('StartFormComponent', () => {
 
         it('should select processDefinition based on processDefinition input', async(() => {
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.of(testMultipleProcessDefs));
-            let change = new SimpleChange(null, '123', true);
             component.appId = 123;
             component.processDefinition = 'My Process 2';
-            component.ngOnChanges({ 'appId': change });
+            component.ngOnChanges({});
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 expect(component.selectedProcessDef.name).toBe(JSON.parse(JSON.stringify(testMultipleProcessDefs[1])).name);
@@ -293,9 +284,8 @@ describe('StartFormComponent', () => {
 
         it('should select automatically the processDefinition if the app contain oly one', async(() => {
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.of(testProcessDefinitions));
-            let change = new SimpleChange(null, '123', true);
             component.appId = 123;
-            component.ngOnChanges({ 'appId': change });
+            component.ngOnChanges({});
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 expect(component.selectedProcessDef.name).toBe(JSON.parse(JSON.stringify(testProcessDefinitions[0])).name);
@@ -304,9 +294,8 @@ describe('StartFormComponent', () => {
 
         it('should select automatically the first processDefinition if the app contain multiple process and there is no processDefinition in input', async(() => {
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.of(testMultipleProcessDefs));
-            let change = new SimpleChange(null, '123', true);
             component.appId = 123;
-            component.ngOnChanges({ 'appId': change });
+            component.ngOnChanges({});
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 expect(component.selectedProcessDef.name).toBe(JSON.parse(JSON.stringify(testMultipleProcessDefs[0])).name);
@@ -317,10 +306,9 @@ describe('StartFormComponent', () => {
 
             it('should hide the process dropdown if showSelectProcessDropdown is false', async(() => {
                 getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.of([testProcessDefRepr]));
-                let change = new SimpleChange(null, '123', true);
                 component.appId = 123;
                 component.showSelectProcessDropdown = false;
-                component.ngOnChanges({ 'appId': change });
+                component.ngOnChanges({});
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     let selectElement = fixture.nativeElement.querySelector('mat-select > .mat-select-trigger');
@@ -330,11 +318,10 @@ describe('StartFormComponent', () => {
 
             it('should show the process dropdown if showSelectProcessDropdown is false', async(() => {
                 getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.of(testMultipleProcessDefs));
-                let change = new SimpleChange(null, '123', true);
                 component.appId = 123;
                 component.processDefinition = 'My Process 2';
                 component.showSelectProcessDropdown = true;
-                component.ngOnChanges({ 'appId': change });
+                component.ngOnChanges({});
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     let selectElement = fixture.nativeElement.querySelector('mat-select > .mat-select-trigger');
@@ -344,10 +331,9 @@ describe('StartFormComponent', () => {
 
             it('should show the process dropdown by default', async(() => {
                 getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.of(testMultipleProcessDefs));
-                let change = new SimpleChange(null, '123', true);
                 component.appId = 123;
                 component.processDefinition = 'My Process 2';
-                component.ngOnChanges({ 'appId': change });
+                component.ngOnChanges({});
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     let selectElement = fixture.nativeElement.querySelector('mat-select > .mat-select-trigger');
@@ -371,6 +357,7 @@ describe('StartFormComponent', () => {
         }));
 
         it('should reload processes when appId input changed', async(() => {
+            component.appId = 456;
             component.ngOnChanges({ appId: change });
             fixture.whenStable().then(() => {
                 expect(getDefinitionsSpy).toHaveBeenCalledWith(456);
@@ -378,6 +365,7 @@ describe('StartFormComponent', () => {
         }));
 
         it('should get current processDeff', () => {
+            component.appId = 456;
             component.ngOnChanges({ appId: change });
             fixture.detectChanges();
             expect(getDefinitionsSpy).toHaveBeenCalled();
@@ -389,8 +377,8 @@ describe('StartFormComponent', () => {
 
         beforeEach(() => {
             component.name = 'My new process';
-            let change = new SimpleChange(null, 123, true);
-            component.ngOnChanges({ 'appId': change });
+            component.appId = 123;
+            component.ngOnChanges({});
         });
 
         it('should call service to start process if required fields provided', async(() => {
