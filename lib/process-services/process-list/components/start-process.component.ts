@@ -99,8 +99,8 @@ export class StartProcessInstanceComponent implements OnChanges {
             this.appId = changes['appId'].currentValue;
         }
 
-        if (changes['processDefinitionId'] && changes['processDefinitionId'].currentValue) {
-            this.processDefinitionId = changes['processDefinitionId'].currentValue;
+        if (changes['processDefinition'] && changes['processDefinition'].currentValue) {
+            this.processDefinition = changes['processDefinition'].currentValue;
         }
 
         this.loadStartProcess();
