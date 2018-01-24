@@ -55,7 +55,7 @@ export class AuthGuardEcm implements CanActivate {
             if (!isLoggedIn) {
                 this.authService.setRedirectUrl({ provider: 'ECM', url: state.url });
                 const pathToLogin = this.getRouteDestinationForLogin();
-                this.router.navigate([pathToLogin]);
+                this.router.navigate(['/' + pathToLogin]);
             }
 
             return isLoggedIn;
@@ -65,6 +65,6 @@ export class AuthGuardEcm implements CanActivate {
     private getRouteDestinationForLogin(): string {
         return this.appConfig &&
                this.appConfig.get<string>('loginRoute') ?
-                        this.appConfig.get<string>('loginRoute') : '/login';
+                        this.appConfig.get<string>('loginRoute') : 'login';
     }
 }

@@ -46,7 +46,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
         this.authService.setRedirectUrl({ provider: 'ALL', url: redirectUrl } );
         const pathToLogin = this.getRouteDestinationForLogin();
-        this.router.navigate([pathToLogin]);
+        this.router.navigate(['/' + pathToLogin]);
 
         return false;
     }
@@ -54,6 +54,6 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     private getRouteDestinationForLogin(): string {
         return this.appConfig &&
                this.appConfig.get<string>('loginRoute') ?
-                        this.appConfig.get<string>('loginRoute') : '/login';
+                        this.appConfig.get<string>('loginRoute') : 'login';
     }
 }
