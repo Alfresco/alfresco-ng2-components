@@ -371,12 +371,10 @@ export class ViewerComponent implements OnChanges {
 
     onNavigateBeforeClick() {
         this.navigateBefore.next();
-        console.log('navigate before');
     }
 
     onNavigateNextClick() {
         this.navigateNext.next();
-        console.log('navigate next');
     }
 
     /**
