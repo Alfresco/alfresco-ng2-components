@@ -50,7 +50,7 @@ export class StartProcessInstanceComponent implements OnChanges {
     appId: number;
 
     @Input()
-    processDefinitionId: string;
+    processDefinition: string;
 
     @Input()
     variables: ProcessInstanceVariable[];
@@ -60,6 +60,9 @@ export class StartProcessInstanceComponent implements OnChanges {
 
     @Input()
     name: string;
+
+    @Input()
+    showSelectProcessDropdown: boolean = true;
 
     @Output()
     start: EventEmitter<ProcessInstance> = new EventEmitter<ProcessInstance>();
@@ -75,7 +78,7 @@ export class StartProcessInstanceComponent implements OnChanges {
 
     processDefinitions: ProcessDefinitionRepresentation[] = [];
 
-    currentProcessDef: ProcessDefinitionRepresentation = new ProcessDefinitionRepresentation();
+    selectedProcessDef: ProcessDefinitionRepresentation = new ProcessDefinitionRepresentation();
 
     errorMessageId: string = '';
 
@@ -92,10 +95,6 @@ export class StartProcessInstanceComponent implements OnChanges {
             this.moveNodeFromCStoPS();
         }
 
-        if (changes['appId'] && changes['appId'].currentValue) {
-            this.appId = changes['appId'].currentValue;
-        }
-
         this.loadStartProcess();
     }
 
@@ -103,30 +102,26 @@ export class StartProcessInstanceComponent implements OnChanges {
         this.resetSelectedProcessDefinition();
         this.resetErrorMessage();
 
-        if (this.appId) {
-            this.activitiProcess.getProcessDefinitions(this.appId).subscribe(
-                (processDefinitionRepresentations: ProcessDefinitionRepresentation[]) => {
-                    this.processDefinitions = processDefinitionRepresentations;
+        this.activitiProcess.getProcessDefinitions(this.appId).subscribe(
+            (processDefinitionRepresentations: ProcessDefinitionRepresentation[]) => {
+                this.processDefinitions = processDefinitionRepresentations;
 
-                    if (this.processDefinitions.length === 1) {
-                        this.currentProcessDef = JSON.parse(JSON.stringify(this.processDefinitions[0]));
-                    } else {
-                        if (this.processDefinitionId) {
-                            this.processDefinitions = this.processDefinitions.filter((currentProcessDefinition) => {
-                                return currentProcessDefinition.id === this.processDefinitionId;
-                            });
-                            this.currentProcessDef = JSON.parse(JSON.stringify(this.processDefinitions[0]));
-                        }
+                if (this.processDefinitions.length === 1 || !this.processDefinition) {
+                    this.selectedProcessDef = this.processDefinitions[0];
+                } else {
+                    this.selectedProcessDef = this.processDefinitions.find((currentProcessDefinition) => {
+                        return currentProcessDefinition.name === this.processDefinition;
+                    });
+
+                    if (!this.selectedProcessDef) {
+                        this.selectedProcessDef = this.processDefinitions[0];
                     }
-                },
-                () => {
-                    this.errorMessageId = 'ADF_PROCESS_LIST.START_PROCESS.ERROR.LOAD_PROCESS_DEFS';
-                });
-        }
-    }
+                }
+            },
+            () => {
+                this.errorMessageId = 'ADF_PROCESS_LIST.START_PROCESS.ERROR.LOAD_PROCESS_DEFS';
+            });
 
-    public hasMultipleProcessDefinitions(): boolean {
-        return this.processDefinitions.length > 1;
     }
 
     getAlfrescoRepositoryName(): string {
@@ -154,10 +149,10 @@ export class StartProcessInstanceComponent implements OnChanges {
     }
 
     public startProcess(outcome?: string) {
-        if (this.currentProcessDef.id && this.name) {
+        if (this.selectedProcessDef && this.selectedProcessDef.id && this.name) {
             this.resetErrorMessage();
             let formValues = this.startForm ? this.startForm.form.values : undefined;
-            this.activitiProcess.startProcess(this.currentProcessDef.id, this.name, outcome, formValues, this.variables).subscribe(
+            this.activitiProcess.startProcess(this.selectedProcessDef.id, this.name, outcome, formValues, this.variables).subscribe(
                 (res) => {
                     this.name = '';
                     this.start.emit(res);
@@ -170,30 +165,12 @@ export class StartProcessInstanceComponent implements OnChanges {
         }
     }
 
-    compareProcessDef = (processDefId) => {
-        if (this.processDefinitions && this.processDefinitions.length === 1 && processDefId === this.processDefinitions[0].id) {
-            this.onProcessDefChange(processDefId);
-            return true;
-        }
-    }
-
-    onProcessDefChange(processDefinitionId) {
-        let processDef = this.processDefinitions.find((processDefinition) => {
-            return processDefinition.id === processDefinitionId;
-        });
-        if (processDef) {
-            this.currentProcessDef = JSON.parse(JSON.stringify(processDef));
-        } else {
-            this.resetSelectedProcessDefinition();
-        }
-    }
-
     public cancelStartProcess() {
         this.cancel.emit();
     }
 
     hasStartForm(): boolean {
-        return this.currentProcessDef && this.currentProcessDef.hasStartForm;
+        return this.selectedProcessDef && this.selectedProcessDef.hasStartForm;
     }
 
     isProcessDefinitionEmpty() {
@@ -209,11 +186,11 @@ export class StartProcessInstanceComponent implements OnChanges {
     }
 
     validateForm(): boolean {
-        return this.currentProcessDef.id && this.name && this.isStartFormMissingOrValid();
+        return this.selectedProcessDef && this.selectedProcessDef.id && this.name && this.isStartFormMissingOrValid();
     }
 
     private resetSelectedProcessDefinition() {
-        this.currentProcessDef = new ProcessDefinitionRepresentation();
+        this.selectedProcessDef = new ProcessDefinitionRepresentation();
     }
 
     private resetErrorMessage(): void {
