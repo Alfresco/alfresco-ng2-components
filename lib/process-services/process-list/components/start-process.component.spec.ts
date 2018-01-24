@@ -279,11 +279,11 @@ describe('StartFormComponent', () => {
             });
         }));
 
-        it('should select processDefinition based on processDefinitionId input', async(() => {
+        it('should select processDefinition based on processDefinition input', async(() => {
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.of(testMultipleProcessDefs));
             let change = new SimpleChange(null, '123', true);
             component.appId = 123;
-            component.processDefinitionId = 'my:process2';
+            component.processDefinition = 'My Process 2';
             component.ngOnChanges({ 'appId': change });
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -302,7 +302,7 @@ describe('StartFormComponent', () => {
             });
         }));
 
-        it('should select automatically the first processDefinition if the app contain multiple process and there is no processDefinitionId in input', async(() => {
+        it('should select automatically the first processDefinition if the app contain multiple process and there is no processDefinition in input', async(() => {
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.of(testMultipleProcessDefs));
             let change = new SimpleChange(null, '123', true);
             component.appId = 123;
@@ -331,7 +331,7 @@ describe('StartFormComponent', () => {
                 getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.of(testMultipleProcessDefs));
                 let change = new SimpleChange(null, '123', true);
                 component.appId = 123;
-                component.processDefinitionId = 'my:process2';
+                component.processDefinition = 'My Process 2';
                 component.ngOnChanges({ 'appId': change });
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -352,10 +352,10 @@ describe('StartFormComponent', () => {
                 });
             }));
 
-            it('should be shown the pre-selected processDefinitionId in input if the app contain multiple process', async(() => {
+            it('should be shown the pre-selected processDefinition in input if the app contain multiple process', async(() => {
                 getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.of(testMultipleProcessDefs));
                 let change = new SimpleChange(null, '123', true);
-                component.processDefinitionId = 'my:process2';
+                component.processDefinition = 'My Process 2';
                 component.ngOnChanges({ 'appId': change });
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -365,7 +365,7 @@ describe('StartFormComponent', () => {
                 });
             }));
 
-            it('should be shown if processDefinitionId is NOT in input and the app contain multiple process', async(() => {
+            it('should be shown if processDefinition is NOT in input and the app contain multiple process', async(() => {
                 getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.of(testMultipleProcessDefs));
                 let change = new SimpleChange(null, '123', true);
                 component.ngOnChanges({ 'appId': change });

@@ -50,7 +50,7 @@ export class StartProcessInstanceComponent implements OnChanges {
     appId: number;
 
     @Input()
-    processDefinitionId: string;
+    processDefinition: string;
 
     @Input()
     variables: ProcessInstanceVariable[];
@@ -92,14 +92,6 @@ export class StartProcessInstanceComponent implements OnChanges {
             this.moveNodeFromCStoPS();
         }
 
-        if (changes['appId'] && changes['appId'].currentValue) {
-            this.appId = changes['appId'].currentValue;
-        }
-
-        if (changes['processDefinitionId'] && changes['processDefinitionId'].currentValue) {
-            this.processDefinitionId = changes['processDefinitionId'].currentValue;
-        }
-
         this.loadStartProcess();
     }
 
@@ -111,11 +103,11 @@ export class StartProcessInstanceComponent implements OnChanges {
             (processDefinitionRepresentations: ProcessDefinitionRepresentation[]) => {
                 this.processDefinitions = processDefinitionRepresentations;
 
-                if (this.processDefinitions.length === 1 || !this.processDefinitionId) {
+                if (this.processDefinitions.length === 1 || !this.processDefinition) {
                     this.selectedProcessDef = this.processDefinitions[0];
                 } else {
                     this.selectedProcessDef = this.processDefinitions.find((currentProcessDefinition) => {
-                        return currentProcessDefinition.id === this.processDefinitionId;
+                        return currentProcessDefinition.name === this.processDefinition;
                     });
 
                     if (!this.selectedProcessDef) {
