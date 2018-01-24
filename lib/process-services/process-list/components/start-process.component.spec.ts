@@ -38,7 +38,7 @@ import {
 } from '../../mock';
 import { StartProcessInstanceComponent } from './start-process.component';
 
-fdescribe('StartFormComponent', () => {
+describe('StartFormComponent', () => {
 
     let appConfig: AppConfigService;
     let activitiContentService: ActivitiContentService;
@@ -370,7 +370,7 @@ fdescribe('StartFormComponent', () => {
             });
         }));
 
-        fit('should reload processes when appId input changed', async(() => {
+        it('should reload processes when appId input changed', async(() => {
             component.ngOnChanges({ appId: change });
             fixture.whenStable().then(() => {
                 expect(getDefinitionsSpy).toHaveBeenCalledWith(456);
