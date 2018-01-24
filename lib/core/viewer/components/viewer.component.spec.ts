@@ -232,7 +232,7 @@ describe('ViewerComponent', () => {
         component.sidebarPosition = 'right';
         fixture.detectChanges();
         let sidebar = element.querySelector('.adf-viewer__sidebar');
-        expect(getComputedStyle(sidebar).order).toEqual('2');
+        expect(getComputedStyle(sidebar).order).toEqual('4');
     });
 
     it('should display sidebar on the right side as fallback', () => {
@@ -241,7 +241,7 @@ describe('ViewerComponent', () => {
         component.sidebarPosition = 'unknown-value';
         fixture.detectChanges();
         let sidebar = element.querySelector('.adf-viewer__sidebar');
-        expect(getComputedStyle(sidebar).order).toEqual('2');
+        expect(getComputedStyle(sidebar).order).toEqual('4');
     });
 
     describe('Full Screen Mode', () => {
