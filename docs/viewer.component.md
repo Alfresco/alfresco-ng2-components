@@ -65,6 +65,9 @@ Using with file url:
 | showSidebar | boolean | false | Toggles sidebar visibility. Requires `allowSidebar` to be set to `true`. |
 | sidebarPosition | string | right | The position of the sidebar. Can be `left` or `right`. |
 | sidebarTemplate | TemplateRef<any> | null | The template intended to be used as a sidebar. The template context contains the loaded node data. |
+| allowNavigate | boolean | false | Toggle before/next navigation, arrow buttons to navigate between multiple documents in the collection. |
+| canNavigateBefore | boolean | true | Toggle the "before" ("<") button. Requires `allowNavigate` to be enabled. |
+| canNavigateNext | boolean | true | Toggle the next (">") button. Requires `allowNavigate` to be enabled.|
 
 ### Events
 
@@ -74,6 +77,8 @@ Using with file url:
 | download | any | Yes | Raised when user clicks the 'Download' button. |
 | print | any | Yes | Raised when user clicks the 'Print' button. |
 | share | any | Yes | Raised when user clicks the 'Share' button. |
+| navigateBefore | any | No | Raised when user clicks 'Navigate Before' ("<") button. |
+| navigateNext | any | No | Raised when user clicks 'Navigate Next' (">") button. |
 
 ## Details
 

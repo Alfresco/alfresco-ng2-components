@@ -91,6 +91,15 @@ export class ViewerComponent implements OnChanges {
     allowShare = false;
 
     @Input()
+    allowNavigate = false;
+
+    @Input()
+    canNavigateBefore = true;
+
+    @Input()
+    canNavigateNext = true;
+
+    @Input()
     allowSidebar = false;
 
     @Input()
@@ -129,6 +138,12 @@ export class ViewerComponent implements OnChanges {
     @Output()
     extensionChange = new EventEmitter<string>();
 
+    @Output()
+    navigateBefore = new EventEmitter();
+
+    @Output()
+    navigateNext = new EventEmitter();
+
     viewerType = 'unknown';
     isLoading = false;
     node: MinimalNodeEntryEntity;
@@ -143,7 +158,7 @@ export class ViewerComponent implements OnChanges {
     private extensions = {
         image: ['png', 'jpg', 'jpeg', 'gif', 'bpm'],
         media: ['wav', 'mp4', 'mp3', 'webm', 'ogg'],
-        text: ['txt', 'xml', 'js', 'html', 'json'],
+        text: ['txt', 'xml', 'js', 'html', 'json', 'ts'],
         pdf: ['pdf']
     };
 
@@ -354,6 +369,16 @@ export class ViewerComponent implements OnChanges {
         }
     }
 
+    onNavigateBeforeClick() {
+        this.navigateBefore.next();
+        console.log('navigate before');
+    }
+
+    onNavigateNextClick() {
+        this.navigateNext.next();
+        console.log('navigate next');
+    }
+
     /**
      * close the viewer
      */
@@ -409,7 +434,7 @@ export class ViewerComponent implements OnChanges {
     }
 
     /**
-     * Litener Keyboard Event
+     * Keyboard event listener
      * @param {KeyboardEvent} event
      */
     @HostListener('document:keydown', ['$event'])

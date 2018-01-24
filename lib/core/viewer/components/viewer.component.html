@@ -112,10 +112,17 @@
                 </div>
             </ng-container>
 
-            <div fxFlexOrder="{{sidebarPosition !== 'left'? 1: 2}}" fxFlex="1 1 auto">
-                <div class="adf-viewer-layout-content">
-                    <div class="adf-viewer-content-container" [ngSwitch]="viewerType">
+            <ng-container *ngIf="allowNavigate && canNavigateBefore">
+                <div class="navigate-before">
+                    <button mat-mini-fab color="primary" (click)="onNavigateBeforeClick()">
+                        <mat-icon>navigate_before</mat-icon>
+                    </button>
+                </div>
+            </ng-container>
 
+            <div class="adf-viewer-main" fxFlexOrder="{{sidebarPosition !== 'left'? 1: 2}}" fxFlex="1 1 auto">
+                <div class="adf-viewer-layout-content" >
+                    <div class="adf-viewer-content-container" [ngSwitch]="viewerType">
                         <ng-container *ngSwitchCase="'pdf'">
                             <adf-pdf-viewer [blobFile]="blobFile" [urlFile]="urlFileContent" [nameFile]="displayName"></adf-pdf-viewer>
                         </ng-container>
@@ -142,10 +149,17 @@
                         <ng-container *ngSwitchDefault>
                             <adf-viewer-unknown-format></adf-viewer-unknown-format>
                         </ng-container>
-
                     </div>
                 </div>
             </div>
+
+            <ng-container *ngIf="allowNavigate && canNavigateNext">
+                <div class="navigate-next">
+                    <button mat-mini-fab color="primary" (click)="onNavigateNextClick()">
+                        <mat-icon>navigate_next</mat-icon>
+                    </button>
+                </div>
+            </ng-container>
         </div>
     </div>
 </div>

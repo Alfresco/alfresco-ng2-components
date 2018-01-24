@@ -17,9 +17,10 @@
 @import '../toolbar/toolbar.component';
 @import '../userinfo/components/user-info.component';
 @import '../viewer/components/viewer.component';
+@import '../viewer/components/pdfViewer.component';
+@import '../viewer/components/txtViewer.component';
 @import '../form/components/form.component';
 @import '../sidebar/sidebar-action-menu.component';
-@import '../viewer/components/pdfViewer.component';
 
 @mixin adf-core-theme($theme) {
     @include adf-colors-theme($theme);
@@ -40,6 +41,7 @@
     @include adf-userinfo-theme($theme);
     @include adf-viewer-theme($theme);
     @include adf-pdf-viewer-theme($theme);
+    @include adf-text-viewer-theme($theme);
     @include adf-form-component-theme($theme);
     @include adf-sidebar-action-menu-theme($theme);
 }
