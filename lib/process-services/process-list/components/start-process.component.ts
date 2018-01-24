@@ -61,6 +61,9 @@ export class StartProcessInstanceComponent implements OnChanges {
     @Input()
     name: string;
 
+    @Input()
+    showSelectProcessDropdown: boolean = true;
+
     @Output()
     start: EventEmitter<ProcessInstance> = new EventEmitter<ProcessInstance>();
 
@@ -92,6 +95,14 @@ export class StartProcessInstanceComponent implements OnChanges {
             this.moveNodeFromCStoPS();
         }
 
+        if (changes['appId'] && changes['appId'].currentValue) {
+            this.appId = changes['appId'].currentValue;
+        }
+
+        if (changes['processDefinitionId'] && changes['processDefinitionId'].currentValue) {
+            this.processDefinitionId = changes['processDefinitionId'].currentValue;
+        }
+
         this.loadStartProcess();
     }
 
@@ -119,10 +130,6 @@ export class StartProcessInstanceComponent implements OnChanges {
                 this.errorMessageId = 'ADF_PROCESS_LIST.START_PROCESS.ERROR.LOAD_PROCESS_DEFS';
             });
 
-    }
-
-    public hasMultipleProcessDefinitions(): boolean {
-        return this.selectedProcessDef && this.processDefinitions.length > 1;
     }
 
     getAlfrescoRepositoryName(): string {

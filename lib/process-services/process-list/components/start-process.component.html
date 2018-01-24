@@ -9,7 +9,7 @@
 			<input matInput placeholder="{{'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.NAME'|translate}}" [(ngModel)]="name" id="processName" required />
 		</mat-form-field>
 
-        <div *ngIf="hasMultipleProcessDefinitions()">
+        <div *ngIf="showSelectProcessDropdown">
             <mat-form-field>
                 <mat-select [(value)]="selectedProcessDef" placeholder="{{'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.TYPE'|translate}}" required>
                     <mat-option>{{'ADF_PROCESS_LIST.START_PROCESS.FORM.TYPE_PLACEHOLDER' | translate}}</mat-option>

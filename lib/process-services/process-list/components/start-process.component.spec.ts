@@ -38,7 +38,7 @@ import {
 } from '../../mock';
 import { StartProcessInstanceComponent } from './start-process.component';
 
-describe('StartFormComponent', () => {
+fdescribe('StartFormComponent', () => {
 
     let appConfig: AppConfigService;
     let activitiContentService: ActivitiContentService;
@@ -315,10 +315,11 @@ describe('StartFormComponent', () => {
 
         describe('dropdown', () => {
 
-            it('should hide the process dropdown if the app contain only one processDefinition', async(() => {
+            it('should hide the process dropdown if showSelectProcessDropdown is false', async(() => {
                 getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.of([testProcessDefRepr]));
                 let change = new SimpleChange(null, '123', true);
                 component.appId = 123;
+                component.showSelectProcessDropdown = false;
                 component.ngOnChanges({ 'appId': change });
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -327,7 +328,21 @@ describe('StartFormComponent', () => {
                 });
             }));
 
-            it('should be shown if the processDefinition is already selected', async(() => {
+            it('should show the process dropdown if showSelectProcessDropdown is false', async(() => {
+                getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.of(testMultipleProcessDefs));
+                let change = new SimpleChange(null, '123', true);
+                component.appId = 123;
+                component.processDefinition = 'My Process 2';
+                component.showSelectProcessDropdown = true;
+                component.ngOnChanges({ 'appId': change });
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    let selectElement = fixture.nativeElement.querySelector('mat-select > .mat-select-trigger');
+                    expect(selectElement).not.toBeNull();
+                });
+            }));
+
+            it('should show the process dropdown by default', async(() => {
                 getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.of(testMultipleProcessDefs));
                 let change = new SimpleChange(null, '123', true);
                 component.appId = 123;
@@ -337,47 +352,9 @@ describe('StartFormComponent', () => {
                 fixture.whenStable().then(() => {
                     let selectElement = fixture.nativeElement.querySelector('mat-select > .mat-select-trigger');
                     expect(selectElement).not.toBeNull();
-                });
-            }));
-
-            it('should be shown if the processDefinition is not selected and the app contain multiple process', async(() => {
-                getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.of(testMultipleProcessDefs));
-                let change = new SimpleChange(null, '123', true);
-                component.appId = 123;
-                component.ngOnChanges({ 'appId': change });
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    let selectElement = fixture.nativeElement.querySelector('mat-select > .mat-select-trigger');
-                    expect(selectElement).not.toBeNull();
-                });
-            }));
-
-            it('should be shown the pre-selected processDefinition in input if the app contain multiple process', async(() => {
-                getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.of(testMultipleProcessDefs));
-                let change = new SimpleChange(null, '123', true);
-                component.processDefinition = 'My Process 2';
-                component.ngOnChanges({ 'appId': change });
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    let selectElement = fixture.nativeElement.querySelector('mat-select > .mat-select-trigger');
-                    expect(selectElement).not.toBeNull();
-                    expect(component.selectedProcessDef.name).toBe('My Process 2');
-                });
-            }));
-
-            it('should be shown if processDefinition is NOT in input and the app contain multiple process', async(() => {
-                getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.of(testMultipleProcessDefs));
-                let change = new SimpleChange(null, '123', true);
-                component.ngOnChanges({ 'appId': change });
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    let selectElement = fixture.nativeElement.querySelector('mat-select > .mat-select-trigger');
-                    expect(selectElement).not.toBeNull();
-                    expect(component.selectedProcessDef.name).toBe('My Process 1');
                 });
             }));
         });
-
     });
 
     describe('input changes', () => {
@@ -393,10 +370,12 @@ describe('StartFormComponent', () => {
             });
         }));
 
-        it('should reload processes when appId input changed', () => {
+        fit('should reload processes when appId input changed', async(() => {
             component.ngOnChanges({ appId: change });
-            expect(getDefinitionsSpy).toHaveBeenCalledWith(456);
-        });
+            fixture.whenStable().then(() => {
+                expect(getDefinitionsSpy).toHaveBeenCalledWith(456);
+            });
+        }));
 
         it('should get current processDeff', () => {
             component.ngOnChanges({ appId: change });
