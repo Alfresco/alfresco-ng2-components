@@ -154,7 +154,7 @@ for more information about installing and using the source code.
 | ---- | ----------- | ----------- |
 | [Data Table Adapter interface](DataTableAdapter.md) | Defines how table data is supplied to [DataTable](datatable.component.md) and [Tasklist](task-list.component.md) components. | [Source](../core/datatable/data/datatable-adapter.ts) |
 | [Form Field Validator interface](FormFieldValidator.md) | Defines how the input fields of [ADF Form](form.component.md) and [ADF Task Details](task-details.component.md) components are validated. | [Source](../core/form/components/widgets/core/form-field-validator.ts) |
-| [Search Configuration interface](search-configuration.service.md) | Provides fine control of parameters to a search. | [Source](../core/services/search-configuration.service.ts) |
+| [Search Configuration interface](search-configuration.interface.md) | Provides fine control of parameters to a search. | [Source](../core/services/search-configuration.service.ts) |
 
 [(Back to Contents)](#contents)
 
