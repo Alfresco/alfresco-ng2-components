@@ -63,6 +63,15 @@
                     <mat-icon>share</mat-icon>
                 </button>
 
+                <button
+                    *ngIf="allowFullScreen"
+                    mat-icon-button
+                    matTooltip="{{ 'ADF_VIEWER.ACTIONS.FULLSCREEN' | translate }}"
+                    data-automation-id="toolbar-fullscreen"
+                    (click)="enterFullScreen()">
+                    <mat-icon>fullscreen</mat-icon>
+                </button>
+
                 <ng-container *ngIf="mnuMoreActions">
                     <button
                         mat-icon-button
@@ -121,7 +130,7 @@
             </ng-container>
 
             <div class="adf-viewer-main" fxFlexOrder="{{sidebarPosition !== 'left'? 1: 2}}" fxFlex="1 1 auto">
-                <div class="adf-viewer-layout-content" >
+                <div class="adf-viewer-layout-content adf-viewer__fullscreen-container">
                     <div class="adf-viewer-content-container" [ngSwitch]="viewerType">
                         <ng-container *ngSwitchCase="'pdf'">
                             <adf-pdf-viewer [blobFile]="blobFile" [urlFile]="urlFileContent" [nameFile]="displayName"></adf-pdf-viewer>

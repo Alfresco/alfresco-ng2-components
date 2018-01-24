@@ -244,7 +244,67 @@ describe('ViewerComponent', () => {
         expect(getComputedStyle(sidebar).order).toEqual('2');
     });
 
+    describe('Full Screen Mode', () => {
+
+        it('should request only if enabled', () => {
+            const domElement = jasmine.createSpyObj('el', ['requestFullscreen']);
+            spyOn(fixture.nativeElement, 'querySelector').and.returnValue(domElement);
+
+            component.allowFullScreen = false;
+            component.enterFullScreen();
+
+            expect(domElement.requestFullscreen).not.toHaveBeenCalled();
+        });
+
+        it('should use standard mode', () => {
+            const domElement = jasmine.createSpyObj('el', ['requestFullscreen']);
+            spyOn(fixture.nativeElement, 'querySelector').and.returnValue(domElement);
+
+            component.enterFullScreen();
+            expect(domElement.requestFullscreen).toHaveBeenCalled();
+        });
+
+        it('should use webkit prefix', () => {
+            const domElement = jasmine.createSpyObj('el', ['webkitRequestFullscreen']);
+            spyOn(fixture.nativeElement, 'querySelector').and.returnValue(domElement);
+
+            component.enterFullScreen();
+            expect(domElement.webkitRequestFullscreen).toHaveBeenCalled();
+        });
+
+        it('should use moz prefix', () => {
+            const domElement = jasmine.createSpyObj('el', ['mozRequestFullScreen']);
+            spyOn(fixture.nativeElement, 'querySelector').and.returnValue(domElement);
+
+            component.enterFullScreen();
+            expect(domElement.mozRequestFullScreen).toHaveBeenCalled();
+        });
+
+        it('should use ms prefix', () => {
+            const domElement = jasmine.createSpyObj('el', ['msRequestFullscreen']);
+            spyOn(fixture.nativeElement, 'querySelector').and.returnValue(domElement);
+
+            component.enterFullScreen();
+            expect(domElement.msRequestFullscreen).toHaveBeenCalled();
+        });
+
+    });
+
     describe('Toolbar', () => {
+
+        it('should render fullscreen button', () => {
+            component.allowFullScreen = true;
+            fixture.detectChanges();
+
+            expect(element.querySelector('[data-automation-id="toolbar-fullscreen"]')).toBeDefined();
+        });
+
+        it('should not render fullscreen button', () => {
+            component.allowFullScreen = false;
+            fixture.detectChanges();
+
+            expect(element.querySelector('[data-automation-id="toolbar-fullscreen"]')).toBeNull();
+        });
 
         it('should render default download button', () => {
             component.allowDownload = true;

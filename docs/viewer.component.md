@@ -68,6 +68,7 @@ Using with file url:
 | allowNavigate | boolean | false | Toggle before/next navigation, arrow buttons to navigate between multiple documents in the collection. |
 | canNavigateBefore | boolean | true | Toggle the "before" ("<") button. Requires `allowNavigate` to be enabled. |
 | canNavigateNext | boolean | true | Toggle the next (">") button. Requires `allowNavigate` to be enabled.|
+| allowFullScreen | boolean | true | Toggle the 'Full Screen' feature. |
 
 ### Events
 

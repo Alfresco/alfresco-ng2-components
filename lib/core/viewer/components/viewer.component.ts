@@ -17,7 +17,7 @@
 
 import { Location } from '@angular/common';
 import {
-    Component, ContentChild, EventEmitter, HostListener,
+    Component, ContentChild, EventEmitter, HostListener, ElementRef,
     Input, OnChanges, Output, SimpleChanges, TemplateRef, ViewEncapsulation
 } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
@@ -89,6 +89,9 @@ export class ViewerComponent implements OnChanges {
 
     @Input()
     allowShare = false;
+
+    @Input()
+    allowFullScreen = true;
 
     @Input()
     allowNavigate = false;
@@ -170,7 +173,8 @@ export class ViewerComponent implements OnChanges {
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService,
                 private location: Location,
-                private renditionService: RenditionsService) {
+                private renditionService: RenditionsService,
+                private el: ElementRef) {
     }
 
     isSourceDefined(): boolean {
@@ -473,6 +477,26 @@ export class ViewerComponent implements OnChanges {
         if (this.allowShare) {
             const args = new BaseEvent();
             this.share.next(args);
+        }
+    }
+
+    /**
+     * Triggers full screen mode with a main content area displayed.
+     */
+    enterFullScreen(): void {
+        if (this.allowFullScreen) {
+            const container = this.el.nativeElement.querySelector('.adf-viewer__fullscreen-container');
+            if (container) {
+                if (container.requestFullscreen) {
+                    container.requestFullscreen();
+                } else if (container.webkitRequestFullscreen) {
+                    container.webkitRequestFullscreen();
+                } else if (container.mozRequestFullScreen) {
+                    container.mozRequestFullScreen();
+                } else if (container.msRequestFullscreen) {
+                    container.msRequestFullscreen();
+                }
+            }
         }
     }
 
