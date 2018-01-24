@@ -38,7 +38,7 @@ import {
 } from '../../mock';
 import { StartProcessInstanceComponent } from './start-process.component';
 
-fdescribe('StartFormComponent', () => {
+describe('StartFormComponent', () => {
 
     let appConfig: AppConfigService;
     let activitiContentService: ActivitiContentService;
