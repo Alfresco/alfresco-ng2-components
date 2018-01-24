@@ -102,43 +102,8 @@
         },
         {
           "glob": "**/*",
-          "input": "../../lib/core/prebuilt-themes",
-          "output": "./assets/prebuilt-themes"
-        },
-        {
-          "glob": "**/*",
-          "input": "../../lib/core/assets",
-          "output": "./assets/"
-        },
-        {
-          "glob": "**/*",
-          "input": "../../lib/process-services/assets",
-          "output": "./assets/"
-        },
-        {
-          "glob": "**/*",
-          "input": "../../lib/content-services/assets",
-          "output": "./assets/"
-        },
-        {
-          "glob": "**/*",
-          "input": "../../lib/core/i18n",
-          "output": "./assets/adf-core/i18n"
-        },
-        {
-          "glob": "**/*",
-          "input": "../../lib/process-services/i18n",
-          "output": "./assets/adf-process-services/i18n"
-        },
-        {
-          "glob": "**/*",
-          "input": "../../lib/content-services/i18n",
-          "output": "./assets/adf-content-services/i18n"
-        },
-        {
-          "glob": "**/*",
-          "input": "../../lib/insights/i18n",
-          "output": "./assets/adf-insights/i18n"
+          "input": "../dist-dev-temp/",
+          "output": "./"
         },
         {
           "glob": "pdf.worker.js",

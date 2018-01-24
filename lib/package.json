@@ -77,7 +77,7 @@
     "moment-es6": "^1.0.0",
     "ng-packagr": "2.0.0-rc.4",
     "ng2-charts": "1.6.0",
-    "pdfjs-dist": "1.5.404",
+    "pdfjs-dist": "2.0.265",
     "raphael": "2.2.7",
     "reflect-metadata": "0.1.10",
     "rxjs": "5.5.2",
