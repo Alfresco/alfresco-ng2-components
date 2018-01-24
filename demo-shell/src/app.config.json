@@ -1,4 +1,5 @@
 {
+    "$schema": "../../lib/core/app-config/schema.json",
     "ecmHost": "http://{hostname}:{port}",
     "bpmHost": "http://{hostname}:{port}",
     "application": {

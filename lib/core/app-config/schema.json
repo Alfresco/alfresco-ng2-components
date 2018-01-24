@@ -1,0 +1,173 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "id": "https://github.com/Alfresco/alfresco-ng2-components/tree/master/lib/core/app-config/schema.json",
+    "title": "ADF Application config",
+
+    "definitions": {
+        "language": {
+            "type": "object",
+            "properties": {
+                "key": { "type": "string" },
+                "label": { "type": "string" }
+            }
+        },
+        "document-list-thumbnail": {
+            "type": "object",
+            "required": [ "key", "type", "srTitle", "sortable" ],
+            "properties": {
+                "key": { "type": "string", "pattern": "^\\$thumbnail$" },
+                "type": { "type": "string", "pattern": "^image$" },
+                "srTitle": { "type": "string" },
+                "sortable": { "type": "boolean" }
+            }
+        },
+        "document-list-general-text": {
+            "type": "object",
+            "required": [ "key", "type", "title", "sortable" ],
+            "properties": {
+                "key": { "type": "string" },
+                "type": { "type": "string" },
+                "title": { "type": "string" },
+                "sortable": { "type": "boolean" }
+            }
+        },
+        "document-list-path": {
+            "type": "object",
+            "required": [ "key", "type", "title", "format", "sortable" ],
+            "properties": {
+                "key": { "type": "string", "pattern": "^path$" },
+                "type": { "type": "string", "pattern": "^location$" },
+                "title": { "type": "string" },
+                "format": { "type": "string" },
+                "sortable": { "type": "boolean" }
+            }
+        },
+        "document-list-filesize": {
+            "type": "object",
+            "required": [ "key", "type", "title", "sortable" ],
+            "properties": {
+                "key": { "type": "string", "pattern": "^content\\.sizeInBytes$" },
+                "type": { "type": "string", "pattern": "^fileSize$" },
+                "title": { "type": "string" },
+                "sortable": { "type": "boolean" }
+            }
+        },
+        "document-list-archivedAt": {
+            "type": "object",
+            "required": [ "key", "type", "title", "format", "sortable" ],
+            "properties": {
+                "key": { "type": "string", "pattern": "^archivedAt$" },
+                "type": { "type": "string", "pattern": "^date$" },
+                "title": { "type": "string" },
+                "format": { "type": "string" },
+                "sortable": { "type": "boolean" }
+            }
+        },
+        "document-list-archivedBy": {
+            "type": "object",
+            "required": [ "key", "type", "title", "sortable" ],
+            "properties": {
+                "key": { "type": "string", "pattern": "^archivedByUser.displayName$" },
+                "type": { "type": "string", "pattern": "^text$" },
+                "title": { "type": "string" },
+                "sortable": { "type": "boolean" }
+            }
+        },
+        "content-metadata-aspect": {
+            "type": "object",
+            "patternProperties": {
+                ".*": {
+                    "oneOf": [
+                        { "type": "string", "pattern": "^\\*$"},
+                        { "type": "array", "items": { "type": "string" } }
+                    ]
+                }
+            }
+        }
+    },
+
+    "type": "object",
+    "properties": {
+        "ecmHost": { "type": "string" },
+        "bpmHost": { "type": "string" },
+        "application": {
+            "type": "object",
+            "properties": {
+                "name": { "type": "string" }
+            }
+        },
+        "languages": {
+            "type": "array",
+            "items": { "$ref": "#/definitions/language" }
+        },
+        "pagination": {
+            "type": "object",
+            "properties": {
+                "size": { "type": "number" },
+                "supportedPageSizes": {
+                    "type": "array",
+                    "items": { "type": "number" }
+                }
+            }
+        },
+        "files": {
+            "type": "object",
+            "properties": {
+                "excluded": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                }
+            }
+        },
+        "logLevel": {
+            "type": "string",
+            "enum": [ "trace", "debug", "info", "warn", "error", "silent" ]
+        },
+        "activiti": {
+            "type": "object"
+        },
+        "document-list": {
+            "type": "object",
+            "properties": {
+                "presets": {
+                    "type": "object",
+                    "propertyNames": {
+                        "enum": [ "-trashcan-", "-sites-", "-mysites-", "-favorites-", "-recent-", "-sharedlinks-", "default" ]
+                    },
+                    "patternProperties": {
+                        ".*": {
+                            "type": "array",
+                            "items": {
+                                "oneOf": [
+                                    { "$ref": "#/definitions/document-list-thumbnail" },
+                                    { "$ref": "#/definitions/document-list-general-text" },
+                                    { "$ref": "#/definitions/document-list-path" },
+                                    { "$ref": "#/definitions/document-list-filesize" },
+                                    { "$ref": "#/definitions/document-list-archivedAt" },
+                                    { "$ref": "#/definitions/document-list-archivedBy" }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "content-metadata": {
+            "type": "object",
+            "required": [ "presets" ],
+            "properties": {
+                "presets": {
+                    "type": "object",
+                    "patternProperties": {
+                        ".*": {
+                            "oneOf": [
+                                { "type": "string", "pattern": "^\\*$"},
+                                { "$ref": "#/definitions/content-metadata-aspect" }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
