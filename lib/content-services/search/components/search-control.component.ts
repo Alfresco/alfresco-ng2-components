@@ -211,7 +211,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
         let previousElement: any = this.getPreviousElementSibling(<Element> $event.target);
         if (previousElement) {
             previousElement.focus();
-        }else {
+        } else {
             this.searchInput.nativeElement.focus();
             this.focusSubject.next(new FocusEvent('focus'));
         }

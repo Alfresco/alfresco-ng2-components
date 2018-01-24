@@ -85,7 +85,7 @@
     "zone.js": "0.8.14"
   },
   "devDependencies": {
-    "@angular/compiler-cli": "5.1.1",
+    "@angular/compiler-cli": "^5.2.0",
     "@types/hammerjs": "2.0.35",
     "@types/jasmine": "^2.5.35",
     "@types/node": "6.0.90",
@@ -139,7 +139,7 @@
     "traceur": "0.0.91",
     "ts-loader": "3.3.0",
     "ts-node": "2.0.0",
-    "tslint": "5.7.0",
+    "tslint": "5.9.1",
     "tslint-loader": "3.5.3",
     "typescript": "2.6.1",
     "uglifyjs-webpack-plugin": "1.1.6",

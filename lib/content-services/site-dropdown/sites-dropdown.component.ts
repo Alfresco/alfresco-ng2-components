@@ -54,7 +54,7 @@ export class DropdownSitesComponent implements OnInit {
         let siteFound;
         if (this.siteSelected === this.MY_FILES_VALUE) {
            siteFound = { entry: {}};
-        }else {
+        } else {
            siteFound = this.siteList.list.entries.find( site => site.entry.guid === this.siteSelected);
         }
         this.change.emit(siteFound);
