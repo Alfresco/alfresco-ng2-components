@@ -7,20 +7,33 @@
       "IMAGE_NOT_AVAILABLE": "预览不可用"
     },
     "FIELD": {
+      "LOCALSTORAGE": "本地存储",
+      "SOURCE": "来源选自 ",
       "UPLOAD": "上传",
-      "REQUIRED": "*必填项",
+      "REQUIRED": "*必需",
       "VALIDATOR": {
         "INVALID_NUMBER": "使用其他数字格式",
         "INVALID_DATE": "使用其他日期格式",
-        "INVALID_VALUE": "输入其他值",
-        "NOT_GREATER_THAN": "不得大于 {{ maxValue }}",
-        "NOT_LESS_THAN": "不得小于 {{ minValue }}",
-        "AT_LEAST_LONG": "输入至少 {{ minLength }} 个字符",
-        "NO_LONGER_THAN": "不得输入超过 {{ maxLength }} 个字符"
+        "INVALID_VALUE": "使用其他值",
+        "NOT_GREATER_THAN": "不能大于 {{ maxValue }}",
+        "NOT_LESS_THAN": "不能小于 {{ minValue }}",
+        "AT_LEAST_LONG": "至少输入 {{ minLength }} 个字符",
+        "NO_LONGER_THAN": "输入不超过 {{ maxLength }} 个字符"
       }
     }
   },
   "CORE": {
+    "FILE_SIZE": {
+      "BYTES": "字节",
+      "KB": "KB",
+      "MB": "MB",
+      "GB": "GB",
+      "TB": "TB",
+      "PB": "PB",
+      "EB": "EB",
+      "ZB": "ZB",
+      "YB": "YB"
+    },
     "PAGINATION": {
       "ITEMS_RANGE": "显示 {{range}}/{{total}}",
       "ITEMS_PER_PAGE": "每页的项目",
@@ -92,6 +105,27 @@
       "BACK": "返回",
       "APPLY": "应用",
       "NOT_VALID": "http(s)://host|ip:port(/path) 无法识别，请使用其他 URL."
+    },
+    "CARDVIEW": {
+      "VALIDATORS": {
+        "FLOAT_VALIDATION_ERROR": "使用数字格式",
+        "INT_VALIDATION_ERROR": "使用整数格式"
+      }
+    },
+    "METADATA": {
+      "BASIC": {
+        "HEADER": "属性",
+        "NAME": "名称",
+        "TITLE": "标题",
+        "DESCRIPTION": "说明",
+        "AUTHOR": "作者",
+        "MIMETYPE": "MIME 类型",
+        "SIZE": "字号(&S)",
+        "CREATOR": "创建者",
+        "CREATED_DATE": "创建日期",
+        "MODIFIER": "修改者",
+        "MODIFIED_DATE": "修改日期"
+      }
     }
   },
   "LOGIN": {
@@ -167,6 +201,12 @@
       "OF": "/"
     },
     "LOADING": "正在加载",
-    "UNKNOWN_FORMAT": "无法加载预览"
+    "UNKNOWN_FORMAT": "无法加载预览",
+    "SIDEBAR": {
+      "METADATA": {
+        "MORE_INFORMATION": "更多信息",
+        "LESS_INFORMATION": "更少信息"
+      }
+    }
   }
 }

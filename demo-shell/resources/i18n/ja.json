@@ -3,7 +3,11 @@
   "VERSION": {
     "NO_PERMISSION": "このコンテンツのバージョンを管理する権限がありません",
     "NO_PERMISSION_EVENT": "${event.type} を ${event.action} するための ${event.permission} 権限がありません",
-    "CHOOSE_FILE": "バージョンを表示するファイルを選択してください"
+    "CHOOSE_FILE": "バージョンを表示するファイルを選択してください",
+    "DIALOG": {
+      "CLOSE": "閉じる",
+      "TITLE": "バージョンの管理"
+    }
   },
   "APP_LAYOUT": {
     "APP_NAME": "ADF デモアプリケーション",
@@ -20,6 +24,7 @@
     "TAG": "タグ",
     "SOCIAL": "ソーシャル",
     "SETTINGS": "設定",
+    "OVERLAY_VIEWER": "オーバーレイビューア",
     "ABOUT": "バージョン情報"
   },
   "DOCUMENT_LIST": {
@@ -30,6 +35,7 @@
     "MAX_SIZE": "最大サイズフィルタ",
     "ENABLE_VERSIONING": "バージョン管理を有効にする",
     "DESCRIPTION_UPLOAD": "アップロードを有効にします",
+    "ENABLE_INFINITE_SCROLL": "無限スクロールを有効にする",
     "MULTISELECT_DESCRIPTION": "複数選択の切り替えを行うには、Cmd (Mac) キーまたは Ctrl (Windows) キーを押します",
     "COLUMNS": {
       "DISPLAY_NAME": "表示名",
@@ -48,7 +54,8 @@
         "DOWNLOAD": "ダウンロード",
         "COPY": "コピー",
         "MOVE": "移動",
-        "DELETE": "削除"
+        "DELETE": "削除",
+        "PROCESS_ACTION": "プロセスの開始"
       }
     }
   },
@@ -70,7 +77,8 @@
     "REPORTS-TAB": "レポート",
     "START-TASK": "タスクの開始",
     "START-PROCESS": "プロセスの開始",
-    "AUDIT-LOG": "プロセスの監査ログ"
+    "PROCESS-AUDIT-LOG": "プロセスの監査ログ",
+    "TASK-AUDIT-LOG": "タスクの監査ログ"
   },
   "FORM-LIST": {
     "STORE": "保存",
@@ -82,7 +90,8 @@
     "LOGIN_FOOTER": "ログインページのフッター"
   },
   "SEARCH": {
-    "RESULTS": "検索結果"
+    "RESULTS": "検索結果",
+    "NO_RESULT": "一致するアイテムはありません"
   },
   "SOCIAL": {
     "LIKE": "[いいね!] コンポーネント",

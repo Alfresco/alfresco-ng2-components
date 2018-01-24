@@ -176,8 +176,9 @@
     "PROPERTIES": {
       "PROCESS_NAME": "プロセス",
       "NAME": "名前",
+      "THUMBNAIL": "サムネイル",
       "STATUS": "ステータス",
-      "END_DATE": "期限",
+      "END_DATE": "終了日",
       "END_DATE_DEFAULT": "期限なし",
       "CATEGORY": "カテゴリ",
       "CATEGORY_DEFAULT": "カテゴリなし",
@@ -300,6 +301,14 @@
       "CREATE": "作成",
       "NEW_TASK": "新しいタスク",
       "NEW_PROCESS": "新しいプロセス"
+    }
+  },
+  "APP": {
+    "DIALOG": {
+      "START": "開始",
+      "TITLE": "プロセスの選択",
+      "LIST": "プロセスリスト",
+      "ERROR": "Process Services への接続中に問題が発生しました"
     }
   }
 }

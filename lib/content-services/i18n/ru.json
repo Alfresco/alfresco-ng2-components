@@ -41,7 +41,8 @@
     "CHOOSE": "Выбрать",
     "COPY": "Копировать",
     "MOVE": "Переместить",
-    "NO_RESULTS": "Результаты не найдены"
+    "NO_RESULTS": "Результаты не найдены",
+    "SELECT_LOCATION": "Выбрать местоположение"
   },
   "OPERATION": {
     "SUCCES": {
@@ -163,5 +164,20 @@
   },
   "PERMISSON": {
     "LACKOF": "У вас нет разрешения {{permission}}, чтобы {{action}} {{type}}"
+  },
+  "METADATA": {
+    "BASIC": {
+      "HEADER": "Свойства",
+      "NAME": "Имя",
+      "TITLE": "Заголовок",
+      "DESCRIPTION": "Описание",
+      "AUTHOR": "Автор",
+      "MIMETYPE": "Тип MIME",
+      "SIZE": "Размер",
+      "CREATOR": "Создатель",
+      "CREATED_DATE": "Дата создания",
+      "MODIFIER": "Редактор",
+      "MODIFIED_DATE": "Дата изменения"
+    }
   }
 }

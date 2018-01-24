@@ -7,20 +7,33 @@
       "IMAGE_NOT_AVAILABLE": "Anteprima non disponibile"
     },
     "FIELD": {
+      "LOCALSTORAGE": "Archivio locale",
+      "SOURCE": "Seleziona origine da ",
       "UPLOAD": "Carica",
       "REQUIRED": "*Obbligatorio",
       "VALIDATOR": {
-        "INVALID_NUMBER": "Usa un formato numerico diverso",
-        "INVALID_DATE": "Usa un formato di data diverso",
-        "INVALID_VALUE": "Immetti un valore diverso",
+        "INVALID_NUMBER": "Utilizzare un formato numerico diverso",
+        "INVALID_DATE": "Utilizzare un formato data diverso",
+        "INVALID_VALUE": "Immettere un altro valore",
         "NOT_GREATER_THAN": "Non può essere maggiore di {{ maxValue }}",
-        "NOT_LESS_THAN": "Non può essere inferiore di {{ minValue }}",
-        "AT_LEAST_LONG": "Immetti almeno {{ minLength }} caratteri",
-        "NO_LONGER_THAN": "Immetti non più di {{ maxLength }} caratteri"
+        "NOT_LESS_THAN": "Non può essere minore di {{ minValue }}",
+        "AT_LEAST_LONG": "Immettere almeno {{ minLength }} caratteri",
+        "NO_LONGER_THAN": "Immettere non più di {{ maxLength }} caratteri"
       }
     }
   },
   "CORE": {
+    "FILE_SIZE": {
+      "BYTES": "byte",
+      "KB": "KB",
+      "MB": "MB",
+      "GB": "GB",
+      "TB": "TB",
+      "PB": "PB",
+      "EB": "EB",
+      "ZB": "ZB",
+      "YB": "YB"
+    },
     "PAGINATION": {
       "ITEMS_RANGE": "Visualizzazione di {{ range }} su {{ total }}",
       "ITEMS_PER_PAGE": "Elementi per pagina",
@@ -92,6 +105,27 @@
       "BACK": "Indietro",
       "APPLY": "Applica",
       "NOT_VALID": "http(s)://host|ip:port(/path) non riconosciuto, provare un URL diverso."
+    },
+    "CARDVIEW": {
+      "VALIDATORS": {
+        "FLOAT_VALIDATION_ERROR": "Utilizzare un formato numerico",
+        "INT_VALIDATION_ERROR": "Utilizzare numeri interi"
+      }
+    },
+    "METADATA": {
+      "BASIC": {
+        "HEADER": "Proprietà",
+        "NAME": "Nome",
+        "TITLE": "Titolo",
+        "DESCRIPTION": "Descrizione",
+        "AUTHOR": "Autore",
+        "MIMETYPE": "Tipo MIME",
+        "SIZE": "Dimensione",
+        "CREATOR": "Creatore",
+        "CREATED_DATE": "Data di creazione",
+        "MODIFIER": "Modificatore",
+        "MODIFIED_DATE": "Data di modifica"
+      }
     }
   },
   "LOGIN": {
@@ -167,6 +201,12 @@
       "OF": "di"
     },
     "LOADING": "Caricamento in corso",
-    "UNKNOWN_FORMAT": "Impossibile caricare l'anteprima"
+    "UNKNOWN_FORMAT": "Impossibile caricare l'anteprima",
+    "SIDEBAR": {
+      "METADATA": {
+        "MORE_INFORMATION": "Più informazioni",
+        "LESS_INFORMATION": "Meno informazioni"
+      }
+    }
   }
 }

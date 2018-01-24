@@ -7,6 +7,8 @@
       "IMAGE_NOT_AVAILABLE": "プレビューは使用できません"
     },
     "FIELD": {
+      "LOCALSTORAGE": "ローカルストレージ",
+      "SOURCE": "ソースの選択先 ",
       "UPLOAD": "アップロード",
       "REQUIRED": "*必須",
       "VALIDATOR": {
@@ -21,6 +23,17 @@
     }
   },
   "CORE": {
+    "FILE_SIZE": {
+      "BYTES": "バイト",
+      "KB": "KB",
+      "MB": "MB",
+      "GB": "GB",
+      "TB": "TB",
+      "PB": "PB",
+      "EB": "EB",
+      "ZB": "ZB",
+      "YB": "YB"
+    },
     "PAGINATION": {
       "ITEMS_RANGE": "表示中: {{ range }} / {{ total }} 件",
       "ITEMS_PER_PAGE": "1 ページのアイテム数",
@@ -92,6 +105,27 @@
       "BACK": "戻る",
       "APPLY": "適用",
       "NOT_VALID": "http(s)://host|ip:port(/path) が認識されません。別の URL を指定してください."
+    },
+    "CARDVIEW": {
+      "VALIDATORS": {
+        "FLOAT_VALIDATION_ERROR": "番号形式を使用してください",
+        "INT_VALIDATION_ERROR": "整数形式を使用してください"
+      }
+    },
+    "METADATA": {
+      "BASIC": {
+        "HEADER": "プロパティ",
+        "NAME": "名前",
+        "TITLE": "タイトル",
+        "DESCRIPTION": "説明",
+        "AUTHOR": "作成者",
+        "MIMETYPE": "MIME タイプ",
+        "SIZE": "サイズ",
+        "CREATOR": "作成者",
+        "CREATED_DATE": "作成日",
+        "MODIFIER": "変更者",
+        "MODIFIED_DATE": "変更日"
+      }
     }
   },
   "LOGIN": {
@@ -167,6 +201,12 @@
       "OF": "/"
     },
     "LOADING": "読み込み中",
-    "UNKNOWN_FORMAT": "プレビューを読み込めませんでした"
+    "UNKNOWN_FORMAT": "プレビューを読み込めませんでした",
+    "SIDEBAR": {
+      "METADATA": {
+        "MORE_INFORMATION": "詳細",
+        "LESS_INFORMATION": "概要"
+      }
+    }
   }
 }

@@ -3,7 +3,11 @@
   "VERSION": {
     "NO_PERMISSION": "No tiene permiso para administrar versiones de este contenido",
     "NO_PERMISSION_EVENT": "No tiene permiso ${event.permission} para ${event.action} el ${event.type}",
-    "CHOOSE_FILE": "Seleccione un fichero para ver sus versiones"
+    "CHOOSE_FILE": "Seleccione un fichero para ver sus versiones",
+    "DIALOG": {
+      "CLOSE": "Cerrar",
+      "TITLE": "Gestionar versiones"
+    }
   },
   "APP_LAYOUT": {
     "APP_NAME": "Aplicación ADF Demo",
@@ -20,6 +24,7 @@
     "TAG": "Etiqueta",
     "SOCIAL": "Social",
     "SETTINGS": "Configuración",
+    "OVERLAY_VIEWER": "Visor de superposición",
     "ABOUT": "Acerca de"
   },
   "DOCUMENT_LIST": {
@@ -30,6 +35,7 @@
     "MAX_SIZE": "Filtro de tamaño máximo",
     "ENABLE_VERSIONING": "Habilitar control de versiones",
     "DESCRIPTION_UPLOAD": "Habilitar carga",
+    "ENABLE_INFINITE_SCROLL": "Habilitar desplazamiento infinito",
     "MULTISELECT_DESCRIPTION": "Utilice Cmd (Mac) o Ctrl (Windows) para cambiar la selección de varios elementos",
     "COLUMNS": {
       "DISPLAY_NAME": "Nombre a mostrar",
@@ -48,7 +54,8 @@
         "DOWNLOAD": "Descargar",
         "COPY": "Copiar",
         "MOVE": "Mover",
-        "DELETE": "Eliminar"
+        "DELETE": "Eliminar",
+        "PROCESS_ACTION": "Iniciar proceso"
       }
     }
   },
@@ -70,7 +77,8 @@
     "REPORTS-TAB": "Informes",
     "START-TASK": "Iniciar tarea",
     "START-PROCESS": "Iniciar proceso",
-    "AUDIT-LOG": "Procesar registro de auditorías"
+    "PROCESS-AUDIT-LOG": "Registro de auditoría de procesos",
+    "TASK-AUDIT-LOG": "Registro de auditoría de tareas"
   },
   "FORM-LIST": {
     "STORE": "Almacenar",
@@ -82,7 +90,8 @@
     "LOGIN_FOOTER": "Pie del inicio de sesión"
   },
   "SEARCH": {
-    "RESULTS": "Resultados de la búsqueda"
+    "RESULTS": "Resultados de la búsqueda",
+    "NO_RESULT": "Ningún resultado encontrado"
   },
   "SOCIAL": {
     "LIKE": "Componente Me gusta",

@@ -176,8 +176,9 @@
     "PROPERTIES": {
       "PROCESS_NAME": "Prozess",
       "NAME": "Name",
+      "THUMBNAIL": "Miniaturansicht",
       "STATUS": "Status",
-      "END_DATE": "Fälligkeitsdatum",
+      "END_DATE": "Enddatum",
       "END_DATE_DEFAULT": "Kein Datum",
       "CATEGORY": "Kategorie",
       "CATEGORY_DEFAULT": "Keine Kategorie",
@@ -300,6 +301,14 @@
       "CREATE": "Erstellen",
       "NEW_TASK": "Neue Aufgabe",
       "NEW_PROCESS": "Neuer Prozess"
+    }
+  },
+  "APP": {
+    "DIALOG": {
+      "START": "Start",
+      "TITLE": "Prozess auswählen",
+      "LIST": "Prozessliste",
+      "ERROR": "Bei der Verbindung zu Process Services ist ein Fehler aufgetreten"
     }
   }
 }
