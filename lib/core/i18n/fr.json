@@ -7,20 +7,33 @@
       "IMAGE_NOT_AVAILABLE": "Aperçu non disponible"
     },
     "FIELD": {
+      "LOCALSTORAGE": "Stockage local",
+      "SOURCE": "Sélectionner la source dans ",
       "UPLOAD": "Importer",
       "REQUIRED": "*Obligatoire",
       "VALIDATOR": {
         "INVALID_NUMBER": "Utiliser un format de numéro différent",
         "INVALID_DATE": "Utiliser un format de date différent",
-        "INVALID_VALUE": "Entrer une valeur différente",
+        "INVALID_VALUE": "Saisir une valeur différente",
         "NOT_GREATER_THAN": "Ne peut pas être supérieur à {{ maxValue }}",
         "NOT_LESS_THAN": "Ne peut pas être inférieur à {{ minValue }}",
-        "AT_LEAST_LONG": "Entrez {{ minLength }} caractères minimum",
-        "NO_LONGER_THAN": "Entrez {{ maxLength }} caractères maximum"
+        "AT_LEAST_LONG": "Saisir {{ minLength }} caractères minimum",
+        "NO_LONGER_THAN": "Saisir {{ maxLength }} caractères maximum"
       }
     }
   },
   "CORE": {
+    "FILE_SIZE": {
+      "BYTES": "Octets",
+      "KB": "Ko",
+      "MB": "Mo",
+      "GB": "Go",
+      "TB": "To",
+      "PB": "Po",
+      "EB": "Eo",
+      "ZB": "Zo",
+      "YB": "Yo"
+    },
     "PAGINATION": {
       "ITEMS_RANGE": "Affichage de {{ range }} sur {{ total }}",
       "ITEMS_PER_PAGE": "Éléments par page",
@@ -92,6 +105,27 @@
       "BACK": "Retour",
       "APPLY": "Appliquer",
       "NOT_VALID": "Adresse http(s)://host|ip:port(/path) non reconnue, essayez une autre URL."
+    },
+    "CARDVIEW": {
+      "VALIDATORS": {
+        "FLOAT_VALIDATION_ERROR": "Utiliser un format de numéro",
+        "INT_VALIDATION_ERROR": "Utiliser un format d'entier"
+      }
+    },
+    "METADATA": {
+      "BASIC": {
+        "HEADER": "Propriétés",
+        "NAME": "Nom",
+        "TITLE": "Titre",
+        "DESCRIPTION": "Description",
+        "AUTHOR": "Auteur",
+        "MIMETYPE": "Type MIME",
+        "SIZE": "Taille",
+        "CREATOR": "Créateur",
+        "CREATED_DATE": "Date de création",
+        "MODIFIER": "Modificateur",
+        "MODIFIED_DATE": "Date de Modification"
+      }
     }
   },
   "LOGIN": {
@@ -167,6 +201,12 @@
       "OF": "sur"
     },
     "LOADING": "Chargement en cours",
-    "UNKNOWN_FORMAT": "Impossible de charger l'aperçu"
+    "UNKNOWN_FORMAT": "Impossible de charger l'aperçu",
+    "SIDEBAR": {
+      "METADATA": {
+        "MORE_INFORMATION": "Plus d'informations",
+        "LESS_INFORMATION": "Moins d'informations"
+      }
+    }
   }
 }

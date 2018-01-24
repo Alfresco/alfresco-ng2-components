@@ -41,7 +41,8 @@
     "CHOOSE": "选择",
     "COPY": "复制",
     "MOVE": "移动",
-    "NO_RESULTS": "未找到结果"
+    "NO_RESULTS": "未找到结果",
+    "SELECT_LOCATION": "选择位置"
   },
   "OPERATION": {
     "SUCCES": {
@@ -163,5 +164,20 @@
   },
   "PERMISSON": {
     "LACKOF": "您没有 {{action}} {{type}} 的 {{permission}} 权限"
+  },
+  "METADATA": {
+    "BASIC": {
+      "HEADER": "属性",
+      "NAME": "名称",
+      "TITLE": "标题",
+      "DESCRIPTION": "说明",
+      "AUTHOR": "作者",
+      "MIMETYPE": "MIME 类型",
+      "SIZE": "字号(&S)",
+      "CREATOR": "创建者",
+      "CREATED_DATE": "创建日期",
+      "MODIFIER": "修改者",
+      "MODIFIED_DATE": "修改日期"
+    }
   }
 }

@@ -176,8 +176,9 @@
     "PROPERTIES": {
       "PROCESS_NAME": "Proces",
       "NAME": "Naam",
+      "THUMBNAIL": "Miniatuur",
       "STATUS": "Status",
-      "END_DATE": "Vervaldatum",
+      "END_DATE": "Einddatum",
       "END_DATE_DEFAULT": "Geen vervaldatum",
       "CATEGORY": "Categorie",
       "CATEGORY_DEFAULT": "Geen categorie",
@@ -300,6 +301,14 @@
       "CREATE": "Maken",
       "NEW_TASK": "Nieuwe taak",
       "NEW_PROCESS": "Nieuw proces"
+    }
+  },
+  "APP": {
+    "DIALOG": {
+      "START": "Start",
+      "TITLE": "Proces selecteren",
+      "LIST": "Proceslijst",
+      "ERROR": "Er is een probleem opgetreden bij het verbinden met Process Services"
     }
   }
 }

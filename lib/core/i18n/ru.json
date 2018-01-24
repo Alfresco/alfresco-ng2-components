@@ -7,30 +7,32 @@
       "IMAGE_NOT_AVAILABLE": "Предварительный просмотр недоступен"
     },
     "FIELD": {
+      "LOCALSTORAGE": "Локальное хранение",
+      "SOURCE": "Выберите источник из ",
       "UPLOAD": "Загрузить",
-      "REQUIRED": "*Обязательно для заполнения",
+      "REQUIRED": "*Обязательное поле",
       "VALIDATOR": {
         "INVALID_NUMBER": "Используйте другой формат числа",
         "INVALID_DATE": "Используйте другой формат даты",
         "INVALID_VALUE": "Введите другое значение",
-        "NOT_GREATER_THAN": "Не может быть более {{ maxValue }}",
-        "NOT_LESS_THAN": "Не может быть менее {{ minValue }}",
-        "AT_LEAST_LONG": "Введите не менее {{ minLength }} символ",
-        "NO_LONGER_THAN": "Введите не более {{ maxLength }} символ"
+        "NOT_GREATER_THAN": "Не может превышать {{ maxValue }}",
+        "NOT_LESS_THAN": "Не может быть меньше {{ minValue }}",
+        "AT_LEAST_LONG": "Введите не менее {{ minLength }} символов",
+        "NO_LONGER_THAN": "Введите не более {{ maxLength }} символов"
       }
     }
   },
   "CORE": {
     "FILE_SIZE": {
-      "BYTES": "Б",
-      "KB": "кБ",
+      "BYTES": "б",
+      "KB": "КБ",
       "MB": "МБ",
       "GB": "ГБ",
       "TB": "ТБ",
       "PB": "ПБ",
       "EB": "ЭБ",
       "ZB": "ЗБ",
-      "YB": "ЙБ"
+      "YB": "ИБ"
     },
     "PAGINATION": {
       "ITEMS_RANGE": "Отображается {{ range }} из {{ total }}",
@@ -103,6 +105,27 @@
       "BACK": "Назад",
       "APPLY": "Применить",
       "NOT_VALID": "http(s)://host|ip:port(/path) не распознан, используйте другой URL-адрес."
+    },
+    "CARDVIEW": {
+      "VALIDATORS": {
+        "FLOAT_VALIDATION_ERROR": "Использовать формат числа",
+        "INT_VALIDATION_ERROR": "Использовать формат целого числа"
+      }
+    },
+    "METADATA": {
+      "BASIC": {
+        "HEADER": "Свойства",
+        "NAME": "Имя",
+        "TITLE": "Заголовок",
+        "DESCRIPTION": "Описание",
+        "AUTHOR": "Автор",
+        "MIMETYPE": "Тип MIME",
+        "SIZE": "Размер",
+        "CREATOR": "Создатель",
+        "CREATED_DATE": "Дата создания",
+        "MODIFIER": "Редактор",
+        "MODIFIED_DATE": "Дата изменения"
+      }
     }
   },
   "LOGIN": {
@@ -178,6 +201,12 @@
       "OF": "из"
     },
     "LOADING": "Загружается",
-    "UNKNOWN_FORMAT": "Не удалось загрузить предварительный просмотр"
+    "UNKNOWN_FORMAT": "Не удалось загрузить предварительный просмотр",
+    "SIDEBAR": {
+      "METADATA": {
+        "MORE_INFORMATION": "Дополнительные сведения",
+        "LESS_INFORMATION": "Краткие сведения"
+      }
+    }
   }
 }

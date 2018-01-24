@@ -2,11 +2,11 @@
     "title": "Welcome",
     "VERSION": {
       "NO_PERMISSION": "You don't have permission to manage versions of this content",
-      "NO_PERMISSION_EVENT": "You don't have {{permission}} permission to {{action}} the {{type}}",
+      "NO_PERMISSION_EVENT": "You don't have ${event.permission} permission to ${event.action} the ${event.type}",
       "CHOOSE_FILE": "Select a file to see its versions",
       "DIALOG": {
         "CLOSE": "Close",
-        "TITLE": "Manage versions"
+        "TITLE": "Manage Versions"
       }
     },
     "APP_LAYOUT": {
@@ -25,12 +25,7 @@
         "SOCIAL": "Social",
         "SETTINGS": "Settings",
         "OVERLAY_VIEWER": "Overlay Viewer",
-        "ABOUT": "About",
-        "SEARCH": "Extended Search",
-        "EXTENDED_SEARCH_QUERY_BODY": "Extended Search with Query Body",
-        "WORD_TO_SEARCH":"Search Word",
-        "SEARCH_CREATED_BY" : "Created By",
-        "SEARCH_SERVICE_APPROACH": "Check this to disable the input property and use the service approach"
+        "ABOUT": "About"
     },
     "DOCUMENT_LIST": {
         "MULTISELECT_CHECKBOXES" :"Multiselect (with checkboxes)",

@@ -41,7 +41,8 @@
     "CHOOSE": "Kiezen",
     "COPY": "Kopiëren",
     "MOVE": "Verplaatsen",
-    "NO_RESULTS": "Geen resultaten gevonden"
+    "NO_RESULTS": "Geen resultaten gevonden",
+    "SELECT_LOCATION": "Locatie selecteren"
   },
   "OPERATION": {
     "SUCCES": {
@@ -163,5 +164,20 @@
   },
   "PERMISSON": {
     "LACKOF": "U hebt geen {{permission}} rechten voor het {{action}} van {{type}}"
+  },
+  "METADATA": {
+    "BASIC": {
+      "HEADER": "Eigenschappen",
+      "NAME": "Naam",
+      "TITLE": "Titel",
+      "DESCRIPTION": "Beschrijving",
+      "AUTHOR": "Auteur",
+      "MIMETYPE": "Mimetype",
+      "SIZE": "Grootte",
+      "CREATOR": "Maker",
+      "CREATED_DATE": "Datum gemaakt",
+      "MODIFIER": "Gewijzigd door",
+      "MODIFIED_DATE": "Datum gewijzigd"
+    }
   }
 }

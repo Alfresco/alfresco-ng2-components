@@ -41,7 +41,8 @@
     "CHOOSE": "選択",
     "COPY": "コピー",
     "MOVE": "移動",
-    "NO_RESULTS": "一致するアイテムはありません"
+    "NO_RESULTS": "一致するアイテムはありません",
+    "SELECT_LOCATION": "場所の選択"
   },
   "OPERATION": {
     "SUCCES": {
@@ -163,5 +164,20 @@
   },
   "PERMISSON": {
     "LACKOF": "{{type}} を {{action}} するための {{permission}} 権限がありません"
+  },
+  "METADATA": {
+    "BASIC": {
+      "HEADER": "プロパティ",
+      "NAME": "名前",
+      "TITLE": "タイトル",
+      "DESCRIPTION": "説明",
+      "AUTHOR": "作成者",
+      "MIMETYPE": "MIME タイプ",
+      "SIZE": "サイズ",
+      "CREATOR": "作成者",
+      "CREATED_DATE": "作成日",
+      "MODIFIER": "変更者",
+      "MODIFIED_DATE": "変更日"
+    }
   }
 }

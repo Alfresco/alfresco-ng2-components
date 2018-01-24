@@ -7,8 +7,10 @@
       "IMAGE_NOT_AVAILABLE": "Vista previa no disponible"
     },
     "FIELD": {
+      "LOCALSTORAGE": "Almacenamiento local",
+      "SOURCE": "Seleccionar origen de ",
       "UPLOAD": "Cargar",
-      "REQUIRED": "*Requerido",
+      "REQUIRED": "*Obligatorio",
       "VALIDATOR": {
         "INVALID_NUMBER": "Utilizar un formato de número diferente",
         "INVALID_DATE": "Utilizar un formato de fecha diferente",
@@ -21,6 +23,17 @@
     }
   },
   "CORE": {
+    "FILE_SIZE": {
+      "BYTES": "bytes",
+      "KB": "KB",
+      "MB": "MB",
+      "GB": "GB",
+      "TB": "TB",
+      "PB": "PB",
+      "EB": "EB",
+      "ZB": "ZB",
+      "YB": "YB"
+    },
     "PAGINATION": {
       "ITEMS_RANGE": "Mostrando {{ range }} de {{ total }}",
       "ITEMS_PER_PAGE": "Elementos por página",
@@ -92,6 +105,27 @@
       "BACK": "Volver",
       "APPLY": "Aplicar",
       "NOT_VALID": "http(s)://host|ip:port(/path) no reconocido; pruebe con una URL diferente."
+    },
+    "CARDVIEW": {
+      "VALIDATORS": {
+        "FLOAT_VALIDATION_ERROR": "Utilizar un formato de número",
+        "INT_VALIDATION_ERROR": "Utilizar un formato de entero"
+      }
+    },
+    "METADATA": {
+      "BASIC": {
+        "HEADER": "Propiedades",
+        "NAME": "Nombre",
+        "TITLE": "Título",
+        "DESCRIPTION": "Descripción",
+        "AUTHOR": "Autor",
+        "MIMETYPE": "Tipo MIME",
+        "SIZE": "Tamaño",
+        "CREATOR": "Creador",
+        "CREATED_DATE": "Fecha de creación",
+        "MODIFIER": "Modificador",
+        "MODIFIED_DATE": "Fecha de modificación"
+      }
     }
   },
   "LOGIN": {
@@ -110,7 +144,7 @@
       "LOGIN-ERROR-PROVIDERS": "Los proveedores no pueden estar no definidos",
       "LOGIN-ERROR-CORS": "Excepción CORS, compruebe la configuración del servidor",
       "LOGIN-ERROR-CSRF": "Excepción CSRF, configure [disableCsrf]=\"true\" en login.component",
-      "LOGIN-ECM-LICENSE": "El respositorio de Alfresco Content Services está en modo solo lectura"
+      "LOGIN-ECM-LICENSE": "El repositorio de Alfresco Content Services está en modo solo lectura"
     },
     "BUTTON": {
       "LOGIN": "Iniciar sesión",
@@ -167,6 +201,12 @@
       "OF": "de"
     },
     "LOADING": "Cargando",
-    "UNKNOWN_FORMAT": "No se ha podido cargar la vista previa"
+    "UNKNOWN_FORMAT": "No se ha podido cargar la vista previa",
+    "SIDEBAR": {
+      "METADATA": {
+        "MORE_INFORMATION": "Más información",
+        "LESS_INFORMATION": "Menos información"
+      }
+    }
   }
 }
