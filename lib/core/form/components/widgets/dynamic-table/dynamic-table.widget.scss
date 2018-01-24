@@ -19,6 +19,11 @@
     $dynamic-table-cell-top: $dynamic-table-card-padding / 2;
     $dynamic-table-drag-border: 1px dashed rgb(68, 138, 255);
 
+    dynamic-table-widget .adf-label {
+        width: auto;
+        height: auto;
+    }
+
     .adf {
 
         &-dynamic-table {
