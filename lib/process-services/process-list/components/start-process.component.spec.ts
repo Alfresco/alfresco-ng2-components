@@ -446,7 +446,7 @@ describe('StartFormComponent', () => {
 
         it('should emit start event when start select a process and add a name', async(() => {
             let startSpy: jasmine.Spy = spyOn(component.start, 'emit');
-            component.selectedProcessDef.id = '1001';
+            component.selectedProcessDef = testProcessDefRepr;
             component.name = 'my:Process';
             component.startProcess();
             fixture.detectChanges();
