@@ -248,6 +248,54 @@
                 }
             }
         },
+        "adf-task-list": {
+            "description": "Task list component configuration",
+            "type": "object",
+            "properties": {
+                "presets": {
+                    "description": "Presets for task list component",
+                    "type": "object",
+                    "patternProperties": {
+                        ".*": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "key": { "type": "string" },
+                                    "type": { "type": "string" },
+                                    "title": { "type": "string" },
+                                    "sortable": { "type": "boolean" }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "adf-process-list": {
+            "description": "Process list component configuration",
+            "type": "object",
+            "properties": {
+                "presets": {
+                    "description": "Presets for process list component",
+                    "type": "object",
+                    "patternProperties": {
+                        ".*": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "key": { "type": "string" },
+                                    "type": { "type": "string" },
+                                    "title": { "type": "string" },
+                                    "sortable": { "type": "boolean" }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "content-metadata": {
             "description": "Content metadata component's configuration",
             "type": "object",
