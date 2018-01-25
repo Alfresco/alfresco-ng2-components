@@ -444,14 +444,18 @@ describe('StartFormComponent', () => {
             });
         }));
 
-        it('should emit start event when start select a process and add a name', () => {
+        it('should emit start event when start select a process and add a name', async(() => {
             let startSpy: jasmine.Spy = spyOn(component.start, 'emit');
             component.selectedProcessDef.id = '1001';
             component.name = 'my:Process';
             component.startProcess();
             fixture.detectChanges();
-            expect(startSpy).toHaveBeenCalled();
-        });
+            fixture.whenStable().then(() => {
+                let startButton = fixture.nativeElement.querySelector('#button-start');
+                startButton.click();
+                expect(startSpy).toHaveBeenCalled();
+            });
+        }));
 
         it('should not emit start event when start the process without select a process and name', () => {
             component.name = null;
