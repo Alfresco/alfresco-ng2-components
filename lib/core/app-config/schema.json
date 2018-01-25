@@ -2,9 +2,11 @@
     "$schema": "http://json-schema.org/schema",
     "id": "https://github.com/Alfresco/alfresco-ng2-components/tree/master/lib/core/app-config/schema.json",
     "title": "ADF Application config",
+    "description": "Configuration object for ADF components used by your application",
 
     "definitions": {
         "language": {
+            "description": "Language definition",
             "type": "object",
             "properties": {
                 "key": { "type": "string" },
@@ -12,6 +14,7 @@
             }
         },
         "document-list-thumbnail": {
+            "description": "Document list's thumbnail image column definition",
             "type": "object",
             "required": [ "key", "type", "srTitle", "sortable" ],
             "properties": {
@@ -22,6 +25,7 @@
             }
         },
         "document-list-general-text": {
+            "description": "Document list's column definition",
             "type": "object",
             "required": [ "key", "type", "title", "sortable" ],
             "properties": {
@@ -32,6 +36,7 @@
             }
         },
         "document-list-path": {
+            "description": "Document list's path column definition",
             "type": "object",
             "required": [ "key", "type", "title", "format", "sortable" ],
             "properties": {
@@ -43,6 +48,7 @@
             }
         },
         "document-list-filesize": {
+            "description": "Document list's path column definition",
             "type": "object",
             "required": [ "key", "type", "title", "sortable" ],
             "properties": {
@@ -53,6 +59,7 @@
             }
         },
         "document-list-archivedAt": {
+            "description": "Document list's archivedAt column definition",
             "type": "object",
             "required": [ "key", "type", "title", "format", "sortable" ],
             "properties": {
@@ -64,6 +71,7 @@
             }
         },
         "document-list-archivedBy": {
+            "description": "Document list's archivedBy column definition",
             "type": "object",
             "required": [ "key", "type", "title", "sortable" ],
             "properties": {
@@ -74,12 +82,24 @@
             }
         },
         "content-metadata-aspect": {
+            "description": "Content metadata's aspect definition",
             "type": "object",
             "patternProperties": {
                 ".*": {
                     "oneOf": [
-                        { "type": "string", "pattern": "^\\*$"},
-                        { "type": "array", "items": { "type": "string" } }
+                        {
+                            "description": "Wildcard for every property",
+                            "type": "string",
+                            "pattern": "^\\*$"
+                        },
+                        {
+                            "description": "Properties array",
+                            "type": "array",
+                            "items": {
+                                "description": "Property name",
+                                "type": "string"
+                                }
+                            }
                     ]
                 }
             }
@@ -88,38 +108,52 @@
 
     "type": "object",
     "properties": {
-        "ecmHost": { "type": "string" },
-        "bpmHost": { "type": "string" },
+        "ecmHost": {
+            "description": "ECM host",
+            "type": "string",
+            "format": "date-time"
+        },
+        "bpmHost": {
+            "description": "BPM host",
+            "type": "string"
+        },
         "application": {
+            "description": "Application's global configuration",
             "type": "object",
             "properties": {
-                "name": { "type": "string" }
+                "name": { "type": "string", "description": "Name of the application" }
             }
         },
         "languages": {
+            "description": "Supported languages",
             "type": "array",
             "items": { "$ref": "#/definitions/language" }
         },
         "pagination": {
+            "description": "Pagination configuration",
             "type": "object",
             "properties": {
-                "size": { "type": "number" },
+                "size": { "type": "number", "description": "Pagination's default page size" },
                 "supportedPageSizes": {
+                    "description": "Pagination's supported page sizes",
                     "type": "array",
                     "items": { "type": "number" }
                 }
             }
         },
         "files": {
+            "description": "Configuration of rules applied to file upload",
             "type": "object",
             "properties": {
                 "excluded": {
+                    "description": "File exclusions",
                     "type": "array",
                     "items": { "type": "string" }
                 }
             }
         },
         "logLevel": {
+            "description": "Application's logging level",
             "type": "string",
             "enum": [ "trace", "debug", "info", "warn", "error", "silent" ]
         },
@@ -127,15 +161,18 @@
             "type": "object"
         },
         "document-list": {
+            "description": "Document list configuration",
             "type": "object",
             "properties": {
                 "presets": {
+                    "description": "Presets for document list component",
                     "type": "object",
                     "propertyNames": {
                         "enum": [ "-trashcan-", "-sites-", "-mysites-", "-favorites-", "-recent-", "-sharedlinks-", "default" ]
                     },
                     "patternProperties": {
                         ".*": {
+                            "description": "Document list's columns",
                             "type": "array",
                             "items": {
                                 "oneOf": [
@@ -153,15 +190,17 @@
             }
         },
         "content-metadata": {
+            "description": "Content metadata component's configuration",
             "type": "object",
             "required": [ "presets" ],
             "properties": {
                 "presets": {
+                    "description": "Presets for content metadata component",
                     "type": "object",
                     "patternProperties": {
                         ".*": {
                             "oneOf": [
-                                { "type": "string", "pattern": "^\\*$"},
+                                { "type": "string", "pattern": "^\\*$", "description": "Wildcard for every aspect"},
                                 { "$ref": "#/definitions/content-metadata-aspect" }
                             ]
                         }
