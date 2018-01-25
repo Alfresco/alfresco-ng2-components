@@ -91,28 +91,21 @@ describe('TabsWidgetComponent', () => {
                 fixture = TestBed.createComponent(TabsWidgetComponent);
                 tabWidgetComponent = fixture.componentInstance;
                 element = fixture.nativeElement;
+
+                fakeTabVisible = new TabModel(new FormModel(fakeFormJson), {
+                    id: 'tab-id-visible',
+                    title: 'tab-title-visible'
+                });
+                fakeTabVisible.isVisible = true;
+                fakeTabInvisible = new TabModel(new FormModel(fakeFormJson), {
+                    id: 'tab-id-invisible',
+                    title: 'tab-title-invisible'
+                });
+                fakeTabInvisible.isVisible = false;
+                tabWidgetComponent.tabs.push(fakeTabVisible);
+                tabWidgetComponent.tabs.push(fakeTabInvisible);
             });
         }));
-
-        beforeEach(() => {
-            fakeTabVisible = new TabModel(new FormModel(fakeFormJson), {
-                id: 'tab-id-visible',
-                title: 'tab-title-visible'
-            });
-            fakeTabVisible.isVisible = true;
-            fakeTabInvisible = new TabModel(new FormModel(fakeFormJson), {
-                id: 'tab-id-invisible',
-                title: 'tab-title-invisible'
-            });
-            fakeTabInvisible.isVisible = false;
-            tabWidgetComponent.tabs.push(fakeTabVisible);
-            tabWidgetComponent.tabs.push(fakeTabInvisible);
-        });
-
-        afterEach(() => {
-            fixture.destroy();
-            TestBed.resetTestingModule();
-        });
 
         it('should show only visible tabs', () => {
             fixture.detectChanges();
