@@ -239,15 +239,15 @@ export class AuthenticationService {
     }
 
     getRedirectUrl(provider: string): string {
-        return  this.hasValidRedirection(provider) ? this.redirectUrl.url : null;
+        return this.hasValidRedirection(provider) ? this.redirectUrl.url : null;
     }
 
     private hasValidRedirection(provider: string): boolean {
-        return this.redirectUrl && this.redirectUrl.provider === provider || this.hasSelectedProviderAll(provider);
+        return this.redirectUrl && (this.redirectUrl.provider === provider || this.hasSelectedProviderAll(provider));
     }
 
     private hasSelectedProviderAll(provider: string): boolean {
-        return this.redirectUrl && this.redirectUrl.provider === 'ALL' || provider === 'ALL';
+        return this.redirectUrl && (this.redirectUrl.provider === 'ALL' || provider === 'ALL');
     }
 
     /**
