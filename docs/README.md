@@ -129,6 +129,7 @@ for more information about installing and using the source code.
 | [Page title service](page-title.service.md) | Sets the page title. | [Source](../lib/core/services/page-title.service.ts) |
 | [People content service](people-content.service.md) | Gets information about a Content Services user. | [Source](../lib/core/services/people-content.service.ts) |
 | [People process service](people-process.service.md) | Gets information about Process Services users. | [Source](../lib/core/services/people-process.service.ts) |
+| [Renditions service](renditions.service.md) | Manages prearranged conversions of content to different formats. | [Source](../lib/core/services/renditions.service.ts) |
 | [Search configuration service](search-configuration.service.md) | Provides fine control of parameters to a search. | [Source](../lib/core/services/search-configuration.service.ts) |
 | [Shared links api service](shared-links-api.service.md) | Finds shared links to Content Services items. | [Source](../lib/core/services/shared-links-api.service.ts) |
 | [Sites service](sites.service.md) | Accesses and manipulates sites from a Content Services repository. | [Source](../lib/core/services/sites.service.ts) |
@@ -139,7 +140,6 @@ for more information about installing and using the source code.
 | [User preferences service](user-preferences.service.md) | Stores preferences for components. | [Source](../lib/core/services/user-preferences.service.ts) |
 | [Bpm user service](bpm-user.service.md) | Gets information about the current Process Services user. | [Source](../lib/core/userinfo/services/bpm-user.service.ts) |
 | [Ecm user service](ecm-user.service.md) | Gets information about a Content Services user. | [Source](../lib/core/userinfo/services/ecm-user.service.ts) |
-| _Renditions service_ | _Not currently documented_ | [Source](../lib/core/services/renditions.service.ts) |
 
 ## Widgets
 
