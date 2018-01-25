@@ -50,7 +50,7 @@ export class StartProcessInstanceComponent implements OnChanges {
     appId: number;
 
     @Input()
-    processDefinition: string;
+    processDefinitionName: string;
 
     @Input()
     variables: ProcessInstanceVariable[];
@@ -106,22 +106,22 @@ export class StartProcessInstanceComponent implements OnChanges {
             (processDefinitionRepresentations: ProcessDefinitionRepresentation[]) => {
                 this.processDefinitions = processDefinitionRepresentations;
 
-                if (this.processDefinitions.length === 1 || !this.processDefinition) {
+                if (this.hasSingleProcessDefinition()) {
                     this.selectedProcessDef = this.processDefinitions[0];
                 } else {
                     this.selectedProcessDef = this.processDefinitions.find((currentProcessDefinition) => {
-                        return currentProcessDefinition.name === this.processDefinition;
+                        return currentProcessDefinition.name === this.processDefinitionName;
                     });
-
-                    if (!this.selectedProcessDef) {
-                        this.selectedProcessDef = this.processDefinitions[0];
-                    }
                 }
             },
             () => {
                 this.errorMessageId = 'ADF_PROCESS_LIST.START_PROCESS.ERROR.LOAD_PROCESS_DEFS';
             });
 
+    }
+
+    hasSingleProcessDefinition(): boolean {
+        return this.processDefinitions.length === 1;
     }
 
     getAlfrescoRepositoryName(): string {

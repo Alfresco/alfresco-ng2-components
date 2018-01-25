@@ -12,7 +12,7 @@
         <div *ngIf="showSelectProcessDropdown">
             <mat-form-field>
                 <mat-select [(value)]="selectedProcessDef" placeholder="{{'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.TYPE'|translate}}" required>
-                    <mat-option>{{'ADF_PROCESS_LIST.START_PROCESS.FORM.TYPE_PLACEHOLDER' | translate}}</mat-option>
+                    <mat-option *ngIf="!hasSingleProcessDefinition()">{{'ADF_PROCESS_LIST.START_PROCESS.FORM.TYPE_PLACEHOLDER' | translate}}</mat-option>
                     <mat-option *ngFor="let processDef of processDefinitions" [value]="processDef">
                         {{ processDef.name }}
                     </mat-option>
