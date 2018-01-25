@@ -24,13 +24,35 @@
                 "sortable": { "type": "boolean" }
             }
         },
-        "document-list-general-text": {
-            "description": "Document list's column definition",
+        "document-list-name": {
+            "description": "Document list's name column definition",
             "type": "object",
             "required": [ "key", "type", "title", "sortable" ],
             "properties": {
-                "key": { "type": "string" },
-                "type": { "type": "string" },
+                "key": { "type": "string", "pattern": "^name$" },
+                "type": { "type": "string", "pattern": "^text$" },
+                "title": { "type": "string" },
+                "sortable": { "type": "boolean" }
+            }
+        },
+        "document-list-title": {
+            "description": "Document list's title column definition",
+            "type": "object",
+            "required": [ "key", "type", "title", "sortable" ],
+            "properties": {
+                "key": { "type": "string", "pattern": "^title$" },
+                "type": { "type": "string", "pattern": "^text$" },
+                "title": { "type": "string" },
+                "sortable": { "type": "boolean" }
+            }
+        },
+        "document-list-visibility": {
+            "description": "Document list's visibility column definition",
+            "type": "object",
+            "required": [ "key", "type", "title", "sortable" ],
+            "properties": {
+                "key": { "type": "string", "pattern": "^visibility$" },
+                "type": { "type": "string", "pattern": "^text$" },
                 "title": { "type": "string" },
                 "sortable": { "type": "boolean" }
             }
@@ -44,6 +66,39 @@
                 "type": { "type": "string", "pattern": "^location$" },
                 "title": { "type": "string" },
                 "format": { "type": "string" },
+                "sortable": { "type": "boolean" }
+            }
+        },
+        "document-list-modifiedAt": {
+            "description": "Document list's modifiedAt column definition",
+            "type": "object",
+            "required": [ "key", "type", "title", "sortable" ],
+            "properties": {
+                "key": { "type": "string", "pattern": "^modifiedAt$" },
+                "type": { "type": "string", "pattern": "^date$" },
+                "title": { "type": "string" },
+                "sortable": { "type": "boolean" }
+            }
+        },
+        "document-list-modifiedByUser": {
+            "description": "Document list's modifiedByUser column definition",
+            "type": "object",
+            "required": [ "key", "type", "title", "sortable" ],
+            "properties": {
+                "key": { "type": "string", "pattern": "^modifiedByUser\\.displayName$" },
+                "type": { "type": "string", "pattern": "^text$" },
+                "title": { "type": "string" },
+                "sortable": { "type": "boolean" }
+            }
+        },
+        "document-list-sharedByUser": {
+            "description": "Document list's sharedByUser column definition",
+            "type": "object",
+            "required": [ "key", "type", "title", "sortable" ],
+            "properties": {
+                "key": { "type": "string", "pattern": "^sharedByUser\\.displayName$" },
+                "type": { "type": "string", "pattern": "^text$" },
+                "title": { "type": "string" },
                 "sortable": { "type": "boolean" }
             }
         },
@@ -110,8 +165,7 @@
     "properties": {
         "ecmHost": {
             "description": "ECM host",
-            "type": "string",
-            "format": "date-time"
+            "type": "string"
         },
         "bpmHost": {
             "description": "BPM host",
@@ -177,8 +231,13 @@
                             "items": {
                                 "oneOf": [
                                     { "$ref": "#/definitions/document-list-thumbnail" },
-                                    { "$ref": "#/definitions/document-list-general-text" },
+                                    { "$ref": "#/definitions/document-list-name" },
+                                    { "$ref": "#/definitions/document-list-title" },
+                                    { "$ref": "#/definitions/document-list-visibility" },
                                     { "$ref": "#/definitions/document-list-path" },
+                                    { "$ref": "#/definitions/document-list-modifiedAt" },
+                                    { "$ref": "#/definitions/document-list-modifiedByUser" },
+                                    { "$ref": "#/definitions/document-list-sharedByUser" },
                                     { "$ref": "#/definitions/document-list-filesize" },
                                     { "$ref": "#/definitions/document-list-archivedAt" },
                                     { "$ref": "#/definitions/document-list-archivedBy" }
