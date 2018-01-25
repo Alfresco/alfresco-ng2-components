@@ -4,6 +4,7 @@
     $foreground: map-get($theme, foreground);
 
     $adf-sidebar-action-menu-button-height: 37.5px;
+    $adf-sidebar-action-menu-button-width: 202px;
     $adf-sidebar-action-menu-button-border-radius: 4px;
     $adf-sidebar-action-menu-opacity: 0.54;
     $adf-sidebar-action-menu-item-opacity: 0.87;
@@ -12,7 +13,7 @@
     .adf {
         &-sidebar-action-menu {
             & .mat-raised-button {
-                width: 100%;
+                width: $adf-sidebar-action-menu-button-width;
                 height: $adf-sidebar-action-menu-button-height;
                 font-weight: bold;
                 background-color: mat-color($primary);
@@ -56,6 +57,7 @@
             margin-top: 7.5px;
             border-radius: 2px;
             box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.26), 0 0 8px 0 rgba(0, 0, 0, 0.12);
+            min-width: $adf-sidebar-action-menu-button-width !important;
         }
     }
 }
