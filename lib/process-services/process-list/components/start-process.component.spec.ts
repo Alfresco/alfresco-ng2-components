@@ -274,7 +274,7 @@ describe('StartFormComponent', () => {
         it('should select processDefinition based on processDefinition input', async(() => {
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.of(testMultipleProcessDefs));
             component.appId = 123;
-            component.processDefinition = 'My Process 2';
+            component.processDefinitionName = 'My Process 2';
             component.ngOnChanges({});
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -289,16 +289,6 @@ describe('StartFormComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 expect(component.selectedProcessDef.name).toBe(JSON.parse(JSON.stringify(testProcessDefinitions[0])).name);
-            });
-        }));
-
-        it('should select automatically the first processDefinition if the app contain multiple process and there is no processDefinition in input', async(() => {
-            getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.of(testMultipleProcessDefs));
-            component.appId = 123;
-            component.ngOnChanges({});
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                expect(component.selectedProcessDef.name).toBe(JSON.parse(JSON.stringify(testMultipleProcessDefs[0])).name);
             });
         }));
 
@@ -319,7 +309,7 @@ describe('StartFormComponent', () => {
             it('should show the process dropdown if showSelectProcessDropdown is false', async(() => {
                 getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.of(testMultipleProcessDefs));
                 component.appId = 123;
-                component.processDefinition = 'My Process 2';
+                component.processDefinitionName = 'My Process 2';
                 component.showSelectProcessDropdown = true;
                 component.ngOnChanges({});
                 fixture.detectChanges();
@@ -332,7 +322,7 @@ describe('StartFormComponent', () => {
             it('should show the process dropdown by default', async(() => {
                 getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.of(testMultipleProcessDefs));
                 component.appId = 123;
-                component.processDefinition = 'My Process 2';
+                component.processDefinitionName = 'My Process 2';
                 component.ngOnChanges({});
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
