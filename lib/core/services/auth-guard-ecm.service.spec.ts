@@ -125,7 +125,7 @@ class TestConfig {
     }
 }
 
-describe('CanActivateLoggedIn', () => {
+describe('AuthGuardService ECM', () => {
     describe('user is not logged in', () => {
         beforeEach(async(() => {
             this.test = new TestConfig({
@@ -211,7 +211,7 @@ describe('CanActivateLoggedIn', () => {
         }));
 
         it('should set redirect url', () => {
-            expect(this.auth.setRedirectUrl).toHaveBeenCalledWith('some-url');
+            expect(this.auth.setRedirectUrl).toHaveBeenCalledWith({ provider: 'ECM', url: 'some-url' });
         });
     });
 

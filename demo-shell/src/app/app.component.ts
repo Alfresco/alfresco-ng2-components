@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { SettingsService, PageTitleService, StorageService, TranslationService } from '@alfresco/adf-core';
 
 @Component({
@@ -26,14 +26,12 @@ import { SettingsService, PageTitleService, StorageService, TranslationService }
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
-  searchTerm = '';
 
   constructor(private settingsService: SettingsService,
               private storage: StorageService,
               translationService: TranslationService,
               pageTitleService: PageTitleService,
-              route: ActivatedRoute,
-              router: Router) {
+              route: ActivatedRoute) {
     this.setProvider();
     pageTitleService.setTitle();
   }
