@@ -270,6 +270,12 @@ describe('AuthenticationService', () => {
 
             expect(authService.getRedirectUrl(preferences.authType)).toBeNull();
         });
+
+        it('[ECM] should return null as redirectUrl when redirectUrl field is not set', () => {
+            authService.setRedirectUrl( null );
+
+            expect(authService.getRedirectUrl(preferences.authType)).toBeNull();
+        });
     });
 
     describe('when the setting is BPM', () => {
@@ -391,6 +397,12 @@ describe('AuthenticationService', () => {
 
             expect(authService.getRedirectUrl(preferences.authType)).toBeNull();
         });
+
+        it('[BPM] should return null as redirectUrl when redirectUrl field is not set', () => {
+            authService.setRedirectUrl( null );
+
+            expect(authService.getRedirectUrl(preferences.authType)).toBeNull();
+        });
     });
 
     describe('when the setting is both ECM and BPM ', () => {
@@ -502,6 +514,12 @@ describe('AuthenticationService', () => {
             authService.setRedirectUrl({provider: 'ECM', url: 'some-url' } );
 
             expect(authService.getRedirectUrl(preferences.authType)).toBe('some-url');
+        });
+
+        it('[ALL] should return null as redirectUrl when redirectUrl field is not set', () => {
+            authService.setRedirectUrl( null );
+
+            expect(authService.getRedirectUrl(preferences.authType)).toBeNull();
         });
     });
 
