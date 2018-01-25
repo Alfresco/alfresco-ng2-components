@@ -341,6 +341,10 @@
             ]
         }
     },
+    "adf-start-process": {
+        "name": "My Default Name",
+        "processDefinitionName": "My default process def name"
+    },
     "adf-process-list": {
         "presets": {
             "default": [
