@@ -84,7 +84,7 @@ export class ContentActionComponent implements OnInit, OnChanges {
     success = new EventEmitter();
 
     model: ContentActionModel;
-    duplicateModel: ContentActionModel;
+    // duplicateModel: ContentActionModel;
 
     constructor(
         private list: ContentActionListComponent,
@@ -102,15 +102,13 @@ export class ContentActionComponent implements OnInit, OnChanges {
             target: this.target,
             disabled: this.disabled
         });
-        this.duplicateModel = null;
+
         if (this.handler) {
-            if(this.target === 'all') {
-                this.duplicateModel = Object.assign({}, this.model);
-                this.duplicateModel.handler = this.getSystemHandler('folder', this.handler);
-                this.duplicateModel.target = 'folder';
+            if (this.target === 'all') {
+                this.duplicateActionForFolder();
                 this.model.target = 'document';
-                this.model.handler =  this.getSystemHandler('document', this.handler);
-            }else {
+                this.model.handler = this.getSystemHandler('document', this.handler);
+            }else{
                 this.model.handler = this.getSystemHandler(this.target, this.handler);
             }
         }
@@ -126,9 +124,6 @@ export class ContentActionComponent implements OnInit, OnChanges {
 
     register(): boolean {
         if (this.list) {
-            if(this.target === 'all' ) {
-                this.list.registerAction(this.duplicateModel);
-            }
             return this.list.registerAction(this.model);
         }
         return false;
@@ -137,6 +132,13 @@ export class ContentActionComponent implements OnInit, OnChanges {
     ngOnChanges(changes) {
         // update localizable properties
         this.model.title = this.title;
+    }
+
+    private duplicateActionForFolder() {
+        let folderActionModel = Object.assign({}, this.model);
+        folderActionModel.handler = this.getSystemHandler('folder', this.handler);
+        folderActionModel.target = 'folder';
+        this.list.registerAction(folderActionModel);
     }
 
     getSystemHandler(target: string, name: string): ContentActionHandler {
