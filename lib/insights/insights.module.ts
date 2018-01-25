@@ -53,7 +53,6 @@ import { MaterialModule } from './material.module';
         FormsModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
-        MaterialModule,
         DiagramsModule,
         AnalyticsProcessModule
     ]
