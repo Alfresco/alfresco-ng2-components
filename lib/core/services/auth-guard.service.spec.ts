@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, inject, TestBed } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -24,6 +24,7 @@ import { CookieServiceMock } from './../mock/cookie.service.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { SettingsService } from './settings.service';
 import { AppConfigModule } from '../app-config/app-config.module';
+import { AppConfigService } from '../app-config/app-config.service';
 import { AuthGuard } from './auth-guard.service';
 import { AuthenticationService } from './authentication.service';
 import { CookieService } from './cookie.service';
@@ -34,6 +35,10 @@ import { UserPreferencesService } from './user-preferences.service';
 
 describe('AuthGuardService', () => {
     let state;
+    let authService: AuthenticationService;
+    let router: Router;
+    let service: AuthGuard;
+    let appConfigService: AppConfigService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -62,45 +67,50 @@ describe('AuthGuardService', () => {
 
     beforeEach(() => {
         state = { url: '' };
+        authService = TestBed.get(AuthenticationService);
+        router = TestBed.get(Router);
+        service = TestBed.get(AuthGuard);
+        appConfigService = TestBed.get(AppConfigService);
     });
 
-    it('if the alfresco js api is logged in should canActivate be true',
-        async(inject([AuthGuard, Router, SettingsService, StorageService, AuthenticationService], (auth, router, settingsService, storage, authService) => {
-            spyOn(router, 'navigate');
+    it('if the alfresco js api is logged in should canActivate be true', async(() => {
+        spyOn(router, 'navigate');
+        spyOn(authService, 'isLoggedIn').and.returnValue(true);
 
-            authService.isLoggedIn = () => {
-                return true;
-            };
+        expect(service.canActivate(null, state)).toBeTruthy();
+        expect(router.navigate).not.toHaveBeenCalled();
+    }));
 
-            expect(auth.canActivate(null, state)).toBeTruthy();
-            expect(router.navigate).not.toHaveBeenCalled();
-        }))
-    );
+    it('if the alfresco js api is NOT logged in should canActivate be false', async(() => {
+        spyOn(router, 'navigate');
+        spyOn(authService, 'isLoggedIn').and.returnValue(false);
 
-    it('if the alfresco js api is NOT logged in should canActivate be false',
-        async(inject([AuthGuard, Router, SettingsService, StorageService, AuthenticationService], (auth, router, settingsService, storage, authService) => {
+        expect(service.canActivate(null, state)).toBeFalsy();
+        expect(router.navigate).toHaveBeenCalled();
+    }));
 
-            spyOn(router, 'navigate');
+    it('should set redirect url', async(() => {
+        state.url = 'some-url';
 
-            authService.isLoggedIn = () => {
-                return false;
-            };
+        spyOn(router, 'navigate');
+        spyOn(authService, 'setRedirectUrl');
 
-            expect(auth.canActivate(null, state)).toBeFalsy();
-            expect(router.navigate).toHaveBeenCalled();
-        }))
-    );
+        service.canActivate(null, state);
 
-    it('should set redirect url',
-        async(inject([AuthGuard, Router, AuthenticationService], (auth, router, authService) => {
-            state.url = 'some-url';
+        expect(authService.setRedirectUrl).toHaveBeenCalledWith({ provider: 'ALL', url: 'some-url' });
+        expect(router.navigate).toHaveBeenCalledWith(['/login']);
+    }));
 
-            spyOn(router, 'navigate');
-            spyOn(authService, 'setRedirectUrl');
+    it('should get redirect url from config if there is one configured', async(() => {
+        state.url = 'some-url';
+        appConfigService.config.loginRoute = 'fakeLoginRoute';
 
-            auth.canActivate(null , state);
+        spyOn(router, 'navigate');
+        spyOn(authService, 'setRedirectUrl');
 
-            expect(authService.setRedirectUrl).toHaveBeenCalledWith(state.url);
-        }))
-    );
+        service.canActivate(null, state);
+
+        expect(authService.setRedirectUrl).toHaveBeenCalledWith({ provider: 'ALL', url: 'some-url' });
+        expect(router.navigate).toHaveBeenCalledWith(['/fakeLoginRoute']);
+    }));
 });

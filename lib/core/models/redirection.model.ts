@@ -15,10 +15,19 @@
  * limitations under the License.
  */
 
-export * from './file.model';
-export * from './permissions.enum';
-export * from './product-version.model';
-export * from './user-process.model';
-export * from './comment-process.model';
-export * from './ecm-company.model';
-export * from './redirection.model';
+/**
+ * This object represent the user redirection guard.*
+ */
+
+export class RedirectionModel {
+    provider: string;
+    url?: string;
+
+    constructor(obj?: any) {
+        if (obj) {
+            this.provider = obj.provider;
+            this.url = obj.url || null;
+        }
+    }
+
+}

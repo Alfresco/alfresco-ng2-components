@@ -213,7 +213,7 @@ export class LoginComponent implements OnInit {
         this.authService.login(values.username, values.password, this.rememberMe)
             .subscribe(
                 (token: any) => {
-                    const redirectUrl = this.authService.getRedirectUrl();
+                    const redirectUrl = this.authService.getRedirectUrl(this.providers);
 
                     this.actualLoginStep = LoginSteps.Welcome;
                     this.userPreferences.setStoragePrefix(values.username);

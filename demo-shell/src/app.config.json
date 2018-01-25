@@ -2,7 +2,7 @@
     "ecmHost": "http://{hostname}:{port}",
     "bpmHost": "http://{hostname}:{port}",
     "application": {
-        "name": "Alfresco ADF Appplication"
+        "name": "Alfresco ADF Application"
     },
     "languages": [
         {
