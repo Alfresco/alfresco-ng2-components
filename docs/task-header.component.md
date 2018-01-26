@@ -16,7 +16,7 @@ Shows all the information related to a task.
 
 | Name | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
-| taskDetails | [TaskDetailsModel](#taskdetailsmodel) |  | (**required**) The task details related to the task. |
+| taskDetails | [TaskDetailsModel](task-details.model.md) |  | (**required**) Details related to the task. |
 | formName | string |  | The name of the form. |
 
 ### Events
@@ -29,3 +29,7 @@ Shows all the information related to a task.
 ## Details
 
 The purpose of the component is to populate the local variable called `properties` (array of CardViewModel), with all the information that we want to display.
+
+## See also
+
+-   [Task Details model](task-details.model.md)

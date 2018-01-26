@@ -1,4 +1,8 @@
-# TaskDetailsModel
+# Task Details model
+
+Information about a task.
+
+## Details
 
 ```json
 { 
@@ -9,3 +13,7 @@
     "description": "string"
 }
 ```
+
+## See Also
+
+-   [Task header component](task-header.component.md)

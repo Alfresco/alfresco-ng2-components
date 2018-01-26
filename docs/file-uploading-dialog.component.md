@@ -18,7 +18,7 @@ Shows a dialog listing all the files uploaded with the Upload Button or Drag Are
 
 This component should be used in combination with the
 [Upload Button component](upload-button.component.md) or the
-[Drag Area component](drag-area.component.md).
+[Upload Drag Area component](upload-drag-area.component.md).
 
 ## See also
 
