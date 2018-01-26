@@ -21,6 +21,7 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ContentService } from '../../services/content.service';
 import { SettingsService } from '../../services/settings.service';
+import { MaterialModule } from '../../material.module';
 
 import { ImgViewerComponent } from './imgViewer.component';
 
@@ -38,7 +39,9 @@ describe('Test Img viewer component ', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-
+            imports: [
+                MaterialModule
+            ],
             declarations: [ImgViewerComponent],
             providers: [
                 SettingsService,
