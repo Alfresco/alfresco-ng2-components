@@ -33,4 +33,4 @@ export class AppComponent {
 
 ## Details
 
-The authentication service is used inside the [login component](../ng2-components/ng2-alfresco-login/README.md) and is possible to find there an example of how to use it.
+The authentication service is used inside the [login component](login.component.md) and is possible to find there an example of how to use it.
