@@ -359,7 +359,7 @@ describe('DynamicTableWidgetComponent', () => {
 
             expect(element.querySelector('#dynamic-table-fake-dynamic-table')).not.toBeNull();
             expect(rowElement).not.toBeNull();
-            expect(rowElement.className).toBeFalsy();
+            expect(rowElement.className).not.toContain('adf-dynamic-table-widget__row-selected');
 
             let event: any = new Event('keyup');
             event.keyCode = 32;
@@ -368,7 +368,7 @@ describe('DynamicTableWidgetComponent', () => {
 
             fixture.whenStable().then(() => {
                 let selectedRow = element.querySelector('#fake-dynamic-table-row-0');
-                expect(selectedRow.className).toBe('adf-dynamic-table-widget__row-selected');
+                expect(selectedRow.className).toContain('adf-dynamic-table-widget__row-selected');
             });
         }));
 

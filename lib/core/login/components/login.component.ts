@@ -55,45 +55,61 @@ export class LoginComponent implements OnInit {
 
     isPasswordShow: boolean = false;
 
+    /* Should the `Remember me` checkbox be shown? */
     @Input()
     showRememberMe: boolean = true;
 
+    /* Should the extra actions (`Need Help`, `Register`, etc) be shown? */
     @Input()
     showLoginActions: boolean = true;
 
+    /* Sets the URL of the NEED HELP link in the footer */
     @Input()
     needHelpLink: string = '';
 
+    /* Sets the URL of the REGISTER link in the footer */
     @Input()
     registerLink: string = '';
 
+    /* Path to a custom logo image */
     @Input()
     logoImageUrl: string = './assets/images/alfresco-logo.svg';
 
+    /* Path to a custom background image */
     @Input()
     backgroundImageUrl: string = './assets/images/background.svg';
 
+    /* The copyright text below the login box */
     @Input()
     copyrightText: string = '\u00A9 2016 Alfresco Software, Inc. All Rights Reserved.';
 
+    /* Possible valid values are ECM, BPM or ALL. By default, this component
+     * will log in only to ECM. If you want to log in in both systems then use ALL.
+     */
     @Input()
     providers: string;
 
+    /* Custom validation rules for the login form */
     @Input()
     fieldsValidation: any;
 
+    /* Prevents the CSRF Token from being submitted. Only valid for Alfresco Process Services. */
     @Input()
     disableCsrf: boolean;
 
+    /* Route to redirect to on successful login. */
     @Input()
     successRoute: string = null;
 
+    /* Emitted when the login is successful */
     @Output()
     success = new EventEmitter<LoginSuccessEvent>();
 
+    /* Emitted when the login fails */
     @Output()
     error = new EventEmitter<LoginErrorEvent>();
 
+    /* Emitted when the login form is submitted */
     @Output()
     executeSubmit = new EventEmitter<LoginSubmitEvent>();
 
@@ -197,7 +213,7 @@ export class LoginComponent implements OnInit {
         this.authService.login(values.username, values.password, this.rememberMe)
             .subscribe(
                 (token: any) => {
-                    const redirectUrl = this.authService.getRedirectUrl();
+                    const redirectUrl = this.authService.getRedirectUrl(this.providers);
 
                     this.actualLoginStep = LoginSteps.Welcome;
                     this.userPreferences.setStoragePrefix(values.username);

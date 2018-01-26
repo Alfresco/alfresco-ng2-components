@@ -1,12 +1,16 @@
 language: node_js
 dist: trusty
-sudo: false
+sudo: required
 node_js:
   - "8"
 
+addons:
+    chrome: stable
+
 before_install:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
+    - export CHROME_BIN=chromium-browser
+    - export DISPLAY=:99.0
+    - sh -e /etc/init.d/xvfb start
 
 env:
   matrix:
@@ -15,6 +19,7 @@ env:
     - MODULE=process-services
     - MODULE=content-services
     - MODULE=demo-shell
+    - MODULE=packaging
 
 install:
     - if ([ "$MODULE" != "demo-shell" ]); then
@@ -27,7 +32,7 @@ install:
 
 script:
     - if ([ "$MODULE" == "core" ]); then
-            (./scripts/npm-build-all.sh -si -sb -t "core*" || exit 1;);
+            (./scripts/npm-build-all.sh -si -sb -t "core" || exit 1;);
       fi
 
     - if ([ "$MODULE" == "process-services" ]); then
@@ -40,6 +45,10 @@ script:
 
     - if ([ "$MODULE" == "content-services" ]); then
             (./scripts/npm-build-all.sh -si -sb -t "content-services" || exit 1;);
+      fi
+
+    - if ([ "$MODULE" == "packaging" ]); then
+            (cd lib && npm run new-build || exit 1;);
       fi
 
     - if ([ "$MODULE" == "demo-shell" ]); then
@@ -80,7 +89,5 @@ after_success:
 
 cache:
   directories:
-  - ./node_modules/material-design-lite
-  - ./node_modules/material-design-icons
   - demo-shell/node_modules
   - lib/node_modules

@@ -21,15 +21,14 @@ import { Observable } from 'rxjs/Observable';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AuthenticationService } from './authentication.service';
 import 'rxjs/add/observable/throw';
+import { SearchConfigurationService } from './search-configuration.service';
 
-/**
- * Internal service used by Document List component.
- */
 @Injectable()
 export class SearchService {
 
     constructor(public authService: AuthenticationService,
-                private apiService: AlfrescoApiService) {
+                private apiService: AlfrescoApiService,
+                private searchConfigurationService: SearchConfigurationService) {
     }
 
     getNodeQueryResults(term: string, options?: SearchOptions): Observable<NodePaging> {
@@ -38,9 +37,17 @@ export class SearchService {
             .catch(err => this.handleError(err));
     }
 
-    search(query: QueryBody): Observable<NodePaging> {
-        const searchQuery = Object.assign(query);
+    search(searchTerm: string, maxResults: string, skipCount: string): Observable<NodePaging> {
+        const searchQuery = Object.assign(this.searchConfigurationService.generateQueryBody(searchTerm, maxResults, skipCount));
         const promise = this.apiService.getInstance().search.searchApi.search(searchQuery);
+
+        return Observable
+            .fromPromise(promise)
+            .catch(err => this.handleError(err));
+    }
+
+    searchByQueryBody(queryBody: QueryBody): Observable<NodePaging> {
+        const promise = this.apiService.getInstance().search.searchApi.search(queryBody);
 
         return Observable
             .fromPromise(promise)

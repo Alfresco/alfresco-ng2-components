@@ -31,9 +31,7 @@ describe('Diagrams boundary', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-                DiagramsModule
-            ]
+            imports: [DiagramsModule]
         }).compileComponents();
     }));
 

@@ -23,6 +23,8 @@ import { mockError, fakeProcessFilters } from '../../mock';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterService } from './process-filter.service';
 
+declare let jasmine: any;
+
 describe('Process filter', () => {
 
     let service: ProcessFilterService;
@@ -51,9 +53,11 @@ describe('Process filter', () => {
                 .and
                 .returnValue(Promise.resolve(fakeProcessFilters));
 
-            createFilter = spyOn(alfrescoApi.activiti.userFiltersApi, 'createUserProcessInstanceFilter')
-                .and
-                .callFake((filter: FilterProcessRepresentationModel) => Promise.resolve(filter));
+            jasmine.Ajax.install();
+        });
+
+        afterEach(() => {
+            jasmine.Ajax.uninstall();
         });
 
         describe('get filters', () => {
@@ -103,16 +107,41 @@ describe('Process filter', () => {
             }));
 
             it('should return the default filters', (done) => {
-                service.createDefaultFilters(1234).subscribe(
-                    (res: FilterProcessRepresentationModel []) => {
-                        expect(res).toBeDefined();
-                        expect(res.length).toEqual(3);
-                        expect(res[0].name).toEqual('Running');
-                        expect(res[1].name).toEqual('Completed');
-                        expect(res[2].name).toEqual('All');
-                        done();
-                    }
-                );
+                service.createDefaultFilters(1234).subscribe((res: FilterProcessRepresentationModel []) => {
+                    expect(res).toBeDefined();
+                    expect(res.length).toEqual(3);
+                    expect(res[0].name).toEqual('Running');
+                    expect(res[0].id).toEqual(111);
+                    expect(res[1].name).toEqual('Completed');
+                    expect(res[1].id).toEqual(222);
+                    expect(res[2].name).toEqual('All');
+                    expect(res[2].id).toEqual(333);
+                    done();
+                });
+
+                jasmine.Ajax.requests.at(0).respondWith({
+                    'status': 200,
+                    contentType: 'application/json',
+                    responseText: JSON.stringify({
+                        appId: 1001, id: '111', name: 'Running', icon: 'fake-icon', recent: false
+                    })
+                });
+
+                jasmine.Ajax.requests.at(1).respondWith({
+                    'status': 200,
+                    contentType: 'application/json',
+                    responseText: JSON.stringify({
+                        appId: 1001, id: '222', name: 'Completed', icon: 'fake-icon', recent: false
+                    })
+                });
+
+                jasmine.Ajax.requests.at(2).respondWith({
+                    'status': 200,
+                    contentType: 'application/json',
+                    responseText: JSON.stringify({
+                        appId: 1001, id: '333', name: 'All', icon: 'fake-icon', recent: false
+                    })
+                });
             });
 
             it('should pass on any error that is returned by the API', async(() => {
@@ -129,6 +158,12 @@ describe('Process filter', () => {
         });
 
         describe('add filter', () => {
+
+            beforeEach(() => {
+                createFilter = spyOn(alfrescoApi.activiti.userFiltersApi, 'createUserProcessInstanceFilter')
+                .and
+                .callFake((processfilter: FilterProcessRepresentationModel) => Promise.resolve(processfilter));
+            });
 
             let filter = fakeProcessFilters.data[0];
 

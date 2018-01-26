@@ -18,10 +18,10 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { SiteModel } from '../models/site.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/operator/catch';
+import { SitePaging, SiteEntry } from 'alfresco-js-api';
 
 @Injectable()
 export class SitesService {
@@ -29,54 +29,38 @@ export class SitesService {
     constructor(
         private apiService: AlfrescoApiService) { }
 
-    getSites(opts: any = {}): any {
+    getSites(opts: any = {}): Observable<SitePaging> {
         const defaultOptions = {
             skipCount: 0,
             include: ['properties']
         };
         const queryOptions = Object.assign({}, defaultOptions, opts);
         return Observable.fromPromise(this.apiService.getInstance().core.sitesApi.getSites(queryOptions))
-            .map((res) => this.convertToModel(res))
             .catch(this.handleError);
     }
 
-    getSite(siteId: string, opts?: any): any {
+    getSite(siteId: string, opts?: any): Observable<SiteEntry> {
         return Observable.fromPromise(this.apiService.getInstance().core.sitesApi.getSite(siteId, opts))
-            .map((res: any) => new SiteModel(res))
             .catch(this.handleError);
     }
 
-    deleteSite(siteId: string, permanentFlag: boolean = true): any {
+    deleteSite(siteId: string, permanentFlag: boolean = true): Observable<any> {
         let options: any = {};
         options.permanent = permanentFlag;
         return Observable.fromPromise(this.apiService.getInstance().core.sitesApi.deleteSite(siteId, options)
             .catch(this.handleError));
     }
 
-    getSiteContent(siteId: string): Observable<any> {
+    getSiteContent(siteId: string): Observable<SiteEntry> {
         return this.getSite(siteId, { relations: ['containers'] });
     }
 
-    getSiteMembers(siteId: string): Observable<any> {
+    getSiteMembers(siteId: string): Observable<SiteEntry> {
         return this.getSite(siteId, { relations: ['members'] });
     }
 
     private handleError(error: Response): any {
         console.error(error);
         return Observable.throw(error || 'Server error');
-    }
-
-    private convertToModel(response: any) {
-        let convertedList: SiteModel[] = [];
-        if (response &&
-            response.list &&
-            response.list.entries &&
-            response.list.entries.length > 0) {
-            response.list.entries.forEach((element: any) => {
-                element.pagination = response.list.pagination;
-                convertedList.push(new SiteModel(element));
-            });
-        }
-        return convertedList;
     }
 }

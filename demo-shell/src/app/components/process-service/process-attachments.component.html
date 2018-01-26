@@ -6,10 +6,24 @@
             [disabled]="isCompletedProcess()">
 
             <adf-process-attachment-list #processAttachList
-                                            *ngIf="processInstanceId"
-                                            [disabled]="isCompletedProcess()"
-                                            [processInstanceId]="processInstanceId"
-                                            (attachmentClick)="onAttachmentClick($event)">
+                *ngIf="processInstanceId"
+                [disabled]="isCompletedProcess()"
+                [processInstanceId]="processInstanceId"
+                (attachmentClick)="onAttachmentClick($event)">
+                    <adf-empty-list>
+                      <div adf-empty-list-header class="adf-empty-list-header">
+                          {{'ADF_PROCESS_LIST.PROCESS-ATTACHMENT.EMPTY.HEADER' | translate}} 
+                       </div>
+                            <div adf-empty-list-body>
+                            <div fxHide.lt-md="true" class="adf-empty-list-drag_drop">
+                              {{'ADF_PROCESS_LIST.PROCESS-ATTACHMENT.EMPTY.DRAG-AND-DROP.TITLE' | translate}}
+                            </div>
+                                  <div fxHide.lt-md="true" class="adf-empty-list__any-files-here-to-add">
+                                  {{'ADF_PROCESS_LIST.PROCESS-ATTACHMENT.EMPTY.DRAG-AND-DROP.SUBTITLE' | translate}}
+                                  </div>
+                            </div>
+                        
+                    </adf-empty-list>
             </adf-process-attachment-list>
 
         </adf-upload-drag-area>

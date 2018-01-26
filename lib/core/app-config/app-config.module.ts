@@ -18,10 +18,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { AppConfigService } from './app-config.service';
-
-export function startupServiceFactory(configService: AppConfigService): Function {
-    return () => configService.load();
-}
+import { startupServiceFactory } from './startup-service-factory';
 
 @NgModule({
     imports: [

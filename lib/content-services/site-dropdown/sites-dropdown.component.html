@@ -9,8 +9,8 @@
             [(ngModel)]="siteSelected"
             (ngModelChange)="selectedSite()">
             <mat-option *ngIf="!hideMyFiles" data-automation-id="site-my-files-option" id="default_site_option" [value]="MY_FILES_VALUE">{{'DROPDOWN.MY_FILES_OPTION' | translate}}</mat-option>
-            <mat-option *ngFor="let site of siteList" [value]="site.guid">
-                {{ site.title | translate }}
+            <mat-option *ngFor="let site of siteList?.list.entries" [value]="site.entry.guid">
+                {{ site.entry.title | translate}}
             </mat-option>
         </mat-select>
     </mat-form-field>

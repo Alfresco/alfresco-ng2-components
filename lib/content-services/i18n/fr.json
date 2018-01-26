@@ -1,25 +1,4 @@
 {
-  "FORM": {
-    "START_FORM": {
-      "TITLE": "Démarrer le formulaire"
-    },
-    "PREVIEW": {
-      "IMAGE_NOT_AVAILABLE": "Aperçu non disponible"
-    },
-    "FIELD": {
-      "UPLOAD": "Importer",
-      "REQUIRED": "*Obligatoire",
-      "VALIDATOR": {
-        "INVALID_NUMBER": "Utiliser un format de numéro différent",
-        "INVALID_DATE": "Utiliser un format de date différent",
-        "INVALID_VALUE": "Entrer une valeur différente",
-        "NOT_GREATER_THAN": "Ne peut pas être supérieur à {{ maxValue }}",
-        "NOT_LESS_THAN": "Ne peut pas être inférieur à {{ minValue }}",
-        "AT_LEAST_LONG": "Entrez {{ minLength }} caractères minimum",
-        "NO_LONGER_THAN": "Entrez {{ maxLength }} caractères maximum"
-      }
-    }
-  },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "Ce dossier est vide"
@@ -62,7 +41,8 @@
     "CHOOSE": "Choisir",
     "COPY": "Copier",
     "MOVE": "Déplacer",
-    "NO_RESULTS": "Aucun résultat trouvé"
+    "NO_RESULTS": "Aucun résultat trouvé",
+    "SELECT_LOCATION": "Sélectionner l'emplacement"
   },
   "OPERATION": {
     "SUCCES": {
@@ -184,5 +164,20 @@
   },
   "PERMISSON": {
     "LACKOF": "Vous n'avez pas les droits d'accès {{permission}} pour {{action}} le {{type}}"
+  },
+  "METADATA": {
+    "BASIC": {
+      "HEADER": "Propriétés",
+      "NAME": "Nom",
+      "TITLE": "Titre",
+      "DESCRIPTION": "Description",
+      "AUTHOR": "Auteur",
+      "MIMETYPE": "Type MIME",
+      "SIZE": "Taille",
+      "CREATOR": "Créateur",
+      "CREATED_DATE": "Date de création",
+      "MODIFIER": "Modificateur",
+      "MODIFIED_DATE": "Date de Modification"
+    }
   }
 }

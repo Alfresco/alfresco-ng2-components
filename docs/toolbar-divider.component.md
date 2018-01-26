@@ -12,3 +12,8 @@ Divides groups of elements in a Toolbar with a visual separator.
     <button></button>
 </adf-toolbar>
 ```
+
+## See Also
+
+-   [Toolbar component](toolbar.component.md)
+-   [Toolbar Title component](toolbar-title.component.md)

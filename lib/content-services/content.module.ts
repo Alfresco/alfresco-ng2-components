@@ -83,8 +83,7 @@ import { ContentMetadataModule } from './content-metadata/content-metadata.modul
         ContentNodeSelectorModule,
         ContentMetadataModule,
         DialogModule,
-        FolderDirectiveModule,
-        MaterialModule
+        FolderDirectiveModule
     ]
 })
 export class ContentModule {

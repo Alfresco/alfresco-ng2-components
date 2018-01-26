@@ -1,15 +1,6 @@
 # Context Menu directive
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-- [Details](#details)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
+Adds a context menu to a component.
 
 ## Basic Usage
 
@@ -48,8 +39,8 @@ export class MyComponent implements OnInit {
 ### Properties
 
 | Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| showIcons | boolean | false | Render defined icons  |
+| ---- | ---- | ------- | ----------- |
+| showIcons | boolean | false | Render defined icons |
 
 ## Details
 

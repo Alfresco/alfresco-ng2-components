@@ -30,7 +30,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Pagination, ProcessInstanceFilterRepresentation } from 'alfresco-js-api';
 import {
     FORM_FIELD_VALIDATORS, FormEvent, FormFieldEvent, FormRenderingService, FormService,
-    DynamicTableRow, ValidateDynamicTableRowEvent
+    DynamicTableRow, ValidateDynamicTableRowEvent, AppConfigService
 } from '@alfresco/adf-core';
 
 import { AnalyticsReportListComponent } from '@alfresco/adf-insights';
@@ -52,7 +52,7 @@ import {
     TaskListService
 } from '@alfresco/adf-process-services';
 import { LogService } from '@alfresco/adf-core';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService, UserPreferencesService } from '@alfresco/adf-core';
 import {
     DataSorting,
     ObjectDataRow,
@@ -121,6 +121,11 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     taskPage = 0;
     processSchemaColumns: any[] = [];
 
+    supportedPages: number[];
+
+    defaultProcessDefinitionName: string;
+    defaultProcessName: string;
+
     activeTab: number = this.tabs.tasks; // tasks|processes|reports
 
     taskFilter: FilterRepresentationModel;
@@ -146,10 +151,17 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
                 private taskListService: TaskListService,
                 private apiService: AlfrescoApiService,
                 private logService: LogService,
+                private appConfig: AppConfigService,
                 formRenderingService: FormRenderingService,
-                formService: FormService) {
+                formService: FormService,
+                private preferenceService: UserPreferencesService) {
         this.dataTasks = new ObjectDataTableAdapter();
         this.dataTasks.setSorting(new DataSorting('created', 'desc'));
+        this.supportedPages = this.preferenceService.getDifferentPageSizes();
+        this.taskPagination.maxItems = this.preferenceService.paginationSize;
+
+        this.defaultProcessName = this.appConfig.get<string>('adf-start-process.name');
+        this.defaultProcessDefinitionName = this.appConfig.get<string>('adf-start-process.processDefinitionName');
 
         // Uncomment this line to replace all 'text' field editors with custom component
         // formRenderingService.setComponentTypeResolver('text', () => CustomEditorComponent, true);
@@ -200,6 +212,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.taskPage = this.currentPage(skipCount, maxItems);
         this.taskPagination.maxItems = maxItems;
         this.taskPagination.skipCount = skipCount;
+        this.preferenceService.paginationSize = maxItems;
     }
 
     onChangePageNumber(pagination: Pagination): void {
@@ -288,7 +301,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     onProcessFilterClick(event: ProcessInstanceFilterRepresentation): void {
-        this.currentProcessInstanceId = null;
         this.processFilter = event;
     }
 

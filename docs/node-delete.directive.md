@@ -19,17 +19,21 @@ Deletes multiple files and folders.
 
 ### Properties
 
-| Name              | Type                | Default | Description                 |
-| ----------------- | ------------------- | ------- | --------------------------- |
-| adf-delete        | MinimalNodeEntity[] | []      | Nodes to delete             |
-| permanent         | boolean             | false   | Permanent delete            |
+| Name | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| adf-delete | MinimalNodeEntity\[] | \[] | Nodes to delete |
+| permanent | boolean | false | Permanent delete |
 
 ### Events
 
-| Name                      | Description                                  |
-| ------------------------- | -------------------------------------------- |
-| delete                    | emitted when delete process is done          |
+| Name | Description |
+| ---- | ----------- |
+| delete | emitted when delete process is done |
 
 ## Details
 
 See **Demo Shell**
+
+## See also
+
+-   [Node Restore directive](node-restore.directive.md)

@@ -1,3 +1,8 @@
+// TODO: import this mixin from core mixins...
+// -------
+@mixin line-clamp($line-height: 1.25, $lines: 3) { display: block; display: -webkit-box; -webkit-box-orient: vertical; position: relative; line-height: $line-height; overflow: hidden; text-overflow: ellipsis; padding: 0 !important; -webkit-line-clamp: $lines; height: calc(0.99em * #{$line-height} * #{$lines}); &:after { content: '...'; text-align: right; bottom: 0; right: 0; width: 25%; display: block; position: absolute; height: calc(0.99em * #{$line-height}); } } @supports (-webkit-line-clamp: 1) { .line-clamp:after { display: none !important; } }
+// -------
+
 :host {
     width: 100%;
 }
@@ -52,6 +57,7 @@ $themes: (
                 right: 20px;
                 top: 20px;
                 padding: 16px;
+                z-index: 9998;
 
                 &-icon {
                     font-size: 70px;
@@ -69,6 +75,8 @@ $themes: (
 
             &-title {
                 padding: 16px;
+                margin-bottom: 0;
+                z-index: 9999;
 
                 h1 {
                     color: white;
@@ -83,7 +91,13 @@ $themes: (
             }
 
             &-subtitle {
+                color: white;
+                z-index: 9999;
                 padding: 16px;
+
+                .line-clamp {
+                    @include line-clamp(1.25, 3);
+                }
             }
 
             &-actions {

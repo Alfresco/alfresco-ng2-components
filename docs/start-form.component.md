@@ -16,7 +16,7 @@ Displays the Start Form for a process.
 ### Properties
 
 | Name | Type | Default | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------- | ----------- |
 | processDefinitionId | string |  | Definition ID of the process to start. |
 | processId | string |  | Process ID of the process to start. |
 | showOutcomeButtons | boolean | true | Should form outcome buttons be shown? |
@@ -26,7 +26,7 @@ Displays the Start Form for a process.
 ### Events
 
 | Name | Description |
-| --- | --- |
+| ---- | ----------- |
 | outcomeClick | Emitted when the user clicks one of the outcome buttons that completes the form. |
 
 ## Details
@@ -40,7 +40,6 @@ The `outcomeClick` event is passed a string containing the ID of the outcome but
 the user clicked. You can pass this value to the `startProcess` method (defined in the
 [Process service](process.service.md)) when activating the process, if necessary.
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
+## See also
 
-<!-- seealso end -->
+-   [Process service](process.service.md)

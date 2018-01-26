@@ -21,15 +21,17 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity, SiteEntry } from 'alfresco-js-api';
 import {
-    AlfrescoApiService, ContentService, TranslationService,
+    AlfrescoApiService, AuthenticationService, ContentService, TranslationService,
     FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
-    SiteModel, UploadService, DataColumn, DataRow, UserPreferencesService,
-    PaginationComponent
+    UploadService, DataColumn, DataRow, UserPreferencesService,
+    PaginationComponent, FormValues
 } from '@alfresco/adf-core';
 
 import { DocumentListComponent, PermissionStyleModel, DownloadZipDialogComponent } from '@alfresco/adf-content-services';
+
+import { SelectAppsDialogComponent } from '@alfresco/adf-process-services';
 
 import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-adapter.component';
 import { Subscription } from 'rxjs/Rx';
@@ -59,6 +61,10 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
         // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
     currentFolderId: string = DEFAULT_FOLDER_TO_SHOW;
+
+    formValues: FormValues = {};
+
+    processId;
 
     @Input()
     selectionMode = 'multiple';
@@ -117,6 +123,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     @Output()
     loadNext: EventEmitter<Pagination> = new EventEmitter();
 
+    @Output()
+    deleteElementSuccess: EventEmitter<any> = new EventEmitter();
+
     @ViewChild(DocumentListComponent)
     documentList: DocumentListComponent;
 
@@ -125,6 +134,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     permissionsStyle: PermissionStyleModel[] = [];
     infiniteScrolling: boolean;
+    supportedPages: number[];
 
     private onCreateFolder: Subscription;
     private onEditFolder: Subscription;
@@ -139,7 +149,8 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 private router: Router,
                 private logService: LogService,
                 private preference: UserPreferencesService,
-                @Optional() private route: ActivatedRoute) {
+                @Optional() private route: ActivatedRoute,
+                public authenticationService: AuthenticationService) {
     }
 
     showFile(event) {
@@ -182,6 +193,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.contentService.folderCreated.subscribe(value => this.onFolderCreated(value));
         this.onCreateFolder = this.contentService.folderCreate.subscribe(value => this.onFolderAction(value));
         this.onEditFolder = this.contentService.folderEdit.subscribe(value => this.onFolderAction(value));
+        this.supportedPages = this.preference.getDifferentPageSizes();
 
         // this.permissionsStyle.push(new PermissionStyleModel('document-list__create', PermissionsEnum.CREATE));
         // this.permissionsStyle.push(new PermissionStyleModel('document-list__disable', PermissionsEnum.NOT_CREATE, false, true));
@@ -203,7 +215,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     giveDefaultPaginationWhenNotDefined() {
-        this.pagination =  <Pagination> {
+        this.pagination = <Pagination> {
             maxItems: this.preference.paginationSize,
             skipCount: 0,
             totalItems: 0,
@@ -251,7 +263,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     handlePermissionError(event: any) {
-        this.translateService.get('OPERATION.ERROR.NO_PERMISSION_EVENT', {
+        this.translateService.get('VERSION.NO_PERMISSION_EVENT', {
             permission: event.permission,
             action: event.action,
             type: event.type
@@ -308,6 +320,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     onDeleteActionSuccess(message) {
         this.uploadService.fileDeleted.next(message);
+        this.deleteElementSuccess.emit();
     }
 
     onManageVersions(event) {
@@ -325,8 +338,8 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    getSiteContent(site: SiteModel) {
-        this.currentFolderId = site && site.guid ? site.guid : DEFAULT_FOLDER_TO_SHOW;
+    getSiteContent(site: SiteEntry) {
+        this.currentFolderId = site && site.entry.guid ? site.entry.guid : DEFAULT_FOLDER_TO_SHOW;
     }
 
     getDocumentListCurrentFolderId() {
@@ -438,6 +451,20 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             return this.contentService.hasPermission(parentNode, 'create');
         }
         return false;
+    }
+
+    startProcesAction($event) {
+        this.formValues['file'] = $event.value.entry;
+
+        const dialogRef = this.dialog.open(SelectAppsDialogComponent, {
+            width: '630px',
+            panelClass: 'adf-version-manager-dialog'
+        });
+
+        dialogRef.afterClosed().subscribe(selectedProcess => {
+            this.processId = selectedProcess.id;
+        });
+
     }
 
     onChangePageSize(event: Pagination): void {

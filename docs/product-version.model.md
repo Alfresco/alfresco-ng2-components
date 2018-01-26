@@ -67,9 +67,6 @@ class VersionModuleModel {
 }
 ```
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
 ## See also
 
-- [Discovery api service](discovery-api.service.md)
-<!-- seealso end -->
+-   [Discovery api service](discovery-api.service.md)

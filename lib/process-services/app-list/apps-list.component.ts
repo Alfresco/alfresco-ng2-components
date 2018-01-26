@@ -37,15 +37,21 @@ export class AppsListComponent implements OnInit {
     public static DEFAULT_TASKS_APP_ICON: string = 'glyphicon-asterisk';
     public static DEFAULT_TASKS_APP_MATERIAL_ICON: string = 'favorite_border';
 
+    /** (**required**) Defines the layout of the apps. There are two possible
+     * values, "GRID" and "LIST".
+     */
     @Input()
     layoutType: string = AppsListComponent.LAYOUT_GRID;
 
+    /** Provides a way to filter the apps to show. */
     @Input()
     filtersAppId: any[];
 
+    /** Emitted when an app entry is clicked. */
     @Output()
     appClick: EventEmitter<AppDefinitionRepresentationModel> = new EventEmitter<AppDefinitionRepresentationModel>();
 
+    /** Emitted when an error occurs. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 

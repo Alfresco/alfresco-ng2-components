@@ -17,12 +17,12 @@ Displays Upload Component (Drag and Click) to upload the attachment to a specifi
 ### Properties
 
 | Name | Type | Description |
-| --- | --- | --- |
-| processInstanceId | string | (**required**): The ID of the process instance to display |
+| ---- | ---- | ----------- |
+| processInstanceId | `string` | (required) The ID of the process instance to display.  |
 
 ### Events
 
-| Name | Description |
-| --- | --- |
-| error | Raised when the error occurred while creating/uploading the attachment by the user from within the component |
-| success | Raised when the attachment created/uploaded successfully from within the component |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| error | `EventEmitter<any>` | Emitted when an error occurs while creating or uploading an attachment from the user within the component. |
+| success | `EventEmitter<any>` | Emitted when an attachment is successfully created or uploaded from within the component. |

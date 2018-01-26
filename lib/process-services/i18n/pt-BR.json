@@ -176,8 +176,9 @@
     "PROPERTIES": {
       "PROCESS_NAME": "Processo",
       "NAME": "Nome",
+      "THUMBNAIL": "Miniatura",
       "STATUS": "Status",
-      "END_DATE": "Data de vencimento",
+      "END_DATE": "Data de término",
       "END_DATE_DEFAULT": "Nenhuma data",
       "CATEGORY": "Categoria",
       "CATEGORY_DEFAULT": "Nenhuma categoria",
@@ -293,6 +294,21 @@
         "NAME": "Nome",
         "CREATED-ON": "Criado em"
       }
+    }
+  },
+  "ADF_SIDEBAR_ACTION_MENU": {
+    "BUTTON": {
+      "CREATE": "Criar",
+      "NEW_TASK": "Nova tarefa",
+      "NEW_PROCESS": "Novo processo"
+    }
+  },
+  "APP": {
+    "DIALOG": {
+      "START": "Iniciar",
+      "TITLE": "Selecionar Processo",
+      "LIST": "Lista de processo",
+      "ERROR": "Houve um problema ao conectar com o Process Services"
     }
   }
 }

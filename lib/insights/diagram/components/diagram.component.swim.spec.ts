@@ -31,11 +31,7 @@ describe('Diagrams swim', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-                DiagramsModule
-            ],
-            declarations: [
-            ]
+            imports: [DiagramsModule]
         }).compileComponents();
     }));
 

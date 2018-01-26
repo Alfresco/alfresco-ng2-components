@@ -39,7 +39,6 @@ export class AboutComponent implements OnInit {
     modules: ObjectDataTableAdapter;
     githubUrlCommitAlpha = 'https://github.com/Alfresco/alfresco-ng2-components/commits/';
 
-    configFile = 'app.config.json';
     ecmHost = '';
     bpmHost = '';
 
@@ -80,7 +79,7 @@ export class AboutComponent implements OnInit {
                     {type: 'text', key: 'expiresAt', title: 'Expires At', sortable: true},
                     {type: 'text', key: 'remainingDays', title: 'Remaining Days', sortable: true},
                     {type: 'text', key: 'holder', title: 'Holder', sortable: true},
-                    {type: 'text', key: 'mode', title: 'Is Cluster Enabled', sortable: true},
+                    {type: 'text', key: 'mode', title: 'Mode', sortable: true},
                     {type: 'text', key: 'isClusterEnabled', title: 'Is Cluster Enabled', sortable: true},
                     {type: 'text', key: 'isCryptodocEnabled', title: 'Is Cryptodoc Enable', sortable: true}
                 ]);

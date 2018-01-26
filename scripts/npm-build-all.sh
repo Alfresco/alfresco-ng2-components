@@ -23,8 +23,8 @@ eval projects=( "core"
 show_help() {
     echo "Usage: npm-build-all.sh"
     echo ""
-    echo "-t or --test <pkg>        Build your local components and run their tests, this parameter also accept a wildecard to execute test e.g: -t "ng2-alfresco-core"."
-    echo "-d or --debug <pkg>       Build your local components and run their tests IN THE BROWSER, this parameter also accept a wildecard to execute test e.g: -t "ng2-alfresco-core"."
+    echo "-t or --test <pkg>        Build your local components and run their tests, this parameter also accept a wildecard to execute test e.g: -t "core"."
+    echo "-d or --debug <pkg>       Build your local components and run their tests IN THE BROWSER, this parameter also accept a wildecard to execute test e.g: -t "core"."
     echo "-c or --clean             Clean the node_modules before starting the build."
     echo "-si or --skipinstall      Skip the install of node_modules before starting the build."
     echo "-sb or --skipbuild        Skip the build of ng-components."
@@ -54,7 +54,7 @@ enable_testbrowser(){
 
 test_project() {
     echo "====== test project: $1 ====="
-    npm run test -- --component $1 || exit 1
+    npm run test -- --component $1 --mode coverage || exit 1
 }
 
 debug_project() {

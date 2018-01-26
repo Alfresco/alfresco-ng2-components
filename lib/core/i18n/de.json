@@ -1,5 +1,39 @@
 {
+  "FORM": {
+    "START_FORM": {
+      "TITLE": "Startformular"
+    },
+    "PREVIEW": {
+      "IMAGE_NOT_AVAILABLE": "Vorschau nicht verfügbar"
+    },
+    "FIELD": {
+      "LOCALSTORAGE": "Lokaler Speicherort",
+      "SOURCE": "Quelle auswählen aus ",
+      "UPLOAD": "Hochladen",
+      "REQUIRED": "*Erforderlich",
+      "VALIDATOR": {
+        "INVALID_NUMBER": "Verwenden Sie ein anderes Zahlenformat",
+        "INVALID_DATE": "Verwenden Sie ein anderes Datumsformat",
+        "INVALID_VALUE": "Geben Sie einen anderen Wert ein",
+        "NOT_GREATER_THAN": "Darf nicht größer als {{ maxValue }} sein",
+        "NOT_LESS_THAN": "Darf nicht kleiner als {{ minValue }} sein",
+        "AT_LEAST_LONG": "Geben Sie mindestens {{ minLength }} Zeichen ein",
+        "NO_LONGER_THAN": "Geben Sie höchstens {{ maxLength }} Zeichen ein"
+      }
+    }
+  },
   "CORE": {
+    "FILE_SIZE": {
+      "BYTES": "Bytes",
+      "KB": "KB",
+      "MB": "MB",
+      "GB": "GB",
+      "TB": "TB",
+      "PB": "PB",
+      "EB": "EB",
+      "ZB": "ZB",
+      "YB": "YB"
+    },
     "PAGINATION": {
       "ITEMS_RANGE": "Angezeigt werden {{ range }} von {{ total }}",
       "ITEMS_PER_PAGE": "Elemente pro Seite",
@@ -71,6 +105,27 @@
       "BACK": "Zurück",
       "APPLY": "Anwenden",
       "NOT_VALID": "http(s)://host|ip:port(/path) nicht erkannt. Probieren Sie es mit einer anderen URL."
+    },
+    "CARDVIEW": {
+      "VALIDATORS": {
+        "FLOAT_VALIDATION_ERROR": "Verwenden Sie ein Zahlenformat",
+        "INT_VALIDATION_ERROR": "Verwenden Sie ein Ganzzahlenformat"
+      }
+    },
+    "METADATA": {
+      "BASIC": {
+        "HEADER": "Eigenschaften",
+        "NAME": "Name",
+        "TITLE": "Titel",
+        "DESCRIPTION": "Beschreibung",
+        "AUTHOR": "Autor",
+        "MIMETYPE": "MIME-Type",
+        "SIZE": "Größe",
+        "CREATOR": "Ersteller",
+        "CREATED_DATE": "Datum der Erstellung",
+        "MODIFIER": "Bearbeiter",
+        "MODIFIED_DATE": "Datum der Änderung"
+      }
     }
   },
   "LOGIN": {
@@ -146,6 +201,12 @@
       "OF": "von"
     },
     "LOADING": "Laden",
-    "UNKNOWN_FORMAT": "Vorschau konnte nicht geladen werden"
+    "UNKNOWN_FORMAT": "Vorschau konnte nicht geladen werden",
+    "SIDEBAR": {
+      "METADATA": {
+        "MORE_INFORMATION": "Mehr Informationen",
+        "LESS_INFORMATION": "Weniger Informationen"
+      }
+    }
   }
 }

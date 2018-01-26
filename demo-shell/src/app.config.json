@@ -2,7 +2,7 @@
     "ecmHost": "http://{hostname}:{port}",
     "bpmHost": "http://{hostname}:{port}",
     "application": {
-        "name": "Alfresco ADF Appplication"
+        "name": "Alfresco ADF Application"
     },
     "languages": [
         {
@@ -51,7 +51,8 @@
         }
     ],
     "pagination": {
-        "size": 25
+        "size": 25,
+        "supportedPageSizes": [ 5, 10, 15, 20 ]
     },
     "files": {
         "excluded": [".DS_Store", "desktop.ini", ".git"]
@@ -83,7 +84,6 @@
         }
     },
     "document-list": {
-        "supportedPageSizes": [ 5, 10, 15, 25 ],
         "presets": {
             "-trashcan-": [
                 {
@@ -330,7 +330,6 @@
         }
     },
     "adf-task-list": {
-        "supportedPageSizes": [ 5, 10, 15, 25 ],
         "presets": {
             "default": [
                 {
@@ -338,51 +337,13 @@
                     "type": "text",
                     "title": "ADF_TASK_LIST.PROPERTIES.NAME",
                     "sortable": true
-                },
-                {
-                    "key": "noassignee",
-                    "type": "text",
-                    "title": "ADF_TASK_LIST.PROPERTIES.ASSIGNEE_DEFAULT",
-                    "cssClass": "hidden",
-                    "sortable": true
-                },
-                {
-                    "key": "nodueDate",
-                    "type": "text",
-                    "title": "ADF_TASK_LIST.PROPERTIES.DUE_DATE_DEFAULT",
-                    "cssClass": "hidden",
-                    "sortable": true
-                },
-                {
-                    "key": "nocategory",
-                    "type": "text",
-                    "title": "ADF_TASK_LIST.PROPERTIES.CATEGORY_DEFAULT",
-                    "cssClass": "hidden",
-                    "sortable": true
-                },
-                {
-                    "key": "noparentname",
-                    "type": "text",
-                    "title": "ADF_TASK_LIST.PROPERTIES.PARENT_NAME_DEFAULT",
-                    "cssClass": "hidden",
-                    "sortable": true
-                },
-                {
-                    "key": "nodescription",
-                    "type": "date",
-                    "title": "ADF_TASK_LIST.PROPERTIES.DESCRIPTION_DEFAULT",
-                    "cssClass": "hidden",
-                    "sortable": true
-                },
-                {
-                    "key": "noformName",
-                    "type": "date",
-                    "title": "ADF_TASK_LIST.PROPERTIES.FORM_NAME_DEFAULT",
-                    "cssClass": "hidden",
-                    "sortable": true
                 }
             ]
         }
+    },
+    "adf-start-process": {
+        "name": "My Default Name",
+        "processDefinitionName": "My default process def name"
     },
     "adf-process-list": {
         "presets": {
@@ -401,6 +362,13 @@
                     "sortable": true
                 }
             ]
+        }
+    },
+    "content-metadata": {
+        "presets": {
+            "default": {
+                "exif:exif": "*"
+            }
         }
     }
 }

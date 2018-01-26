@@ -1,11 +1,10 @@
 # Host settings component
 
-This component is a form that allows you to validate and set the url of your content service and process service saving 
-it in the user local storage
+Validates the URLs for ACS and APS and saves them in the user's local storage
 
 ![Host settings](docassets/images/host-settings-component.png)
 
-## Basic Usage 
+## Basic Usage
 
 ```html
 <adf-host-settings>
@@ -15,13 +14,11 @@ it in the user local storage
 ### Properties
 
 | Name | Type | Default Value | Description |
-| --- | --- | --- | --- |
-| providers | string | ALL | Possible valid values are ECM, BPM or ALL. It indicate which URL configurations show  |
-
+| ---- | ---- | ------------- | ----------- |
+| providers | string | ALL | Possible valid values are ECM, BPM or ALL. It indicate which URL configurations show |
 
 ### Events
 
 | Name | Returned Type | Description |
-| --- | --- | --- |
-| error | string | emitted when the url inserted is wrong   |
-
+| ---- | ------------- | ----------- |
+| error | string | emitted when the url inserted is wrong |

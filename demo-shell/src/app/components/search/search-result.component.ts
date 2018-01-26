@@ -62,4 +62,8 @@ export class SearchResultComponent implements OnInit {
          this.maxItems = pagination.maxItems;
          this.skipCount = pagination.skipCount;
     }
+
+    onDeleteElementSuccess(element: any) {
+        this.search.reload();
+    }
 }

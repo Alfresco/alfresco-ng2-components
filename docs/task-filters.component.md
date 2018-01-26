@@ -1,4 +1,4 @@
-# Activiti Filter component
+# Task Filters component
 
 Shows all available filters.
 
@@ -11,7 +11,7 @@ Shows all available filters.
 ### Properties
 
 | Name | Type | Description |
-| --- | --- | --- |
+| ---- | ---- | ----------- |
 | filterParam | [FilterParamsModel](#filterparamsmodel) | The params to filter the task filter. If there is no match the default one (first filter of the list) is selected |
 | appId | string | Display filters available to the current user for the application with the specified ID. |
 | `appName` | string | Display filters available to the current user for the application with the specified name. |
@@ -22,20 +22,19 @@ If both `appId` and `appName` are specified then `appName` will take precedence 
 ### Events
 
 | Name | Description |
-| --- | --- |
-| filterClick | Raised when the filter in the list is clicked  |
-| success | Raised when the list is loaded  |
-| error | Raised if there is an error during the loading  |
+| ---- | ----------- |
+| filterClick | Raised when the filter in the list is clicked |
+| success | Raised when the list is loaded |
+| error | Raised if there is an error during the loading |
 
 ## Details
 
 ### How filter the activiti task filters
 
- ```html
+```html
 <adf-filters 
-    [filterParam]="{name:'My tasks'}">
+   [filterParam]="{name:'My tasks'}">
 </adf-filters>
-
 ```
 
 You can use inside the filterParam one of the properties from [FilterParamsModel](#filterparamsmodel) (see below).
@@ -51,7 +50,7 @@ You can use inside the filterParam one of the properties from [FilterParamsModel
 ```
 
 | Name | Type | Description |
-| --- | --- | --- |
+| ---- | ---- | ----------- |
 | id | string | The id of the task filter |
 | name | string | The name of the task filter, lowercase is checked |
 | index | string | The zero-based position of the filter in the array. |
@@ -61,9 +60,6 @@ You can use inside the filterParam one of the properties from [FilterParamsModel
 The task filter often works well as an item in an accordion menu. See the [Accordion component](accordion.component.md)
 page for an example of how to do set this up.
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
 ## See also
 
-- [Filter model](filter.model.md)
-<!-- seealso end -->
+-   [Filter model](filter.model.md)

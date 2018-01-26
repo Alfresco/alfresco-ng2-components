@@ -16,16 +16,18 @@
  */
 
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, Router } from '@angular/router';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AuthenticationService } from './authentication.service';
+import { AppConfigService } from '../app-config/app-config.service';
 
 @Injectable()
 export class AuthGuardEcm implements CanActivate {
     constructor(
         private authService: AuthenticationService,
         private apiService: AlfrescoApiService,
-        private router: Router) {
+        private router: Router,
+        private appConfig: AppConfigService) {
     }
 
     private get authApi() {
@@ -51,11 +53,18 @@ export class AuthGuardEcm implements CanActivate {
 
         return this.isLoggedIn().then(isLoggedIn => {
             if (!isLoggedIn) {
-                this.authService.setRedirectUrl(state.url);
-                this.router.navigate([ '/login' ]);
+                this.authService.setRedirectUrl({ provider: 'ECM', url: state.url });
+                const pathToLogin = this.getRouteDestinationForLogin();
+                this.router.navigate(['/' + pathToLogin]);
             }
 
             return isLoggedIn;
         });
+    }
+
+    private getRouteDestinationForLogin(): string {
+        return this.appConfig &&
+               this.appConfig.get<string>('loginRoute') ?
+                        this.appConfig.get<string>('loginRoute') : 'login';
     }
 }

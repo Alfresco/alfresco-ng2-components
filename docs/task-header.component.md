@@ -1,4 +1,4 @@
-# Activiti Task Header component
+# Task Header component
 
 Shows all the information related to a task.
 
@@ -15,17 +15,21 @@ Shows all the information related to a task.
 ### Properties
 
 | Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| taskDetails | [TaskDetailsModel](#taskdetailsmodel) | | (**required**) The task details related to the task. |
-| formName | string | | The name of the form. |
+| ---- | ---- | ------- | ----------- |
+| taskDetails | [TaskDetailsModel](task-details.model.md) |  | (**required**) Details related to the task. |
+| formName | string |  | The name of the form. |
 
 ### Events
 
 | Name | Description |
-| --- | --- |
+| ---- | ----------- |
 | claim | Raised when the task is claimed. |
 | unclaim | Raised when the task is unclaimed (requeued). |
 
 ## Details
 
 The purpose of the component is to populate the local variable called `properties` (array of CardViewModel), with all the information that we want to display.
+
+## See also
+
+-   [Task Details model](task-details.model.md)

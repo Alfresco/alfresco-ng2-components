@@ -27,6 +27,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 import { PeopleModule } from '../people/people.module';
 import { CommentsModule } from '../comments/comments.module';
+import { ContentWidgetModule } from '../content-widget/content-widget.module';
 import { TaskUploadService } from './services/task-upload.service';
 import { ProcessUploadService } from './services/process-upload.service';
 import { TaskListService } from './services/tasklist.service';
@@ -56,7 +57,8 @@ import { TaskListComponent } from './components/task-list.component';
         FormsModule,
         ReactiveFormsModule,
         PeopleModule,
-        CommentsModule
+        CommentsModule,
+        ContentWidgetModule
     ],
     declarations: [
         NoTaskDetailsTemplateDirective,

@@ -31,21 +31,27 @@ export class AccordionGroupComponent implements OnDestroy {
     @ViewChild('contentWrapper')
     contentWrapper: any;
 
+    /** Title heading for the group. */
     @Input()
     heading: string;
 
+    /** The material design icon. */
     @Input()
     headingIcon: string;
 
+    /** Tooltip message to be shown for headingIcon */
     @Input()
     headingIconTooltip: string;
 
+    /** Should the (expanded) accordion icon be shown? */
     @Input()
     hasAccordionIcon: boolean = true;
 
+    /** Emitted when the heading is clicked. */
     @Output()
     headingClick: EventEmitter<any> = new EventEmitter<any>();
 
+    /** Is this group currently open? */
     @Input()
     set isOpen(value: boolean) {
         this._isOpen = value;
@@ -58,6 +64,7 @@ export class AccordionGroupComponent implements OnDestroy {
         return this._isOpen;
     }
 
+    /** Is this group currently selected? */
     @Input()
     set isSelected(value: boolean) {
         this._isSelected = value;

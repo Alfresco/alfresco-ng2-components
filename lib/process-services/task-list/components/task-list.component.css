@@ -1,13 +1,13 @@
-alfresco-datatable >>> .column-header {
+alfresco-datatable ::ng-deep .column-header {
     color: #232323;
     font-size: 15px;
 }
 
-alfresco-datatable >>> .data-cell {
+alfresco-datatable ::ng-deep .data-cell {
     cursor: pointer !important;
 }
 
-alfresco-datatable >>> .cell-value{
+alfresco-datatable ::ng-deep .cell-value{
     width: 250px;
     white-space: nowrap;
     overflow: hidden;

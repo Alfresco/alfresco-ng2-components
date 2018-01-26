@@ -31,36 +31,27 @@ describe('Diagrams throw', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [],
-            declarations: [
-                DiagramsModule
-            ],
-            providers: [
+            imports: [DiagramsModule]
+        }).compileComponents().then(() => {
+            jasmine.Ajax.install();
 
-            ]
-        }).compileComponents();
+            fixture = TestBed.createComponent(DiagramComponent);
+            component = fixture.componentInstance;
+            element = fixture.nativeElement;
+            component.processInstanceId = '38399';
+            component.processDefinitionId = 'fakeprocess:24:38399';
+            component.metricPercentages = { startEvent: 0 };
+
+            fixture.detectChanges();
+        });
     }));
-
-    beforeEach(() => {
-        fixture = TestBed.createComponent(DiagramComponent);
-        component = fixture.componentInstance;
-        element = fixture.nativeElement;
-        fixture.detectChanges();
-    });
-
-    beforeEach(() => {
-        jasmine.Ajax.install();
-        component.processInstanceId = '38399';
-        component.processDefinitionId = 'fakeprocess:24:38399';
-        component.metricPercentages = { startEvent: 0 };
-    });
 
     afterEach(() => {
         component.success.unsubscribe();
         jasmine.Ajax.uninstall();
     });
 
-    let ajaxReply =  (resp: any) => {
+    let ajaxReply = (resp: any) => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
             contentType: 'json',

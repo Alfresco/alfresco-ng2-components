@@ -63,6 +63,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     @Input()
     liveSearchMaxResults: number = 5;
 
+    /** @deprecated in 2.1.0 */
     @Input()
     customQueryBody: QueryBody;
 

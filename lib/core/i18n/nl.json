@@ -1,5 +1,39 @@
 {
+  "FORM": {
+    "START_FORM": {
+      "TITLE": "Beginformulier"
+    },
+    "PREVIEW": {
+      "IMAGE_NOT_AVAILABLE": "Voorbeeld niet beschikbaar"
+    },
+    "FIELD": {
+      "LOCALSTORAGE": "Lokale opslag",
+      "SOURCE": "Selecteer bron uit ",
+      "UPLOAD": "Uploaden",
+      "REQUIRED": "*Vereist",
+      "VALIDATOR": {
+        "INVALID_NUMBER": "Gebruik een andere getalnotatie",
+        "INVALID_DATE": "Gebruik een andere datumnotatie",
+        "INVALID_VALUE": "Voer een andere waarde in",
+        "NOT_GREATER_THAN": "Mag niet groter zijn dan {{ maxValue }}",
+        "NOT_LESS_THAN": "Mag niet kleiner zijn dan {{ minValue }}",
+        "AT_LEAST_LONG": "Voer ten minste {{ minLength }} tekens in",
+        "NO_LONGER_THAN": "Voer niet meer dan {{ maxLength }} tekens in"
+      }
+    }
+  },
   "CORE": {
+    "FILE_SIZE": {
+      "BYTES": "bytes",
+      "KB": "KB",
+      "MB": "MB",
+      "GB": "GB",
+      "TB": "TB",
+      "PB": "PB",
+      "EB": "EB",
+      "ZB": "ZB",
+      "YB": "YB"
+    },
     "PAGINATION": {
       "ITEMS_RANGE": "{{ range }} van {{ total }} wordt weergegeven",
       "ITEMS_PER_PAGE": "Items per pagina",
@@ -71,6 +105,27 @@
       "BACK": "Terug",
       "APPLY": "Toepassen",
       "NOT_VALID": "http(s)://host|ip:port(/path) niet herkend, probeer een andere URL."
+    },
+    "CARDVIEW": {
+      "VALIDATORS": {
+        "FLOAT_VALIDATION_ERROR": "Gebruik een getalnotatie",
+        "INT_VALIDATION_ERROR": "Gebruik een notatie voor gehele getallen"
+      }
+    },
+    "METADATA": {
+      "BASIC": {
+        "HEADER": "Eigenschappen",
+        "NAME": "Naam",
+        "TITLE": "Titel",
+        "DESCRIPTION": "Beschrijving",
+        "AUTHOR": "Auteur",
+        "MIMETYPE": "Mimetype",
+        "SIZE": "Grootte",
+        "CREATOR": "Maker",
+        "CREATED_DATE": "Datum gemaakt",
+        "MODIFIER": "Gewijzigd door",
+        "MODIFIED_DATE": "Datum gewijzigd"
+      }
     }
   },
   "LOGIN": {
@@ -146,6 +201,12 @@
       "OF": "van"
     },
     "LOADING": "Wordt geladen",
-    "UNKNOWN_FORMAT": "Kan voorbeeld niet laden"
+    "UNKNOWN_FORMAT": "Kan voorbeeld niet laden",
+    "SIDEBAR": {
+      "METADATA": {
+        "MORE_INFORMATION": "Meer informatie",
+        "LESS_INFORMATION": "Minder informatie"
+      }
+    }
   }
 }

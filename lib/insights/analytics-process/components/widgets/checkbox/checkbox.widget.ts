@@ -15,14 +15,13 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+ /* tslint:disable:component-selector no-access-missing-member no-input-rename  */
 
-/* tslint:disable:no-access-missing-member */
-import { Component, ElementRef, Input, ViewEncapsulation } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { WidgetComponent } from './../widget.component';
+ import { Component, ElementRef, Input, ViewEncapsulation } from '@angular/core';
+ import { FormGroup } from '@angular/forms';
+ import { WidgetComponent } from './../widget.component';
 
-@Component({
+ @Component({
     selector: 'analytics-checkbox-widget',
     templateUrl: './checkbox.widget.html',
     encapsulation: ViewEncapsulation.None

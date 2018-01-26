@@ -17,10 +17,7 @@ be highlighted with added HTML (see the
 [Highlight Transform service](highlight-transform.service.md) for more information about how
 this is implemented). The parameter can contain spaces, in which case each separate "word" in the string will be highlighted individually.
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
 ## See also
 
-- [Highlight directive](highlight.directive.md)
-- [Highlight transform service](highlight-transform.service.md)
-<!-- seealso end -->
+-   [Highlight directive](highlight.directive.md)
+-   [Highlight transform service](highlight-transform.service.md)

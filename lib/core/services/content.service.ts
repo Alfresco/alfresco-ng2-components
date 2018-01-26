@@ -133,35 +133,35 @@ export class ContentService {
     /**
      * Get thumbnail URL for the given document node.
      *
-     * @param {string|MinimalNodeEntity} nodeId Node to get URL for.
+     * @param {string|MinimalNodeEntity} nodeId or node to get URL for.
      * @param {boolean} [attachment] Retrieve content as an attachment for download
      * @param {string} [ticket] Custom ticket to use for authentication
      * @returns {string} The URL address pointing to the content.
      */
-    getDocumentThumbnailUrl(nodeId: any, attachment?: boolean, ticket?: string): string {
+    getDocumentThumbnailUrl(node: any, attachment?: boolean, ticket?: string): string {
 
-        if (nodeId && nodeId.entry) {
-            nodeId = nodeId.entry.id;
+        if (node && node.entry) {
+            node = node.entry.id;
         }
 
-        return this.contentApi.getDocumentThumbnailUrl(nodeId, attachment, ticket);
+        return this.contentApi.getDocumentThumbnailUrl(node, attachment, ticket);
     }
 
     /**
      * Get content URL for the given node.
      *
-     * @param nodeId {string|MinimalNodeEntity} Node to get URL for.
+     * @param node {string|MinimalNodeEntity} nodeId or node to get URL for.
      * @param {boolean} [attachment] Retrieve content as an attachment for download
      * @param {string} [ticket] Custom ticket to use for authentication
      * @returns {string} The URL address pointing to the content.
      */
-    getContentUrl(nodeId: any, attachment?: boolean, ticket?: string): string {
+    getContentUrl(node: any, attachment?: boolean, ticket?: string): string {
 
-        if (nodeId && nodeId.entry) {
-            nodeId = nodeId.entry.id;
+        if (node && node.entry) {
+            node = node.entry.id;
         }
 
-        return this.contentApi.getContentUrl(nodeId, attachment, ticket);
+        return this.contentApi.getContentUrl(node, attachment, ticket);
     }
 
     /**

@@ -1,5 +1,39 @@
 {
+  "FORM": {
+    "START_FORM": {
+      "TITLE": "Iniciar formulário"
+    },
+    "PREVIEW": {
+      "IMAGE_NOT_AVAILABLE": "Visualização não disponível"
+    },
+    "FIELD": {
+      "LOCALSTORAGE": "Armazenamento local",
+      "SOURCE": "Selecionar origem de ",
+      "UPLOAD": "Carregar",
+      "REQUIRED": "*Obrigatório",
+      "VALIDATOR": {
+        "INVALID_NUMBER": "Use um formato de número diferente",
+        "INVALID_DATE": "Use um formato de data diferente",
+        "INVALID_VALUE": "Insira um valor diferente",
+        "NOT_GREATER_THAN": "Não pode ser maior do que {{ maxValue }}",
+        "NOT_LESS_THAN": "Não pode ser menor do que {{ minValue }}",
+        "AT_LEAST_LONG": "Insira no mínimo {{ minLength }} caracteres",
+        "NO_LONGER_THAN": "Insira no máximo {{ maxLength }} caracteres"
+      }
+    }
+  },
   "CORE": {
+    "FILE_SIZE": {
+      "BYTES": "Bytes",
+      "KB": "KB",
+      "MB": "MB",
+      "GB": "GB",
+      "TB": "TB",
+      "PB": "PB",
+      "EB": "EB",
+      "ZB": "ZB",
+      "YB": "YB"
+    },
     "PAGINATION": {
       "ITEMS_RANGE": "Mostrando {{ range }} de {{ total }}",
       "ITEMS_PER_PAGE": "Itens por página",
@@ -71,6 +105,27 @@
       "BACK": "Voltar",
       "APPLY": "Aplicar",
       "NOT_VALID": "http(s)://host|ip:port(/path) não reconhecida, tente uma URL diferente."
+    },
+    "CARDVIEW": {
+      "VALIDATORS": {
+        "FLOAT_VALIDATION_ERROR": "Use um formato de número",
+        "INT_VALIDATION_ERROR": "Use um formato inteiro"
+      }
+    },
+    "METADATA": {
+      "BASIC": {
+        "HEADER": "Propriedades",
+        "NAME": "Nome",
+        "TITLE": "Título",
+        "DESCRIPTION": "Descrição",
+        "AUTHOR": "Autor",
+        "MIMETYPE": "Tipo mime",
+        "SIZE": "Tamanho",
+        "CREATOR": "Criador",
+        "CREATED_DATE": "Data de criação",
+        "MODIFIER": "Modificador",
+        "MODIFIED_DATE": "Data de modificação"
+      }
     }
   },
   "LOGIN": {
@@ -146,6 +201,12 @@
       "OF": "de"
     },
     "LOADING": "Carregando",
-    "UNKNOWN_FORMAT": "Não foi possível carregar pré-visualização"
+    "UNKNOWN_FORMAT": "Não foi possível carregar pré-visualização",
+    "SIDEBAR": {
+      "METADATA": {
+        "MORE_INFORMATION": "Mais informação",
+        "LESS_INFORMATION": "Menos informação"
+      }
+    }
   }
 }

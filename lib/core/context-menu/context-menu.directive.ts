@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/* tslint:disable:no-input-rename  */
+
 import { Directive, HostListener, Input } from '@angular/core';
 import { ContextMenuService } from './context-menu.service';
 

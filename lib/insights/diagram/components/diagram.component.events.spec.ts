@@ -31,9 +31,7 @@ describe('Diagrams events', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-                DiagramsModule
-            ]
+            imports: [DiagramsModule]
         }).compileComponents();
     }));
 

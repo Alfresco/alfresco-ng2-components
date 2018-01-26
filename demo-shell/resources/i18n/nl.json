@@ -3,7 +3,11 @@
   "VERSION": {
     "NO_PERMISSION": "U hebt geen rechten voor het beheren van versies van deze content",
     "NO_PERMISSION_EVENT": "U hebt geen ${event.permission} rechten voor het ${event.action} van ${event.type}",
-    "CHOOSE_FILE": "Selecteer een bestand om de versies ervan te zien"
+    "CHOOSE_FILE": "Selecteer een bestand om de versies ervan te zien",
+    "DIALOG": {
+      "CLOSE": "Sluiten",
+      "TITLE": "Versies beheren"
+    }
   },
   "APP_LAYOUT": {
     "APP_NAME": "ADF-demotoepassing",
@@ -20,6 +24,7 @@
     "TAG": "Tag",
     "SOCIAL": "Sociaal",
     "SETTINGS": "Instellingen",
+    "OVERLAY_VIEWER": "Overlay-viewer",
     "ABOUT": "Info"
   },
   "DOCUMENT_LIST": {
@@ -30,6 +35,7 @@
     "MAX_SIZE": "Max.formaat filter",
     "ENABLE_VERSIONING": "Versiebeheer inschakelen",
     "DESCRIPTION_UPLOAD": "Uploaden inschakelen",
+    "ENABLE_INFINITE_SCROLL": "Oneindig scrollen inschakelen",
     "MULTISELECT_DESCRIPTION": "Cmd (Mac) of Ctrl (Windows) gebruiken om de selectie van meerdere items in of uit te schakelen",
     "COLUMNS": {
       "DISPLAY_NAME": "Getoonde naam",
@@ -48,7 +54,8 @@
         "DOWNLOAD": "Downloaden",
         "COPY": "Kopiëren",
         "MOVE": "Verplaatsen",
-        "DELETE": "Verwijderen"
+        "DELETE": "Verwijderen",
+        "PROCESS_ACTION": "Proces starten"
       }
     }
   },
@@ -70,7 +77,8 @@
     "REPORTS-TAB": "Rapporten",
     "START-TASK": "Taak starten",
     "START-PROCESS": "Proces starten",
-    "AUDIT-LOG": "Auditlog van proces"
+    "PROCESS-AUDIT-LOG": "Auditlog van proces",
+    "TASK-AUDIT-LOG": "Auditlog van taak"
   },
   "FORM-LIST": {
     "STORE": "Opslaan",
@@ -82,7 +90,8 @@
     "LOGIN_FOOTER": "Voettekst aanmeldingspagina"
   },
   "SEARCH": {
-    "RESULTS": "Zoekresultaten"
+    "RESULTS": "Zoekresultaten",
+    "NO_RESULT": "Geen resultaten gevonden"
   },
   "SOCIAL": {
     "LIKE": "'Vind ik leuk'-component",

@@ -25,7 +25,7 @@ import { MaterialModule } from '../../material.module';
 
 declare let jasmine: any;
 
-fdescribe('AnalyticsReportParametersComponent', () => {
+describe('AnalyticsReportParametersComponent', () => {
 
     let component: AnalyticsReportParametersComponent;
     let fixture: ComponentFixture<AnalyticsReportParametersComponent>;

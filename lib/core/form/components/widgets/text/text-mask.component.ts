@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- /* tslint:disable: component-selector, no-use-before-declare  */
+ /* tslint:disable: component-selector no-use-before-declare no-input-rename  */
 
 import {
     Directive,

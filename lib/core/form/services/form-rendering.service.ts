@@ -20,7 +20,6 @@ import { Injectable, Type } from '@angular/core';
 
 import {
     AmountWidgetComponent,
-    AttachWidgetComponent,
     CheckboxWidgetComponent,
     ContainerWidgetComponent,
     DateWidgetComponent,
@@ -28,7 +27,6 @@ import {
     DocumentWidgetComponent,
     DropdownWidgetComponent,
     DynamicTableWidgetComponent,
-    FormFieldModel,
     FunctionalGroupWidgetComponent,
     HyperlinkWidgetComponent,
     MultilineTextWidgetComponentComponent,
@@ -63,21 +61,11 @@ export class FormRenderingService extends DynamicComponentMapper {
         'dynamic-table': DynamicComponentResolver.fromType(DynamicTableWidgetComponent),
         'container': DynamicComponentResolver.fromType(ContainerWidgetComponent),
         'group': DynamicComponentResolver.fromType(ContainerWidgetComponent),
-        'document': DynamicComponentResolver.fromType(DocumentWidgetComponent)
+        'document': DynamicComponentResolver.fromType(DocumentWidgetComponent),
+        'upload':  DynamicComponentResolver.fromType(UploadWidgetComponent)
     };
 
     constructor() {
         super();
-
-        this.types['upload'] = (field: FormFieldModel): Type<{}> => {
-            if (field) {
-                let params = field.params;
-                if (params && params.link) {
-                    return AttachWidgetComponent;
-                }
-                return UploadWidgetComponent;
-            }
-            return UnknownWidgetComponent;
-        };
     }
 }

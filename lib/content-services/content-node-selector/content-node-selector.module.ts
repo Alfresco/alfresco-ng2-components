@@ -21,12 +21,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 import { TranslateModule } from '@ngx-translate/core';
 
+import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
 import { ContentNodeSelectorService } from './content-node-selector.service';
+import { ContentNodeDialogService } from './content-node-dialog.service';
 import { SitesDropdownModule } from '../site-dropdown/sites-dropdown.module';
 import { BreadcrumbModule } from '../breadcrumb/breadcrumb.module';
-import { PaginationModule, ToolbarModule, DirectiveModule } from '@alfresco/adf-core';
+import { PaginationModule, ToolbarModule, DirectiveModule, DataColumnModule, DataTableModule } from '@alfresco/adf-core';
 import { DocumentListModule } from '../document-list/document-list.module';
+import { NameLocationCellComponent } from './name-location-cell/name-location-cell.component';
 
 @NgModule({
     imports: [
@@ -40,19 +43,24 @@ import { DocumentListModule } from '../document-list/document-list.module';
         BreadcrumbModule,
         ToolbarModule,
         DocumentListModule,
+        DataColumnModule,
+        DataTableModule,
         PaginationModule
     ],
     exports: [
-        ContentNodeSelectorComponent
+        ContentNodeSelectorPanelComponent, ContentNodeSelectorComponent
     ],
     entryComponents: [
-        ContentNodeSelectorComponent
+        ContentNodeSelectorPanelComponent, ContentNodeSelectorComponent
     ],
     declarations: [
+        ContentNodeSelectorPanelComponent,
+        NameLocationCellComponent,
         ContentNodeSelectorComponent
     ],
     providers: [
-        ContentNodeSelectorService
+        ContentNodeSelectorService,
+        ContentNodeDialogService
     ]
 })
 export class ContentNodeSelectorModule {}

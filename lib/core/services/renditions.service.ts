@@ -71,7 +71,7 @@ export class RenditionsService {
     }
 
     getRenditionUrl(nodeId: string, encoding: string): string {
-        return this.apiService.contentApi.getRenditionUrl(nodeId, 'pdf');
+        return this.apiService.contentApi.getRenditionUrl(nodeId, encoding);
     }
 
     getRendition(nodeId: string, encoding: string): Observable<RenditionEntry> {

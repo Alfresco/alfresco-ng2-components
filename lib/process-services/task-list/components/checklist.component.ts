@@ -30,21 +30,31 @@ import { TaskListService } from './../services/tasklist.service';
 })
 export class ChecklistComponent implements OnInit, OnChanges {
 
+    /** (required) The id of the parent task to which subtasks are
+     * attached.
+     */
     @Input()
     taskId: string;
 
+    /** Toggle readonly state of the form. All form widgets
+     * will render as readonly if enabled.
+     */
     @Input()
     readOnly: boolean = false;
 
+    /** (required) The assignee id that the subtasks are assigned to. */
     @Input()
     assignee: string;
 
+    /** Emitted when a new checklist task is created. */
     @Output()
     checklistTaskCreated: EventEmitter<TaskDetailsModel> = new EventEmitter<TaskDetailsModel>();
 
+    /** Emitted when a checklist task is deleted. */
     @Output()
     checklistTaskDeleted: EventEmitter<string> = new EventEmitter<string>();
 
+    /** Emitted when an error occurs. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 

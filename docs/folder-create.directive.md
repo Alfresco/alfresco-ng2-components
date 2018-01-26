@@ -1,17 +1,6 @@
 # Folder Create directive
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-  * [Properties](#properties)
-  * [Events](#events)
-- [Details](#details)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
+Allows folders to be created.
 
 ## Basic Usage
 
@@ -30,9 +19,9 @@
 
 ### Properties
 
-| Name              | Type                | Default   | Description                                                       |
-| ----------------- | ------------------- | --------- | ----------------------------------------------------------------- |
-| adf-create-folder | string              | '-my-'    | Parent folder where the new folder will be located after creation |
+| Name | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| adf-create-folder | string | '-my-' | Parent folder where the new folder will be located after creation |
 
 ## Details
 

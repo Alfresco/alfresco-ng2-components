@@ -1,44 +1,112 @@
-.adf {
-    &-form-container {
+@mixin adf-form-component-theme($theme) {
+
+    $config: mat-typography-config();
+
+    .adf {
+        &-form-container {
+            max-width: 100% !important;
+            max-height: 100% !important;
+    
+            & .mat-card {
+                padding: 16px 24px;
+                overflow: hidden;
+            }
+    
+            & .mat-card-header-text {
+                margin: 0px !important;
+            }
+    
+            & .mat-tab-body-content {
+                overflow: hidden;
+            }
+    
+            & .mat-tab-label {
+                font-size: mat-font-size($config, subheading-2);
+                line-height: mat-line-height($config, headline);
+                letter-spacing: -0.4px;
+                text-align: left;
+                color: rgba(0, 0, 0, 0.54);
+                text-transform: uppercase;
+            }
+    
+            & .mat-ink-bar {
+                height: 4px;
+            }
+    
+            & .mat-input-wrapper {
+                margin: 0px 12px 0px 0px;
+            }
+        }    
+    
+        &-form-title {
+            font-size: mat-font-size($alfresco-typography, title);
+        }
+    
+        &-form-debug-container {
+            padding: 10px;
+        }
+    
+        &-form-debug-container .debug-toggle-text {
+            padding-left: 15px;
+            cursor: pointer;
+        }
+    
+        &-form-debug-container .debug-toggle-text:hover {
+            font-weight: bold;
+        }
+    
+        &-form-reload-button {
+            position: absolute;
+            right: 12px;
+            top: 30px;
+        }
+    
+        &-form-hide-button {
+            display: none !important;
+        }
+    
+        &-task-title {
+            text-align: center
+        }
+    
+        &-label {
+            width: 32px;
+            height: 16px;
+            font-size: mat-font-size($config, caption);
+            line-height: mat-line-height($config, headline);
+            text-align: left;
+            white-space: nowrap;
+        }
+    
+        &-form-mat-card-actions {
+            float: right;
+            padding-bottom: 25px !important;
+            padding-right: 25px !important; 
+    
+            & .mat-button {
+                height: 36px;
+                border-radius: 5px;
+        
+            }
+    
+            & .mat-button-wrapper {
+                width: 58px;
+                height: 20px;
+                opacity: 0.54;
+                font-size: mat-font-size($config, body-2);
+                font-weight: bold;
+            }
+        }
+    }
+    
+    form-field {
         width: 100%;
-        min-height: 100px;
-        overflow: visible;
+    
+        .mat-input-element {
+            font-size: mat-font-size($config, body-2);
+            padding-top: 8px;
+            line-height: normal;
+        }
     }
-
-    &-form-debug-container {
-        padding: 10px;
-    }
-
-    &-form-debug-container .debug-toggle-text {
-        padding-left: 15px;
-        cursor: pointer;
-    }
-
-    &-form-debug-container .debug-toggle-text:hover {
-        font-weight: bold;
-    }
-
-    &-form-reload-button {
-        position: absolute;
-        right: 0;
-        top: 0;
-    }
-
-    &-form-hide-button {
-        display: none;
-    }
-
-    &-task-title {
-        text-align: center
-    }
-}
-
-form-field {
-    width: 100%;
-
-    .mat-input-element {
-        font-size: 14px;
-        padding-top: 8px;
-        line-height: normal;
-    }
+    
 }

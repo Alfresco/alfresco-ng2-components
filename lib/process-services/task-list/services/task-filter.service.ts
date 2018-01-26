@@ -63,12 +63,16 @@ export class TaskFilterService {
                     let filters: FilterRepresentationModel[] = [];
                     res.forEach((filter) => {
                         if (filter.name === involvedTasksFilter.name) {
+                            involvedTasksFilter.id = filter.id;
                             filters.push(involvedTasksFilter);
                         } else if (filter.name === myTasksFilter.name) {
+                            myTasksFilter.id = filter.id;
                             filters.push(myTasksFilter);
                         } else if (filter.name === queuedTasksFilter.name) {
+                            queuedTasksFilter.id = filter.id;
                             filters.push(queuedTasksFilter);
                         } else if (filter.name === completedTasksFilter.name) {
+                            completedTasksFilter.id = filter.id;
                             filters.push(completedTasksFilter);
                         }
                     });

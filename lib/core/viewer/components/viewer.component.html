@@ -18,7 +18,7 @@
                         <mat-icon>arrow_back</mat-icon>
                     </button>
                     <img class="adf-viewer__mimeicon" [src]="mimeType | adfMimeTypeIcon">
-                    <span id="adf-viewer-display-name">{{ displayName }}</span>
+                    <span class="adf-viewer__display-name" id="adf-viewer-display-name">{{ displayName }}</span>
                 </adf-toolbar-title>
 
                 <ng-container *ngIf="mnuOpenWith">
@@ -84,7 +84,7 @@
                         matTooltip="{{ 'ADF_VIEWER.ACTIONS.INFO' | translate }}"
                         data-automation-id="toolbar-sidebar"
                         [color]="showSidebar ? 'accent' : 'default'"
-                        (click)="showSidebar = !showSidebar">
+                        (click)="toggleSidebar($event)">
                         <mat-icon>info_outline</mat-icon>
                     </button>
                 </ng-container>
@@ -103,7 +103,7 @@
 
         <div *ngIf="!isLoading" fxLayout="row" fxFlex="1 1 auto">
 
-            <ng-container *ngIf="showSidebar">
+            <ng-container *ngIf="allowSidebar && showSidebar">
                 <div class="adf-viewer__sidebar" fxFlexOrder="{{sidebarPosition === 'left'? 1: 2 }}">
                     <ng-container *ngIf="sidebarTemplate">
                         <ng-container *ngTemplateOutlet="sidebarTemplate;context:sidebarTemplateContext"></ng-container>
@@ -133,7 +133,7 @@
                         </ng-container>
 
                         <ng-container *ngSwitchCase="'custom'">
-                            <span *ngFor="let extensionTemplate of extensionTemplates">
+                            <span class="adf-viewer-custom-content" *ngFor="let extensionTemplate of extensionTemplates">
                                 <ng-template *ngIf="extensionTemplate.isVisible" [ngTemplateOutlet]="extensionTemplate.template" [ngTemplateOutletContext]="{ urlFileContent: urlFileContent, extension:extension }">
                                 </ng-template>
                             </span>

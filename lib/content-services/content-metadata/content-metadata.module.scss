@@ -1,0 +1,7 @@
+@import './components/content-metadata/content-metadata.component';
+@import './components/content-metadata-card/content-metadata-card.component';
+
+@mixin adf-content-metadata-module-theme($theme) {
+    @include adf-content-metadata-theme($theme);
+    @include adf-content-metadata-card-theme($theme);
+}

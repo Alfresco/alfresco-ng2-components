@@ -27,7 +27,7 @@ import { TranslateLoaderService } from '../services/translate-loader.service';
 import { TranslationService } from '../services/translation.service';
 import { PaginationComponent } from './pagination.component';
 import { PaginatedComponent } from './public-api';
-import { Subject } from 'rxjs/Subject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 class FakePaginationInput implements Pagination {
     count: number = 25;
@@ -90,6 +90,11 @@ describe('PaginationComponent', () => {
                 fixture.detectChanges();
             });
     }));
+
+    it('should have an "empty" class if no items present', () => {
+        fixture.detectChanges();
+        expect(fixture.nativeElement.classList.contains('adf-pagination__empty')).toBeTruthy();
+    });
 
     describe('Single page', () => {
         beforeEach(() => {
@@ -274,7 +279,7 @@ describe('PaginationComponent', () => {
             const pagination: Pagination = {};
 
             const customComponent = <PaginatedComponent> {
-                pagination: new Subject<Pagination>()
+                pagination: new BehaviorSubject<Pagination>({})
             };
 
             component.target = customComponent;
@@ -289,7 +294,7 @@ describe('PaginationComponent', () => {
             const pagination2: Pagination = {};
 
             const customComponent = <PaginatedComponent> {
-                pagination: new Subject<Pagination>()
+                pagination: new BehaviorSubject<Pagination>({})
             };
 
             component.target = customComponent;
@@ -304,7 +309,7 @@ describe('PaginationComponent', () => {
 
         it('should send pagination event to paginated component', () => {
             const customComponent = <PaginatedComponent> {
-                pagination: new Subject<Pagination>(),
+                pagination: new BehaviorSubject<Pagination>({}),
                 updatePagination() {},
                 supportedPageSizes: []
             };

@@ -55,10 +55,16 @@ export class ViewerComponent implements OnChanges {
     urlFile = '';
 
     @Input()
+    urlFileViewer: string = null;
+
+    @Input()
     blobFile: Blob;
 
     @Input()
     fileNodeId: string = null;
+
+    @Input()
+    sharedLinkId: string = null;
 
     @Input()
     overlayMode = false;
@@ -96,6 +102,15 @@ export class ViewerComponent implements OnChanges {
     @Input()
     sidebarTemplate: TemplateRef<any> = null;
 
+    @Input()
+    mimeType: string;
+
+    @Input()
+    fileName: string;
+
+    @Input()
+    downloadUrl: string = null;
+
     @Output()
     goBack = new EventEmitter<BaseEvent<any>>();
 
@@ -115,8 +130,6 @@ export class ViewerComponent implements OnChanges {
     extensionChange = new EventEmitter<string>();
 
     viewerType = 'unknown';
-    downloadUrl: string = null;
-    fileName = 'document';
     isLoading = false;
     node: MinimalNodeEntryEntity;
 
@@ -125,7 +138,6 @@ export class ViewerComponent implements OnChanges {
     urlFileContent: string;
     otherMenu: any;
     extension: string;
-    mimeType: string;
     sidebarTemplateContext: { node: MinimalNodeEntryEntity } = { node: null };
 
     private extensions = {
@@ -146,10 +158,14 @@ export class ViewerComponent implements OnChanges {
                 private renditionService: RenditionsService) {
     }
 
+    isSourceDefined(): boolean {
+        return (this.urlFile || this.blobFile || this.fileNodeId || this.sharedLinkId) ? true : false;
+    }
+
     ngOnChanges(changes: SimpleChanges) {
         if (this.showViewer) {
-            if (!this.urlFile && !this.blobFile && !this.fileNodeId) {
-                throw new Error('Attribute urlFile or fileNodeId or blobFile is required');
+            if (!this.isSourceDefined()) {
+                throw new Error('A content source attribute value is missing.');
             }
 
             return new Promise((resolve, reject) => {
@@ -176,7 +192,7 @@ export class ViewerComponent implements OnChanges {
                     this.downloadUrl = this.urlFile;
                     this.fileName = this.displayName;
 
-                    this.viewerType = this.getViewerTypeByExtension(this.extension);
+                    this.viewerType = this.urlFileViewer || this.getViewerTypeByExtension(this.extension);
                     if (this.viewerType === 'unknown') {
                         this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
                     }
@@ -203,7 +219,7 @@ export class ViewerComponent implements OnChanges {
                             }
 
                             if (this.viewerType === 'unknown') {
-                                this.displayAsPdf(data.id);
+                                this.displayNodeRendition(data.id);
                             } else {
                                 this.isLoading = false;
                             }
@@ -219,8 +235,45 @@ export class ViewerComponent implements OnChanges {
                             this.logService.error('This node does not exist');
                         }
                     );
+                } else if (this.sharedLinkId) {
+                    this.isLoading = true;
+
+                    this.apiService.sharedLinksApi.getSharedLink(this.sharedLinkId).then(details => {
+                        this.mimeType = details.entry.content.mimeType;
+                        this.displayName = this.getDisplayName(details.entry.name);
+                        this.extension = this.getFileExtension(details.entry.name);
+                        this.fileName = details.entry.name;
+
+                        this.urlFileContent = this.apiService.contentApi.getSharedLinkContentUrl(this.sharedLinkId, false);
+                        this.downloadUrl = this.apiService.contentApi.getSharedLinkContentUrl(this.sharedLinkId, true);
+
+                        this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
+                        if (this.viewerType === 'unknown') {
+                            this.viewerType = this.getViewerTypeByExtension(this.extension);
+                        }
+
+                        if (this.viewerType === 'unknown') {
+                            this.displaySharedLinkRendition(this.sharedLinkId);
+                        } else {
+                            this.isLoading = false;
+                        }
+
+                        this.extensionChange.emit(this.extension);
+                        this.isLoading = false;
+                        resolve();
+                    });
                 }
             });
+        }
+    }
+
+    toggleSidebar() {
+        this.showSidebar = !this.showSidebar;
+        if (this.showSidebar && this.fileNodeId) {
+            this.apiService.getInstance().nodes.getNodeInfo(this.fileNodeId)
+                .then((data: MinimalNodeEntryEntity) => {
+                    this.sidebarTemplateContext.node = data;
+                });
         }
     }
 
@@ -328,13 +381,20 @@ export class ViewerComponent implements OnChanges {
     }
 
     /**
-     * Get the token from the local storage
+     * Get file extension from the string.
+     * Supports the URL formats like:
+     * http://localhost/test.jpg?cache=1000
+     * http://localhost/test.jpg#cache=1000
      *
      * @param {string} fileName - file name
      * @returns {string} file name extension
      */
     getFileExtension(fileName: string): string {
-        return fileName.split('.').pop().toLowerCase();
+        if (fileName) {
+            const match = fileName.match(/\.([^\./\?\#]+)($|\?|\#)/);
+            return match ? match[1] : null;
+        }
+        return null;
     }
 
     isCustomViewerExtension(extension: string): boolean {
@@ -393,40 +453,64 @@ export class ViewerComponent implements OnChanges {
         }
     }
 
-    private displayAsPdf(nodeId: string) {
+    private async displayNodeRendition(nodeId: string) {
         this.isLoading = true;
 
-        this.renditionService.getRendition(nodeId, 'pdf').subscribe(
-            (response) => {
-                const status = response.entry.status.toString();
+        try {
+            const rendition = await this.apiService.renditionsApi.getRendition(nodeId, 'pdf');
+            const status = rendition.entry.status.toString();
 
-                if (status === 'CREATED') {
-                    this.isLoading = false;
-                    this.showPdfRendition(nodeId);
-                } else if (status === 'NOT_CREATED') {
-                    this.renditionService.convert(nodeId, 'pdf').subscribe({
-                        complete: () => {
-                            this.isLoading = false;
-                            this.showPdfRendition(nodeId);
-                        },
-                        error: (error) => {
-                            this.isLoading = false;
-                        }
-                    });
-                } else {
-                    this.isLoading = false;
+            if (status === 'CREATED') {
+                this.viewerType = 'pdf';
+                this.urlFileContent = this.apiService.contentApi.getRenditionUrl(nodeId, 'pdf');
+            } else if (status === 'NOT_CREATED') {
+                try {
+                    await this.renditionService.convert(nodeId, 'pdf').toPromise();
+                    this.viewerType = 'pdf';
+                    this.urlFileContent = this.apiService.contentApi.getRenditionUrl(nodeId, 'pdf');
+                } catch (error) {
+                    this.logService.error(error);
                 }
-            },
-            (err) => {
-                this.isLoading = false;
             }
-        );
+        } catch (error) {
+            this.logService.error(error);
+
+            try {
+                const imagePreview = await this.apiService.renditionsApi.getRendition(nodeId, 'imgpreview');
+                if (imagePreview.entry.status.toString() === 'CREATED') {
+                    this.viewerType = 'image';
+                    this.urlFileContent = this.apiService.contentApi.getRenditionUrl(nodeId, 'imgpreview');
+                }
+            } catch (error) {
+                this.logService.error(error);
+            }
+        }
+
+        this.isLoading = false;
     }
 
-    private showPdfRendition(nodeId: string) {
-        if (nodeId) {
-            this.viewerType = 'pdf';
-            this.urlFileContent = this.renditionService.getRenditionUrl(nodeId, 'pdf');
+    private async displaySharedLinkRendition(sharedId: string) {
+        this.isLoading = true;
+
+        try {
+            const rendition = await this.apiService.renditionsApi.getSharedLinkRendition(sharedId, 'pdf');
+            if (rendition.entry.status.toString() === 'CREATED') {
+                this.viewerType = 'pdf';
+                this.urlFileContent = this.apiService.contentApi.getSharedLinkRenditionUrl(sharedId, 'pdf');
+            }
+        } catch (error) {
+            this.logService.error(error);
+            try {
+                const rendition = await this.apiService.renditionsApi.getSharedLinkRendition(sharedId, 'imgpreview');
+                if (rendition.entry.status.toString() === 'CREATED') {
+                    this.viewerType = 'image';
+                    this.urlFileContent = this.apiService.contentApi.getSharedLinkRenditionUrl(sharedId, 'imgpreview');
+                }
+            } catch (error) {
+                this.logService.error(error);
+            }
         }
+
+        this.isLoading = false;
     }
 }

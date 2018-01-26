@@ -1,25 +1,4 @@
 {
-  "FORM": {
-    "START_FORM": {
-      "TITLE": "Beginformulier"
-    },
-    "PREVIEW": {
-      "IMAGE_NOT_AVAILABLE": "Preview niet beschikbaar"
-    },
-    "FIELD": {
-      "UPLOAD": "Uploaden",
-      "REQUIRED": "*Verplicht",
-      "VALIDATOR": {
-        "INVALID_NUMBER": "Gebruik een andere getalnotatie",
-        "INVALID_DATE": "Gebruik een andere datumnotatie",
-        "INVALID_VALUE": "Voer een andere waarde in",
-        "NOT_GREATER_THAN": "Mag niet groter zijn dan {{ maxValue }}",
-        "NOT_LESS_THAN": "Mag niet kleiner zijn dan {{ minValue }}",
-        "AT_LEAST_LONG": "Voer minimaal {{ minLength }} tekens in",
-        "NO_LONGER_THAN": "Voer maximaal {{ maxLength }} tekens in"
-      }
-    }
-  },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "Deze map is leeg"
@@ -62,7 +41,8 @@
     "CHOOSE": "Kiezen",
     "COPY": "Kopiëren",
     "MOVE": "Verplaatsen",
-    "NO_RESULTS": "Geen resultaten gevonden"
+    "NO_RESULTS": "Geen resultaten gevonden",
+    "SELECT_LOCATION": "Locatie selecteren"
   },
   "OPERATION": {
     "SUCCES": {
@@ -184,5 +164,20 @@
   },
   "PERMISSON": {
     "LACKOF": "U hebt geen {{permission}} rechten voor het {{action}} van {{type}}"
+  },
+  "METADATA": {
+    "BASIC": {
+      "HEADER": "Eigenschappen",
+      "NAME": "Naam",
+      "TITLE": "Titel",
+      "DESCRIPTION": "Beschrijving",
+      "AUTHOR": "Auteur",
+      "MIMETYPE": "Mimetype",
+      "SIZE": "Grootte",
+      "CREATOR": "Maker",
+      "CREATED_DATE": "Datum gemaakt",
+      "MODIFIER": "Gewijzigd door",
+      "MODIFIED_DATE": "Datum gewijzigd"
+    }
   }
 }

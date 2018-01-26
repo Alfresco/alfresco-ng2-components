@@ -2,15 +2,7 @@
 
 Shows a notification message with optional feedback.
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Details](#details)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
+![Notification Service screenshot](docassets/images/NotiService.png)
 
 ## Details
 

@@ -23,16 +23,6 @@ import { UserPreferencesService } from './user-preferences.service';
 
 @Injectable()
 export class FavoritesApiService {
-    static remapFavoritesData(data: any = {}): NodePaging {
-        const list = (data.list || {});
-        const pagination = (list.pagination || {});
-        const entries: any[] = FavoritesApiService
-            .remapFavoriteEntries(list.entries || []);
-
-        return <NodePaging> {
-            list: { entries, pagination }
-        };
-    }
 
     static remapEntry({ entry }: any): any {
         entry.properties = {
@@ -43,7 +33,18 @@ export class FavoritesApiService {
         return { entry };
     }
 
-    static remapFavoriteEntries(entries: any[]) {
+    remapFavoritesData(data: any = {}): NodePaging {
+        const list = (data.list || {});
+        const pagination = (list.pagination || {});
+        const entries: any[] = this
+            .remapFavoriteEntries(list.entries || []);
+
+        return <NodePaging> {
+            list: { entries, pagination }
+        };
+    }
+
+    remapFavoriteEntries(entries: any[]) {
         return entries
             .map(({ entry: { target }}: any) => ({
                 entry: target.file || target.folder
@@ -72,7 +73,7 @@ export class FavoritesApiService {
         const queryOptions = Object.assign(defaultOptions, options);
         const promise = favoritesApi
             .getFavorites(personId, queryOptions)
-            .then(FavoritesApiService.remapFavoritesData);
+            .then(this.remapFavoritesData);
 
         return Observable
             .fromPromise(promise)

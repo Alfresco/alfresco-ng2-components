@@ -27,8 +27,9 @@ Displays a sidebar-style information panel with tabs.
 ### Properties
 
 | Name | Type | Default | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------- | ----------- |
 | title | string | null | The title of the info drawer |
+| selectedIndex | number | 0 | The selected index tab |
 | currentTab | any | null | The currently active tab |
 
 ## Details
@@ -37,9 +38,6 @@ This is a variant of the [Info Drawer Layout component](info-drawer-layout.compo
 
 You can also customize the three regions (title, buttons and content) as with the Info Drawer Layout component.
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
 ## See also
 
-- [Info drawer layout component](info-drawer-layout.component.md)
-<!-- seealso end -->
+-   [Info drawer layout component](info-drawer-layout.component.md)

@@ -45,6 +45,7 @@ export * from './pagination';
 export * from './login';
 export * from './language-menu';
 export * from './info-drawer';
+export * from './sidebar';
 export * from './data-column';
 export * from './datatable';
 export * from './context-menu';

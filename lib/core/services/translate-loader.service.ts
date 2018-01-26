@@ -60,8 +60,10 @@ export class TranslateLoaderService implements TranslateLoader {
             if (!this.isComponentInQueue(lang, component.name)) {
                 this.queue[lang].push(component.name);
 
-                let currentObserv = Observable.create(observer => {
-                    this.http.get(`${component.path}/${this.prefix}/${lang}${this.suffix}`)
+                const loader = Observable.create(observer => {
+                    const translationUrl = `${component.path}/${this.prefix}/${lang}${this.suffix}?v=${Date.now()}`;
+
+                    this.http.get(translationUrl)
                         .map((res: Response) => {
                             component.json[lang] = res;
                         }).subscribe((result) => {
@@ -73,7 +75,7 @@ export class TranslateLoaderService implements TranslateLoader {
                     });
                 });
 
-                observableBatch.push(currentObserv);
+                observableBatch.push(loader);
             }
         });
 

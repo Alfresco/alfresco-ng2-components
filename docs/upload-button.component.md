@@ -1,5 +1,7 @@
 # Upload Button Component
 
+Activates a file upload.
+
 ## Basic Usage
 
 ```html

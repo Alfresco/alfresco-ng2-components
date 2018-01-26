@@ -15,16 +15,20 @@
  * limitations under the License.
  */
 
-import { ContentService, ThumbnailService } from '@alfresco/adf-core';
-import { Component, EventEmitter, Input, NgZone, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { ContentService, EmptyListComponent , ThumbnailService } from '@alfresco/adf-core';
+import { AfterContentInit, ContentChild, Component, EventEmitter, Input, NgZone, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { ProcessContentService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-process-attachment-list',
     styleUrls: ['./process-attachment-list.component.scss'],
-    templateUrl: './process-attachment-list.component.html'
+    templateUrl: './process-attachment-list.component.html',
+    encapsulation: ViewEncapsulation.None
 })
-export class ProcessAttachmentListComponent implements OnChanges {
+export class ProcessAttachmentListComponent implements OnChanges, AfterContentInit {
+
+    @ContentChild(EmptyListComponent)
+    emptyTemplate: EmptyListComponent;
 
     @Input()
     processInstanceId: string;
@@ -41,8 +45,7 @@ export class ProcessAttachmentListComponent implements OnChanges {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    @Input()
-    emptyListImageUrl: string = './assets/images/empty_doc_lib.svg';
+    hasCustomTemplate: boolean = false;
 
     attachments: any[] = [];
     isLoading: boolean = true;
@@ -59,6 +62,12 @@ export class ProcessAttachmentListComponent implements OnChanges {
         }
     }
 
+    ngAfterContentInit() {
+        if (this.emptyTemplate) {
+            this.hasCustomTemplate = true;
+        }
+    }
+
     reset() {
         this.attachments = [];
     }
@@ -67,6 +76,10 @@ export class ProcessAttachmentListComponent implements OnChanges {
         this.ngZone.run(() => {
             this.loadAttachmentsByProcessInstanceId(this.processInstanceId);
         });
+    }
+
+    hasCutomEmptyTemplate() {
+        return !!this.emptyTemplate;
     }
 
     add(content: any): void {

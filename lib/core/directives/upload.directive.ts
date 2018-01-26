@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/* tslint:disable:no-input-rename  */
+
 import { Directive, ElementRef, HostListener, Input, NgZone, OnDestroy, OnInit, Renderer } from '@angular/core';
 import { FileInfo, FileUtils } from '../utils/file-utils';
 

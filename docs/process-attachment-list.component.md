@@ -2,6 +2,8 @@
 
 Displays attached documents on a specified process instance
 
+![process-attachment-list-sample](docassets/images/process-attachment-list.png)
+
 ## Basic Usage
 
 ```html
@@ -10,6 +12,10 @@ Displays attached documents on a specified process instance
     (attachmentClick)="YOUR_ATTACHMENT_CLICK_EMITTER_HANDLER">
 </adf-process-attachment-list>
 ```
+
+If the List is empty, a default no content template is displayed.
+
+![default-no-content-template-sample](docassets/images/default-no-content-template.png)
 
 Make sure to override the UploadService with the ProcessUploadService
 ```ts
@@ -27,6 +33,33 @@ export class MyCustomProcessAttachmentComponent {
     constructor() {}
 }
 ```
+
+### How to Add Drag and Drop Functionality
+
+If we want user to be able to upload attachments for empty lists, We can wrap our component with upload drag area component. In that case, We should also pass a custom *no content template* as shown below with our component urging the user to drag files to upload whenever the list is empty.
+
+```html
+<adf-upload-drag-area
+    [parentId]="YOUR_PROCESS_ID"
+    [showNotificationBar]="BOOLEAN">
+    <adf-process-attachment-list  
+        [processId]="YOUR_PROCESS_ID"
+        (attachmentClick)="YOUR_HANDLER">
+            <div adf-empty-list> //no content template
+                <adf-empty-list>
+                    <div adf-empty-list-header>{{This List is empty}}</div>
+                    <div adf-empty-list-body>{{Drag and drop to upload}}</div>
+                    <div adf-empty-list-footer>
+                        <img [src]="Your custom image URL"></div> 
+                </adf-empty-list>
+            </div>
+    </adf-process-attachment-list>
+</adf-upload-drag-area>
+```
+
+If the List is empty, the custom no-content template we passed is displayed.
+
+![custom-no-content-drag-drop-template-sample](docassets/images/custom-no-content-drag-drop-template.png)
 
 ### Properties
 

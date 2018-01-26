@@ -2,17 +2,6 @@
 
 Displays comments associated with a particular process instance and allows the user to add new comments
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-  * [Properties](#properties)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
-
 ## Basic Usage
 
 ```html
@@ -24,5 +13,5 @@ Displays comments associated with a particular process instance and allows the u
 ### Properties
 
 | Name | Type | Description |
-| --- | --- | --- |
+| ---- | ---- | ----------- |
 | processInstanceId | string | (**required**): The numeric ID of the process instance to display comments for |

@@ -1,4 +1,4 @@
-# Activiti Checklist Component
+# Checklist Component
 
 Shows the checklist task functionality.
 
@@ -15,7 +15,15 @@ Shows the checklist task functionality.
 ### Properties
 
 | Name | Type | Description |
-| --- | --- | --- |
-| taskId | string | (**required**) The id of the parent task which sub tasks are attached on. |
-| readOnlyForm | boolean | Toggle readonly state of the form. Enforces all form widgets render readonly if enabled. |
-| assignee | string | (**required**) The assignee id where the subtasks are assigned to. |
+| ---- | ---- | ----------- |
+| taskId | `string` | (required) The id of the parent task to which subtasks are attached. |
+| readOnly | `boolean` | Toggle readonly state of the form. All form widgets will render as readonly if enabled.<br/> Default value: `false` |
+| assignee | `string` | (required) The assignee id that the subtasks are assigned to.  |
+
+### Events
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| checklistTaskCreated | `EventEmitter<TaskDetailsModel>` | Emitted when a new checklist task is created. |
+| checklistTaskDeleted | `EventEmitter<string>` | Emitted when a checklist task is deleted. |
+| error | `EventEmitter<any>` | Emitted when an error occurs. |

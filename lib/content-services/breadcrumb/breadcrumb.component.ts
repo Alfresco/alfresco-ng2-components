@@ -30,15 +30,26 @@ import { DocumentListComponent } from '../document-list';
 })
 export class BreadcrumbComponent implements OnChanges {
 
+    /** Active node, builds UI based on folderNode.path.elements collection. */
     @Input()
     folderNode: MinimalNodeEntryEntity = null;
 
+    /** (optional) Name of the root element of the breadcrumb. You can use
+     * this property to rename "Company Home" to "Personal Files" for
+     * example. You can use an i18n resource key for the property value.
+     */
     @Input()
     root: string = null;
 
+    /** (optional) The id of the root element. You can use this property
+     * to set a custom element the breadcrumb should start with.
+     */
     @Input()
     rootId: string = null;
 
+    /** (optional) Document List component to operate with. The list will
+     * update when the breadcrumb is clicked.
+     */
     @Input()
     target: DocumentListComponent;
 
@@ -48,6 +59,7 @@ export class BreadcrumbComponent implements OnChanges {
         return !!this.root;
     }
 
+    /** Emitted when the user clicks on a breadcrumb. */
     @Output()
     navigate: EventEmitter<PathElementEntity> = new EventEmitter<PathElementEntity>();
 

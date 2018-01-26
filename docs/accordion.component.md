@@ -29,15 +29,6 @@ export class MyComponent implements OnInit {
 }
 ```
 
-### Properties
-
-| Name | Type | Description |
-| --- | --- | --- |
-| heading | string | The header title. |
-| isSelected | boolean | Define if the accordion group is selected or not. |
-| headingIcon | string | The material design icon. |
-| hasAccordionIcon | boolean | Define if the accordion (expand) icon needs to be shown or not, the default value is true |
-
 ## Details
 
 An accordion menu contains several panels of content, only one of which is visible at any time. The
@@ -69,9 +60,7 @@ the following example:
 
 ![how-create-accordion-menu](docassets/images/how-to-create-accordion-menu.png)
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
 ## See also
 
-- [Accordion group component](accordion-group.component.md)
-<!-- seealso end -->
+-   [Accordion group component](accordion-group.component.md)
+

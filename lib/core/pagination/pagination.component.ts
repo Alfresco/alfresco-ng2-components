@@ -24,7 +24,8 @@ import {
     Output,
     ViewEncapsulation,
     ChangeDetectorRef,
-    OnDestroy
+    OnDestroy,
+    HostBinding
 } from '@angular/core';
 
 import { Pagination } from 'alfresco-js-api';
@@ -132,6 +133,11 @@ export class PaginationComponent implements OnInit, OnDestroy {
 
     get hasItems(): boolean {
         return this.pagination && this.pagination.count > 0;
+    }
+
+    @HostBinding('class.adf-pagination__empty')
+    get isEmpty(): boolean {
+        return !this.hasItems;
     }
 
     get range(): number[] {

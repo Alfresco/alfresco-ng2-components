@@ -6,31 +6,23 @@ Displays data as a table with customizable columns and presentation.
 
 See it live: [DataTable Quickstart](https://embed.plnkr.co/80qr4YFBeHjLMdAV0F6l/)
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
+## Contents
 
-<!-- toc -->
+-   [Basic usage](#basic-usage)
 
-- [Basic usage](#basic-usage)
-  * [Properties](#properties)
-  * [Events](#events)
-- [Details](#details)
-  * [Supplying data for the table](#supplying-data-for-the-table)
-  * [Customizing columns](#customizing-columns)
-  * [DataTable DOM Events](#datatable-dom-events)
-  * [Custom Empty content template](#custom-empty-content-template)
-  * [Loading content template](#loading-content-template)
-  * [Events](#events-1)
-    + [row-keyup DOM event](#row-keyup-dom-event)
-    + [rowClick event](#rowclick-event)
-    + [rowDblClick event](#rowdblclick-event)
-    + [showRowContextMenu event](#showrowcontextmenu-event)
-    + [showRowActionsMenu event](#showrowactionsmenu-event)
-    + [executeRowAction event](#executerowaction-event)
-- [See also](#see-also)
+    -   [Properties](#properties)
+    -   [Events](#events)
 
-<!-- tocstop -->
+-   [Details](#details)
 
-<!-- markdown-toc end -->
+    -   [Supplying data for the table](#supplying-data-for-the-table)
+    -   [Customizing columns](#customizing-columns)
+    -   [DataTable DOM Events](#datatable-dom-events)
+    -   [Custom Empty content template](#custom-empty-content-template)
+    -   [Loading content template](#loading-content-template)
+    -   [Events](#events-1)
+
+-   [See also](#see-also)
 
 ## Basic usage
 
@@ -127,26 +119,26 @@ export class DataTableDemo {
 ### Properties
 
 | Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| selectionMode | string | 'single' | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows.  |
-| rowStyle | string | | The inline style to apply to every row, see [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html) docs for more details and usage examples |
-| rowStyleClass | string | | The CSS class to apply to every row |
+| ---- | ---- | ------- | ----------- |
+| selectionMode | string | 'single' | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
+| rowStyle | string |  | The inline style to apply to every row, see [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html) docs for more details and usage examples |
+| rowStyleClass | string |  | The CSS class to apply to every row |
 | data | DataTableAdapter | instance of **ObjectDataTableAdapter** | data source |
-| rows | Object[] | [] | The rows that the datatable should show |
+| rows | Object\[] | \[] | The rows that the datatable should show |
 | multiselect | boolean | false | Toggles multiple row selection, renders checkboxes at the beginning of each row |
 | actions | boolean | false | Toggles data actions column |
-| actionsPosition | string (left\|right) | right | Position of the actions dropdown menu. | 
-| fallbackThumbnail | string |  | Fallback image for row where thumbnail is missing|
+| actionsPosition | string (left\|right) | right | Position of the actions dropdown menu. |
+| fallbackThumbnail | string |  | Fallback image for row where thumbnail is missing |
 | contextMenu | boolean | false | Toggles custom context menu for the component |
 | allowDropFiles | boolean | false | Toggle file drop support for rows (see **ng2-alfresco-core/UploadDirective** for more details) |
-| loading | boolean | false | Flag that indicates if the datatable is in loading state and needs to show the loading template. Read the documentation above to see how to configure a loading template  |
+| loading | boolean | false | Flag that indicates if the datatable is in loading state and needs to show the loading template. Read the documentation above to see how to configure a loading template |
 | showHeader | boolean | true | Toggles header visibility |
-| selection | DataRow[] | [] | Contains selected rows |
+| selection | DataRow\[] | \[] | Contains selected rows |
 
 ### Events
 
-| Name | Description
-| --- | --- |
+| Name | Description |
+| ---- | ----------- |
 | [rowClick](#rowclick-event) | Emitted when user clicks the row |
 | [rowDblClick](#rowdblclick-event) | Emitted when user double-clicks the row |
 | [showRowContextMenu](#showrowcontextmenu-event) | Emitted before context menu is displayed for a row |
@@ -174,12 +166,12 @@ Below are the DOM events raised by DataTable component.
 These events bubble up the component tree and can be handled by any parent component.
 
 | Name | Description |
-| --- | --- |
+| ---- | ----------- |
 | row-click | Raised when user clicks a row |
 | row-dblclick | Raised when user double-clicks a row |
 | row-select | Raised after user selects a row |
 | row-unselect | Raised after user unselects a row |
-| row-keyup | Raised on the 'keyup' event for the focused row.  |
+| row-keyup | Raised on the 'keyup' event for the focused row. |
 
 For example:
 
@@ -250,8 +242,8 @@ You can use any HTML layout or Angular component as a content of the empty templ
 </adf-datatable>
 ```
 
-| Name | Type | Default | Description
-| --- | --- | --- | --- |
+| Name | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
 | emptyListImageUrl | String | empty_doc_lib.svg | The default image used as background |
 | emptyMsg | String | This list is empty | The default title message |
 | dragDropMsg | String | Drag and drop | The default drag and drop message |
@@ -462,11 +454,13 @@ where you can handle the process, inspect the action payload and all custom prop
 and do corresponding actions.
 
 <!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
+
 <!-- seealso start -->
+
 ## See also
 
-- [Data column component](data-column.component.md)
-- [Pagination component](pagination.component.md)
-- [DataTableAdapter](DataTableAdapter.md)
-- [Document list component](document-list.component.md)
-<!-- seealso end -->
+-   [Data column component](data-column.component.md)
+-   [Pagination component](pagination.component.md)
+-   [DataTableAdapter](DataTableAdapter.md)
+-   [Document list component](document-list.component.md)
+    <!-- seealso end -->

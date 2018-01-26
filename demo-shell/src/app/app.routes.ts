@@ -29,6 +29,7 @@ import { FormViewerComponent } from './components/process-service/form-viewer.co
 import { FormNodeViewerComponent } from './components/process-service/form-node-viewer.component';
 import { AppsViewComponent } from './components/process-service/apps-view.component';
 import { SearchResultComponent } from './components/search/search-result.component';
+import { SearchExtendedComponent } from './components/search/search-extended.component';
 
 import { DataTableComponent } from './components/datatable/datatable.component';
 import { WebscriptComponent } from './components/webscript/webscript.component';
@@ -42,11 +43,16 @@ import { FileViewComponent } from './components/file-view/file-view.component';
 import { CustomSourcesComponent } from './components/files/custom-sources.component';
 import { FormListComponent } from './components/form/form-list.component';
 import { OverlayViewerComponent } from './components/overlay-viewer/overlay-viewer.component';
+import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'settings', component: SettingsComponent },
     { path: 'files/:nodeId/view', component: FileViewComponent, canActivate: [ AuthGuardEcm ] },
+    {
+        path: 'preview/s/:id',
+        component: SharedLinkViewComponent
+    },
     {
         path: '',
         component: AppLayoutComponent,
@@ -88,6 +94,11 @@ export const appRoutes: Routes = [
             {
                 path: 'search',
                 component: SearchResultComponent,
+                canActivate: [AuthGuardEcm]
+            },
+            {
+                path: 'extendedSearch',
+                component: SearchExtendedComponent,
                 canActivate: [AuthGuardEcm]
             },
             {

@@ -28,6 +28,7 @@ import { UserPreferencesService } from './user-preferences.service';
 describe('UserPreferencesService', () => {
 
     const defaultPaginationSize: number = 10;
+    const supportedPaginationSize = [5, 10, 15, 20];
     let preferences: UserPreferencesService;
     let storage: StorageService;
     let appConfig: AppConfigService;
@@ -55,7 +56,8 @@ describe('UserPreferencesService', () => {
         appConfig = TestBed.get(AppConfigService);
         appConfig.config = {
             pagination: {
-                size: 10
+                'size': 10,
+                'supportedPageSizes': [ 5, 10, 15, 20 ]
             }
         };
         preferences = TestBed.get(UserPreferencesService);
@@ -64,7 +66,12 @@ describe('UserPreferencesService', () => {
     });
 
     it('should get default pagination from app config', () => {
-        expect(preferences.paginationSize).toBe(defaultPaginationSize);
+        expect(preferences.defaults.paginationSize).toBe(defaultPaginationSize);
+    });
+
+    it('should return supported page sizes defined in the app config', () => {
+        const supportedPages = preferences.getDifferentPageSizes();
+        expect(supportedPages).toEqual(supportedPaginationSize);
     });
 
     it('should use [GUEST] as default storage prefix', () => {

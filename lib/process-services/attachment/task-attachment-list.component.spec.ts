@@ -331,9 +331,11 @@ describe('Custom CustomEmptyTemplateComponent', () => {
     });
 
     it('should render the custom template', () => {
-        fixture.detectChanges();
-        let title: any = fixture.debugElement.queryAll(By.css('[adf-empty-list-header]'));
-        expect(title.length).toBe(1);
-        expect(title[0].nativeElement.innerText).toBe('Custom header');
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            let title: any = fixture.debugElement.queryAll(By.css('[adf-empty-list-header]'));
+            expect(title.length).toBe(1);
+            expect(title[0].nativeElement.innerText).toBe('Custom header');
+        });
     });
 });

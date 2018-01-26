@@ -1,25 +1,4 @@
 {
-  "FORM": {
-    "START_FORM": {
-      "TITLE": "Start skjema"
-    },
-    "PREVIEW": {
-      "IMAGE_NOT_AVAILABLE": "Forhåndsvisning ikke tilgjengelig"
-    },
-    "FIELD": {
-      "UPLOAD": "Laster opp",
-      "REQUIRED": "*Påkrevd",
-      "VALIDATOR": {
-        "INVALID_NUMBER": "Bruk et annet nummerformat",
-        "INVALID_DATE": "Bruk et annet datoformat",
-        "INVALID_VALUE": "Angi en annen verdi",
-        "NOT_GREATER_THAN": "Kan ikke være større enn {{ maxValue }}",
-        "NOT_LESS_THAN": "Kan ikke være mindre enn {{ minValue }}",
-        "AT_LEAST_LONG": "Angi minst {{ minLength }} tegn",
-        "NO_LONGER_THAN": "Ikke angi flere enn {{ maxLength }} tegn"
-      }
-    }
-  },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "Denne mappen er tom"
@@ -62,7 +41,8 @@
     "CHOOSE": "Velg",
     "COPY": "Kopier",
     "MOVE": "Flytt",
-    "NO_RESULTS": "Ingen resultater funnet"
+    "NO_RESULTS": "Ingen resultater funnet",
+    "SELECT_LOCATION": "Velg plassering"
   },
   "OPERATION": {
     "SUCCES": {
@@ -184,5 +164,20 @@
   },
   "PERMISSON": {
     "LACKOF": "Du har ikke {{permission}} tillatelsen til å {{action}} {{type}}"
+  },
+  "METADATA": {
+    "BASIC": {
+      "HEADER": "Egenskaper",
+      "NAME": "Navn",
+      "TITLE": "Tittel",
+      "DESCRIPTION": "Beskrivelse",
+      "AUTHOR": "Forfatter",
+      "MIMETYPE": "Mimetype",
+      "SIZE": "Størrelse",
+      "CREATOR": "Oppretter",
+      "CREATED_DATE": "Opprettelsesdato",
+      "MODIFIER": "Modifikator",
+      "MODIFIED_DATE": "Endringsdato"
+    }
   }
 }

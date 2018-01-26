@@ -65,8 +65,7 @@ import { PeopleModule } from './people/people.module';
         TaskListModule,
         AppsListModule,
         AttachmentModule,
-        PeopleModule,
-        MaterialModule
+        PeopleModule
     ]
 })
 export class ProcessModule {

@@ -36,48 +36,74 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
+    /* The id of the app. */
     @Input()
     appId: number;
 
+    /* The Instance Id of the process. */
     @Input()
     processInstanceId: string;
 
+    /* The Definition Key of the process. */
     @Input()
     processDefinitionKey: string;
 
+    /* Current state of the process. Possible values are: `completed`, `active`. */
     @Input()
     state: string;
 
+    /* The assignment of the process. Possible values are: "assignee" (the current user
+     * is the assignee), candidate (the current user is a task candidate", "group_x" (the task
+     * is assigned to a group where the current user is a member,
+     * no value(the current user is involved).
+     */
     @Input()
     assignment: string;
 
+    /* Define the sort order of the processes. Possible values are : `created-desc`,
+     * `created-asc`, `due-desc`, `due-asc`
+     */
     @Input()
     sort: string;
 
     @Input()
     name: string;
 
+    /* Define which task id should be selected after reloading. If the task id doesn't
+     * exist or nothing is passed then the first task will be selected.
+     */
     @Input()
     landingTaskId: string;
 
+    /* Data source object that represents the number and the type of the columns that
+     * you want to show.
+     */
     @Input()
     data: DataTableAdapter;
 
+    /* Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode,
+     * you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for
+     * multiple rows.
+     */
     @Input()
     selectionMode: string = 'single'; // none|single|multiple
 
     @Input()
     presetColumn: string;
 
+    /* Toggles multiple row selection, renders checkboxes at the beginning of each row */
     @Input()
     multiselect: boolean = false;
 
+    /* Emitted when a task in the list is clicked */
     @Output()
     rowClick: EventEmitter<string> = new EventEmitter<string>();
 
+    /* Emitted when rows are selected/unselected */
     @Output()
     rowsSelected: EventEmitter<any[]> = new EventEmitter<any[]>();
 
+    /* Emitted when the task list is loaded */
     @Output()
     success: EventEmitter<any> = new EventEmitter<any>();
 
@@ -88,9 +114,11 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
     selectedInstances: any[];
     layoutPresets = {};
 
+    /* The page number of the tasks to fetch. */
     @Input()
     page: number = 0;
 
+    /* The number of tasks to fetch. */
     @Input()
     size: number = DEFAULT_SIZE;
 
@@ -145,21 +173,11 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
      * If component is assigned with an empty data adater the default schema settings applied.
      */
     setupSchema(): void {
-        let schema: DataColumn[] = [];
-
-        if (this.columnList && this.columnList.columns && this.columnList.columns.length > 0) {
-            schema = this.columnList.columns.map(c => <DataColumn> c);
-        }
-
+        let schema = this.getSchema();
         if (!this.data) {
-            this.data = new ObjectDataTableAdapter([], schema.length > 0 ? schema :  this.presetColumn  ? this.getLayoutPreset(this.presetColumn) : this.getLayoutPreset());
-
-        } else {
-            if (schema && schema.length > 0) {
-                this.data.setColumns(schema);
-            } else if (this.data.getColumns().length === 0) {
-                this.presetColumn ? this.setupDefaultColumns(this.presetColumn) : this.setupDefaultColumns();
-            }
+            this.data = new ObjectDataTableAdapter([], schema);
+        } else if (this.data.getColumns().length === 0) {
+            this.data.setColumns(schema);
         }
     }
 
@@ -341,13 +359,6 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
         return new TaskQueryRequestRepresentationModel(requestNode);
     }
 
-    setupDefaultColumns(preset: string = 'default'): void {
-        if (this.data) {
-            const columns = this.getLayoutPreset(preset);
-            this.data.setColumns(columns);
-        }
-    }
-
     private loadLayoutPresets(): void {
         const externalSettings = this.appConfig.get('adf-task-list.presets', null);
 
@@ -356,10 +367,30 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
         } else {
             this.layoutPresets = taskPresetsDefaultModel;
         }
-
     }
 
-    private getLayoutPreset(name: string = 'default'): DataColumn[] {
-        return (this.layoutPresets[name] || this.layoutPresets['default']).map(col => new ObjectDataColumn(col));
+    getSchema(): any {
+        let customSchemaColumns = [];
+        customSchemaColumns = this.getSchemaFromConfig(this.presetColumn).concat(this.getSchemaFromHtml());
+        if (customSchemaColumns.length === 0) {
+            customSchemaColumns = this.getDefaultLayoutPreset();
+        }
+        return customSchemaColumns;
+    }
+
+    getSchemaFromHtml(): any {
+        let schema = [];
+        if (this.columnList && this.columnList.columns && this.columnList.columns.length > 0) {
+            schema = this.columnList.columns.map(c => <DataColumn> c);
+        }
+        return schema;
+    }
+
+    private getSchemaFromConfig(name: string): DataColumn[] {
+        return name ? (this.layoutPresets[name]).map(col => new ObjectDataColumn(col)) : [];
+    }
+
+    private getDefaultLayoutPreset(): DataColumn[] {
+        return (this.layoutPresets['default']).map(col => new ObjectDataColumn(col));
     }
 }

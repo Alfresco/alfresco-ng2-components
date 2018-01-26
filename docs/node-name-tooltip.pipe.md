@@ -1,21 +1,6 @@
 # Node Name Tooltip directive
 
-Formats the tooltip of the underlying Node based on the following rules:
-
-* if the *title* and *description* are missing, then the tooltip shows the *name*;
-* if the *title* is missing, then the tooltip shows the *name* and *description*;
-* if the *description* is missing, then the tooltip shows the *name* and *title*;
-* if *name* and *title*, *name* and *description*, or *title* and *description* are the same, then only a single line is displayed.
-
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
+Formats the tooltip for a Node.
 
 ## Basic Usage
 
@@ -29,9 +14,11 @@ Formats the tooltip of the underlying Node based on the following rules:
 </data-column>
 ```
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
+## Details
 
-## See also
+The tooltip is formatted according to the following rules:
 
-<!-- seealso end -->
+-   if the _title_ and _description_ are missing, then the tooltip shows the _name_;
+-   if the _title_ is missing, then the tooltip shows the _name_ and _description_;
+-   if the _description_ is missing, then the tooltip shows the _name_ and _title_;
+-   if _name_ and _title_, _name_ and _description_, or _title_ and _description_ are the same, then only a single line is displayed.

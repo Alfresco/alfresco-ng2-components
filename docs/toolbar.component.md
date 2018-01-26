@@ -4,22 +4,6 @@ Simple container for headers, titles, actions and breadcrumbs.
 
 ![](docassets/images/adf-toolbar-01.png)
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-  * [Properties](#properties)
-- [Details](#details)
-  * [Custom title](#custom-title)
-  * [Divider](#divider)
-  * [Dropdown menu](#dropdown-menu)
-  * [Custom color](#custom-color)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
-
 ## Basic Usage
 
 ```html
@@ -36,9 +20,9 @@ Simple container for headers, titles, actions and breadcrumbs.
 ### Properties
 
 | Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| title | string | | Toolbar title |
-| color | string | | Toolbar color, can be changed to empty value (default), `primary`, `accent` or `warn`. |
+| ---- | ---- | ------- | ----------- |
+| title | string |  | Toolbar title |
+| color | string |  | Toolbar color, can be changed to empty value (default), `primary`, `accent` or `warn`. |
 
 ## Details
 
@@ -121,3 +105,8 @@ For example:
 ![](docassets/images/adf-toolbar-06.png)
 
 ![](docassets/images/adf-toolbar-07.png)
+
+## See also
+
+-   [Toolbar Divider component](toolbar-divider.component.md)
+-   [Toolbar Title component](toolbar-title.component.md)

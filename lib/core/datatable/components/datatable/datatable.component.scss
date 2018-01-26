@@ -120,6 +120,7 @@
             color: $data-table-header-color;
             padding-bottom: 8px;
             box-sizing: border-box;
+            white-space: nowrap;
 
             &.sortable {
                 @include no-select;

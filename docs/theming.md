@@ -22,7 +22,7 @@ Available pre-built themes:
 
 If you're using Angular CLI you can include one of the prebuilt theme in your `styles.scss` file:
 ```css
-@import '~ng2-alfresco-core/prebuilt-themes/adf-blue-orange.css';
+@import '~@alfresco/adf-core/prebuilt-themes/adf-blue-orange.css';
 ```
 Or you can add it directly in your index.html
 

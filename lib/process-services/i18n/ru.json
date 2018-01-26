@@ -176,8 +176,9 @@
     "PROPERTIES": {
       "PROCESS_NAME": "Процесс",
       "NAME": "Имя",
+      "THUMBNAIL": "Эскиз",
       "STATUS": "Статус",
-      "END_DATE": "Срок",
+      "END_DATE": "Дата окончания",
       "END_DATE_DEFAULT": "Нет срока",
       "CATEGORY": "Категория",
       "CATEGORY_DEFAULT": "Нет категории",
@@ -293,6 +294,21 @@
         "NAME": "Имя",
         "CREATED-ON": "Дата создания"
       }
+    }
+  },
+  "ADF_SIDEBAR_ACTION_MENU": {
+    "BUTTON": {
+      "CREATE": "Создать",
+      "NEW_TASK": "Новая задача",
+      "NEW_PROCESS": "Новый процесс"
+    }
+  },
+  "APP": {
+    "DIALOG": {
+      "START": "Начать",
+      "TITLE": "Выбрать процесс",
+      "LIST": "Список процессов",
+      "ERROR": "Возникла проблема при подключении к Process Services"
     }
   }
 }

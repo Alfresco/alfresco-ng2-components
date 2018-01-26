@@ -153,7 +153,7 @@ describe('DropdownSitesComponent', () => {
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(fixture.nativeElement.innerText.trim()).toBe('DROPDOWN.PLACEHOLDER_LABEL');
+                expect(fixture.nativeElement.innerText.trim()).toContain('DROPDOWN.PLACEHOLDER_LABEL');
             });
         }));
 
@@ -166,12 +166,30 @@ describe('DropdownSitesComponent', () => {
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(fixture.nativeElement.innerText.trim()).toBe('NODE_SELECTOR.SELECT_LOCATION');
+                expect(fixture.nativeElement.innerText.trim()).toContain('NODE_SELECTOR.SELECT_LOCATION');
             });
         }));
 
         it('should load custom sites when the \'siteList\' input property is given a value', async(() => {
-            component.siteList = [{title: 'PERSONAL_FILES', guid: '-my-'}, {title: 'FILE_LIBRARIES', guid: '-mysites-'}];
+            component.siteList = {
+                'list': {
+                    'entries': [
+                        {
+                            'entry': {
+                                'guid': '-my-',
+                                'title': 'PERSONAL_FILES'
+                            }
+                        },
+                        {
+                            'entry': {
+                                'guid': '-mysites-',
+                                'title': 'FILE_LIBRARIES'
+                            }
+                        }
+                    ]
+                }
+            };
+
             fixture.detectChanges();
 
             openSelectbox();
@@ -236,7 +254,7 @@ describe('DropdownSitesComponent', () => {
             });
 
             component.change.subscribe((site) => {
-                expect(site.guid).toBe('fake-1');
+                expect(site.entry.guid).toBe('fake-1');
                 done();
             });
         });

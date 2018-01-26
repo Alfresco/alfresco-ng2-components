@@ -5,9 +5,9 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 LANG_ROOT="./i18n"
 
 show_help() {
-    echo "Usage: import-langs.sh import the i18n files from a folder"
+    echo "Usage: import-langs.sh --input NAME_FOLDER import the i18n files from a folder"
     echo ""
-    echo "--output or -o to specify a folder otherwise it will be created in i18n"
+    echo "--input or -o to specify a folder otherwise it will be created in i18n"
 }
 
 input_folder(){

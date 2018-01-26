@@ -29,34 +29,34 @@ import { UserInfoComponent } from './user-info.component';
 
 class FakeSanitazer extends DomSanitizer {
 
-        constructor() {
-            super();
-        }
-
-        sanitize(html) {
-            return html;
-        }
-
-        bypassSecurityTrustHtml(value: string): any {
-            return value;
-        }
-
-        bypassSecurityTrustStyle(value: string): any {
-            return null;
-        }
-
-        bypassSecurityTrustScript(value: string): any {
-            return null;
-        }
-
-        bypassSecurityTrustUrl(value: string): any {
-            return null;
-        }
-
-        bypassSecurityTrustResourceUrl(value: string): any {
-            return null;
-        }
+    constructor() {
+        super();
     }
+
+    sanitize(html) {
+        return html;
+    }
+
+    bypassSecurityTrustHtml(value: string): any {
+        return value;
+    }
+
+    bypassSecurityTrustStyle(value: string): any {
+        return null;
+    }
+
+    bypassSecurityTrustScript(value: string): any {
+        return null;
+    }
+
+    bypassSecurityTrustUrl(value: string): any {
+        return null;
+    }
+
+    bypassSecurityTrustResourceUrl(value: string): any {
+        return null;
+    }
+}
 
 declare let jasmine: any;
 
@@ -119,7 +119,7 @@ describe('User info component', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'application/json',
-                responseText: JSON.stringify({entry: fakeEcmEditedUser})
+                responseText: JSON.stringify({ entry: fakeEcmEditedUser })
             });
 
             fixture.whenStable().then(() => {
@@ -141,7 +141,7 @@ describe('User info component', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'application/json',
-                responseText: JSON.stringify({entry: fakeEcmEditedUser})
+                responseText: JSON.stringify({ entry: fakeEcmEditedUser })
             });
 
             fixture.whenStable().then(() => {
@@ -157,7 +157,7 @@ describe('User info component', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'application/json',
-                responseText: JSON.stringify({entry: fakeEcmEditedUser})
+                responseText: JSON.stringify({ entry: fakeEcmEditedUser })
             });
 
             fixture.whenStable().then(() => {
@@ -171,7 +171,7 @@ describe('User info component', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'application/json',
-                responseText: JSON.stringify({entry: fakeEcmEditedUser})
+                responseText: JSON.stringify({ entry: fakeEcmEditedUser })
             });
 
             fixture.whenStable().then(() => {
@@ -186,7 +186,7 @@ describe('User info component', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'application/json',
-                responseText: JSON.stringify({entry: fakeEcmEditedUser})
+                responseText: JSON.stringify({ entry: fakeEcmEditedUser })
             });
 
             fixture.whenStable().then(() => {
@@ -203,7 +203,7 @@ describe('User info component', () => {
                 jasmine.Ajax.requests.mostRecent().respondWith({
                     status: 200,
                     contentType: 'application/json',
-                    responseText: JSON.stringify({entry: fakeEcmUser})
+                    responseText: JSON.stringify({ entry: fakeEcmUser })
                 });
             }));
 
@@ -262,7 +262,7 @@ describe('User info component', () => {
                 jasmine.Ajax.requests.mostRecent().respondWith({
                     status: 200,
                     contentType: 'application/json',
-                    responseText: JSON.stringify({entry: fakeEcmUserNoImage})
+                    responseText: JSON.stringify({ entry: fakeEcmUserNoImage })
                 });
                 fixture.whenStable().then(() => fixture.detectChanges());
             }));
@@ -418,19 +418,22 @@ describe('User info component', () => {
     describe('when user is logged on bpm and ecm', () => {
 
         beforeEach(async(() => {
+
+        }));
+
+        beforeEach(async(() => {
             spyOn(stubAuthService, 'isEcmLoggedIn').and.returnValue(true);
             spyOn(stubAuthService, 'isBpmLoggedIn').and.returnValue(true);
             spyOn(stubAuthService, 'isLoggedIn').and.returnValue(true);
             spyOn(stubContent, 'getContentUrl').and.returnValue('src/assets/images/ecmImg.gif');
             jasmine.Ajax.install();
-        }));
 
-        beforeEach(async(() => {
             fixture.detectChanges();
+
             jasmine.Ajax.requests.first().respondWith({
                 status: 200,
                 contentType: 'application/json',
-                responseText: JSON.stringify({entry: fakeEcmUser})
+                responseText: JSON.stringify({ entry: fakeEcmUser })
             });
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -441,8 +444,10 @@ describe('User info component', () => {
 
         beforeEach(() => {
             fixture.detectChanges();
+
             let imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#logged-user-img');
             imageButton.click();
+
             fixture.detectChanges();
         });
 
@@ -457,24 +462,28 @@ describe('User info component', () => {
             let bpmUsername = fixture.debugElement.query(By.css('#bpm-username'));
             let bpmImage = fixture.debugElement.query(By.css('#bpm-user-detail-image'));
 
-            expect(element.querySelector('#userinfo_container')).not.toBeNull();
-            expect(bpmUsername).not.toBeNull();
-            expect(bpmImage).not.toBeNull();
-            expect(bpmImage.properties.src).toContain('app/rest/admin/profile-picture');
-            expect(bpmUsername.nativeElement.textContent).toContain('fake-bpm-first-name fake-bpm-last-name');
-            expect(fixture.debugElement.query(By.css('#bpm-tenant')).nativeElement.textContent).toContain('fake-tenant-name');
+            fixture.whenStable().then(() => {
+                expect(element.querySelector('#userinfo_container')).not.toBeNull();
+                expect(bpmUsername).not.toBeNull();
+                expect(bpmImage).not.toBeNull();
+                expect(bpmImage.properties.src).toContain('app/rest/admin/profile-picture');
+                expect(bpmUsername.nativeElement.textContent).toContain('fake-bpm-first-name fake-bpm-last-name');
+                expect(fixture.debugElement.query(By.css('#bpm-tenant')).nativeElement.textContent).toContain('fake-tenant-name');
+            });
         });
 
         it('should get the ecm user informations from the service', () => {
             let ecmUsername = fixture.debugElement.query(By.css('#ecm-username'));
             let ecmImage = fixture.debugElement.query(By.css('#ecm-user-detail-image'));
 
-            expect(element.querySelector('#userinfo_container')).toBeDefined();
-            expect(ecmUsername).not.toBeNull();
-            expect(ecmImage).not.toBeNull();
-            expect(ecmImage.properties.src).toContain('assets/images/ecmImg.gif');
-            expect(fixture.debugElement.query(By.css('#ecm-full-name')).nativeElement.textContent).toContain('fake-ecm-first-name fake-ecm-last-name');
-            expect(fixture.debugElement.query(By.css('#ecm-job-title')).nativeElement.textContent).toContain('job-ecm-test');
+            fixture.whenStable().then(() => {
+                expect(element.querySelector('#userinfo_container')).toBeDefined();
+                expect(ecmUsername).not.toBeNull();
+                expect(ecmImage).not.toBeNull();
+                expect(ecmImage.properties.src).toContain('assets/images/ecmImg.gif');
+                expect(fixture.debugElement.query(By.css('#ecm-full-name')).nativeElement.textContent).toContain('fake-ecm-first-name fake-ecm-last-name');
+                expect(fixture.debugElement.query(By.css('#ecm-job-title')).nativeElement.textContent).toContain('job-ecm-test');
+            });
         });
 
         it('should show the ecm image if exists', () => {

@@ -1,6 +1,7 @@
 # Activiti Alfresco Content Service
 
-Get Alfresco Repository folder content based on a Repository account configured in Alfresco Process Services (APS). 
+Gets Alfresco Repository folder content based on a Repository account configured in Alfresco Process Services (APS).
+
 It is possible to configure multiple Alfresco Repository accounts in APS (i.e. multiple Alfresco Servers).
 This service can also be used to link Alfresco content as related content in APS. 
 Content such as documents and other files can be attached to Process Instances 

@@ -91,10 +91,13 @@ export class ProcessFilterService {
                     let filters: FilterProcessRepresentationModel[] = [];
                     res.forEach((filter) => {
                         if (filter.name === runningFilter.name) {
+                            runningFilter.id = filter.id;
                             filters.push(runningFilter);
                         } else if (filter.name === completedFilter.name) {
+                            completedFilter.id = filter.id;
                             filters.push(completedFilter);
                         } else if (filter.name === allFilter.name) {
+                            allFilter.id = filter.id;
                             filters.push(allFilter);
                         }
                     });
