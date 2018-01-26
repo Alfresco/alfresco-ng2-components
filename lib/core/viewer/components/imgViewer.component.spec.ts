@@ -22,6 +22,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { ContentService } from '../../services/content.service';
 import { SettingsService } from '../../services/settings.service';
 import { MaterialModule } from '../../material.module';
+import { ToolbarModule } from '../../toolbar/toolbar.module';
 
 import { ImgViewerComponent } from './imgViewer.component';
 
@@ -40,7 +41,8 @@ describe('Test Img viewer component ', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                MaterialModule
+                MaterialModule,
+                ToolbarModule
             ],
             declarations: [ImgViewerComponent],
             providers: [
