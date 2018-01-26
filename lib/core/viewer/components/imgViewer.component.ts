@@ -22,10 +22,13 @@ import { ContentService } from '../../services/content.service';
     selector: 'adf-img-viewer',
     templateUrl: './imgViewer.component.html',
     styleUrls: ['./imgViewer.component.scss'],
-    host: { 'class': 'adf-img-viewer' },
+    host: { 'class': 'adf-image-viewer' },
     encapsulation: ViewEncapsulation.None
 })
 export class ImgViewerComponent implements OnChanges {
+
+    @Input()
+    showToolbar = true;
 
     @Input()
     urlFile: string;
@@ -35,6 +38,14 @@ export class ImgViewerComponent implements OnChanges {
 
     @Input()
     nameFile: string;
+
+    rotate: number = 0;
+    scaleX: number = 1.0;
+    scaleY: number = 1.0;
+
+    get transform(): string {
+        return `scale(${this.scaleX}, ${this.scaleY}) rotate(${this.rotate}deg)`
+    }
 
     constructor(private contentService: ContentService) {}
 
@@ -47,5 +58,32 @@ export class ImgViewerComponent implements OnChanges {
         if (!this.urlFile && !this.blobFile) {
             throw new Error('Attribute urlFile or blobFile is required');
         }
+    }
+
+    zoomIn() {
+        const ratio = +((this.scaleX + 0.2).toFixed(1));
+        this.scaleX = this.scaleY = ratio;
+    }
+
+    zoomOut() {
+        let ratio = +((this.scaleX - 0.2).toFixed(1));
+        if (ratio < 0.2) {
+            ratio = 0.2;
+        }
+        this.scaleX = this.scaleY = ratio;
+    }
+
+    rotateLeft() {
+        const angle = this.rotate - 90;
+        this.rotate = Math.abs(angle) < 360 ? angle : 0;
+    }
+
+    rotateRight() {
+        const angle = this.rotate + 90;
+        this.rotate = Math.abs(angle) < 360 ? angle : 0;
+    }
+
+    flip() {
+        this.scaleX *= -1;
     }
 }

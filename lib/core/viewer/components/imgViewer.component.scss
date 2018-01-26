@@ -1,14 +1,33 @@
-.adf-img-viewer {
-    .image-container {
-        display: flex;
-        flex: 1;
-        text-align: center;
-        flex-direction: row;
-        justify-content: center;
-        height: 90vh;
-        img {
-            width: 100%;
-            object-fit: contain;
+@mixin adf-image-viewer-theme($theme) {
+    .adf-image-viewer {
+        .image-container {
+            display: flex;
+            flex: 1;
+            text-align: center;
+            flex-direction: row;
+            justify-content: center;
+            height: 90vh;
+            img {
+                width: 100%;
+                object-fit: contain;
+            }
+        }
+
+        &__toolbar {
+            position: absolute;
+            bottom: 5px;
+
+            left: 50%;
+            transform: translateX(-50%);
+
+            .adf-toolbar .mat-toolbar {
+                max-height: 48px;
+                background-color: mat-color($primary, default-contrast, 1);
+                border-width: 0;
+                border-radius: 2px;
+                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12);
+            }
+
         }
     }
 }

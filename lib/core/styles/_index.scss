@@ -19,6 +19,7 @@
 @import '../viewer/components/viewer.component';
 @import '../viewer/components/pdfViewer.component';
 @import '../viewer/components/txtViewer.component';
+@import '../viewer/components/imgViewer.component';
 @import '../form/components/form.component';
 @import '../sidebar/sidebar-action-menu.component';
 
@@ -41,6 +42,7 @@
     @include adf-userinfo-theme($theme);
     @include adf-viewer-theme($theme);
     @include adf-pdf-viewer-theme($theme);
+    @include adf-image-viewer-theme($theme);
     @include adf-text-viewer-theme($theme);
     @include adf-form-component-theme($theme);
     @include adf-sidebar-action-menu-theme($theme);
