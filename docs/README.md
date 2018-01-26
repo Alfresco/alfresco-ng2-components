@@ -273,6 +273,7 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Filter model](filter.model.md) | Contains classes related to filters in Process Services. | [Source](../lib/process-services/task-list/models/filter.model.ts) |
+| [Task details model](task-details.model.md) | Information about a task. | [Source](../lib/process-services/task-list/models/task-details.model.ts) |
 
 ## Services
 

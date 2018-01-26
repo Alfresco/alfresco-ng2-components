@@ -43,7 +43,7 @@ Contains the value and metadata for a field of an [ADF Form](form.component.md).
 | fields | FormFieldModel\[] | \[] | Fields contained within a container field |
 | columns | ContainerColumnModel\[] | \[] | Column definitions for a container field |
 | emptyOption | FormFieldOption |  | Dropdown menu item to use when no option is chosen |
-| validationSummary | string |  | Error/information message added during field validation (see [FormFieldValidator](FormFieldValidator) interface) |
+| validationSummary | string |  | Error/information message added during field validation (see [FormFieldValidator](FormFieldValidator.md) interface) |
 
 ## Details
 
