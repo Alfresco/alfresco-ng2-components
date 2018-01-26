@@ -22,7 +22,7 @@ import { ContentNodeSelectorService } from './content-node-selector.service';
 
 class SearchServiceMock {
     public query: QueryBody;
-    search(query: QueryBody) {
+    searchByQueryBody(query: QueryBody) {
         this.query = query;
     }
 }

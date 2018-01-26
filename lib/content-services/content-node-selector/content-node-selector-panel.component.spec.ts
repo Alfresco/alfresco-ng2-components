@@ -124,7 +124,7 @@ describe('ContentNodeSelectorComponent', () => {
             component.debounceSearch = 0;
 
             searchService = TestBed.get(SearchService);
-            searchSpy = spyOn(searchService, 'search').and.callFake(() => {
+            searchSpy = spyOn(searchService, 'searchByQueryBody').and.callFake(() => {
                 return Observable.create((observer: Observer<NodePaging>) => {
                     _observer = observer;
                 });
@@ -301,7 +301,7 @@ describe('ContentNodeSelectorComponent', () => {
                 typeToSearchBox('kakarot');
 
                 setTimeout(() => {
-                    expect(searchSpy).toHaveBeenCalledWith(defaultSearchOptions('kakarot'), '25', '0');
+                    expect(searchSpy).toHaveBeenCalledWith(defaultSearchOptions('kakarot'));
                     done();
                 }, 300);
             });
@@ -325,7 +325,7 @@ describe('ContentNodeSelectorComponent', () => {
                     component.siteChanged(<SiteEntry> { entry: { guid: 'namek' } });
 
                     expect(searchSpy.calls.count()).toBe(2, 'Search count should be two after the site change');
-                    expect(searchSpy.calls.argsFor(1)).toEqual([defaultSearchOptions('vegeta', 'namek'), '25', '0'] );
+                    expect(searchSpy.calls.argsFor(1)).toEqual([defaultSearchOptions('vegeta', 'namek')] );
                     done();
                 }, 300);
             });
@@ -523,7 +523,7 @@ describe('ContentNodeSelectorComponent', () => {
 
                     component.getNextPageOfSearch({ skipCount });
 
-                    expect(searchSpy).toHaveBeenCalledWith(defaultSearchOptions('kakarot', undefined, skipCount), '25', skipCount.toString());
+                    expect(searchSpy).toHaveBeenCalledWith(defaultSearchOptions('kakarot', undefined, skipCount));
                 });
 
                 it('should be shown when pagination\'s hasMoreItems is true', () => {
