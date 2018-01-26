@@ -42,8 +42,6 @@ Starts a process.
 ```
 
 If your app has more than one process definition, with the property processDefinitionName you can select as dropdown default value your PROCESS_DEFINITION_NAME. The name will be the PROCESS_NAME.
-You can configure the processDefinitionName value in your custom `app.config.json`
-You can configure the process name value in your custom `app.config.json`
 
 ### Start a process not included in an app
 
@@ -54,7 +52,6 @@ You can configure the process name value in your custom `app.config.json`
 ```
 
 With the property processDefinitionName you can select as dropdown default value your PROCESS_DEFINITION_NAME. 
-You can configure the processDefinitionName values in your custom `app.config.json`
 
 
 ### Custom data example
