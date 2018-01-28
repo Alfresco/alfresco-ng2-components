@@ -22,7 +22,7 @@ import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import { ShareDataRow } from '../document-list/data/share-data-row.model';
 import { MinimalNodeEntryEntity, SitePaging } from 'alfresco-js-api';
-import { DataColumn, SitesService } from '@alfresco/adf-core';
+import { DataColumn, SitesService, TranslationService } from '@alfresco/adf-core';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
 import { ContentNodeSelectorComponentData } from './content-node-selector.component-data.interface';
@@ -33,7 +33,8 @@ export class ContentNodeDialogService {
     constructor(private dialog: MatDialog,
                 private contentService: ContentService,
                 private documentListService: DocumentListService,
-                private siteService: SitesService) { }
+                private siteService: SitesService,
+                private translation: TranslationService) { }
 
     openFileBrowseDialogByFolderId(folderNodeId: string): Observable<MinimalNodeEntryEntity[]> {
         return Observable.fromPromise(this.documentListService.getFolderNode(folderNodeId))
@@ -69,8 +70,10 @@ export class ContentNodeDialogService {
                 complete: this.close.bind(this)
             });
 
+            const title = this.getTitleTranslation(action, contentEntry.name);
+
             const data: ContentNodeSelectorComponentData = {
-                title: `${action} '${contentEntry.name}' to ...`,
+                title: title,
                 actionName: action,
                 currentFolderId: contentEntry.parentId,
                 imageResolver: this.imageResolver.bind(this),
@@ -86,6 +89,10 @@ export class ContentNodeDialogService {
             let errors = new Error(JSON.stringify({ error: { statusCode: 403 } } ));
             return Observable.throw(errors);
         }
+    }
+
+    getTitleTranslation(action: string, name: string): string {
+        return this.translation.instant(`NODE_SELECTOR.${action.toUpperCase()}_ITEM`, {name});
     }
 
     openUploadFolderDialog(action: string, contentEntry: MinimalNodeEntryEntity): Observable<MinimalNodeEntryEntity[]> {
