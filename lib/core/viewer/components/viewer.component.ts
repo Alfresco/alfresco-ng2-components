@@ -17,7 +17,7 @@
 
 import { Location } from '@angular/common';
 import {
-    Component, ContentChild, EventEmitter, HostListener,
+    Component, ContentChild, EventEmitter, HostListener, ElementRef,
     Input, OnChanges, Output, SimpleChanges, TemplateRef, ViewEncapsulation
 } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
@@ -91,6 +91,18 @@ export class ViewerComponent implements OnChanges {
     allowShare = false;
 
     @Input()
+    allowFullScreen = true;
+
+    @Input()
+    allowNavigate = false;
+
+    @Input()
+    canNavigateBefore = true;
+
+    @Input()
+    canNavigateNext = true;
+
+    @Input()
     allowSidebar = false;
 
     @Input()
@@ -129,6 +141,12 @@ export class ViewerComponent implements OnChanges {
     @Output()
     extensionChange = new EventEmitter<string>();
 
+    @Output()
+    navigateBefore = new EventEmitter();
+
+    @Output()
+    navigateNext = new EventEmitter();
+
     viewerType = 'unknown';
     isLoading = false;
     node: MinimalNodeEntryEntity;
@@ -143,7 +161,7 @@ export class ViewerComponent implements OnChanges {
     private extensions = {
         image: ['png', 'jpg', 'jpeg', 'gif', 'bpm'],
         media: ['wav', 'mp4', 'mp3', 'webm', 'ogg'],
-        text: ['txt', 'xml', 'js', 'html', 'json'],
+        text: ['txt', 'xml', 'js', 'html', 'json', 'ts'],
         pdf: ['pdf']
     };
 
@@ -155,7 +173,8 @@ export class ViewerComponent implements OnChanges {
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService,
                 private location: Location,
-                private renditionService: RenditionsService) {
+                private renditionService: RenditionsService,
+                private el: ElementRef) {
     }
 
     isSourceDefined(): boolean {
@@ -354,6 +373,14 @@ export class ViewerComponent implements OnChanges {
         }
     }
 
+    onNavigateBeforeClick() {
+        this.navigateBefore.next();
+    }
+
+    onNavigateNextClick() {
+        this.navigateNext.next();
+    }
+
     /**
      * close the viewer
      */
@@ -409,14 +436,34 @@ export class ViewerComponent implements OnChanges {
     }
 
     /**
-     * Litener Keyboard Event
+     * Keyboard event listener
      * @param {KeyboardEvent} event
      */
-    @HostListener('document:keydown', ['$event'])
+    @HostListener('document:keyup', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
-        let key = event.keyCode;
+        const key = event.keyCode;
+
+        // Esc
         if (key === 27 && this.overlayMode) { // esc
             this.close();
+        }
+
+        // Left arrow
+        if (key === 37 && this.canNavigateBefore) {
+            event.preventDefault();
+            this.onNavigateBeforeClick();
+        }
+
+        // Right arrow
+        if (key === 39 && this.canNavigateNext) {
+            event.preventDefault();
+            this.onNavigateNextClick();
+        }
+
+        // Ctrl+F
+        if (key === 70 && event.ctrlKey) {
+            event.preventDefault();
+            this.enterFullScreen();
         }
     }
 
@@ -450,6 +497,26 @@ export class ViewerComponent implements OnChanges {
         if (this.allowShare) {
             const args = new BaseEvent();
             this.share.next(args);
+        }
+    }
+
+    /**
+     * Triggers full screen mode with a main content area displayed.
+     */
+    enterFullScreen(): void {
+        if (this.allowFullScreen) {
+            const container = this.el.nativeElement.querySelector('.adf-viewer__fullscreen-container');
+            if (container) {
+                if (container.requestFullscreen) {
+                    container.requestFullscreen();
+                } else if (container.webkitRequestFullscreen) {
+                    container.webkitRequestFullscreen();
+                } else if (container.mozRequestFullScreen) {
+                    container.mozRequestFullScreen();
+                } else if (container.msRequestFullscreen) {
+                    container.msRequestFullscreen();
+                }
+            }
         }
     }
 

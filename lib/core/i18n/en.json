@@ -187,7 +187,8 @@
       "PRINT": "Print",
       "SHARE": "Share",
       "MORE_ACTIONS": "More actions",
-      "INFO": "Info"
+      "INFO": "Info",
+      "FULLSCREEN": "Activate full-screen mode"
     },
     "ARIA": {
       "PREVIOUS_PAGE": "Previous page",

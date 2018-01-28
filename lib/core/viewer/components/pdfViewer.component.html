@@ -44,7 +44,9 @@
             <span>{{ 'ADF_VIEWER.PAGE_LABEL.OF' | translate }} {{ totalPages }}</span>
         </div>
 
-        <adf-toolbar-divider></adf-toolbar-divider>
+        <div class="adf-pdf-viewer__toolbar-page-scale">
+            {{ currentScaleText }}
+        </div>
 
         <button
             id="viewer-zoom-in-button"
