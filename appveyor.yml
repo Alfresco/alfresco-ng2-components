@@ -9,10 +9,10 @@ environment:
   nodejs_version: "8"
 
   matrix:
-  - COMPONENT_NAME: core
-  - COMPONENT_NAME: process-service
-  - COMPONENT_NAME: content-service
-  - COMPONENT_NAME: insights
+    - COMPONENT_NAME: process-service
+    - COMPONENT_NAME: content-service
+    - COMPONENT_NAME: core
+    - COMPONENT_NAME: insights
 #  - COMPONENT_NAME: ng2-demo-shell
 
 # Install scripts. (runs after repo cloning)
@@ -53,3 +53,5 @@ install:
 
 # Don't actually build.
 build: off
+matrix:
+  fast_finish: true
