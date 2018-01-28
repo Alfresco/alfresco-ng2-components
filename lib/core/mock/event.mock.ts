@@ -24,6 +24,13 @@ export class EventMock {
         document.dispatchEvent(event);
     }
 
+    static keyUp(key: any) {
+        let event: any = document.createEvent('Event');
+        event.keyCode = key;
+        event.initEvent('keyup');
+        document.dispatchEvent(event);
+    }
+
     static resizeMobileView() {
         // todo: no longer compiles with TS 2.0.2 as innerWidth/innerHeight are readonly fields
         /*
