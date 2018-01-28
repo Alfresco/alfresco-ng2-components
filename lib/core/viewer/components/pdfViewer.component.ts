@@ -56,12 +56,16 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     loadingPercent: number;
     pdfViewer: any;
     currentScaleMode: string = 'auto';
-    currentScale: number;
+    currentScale: number = 1;
 
     MAX_AUTO_SCALE: number = 1.25;
     DEFAULT_SCALE_DELTA: number = 1.1;
     MIN_SCALE: number = 0.25;
     MAX_SCALE: number = 10.0;
+
+    get currentScaleText(): string {
+        return Math.round(this.currentScale * 100) + '%';
+    }
 
     constructor(private renderingQueueServices: RenderingQueueServices,
                 private logService: LogService) {
@@ -163,21 +167,21 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             let documentContainer = document.getElementById('viewer-pdf-container');
 
             let widthContainer;
-            let heigthContainer;
+            let heightContainer;
 
             if (viewerContainer && viewerContainer.clientWidth <= documentContainer.clientWidth) {
                 widthContainer = viewerContainer.clientWidth;
-                heigthContainer = viewerContainer.clientHeight;
+                heightContainer = viewerContainer.clientHeight;
             } else {
                 widthContainer = documentContainer.clientWidth;
-                heigthContainer = documentContainer.clientHeight;
+                heightContainer = documentContainer.clientHeight;
             }
 
             let currentPage = this.pdfViewer._pages[this.pdfViewer._currentPageNumber - 1];
 
             let padding = 20;
             let pageWidthScale = (widthContainer - padding) / currentPage.width * currentPage.scale;
-            let pageHeightScale = (heigthContainer - padding) / currentPage.width * currentPage.scale;
+            let pageHeightScale = (heightContainer - padding) / currentPage.width * currentPage.scale;
 
             let scale;
 
@@ -231,7 +235,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     /**
-     * method to check if the request scale of the page is the same for avoid unuseful re-rendering
+     * Check if the request scale of the page is the same for avoid useless re-rendering
      *
      * @param {number} oldScale - old scale page
      * @param {number} newScale - new scale page
@@ -243,7 +247,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     /**
-     * method to check if is a land scape view
+     * Check if is a land scape view
      *
      * @param {number} width
      * @param {number} height
