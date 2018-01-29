@@ -102,8 +102,8 @@ export class ImgViewerComponent implements OnInit, OnChanges, OnDestroy {
             this.drag.x = event.pageX;
             this.drag.y = event.pageY;
 
-            const scaleX = (this.scaleX != 0 ? this.scaleX : 1.0);
-            const scaleY = (this.scaleY != 0 ? this.scaleY : 1.0);
+            const scaleX = (this.scaleX !== 0 ? this.scaleX : 1.0);
+            const scaleY = (this.scaleY !== 0 ? this.scaleY : 1.0);
 
             this.offsetX += (this.delta.x / scaleX);
             this.offsetY += (this.delta.y / scaleY);
