@@ -14,12 +14,15 @@ Displays detailed information on a specified process instance
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| processInstanceId | string | (required): The numeric ID of the process instance to display |
+| processInstanceId | `string` | (required) The numeric ID of the process instance to display.  |
+| showTitle | `boolean` | Toggles whether to show or hide the title. <br/> Default value: `true` |
+| showRefreshButton | `boolean` | Toggles whether to show or hide the refresh button. <br/> Default value: `true` |
 
 ### Events
 
-| Name | Description |
-| ---- | ----------- |
-| processCancelledEmitter | Raised when the current process is cancelled by the user from within the component |
-| taskFormCompletedEmitter | Raised when the form associated with an active task is completed from within the component |
-| showProcessDiagram | Raised when the show diagram button is clicked |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| processCancelled | `EventEmitter<any>` | Emitted when the current process is cancelled by the user from within the component. |
+| error | `EventEmitter<any>` | Emitted when an error occurs. |
+| taskClick | `EventEmitter<TaskDetailsEvent>` | Emitted when a task is clicked. |
+| showProcessDiagram | `EventEmitter<any>` | Emitted when the "show diagram" button is clicked. |

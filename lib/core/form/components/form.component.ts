@@ -41,81 +41,109 @@ export class FormComponent implements OnInit, OnChanges {
     static COMPLETE_BUTTON_COLOR: string = 'primary';
     static COMPLETE_OUTCOME_NAME: string ='Complete'
 
+    /** Underlying form model instance. */
     @Input()
     form: FormModel;
 
+    /** Task id to fetch corresponding form and values. */
     @Input()
     taskId: string;
 
+    /** Content Services node ID for the form metadata. */
     @Input()
     nodeId: string;
 
+    /** The id of the form definition to load and display with custom values. */
     @Input()
     formId: string;
 
+    /** Name of the form definition to load and display with custom values. */
     @Input()
     formName: string;
 
+    /** Toggle saving of form metadata. */
     @Input()
     saveMetadata: boolean = false;
 
+    /** Custom form values map to be used with the rendered form. */
     @Input()
     data: FormValues;
 
+    /** Path of the folder where the metadata will be stored. */
     @Input()
     path: string;
 
+    /** Name to assign to the new node where the metadata are stored. */
     @Input()
     nameNode: string;
 
+    /** Toggle rendering of the form title. */
     @Input()
     showTitle: boolean = true;
 
+    /** Toggle rendering of the `Complete` outcome button. */
     @Input()
     showCompleteButton: boolean = true;
 
+    /** If true then the `Complete` outcome button is shown but it will be disabled. */
     @Input()
     disableCompleteButton: boolean = false;
 
+    /** If true then the `Start Process` outcome button is shown but it will be disabled. */
     @Input()
     disableStartProcessButton: boolean = false;
 
+    /** Toggle rendering of the `Save` outcome button. */
     @Input()
     showSaveButton: boolean = true;
 
+    /** Toggle debug options. */
     @Input()
     showDebugButton: boolean = false;
 
+    /** Toggle readonly state of the form. Forces all form widgets to render as readonly if enabled. */
     @Input()
     readOnly: boolean = false;
 
+    /** Toggle rendering of the `Refresh` button. */
     @Input()
     showRefreshButton: boolean = true;
 
+    /** Toggle rendering of the validation icon next to the form title. */
     @Input()
     showValidationIcon: boolean = true;
 
+    /** Contains a list of form field validator instances. */
     @Input()
     fieldValidators: FormFieldValidator[] = [];
 
+    /** Emitted when the form is submitted with the `Save` or custom outcomes. */
     @Output()
     formSaved: EventEmitter<FormModel> = new EventEmitter<FormModel>();
 
+    /** Emitted when the form is submitted with the `Complete` outcome. */
     @Output()
     formCompleted: EventEmitter<FormModel> = new EventEmitter<FormModel>();
 
+    /** Emitted when form content is clicked. */
     @Output()
     formContentClicked: EventEmitter<ContentLinkModel> = new EventEmitter<ContentLinkModel>();
 
+    /** Emitted when the form is loaded or reloaded. */
     @Output()
     formLoaded: EventEmitter<FormModel> = new EventEmitter<FormModel>();
 
+    /** Emitted when form values are refreshed due to a data property change. */
     @Output()
     formDataRefreshed: EventEmitter<FormModel> = new EventEmitter<FormModel>();
 
+    /** Emitted when any outcome is executed. Default behaviour can be prevented
+     * via `event.preventDefault()`.
+     */
     @Output()
     executeOutcome: EventEmitter<FormOutcomeEvent> = new EventEmitter<FormOutcomeEvent>();
 
+    /** Emitted when any error occurs. */
     @Output()
     onError: EventEmitter<any> = new EventEmitter<any>();
 

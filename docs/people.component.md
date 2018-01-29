@@ -33,13 +33,9 @@ Displays users involved with a specified task
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| people | User\[] | The array of User object to display |
-| taskId | string | The numeric ID of the task |
-| readOnly | boolean | The boolean flag |
-
-### Events
-
-No Events
+| people | `any[]` | The array of User objects to display. <br/> Default value: `[]` |
+| taskId | `string` | The numeric ID of the task. <br/> Default value: `''` |
+| readOnly | `boolean` | Should the data be read-only? <br/> Default value: `false` |
 
 ## Details
 

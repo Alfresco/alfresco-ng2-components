@@ -12,15 +12,15 @@ Allows a user to add "likes" to an item.
 
 ### Properties
 
-| Attribute | Type | Default | Description |
-| --------- | ---- | ------- | ----------- |
-| nodeId | string |  | The identifier of a node. |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| nodeId | `string` | Identifier of a node to apply likes to.  |
 
 ### Events
 
-| Name | Description |
-| ---- | ----------- |
-| changeVote | Raised when vote gets changed |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| changeVote | `EventEmitter<{}>` | Emitted when the "vote" gets changed. |
 
 ## See also
 

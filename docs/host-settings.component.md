@@ -13,12 +13,12 @@ Validates the URLs for ACS and APS and saves them in the user's local storage
 
 ### Properties
 
-| Name | Type | Default Value | Description |
-| ---- | ---- | ------------- | ----------- |
-| providers | string | ALL | Possible valid values are ECM, BPM or ALL. It indicate which URL configurations show |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| providers | `string` | Determines which configurations are shown. Possible valid values are "ECM", "BPM" or "ALL". <br/> Default value: `'ALL'` |
 
 ### Events
 
-| Name | Returned Type | Description |
-| ---- | ------------- | ----------- |
-| error | string | emitted when the url inserted is wrong |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| error | `EventEmitter<string>` | Emitted when the URL is invalid. |

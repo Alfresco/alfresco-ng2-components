@@ -122,14 +122,14 @@ function getPropDataFromClassChain(
     getPropDataFromClass(checker, classDec, inputs, outputs);
 
     // Inherited classes
-    for(const hc of classDec.heritageClauses) {
-        let hcType = checker.getTypeFromTypeNode(hc.types[0]);
-        
-        console.log(checker.getFullyQualifiedName(hcType.symbol));
-
-        for (const dec of hcType.symbol.declarations) {
-            if (isClassDeclaration(dec)) {
-                getPropDataFromClassChain(checker, dec, inputs, outputs);
+    if (classDec.heritageClauses) {
+        for(const hc of classDec.heritageClauses) {
+            let hcType = checker.getTypeFromTypeNode(hc.types[0]);
+            
+            for (const dec of hcType.symbol.declarations) {
+                if (isClassDeclaration(dec)) {
+                    getPropDataFromClassChain(checker, dec, inputs, outputs);
+                }
             }
         }
     }

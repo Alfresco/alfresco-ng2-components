@@ -30,18 +30,30 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
     @ContentChild(EmptyListComponent)
     emptyTemplate: EmptyListComponent;
 
+    /** (**required**) The ID of the process instance to display. */
     @Input()
     processInstanceId: string;
 
+    /** Disable/Enable read-only mode for attachment list. */
     @Input()
     disabled: boolean = false;
 
+    /** Emitted when the attachment is double-clicked or the
+     * view option is selected from the context menu by the user from
+     * within the component. Returns a Blob representing the object
+     * that was clicked. */
     @Output()
     attachmentClick = new EventEmitter();
 
+    /** Emitted when the attachment list has fetched all the attachments.
+     * Returns a list of attachments.
+     */
     @Output()
     success = new EventEmitter();
 
+    /** Emitted when the attachment list is not able to fetch the attachments
+     * (eg, following a network error).
+     */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 

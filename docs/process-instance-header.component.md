@@ -16,8 +16,4 @@ Sub-component of the process details component, which renders some general infor
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| processInstance | [ProcessInstanceModel](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-activiti-processlist/src/models/process-instance.model.ts) | (**required**): Full details of the process instance to display information about |
-
-#### Events
-
-This component does not define any events.
+| processInstance | `ProcessInstance` | (**required**) Full details of the process instance to display information about.  |

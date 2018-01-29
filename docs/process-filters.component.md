@@ -14,20 +14,18 @@ Collection of criteria used to filter process instances, which may be customized
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| filterParam | [FilterParamsModel](#filterparamsmodel) | The params to filter the task filter. If there is no match the default one (first filter of the list) is selected |
-| appId | string | Display filters available to the current user for the application with the specified ID. |
-| appName | string | Display filters available to the current user for the application with the specified name. |
-| hasIcon | boolean | Toggle to show or not the filter's icon. |
-
-If both `appId` and `appName` are specified then `appName` will take precedence and `appId` will be ignored.
+| filterParam | `FilterProcessRepresentationModel` | The parameters to filter the task filter. If there is no match then the default one (ie, the first filter in the list) is selected. |
+| appId | `number` | Display filters available to the current user for the application with the specified ID.  |
+| appName | `string` | Display filters available to the current user for the application with the specified name.  |
+| showIcon | `boolean` | Toggle to show or hide the filter's icon. <br/> Default value: `true` |
 
 ### Events
 
-| Name | Description |
-| ---- | ----------- |
-| success | Raised when the list of filters has been successfully loaded from the server |
-| error | Raised when an error occurs |
-| filterClick | Raised when the user selects a filter from the list |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| filterClick | `EventEmitter<ProcessInstanceFilterRepresentation>` | Emitted when the user selects a filter from the list. |
+| success | `EventEmitter<ProcessInstanceFilterRepresentation[]>` | Emitted when the list of filters has been successfully loaded from the server. |
+| error | `EventEmitter<any>` | Emitted when an error occurs. |
 
 ## Details
 
@@ -36,6 +34,8 @@ filter as the active filter.
 
 The most common usage is in driving a process instance list to allow the user to choose which
 process instances are displayed in the list.
+
+If both `appId` and `appName` are specified then `appName` will take precedence and `appId` will be ignored.
 
 ### How filter the activiti process filters
 

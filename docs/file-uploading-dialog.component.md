@@ -10,9 +10,9 @@ Shows a dialog listing all the files uploaded with the Upload Button or Drag Are
 
 ### Properties
 
-| Name | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| position | string | 'right' | Dialog position. Accepted values are 'left' or 'right' |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| position | `string` | Dialog position. Can be 'left' or 'right'. <br/> Default value: `'right'` |
 
 ## Details
 

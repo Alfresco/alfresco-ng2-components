@@ -29,21 +29,21 @@ Adds pagination to the component it is used with.
 
 ### Properties
 
-| Name | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| pagination | Pagination |  | Pagination object |
-| supportedPageSizes | Array&lt;number> | [ 25, 50, 100 ] | An array of page sizes |
-| target | PaginatedComponent |  | Component that provides custom pagination support |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| target | `PaginatedComponent` | Component that provides custom pagination support.  |
+| supportedPageSizes | `number[]` | An array of page sizes. <br/> Default value: `[5, 25, 50, 100]` |
+| pagination | `Pagination` | Pagination object.  |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| change | EventEmitter&lt;PaginationQueryParams> | Triggered for any action in pagination |
-| nextPage | EventEmitter&lt;Pagination> | Triggered on next page action |
-| prevPage | EventEmitter&lt;Pagination> | Triggered on previous page action |
-| changePageSize | EventEmitter&lt;Pagination> | Triggered on page size change action |
-| changePageNumber | EventEmitter&lt;Pagination> | Triggered on page change action |
+| change | `EventEmitter<PaginationQueryParams>` | Emitted when paginaton changes in any way. |
+| changePageNumber | `EventEmitter<Pagination>` | Emitted when the page number changes. |
+| changePageSize | `EventEmitter<Pagination>` | Emitted when the page size changes. |
+| nextPage | `EventEmitter<Pagination>` | Emitted when the next page is requested. |
+| prevPage | `EventEmitter<Pagination>` | Emitted when the previous page is requested. |
 
 ## Details
 
@@ -71,3 +71,7 @@ export interface PaginatedComponent {
 
 Your component needs to provide a `pagination` subject to allow Pagination component to reflect to changes.
 Every time user interacts with the Pagination, it will call the `updatePagination` method and pass the parameters.
+
+## See also
+
+-  [Infinite Pagination component](infinite-pagination.component.md)

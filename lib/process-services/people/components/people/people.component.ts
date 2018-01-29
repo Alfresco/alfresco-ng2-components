@@ -30,12 +30,15 @@ import { PeopleSearchComponent } from '../people-search/people-search.component'
 })
 export class PeopleComponent implements OnInit, AfterViewInit {
 
+    /** The array of User objects to display. */
     @Input()
     people: UserProcessModel[] = [];
 
+    /** The numeric ID of the task. */
     @Input()
     taskId: string = '';
 
+    /** Should the data be read-only? */
     @Input()
     readOnly: boolean = false;
 

@@ -12,15 +12,15 @@ Searches users/people.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| results | Observable&lt;User\[]> | The params to show people list |
+| results | `Observable<any[]>` | The parameters to show people list.  |
 
 ### Events
 
-| Name | Description |
-| ---- | ----------- |
-| searchPeople | Raised when the search people with new keyword |
-| success | Raised when select the user and click action button |
-| closeSearch | Raised when click the clse button |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| searchPeople | `EventEmitter<any>` | Emitted when a search is performed with a new keyword. |
+| success | `EventEmitter<any>` | Emitted when a user is selected and the action button is clicked. |
+| closeSearch | `EventEmitter<{}>` | Emitted when the "close" button is clicked. |
 
 ## Details
 

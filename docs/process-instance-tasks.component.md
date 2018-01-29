@@ -15,11 +15,12 @@ Lists both the active and completed tasks associated with a particular process i
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| processInstanceId | string | (**required**): The ID of the process instance to display tasks for |
-| showRefreshButton | boolean | (default: `true`): Whether to show a refresh button next to the list of tasks to allow this to be updated from the server |
+| processInstanceDetails | `ProcessInstance` | (**required**) The ID of the process instance to display tasks for.  |
+| showRefreshButton | `boolean` | Toggles whether to show a refresh button next to the list of tasks to allow it to be updated from the server. <br/> Default value: `true` |
 
 ### Events
 
-| Name | Description |
-| ---- | ----------- |
-| taskFormCompletedEmitter | Raised when the form associated with an active task is completed from within the component |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| error | `EventEmitter<any>` | Emitted when an error occurs. |
+| taskClick | `EventEmitter<TaskDetailsEvent>` | Emitted when a task is clicked. |

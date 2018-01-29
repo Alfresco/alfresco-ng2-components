@@ -32,12 +32,16 @@ import { ProcessService } from './../services/process.service';
 })
 export class ProcessInstanceTasksComponent implements OnInit, OnChanges {
 
+    /** (**required**) The ID of the process instance to display tasks for. */
     @Input()
     processInstanceDetails: ProcessInstance;
 
+    /** Toggles whether to show a refresh button next to the list of tasks to allow
+     * it to be updated from the server. */
     @Input()
     showRefreshButton: boolean = true;
 
+    /** Emitted when an error occurs. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
@@ -59,6 +63,7 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges {
     @ViewChild('taskdetails')
     taskdetails: any;
 
+    /** Emitted when a task is clicked. */
     @Output()
     taskClick: EventEmitter<TaskDetailsEvent> = new EventEmitter<TaskDetailsEvent>();
 

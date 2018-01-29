@@ -32,6 +32,7 @@ import { ProcessInstanceTasksComponent } from './process-instance-tasks.componen
 })
 export class ProcessInstanceDetailsComponent implements OnChanges {
 
+    /** (required) The numeric ID of the process instance to display. */
     @Input()
     processInstanceId: string;
 
@@ -41,23 +42,29 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
     @ViewChild(ProcessInstanceTasksComponent)
     tasksList: ProcessInstanceTasksComponent;
 
+    /** Toggles whether to show or hide the title. */
     @Input()
     showTitle: boolean = true;
 
+    /** Toggles whether to show or hide the refresh button. */
     @Input()
     showRefreshButton: boolean = true;
 
+    /** Emitted when the current process is cancelled by the user from within the component. */
     @Output()
     processCancelled: EventEmitter<any> = new EventEmitter<any>();
 
+    /** Emitted when an error occurs. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
+    /** Emitted when a task is clicked. */
     @Output()
     taskClick: EventEmitter<TaskDetailsEvent> = new EventEmitter<TaskDetailsEvent>();
 
     processInstanceDetails: ProcessInstance;
 
+    /** Emitted when the "show diagram" button is clicked. */
     @Output()
     showProcessDiagram: EventEmitter<any> = new EventEmitter<any>();
 

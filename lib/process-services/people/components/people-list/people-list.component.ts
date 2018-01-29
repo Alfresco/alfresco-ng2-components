@@ -33,15 +33,19 @@ export class PeopleListComponent implements AfterViewInit, AfterContentInit {
     @ViewChild(DataTableComponent)
     peopleDataTable: DataTableComponent;
 
+    /** The array of user data used to populate the people list. */
     @Input()
     users: UserProcessModel[];
 
+    /** Toggles whether or not actions should be visible, i.e. the 'Three-Dots' menu. */
     @Input()
     actions: boolean = false;
 
+    /** Emitted when the user clicks a row in the people list. */
     @Output()
     clickRow: EventEmitter<UserProcessModel> = new EventEmitter<UserProcessModel>();
 
+    /** Emitted when the user clicks in the 'Three Dots' drop down menu for a row. */
     @Output()
     clickAction: EventEmitter<UserEventModel> = new EventEmitter<UserEventModel>();
 

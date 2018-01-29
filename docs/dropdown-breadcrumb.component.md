@@ -17,23 +17,18 @@ Indicates the current position within a navigation hierarchy using a dropdown me
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| target | DocumentListComponent | (optional) DocumentList component to operate with. Upon clicks will instruct the given component to update. |
-| folderNode | [MinimalNodeEntryEntity](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md) | Active node, builds UI based on `folderNode.path.elements` collection. |
-| root | string | (optional) Name of the root element of the breadcrumb. You can use this property to rename "Company Home" to "Personal Files" for example. You can use i18n resource key for the property value. |
-| rootId | string | (optional) The id of the root element. You can use this property to set a custom element the breadcrumb should start with. |
+| folderNode | `MinimalNodeEntryEntity` | Active node, builds UI based on folderNode.path.elements collection. <br/> Default value: `null` |
+| root | `string` | (optional) Name of the root element of the breadcrumb. You can use this property to rename "Company Home" to "Personal Files" for example. You can use an i18n resource key for the property value.<br/> Default value: `null` |
+| rootId | `string` | (optional) The id of the root element. You can use this property to set a custom element the breadcrumb should start with.<br/> Default value: `null` |
+| target | `DocumentListComponent` | (optional) Document List component to operate with. The list will update when the breadcrumb is clicked. |
 
 ### Events
 
-| Name | Returned Type | Description |
-| ---- | ------------- | ----------- |
-| navigate | [PathElementEntity](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/PathElementEntity.md) | emitted when user clicks on a breadcrumb |
-
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-
-<!-- seealso start -->
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| navigate | `EventEmitter<PathElementEntity>` | Emitted when the user clicks on a breadcrumb. |
 
 ## See also
 
 -   [Document list component](document-list.component.md)
 -   [Breadcrumb component](breadcrumb.component.md)
-    <!-- seealso end -->
