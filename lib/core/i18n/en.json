@@ -195,7 +195,11 @@
       "NEXT_PAGE": "Next page",
       "ZOOM_IN": "Zoom in",
       "ZOOM_OUT": "Zoom out",
-      "FIT_PAGE": "Fit page"
+      "FIT_PAGE": "Fit page",
+      "ROTATE_LEFT": "Rotate left",
+      "ROTATE_RIGHT": "Rotate right",
+      "FLIP_HORIZONTAL": "Flip horizontally",
+      "RESET": "Reset"
     },
     "PAGE_LABEL": {
       "SHOWING": "Showing",

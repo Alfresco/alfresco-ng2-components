@@ -20,6 +20,7 @@
 
         <button
             id="viewer-previous-page-button"
+            title="{{ 'ADF_VIEWER.ARIA.PREVIOUS_PAGE' | translate }}"
             attr.aria-label="{{ 'ADF_VIEWER.ARIA.PREVIOUS_PAGE' | translate }}"
             mat-icon-button
             (click)="previousPage()">
@@ -28,6 +29,7 @@
 
         <button
             id="viewer-next-page-button"
+            title="{{ 'ADF_VIEWER.ARIA.NEXT_PAGE' | translate }}"
             attr.aria-label="{{ 'ADF_VIEWER.ARIA.NEXT_PAGE' | translate }}"
             mat-icon-button
             (click)="nextPage()">
@@ -44,12 +46,13 @@
             <span>{{ 'ADF_VIEWER.PAGE_LABEL.OF' | translate }} {{ totalPages }}</span>
         </div>
 
-        <div class="adf-pdf-viewer__toolbar-page-scale">
+        <div class="adf-viewer__toolbar-page-scale">
             {{ currentScaleText }}
         </div>
 
         <button
             id="viewer-zoom-in-button"
+            title="{{ 'ADF_VIEWER.ARIA.ZOOM_IN' | translate }}"
             attr.aria-label="{{ 'ADF_VIEWER.ARIA.ZOOM_IN' | translate }}"
             mat-icon-button
             (click)="zoomIn()">
@@ -58,6 +61,7 @@
 
         <button
             id="viewer-zoom-out-button"
+            title="{{ 'ADF_VIEWER.ARIA.ZOOM_OUT' | translate }}"
             attr.aria-label="{{ 'ADF_VIEWER.ARIA.ZOOM_OUT' | translate }}"
             mat-icon-button
             (click)="zoomOut()">
@@ -66,6 +70,7 @@
 
         <button
             id="viewer-scale-page-button"
+            title="{{ 'ADF_VIEWER.ARIA.FIT_PAGE' | translate }}"
             attr.aria-label="{{ 'ADF_VIEWER.ARIA.FIT_PAGE' | translate }}"
             mat-icon-button
             (click)="pageFit()">
