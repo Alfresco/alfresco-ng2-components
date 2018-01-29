@@ -438,7 +438,7 @@ describe('ViewerComponent', () => {
                 expect(element.querySelector('.adf-viewer-toolbar')).not.toBeNull();
             });
 
-            it('should Name File be present if is overlay mode ', () => {
+            xit('should Name File be present if is overlay mode ', () => {
                 component.ngOnChanges(null).then(() => {
                     fixture.detectChanges();
                     expect(element.querySelector('.adf-viewer-filename').innerHTML).toEqual('fake-test-file.pdf');
