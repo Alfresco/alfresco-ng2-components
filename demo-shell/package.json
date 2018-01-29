@@ -5,6 +5,7 @@
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "ng": "ng",
+    "prestart": "npm run validate-config",
     "start": "npm run server-versions && rimraf dist && ng serve --host 0.0.0.0 --app dist --open --aot=false",
     "start:dev": "npm run lint && npm run server-versions && rimraf dist && npm run clean-lib-angular && concurrently \"ng serve --host 0.0.0.0 --disable-host-check --app dev pp-dev --proxy-config proxy.conf.js --open\" \"npm run style:dev -- --watch\" ",
     "start:dist": "npm run server-versions && rimraf dist && node --max_old_space_size=30000 node_modules/.bin/ng serve --prod --build-optimizer=false  --aot=false --host 0.0.0.0 --disable-host-check --app dist",
