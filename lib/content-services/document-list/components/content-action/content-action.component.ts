@@ -17,7 +17,7 @@
 
  /* tslint:disable:component-selector  */
 
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { ContentActionHandler } from '../../models/content-action.model';
 import { DocumentActionsService } from '../../services/document-actions.service';
@@ -33,7 +33,7 @@ import { ContentActionListComponent } from './content-action-list.component';
         FolderActionsService
     ]
 })
-export class ContentActionComponent implements OnInit, OnChanges {
+export class ContentActionComponent implements OnInit {
 
     /** The title of the action as shown in the menu. */
     @Input()
@@ -83,62 +83,49 @@ export class ContentActionComponent implements OnInit, OnChanges {
     @Output()
     success = new EventEmitter();
 
-    model: ContentActionModel;
-    // duplicateModel: ContentActionModel;
-
     constructor(
         private list: ContentActionListComponent,
         private documentActions: DocumentActionsService,
         private folderActions: FolderActionsService) {
-        this.model = new ContentActionModel();
     }
 
     ngOnInit() {
-        this.model = new ContentActionModel({
-            title: this.title,
-            icon: this.icon,
-            permission: this.permission,
-            disableWithNoPermission: this.disableWithNoPermission,
-            target: this.target,
-            disabled: this.disabled
-        });
-
         if (this.handler) {
             if (this.target === 'all') {
-                this.duplicateActionForFolder();
-                this.model.target = 'document';
-                this.model.handler = this.getSystemHandler('document', this.handler);
-            }else{
-                this.model.handler = this.getSystemHandler(this.target, this.handler);
+                this.generateAction('folder');
+                this.generateAction('document');
+            } else {
+                this.generateAction(this.target);
             }
         }
-
-        if (this.execute) {
-            this.model.execute = (value: any): void => {
-                this.execute.emit({ value });
-            };
-        }
-
-        this.register();
     }
 
-    register(): boolean {
+    register(model: ContentActionModel): boolean {
         if (this.list) {
-            return this.list.registerAction(this.model);
+            return this.list.registerAction(model);
         }
         return false;
     }
 
-    ngOnChanges(changes) {
-        // update localizable properties
-        this.model.title = this.title;
-    }
+    private generateAction(target: string) {
+        let model = new ContentActionModel({
+            title: this.title,
+            icon: this.icon,
+            permission: this.permission,
+            disableWithNoPermission: this.disableWithNoPermission,
+            target: target,
+            disabled: this.disabled
+        });
 
-    private duplicateActionForFolder() {
-        let folderActionModel = Object.assign({}, this.model);
-        folderActionModel.handler = this.getSystemHandler('folder', this.handler);
-        folderActionModel.target = 'folder';
-        this.list.registerAction(folderActionModel);
+        model.handler = this.getSystemHandler(target, this.handler);
+
+        if (this.execute) {
+            model.execute = (value: any): void => {
+                this.execute.emit({ value });
+            };
+        }
+
+        this.register(model);
     }
 
     getSystemHandler(target: string, name: string): ContentActionHandler {
