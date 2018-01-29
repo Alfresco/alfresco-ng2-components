@@ -61,7 +61,7 @@
             .adf-viewer-layout-content {
                 @extend .full-screen;
                 position: relative;
-                overflow-y: auto;
+                overflow-y: hidden;
                 overflow-x: hidden;
                 z-index: 1;
                 background-color: mat-color($background, background);
