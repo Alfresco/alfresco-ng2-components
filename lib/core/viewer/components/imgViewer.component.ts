@@ -165,10 +165,6 @@ export class ImgViewerComponent implements OnInit, OnChanges, OnDestroy {
         this.rotate = Math.abs(angle) < 360 ? angle : 0;
     }
 
-    flip() {
-        this.scaleX *= -1;
-    }
-
     reset() {
         this.rotate = 0;
         this.scaleX = 1.0;
