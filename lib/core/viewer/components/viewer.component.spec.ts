@@ -290,7 +290,7 @@ describe('ViewerComponent', () => {
 
     });
 
-    describe('Toolbar', () => {
+    xdescribe('Toolbar', () => {
 
         it('should render fullscreen button', () => {
             component.allowFullScreen = true;
