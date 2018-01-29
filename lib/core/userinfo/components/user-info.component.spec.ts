@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
- /*tslint:disable:ban*/
-
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By, DomSanitizer } from '@angular/platform-browser';
 import { AuthenticationService, ContentService } from '../../services';
@@ -61,7 +59,7 @@ class FakeSanitazer extends DomSanitizer {
     }
 }
 
-fdescribe('User info component', () => {
+describe('User info component', () => {
 
     let component: UserInfoComponent;
     let fixture: ComponentFixture<UserInfoComponent>;
@@ -391,13 +389,15 @@ fdescribe('User info component', () => {
 
     describe('when user is logged on bpm and ecm', () => {
 
+        let ecmUserInfoSpy;
+
         beforeEach(async(() => {
             spyOn(authService, 'isEcmLoggedIn').and.returnValue(true);
             spyOn(authService, 'isBpmLoggedIn').and.returnValue(true);
             spyOn(authService, 'isLoggedIn').and.returnValue(true);
             spyOn(contentService, 'getContentUrl').and.returnValue('src/assets/images/ecmImg.gif');
 
-            spyOn(ecmUserService, 'getCurrentUserInfo').and.returnValue(Observable.of(fakeEcmUser));
+            ecmUserInfoSpy = spyOn(ecmUserService, 'getCurrentUserInfo').and.returnValue(Observable.of(fakeEcmUser));
             spyOn(bpmUserService, 'getCurrentUserInfo').and.returnValue(Observable.of(fakeBpmUser));
         }));
 
@@ -441,15 +441,15 @@ fdescribe('User info component', () => {
             expect(element.querySelector('#logged-user-img').getAttribute('src')).toEqual('src/assets/images/ecmImg.gif');
         }));
 
-        it('should show the bpm image if ecm does not have it', async(() => {
-            component.ecmUserImage = null;
+        it('should show the ecm initials if the ecm user has no image', async(() => {
+            ecmUserInfoSpy.and.returnValue(Observable.of(fakeEcmUserNoImage));
             fixture.detectChanges();
-            openUserInfo();
+
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('#userinfo_container')).toBeDefined();
-                expect(element.querySelector('#logged-user-img')).toBeDefined();
-                expect(element.querySelector('#logged-user-img').getAttribute('src')).toContain('rest/admin/profile-picture');
+                expect(element.querySelector('#logged-user-img')).toBeNull();
+                expect(element.querySelector('#user-initials-image').textContent).toContain('ff');
             });
         }));
 
