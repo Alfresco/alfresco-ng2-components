@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation, ElementRef, OnInit, OnDestroy } from '@angular/core';
 import { ContentService } from '../../services/content.service';
 
 @Component({
@@ -25,7 +25,7 @@ import { ContentService } from '../../services/content.service';
     host: { 'class': 'adf-image-viewer' },
     encapsulation: ViewEncapsulation.None
 })
-export class ImgViewerComponent implements OnChanges {
+export class ImgViewerComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input()
     showToolbar = true;
@@ -42,12 +42,94 @@ export class ImgViewerComponent implements OnChanges {
     rotate: number = 0;
     scaleX: number = 1.0;
     scaleY: number = 1.0;
+    offsetX: number = 0;
+    offsetY: number = 0;
+    isDragged: boolean = false;
+
+    private drag = { x: 0, y: 0 };
+    private delta = { x: 0, y: 0 };
 
     get transform(): string {
-        return `scale(${this.scaleX}, ${this.scaleY}) rotate(${this.rotate}deg)`
+        return `scale(${this.scaleX}, ${this.scaleY}) rotate(${this.rotate}deg) translate(${this.offsetX}px, ${this.offsetY}px)`;
     }
 
-    constructor(private contentService: ContentService) {}
+    get currentScaleText(): string {
+        return Math.round(this.scaleX * 100) + '%';
+    }
+
+    private element: HTMLElement;
+
+    constructor(
+        private contentService: ContentService,
+        private el: ElementRef) {
+    }
+
+    ngOnInit() {
+        this.element = (<HTMLElement> this.el.nativeElement).querySelector('#viewer-image');
+
+        if (this.element) {
+            this.element.addEventListener('mousedown', this.onMouseDown.bind(this));
+            this.element.addEventListener('mouseup', this.onMouseUp.bind(this));
+            this.element.addEventListener('mouseleave', this.onMouseLeave.bind(this));
+            this.element.addEventListener('mouseout', this.onMouseOut.bind(this));
+            this.element.addEventListener('mousemove', this.onMouseMove.bind(this));
+        }
+    }
+
+    ngOnDestroy() {
+        if (this.element) {
+            this.element.removeEventListener('mousedown', this.onMouseDown);
+            this.element.removeEventListener('mouseup', this.onMouseUp);
+            this.element.removeEventListener('mouseleave', this.onMouseLeave);
+            this.element.removeEventListener('mouseout', this.onMouseOut);
+            this.element.removeEventListener('mousemove', this.onMouseMove);
+        }
+    }
+
+    onMouseDown(event: MouseEvent) {
+        event.preventDefault();
+        this.isDragged = true;
+        this.drag = { x: event.pageX, y: event.pageY };
+    }
+
+    onMouseMove(event: MouseEvent) {
+        if (this.isDragged) {
+            event.preventDefault();
+
+            this.delta.x = event.pageX - this.drag.x;
+            this.delta.y = event.pageY - this.drag.y;
+
+            this.drag.x = event.pageX;
+            this.drag.y = event.pageY;
+
+            const scaleX = (this.scaleX !== 0 ? this.scaleX : 1.0);
+            const scaleY = (this.scaleY !== 0 ? this.scaleY : 1.0);
+
+            this.offsetX += (this.delta.x / scaleX);
+            this.offsetY += (this.delta.y / scaleY);
+        }
+    }
+
+    onMouseUp(event: MouseEvent) {
+        if (this.isDragged) {
+            event.preventDefault();
+            this.isDragged = false;
+        }
+    }
+
+    onMouseLeave(event: MouseEvent) {
+        if (this.isDragged) {
+            event.preventDefault();
+            this.isDragged = false;
+        }
+    }
+
+    onMouseOut(event: MouseEvent) {
+        if (this.isDragged) {
+            event.preventDefault();
+            this.isDragged = false;
+        }
+    }
 
     ngOnChanges(changes: SimpleChanges) {
         let blobFile = changes['blobFile'];
@@ -83,7 +165,11 @@ export class ImgViewerComponent implements OnChanges {
         this.rotate = Math.abs(angle) < 360 ? angle : 0;
     }
 
-    flip() {
-        this.scaleX *= -1;
+    reset() {
+        this.rotate = 0;
+        this.scaleX = 1.0;
+        this.scaleY = 1.0;
+        this.offsetX = 0;
+        this.offsetY = 0;
     }
 }
