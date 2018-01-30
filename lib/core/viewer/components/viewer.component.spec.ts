@@ -242,7 +242,7 @@ fdescribe('ViewerComponent', () => {
         expect(getComputedStyle(sidebar).order).toEqual('4');
     });
 
-    xdescribe('Full Screen Mode', () => {
+    describe('Full Screen Mode', () => {
 
         it('should request only if enabled', () => {
             const domElement = jasmine.createSpyObj('el', ['requestFullscreen']);
