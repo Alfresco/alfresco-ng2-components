@@ -29,11 +29,11 @@ Adds pagination to the component it is used with.
 
 ### Properties
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| target | `PaginatedComponent` | Component that provides custom pagination support.  |
-| supportedPageSizes | `number[]` | An array of page sizes. <br/> Default value: `[5, 25, 50, 100]` |
-| pagination | `Pagination` | Pagination object.  |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| target | `PaginatedComponent` |  | Component that provides custom pagination support.  |
+| supportedPageSizes | `number[]` | `[5, 25, 50, 100]` | An array of page sizes.  |
+| pagination | `Pagination` |  | Pagination object.  |
 
 ### Events
 
@@ -74,4 +74,4 @@ Every time user interacts with the Pagination, it will call the `updatePaginatio
 
 ## See also
 
--  [Infinite Pagination component](infinite-pagination.component.md)
+-   [Infinite Pagination component](infinite-pagination.component.md)

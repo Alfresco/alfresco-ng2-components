@@ -12,11 +12,11 @@ Displays detailed information on a specified process instance
 
 ### Properties
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| processInstanceId | `string` | (required) The numeric ID of the process instance to display.  |
-| showTitle | `boolean` | Toggles whether to show or hide the title. <br/> Default value: `true` |
-| showRefreshButton | `boolean` | Toggles whether to show or hide the refresh button. <br/> Default value: `true` |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| processInstanceId | `string` |  | (required) The numeric ID of the process instance to display.  |
+| showTitle | `boolean` | `true` | Toggles whether to show or hide the title.  |
+| showRefreshButton | `boolean` | `true` | Toggles whether to show or hide the refresh button.  |
 
 ### Events
 

@@ -36,10 +36,10 @@ export class MyCustomProcessAttachmentComponent {
 
 ### Properties
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| processInstanceId | `string` | (**required**) The ID of the process instance to display.  |
-| disabled | `boolean` | Disable/Enable read-only mode for attachment list. <br/> Default value: `false` |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| processInstanceId | `string` |  | (**required**) The ID of the process instance to display.  |
+| disabled | `boolean` | `false` | Disable/Enable read-only mode for attachment list.  |
 
 ### Events
 

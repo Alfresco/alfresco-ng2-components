@@ -12,6 +12,6 @@ Shows APS forms as a list.
 
 ### Properties
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| forms | `any[]` | The array that contains the information to show inside the list. <br/> Default value: `[]` |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| forms | `any[]` | `[]` | The array that contains the information to show inside the list.  |

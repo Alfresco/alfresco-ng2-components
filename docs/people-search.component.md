@@ -10,9 +10,9 @@ Searches users/people.
 
 ### Properties
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| results | `Observable<any[]>` | The parameters to show people list.  |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| results | `Observable<any[]>` |  | The parameters to show people list.  |
 
 ### Events
 

@@ -13,10 +13,10 @@ Lists both the active and completed tasks associated with a particular process i
 
 ### Properties
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| processInstanceDetails | `ProcessInstance` | (**required**) The ID of the process instance to display tasks for.  |
-| showRefreshButton | `boolean` | Toggles whether to show a refresh button next to the list of tasks to allow it to be updated from the server. <br/> Default value: `true` |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| processInstanceDetails | `ProcessInstance` |  | (**required**) The ID of the process instance to display tasks for.  |
+| showRefreshButton | `boolean` | `true` | Toggles whether to show a refresh button next to the list of tasks to allow it to be updated from the server. |
 
 ### Events
 

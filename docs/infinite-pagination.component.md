@@ -27,12 +27,12 @@ Adds "infinite" pagination to the component it is used with.
 
 ### Properties
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| pagination | `Pagination` | Pagination object.  |
-| target | `PaginatedComponent` | Component that provides custom pagination support.  |
-| pageSize | `number` | Number of items that are added with each "load more" event. <br/> Default value: `InfinitePaginationComponent.DEFAULT_PAGE_SIZE` |
-| isLoading | `boolean` | Is a new page loading? <br/> Default value: `false` |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| pagination | `Pagination` |  | Pagination object.  |
+| target | `PaginatedComponent` |  | Component that provides custom pagination support.  |
+| pageSize | `number` | `InfinitePaginationComponent.DEFAULT_PAGE_SIZE` | Number of items that are added with each "load more" event.  |
+| isLoading | `boolean` | `false` | Is a new page loading?  |
 
 ### Events
 

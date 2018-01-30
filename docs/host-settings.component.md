@@ -13,9 +13,9 @@ Validates the URLs for ACS and APS and saves them in the user's local storage
 
 ### Properties
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| providers | `string` | Determines which configurations are shown. Possible valid values are "ECM", "BPM" or "ALL". <br/> Default value: `'ALL'` |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| providers | `string` | `'ALL'` | Determines which configurations are shown. Possible valid values are "ECM", "BPM" or "ALL".  |
 
 ### Events
 

@@ -12,12 +12,12 @@ Collection of criteria used to filter process instances, which may be customized
 
 ### Properties
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| filterParam | `FilterProcessRepresentationModel` | The parameters to filter the task filter. If there is no match then the default one (ie, the first filter in the list) is selected. |
-| appId | `number` | Display filters available to the current user for the application with the specified ID.  |
-| appName | `string` | Display filters available to the current user for the application with the specified name.  |
-| showIcon | `boolean` | Toggle to show or hide the filter's icon. <br/> Default value: `true` |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| filterParam | `FilterProcessRepresentationModel` |  | The parameters to filter the task filter. If there is no match then the default one (ie, the first filter in the list) is selected. |
+| appId | `number` |  | Display filters available to the current user for the application with the specified ID.  |
+| appName | `string` |  | Display filters available to the current user for the application with the specified name.  |
+| showIcon | `boolean` | `true` | Toggle to show or hide the filter's icon.  |
 
 ### Events
 

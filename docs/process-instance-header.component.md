@@ -14,6 +14,6 @@ Sub-component of the process details component, which renders some general infor
 
 ### Properties
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| processInstance | `ProcessInstance` | (**required**) Full details of the process instance to display information about.  |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| processInstance | `ProcessInstance` |  | (**required**) Full details of the process instance to display information about.  |

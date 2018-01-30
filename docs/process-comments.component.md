@@ -12,10 +12,10 @@ Displays comments associated with a particular process instance and allows the u
 
 ### Properties
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| processInstanceId | `string` | (**required**) The numeric ID of the process instance to display comments for.  |
-| readOnly | `boolean` | Should the comments be read-only? <br/> Default value: `true` |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| processInstanceId | `string` |  | (**required**) The numeric ID of the process instance to display comments for.  |
+| readOnly | `boolean` | `true` | Should the comments be read-only?  |
 
 ### Events
 

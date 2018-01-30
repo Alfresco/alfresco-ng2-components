@@ -31,11 +31,11 @@ Displays users involved with a specified task
 
 ### Properties
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| people | `any[]` | The array of User objects to display. <br/> Default value: `[]` |
-| taskId | `string` | The numeric ID of the task. <br/> Default value: `''` |
-| readOnly | `boolean` | Should the data be read-only? <br/> Default value: `false` |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| people | `any[]` | `[]` | The array of User objects to display.  |
+| taskId | `string` | `''` | The numeric ID of the task.  |
+| readOnly | `boolean` | `false` | Should the data be read-only?  |
 
 ## Details
 

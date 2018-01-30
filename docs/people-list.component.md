@@ -64,10 +64,10 @@ Note that the people list component is based on the [Datatable component](datata
 
 ### Properties
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| users | `any[]` | The array of user data used to populate the people list.  |
-| actions | `boolean` | Toggles whether or not actions should be visible, i.e. the 'Three-Dots' menu. <br/> Default value: `false` |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| users | `any[]` |  | The array of user data used to populate the people list.  |
+| actions | `boolean` | `false` | Toggles whether or not actions should be visible, i.e. the 'Three-Dots' menu.  |
 
 ### Events
 

@@ -31,14 +31,14 @@ export class MyComponent implements OnInit {
 
 ### Properties
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| heading | `string` | Title heading for the group.  |
-| headingIcon | `string` | The material design icon.  |
-| headingIconTooltip | `string` | Tooltip message to be shown for headingIcon  |
-| hasAccordionIcon | `boolean` | Should the (expanded) accordion icon be shown? <br/> Default value: `true` |
-| isOpen | `boolean` | Is this group currently open?  |
-| isSelected | `boolean` | Is this group currently selected?  |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| heading | `string` |  | Title heading for the group.  |
+| headingIcon | `string` |  | The material design icon.  |
+| headingIconTooltip | `string` |  | Tooltip message to be shown for headingIcon  |
+| hasAccordionIcon | `boolean` | `true` | Should the (expanded) accordion icon be shown?  |
+| isOpen | `boolean` |  | Is this group currently open?  |
+| isSelected | `boolean` |  | Is this group currently selected?  |
 
 ### Events
 

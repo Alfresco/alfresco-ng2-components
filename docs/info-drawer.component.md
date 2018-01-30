@@ -26,10 +26,10 @@ Displays a sidebar-style information panel with tabs.
 
 ### Properties
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| title | `string` | The title of the info drawer. <br/> Default value: `null` |
-| selectedIndex | `number` | The selected index tab. <br/> Default value: `0` |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| title | `string` | `null` | The title of the info drawer.  |
+| selectedIndex | `number` | `0` | The selected index tab.  |
 
 ### Events
 

@@ -47,9 +47,13 @@ export function updatePhase(tree, pathname, aggData) {
                 });
             }
         }
+
+        return true;
+    } else {
+        return false;
     }
 
-    return true;
+    
 }
 
 
@@ -201,7 +205,7 @@ function buildInputsTable(inputs: any[]) {
         unist.makeTableRow([
             unist.makeTableCell([unist.makeText("Name")]),
             unist.makeTableCell([unist.makeText("Type")]),
-           // unist.makeTableCell([unist.makeText("Default value")]),
+            unist.makeTableCell([unist.makeText("Default value")]),
             unist.makeTableCell([unist.makeText("Description")])
         ])
     ];
@@ -219,16 +223,24 @@ function buildInputsTable(inputs: any[]) {
 
         var descCellContent = remark().parse(pDesc).children;
 
+        var defaultCellContent;
+
         if (pDefault) {
+            /*
             descCellContent.push(unist.makeHTML("<br/>"));
             descCellContent.push(unist.makeText(" Default value: "));
             descCellContent.push(unist.makeInlineCode(pDefault));
+            */
+            defaultCellContent = unist.makeInlineCode(pDefault);
+        } else {
+            defaultCellContent = unist.makeText("");
         }
-
+        
         var cells = [
             unist.makeTableCell([unist.makeText(pName)]),
             unist.makeTableCell([unist.makeInlineCode(pType)]),
-            //unist.makeTableCell([unist.makeText(pDefault)]),
+            //unist.makeTableCell([unist.makeInlineCode(pDefault)]),
+            unist.makeTableCell([defaultCellContent]),
             unist.makeTableCell(descCellContent)
         ];
 

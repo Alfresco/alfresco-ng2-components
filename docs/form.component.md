@@ -101,27 +101,27 @@ and store the form field as metadata. The param nameNode is optional.
 
 ### Properties
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| form | `FormModel` | Underlying form model instance.  |
-| taskId | `string` | Task id to fetch corresponding form and values.  |
-| nodeId | `string` | Content Services node ID for the form metadata.  |
-| formId | `string` | The id of the form definition to load and display with custom values.  |
-| formName | `string` | Name of the form definition to load and display with custom values.  |
-| saveMetadata | `boolean` | Toggle saving of form metadata. <br/> Default value: `false` |
-| data | `FormValues` | Custom form values map to be used with the rendered form.  |
-| path | `string` | Path of the folder where the metadata will be stored.  |
-| nameNode | `string` | Name to assign to the new node where the metadata are stored.  |
-| showTitle | `boolean` | Toggle rendering of the form title. <br/> Default value: `true` |
-| showCompleteButton | `boolean` | Toggle rendering of the `Complete` outcome button. <br/> Default value: `true` |
-| disableCompleteButton | `boolean` | If true then the `Complete` outcome button is shown but it will be disabled. <br/> Default value: `false` |
-| disableStartProcessButton | `boolean` | If true then the `Start Process` outcome button is shown but it will be disabled. <br/> Default value: `false` |
-| showSaveButton | `boolean` | Toggle rendering of the `Save` outcome button. <br/> Default value: `true` |
-| showDebugButton | `boolean` | Toggle debug options. <br/> Default value: `false` |
-| readOnly | `boolean` | Toggle readonly state of the form. Forces all form widgets to render as readonly if enabled. <br/> Default value: `false` |
-| showRefreshButton | `boolean` | Toggle rendering of the `Refresh` button. <br/> Default value: `true` |
-| showValidationIcon | `boolean` | Toggle rendering of the validation icon next to the form title. <br/> Default value: `true` |
-| fieldValidators | `FormFieldValidator[]` | Contains a list of form field validator instances. <br/> Default value: `[]` |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| form | `FormModel` |  | Underlying form model instance.  |
+| taskId | `string` |  | Task id to fetch corresponding form and values.  |
+| nodeId | `string` |  | Content Services node ID for the form metadata.  |
+| formId | `string` |  | The id of the form definition to load and display with custom values.  |
+| formName | `string` |  | Name of the form definition to load and display with custom values.  |
+| saveMetadata | `boolean` | `false` | Toggle saving of form metadata.  |
+| data | `FormValues` |  | Custom form values map to be used with the rendered form.  |
+| path | `string` |  | Path of the folder where the metadata will be stored.  |
+| nameNode | `string` |  | Name to assign to the new node where the metadata are stored.  |
+| showTitle | `boolean` | `true` | Toggle rendering of the form title.  |
+| showCompleteButton | `boolean` | `true` | Toggle rendering of the `Complete` outcome button.  |
+| disableCompleteButton | `boolean` | `false` | If true then the `Complete` outcome button is shown but it will be disabled.  |
+| disableStartProcessButton | `boolean` | `false` | If true then the `Start Process` outcome button is shown but it will be disabled.  |
+| showSaveButton | `boolean` | `true` | Toggle rendering of the `Save` outcome button.  |
+| showDebugButton | `boolean` | `false` | Toggle debug options.  |
+| readOnly | `boolean` | `false` | Toggle readonly state of the form. Forces all form widgets to render as readonly if enabled.  |
+| showRefreshButton | `boolean` | `true` | Toggle rendering of the `Refresh` button.  |
+| showValidationIcon | `boolean` | `true` | Toggle rendering of the validation icon next to the form title.  |
+| fieldValidators | `FormFieldValidator[]` | `[]` | Contains a list of form field validator instances.  |
 
 ### Events
 
