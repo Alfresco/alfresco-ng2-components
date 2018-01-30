@@ -295,3 +295,19 @@ Extract the i18n files from the repo and create a zip
 ```sh
 ./extract-langs.sh 
 ```
+
+
+***docker-publish.sh*** 
+
+publish doker images in the selected repository
+
+| Option | Description |
+| --- | --- |
+| -u or --username  | username  |
+| -p or --password  | password |
+| -t or --tags  | tags |
+
+
+```sh
+./docker-publish.sh
+```
