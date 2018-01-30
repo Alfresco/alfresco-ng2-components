@@ -65,7 +65,7 @@ export class ImgViewerComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnInit() {
-        this.element = (<HTMLElement>this.el.nativeElement).querySelector('#viewer-image');
+        this.element = (<HTMLElement> this.el.nativeElement).querySelector('#viewer-image');
 
         if (this.element) {
             this.element.addEventListener('mousedown', this.onMouseDown.bind(this));
