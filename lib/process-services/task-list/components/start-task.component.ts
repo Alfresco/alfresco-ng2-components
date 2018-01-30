@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LogService, PeopleProcessService, UserPreferencesService, UserProcessModel } from '@alfresco/adf-core';
+import { LogService, UserPreferencesService, UserProcessModel } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MOMENT_DATE_FORMATS, MomentDateAdapter } from '@alfresco/adf-core';
@@ -52,8 +52,6 @@ export class StartTaskComponent implements OnInit {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    people: UserProcessModel[] = [];
-
     startTaskmodel: StartTaskModel = new StartTaskModel();
 
     forms: Form[];
@@ -73,7 +71,6 @@ export class StartTaskComponent implements OnInit {
      * @param taskService
      */
     constructor(private taskService: TaskListService,
-                private peopleService: PeopleProcessService,
                 private dateAdapter: DateAdapter<Moment>,
                 private preferences: UserPreferencesService,
                 private logService: LogService) {
@@ -84,7 +81,6 @@ export class StartTaskComponent implements OnInit {
             this.dateAdapter.setLocale(locale);
         });
         this.loadFormsTask();
-        this.getUsers();
     }
 
     public start(): void {
@@ -138,15 +134,6 @@ export class StartTaskComponent implements OnInit {
                 this.error.emit(err);
                 this.logService.error('An error occurred while trying to get the forms');
             });
-    }
-
-    private getUsers(): void {
-        this.peopleService.getWorkflowUsers().subscribe((users) => {
-            this.people = users;
-        }, (err) => {
-            this.error.emit(err);
-            this.logService.error('Could not load users');
-        });
     }
 
     public isUserNameEmpty(user: UserProcessModel): boolean {

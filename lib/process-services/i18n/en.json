@@ -141,6 +141,7 @@
       }
     },
     "PEOPLE": {
+      "ASSIGNEE": "Assignee",
       "DIALOG_CLOSE": "CLOSE",
       "ADD_USER": "ADD",
       "ADD_ASSIGNEE": "ASSIGN",
