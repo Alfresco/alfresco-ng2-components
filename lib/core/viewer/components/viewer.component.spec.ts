@@ -420,7 +420,7 @@ fdescribe('ViewerComponent', () => {
 
     });
 
-    xdescribe('View', () => {
+    describe('View', () => {
 
         describe('Overlay mode true', () => {
 
@@ -433,29 +433,31 @@ fdescribe('ViewerComponent', () => {
                 expect(element.querySelector('.adf-viewer-toolbar')).not.toBeNull();
             });
 
-            // xit('should Name File be present if is overlay mode ', () => {
-            //     component.ngOnChanges(null).then(() => {
-            //         fixture.detectChanges();
-            //         expect(element.querySelector('.adf-viewer-filename').innerHTML).toEqual('fake-test-file.pdf');
-            //     });
-            // });
+            xit('should Name File be present if is overlay mode ', async(() => {
+                component.ngOnChanges(null);
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    expect(element.querySelector('.adf-viewer-filename').innerHTML).toEqual('fake-test-file.pdf');
+                });
+            }));
 
-            // it('should Close button be present if overlay mode', () => {
-            //     expect(element.querySelector('.adf-viewer-close-button')).not.toBeNull();
-            // });
+            it('should Close button be present if overlay mode', () => {
+                expect(element.querySelector('.adf-viewer-close-button')).not.toBeNull();
+            });
 
-            // it('should Click on close button hide the viewer', () => {
-            //     let closebutton: any = element.querySelector('.adf-viewer-close-button');
-            //     closebutton.click();
-            //     fixture.detectChanges();
-            //     expect(element.querySelector('.adf-viewer-content')).toBeNull();
-            // });
+            it('should Click on close button hide the viewer', () => {
+                let closebutton: any = element.querySelector('.adf-viewer-close-button');
+                closebutton.click();
+                fixture.detectChanges();
+                expect(element.querySelector('.adf-viewer-content')).toBeNull();
+            });
 
-            // it('should Esc button hide the viewer', () => {
-            //     EventMock.keyUp(27);
-            //     fixture.detectChanges();
-            //     expect(element.querySelector('.adf-viewer-content')).toBeNull();
-            // });
+            it('should Esc button hide the viewer', () => {
+                EventMock.keyUp(27);
+                fixture.detectChanges();
+                expect(element.querySelector('.adf-viewer-content')).toBeNull();
+            });
         });
 
         describe('Overlay mode false', () => {
