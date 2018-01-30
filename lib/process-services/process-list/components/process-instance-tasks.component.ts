@@ -37,7 +37,8 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges {
     processInstanceDetails: ProcessInstance;
 
     /** Toggles whether to show a refresh button next to the list of tasks to allow
-     * it to be updated from the server. */
+     * it to be updated from the server.
+     */
     @Input()
     showRefreshButton: boolean = true;
 

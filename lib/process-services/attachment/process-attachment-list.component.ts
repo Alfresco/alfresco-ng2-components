@@ -41,7 +41,8 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
     /** Emitted when the attachment is double-clicked or the
      * view option is selected from the context menu by the user from
      * within the component. Returns a Blob representing the object
-     * that was clicked. */
+     * that was clicked.
+     */
     @Output()
     attachmentClick = new EventEmitter();
 
