@@ -479,47 +479,47 @@ fdescribe('ViewerComponent', () => {
         });
     });
 
-    xdescribe('Attribute', () => {
-        it('should Url or fileNodeId be mandatory', () => {
-            component.showViewer = true;
-            component.fileNodeId = undefined;
-            component.urlFile = undefined;
+    // xdescribe('Attribute', () => {
+    //     it('should Url or fileNodeId be mandatory', () => {
+    //         component.showViewer = true;
+    //         component.fileNodeId = undefined;
+    //         component.urlFile = undefined;
 
-            expect(() => {
-                component.ngOnChanges(null);
-            }).toThrow();
-        });
+    //         expect(() => {
+    //             component.ngOnChanges(null);
+    //         }).toThrow();
+    //     });
 
-        it('should FileNodeId present not thrown any error ', () => {
-            component.showViewer = true;
-            component.fileNodeId = 'file-node-id';
-            component.urlFile = undefined;
+    //     it('should FileNodeId present not thrown any error ', () => {
+    //         component.showViewer = true;
+    //         component.fileNodeId = 'file-node-id';
+    //         component.urlFile = undefined;
 
-            expect(() => {
-                component.ngOnChanges(null);
-            }).not.toThrow();
-        });
+    //         expect(() => {
+    //             component.ngOnChanges(null);
+    //         }).not.toThrow();
+    //     });
 
-        it('should  urlFile present not thrown any error ', () => {
-            component.showViewer = true;
-            component.fileNodeId = undefined;
+    //     it('should  urlFile present not thrown any error ', () => {
+    //         component.showViewer = true;
+    //         component.fileNodeId = undefined;
 
-            expect(() => {
-                component.ngOnChanges(null);
-            }).not.toThrow();
-        });
+    //         expect(() => {
+    //             component.ngOnChanges(null);
+    //         }).not.toThrow();
+    //     });
 
-        it('should showViewer default value  be true', () => {
-            expect(component.showViewer).toBe(true);
-        });
+    //     it('should showViewer default value  be true', () => {
+    //         expect(component.showViewer).toBe(true);
+    //     });
 
-        it('should viewer be hide if showViewer value is false', () => {
-            component.showViewer = false;
+    //     it('should viewer be hide if showViewer value is false', () => {
+    //         component.showViewer = false;
 
-            fixture.detectChanges();
-            expect(element.querySelector('.adf-viewer-content')).toBeNull();
-        });
-    });
+    //         fixture.detectChanges();
+    //         expect(element.querySelector('.adf-viewer-content')).toBeNull();
+    //     });
+    // });
 
     xdescribe('Extension Type Test', () => {
         // it('should  extension file pdf  be loaded', (done) => {
