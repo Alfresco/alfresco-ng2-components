@@ -1,0 +1,33 @@
+<mat-form-field class="search-text-container">
+    <input
+        matInput
+        placeholder="{{ searchPlaceholder }}"
+        type="text"
+        id="userSearchText"
+        [value]=""
+        [formControl]="searchUser"
+        data-automation-id="adf-people-search-input">
+</mat-form-field>
+<ng-container *ngIf="users$ | async; let users">
+    <div class="search-list-container" id="search-people-list" *ngIf="users.length > 0">
+        <adf-people-list [users]="users" (clickRow)="onRowClick($event)">
+            <data-columns>
+                <data-column key="firstName">
+                    <ng-template let-entry="$implicit">
+                            <div *ngIf="!entry.row.obj.pictureId" class="people-pic">
+                                {{getInitialUserName(entry.row.obj.firstName, entry.row.obj.lastName)}}</div>
+                            <div>
+                                <img *ngIf="entry.row.obj.pictureId" class="people-img"
+                                    [src]="peopleProcessService.getUserImage(entry.row.obj)"/>
+                            </div>
+                    </ng-template>
+                </data-column>
+                <data-column key="email" class="full-width">
+                    <ng-template let-entry="$implicit">
+                        <div class="people-full-name">{{ getDisplayUser(entry.row.obj.firstName, entry.row.obj.lastName, ' ') }}</div>
+                    </ng-template>
+                </data-column>
+            </data-columns>
+        </adf-people-list>
+    </div>
+</ng-container>

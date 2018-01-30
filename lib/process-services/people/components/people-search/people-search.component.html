@@ -1,0 +1,14 @@
+<div class="search-text-header">
+    <ng-content select="[people-search-title]"></ng-content>
+</div>
+
+<adf-people-search-field [performSearch]="performSearch" (rowClick)="onRowClick($event)"></adf-people-search-field>
+
+<div class="search-list-action-container">
+    <button mat-button type="button" id="close-people-search" (click)="closeSearchList()">
+        {{'ADF_TASK_LIST.PEOPLE.DIALOG_CLOSE' | translate }}
+    </button>
+    <button mat-button type="button" id="add-people" (click)="involveUserAndClose()">
+        <ng-content select="[people-search-action-label]"></ng-content>
+    </button>
+</div>

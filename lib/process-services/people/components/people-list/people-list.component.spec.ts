@@ -18,7 +18,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { UserProcessModel } from '@alfresco/adf-core';
 import { DataRowActionEvent, DataRowEvent, ObjectDataRow } from '@alfresco/adf-core';
-import { UserEventModel } from '../task-list/models/user-event.model';
+import { UserEventModel } from '../../../task-list/models/user-event.model';
 import { PeopleListComponent } from './people-list.component';
 
 const fakeUser: UserProcessModel = new UserProcessModel({

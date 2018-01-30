@@ -1,0 +1,14 @@
+<adf-people-search-field
+    class="adf-people-selector-field"
+    [performSearch]="performSearch"
+    [placeholder]="placeholder"
+    (rowClick)="userSelected($event)">
+</adf-people-search-field>
+<button
+    *ngIf="selectedUser"
+    mat-icon-button
+    class="adf-people-selector-deselect"
+    data-automation-id="adf-people-selector-deselect"
+    (click)="userDeselected()">
+        <mat-icon>cancel</mat-icon>
+</button>

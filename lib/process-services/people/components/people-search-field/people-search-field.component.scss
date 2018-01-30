@@ -1,26 +1,10 @@
-@mixin adf-task-list-people-search-theme($theme) {
+@mixin adf-task-list-people-search-field-theme($theme) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
     $warn: map-get($theme, warn);
 
-    .adf-people-search {
+    .adf-people-search-field {
         width: 100%;
-
-        .activiti-label {
-            font-weight: bolder;
-        }
-
-        .fix-element-user-list {
-            padding-top: 0px;
-            padding-right: 0px;
-            padding-bottom: 0px;
-            padding-left: 0px;
-        }
-
-        .search-text-header {
-            font-weight: bold;
-            opacity: 0.54;
-        }
 
         .search-text-container {
             width: 100%;
@@ -38,20 +22,6 @@
 
         adf-people-list ::ng-deep adf-datatable ::ng-deep thead {
             display: none;
-        }
-
-        .search-list-action-container {
-            border-top: 1px solid #eee;
-            text-align: right;
-            padding: 5px 0px;
-            margin-top: 5px;
-            > button {
-                opacity: 0.54;
-                font-weight: bolder;
-                &:hover {
-                    color: mat-color($primary);
-                }
-            }
         }
 
         .people-pic {
