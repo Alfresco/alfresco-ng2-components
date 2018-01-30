@@ -422,14 +422,14 @@ fdescribe('ViewerComponent', () => {
 
     describe('View', () => {
 
-        describe('Overlay mode true', () => {
+        xdescribe('Overlay mode true', () => {
 
             beforeEach(() => {
                 component.overlayMode = true;
                 fixture.detectChanges();
             });
 
-            it('should header be present if is overlay mode', () => {
+            xit('should header be present if is overlay mode', () => {
                 expect(element.querySelector('.adf-viewer-toolbar')).not.toBeNull();
             });
 
@@ -442,18 +442,18 @@ fdescribe('ViewerComponent', () => {
                 });
             }));
 
-            it('should Close button be present if overlay mode', () => {
+            xit('should Close button be present if overlay mode', () => {
                 expect(element.querySelector('.adf-viewer-close-button')).not.toBeNull();
             });
 
-            it('should Click on close button hide the viewer', () => {
+            xit('should Click on close button hide the viewer', () => {
                 let closebutton: any = element.querySelector('.adf-viewer-close-button');
                 closebutton.click();
                 fixture.detectChanges();
                 expect(element.querySelector('.adf-viewer-content')).toBeNull();
             });
 
-            it('should Esc button hide the viewer', () => {
+            xit('should Esc button hide the viewer', () => {
                 EventMock.keyUp(27);
                 fixture.detectChanges();
                 expect(element.querySelector('.adf-viewer-content')).toBeNull();
@@ -481,7 +481,7 @@ fdescribe('ViewerComponent', () => {
 
     describe('Attribute', () => {
 
-        xit('should Url or fileNodeId be mandatory', () => {
+        it('should Url or fileNodeId be mandatory', () => {
             component.showViewer = true;
             component.fileNodeId = undefined;
             component.urlFile = undefined;
@@ -491,7 +491,7 @@ fdescribe('ViewerComponent', () => {
             }).toThrow();
         });
 
-        xit('should FileNodeId present not thrown any error ', () => {
+        it('should FileNodeId present not thrown any error ', () => {
             component.showViewer = true;
             component.fileNodeId = 'file-node-id';
             component.urlFile = undefined;
@@ -501,7 +501,7 @@ fdescribe('ViewerComponent', () => {
             }).not.toThrow();
         });
 
-        xit('should  urlFile present not thrown any error ', () => {
+        it('should  urlFile present not thrown any error ', () => {
             component.showViewer = true;
             component.fileNodeId = undefined;
 
