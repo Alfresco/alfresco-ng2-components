@@ -53,18 +53,6 @@
                     outline-color: gray;
                 }
             }
-
-            &-page-scale {
-                cursor: default;
-                width: 79px;
-                height: 24px;
-                font-size: 14px;
-                border: 1px solid mat-color($foreground, text, 0.07);
-                text-align: center;
-                line-height: 24px;
-                margin-left: 4px;
-                margin-right: 4px;
-            }
         }
     }
 }

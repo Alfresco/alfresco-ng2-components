@@ -29,6 +29,8 @@ export class ThumbnailService {
         'image/png': './assets/images/ft_ic_raster_image.svg',
         'image/jpeg': './assets/images/ft_ic_raster_image.svg',
         'image/gif': './assets/images/ft_ic_raster_image.svg',
+        'application/eps': './assets/images/ft_ic_raster_image.svg',
+        'application/illustrator': './assets/images/ft_ic_raster_image.svg',
         'application/pdf': './assets/images/ft_ic_pdf.svg',
         'application/vnd.ms-excel': './assets/images/ft_ic_ms_excel.svg',
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': './assets/images/ft_ic_ms_excel.svg',

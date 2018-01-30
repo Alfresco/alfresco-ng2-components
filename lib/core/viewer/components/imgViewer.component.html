@@ -1,27 +1,56 @@
 <div class="image-container" [ngStyle]="{ transform: transform }">
-    <img id="viewer-image" [src]="urlFile" [alt]="nameFile" />
+    <img id="viewer-image" [src]="urlFile" [alt]="nameFile" [ngStyle]="{ 'cursor' : isDragged ? 'move': 'default' } " />
 </div>
 
 <div class="adf-image-viewer__toolbar" *ngIf="showToolbar">
     <adf-toolbar>
-        <button mat-icon-button (click)="zoomIn()">
+        <button
+            id="viewer-zoom-in-button"
+            mat-icon-button
+            title="{{ 'ADF_VIEWER.ARIA.ZOOM_IN' | translate }}"
+            attr.aria-label="{{ 'ADF_VIEWER.ARIA.ZOOM_IN' | translate }}"
+            (click)="zoomIn()">
             <mat-icon>zoom_in</mat-icon>
         </button>
 
-        <button mat-icon-button (click)="zoomOut()">
+        <button
+            id="viewer-zoom-out-button"
+            title="{{ 'ADF_VIEWER.ARIA.ZOOM_OUT' | translate }}"
+            attr.aria-label="{{ 'ADF_VIEWER.ARIA.ZOOM_OUT' | translate }}"
+            mat-icon-button
+            (click)="zoomOut()">
             <mat-icon>zoom_out</mat-icon>
         </button>
 
-        <button mat-icon-button (click)="rotateLeft()">
+        <div class="adf-viewer__toolbar-page-scale">
+            {{ currentScaleText }}
+        </div>
+
+        <button
+            id="viewer-rotate-left-button"
+            title="{{ 'ADF_VIEWER.ARIA.ROTATE_LEFT' | translate }}"
+            attr.aria-label="{{ 'ADF_VIEWER.ARIA.ROTATE_LEFT' | translate }}"
+            mat-icon-button
+            (click)="rotateLeft()">
             <mat-icon>rotate_left</mat-icon>
         </button>
 
-        <button mat-icon-button (click)="rotateRight()">
+        <button
+            id="viewer-rotate-right-button"
+            title="{{ 'ADF_VIEWER.ARIA.ROTATE_RIGHT' | translate }}"
+            attr.aria-label="{{ 'ADF_VIEWER.ARIA.ROTATE_RIGHT' | translate }}"
+            mat-icon-button
+            (click)="rotateRight()">
             <mat-icon>rotate_right</mat-icon>
         </button>
 
-        <button mat-icon-button (click)="flip()">
-            <mat-icon>flip</mat-icon>
+        <button
+            id="viewer-reset-button"
+            title="{{ 'ADF_VIEWER.ARIA.RESET' | translate }}"
+            attr.aria-label="{{ 'ADF_VIEWER.ARIA.RESET' | translate }}"
+            mat-icon-button
+            (click)="reset()">
+            <mat-icon>zoom_out_map</mat-icon>
         </button>
     </adf-toolbar>
 </div>
