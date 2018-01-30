@@ -187,102 +187,94 @@ export class ViewerComponent implements OnChanges {
                 throw new Error('A content source attribute value is missing.');
             }
 
-            return new Promise((resolve, reject) => {
-                if (this.blobFile) {
-                    this.displayName = this.getDisplayName('Unknown');
-                    this.isLoading = true;
-                    this.mimeType = this.blobFile.type;
+            if (this.blobFile) {
+                this.displayName = this.getDisplayName('Unknown');
+                this.isLoading = true;
+                this.mimeType = this.blobFile.type;
+                this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
+
+                this.allowDownload = false;
+                // TODO: wrap blob into the data url and allow downloading
+
+                this.extensionChange.emit(this.mimeType);
+                this.isLoading = false;
+                this.scrollTop();
+            } else if (this.urlFile) {
+                this.isLoading = true;
+                let filenameFromUrl = this.getFilenameFromUrl(this.urlFile);
+                this.displayName = this.getDisplayName(filenameFromUrl);
+                this.extension = this.getFileExtension(filenameFromUrl);
+                this.urlFileContent = this.urlFile;
+
+                this.downloadUrl = this.urlFile;
+                this.fileName = this.displayName;
+
+                this.viewerType = this.urlFileViewer || this.getViewerTypeByExtension(this.extension);
+                if (this.viewerType === 'unknown') {
                     this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
+                }
 
-                    this.allowDownload = false;
-                    // TODO: wrap blob into the data url and allow downloading
+                this.extensionChange.emit(this.extension);
+                this.isLoading = false;
+                this.scrollTop();
+            } else if (this.fileNodeId) {
+                this.isLoading = true;
+                this.apiService.getInstance().nodes.getNodeInfo(this.fileNodeId).then(
+                    (data: MinimalNodeEntryEntity) => {
+                        this.mimeType = data.content.mimeType;
+                        this.displayName = this.getDisplayName(data.name);
+                        this.urlFileContent = this.apiService.getInstance().content.getContentUrl(data.id);
+                        this.extension = this.getFileExtension(data.name);
 
-                    this.extensionChange.emit(this.mimeType);
-                    this.isLoading = false;
-                    this.scrollTop();
-                    resolve();
-                } else if (this.urlFile) {
-                    this.isLoading = true;
-                    let filenameFromUrl = this.getFilenameFromUrl(this.urlFile);
-                    this.displayName = this.getDisplayName(filenameFromUrl);
-                    this.extension = this.getFileExtension(filenameFromUrl);
-                    this.urlFileContent = this.urlFile;
+                        this.fileName = data.name;
+                        this.downloadUrl = this.apiService.getInstance().content.getContentUrl(data.id, true);
 
-                    this.downloadUrl = this.urlFile;
-                    this.fileName = this.displayName;
-
-                    this.viewerType = this.urlFileViewer || this.getViewerTypeByExtension(this.extension);
-                    if (this.viewerType === 'unknown') {
-                        this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
-                    }
-
-                    this.extensionChange.emit(this.extension);
-                    this.isLoading = false;
-                    this.scrollTop();
-                    resolve();
-                } else if (this.fileNodeId) {
-                    this.isLoading = true;
-                    this.apiService.getInstance().nodes.getNodeInfo(this.fileNodeId).then(
-                        (data: MinimalNodeEntryEntity) => {
-                            this.mimeType = data.content.mimeType;
-                            this.displayName = this.getDisplayName(data.name);
-                            this.urlFileContent = this.apiService.getInstance().content.getContentUrl(data.id);
-                            this.extension = this.getFileExtension(data.name);
-
-                            this.fileName = data.name;
-                            this.downloadUrl = this.apiService.getInstance().content.getContentUrl(data.id, true);
-
-                            this.viewerType = this.getViewerTypeByExtension(this.extension);
-                            if (this.viewerType === 'unknown') {
-                                this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
-                            }
-
-                            if (this.viewerType === 'unknown') {
-                                this.displayNodeRendition(data.id);
-                            } else {
-                                this.isLoading = false;
-                            }
-
-                            this.extensionChange.emit(this.extension);
-                            this.sidebarTemplateContext.node = data;
-                            this.scrollTop();
-                            resolve();
-                        },
-                        (error) => {
-                            this.isLoading = false;
-                            reject(error);
-                            this.logService.error('This node does not exist');
-                        }
-                    );
-                } else if (this.sharedLinkId) {
-                    this.isLoading = true;
-
-                    this.apiService.sharedLinksApi.getSharedLink(this.sharedLinkId).then(details => {
-                        this.mimeType = details.entry.content.mimeType;
-                        this.displayName = this.getDisplayName(details.entry.name);
-                        this.extension = this.getFileExtension(details.entry.name);
-                        this.fileName = details.entry.name;
-
-                        this.urlFileContent = this.apiService.contentApi.getSharedLinkContentUrl(this.sharedLinkId, false);
-                        this.downloadUrl = this.apiService.contentApi.getSharedLinkContentUrl(this.sharedLinkId, true);
-
-                        this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
+                        this.viewerType = this.getViewerTypeByExtension(this.extension);
                         if (this.viewerType === 'unknown') {
-                            this.viewerType = this.getViewerTypeByExtension(this.extension);
+                            this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
                         }
 
                         if (this.viewerType === 'unknown') {
-                            this.displaySharedLinkRendition(this.sharedLinkId);
+                            this.displayNodeRendition(data.id);
                         } else {
                             this.isLoading = false;
                         }
 
                         this.extensionChange.emit(this.extension);
+                        this.sidebarTemplateContext.node = data;
+                        this.scrollTop();
+                    },
+                    (error) => {
                         this.isLoading = false;
-                        resolve();
-                    });
-                }
-            });
+                        this.logService.error('This node does not exist');
+                    }
+                );
+            } else if (this.sharedLinkId) {
+                this.isLoading = true;
+
+                this.apiService.sharedLinksApi.getSharedLink(this.sharedLinkId).then(details => {
+                    this.mimeType = details.entry.content.mimeType;
+                    this.displayName = this.getDisplayName(details.entry.name);
+                    this.extension = this.getFileExtension(details.entry.name);
+                    this.fileName = details.entry.name;
+
+                    this.urlFileContent = this.apiService.contentApi.getSharedLinkContentUrl(this.sharedLinkId, false);
+                    this.downloadUrl = this.apiService.contentApi.getSharedLinkContentUrl(this.sharedLinkId, true);
+
+                    this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
+                    if (this.viewerType === 'unknown') {
+                        this.viewerType = this.getViewerTypeByExtension(this.extension);
+                    }
+
+                    if (this.viewerType === 'unknown') {
+                        this.displaySharedLinkRendition(this.sharedLinkId);
+                    } else {
+                        this.isLoading = false;
+                    }
+                    this.extensionChange.emit(this.extension);
+                    this.isLoading = false;
+                });
+            }
         }
     }
 
