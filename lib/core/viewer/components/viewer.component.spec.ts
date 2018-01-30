@@ -242,7 +242,7 @@ fdescribe('ViewerComponent', () => {
         expect(getComputedStyle(sidebar).order).toEqual('4');
     });
 
-    describe('Full Screen Mode', () => {
+    xdescribe('Full Screen Mode', () => {
 
         it('should request only if enabled', () => {
             const domElement = jasmine.createSpyObj('el', ['requestFullscreen']);
@@ -288,7 +288,7 @@ fdescribe('ViewerComponent', () => {
 
     });
 
-    describe('Toolbar', () => {
+    xdescribe('Toolbar', () => {
 
         it('should render fullscreen button', () => {
             component.allowFullScreen = true;
@@ -420,7 +420,7 @@ fdescribe('ViewerComponent', () => {
 
     });
 
-    describe('View', () => {
+    xdescribe('View', () => {
 
         describe('Overlay mode true', () => {
 
@@ -674,7 +674,7 @@ fdescribe('ViewerComponent', () => {
         // });
     });
 
-    describe('Events', () => {
+    xdescribe('Events', () => {
         it('should if the extension change extension Change event be fired ', async(() => {
 
             component.extensionChange.subscribe((fileExtension) => {
