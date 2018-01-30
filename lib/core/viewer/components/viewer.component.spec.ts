@@ -112,7 +112,7 @@ class ViewerWithCustomOpenWithComponent {}
 })
 class ViewerWithCustomMoreActionsComponent {}
 
-describe('ViewerComponent', () => {
+fdescribe('ViewerComponent', () => {
 
     let component: ViewerComponent;
     let fixture: ComponentFixture<ViewerComponent>;
@@ -161,7 +161,7 @@ describe('ViewerComponent', () => {
         element = fixture.nativeElement;
         component = fixture.componentInstance;
 
-        alfrescoApiService = TestBed.get(AlfrescoApiService);
+        // alfrescoApiService = TestBed.get(AlfrescoApiService);
 
         component.showToolbar = true;
         component.urlFile = 'base/src/assets/fake-test-file.pdf';
@@ -330,12 +330,12 @@ describe('ViewerComponent', () => {
             expect(component.downloadContent).toHaveBeenCalled();
         });
 
-        xit('should raise download event with the toolbar button', async(() => {
+        it('should raise download event with the toolbar button', async(() => {
             component.allowDownload = true;
             fixture.detectChanges();
 
             component.download.subscribe(e => {
-                e.preventDefault();
+                expect(e).not.toBeNull();
             });
 
             const button: HTMLButtonElement = element.querySelector('[data-automation-id="toolbar-download"]') as HTMLButtonElement;
@@ -368,12 +368,12 @@ describe('ViewerComponent', () => {
             expect(component.printContent).toHaveBeenCalled();
         });
 
-        xit('should raise the print event with the toolbar button', async(() => {
+        it('should raise the print event with the toolbar button', async(() => {
             component.allowPrint = true;
             fixture.detectChanges();
 
             component.print.subscribe(e => {
-                e.preventDefault();
+                expect(e).not.toBeNull();
             });
 
             const button: HTMLButtonElement = element.querySelector('[data-automation-id="toolbar-print"]') as HTMLButtonElement;
@@ -406,12 +406,12 @@ describe('ViewerComponent', () => {
             expect(component.shareContent).toHaveBeenCalled();
         });
 
-        xit('should raise share event with the toolbar button', async(() => {
+        it('should raise share event with the toolbar button', async(() => {
             component.allowShare = true;
             fixture.detectChanges();
 
             component.share.subscribe(e => {
-                e.preventDefault();
+                expect(e).not.toBeNull();
             });
 
             const button: HTMLButtonElement = element.querySelector('[data-automation-id="toolbar-share"]') as HTMLButtonElement;
@@ -734,9 +734,9 @@ describe('ViewerComponent', () => {
     });
 
     xdescribe('display name property override by nodeId', () => {
-        const displayName = 'the-name';
-        const nodeDetails = { name: displayName, id: '12', content: { mimeType: 'txt' }};
-        const contentUrl = '/content/url/path';
+        // const displayName = 'the-name';
+        // const nodeDetails = { name: displayName, id: '12', content: { mimeType: 'txt' }};
+        // const contentUrl = '/content/url/path';
         // const alfrescoApiInstanceMock = {
         //     nodes: { getNodeInfo: () => Promise.resolve(nodeDetails) },
         //     content: { getContentUrl: () => contentUrl }
