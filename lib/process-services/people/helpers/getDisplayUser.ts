@@ -15,13 +15,8 @@
  * limitations under the License.
  */
 
-export * from './components/people/people.component';
-export * from './components/people-list/people-list.component';
-export * from './components/people-search/people-search.component';
-export * from './components/people-search-field/people-search-field.component';
-export * from './components/people-selector/people-selector.component';
-
-export * from './interfaces/perform-search-callback.interface';
-
-export * from './directives/people-search-action-label.directive';
-export * from './directives/people-search-title.directive';
+export function getDisplayUser(firstName: string, lastName: string, delimiter: string = '-'): string {
+    firstName = (firstName !== null ? firstName : '');
+    lastName = (lastName !== null ? lastName : '');
+    return firstName + delimiter + lastName;
+}

@@ -17,7 +17,8 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MaterialModule } from '../../material.module';
-import { PeopleProcessService } from '@alfresco/adf-core';
+import { TranslationService, TranslationMock } from '@alfresco/adf-core';
+import { PeopleSelectorComponent, PeopleSearchFieldComponent, PeopleListComponent } from '../../people';
 import { Observable } from 'rxjs/Observable';
 import { startTaskMock } from '../../mock';
 import { StartTaskModel } from '../models/start-task.model';
@@ -30,10 +31,8 @@ describe('StartTaskComponent', () => {
     let component: StartTaskComponent;
     let fixture: ComponentFixture<StartTaskComponent>;
     let service: TaskListService;
-    let peopleService: PeopleProcessService;
     let element: HTMLElement;
     let getFormlistSpy: jasmine.Spy;
-    let getWorkflowUsersSpy: jasmine.Spy;
     let createNewTaskSpy: jasmine.Spy;
     let fakeForms =    [
         {
@@ -52,11 +51,14 @@ describe('StartTaskComponent', () => {
                 MaterialModule
             ],
             declarations: [
-                StartTaskComponent
+                StartTaskComponent,
+                PeopleSearchFieldComponent,
+                PeopleListComponent,
+                PeopleSelectorComponent
             ],
             providers: [
                 TaskListService,
-                PeopleProcessService
+                { provide: TranslationService, useClass: TranslationMock }
             ]
         }).compileComponents().then(() => {
 
@@ -65,25 +67,7 @@ describe('StartTaskComponent', () => {
             element = fixture.nativeElement;
 
             service = fixture.debugElement.injector.get(TaskListService);
-            peopleService = fixture.debugElement.injector.get(PeopleProcessService);
             getFormlistSpy = spyOn(service, 'getFormList').and.returnValue(Observable.of(fakeForms));
-            getWorkflowUsersSpy = spyOn(peopleService, 'getWorkflowUsers').and.returnValue(Observable.of([
-                {
-                    id: 1,
-                    firstName: 'fakeName',
-                    lastName: 'fakeName',
-                    email: 'fake@app.activiti.com',
-                    company: 'Alfresco.com',
-                    pictureId: 3003
-                },
-                {
-                    id: 1001,
-                    firstName: 'fake-name',
-                    lastName: 'fake-name',
-                    email: 'fake-@app.com',
-                    company: 'app'
-                }
-            ]));
 
             fixture.detectChanges();
         });
@@ -299,16 +283,6 @@ describe('StartTaskComponent', () => {
         expect(element.querySelector('#button-start').textContent).toContain('ADF_TASK_LIST.START_TASK.FORM.ACTION.START');
     });
 
-    it('should fetch all users on ngonint', () => {
-        component.ngOnInit();
-        expect(component.people).toBeDefined();
-        expect(component.people[0].firstName).toEqual('fakeName');
-        expect(component.people[1].firstName).toEqual('fake-name');
-        expect(component.people[0].id).toEqual(1);
-        expect(component.people[1].id).toEqual(1001);
-        expect(getWorkflowUsersSpy).toHaveBeenCalled();
-    });
-
     it('should not emit TaskDetails OnCancel', () => {
         let emitSpy = spyOn(component.cancel, 'emit');
         component.onCancel();
@@ -339,15 +313,6 @@ describe('StartTaskComponent', () => {
         let createTaskButton = fixture.nativeElement.querySelector('#button-start');
         expect(createTaskButton.disabled).toBeFalsy();
     });
-
-    it('should define the select option for Assignee', async(() => {
-        fixture.whenStable().then(() => {
-            let selectElement = fixture.nativeElement.querySelector('#assignee_id');
-            expect(selectElement).not.toBeNull();
-            expect(selectElement).toBeDefined();
-            expect(selectElement.attributes['aria-label'].value).toContain('ADF_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE');
-        });
-    }));
 
     it('should define the select option for Forms', () => {
         component.forms = fakeForms;

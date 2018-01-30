@@ -1,0 +1,21 @@
+@mixin adf-task-list-people-selector-theme($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+
+    .adf-people-selector {
+        display: flex;
+        flex-flow: row;
+        justify-content: space-between;
+
+        &-field {
+            flex: 1 1 auto;
+        }
+
+        &-deselect {
+            flex: 0 0 auto;
+            top: 5px;
+            right: 5px;
+        }
+    }
+}

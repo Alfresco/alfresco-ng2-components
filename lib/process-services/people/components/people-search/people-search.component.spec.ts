@@ -17,10 +17,11 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule, MatInputModule } from '@angular/material';
-import { UserProcessModel } from '@alfresco/adf-core';
+import { UserProcessModel, TranslationService, TranslationMock } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
-import { PeopleListComponent } from './people-list.component';
+import { PeopleListComponent } from '../people-list/people-list.component';
 import { PeopleSearchComponent } from './people-search.component';
+import { PeopleSearchFieldComponent } from '../people-search-field/people-search-field.component';
 
 const fakeUser: UserProcessModel = new UserProcessModel({
     id: '1',
@@ -52,9 +53,11 @@ describe('PeopleSearchComponent', () => {
             ],
             declarations: [
                 PeopleSearchComponent,
+                PeopleSearchFieldComponent,
                 PeopleListComponent
             ],
             providers: [
+                { provide: TranslationService, useClass: TranslationMock }
             ]
         }).compileComponents().then(() => {
 
@@ -81,22 +84,21 @@ describe('PeopleSearchComponent', () => {
     });
 
     it('should show user which can be involved ', (done) => {
-        peopleSearchComponent.searchPeople.subscribe(() => {
-            peopleSearchComponent.results = Observable.of(userArray);
-            peopleSearchComponent.ngOnInit();
-            fixture.detectChanges();
-            fixture.whenStable()
-                .then(() => {
-                    let gatewayElement: any = element.querySelector('#search-people-list tbody');
-                    expect(gatewayElement).not.toBeNull();
-                    expect(gatewayElement.children.length).toBe(2);
-                    done();
-                });
-        });
+        peopleSearchComponent.results = Observable.of(userArray);
+        peopleSearchComponent.ngOnInit();
+        fixture.detectChanges();
+
         searchInput = element.querySelector('#userSearchText');
         searchInput.value = 'fake-search';
-        peopleSearchComponent.searchUser.markAsDirty();
         searchInput.dispatchEvent(new Event('input'));
+
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            let gatewayElement: any = element.querySelector('#search-people-list tbody');
+            expect(gatewayElement).not.toBeNull();
+            expect(gatewayElement.children.length).toBe(2);
+            done();
+        });
     });
 
     it('should send an event when an user is clicked', (done) => {
@@ -120,13 +122,20 @@ describe('PeopleSearchComponent', () => {
         peopleSearchComponent.results = Observable.of(userArray);
         peopleSearchComponent.ngOnInit();
         fixture.detectChanges();
+
+        searchInput = element.querySelector('#userSearchText');
+        searchInput.value = 'fake-search';
+        searchInput.dispatchEvent(new Event('input'));
+        fixture.detectChanges();
+
         peopleSearchComponent.onRowClick(fakeUser);
         let addUserButton = <HTMLElement> element.querySelector('#add-people');
         addUserButton.click();
-
         fixture.detectChanges();
+
         fixture.whenStable()
             .then(() => {
+                fixture.detectChanges();
                 let gatewayElement: any = element.querySelector('#search-people-list tbody');
                 expect(gatewayElement).not.toBeNull();
                 expect(gatewayElement.children.length).toBe(1);
