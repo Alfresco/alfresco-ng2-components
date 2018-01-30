@@ -1,0 +1,319 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "id": "https://github.com/Alfresco/alfresco-ng2-components/tree/master/lib/core/app-config/schema.json",
+    "title": "ADF Application config",
+    "description": "Configuration object for ADF components used by your application",
+
+    "definitions": {
+        "language": {
+            "description": "Language definition",
+            "type": "object",
+            "properties": {
+                "key": { "type": "string" },
+                "label": { "type": "string" }
+            }
+        },
+        "document-list-thumbnail": {
+            "description": "Document list's thumbnail image column definition",
+            "type": "object",
+            "required": [ "key", "type", "srTitle", "sortable" ],
+            "properties": {
+                "key": { "type": "string", "pattern": "^\\$thumbnail$" },
+                "type": { "type": "string", "pattern": "^image$" },
+                "srTitle": { "type": "string" },
+                "sortable": { "type": "boolean" }
+            }
+        },
+        "document-list-name": {
+            "description": "Document list's name column definition",
+            "type": "object",
+            "required": [ "key", "type", "title", "sortable" ],
+            "properties": {
+                "key": { "type": "string", "pattern": "^name$" },
+                "type": { "type": "string", "pattern": "^text$" },
+                "title": { "type": "string" },
+                "sortable": { "type": "boolean" }
+            }
+        },
+        "document-list-title": {
+            "description": "Document list's title column definition",
+            "type": "object",
+            "required": [ "key", "type", "title", "sortable" ],
+            "properties": {
+                "key": { "type": "string", "pattern": "^title$" },
+                "type": { "type": "string", "pattern": "^text$" },
+                "title": { "type": "string" },
+                "sortable": { "type": "boolean" }
+            }
+        },
+        "document-list-visibility": {
+            "description": "Document list's visibility column definition",
+            "type": "object",
+            "required": [ "key", "type", "title", "sortable" ],
+            "properties": {
+                "key": { "type": "string", "pattern": "^visibility$" },
+                "type": { "type": "string", "pattern": "^text$" },
+                "title": { "type": "string" },
+                "sortable": { "type": "boolean" }
+            }
+        },
+        "document-list-path": {
+            "description": "Document list's path column definition",
+            "type": "object",
+            "required": [ "key", "type", "title", "format", "sortable" ],
+            "properties": {
+                "key": { "type": "string", "pattern": "^path$" },
+                "type": { "type": "string", "pattern": "^location$" },
+                "title": { "type": "string" },
+                "format": { "type": "string" },
+                "sortable": { "type": "boolean" }
+            }
+        },
+        "document-list-modifiedAt": {
+            "description": "Document list's modifiedAt column definition",
+            "type": "object",
+            "required": [ "key", "type", "title", "sortable" ],
+            "properties": {
+                "key": { "type": "string", "pattern": "^modifiedAt$" },
+                "type": { "type": "string", "pattern": "^date$" },
+                "title": { "type": "string" },
+                "sortable": { "type": "boolean" }
+            }
+        },
+        "document-list-modifiedByUser": {
+            "description": "Document list's modifiedByUser column definition",
+            "type": "object",
+            "required": [ "key", "type", "title", "sortable" ],
+            "properties": {
+                "key": { "type": "string", "pattern": "^modifiedByUser\\.displayName$" },
+                "type": { "type": "string", "pattern": "^text$" },
+                "title": { "type": "string" },
+                "sortable": { "type": "boolean" }
+            }
+        },
+        "document-list-sharedByUser": {
+            "description": "Document list's sharedByUser column definition",
+            "type": "object",
+            "required": [ "key", "type", "title", "sortable" ],
+            "properties": {
+                "key": { "type": "string", "pattern": "^sharedByUser\\.displayName$" },
+                "type": { "type": "string", "pattern": "^text$" },
+                "title": { "type": "string" },
+                "sortable": { "type": "boolean" }
+            }
+        },
+        "document-list-filesize": {
+            "description": "Document list's path column definition",
+            "type": "object",
+            "required": [ "key", "type", "title", "sortable" ],
+            "properties": {
+                "key": { "type": "string", "pattern": "^content\\.sizeInBytes$" },
+                "type": { "type": "string", "pattern": "^fileSize$" },
+                "title": { "type": "string" },
+                "sortable": { "type": "boolean" }
+            }
+        },
+        "document-list-archivedAt": {
+            "description": "Document list's archivedAt column definition",
+            "type": "object",
+            "required": [ "key", "type", "title", "format", "sortable" ],
+            "properties": {
+                "key": { "type": "string", "pattern": "^archivedAt$" },
+                "type": { "type": "string", "pattern": "^date$" },
+                "title": { "type": "string" },
+                "format": { "type": "string" },
+                "sortable": { "type": "boolean" }
+            }
+        },
+        "document-list-archivedBy": {
+            "description": "Document list's archivedBy column definition",
+            "type": "object",
+            "required": [ "key", "type", "title", "sortable" ],
+            "properties": {
+                "key": { "type": "string", "pattern": "^archivedByUser.displayName$" },
+                "type": { "type": "string", "pattern": "^text$" },
+                "title": { "type": "string" },
+                "sortable": { "type": "boolean" }
+            }
+        },
+        "content-metadata-aspect": {
+            "description": "Content metadata's aspect definition",
+            "type": "object",
+            "patternProperties": {
+                ".*": {
+                    "oneOf": [
+                        {
+                            "description": "Wildcard for every property",
+                            "type": "string",
+                            "pattern": "^\\*$"
+                        },
+                        {
+                            "description": "Properties array",
+                            "type": "array",
+                            "items": {
+                                "description": "Property name",
+                                "type": "string"
+                                }
+                            }
+                    ]
+                }
+            }
+        }
+    },
+
+    "type": "object",
+    "properties": {
+        "ecmHost": {
+            "description": "ECM host",
+            "type": "string"
+        },
+        "bpmHost": {
+            "description": "BPM host",
+            "type": "string"
+        },
+        "application": {
+            "description": "Application's global configuration",
+            "type": "object",
+            "properties": {
+                "name": { "type": "string", "description": "Name of the application" }
+            }
+        },
+        "languages": {
+            "description": "Supported languages",
+            "type": "array",
+            "items": { "$ref": "#/definitions/language" }
+        },
+        "pagination": {
+            "description": "Pagination configuration",
+            "type": "object",
+            "properties": {
+                "size": { "type": "number", "description": "Pagination's default page size" },
+                "supportedPageSizes": {
+                    "description": "Pagination's supported page sizes",
+                    "type": "array",
+                    "items": { "type": "number" }
+                }
+            }
+        },
+        "files": {
+            "description": "Configuration of rules applied to file upload",
+            "type": "object",
+            "properties": {
+                "excluded": {
+                    "description": "File exclusions",
+                    "type": "array",
+                    "items": { "type": "string" }
+                }
+            }
+        },
+        "logLevel": {
+            "description": "Application's logging level",
+            "type": "string",
+            "enum": [ "trace", "debug", "info", "warn", "error", "silent" ]
+        },
+        "activiti": {
+            "type": "object"
+        },
+        "document-list": {
+            "description": "Document list configuration",
+            "type": "object",
+            "properties": {
+                "presets": {
+                    "description": "Presets for document list component",
+                    "type": "object",
+                    "propertyNames": {
+                        "enum": [ "-trashcan-", "-sites-", "-mysites-", "-favorites-", "-recent-", "-sharedlinks-", "default" ]
+                    },
+                    "patternProperties": {
+                        ".*": {
+                            "description": "Document list's columns",
+                            "type": "array",
+                            "items": {
+                                "oneOf": [
+                                    { "$ref": "#/definitions/document-list-thumbnail" },
+                                    { "$ref": "#/definitions/document-list-name" },
+                                    { "$ref": "#/definitions/document-list-title" },
+                                    { "$ref": "#/definitions/document-list-visibility" },
+                                    { "$ref": "#/definitions/document-list-path" },
+                                    { "$ref": "#/definitions/document-list-modifiedAt" },
+                                    { "$ref": "#/definitions/document-list-modifiedByUser" },
+                                    { "$ref": "#/definitions/document-list-sharedByUser" },
+                                    { "$ref": "#/definitions/document-list-filesize" },
+                                    { "$ref": "#/definitions/document-list-archivedAt" },
+                                    { "$ref": "#/definitions/document-list-archivedBy" }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "adf-task-list": {
+            "description": "Task list component configuration",
+            "type": "object",
+            "properties": {
+                "presets": {
+                    "description": "Presets for task list component",
+                    "type": "object",
+                    "patternProperties": {
+                        ".*": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "key": { "type": "string" },
+                                    "type": { "type": "string" },
+                                    "title": { "type": "string" },
+                                    "sortable": { "type": "boolean" }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "adf-process-list": {
+            "description": "Process list component configuration",
+            "type": "object",
+            "properties": {
+                "presets": {
+                    "description": "Presets for process list component",
+                    "type": "object",
+                    "patternProperties": {
+                        ".*": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "key": { "type": "string" },
+                                    "type": { "type": "string" },
+                                    "title": { "type": "string" },
+                                    "sortable": { "type": "boolean" }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "content-metadata": {
+            "description": "Content metadata component's configuration",
+            "type": "object",
+            "required": [ "presets" ],
+            "properties": {
+                "presets": {
+                    "description": "Presets for content metadata component",
+                    "type": "object",
+                    "patternProperties": {
+                        ".*": {
+                            "oneOf": [
+                                { "type": "string", "pattern": "^\\*$", "description": "Wildcard for every aspect"},
+                                { "$ref": "#/definitions/content-metadata-aspect" }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
