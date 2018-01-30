@@ -311,7 +311,25 @@ fdescribe('ViewerComponent', () => {
 
     });
 
-    xdescribe('Toolbar', () => {
+    describe('Toolbar', () => {
+
+        beforeEach(() => {
+            fixture = TestBed.createComponent(ViewerComponent);
+
+            element = fixture.nativeElement;
+            component = fixture.componentInstance;
+
+            // alfrescoApiService = TestBed.get(AlfrescoApiService);
+
+            component.showToolbar = true;
+            component.urlFile = 'base/src/assets/fake-test-file.pdf';
+            component.mimeType = 'application/pdf';
+            fixture.detectChanges();
+        });
+
+        afterEach(() => {
+            fixture.destroy();
+        });
 
         it('should render fullscreen button', () => {
             expect(element.querySelector('[data-automation-id="toolbar-fullscreen"]')).toBeDefined();
@@ -694,6 +712,24 @@ fdescribe('ViewerComponent', () => {
     });
 
     xdescribe('Events', () => {
+        beforeEach(() => {
+            fixture = TestBed.createComponent(ViewerComponent);
+
+            element = fixture.nativeElement;
+            component = fixture.componentInstance;
+
+            // alfrescoApiService = TestBed.get(AlfrescoApiService);
+
+            component.showToolbar = true;
+            component.urlFile = 'base/src/assets/fake-test-file.pdf';
+            component.mimeType = 'application/pdf';
+            fixture.detectChanges();
+        });
+
+        afterEach(() => {
+            fixture.destroy();
+        });
+
         it('should if the extension change extension Change event be fired ', async(() => {
 
             component.extensionChange.subscribe((fileExtension) => {
