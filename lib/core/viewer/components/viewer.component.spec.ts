@@ -288,7 +288,7 @@ fdescribe('ViewerComponent', () => {
 
     });
 
-    xdescribe('Toolbar', () => {
+    describe('Toolbar', () => {
 
         it('should render fullscreen button', () => {
             component.allowFullScreen = true;
@@ -420,7 +420,7 @@ fdescribe('ViewerComponent', () => {
 
     });
 
-    xdescribe('View', () => {
+    describe('View', () => {
 
         describe('Overlay mode true', () => {
 
@@ -479,47 +479,48 @@ fdescribe('ViewerComponent', () => {
         });
     });
 
-    // xdescribe('Attribute', () => {
-    //     it('should Url or fileNodeId be mandatory', () => {
-    //         component.showViewer = true;
-    //         component.fileNodeId = undefined;
-    //         component.urlFile = undefined;
+    describe('Attribute', () => {
 
-    //         expect(() => {
-    //             component.ngOnChanges(null);
-    //         }).toThrow();
-    //     });
+        xit('should Url or fileNodeId be mandatory', () => {
+            component.showViewer = true;
+            component.fileNodeId = undefined;
+            component.urlFile = undefined;
 
-    //     it('should FileNodeId present not thrown any error ', () => {
-    //         component.showViewer = true;
-    //         component.fileNodeId = 'file-node-id';
-    //         component.urlFile = undefined;
+            expect(() => {
+                component.ngOnChanges(null);
+            }).toThrow();
+        });
 
-    //         expect(() => {
-    //             component.ngOnChanges(null);
-    //         }).not.toThrow();
-    //     });
+        xit('should FileNodeId present not thrown any error ', () => {
+            component.showViewer = true;
+            component.fileNodeId = 'file-node-id';
+            component.urlFile = undefined;
 
-    //     it('should  urlFile present not thrown any error ', () => {
-    //         component.showViewer = true;
-    //         component.fileNodeId = undefined;
+            expect(() => {
+                component.ngOnChanges(null);
+            }).not.toThrow();
+        });
 
-    //         expect(() => {
-    //             component.ngOnChanges(null);
-    //         }).not.toThrow();
-    //     });
+        xit('should  urlFile present not thrown any error ', () => {
+            component.showViewer = true;
+            component.fileNodeId = undefined;
 
-    //     it('should showViewer default value  be true', () => {
-    //         expect(component.showViewer).toBe(true);
-    //     });
+            expect(() => {
+                component.ngOnChanges(null);
+            }).not.toThrow();
+        });
 
-    //     it('should viewer be hide if showViewer value is false', () => {
-    //         component.showViewer = false;
+        it('should showViewer default value  be true', () => {
+            expect(component.showViewer).toBe(true);
+        });
 
-    //         fixture.detectChanges();
-    //         expect(element.querySelector('.adf-viewer-content')).toBeNull();
-    //     });
-    // });
+        it('should viewer be hide if showViewer value is false', () => {
+            component.showViewer = false;
+
+            fixture.detectChanges();
+            expect(element.querySelector('.adf-viewer-content')).toBeNull();
+        });
+    });
 
     xdescribe('Extension Type Test', () => {
         // it('should  extension file pdf  be loaded', (done) => {
