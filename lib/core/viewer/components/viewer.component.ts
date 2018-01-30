@@ -181,6 +181,88 @@ export class ViewerComponent implements OnChanges {
         return (this.urlFile || this.blobFile || this.fileNodeId || this.sharedLinkId) ? true : false;
     }
 
+    private setUpBlobData() {
+        this.displayName = this.getDisplayName('Unknown');
+        this.isLoading = true;
+        this.mimeType = this.blobFile.type;
+        this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
+
+        this.allowDownload = false;
+        // TODO: wrap blob into the data url and allow downloading
+
+        this.extensionChange.emit(this.mimeType);
+        this.isLoading = false;
+        this.scrollTop();
+    }
+
+    private setUpUrlFile() {
+        this.isLoading = true;
+        let filenameFromUrl = this.getFilenameFromUrl(this.urlFile);
+        this.displayName = this.getDisplayName(filenameFromUrl);
+        this.extension = this.getFileExtension(filenameFromUrl);
+        this.urlFileContent = this.urlFile;
+
+        this.downloadUrl = this.urlFile;
+        this.fileName = this.displayName;
+
+        this.viewerType = this.urlFileViewer || this.getViewerTypeByExtension(this.extension);
+        if (this.viewerType === 'unknown') {
+            this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
+        }
+
+        this.extensionChange.emit(this.extension);
+        this.isLoading = false;
+        this.scrollTop();
+    }
+
+    private setUpNodeFile(data: MinimalNodeEntryEntity) {
+        this.mimeType = data.content.mimeType;
+        this.displayName = this.getDisplayName(data.name);
+        this.urlFileContent = this.apiService.getInstance().content.getContentUrl(data.id);
+        this.extension = this.getFileExtension(data.name);
+
+        this.fileName = data.name;
+        this.downloadUrl = this.apiService.getInstance().content.getContentUrl(data.id, true);
+
+        this.viewerType = this.getViewerTypeByExtension(this.extension);
+        if (this.viewerType === 'unknown') {
+            this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
+        }
+
+        if (this.viewerType === 'unknown') {
+            this.displayNodeRendition(data.id);
+        } else {
+            this.isLoading = false;
+        }
+
+        this.extensionChange.emit(this.extension);
+        this.sidebarTemplateContext.node = data;
+        this.scrollTop();
+    }
+
+    private setUpSharedLinkFile(details: any) {
+        this.mimeType = details.entry.content.mimeType;
+        this.displayName = this.getDisplayName(details.entry.name);
+        this.extension = this.getFileExtension(details.entry.name);
+        this.fileName = details.entry.name;
+
+        this.urlFileContent = this.apiService.contentApi.getSharedLinkContentUrl(this.sharedLinkId, false);
+        this.downloadUrl = this.apiService.contentApi.getSharedLinkContentUrl(this.sharedLinkId, true);
+
+        this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
+        if (this.viewerType === 'unknown') {
+            this.viewerType = this.getViewerTypeByExtension(this.extension);
+        }
+
+        if (this.viewerType === 'unknown') {
+            this.displaySharedLinkRendition(this.sharedLinkId);
+        } else {
+            this.isLoading = false;
+        }
+        this.extensionChange.emit(this.extension);
+        this.isLoading = false;
+    }
+
     ngOnChanges(changes: SimpleChanges) {
         if (this.showViewer) {
             if (!this.isSourceDefined()) {
@@ -188,61 +270,14 @@ export class ViewerComponent implements OnChanges {
             }
 
             if (this.blobFile) {
-                this.displayName = this.getDisplayName('Unknown');
-                this.isLoading = true;
-                this.mimeType = this.blobFile.type;
-                this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
-
-                this.allowDownload = false;
-                // TODO: wrap blob into the data url and allow downloading
-
-                this.extensionChange.emit(this.mimeType);
-                this.isLoading = false;
-                this.scrollTop();
+                this.setUpBlobData();
             } else if (this.urlFile) {
-                this.isLoading = true;
-                let filenameFromUrl = this.getFilenameFromUrl(this.urlFile);
-                this.displayName = this.getDisplayName(filenameFromUrl);
-                this.extension = this.getFileExtension(filenameFromUrl);
-                this.urlFileContent = this.urlFile;
-
-                this.downloadUrl = this.urlFile;
-                this.fileName = this.displayName;
-
-                this.viewerType = this.urlFileViewer || this.getViewerTypeByExtension(this.extension);
-                if (this.viewerType === 'unknown') {
-                    this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
-                }
-
-                this.extensionChange.emit(this.extension);
-                this.isLoading = false;
-                this.scrollTop();
+                this.setUpUrlFile();
             } else if (this.fileNodeId) {
                 this.isLoading = true;
                 this.apiService.getInstance().nodes.getNodeInfo(this.fileNodeId).then(
                     (data: MinimalNodeEntryEntity) => {
-                        this.mimeType = data.content.mimeType;
-                        this.displayName = this.getDisplayName(data.name);
-                        this.urlFileContent = this.apiService.getInstance().content.getContentUrl(data.id);
-                        this.extension = this.getFileExtension(data.name);
-
-                        this.fileName = data.name;
-                        this.downloadUrl = this.apiService.getInstance().content.getContentUrl(data.id, true);
-
-                        this.viewerType = this.getViewerTypeByExtension(this.extension);
-                        if (this.viewerType === 'unknown') {
-                            this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
-                        }
-
-                        if (this.viewerType === 'unknown') {
-                            this.displayNodeRendition(data.id);
-                        } else {
-                            this.isLoading = false;
-                        }
-
-                        this.extensionChange.emit(this.extension);
-                        this.sidebarTemplateContext.node = data;
-                        this.scrollTop();
+                        this.setUpNodeFile(data);
                     },
                     (error) => {
                         this.isLoading = false;
@@ -253,26 +288,7 @@ export class ViewerComponent implements OnChanges {
                 this.isLoading = true;
 
                 this.apiService.sharedLinksApi.getSharedLink(this.sharedLinkId).then(details => {
-                    this.mimeType = details.entry.content.mimeType;
-                    this.displayName = this.getDisplayName(details.entry.name);
-                    this.extension = this.getFileExtension(details.entry.name);
-                    this.fileName = details.entry.name;
-
-                    this.urlFileContent = this.apiService.contentApi.getSharedLinkContentUrl(this.sharedLinkId, false);
-                    this.downloadUrl = this.apiService.contentApi.getSharedLinkContentUrl(this.sharedLinkId, true);
-
-                    this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
-                    if (this.viewerType === 'unknown') {
-                        this.viewerType = this.getViewerTypeByExtension(this.extension);
-                    }
-
-                    if (this.viewerType === 'unknown') {
-                        this.displaySharedLinkRendition(this.sharedLinkId);
-                    } else {
-                        this.isLoading = false;
-                    }
-                    this.extensionChange.emit(this.extension);
-                    this.isLoading = false;
+                    this.setUpSharedLinkFile(details);
                 });
             }
         }
