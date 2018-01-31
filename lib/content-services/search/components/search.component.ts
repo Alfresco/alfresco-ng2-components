@@ -51,12 +51,15 @@ export class SearchComponent implements AfterContentInit, OnChanges {
     @ContentChild(TemplateRef)
     template: TemplateRef<any>;
 
+    /** Function that maps an option's value to its display value in the trigger. */
     @Input()
     displayWith: ((value: any) => string) | null = null;
 
+    /** Maximum number of results to show in the search. */
     @Input()
     maxResults: number = 20;
 
+    /** Number of results to skip from the results pagination. */
     @Input()
     skipResults: number = 0;
 
@@ -64,9 +67,13 @@ export class SearchComponent implements AfterContentInit, OnChanges {
     @Input()
     queryBody: QueryBody;
 
+    /** Search term to use when executing the search. Updating this value will
+     * run a new search and update the results.
+     */
     @Input()
     searchTerm: string = '';
 
+    /** CSS class for display. */
     @Input('class')
     set classList(classList: string) {
         if (classList && classList.length) {
@@ -75,9 +82,11 @@ export class SearchComponent implements AfterContentInit, OnChanges {
         }
     }
 
+    /** Emitted when search results have fully loaded. */
     @Output()
     resultLoaded: EventEmitter<NodePaging> = new EventEmitter();
 
+    /** Emitted when an error occurs. */
     @Output()
     error: EventEmitter<any> = new EventEmitter();
 

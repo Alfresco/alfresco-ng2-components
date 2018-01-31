@@ -27,6 +27,7 @@ import { RatingService } from './services/rating.service';
 })
 export class RatingComponent implements OnChanges {
 
+    /** Identifier of the node to apply the rating to. */
     @Input()
     nodeId: string;
 
@@ -34,6 +35,7 @@ export class RatingComponent implements OnChanges {
 
     ratingType: string = 'fiveStar';
 
+    /** Emitted when the "vote" gets changed. */
     @Output()
     changeVote = new EventEmitter();
 

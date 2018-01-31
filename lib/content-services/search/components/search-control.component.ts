@@ -45,21 +45,29 @@ import { MatListItem } from '@angular/material';
 })
 export class SearchControlComponent implements OnInit, OnDestroy {
 
+    /** Toggles whether to use an expanding search control. If false
+     * then a regular input is used.
+     */
     @Input()
     expandable: boolean = true;
 
+    /** Toggles highlighting of the search term in the results. */
     @Input()
     highlight: boolean = false;
 
+    /** Type of the input field to render, e.g. "search" or "text" (default). */
     @Input()
     inputType: string = 'text';
 
+    /** Toggles auto-completion of the search input field. */
     @Input()
     autocomplete: boolean = false;
 
+    /** Toggles "find-as-you-type" suggestions for possible matches. */
     @Input()
     liveSearchEnabled: boolean = true;
 
+    /** Maximum number of results to show in the live search. */
     @Input()
     liveSearchMaxResults: number = 5;
 
@@ -67,12 +75,21 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     @Input()
     customQueryBody: QueryBody;
 
+    /** Emitted when the search is submitted pressing ENTER button.
+     * The search term is provided as value of the event.
+     */
     @Output()
     submit: EventEmitter<any> = new EventEmitter();
 
+    /** Emitted when the search term is changed. The search term is provided
+     * in the 'value' property of the returned object.  If the term is less
+     * than three characters in length then the term is truncated to an empty
+     * string.
+     */
     @Output()
     searchChange: EventEmitter<string> = new EventEmitter();
 
+    /** Emitted when a file item from the list of "find-as-you-type" results is selected. */
     @Output()
     optionClicked: EventEmitter<any> = new EventEmitter();
 
@@ -211,7 +228,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
         let previousElement: any = this.getPreviousElementSibling(<Element> $event.target);
         if (previousElement) {
             previousElement.focus();
-        }else {
+        } else {
             this.searchInput.nativeElement.focus();
             this.focusSubject.next(new FocusEvent('focus'));
         }
