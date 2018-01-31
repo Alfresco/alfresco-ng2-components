@@ -110,7 +110,6 @@ export class RenditionsService {
                 if (attempts > retries) {
                     return false;
                 }
-                console.log(data.entry.status, retries);
                 return (data.entry.status.toString() !== 'CREATED');
             });
     }
