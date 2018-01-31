@@ -21,7 +21,7 @@ import { Component } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MatSnackBar, MatSnackBarModule } from '@angular/material';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NotificationService } from './notification.service';
 
 describe('NotificationService', () => {
@@ -30,7 +30,7 @@ describe('NotificationService', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                BrowserAnimationsModule,
+                NoopAnimationsModule,
                 OverlayModule,
                 MatSnackBarModule
             ],
