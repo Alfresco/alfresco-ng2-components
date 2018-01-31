@@ -26,6 +26,7 @@ import { FormService } from './../services/form.service';
 })
 export class FormListComponent implements OnChanges {
 
+    /** The array that contains the information to show inside the list. */
     @Input()
     forms: any [] = [];
 

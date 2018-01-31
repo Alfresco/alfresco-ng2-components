@@ -26,11 +26,16 @@ Displays a sidebar-style information panel with tabs.
 
 ### Properties
 
-| Name | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| title | string | null | The title of the info drawer |
-| selectedIndex | number | 0 | The selected index tab |
-| currentTab | any | null | The currently active tab |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| title | `string` | `null` | The title of the info drawer.  |
+| selectedIndex | `number` | `0` | The selected index tab.  |
+
+### Events
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| currentTab | `EventEmitter<number>` | Emitted when the currently active tab changes. |
 
 ## Details
 

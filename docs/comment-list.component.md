@@ -54,9 +54,9 @@ In the component template use the comment list component:
 
 ### Properties
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| comments | `any[]` | The comments data used to populate the list.  |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| comments | `any[]` |  | The comments data used to populate the list.  |
 
 ### Events
 
