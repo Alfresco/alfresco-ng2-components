@@ -181,6 +181,36 @@ export class ViewerComponent implements OnChanges {
         return (this.urlFile || this.blobFile || this.fileNodeId || this.sharedLinkId) ? true : false;
     }
 
+    ngOnChanges(changes: SimpleChanges) {
+        if (this.showViewer) {
+            if (!this.isSourceDefined()) {
+                throw new Error('A content source attribute value is missing.');
+            }
+            if (this.blobFile) {
+                this.setUpBlobData();
+            } else if (this.urlFile) {
+                this.setUpUrlFile();
+            } else if (this.fileNodeId) {
+                this.isLoading = true;
+                this.apiService.getInstance().nodes.getNodeInfo(this.fileNodeId).then(
+                    (data: MinimalNodeEntryEntity) => {
+                        this.setUpNodeFile(data);
+                    },
+                    (error) => {
+                        this.isLoading = false;
+                        this.logService.error('This node does not exist');
+                    }
+                );
+            } else if (this.sharedLinkId) {
+                this.isLoading = true;
+
+                this.apiService.sharedLinksApi.getSharedLink(this.sharedLinkId).then(details => {
+                    this.setUpSharedLinkFile(details);
+                });
+            }
+        }
+    }
+
     private setUpBlobData() {
         this.displayName = this.getDisplayName('Unknown');
         this.isLoading = true;
@@ -261,36 +291,6 @@ export class ViewerComponent implements OnChanges {
         }
         this.extensionChange.emit(this.extension);
         this.isLoading = false;
-    }
-
-    ngOnChanges(changes: SimpleChanges) {
-        if (this.showViewer) {
-            if (!this.isSourceDefined()) {
-                throw new Error('A content source attribute value is missing.');
-            }
-            if (this.blobFile) {
-                this.setUpBlobData();
-            } else if (this.urlFile) {
-                this.setUpUrlFile();
-            } else if (this.fileNodeId) {
-                this.isLoading = true;
-                this.apiService.getInstance().nodes.getNodeInfo(this.fileNodeId).then(
-                    (data: MinimalNodeEntryEntity) => {
-                        this.setUpNodeFile(data);
-                    },
-                    (error) => {
-                        this.isLoading = false;
-                        this.logService.error('This node does not exist');
-                    }
-                );
-            } else if (this.sharedLinkId) {
-                this.isLoading = true;
-
-                this.apiService.sharedLinksApi.getSharedLink(this.sharedLinkId).then(details => {
-                    this.setUpSharedLinkFile(details);
-                });
-            }
-        }
     }
 
     toggleSidebar() {
