@@ -133,9 +133,9 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Data Table Adapter interface](DataTableAdapter.md) | Defines how table data is supplied to [DataTable](datatable.component.md) and [Tasklist](task-list.component.md) components. | [Source](../core/datatable/data/datatable-adapter.ts) |
-| [Form Field Validator interface](FormFieldValidator.md) | Defines how the input fields of [ADF Form](form.component.md) and [ADF Task Details](task-details.component.md) components are validated. | [Source](../core/form/components/widgets/core/form-field-validator.ts) |
-| [Search Configuration interface](search-configuration.interface.md) | Provides fine control of parameters to a search. | [Source](../core/services/search-configuration.service.ts) |
+| [Data Table Adapter interface](DataTableAdapter.md) | Defines how table data is supplied to [DataTable](datatable.component.md) and [Tasklist](task-list.component.md) components. | [Source](../lib/core/datatable/data/datatable-adapter.ts) |
+| [Form Field Validator interface](FormFieldValidator.md) | Defines how the input fields of [ADF Form](form.component.md) and [ADF Task Details](task-details.component.md) components are validated. | [Source](../lib/core/form/components/widgets/core/form-field-validator.ts) |
+| [Search Configuration interface](search-configuration.interface.md) | Provides fine control of parameters to a search. | [Source](../lib/core/services/search-configuration.service.ts) |
 
 [(Back to Contents)](#contents)
 
@@ -152,6 +152,7 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
+| [Sites dropdown component](sites-dropdown.component.md) | Displays a dropdown menu to show and interact with the sites of the current user. | [Source](../lib/content-services/site-dropdown/sites-dropdown.component.ts) |
 | _Breadcrumb component_ | _Not currently documented_ | [Source](../lib/content-services/breadcrumb/breadcrumb.component.ts) |
 | _Dropdown breadcrumb component_ | _Not currently documented_ | [Source](../lib/content-services/breadcrumb/dropdown-breadcrumb.component.ts) |
 | _Content node selector panel component_ | _Not currently documented_ | [Source](../lib/content-services/content-node-selector/content-node-selector-panel.component.ts) |
@@ -160,7 +161,6 @@ for more information about installing and using the source code.
 | _Document list component_ | _Not currently documented_ | [Source](../lib/content-services/document-list/components/document-list.component.ts) |
 | _Search control component_ | _Not currently documented_ | [Source](../lib/content-services/search/components/search-control.component.ts) |
 | _Search component_ | _Not currently documented_ | [Source](../lib/content-services/search/components/search.component.ts) |
-| _Sites dropdown component_ | _Not currently documented_ | [Source](../lib/content-services/site-dropdown/sites-dropdown.component.ts) |
 | _Like component_ | _Not currently documented_ | [Source](../lib/content-services/social/like.component.ts) |
 | _Rating component_ | _Not currently documented_ | [Source](../lib/content-services/social/rating.component.ts) |
 | _Tag actions component_ | _Not currently documented_ | [Source](../lib/content-services/tag/tag-actions.component.ts) |
@@ -208,7 +208,6 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Process list component](process-list.component.md) | Renders a list containing all the process instances matched by the parameters specified. | [Source](../lib/process-services/process-list/components/process-list.component.ts) |
 | _Apps list component_ | _Not currently documented_ | [Source](../lib/process-services/app-list/apps-list.component.ts) |
 | _Create process attachment component_ | _Not currently documented_ | [Source](../lib/process-services/attachment/create-process-attachment.component.ts) |
 | _Create task attachment component_ | _Not currently documented_ | [Source](../lib/process-services/attachment/create-task-attachment.component.ts) |
@@ -217,13 +216,16 @@ for more information about installing and using the source code.
 | _Comment list component_ | _Not currently documented_ | [Source](../lib/process-services/comments/comment-list.component.ts) |
 | _Comments component_ | _Not currently documented_ | [Source](../lib/process-services/comments/comments.component.ts) |
 | _Process comments component_ | _Not currently documented_ | [Source](../lib/process-services/comments/process-comments.component.ts) |
-| _People list component_ | _Not currently documented_ | [Source](../lib/process-services/people/people-list.component.ts) |
-| _People search component_ | _Not currently documented_ | [Source](../lib/process-services/people/people-search.component.ts) |
-| _People component_ | _Not currently documented_ | [Source](../lib/process-services/people/people.component.ts) |
+| _People component_ | _Not currently documented_ | [Source](../lib/process-services/people/components/people/people.component.ts) |
+| _People list component_ | _Not currently documented_ | [Source](../lib/process-services/people/components/people-list/people-list.component.ts) |
+| _People search component_ | _Not currently documented_ | [Source](../lib/process-services/people/components/people-search/people-search.component.ts) |
+| _People search field component_ | _Not currently documented_ | [Source](../lib/process-services/people/components/people-search-field/people-search-field.component.ts) |
+| _People selector component_ | _Not currently documented_ | [Source](../lib/process-services/people/components/people-selector/people-selector.component.ts) |
 | _Process filters component_ | _Not currently documented_ | [Source](../lib/process-services/process-list/components/process-filters.component.ts) |
 | _Process instance details component_ | _Not currently documented_ | [Source](../lib/process-services/process-list/components/process-instance-details.component.ts) |
 | _Process instance header component_ | _Not currently documented_ | [Source](../lib/process-services/process-list/components/process-instance-header.component.ts) |
 | _Process instance tasks component_ | _Not currently documented_ | [Source](../lib/process-services/process-list/components/process-instance-tasks.component.ts) |
+| _Process list component_ | _Not currently documented_ | [Source](../lib/process-services/process-list/components/process-list.component.ts) |
 | _Start process component_ | _Not currently documented_ | [Source](../lib/process-services/process-list/components/start-process.component.ts) |
 | _Checklist component_ | _Not currently documented_ | [Source](../lib/process-services/task-list/components/checklist.component.ts) |
 | _Start task component_ | _Not currently documented_ | [Source](../lib/process-services/task-list/components/start-task.component.ts) |
@@ -236,6 +238,8 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
+| _People search action label directive_ | _Not currently documented_ | [Source](../lib/process-services/people/directives/people-search-action-label.directive.ts) |
+| _People search title directive_ | _Not currently documented_ | [Source](../lib/process-services/people/directives/people-search-title.directive.ts) |
 | _Process audit directive_ | _Not currently documented_ | [Source](../lib/process-services/process-list/components/process-audit.directive.ts) |
 | _Task audit directive_ | _Not currently documented_ | [Source](../lib/process-services/task-list/components/task-audit.directive.ts) |
 

@@ -26,15 +26,25 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class DropdownSitesComponent implements OnInit {
 
+    /** Hide the "My Files" option. */
     @Input()
     hideMyFiles: boolean = false;
 
+    /** A custom list of sites to be displayed by the dropdown. If no value
+     * is given, the sites of the current user are displayed by default. A
+     * list of objects only with properties 'title' and 'guid' is enough to
+     * be able to display the dropdown.
+     */
     @Input()
     siteList: SitePaging = null;
 
+    /** Text or a translation key to act as a placeholder. */
     @Input()
     placeholder: string = 'DROPDOWN.PLACEHOLDER_LABEL';
 
+    /** Emitted when the user selects a site. When the default option is selected,
+     * an empty model is emitted.
+     */
     @Output()
     change: EventEmitter<SiteEntry> = new EventEmitter();
 
@@ -54,7 +64,7 @@ export class DropdownSitesComponent implements OnInit {
         let siteFound;
         if (this.siteSelected === this.MY_FILES_VALUE) {
            siteFound = { entry: {}};
-        }else {
+        } else {
            siteFound = this.siteList.list.entries.find( site => site.entry.guid === this.siteSelected);
         }
         this.change.emit(siteFound);
