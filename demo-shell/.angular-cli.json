@@ -20,6 +20,11 @@
         },
         {
           "glob": "**/*",
+          "input": "./app/components/lazy-loading/i18n",
+          "output": "./resources/lazy-loading/i18n"
+        },
+        {
+          "glob": "**/*",
           "input": "../node_modules/@alfresco/adf-core/prebuilt-themes",
           "output": "./assets/prebuilt-themes"
         },
@@ -89,6 +94,11 @@
           "glob": "**/*",
           "input": "../resources",
           "output": "./resources"
+        },
+        {
+          "glob": "**/*",
+          "input": "./app/components/lazy-loading/i18n",
+          "output": "./resources/lazy-loading/i18n"
         },
         {
           "glob": "**/*",
