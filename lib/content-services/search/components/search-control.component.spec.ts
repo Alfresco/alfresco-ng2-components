@@ -17,7 +17,6 @@
 
 import { DebugElement } from '@angular/core';
 import { async, discardPeriodicTasks, fakeAsync, ComponentFixture, TestBed, tick } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '../../material.module';
 import { By } from '@angular/platform-browser';
 import { AuthenticationService, SearchService } from '@alfresco/adf-core';
@@ -40,8 +39,7 @@ describe('SearchControlComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                MaterialModule,
-                NoopAnimationsModule
+                MaterialModule
             ],
             declarations: [
                 SearchControlComponent,

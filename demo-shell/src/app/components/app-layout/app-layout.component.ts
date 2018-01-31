@@ -34,6 +34,7 @@ export class AppLayoutComponent {
         { href: '/login', icon: 'vpn_key', title: 'APP_LAYOUT.LOGIN' },
         { href: '/dl-custom-sources', icon: 'extension', title: 'APP_LAYOUT.CUSTOM_SOURCES' },
         { href: '/datatable', icon: 'view_module', title: 'APP_LAYOUT.DATATABLE' },
+        { href: '/datatable-lazy', icon: 'view_module', title: 'APP_LAYOUT.DATATABLE_LAZY' },
         { href: '/form', icon: 'poll', title: 'APP_LAYOUT.FORM' },
         { href: '/form-list', icon: 'library_books', title: 'APP_LAYOUT.FORM_LIST' },
         { href: '/uploader', icon: 'file_upload', title: 'APP_LAYOUT.UPLOADER' },

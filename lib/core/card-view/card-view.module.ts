@@ -38,9 +38,6 @@ import { CardViewItemDispatcherComponent } from './components/card-view-item-dis
 import { CardViewMapItemComponent } from './components/card-view-mapitem/card-view-mapitem.component';
 import { CardViewTextItemComponent } from './components/card-view-textitem/card-view-textitem.component';
 
-import { CardItemTypeService } from './services/card-item-types.service';
-import { CardViewUpdateService } from './services/card-view-update.service';
-
 @NgModule({
     imports: [
         CommonModule,
@@ -77,10 +74,6 @@ import { CardViewUpdateService } from './services/card-view-update.service';
         CardViewDateItemComponent,
         CardViewMapItemComponent,
         CardViewTextItemComponent
-    ],
-    providers: [
-        CardItemTypeService,
-        CardViewUpdateService
     ]
 })
 export class CardViewModule {}

@@ -17,6 +17,7 @@
         "LOGIN": "Login",
         "CUSTOM_SOURCES": "Custom Sources",
         "DATATABLE": "Datatable",
+        "DATATABLE_LAZY": "Datatable (Lazy)",
         "FORM": "Form",
         "FORM_LIST": "Form List",
         "UPLOADER": "Uploader",
