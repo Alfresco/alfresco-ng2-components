@@ -15,29 +15,16 @@ Shows the charts related to the reportId passed as input
 
 ### Properties
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| appId | string | The application id |
-| reportId | string | The report id |
-| hideParameters | boolean | Toggle the analytics parameters |
-
-You can also hide chart parameters UI by setting the `hideParameters` to `true`:
-
-```html
-<adf-analytics 
-    [appId]="appId" 
-    [reportId]="reportId" 
-    [hideParameters]="true">
-</adf-analytics>
-```
-
-![Analytics-without-parameters](docassets/images/analytics-without-parameters.png)
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| appId | `number` |  |  |
+| reportId | `number` |  |  |
+| hideParameters | `boolean` | `false` |  |
 
 ### Events
 
-| Name | Description |
-| ---- | ----------- |
-| success | The event is emitted when the report parameters are loaded |
-| error | The event is emitted when an error occurs during the loading |
-| reportSaved | The event is emitted when a report is saved |
-| reportDeleted | The event is emitted when a report is deleted |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| editReport | `EventEmitter<{}>` |  |
+| reportSaved | `EventEmitter<{}>` |  |
+| reportDeleted | `EventEmitter<{}>` |  |

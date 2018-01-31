@@ -33,35 +33,47 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
+    /** The id of the app. */
     @Input()
     appId: number;
 
+    /** The processDefinitionKey of the process. */
     @Input()
     processDefinitionKey: string;
 
+    /** Defines the state of the processes. Possible values are `running`, `completed` and `all` */
     @Input()
     state: string;
 
+    /** Defines the sort ordering of the list. Possible values are `created-desc`, `created-asc`,
+     * `ended-desc`, `ended-asc`.
+     */
     @Input()
     sort: string;
 
+    /** The name of the list. */
     @Input()
     name: string;
 
+    /** The presetColumn of the custom schema to fetch. */
     @Input()
     presetColumn: string;
 
     requestNode: ProcessFilterParamRepresentationModel;
 
+    /** Data source to define the datatable. */
     @Input()
     data: DataTableAdapter;
 
+    /** Emitted when a row in the process list is clicked. */
     @Output()
     rowClick: EventEmitter<string> = new EventEmitter<string>();
 
+    /** Emitted when the list of process instances has been loaded successfully from the server. */
     @Output()
     success: EventEmitter<ProcessInstance[]> = new EventEmitter<ProcessInstance[]>();
 
+    /** Emitted when an error occurs while loading the list of process instances from the server. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 

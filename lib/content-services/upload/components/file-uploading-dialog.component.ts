@@ -32,6 +32,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     @ViewChild(FileUploadingListComponent)
     uploadList: FileUploadingListComponent;
 
+    /** Dialog position. Can be 'left' or 'right'. */
     @Input()
     position: string = 'right';
 

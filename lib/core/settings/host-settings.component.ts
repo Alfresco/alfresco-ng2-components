@@ -42,9 +42,11 @@ export class HostSettingsComponent {
     urlFormControlEcm = new FormControl('', [Validators.required, Validators.pattern(this.HOST_REGEX)]);
     urlFormControlBpm = new FormControl('', [Validators.required, Validators.pattern(this.HOST_REGEX)]);
 
+    /** Determines which configurations are shown. Possible valid values are "ECM", "BPM" or "ALL". */
     @Input()
     providers: string = 'ALL';
 
+    /** Emitted when the URL is invalid. */
     @Output()
     error = new EventEmitter<string>();
 

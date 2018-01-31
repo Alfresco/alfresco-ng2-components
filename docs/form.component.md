@@ -101,45 +101,39 @@ and store the form field as metadata. The param nameNode is optional.
 
 ### Properties
 
-| Name | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| taskId | string |  | Task id to fetch corresponding form and values. |
-| formId | string |  | The id of the form definition to load and display with custom values. |
-| formName | string |  | Name of the form definition to load and display with custom values. |
-| data | FormValues |  | Custom form values map to be used with the rendered form. |
-| showTitle | boolean | true | Toggle rendering of the form title. |
-| showCompleteButton | boolean | true | Toggle rendering of the `Complete` outcome button. |
-| disableCompleteButton | boolean | false | The `Complete` outcome button is shown but it will be disabled. |
-| disableStartProcessButton | boolean | false | The `Start Process` outcome button is shown but it will be disabled. |
-| showSaveButton | boolean | true | Toggle rendering of the `Save` outcome button. |
-| readOnly | boolean | false | Toggle readonly state of the form. Enforces all form widgets render readonly if enabled. |
-| showRefreshButton | boolean | true | Toggle rendering of the `Refresh` button. |
-| showValidationIcon | boolean | true | Toggle rendering of the validation icon next form title. |
-| saveMetadata | boolean | false | Store the value of the form as metadata. |
-| path | string |  | Path of the folder where to store the metadata. |
-| nameNode | string | true | Name to assign to the new node where the metadata are stored. |
-| fieldValidators | FormFieldValidator\[] | See [Field Validators](#field-validators) section below | Contains a list of form field validator instances. |
-
-### Advanced properties
-
- The following properties are for complex customisation purposes:
-
-| Name | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| form | FormModel |  | Underlying form model instance. |
-| showDebugButton | boolean | false | Toggle debug options. |
-| debugMode | boolean | false | Toggle debug mode, allows displaying additional data for development and debugging purposes. |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| form | `FormModel` |  | Underlying form model instance.  |
+| taskId | `string` |  | Task id to fetch corresponding form and values.  |
+| nodeId | `string` |  | Content Services node ID for the form metadata.  |
+| formId | `string` |  | The id of the form definition to load and display with custom values.  |
+| formName | `string` |  | Name of the form definition to load and display with custom values.  |
+| saveMetadata | `boolean` | `false` | Toggle saving of form metadata.  |
+| data | `FormValues` |  | Custom form values map to be used with the rendered form.  |
+| path | `string` |  | Path of the folder where the metadata will be stored.  |
+| nameNode | `string` |  | Name to assign to the new node where the metadata are stored.  |
+| showTitle | `boolean` | `true` | Toggle rendering of the form title.  |
+| showCompleteButton | `boolean` | `true` | Toggle rendering of the `Complete` outcome button.  |
+| disableCompleteButton | `boolean` | `false` | If true then the `Complete` outcome button is shown but it will be disabled.  |
+| disableStartProcessButton | `boolean` | `false` | If true then the `Start Process` outcome button is shown but it will be disabled.  |
+| showSaveButton | `boolean` | `true` | Toggle rendering of the `Save` outcome button.  |
+| showDebugButton | `boolean` | `false` | Toggle debug options.  |
+| readOnly | `boolean` | `false` | Toggle readonly state of the form. Forces all form widgets to render as readonly if enabled.  |
+| showRefreshButton | `boolean` | `true` | Toggle rendering of the `Refresh` button.  |
+| showValidationIcon | `boolean` | `true` | Toggle rendering of the validation icon next to the form title.  |
+| fieldValidators | `FormFieldValidator[]` | `[]` | Contains a list of form field validator instances.  |
 
 ### Events
 
-| Name | Return Type | Description |
-| ---- | ----------- | ----------- |
-| formLoaded | [FormModel](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-activiti-form/src/components/widgets/core/form.model.ts) | Invoked when form is loaded or reloaded. |
-| formSaved | [FormModel](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-activiti-form/src/components/widgets/core/form.model.ts) | Invoked when form is submitted with `Save` or custom outcomes. |
-| formCompleted | [FormModel](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-activiti-form/src/components/widgets/core/form.model.ts) | Invoked when form is submitted with `Complete` outcome. |
-| formDataRefreshed | [FormModel](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-activiti-form/src/components/widgets/core/form.model.ts) | Invoked when form values are refreshed due to a data property change |
-| executeOutcome | [FormOutcomeEvent](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-activiti-form/src/components/widgets/core/form-outcome-event.model.ts) | Invoked when any outcome is executed, default behaviour can be prevented via `event.preventDefault()` |
-| error | any | Invoked at any error |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| formSaved | `EventEmitter<FormModel>` | Emitted when the form is submitted with the `Save` or custom outcomes. |
+| formCompleted | `EventEmitter<FormModel>` | Emitted when the form is submitted with the `Complete` outcome. |
+| formContentClicked | `EventEmitter<ContentLinkModel>` | Emitted when form content is clicked. |
+| formLoaded | `EventEmitter<FormModel>` | Emitted when the form is loaded or reloaded. |
+| formDataRefreshed | `EventEmitter<FormModel>` | Emitted when form values are refreshed due to a data property change. |
+| executeOutcome | `EventEmitter<FormOutcomeEvent>` | Emitted when any outcome is executed. Default behaviour can be prevented via `event.preventDefault()`. |
+| onError | `EventEmitter<any>` | Emitted when any error occurs. |
 
 ## Details
 

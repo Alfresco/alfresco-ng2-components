@@ -12,8 +12,6 @@ Shows APS forms as a list.
 
 ### Properties
 
-The recommended set of properties can be found in the following table:
-
-| Name | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| forms | any |  | The array that contains the information to show inside the list. |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| forms | `any[]` | `[]` | The array that contains the information to show inside the list.  |
