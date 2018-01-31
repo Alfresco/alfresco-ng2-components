@@ -29,97 +29,102 @@ export class ThumbnailService {
         'image/png': './assets/images/ft_ic_raster_image.svg',
         'image/jpeg': './assets/images/ft_ic_raster_image.svg',
         'image/gif': './assets/images/ft_ic_raster_image.svg',
+        'image/bmp': './assets/images/ft_ic_raster_image.svg',
+        'image/cgm': './assets/images/ft_ic_raster_image.svg',
+        'image/ief': './assets/images/ft_ic_raster_image.svg',
+        'image/jp2': './assets/images/ft_ic_raster_image.svg',
+        'image/tiff': './assets/images/ft_ic_raster_image.svg',
+        'image/vnd.adobe.photoshop': './assets/images/ft_ic_raster_image.svg',
+        'image/vnd.adobe.premiere': './assets/images/ft_ic_raster_image.svg',
+        'image/x-cmu-raster': './assets/images/ft_ic_raster_image.svg',
+        'image/x-dwt': './assets/images/ft_ic_raster_image.svg',
+        'image/x-portable-anymap': './assets/images/ft_ic_raster_image.svg',
+        'image/x-portable-bitmap': './assets/images/ft_ic_raster_image.svg',
+        'image/x-portable-graymap': './assets/images/ft_ic_raster_image.svg',
+        'image/x-portable-pixmap': './assets/images/ft_ic_raster_image.svg',
+        'image/x-raw-adobe': './assets/images/ft_ic_raster_image.svg',
+        'image/x-raw-canon': './assets/images/ft_ic_raster_image.svg',
+        'image/x-raw-fuji': './assets/images/ft_ic_raster_image.svg',
+        'image/x-raw-hasselblad': './assets/images/ft_ic_raster_image.svg',
+        'image/x-raw-kodak': './assets/images/ft_ic_raster_image.svg',
+        'image/x-raw-leica': './assets/images/ft_ic_raster_image.svg',
+        'image/x-raw-minolta': './assets/images/ft_ic_raster_image.svg',
+        'image/x-raw-nikon': './assets/images/ft_ic_raster_image.svg',
+        'image/x-raw-olympus': './assets/images/ft_ic_raster_image.svg',
+        'image/x-raw-panasonic': './assets/images/ft_ic_raster_image.svg',
+        'image/x-raw-pentax': './assets/images/ft_ic_raster_image.svg',
+        'image/x-raw-red': './assets/images/ft_ic_raster_image.svg',
+        'image/x-raw-sigma': './assets/images/ft_ic_raster_image.svg',
+        'image/x-raw-sony': './assets/images/ft_ic_raster_image.svg',
+        'image/x-xbitmap': './assets/images/ft_ic_raster_image.svg',
+        'image/x-xpixmap': './assets/images/ft_ic_raster_image.svg',
+        'image/x-xwindowdump': './assets/images/ft_ic_raster_image.svg',
+        'image/svg+xml': './assets/images/ft_ic_vector_image.svg',
         'application/eps': './assets/images/ft_ic_raster_image.svg',
         'application/illustrator': './assets/images/ft_ic_raster_image.svg',
         'application/pdf': './assets/images/ft_ic_pdf.svg',
         'application/vnd.ms-excel': './assets/images/ft_ic_ms_excel.svg',
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': './assets/images/ft_ic_ms_excel.svg',
         'application/vnd.openxmlformats-officedocument.spreadsheetml.template': './assets/images/ft_ic_ms_excel.svg',
+        'application/vnd.ms-excel.addin.macroenabled.12': './assets/images/ft_ic_ms_excel.svg',
+        'application/vnd.ms-excel.sheet.binary.macroenabled.12': './assets/images/ft_ic_ms_excel.svg',
+        'application/vnd.ms-excel.sheet.macroenabled.12': './assets/images/ft_ic_ms_excel.svg',
+        'application/vnd.ms-excel.template.macroenabled.12': './assets/images/ft_ic_ms_excel.svg',
+        'application/vnd.sun.xml.calc': './assets/images/ft_ic_ms_excel.svg',
+        'application/vnd.sun.xml.calc.template': './assets/images/ft_ic_ms_excel.svg',
+        'application/vnd.ms-outlook': './assets/images/ft_ic_document.svg',
         'application/msword': './assets/images/ft_ic_ms_word.svg',
         'application/vnd.openxmlformats-officedocument.wordprocessingml.document': './assets/images/ft_ic_ms_word.svg',
         'application/vnd.openxmlformats-officedocument.wordprocessingml.template': './assets/images/ft_ic_ms_word.svg',
+        'application/vnd.ms-word.document.macroenabled.12': './assets/images/ft_ic_ms_word.svg',
+        'application/vnd.ms-word.template.macroenabled.12': './assets/images/ft_ic_ms_word.svg',
+        'application/vnd.sun.xml.writer': './assets/images/ft_ic_ms_word.svg',
+        'application/vnd.sun.xml.writer.template': './assets/images/ft_ic_ms_word.svg',
+        'application/rtf': './assets/images/ft_ic_ms_word.svg',
         'application/vnd.ms-powerpoint': './assets/images/ft_ic_ms_powerpoint.svg',
         'application/vnd.openxmlformats-officedocument.presentationml.presentation': './assets/images/ft_ic_ms_powerpoint.svg',
         'application/vnd.openxmlformats-officedocument.presentationml.template': './assets/images/ft_ic_ms_powerpoint.svg',
         'application/vnd.openxmlformats-officedocument.presentationml.slideshow': './assets/images/ft_ic_ms_powerpoint.svg',
+        'application/vnd.oasis.opendocument.presentation': './assets/images/ft_ic_ms_powerpoint.svg',
+        'application/vnd.oasis.opendocument.presentation-template': './assets/images/ft_ic_ms_powerpoint.svg',
+        'application/vnd.openxmlformats-officedocument.presentationml.slide': './assets/images/ft_ic_ms_powerpoint.svg',
+        'application/vnd.sun.xml.impress': './assets/images/ft_ic_ms_powerpoint.svg',
+        'application/vnd.sun.xml.impress.template': './assets/images/ft_ic_ms_powerpoint.svg',
+        'application/vnd.oasis.opendocument.spreadsheet': './assets/images/ft_ic_ms_excel.svg',
+        'application/vnd.oasis.opendocument.spreadsheet-template': './assets/images/ft_ic_ms_excel.svg',
+        'application/vnd.ms-powerpoint.addin.macroenabled.12': './assets/images/ft_ic_ms_powerpoint.svg',
+        'application/vnd.ms-powerpoint.presentation.macroenabled.12': './assets/images/ft_ic_ms_powerpoint.svg',
+        'application/vnd.ms-powerpoint.slide.macroenabled.12': './assets/images/ft_ic_ms_powerpoint.svg',
+        'application/vnd.ms-powerpoint.slideshow.macroenabled.12': './assets/images/ft_ic_ms_powerpoint.svg',
+        'application/vnd.ms-powerpoint.template.macroenabled.12': './assets/images/ft_ic_ms_powerpoint.svg',
         'video/mp4': './assets/images/ft_ic_video.svg',
         'text/plain': './assets/images/ft_ic_document.svg',
+        'application/vnd.oasis.opendocument.text': './assets/images/ft_ic_document.svg',
+        'application/vnd.oasis.opendocument.text-template': './assets/images/ft_ic_document.svg',
         'application/x-javascript': './assets/images/ft_ic_document.svg',
         'application/json': './assets/images/ft_ic_document.svg',
-        'image/svg+xml': './assets/images/ft_ic_vector_image.svg',
+        'text/csv': './assets/images/ft_ic_document.svg',
+        'text/xml': './assets/images/ft_ic_document.svg',
         'text/html': './assets/images/ft_ic_website.svg',
         'application/x-compressed': './assets/images/ft_ic_archive.svg',
         'application/x-zip-compressed': './assets/images/ft_ic_archive.svg',
         'application/zip': './assets/images/ft_ic_archive.svg',
+        'application/x-tar': './assets/images/ft_ic_archive.svg',
         'application/vnd.apple.keynote': './assets/images/ft_ic_presentation.svg',
         'application/vnd.apple.pages': './assets/images/ft_ic_document.svg',
         'application/vnd.apple.numbers': './assets/images/ft_ic_spreadsheet.svg',
+        'application/vnd.visio': './assets/images/ft_ic_document.svg',
+        'application/wordperfect': './assets/images/ft_ic_document.svg',
+        'application/x-cpio': './assets/images/ft_ic_document.svg',
         'folder': './assets/images/ft_ic_folder.svg',
         'disable/folder': './assets/images/ft_ic_folder_disable.svg',
         'selected': './assets/images/ft_ic_selected.svg'
     };
 
     constructor(public contentService: ContentService, matIconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
-        matIconRegistry.addSvgIcon('image/png',
-            sanitizer.bypassSecurityTrustResourceUrl('./assets/images/ft_ic_raster_image.svg'));
-        matIconRegistry.addSvgIcon('image/jpeg',
-            sanitizer.bypassSecurityTrustResourceUrl('./assets/images/ft_ic_raster_image.svg'));
-        matIconRegistry.addSvgIcon('image/gif',
-            sanitizer.bypassSecurityTrustResourceUrl('./assets/images/ft_ic_raster_image.svg'));
-        matIconRegistry.addSvgIcon('application/pdf',
-            sanitizer.bypassSecurityTrustResourceUrl('./assets/images/ft_ic_pdf.svg'));
-        matIconRegistry.addSvgIcon('application/vnd.ms-excel',
-            sanitizer.bypassSecurityTrustResourceUrl('./assets/images/ft_ic_ms_excel.svg'));
-        matIconRegistry.addSvgIcon('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-            sanitizer.bypassSecurityTrustResourceUrl('./assets/images/ft_ic_ms_excel.svg'));
-        matIconRegistry.addSvgIcon('application/vnd.openxmlformats-officedocument.spreadsheetml.template',
-            sanitizer.bypassSecurityTrustResourceUrl('./assets/images/ft_ic_ms_excel.svg'));
-        matIconRegistry.addSvgIcon('application/msword',
-            sanitizer.bypassSecurityTrustResourceUrl('./assets/images/ft_ic_ms_word.svg'));
-        matIconRegistry.addSvgIcon('application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-            sanitizer.bypassSecurityTrustResourceUrl('./assets/images/ft_ic_ms_word.svg'));
-        matIconRegistry.addSvgIcon('application/vnd.openxmlformats-officedocument.wordprocessingml.template',
-            sanitizer.bypassSecurityTrustResourceUrl('./assets/images/ft_ic_ms_word.svg'));
-        matIconRegistry.addSvgIcon('application/vnd.ms-powerpoint',
-            sanitizer.bypassSecurityTrustResourceUrl('./assets/images/ft_ic_ms_powerpoint.svg'));
-        matIconRegistry.addSvgIcon('application/vnd.openxmlformats-officedocument.presentationml.presentation',
-            sanitizer.bypassSecurityTrustResourceUrl('./assets/images/ft_ic_ms_powerpoint.svg'));
-        matIconRegistry.addSvgIcon('application/vnd.openxmlformats-officedocument.presentationml.template',
-            sanitizer.bypassSecurityTrustResourceUrl('./assets/images/ft_ic_ms_powerpoint.svg'));
-        matIconRegistry.addSvgIcon('application/vnd.openxmlformats-officedocument.presentationml.slideshow',
-            sanitizer.bypassSecurityTrustResourceUrl('./assets/images/ft_ic_ms_powerpoint.svg'));
-        matIconRegistry.addSvgIcon('video/mp4',
-            sanitizer.bypassSecurityTrustResourceUrl('./assets/images/ft_ic_video.svg'));
-        matIconRegistry.addSvgIcon('text/plain',
-            sanitizer.bypassSecurityTrustResourceUrl('./assets/images/ft_ic_document.svg'));
-        matIconRegistry.addSvgIcon('application/x-javascript',
-            sanitizer.bypassSecurityTrustResourceUrl('./assets/images/ft_ic_document.svg'));
-        matIconRegistry.addSvgIcon('application/json',
-            sanitizer.bypassSecurityTrustResourceUrl('./assets/images/ft_ic_document.svg'));
-        matIconRegistry.addSvgIcon('image/svg+xml',
-            sanitizer.bypassSecurityTrustResourceUrl('./assets/images/ft_ic_vector_image.svg'));
-        matIconRegistry.addSvgIcon('text/html',
-            sanitizer.bypassSecurityTrustResourceUrl('./assets/images/ft_ic_website.svg'));
-        matIconRegistry.addSvgIcon('application/x-compressed',
-            sanitizer.bypassSecurityTrustResourceUrl('./assets/images/ft_ic_archive.svg'));
-        matIconRegistry.addSvgIcon('application/x-zip-compressed',
-            sanitizer.bypassSecurityTrustResourceUrl('./assets/images/ft_ic_archive.svg'));
-        matIconRegistry.addSvgIcon('application/zip',
-            sanitizer.bypassSecurityTrustResourceUrl('./assets/images/ft_ic_archive.svg'));
-        matIconRegistry.addSvgIcon('application/vnd.apple.keynote',
-            sanitizer.bypassSecurityTrustResourceUrl('./assets/images/ft_ic_presentation.svg'));
-        matIconRegistry.addSvgIcon('application/vnd.apple.pages',
-            sanitizer.bypassSecurityTrustResourceUrl('./assets/images/ft_ic_document.svg'));
-        matIconRegistry.addSvgIcon('application/vnd.apple.numbers',
-            sanitizer.bypassSecurityTrustResourceUrl('./assets/images/ft_ic_spreadsheet.svg'));
-        matIconRegistry.addSvgIcon('folder',
-            sanitizer.bypassSecurityTrustResourceUrl('./assets/images/ft_ic_folder.svg'));
-        matIconRegistry.addSvgIcon('disable/folder',
-            sanitizer.bypassSecurityTrustResourceUrl('./assets/images/ft_ic_folder_disable.svg'));
-        matIconRegistry.addSvgIcon('selected',
-            sanitizer.bypassSecurityTrustResourceUrl('./assets/images/ft_ic_selected.svg'));
-        matIconRegistry.addSvgIcon('default',
-            sanitizer.bypassSecurityTrustResourceUrl('./assets/images/ft_ic_miscellaneous.svg'));
+        Object.keys(this.mimeTypeIcons).forEach(key => {
+            matIconRegistry.addSvgIcon(key, sanitizer.bypassSecurityTrustResourceUrl(this.mimeTypeIcons[key]));
+        });
     }
 
     /**

@@ -26,7 +26,9 @@ import 'rxjs/add/observable/interval';
 import 'rxjs/add/operator/takeWhile';
 
 /**
+ * @deprecated
  * RenditionsService
+ * (this service is deprecated in 2.2.0 and will be removed in future revisions)
  *
  * @returns {RenditionsService} .
  */
@@ -36,6 +38,7 @@ export class RenditionsService {
     constructor(private apiService: AlfrescoApiService) {
     }
 
+    /** @deprecated */
     isRenditionAvailable(nodeId: string, encoding: string): Observable<boolean> {
         return Observable.create((observer) => {
             this.getRendition(nodeId, encoding).subscribe(
@@ -55,6 +58,7 @@ export class RenditionsService {
         });
     }
 
+    /** @deprecated */
     isConversionPossible(nodeId: string, encoding: string): Observable<boolean> {
         return Observable.create((observer) => {
             this.getRendition(nodeId, encoding).subscribe(
@@ -70,31 +74,43 @@ export class RenditionsService {
         });
     }
 
+    /** @deprecated */
     getRenditionUrl(nodeId: string, encoding: string): string {
         return this.apiService.contentApi.getRenditionUrl(nodeId, encoding);
     }
 
+    /** @deprecated */
     getRendition(nodeId: string, encoding: string): Observable<RenditionEntry> {
         return Observable.fromPromise(this.apiService.renditionsApi.getRendition(nodeId, encoding));
     }
 
+    /** @deprecated */
     getRenditionsListByNodeId(nodeId: string): Observable<RenditionPaging> {
         return Observable.fromPromise(this.apiService.renditionsApi.getRenditions(nodeId));
     }
 
+    /** @deprecated */
     createRendition(nodeId: string, encoding: string): Observable<{}> {
         return Observable.fromPromise(this.apiService.renditionsApi.createRendition(nodeId, {id: encoding}));
     }
 
-    convert(nodeId: string, encoding: string, pollingInterval: number = 1000) {
+    /** @deprecated */
+    convert(nodeId: string, encoding: string, pollingInterval: number = 1000, retries: number = 5) {
         return this.createRendition(nodeId, encoding)
-            .concatMap(() => this.pollRendition(nodeId, encoding, pollingInterval));
+            .concatMap(() => this.pollRendition(nodeId, encoding, pollingInterval, retries));
     }
 
-    private pollRendition(nodeId: string, encoding: string, interval: number = 1000) {
+    /** @deprecated */
+    private pollRendition(nodeId: string, encoding: string, interval: number = 1000, retries: number = 5) {
+        let attempts = 0;
         return Observable.interval(interval)
             .switchMap(() => this.getRendition(nodeId, encoding))
             .takeWhile((data) => {
+                attempts += 1;
+                if (attempts > retries) {
+                    return false;
+                }
+                console.log(data.entry.status, retries);
                 return (data.entry.status.toString() !== 'CREATED');
             });
     }
