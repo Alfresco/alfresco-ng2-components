@@ -116,7 +116,7 @@ fdescribe('ViewerComponent', () => {
 
     let component: ViewerComponent;
     let fixture: ComponentFixture<ViewerComponent>;
-    // let alfrescoApiService: AlfrescoApiService;
+    let alfrescoApiService: AlfrescoApiService;
     let element: HTMLElement;
 
     beforeEach(async(() => {
@@ -598,157 +598,202 @@ fdescribe('ViewerComponent', () => {
         });
     });
 
-    xdescribe('Extension Type Test', () => {
-        // it('should  extension file pdf  be loaded', (done) => {
-        //     component.urlFile = 'base/src/assets/fake-test-file.pdf';
+    describe('Extension Type Test', () => {
 
-        //     component.ngOnChanges(null).then(() => {
-        //         fixture.detectChanges();
-        //         expect(element.querySelector('adf-pdf-viewer')).not.toBeNull();
-        //         done();
-        //     });
-        // });
+        beforeEach(() => {
+            fixture = TestBed.createComponent(ViewerComponent);
 
-        // it('should  extension file png be loaded', (done) => {
-        //     component.urlFile = 'fake-url-file.png';
+            element = fixture.nativeElement;
+            component = fixture.componentInstance;
 
-        //     component.ngOnChanges(null).then(() => {
-        //         fixture.detectChanges();
-        //         expect(element.querySelector('#viewer-image')).not.toBeNull();
-        //         done();
-        //     });
-        // });
+            component.showToolbar = true;
+            component.urlFile = 'base/src/assets/fake-test-file.pdf';
+            component.mimeType = 'application/pdf';
+        });
 
-        // it('should extension file mp4 be loaded', (done) => {
-        //     component.urlFile = 'fake-url-file.mp4';
+        afterEach(() => {
+            fixture.destroy();
+        });
 
-        //     component.ngOnChanges(null).then(() => {
-        //         fixture.detectChanges();
-        //         expect(element.querySelector('adf-media-player')).not.toBeNull();
-        //         done();
-        //     });
-        // });
+        it('should  extension file pdf  be loaded', async(() => {
+            component.urlFile = 'base/src/assets/fake-test-file.pdf';
+            component.ngOnChanges(null);
+            fixture.detectChanges();
 
-        // it('should extension file mp3 be loaded', (done) => {
-        //     component.urlFile = 'fake-url-file.mp3';
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('adf-pdf-viewer')).not.toBeNull();
+            });
+        }));
 
-        //     component.ngOnChanges(null).then(() => {
-        //         fixture.detectChanges();
-        //         expect(element.querySelector('adf-media-player')).not.toBeNull();
-        //         done();
-        //     });
-        // });
+        it('should  extension file png be loaded', async(() => {
+            component.urlFile = 'fake-url-file.png';
+            component.ngOnChanges(null);
+            fixture.detectChanges();
 
-        // it('should extension file wav be loaded', (done) => {
-        //     component.urlFile = 'fake-url-file.wav';
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#viewer-image')).not.toBeNull();
+            });
+        }));
 
-        //     component.ngOnChanges(null).then(() => {
-        //         fixture.detectChanges();
-        //         expect(element.querySelector('adf-media-player')).not.toBeNull();
-        //         done();
-        //     });
-        // });
+        it('should extension file mp4 be loaded', async(() => {
+            component.urlFile = 'fake-url-file.mp4';
+            component.ngOnChanges(null);
+            fixture.detectChanges();
 
-        // it('should extension file txt be loaded', (done) => {
-        //     component.urlFile = 'fake-url-file.txt';
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('adf-media-player')).not.toBeNull();
+            });
+        }));
 
-        //     component.ngOnChanges(null).then(() => {
-        //         fixture.detectChanges();
-        //         expect(element.querySelector('adf-txt-viewer')).not.toBeNull();
-        //         done();
-        //     });
-        // });
+        it('should extension file mp3 be loaded', async(() => {
+            component.urlFile = 'fake-url-file.mp3';
+            component.ngOnChanges(null);
+            fixture.detectChanges();
 
-        // it('should display [unknown format] for unsupported extensions', (done) => {
-        //     component.urlFile = 'fake-url-file.unsupported';
-        //     component.mimeType = '';
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('adf-media-player')).not.toBeNull();
+            });
+        }));
 
-        //     component.ngOnChanges(null).then(() => {
-        //         fixture.detectChanges();
-        //         expect(element.querySelector('adf-viewer-unknown-format')).toBeDefined();
-        //         done();
-        //     });
-        // });
+        it('should extension file wav be loaded', async(() => {
+            component.urlFile = 'fake-url-file.wav';
+            component.ngOnChanges(null);
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('adf-media-player')).not.toBeNull();
+            });
+        }));
+
+        xit('should extension file txt be loaded', async(() => {
+            component.urlFile = 'fake-url-file.txt';
+            component.ngOnChanges(null);
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('adf-txt-viewer')).not.toBeNull();
+            });
+        }));
+
+        it('should display [unknown format] for unsupported extensions', async(() => {
+            component.urlFile = 'fake-url-file.unsupported';
+            component.mimeType = '';
+            component.ngOnChanges(null);
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('adf-viewer-unknown-format')).toBeDefined();
+            });
+        }));
     });
 
-    xdescribe('MimeType handling', () => {
-        // it('should display a PDF file identified by mimetype when the filename has no extension', (done) => {
-        //     component.urlFile = 'content';
-        //     component.mimeType = 'application/pdf';
+    describe('MimeType handling', () => {
 
-        //     component.ngOnChanges(null).then(() => {
-        //         fixture.detectChanges();
-        //         expect(element.querySelector('adf-pdf-viewer')).not.toBeNull();
-        //         done();
-        //     });
+        beforeEach(() => {
+            fixture = TestBed.createComponent(ViewerComponent);
 
-        // });
+            element = fixture.nativeElement;
+            component = fixture.componentInstance;
 
-        // it('should display a PDF file identified by mimetype when the file extension is wrong', (done) => {
-        //     component.urlFile = 'content.bin';
-        //     component.mimeType = 'application/pdf';
+            component.showToolbar = true;
+            component.urlFile = 'base/src/assets/fake-test-file.pdf';
+            component.mimeType = 'application/pdf';
+        });
 
-        //     component.ngOnChanges(null).then(() => {
-        //         fixture.detectChanges();
-        //         expect(element.querySelector('adf-pdf-viewer')).not.toBeNull();
-        //         done();
-        //     });
-        // });
+        afterEach(() => {
+            fixture.destroy();
+        });
 
-        // it('should display an image file identified by mimetype when the filename has no extension', (done) => {
-        //     component.urlFile = 'content';
-        //     component.mimeType = 'image/png';
+        it('should display a PDF file identified by mimetype when the filename has no extension', async(() => {
+            component.urlFile = 'content';
+            component.mimeType = 'application/pdf';
+            fixture.detectChanges();
+            component.ngOnChanges(null);
 
-        //     component.ngOnChanges(null).then(() => {
-        //         fixture.detectChanges();
-        //         expect(element.querySelector('#viewer-image')).not.toBeNull();
-        //         done();
-        //     });
-        // });
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('adf-pdf-viewer')).not.toBeNull();
+            });
 
-        // it('should display a image file identified by mimetype when the file extension is wrong', (done) => {
-        //     component.urlFile = 'content.bin';
-        //     component.mimeType = 'image/png';
+        }));
 
-        //     component.ngOnChanges(null).then(() => {
-        //         fixture.detectChanges();
-        //         expect(element.querySelector('#viewer-image')).not.toBeNull();
-        //         done();
-        //     });
-        // });
+        it('should display a PDF file identified by mimetype when the file extension is wrong', async(() => {
+            component.urlFile = 'content.bin';
+            component.mimeType = 'application/pdf';
+            component.ngOnChanges(null);
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('adf-pdf-viewer')).not.toBeNull();
+            });
+        }));
 
-        // it('should display the media player if the file identified by mimetype is a media when the filename has wrong extension', (done) => {
-        //     component.urlFile = 'content.bin';
-        //     component.mimeType = 'video/mp4';
+        it('should display an image file identified by mimetype when the filename has no extension', async(() => {
+            component.urlFile = 'content';
+            component.mimeType = 'image/png';
+            fixture.detectChanges();
+            component.ngOnChanges(null);
 
-        //     component.ngOnChanges(null).then(() => {
-        //         fixture.detectChanges();
-        //         expect(element.querySelector('adf-media-player')).not.toBeNull();
-        //         done();
-        //     });
-        // });
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#viewer-image')).not.toBeNull();
+            });
+        }));
 
-        // it('should display the txt viewer  if the file identified by mimetype is a txt when the filename has wrong extension', (done) => {
-        //     component.urlFile = 'content.bin';
-        //     component.mimeType = 'text/txt';
+        it('should display a image file identified by mimetype when the file extension is wrong', async(() => {
+            component.urlFile = 'content.bin';
+            component.mimeType = 'image/png';
+            fixture.detectChanges();
+            component.ngOnChanges(null);
 
-        //     component.ngOnChanges(null).then(() => {
-        //         fixture.detectChanges();
-        //         expect(element.querySelector('adf-txt-viewer')).not.toBeNull();
-        //         done();
-        //     });
-        // });
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#viewer-image')).not.toBeNull();
+            });
+        }));
 
-        // it('should display the media player if the file identified by mimetype is a media when the filename has no extension', (done) => {
-        //     component.urlFile = 'content';
-        //     component.mimeType = 'video/mp4';
+        it('should display the media player if the file identified by mimetype is a media when the filename has wrong extension', async(() => {
+            component.urlFile = 'content.bin';
+            component.mimeType = 'video/mp4';
+            fixture.detectChanges();
+            component.ngOnChanges(null);
 
-        //     component.ngOnChanges(null).then(() => {
-        //         fixture.detectChanges();
-        //         expect(element.querySelector('adf-media-player')).not.toBeNull();
-        //         done();
-        //     });
-        // });
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('adf-media-player')).not.toBeNull();
+            });
+        }));
+
+        xit('should display the txt viewer  if the file identified by mimetype is a txt when the filename has wrong extension', async(() => {
+            component.urlFile = 'content.bin';
+            component.mimeType = 'text/txt';
+            fixture.detectChanges();
+            component.ngOnChanges(null);
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('adf-txt-viewer')).not.toBeNull();
+            });
+        }));
+
+        it('should display the media player if the file identified by mimetype is a media when the filename has no extension', async(() => {
+            component.urlFile = 'content';
+            component.mimeType = 'video/mp4';
+            fixture.detectChanges();
+            component.ngOnChanges(null);
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('adf-media-player')).not.toBeNull();
+            });
+        }));
     });
 
     describe('Events', () => {
@@ -781,88 +826,142 @@ fdescribe('ViewerComponent', () => {
         }));
     });
 
-    xdescribe('display name property override by urlFile', () => {
-        // it('should displayName override the default name if is present and urlFile is set' , (done) => {
-        //     component.urlFile = 'base/src/assets/fake-test-file.pdf';
-        //     component.displayName = 'test name';
+    describe('display name property override by urlFile', () => {
 
-        //     component.ngOnChanges(null).then(() => {
-        //         fixture.detectChanges();
-        //         expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual('test name');
-        //         done();
-        //     });
-        // });
+        beforeEach(() => {
+            fixture = TestBed.createComponent(ViewerComponent);
 
-        // it('should use the urlFile name if displayName is NOT set and urlFile is set' , (done) => {
-        //     component.urlFile = 'base/src/assets/fake-test-file.pdf';
-        //     component.displayName = null;
+            element = fixture.nativeElement;
+            component = fixture.componentInstance;
 
-        //     component.ngOnChanges(null).then(() => {
-        //         fixture.detectChanges();
-        //         expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual('fake-test-file.pdf');
-        //         done();
-        //     });
-        // });
+            component.showToolbar = true;
+            component.urlFile = 'base/src/assets/fake-test-file.pdf';
+            component.mimeType = 'application/pdf';
+        });
+
+        afterEach(() => {
+            fixture.destroy();
+        });
+
+        it('should displayName override the default name if is present and urlFile is set' , async(() => {
+            component.urlFile = 'base/src/assets/fake-test-file.pdf';
+            component.displayName = 'test name';
+            fixture.detectChanges();
+            component.ngOnChanges(null);
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual('test name');
+            });
+        }));
+
+        it('should use the urlFile name if displayName is NOT set and urlFile is set' , async(() => {
+            component.urlFile = 'base/src/assets/fake-test-file.pdf';
+            component.displayName = null;
+            fixture.detectChanges();
+            component.ngOnChanges(null);
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual('fake-test-file.pdf');
+            });
+        }));
     });
 
-    xdescribe('display name property override by blobFile', () => {
-        // it('should displayName override the name if is present and blobFile is set' , (done) => {
-        //     component.displayName = 'blob file display name';
-        //     component.blobFile = new Blob(['This is my blob content'], {type : 'text/plain'});
+    describe('display name property override by blobFile', () => {
 
-        //     component.ngOnChanges(null).then(() => {
-        //         fixture.detectChanges();
-        //         expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual('blob file display name');
-        //         done();
-        //     });
-        // });
+        beforeEach(() => {
+            fixture = TestBed.createComponent(ViewerComponent);
 
-        // it('should show uknownn name if displayName is NOT set and blobFile is set' , (done) => {
-        //     component.displayName = null;
-        //     component.blobFile = new Blob(['This is my blob content'], {type : 'text/plain'});
+            element = fixture.nativeElement;
+            component = fixture.componentInstance;
 
-        //     component.ngOnChanges(null).then(() => {
-        //         fixture.detectChanges();
-        //         expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual('Unknown');
-        //         done();
-        //     });
-        // });
+            component.showToolbar = true;
+            component.urlFile = 'base/src/assets/fake-test-file.pdf';
+            component.mimeType = 'application/pdf';
+        });
+
+        afterEach(() => {
+            fixture.destroy();
+        });
+
+        it('should displayName override the name if is present and blobFile is set' , async(() => {
+            component.displayName = 'blob file display name';
+            component.blobFile = new Blob(['This is my blob content'], {type : 'text/plain'});
+            fixture.detectChanges();
+            component.ngOnChanges(null);
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual('blob file display name');
+            });
+        }));
+
+        it('should show uknownn name if displayName is NOT set and blobFile is set' , async(() => {
+            component.displayName = null;
+            component.blobFile = new Blob(['This is my blob content'], {type : 'text/plain'});
+            fixture.detectChanges();
+            component.ngOnChanges(null);
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual('Unknown');
+            });
+        }));
     });
 
-    xdescribe('display name property override by nodeId', () => {
-        // const displayName = 'the-name';
-        // const nodeDetails = { name: displayName, id: '12', content: { mimeType: 'txt' }};
-        // const contentUrl = '/content/url/path';
-        // const alfrescoApiInstanceMock = {
-        //     nodes: { getNodeInfo: () => Promise.resolve(nodeDetails) },
-        //     content: { getContentUrl: () => contentUrl }
-        // };
+    describe('display name property override by nodeId', () => {
 
-        // it('should use the displayName if displayName is set and fileNodeId is set' , (done) => {
-        //     const userDefinedDisplayName = 'user defined display name';
-        //     component.fileNodeId = '12';
-        //     component.urlFile = null;
-        //     component.displayName = userDefinedDisplayName;
+        const displayName = 'the-name';
+        const nodeDetails = { name: displayName, id: '12', content: { mimeType: 'txt' } };
+        const contentUrl = '/content/url/path';
+        const alfrescoApiInstanceMock = {
+            nodes: { getNodeInfo: () => Promise.resolve(nodeDetails) },
+            content: { getContentUrl: () => contentUrl }
+        };
 
-        //     spyOn(alfrescoApiService, 'getInstance').and.returnValue(alfrescoApiInstanceMock);
-        //     component.ngOnChanges(null).then(() => {
-        //         fixture.detectChanges();
-        //         expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual(userDefinedDisplayName);
-        //         done();
-        //     });
-        // });
+        beforeEach(() => {
+            fixture = TestBed.createComponent(ViewerComponent);
 
-        // it('should use the node name if displayName is NOT set and fileNodeId is set' , (done) => {
-        //     component.fileNodeId = '12';
-        //     component.urlFile = null;
-        //     component.displayName = null;
+            element = fixture.nativeElement;
+            component = fixture.componentInstance;
 
-        //     spyOn(alfrescoApiService, 'getInstance').and.returnValue(alfrescoApiInstanceMock);
-        //     component.ngOnChanges(null).then(() => {
-        //         fixture.detectChanges();
-        //         expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual(displayName);
-        //         done();
-        //     });
-        // });
+            component.showToolbar = true;
+            component.urlFile = 'base/src/assets/fake-test-file.pdf';
+            component.mimeType = 'application/pdf';
+            alfrescoApiService = TestBed.get(AlfrescoApiService);
+            fixture.detectChanges();
+        });
+
+        afterEach(() => {
+            fixture.destroy();
+        });
+
+        it('should use the displayName if displayName is set and fileNodeId is set', async(() => {
+            const userDefinedDisplayName = 'user defined display name';
+            component.fileNodeId = '12';
+            component.urlFile = null;
+            component.displayName = userDefinedDisplayName;
+            spyOn(alfrescoApiService, 'getInstance').and.returnValue(alfrescoApiInstanceMock);
+
+            component.ngOnChanges(null);
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual(userDefinedDisplayName);
+            });
+        }));
+
+        it('should use the node name if displayName is NOT set and fileNodeId is set', async(() => {
+            component.fileNodeId = '12';
+            component.urlFile = null;
+            component.displayName = null;
+            spyOn(alfrescoApiService, 'getInstance').and.returnValue(alfrescoApiInstanceMock);
+
+            component.ngOnChanges(null);
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual(displayName);
+            });
+        }));
     });
 });
