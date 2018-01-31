@@ -701,6 +701,11 @@ describe('ViewerComponent', () => {
                 });
             }));
 
+            it('should display the txt viewer  if the file identified by mimetype is a txt when the filename has wrong extension', (done) => {
+                component.urlFile = 'content.bin';
+                component.mimeType = 'text/plain';
+            });
+
             it('should show uknownn name if displayName is NOT set and blobFile is set' , async(() => {
                 component.displayName = null;
                 component.blobFile = new Blob(['This is my blob content'], {type : 'text/plain'});
