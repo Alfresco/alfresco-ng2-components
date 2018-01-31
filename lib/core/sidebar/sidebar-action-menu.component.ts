@@ -28,9 +28,11 @@ import { ChangeDetectionStrategy, Component, Directive, Input, ViewEncapsulation
 
 export class SidebarActionMenuComponent {
 
+    /** The title of the sidebar action. */
     @Input()
     title: string;
 
+    /** Toggle the sidebar action menu on expand. */
     @Input()
     expanded: boolean;
 
