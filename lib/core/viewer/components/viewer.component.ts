@@ -172,7 +172,8 @@ export class ViewerComponent implements OnChanges {
     private mimeTypes = {
         text: ['text/plain', 'text/csv', 'text/xml', 'text/html', 'application/x-javascript'],
         pdf: ['application/pdf'],
-        image: ['image/png', 'image/jpeg', 'image/gif', 'image/bmp', 'image/svg+xml']
+        image: ['image/png', 'image/jpeg', 'image/gif', 'image/bmp', 'image/svg+xml'],
+        media: ['video/mp4', 'video/webm', 'video/ogg', 'audio/mpeg', 'audio/ogg', 'audio/wav']
     };
 
     constructor(private apiService: AlfrescoApiService,
@@ -318,14 +319,6 @@ export class ViewerComponent implements OnChanges {
     getViewerTypeByMimeType(mimeType: string) {
         if (mimeType) {
             mimeType = mimeType.toLowerCase();
-
-            if (mimeType.startsWith('video/')) {
-                return 'media';
-            }
-
-            if (mimeType.startsWith('audio/')) {
-                return 'media';
-            }
 
             const editorTypes = Object.keys(this.mimeTypes);
             for (let type of editorTypes) {
