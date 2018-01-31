@@ -265,7 +265,22 @@ fdescribe('ViewerComponent', () => {
         });
     });
 
-    xdescribe('Full Screen Mode', () => {
+    describe('Full Screen Mode', () => {
+
+        beforeEach(() => {
+            fixture = TestBed.createComponent(ViewerComponent);
+            element = fixture.nativeElement;
+            component = fixture.componentInstance;
+
+            component.showToolbar = true;
+            component.urlFile = 'base/src/assets/fake-test-file.pdf';
+            component.mimeType = 'application/pdf';
+            fixture.detectChanges();
+        });
+
+        afterEach(() => {
+            fixture.destroy();
+        });
 
         it('should request only if enabled', () => {
             const domElement = jasmine.createSpyObj('el', ['requestFullscreen']);
