@@ -15,7 +15,9 @@
  * limitations under the License.
  */
 
-export class CookieServiceMock {
+import { CookieService } from '../services/cookie.service';
+
+export class CookieServiceMock extends CookieService {
 
     getItem(key: string): string | null {
         return this[key] && this[key].data || null;

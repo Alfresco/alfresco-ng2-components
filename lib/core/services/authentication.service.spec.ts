@@ -75,7 +75,7 @@ describe('AuthenticationService', () => {
         jasmine.Ajax.uninstall();
     });
 
-    describe('remembe me', () => {
+    describe('remember me', () => {
 
         beforeEach(() => {
             preferences.authType = 'ECM';
@@ -137,6 +137,24 @@ describe('AuthenticationService', () => {
 
         beforeEach(() => {
             preferences.authType = 'ECM';
+        });
+
+        it('should require remember me set for ECM check', () => {
+            spyOn(cookie, 'isEnabled').and.returnValue(true);
+            spyOn(authService, 'isRememberMeSet').and.returnValue(false);
+            spyOn(apiService, 'getInstance').and.callThrough();
+
+            expect(authService.isEcmLoggedIn()).toBeFalsy();
+            expect(apiService.getInstance).not.toHaveBeenCalled();
+        });
+
+        it('should not require cookie service enabled for ECM check', () => {
+            spyOn(cookie, 'isEnabled').and.returnValue(false);
+            spyOn(authService, 'isRememberMeSet').and.returnValue(false);
+            spyOn(apiService, 'getInstance').and.callThrough();
+
+            expect(authService.isEcmLoggedIn()).toBeFalsy();
+            expect(apiService.getInstance).toHaveBeenCalled();
         });
 
         it('[ECM] should return an ECM ticket after the login done', (done) => {
@@ -282,6 +300,24 @@ describe('AuthenticationService', () => {
 
         beforeEach(() => {
             preferences.authType = 'BPM';
+        });
+
+        it('should require remember me set for BPM check', () => {
+            spyOn(cookie, 'isEnabled').and.returnValue(true);
+            spyOn(authService, 'isRememberMeSet').and.returnValue(false);
+            spyOn(apiService, 'getInstance').and.callThrough();
+
+            expect(authService.isBpmLoggedIn()).toBeFalsy();
+            expect(apiService.getInstance).not.toHaveBeenCalled();
+        });
+
+        it('should not require cookie service enabled for BPM check', () => {
+            spyOn(cookie, 'isEnabled').and.returnValue(false);
+            spyOn(authService, 'isRememberMeSet').and.returnValue(false);
+            spyOn(apiService, 'getInstance').and.callThrough();
+
+            expect(authService.isBpmLoggedIn()).toBeFalsy();
+            expect(apiService.getInstance).toHaveBeenCalled();
         });
 
         it('[BPM] should return an BPM ticket after the login done', (done) => {
