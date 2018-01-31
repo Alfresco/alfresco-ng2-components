@@ -75,6 +75,7 @@ import { TranslateLoaderService } from './services/translate-loader.service';
 import { TRANSLATION_PROVIDER, TranslationService } from './services/translation.service';
 import { UploadService } from './services/upload.service';
 import { UserPreferencesService } from './services/user-preferences.service';
+import { SearchConfigurationService } from './services/search-configuration.service';
 
 export function createTranslateLoader(http: HttpClient, logService: LogService) {
     return new TranslateLoaderService(http, logService);
@@ -141,7 +142,8 @@ export function providers() {
         SharedLinksApiService,
         SitesService,
         DiscoveryApiService,
-        CommentProcessService
+        CommentProcessService,
+        SearchConfigurationService
     ];
 }
 
