@@ -63,4 +63,3 @@ the following example:
 ## See also
 
 -   [Accordion group component](accordion-group.component.md)
-

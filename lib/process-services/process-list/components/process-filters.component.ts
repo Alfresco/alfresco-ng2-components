@@ -30,24 +30,33 @@ import { ProcessFilterService } from './../services/process-filter.service';
 })
 export class ProcessFiltersComponent implements OnInit, OnChanges {
 
+    /** The parameters to filter the task filter. If there is no match then the default one
+     * (ie, the first filter in the list) is selected.
+     */
     @Input()
     filterParam: FilterProcessRepresentationModel;
 
+    /** Emitted when the user selects a filter from the list. */
     @Output()
     filterClick: EventEmitter<ProcessInstanceFilterRepresentation> = new EventEmitter<ProcessInstanceFilterRepresentation>();
 
+    /** Emitted when the list of filters has been successfully loaded from the server. */
     @Output()
     success: EventEmitter<ProcessInstanceFilterRepresentation[]> = new EventEmitter<ProcessInstanceFilterRepresentation[]>();
 
+    /** Emitted when an error occurs. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
+    /** Display filters available to the current user for the application with the specified ID. */
     @Input()
     appId: number;
 
+    /** Display filters available to the current user for the application with the specified name. */
     @Input()
     appName: string;
 
+    /** Toggle to show or hide the filter's icon. */
     @Input()
     showIcon: boolean = true;
 

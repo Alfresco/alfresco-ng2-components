@@ -56,27 +56,35 @@ export class PaginationComponent implements OnInit, OnDestroy {
         CHANGE_PAGE_NUMBER: 'CHANGE_PAGE_NUMBER'
     };
 
+    /** Component that provides custom pagination support. */
     @Input()
     target: PaginatedComponent;
 
+    /** An array of page sizes. */
     @Input()
     supportedPageSizes: number[] = [5, 25, 50, 100];
 
+    /** Pagination object. */
     @Input()
     pagination: Pagination;
 
+    /** Emitted when paginaton changes in any way. */
     @Output()
     change: EventEmitter<PaginationQueryParams> = new EventEmitter<PaginationQueryParams>();
 
+    /** Emitted when the page number changes. */
     @Output()
     changePageNumber: EventEmitter<Pagination> = new EventEmitter<Pagination>();
 
+    /** Emitted when the page size changes. */
     @Output()
     changePageSize: EventEmitter<Pagination> = new EventEmitter<Pagination>();
 
+    /** Emitted when the next page is requested. */
     @Output()
     nextPage: EventEmitter<Pagination> = new EventEmitter<Pagination>();
 
+    /** Emitted when the previous page is requested. */
     @Output()
     prevPage: EventEmitter<Pagination> = new EventEmitter<Pagination>();
 

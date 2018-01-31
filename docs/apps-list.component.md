@@ -14,10 +14,10 @@ Shows all available apps.
 
 ### Properties
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| layoutType | `string` | (\*\*required\*\*) Defines the layout of the apps. There are two possible values, "GRID" and "LIST".<br/> Default value: `AppsListComponent.LAYOUT_GRID` |
-| filtersAppId | `any[]` | Provides a way to filter the apps to show.  |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| layoutType | `string` | `AppsListComponent.LAYOUT_GRID` | (**required**) Defines the layout of the apps. There are two possible values, "GRID" and "LIST". |
+| filtersAppId | `any[]` |  | Provides a way to filter the apps to show.  |
 
 ### Events
 

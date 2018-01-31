@@ -27,19 +27,18 @@ Adds "infinite" pagination to the component it is used with.
 
 ### Properties
 
-| Name | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| pagination | Pagination | `InfinitePaginationComponent.DEFAULT_PAGINATION` | Pagination object |
-| pageSize | number | `InfinitePaginationComponent.DEFAULT_PAGE_SIZE` | Number of items that are added with each "load more" event |
-| loading | boolean | false |  |
-| target | PaginatedComponent |  | Component that provides custom pagination support |
-
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| pagination | `Pagination` |  | Pagination object.  |
+| target | `PaginatedComponent` |  | Component that provides custom pagination support.  |
+| pageSize | `number` | `InfinitePaginationComponent.DEFAULT_PAGE_SIZE` | Number of items that are added with each "load more" event.  |
+| isLoading | `boolean` | `false` | Is a new page loading?  |
 
 ### Events
 
-| Name | Description |
-| ---- | ----------- |
-| loadMore | Emitted when the "Load More" button is clicked |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| loadMore | `EventEmitter<Pagination>` | Emitted when the "Load More" button is clicked. |
 
 ## Details
 

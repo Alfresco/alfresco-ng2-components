@@ -34,12 +34,15 @@ export class InfoDrawerTabComponent {
     host: { 'class': 'adf-info-drawer' }
 })
 export class InfoDrawerComponent {
+    /** The title of the info drawer. */
     @Input()
     title: string|null = null;
 
+    /** The selected index tab. */
     @Input()
     selectedIndex: number = 0;
 
+    /** Emitted when the currently active tab changes. */
     @Output()
     currentTab: EventEmitter<number> = new EventEmitter<number>();
 

@@ -27,12 +27,15 @@ import { Observer } from 'rxjs/Observer';
 })
 export class ProcessCommentsComponent implements OnChanges {
 
+    /** (**required**) The numeric ID of the process instance to display comments for. */
     @Input()
     processInstanceId: string;
 
+    /** Should the comments be read-only? */
     @Input()
     readOnly: boolean = true;
 
+    /** Emitted when an error occurs. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
