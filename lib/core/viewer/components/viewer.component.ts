@@ -268,7 +268,6 @@ export class ViewerComponent implements OnChanges {
             if (!this.isSourceDefined()) {
                 throw new Error('A content source attribute value is missing.');
             }
-
             if (this.blobFile) {
                 this.setUpBlobData();
             } else if (this.urlFile) {

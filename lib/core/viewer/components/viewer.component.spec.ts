@@ -456,40 +456,52 @@ fdescribe('ViewerComponent', () => {
 
     });
 
-    xdescribe('View', () => {
+    describe('View', () => {
 
-        xdescribe('Overlay mode true', () => {
+        describe('Overlay mode true', () => {
 
             beforeEach(() => {
+                fixture = TestBed.createComponent(ViewerComponent);
+
+                element = fixture.nativeElement;
+                component = fixture.componentInstance;
+
+                component.showToolbar = true;
                 component.overlayMode = true;
+                component.urlFile = 'base/src/assets/fake-test-file.pdf';
+                component.mimeType = 'application/pdf';
                 fixture.detectChanges();
             });
 
-            xit('should header be present if is overlay mode', () => {
+            afterEach(() => {
+                fixture.destroy();
+            });
+
+            it('should header be present if is overlay mode', () => {
                 expect(element.querySelector('.adf-viewer-toolbar')).not.toBeNull();
             });
 
-            xit('should Name File be present if is overlay mode ', async(() => {
+            it('should Name File be present if is overlay mode ', async(() => {
                 component.ngOnChanges(null);
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    expect(element.querySelector('.adf-viewer-filename').innerHTML).toEqual('fake-test-file.pdf');
+                    expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual('fake-test-file.pdf');
                 });
             }));
 
-            xit('should Close button be present if overlay mode', () => {
+            it('should Close button be present if overlay mode', () => {
                 expect(element.querySelector('.adf-viewer-close-button')).not.toBeNull();
             });
 
-            xit('should Click on close button hide the viewer', () => {
+            it('should Click on close button hide the viewer', () => {
                 let closebutton: any = element.querySelector('.adf-viewer-close-button');
                 closebutton.click();
                 fixture.detectChanges();
                 expect(element.querySelector('.adf-viewer-content')).toBeNull();
             });
 
-            xit('should Esc button hide the viewer', () => {
+            it('should Esc button hide the viewer', () => {
                 EventMock.keyUp(27);
                 fixture.detectChanges();
                 expect(element.querySelector('.adf-viewer-content')).toBeNull();
@@ -499,8 +511,20 @@ fdescribe('ViewerComponent', () => {
         describe('Overlay mode false', () => {
 
             beforeEach(() => {
+                fixture = TestBed.createComponent(ViewerComponent);
+
+                element = fixture.nativeElement;
+                component = fixture.componentInstance;
+
+                component.showToolbar = true;
                 component.overlayMode = false;
+                component.urlFile = 'base/src/assets/fake-test-file.pdf';
+                component.mimeType = 'application/pdf';
                 fixture.detectChanges();
+            });
+
+            afterEach(() => {
+                fixture.destroy();
             });
 
             it('should header be NOT be present if is not overlay mode', () => {
@@ -515,7 +539,23 @@ fdescribe('ViewerComponent', () => {
         });
     });
 
-    xdescribe('Attribute', () => {
+    describe('Attribute', () => {
+
+        beforeEach(() => {
+            fixture = TestBed.createComponent(ViewerComponent);
+
+            element = fixture.nativeElement;
+            component = fixture.componentInstance;
+
+            component.showToolbar = true;
+            component.urlFile = 'base/src/assets/fake-test-file.pdf';
+            component.mimeType = 'application/pdf';
+            fixture.detectChanges();
+        });
+
+        afterEach(() => {
+            fixture.destroy();
+        });
 
         it('should Url or fileNodeId be mandatory', () => {
             component.showViewer = true;
@@ -711,14 +751,13 @@ fdescribe('ViewerComponent', () => {
         // });
     });
 
-    xdescribe('Events', () => {
+    describe('Events', () => {
+
         beforeEach(() => {
             fixture = TestBed.createComponent(ViewerComponent);
 
             element = fixture.nativeElement;
             component = fixture.componentInstance;
-
-            // alfrescoApiService = TestBed.get(AlfrescoApiService);
 
             component.showToolbar = true;
             component.urlFile = 'base/src/assets/fake-test-file.pdf';
