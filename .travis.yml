@@ -61,7 +61,7 @@ script:
 jobs:
     include:
         - stage: Check 2.0.0 Project Update
-          script: ./scripts/est-e2e-bc.sh
+          script: ./scripts/test-e2e-bc.sh
 
 # jobs:
 #   include:
