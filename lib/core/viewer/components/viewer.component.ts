@@ -573,7 +573,7 @@ export class ViewerComponent implements OnChanges {
 
         let rendition = supported.list.entries.find(obj => obj.entry.id.toLowerCase() === renditionId);
         if (!rendition) {
-            renditionId = 'imgpreview'
+            renditionId = 'imgpreview';
             rendition = supported.list.entries.find(obj => obj.entry.id.toLowerCase() === renditionId);
 
             if (!rendition) {
