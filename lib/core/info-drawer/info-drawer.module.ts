@@ -19,23 +19,26 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
 
-import { InfoDrawerLayoutComponent } from './info-drawer-layout.component';
+import { InfoDrawerLayoutComponent, InfoDrawerTitleDirective, InfoDrawerButtonsDirective, InfoDrawerContentDirective } from './info-drawer-layout.component';
 import { InfoDrawerComponent, InfoDrawerTabComponent } from './info-drawer.component';
+
+export function declarations() {
+    return [
+        InfoDrawerLayoutComponent,
+        InfoDrawerTabComponent,
+        InfoDrawerComponent,
+        InfoDrawerTitleDirective,
+        InfoDrawerButtonsDirective,
+        InfoDrawerContentDirective
+    ];
+}
 
 @NgModule({
     imports: [
         CommonModule,
         MaterialModule
     ],
-    declarations: [
-        InfoDrawerLayoutComponent,
-        InfoDrawerTabComponent,
-        InfoDrawerComponent
-    ],
-    exports: [
-        InfoDrawerLayoutComponent,
-        InfoDrawerTabComponent,
-        InfoDrawerComponent
-    ]
+    declarations: declarations(),
+    exports: declarations()
 })
 export class InfoDrawerModule {}
