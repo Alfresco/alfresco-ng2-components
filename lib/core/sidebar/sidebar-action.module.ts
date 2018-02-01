@@ -20,7 +20,16 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
 
-import { SidebarActionMenuComponent } from './sidebar-action-menu.component';
+import { SidebarActionMenuComponent, SidebarMenuDirective, SidebarMenuExpandIconDirective, SidebarMenuTitleIconDirective } from './sidebar-action-menu.component';
+
+export function declarations() {
+    return [
+        SidebarActionMenuComponent,
+        SidebarMenuDirective,
+        SidebarMenuExpandIconDirective,
+        SidebarMenuTitleIconDirective
+    ];
+}
 
 @NgModule({
     imports: [
@@ -28,11 +37,7 @@ import { SidebarActionMenuComponent } from './sidebar-action-menu.component';
         MaterialModule,
         FlexLayoutModule
     ],
-    declarations: [
-        SidebarActionMenuComponent
-    ],
-    exports: [
-        SidebarActionMenuComponent
-    ]
+    declarations: declarations(),
+    exports: declarations()
 })
 export class SideBarActionModule {}
