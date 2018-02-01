@@ -65,5 +65,6 @@ import 'intl';  // Run `npm install --save intl`.
  * Support custom event in IE11
  *
  * */
-import 'custom-event-polyfill/custom-event-polyfill'  // Run `npm install --save custom-event-polyfill`.
+
+import 'custom-event-polyfill/custom-event-polyfill'; // Run `npm install --save custom-event-polyfill`.
 

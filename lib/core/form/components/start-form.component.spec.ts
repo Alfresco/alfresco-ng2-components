@@ -339,8 +339,8 @@ describe('ActivitiStartForm', () => {
             component.showOutcomeButtons = true;
             component.showRefreshButton = true;
             component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
+            fixture.detectChanges();
             fixture.whenStable().then(() => {
-                fixture.detectChanges();
                 const formTabs = component.form.tabs;
                 const tabField1 = formTabs.find(tab => tab.id === 'form1');
                 const tabField2 = formTabs.find(tab => tab.id === 'form2');
@@ -357,8 +357,8 @@ describe('ActivitiStartForm', () => {
             component.showOutcomeButtons = true;
             component.showRefreshButton = true;
             component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
+            fixture.detectChanges();
             fixture.whenStable().then(() => {
-                fixture.detectChanges();
                 const titleIcon = fixture.debugElement.nativeElement.querySelector('mat-card-title>mat-icon');
                 const titleElement = fixture.debugElement.nativeElement.querySelector('mat-card-title>h2');
                 const actionButtons = fixture.debugElement.nativeElement.querySelectorAll('.mat-button');

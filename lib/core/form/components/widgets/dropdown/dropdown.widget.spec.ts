@@ -43,9 +43,9 @@ describe('DropdownWidgetComponent', () => {
     let element: HTMLElement;
 
     let fakeOptionList: FormFieldOption[] = [
-        {id: 'opt_1', name: 'option_1'},
-        {id: 'opt_2', name: 'option_2'},
-        {id: 'opt_3', name: 'option_3'}];
+        { id: 'opt_1', name: 'option_1' },
+        { id: 'opt_2', name: 'option_2' },
+        { id: 'opt_3', name: 'option_3' }];
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -71,7 +71,7 @@ describe('DropdownWidgetComponent', () => {
         widget.ngOnInit();
         expect(formService.getRestFieldValues).not.toHaveBeenCalled();
 
-        widget.field = new FormFieldModel(null, {restUrl: null});
+        widget.field = new FormFieldModel(null, { restUrl: null });
         widget.ngOnInit();
         expect(formService.getRestFieldValues).not.toHaveBeenCalled();
     });
@@ -100,7 +100,7 @@ describe('DropdownWidgetComponent', () => {
     });
 
     it('should preserve empty option when loading fields', () => {
-        let restFieldValue: FormFieldOption = <FormFieldOption> {id: '1', name: 'Option1'};
+        let restFieldValue: FormFieldOption = <FormFieldOption> { id: '1', name: 'Option1' };
         spyOn(formService, 'getRestFieldValues').and.callFake(() => {
             return Observable.create(observer => {
                 observer.next([restFieldValue]);
@@ -108,8 +108,8 @@ describe('DropdownWidgetComponent', () => {
             });
         });
 
-        let form = new FormModel({taskId: '<id>'});
-        let emptyOption: FormFieldOption = <FormFieldOption> {id: 'empty', name: 'Empty'};
+        let form = new FormModel({ taskId: '<id>' });
+        let emptyOption: FormFieldOption = <FormFieldOption> { id: 'empty', name: 'Empty' };
         widget.field = new FormFieldModel(form, {
             id: '<id>',
             restUrl: '/some/url/address',
@@ -133,14 +133,14 @@ describe('DropdownWidgetComponent', () => {
                 spyOn(formService, 'getRestFieldValues').and.callFake(() => {
                     return Observable.of(fakeOptionList);
                 });
-                widget.field = new FormFieldModel(new FormModel({taskId: 'fake-task-id'}), {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'dropdown-id',
                     name: 'date-name',
                     type: 'dropdown',
                     readOnly: 'false',
                     restUrl: 'fake-rest-url'
                 });
-                widget.field.emptyOption = {id: 'empty', name: 'Choose one...'};
+                widget.field.emptyOption = { id: 'empty', name: 'Choose one...' };
                 widget.field.isVisible = true;
                 fixture.detectChanges();
             }));
@@ -178,6 +178,8 @@ describe('DropdownWidgetComponent', () => {
                 fixture.detectChanges();
 
                 openSelect();
+
+                fixture.detectChanges();
 
                 fixture.whenStable()
                     .then(() => {
@@ -216,14 +218,14 @@ describe('DropdownWidgetComponent', () => {
                 spyOn(formService, 'getRestFieldValuesByProcessId').and.callFake(() => {
                     return Observable.of(fakeOptionList);
                 });
-                widget.field = new FormFieldModel(new FormModel({processDefinitionId: 'fake-process-id'}), {
+                widget.field = new FormFieldModel(new FormModel({ processDefinitionId: 'fake-process-id' }), {
                     id: 'dropdown-id',
                     name: 'date-name',
                     type: 'dropdown',
                     readOnly: 'false',
                     restUrl: 'fake-rest-url'
                 });
-                widget.field.emptyOption = {id: 'empty', name: 'Choose one...'};
+                widget.field.emptyOption = { id: 'empty', name: 'Choose one...' };
                 widget.field.isVisible = true;
                 fixture.detectChanges();
             }));
@@ -262,6 +264,8 @@ describe('DropdownWidgetComponent', () => {
 
                 openSelect();
 
+                fixture.detectChanges();
+
                 fixture.whenStable()
                     .then(() => {
                         let dropDownElement: any = element.querySelector('#dropdown-id');
@@ -270,7 +274,7 @@ describe('DropdownWidgetComponent', () => {
             }));
 
             it('should be disabled when the field is readonly', async(() => {
-                widget.field = new FormFieldModel(new FormModel({processDefinitionId: 'fake-process-id'}), {
+                widget.field = new FormFieldModel(new FormModel({ processDefinitionId: 'fake-process-id' }), {
                     id: 'dropdown-id',
                     name: 'date-name',
                     type: 'dropdown',

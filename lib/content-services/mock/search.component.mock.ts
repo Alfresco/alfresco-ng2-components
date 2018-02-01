@@ -141,7 +141,7 @@ export let errorJson = {
     search: SearchComponent;
 
     message: string = '';
-    searchedWord= '';
+    searchedWord = '';
     maxResults: number = 5;
     searchNode: QueryBody;
 
