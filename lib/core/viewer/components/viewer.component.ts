@@ -20,11 +20,10 @@ import {
     Component, ContentChild, EventEmitter, HostListener, ElementRef,
     Input, OnChanges, Output, SimpleChanges, TemplateRef, ViewEncapsulation
 } from '@angular/core';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity, RenditionEntry } from 'alfresco-js-api';
 import { BaseEvent } from '../../events';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
-import { RenditionsService } from '../../services/renditions.service';
 import { ViewerMoreActionsComponent } from './viewer-more-actions.component';
 import { ViewerOpenWithComponent } from './viewer-open-with.component';
 import { ViewerSidebarComponent } from './viewer-sidebar.component';
@@ -123,6 +122,9 @@ export class ViewerComponent implements OnChanges {
     @Input()
     downloadUrl: string = null;
 
+    @Input()
+    maxRetries = 5;
+
     @Output()
     goBack = new EventEmitter<BaseEvent<any>>();
 
@@ -158,22 +160,25 @@ export class ViewerComponent implements OnChanges {
     extension: string;
     sidebarTemplateContext: { node: MinimalNodeEntryEntity } = { node: null };
 
+    // Extensions that are supported by the Viewer without conversion
     private extensions = {
-        image: ['png', 'jpg', 'jpeg', 'gif', 'bpm'],
+        image: ['png', 'jpg', 'jpeg', 'gif', 'bpm', 'svg'],
         media: ['wav', 'mp4', 'mp3', 'webm', 'ogg'],
         text: ['txt', 'xml', 'js', 'html', 'json', 'ts'],
         pdf: ['pdf']
     };
 
-    private mimeTypes = [
-        { mimeType: 'application/x-javascript', type: 'text' },
-        { mimeType: 'application/pdf', type: 'pdf' }
-    ];
+    // Mime types that are supported by the Viewer without conversion
+    private mimeTypes = {
+        text: ['text/plain', 'text/csv', 'text/xml', 'text/html', 'application/x-javascript'],
+        pdf: ['application/pdf'],
+        image: ['image/png', 'image/jpeg', 'image/gif', 'image/bmp', 'image/svg+xml'],
+        media: ['video/mp4', 'video/webm', 'video/ogg', 'audio/mpeg', 'audio/ogg', 'audio/wav']
+    };
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService,
                 private location: Location,
-                private renditionService: RenditionsService,
                 private el: ElementRef) {
     }
 
@@ -315,25 +320,11 @@ export class ViewerComponent implements OnChanges {
         if (mimeType) {
             mimeType = mimeType.toLowerCase();
 
-            if (mimeType.startsWith('image/')) {
-                return 'image';
-            }
-
-            if (mimeType.startsWith('text/')) {
-                return 'text';
-            }
-
-            if (mimeType.startsWith('video/')) {
-                return 'media';
-            }
-
-            if (mimeType.startsWith('audio/')) {
-                return 'media';
-            }
-
-            const registered = this.mimeTypes.find(t => t.mimeType === mimeType);
-            if (registered) {
-                return registered.type;
+            const editorTypes = Object.keys(this.mimeTypes);
+            for (let type of editorTypes) {
+                if (this.mimeTypes[type].indexOf(mimeType) >= 0) {
+                    return type;
+                }
             }
         }
         return 'unknown';
@@ -531,33 +522,20 @@ export class ViewerComponent implements OnChanges {
         this.isLoading = true;
 
         try {
-            const rendition = await this.apiService.renditionsApi.getRendition(nodeId, 'pdf');
-            const status = rendition.entry.status.toString();
+            const rendition = await this.resolveRendition(nodeId, 'pdf');
+            if (rendition) {
+                const renditionId = rendition.entry.id;
 
-            if (status === 'CREATED') {
-                this.viewerType = 'pdf';
-                this.urlFileContent = this.apiService.contentApi.getRenditionUrl(nodeId, 'pdf');
-            } else if (status === 'NOT_CREATED') {
-                try {
-                    await this.renditionService.convert(nodeId, 'pdf').toPromise();
+                if (renditionId === 'pdf') {
                     this.viewerType = 'pdf';
-                    this.urlFileContent = this.apiService.contentApi.getRenditionUrl(nodeId, 'pdf');
-                } catch (error) {
-                    this.logService.error(error);
-                }
-            }
-        } catch (error) {
-            this.logService.error(error);
-
-            try {
-                const imagePreview = await this.apiService.renditionsApi.getRendition(nodeId, 'imgpreview');
-                if (imagePreview.entry.status.toString() === 'CREATED') {
+                } else if (renditionId === 'imgpreview') {
                     this.viewerType = 'image';
-                    this.urlFileContent = this.apiService.contentApi.getRenditionUrl(nodeId, 'imgpreview');
                 }
-            } catch (error) {
-                this.logService.error(error);
+
+                this.urlFileContent = this.apiService.contentApi.getRenditionUrl(nodeId, renditionId);
             }
+        } catch (err) {
+            this.logService.error(err);
         }
 
         this.isLoading = false;
@@ -586,5 +564,57 @@ export class ViewerComponent implements OnChanges {
         }
 
         this.isLoading = false;
+    }
+
+    private async resolveRendition(nodeId: string, renditionId: string): Promise<RenditionEntry> {
+        renditionId = renditionId.toLowerCase();
+
+        const supported = await this.apiService.renditionsApi.getRenditions(nodeId);
+
+        let rendition = supported.list.entries.find(obj => obj.entry.id.toLowerCase() === renditionId);
+        if (!rendition) {
+            renditionId = 'imgpreview';
+            rendition = supported.list.entries.find(obj => obj.entry.id.toLowerCase() === renditionId);
+
+            if (!rendition) {
+                return null;
+            }
+        }
+
+        const status = rendition.entry.status.toString();
+
+        if (status === 'CREATED') {
+            return rendition;
+        } else if (status === 'NOT_CREATED') {
+            try {
+                await this.apiService.renditionsApi.createRendition(nodeId, {id: renditionId});
+                return await this.waitRendition(nodeId, renditionId, 0);
+            } catch (err) {
+                this.logService.error(err);
+                return null;
+            }
+        }
+    }
+
+    private async waitRendition(nodeId: string, renditionId: string, retries: number): Promise<RenditionEntry> {
+        const rendition = await this.apiService.renditionsApi.getRendition(nodeId, renditionId);
+
+        if (retries > this.maxRetries) {
+            return null;
+        }
+
+        const status = rendition.entry.status.toString();
+
+        if (status === 'CREATED') {
+            return rendition;
+        } else {
+            retries += 1;
+            await this.wait(1000);
+            return await this.waitRendition(nodeId, renditionId, retries);
+        }
+    }
+
+    private wait(ms: number): Promise<any> {
+        return new Promise(resolve => setTimeout(resolve, ms));
     }
 }
