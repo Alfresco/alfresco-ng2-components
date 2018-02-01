@@ -622,7 +622,7 @@ describe('ViewerComponent', () => {
 
             it('should display the txt viewer  if the file identified by mimetype is a txt when the filename has wrong extension', async(() => {
                 component.urlFile = 'content.bin';
-                component.mimeType = 'text/txt';
+                component.mimeType = 'text/plain';
                 component.urlFile = require('../assets/fake-test-file.txt');
                 fixture.detectChanges();
                 component.ngOnChanges(null);
@@ -700,11 +700,6 @@ describe('ViewerComponent', () => {
                     expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual('blob file display name');
                 });
             }));
-
-            it('should display the txt viewer  if the file identified by mimetype is a txt when the filename has wrong extension', (done) => {
-                component.urlFile = 'content.bin';
-                component.mimeType = 'text/plain';
-            });
 
             it('should show uknownn name if displayName is NOT set and blobFile is set' , async(() => {
                 component.displayName = null;
