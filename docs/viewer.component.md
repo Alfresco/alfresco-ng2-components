@@ -69,6 +69,7 @@ Using with file url:
 | canNavigateBefore | boolean | true | Toggle the "before" ("<") button. Requires `allowNavigate` to be enabled. |
 | canNavigateNext | boolean | true | Toggle the next (">") button. Requires `allowNavigate` to be enabled.|
 | allowFullScreen | boolean | true | Toggle the 'Full Screen' feature. |
+| maxRetries | number | 5 | Number of times the Viewer will retry fetching content Rendition. Retries have at least 1 second delay in between. |
 
 ### Events
 
@@ -143,15 +144,53 @@ You can provide custom file parameters, for example a value for the `mimeType` o
 
 ### Supported file formats
 
-| Type | Extension |
-| ---- | --------- |
-| Media | wav, Mp3, Mp4, WebM, Ogv |
-| Images | png, jpg, jpeg, gif, bmp |
-| Text | pdf, txt |
+The Viewer component consists of separate Views that handle particular types of type families based on either a file extension or a mime type:
 
-### PDF Conversion
+- PDF View
+  - application/pdf
+  - *.pdf
+- Image View
+  - image/png
+  - image/jpeg
+  - image/gif
+  - image/bmp
+  - image/svg+xml
+  - *.png
+  - *.jpg
+  - *.jpeg
+  - *.gif
+  - *.bpm
+  - *.svg
+- Text View
+  - text/plain
+  - text/csv
+  - text/xml
+  - text/html
+  - application/x-javascript
+  - *.txt
+  - *.xml
+  - *.js
+  - *.html
+  - *.json
+  - *.ts
+- Media View
+  - video/mp4
+  - video/webm
+  - video/ogg
+  - audio/mpeg
+  - audio/ogg
+  - audio/wav
+  - *.wav
+  - *.mp4
+  - *.mp3
+  - *.webm
+  - *.ogg
 
-For unsupported extensions or mime types the viewer will try to fetch PDF rendition utilising the [renditions service api](https://community.alfresco.com/docs/DOC-5879-rendition-service)
+### Content Renditions
+
+For those extensions and mime types that cannot be natively displayed in the browser, the Viewer will try to fetch corresponding rendition by utilising the [renditions service api](https://community.alfresco.com/docs/DOC-5879-rendition-service).
+
+For the full list of supported types please refer to: [File types that support preview and thumbnail generation](http://docs.alfresco.com/5.2/references/valid-transformations-preview.html).
 
 ### Configuring PDF.js library
 
