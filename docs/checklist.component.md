@@ -14,11 +14,11 @@ Shows the checklist task functionality.
 
 ### Properties
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| taskId | `string` | (required) The id of the parent task to which subtasks are attached. |
-| readOnly | `boolean` | Toggle readonly state of the form. All form widgets will render as readonly if enabled.<br/> Default value: `false` |
-| assignee | `string` | (required) The assignee id that the subtasks are assigned to.  |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| taskId | `string` |  | (required) The id of the parent task to which subtasks are attached. |
+| readOnly | `boolean` | `false` | Toggle readonly state of the form. All form widgets will render as readonly if enabled. |
+| assignee | `string` |  | (required) The assignee id that the subtasks are assigned to.  |
 
 ### Events
 

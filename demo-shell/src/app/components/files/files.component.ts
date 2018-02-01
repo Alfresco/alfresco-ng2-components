@@ -34,7 +34,7 @@ import { DocumentListComponent, PermissionStyleModel, DownloadZipDialogComponent
 import { SelectAppsDialogComponent } from '@alfresco/adf-process-services';
 
 import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-adapter.component';
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs/Subscription';
 
 const DEFAULT_FOLDER_TO_SHOW = '-my-';
 
@@ -272,7 +272,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 message,
                 4000
             );
-        })
+        });
     }
 
     handleUploadError(event: any) {

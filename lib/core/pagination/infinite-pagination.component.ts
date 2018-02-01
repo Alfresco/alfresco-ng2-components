@@ -50,18 +50,23 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy {
         hasMoreItems: false
     };
 
+    /** Pagination object. */
     @Input()
     pagination: Pagination;
 
+    /** Component that provides custom pagination support. */
     @Input()
     target: PaginatedComponent;
 
+    /** Number of items that are added with each "load more" event. */
     @Input()
     pageSize: number = InfinitePaginationComponent.DEFAULT_PAGE_SIZE;
 
+    /** Is a new page loading? */
     @Input('loading')
     isLoading: boolean = false;
 
+    /** Emitted when the "Load More" button is clicked. */
     @Output()
     loadMore: EventEmitter<Pagination> = new EventEmitter<Pagination>();
 

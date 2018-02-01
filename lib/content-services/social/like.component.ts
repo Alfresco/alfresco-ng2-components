@@ -26,10 +26,11 @@ import { RatingService } from './services/rating.service';
     encapsulation: ViewEncapsulation.None
 })
 export class LikeComponent implements OnChanges {
-
+    /** Identifier of a node to apply likes to. */
     @Input()
     nodeId: string;
 
+    /** Emitted when the "vote" gets changed. */
     @Output()
     changeVote = new EventEmitter();
 

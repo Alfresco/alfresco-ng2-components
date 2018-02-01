@@ -16,9 +16,9 @@ Displays Upload Component (Drag and Click) to upload the attachment to a specifi
 
 ### Properties
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| processInstanceId | `string` | (required) The ID of the process instance to display.  |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| processInstanceId | `string` |  | (required) The ID of the process instance to display.  |
 
 ### Events
 

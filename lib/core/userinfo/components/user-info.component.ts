@@ -77,8 +77,7 @@ export class UserInfoComponent implements OnInit {
                 .subscribe((res) => {
                     this.ecmUser = new EcmUserModel(res);
                     this.getEcmAvatar();
-                }
-                );
+                });
         } else {
             this.ecmUser = null;
             this.ecmUserImage = null;

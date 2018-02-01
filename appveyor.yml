@@ -9,10 +9,10 @@ environment:
   nodejs_version: "8"
 
   matrix:
-  - COMPONENT_NAME: core
-  - COMPONENT_NAME: process-service
-  - COMPONENT_NAME: content-service
-  - COMPONENT_NAME: insights
+    - COMPONENT_NAME: process-service
+    - COMPONENT_NAME: content-service
+    - COMPONENT_NAME: core
+    - COMPONENT_NAME: insights
 #  - COMPONENT_NAME: ng2-demo-shell
 
 # Install scripts. (runs after repo cloning)
@@ -38,7 +38,7 @@ install:
               else
                 (cd scripts && sh npm-build-all.sh -t "insights" -vjsapi alpha|| exit 1)
     )
-   - if %COMPONENT_NAME% EQU core (
+  - if %COMPONENT_NAME% EQU core (
               if %APPVEYOR_REPO_BRANCH EQU master
                 (cd scripts && sh npm-build-all.sh -t "core"  || exit 1)
               else
@@ -53,3 +53,5 @@ install:
 
 # Don't actually build.
 build: off
+matrix:
+  fast_finish: true

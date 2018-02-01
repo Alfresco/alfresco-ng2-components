@@ -15,10 +15,10 @@ Displays comments from users involved in a specified task and allows an involved
 
 ### Properties
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| taskId | `string` | The numeric ID of the task.  |
-| readOnly | `boolean` | Are the comments read only? <br/> Default value: `false` |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| taskId | `string` |  | The numeric ID of the task.  |
+| readOnly | `boolean` | `false` | Are the comments read only?  |
 
 ### Events
 

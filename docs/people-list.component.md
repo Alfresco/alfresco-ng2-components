@@ -60,18 +60,18 @@ In the component template use the people list component:
 </adf-people-list>
 ```
 
-Note that the people list component is based on the `<adf-datatable` component.
+Note that the people list component is based on the [Datatable component](datatable.component.md).
 
 ### Properties
 
-| Name | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| users | UserProcessModel\[] |  | The array of user data that should be used to populate the people list |
-| actions | boolean | false | true if actions should be visible, i.e. the 'Three-Dots' menu |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| users | `any[]` |  | The array of user data used to populate the people list.  |
+| actions | `boolean` | `false` | Toggles whether or not actions should be visible, i.e. the 'Three-Dots' menu.  |
 
 ### Events
 
-| Name | Description |
-| ---- | ----------- |
-| clickRow | Emitted when the user clicks a row in the people list. |
-| clickAction | Emitted when the user clicks in the 'Three Dots' drop down menu for a row. |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| clickRow | `EventEmitter<any>` | Emitted when the user clicks a row in the people list. |
+| clickAction | `EventEmitter<UserEventModel>` | Emitted when the user clicks in the 'Three Dots' drop down menu for a row. |

@@ -153,9 +153,9 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Data Table Adapter interface](DataTableAdapter.md) | Defines how table data is supplied to [DataTable](datatable.component.md) and [Tasklist](task-list.component.md) components. | [Source](../core/datatable/data/datatable-adapter.ts) |
-| [Form Field Validator interface](FormFieldValidator.md) | Defines how the input fields of [ADF Form](form.component.md) and [ADF Task Details](task-details.component.md) components are validated. | [Source](../core/form/components/widgets/core/form-field-validator.ts) |
-| [Search Configuration interface](search-configuration.interface.md) | Provides fine control of parameters to a search. | [Source](../core/services/search-configuration.service.ts) |
+| [Data Table Adapter interface](DataTableAdapter.md) | Defines how table data is supplied to [DataTable](datatable.component.md) and [Tasklist](task-list.component.md) components. | [Source](../lib/core/datatable/data/datatable-adapter.ts) |
+| [Form Field Validator interface](FormFieldValidator.md) | Defines how the input fields of [ADF Form](form.component.md) and [ADF Task Details](task-details.component.md) components are validated. | [Source](../lib/core/form/components/widgets/core/form-field-validator.ts) |
+| [Search Configuration interface](search-configuration.interface.md) | Provides fine control of parameters to a search. | [Source](../lib/core/services/search-configuration.service.ts) |
 
 [(Back to Contents)](#contents)
 
@@ -244,10 +244,10 @@ for more information about installing and using the source code.
 | [Task attachment list component](task-attachment-list.component.md) | Displays attached documents on a specified task. | [Source](../lib/process-services/attachment/task-attachment-list.component.ts) |
 | [Comment list component](comment-list.component.md) | Shows a list of comments. | [Source](../lib/process-services/comments/comment-list.component.ts) |
 | [Comments component](comments.component.md) | Displays comments from users involved in a specified task and allows an involved user to add a comment to the task. | [Source](../lib/process-services/comments/comments.component.ts) |
-| [Process comments component](process-comments.component.md) | Displays comments associated with a particular process instance and allows the user to add new comments | [Source](../lib/process-services/comments/process-comments.component.ts) |
-| [People list component](people-list.component.md) | Shows a list of users (people). | [Source](../lib/process-services/people/people-list.component.ts) |
-| [People search component](people-search.component.md) | Searches users/people. | [Source](../lib/process-services/people/people-search.component.ts) |
-| [People component](people.component.md) | Displays users involved with a specified task | [Source](../lib/process-services/people/people.component.ts) |
+| [Process comments component](process-comments.component.md) | Displays comments associated with a particular process instance and allows the user to add new comments. | [Source](../lib/process-services/comments/process-comments.component.ts) |
+| [People component](people.component.md) | Displays users involved with a specified task | [Source](../lib/process-services/people/components/people/people.component.ts) |
+| [People list component](people-list.component.md) | Shows a list of users (people). | [Source](../lib/process-services/people/components/people-list/people-list.component.ts) |
+| [People search component](people-search.component.md) | Searches users/people. | [Source](../lib/process-services/people/components/people-search/people-search.component.ts) |
 | [Process filters component](process-filters.component.md) | Collection of criteria used to filter process instances, which may be customized by users. | [Source](../lib/process-services/process-list/components/process-filters.component.ts) |
 | [Process instance details component](process-instance-details.component.md) | Displays detailed information on a specified process instance | [Source](../lib/process-services/process-list/components/process-instance-details.component.ts) |
 | [Process instance header component](process-instance-header.component.md) | Sub-component of the process details component, which renders some general information about the selected process. | [Source](../lib/process-services/process-list/components/process-instance-header.component.ts) |
@@ -260,6 +260,8 @@ for more information about installing and using the source code.
 | [Task filters component](task-filters.component.md) | Shows all available filters. | [Source](../lib/process-services/task-list/components/task-filters.component.ts) |
 | [Task header component](task-header.component.md) | Shows all the information related to a task. | [Source](../lib/process-services/task-list/components/task-header.component.ts) |
 | [Task list component](task-list.component.md) | Renders a list containing all the tasks matched by the parameters specified. | [Source](../lib/process-services/task-list/components/task-list.component.ts) |
+| _People search field component_ | _Not currently documented_ | [Source](../lib/process-services/people/components/people-search-field/people-search-field.component.ts) |
+| _People selector component_ | _Not currently documented_ | [Source](../lib/process-services/people/components/people-selector/people-selector.component.ts) |
 
 ## Directives
 
@@ -267,6 +269,8 @@ for more information about installing and using the source code.
 | ---- | ----------- | ----------- |
 | [Process audit directive](process-audit.directive.md) | Fetches the Process Audit information in the pdf or json format. | [Source](../lib/process-services/process-list/components/process-audit.directive.ts) |
 | [Task audit directive](task-audit.directive.md) | Fetches the Task Audit information in the pdf or json format. | [Source](../lib/process-services/task-list/components/task-audit.directive.ts) |
+| _People search action label directive_ | _Not currently documented_ | [Source](../lib/process-services/people/directives/people-search-action-label.directive.ts) |
+| _People search title directive_ | _Not currently documented_ | [Source](../lib/process-services/people/directives/people-search-title.directive.ts) |
 
 ## Models
 

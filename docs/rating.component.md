@@ -1,4 +1,4 @@
-# ADF Rating component
+# Rating component
 
 Allows a user to add ratings to an item.
 
@@ -14,15 +14,15 @@ Allows a user to add ratings to an item.
 
 ### Properties
 
-| Attribute | Type | Default | Description |
-| --------- | ---- | ------- | ----------- |
-| nodeId | string |  | The identifier of a node |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| nodeId | `string` |  | Identifier of the node to apply the rating to.  |
 
 ### Events
 
-| Name | Description |
-| ---- | ----------- |
-| changeVote | Raised when vote gets changed |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| changeVote | `EventEmitter<{}>` | Emitted when the "vote" gets changed. |
 
 ## See also
 
