@@ -90,13 +90,11 @@ export class ContentActionComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.handler) {
-            if (this.target === 'all') {
-                this.generateAction('folder');
-                this.generateAction('document');
-            } else {
-                this.generateAction(this.target);
-            }
+        if (this.target === 'all') {
+            this.generateAction('folder');
+            this.generateAction('document');
+        } else {
+            this.generateAction(this.target);
         }
     }
 
@@ -116,8 +114,9 @@ export class ContentActionComponent implements OnInit {
             target: target,
             disabled: this.disabled
         });
-
-        model.handler = this.getSystemHandler(target, this.handler);
+        if (this.handler) {
+            model.handler = this.getSystemHandler(target, this.handler);
+        }
 
         if (this.execute) {
             model.execute = (value: any): void => {

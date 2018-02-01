@@ -198,7 +198,6 @@
                     <!-- folder actions -->
                     <content-action
                         icon="content_copy"
-
                         title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.COPY' | translate}}"
                         permission="update"
                         [disableWithNoPermission]="true"
@@ -206,19 +205,8 @@
                         (success)="onContentActionSuccess($event)"
                         handler="copy">
                     </content-action>
-                    <!-- <content-action
-                        icon="content_copy"
-                        target="document"
-                        title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.COPY' | translate}}"
-                        permission="update"
-                        [disableWithNoPermission]="true"
-                        (error)="onContentActionError($event)"
-                        (success)="onContentActionSuccess($event)"
-                        handler="copy">
-                    </content-action>                     -->
                     <content-action
                         icon="redo"
-                        target="folder"
                         title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.MOVE' | translate}}"
                         permission="update"
                         [disableWithNoPermission]="true"
@@ -228,7 +216,6 @@
                     </content-action>
                     <content-action
                         icon="delete"
-                        target="folder"
                         permission="delete"
                         [disableWithNoPermission]="true"
                         title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.DELETE' | translate}}"
@@ -237,17 +224,6 @@
                         handler="delete">
                     </content-action>
                     <!-- document actions -->
-
-                    <content-action
-                        icon="redo"
-                        target="document"
-                        title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.MOVE' | translate}}"
-                        permission="update"
-                        [disableWithNoPermission]="true"
-                        (error)="onContentActionError($event)"
-                        (success)="onContentActionSuccess($event)"
-                        handler="move">
-                    </content-action>
                     <content-action
                         icon="storage"
                         target="document"
@@ -259,16 +235,6 @@
                         target="document"
                         title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DOWNLOAD' | translate}}"
                         handler="download">
-                    </content-action>
-                    <content-action
-                        icon="delete"
-                        target="document"
-                        permission="delete"
-                        [disableWithNoPermission]="true"
-                        (permissionEvent)="handlePermissionError($event)"
-                        title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DELETE' | translate}}"
-                        (success)="onDeleteActionSuccess($event)"
-                        handler="delete">
                     </content-action>
                     <content-action
                         *ngIf="authenticationService.isBpmLoggedIn()"

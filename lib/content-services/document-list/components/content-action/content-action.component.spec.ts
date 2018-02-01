@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
- /*tslint:disable:ban*/
-
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
@@ -25,7 +23,6 @@ import { DataTableModule } from '@alfresco/adf-core';
 import { MaterialModule } from '../../../material.module';
 
 import { DocumentListService } from '../../services/document-list.service';
-// import { FileNode } from '../../../mock';
 import { ContentActionHandler } from './../../models/content-action.model';
 import { DocumentActionsService } from './../../services/document-actions.service';
 import { FolderActionsService } from './../../services/folder-actions.service';
@@ -34,7 +31,7 @@ import { DocumentListComponent } from './../document-list.component';
 import { ContentActionListComponent } from './content-action-list.component';
 import { ContentActionComponent } from './content-action.component';
 
-fdescribe('ContentAction', () => {
+describe('ContentAction', () => {
 
     let documentList: DocumentListComponent;
     let actionList: ContentActionListComponent;
@@ -133,7 +130,7 @@ fdescribe('ContentAction', () => {
         expect(model.handler).toBe(handler);
     });
 
-    it('should require target to get system handler', () => {
+    it('should create document and folder action when there is no target', () => {
         spyOn(folderActions, 'getHandler').and.stub();
         spyOn(documentActions, 'getHandler').and.stub();
 
@@ -141,17 +138,37 @@ fdescribe('ContentAction', () => {
         action.handler = '<handler>';
 
         action.ngOnInit();
+        expect(documentList.actions.length).toBe(2);
+        expect(folderActions.getHandler).toHaveBeenCalled();
+        expect(documentActions.getHandler).toHaveBeenCalled();
+    });
+
+    it('should create document action when target is document', () => {
+        spyOn(folderActions, 'getHandler').and.stub();
+        spyOn(documentActions, 'getHandler').and.stub();
+
+        let action = new ContentActionComponent(actionList, documentActions, folderActions);
+        action.handler = '<handler>';
+        action.target = 'document';
+
+        action.ngOnInit();
         expect(documentList.actions.length).toBe(1);
         expect(folderActions.getHandler).not.toHaveBeenCalled();
-        expect(documentActions.getHandler).not.toHaveBeenCalled();
-
-        action.target = 'document';
-        action.ngOnInit();
         expect(documentActions.getHandler).toHaveBeenCalled();
+    });
 
+    it('should create folder action when target is folder', () => {
+        spyOn(folderActions, 'getHandler').and.stub();
+        spyOn(documentActions, 'getHandler').and.stub();
+
+        let action = new ContentActionComponent(actionList, documentActions, folderActions);
+        action.handler = '<handler>';
         action.target = 'folder';
+
         action.ngOnInit();
+        expect(documentList.actions.length).toBe(1);
         expect(folderActions.getHandler).toHaveBeenCalled();
+        expect(documentActions.getHandler).not.toHaveBeenCalled();
     });
 
     it('should be case insensitive for document target', () => {
