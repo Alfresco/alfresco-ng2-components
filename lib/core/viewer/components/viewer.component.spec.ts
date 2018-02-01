@@ -622,7 +622,7 @@ describe('ViewerComponent', () => {
 
             it('should display the txt viewer  if the file identified by mimetype is a txt when the filename has wrong extension', async(() => {
                 component.urlFile = 'content.bin';
-                component.mimeType = 'text/txt';
+                component.mimeType = 'text/plain';
                 component.urlFile = require('../assets/fake-test-file.txt');
                 fixture.detectChanges();
                 component.ngOnChanges(null);
