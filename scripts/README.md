@@ -267,9 +267,13 @@ For development environment configuration please refer to [project docs](../demo
 | -v or --version    | the version of the components to check |
 
 
+# npm-add-pkg.sh
+
 ***npm-add-pkg.sh*** check the bundles in the package npm are present
 
 Add a package across all the pacakge json in the project
+
+## Options
 
 | Option | Description |
 | --- | --- |
@@ -279,27 +283,38 @@ Add a package across all the pacakge json in the project
 
 * Add a package in the project
 
+## Examples
+
 ```sh
 ./npm-add-pkg.sh --save-dev NPM_NAME
 ```
 
+# extract-langs.sh
+
 ***extract-langs.sh*** 
 
 Extract the i18n files from the repo and create a zip
+
+## Options
 
 | Option | Description |
 | --- | --- |
 | -h or --help    | show the help  |
 | --output or o   | output folder otherwise will be 18n |
 
+## Examples
+
 ```sh
 ./extract-langs.sh 
 ```
 
+# docker-publish.sh
 
 ***docker-publish.sh*** 
 
 publish doker images in the selected repository
+
+## Options
 
 | Option | Description |
 | --- | --- |
@@ -307,6 +322,7 @@ publish doker images in the selected repository
 | -p or --password  | password |
 | -t or --tags  | tags |
 
+## Examples
 
 ```sh
 ./docker-publish.sh

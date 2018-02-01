@@ -57,7 +57,7 @@ export class ImgViewerComponent implements OnInit, OnChanges, OnDestroy {
         return Math.round(this.scaleX * 100) + '%';
     }
 
-    private element: HTMLElement;
+    private element: any;
 
     constructor(
         private contentService: ContentService,
@@ -65,7 +65,7 @@ export class ImgViewerComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnInit() {
-        this.element = (<HTMLElement> this.el.nativeElement).querySelector('#viewer-image');
+        this.element = this.el.nativeElement.querySelector('#viewer-image');
 
         if (this.element) {
             this.element.addEventListener('mousedown', this.onMouseDown.bind(this));
