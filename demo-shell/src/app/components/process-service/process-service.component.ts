@@ -58,7 +58,7 @@ import {
     ObjectDataRow,
     ObjectDataTableAdapter
 } from '@alfresco/adf-core';
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs/Subscription';
 import { /*CustomEditorComponent*/ CustomStencil01 } from './custom-editor/custom-editor.component';
 import { DemoFieldValidator } from './demo-field-validator';
 

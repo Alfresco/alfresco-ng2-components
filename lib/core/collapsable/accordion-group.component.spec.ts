@@ -46,7 +46,7 @@ describe('AccordionGroupComponent', () => {
 
     });
 
-    it('should be closed by default', () => {
+    it('should be closed by default', async(() => {
         component.heading = 'Fake Header';
         component.headingIcon = 'fake-icon';
         component.contentWrapper.nativeElement.innerHTML = '<a>Test</a>';
@@ -59,9 +59,9 @@ describe('AccordionGroupComponent', () => {
             let headerToggle = element.querySelector('#accordion-button .material-icons');
             expect(headerToggle.innerText).toEqual('expand_more');
         });
-    });
+    }));
 
-    it('should be open when click', () => {
+    it('should be open when click', async(() => {
         component.isSelected = true;
         component.heading = 'Fake Header';
         component.headingIcon = 'fake-icon';
@@ -77,9 +77,9 @@ describe('AccordionGroupComponent', () => {
             let headerToggle = element.querySelector('#accordion-button .material-icons');
             expect(headerToggle.innerText).toEqual('expand_less');
         });
-    });
+    }));
 
-    it('should show expand icon by default', () => {
+    it('should show expand icon by default', async(() => {
         component.heading = 'Fake Header';
         component.headingIcon = 'fake-icon';
         component.contentWrapper.nativeElement.innerHTML = '<a>Test</a>';
@@ -88,9 +88,9 @@ describe('AccordionGroupComponent', () => {
             let headerIcon = element.querySelector('#accordion-button');
             expect(headerIcon).toBeDefined();
         });
-    });
+    }));
 
-    it('should hide expand icon', () => {
+    it('should hide expand icon', async(() => {
         component.heading = 'Fake Header';
         component.headingIcon = 'fake-icon';
         component.hasAccordionIcon = false;
@@ -100,19 +100,18 @@ describe('AccordionGroupComponent', () => {
             let headerIcon = element.querySelector('#accordion-button');
             expect(headerIcon).toBeNull();
         });
-    });
+    }));
 
-    it('should emit an event when a heading clicked', (done) => {
+    it('should emit an event when a heading clicked', async(() => {
         component.heading = 'Fake Header';
         fixture.detectChanges();
         let heading: string = component.heading;
         component.headingClick.subscribe((headName: string) => {
             expect(headName).toBeDefined();
             expect(headName).toEqual(heading);
-            done();
         });
         let header = element.querySelector('.adf-panel-heading');
         header.click();
-    });
+    }));
 
 });

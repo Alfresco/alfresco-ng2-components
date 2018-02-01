@@ -91,7 +91,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     pagination: Pagination;
     skipCount: number = 0;
     infiniteScroll: boolean = false;
-    debounceSearch: number= 200;
+    debounceSearch: number = 200;
     searchInput: FormControl = new FormControl();
 
     constructor(private contentNodeSelectorService: ContentNodeSelectorService,

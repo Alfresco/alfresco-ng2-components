@@ -7,7 +7,7 @@ import 'hammerjs';
 import 'chart.js';
 import 'ng2-charts';
 
-import pdfjsLib from 'pdfjs-dist';
+import * as pdfjsLib from 'pdfjs-dist';
 pdfjsLib.PDFJS.workerSrc = 'pdf.worker.js';
 
 if (environment.production) {

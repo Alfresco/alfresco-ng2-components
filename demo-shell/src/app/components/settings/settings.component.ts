@@ -28,6 +28,6 @@ export class SettingsComponent {
     }
 
     onError(error: string) {
-        this.logService.log(error)
+        this.logService.log(error);
     }
 }
