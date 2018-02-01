@@ -22,6 +22,7 @@ may be listed here before their documentation is available.
 -   [Angular Material Design](angular-material-design.md)
 -   [Theming](theming.md)
 -   [Typography](typography.md)
+-   [Internationalization](internationalization.md)
 -   [Walkthrough - adding indicators to highlight information about a node](metadata-indicators.md)
 
 <!--guide end-->
