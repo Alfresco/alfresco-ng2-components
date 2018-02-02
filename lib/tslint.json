@@ -161,7 +161,10 @@
             "adf",
             "kebab-case"
         ],
-        "ordered-imports": false,
+      "naming-convention": [
+        {"type": "enumMember", "format": "PascalCase"}
+      ],
+      "ordered-imports": false,
         "use-input-property-decorator": true,
         "use-output-property-decorator": true,
         "use-host-property-decorator": false,
