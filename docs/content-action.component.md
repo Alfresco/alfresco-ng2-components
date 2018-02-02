@@ -79,7 +79,7 @@ export class MyView {
 | title | `string` | `'Action'` | The title of the action as shown in the menu.  |
 | icon | `string` |  | The name of the icon to display next to the menu command (can be left blank).  |
 | handler | `string` |  | System actions. Can be "delete", "download", "copy" or "move".  |
-| target | `string` | `'all'` | Type of item that the action appies to. Can be "document" or "folder", when no specific target is added the action will be shown for documents and folders  |
+| target | `string` | [ContentActionTarget.ALL](https://github.com/Alfresco/alfresco-ng2-components/blob/development/lib/content-services/document-list/models/content-action.model.ts) | Type of item that the action applies to. Can be one of the values provided by the [ContentActionTarget](#Document-Action-Target-Enum)  |
 | permission | `string` |  | The permission type.  |
 | disableWithNoPermission | `boolean` |  | Should this action be disabled in the menu if the user doesn't have permission for it?  |
 | disabled | `boolean` | `false` | Is the menu item disabled?  |
@@ -285,6 +285,11 @@ The built-in actions are defined in the [Document Actions service](document-acti
 and override the default implementations. See the doc pages for
 [Document Actions service](document-actions.service.md) and [Folder Actions service](folder-actions.service.md)
 for details and examples.
+
+### Document Action Target Enum
+
+We have created an enum for the values that can be provided as target for action : 
+**ALL**, **FOLDER**, **DOCUMENT**
 
 <!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
 
