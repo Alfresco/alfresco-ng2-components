@@ -32,6 +32,7 @@
     "build-content": "ng-packagr -p ./ng-package/ng-package-content.json",
     "build-process": "ng-packagr -p ./ng-package/ng-package-process.json",
     "build-insights": "ng-packagr -p ./ng-package/ng-package-insights.json",
+    "test-export": "node config/test-export.js",
     "webpack": "node node_modules/webpack/bin/webpack.js"
   },
   "main": "./index.js",
@@ -128,6 +129,9 @@
     "raw-loader": "0.5.1",
     "remap-istanbul": "0.6.3",
     "rimraf": "^2.6.2",
+    "rollup-plugin-cleanup": "^2.0.0",
+    "rollup-plugin-license": "^0.5.0",
+    "rollup-plugin-shift-header": "^1.0.1",
     "run-sequence": "1.2.2",
     "sass-loader": "6.0.5",
     "script-loader": "0.7.0",

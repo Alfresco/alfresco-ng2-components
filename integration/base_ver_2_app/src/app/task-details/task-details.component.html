@@ -1,0 +1,15 @@
+<h3>Task details</h3>
+
+<adf-task-details
+  [taskId]="taskId"
+  (formContentClicked)="onFormContentClick($event)">
+</adf-task-details>
+
+<div *ngIf="fileShowed">
+  <adf-viewer
+      [(showViewer)]="fileShowed"
+      [blobFile]="content"
+      [displayName]="contentName"
+      [overlayMode]="true">
+  </adf-viewer>
+</div>
