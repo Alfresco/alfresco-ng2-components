@@ -14,6 +14,12 @@ Shows tags for a node.
 
 ### Properties
 
-| Attribute | Type | Default | Description |
-| --------- | ---- | ------- | ----------- |
-| nodeId | string |  | The identifier of a node |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| nodeId | `string` |  | The identifier of a node.  |
+
+### Events
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| results | `EventEmitter<{}>` | Emitted when a tag is selected. |
