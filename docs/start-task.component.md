@@ -14,14 +14,14 @@ Creates/Starts new task for the specified app
 
 ### Properties
 
-| Name | Type | Description |
-| --- | --- | --- |
-| appId | string | (**required**): The id of the app. |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| appId | `number` |  | (required) The id of the app.  |
 
 ### Events
 
-| Name | Description |
-| --- | --- |
-| success | Raised when the task is successfully created |
-| cancel | Raised when the cancel button is pressed by the user |
-| error | Raised if there is an error during task creation |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| success | `EventEmitter<any>` | Emitted when the task is successfully created. |
+| cancel | `EventEmitter<void>` | Emitted when the cancel button is clicked by the user. |
+| error | `EventEmitter<any>` | Emitted when an error occurs. |
