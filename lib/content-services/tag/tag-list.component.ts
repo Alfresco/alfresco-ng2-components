@@ -35,6 +35,7 @@ export class TagListComponent implements OnInit {
 
     tagsEntries: any;
 
+    /** Emitted when a tag is selected. */
     @Output()
     result = new EventEmitter();
 

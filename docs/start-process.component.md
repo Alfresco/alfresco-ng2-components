@@ -15,21 +15,21 @@ Starts a process.
 ### Properties
 
 | Name | Type | Description |
-| ---- | -- | ----------- |
+| ---- | ---- | ----------- |
 | appId | `number` | (optional): Limit the list of processes which can be started to those contained in the specified app |
 | name | `string` | (optional) name to assign to the current process |
 | processDefinitionName | `string` | (optional) definition name of the process to start |
-| variables | `ProcessInstanceVariable[]` |Variables in input to the process [RestVariable](https://github.com/Alfresco/alfresco-js-api/tree/master/src/alfresco-activiti-rest-api/docs/RestVariable.md) |
+| variables | `ProcessInstanceVariable[]` | Variables in input to the process [RestVariable](https://github.com/Alfresco/alfresco-js-api/tree/master/src/alfresco-activiti-rest-api/docs/RestVariable.md) |
 | values | `FormValues` | Parameter to pass form field values in the start form if is associated |
-| showSelectProcessDropdown  | `boolean` | hide or show the process selection drodown, true by default |
+| showSelectProcessDropdown | `boolean` | hide or show the process selection drodown, true by default |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | -- | --------- |
+| ---- | ---- | ----------- |
 | start | `EventEmitter<ProcessInstance>` | Emitted when the process starts |
-| cancel | `EventEmitter<ProcessInstance>` |  Emitted when the process is canceled |
-| error | `EventEmitter<ProcessInstance>` |  Emitted when the start process operation fails |
+| cancel | `EventEmitter<ProcessInstance>` | Emitted when the process is canceled |
+| error | `EventEmitter<ProcessInstance>` | Emitted when the start process operation fails |
 
 ### Start a process with a default name and pre-selected process definition name
 
@@ -52,7 +52,6 @@ If your app has more than one process definition, with the property processDefin
 ```
 
 With the property processDefinitionName you can select as dropdown default value your PROCESS_DEFINITION_NAME. 
-
 
 ### Custom data example
 

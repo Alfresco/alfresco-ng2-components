@@ -30,18 +30,28 @@ export class TaskAttachmentListComponent implements OnChanges, AfterContentInit 
     @ContentChild(EmptyListComponent)
     emptyTemplate: EmptyListComponent;
 
+    /** (**required**) The ID of the task to display. */
     @Input()
     taskId: string;
 
+    /** Disable/Enable read only mode for attachement list. */
     @Input()
     disabled: boolean = false;
 
+    /** Emitted when the attachment is double-clicked or a view
+     * option is selected from the context menu by the user from within the component.
+     * Returns a Blob representing the clicked object.
+     */
     @Output()
     attachmentClick = new EventEmitter();
 
+    /** Emitted when the attachment list has fetched all the attachments.
+     * Returns a list of attachments.
+     */
     @Output()
     success = new EventEmitter();
 
+    /** Emitted when an error occurs while fetching the attachments. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 

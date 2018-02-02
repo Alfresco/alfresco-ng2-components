@@ -12,13 +12,14 @@ Displays attached documents on a specified task.
     (attachmentClick)="YOUR_HANDLER">
 </adf-task-attachment-list>
 ```
+
 If the List is empty, a default no content template is displayed.
 
 ![default-no-content-template-sample](docassets/images/default-no-content-template.png)
 
 ### How to Add Drag and Drop Functionality
 
-If we want user to be able to upload attachments for empty lists, We can wrap our component with upload drag area component. In that case, We should also pass a custom *no content template* as shown below with our component urging the user to drag files to upload whenever the list is empty.
+If we want user to be able to upload attachments for empty lists, We can wrap our component with upload drag area component. In that case, We should also pass a custom _no content template_ as shown below with our component urging the user to drag files to upload whenever the list is empty.
 
 ```html
 <adf-upload-drag-area
@@ -41,6 +42,7 @@ import { UploadService } from '@alfresco/adf-core';
 import { TaskUploadService } from '@alfresco/adf-process-services';
 
 Make sure to override the UploadService with the TaskUploadService
+
 ```ts
 @Component({
     selector: 'my-custom-task-attachment',
@@ -61,15 +63,15 @@ If the List is empty, the custom no-content template we passed is displayed.
 
 ### Properties
 
-| Name | Type | Description |
-| --- | --- | --- |
-| taskId | string | (**required**): The ID of the task to display |
-| disabled | boolean | false | Disable/Enable read only mode for attachement list |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| taskId | `string` |  | (**required**) The ID of the task to display.  |
+| disabled | `boolean` | `false` | Disable/Enable read only mode for attachement list.  |
 
 ### Events
 
-| Name | Description |
-| --- | --- |
-| attachmentClick | Raised when the attachment double clicked or selected view option from context menu by the user from within the component and return a Blob obj of the object clicker|
-| success | Raised when the attachment list fetch all the attach and return a list of attachments |
-| error | Raised when the attachment list is not able to fetch the attachments for example network error   |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| attachmentClick | `EventEmitter<{}>` | Emitted when the attachment is double-clicked or a view option is selected from the context menu by the user from within the component. Returns a Blob representing the clicked object. |
+| success | `EventEmitter<{}>` | Emitted when the attachment list has fetched all the attachments. Returns a list of attachments. |
+| error | `EventEmitter<any>` | Emitted when an error occurs while fetching the attachments. |

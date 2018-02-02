@@ -48,24 +48,31 @@ import { FormOutcomeModel } from './widgets/core/index';
 })
 export class StartFormComponent extends FormComponent implements OnChanges, OnInit {
 
+    /** Definition ID of the process to start. */
     @Input()
     processDefinitionId: string;
 
+    /** Process ID of the process to start. */
     @Input()
     processId: string;
 
+    /** Should form outcome buttons be shown? */
     @Input()
     showOutcomeButtons: boolean = true;
 
+    /** Should the refresh button be shown? */
     @Input()
     showRefreshButton: boolean = true;
 
+    /** Is the form read-only (ie, can't be edited)? */
     @Input()
     readOnlyForm: boolean = false;
 
+    /** Emitted when the user clicks one of the outcome buttons that completes the form. */
     @Output()
     outcomeClick: EventEmitter<any> = new EventEmitter<any>();
 
+    /** Emitted when a field of the form is clicked. */
     @Output()
     formContentClicked: EventEmitter<ContentLinkModel> = new EventEmitter<ContentLinkModel>();
 

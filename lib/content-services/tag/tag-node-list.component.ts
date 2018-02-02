@@ -32,12 +32,13 @@ import { TagService } from './services/tag.service';
     encapsulation: ViewEncapsulation.None
 })
 export class TagNodeListComponent implements OnChanges {
-
+    /** The identifier of a node. */
     @Input()
     nodeId: string;
 
     tagsEntries: any;
 
+    /** Emitted when a tag is selected. */
     @Output()
     results = new EventEmitter();
 
