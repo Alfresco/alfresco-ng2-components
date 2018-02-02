@@ -79,7 +79,7 @@ export class MyView {
 | title | `string` | `'Action'` | The title of the action as shown in the menu.  |
 | icon | `string` |  | The name of the icon to display next to the menu command (can be left blank).  |
 | handler | `string` |  | System actions. Can be "delete", "download", "copy" or "move".  |
-| target | `string` | [ContentActionTarget.ALL](https://github.com/Alfresco/alfresco-ng2-components/blob/development/lib/content-services/document-list/models/content-action.model.ts) | Type of item that the action applies to. Can be one of the values provided by the enum : **ALL**, **FOLDER**, **DOCUMENT**  |
+| target | `string` | [ContentActionTarget.All](https://github.com/Alfresco/alfresco-ng2-components/blob/development/lib/content-services/document-list/models/content-action.model.ts) | Type of item that the action applies to. Can be one of the values provided by the enum : **All**, **Folder**, **Document**  |
 | permission | `string` |  | The permission type.  |
 | disableWithNoPermission | `boolean` |  | Should this action be disabled in the menu if the user doesn't have permission for it?  |
 | disabled | `boolean` | `false` | Is the menu item disabled?  |
