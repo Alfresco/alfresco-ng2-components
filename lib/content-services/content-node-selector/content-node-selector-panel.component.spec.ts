@@ -18,7 +18,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { MinimalNodeEntryEntity, SiteEntry } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity, SiteEntry, SitePaging } from 'alfresco-js-api';
 import {
     AlfrescoApiService,
     ContentService,
@@ -59,7 +59,9 @@ describe('ContentNodeSelectorComponent', () => {
     let component: ContentNodeSelectorPanelComponent;
     let fixture: ComponentFixture<ContentNodeSelectorPanelComponent>;
     let searchService: SearchService;
+    let contentNodeSelectorService: ContentNodeSelectorService;
     let searchSpy: jasmine.Spy;
+    let cnSearchSpy: jasmine.Spy;
 
     let _observer: Observer<NodePaging>;
 
@@ -124,6 +126,8 @@ describe('ContentNodeSelectorComponent', () => {
             component.debounceSearch = 0;
 
             searchService = TestBed.get(SearchService);
+            contentNodeSelectorService = TestBed.get(ContentNodeSelectorService);
+            cnSearchSpy = spyOn(contentNodeSelectorService, 'search').and.callThrough();
             searchSpy = spyOn(searchService, 'searchByQueryBody').and.callFake(() => {
                 return Observable.create((observer: Observer<NodePaging>) => {
                     _observer = observer;
@@ -259,6 +263,7 @@ describe('ContentNodeSelectorComponent', () => {
         });
 
         describe('Search functionality', () => {
+            let  getCorrespondingNodeIdsSpy;
 
             function defaultSearchOptions(searchTerm, rootNodeId = undefined, skipCount = 0) {
 
@@ -292,6 +297,13 @@ describe('ContentNodeSelectorComponent', () => {
 
                 spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.resolve(expectedDefaultFolderNode));
                 spyOn(component.documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.resolve());
+                getCorrespondingNodeIdsSpy = spyOn(component.documentList, 'getCorrespondingNodeIds').and
+                    .callFake(id => {
+                        if (id === '-sites-') {
+                            return new Promise((resolve) => resolve(['123456testId', '09876543testId']));
+                        }
+                        return new Promise((resolve) => resolve([id]));
+                    });
 
                 component.currentFolderId = 'cat-girl-nuku-nuku';
                 fixture.detectChanges();
@@ -324,9 +336,82 @@ describe('ContentNodeSelectorComponent', () => {
 
                     component.siteChanged(<SiteEntry> { entry: { guid: 'namek' } });
 
-                    expect(searchSpy.calls.count()).toBe(2, 'Search count should be two after the site change');
-                    expect(searchSpy.calls.argsFor(1)).toEqual([defaultSearchOptions('vegeta', 'namek')] );
-                    done();
+                    fixture.whenStable().then(() => {
+                        expect(searchSpy.calls.count()).toBe(2, 'Search count should be two after the site change');
+                        expect(searchSpy.calls.argsFor(1)).toEqual([defaultSearchOptions('vegeta', 'namek')] );
+                        done();
+                    });
+                }, 300);
+            });
+
+            it('should call the content node selector\'s search with the right parameters on changing the site selectbox\'s value', (done) => {
+                typeToSearchBox('vegeta');
+
+                setTimeout(() => {
+                    expect(cnSearchSpy.calls.count()).toBe(1);
+
+                    component.siteChanged(<SiteEntry> { entry: { guid: '-sites-' } });
+
+                    fixture.whenStable().then(() => {
+                        expect(cnSearchSpy).toHaveBeenCalled();
+                        expect(cnSearchSpy.calls.count()).toBe(2);
+                        expect(cnSearchSpy).toHaveBeenCalledWith('vegeta', '-sites-', 0, 25);
+                        done();
+                    });
+                }, 300);
+            });
+
+            it('should call the content node selector\'s search with the right parameters on changing the site selectbox\'s value from a custom dropdown menu', (done) => {
+                component.dropdownSiteList = <SitePaging> {list: {entries: [<SiteEntry> { entry: { guid: '-sites-' } }, <SiteEntry> { entry: { guid: 'namek' } }]}};
+                fixture.detectChanges();
+
+                typeToSearchBox('vegeta');
+
+                setTimeout(() => {
+                    expect(cnSearchSpy.calls.count()).toBe(1);
+
+                    component.siteChanged(<SiteEntry> { entry: { guid: '-sites-' } });
+
+                    fixture.whenStable().then(() => {
+                        expect(cnSearchSpy).toHaveBeenCalled();
+                        expect(cnSearchSpy.calls.count()).toBe(2);
+                        expect(cnSearchSpy).toHaveBeenCalledWith('vegeta', '-sites-', 0, 25, ['123456testId', '09876543testId']);
+                        done();
+                    });
+                }, 300);
+            });
+
+            it('should get the corresponding node ids before the search call on changing the site selectbox\'s value from a custom dropdown menu', (done) => {
+                component.dropdownSiteList = <SitePaging> {list: {entries: [<SiteEntry> { entry: { guid: '-sites-' } }, <SiteEntry> { entry: { guid: 'namek' } }]}};
+                fixture.detectChanges();
+
+                typeToSearchBox('vegeta');
+
+                setTimeout(() => {
+                    expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(1, 'getCorrespondingNodeIdsSpy calls count should be one after only one search');
+
+                    component.siteChanged(<SiteEntry> { entry: { guid: 'namek' } });
+
+                    fixture.whenStable().then(() => {
+                        expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(2, 'getCorrespondingNodeIdsSpy calls count should be two after the site change');
+                        expect(getCorrespondingNodeIdsSpy.calls.allArgs()).toEqual([[undefined], ['namek']]);
+                        done();
+                    });
+                }, 300);
+            });
+
+            it('should NOT get the corresponding node ids before the search call on changing the site selectbox\'s value from default dropdown menu', (done) => {
+                typeToSearchBox('vegeta');
+
+                setTimeout(() => {
+                    expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(0, 'getCorrespondingNodeIdsSpy should not be called');
+
+                    component.siteChanged(<SiteEntry> { entry: { guid: 'namek' } });
+
+                    fixture.whenStable().then(() => {
+                        expect(getCorrespondingNodeIdsSpy).not.toHaveBeenCalled();
+                        done();
+                    });
                 }, 300);
             });
 
@@ -523,7 +608,9 @@ describe('ContentNodeSelectorComponent', () => {
 
                     component.getNextPageOfSearch({ skipCount });
 
-                    expect(searchSpy).toHaveBeenCalledWith(defaultSearchOptions('kakarot', undefined, skipCount));
+                    fixture.whenStable().then(() => {
+                        expect(searchSpy).toHaveBeenCalledWith(defaultSearchOptions('kakarot', undefined, skipCount));
+                    });
                 });
 
                 it('should be shown when pagination\'s hasMoreItems is true', () => {

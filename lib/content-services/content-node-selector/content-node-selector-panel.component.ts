@@ -220,8 +220,19 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     private querySearch(): void {
         this.loadingSearchResults = true;
 
-        this.contentNodeSelectorService.search(this.searchTerm, this.siteId, this.skipCount, this.pageSize)
-            .subscribe(this.showSearchResults.bind(this));
+        if (this.dropdownSiteList) {
+            this.documentList.getCorrespondingNodeIds(this.siteId)
+                .then(nodeIds => {
+                    this.contentNodeSelectorService.search(this.searchTerm, this.siteId, this.skipCount, this.pageSize, nodeIds)
+                        .subscribe(this.showSearchResults.bind(this));
+                })
+                .catch(() => {
+                    this.showSearchResults({list: {entries: []}});
+                });
+        } else {
+            this.contentNodeSelectorService.search(this.searchTerm, this.siteId, this.skipCount, this.pageSize)
+                .subscribe(this.showSearchResults.bind(this));
+        }
     }
 
     /**
