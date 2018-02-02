@@ -79,7 +79,7 @@ export class MyView {
 | title | `string` | `'Action'` | The title of the action as shown in the menu.  |
 | icon | `string` |  | The name of the icon to display next to the menu command (can be left blank).  |
 | handler | `string` |  | System actions. Can be "delete", "download", "copy" or "move".  |
-| target | `string` |  | Type of item that the action appies to. Can be "document" or "folder"  |
+| target | `string` | `'all'` | Type of item that the action appies to. Can be "document" or "folder", when no specific target is added the action will be shown for documents and folders  |
 | permission | `string` |  | The permission type.  |
 | disableWithNoPermission | `boolean` |  | Should this action be disabled in the menu if the user doesn't have permission for it?  |
 | disabled | `boolean` | `false` | Is the menu item disabled?  |
