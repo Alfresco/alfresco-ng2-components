@@ -14,6 +14,14 @@ Shows available actions for tags.
 
 ### Properties
 
-| Attribute | Type | Default | Description |
-| --------- | ---- | ------- | ----------- |
-| nodeId | string |  | The identifier of a node |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| nodeId | `string` |  | The identifier of a node.  |
+
+### Events
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| successAdd | `EventEmitter<any>` | Emitted when a tag is added successfully. |
+| error | `EventEmitter<any>` | Emitted when an error occurs. |
+| result | `EventEmitter<{}>` | Emitted when an action is chosen. |

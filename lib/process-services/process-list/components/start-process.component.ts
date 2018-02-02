@@ -46,30 +46,43 @@ import { AttachFileWidgetComponent, AttachFolderWidgetComponent } from '../../co
 })
 export class StartProcessInstanceComponent implements OnChanges {
 
+    /** (optional) Limit the list of processes that can be started to those
+     * contained in the specified app.
+     */
     @Input()
     appId: number;
 
+    /** (optional) Definition name of the process to start. */
     @Input()
     processDefinitionName: string;
 
+    /** Variables in input to the process
+     * [RestVariable](https://github.com/Alfresco/alfresco-js-api/tree/master/src/alfresco-activiti-rest-api/docs/RestVariable.md).
+     */
     @Input()
     variables: ProcessInstanceVariable[];
 
+    /** Parameter to pass form field values in the start form if it is associated. */
     @Input()
     values: FormValues;
 
+    /** (optional) Name to assign to the current process. */
     @Input()
     name: string;
 
+    /** Hide or show the process selection drodown. */
     @Input()
     showSelectProcessDropdown: boolean = true;
 
+    /** Emitted when the process starts. */
     @Output()
     start: EventEmitter<ProcessInstance> = new EventEmitter<ProcessInstance>();
 
+    /** Emitted when the process is canceled. */
     @Output()
     cancel: EventEmitter<ProcessInstance> = new EventEmitter<ProcessInstance>();
 
+    /** Emitted when an error occurs. */
     @Output()
     error: EventEmitter<ProcessInstance> = new EventEmitter<ProcessInstance>();
 

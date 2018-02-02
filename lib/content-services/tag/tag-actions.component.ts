@@ -34,15 +34,19 @@ import { TagService } from './services/tag.service';
 })
 export class TagActionsComponent implements OnChanges {
 
+    /** The identifier of a node. */
     @Input()
     nodeId: string;
 
+    /** Emitted when a tag is added successfully. */
     @Output()
     successAdd: EventEmitter<any> = new EventEmitter();
 
+    /** Emitted when an error occurs. */
     @Output()
     error: EventEmitter<any> = new EventEmitter();
 
+    /** Emitted when an action is chosen. */
     @Output()
     result = new EventEmitter();
 
