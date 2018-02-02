@@ -22,7 +22,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ContentActionHandler } from '../../models/content-action.model';
 import { DocumentActionsService } from '../../services/document-actions.service';
 import { FolderActionsService } from '../../services/folder-actions.service';
-import { ContentActionModel } from './../../models/content-action.model';
+import { ContentActionModel, ContentActionTarget } from './../../models/content-action.model';
 import { ContentActionListComponent } from './content-action-list.component';
 
 @Component({
@@ -49,7 +49,7 @@ export class ContentActionComponent implements OnInit {
 
     /** Type of item that the action appies to. Can be "document" or "folder" */
     @Input()
-    target: string = 'all';
+    target: string = ContentActionTarget.All;
 
     /** The permission type. */
     @Input()
@@ -90,9 +90,9 @@ export class ContentActionComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.target === 'all') {
-            this.generateAction('folder');
-            this.generateAction('document');
+        if (this.target === ContentActionTarget.All) {
+            this.generateAction(ContentActionTarget.Folder);
+            this.generateAction(ContentActionTarget.Document);
         } else {
             this.generateAction(this.target);
         }
@@ -131,7 +131,7 @@ export class ContentActionComponent implements OnInit {
         if (target) {
             let ltarget = target.toLowerCase();
 
-            if (ltarget === 'document') {
+            if (ltarget === ContentActionTarget.Document) {
                 if (this.documentActions) {
                     this.documentActions.permissionEvent.subscribe((permission) => {
                         this.permissionEvent.emit(permission);
@@ -150,7 +150,7 @@ export class ContentActionComponent implements OnInit {
                 return null;
             }
 
-            if (ltarget === 'folder') {
+            if (ltarget === ContentActionTarget.Folder) {
                 if (this.folderActions) {
                     this.folderActions.permissionEvent.subscribe((permission) => {
                         this.permissionEvent.emit(permission);

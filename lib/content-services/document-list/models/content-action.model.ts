@@ -39,6 +39,12 @@ export class ContentActionModel {
     }
 }
 
+export enum ContentActionTarget {
+    Document = 'document',
+    Folder = 'folder',
+    All = 'all'
+}
+
 export type ContentActionHandler = (obj: any, target?: any, permission?: string) => any;
 
 export class DocumentActionModel extends ContentActionModel {
