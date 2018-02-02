@@ -2,35 +2,117 @@
 
 Supports localisation.
 
+## Methods
+
+`addTranslationFolder(name: string = '', path: string = '')`<br/>
+Adds a new folder of translation source files.
+
+`use(lang: string): Observable<any>`<br/>
+Sets the target language for translations.
+
+`get(key: string|Array<string>, interpolateParams?: Object): Observable<string|any>`<br/>
+Gets the translation for the supplied key.
+
+`instant(key: string | Array<string>, interpolateParams?: Object): string | any`<br/>
+Directly returns the translation for the supplied key.
+
 ## Details
+
+In the `get` and `instant` methods, the `interpolateParams` parameter supplies
+interpolation strings for keys that include them. For example, in the standard
+`en.json`, the `CORE.PAGINATION.ITEMS_RANGE` key is defined as:
+
+    "Showing {{ range }} of {{ total }}"
+
+The `range` and `total` interpolations are supplied to the `get` method using
+an object with fields of the same name:
+
+```ts
+this.trans.get(
+      "CORE.PAGINATION.ITEMS_RANGE",
+      {
+        range: "1..10",
+        total: "122"
+      }
+    ).subscribe(translation => {
+      this.translatedText = translation;
+    });
+```
 
 ### Registering translation sources
 
-In order to enable localisation support you will need to create a `/resources/i18n/en.json` file
-and register its parent `i18n` folder with your component or application module.
+To supply your own set of translation source files, you
+first need to create a subfolder for them within your application's
+`assets` folder. The folder can have any name you like but it must also have
+a sub-folder called `i18n` where the translation lists will be stored. So, the
+general format of the path to this folder will be:
 
-For example:
+`<app>/src/assets/my-translations/i18n`
+
+If you wanted English and French translations then you would copy the built-in
+`en.json` and `fr.json` files into the `i18n` folder and add your new keys:
+
+    // en.json
+
+        ...
+      "WELCOME_MESSAGE": "Welcome!"
+        ...
+
+    // fr.json
+        ...
+      "WELCOME_MESSAGE": "Bienvenue!"
+        ...
+
+To enable the new translations in your app, you also need to register them in your
+`app.module.ts` file. Import `TRANSLATION_PROVIDER` and add the path of your
+translations folder to the `providers`:
 
 ```ts
-import { TRANSLATION_PROVIDER } from '@alfresco/adf-core';
+// Other imports...
+
+import { TRANSLATION_PROVIDER } from "@alfresco/adf-core";
+
+  ...
 
 @NgModule({
+  imports: [
     ...
-    providers: [
-        ...
-        {
-            provide: TRANSLATION_PROVIDER,
-            multi: true,
-            useValue: {
-                name: 'ng2-alfresco-core',
-                source: 'assets/ng2-alfresco-core'
-            }
-        }
-    ]
-})
+  ],
+  declarations: [
+    ...
+  ],
+  providers: [
+    {
+      provide: TRANSLATION_PROVIDER,
+      multi: true,
+      useValue: {
+          name: 'my-translations',
+          source: 'assets/my-translations'
+      }
+  }
+  ...
 ```
 
-Note: the `source` property points to the web application root, please ensure you have webpack settings to copy all the i18n files at compile time.
+You can now use your new keys in your component:
+
+```ts
+  ...
+ngOnInit() {
+    this.trans.use("fr");
+    
+    this.trans.get("WELCOME_MESSAGE").subscribe(translation => {
+      this.translatedText = translation;
+    });
+  }
+  ...
+```
+
+The new translation files completely replace the built-in ones.
+If you want to continue using the built-in keys then you must add your new
+keys to copies of the existing files.
+
+Note: the `source` property points to the web application root. Ensure you have
+webpack correctly set up to copy all the i18n files at compile time.
 
 ```text
 index.html
@@ -38,7 +120,7 @@ assets/ng2-alfresco-core/i18n/en.json
 ...
 ```
 
-You can register as many entries as you would like.
+You can register as many entries as you like.
 
 ### Switching languages
 
@@ -56,3 +138,7 @@ class MyComponent {
     }
 }
 ```
+
+## See Also
+
+-   [Internationalization](internationalization.md)
