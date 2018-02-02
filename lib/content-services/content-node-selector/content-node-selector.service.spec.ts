@@ -103,4 +103,22 @@ describe('ContentNodeSelectorService', () => {
 
         expect(search.query.filterQueries).not.toContain({ query: 'ANCESTOR:\'workspace://SpacesStore/null\'' });
     });
+
+    it('should filter for the extra provided ancestors if defined', () => {
+        service.search('nuka cola quantum', 'diamond-city', 0, 25, ['extra-diamond-city']);
+
+        expect(search.query.filterQueries).toContain({ query: 'ANCESTOR:\'workspace://SpacesStore/diamond-city\' OR ANCESTOR:\'workspace://SpacesStore/extra-diamond-city\'' });
+    });
+
+    it('should NOT filter for extra ancestors if an empty list of ids is provided', () => {
+        service.search('nuka cola quantum', 'diamond-city', 0, 25, []);
+
+        expect(search.query.filterQueries).toContain({ query: 'ANCESTOR:\'workspace://SpacesStore/diamond-city\'' });
+    });
+
+    it('should NOT filter for the extra provided ancestor if it\'s the same as the rootNodeId', () => {
+        service.search('nuka cola quantum', 'diamond-city', 0, 25, ['diamond-city']);
+
+        expect(search.query.filterQueries).toContain({ query: 'ANCESTOR:\'workspace://SpacesStore/diamond-city\'' });
+    });
 });
