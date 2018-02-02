@@ -60,7 +60,7 @@ If you wanted English and French translations then you would copy the built-in
 
     // fr.json
         ...
-      "WELCOME_MESSAGE": "Bienvenue!"
+      "WELCOME_MESSAGE": "Bienvenue !"
         ...
 
 To enable the new translations in your app, you also need to register them in your
