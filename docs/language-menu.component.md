@@ -65,3 +65,7 @@ How to attach an ADF Language Menu as nested menu
 ### Nested menu details
 
 In the previous example we are using the ADF Language Menu as nested menu.
+
+## See Also
+
+-   [Internationalization](internationalization.md)
