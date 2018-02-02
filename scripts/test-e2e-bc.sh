@@ -20,4 +20,4 @@ npm install --save  @mat-datetimepicker/core @mat-datetimepicker/moment
 npm install --save-exact --save  @angular/animations@${ANGULAR_VERSION} @angular/common@${ANGULAR_VERSION}  @angular/compiler@${ANGULAR_VERSION} @angular/core@${ANGULAR_VERSION}  @angular/platform-browser@${ANGULAR_VERSION} @angular/router@${ANGULAR_VERSION} @angular/flex-layout@2.0.0-beta.12  @angular/forms@${ANGULAR_VERSION} @angular/forms@${ANGULAR_VERSION} @angular/http@${ANGULAR_VERSION}  @angular/platform-browser-dynamic@${ANGULAR_VERSION}
 npm install --save-exact --save @angular/cdk@${MATERIAL_VERSION} @angular/material@${MATERIAL_VERSION}
 
-pm run e2e
+npm run e2e
