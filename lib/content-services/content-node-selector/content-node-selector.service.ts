@@ -32,13 +32,25 @@ export class ContentNodeSelectorService {
      * Performs a search for content node selection
      *
      * @param searchTerm    The term to search for
-     * @param skipCount     From where to start the loading
      * @param rootNodeId    The root is to start the search from
+     * @param skipCount     From where to start the loading
      * @param maxItems      How many items to load
+     * @param [extraNodeIds]  List of extra node ids to search from. This last parameter is necessary when
+     * the rootNodeId is one of the supported aliases (e.g. '-my-', '-root-', '-mysites-', etc.)
+     * and search is not supported for that alias, but can be performed on its corresponding nodes.
      */
-    public search(searchTerm: string, rootNodeId: string = null, skipCount: number = 0, maxItems: number = 25): Observable<NodePaging> {
+    public search(searchTerm: string, rootNodeId: string = null, skipCount: number = 0, maxItems: number = 25, extraNodeIds?: string[]): Observable<NodePaging> {
 
-        const parentFiltering = rootNodeId ? [ { query: `ANCESTOR:'workspace://SpacesStore/${rootNodeId}'` } ] : [];
+        let extraParentFiltering = '';
+
+        if (extraNodeIds && extraNodeIds.length && !(extraNodeIds.length === 1 && extraNodeIds[0] === rootNodeId)) {
+
+            extraNodeIds.forEach(extraId => {
+                extraParentFiltering += ` OR ANCESTOR:'workspace://SpacesStore/${extraId}'`;
+            });
+        }
+
+        const parentFiltering = rootNodeId ? [ { query: `ANCESTOR:'workspace://SpacesStore/${rootNodeId}'${extraParentFiltering}` } ] : [];
 
         let defaultSearchNode: any = {
             query: {

@@ -671,33 +671,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     private loadRecent(merge: boolean = false): void {
-        this.apiService.peopleApi.getPerson('-me-')
-            .then((person: PersonEntry) => {
-                const username = person.entry.id;
-                const query = {
-                    query: {
-                        query: '*',
-                        language: 'afts'
-                    },
-                    filterQueries: [
-                        { query: `cm:modified:[NOW/DAY-30DAYS TO NOW/DAY+1DAY]` },
-                        { query: `cm:modifier:${username} OR cm:creator:${username}` },
-                        { query: `TYPE:"content" AND -TYPE:"app:filelink" AND -TYPE:"fm:post"` }
-                    ],
-                    include: ['path', 'properties', 'allowableOperations'],
-                    sort: [{
-                        type: 'FIELD',
-                        field: 'cm:modified',
-                        ascending: false
-                    }],
-                    paging: {
-                        maxItems: this.maxItems,
-                        skipCount: this.skipCount
-                    }
-                };
-
-                return this.apiService.searchApi.search(query);
-            })
+        this.getRecentFiles('-me-')
             .then((page: NodePaging) => this.onPageLoaded(page, merge))
             .catch(error => this.error.emit(error));
     }
@@ -929,5 +903,69 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.contextActionHandlerSubscription.unsubscribe();
             this.contextActionHandlerSubscription = null;
         }
+    }
+
+    getCorrespondingNodeIds(nodeId: string): Promise<string[]> {
+        if (nodeId === '-trashcan-') {
+            return this.apiService.nodesApi.getDeletedNodes()
+                .then(result => result.list.entries.map(node => node.entry.id));
+
+        } else if (nodeId === '-sharedlinks-') {
+            return this.apiService.sharedLinksApi.findSharedLinks()
+                .then(result => result.list.entries.map(node => node.entry.nodeId));
+
+        } else if (nodeId === '-sites-') {
+            return this.apiService.sitesApi.getSites()
+                .then(result => result.list.entries.map(node => node.entry.guid));
+
+        } else if (nodeId === '-mysites-') {
+            return this.apiService.peopleApi.getSiteMembership('-me-')
+                .then(result => result.list.entries.map(node => node.entry.guid));
+
+        } else if (nodeId === '-favorites-') {
+            return this.apiService.favoritesApi.getFavorites('-me-')
+                .then(result => result.list.entries.map(node => node.entry.targetGuid));
+
+        } else if (nodeId === '-recent-') {
+            return this.getRecentFiles('-me-')
+                .then(result => result.list.entries.map(node => node.entry.id));
+
+        } else if (nodeId) {
+            return this.documentListService.getFolderNode(nodeId)
+                .then(node => [ node.id ]);
+        }
+
+        return new Promise((resolve) => {
+            resolve([]);
+        });
+    }
+
+    getRecentFiles(personId: string): Promise<NodePaging> {
+        return this.apiService.peopleApi.getPerson(personId)
+            .then((person: PersonEntry) => {
+                const username = person.entry.id;
+                const query = {
+                    query: {
+                        query: '*',
+                        language: 'afts'
+                    },
+                    filterQueries: [
+                        { query: `cm:modified:[NOW/DAY-30DAYS TO NOW/DAY+1DAY]` },
+                        { query: `cm:modifier:${username} OR cm:creator:${username}` },
+                        { query: `TYPE:"content" AND -TYPE:"app:filelink" AND -TYPE:"fm:post"` }
+                    ],
+                    include: ['path', 'properties', 'allowableOperations'],
+                    sort: [{
+                        type: 'FIELD',
+                        field: 'cm:modified',
+                        ascending: false
+                    }],
+                    paging: {
+                        maxItems: this.maxItems,
+                        skipCount: this.skipCount
+                    }
+                };
+                return this.apiService.searchApi.search(query);
+            });
     }
 }
