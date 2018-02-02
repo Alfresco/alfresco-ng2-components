@@ -43,9 +43,10 @@ export class ContentNodeSelectorService {
 
         let extraParentFiltering = '';
 
-        if (extraNodeIds && extraNodeIds.length && !(extraNodeIds.length === 1 && extraNodeIds[0] === rootNodeId)) {
-
-            extraNodeIds.forEach(extraId => {
+        if (extraNodeIds && extraNodeIds.length) {
+            extraNodeIds
+                .filter(id => id !== rootNodeId)
+                .forEach(extraId => {
                 extraParentFiltering += ` OR ANCESTOR:'workspace://SpacesStore/${extraId}'`;
             });
         }

@@ -18,7 +18,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { MinimalNodeEntryEntity, SiteEntry } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity, SiteEntry, SitePaging } from 'alfresco-js-api';
 import {
     AlfrescoApiService,
     ContentService,
@@ -355,13 +355,36 @@ describe('ContentNodeSelectorComponent', () => {
                     fixture.whenStable().then(() => {
                         expect(cnSearchSpy).toHaveBeenCalled();
                         expect(cnSearchSpy.calls.count()).toBe(2);
+                        expect(cnSearchSpy).toHaveBeenCalledWith('vegeta', '-sites-', 0, 25);
+                        done();
+                    });
+                }, 300);
+            });
+
+            it('should call the content node selector\'s search with the right parameters on changing the site selectbox\'s value from a custom dropdown menu', (done) => {
+                component.dropdownSiteList = <SitePaging> {list: {entries: [<SiteEntry> { entry: { guid: '-sites-' } }, <SiteEntry> { entry: { guid: 'namek' } }]}};
+                fixture.detectChanges();
+
+                typeToSearchBox('vegeta');
+
+                setTimeout(() => {
+                    expect(cnSearchSpy.calls.count()).toBe(1);
+
+                    component.siteChanged(<SiteEntry> { entry: { guid: '-sites-' } });
+
+                    fixture.whenStable().then(() => {
+                        expect(cnSearchSpy).toHaveBeenCalled();
+                        expect(cnSearchSpy.calls.count()).toBe(2);
                         expect(cnSearchSpy).toHaveBeenCalledWith('vegeta', '-sites-', 0, 25, ['123456testId', '09876543testId']);
                         done();
                     });
                 }, 300);
             });
 
-            it('should get the corresponding node ids before the search call on changing the site selectbox\'s value', (done) => {
+            it('should get the corresponding node ids before the search call on changing the site selectbox\'s value from a custom dropdown menu', (done) => {
+                component.dropdownSiteList = <SitePaging> {list: {entries: [<SiteEntry> { entry: { guid: '-sites-' } }, <SiteEntry> { entry: { guid: 'namek' } }]}};
+                fixture.detectChanges();
+
                 typeToSearchBox('vegeta');
 
                 setTimeout(() => {
@@ -372,6 +395,21 @@ describe('ContentNodeSelectorComponent', () => {
                     fixture.whenStable().then(() => {
                         expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(2, 'getCorrespondingNodeIdsSpy calls count should be two after the site change');
                         expect(getCorrespondingNodeIdsSpy.calls.allArgs()).toEqual([[undefined], ['namek']]);
+                        done();
+                    });
+                }, 300);
+            });
+
+            it('should NOT get the corresponding node ids before the search call on changing the site selectbox\'s value from default dropdown menu', (done) => {
+                typeToSearchBox('vegeta');
+
+                setTimeout(() => {
+                    expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(0, 'getCorrespondingNodeIdsSpy should not be called');
+
+                    component.siteChanged(<SiteEntry> { entry: { guid: 'namek' } });
+
+                    fixture.whenStable().then(() => {
+                        expect(getCorrespondingNodeIdsSpy).not.toHaveBeenCalled();
                         done();
                     });
                 }, 300);
