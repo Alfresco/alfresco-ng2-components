@@ -49,7 +49,7 @@ export class ContentActionComponent implements OnInit {
 
     /** Type of item that the action appies to. Can be "document" or "folder" */
     @Input()
-    target: string = ContentActionTarget.ALL;
+    target: string = ContentActionTarget.All;
 
     /** The permission type. */
     @Input()
@@ -90,9 +90,9 @@ export class ContentActionComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.target === ContentActionTarget.ALL) {
-            this.generateAction(ContentActionTarget.FOLDER);
-            this.generateAction(ContentActionTarget.DOCUMENT);
+        if (this.target === ContentActionTarget.All) {
+            this.generateAction(ContentActionTarget.Folder);
+            this.generateAction(ContentActionTarget.Document);
         } else {
             this.generateAction(this.target);
         }
@@ -131,7 +131,7 @@ export class ContentActionComponent implements OnInit {
         if (target) {
             let ltarget = target.toLowerCase();
 
-            if (ltarget === ContentActionTarget.DOCUMENT) {
+            if (ltarget === ContentActionTarget.Document) {
                 if (this.documentActions) {
                     this.documentActions.permissionEvent.subscribe((permission) => {
                         this.permissionEvent.emit(permission);
@@ -150,7 +150,7 @@ export class ContentActionComponent implements OnInit {
                 return null;
             }
 
-            if (ltarget === ContentActionTarget.FOLDER) {
+            if (ltarget === ContentActionTarget.Folder) {
                 if (this.folderActions) {
                     this.folderActions.permissionEvent.subscribe((permission) => {
                         this.permissionEvent.emit(permission);
