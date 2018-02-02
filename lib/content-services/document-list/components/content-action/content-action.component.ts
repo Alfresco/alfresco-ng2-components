@@ -17,12 +17,12 @@
 
  /* tslint:disable:component-selector  */
 
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { ContentActionHandler } from '../../models/content-action.model';
 import { DocumentActionsService } from '../../services/document-actions.service';
 import { FolderActionsService } from '../../services/folder-actions.service';
-import { ContentActionModel } from './../../models/content-action.model';
+import { ContentActionModel, ContentActionTarget } from './../../models/content-action.model';
 import { ContentActionListComponent } from './content-action-list.component';
 
 @Component({
@@ -33,7 +33,7 @@ import { ContentActionListComponent } from './content-action-list.component';
         FolderActionsService
     ]
 })
-export class ContentActionComponent implements OnInit, OnChanges {
+export class ContentActionComponent implements OnInit {
 
     /** The title of the action as shown in the menu. */
     @Input()
@@ -49,7 +49,7 @@ export class ContentActionComponent implements OnInit, OnChanges {
 
     /** Type of item that the action appies to. Can be "document" or "folder" */
     @Input()
-    target: string;
+    target: string = ContentActionTarget.All;
 
     /** The permission type. */
     @Input()
@@ -83,58 +83,58 @@ export class ContentActionComponent implements OnInit, OnChanges {
     @Output()
     success = new EventEmitter();
 
-    model: ContentActionModel;
-
     constructor(
         private list: ContentActionListComponent,
         private documentActions: DocumentActionsService,
         private folderActions: FolderActionsService) {
-        this.model = new ContentActionModel();
     }
 
     ngOnInit() {
-        this.model = new ContentActionModel({
-            title: this.title,
-            icon: this.icon,
-            permission: this.permission,
-            disableWithNoPermission: this.disableWithNoPermission,
-            target: this.target,
-            disabled: this.disabled
-        });
-
-        if (this.handler) {
-            this.model.handler = this.getSystemHandler(this.target, this.handler);
+        if (this.target === ContentActionTarget.All) {
+            this.generateAction(ContentActionTarget.Folder);
+            this.generateAction(ContentActionTarget.Document);
+        } else {
+            this.generateAction(this.target);
         }
-
-        if (this.execute) {
-            this.model.execute = (value: any): void => {
-                this.execute.emit({ value });
-            };
-        }
-
-        this.register();
     }
 
-    register(): boolean {
+    register(model: ContentActionModel): boolean {
         if (this.list) {
-            return this.list.registerAction(this.model);
+            return this.list.registerAction(model);
         }
         return false;
     }
 
-    ngOnChanges(changes) {
-        // update localizable properties
-        this.model.title = this.title;
+    private generateAction(target: string) {
+        let model = new ContentActionModel({
+            title: this.title,
+            icon: this.icon,
+            permission: this.permission,
+            disableWithNoPermission: this.disableWithNoPermission,
+            target: target,
+            disabled: this.disabled
+        });
+        if (this.handler) {
+            model.handler = this.getSystemHandler(target, this.handler);
+        }
+
+        if (this.execute) {
+            model.execute = (value: any): void => {
+                this.execute.emit({ value });
+            };
+        }
+
+        this.register(model);
     }
 
     getSystemHandler(target: string, name: string): ContentActionHandler {
         if (target) {
             let ltarget = target.toLowerCase();
 
-            if (ltarget === 'document') {
+            if (ltarget === ContentActionTarget.Document) {
                 if (this.documentActions) {
-                    this.documentActions.permissionEvent.subscribe((permision) => {
-                        this.permissionEvent.emit(permision);
+                    this.documentActions.permissionEvent.subscribe((permission) => {
+                        this.permissionEvent.emit(permission);
                     });
 
                     this.documentActions.error.subscribe((errors) => {
@@ -150,10 +150,10 @@ export class ContentActionComponent implements OnInit, OnChanges {
                 return null;
             }
 
-            if (ltarget === 'folder') {
+            if (ltarget === ContentActionTarget.Folder) {
                 if (this.folderActions) {
-                    this.folderActions.permissionEvent.subscribe((permision) => {
-                        this.permissionEvent.emit(permision);
+                    this.folderActions.permissionEvent.subscribe((permission) => {
+                        this.permissionEvent.emit(permission);
                     });
 
                     this.folderActions.error.subscribe((errors) => {
