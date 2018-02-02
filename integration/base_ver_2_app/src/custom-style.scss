@@ -1,0 +1,33 @@
+@import '~@alfresco/adf-core/prebuilt-themes/adf-blue-orange.css';
+
+
+@import '~@alfresco/adf-content-services/theming';
+@import '~@alfresco/adf-process-services/theming';
+@import '~@alfresco/adf-core/theming';
+
+@import '~@angular/material/theming';
+
+@include mat-core($alfresco-typography);
+
+$primary: mat-palette($alfresco-accent-orange);
+$accent:  mat-palette($alfresco-accent-purple);
+$warn:    mat-palette($alfresco-warn);
+$theme:   mat-light-theme($primary, $accent, $warn);
+
+@include angular-material-theme($theme);
+@include adf-content-services-theme($theme);
+@include adf-process-services-theme($theme);
+@include adf-core-theme($theme);
+
+body, html {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+    font-size: mat-font-size($alfresco-typography, body-1);
+    font-family: mat-font-family($alfresco-typography);
+    line-height: mat-line-height($alfresco-typography, body-1);
+}
+
+body {
+    overflow: auto;
+}

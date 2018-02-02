@@ -58,6 +58,10 @@ script:
             (./scripts/start.sh -dev -t -ss -vjsapi alpha || exit 1;);
        fi
       fi
+jobs:
+    include:
+        - stage: Check 2.0.0 Project Update
+          script: ./scripts/test-e2e-bc.sh
 
 # jobs:
 #   include:
