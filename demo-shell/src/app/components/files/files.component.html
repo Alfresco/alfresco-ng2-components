@@ -195,11 +195,10 @@
                 </data-columns>
 
                 <content-actions>
-                    <!-- folder actions -->
+                    <!-- common actions -->
                     <content-action
                         icon="content_copy"
-                        target="folder"
-                        title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.COPY' | translate}}"
+                        title="DOCUMENT_LIST.ACTIONS.FOLDER.COPY"
                         permission="update"
                         [disableWithNoPermission]="true"
                         (error)="onContentActionError($event)"
@@ -208,8 +207,7 @@
                     </content-action>
                     <content-action
                         icon="redo"
-                        target="folder"
-                        title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.MOVE' | translate}}"
+                        title="DOCUMENT_LIST.ACTIONS.FOLDER.MOVE"
                         permission="update"
                         [disableWithNoPermission]="true"
                         (error)="onContentActionError($event)"
@@ -218,35 +216,14 @@
                     </content-action>
                     <content-action
                         icon="delete"
-                        target="folder"
                         permission="delete"
                         [disableWithNoPermission]="true"
-                        title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.DELETE' | translate}}"
+                        title="DOCUMENT_LIST.ACTIONS.FOLDER.DELETE"
                         (permissionEvent)="handlePermissionError($event)"
                         (success)="onDeleteActionSuccess($event)"
                         handler="delete">
                     </content-action>
                     <!-- document actions -->
-                    <content-action
-                        icon="content_copy"
-                        target="document"
-                        title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.COPY' | translate}}"
-                        permission="update"
-                        [disableWithNoPermission]="true"
-                        (error)="onContentActionError($event)"
-                        (success)="onContentActionSuccess($event)"
-                        handler="copy">
-                    </content-action>
-                    <content-action
-                        icon="redo"
-                        target="document"
-                        title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.MOVE' | translate}}"
-                        permission="update"
-                        [disableWithNoPermission]="true"
-                        (error)="onContentActionError($event)"
-                        (success)="onContentActionSuccess($event)"
-                        handler="move">
-                    </content-action>
                     <content-action
                         icon="storage"
                         target="document"
@@ -256,24 +233,14 @@
                     <content-action
                         icon="file_download"
                         target="document"
-                        title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DOWNLOAD' | translate}}"
+                        title="DOCUMENT_LIST.ACTIONS.DOCUMENT.DOWNLOAD"
                         handler="download">
-                    </content-action>
-                    <content-action
-                        icon="delete"
-                        target="document"
-                        permission="delete"
-                        [disableWithNoPermission]="true"
-                        (permissionEvent)="handlePermissionError($event)"
-                        title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DELETE' | translate}}"
-                        (success)="onDeleteActionSuccess($event)"
-                        handler="delete">
                     </content-action>
                     <content-action
                         *ngIf="authenticationService.isBpmLoggedIn()"
                         icon="play_arrow"
                         target="document" 
-                        title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.PROCESS_ACTION' | translate}}"
+                        title="DOCUMENT_LIST.ACTIONS.DOCUMENT.PROCESS_ACTION"
                         (execute)="startProcesAction($event)">
                     </content-action>
                 </content-actions>

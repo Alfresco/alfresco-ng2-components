@@ -21,9 +21,8 @@ import { async, TestBed } from '@angular/core/testing';
 import { ContentService } from '@alfresco/adf-core';
 import { DataTableModule } from '@alfresco/adf-core';
 import { MaterialModule } from '../../../material.module';
-
-import { DocumentListService } from '../../services/document-list.service';
 import { FileNode } from '../../../mock';
+import { DocumentListService } from '../../services/document-list.service';
 import { ContentActionHandler } from './../../models/content-action.model';
 import { DocumentActionsService } from './../../services/document-actions.service';
 import { FolderActionsService } from './../../services/folder-actions.service';
@@ -31,6 +30,7 @@ import { NodeActionsService } from './../../services/node-actions.service';
 import { DocumentListComponent } from './../document-list.component';
 import { ContentActionListComponent } from './content-action-list.component';
 import { ContentActionComponent } from './content-action.component';
+import { ContentActionModel } from './../../models/content-action.model';
 
 describe('ContentAction', () => {
 
@@ -131,7 +131,7 @@ describe('ContentAction', () => {
         expect(model.handler).toBe(handler);
     });
 
-    it('should require target to get system handler', () => {
+    it('should create document and folder action when there is no target', () => {
         spyOn(folderActions, 'getHandler').and.stub();
         spyOn(documentActions, 'getHandler').and.stub();
 
@@ -139,17 +139,37 @@ describe('ContentAction', () => {
         action.handler = '<handler>';
 
         action.ngOnInit();
+        expect(documentList.actions.length).toBe(2);
+        expect(folderActions.getHandler).toHaveBeenCalled();
+        expect(documentActions.getHandler).toHaveBeenCalled();
+    });
+
+    it('should create document action when target is document', () => {
+        spyOn(folderActions, 'getHandler').and.stub();
+        spyOn(documentActions, 'getHandler').and.stub();
+
+        let action = new ContentActionComponent(actionList, documentActions, folderActions);
+        action.handler = '<handler>';
+        action.target = 'document';
+
+        action.ngOnInit();
         expect(documentList.actions.length).toBe(1);
         expect(folderActions.getHandler).not.toHaveBeenCalled();
-        expect(documentActions.getHandler).not.toHaveBeenCalled();
-
-        action.target = 'document';
-        action.ngOnInit();
         expect(documentActions.getHandler).toHaveBeenCalled();
+    });
 
+    it('should create folder action when target is folder', () => {
+        spyOn(folderActions, 'getHandler').and.stub();
+        spyOn(documentActions, 'getHandler').and.stub();
+
+        let action = new ContentActionComponent(actionList, documentActions, folderActions);
+        action.handler = '<handler>';
         action.target = 'folder';
+
         action.ngOnInit();
+        expect(documentList.actions.length).toBe(1);
         expect(folderActions.getHandler).toHaveBeenCalled();
+        expect(documentActions.getHandler).not.toHaveBeenCalled();
     });
 
     it('should be case insensitive for document target', () => {
@@ -193,20 +213,6 @@ describe('ContentAction', () => {
         model.execute('<obj>');
     });
 
-    it('should sync localizable fields with model', () => {
-
-        let action = new ContentActionComponent(actionList, null, null);
-        action.title = 'title1';
-        action.ngOnInit();
-
-        expect(action.model.title).toBe(action.title);
-
-        action.title = 'title2';
-        action.ngOnChanges(null);
-
-        expect(action.model.title).toBe('title2');
-    });
-
     it('should not find document action handler with missing service', () => {
         let action = new ContentActionComponent(actionList, null, null);
         expect(action.getSystemHandler('document', 'name')).toBeNull();
@@ -245,31 +251,31 @@ describe('ContentAction', () => {
 
     });
 
-    it('should wire model with custom event handler', (done) => {
+    it('should wire model with custom event handler', async(() => {
         let action = new ContentActionComponent(actionList, documentActions, folderActions);
         let file = new FileNode();
 
         let handler = new EventEmitter();
         handler.subscribe((e) => {
             expect(e.value).toBe(file);
-            done();
         });
 
         action.execute = handler;
 
         action.ngOnInit();
-        action.model.execute(file);
-    });
+        documentList.actions[0].execute(file);
+    }));
 
     it('should allow registering model without handler', () => {
         let action = new ContentActionComponent(actionList, documentActions, folderActions);
 
         spyOn(actionList, 'registerAction').and.callThrough();
         action.execute = null;
+        action.handler = null;
+        action.target = 'document';
         action.ngOnInit();
 
-        expect(action.model.handler).toBeUndefined();
-        expect(actionList.registerAction).toHaveBeenCalledWith(action.model);
+        expect(actionList.registerAction).toHaveBeenCalledWith(documentList.actions[0]);
     });
 
     it('should register on init', () => {
@@ -281,10 +287,11 @@ describe('ContentAction', () => {
     });
 
     it('should require action list to register action with', () => {
+        const fakeModel = new ContentActionModel();
         let action = new ContentActionComponent(actionList, null, null);
-        expect(action.register()).toBeTruthy();
+        expect(action.register(fakeModel)).toBeTruthy();
 
         action = new ContentActionComponent(null, null, null);
-        expect(action.register()).toBeFalsy();
+        expect(action.register(fakeModel)).toBeFalsy();
     });
 });
