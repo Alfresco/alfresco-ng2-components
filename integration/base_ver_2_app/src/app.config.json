@@ -1,0 +1,54 @@
+{
+    "ecmHost": "http://{hostname}{:port}",
+    "bpmHost": "http://{hostname}{:port}",
+    "application": {
+        "name": "Alfresco ADF Appplication"
+    },
+    "languages": [
+        {
+            "key": "en",
+            "label": "English"
+        },
+        {
+            "key": "fr",
+            "label": "French"
+        },
+        {
+            "key": "de",
+            "label": "German"
+        },
+        {
+            "key": "it",
+            "label": "Italian"
+        },
+        {
+            "key": "es",
+            "label": "Spanish"
+        },
+        {
+            "key": "ja",
+            "label": "Japanese"
+        },
+        {
+            "key": "nl",
+            "label": "Dutch"
+        },
+        {
+            "key": "pt-BR",
+            "label": "Brazilian Portuguese"
+        },
+        {
+            "key": "nb",
+            "label": "Norwegian"
+        },
+        {
+            "key": "ru",
+            "label": "Russian"
+        },
+        {
+            "key": "zh-CN",
+            "label": "Simplified Chinese"
+        }
+    ],
+    "logLevel" : "trace"
+}

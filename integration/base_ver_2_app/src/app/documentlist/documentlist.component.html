@@ -1,0 +1,31 @@
+<adf-toolbar>
+  <adf-toolbar-title>
+    <adf-breadcrumb
+      class="files-breadcrumb"
+      root="Personal Files"
+      [target]="documentList"
+      [folderNode]="documentList.folderNode">
+    </adf-breadcrumb>
+  </adf-toolbar-title>
+  <adf-upload-button
+    [rootFolderId]="documentList.currentFolderId || '-root-'"
+    [adf-node-permission]="'create'"
+    (success)="uploadSuccess($event)">
+  </adf-upload-button>
+
+</adf-toolbar>
+
+
+<adf-document-list
+  #documentList
+  [currentFolderId]="'-root-'"  
+  (preview)="showPreview($event)">
+</adf-document-list>
+
+<adf-viewer
+  [showViewer]="showViewer" 
+  [overlayMode]="true" 
+  [fileNodeId]="nodeId"
+  (goBack)="onGoBack($event)">
+</adf-viewer>
+<file-uploading-dialog></file-uploading-dialog>
