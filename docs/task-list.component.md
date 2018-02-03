@@ -134,7 +134,7 @@ You can also use both HTML-based and app.config.json custom schema declaration a
 | processInstanceId | string |  | The processInstanceId of the process. |
 | presetColumn | string |  | The presetColumn of the custom schema to fetch. |
 | page | number | 0 | The page of the tasks to fetch. |
-| size | number | 5 | The number of tasks to fetch. |
+| size | number | 25 | The number of tasks to fetch. |
 | assignment | string |  | The assignment of the process. <ul>Possible values are: <li>assignee : where the current user is the assignee</li> <li>candidate: where the current user is a task candidate </li><li>group_x: where the task is assigned to a group where the current user is a member of.</li> <li>no value: where the current user is involved</li> </ul> |
 | selectionMode | string | 'single' | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
 | multiselect | boolean | false | Toggles multiple row selection, renders checkboxes at the beginning of each row |
