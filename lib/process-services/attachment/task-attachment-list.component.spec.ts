@@ -99,6 +99,13 @@ describe('TaskAttachmentList', () => {
         getFileRawContentSpy = spyOn(service, 'getFileRawContent').and.returnValue(Observable.of(blobObj));
     });
 
+    afterEach(() => {
+        const overlayContainers = <any> window.document.querySelectorAll('.cdk-overlay-container');
+        overlayContainers.forEach((overlayContainer) => {
+            overlayContainer.innerHTML = '';
+        });
+    });
+
     it('should load attachments when taskId specified', () => {
         let change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'taskId': change });
@@ -168,7 +175,7 @@ describe('TaskAttachmentList', () => {
         });
     }));
 
-    it('should display all actions if attachments are not read only', () => {
+    it('should display all actions if attachments are not read only', async(() => {
         let change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'taskId': change });
         fixture.detectChanges();
@@ -177,14 +184,15 @@ describe('TaskAttachmentList', () => {
         actionButton.click();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            let actionMenu = fixture.debugElement.nativeElement.querySelectorAll('button.mat-menu-item').length;
-            expect(fixture.debugElement.nativeElement.querySelector('[data-automation-id="View"]')).not.toBeNull();
-            expect(fixture.debugElement.nativeElement.querySelector('[data-automation-id="Remove"]')).not.toBeNull();
+            let actionMenu = window.document.querySelectorAll('button.mat-menu-item').length;
+            expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.VIEW_CONTENT"]')).not.toBeNull();
+            expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.REMOVE_CONTENT"]')).not.toBeNull();
+            expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT"]')).not.toBeNull();
             expect(actionMenu).toBe(3);
         });
-    });
+    }));
 
-    it('should not display remove action if attachments are read only', () => {
+    it('should not display remove action if attachments are read only', async(() => {
         let change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'taskId': change });
         component.disabled = true;
@@ -194,12 +202,13 @@ describe('TaskAttachmentList', () => {
         actionButton.click();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            let actionMenu = fixture.debugElement.nativeElement.querySelectorAll('button.mat-menu-item').length;
-            expect(fixture.debugElement.nativeElement.querySelector('[data-automation-id="View"]')).not.toBeNull();
-            expect(fixture.debugElement.nativeElement.querySelector('[data-automation-id="Remove"]')).toBeNull();
+            let actionMenu = window.document.querySelectorAll('button.mat-menu-item').length;
+            expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.VIEW_CONTENT"]')).not.toBeNull();
+            expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT"]')).not.toBeNull();
+            expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.REMOVE_CONTENT"]')).toBeNull();
             expect(actionMenu).toBe(2);
         });
-    });
+    }));
 
     it('should show the empty list component when the attachments list is empty', async(() => {
         getTaskRelatedContentSpy.and.returnValue(Observable.of({
@@ -330,12 +339,12 @@ describe('Custom CustomEmptyTemplateComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should render the custom template', () => {
+    it('should render the custom template', async(() => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             let title: any = fixture.debugElement.queryAll(By.css('[adf-empty-list-header]'));
             expect(title.length).toBe(1);
             expect(title[0].nativeElement.innerText).toBe('Custom header');
         });
-    });
+    }));
 });

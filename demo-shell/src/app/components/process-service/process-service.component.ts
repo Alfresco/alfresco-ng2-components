@@ -30,7 +30,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Pagination, ProcessInstanceFilterRepresentation } from 'alfresco-js-api';
 import {
     FORM_FIELD_VALIDATORS, FormEvent, FormFieldEvent, FormRenderingService, FormService,
-    DynamicTableRow, ValidateDynamicTableRowEvent, AppConfigService
+    DynamicTableRow, ValidateDynamicTableRowEvent, AppConfigService, PaginationComponent
 } from '@alfresco/adf-core';
 
 import { AnalyticsReportListComponent } from '@alfresco/adf-insights';
@@ -76,6 +76,9 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     @ViewChild(TaskFiltersComponent)
     activitifilter: TaskFiltersComponent;
 
+    @ViewChild(PaginationComponent)
+    processListPagination: PaginationComponent;
+
     @ViewChild(TaskListComponent)
     taskList: TaskListComponent;
 
@@ -119,6 +122,8 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         totalItems: 0
     };
     taskPage = 0;
+    processPage = 0;
+    paginationPageSize = 0;
     processSchemaColumns: any[] = [];
 
     supportedPages: number[];
@@ -159,6 +164,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.dataTasks.setSorting(new DataSorting('created', 'desc'));
         this.supportedPages = this.preferenceService.getDifferentPageSizes();
         this.taskPagination.maxItems = this.preferenceService.paginationSize;
+        this.paginationPageSize = this.preferenceService.paginationSize;
 
         this.defaultProcessName = this.appConfig.get<string>('adf-start-process.name');
         this.defaultProcessDefinitionName = this.appConfig.get<string>('adf-start-process.processDefinitionName');
@@ -202,9 +208,24 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.taskPage--;
     }
 
+    onPrevPageProcess(pagination: Pagination): void {
+        this.processPage = this.processListPagination.current - 1;
+    }
+
     onNextPage(pagination: Pagination): void {
         this.taskPagination.skipCount = pagination.skipCount;
         this.taskPage++;
+    }
+
+    onNextPageProcess(pagination: Pagination): void {
+        this.processPage = this.processListPagination.current - 1;
+    }
+
+    onChangePageSizeProcess(pagination: Pagination): void {
+        const { maxItems } = pagination;
+        this.preferenceService.paginationSize = maxItems;
+        this.processPage = this.processListPagination.current - 1;
+        this.paginationPageSize = maxItems;
     }
 
     onChangePageSize(pagination: Pagination): void {
@@ -220,6 +241,10 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.taskPage = this.currentPage(skipCount, maxItems);
         this.taskPagination.maxItems = maxItems;
         this.taskPagination.skipCount = skipCount;
+    }
+
+    onChangePageNumberProcess(pagination: Pagination): void {
+        this.processPage = this.processListPagination.current - 1;
     }
 
     currentPage(skipCount: number, maxItems: number): number {
@@ -269,6 +294,12 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     onTaskFilterClick(filter: FilterRepresentationModel): void {
         this.applyTaskFilter(filter);
+        this.resetTaskPaginationPage();
+    }
+
+    resetTaskPaginationPage() {
+        this.taskPage = 0;
+        this.taskPagination.skipCount = 0;
     }
 
     onReportClick(event: any): void {
@@ -302,6 +333,11 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     onProcessFilterClick(event: ProcessInstanceFilterRepresentation): void {
         this.processFilter = event;
+        this.resetProcessPaginationPage();
+    }
+
+    resetProcessPaginationPage() {
+        this.processPage = 0;
     }
 
     onSuccessProcessFilterList(event: ProcessInstanceFilterRepresentation[]): void {

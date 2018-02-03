@@ -61,7 +61,7 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
     hasCustomTemplate: boolean = false;
 
     attachments: any[] = [];
-    isLoading: boolean = true;
+    isLoading: boolean = false;
 
     constructor(private activitiContentService: ProcessContentService,
                 private contentService: ContentService,
