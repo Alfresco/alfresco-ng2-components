@@ -23,6 +23,7 @@ import { ProcessFilterParamRepresentationModel } from '../models/filter-process.
 import { ProcessDefinitionRepresentation } from '../models/process-definition.model';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessInstance } from '../models/process-instance.model';
+import { ProcessListModel } from '../models/process-list.model';
 import 'rxjs/add/observable/throw';
 
 declare let moment: any;
@@ -33,13 +34,15 @@ export class ProcessService {
     constructor(private alfrescoApiService: AlfrescoApiService) {
     }
 
-    getProcessInstances(requestNode: ProcessFilterParamRepresentationModel, processDefinitionKey?: string): Observable<ProcessInstance[]> {
+    getProcessInstances(requestNode: ProcessFilterParamRepresentationModel, processDefinitionKey?: string): Observable<ProcessListModel> {
         return Observable.fromPromise(this.alfrescoApiService.getInstance().activiti.processApi.getProcessInstances(requestNode))
             .map((res: any) => {
                 if (processDefinitionKey) {
-                    return res.data.filter(process => process.processDefinitionKey === processDefinitionKey);
+                    const filtered = res.data.filter(process => process.processDefinitionKey === processDefinitionKey);
+                    res.data = filtered;
+                    return res;
                 } else {
-                    return res.data;
+                    return res;
                 }
             }).catch(err => this.handleProcessError(err));
     }

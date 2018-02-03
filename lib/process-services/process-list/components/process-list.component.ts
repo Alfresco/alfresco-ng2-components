@@ -16,20 +16,22 @@
  */
 
 import { DataColumn, DataRowEvent, DataSorting, DataTableAdapter, ObjectDataColumn, ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/adf-core';
-import { AppConfigService, DataColumnListComponent } from '@alfresco/adf-core';
+import { AppConfigService, DataColumnListComponent, PaginatedComponent, PaginationComponent, PaginationQueryParams, UserPreferencesService } from '@alfresco/adf-core';
 import { DatePipe } from '@angular/common';
 import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
-import { ProcessInstance } from '../models/process-instance.model';
 import { processPresetsDefaultModel } from '../models/process-preset.model';
 import { ProcessService } from '../services/process.service';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Pagination } from 'alfresco-js-api';
+import { ProcessListModel } from '../models/process-list.model';
 
 @Component({
     selector: 'adf-process-instance-list',
     styleUrls: ['./process-list.component.css'],
     templateUrl: './process-list.component.html'
 })
-export class ProcessInstanceListComponent implements OnChanges, AfterContentInit {
+export class ProcessInstanceListComponent implements OnChanges, AfterContentInit, PaginatedComponent {
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
@@ -57,6 +59,12 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
 
     /** The presetColumn of the custom schema to fetch. */
     @Input()
+    page: number = 0;
+
+    @Input()
+    size: number = PaginationComponent.DEFAULT_PAGINATION.maxItems;
+
+    @Input()
     presetColumn: string;
 
     requestNode: ProcessFilterParamRepresentationModel;
@@ -71,7 +79,7 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
 
     /** Emitted when the list of process instances has been loaded successfully from the server. */
     @Output()
-    success: EventEmitter<ProcessInstance[]> = new EventEmitter<ProcessInstance[]>();
+    success: EventEmitter<ProcessListModel> = new EventEmitter<ProcessListModel>();
 
     /** Emitted when an error occurs while loading the list of process instances from the server. */
     @Output()
@@ -81,8 +89,18 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     isLoading: boolean = true;
     layoutPresets = {};
 
+    pagination: BehaviorSubject<Pagination>;
+
     constructor(private processService: ProcessService,
+                private userPreferences: UserPreferencesService,
                 private appConfig: AppConfigService) {
+        this.size = this.userPreferences.paginationSize;
+
+        this.pagination = new BehaviorSubject<Pagination>(<Pagination> {
+            maxItems: this.size,
+            skipCount: 0,
+            totalItems: 0
+        });
     }
 
     ngAfterContentInit() {
@@ -130,6 +148,8 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
         let state = changes['state'];
         let sort = changes['sort'];
         let name = changes['name'];
+        let page = changes['page'];
+        let size = changes['size'];
 
         if (appId && appId.currentValue) {
             changed = true;
@@ -140,6 +160,10 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
         } else if (sort && sort.currentValue) {
             changed = true;
         } else if (name && name.currentValue) {
+            changed = true;
+        } else if (page && page.currentValue !== page.previousValue) {
+            changed = true;
+        } else if (size && size.currentValue !== size.previousValue) {
             changed = true;
         }
         return changed;
@@ -155,11 +179,17 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
         this.processService.getProcessInstances(requestNode, this.processDefinitionKey)
             .subscribe(
                 (response) => {
-                    let instancesRow = this.createDataRow(response);
+                    let instancesRow = this.createDataRow(response.data);
                     this.renderInstances(instancesRow);
                     this.selectFirst();
                     this.success.emit(response);
                     this.isLoading = false;
+                    this.pagination.next({
+                        count: response.data.length,
+                        maxItems: this.size,
+                        skipCount: this.page * this.size,
+                        totalItems: response.total
+                    });
                 },
                 error => {
                     this.error.emit(error);
@@ -297,7 +327,10 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
         let requestNode = {
             appDefinitionId: this.appId,
             state: this.state,
-            sort: this.sort
+            sort: this.sort,
+            page: this.page,
+            size: this.size,
+            start: 0
         };
         return new ProcessFilterParamRepresentationModel(requestNode);
     }
@@ -322,5 +355,13 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
 
     private getLayoutPreset(name: string = 'default'): DataColumn[] {
         return (this.layoutPresets[name] || this.layoutPresets['default']).map(col => new ObjectDataColumn(col));
+    }
+
+    updatePagination(params: PaginationQueryParams) {
+
+    }
+
+    get supportedPageSizes(): number[] {
+        return this.userPreferences.getDifferentPageSizes();
     }
 }

@@ -15,60 +15,75 @@
  * limitations under the License.
  */
 
-import { ProcessInstance } from '../../process-list/models/process-instance.model';
+export let fakeProcessInstance = {
+    size: 2, total: 2, start: 0,
+    data: [
+        {
+            id: '1', name: 'Process 773443333', businessKey: null,
+            processDefinitionId: 'fakeprocess:5:7507',
+            tenantId: 'tenant_1',
+            started: '2015-11-09T12:36:14.184+0000',
+            ended: null,
+            startedBy: { id: 3, firstName: 'tenant2', lastName: 'tenantLastname', email: 'tenant2@tenant'},
+            processDefinitionName: 'Fake Process Name',
+            processDefinitionDescription: null,
+            processDefinitionKey: 'fakeprocess',
+            processDefinitionCategory: 'http://www.activiti.org/processdef',
+            processDefinitionVersion: 1,
+            processDefinitionDeploymentId: '2540',
+            graphicalNotationDefined: true,
+            startFormDefined: false,
+            suspended: false,
+            variables: []
+        },
+        {
+            id: '2', name: 'Process 382927392', businessKey: null,
+            processDefinitionId: 'fakeprocess:5:7507',
+            tenantId: 'tenant_1',
+            started: '2018-01-10T17:02:22.597+0000',
+            ended: null,
+            startedBy: { id: 3, firstName: 'tenant2', lastName: 'tenantLastname', email: 'tenant2@tenant' },
+            processDefinitionName: 'Fake Process Name',
+            processDefinitionDescription: null,
+            processDefinitionKey: 'fakeprocess',
+            processDefinitionCategory: 'http://www.activiti.org/processdef',
+            processDefinitionVersion: 1,
+            processDefinitionDeploymentId: '2540',
+            graphicalNotationDefined: true,
+            startFormDefined: false,
+            suspended: false,
+            variables: []
+        }
+    ]
+};
 
-export let fakeProcessInstance = [
-    new ProcessInstance({
-        id: 1,
-        name: 'Process 773443333',
-        processDefinitionId: 'fakeprocess:5:7507',
-        processDefinitionKey: 'fakeprocess',
-        processDefinitionName: 'Fake Process Name',
-        description: null, category: null,
-        started: '2015-11-09T12:36:14.184+0000',
-        startedBy: {
-            id: 3, firstName: 'tenant2', lastName: 'tenantLastname', email: 'tenant2@tenant'
+export let fakeProcessInstancesWithNoName = {
+    size: 2, total: 2, start: 0,
+    data: [
+        {
+            id: '1',
+            name: null,
+            processDefinitionId: 'fakeprocess:5:7507',
+            processDefinitionKey: 'fakeprocess',
+            processDefinitionName: 'Fake Process Name',
+            description: null, category: null,
+            started: '2017-11-09T12:36:14.184+0000',
+            startedBy: {
+                id: 3, firstName: 'tenant2', lastName: 'tenantLastname', email: 'tenant2@tenant'
+            }
+        },
+        {
+            id: 2,
+            name: '',
+            processDefinitionId: 'fakeprocess:5:7507',
+            processDefinitionKey: 'fakeprocess',
+            processDefinitionName: 'Fake Process Name',
+            description: null,
+            category: null,
+            started: '2017-11-09T12:37:25.184+0000',
+            startedBy: {
+                id: 3, firstName: 'tenant2', lastName: 'tenantLastname', email: 'tenant2@tenant'
+            }
         }
-    }),
-    new ProcessInstance({
-        id: 2,
-        name: 'Process 382927392',
-        processDefinitionId: 'fakeprocess:5:7507',
-        processDefinitionKey: 'fakeprocess',
-        processDefinitionName: 'Fake Process Name',
-        description: null,
-        category: null,
-        started: '2017-11-09T12:37:25.184+0000',
-        startedBy: {
-            id: 3, firstName: 'tenant2', lastName: 'tenantLastname', email: 'tenant2@tenant'
-        }
-    })
-];
-
-export let fakeProcessInstancesWithNoName = [
-    new ProcessInstance({
-        id: 1,
-        name: null,
-        processDefinitionId: 'fakeprocess:5:7507',
-        processDefinitionKey: 'fakeprocess',
-        processDefinitionName: 'Fake Process Name',
-        description: null, category: null,
-        started: '2017-11-09T12:36:14.184+0000',
-        startedBy: {
-            id: 3, firstName: 'tenant2', lastName: 'tenantLastname', email: 'tenant2@tenant'
-        }
-    }),
-    new ProcessInstance({
-        id: 2,
-        name: '',
-        processDefinitionId: 'fakeprocess:5:7507',
-        processDefinitionKey: 'fakeprocess',
-        processDefinitionName: 'Fake Process Name',
-        description: null,
-        category: null,
-        started: '2017-11-09T12:37:25.184+0000',
-        startedBy: {
-            id: 3, firstName: 'tenant2', lastName: 'tenantLastname', email: 'tenant2@tenant'
-        }
-    })
-];
+    ]
+};

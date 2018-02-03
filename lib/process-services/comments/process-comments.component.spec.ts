@@ -100,7 +100,7 @@ describe('ActivitiProcessInstanceComments', () => {
         });
     }));
 
-    it('should display comments count when the process has comments', () => {
+    it('should display comments count when the process has comments', async(() => {
         let change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'processInstanceId': change });
 
@@ -109,7 +109,7 @@ describe('ActivitiProcessInstanceComments', () => {
             let element = fixture.nativeElement.querySelector('#comment-header');
             expect(element.innerText).toBe('ADF_PROCESS_LIST.DETAILS.COMMENTS.HEADER');
         });
-    });
+    }));
 
     it('should not display comments when the process has no comments', async(() => {
         let change = new SimpleChange(null, '123', true);

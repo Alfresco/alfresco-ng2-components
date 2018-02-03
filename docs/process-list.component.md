@@ -55,6 +55,8 @@ define custom schema in the app.config.json as shown below json format.
 | presetColumn | string |  | The presetColumn of the custom schema to fetch. |
 | state | Define state of the processes. Possible values are `running`, `completed` and `all` |  |  |
 | sort | Define sort of the processes. Possible values are `created-desc`, `created-asc`, `ended-desc`, `ended-asc` |  |  |
+| page | number | 0 | The page of the tasks to fetch. |
+| size | number | 25 | The number of tasks to fetch. |
 | schemaColumn | List of columns to display in the process instances datatable (see the [Details](#details) section below) |  |  |
 
 ### Events
