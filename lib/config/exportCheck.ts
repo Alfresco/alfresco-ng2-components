@@ -11,6 +11,67 @@ interface DocEntry {
     returnType?: string
 };
 
+let error_array = [];
+
+let add_error = function (error: string) {
+    error_array.push(error);
+}
+
+let print_error = function () {
+    error_array.forEach((current_error) => {
+        console.log(current_error);
+    });
+}
+
+let check_parameters = function (currentExport_old, currentExport_new: any, count_error: number) {
+//check parameters
+    currentExport_old.constructors[0].parameters.forEach((currentParameters_old) => {
+
+        let currentParameters_new = currentExport_new[0].constructors[0].parameters.find((currentParameters_new) => {
+            return currentParameters_new.name === currentParameters_old.name;
+        });
+
+        if (!currentParameters_new) {
+            add_error(`[${++count_error}] Not find parameter in ${currentExport_old.name} \n missing paramaeter: ${currentParameters_old.name}`);
+        } else {
+
+            if (currentParameters_old.type !== currentParameters_new.type) {
+                add_error(`[${++count_error}] Different type parameter ${currentParameters_old.name} \n Old type: ${currentParameters_old.type.replace('typeof', '')} \n New type: ${currentParameters_new.type.replace('typeof', '')}  \n`);
+            }
+        }
+
+    });
+    return count_error;
+};
+
+let check_export = function (export_old: any, export_new: any) {
+    let count_error = 0;
+
+    export_old.forEach((currentExport_old) => {
+
+        let currentExport_new = export_new.filter((currentExport_new) => {
+            return currentExport_new.name === currentExport_old.name;
+        });
+
+        if (currentExport_new.length > 1) {
+            add_error(`[${++count_error}] Multiple export ${currentExport_new[0].name} times ${currentExport_new.length} `);
+        } else if (currentExport_new.length === 0) {
+            add_error(`[${++count_error}] Not find export ${currentExport_old.name}`);
+        } else if (currentExport_new.length === 1) {
+
+            //check export type
+            if (currentExport_old.type !== currentExport_new[0].type) {
+                add_error(`[${++count_error}] Different type export ${currentExport_old.name} \n Old type: ${currentExport_old.type.replace('typeof', '')} \n New type: ${currentExport_new[0].type.replace('typeof', '')}  \n`);
+            }
+
+            count_error = check_parameters(currentExport_old, currentExport_new, count_error);
+
+        }
+
+    });
+};
+
+
 /** Generate documentation for all classes in a set of .ts files */
 function generatExportList(fileNames: string[], options: ts.CompilerOptions): void {
     // Build a program using the set of root file names in fileNames
@@ -19,7 +80,7 @@ function generatExportList(fileNames: string[], options: ts.CompilerOptions): vo
     // Get the checker, we will use it to find more about classes
     let checker = program.getTypeChecker();
 
-    let output: DocEntry[] = [];
+    let exportCurrentVersion: DocEntry[] = [];
 
     // Visit every sourceFile in the program
     for (const sourceFile of program.getSourceFiles()) {
@@ -29,13 +90,26 @@ function generatExportList(fileNames: string[], options: ts.CompilerOptions): vo
         }
     }
 
-    // sort
-    output.sort((nameA, nameB) => nameA.name.localeCompare(nameB.name));
+    exportCurrentVersion.sort((nameA, nameB) => nameA.name.localeCompare(nameB.name));
 
-    // print out the doc
-    fs.writeFileSync("export.json", JSON.stringify(output, undefined, 4));
+    console.log('Saving new export in export-new.json');
 
-    return;
+    fs.writeFileSync("export-new.json", JSON.stringify(exportCurrentVersion, undefined, 4));
+
+    var export_old = JSON.parse(fs.readFileSync('export-2.0.0.json', 'utf8'));
+    var export_new = JSON.parse(JSON.stringify(exportCurrentVersion));
+
+    console.log('Comparing export-2.0.0.json and export-new.json');
+
+    check_export(export_old, export_new);
+
+    print_error();
+
+    if(error_array.length>0){
+        throw new Error('Export problems detected');
+    }else{
+        return ;
+    }
 
     /** visit nodes finding exported classes */
     function visit(node: ts.Node) {
@@ -48,7 +122,7 @@ function generatExportList(fileNames: string[], options: ts.CompilerOptions): vo
             // This is a top level class, get its symbol
             let symbol = checker.getSymbolAtLocation(node.name);
             if (symbol) {
-                output.push(serializeClass(symbol));
+                exportCurrentVersion.push(serializeClass(symbol));
             }
             // No need to walk any further, class expressions/inner declarations
             // cannot be exported
