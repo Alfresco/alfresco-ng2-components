@@ -462,6 +462,26 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(component.showingSearchResults).toBeFalsy();
             });
 
+            it('should show nodes from the same folder as selected in the dropdown on clearing the search input', (done) => {
+                typeToSearchBox('piccolo');
+
+                setTimeout(() => {
+                    expect(searchSpy.calls.count()).toBe(1);
+
+                    component.siteChanged(<SiteEntry> { entry: { guid: 'namek' } });
+
+                    expect(searchSpy.calls.count()).toBe(2);
+                    expect(searchSpy.calls.argsFor(1)).toEqual([defaultSearchOptions('piccolo', 'namek')]);
+
+                    component.clear();
+
+                    expect(component.searchTerm).toBe('');
+                    expect(component.folderIdToShow).toBe('namek');
+                    done();
+                }, 300);
+
+            });
+
             it('should show the current folder\'s content instead of search results if search was not performed', () => {
                 let documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
                 expect(documentList).not.toBeNull('Document list should be shown');
