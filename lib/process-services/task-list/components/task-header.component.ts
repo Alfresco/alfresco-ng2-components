@@ -16,9 +16,15 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-
-import { BpmUserService, CardViewDateItemModel, CardViewItem, CardViewMapItemModel, CardViewTextItemModel, LogService, TranslationService } from '@alfresco/adf-core';
-
+import { BpmUserService,
+         CardViewDateItemModel,
+         CardViewItem,
+         CardViewMapItemModel,
+         CardViewTextItemModel,
+         CardViewBaseItemModel,
+         LogService,
+         TranslationService,
+         AppConfigService } from '@alfresco/adf-core';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 
@@ -49,7 +55,8 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
     constructor(private activitiTaskService: TaskListService,
                 private bpmUserService: BpmUserService,
                 private translationService: TranslationService,
-                private logService: LogService) {
+                private logService: LogService,
+                private appConfig: AppConfigService) {
     }
 
     ngOnInit() {
@@ -60,103 +67,114 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
         this.refreshData();
     }
 
+    private initDefaultProperties(parentInfoMap) {
+        return [
+            new CardViewTextItemModel(
+                {
+                 label: 'ADF_TASK_LIST.PROPERTIES.ASSIGNEE',
+                 value: this.taskDetails.getFullName(),
+                 key: 'assignee',
+                 default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.ASSIGNEE_DEFAULT'),
+                 clickable: !this.isCompleted()
+                }
+            ),
+            new CardViewTextItemModel(
+                {
+                    label: 'ADF_TASK_LIST.PROPERTIES.STATUS',
+                    value: this.getTaskStatus(),
+                    key: 'status'
+                }
+            ),
+            new CardViewTextItemModel(
+                {
+                    label: 'ADF_TASK_LIST.PROPERTIES.PRIORITY',
+                    value: this.taskDetails.priority,
+                    key: 'priority',
+                    editable: true
+                }
+            ),
+            new CardViewDateItemModel(
+                {
+                    label: 'ADF_TASK_LIST.PROPERTIES.DUE_DATE',
+                    value: this.taskDetails.dueDate,
+                    key: 'dueDate',
+                    default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.DUE_DATE_DEFAULT'),
+                    editable: true
+                }
+            ),
+            new CardViewTextItemModel(
+                {
+                    label: 'ADF_TASK_LIST.PROPERTIES.CATEGORY',
+                    value: this.taskDetails.category,
+                    key: 'category',
+                    default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.CATEGORY_DEFAULT')
+                }
+            ),
+            new CardViewMapItemModel(
+                {
+                    label: 'ADF_TASK_LIST.PROPERTIES.PARENT_NAME',
+                    value: parentInfoMap,
+                    key: 'parentName',
+                    default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.PARENT_NAME_DEFAULT'),
+                    clickable: true
+                }
+            ),
+            new CardViewTextItemModel(
+                {
+                    label: 'ADF_TASK_LIST.PROPERTIES.CREATED_BY',
+                    value: this.taskDetails.getFullName(),
+                    key: 'created-by'
+                }
+            ),
+            new CardViewDateItemModel(
+                {
+                    label: 'ADF_TASK_LIST.PROPERTIES.CREATED',
+                    value: this.taskDetails.created,
+                    key: 'created'
+                }
+            ),
+            new CardViewTextItemModel(
+                {
+                    label: 'ADF_TASK_LIST.PROPERTIES.ID',
+                    value: this.taskDetails.id,
+                    key: 'id'
+                }
+            ),
+            new CardViewTextItemModel(
+                {
+                    label: 'ADF_TASK_LIST.PROPERTIES.DESCRIPTION',
+                    value: this.taskDetails.description,
+                    key: 'description',
+                    default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.DESCRIPTION_DEFAULT'),
+                    multiline: true,
+                    editable: true
+                }
+            ),
+            new CardViewTextItemModel(
+                {
+                    label: 'ADF_TASK_LIST.PROPERTIES.FORM_NAME',
+                    value: this.formName,
+                    key: 'formName',
+                    default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.FORM_NAME_DEFAULT')
+                }
+            )
+        ];
+    }
+
     /**
      * Refresh the card data
      */
     refreshData() {
         if (this.taskDetails) {
             const parentInfoMap = this.getParentInfo();
-            this.properties = [
-                new CardViewTextItemModel(
-                    {
-                     label: 'ADF_TASK_LIST.PROPERTIES.ASSIGNEE',
-                     value: this.taskDetails.getFullName(),
-                     key: 'assignee',
-                     default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.ASSIGNEE_DEFAULT'),
-                     clickable: !this.isCompleted()
-                    }
-                ),
-                new CardViewTextItemModel(
-                    {
-                        label: 'ADF_TASK_LIST.PROPERTIES.STATUS',
-                        value: this.getTaskStatus(),
-                        key: 'status'
-                    }
-                ),
-                new CardViewTextItemModel(
-                    {
-                        label: 'ADF_TASK_LIST.PROPERTIES.PRIORITY',
-                        value: this.taskDetails.priority,
-                        key: 'priority',
-                        editable: true
-                    }
-                ),
-                new CardViewDateItemModel(
-                    {
-                        label: 'ADF_TASK_LIST.PROPERTIES.DUE_DATE',
-                        value: this.taskDetails.dueDate,
-                        key: 'dueDate',
-                        default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.DUE_DATE_DEFAULT'),
-                        editable: true
-                    }
-                ),
-                new CardViewTextItemModel(
-                    {
-                        label: 'ADF_TASK_LIST.PROPERTIES.CATEGORY',
-                        value: this.taskDetails.category,
-                        key: 'category',
-                        default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.CATEGORY_DEFAULT')
-                    }
-                ),
-                new CardViewMapItemModel(
-                    {
-                        label: 'ADF_TASK_LIST.PROPERTIES.PARENT_NAME',
-                        value: parentInfoMap, key: 'parentName',
-                        default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.PARENT_NAME_DEFAULT'),
-                        clickable: true
-                    }
-                ),
-                new CardViewTextItemModel(
-                    {
-                        label: 'ADF_TASK_LIST.PROPERTIES.CREATED_BY',
-                        value: this.taskDetails.getFullName(),
-                        key: 'created-by'
-                    }
-                ),
-                new CardViewDateItemModel(
-                    {
-                        label: 'ADF_TASK_LIST.PROPERTIES.CREATED',
-                        value: this.taskDetails.created,
-                        key: 'created'
-                    }
-                ),
-                new CardViewTextItemModel(
-                    {
-                        label: 'ADF_TASK_LIST.PROPERTIES.ID',
-                        value: this.taskDetails.id,
-                        key: 'id'
-                    }
-                ),
-                new CardViewTextItemModel(
-                    {
-                        label: 'ADF_TASK_LIST.PROPERTIES.DESCRIPTION',
-                        value: this.taskDetails.description,
-                        key: 'description',
-                        default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.DESCRIPTION_DEFAULT'),
-                        multiline: true,
-                        editable: true
-                    }
-                ),
-                new CardViewTextItemModel(
-                    {
-                        label: 'ADF_TASK_LIST.PROPERTIES.FORM_NAME',
-                        value: this.formName,
-                        key: 'formName',
-                        default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.FORM_NAME_DEFAULT')
-                    }
-                )
-            ];
+            const defaultProperties = this.initDefaultProperties(parentInfoMap);
+            const filteredProperties: string[] = this.appConfig.get('adf-task-header.presets.properties');
+            this.properties = defaultProperties.filter((cardItem) => this.isValidSelection(filteredProperties, cardItem));
         }
+    }
+
+    private isValidSelection(filteredProperties: string[], cardItem: CardViewBaseItemModel): boolean {
+        return filteredProperties ? filteredProperties.indexOf(cardItem.key) >= 0 : true;
     }
 
     /**

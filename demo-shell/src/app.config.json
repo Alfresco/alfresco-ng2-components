@@ -330,6 +330,11 @@
             ]
         }
     },
+    "adf-task-header": {
+      "presets": {
+          "properties" : [ "assignee", "status", "priority", "parentName"]
+      }
+    },
     "adf-task-list": {
         "presets": {
             "default": [
