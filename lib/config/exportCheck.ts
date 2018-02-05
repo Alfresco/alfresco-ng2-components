@@ -1,5 +1,6 @@
 import * as ts from "typescript";
 import * as fs from "fs";
+import chalk from "chalk";
 
 interface DocEntry {
     position?: {
@@ -24,7 +25,7 @@ let add_error = function (error: string) {
 
 let print_error = function () {
     error_array.forEach((current_error) => {
-        console.log(current_error);
+        console.log(chalk.red(current_error));
     });
 }
 
@@ -41,11 +42,11 @@ let check_parameters = function (currentExport_old, currentExport_new: any, coun
         });
 
         if (!currentParameters_new) {
-            add_error(`[${++count_error}] Not find parameter in ${currentExport_old.name} \n missing paramaeter: ${currentParameters_old.name}`);
+            add_error(`\n[${++count_error}] Not find parameter in ${currentExport_old.name} \n missing paramaeter: ${currentParameters_old.name}`);
         } else {
 
             if (currentParameters_old.type !== currentParameters_new.type) {
-                add_error(`[${++count_error}] Different type parameter ${currentParameters_old.name} \n Old type: ${currentParameters_old.type.replace('typeof', '')} \n New type: ${currentParameters_new.type.replace('typeof', '')}  \n`);
+                add_error(`\n[${++count_error}] Different type parameter ${currentParameters_old.name} \n Old type: ${currentParameters_old.type.replace('typeof', '')} \n New type: ${currentParameters_new.type.replace('typeof', '')}  \n`);
             }
         }
 
@@ -63,20 +64,20 @@ let check_export = function (export_old: any, export_new: any) {
         });
 
         if (currentExport_new.length > 1) {
-            add_error(`[${++count_error}] Multiple export ${currentExport_new[0].name} times ${currentExport_new.length}`);
+            add_error(`\n[${++count_error}] Multiple export ${currentExport_new[0].name} times ${currentExport_new.length}`);
 
-            currentExport_new.forEach((error)=>{
+            currentExport_new.forEach((error) => {
                 add_error(`${current_error_postion(error)}`);
             })
 
 
         } else if (currentExport_new.length === 0) {
-            add_error(`[${++count_error}] Not find export ${currentExport_old.name}}`);
+            add_error(`\n[${++count_error}] Not find export ${currentExport_old.name}`);
         } else if (currentExport_new.length === 1) {
 
             //check export type
             if (currentExport_old.type !== currentExport_new[0].type) {
-                add_error(`[${++count_error}] Different type export ${currentExport_old.name} \n Old type: ${currentExport_old.type.replace('typeof', '')} \n New type: ${currentExport_new[0].type.replace('typeof', '')}  ${current_error_postion(currentExport_new[0])}\n`);
+                add_error(`\n[${++count_error}] Different type export ${currentExport_old.name} \n Old type: ${currentExport_old.type.replace('typeof', '')} \n New type: ${currentExport_new[0].type.replace('typeof', '')}  ${current_error_postion(currentExport_new[0])}`);
             }
 
             count_error = check_parameters(currentExport_old, currentExport_new, count_error);
@@ -107,14 +108,14 @@ function generatExportList(fileNames: string[], options: ts.CompilerOptions): vo
 
     exportCurrentVersion.sort((nameA, nameB) => nameA.name.localeCompare(nameB.name));
 
-    console.log('Saving new export in export-new.json');
+    console.log(chalk.green('Saving new export in export-new.json'));
 
-    fs.writeFileSync("export-new.json", JSON.stringify(exportCurrentVersion, undefined, 4));
+    fs.writeFileSync('export-new.json', JSON.stringify(exportCurrentVersion, undefined, 4));
 
     var export_old = JSON.parse(fs.readFileSync('export-2.0.0.json', 'utf8'));
     var export_new = JSON.parse(JSON.stringify(exportCurrentVersion));
 
-    console.log('Comparing export-2.0.0.json and export-new.json');
+    console.log(chalk.green('Comparing export-2.0.0.json and export-new.json'));
 
     check_export(export_old, export_new);
 
@@ -135,10 +136,17 @@ function generatExportList(fileNames: string[], options: ts.CompilerOptions): vo
 
         if (ts.isClassDeclaration(node) && node.name) {
 
+            //skip file with export-check: exclude comment
+            if (node.getFullText(node.getSourceFile()).indexOf('export-check: exclude') > 0) {
+                console.log(node.getText(node.getSourceFile()));
+                return;
+            }
+
             let { line, character } = node.getSourceFile().getLineAndCharacterOfPosition(node.getStart());
 
             // This is a top level class, get its symbol
             let symbol = checker.getSymbolAtLocation(node.name);
+
             if (symbol) {
                 let filename = node.getSourceFile().fileName.substring(node.getSourceFile().fileName.indexOf('lib'), node.getSourceFile().fileName.length)
                 exportCurrentVersion.push(serializeClass(symbol, line, character, filename));
@@ -194,5 +202,5 @@ function generatExportList(fileNames: string[], options: ts.CompilerOptions): vo
 }
 
 generatExportList(process.argv.slice(2), {
-    target: ts.ScriptTarget.ES5, module: ts.ModuleKind.CommonJS
+    target: ts.ScriptTarget.ES5, module: ts.ModuleKind.CommonJS, removeComments: false
 });
