@@ -19,6 +19,7 @@ import { async, TestBed } from '@angular/core/testing';
 import { ContentMetadataService } from './content-metadata.service';
 import { PropertyDescriptorsService } from './property-descriptors.service';
 import { BasicPropertiesService } from './basic-properties.service';
+import { GroupedPropertiesService } from './grouped-properties.service';
 import { AspectWhiteListService } from './aspect-whitelist.service';
 import { PropertyDescriptorLoaderService } from './properties-loader.service';
 import { AlfrescoApiService } from '@alfresco/adf-core';
@@ -51,6 +52,7 @@ describe('ContentMetadataService', () => {
             providers: [
                 ContentMetadataService,
                 BasicPropertiesService,
+                GroupedPropertiesService,
                 AspectWhiteListService,
                 PropertyDescriptorLoaderService,
                 AlfrescoApiService,
@@ -181,7 +183,7 @@ describe('ContentMetadataService', () => {
 
     describe('Different types\'s attributes', () => {
 
-        ContentMetadataService.RECOGNISED_ECM_TYPES.forEach((dataType) => {
+        GroupedPropertiesService.RECOGNISED_ECM_TYPES.forEach((dataType) => {
             it(`should translate properly the basic attributes of a property for ${dataType}`, () => {
                 aspectProperty.name = 'prefix:name';
                 aspectProperty.title = 'title';

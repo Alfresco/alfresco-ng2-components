@@ -28,6 +28,7 @@ import { PropertyDescriptorLoaderService } from './services/properties-loader.se
 import { AspectWhiteListService } from './services/aspect-whitelist.service';
 import { BasicPropertiesService } from './services/basic-properties.service';
 import { ContentMetadataService } from './services/content-metadata.service';
+import { GroupedPropertiesService } from './services/grouped-properties.service';
 
 @NgModule({
     imports: [
@@ -51,6 +52,7 @@ import { ContentMetadataService } from './services/content-metadata.service';
         PropertyDescriptorLoaderService,
         AspectWhiteListService,
         BasicPropertiesService,
+        GroupedPropertiesService,
         FileSizePipe
     ]
 })
