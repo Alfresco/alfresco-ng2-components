@@ -17,7 +17,7 @@
 
 import { CardViewItem} from '@alfresco/adf-core';
 
-export interface CardViewAspect {
-    name: string;
+export interface CardViewGroup {
+    title: string;
     properties: CardViewItem[]
 }

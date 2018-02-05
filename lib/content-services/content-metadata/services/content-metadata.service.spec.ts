@@ -110,7 +110,7 @@ describe('ContentMetadataService', () => {
 
             node.properties = { 'FAS:PLAGUE': 'The Chariot Line' };
 
-            service.getAspectProperties(node, dummyPreset).subscribe((cardViewAspect) => {
+            service.getGroupedProperties(node, dummyPreset).subscribe((cardViewAspect) => {
                 expect(cardViewAspect[0].properties.length).toBe(2);
                 expect(cardViewAspect[0].properties[0] instanceof CardViewTextItemModel).toBeTruthy('First property should be instance of CardViewTextItemModel');
                 expect(cardViewAspect[0].properties[1] instanceof CardViewTextItemModel).toBeTruthy('Second property should be instance of CardViewTextItemModel');
@@ -143,7 +143,7 @@ describe('ContentMetadataService', () => {
 
             node.properties = { 'FAS:PLAGUE': 'The Chariot Line' };
 
-            service.getAspectProperties(node, dummyPreset).subscribe((cardViewAspect) => {
+            service.getGroupedProperties(node, dummyPreset).subscribe((cardViewAspect) => {
                 expect(cardViewAspect.length).toBe(2);
                 expect(cardViewAspect[0].properties[0] instanceof CardViewTextItemModel).toBeTruthy('First aspect\'s property should be instance of CardViewTextItemModel');
                 expect(cardViewAspect[1].properties[0] instanceof CardViewTextItemModel).toBeTruthy('Second aspect\'s property should be instance of CardViewTextItemModel');
@@ -160,7 +160,7 @@ describe('ContentMetadataService', () => {
             aspectProperty.defaultValue = 'Daemonic beast';
             aspects.push(aspect);
 
-            service.getAspectProperties(node, dummyPreset).subscribe((cardViewAspect) => {
+            service.getGroupedProperties(node, dummyPreset).subscribe((cardViewAspect) => {
                 expect(logService.error).toHaveBeenCalledWith('Unknown type for mapping: daemonic:scorcher');
             });
         });
@@ -172,7 +172,7 @@ describe('ContentMetadataService', () => {
             aspectProperty.defaultValue = 'Daemonic beast';
             aspects.push(aspect);
 
-            service.getAspectProperties(node, dummyPreset).subscribe((cardViewAspect) => {
+            service.getGroupedProperties(node, dummyPreset).subscribe((cardViewAspect) => {
                 const property: CardViewTextItemModel = <CardViewTextItemModel> cardViewAspect[0].properties[0];
                 expect(property instanceof CardViewTextItemModel).toBeTruthy('Property should be instance of CardViewTextItemModel');
             });
@@ -191,7 +191,7 @@ describe('ContentMetadataService', () => {
 
                 node.properties = { 'prefix:name': null };
 
-                service.getAspectProperties(node, dummyPreset).subscribe((cardViewAspect) => {
+                service.getGroupedProperties(node, dummyPreset).subscribe((cardViewAspect) => {
                     const property = cardViewAspect[0].properties[0];
                     expect(property.label).toBe(aspectProperty.title);
                     expect(property.key).toBe('properties.prefix:name');
@@ -207,7 +207,7 @@ describe('ContentMetadataService', () => {
 
             node.properties = { 'FAS:PLAGUE': 'The Chariot Line' };
 
-            service.getAspectProperties(node, dummyPreset).subscribe((cardViewAspect) => {
+            service.getGroupedProperties(node, dummyPreset).subscribe((cardViewAspect) => {
                 const property: CardViewTextItemModel = <CardViewTextItemModel> cardViewAspect[0].properties[0];
                 expect(property instanceof CardViewTextItemModel).toBeTruthy('Property should be instance of CardViewTextItemModel');
                 expect(property.value).toBe('The Chariot Line');
@@ -221,7 +221,7 @@ describe('ContentMetadataService', () => {
 
             node.properties = { 'FAS:PLAGUE': 'The Chariot Line' };
 
-            service.getAspectProperties(node, dummyPreset).subscribe((cardViewAspect) => {
+            service.getGroupedProperties(node, dummyPreset).subscribe((cardViewAspect) => {
                 const property: CardViewTextItemModel = <CardViewTextItemModel> cardViewAspect[0].properties[0];
                 expect(property instanceof CardViewTextItemModel).toBeTruthy('Property should be instance of CardViewTextItemModel');
                 expect(property.value).toBe('The Chariot Line');
@@ -236,7 +236,7 @@ describe('ContentMetadataService', () => {
 
             node.properties = { 'FAS:PLAGUE': expectedValue };
 
-            service.getAspectProperties(node, dummyPreset).subscribe((cardViewAspect) => {
+            service.getGroupedProperties(node, dummyPreset).subscribe((cardViewAspect) => {
                 const property: CardViewDateItemModel = <CardViewDateItemModel> cardViewAspect[0].properties[0];
                 expect(property instanceof CardViewDateItemModel).toBeTruthy('Property should be instance of CardViewDateItemModel');
                 expect(property.value).toBe(expectedValue);
@@ -250,7 +250,7 @@ describe('ContentMetadataService', () => {
 
             node.properties = { 'FAS:PLAGUE': expectedValue };
 
-            service.getAspectProperties(node, dummyPreset).subscribe((cardViewAspect) => {
+            service.getGroupedProperties(node, dummyPreset).subscribe((cardViewAspect) => {
                 const property: CardViewDatetimeItemModel = <CardViewDatetimeItemModel> cardViewAspect[0].properties[0];
                 expect(property instanceof CardViewDatetimeItemModel).toBeTruthy('Property should be instance of CardViewDatetimeItemModel');
                 expect(property.value).toBe(expectedValue);
@@ -263,7 +263,7 @@ describe('ContentMetadataService', () => {
 
             node.properties = { 'FAS:PLAGUE': '1024' };
 
-            service.getAspectProperties(node, dummyPreset).subscribe((cardViewAspect) => {
+            service.getGroupedProperties(node, dummyPreset).subscribe((cardViewAspect) => {
                 const property: CardViewIntItemModel = <CardViewIntItemModel> cardViewAspect[0].properties[0];
                 expect(property instanceof CardViewIntItemModel).toBeTruthy('Property should be instance of CardViewIntItemModel');
                 expect(property.value).toBe(1024);
@@ -276,7 +276,7 @@ describe('ContentMetadataService', () => {
 
             node.properties = { 'FAS:PLAGUE': '1024' };
 
-            service.getAspectProperties(node, dummyPreset).subscribe((cardViewAspect) => {
+            service.getGroupedProperties(node, dummyPreset).subscribe((cardViewAspect) => {
                 const property: CardViewIntItemModel = <CardViewIntItemModel> cardViewAspect[0].properties[0];
                 expect(property instanceof CardViewIntItemModel).toBeTruthy('Property should be instance of CardViewIntItemModel');
                 expect(property.value).toBe(1024);
@@ -289,7 +289,7 @@ describe('ContentMetadataService', () => {
 
             node.properties = { 'FAS:PLAGUE': '1024.24' };
 
-            service.getAspectProperties(node, dummyPreset).subscribe((cardViewAspect) => {
+            service.getGroupedProperties(node, dummyPreset).subscribe((cardViewAspect) => {
                 const property: CardViewFloatItemModel = <CardViewFloatItemModel> cardViewAspect[0].properties[0];
                 expect(property instanceof CardViewFloatItemModel).toBeTruthy('Property should be instance of CardViewFloatItemModel');
                 expect(property.value).toBe(1024.24);
@@ -302,7 +302,7 @@ describe('ContentMetadataService', () => {
 
             node.properties = { 'FAS:PLAGUE': '1024.24' };
 
-            service.getAspectProperties(node, dummyPreset).subscribe((cardViewAspect) => {
+            service.getGroupedProperties(node, dummyPreset).subscribe((cardViewAspect) => {
                 const property: CardViewFloatItemModel = <CardViewFloatItemModel> cardViewAspect[0].properties[0];
                 expect(property instanceof CardViewFloatItemModel).toBeTruthy('Property should be instance of CardViewFloatItemModel');
                 expect(property.value).toBe(1024.24);
@@ -315,7 +315,7 @@ describe('ContentMetadataService', () => {
 
             node.properties = { 'FAS:PLAGUE': true };
 
-            service.getAspectProperties(node, dummyPreset).subscribe((cardViewAspect) => {
+            service.getGroupedProperties(node, dummyPreset).subscribe((cardViewAspect) => {
                 const property: CardViewBoolItemModel = <CardViewBoolItemModel> cardViewAspect[0].properties[0];
                 expect(property instanceof CardViewBoolItemModel).toBeTruthy('Property should be instance of CardViewBoolItemModel');
                 expect(property.value).toBe(true);

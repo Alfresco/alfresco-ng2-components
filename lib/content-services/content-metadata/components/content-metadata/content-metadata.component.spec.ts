@@ -199,18 +199,18 @@ describe('ContentMetadataComponent', () => {
         }));
 
         it('should load the aspect properties on node change', () => {
-            spyOn(contentMetadataService, 'getAspectProperties');
+            spyOn(contentMetadataService, 'getGroupedProperties');
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
-            expect(contentMetadataService.getAspectProperties).toHaveBeenCalledWith(expectedNode, 'custom-preset');
+            expect(contentMetadataService.getGroupedProperties).toHaveBeenCalledWith(expectedNode, 'custom-preset');
         });
 
         it('should pass through the loaded aspect properties to the card view', async(() => {
             const expectedProperties = [];
             component.expanded = true;
             fixture.detectChanges();
-            spyOn(contentMetadataService, 'getAspectProperties').and.callFake(() => {
+            spyOn(contentMetadataService, 'getGroupedProperties').and.callFake(() => {
                 return Observable.of([{ properties: expectedProperties }]);
             });
 
@@ -218,7 +218,7 @@ describe('ContentMetadataComponent', () => {
 
             component.basicProperties$.subscribe(() => {
                 fixture.detectChanges();
-                const firstAspectPropertiesComponent = fixture.debugElement.query(By.css('.adf-metadata-properties-aspect adf-card-view')).componentInstance;
+                const firstAspectPropertiesComponent = fixture.debugElement.query(By.css('.adf-metadata-grouped-properties-container adf-card-view')).componentInstance;
                 expect(firstAspectPropertiesComponent.properties).toBe(expectedProperties);
             });
         }));
@@ -227,13 +227,13 @@ describe('ContentMetadataComponent', () => {
             component.expanded = true;
             component.displayEmpty = false;
             fixture.detectChanges();
-            spyOn(contentMetadataService, 'getAspectProperties').and.returnValue(Observable.of([{ properties: [] }]));
+            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(Observable.of([{ properties: [] }]));
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
             component.basicProperties$.subscribe(() => {
                 fixture.detectChanges();
-                const basicPropertiesComponent = fixture.debugElement.query(By.css('.adf-metadata-properties-aspect adf-card-view')).componentInstance;
+                const basicPropertiesComponent = fixture.debugElement.query(By.css('.adf-metadata-grouped-properties-container adf-card-view')).componentInstance;
                 expect(basicPropertiesComponent.displayEmpty).toBe(false);
             });
         }));

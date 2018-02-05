@@ -31,7 +31,7 @@ import {
     LogService
 } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
-import { AspectProperty, CardViewAspect, Aspect } from '../interfaces/content-metadata.interfaces';
+import { AspectProperty, CardViewGroup, Aspect } from '../interfaces/content-metadata.interfaces';
 
 const D_TEXT = 'd:text';
 const D_MLTEXT = 'd:mltext';
@@ -56,12 +56,12 @@ export class ContentMetadataService {
         return Observable.of(this.basicPropertiesService.getBasicProperties(node));
     }
 
-    getAspectProperties(node: MinimalNodeEntryEntity, preset: string): Observable<CardViewAspect[]> {
+    getGroupedProperties(node: MinimalNodeEntryEntity, preset: string): Observable<CardViewGroup[]> {
         return this.propertyDescriptorsService.getAspects(node, preset)
             .map(aspects => this.translateAspects(aspects, node.properties));
     }
 
-    private translateAspects(aspects: Aspect[], nodeProperties): CardViewAspect[] {
+    private translateAspects(aspects: Aspect[], nodeProperties): CardViewGroup[] {
         return aspects.map(aspect => {
             const translatedAspect: any = Object.assign({}, aspect);
             translatedAspect.properties = this.translateProperties(aspect.properties, nodeProperties);
