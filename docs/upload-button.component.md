@@ -18,24 +18,26 @@ Activates a file upload.
 
 ### Properties
 
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| disabled | boolean | false | Toggle component disabled state if there is no node permission checking |
-| uploadFolders | boolean | false | Allow/disallow upload folders (only for Chrome) |
-| multipleFiles | boolean | false | Allow/disallow multiple files |
-| acceptedFilesType | string | * |  array of allowed file extensions , example: ".jpg,.gif,.png,.svg" |
-| maxFilesSize | number |  |  if defined allow to upload files only with this max file size. the size of a file is in bytes  |
-| rootFolderId | string | '-root-' | The ID of the root. It can be the nodeId if you are using the upload for the Content Service or taskId/processId for the Process Service. |
-| versioning | boolean | false | Versioning false is the default uploader behaviour and it renames the file using an integer suffix if there is a name clash. Versioning true to indicate that a major version should be created |
-| staticTitle | string | (predefined) | define the text of the upload button |
-| tooltip | string | | Custom tooltip |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| disabled | `boolean` | `false` | Toggles component disabled state (if there is no node permission checking).  |
+| uploadFolders | `boolean` | `false` | Allows/disallows upload folders (only for Chrome).  |
+| multipleFiles | `boolean` | `false` | Allows/disallows multiple files  |
+| versioning | `boolean` | `false` | Toggles versioning.  |
+| acceptedFilesType | `string` | `'*'` | List of allowed file extensions, for example: ".jpg,.gif,.png,.svg".  |
+| maxFilesSize | `number` |  | Sets a limit on the maximum size (in bytes) of a file to be uploaded. Has no effect if undefined. |
+| staticTitle | `string` |  | Defines the text of the upload button.  |
+| tooltip | `string` | `null` | Custom tooltip text.  |
+| rootFolderId | `string` | `'-root-'` | The ID of the root. Use the nodeId for Content Services or the taskId/processId for Process Services. |
 
 ### Events
 
-| Name | Description |
-| --- | --- |
-| success | Raised when the file is uploaded |
-| permissionEvent | permissionEvent that is raised when the delete permission is missing |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| success | `EventEmitter<{}>` | Emitted when the file is uploaded successfully. |
+| error | `EventEmitter<{}>` | Emitted when an error occurs. |
+| createFolder | `EventEmitter<{}>` | Emitted when a folder is created. |
+| permissionEvent | `EventEmitter<PermissionModel>` | Emitted when delete permission is missing. |
 
 ## Details
 

@@ -38,15 +38,21 @@ import { Component, EventEmitter, forwardRef, Input, Output, ViewEncapsulation }
 })
 export class UploadDragAreaComponent implements NodePermissionSubject {
 
+    /** Toggle component disabled state. */
     @Input()
     disabled: boolean = false;
 
+    /** When false, renames the file using an integer suffix if there is a name clash.
+     * Set to true to indicate that a major version should be created instead.
+     */
     @Input()
     versioning: boolean = false;
 
+    /** ID of parent folder node. */
     @Input()
     parentId: string;
 
+    /** Emitted when the file is uploaded. */
     @Output()
     success = new EventEmitter();
 

@@ -34,6 +34,7 @@ export class VersionListComponent implements OnChanges {
     versions: any = [];
     isLoading: boolean = true;
 
+    /** ID of the node whose version history you want to display. */
     @Input()
     id: string;
 
