@@ -46,46 +46,51 @@ Using with file url:
 
 ### Properties
 
-| Name | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| fileNodeId | string |  | Node Id of the file to load |
-| sharedLinkId | string |  | Shared link id (to display shared file) |
-| urlFile | string |  | If you want to load an external file that does not come from ECM you can use this Url where to load the file |
-| urlFileViewer | string | null | Viewer to use with the `urlFile` address (`pdf`, `image`, `media`, `text`). Used when `urlFile` has no filename and extension. |
-| urlBlob | Blob |  | If you want to load a Blob File |
-| overlayMode | boolean | false | If `true` show the Viewer full page over the present content otherwise will fit the parent div |
-| showViewer | boolean | true | Hide or show the viewer |
-| showToolbar | boolean | true | Hide or show the toolbar |
-| displayName | string |  | You can specify the name of the file |
-| allowGoBack | boolean | true | Allow `back` navigation |
-| allowDownload | boolean | true | Toggle download feature |
-| allowPrint | boolean | false | Toggle printing feature |
-| allowShare | boolean | false | Toggle sharing feature |
-| allowSidebar | boolean | false | Toggle sidebar feature |
-| showSidebar | boolean | false | Toggles sidebar visibility. Requires `allowSidebar` to be set to `true`. |
-| sidebarPosition | string | right | The position of the sidebar. Can be `left` or `right`. |
-| sidebarTemplate | TemplateRef<any> | null | The template intended to be used as a sidebar. The template context contains the loaded node data. |
-| allowNavigate | boolean | false | Toggle before/next navigation, arrow buttons to navigate between multiple documents in the collection. |
-| canNavigateBefore | boolean | true | Toggle the "before" ("<") button. Requires `allowNavigate` to be enabled. |
-| canNavigateNext | boolean | true | Toggle the next (">") button. Requires `allowNavigate` to be enabled.|
-| allowFullScreen | boolean | true | Toggle the 'Full Screen' feature. |
-| maxRetries | number | 5 | Number of times the Viewer will retry fetching content Rendition. Retries have at least 1 second delay in between. |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| urlFile | `string` | `''` | If you want to load an external file that does not come from ACS you can use this URL to specify where to load the file from. |
+| urlFileViewer | `string` | `null` | Viewer to use with the `urlFile` address (`pdf`, `image`, `media`, `text`). Used when `urlFile` has no filename and extension. |
+| blobFile | `Blob` |  | Loads a Blob File  |
+| fileNodeId | `string` | `null` | Node Id of the file to load.  |
+| sharedLinkId | `string` | `null` | Shared link id (to display shared file).  |
+| overlayMode | `boolean` | `false` | If `true` then show the Viewer as a full page over the current content. Otherwise fit inside the parent div. |
+| showViewer | `boolean` | `true` | Hide or show the viewer  |
+| showToolbar | `boolean` | `true` | Hide or show the toolbar  |
+| displayName | `string` |  | Specifies the name of the file when it is not available from the URL.  |
+| allowGoBack | `boolean` | `true` | Allows `back` navigation  |
+| allowDownload | `boolean` | `true` | Toggles downloading.  |
+| allowPrint | `boolean` | `false` | Toggles printing.  |
+| allowShare | `boolean` | `false` | Toggles sharing.  |
+| allowFullScreen | `boolean` | `true` | Toggles the 'Full Screen' feature.  |
+| allowNavigate | `boolean` | `false` | Toggles before/next navigation. You can use the arrow buttons to navigate between documents in the collection. |
+| canNavigateBefore | `boolean` | `true` | Toggles the "before" ("&lt;") button. Requires `allowNavigate` to be enabled.  |
+| canNavigateNext | `boolean` | `true` | Toggles the next (">") button. Requires `allowNavigate` to be enabled.  |
+| allowSidebar | `boolean` | `false` | Toggles the sidebar.  |
+| showSidebar | `boolean` | `false` | Toggles sidebar visibility. Requires `allowSidebar` to be set to `true`.  |
+| sidebarPosition | `string` | `'right'` | The position of the sidebar. Can be `left` or `right`.  |
+| sidebarTemplate | `TemplateRef<any>` | `null` | The template for the sidebar. The template context contains the loaded node data.  |
+| mimeType | `string` |  | MIME type of the file content (when not determined by the filename extension).  |
+| fileName | `string` |  | Content filename.  |
+| downloadUrl | `string` | `null` | URL to download.  |
+| maxRetries | `number` | `5` | Number of times the Viewer will retry fetching content Rendition. There is a delay of at least one second between attempts. |
 
 ### Events
 
-| Name | Argument Type | Cancelable | Description |
-| ---- | ------------- | ---------- | ----------- |
-| goBack | any | Yes | Raised when user clicks the 'Back' button. |
-| download | any | Yes | Raised when user clicks the 'Download' button. |
-| print | any | Yes | Raised when user clicks the 'Print' button. |
-| share | any | Yes | Raised when user clicks the 'Share' button. |
-| navigateBefore | any | No | Raised when user clicks 'Navigate Before' ("<") button. |
-| navigateNext | any | No | Raised when user clicks 'Navigate Next' (">") button. |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| goBack | `EventEmitter<BaseEvent<any>>` | Emitted when user clicks the 'Back' button. |
+| download | `EventEmitter<BaseEvent<any>>` | Emitted when user clicks the 'Download' button. |
+| print | `EventEmitter<BaseEvent<any>>` | Emitted when user clicks the 'Print' button. |
+| share | `EventEmitter<BaseEvent<any>>` | Emitted when user clicks the 'Share' button. |
+| showViewerChange | `EventEmitter<boolean>` | Emitted when the viewer is shown or hidden. |
+| extensionChange | `EventEmitter<string>` | Emitted when the filename extension changes. |
+| navigateBefore | `EventEmitter<{}>` | Emitted when user clicks 'Navigate Before' ("&lt;") button. |
+| navigateNext | `EventEmitter<{}>` | Emitted when user clicks 'Navigate Next' (">") button. |
 
 ### Keyboard shortcuts
 
 | Name | Description |
-| --- | --- |
+| ---- | ----------- |
 | Esc | Close the viewer (overlay mode only). |
 | Left | Invoke 'Navigate before' action. |
 | Right | Invoke 'Navigate next' action. |
@@ -146,45 +151,45 @@ You can provide custom file parameters, for example a value for the `mimeType` o
 
 The Viewer component consists of separate Views that handle particular types of type families based on either a file extension or a mime type:
 
-- PDF View
-  - application/pdf
-  - *.pdf
-- Image View
-  - image/png
-  - image/jpeg
-  - image/gif
-  - image/bmp
-  - image/svg+xml
-  - *.png
-  - *.jpg
-  - *.jpeg
-  - *.gif
-  - *.bpm
-  - *.svg
-- Text View
-  - text/plain
-  - text/csv
-  - text/xml
-  - text/html
-  - application/x-javascript
-  - *.txt
-  - *.xml
-  - *.js
-  - *.html
-  - *.json
-  - *.ts
-- Media View
-  - video/mp4
-  - video/webm
-  - video/ogg
-  - audio/mpeg
-  - audio/ogg
-  - audio/wav
-  - *.wav
-  - *.mp4
-  - *.mp3
-  - *.webm
-  - *.ogg
+-   PDF View
+    -   application/pdf
+    -   \*.pdf
+-   Image View
+    -   image/png
+    -   image/jpeg
+    -   image/gif
+    -   image/bmp
+    -   image/svg+xml
+    -   \*.png
+    -   \*.jpg
+    -   \*.jpeg
+    -   \*.gif
+    -   \*.bpm
+    -   \*.svg
+-   Text View
+    -   text/plain
+    -   text/csv
+    -   text/xml
+    -   text/html
+    -   application/x-javascript
+    -   \*.txt
+    -   \*.xml
+    -   \*.js
+    -   \*.html
+    -   \*.json
+    -   \*.ts
+-   Media View
+    -   video/mp4
+    -   video/webm
+    -   video/ogg
+    -   audio/mpeg
+    -   audio/ogg
+    -   audio/wav
+    -   \*.wav
+    -   \*.mp4
+    -   \*.mp3
+    -   \*.webm
+    -   \*.ogg
 
 ### Content Renditions
 

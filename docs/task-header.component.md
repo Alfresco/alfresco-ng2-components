@@ -14,17 +14,17 @@ Shows all the information related to a task.
 
 ### Properties
 
-| Name | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| taskDetails | [TaskDetailsModel](task-details.model.md) |  | (**required**) Details related to the task. |
-| formName | string |  | The name of the form. |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| formName | `string` | `null` | The name of the form.  |
+| taskDetails | `TaskDetailsModel` |  | (required) Details related to the task.  |
 
 ### Events
 
-| Name | Description |
-| ---- | ----------- |
-| claim | Raised when the task is claimed. |
-| unclaim | Raised when the task is unclaimed (requeued). |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| claim | `EventEmitter<any>` | Emitted when the task is claimed. |
+| unclaim | `EventEmitter<any>` | Emitted when the task is unclaimed (ie, requeued). |
 
 ## Details
 
