@@ -50,6 +50,14 @@ export class HostSettingsComponent {
     @Output()
     error = new EventEmitter<string>();
 
+    /** Emitted when the ecm host URL is changed. */
+    @Output()
+    ecmHostChange = new EventEmitter<string>();
+
+    /** Emitted when the bpm host URL is changed. */
+    @Output()
+    bpmHostChange = new EventEmitter<string>();
+
     constructor(private settingsService: SettingsService,
                 private storage: StorageService,
                 private logService: LogService,
@@ -63,6 +71,7 @@ export class HostSettingsComponent {
         if (value && this.isValidUrl(value)) {
             this.logService.info(`ECM host: ${value}`);
             this.ecmHostTmp = value;
+            this.ecmHostChange.emit(value);
         } else {
             this.translationService.get('CORE.HOST_SETTING.CS_URL_ERROR').subscribe((message) => {
                 this.error.emit(message);
@@ -75,6 +84,7 @@ export class HostSettingsComponent {
         if (value && this.isValidUrl(value)) {
             this.logService.info(`BPM host: ${value}`);
             this.bpmHostTmp = value;
+            this.bpmHostChange.emit(value);
         } else {
             this.translationService.get('CORE.HOST_SETTING.PS_URL_ERROR').subscribe((message) => {
                 this.error.emit(message);
