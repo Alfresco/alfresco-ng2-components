@@ -2,6 +2,11 @@ import * as ts from "typescript";
 import * as fs from "fs";
 
 interface DocEntry {
+    position?: {
+        line: number,
+        character: number,
+        fileName: string
+    },
     name?: string,
     fileName?: string,
     documentation?: string,
@@ -21,6 +26,10 @@ let print_error = function () {
     error_array.forEach((current_error) => {
         console.log(current_error);
     });
+}
+
+let current_error_postion = function (exportEntry) {
+    return ` ${exportEntry.position.fileName} (${exportEntry.position.line},${exportEntry.position.character})`
 }
 
 let check_parameters = function (currentExport_old, currentExport_new: any, count_error: number) {
@@ -54,14 +63,20 @@ let check_export = function (export_old: any, export_new: any) {
         });
 
         if (currentExport_new.length > 1) {
-            add_error(`[${++count_error}] Multiple export ${currentExport_new[0].name} times ${currentExport_new.length} `);
+            add_error(`[${++count_error}] Multiple export ${currentExport_new[0].name} times ${currentExport_new.length}`);
+
+            currentExport_new.forEach((error)=>{
+                add_error(`${current_error_postion(error)}`);
+            })
+
+
         } else if (currentExport_new.length === 0) {
-            add_error(`[${++count_error}] Not find export ${currentExport_old.name}`);
+            add_error(`[${++count_error}] Not find export ${currentExport_old.name}}`);
         } else if (currentExport_new.length === 1) {
 
             //check export type
             if (currentExport_old.type !== currentExport_new[0].type) {
-                add_error(`[${++count_error}] Different type export ${currentExport_old.name} \n Old type: ${currentExport_old.type.replace('typeof', '')} \n New type: ${currentExport_new[0].type.replace('typeof', '')}  \n`);
+                add_error(`[${++count_error}] Different type export ${currentExport_old.name} \n Old type: ${currentExport_old.type.replace('typeof', '')} \n New type: ${currentExport_new[0].type.replace('typeof', '')}  ${current_error_postion(currentExport_new[0])}\n`);
             }
 
             count_error = check_parameters(currentExport_old, currentExport_new, count_error);
@@ -105,10 +120,10 @@ function generatExportList(fileNames: string[], options: ts.CompilerOptions): vo
 
     print_error();
 
-    if(error_array.length>0){
+    if (error_array.length > 0) {
         throw new Error('Export problems detected');
-    }else{
-        return ;
+    } else {
+        return;
     }
 
     /** visit nodes finding exported classes */
@@ -119,10 +134,14 @@ function generatExportList(fileNames: string[], options: ts.CompilerOptions): vo
         }
 
         if (ts.isClassDeclaration(node) && node.name) {
+
+            let { line, character } = node.getSourceFile().getLineAndCharacterOfPosition(node.getStart());
+
             // This is a top level class, get its symbol
             let symbol = checker.getSymbolAtLocation(node.name);
             if (symbol) {
-                exportCurrentVersion.push(serializeClass(symbol));
+                let filename = node.getSourceFile().fileName.substring(node.getSourceFile().fileName.indexOf('lib'), node.getSourceFile().fileName.length)
+                exportCurrentVersion.push(serializeClass(symbol, line, character, filename));
             }
             // No need to walk any further, class expressions/inner declarations
             // cannot be exported
@@ -134,8 +153,13 @@ function generatExportList(fileNames: string[], options: ts.CompilerOptions): vo
     }
 
     /** Serialize a symbol into a json object */
-    function serializeSymbol(symbol: ts.Symbol): DocEntry {
+    function serializeSymbol(symbol: ts.Symbol, line?: number, character?: number, fileName?: string): DocEntry {
         return {
+            position: {
+                line: line,
+                character: character,
+                fileName: fileName
+            },
             name: symbol.getName(),
             documentation: ts.displayPartsToString(symbol.getDocumentationComment()),
             type: checker.typeToString(checker.getTypeOfSymbolAtLocation(symbol, symbol.valueDeclaration!))
@@ -143,8 +167,8 @@ function generatExportList(fileNames: string[], options: ts.CompilerOptions): vo
     }
 
     /** Serialize a class symbol information */
-    function serializeClass(symbol: ts.Symbol) {
-        let details = serializeSymbol(symbol);
+    function serializeClass(symbol: ts.Symbol, line?: number, character?: number, fileName?: string) {
+        let details = serializeSymbol(symbol, line, character, fileName);
 
         // Get the construct signatures
         let constructorType = checker.getTypeOfSymbolAtLocation(symbol, symbol.valueDeclaration!);
@@ -155,7 +179,9 @@ function generatExportList(fileNames: string[], options: ts.CompilerOptions): vo
     /** Serialize a signature (call or construct) */
     function serializeSignature(signature: ts.Signature) {
         return {
-            parameters: signature.parameters.map(serializeSymbol),
+            parameters: signature.parameters.map((currentParam) => {
+                return serializeSymbol(currentParam);
+            }),
             returnType: checker.typeToString(signature.getReturnType()),
             documentation: ts.displayPartsToString(signature.getDocumentationComment())
         };
