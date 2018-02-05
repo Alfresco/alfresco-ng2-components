@@ -175,7 +175,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
         this.skipCount = 0;
         this.chosenNode = null;
         this.showingSearchResults = false;
-        this.folderIdToShow = this.currentFolderId;
+        this.folderIdToShow = this.siteId || this.currentFolderId;
     }
 
     /**
