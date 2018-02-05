@@ -30,21 +30,29 @@ import { EcmUserService } from './../services/ecm-user.service';
 })
 export class UserInfoComponent implements OnInit {
 
+    /** Custom path for the background banner image for ACS users. */
     @Input()
     ecmBackgroundImage: string = './assets/images/ecm-background.png';
 
+    /** Custom path for the background banner image for APS users. */
     @Input()
     bpmBackgroundImage: string = './assets/images/bpm-background.png';
 
+    /** Custom choice for opening the menu at the bottom. Can be `before` or `after`. */
     @Input()
     menuPositionX: string = 'after';
 
+    /** Custom choice for opening the menu at the bottom. Can be `above` or `below`. */
     @Input()
     menuPositionY: string = 'below';
 
+    /** Shows/hides the username next to the user info button. */
     @Input()
     showName: boolean = true;
 
+    /** When the username is shown, this defines its position relative to the user info button.
+     * Can be `right` or `left`.
+     */
     @Input()
     namePosition: string = 'right';
 

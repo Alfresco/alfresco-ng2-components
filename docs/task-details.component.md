@@ -12,33 +12,36 @@ Shows the details of the task id passed in input
 
 ### Properties
 
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| taskId | string | | (**required**) The id of the task details that we are asking for. |
-| showNextTask | boolean | true | Automatically render the next one, when the task is completed. |
-| showFormTitle | boolean | true | Toggle rendering of the form title. |
-| readOnlyForm | boolean | false | Toggle readonly state of the form. Enforces all form widgets render readonly if enabled. |
-| showFormRefreshButton | boolean | true | Toggle rendering of the `Refresh` button. |
-| showFormSaveButton | boolean | true| Toggle rendering of the `Save` outcome button. |
-| showFormCompleteButton | boolean | true | Toggle rendering of the Form `Complete` outcome button |
-| peopleIconImageUrl | string | | Define a custom people icon image |
-| showHeader | boolean | true | Toggle task details Header component |
-| showHeaderContent | boolean | true | Toggle collapsed/expanded state of the Header component |
-| showInvolvePeople | boolean | true | Toggle `Involve People` feature for Header component |
-| showComments | boolean | true | Toggle `Comments` feature for Header component |
-| showChecklist | boolean | true | Toggle `Checklist` feature for Header component |
-| fieldValidators | FormFieldValidator[] | [] | Field validators for use with the form. |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| debugMode | `boolean` | `false` | Toggles debug mode.  |
+| taskId | `string` |  | (**required**) The id of the task whose details we are asking for.  |
+| showNextTask | `boolean` | `true` | Automatically renders the next task when the current one is completed.  |
+| showHeader | `boolean` | `true` | Toggles task details Header component.  |
+| showHeaderContent | `boolean` | `true` | Toggles collapsed/expanded state of the Header component.  |
+| showInvolvePeople | `boolean` | `true` | Toggles `Involve People` feature for the Header component.  |
+| showComments | `boolean` | `true` | Toggles `Comments` feature for the Header component.  |
+| showChecklist | `boolean` | `true` | Toggles `Checklist` feature for the Header component.  |
+| showFormTitle | `boolean` | `true` | Toggles rendering of the form title.  |
+| showFormCompleteButton | `boolean` | `true` | Toggles rendering of the `Complete` outcome button.  |
+| showFormSaveButton | `boolean` | `true` | Toggles rendering of the `Save` outcome button.  |
+| readOnlyForm | `boolean` | `false` | Toggles read-only state of the form. All form widgets render as read-only if enabled. |
+| showFormRefreshButton | `boolean` | `true` | Toggles rendering of the `Refresh` button.  |
+| fieldValidators | `any[]` | `[]` | Field validators for use with the form.  |
 
 ### Events
 
-| Name | Description |
-| --- | --- |
-| formLoaded | Raised when form is loaded or reloaded. |
-| formSaved | Raised when form is submitted with `Save` or custom outcomes.  |
-| formCompleted | Raised when form is submitted with `Complete` outcome.  |
-| taskCreated | Raised when a checklist task is created.  |
-| executeOutcome | Raised when any outcome is executed, default behaviour can be prevented via `event.preventDefault()` |
-| error | Raised at any error |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| formSaved | `EventEmitter<any>` | Emitted when the form is submitted with the `Save` or custom outcomes. |
+| formCompleted | `EventEmitter<any>` | Emitted when the form is submitted with the `Complete` outcome. |
+| formContentClicked | `EventEmitter<any>` | Emitted when the form field content is clicked. |
+| formLoaded | `EventEmitter<any>` | Emitted when the form is loaded or reloaded. |
+| taskCreated | `EventEmitter<TaskDetailsModel>` | Emitted when a checklist task is created. |
+| taskDeleted | `EventEmitter<string>` | Emitted when a checklist task is deleted. |
+| error | `EventEmitter<any>` | Emitted when an error occurs. |
+| executeOutcome | `EventEmitter<any>` | Emitted when any outcome is executed. Default behaviour can be prevented via `event.preventDefault()`. |
+| assignTask | `EventEmitter<void>` | Emitted when a task is assigned. |
 
 ## Details
 

@@ -46,24 +46,36 @@ import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core
 })
 export class WebscriptComponent implements OnChanges {
 
+    /** (required) Path to the webscript (as defined by webscript). */
     @Input()
     scriptPath: string;
 
+    /** Arguments to pass to the webscript. */
     @Input()
     scriptArgs: any;
 
+    /** Toggles whether to show or hide the data. */
     @Input()
     showData: boolean = true;
 
+    /** Path where the application is deployed */
     @Input()
     contextRoot: string = 'alfresco';
 
+    /** Path that the webscript service is mapped to. */
     @Input()
     servicePath: string = 'service';
 
+    /** Content type to interpret the data received from the webscript.
+     * Can be "JSON" , "HTML" , "DATATABLE" or "TEXT"
+     */
     @Input()
     contentType: string = 'TEXT';
 
+    /** Emitted when the operation succeeds. You can get the plain data from
+     * the webscript through the **success** event parameter and use it as you
+     * need in your application.
+     */
     @Output()
     success = new EventEmitter();
 

@@ -47,9 +47,11 @@ export class WidgetComponent implements AfterViewInit {
     static DEFAULT_HYPERLINK_URL: string = '#';
     static DEFAULT_HYPERLINK_SCHEME: string = 'http://';
 
+    /** Does the widget show a read-only value? (ie, can't be edited) */
     @Input()
     readOnly: boolean = false;
 
+    /** Data to be displayed in the field */
     @Input()
     field: FormFieldModel;
 

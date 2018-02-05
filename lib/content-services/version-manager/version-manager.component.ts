@@ -26,6 +26,7 @@ import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 })
 export class VersionManagerComponent {
 
+    /** The node whose version history you want to manage. */
     @Input()
     node: MinimalNodeEntryEntity;
 }

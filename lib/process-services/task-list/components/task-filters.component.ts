@@ -30,24 +30,33 @@ import { TaskListService } from './../services/tasklist.service';
 })
 export class TaskFiltersComponent implements OnInit, OnChanges {
 
+    /** Parameters to use for the task filter. If there is no match then
+     * the default filter (the first one the list) is selected.
+     */
     @Input()
     filterParam: FilterParamsModel;
 
+    /** Emitted when a filter in the list is clicked. */
     @Output()
     filterClick: EventEmitter<FilterRepresentationModel> = new EventEmitter<FilterRepresentationModel>();
 
+    /** Emitted when the list is loaded. */
     @Output()
     success: EventEmitter<any> = new EventEmitter<any>();
 
+    /** Emitted when an error occurs during loading. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
+    /** Display filters available to the current user for the application with the specified ID. */
     @Input()
     appId: number;
 
+    /** Display filters available to the current user for the application with the specified name. */
     @Input()
     appName: string;
 
+    /** Toggles display of the filter's icon. */
     @Input()
     hasIcon: boolean = true;
 

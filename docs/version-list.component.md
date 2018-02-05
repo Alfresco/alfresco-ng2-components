@@ -10,9 +10,9 @@ Displays the version history of a node in a [Version Manager component](version-
 
 ### Properties
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| id | string | The node id you want to see the version history of. |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| id | `string` |  | ID of the node whose version history you want to display.  |
 
 ## Details
 
