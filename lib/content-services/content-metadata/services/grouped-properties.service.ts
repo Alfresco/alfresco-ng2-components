@@ -50,8 +50,8 @@ export class GroupedPropertiesService {
     constructor(private propertyDescriptorsService: PropertyDescriptorsService,
                 private logService: LogService) {}
 
-    getProperties(node: MinimalNodeEntryEntity, preset: string): Observable<CardViewGroup[]> {
-        return this.propertyDescriptorsService.getAspects(node, preset)
+    getProperties(node: MinimalNodeEntryEntity): Observable<CardViewGroup[]> {
+        return this.propertyDescriptorsService.getAspects(node)
             .map(aspects => this.translateAspects(aspects, node.properties));
     }
 

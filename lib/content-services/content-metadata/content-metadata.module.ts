@@ -25,7 +25,9 @@ import { ContentMetadataComponent } from './components/content-metadata/content-
 import { ContentMetadataCardComponent } from './components/content-metadata-card/content-metadata-card.component';
 import { PropertyDescriptorsService } from './services/property-descriptors.service';
 import { PropertyDescriptorLoaderService } from './services/properties-loader.service';
-import { AspectWhiteListService } from './services/aspect-whitelist.service';
+import { ContentMetadataConfigService } from './services/config/content-metadata-config.service';
+import { AspectOrientedConfigParserService } from './services/config/aspect-oriented-config-parser.service';
+import { IndifferentConfigParserService } from './services/config/indifferent-config-parser.service';
 import { BasicPropertiesService } from './services/basic-properties.service';
 import { ContentMetadataService } from './services/content-metadata.service';
 import { GroupedPropertiesService } from './services/grouped-properties.service';
@@ -50,7 +52,9 @@ import { GroupedPropertiesService } from './services/grouped-properties.service'
         ContentMetadataService,
         PropertyDescriptorsService,
         PropertyDescriptorLoaderService,
-        AspectWhiteListService,
+        ContentMetadataConfigService,
+        AspectOrientedConfigParserService,
+        IndifferentConfigParserService,
         BasicPropertiesService,
         GroupedPropertiesService,
         FileSizePipe

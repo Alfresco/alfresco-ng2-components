@@ -22,17 +22,39 @@ import { Observable } from 'rxjs/Observable';
 import { GroupedPropertiesService } from './grouped-properties.service';
 import { CardViewItem } from '@alfresco/adf-core';
 import { CardViewGroup } from '../interfaces/content-metadata.interfaces';
+import { ContentMetadataConfigService } from './config/content-metadata-config.service';
 
 @Injectable()
 export class ContentMetadataService {
 
-    constructor(private basicPropertiesService: BasicPropertiesService, private groupedPropertiesService: GroupedPropertiesService) {}
+    constructor(
+        private basicPropertiesService: BasicPropertiesService, 
+        private groupedPropertiesService: GroupedPropertiesService,
+        private contentMetadataConfigService: ContentMetadataConfigService
+    ) {}
 
     getBasicProperties(node: MinimalNodeEntryEntity): Observable<CardViewItem[]> {
         return Observable.of(this.basicPropertiesService.getProperties(node));
     }
 
-    getGroupedProperties(node: MinimalNodeEntryEntity, preset: string): Observable<CardViewGroup[]> {
-        return this.groupedPropertiesService.getProperties(node, preset);
+    getGroupedProperties(node: MinimalNodeEntryEntity, presetName: string = 'default'): Observable<CardViewGroup[]> {
+        this.contentMetadataConfigService.use(presetName);
+        return this.groupedPropertiesService.getProperties(node);
     }
+
+    // private transformByPreset(preset: PresetConfig, propertiesGroups: CardViewGroup[]) {
+    //     if (this.contentMetadataConfigService.isIndifferent(preset)) {
+    //         return propertiesGroups;
+    //     }
+
+    //     else if (this.contentMetadataConfigService.isAspectOriented(preset)) {
+    //         const aspectNames = Object.keys(preset);
+    //         return aspectNames.map((aspectName) => propertiesGroups[aspectName] );
+    //     }
+
+    //     else if (this.contentMetadataConfigService.isLayoutOriented(preset)) {
+    //         console.log('Not supported yet');
+    //         return [];
+    //     }   
+    // }
 }

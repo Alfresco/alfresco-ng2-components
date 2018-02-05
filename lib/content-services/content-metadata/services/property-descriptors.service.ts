@@ -17,27 +17,25 @@
 
 import { Injectable } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { PropertyDescriptorLoaderService } from './properties-loader.service';
-import { AspectWhiteListService } from './aspect-whitelist.service';
 import { Observable } from 'rxjs/Observable';
 import { Aspect, AspectProperty } from '../interfaces/content-metadata.interfaces';
+import { PropertyDescriptorLoaderService } from './properties-loader.service';
+import { ContentMetadataConfigService } from './config/content-metadata-config.service';
 
 @Injectable()
 export class PropertyDescriptorsService {
 
-    constructor(private aspectWhiteListService: AspectWhiteListService,
-                private aspectPropertiesService: PropertyDescriptorLoaderService) {}
+    constructor(private aspectPropertiesService: PropertyDescriptorLoaderService,
+                private contentMetadataConfigService: ContentMetadataConfigService) {}
 
-    getAspects(node: MinimalNodeEntryEntity, presetName: string = 'default'): Observable<Aspect[]> {
-        this.aspectWhiteListService.choosePreset(presetName);
-
+    getAspects(node: MinimalNodeEntryEntity): Observable<Aspect[]> {
         return this.loadAspectDescriptors(node.aspectNames)
             .map(this.filterPropertiesByWhitelist.bind(this));
     }
 
     private loadAspectDescriptors(aspectsAssignedToNode: string[]): Observable<any> {
         const aspectsToLoad = aspectsAssignedToNode
-            .filter(nodeAspectName => this.aspectWhiteListService.isAspectAllowed(nodeAspectName));
+            .filter(nodeAspectName => this.contentMetadataConfigService.isGroupAllowed(nodeAspectName));
 
         return this.aspectPropertiesService.load(aspectsToLoad);
     }
@@ -55,6 +53,6 @@ export class PropertyDescriptorsService {
 
         return Object.keys(aspectDescriptor.properties)
             .map(propertyName => aspectDescriptor.properties[propertyName])
-            .filter(property => this.aspectWhiteListService.isPropertyAllowed(aspectName, property.name));
+            .filter(property => this.contentMetadataConfigService.isPropertyAllowed(aspectName, property.name));
     }
 }
