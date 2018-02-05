@@ -56,10 +56,26 @@ describe('HostSettingsComponent', () => {
             done();
         });
 
-        let ecmUrlInput = fixture.nativeElement.querySelector('#ecmHost');
+        const ecmUrlInput = fixture.nativeElement.querySelector('#ecmHost');
         ecmUrlInput.value = 'wrong_url';
 
-        let event: any = {};
+        const event: any = {};
+        event.target = ecmUrlInput;
+        component.onChangeECMHost(event);
+    });
+
+    it('should emit ecmHostChange when the ECM url inserted is correct', (done) => {
+        fixture.detectChanges();
+        const url = 'http://localhost:9999/ecm';
+        component.ecmHostChange.subscribe((message: string) => {
+            expect(message).toEqual(url);
+            done();
+        });
+
+        const ecmUrlInput = fixture.nativeElement.querySelector('#ecmHost');
+        ecmUrlInput.value = url;
+
+        const event: any = {};
         event.target = ecmUrlInput;
         component.onChangeECMHost(event);
     });
@@ -72,12 +88,29 @@ describe('HostSettingsComponent', () => {
             done();
         });
 
-        let bpmUrlInput: any = fixture.nativeElement.querySelector('#bpmHost');
+        const bpmUrlInput: any = fixture.nativeElement.querySelector('#bpmHost');
         bpmUrlInput.value = 'wrong_url';
 
-        let event: any = {};
+        const event: any = {};
         event.target = bpmUrlInput;
         component.onChangeBPMHost(event);
+    });
+
+    it('should emit bpmHostChange when the BPM url inserted is correct', (done) => {
+        fixture.detectChanges();
+        const url = 'http://localhost:9999/bpm';
+
+        component.ecmHostChange.subscribe((message: string) => {
+            expect(message).toEqual(url);
+            done();
+        });
+
+        const ecmUrlInput = fixture.nativeElement.querySelector('#bpmHost');
+        ecmUrlInput.value = url;
+
+        const event: any = {};
+        event.target = ecmUrlInput;
+        component.onChangeECMHost(event);
     });
 
     it('should not render the ECM url config if setting provider is BPM', () => {
@@ -85,8 +118,8 @@ describe('HostSettingsComponent', () => {
 
         fixture.detectChanges();
 
-        let bpmUrlInput = fixture.nativeElement.querySelector('#bpmHost');
-        let ecmUrlInput = fixture.nativeElement.querySelector('#ecmHost');
+        const bpmUrlInput = fixture.nativeElement.querySelector('#bpmHost');
+        const ecmUrlInput = fixture.nativeElement.querySelector('#ecmHost');
         expect(ecmUrlInput).toEqual(null);
         expect(bpmUrlInput).toBeDefined();
     });
@@ -96,8 +129,8 @@ describe('HostSettingsComponent', () => {
 
         fixture.detectChanges();
 
-        let ecmUrlInput = fixture.nativeElement.querySelector('#ecmHost');
-        let bpmUrlInput = fixture.nativeElement.querySelector('#bpmHost');
+        const ecmUrlInput = fixture.nativeElement.querySelector('#ecmHost');
+        const bpmUrlInput = fixture.nativeElement.querySelector('#bpmHost');
         expect(bpmUrlInput).toEqual(null);
         expect(ecmUrlInput).toBeDefined();
     });

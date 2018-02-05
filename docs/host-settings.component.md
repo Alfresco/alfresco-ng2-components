@@ -22,3 +22,5 @@ Validates the URLs for ACS and APS and saves them in the user's local storage
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | error | `EventEmitter<string>` | Emitted when the URL is invalid. |
+| ecmHostChange | `EventEmitter<string>` | Emitted when the ECM host url is changed. |
+| bpmHostChange | `EventEmitter<string>` | Emitted when the BPM host url is changed. |
