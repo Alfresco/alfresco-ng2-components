@@ -53,42 +53,59 @@ import 'rxjs/add/observable/throw';
 })
 export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionSubject {
 
+    /** Toggles component disabled state (if there is no node permission checking). */
     @Input()
     disabled: boolean = false;
 
+    /** Allows/disallows upload folders (only for Chrome). */
     @Input()
     uploadFolders: boolean = false;
 
+    /** Allows/disallows multiple files */
     @Input()
     multipleFiles: boolean = false;
 
+    /** Toggles versioning. */
     @Input()
     versioning: boolean = false;
 
+    /** List of allowed file extensions, for example: ".jpg,.gif,.png,.svg". */
     @Input()
     acceptedFilesType: string = '*';
 
+    /** Sets a limit on the maximum size (in bytes) of a file to be uploaded.
+     * Has no effect if undefined.
+     */
     @Input()
     maxFilesSize: number;
 
+    /** Defines the text of the upload button. */
     @Input()
     staticTitle: string;
 
+    /** Custom tooltip text. */
     @Input()
     tooltip: string = null;
 
+    /** The ID of the root. Use the nodeId for
+     * Content Services or the taskId/processId for Process Services.
+     */
     @Input()
     rootFolderId: string = '-root-';
 
+    /** Emitted when the file is uploaded successfully. */
     @Output()
     success = new EventEmitter();
 
+    /** Emitted when an error occurs. */
     @Output()
     error = new EventEmitter();
 
+    /** Emitted when a folder is created. */
     @Output()
     createFolder = new EventEmitter();
 
+    /** Emitted when delete permission is missing. */
     @Output()
     permissionEvent: EventEmitter<PermissionModel> = new EventEmitter<PermissionModel>();
 

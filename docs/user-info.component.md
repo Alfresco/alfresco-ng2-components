@@ -10,16 +10,16 @@ Shows user information.
 
 ### Properties
 
-| Name | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| ecmBackgroundImage | string | (alfresco image) | Custom path for the background banner image for ECM users |
-| bpmBackgroundImage | string | (alfresco image) | Custom path for the background banner image for BPM users |
-| menuPositionX | string |  | Custom choice for opening the menu bottom : `before` or `after` |
-| menuPositionY | string |  | Custom choice for opening the menu bottom : `above` or `below` |
-| namePosition | string | `right` | When the username is showed this define his position relatively the user info button. It can be two values : `right` or `left` |
-| showName | boolean | true | Show/Hide the username next the user info button |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| ecmBackgroundImage | `string` | `'./assets/images/ecm-background.png'` | Custom path for the background banner image for ACS users.  |
+| bpmBackgroundImage | `string` | `'./assets/images/bpm-background.png'` | Custom path for the background banner image for APS users.  |
+| menuPositionX | `string` | `'after'` | Custom choice for opening the menu at the bottom. Can be `before` or `after`.  |
+| menuPositionY | `string` | `'below'` | Custom choice for opening the menu at the bottom. Can be `above` or `below`.  |
+| showName | `boolean` | `true` | Shows/hides the username next to the user info button.  |
+| namePosition | `string` | `'right'` | When the username is shown, this defines its position relative to the user info button. Can be `right` or `left`. |
 
 ## Details
 
 This will show a round icon with user and on click some user information.
-If user is logged in with ECM and BPM the ECM image will be shown.
+If user is logged in with both ACS and APS, the ACS image will be shown.

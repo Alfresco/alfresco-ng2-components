@@ -56,72 +56,99 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     @ViewChild('errorDialog')
     errorDialog: TemplateRef<any>;
 
+    /** Toggles debug mode. */
     @Input()
     debugMode: boolean = false;
 
+    /** (**required**) The id of the task whose details we are asking for. */
     @Input()
     taskId: string;
 
+    /** Automatically renders the next task when the current one is completed. */
     @Input()
     showNextTask: boolean = true;
 
+    /** Toggles task details Header component. */
     @Input()
     showHeader: boolean = true;
 
+    /** Toggles collapsed/expanded state of the Header component. */
     @Input()
     showHeaderContent: boolean = true;
 
+    /** Toggles `Involve People` feature for the Header component. */
     @Input()
     showInvolvePeople: boolean = true;
 
+    /** Toggles `Comments` feature for the Header component. */
     @Input()
     showComments: boolean = true;
 
+    /** Toggles `Checklist` feature for the Header component. */
     @Input()
     showChecklist: boolean = true;
 
+    /** Toggles rendering of the form title. */
     @Input()
     showFormTitle: boolean = true;
 
+    /** Toggles rendering of the `Complete` outcome button. */
     @Input()
     showFormCompleteButton: boolean = true;
 
+    /** Toggles rendering of the `Save` outcome button. */
     @Input()
     showFormSaveButton: boolean = true;
 
+    /** Toggles read-only state of the form. All form widgets render as read-only
+     * if enabled.
+     */
     @Input()
     readOnlyForm: boolean = false;
 
+    /** Toggles rendering of the `Refresh` button. */
     @Input()
     showFormRefreshButton: boolean = true;
 
+    /** Field validators for use with the form. */
     @Input()
     fieldValidators: FormFieldValidator[] = [];
 
+    /** Emitted when the form is submitted with the `Save` or custom outcomes. */
     @Output()
     formSaved: EventEmitter<FormModel> = new EventEmitter<FormModel>();
 
+    /** Emitted when the form is submitted with the `Complete` outcome. */
     @Output()
     formCompleted: EventEmitter<FormModel> = new EventEmitter<FormModel>();
 
+    /** Emitted when the form field content is clicked. */
     @Output()
     formContentClicked: EventEmitter<ContentLinkModel> = new EventEmitter<ContentLinkModel>();
 
+    /** Emitted when the form is loaded or reloaded. */
     @Output()
     formLoaded: EventEmitter<FormModel> = new EventEmitter<FormModel>();
 
+    /** Emitted when a checklist task is created. */
     @Output()
     taskCreated: EventEmitter<TaskDetailsModel> = new EventEmitter<TaskDetailsModel>();
 
+    /** Emitted when a checklist task is deleted. */
     @Output()
     taskDeleted: EventEmitter<string> = new EventEmitter<string>();
 
+    /** Emitted when an error occurs. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
+    /** Emitted when any outcome is executed. Default behaviour can be prevented
+     * via `event.preventDefault()`.
+     */
     @Output()
     executeOutcome: EventEmitter<FormOutcomeEvent> = new EventEmitter<FormOutcomeEvent>();
 
+    /** Emitted when a task is assigned. */
     @Output()
     assignTask: EventEmitter<void> = new EventEmitter<void>();
 

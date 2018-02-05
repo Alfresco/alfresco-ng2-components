@@ -29,15 +29,19 @@ import { TaskListService } from './../services/tasklist.service';
 })
 export class TaskHeaderComponent implements OnChanges, OnInit {
 
+    /** The name of the form. */
     @Input()
     formName: string = null;
 
+    /** (required) Details related to the task. */
     @Input()
     taskDetails: TaskDetailsModel;
 
+    /** Emitted when the task is claimed. */
     @Output()
     claim: EventEmitter<any> = new EventEmitter<any>();
 
+    /** Emitted when the task is unclaimed (ie, requeued). */
     @Output()
     unclaim: EventEmitter<any> = new EventEmitter<any>();
 

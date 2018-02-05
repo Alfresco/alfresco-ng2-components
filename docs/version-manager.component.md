@@ -14,9 +14,9 @@ Displays the version history of a node with the ability to upload a new version.
 
 ### Properties
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| node | [MinimalNodeEntryEntity](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md) | The node you want to manage the version history of. |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| node | `MinimalNodeEntryEntity` |  | The node whose version history you want to manage.  |
 
 ## Details
 

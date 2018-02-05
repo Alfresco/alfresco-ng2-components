@@ -19,10 +19,10 @@ Simple container for headers, titles, actions and breadcrumbs.
 
 ### Properties
 
-| Name | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| title | string |  | Toolbar title |
-| color | string |  | Toolbar color, can be changed to empty value (default), `primary`, `accent` or `warn`. |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| title | `string` | `''` | Toolbar title.  |
+| color | `string` |  | Toolbar color. Can be changed to empty value (default), `primary`, `accent` or `warn`.  |
 
 ## Details
 

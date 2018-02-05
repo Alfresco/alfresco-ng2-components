@@ -50,102 +50,145 @@ export class ViewerComponent implements OnChanges {
     @ContentChild(ViewerMoreActionsComponent)
     mnuMoreActions: ViewerMoreActionsComponent;
 
+    /** If you want to load an external file that does not come from ACS you
+     * can use this URL to specify where to load the file from.
+     */
     @Input()
     urlFile = '';
 
+    /** Viewer to use with the `urlFile` address (`pdf`, `image`, `media`, `text`).
+     * Used when `urlFile` has no filename and extension.
+     */
     @Input()
     urlFileViewer: string = null;
 
+    /** Loads a Blob File */
     @Input()
     blobFile: Blob;
 
+    /** Node Id of the file to load. */
     @Input()
     fileNodeId: string = null;
 
+    /** Shared link id (to display shared file). */
     @Input()
     sharedLinkId: string = null;
 
+    /** If `true` then show the Viewer as a full page over the current content.
+     * Otherwise fit inside the parent div.
+     */
     @Input()
     overlayMode = false;
 
+    /** Hide or show the viewer */
     @Input()
     showViewer = true;
 
+    /** Hide or show the toolbar */
     @Input()
     showToolbar = true;
 
+    /** Specifies the name of the file when it is not available from the URL. */
     @Input()
     displayName: string;
 
+    /** Allows `back` navigation */
     @Input()
     allowGoBack = true;
 
+    /** Toggles downloading. */
     @Input()
     allowDownload = true;
 
+    /** Toggles printing. */
     @Input()
     allowPrint = false;
 
+    /** Toggles sharing. */
     @Input()
     allowShare = false;
 
+    /** Toggles the 'Full Screen' feature. */
     @Input()
     allowFullScreen = true;
 
+    /** Toggles before/next navigation. You can use the arrow buttons to navigate
+     * between documents in the collection.
+     */
     @Input()
     allowNavigate = false;
 
+    /** Toggles the "before" ("<") button. Requires `allowNavigate` to be enabled. */
     @Input()
     canNavigateBefore = true;
 
+    /** Toggles the next (">") button. Requires `allowNavigate` to be enabled. */
     @Input()
     canNavigateNext = true;
 
+    /** Toggles the sidebar. */
     @Input()
     allowSidebar = false;
 
+    /** Toggles sidebar visibility. Requires `allowSidebar` to be set to `true`. */
     @Input()
     showSidebar = false;
 
+    /** The position of the sidebar. Can be `left` or `right`. */
     @Input()
     sidebarPosition = 'right';
 
+    /** The template for the sidebar. The template context contains the loaded node data. */
     @Input()
     sidebarTemplate: TemplateRef<any> = null;
 
+    /** MIME type of the file content (when not determined by the filename extension). */
     @Input()
     mimeType: string;
 
+    /** Content filename. */
     @Input()
     fileName: string;
 
+    /** URL to download. */
     @Input()
     downloadUrl: string = null;
 
+    /** Number of times the Viewer will retry fetching content Rendition.
+     * There is a delay of at least one second between attempts.
+     */
     @Input()
     maxRetries = 5;
 
+    /** Emitted when user clicks the 'Back' button. */
     @Output()
     goBack = new EventEmitter<BaseEvent<any>>();
 
+    /** Emitted when user clicks the 'Download' button. */
     @Output()
     download = new EventEmitter<BaseEvent<any>>();
 
+    /** Emitted when user clicks the 'Print' button. */
     @Output()
     print = new EventEmitter<BaseEvent<any>>();
 
+    /** Emitted when user clicks the 'Share' button. */
     @Output()
     share = new EventEmitter<BaseEvent<any>>();
 
+    /** Emitted when the viewer is shown or hidden. */
     @Output()
     showViewerChange = new EventEmitter<boolean>();
 
+    /** Emitted when the filename extension changes. */
     @Output()
     extensionChange = new EventEmitter<string>();
 
+    /** Emitted when user clicks 'Navigate Before' ("<") button. */
     @Output()
     navigateBefore = new EventEmitter();
 
+    /** Emitted when user clicks 'Navigate Next' (">") button. */
     @Output()
     navigateNext = new EventEmitter();
 

@@ -10,22 +10,20 @@ Shows all available filters.
 
 ### Properties
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| filterParam | [FilterParamsModel](#filterparamsmodel) | The params to filter the task filter. If there is no match the default one (first filter of the list) is selected |
-| appId | string | Display filters available to the current user for the application with the specified ID. |
-| `appName` | string | Display filters available to the current user for the application with the specified name. |
-| `hasIcon` | boolean | Toggle to show or not the filter's icon. |
-
-If both `appId` and `appName` are specified then `appName` will take precedence and `appId` will be ignored.
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| filterParam | `FilterParamsModel` |  | Parameters to use for the task filter. If there is no match then the default filter (the first one the list) is selected. |
+| appId | `number` |  | Display filters available to the current user for the application with the specified ID.  |
+| appName | `string` |  | Display filters available to the current user for the application with the specified name.  |
+| hasIcon | `boolean` | `true` | Toggles display of the filter's icon.  |
 
 ### Events
 
-| Name | Description |
-| ---- | ----------- |
-| filterClick | Raised when the filter in the list is clicked |
-| success | Raised when the list is loaded |
-| error | Raised if there is an error during the loading |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| filterClick | `EventEmitter<FilterRepresentationModel>` | Emitted when a filter in the list is clicked. |
+| success | `EventEmitter<any>` | Emitted when the list is loaded. |
+| error | `EventEmitter<any>` | Emitted when an error occurs during loading. |
 
 ## Details
 

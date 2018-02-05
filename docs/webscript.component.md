@@ -42,24 +42,20 @@ export class AppComponent {
 
 ### Properties
 
-| Attribute | Type | Default | Description |
-| --------- | ---- | ------- | ----------- |
-| scriptPath | string |  | (**mandatory**) path to Web Script (as defined by Web Script) |
-| scriptArgs | Object |  | arguments to pass to Web Script |
-| contextRoot | string |  | path where application is deployed |
-| scriptPath | string | alfresco | path to Web Script (as defined by Web Script) |
-| contentType | string | service | path where Web Script service is mapped default value |
-| contentType | string | TEXT | how to handle the data received from the web script JSON , HTML , DATATABLE or TEXT |
-| showData | boolean | true | render the webscript data |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| scriptPath | `string` |  | (required) Path to the webscript (as defined by webscript).  |
+| scriptArgs | `any` |  | Arguments to pass to the webscript.  |
+| showData | `boolean` | `true` | Toggles whether to show or hide the data.  |
+| contextRoot | `string` | `'alfresco'` | Path where the application is deployed  |
+| servicePath | `string` | `'service'` | Path that the webscript service is mapped to.  |
+| contentType | `string` | `'TEXT'` | Content type to interpret the data received from the webscript. Can be "JSON" , "HTML" , "DATATABLE" or "TEXT" |
 
 ### Events
 
-| Name | Description |
-| ---- | ----------- |
-| success | You can get the plain data from the webscript through the **success** event parameter and use it as you need in your application |
-
-**contentType** {string}  
-**_data_**      {string}  data containing the plain value you get from the webscipt as an output parameter
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| success | `EventEmitter<{}>` | Emitted when the operation succeeds. You can get the plain data from the webscript through the **success** event parameter and use it as you need in your application. |
 
 ## Details
 
