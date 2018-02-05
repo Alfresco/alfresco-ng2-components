@@ -78,8 +78,8 @@ export class WidgetVisibilityService {
         if (visibilityObj.leftRestResponseId && visibilityObj.leftRestResponseId !== 'null') {
             leftValue = this.getVariableValue(form, visibilityObj.leftRestResponseId, this.processVarList);
         } else {
-            leftValue = this.getFormValue(form, visibilityObj.leftFormFieldId);
-            leftValue = leftValue ? leftValue : this.getVariableValue(form, visibilityObj.leftFormFieldId, this.processVarList);
+            leftValue = this.getVariableValue(form, visibilityObj.leftFormFieldId, this.processVarList);
+            leftValue = leftValue ? leftValue : this.getFormValue(form, visibilityObj.leftFormFieldId);
         }
         return leftValue;
     }
@@ -129,7 +129,7 @@ export class WidgetVisibilityService {
         let fieldValue = '';
         form.getFormFields().forEach((formField: FormFieldModel) => {
             if (this.isSearchedField(formField, fieldId)) {
-                fieldValue = this.getObjectValue(formField);
+                fieldValue = this.getObjectValue(formField, fieldId);
                 if (!fieldValue) {
                     if (formField.value && formField.value.id) {
                         fieldValue = formField.value.id;
@@ -143,20 +143,27 @@ export class WidgetVisibilityService {
         return fieldValue;
     }
 
-    private getObjectValue(field: FormFieldModel) {
+    private getObjectValue(field: FormFieldModel, fieldId: string) {
         let value = '';
         if (field.value && field.value.name) {
             value = field.value.name;
         } else if (field.options) {
             let option = field.options.find(opt => opt.id === field.value);
             if (option) {
-                value = option.name;
-            } else {
-
-                value = field.value;
+                value = this.getValueFromOption(fieldId, option);
             }
         }
         return value;
+    }
+
+    private getValueFromOption(fieldId: string, option): string {
+        let optionValue = '';
+        if (fieldId && fieldId.indexOf('_LABEL') > 0) {
+            optionValue = option.name;
+        } else {
+            optionValue = option.id;
+        }
+        return optionValue;
     }
 
     private isSearchedField(field: FormFieldModel, fieldToFind: string): boolean {

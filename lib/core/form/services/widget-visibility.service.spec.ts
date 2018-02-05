@@ -438,10 +438,10 @@ describe('WidgetVisibilityService', () => {
             expect(leftValue).toBe('value_2');
         });
 
-        it('should return undefined for a value that is not on variable or form', () => {
+        it('should return an empty string for a value that is not on variable or form', () => {
             let leftValue = service.getLeftValue(fakeFormWithField, visibilityObjTest);
 
-            expect(leftValue).toBeUndefined();
+            expect(leftValue).toBe('');
         });
 
         it('should evaluate the visibility for the field with single visibility condition between two field values', () => {
@@ -612,25 +612,23 @@ describe('WidgetVisibilityService', () => {
             expect(res).toBe('value_1');
         });
 
-        /*
-         it('should refresh the visibility for field', () => {
-         visibilityObjTest.leftFormFieldId = 'FIELD_TEST';
-         visibilityObjTest.operator = '!=';
-         visibilityObjTest.rightFormFieldId = 'RIGHT_FORM_FIELD_ID';
+        it('should refresh the visibility for field', () => {
+            visibilityObjTest.leftFormFieldId = 'FIELD_TEST';
+            visibilityObjTest.operator = '!=';
+            visibilityObjTest.rightFormFieldId = 'RIGHT_FORM_FIELD_ID';
 
-         let container = <ContainerModel> fakeFormWithField.fields[0];
-         let column0 = container.columns[0];
-         let column1 = container.columns[1];
+            let container = <ContainerModel> fakeFormWithField.fields[0];
+            let column0 = container.field.columns[0];
+            let column1 = container.field.columns[1];
 
-         column0.fields[0].visibilityCondition = visibilityObjTest;
-         service.refreshVisibility(fakeFormWithField);
+            column0.fields[0].visibilityCondition = visibilityObjTest;
+            service.refreshVisibility(fakeFormWithField);
 
-         expect(column0.fields[0].isVisible).toBeFalsy();
-         expect(column0.fields[1].isVisible).toBeTruthy();
-         expect(column0.fields[2].isVisible).toBeTruthy();
-         expect(column1.fields[0].isVisible).toBeTruthy();
-         });
-         */
+            expect(column0.fields[0].isVisible).toBeFalsy();
+            expect(column0.fields[1].isVisible).toBeTruthy();
+            expect(column0.fields[2].isVisible).toBeTruthy();
+            expect(column1.fields[0].isVisible).toBeTruthy();
+        });
 
         it('should refresh the visibility for tab in forms', () => {
             visibilityObjTest.leftFormFieldId = 'FIELD_TEST';
@@ -655,9 +653,9 @@ describe('WidgetVisibilityService', () => {
             expect(tab.isVisible).toBeFalsy();
         });
 
-        xit('should refresh the visibility for container in forms', () => {
+        it('should refresh the visibility for container in forms', () => {
             visibilityObjTest.leftFormFieldId = 'FIELD_TEST';
-            visibilityObjTest.operator = '!=';
+            visibilityObjTest.operator = '==';
             visibilityObjTest.rightFormFieldId = 'LEFT_FORM_FIELD_ID';
             let contModel = new ContainerModel(new FormFieldModel(fakeFormWithField, {
                 id: 'fake-container-id',
