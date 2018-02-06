@@ -369,6 +369,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
                 newDirection = current.direction === 'asc' ? 'desc' : 'asc';
             }
             this.data.setSorting(new DataSorting(column.key, newDirection));
+            this.emitSortingChangedEvent(column.key, newDirection);
         }
     }
 
@@ -514,6 +515,17 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
             detail: {
                 row: row,
                 selection: this.selection
+            },
+            bubbles: true
+        });
+        this.elementRef.nativeElement.dispatchEvent(domEvent);
+    }
+
+    private emitSortingChangedEvent(key: string, direction: string) {
+        const domEvent = new CustomEvent('sorting-changed', {
+            detail: {
+                key,
+                direction
             },
             bubbles: true
         });
