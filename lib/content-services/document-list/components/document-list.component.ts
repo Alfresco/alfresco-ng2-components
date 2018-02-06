@@ -320,7 +320,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             if (changes.currentFolderId.previousValue !== changes.currentFolderId.currentValue) {
                 this.folderNode = null;
             }
-            this.updateLayout(changes.currentFolderId.currentValue);
+            if (!this.hasCustomLayout) {
+                this.setupDefaultColumns(changes.currentFolderId.currentValue);
+            }
             this.loadFolderByNodeId(changes.currentFolderId.currentValue);
         } else if (this.data) {
             if (changes.node && changes.node.currentValue) {
@@ -489,7 +491,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
         let nodeId = this.folderNode ? this.folderNode.id : this.currentFolderId;
 
-        this.updateLayout(nodeId);
+        if (!this.hasCustomLayout) {
+            this.setupDefaultColumns(nodeId);
+        }
         if (nodeId) {
             this.loadFolderNodesByFolderNodeId(nodeId, this.maxItems, this.skipCount, merge).catch(err => this.error.emit(err));
         }
@@ -866,47 +870,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
 
         return false;
-    }
-
-    /**
-     * Updates the columns for display according to the type of nodes needed to be displayed and the custom layout defined
-     * @param nodeId The ID of the folder node to display or the reserved string alias for special sources
-     */
-    updateLayout(nodeId) {
-        if (!this.hasCustomLayout) {
-            this.setupDefaultColumns(nodeId);
-
-        } else {
-            const columns = this.columnList.columns.map(c => <DataColumn> c);
-            if (!this.isCompatibleWithLayout(nodeId, columns)) {
-                this.setupDefaultColumns(nodeId);
-
-            } else {
-                this.data.setColumns(columns);
-            }
-        }
-    }
-
-    isCompatibleWithLayout(nodeId, columns: DataColumn[]): boolean {
-        if (columns && columns.length) {
-            return this.canDisplayNameColumn(nodeId, columns);
-        }
-        return false;
-    }
-
-    canDisplayNameColumn(nodeId, columns: DataColumn[]): boolean {
-        if (nodeId) {
-            const nameKey = columns.filter(col => col.key === this.getNameColumnKey(nodeId));
-            return nameKey.length > 0;
-        }
-        return true;
-    }
-
-    getNameColumnKey(nodeId): string {
-        if (nodeId === '-sites-' || nodeId === '-mysites-') {
-            return 'title';
-        }
-        return 'name';
     }
 
     hasCurrentNodePermission(permission: string): boolean {
