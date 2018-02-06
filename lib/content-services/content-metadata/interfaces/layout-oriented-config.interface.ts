@@ -15,4 +15,13 @@
  * limitations under the License.
  */
 
-export interface LayoutOrientedConfig {}
+export interface LayoutOrientedConfig {
+    [index: number]: {
+        title: string;
+        items: {
+            aspect?: string;
+            type?: string;
+            properties: '*' | string[]
+        };
+    };
+}
