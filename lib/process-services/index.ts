@@ -23,6 +23,7 @@ export * from './app-list/apps-list.module';
 export * from './attachment/attachment.module';
 export * from './comments/comments.module';
 export * from './people/people.module';
+export * from './content-widget/content-widget.module';
 
 export * from './process-list';
 export * from './task-list';
@@ -30,3 +31,4 @@ export * from './app-list';
 export * from './attachment';
 export * from './comments';
 export * from './people';
+export * from './content-widget';
