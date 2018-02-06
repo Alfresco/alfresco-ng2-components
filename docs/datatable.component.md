@@ -172,6 +172,7 @@ These events bubble up the component tree and can be handled by any parent compo
 | row-select | Raised after user selects a row |
 | row-unselect | Raised after user unselects a row |
 | row-keyup | Raised on the 'keyup' event for the focused row. |
+| sorting-changed | Raised after user clicks the sortable column header. |
 
 For example:
 

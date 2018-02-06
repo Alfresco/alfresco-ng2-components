@@ -51,6 +51,27 @@ describe('DataTable', () => {
         element = fixture.debugElement.nativeElement;
     });
 
+    it('should emit "sorting-changed" DOM event', (done) => {
+        const column = new ObjectDataColumn({ key: 'name', sortable: true, direction: 'asc' });
+        dataTable.data = new ObjectDataTableAdapter(
+            [
+                { name: '1' },
+                { name: '2' }
+            ],
+            [ column ]
+        );
+        dataTable.data.setSorting(new DataSorting('name', 'desc'));
+
+        fixture.nativeElement.addEventListener('sorting-changed', (event: CustomEvent) => {
+            expect(event.detail.key).toBe('name');
+            expect(event.detail.direction).toBe('asc');
+            done();
+        });
+
+        dataTable.ngOnChanges({});
+        dataTable.onColumnHeaderClick(column);
+    });
+
     it('should change the rows on changing of the data', () => {
         let newData = new ObjectDataTableAdapter(
             [
