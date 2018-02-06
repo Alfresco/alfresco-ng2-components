@@ -57,7 +57,7 @@ describe('FormFieldValidator', () => {
             expect(validator.validate(field)).toBeTruthy();
         });
 
-        it('should simply validate as true if the mandatory field is not visible', () => {
+        it('should validate as true if the mandatory field is not visible', () => {
             let field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TEXT,
                 value: '<value>'
