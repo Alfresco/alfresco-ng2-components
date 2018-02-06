@@ -17,108 +17,89 @@
 
 import { async, TestBed } from '@angular/core/testing';
 import { PropertyDescriptorsService } from './property-descriptors.service';
-import { PropertyDescriptorLoaderService } from './properties-loader.service';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { PropertyDescriptorsLoaderService } from './property-descriptors-loader.service';
 import { AlfrescoApiService } from '@alfresco/adf-core';
-import { AspectWhiteListService } from './aspect-whitelist.service';
-import { AppConfigService, LogService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
-import { GroupProperty } from '../interfaces/content-metadata.interfaces';
+import { Property, ContentMetadataConfig } from '../interfaces/content-metadata.interfaces';
+import { IndifferentConfigService } from './config/indifferent-config.service';
+import { AspectOrientedConfigService } from './config/aspect-oriented-config.service';
 
 describe('PropertyDescriptorsService', () => {
 
-    let contentMetadataService: PropertyDescriptorsService,
-        aspectProperties: PropertyDescriptorLoaderService,
-        appConfigService: AppConfigService,
-        logService: LogService,
-        node: MinimalNodeEntryEntity,
-        testPresets: any;
+    let propertyDescriptorsService: PropertyDescriptorsService,
+        propertyDescriptorsLoaderService: PropertyDescriptorsLoaderService,
+        groupNames: string[],
+        config: ContentMetadataConfig;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             providers: [
                 PropertyDescriptorsService,
-                PropertyDescriptorLoaderService,
-                AppConfigService,
-                AspectWhiteListService,
-                { provide: LogService, useValue: { error: () => {} }},
+                PropertyDescriptorsLoaderService,
                 AlfrescoApiService
             ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
-        contentMetadataService = TestBed.get(PropertyDescriptorsService);
-        aspectProperties = TestBed.get(PropertyDescriptorLoaderService);
-        appConfigService = TestBed.get(AppConfigService);
-        logService = TestBed.get(LogService);
+        propertyDescriptorsService = TestBed.get(PropertyDescriptorsService);
+        propertyDescriptorsLoaderService = TestBed.get(PropertyDescriptorsLoaderService);
     });
 
     afterEach(() => {
         TestBed.resetTestingModule();
     });
 
-    describe('getAspects', () => {
+    describe('loadDescriptors', () => {
 
         beforeEach(() => {
-            node = <MinimalNodeEntryEntity> { aspectNames: [ 'exif:exif', 'cm:content', 'custom:custom' ] };
-
-            testPresets = {};
-            appConfigService.config['content-metadata'] = {
-                presets: testPresets
-            };
+            groupNames = [ 'exif:exif', 'cm:content', 'custom:custom' ];
         });
 
-        it('should call the aspect properties loading for the default aspects related to the given node and defined in the app config', () => {
-            spyOn(aspectProperties, 'load').and.callFake(x => Observable.of({}));
-            testPresets.default = { 'exif:exif': [], 'custom:custom': [], 'banana:banana': [] };
+        it('should load the groups of the intersection of AspectOrientedConfigService\'s groups and groupNames', () => {
+            spyOn(propertyDescriptorsLoaderService, 'load').and.callFake(x => Observable.of({}));
+            config = new AspectOrientedConfigService({ 'exif:exif': [], 'custom:custom': [], 'banana:banana': [] });
 
-            contentMetadataService.getAspects(node);
+            propertyDescriptorsService.loadDescriptors(groupNames, config);
 
-            expect(aspectProperties.load).toHaveBeenCalledWith(['exif:exif', 'custom:custom']);
+            expect(propertyDescriptorsLoaderService.load).toHaveBeenCalledWith(['exif:exif', 'custom:custom']);
         });
 
-        it('should call the aspect properties loading for the defined aspects related to the given node and defined in the app config', () => {
-            spyOn(aspectProperties, 'load').and.callFake(x => Observable.of({}));
-            testPresets.pink = { 'cm:content': [], 'custom:custom': [] };
+        it('should load everything from groupNames if IndifferentConfigService config is passed', () => {
+            spyOn(propertyDescriptorsLoaderService, 'load').and.callFake(x => Observable.of({}));
+            config = new IndifferentConfigService('*');
 
-            contentMetadataService.getAspects(node, 'pink');
+            propertyDescriptorsService.loadDescriptors(groupNames, config);
 
-            expect(aspectProperties.load).toHaveBeenCalledWith(['cm:content', 'custom:custom']);
+            expect(propertyDescriptorsLoaderService.load).toHaveBeenCalledWith(['exif:exif', 'cm:content', 'custom:custom']);
         });
 
-        it('should call the aspect properties loading for all the node aspectNames if the "*" widecard is used for the preset', () => {
-            spyOn(aspectProperties, 'load').and.callFake(x => Observable.of({}));
-            testPresets.default = '*';
+        // TODO: move it to the right place
+        // it('should call the aspect properties loading for all the node aspectNames if there is no preset data defined in the app config', () => {
+        //     spyOn(propertyDescriptorsLoaderService, 'load').and.callFake(x => Observable.of({}));
+        //     spyOn(logService, 'error').and.stub();
+        //     appConfigService.config['content-metadata'] = undefined;
 
-            contentMetadataService.getAspects(node);
+        //     propertyDescriptorsService.loadDescriptors(node);
 
-            expect(aspectProperties.load).toHaveBeenCalledWith(['exif:exif', 'cm:content', 'custom:custom']);
-        });
+        //     expect(logService.error).not.toHaveBeenCalled();
+        //     expect(propertyDescriptorsLoaderService.load).toHaveBeenCalledWith(['exif:exif', 'cm:content', 'custom:custom']);
+        // });
 
-        it('should call the aspect properties loading for all the node aspectNames if there is no preset data defined in the app config', () => {
-            spyOn(aspectProperties, 'load').and.callFake(x => Observable.of({}));
-            spyOn(logService, 'error').and.stub();
-            appConfigService.config['content-metadata'] = undefined;
+        // TODO: move it to the right place
+        // it('should show meaningful error when invalid preset are given', () => {
+        //     spyOn(propertyDescriptorsLoaderService, 'load').and.callFake(x => Observable.of({}));
+        //     spyOn(logService, 'error').and.stub();
+        //     testPresets.pink = { 'cm:content': {}, 'custom:custom': {} };
 
-            contentMetadataService.getAspects(node);
+        //     propertyDescriptorsService.loadDescriptors(node, 'blue');
 
-            expect(logService.error).not.toHaveBeenCalled();
-            expect(aspectProperties.load).toHaveBeenCalledWith(['exif:exif', 'cm:content', 'custom:custom']);
-        });
+        //     expect(logService.error).toHaveBeenCalledWith('No content-metadata preset for: blue');
+        // });
 
-        it('should show meaningful error when invalid preset are given', () => {
-            spyOn(aspectProperties, 'load').and.callFake(x => Observable.of({}));
-            spyOn(logService, 'error').and.stub();
-            testPresets.pink = { 'cm:content': {}, 'custom:custom': {} };
-
-            contentMetadataService.getAspects(node, 'blue');
-
-            expect(logService.error).toHaveBeenCalledWith('No content-metadata preset for: blue');
-        });
-
-        it('should filter out properties which are not defined in the particular aspect', () => {
-            spyOn(aspectProperties, 'load').and.callFake(() => {
+        // TODO: move it to the right place
+        it('should filter out properties which are not defined in the particular group', (done) => {
+            spyOn(propertyDescriptorsLoaderService, 'load').and.callFake(() => {
                 return Observable.of([
                     {
                         name: 'exif:exif',
@@ -130,19 +111,21 @@ describe('PropertyDescriptorsService', () => {
                 ]);
             });
 
-            testPresets.default = { 'exif:exif': ['exif:2'] };
+            config = new AspectOrientedConfigService({ 'exif:exif': ['exif:2'] });
 
-            contentMetadataService.getAspects(node).subscribe({
+            propertyDescriptorsService.loadDescriptors(groupNames, config).subscribe({
                 next: (aspects) => {
                     expect(aspects[0].name).toBe('exif:exif');
-                    expect(aspects[0].properties).toContain(<GroupProperty> { name: 'exif:2' });
-                    expect(aspects[0].properties).not.toContain(<GroupProperty> { name: 'exif:1' });
-                }
+                    expect(aspects[0].properties).toContain(<Property> { name: 'exif:2' });
+                    expect(aspects[0].properties).not.toContain(<Property> { name: 'exif:1' });
+                },
+                complete: done
             });
         });
 
-        it('should accept "*" wildcard for aspect properties', () => {
-            spyOn(aspectProperties, 'load').and.callFake(() => {
+        // TODO: move it to the right place
+        it('should accept "*" wildcard for group properties', (done) => {
+            spyOn(propertyDescriptorsLoaderService, 'load').and.callFake(() => {
                 return Observable.of([
                     {
                         name: 'exif:exif',
@@ -161,27 +144,29 @@ describe('PropertyDescriptorsService', () => {
                 ]);
             });
 
-            testPresets.default = {
+            config = new AspectOrientedConfigService({
                 'exif:exif': '*',
                 'custom:custom': ['custom:1']
-            };
+            });
 
-            contentMetadataService.getAspects(node).subscribe({
+            propertyDescriptorsService.loadDescriptors(groupNames, config).subscribe({
                 next: (aspects) => {
                     expect(aspects.length).toBe(2);
                     expect(aspects[0].name).toBe('exif:exif');
-                    expect(aspects[0].properties).toContain(<GroupProperty> { name: 'exif:1' });
-                    expect(aspects[0].properties).toContain(<GroupProperty> { name: 'exif:2' });
+                    expect(aspects[0].properties).toContain(<Property> { name: 'exif:1' });
+                    expect(aspects[0].properties).toContain(<Property> { name: 'exif:2' });
 
                     expect(aspects[1].name).toBe('custom:custom');
-                    expect(aspects[1].properties).toContain(<GroupProperty> { name: 'custom:1' });
-                    expect(aspects[1].properties).not.toContain(<GroupProperty> { name: 'custom:2' });
-                }
+                    expect(aspects[1].properties).toContain(<Property> { name: 'custom:1' });
+                    expect(aspects[1].properties).not.toContain(<Property> { name: 'custom:2' });
+                },
+                complete: done
             });
         });
 
-        it('should filter out aspects which are not present in app config preset', () => {
-            spyOn(aspectProperties, 'load').and.callFake(() => {
+        // TODO: move it to the right place
+        it('should filter out groups which are not present in app config preset', () => {
+            spyOn(propertyDescriptorsLoaderService, 'load').and.callFake(() => {
                 return Observable.of([
                     {
                         name: 'exif:exif',
@@ -192,16 +177,16 @@ describe('PropertyDescriptorsService', () => {
                 ]);
             });
 
-            testPresets.default = {
+            config = new AspectOrientedConfigService({
                 'exif:exif': ['exif:1'],
                 'banana:banana': ['banana:1']
-            };
+            });
 
-            contentMetadataService.getAspects(node).subscribe({
+            propertyDescriptorsService.loadDescriptors(groupNames, config).subscribe({
                 next: (aspects) => {
                     expect(aspects.length).toBe(1);
                     expect(aspects[0].name).toBe('exif:exif');
-                    expect(aspects[0].properties).toContain(<GroupProperty> { name: 'exif:1' });
+                    expect(aspects[0].properties).toContain(<Property> { name: 'exif:1' });
                 }
             });
         });

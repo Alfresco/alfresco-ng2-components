@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { BasicPropertiesService } from './basic-properties.service';
 import { Observable } from 'rxjs/Observable';
-import { PropertyGroupTranslatorService } from './grouped-properties.service';
+import { PropertyGroupTranslatorService } from './property-groups-translator.service';
 import { CardViewItem } from '@alfresco/adf-core';
 import { CardViewGroup } from '../interfaces/content-metadata.interfaces';
 import { ContentMetadataConfigFactory } from './config/content-metadata-config.factory';

@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { PropertyGroup, Property, ContentMetadataConfig } from '../interfaces/content-metadata.interfaces';
-import { PropertyDescriptorLoaderService } from './properties-loader.service';
+import { PropertyDescriptorsLoaderService } from './property-descriptors-loader.service';
 
 function convertObjectToArray(object: any): Property[] {
     return Object.keys(object).map(key => object[key]);
@@ -27,12 +27,12 @@ function convertObjectToArray(object: any): Property[] {
 @Injectable()
 export class PropertyDescriptorsService {
 
-    constructor(private propertyDescriptorLoaderService: PropertyDescriptorLoaderService) {}
+    constructor(private propertyDescriptorsLoaderService: PropertyDescriptorsLoaderService) {}
 
     loadDescriptors(groupNames: string[], config: ContentMetadataConfig): Observable<PropertyGroup[]> {
         const groupsToLoad = groupNames.filter(groupName => config.isGroupAllowed(groupName));
 
-        return this.propertyDescriptorLoaderService.load(groupsToLoad)
+        return this.propertyDescriptorsLoaderService.load(groupsToLoad)
             .map(this.filterPropertiesByWhitelist.bind(this, config));
     }
 

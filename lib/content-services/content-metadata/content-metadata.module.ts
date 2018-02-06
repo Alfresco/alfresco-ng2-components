@@ -24,13 +24,11 @@ import { CardViewModule , FileSizePipe } from '@alfresco/adf-core';
 import { ContentMetadataComponent } from './components/content-metadata/content-metadata.component';
 import { ContentMetadataCardComponent } from './components/content-metadata-card/content-metadata-card.component';
 import { PropertyDescriptorsService } from './services/property-descriptors.service';
-import { PropertyDescriptorLoaderService } from './services/properties-loader.service';
+import { PropertyDescriptorsLoaderService } from './services/property-descriptors-loader.service';
 import { ContentMetadataConfigFactory } from './services/config/content-metadata-config.factory';
-import { AspectOrientedConfigService } from './services/config/aspect-oriented-config.service';
-import { IndifferentConfigService } from './services/config/indifferent-config.service';
 import { BasicPropertiesService } from './services/basic-properties.service';
 import { ContentMetadataService } from './services/content-metadata.service';
-import { PropertyGroupTranslatorService } from './services/grouped-properties.service';
+import { PropertyGroupTranslatorService } from './services/property-groups-translator.service';
 
 @NgModule({
     imports: [
@@ -51,10 +49,8 @@ import { PropertyGroupTranslatorService } from './services/grouped-properties.se
     providers: [
         ContentMetadataService,
         PropertyDescriptorsService,
-        PropertyDescriptorLoaderService,
+        PropertyDescriptorsLoaderService,
         ContentMetadataConfigFactory,
-        AspectOrientedConfigService,
-        IndifferentConfigService,
         BasicPropertiesService,
         PropertyGroupTranslatorService,
         FileSizePipe

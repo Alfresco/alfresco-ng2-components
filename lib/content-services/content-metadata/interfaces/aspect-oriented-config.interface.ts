@@ -15,4 +15,6 @@
  * limitations under the License.
  */
 
-export declare type AspectOrientedConfig = any[];
+export declare interface AspectOrientedConfig {
+    [key: string]: string | string[];
+}

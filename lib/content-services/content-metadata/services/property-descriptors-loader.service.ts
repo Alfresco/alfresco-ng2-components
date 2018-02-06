@@ -22,7 +22,7 @@ import { Observable } from 'rxjs/Observable';
 import { defer } from 'rxjs/observable/defer';
 
 @Injectable()
-export class PropertyDescriptorLoaderService {
+export class PropertyDescriptorsLoaderService {
 
     constructor(private alfrescoApiService: AlfrescoApiService) {}
 

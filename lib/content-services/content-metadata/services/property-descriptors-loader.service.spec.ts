@@ -16,27 +16,27 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { PropertyDescriptorLoaderService } from './properties-loader.service';
+import { PropertyDescriptorsLoaderService } from './property-descriptors-loader.service';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { ClassesApi } from 'alfresco-js-api';
 
 describe('PropertyDescriptorLoaderService', () => {
 
-    let aspectProperties: PropertyDescriptorLoaderService,
+    let propertyDescriptorsLoaderService: PropertyDescriptorsLoaderService,
         classesApi: ClassesApi;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             providers: [
-                PropertyDescriptorLoaderService,
+                PropertyDescriptorsLoaderService,
                 AlfrescoApiService
             ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
-        aspectProperties = TestBed.get(PropertyDescriptorLoaderService);
+        propertyDescriptorsLoaderService = TestBed.get(PropertyDescriptorsLoaderService);
         const alfrescoApiService = TestBed.get(AlfrescoApiService);
         classesApi = alfrescoApiService.classesApi;
     });
@@ -45,10 +45,10 @@ describe('PropertyDescriptorLoaderService', () => {
         TestBed.resetTestingModule();
     });
 
-    it('should load the aspects passed by paramter', () => {
+    it('should load the groups passed by paramter', () => {
         spyOn(classesApi, 'getClass');
 
-        aspectProperties.load(['exif:exif', 'cm:content', 'custom:custom'])
+        propertyDescriptorsLoaderService.load(['exif:exif', 'cm:content', 'custom:custom'])
             .subscribe(() => {});
 
         expect(classesApi.getClass).toHaveBeenCalledTimes(3);
@@ -83,7 +83,7 @@ describe('PropertyDescriptorLoaderService', () => {
             return Observable.of(apiResponses[counter++]);
         });
 
-        aspectProperties.load(['exif:exif', 'cm:content'])
+        propertyDescriptorsLoaderService.load(['exif:exif', 'cm:content'])
             .subscribe({
                 next: (data) => {
                     expect(data[0]).toBe(exifResponse);
