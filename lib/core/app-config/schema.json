@@ -248,6 +248,24 @@
                 }
             }
         },
+        "adf-task-header": {
+            "description": "Task header component configuration",
+            "type": "object",
+            "properties": {
+                "presets": {
+                    "description": "Presets for task header component",
+                    "type": "object",
+                    "properties": {
+                        "properties": {
+                              "type": "array",
+                              "items": {
+                                "enum": [ "assignee", "status", "priority", "dueDate", "category", "parentName", "created-by", "created", "id", "description", "formName" ]
+                              }
+                        }
+                    }
+                }
+            }
+        },
         "adf-task-list": {
             "description": "Task list component configuration",
             "type": "object",
