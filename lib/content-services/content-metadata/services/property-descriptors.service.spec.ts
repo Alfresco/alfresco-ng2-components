@@ -75,29 +75,6 @@ describe('PropertyDescriptorsService', () => {
         });
 
         // TODO: move it to the right place
-        // it('should call the aspect properties loading for all the node aspectNames if there is no preset data defined in the app config', () => {
-        //     spyOn(propertyDescriptorsLoaderService, 'load').and.callFake(x => Observable.of({}));
-        //     spyOn(logService, 'error').and.stub();
-        //     appConfigService.config['content-metadata'] = undefined;
-
-        //     propertyDescriptorsService.loadDescriptors(node);
-
-        //     expect(logService.error).not.toHaveBeenCalled();
-        //     expect(propertyDescriptorsLoaderService.load).toHaveBeenCalledWith(['exif:exif', 'cm:content', 'custom:custom']);
-        // });
-
-        // TODO: move it to the right place
-        // it('should show meaningful error when invalid preset are given', () => {
-        //     spyOn(propertyDescriptorsLoaderService, 'load').and.callFake(x => Observable.of({}));
-        //     spyOn(logService, 'error').and.stub();
-        //     testPresets.pink = { 'cm:content': {}, 'custom:custom': {} };
-
-        //     propertyDescriptorsService.loadDescriptors(node, 'blue');
-
-        //     expect(logService.error).toHaveBeenCalledWith('No content-metadata preset for: blue');
-        // });
-
-        // TODO: move it to the right place
         it('should filter out properties which are not defined in the particular group', (done) => {
             spyOn(propertyDescriptorsLoaderService, 'load').and.callFake(() => {
                 return Observable.of([

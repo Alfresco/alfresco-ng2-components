@@ -27,20 +27,16 @@ export class ContentMetadataConfigFactory {
     static readonly INDIFFERENT_PRESET = '*';
     static readonly DEFAULT_PRESET_NAME = 'default';
 
-    constructor(private appConfigService: AppConfigService,
-                private logService: LogService) {}
+    constructor(private appConfigService: AppConfigService, private logService: LogService) {}
 
-    public get(presetName: string): ContentMetadataConfig {
+    public get(presetName: string = 'default'): ContentMetadataConfig {
         let presetConfig;
         try {
             presetConfig = this.appConfigService.config['content-metadata'].presets[presetName];
-
-            if (!presetConfig && presetName !== ContentMetadataConfigFactory.DEFAULT_PRESET_NAME) {
-                const errorMessage = `No content-metadata preset for: ${presetName}`;
-                this.logService.error(errorMessage);
-                throw new Error(errorMessage);
+        } catch {
+            if (presetName !== ContentMetadataConfigFactory.DEFAULT_PRESET_NAME) {
+                this.logService.error(`No content-metadata preset for: ${presetName}`);
             }
-        } catch (e) {
             presetConfig = ContentMetadataConfigFactory.INDIFFERENT_PRESET;
         }
 
