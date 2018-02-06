@@ -19,12 +19,12 @@ import { async, TestBed } from '@angular/core/testing';
 import { ContentMetadataService } from './content-metadata.service';
 import { PropertyDescriptorsService } from './property-descriptors.service';
 import { BasicPropertiesService } from './basic-properties.service';
-import { GroupedPropertiesService } from './grouped-properties.service';
+import { PropertyGroupTranslatorService } from './grouped-properties.service';
 import { AspectWhiteListService } from './aspect-whitelist.service';
 import { PropertyDescriptorLoaderService } from './properties-loader.service';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
-import { Aspect, AspectProperty } from '../interfaces/content-metadata.interfaces';
+import { Group, GroupProperty } from '../interfaces/content-metadata.interfaces';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import {
     CardViewTextItemModel,
@@ -40,9 +40,9 @@ describe('ContentMetadataService', () => {
 
     let service: ContentMetadataService,
         descriptorsService: PropertyDescriptorsService,
-        aspects: Aspect[],
-        aspect: Aspect,
-        aspectProperty: AspectProperty,
+        aspects: Group[],
+        aspect: Group,
+        aspectProperty: GroupProperty,
         node: MinimalNodeEntryEntity;
 
     const dummyPreset = 'default';
@@ -52,7 +52,7 @@ describe('ContentMetadataService', () => {
             providers: [
                 ContentMetadataService,
                 BasicPropertiesService,
-                GroupedPropertiesService,
+                PropertyGroupTranslatorService,
                 AspectWhiteListService,
                 PropertyDescriptorLoaderService,
                 AlfrescoApiService,
@@ -183,7 +183,7 @@ describe('ContentMetadataService', () => {
 
     describe('Different types\'s attributes', () => {
 
-        GroupedPropertiesService.RECOGNISED_ECM_TYPES.forEach((dataType) => {
+        PropertyGroupTranslatorService.RECOGNISED_ECM_TYPES.forEach((dataType) => {
             it(`should translate properly the basic attributes of a property for ${dataType}`, () => {
                 aspectProperty.name = 'prefix:name';
                 aspectProperty.title = 'title';

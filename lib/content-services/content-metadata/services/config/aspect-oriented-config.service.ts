@@ -16,30 +16,32 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AspectOrientedConfig, ConfigParser } from './content-metadata-config.service';
+import { ContentMetadataConfig, AspectOrientedConfig } from '../../interfaces/content-metadata.interfaces';
 
 @Injectable()
-export class AspectOrientedConfigParserService implements ConfigParser {
+export class AspectOrientedConfigService implements ContentMetadataConfig {
 
-    public isGroupAllowed(config: AspectOrientedConfig, groupName: string) {
-        const groupNames = Object.keys(config);
+    constructor(private config: AspectOrientedConfig) {}
+
+    public isGroupAllowed(groupName: string) {
+        const groupNames = Object.keys(this.config);
         return groupNames.indexOf(groupName) !== -1;
     }
 
-    public isPropertyAllowed(config: AspectOrientedConfig, groupName: string, propertyName: string) {
-        if (this.isEveryPropertyAllowedFor(config, groupName)) {
+    public isPropertyAllowed(groupName: string, propertyName: string) {
+        if (this.isEveryPropertyAllowedFor(groupName)) {
             return true;
         }
 
-        if (config[groupName]) {
-            return config[groupName].indexOf(propertyName) !== -1;
+        if (this.config[groupName]) {
+            return this.config[groupName].indexOf(propertyName) !== -1;
         }
 
         return false;
     }
 
-    private isEveryPropertyAllowedFor(preset: AspectOrientedConfig, groupName: string): boolean {
-        const allowedProperties = preset[groupName];
+    private isEveryPropertyAllowedFor(groupName: string): boolean {
+        const allowedProperties = this.config[groupName];
         return typeof allowedProperties === 'string' && allowedProperties === '*';
     }
 }

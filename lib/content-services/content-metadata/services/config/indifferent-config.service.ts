@@ -15,11 +15,19 @@
  * limitations under the License.
  */
 
-import { AspectProperty } from "./aspect-property.interface";
+import { Injectable } from '@angular/core';
+import { ContentMetadataConfig, InDifferentConfig } from '../../interfaces/content-metadata.interfaces';
 
-export interface Aspect {
-    name: string;
-    title: string;
-    description: string;
-    properties: AspectProperty[]
+@Injectable()
+export class IndifferentConfigService implements ContentMetadataConfig {
+
+    constructor(config: InDifferentConfig) {}
+
+    public isGroupAllowed(groupName: string) {
+        return true;
+    }
+
+    public isPropertyAllowed(groupName: string, propertyName: string) {
+        return true;
+    }
 }

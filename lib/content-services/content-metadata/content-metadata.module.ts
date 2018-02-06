@@ -25,12 +25,12 @@ import { ContentMetadataComponent } from './components/content-metadata/content-
 import { ContentMetadataCardComponent } from './components/content-metadata-card/content-metadata-card.component';
 import { PropertyDescriptorsService } from './services/property-descriptors.service';
 import { PropertyDescriptorLoaderService } from './services/properties-loader.service';
-import { ContentMetadataConfigService } from './services/config/content-metadata-config.service';
-import { AspectOrientedConfigParserService } from './services/config/aspect-oriented-config-parser.service';
-import { IndifferentConfigParserService } from './services/config/indifferent-config-parser.service';
+import { ContentMetadataConfigFactory } from './services/config/content-metadata-config.factory';
+import { AspectOrientedConfigService } from './services/config/aspect-oriented-config.service';
+import { IndifferentConfigService } from './services/config/indifferent-config.service';
 import { BasicPropertiesService } from './services/basic-properties.service';
 import { ContentMetadataService } from './services/content-metadata.service';
-import { GroupedPropertiesService } from './services/grouped-properties.service';
+import { PropertyGroupTranslatorService } from './services/grouped-properties.service';
 
 @NgModule({
     imports: [
@@ -52,11 +52,11 @@ import { GroupedPropertiesService } from './services/grouped-properties.service'
         ContentMetadataService,
         PropertyDescriptorsService,
         PropertyDescriptorLoaderService,
-        ContentMetadataConfigService,
-        AspectOrientedConfigParserService,
-        IndifferentConfigParserService,
+        ContentMetadataConfigFactory,
+        AspectOrientedConfigService,
+        IndifferentConfigService,
         BasicPropertiesService,
-        GroupedPropertiesService,
+        PropertyGroupTranslatorService,
         FileSizePipe
     ]
 })

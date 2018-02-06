@@ -26,11 +26,11 @@ export class PropertyDescriptorLoaderService {
 
     constructor(private alfrescoApiService: AlfrescoApiService) {}
 
-    load(aspects: string[]): Observable<any> {
-        const aspectFetchStreams = aspects
-            .map(aspectName => aspectName.replace(':', '_'))
-            .map(aspectName => defer( () => this.alfrescoApiService.classesApi.getClass(aspectName)) );
+    load(groupNames: string[]): Observable<any> {
+        const groupFetchStreams = groupNames
+            .map(groupName => groupName.replace(':', '_'))
+            .map(groupName => defer( () => this.alfrescoApiService.classesApi.getClass(groupName)) );
 
-        return forkJoin(aspectFetchStreams);
+        return forkJoin(groupFetchStreams);
     }
 }

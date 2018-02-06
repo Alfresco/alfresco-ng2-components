@@ -15,11 +15,7 @@
  * limitations under the License.
  */
 
-export * from './aspect-oriented-config.interface';
-export * from './property.interface';
-export * from './property-group.interface';
-export * from './card-view-group.interface';
-export * from './content-metadata-config.interface';
-export * from './indifferent-config.interface';
-export * from './layout-oriented-config.interface';
-export * from './preset-config.interface';
+export interface ContentMetadataConfig {
+    isGroupAllowed(groupname: string): boolean;
+    isPropertyAllowed(groupName: string, propertyName: string): boolean;
+}

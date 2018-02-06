@@ -16,43 +16,35 @@
  */
 
 import { Injectable } from '@angular/core';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
-import { Aspect, AspectProperty } from '../interfaces/content-metadata.interfaces';
+import { PropertyGroup, Property, ContentMetadataConfig } from '../interfaces/content-metadata.interfaces';
 import { PropertyDescriptorLoaderService } from './properties-loader.service';
-import { ContentMetadataConfigService } from './config/content-metadata-config.service';
+
+function convertObjectToArray(object: any): Property[] {
+    return Object.keys(object).map(key => object[key]);
+}
 
 @Injectable()
 export class PropertyDescriptorsService {
 
-    constructor(private aspectPropertiesService: PropertyDescriptorLoaderService,
-                private contentMetadataConfigService: ContentMetadataConfigService) {}
+    constructor(private propertyDescriptorLoaderService: PropertyDescriptorLoaderService) {}
 
-    getAspects(node: MinimalNodeEntryEntity): Observable<Aspect[]> {
-        return this.loadAspectDescriptors(node.aspectNames)
-            .map(this.filterPropertiesByWhitelist.bind(this));
+    loadDescriptors(groupNames: string[], config: ContentMetadataConfig): Observable<PropertyGroup[]> {
+        const groupsToLoad = groupNames.filter(groupName => config.isGroupAllowed(groupName));
+
+        return this.propertyDescriptorLoaderService.load(groupsToLoad)
+            .map(this.filterPropertiesByWhitelist.bind(this, config));
     }
 
-    private loadAspectDescriptors(aspectsAssignedToNode: string[]): Observable<any> {
-        const aspectsToLoad = aspectsAssignedToNode
-            .filter(nodeAspectName => this.contentMetadataConfigService.isGroupAllowed(nodeAspectName));
-
-        return this.aspectPropertiesService.load(aspectsToLoad);
-    }
-
-    private filterPropertiesByWhitelist(aspectDescriptors): Aspect[] {
-        return aspectDescriptors.map((aspectDescriptor) => {
-            return Object.assign({}, aspectDescriptor, {
-                properties: this.getFilteredPropertiesArray(aspectDescriptor)
+    private filterPropertiesByWhitelist(config: ContentMetadataConfig, groupDescriptors: PropertyGroup[]): PropertyGroup[] {
+        return groupDescriptors
+            .map((groupDescriptor) => {
+                const filteredPropertiesArray = convertObjectToArray(groupDescriptor.properties)
+                    .filter(property => config.isPropertyAllowed(groupDescriptor.name, property.name));
+                
+                return Object.assign({}, groupDescriptor, {
+                    properties: filteredPropertiesArray
+                });
             });
-        });
-    }
-
-    private getFilteredPropertiesArray(aspectDescriptor): AspectProperty[] {
-        const aspectName = aspectDescriptor.name;
-
-        return Object.keys(aspectDescriptor.properties)
-            .map(propertyName => aspectDescriptor.properties[propertyName])
-            .filter(property => this.contentMetadataConfigService.isPropertyAllowed(aspectName, property.name));
     }
 }

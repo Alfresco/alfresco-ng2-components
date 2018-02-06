@@ -15,17 +15,5 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
-import { InDifferentConfig, ConfigParser } from './content-metadata-config.service';
-
-@Injectable()
-export class IndifferentConfigParserService implements ConfigParser {
-
-    public isGroupAllowed(config: InDifferentConfig, groupName: string) {
-        return true;
-    }
-
-    public isPropertyAllowed(config: InDifferentConfig, groupName: string, propertyName: string) {
-        return true;
-    }
-}
+export declare type InDifferentConfig = '*';
+ 

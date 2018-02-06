@@ -19,18 +19,20 @@ import { Injectable } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { BasicPropertiesService } from './basic-properties.service';
 import { Observable } from 'rxjs/Observable';
-import { GroupedPropertiesService } from './grouped-properties.service';
+import { PropertyGroupTranslatorService } from './grouped-properties.service';
 import { CardViewItem } from '@alfresco/adf-core';
 import { CardViewGroup } from '../interfaces/content-metadata.interfaces';
-import { ContentMetadataConfigService } from './config/content-metadata-config.service';
+import { ContentMetadataConfigFactory } from './config/content-metadata-config.factory';
+import { PropertyDescriptorsService } from './property-descriptors.service';
 
 @Injectable()
 export class ContentMetadataService {
 
     constructor(
         private basicPropertiesService: BasicPropertiesService, 
-        private groupedPropertiesService: GroupedPropertiesService,
-        private contentMetadataConfigService: ContentMetadataConfigService
+        private propertyGroupTranslatorService: PropertyGroupTranslatorService,
+        private propertyDescriptorsService: PropertyDescriptorsService,
+        private contentMetadataConfigFactory: ContentMetadataConfigFactory
     ) {}
 
     getBasicProperties(node: MinimalNodeEntryEntity): Observable<CardViewItem[]> {
@@ -38,8 +40,10 @@ export class ContentMetadataService {
     }
 
     getGroupedProperties(node: MinimalNodeEntryEntity, presetName: string = 'default'): Observable<CardViewGroup[]> {
-        this.contentMetadataConfigService.use(presetName);
-        return this.groupedPropertiesService.getProperties(node);
+        const config = this.contentMetadataConfigFactory.get(presetName);
+
+        return this.propertyDescriptorsService.loadDescriptors(node.aspectNames, config)
+            .map(groups => this.propertyGroupTranslatorService.translateToCardViewGroups(groups, node.properties) );
     }
 
     // private transformByPreset(preset: PresetConfig, propertiesGroups: CardViewGroup[]) {

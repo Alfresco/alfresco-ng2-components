@@ -25,7 +25,7 @@ import { ContentMetadataComponent } from '../content-metadata/content-metadata.c
 import { MatExpansionModule, MatCardModule, MatButtonModule, MatIconModule } from '@angular/material';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { BasicPropertiesService } from '../../services/basic-properties.service';
-import { GroupedPropertiesService } from '../../services/grouped-properties.service';
+import { PropertyGroupTranslatorService } from '../../services/grouped-properties.service';
 import { PropertyDescriptorLoaderService } from '../../services/properties-loader.service';
 import { PropertyDescriptorsService } from '../../services/property-descriptors.service';
 import { AspectWhiteListService } from '../../services/aspect-whitelist.service';
@@ -53,7 +53,7 @@ describe('ContentMetadataCardComponent', () => {
             providers: [
                 ContentMetadataService,
                 BasicPropertiesService,
-                GroupedPropertiesService,
+                PropertyGroupTranslatorService,
                 PropertyDescriptorLoaderService,
                 PropertyDescriptorsService,
                 AspectWhiteListService,
