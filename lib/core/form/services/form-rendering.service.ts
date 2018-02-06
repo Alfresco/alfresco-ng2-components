@@ -36,7 +36,8 @@ import {
     TextWidgetComponent,
     TypeaheadWidgetComponent,
     UnknownWidgetComponent,
-    UploadWidgetComponent
+    UploadWidgetComponent,
+    DateTimeWidgetComponent
 } from './../components/widgets/index';
 
 @Injectable()
@@ -62,7 +63,8 @@ export class FormRenderingService extends DynamicComponentMapper {
         'container': DynamicComponentResolver.fromType(ContainerWidgetComponent),
         'group': DynamicComponentResolver.fromType(ContainerWidgetComponent),
         'document': DynamicComponentResolver.fromType(DocumentWidgetComponent),
-        'upload':  DynamicComponentResolver.fromType(UploadWidgetComponent)
+        'upload':  DynamicComponentResolver.fromType(UploadWidgetComponent),
+        'datetime':  DynamicComponentResolver.fromType(DateTimeWidgetComponent),
     };
 
     constructor() {

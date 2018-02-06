@@ -1,0 +1,17 @@
+@import '../form';
+
+.adf {
+
+    &-date-time-widget {
+
+        .mat-input-suffix {
+            text-align: right;
+            position: absolute;
+            margin-top: 30px;
+            width: 100%;
+        }
+
+    }
+
+}
+
