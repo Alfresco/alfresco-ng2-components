@@ -17,7 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { CardViewUpdateService } from '@alfresco/adf-core';
+import { CardViewUpdateService, AppConfigService } from '@alfresco/adf-core';
 import { BpmUserService } from '@alfresco/adf-core';
 import { MaterialModule } from '../../material.module';
 import { Observable } from 'rxjs/Observable';
@@ -39,6 +39,7 @@ describe('TaskHeaderComponent', () => {
     let component: TaskHeaderComponent;
     let fixture: ComponentFixture<TaskHeaderComponent>;
     let userBpmService: BpmUserService;
+    let appConfigService: AppConfigService;
 
     let fakeBpmAssignedUser = {
         id: 1001,
@@ -65,7 +66,8 @@ describe('TaskHeaderComponent', () => {
             providers: [
                 TaskListService,
                 BpmUserService,
-                CardViewUpdateService
+                CardViewUpdateService,
+                AppConfigService
             ]
         }).compileComponents();
     }));
@@ -77,6 +79,7 @@ describe('TaskHeaderComponent', () => {
         userBpmService = TestBed.get(BpmUserService);
         spyOn(userBpmService, 'getCurrentUserInfo').and.returnValue(Observable.of(fakeBpmAssignedUser));
         component.taskDetails = new TaskDetailsModel(taskDetailsMock);
+        appConfigService = TestBed.get(AppConfigService);
     });
 
     it('should render empty component if no task details provided', () => {
@@ -277,6 +280,38 @@ describe('TaskHeaderComponent', () => {
         fixture.detectChanges();
         let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-formName"] .adf-property-value'));
         expect(valueEl.nativeElement.innerText).toBe('ADF_TASK_LIST.PROPERTIES.FORM_NAME_DEFAULT');
+    });
+
+    describe('Config Filtering', () => {
+
+        it('should show only the properties from the configuration file', () => {
+            spyOn(appConfigService, 'get').and.returnValue(['assignee', 'status']);
+            component.taskDetails.processInstanceId = '1';
+            component.taskDetails.processDefinitionName = 'Parent Name';
+            component.ngOnChanges({});
+            fixture.detectChanges();
+            let propertyList = fixture.debugElement.queryAll(By.css('.adf-property-list .adf-property'));
+            expect(propertyList).toBeDefined();
+            expect(propertyList).not.toBeNull();
+            expect(propertyList.length).toBe(2);
+            expect(propertyList[0].nativeElement.textContent).toContain('ADF_TASK_LIST.PROPERTIES.ASSIGNEE');
+            expect(propertyList[1].nativeElement.textContent).toContain('ADF_TASK_LIST.PROPERTIES.STATUS');
+        });
+
+        it('should show all the default properties if there is no configuration', () => {
+            spyOn(appConfigService, 'get').and.returnValue(null);
+            component.taskDetails.processInstanceId = '1';
+            component.taskDetails.processDefinitionName = 'Parent Name';
+            component.ngOnChanges({});
+            fixture.detectChanges();
+            let propertyList = fixture.debugElement.queryAll(By.css('.adf-property-list .adf-property'));
+            expect(propertyList).toBeDefined();
+            expect(propertyList).not.toBeNull();
+            expect(propertyList.length).toBe(component.properties.length);
+            expect(propertyList[0].nativeElement.textContent).toContain('ADF_TASK_LIST.PROPERTIES.ASSIGNEE');
+            expect(propertyList[1].nativeElement.textContent).toContain('ADF_TASK_LIST.PROPERTIES.STATUS');
+        });
+
     });
 
 });
