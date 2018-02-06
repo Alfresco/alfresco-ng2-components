@@ -608,7 +608,15 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         };
 
         this.apiService.sitesApi.getSites(options)
-            .then((page: NodePaging) => this.onPageLoaded(page, merge))
+            .then((page: NodePaging) => {
+                page.list.entries.map(
+                    ({entry}: any) => {
+                        entry.name = entry.name || entry.title;
+                        return {entry};
+                    }
+                );
+                this.onPageLoaded(page, merge);
+        })
             .catch(error => this.error.emit(error));
     }
 
@@ -626,6 +634,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                         entries: result.list.entries
                             .map(({entry: {site}}: any) => {
                                 site.allowableOperations = site.allowableOperations ? site.allowableOperations : [this.CREATE_PERMISSION];
+                                site.name = site.name || site.title;
                                 return {
                                     entry: site
                                 };
