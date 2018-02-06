@@ -27,7 +27,9 @@ import {
     fakeNodeAnswerWithEntries,
     fakeNodeAnswerWithNOEntries,
     fakeNodeWithCreatePermission,
-    fakeNodeWithNoPermission
+    fakeNodeWithNoPermission,
+    fakeGetSitesAnswer,
+    fakeGetSiteMembership
 } from '../../mock';
 import { MaterialModule } from '../../material.module';
 import { ContentActionModel } from '../models/content-action.model';
@@ -1017,6 +1019,34 @@ describe('DocumentList', () => {
         documentList.loadFolderByNodeId('-sites-');
     });
 
+    it('should assure that sites have name property set', (done) => {
+        const sitesApi = apiService.getInstance().core.sitesApi;
+        spyOn(sitesApi, 'getSites').and.returnValue(Promise.resolve(fakeGetSitesAnswer));
+
+        documentList.loadFolderByNodeId('-sites-');
+        expect(sitesApi.getSites).toHaveBeenCalled();
+
+        documentList.ready.subscribe((page) => {
+            const entriesWithoutName = page.list.entries.filter(item => !item.entry.name);
+            expect(entriesWithoutName.length).toBe(0);
+            done();
+        });
+    });
+
+    it('should assure that sites have name property set correctly', (done) => {
+        const sitesApi = apiService.getInstance().core.sitesApi;
+        spyOn(sitesApi, 'getSites').and.returnValue(Promise.resolve(fakeGetSitesAnswer));
+
+        documentList.loadFolderByNodeId('-sites-');
+        expect(sitesApi.getSites).toHaveBeenCalled();
+
+        documentList.ready.subscribe((page) => {
+            const wrongName = page.list.entries.filter(item => (item.entry.name !== item.entry.title));
+            expect(wrongName.length).toBe(0);
+            done();
+        });
+    });
+
     it('should fetch user membership sites', () => {
         const peopleApi = apiService.getInstance().core.peopleApi;
         spyOn(peopleApi, 'getSiteMembership').and.returnValue(Promise.resolve());
@@ -1035,6 +1065,34 @@ describe('DocumentList', () => {
         });
 
         documentList.loadFolderByNodeId('-mysites-');
+    });
+
+    it('should assure that user membership sites have name property set', (done) => {
+        const peopleApi = apiService.getInstance().core.peopleApi;
+        spyOn(peopleApi, 'getSiteMembership').and.returnValue(Promise.resolve(fakeGetSiteMembership));
+
+        documentList.loadFolderByNodeId('-mysites-');
+        expect(peopleApi.getSiteMembership).toHaveBeenCalled();
+
+        documentList.ready.subscribe((page) => {
+            const entriesWithoutName = page.list.entries.filter(item => !item.entry.name);
+            expect(entriesWithoutName.length).toBe(0);
+            done();
+        });
+    });
+
+    it('should assure that user membership sites have name property set correctly', (done) => {
+        const peopleApi = apiService.getInstance().core.peopleApi;
+        spyOn(peopleApi, 'getSiteMembership').and.returnValue(Promise.resolve(fakeGetSiteMembership));
+
+        documentList.loadFolderByNodeId('-mysites-');
+        expect(peopleApi.getSiteMembership).toHaveBeenCalled();
+
+        documentList.ready.subscribe((page) => {
+            const wrongName = page.list.entries.filter(item => (item.entry.name !== item.entry.title));
+            expect(wrongName.length).toBe(0);
+            done();
+        });
     });
 
     it('should fetch favorites', () => {
