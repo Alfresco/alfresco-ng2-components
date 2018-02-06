@@ -47,12 +47,23 @@ describe('FormFieldValidator', () => {
                 value: '<value>'
             });
 
+            field.isVisible = true;
             field.required = false;
             expect(validator.isSupported(field)).toBeFalsy();
             expect(validator.validate(field)).toBeTruthy();
 
             field.required = true;
             expect(validator.isSupported(field)).toBeTruthy();
+            expect(validator.validate(field)).toBeTruthy();
+        });
+
+        it('should simply validate as true if the mandatory field is not visible', () => {
+            let field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.TEXT,
+                value: '<value>'
+            });
+            field.required = true;
+            field.isVisible = false;
             expect(validator.validate(field)).toBeTruthy();
         });
 
@@ -69,6 +80,7 @@ describe('FormFieldValidator', () => {
                 required: true
             });
 
+            field.isVisible = true;
             field.emptyOption = <FormFieldOption> { id: '<empty>' };
             expect(validator.validate(field)).toBeFalsy();
 
@@ -84,6 +96,7 @@ describe('FormFieldValidator', () => {
                 options: [{ id: 'two', name: 'two' }]
             });
 
+            field.isVisible = true;
             expect(validator.validate(field)).toBeFalsy();
         });
 
@@ -95,6 +108,7 @@ describe('FormFieldValidator', () => {
                 options: [{ id: 'two', name: 'two' }]
             });
 
+            field.isVisible = true;
             expect(validator.validate(field)).toBeTruthy();
         });
 
@@ -105,6 +119,7 @@ describe('FormFieldValidator', () => {
                 required: true
             });
 
+            field.isVisible = true;
             field.value = null;
             expect(validator.validate(field)).toBeFalsy();
 
@@ -119,6 +134,7 @@ describe('FormFieldValidator', () => {
                 required: true
             });
 
+            field.isVisible = true;
             expect(validator.validate(field)).toBeTruthy();
         });
 
@@ -129,6 +145,7 @@ describe('FormFieldValidator', () => {
                 required: true
             });
 
+            field.isVisible = true;
             field.value = null;
             expect(validator.validate(field)).toBeFalsy();
 
@@ -143,6 +160,7 @@ describe('FormFieldValidator', () => {
                 required: true
             });
 
+            field.isVisible = true;
             expect(validator.validate(field)).toBeTruthy();
         });
 
@@ -153,6 +171,7 @@ describe('FormFieldValidator', () => {
                 required: true
             });
 
+            field.isVisible = true;
             field.value = null;
             expect(validator.validate(field)).toBeFalsy();
 
@@ -167,6 +186,7 @@ describe('FormFieldValidator', () => {
                 required: true
             });
 
+            field.isVisible = true;
             expect(validator.validate(field)).toBeTruthy();
         });
 

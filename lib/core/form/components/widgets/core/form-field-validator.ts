@@ -54,6 +54,10 @@ export class RequiredFieldValidator implements FormFieldValidator {
     validate(field: FormFieldModel): boolean {
         if (this.isSupported(field)) {
 
+            if (!field.isVisible) {
+                return true;
+            }
+
             if (field.type === FormFieldTypes.DROPDOWN) {
                 if (field.hasEmptyValue && field.emptyOption) {
                     if (field.value === field.emptyOption.id) {

@@ -161,6 +161,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.params = <FormFieldMetadata> json.params || {};
             this.hyperlinkUrl = json.hyperlinkUrl;
             this.displayText = json.displayText;
+            this.isVisible = json.isVisible;
             this.visibilityCondition = <WidgetVisibilityModel> json.visibilityCondition;
             this.enableFractions = <boolean> json.enableFractions;
             this.currency = json.currency;
