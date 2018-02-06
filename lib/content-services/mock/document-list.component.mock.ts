@@ -115,3 +115,79 @@ export const fakeNodeAnswerWithNOEntries = {
         'entries': []
     }
 };
+
+export const fakeGetSitesAnswer = {
+    'list': {
+        'pagination': {
+            'count': 3,
+            'hasMoreItems': false,
+            'totalItems': 3,
+            'skipCount': 0,
+            'maxItems': 20
+        },
+        'entries': [{
+            'entry': {
+                'role': 'SiteManager',
+                'visibility': 'PRIVATE',
+                'guid': 'ac65fdbe-0c79-4f67-bd6a-b89a2768561b',
+                'id': 'admin-site',
+                'preset': 'site-dashboard',
+                'title': 'Admin Site'
+            }
+        }, {
+            'entry': {
+                'role': 'SiteManager',
+                'visibility': 'PUBLIC',
+                'guid': 'b4cff62a-664d-4d45-9302-98723eac1319',
+                'description': 'This is a Sample Alfresco Team site.',
+                'id': 'swsdp',
+                'preset': 'site-dashboard',
+                'title': 'Sample: Web Site Design Project'
+            }
+        }, {
+            'entry': {
+                'visibility': 'PUBLIC',
+                'guid': 'af36cf8f-d43c-4a4b-84e6-d1b03e3a2ce5',
+                'id': 'test-site',
+                'preset': 'site-dashboard',
+                'title': 'Test Site'
+            }
+        }]
+    }
+};
+
+export const fakeGetSiteMembership = {
+    'list': {
+        'pagination': {
+            'count': 2,
+            'hasMoreItems': false,
+            'totalItems': 2,
+            'skipCount': 0,
+            'maxItems': 20
+        },
+        'entries': [{
+            'entry': {
+                'site': {
+                    'role': 'SiteManager',
+                    'visibility': 'PRIVATE',
+                    'guid': 'ac65fdbe-0c79-4f67-bd6a-b89a2768561b',
+                    'id': 'admin-site',
+                    'preset': 'site-dashboard',
+                    'title': 'Admin Site'
+                }, 'role': 'SiteManager', 'guid': 'ac65fdbe-0c79-4f67-bd6a-b89a2768561b', 'id': 'admin-site'
+            }
+        }, {
+            'entry': {
+                'site': {
+                    'role': 'SiteManager',
+                    'visibility': 'PUBLIC',
+                    'guid': 'b4cff62a-664d-4d45-9302-98723eac1319',
+                    'description': 'This is a Sample Alfresco Team site.',
+                    'id': 'swsdp',
+                    'preset': 'site-dashboard',
+                    'title': 'Sample: Web Site Design Project'
+                }, 'role': 'SiteManager', 'guid': 'b4cff62a-664d-4d45-9302-98723eac1319', 'id': 'swsdp'
+            }
+        }]
+    }
+};
