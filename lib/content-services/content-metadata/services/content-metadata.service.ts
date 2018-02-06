@@ -29,7 +29,7 @@ import { PropertyDescriptorsService } from './property-descriptors.service';
 export class ContentMetadataService {
 
     constructor(
-        private basicPropertiesService: BasicPropertiesService, 
+        private basicPropertiesService: BasicPropertiesService,
         private propertyGroupTranslatorService: PropertyGroupTranslatorService,
         private propertyDescriptorsService: PropertyDescriptorsService,
         private contentMetadataConfigFactory: ContentMetadataConfigFactory
@@ -59,6 +59,6 @@ export class ContentMetadataService {
     //     else if (this.contentMetadataConfigService.isLayoutOriented(preset)) {
     //         console.log('Not supported yet');
     //         return [];
-    //     }   
+    //     }
     // }
 }

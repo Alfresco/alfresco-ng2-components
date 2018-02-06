@@ -15,5 +15,4 @@
  * limitations under the License.
  */
 
-export interface LayoutOrientedConfig {};
- 
+export interface LayoutOrientedConfig {}

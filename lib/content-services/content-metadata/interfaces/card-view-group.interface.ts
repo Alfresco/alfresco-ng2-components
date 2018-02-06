@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { CardViewItem} from '@alfresco/adf-core';
+import { CardViewItem } from '@alfresco/adf-core';
 
 export interface CardViewGroup {
     title: string;
-    properties: CardViewItem[]
+    properties: CardViewItem[];
 }

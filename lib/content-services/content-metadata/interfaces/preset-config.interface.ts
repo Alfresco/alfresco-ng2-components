@@ -14,9 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { InDifferentConfig } from "./indifferent-config.interface";
-import { AspectOrientedConfig } from "./aspect-oriented-config.interface";
-import { LayoutOrientedConfig } from "./layout-oriented-config.interface";
+import { InDifferentConfig } from './indifferent-config.interface';
+import { AspectOrientedConfig } from './aspect-oriented-config.interface';
+import { LayoutOrientedConfig } from './layout-oriented-config.interface';
 
 export declare type PresetConfig = InDifferentConfig | AspectOrientedConfig | LayoutOrientedConfig;
- 

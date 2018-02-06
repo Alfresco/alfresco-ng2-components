@@ -49,13 +49,13 @@ export class ContentMetadataConfigFactory {
 
     private createConfig(presetConfig: PresetConfig): ContentMetadataConfig {
         let config: ContentMetadataConfig;
-        
+
         if (this.isAspectOrientedPreset(presetConfig)) {
-            config = new AspectOrientedConfigService(<AspectOrientedConfig>presetConfig);
+            config = new AspectOrientedConfigService(<AspectOrientedConfig> presetConfig);
         } else if (this.isLayoutOrientedPreset(presetConfig)) {
             config = null;
         } else {
-            config = new IndifferentConfigService(<InDifferentConfig>presetConfig);
+            config = new IndifferentConfigService(<InDifferentConfig> presetConfig);
         }
 
         Object.freeze(config);

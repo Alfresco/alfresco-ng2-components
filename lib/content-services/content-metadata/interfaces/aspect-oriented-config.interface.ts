@@ -16,4 +16,3 @@
  */
 
 export declare type AspectOrientedConfig = any[];
- 

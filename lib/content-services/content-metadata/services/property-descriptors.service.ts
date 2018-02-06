@@ -41,7 +41,7 @@ export class PropertyDescriptorsService {
             .map((groupDescriptor) => {
                 const filteredPropertiesArray = convertObjectToArray(groupDescriptor.properties)
                     .filter(property => config.isPropertyAllowed(groupDescriptor.name, property.name));
-                
+
                 return Object.assign({}, groupDescriptor, {
                     properties: filteredPropertiesArray
                 });

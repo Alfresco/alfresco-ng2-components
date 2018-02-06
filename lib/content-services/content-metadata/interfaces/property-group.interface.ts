@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { Property } from "./property.interface";
+import { Property } from './property.interface';
 
 export interface PropertyGroup {
     name: string;
     title: string;
     description: string;
-    properties: Property[]
+    properties: Property[];
 }
