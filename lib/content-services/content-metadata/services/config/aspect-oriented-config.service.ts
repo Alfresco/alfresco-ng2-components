@@ -23,12 +23,12 @@ export class AspectOrientedConfigService implements ContentMetadataConfig {
 
     constructor(private config: AspectOrientedConfig) {}
 
-    public isGroupAllowed(groupName: string) {
+    public isGroupAllowed(groupName: string): boolean {
         const groupNames = Object.keys(this.config);
         return groupNames.indexOf(groupName) !== -1;
     }
 
-    public isPropertyAllowed(groupName: string, propertyName: string) {
+    public isPropertyAllowed(groupName: string, propertyName: string): boolean {
         if (this.isEveryPropertyAllowedFor(groupName)) {
             return true;
         }

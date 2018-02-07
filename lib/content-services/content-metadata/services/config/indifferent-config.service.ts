@@ -23,11 +23,11 @@ export class IndifferentConfigService implements ContentMetadataConfig {
 
     constructor(config: InDifferentConfig) {}
 
-    public isGroupAllowed(groupName: string) {
+    public isGroupAllowed(groupName: string): boolean {
         return true;
     }
 
-    public isPropertyAllowed(groupName: string, propertyName: string) {
+    public isPropertyAllowed(groupName: string, propertyName: string): boolean {
         return true;
     }
 }
