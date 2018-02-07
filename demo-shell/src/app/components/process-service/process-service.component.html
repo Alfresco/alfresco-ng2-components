@@ -33,7 +33,7 @@
                         [appId]="taskFilter?.appId"
                         [presetColumn]="presetColoum"
                         [page]="taskPage"
-                        [size]="taskPagination.maxItems"
+                        [size]="paginationPageSize"
                         [processDefinitionKey]="taskFilter?.filter?.processDefinitionKey"
                         [name]="taskFilter?.filter?.name"
                         [assignment]="taskFilter?.filter?.assignment"
@@ -45,7 +45,7 @@
                         (success)="onSuccessTaskList($event)"
                         (row-click)="onRowClick($event)"
                         (row-dblclick)="onTaskRowDblClick($event)"
-                        #activititasklist>
+                        #taskList>
                         <!-- Custom column definition demo -->
 
                         <!-- <data-columns>
@@ -56,12 +56,14 @@
                     </adf-tasklist>
 
                     <adf-pagination
+                        *ngIf="taskList"
+                        [target]="taskList"
                         (changePageNumber)="onChangePageNumber($event)"
                         (changePageSize)="onChangePageSize($event)"
                         (nextPage)="onNextPage($event)"
                         (prevPage)="onPrevPage($event)"
-                        [pagination]="taskPagination"
-                        [supportedPageSizes]="supportedPages">
+                        [supportedPageSizes]="supportedPages"
+                        #taskListPagination>
                     </adf-pagination>
                 </div>
                 <div class="adf-grid-item adf-tasks-details" *ngIf="!isStartTaskMode()" fxFlex.gt-md="1 1 auto">
