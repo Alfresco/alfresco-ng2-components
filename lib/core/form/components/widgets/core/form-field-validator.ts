@@ -42,7 +42,8 @@ export class RequiredFieldValidator implements FormFieldValidator {
         FormFieldTypes.UPLOAD,
         FormFieldTypes.AMOUNT,
         FormFieldTypes.DYNAMIC_TABLE,
-        FormFieldTypes.DATE
+        FormFieldTypes.DATE,
+        FormFieldTypes.DATETIME
     ];
 
     isSupported(field: FormFieldModel): boolean {
@@ -159,11 +160,14 @@ export class DateFieldValidator implements FormFieldValidator {
 
 export class MinDateFieldValidator implements FormFieldValidator {
 
-    MIN_DATE_FORMAT = 'DD-MM-YYYY';
-
     private supportedTypes = [
-        FormFieldTypes.DATE
+        FormFieldTypes.DATE,
+        FormFieldTypes.DATETIME
     ];
+
+    private isDateTimeField(fieldType: string ): boolean {
+        return fieldType === FormFieldTypes.DATETIME;
+    }
 
     isSupported(field: FormFieldModel): boolean {
         return field &&
@@ -171,30 +175,63 @@ export class MinDateFieldValidator implements FormFieldValidator {
     }
 
     validate(field: FormFieldModel): boolean {
+        let isValid = true;
         if (this.isSupported(field) && field.value) {
             const dateFormat = field.dateDisplayFormat;
 
             if (!DateFieldValidator.isValidDate(field.value, dateFormat)) {
                 field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_DATE';
-                return false;
-            }
-
-            // remove time and timezone info
-            let d;
-            if (typeof field.value === 'string') {
-                d = moment(field.value.split('T')[0], dateFormat);
+                isValid = false;
             } else {
-                d = field.value;
-            }
-            let min = moment(field.minValue, this.MIN_DATE_FORMAT);
-
-            if (d.isBefore(min)) {
-                field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_LESS_THAN`;
-                field.validationSummary.attributes.set('minValue', field.minValue.toLocaleString());
-                return false;
+                if (this.isDateTimeField(field.type)) {
+                    isValid = this.checkDateTime(field, dateFormat);
+                } else {
+                    isValid = this.checkDate(field, dateFormat);
+                }
             }
         }
-        return true;
+        return isValid;
+    }
+
+    private checkDate(field: FormFieldModel, dateFormat: string): boolean {
+        const MIN_DATE_FORMAT = 'DD-MM-YYYY';
+        let isValid = true;
+        // remove time and timezone info
+        let d;
+        if (typeof field.value === 'string') {
+            d = moment(field.value.split('T')[0], dateFormat);
+        } else {
+            d = field.value;
+        }
+        let min = moment(field.minValue, MIN_DATE_FORMAT);
+
+        if (d.isBefore(min)) {
+            field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_LESS_THAN`;
+            field.validationSummary.attributes.set('minValue', field.minValue.toLocaleString());
+            isValid = false;
+        }
+        return isValid;
+    }
+
+    private checkDateTime(field: FormFieldModel, dateFormat: string): boolean {
+        const MIN_DATE_FORMAT = 'YYYY-MM-DDTHH:mm:ssZ';
+        const CHECK_DATE_FORMAT = 'D-M-YYYY hh:mm:s';
+        let isValid = true;
+        // remove time and timezone info
+        let d;
+        if (typeof field.value === 'string') {
+            d = moment(field.value, dateFormat);
+        } else {
+            d = field.value;
+        }
+        let min = moment(field.minValue, MIN_DATE_FORMAT);
+
+        if (moment(d.format(CHECK_DATE_FORMAT)).isBefore(min.format(CHECK_DATE_FORMAT))) {
+            field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_LESS_THAN`;
+            field.validationSummary.attributes.set('minValue', min.format('D-M-YYYYThh-mm-ss'));
+            isValid = false;
+        }
+        return isValid;
     }
 }
 
