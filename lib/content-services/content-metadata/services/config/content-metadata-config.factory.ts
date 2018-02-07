@@ -19,7 +19,14 @@ import { Injectable } from '@angular/core';
 import { AppConfigService, LogService } from '@alfresco/adf-core';
 import { AspectOrientedConfigService } from './aspect-oriented-config.service';
 import { IndifferentConfigService } from './indifferent-config.service';
-import { PresetConfig, ContentMetadataConfig, AspectOrientedConfig, InDifferentConfig } from '../../interfaces/content-metadata.interfaces';
+import { LayoutOrientedConfigService } from './layout-oriented-config.service';
+import {
+    PresetConfig,
+    ContentMetadataConfig,
+    AspectOrientedConfig,
+    InDifferentConfig,
+    LayoutOrientedConfig
+} from '../../interfaces/content-metadata.interfaces';
 
 @Injectable()
 export class ContentMetadataConfigFactory {
@@ -46,10 +53,10 @@ export class ContentMetadataConfigFactory {
     private createConfig(presetConfig: PresetConfig): ContentMetadataConfig {
         let config: ContentMetadataConfig;
 
-        if (this.isAspectOrientedPreset(presetConfig)) {
+        if (this.isLayoutOrientedPreset(presetConfig)) {
+            config = new LayoutOrientedConfigService(<LayoutOrientedConfig> presetConfig);
+        } else if (this.isAspectOrientedPreset(presetConfig)) {
             config = new AspectOrientedConfigService(<AspectOrientedConfig> presetConfig);
-        } else if (this.isLayoutOrientedPreset(presetConfig)) {
-            config = null;
         } else {
             config = new IndifferentConfigService(<InDifferentConfig> presetConfig);
         }

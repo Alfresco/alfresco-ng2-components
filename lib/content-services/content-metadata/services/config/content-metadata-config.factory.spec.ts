@@ -19,6 +19,7 @@ import { async, TestBed } from '@angular/core/testing';
 import { AppConfigService, LogService } from '@alfresco/adf-core';
 import { IndifferentConfigService } from './indifferent-config.service';
 import { AspectOrientedConfigService } from './aspect-oriented-config.service';
+import { LayoutOrientedConfigService } from './layout-oriented-config.service';
 import { ContentMetadataConfigFactory } from './content-metadata-config.factory';
 import { ContentMetadataConfig } from '../../interfaces/content-metadata.interfaces';
 
@@ -103,6 +104,14 @@ describe('ContentMetadataConfigFactory', () => {
             config = factory.get('default');
 
             expect(config).toEqual(jasmine.any(AspectOrientedConfigService));
+        });
+
+        it('should get back the LayoutOrientedConfigService preset if the preset config is layout oriented', () => {
+            setConfig('default', []);
+
+            config = factory.get('default');
+
+            expect(config).toEqual(jasmine.any(LayoutOrientedConfigService));
         });
     });
 });
