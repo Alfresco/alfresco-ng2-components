@@ -7,7 +7,7 @@ import * as heading from "mdast-util-heading-range";
 import * as remark from "remark";
 
 import * as unist from "../unistHelpers";
-import { JsxEmit, isClassDeclaration } from "typescript";
+import { JsxEmit, isClassDeclaration, PropertyDeclaration } from "typescript";
 
 export function initPhase(aggData) {
 }
@@ -18,42 +18,125 @@ export function readPhase(tree, pathname, aggData) {
 export function aggPhase(aggData) {
 }
 
+
+interface NgDocAutoContent {
+    extractClassInfoFromSource(checker: ts.TypeChecker, classDec: ts.ClassDeclaration);
+    addContentToDoc(tree);
+}
+
+class PropData {
+    name: string;
+    type: string;
+    initializer: string;
+    docText: string;
+}
+
+class ComponentDocAutoContent implements NgDocAutoContent {
+    inputs: PropData[];
+    outputs: PropData[];
+
+    constructor() {
+        this.inputs = [];
+        this.outputs = [];
+    }
+
+
+    extractClassInfoFromSource(checker: ts.TypeChecker, classDec: ts.ClassDeclaration) {
+        let sourceFile = classDec.getSourceFile();
+
+        for (var i = 0; i < classDec.members.length; i++) {
+            let member = classDec.members[i];
+
+            if (ts.isPropertyDeclaration(member) ||
+                ts.isGetAccessorDeclaration(member) ||
+                ts.isSetAccessorDeclaration(member)) {
+                let prop: ts.PropertyDeclaration = member;
+
+                let mods = ts.getCombinedModifierFlags(prop);
+                let nonPrivate = (mods & ts.ModifierFlags.Private) === 0;
+                let memSymbol = checker.getSymbolAtLocation(prop.name);
+                
+                if (nonPrivate && memSymbol && prop.decorators) {
+                    let name = memSymbol.getName();
+                    let initializer = "";
+                    
+                    if (prop.initializer) {
+                        initializer = prop.initializer.getText(sourceFile);
+                    }
+                    
+                    let doc = ts.displayPartsToString(memSymbol.getDocumentationComment(checker));
+                    doc = doc.replace(/\r\n/g, " ");
+                    
+                    let propType = checker.typeToString(checker.getTypeOfSymbolAtLocation(memSymbol, memSymbol.valueDeclaration!));
+                    
+                    let dec = prop.decorators[0].getText(sourceFile);
+                
+                    if (dec.match(/@Input/)) {
+                        this.inputs.push({
+                            "name": name,
+                            "type": propType,
+                            "initializer": initializer,
+                            "docText": doc
+                        });
+                    } else if (dec.match(/@Output/)) {
+                        this.outputs.push({
+                            "name": name,
+                            "type": propType,
+                            "initializer": "",
+                            "docText": doc
+                        });
+                    }
+                }
+            }
+        }
+    }
+
+
+    addContentToDoc(tree) {
+        let inTable = buildPropsTable(this.inputs);
+        let outTable = buildPropsTable(this.outputs, false);
+
+        if (inTable) {
+            heading(tree, "Properties", (before, section, after) => {
+                return [before, inTable, after];
+            });
+        }
+
+        if (outTable) {
+            heading(tree, "Events", (before, section, after) => {
+                return [before, outTable, after];
+            });
+        }
+    }
+}
+
+
 export function updatePhase(tree, pathname, aggData) {
     let fileNameNoSuffix = path.basename(pathname, ".md");
 
-    if (fileNameNoSuffix.match(/component/)) {
+    let itemType = fileNameNoSuffix.match(/component|service/);
+
+    if (itemType) {
         let srcData = aggData.srcData[fileNameNoSuffix];
 
         if (srcData) {
             let srcPath = srcData.path;
-            let className = fixCompodocFilename(fileNameNoSuffix);
+            let className = fixAngularFilename(fileNameNoSuffix);
             
-            let inputs = [];
-            let outputs = [];
-            getPropDocData(path.resolve(".", srcPath), className, inputs, outputs);
+            let classData: NgDocAutoContent;
 
-            let inTable = buildInputsTable(inputs);
-            let outTable = buildOutputsTable(outputs);
-
-            if (inTable) {
-                heading(tree, "Properties", (before, section, after) => {
-                    return [before, inTable, after];
-                });
+            if (itemType[0] === "component") {
+                classData = new ComponentDocAutoContent();
             }
 
-            if (outTable) {
-                heading(tree, "Events", (before, section, after) => {
-                    return [before, outTable, after];
-                });
-            }
+            getDocSourceData(path.resolve(".", srcPath), className, classData);
+            classData.addContentToDoc(tree);
         }
 
         return true;
     } else {
         return false;
     }
-
-    
 }
 
 
@@ -62,7 +145,7 @@ function initialCap(str: string) {
 }
 
 
-function fixCompodocFilename(rawName: string) {
+function fixAngularFilename(rawName: string) {
 	var name = rawName.replace(/\]|\(|\)/g, '');
 	
     var fileNameSections = name.split('.');
@@ -86,7 +169,7 @@ function fixCompodocFilename(rawName: string) {
 }
 
 
-function getPropDocData(srcPath: string, docClassName: string, inputs: any[], outputs: any[]) {
+function getDocSourceData(srcPath: string, docClassName: string, classData: NgDocAutoContent) {
     let prog = ts.createProgram([srcPath], {
         target: ts.ScriptTarget.ES5, module: ts.ModuleKind.CommonJS
     });
@@ -108,7 +191,7 @@ function getPropDocData(srcPath: string, docClassName: string, inputs: any[], ou
             let sourceFile = classDec.getSourceFile();
     
             if (classDec.name.escapedText === docClassName) {
-                getPropDataFromClassChain(checker, classDec, inputs, outputs);
+                getPropDataFromClassChain(checker, classDec, classData);
             }
         }
     }
@@ -119,11 +202,10 @@ function getPropDocData(srcPath: string, docClassName: string, inputs: any[], ou
 function getPropDataFromClassChain(
     checker: ts.TypeChecker,
     classDec: ts.ClassDeclaration,
-    inputs: any[],
-    outputs: any[]
+    classData: NgDocAutoContent
 ){ 
     // Main class
-    getPropDataFromClass(checker, classDec, inputs, outputs);
+    classData.extractClassInfoFromSource(checker, classDec);
 
     // Inherited classes
     if (classDec.heritageClauses) {
@@ -132,7 +214,7 @@ function getPropDataFromClassChain(
             
             for (const dec of hcType.symbol.declarations) {
                 if (isClassDeclaration(dec)) {
-                    getPropDataFromClassChain(checker, dec, inputs, outputs);
+                    getPropDataFromClassChain(checker, dec, classData);
                 }
             }
         }
@@ -141,83 +223,32 @@ function getPropDataFromClassChain(
 }
 
 
-function getPropDataFromClass(
-    checker: ts.TypeChecker,
-    classDec: ts.ClassDeclaration,
-    inputs: any[],
-    outputs: any[]
-){
-    let sourceFile = classDec.getSourceFile();
-
-    for (var i = 0; i < classDec.members.length; i++) {
-        let member = classDec.members[i];
-
-        if (ts.isPropertyDeclaration(member) ||
-            ts.isGetAccessorDeclaration(member) ||
-            ts.isSetAccessorDeclaration(member)) {
-            let prop: ts.PropertyDeclaration = member;
-
-            let mods = ts.getCombinedModifierFlags(prop);
-            let nonPrivate = (mods & ts.ModifierFlags.Private) === 0;
-            let memSymbol = checker.getSymbolAtLocation(prop.name);
-            
-            if (nonPrivate && memSymbol && prop.decorators) {
-                let name = memSymbol.getName();
-                let initializer = "";
-                
-                if (prop.initializer) {
-                    initializer = prop.initializer.getText(sourceFile);
-                }
-                
-                let doc = ts.displayPartsToString(memSymbol.getDocumentationComment(checker));
-                doc = doc.replace(/\r\n/g, " ");
-                
-                let propType = checker.typeToString(checker.getTypeOfSymbolAtLocation(memSymbol, memSymbol.valueDeclaration!));
-                
-                let dec = prop.decorators[0].getText(sourceFile);
-            
-                if (dec.match(/@Input/)) {
-                    inputs.push({
-                        "name": name,
-                        "type": propType,
-                        "init": initializer,
-                        "docText": doc
-                    });
-                } else if (dec.match(/@Output/)) {
-                    outputs.push({
-                        "name": name,
-                        "type": propType,
-                        "docText": doc
-                    });
-                }
-            }
-        }
-    }
-}
-
-
-function buildInputsTable(inputs: any[]) {
-    if (inputs.length === 0) {
+function buildPropsTable(props: PropData[], includeInitializer: boolean = true) {
+    if (props.length === 0) {
         return null;
     }
 
+    var headerCells = [
+        unist.makeTableCell([unist.makeText("Name")]),
+        unist.makeTableCell([unist.makeText("Type")])
+    ];
+
+    if (includeInitializer)
+        headerCells.push(unist.makeTableCell([unist.makeText("Default value")]));
+
+    headerCells.push(unist.makeTableCell([unist.makeText("Description")]));
+
     var rows = [
-        unist.makeTableRow([
-            unist.makeTableCell([unist.makeText("Name")]),
-            unist.makeTableCell([unist.makeText("Type")]),
-            unist.makeTableCell([unist.makeText("Default value")]),
-            unist.makeTableCell([unist.makeText("Description")])
-        ])
+        unist.makeTableRow(headerCells)
     ];
     
-    for (var i = 0; i < inputs.length; i++) {
-        var pName = inputs[i].name;
-        var pType = inputs[i].type;
-        var pDefault = inputs[i].init || "";
-        var pDesc = inputs[i].docText || "";
+    for (var i = 0; i < props.length; i++) {
+        var pName = props[i].name;
+        var pType = props[i].type;
+        var pDefault = props[i].initializer || "";
+        var pDesc = props[i].docText || "";
 
         if (pDesc) {
-            //pDesc = pDesc.trim().replace(/[\n\r]+/, " ");
             pDesc = pDesc.replace(/[\n\r]+/, " ");
         }
 
@@ -226,11 +257,6 @@ function buildInputsTable(inputs: any[]) {
         var defaultCellContent;
 
         if (pDefault) {
-            /*
-            descCellContent.push(unist.makeHTML("<br/>"));
-            descCellContent.push(unist.makeText(" Default value: "));
-            descCellContent.push(unist.makeInlineCode(pDefault));
-            */
             defaultCellContent = unist.makeInlineCode(pDefault);
         } else {
             defaultCellContent = unist.makeText("");
@@ -238,52 +264,25 @@ function buildInputsTable(inputs: any[]) {
         
         var cells = [
             unist.makeTableCell([unist.makeText(pName)]),
-            unist.makeTableCell([unist.makeInlineCode(pType)]),
-            //unist.makeTableCell([unist.makeInlineCode(pDefault)]),
-            unist.makeTableCell([defaultCellContent]),
-            unist.makeTableCell(descCellContent)
+            unist.makeTableCell([unist.makeInlineCode(pType)])
         ];
 
+        if (includeInitializer)
+            cells.push(unist.makeTableCell([defaultCellContent]));
+        
+        cells.push(unist.makeTableCell(descCellContent));
+        
         rows.push(unist.makeTableRow(cells));
     }
 
-    return unist.makeTable([null, null, null, null], rows);
+    let spacers = [null, null, null];
+
+    if (includeInitializer)
+        spacers.push(null);
+
+    return unist.makeTable(spacers, rows);
 }
 
-
-function buildOutputsTable(outputs: any[]) {
-    if (outputs.length === 0) {
-        return null;
-    }
-
-    var rows = [
-        unist.makeTableRow([
-            unist.makeTableCell([unist.makeText("Name")]),
-            unist.makeTableCell([unist.makeText("Type")]),
-            unist.makeTableCell([unist.makeText("Description")])
-        ])
-    ];
-    
-    for (var i = 0; i < outputs.length; i++){
-        var eName = outputs[i].name;
-        var eType = outputs[i].type;
-        var eDesc = outputs[i].docText || "";
-
-        if (eDesc) {
-            eDesc = eDesc.trim().replace(/[\n\r]+/, ' ');
-        }
-
-        var cells = [
-            unist.makeTableCell([unist.makeText(eName)]),
-            unist.makeTableCell([unist.makeInlineCode(eType)]),
-            unist.makeTableCell(remark().parse(eDesc).children)
-        ];
-
-        rows.push(unist.makeTableRow(cells));
-    }
-
-    return unist.makeTable([null, null, null], rows);
-}
 
 function isNodeExported(node: ts.Node): boolean {
     return (ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Export) !== 0 || (!!node.parent && node.parent.kind === ts.SyntaxKind.SourceFile);
