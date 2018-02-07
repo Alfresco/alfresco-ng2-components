@@ -12,6 +12,7 @@ interface DocEntry {
 };
 
 let error_array = [];
+let warning_array = [];
 
 let add_error = function (error: string) {
     error_array.push(error);
@@ -23,15 +24,12 @@ let print_errors = function () {
     });
 }
 
-
-let warning_array = [];
-
 let add_warning = function (error: string) {
     warning_array.push(error);
 }
 
 let print_warnings = function () {
-    warning_array.forEach((current_warning => {
+    warning_array.forEach((current_warning) => {
         console.log(chalk.yellow(`${current_warning}`));
     });
 }
@@ -125,15 +123,32 @@ function generatExportList(fileNames: string[], options: ts.CompilerOptions): vo
         let symbol = checker.getSymbolAtLocation(node);
 
         if (symbol) {
-            let className:any = symbol.escapedName;
-            let filename = node.getSourceFile().fileName.substring(node.getSourceFile().fileName.indexOf('lib'), node.getSourceFile().fileName.length);
-            exportCurrentVersion.push(serializeClass(className, line, character, filename));
-        }else{
-            let className:any = (node as ts.ClassDeclaration).name.escapedText;
+            let className: any = symbol.escapedName;
             let filename = node.getSourceFile().fileName.substring(node.getSourceFile().fileName.indexOf('lib'), node.getSourceFile().fileName.length);
             exportCurrentVersion.push(serializeClass(className, line, character, filename));
 
+        } else {
+            let className: any = (node as ts.ClassDeclaration).name.escapedText;
+            let filename = node.getSourceFile().fileName.substring(node.getSourceFile().fileName.indexOf('lib'), node.getSourceFile().fileName.length);
+            exportCurrentVersion.push(serializeClass(className, line, character, filename));
+
+            // if (className === "ContentMetadataService") {
+            //     console.log(chalk.greenBright("ContentMetadataService"));
+            //     recursiveStack(node);
+            // }
+
         }
+    }
+
+    function recursiveStack(node: ts.Node) {
+        let filename = node.getSourceFile().fileName.substring(node.getSourceFile().fileName.indexOf('lib'), node.getSourceFile().fileName.length);
+        let { line, character } = node.getSourceFile().getLineAndCharacterOfPosition(node.getStart());
+        console.log(chalk.bgCyan(line + " " + character + " " + node.getSourceFile().fileName));
+
+        if(node.parent){
+            recursiveStack(node.parent)
+        }
+
     }
 
     /** visit nodes finding exported classes */
@@ -148,7 +163,9 @@ function generatExportList(fileNames: string[], options: ts.CompilerOptions): vo
                 });
             }
 
-            extractExport(node);
+            if(node.parent.kind !== ts.SyntaxKind.SourceFile){
+                extractExport(node);
+            }
         }
 
         if (node.kind === ts.SyntaxKind.PropertyAssignment) {
