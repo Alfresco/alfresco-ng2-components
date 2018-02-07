@@ -401,7 +401,7 @@ Below is a sample form definition JSON.
         }
 ```
 
-Below component with the form definition JSON assigned to the variable `formDefinitionJSON`, shows how a form is rendered by using form definition JSON.
+The component below with the form definition JSON assigned to the variable `formDefinitionJSON`, shows how a form is rendered by using form definition JSON.
 
 ```ts
 @Component({
