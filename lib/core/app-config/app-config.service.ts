@@ -31,7 +31,13 @@ export class AppConfigService {
         ecmHost: 'http://{hostname}{:port}/ecm',
         bpmHost: 'http://{hostname}{:port}/bpm',
         logLevel: 'silent',
-        alfrescoRepositoryName : 'alfresco-1'
+        alfrescoRepositoryName : 'alfresco-1',
+        oauth2 : {
+            host: 'host',
+            authPath: '/auth/realms/springboot/protocol/openid-connect/token',
+            clientId: 'activiti',
+            secret: 'secret'
+        }
     };
 
     constructor(private http: HttpClient) {
