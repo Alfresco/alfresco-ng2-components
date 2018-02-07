@@ -33,7 +33,7 @@
     "build-process": "ng-packagr -p ./process-services/package.json",
     "build-insights": "ng-packagr -p ./insights/package.json",
     "build-export-check" : "tsc ./config/exportCheck.ts",
-    "export-check": "node ./config/exportCheck.js ./core/core.module.ts ./process-services/process.module.ts /content-services/content.module.ts ./insights/insights.module.ts",
+    "export-check": "node ./config/exportCheck.js ./core/core.module.ts ./process-services/process.module.ts ./content-services/content.module.ts ./insights/insights.module.ts",
     "test-export": "npm run build-export-check && npm run export-check",
     "webpack": "node node_modules/webpack/bin/webpack.js"
   },

@@ -81,8 +81,8 @@ export function createTranslateLoader(http: HttpClient, logService: LogService) 
     return new TranslateLoaderService(http, logService);
 }
 
-export function modules() {
-    return [
+@NgModule({
+    imports: [
         ViewerModule,
         SideBarActionModule,
         PipeModule,
@@ -105,12 +105,113 @@ export function modules() {
         LanguageMenuModule,
         InfoDrawerModule,
         DataColumnModule,
-        DataTableModule
-    ];
+        DataTableModule,
+        TranslateModule.forChild({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: (createTranslateLoader),
+                deps: [HttpClient, LogService]
+            }
+        })
+    ],
+    exports: [
+        ViewerModule,
+        SideBarActionModule,
+        PipeModule,
+        CommonModule,
+        DirectiveModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        HostSettingsModule,
+        UserInfoModule,
+        MaterialModule,
+        AppConfigModule,
+        PaginationModule,
+        ToolbarModule,
+        ContextMenuModule,
+        CardViewModule,
+        CollapsableModule,
+        FormModule,
+        LoginModule,
+        LanguageMenuModule,
+        InfoDrawerModule,
+        DataColumnModule,
+        DataTableModule,
+        TranslateModule
+    ]
+})
+export class CoreModuleLazy {
 }
 
-export function providers() {
-    return [
+@NgModule({
+    imports: [
+        ViewerModule,
+        SideBarActionModule,
+        PipeModule,
+        CommonModule,
+        DirectiveModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        HostSettingsModule,
+        UserInfoModule,
+        MaterialModule,
+        AppConfigModule,
+        PaginationModule,
+        ToolbarModule,
+        ContextMenuModule,
+        CardViewModule,
+        CollapsableModule,
+        FormModule,
+        LoginModule,
+        LanguageMenuModule,
+        InfoDrawerModule,
+        DataColumnModule,
+        DataTableModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: (createTranslateLoader),
+                deps: [HttpClient, LogService]
+            }
+        })
+    ],
+    exports: [
+        ViewerModule,
+        SideBarActionModule,
+        PipeModule,
+        CommonModule,
+        DirectiveModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        HostSettingsModule,
+        UserInfoModule,
+        MaterialModule,
+        AppConfigModule,
+        PaginationModule,
+        ToolbarModule,
+        ContextMenuModule,
+        CardViewModule,
+        CollapsableModule,
+        FormModule,
+        LoginModule,
+        LanguageMenuModule,
+        InfoDrawerModule,
+        DataColumnModule,
+        DataTableModule,
+        TranslateModule
+    ],
+    providers: [
+        {
+            provide: TRANSLATION_PROVIDER,
+            multi: true,
+            useValue: {
+                name: 'adf-core',
+                source: 'assets/adf-core'
+            }
+        },
         AuthenticationService,
         AlfrescoApiService,
         SettingsService,
@@ -144,53 +245,6 @@ export function providers() {
         DiscoveryApiService,
         CommentProcessService,
         SearchConfigurationService
-    ];
-}
-
-@NgModule({
-    imports: [
-        ...modules(),
-        TranslateModule.forChild({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: (createTranslateLoader),
-                deps: [HttpClient, LogService]
-            }
-        })
-    ],
-    exports: [
-        ...modules(),
-        TranslateModule
-    ]
-})
-export class CoreModuleLazy {
-}
-
-@NgModule({
-    imports: [
-        ...modules(),
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: (createTranslateLoader),
-                deps: [HttpClient, LogService]
-            }
-        })
-    ],
-    exports: [
-        ...modules(),
-        TranslateModule
-    ],
-    providers: [
-        {
-            provide: TRANSLATION_PROVIDER,
-            multi: true,
-            useValue: {
-                name: 'adf-core',
-                source: 'assets/adf-core'
-            }
-        },
-        ...providers()
     ]
 })
 export class CoreModule {

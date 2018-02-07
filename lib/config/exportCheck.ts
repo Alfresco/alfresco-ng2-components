@@ -8,13 +8,7 @@ interface DocEntry {
         character: number,
         fileName: string
     },
-    name?: string,
-    fileName?: string,
-    documentation?: string,
-    type?: string,
-    constructors?: DocEntry[],
-    parameters?: DocEntry[],
-    returnType?: string
+    name?: string
 };
 
 let error_array = [];
@@ -23,9 +17,22 @@ let add_error = function (error: string) {
     error_array.push(error);
 }
 
-let print_error = function () {
+let print_errors = function () {
     error_array.forEach((current_error) => {
-        console.log(chalk.red(current_error));
+        console.log(chalk.red(`${current_error}`));
+    });
+}
+
+
+let warning_array = [];
+
+let add_warning = function (error: string) {
+    warning_array.push(error);
+}
+
+let print_warnings = function () {
+    warning_array.forEach((current_warning => {
+        console.log(chalk.yellow(`${current_warning}`));
     });
 }
 
@@ -33,29 +40,9 @@ let current_error_postion = function (exportEntry) {
     return ` ${exportEntry.position.fileName} (${exportEntry.position.line},${exportEntry.position.character})`
 }
 
-let check_parameters = function (currentExport_old, currentExport_new: any, count_error: number) {
-//check parameters
-    currentExport_old.constructors[0].parameters.forEach((currentParameters_old) => {
-
-        let currentParameters_new = currentExport_new[0].constructors[0].parameters.find((currentParameters_new) => {
-            return currentParameters_new.name === currentParameters_old.name;
-        });
-
-        if (!currentParameters_new) {
-            add_error(`\n[${++count_error}] Not find parameter in ${currentExport_old.name} \n missing paramaeter: ${currentParameters_old.name}`);
-        } else {
-
-            if (currentParameters_old.type !== currentParameters_new.type) {
-                add_error(`\n[${++count_error}] Different type parameter ${currentParameters_old.name} \n Old type: ${currentParameters_old.type.replace('typeof', '')} \n New type: ${currentParameters_new.type.replace('typeof', '')}  \n`);
-            }
-        }
-
-    });
-    return count_error;
-};
-
 let check_export = function (export_old: any, export_new: any) {
     let count_error = 0;
+    let count_warning = 0;
 
     export_old.forEach((currentExport_old) => {
 
@@ -64,35 +51,33 @@ let check_export = function (export_old: any, export_new: any) {
         });
 
         if (currentExport_new.length > 1) {
-            add_error(`\n[${++count_error}] Multiple export ${currentExport_new[0].name} times ${currentExport_new.length}`);
+            add_warning(`\n[${++count_warning}] Multiple export ${currentExport_new[0].name} times ${currentExport_new.length}`);
 
             currentExport_new.forEach((error) => {
-                add_error(`${current_error_postion(error)}`);
+                add_warning(`${current_error_postion(error)}`);
             })
 
 
         } else if (currentExport_new.length === 0) {
             add_error(`\n[${++count_error}] Not find export ${currentExport_old.name}`);
-        } else if (currentExport_new.length === 1) {
-
-            //check export type
-            if (currentExport_old.type !== currentExport_new[0].type) {
-                add_error(`\n[${++count_error}] Different type export ${currentExport_old.name} \n Old type: ${currentExport_old.type.replace('typeof', '')} \n New type: ${currentExport_new[0].type.replace('typeof', '')}  ${current_error_postion(currentExport_new[0])}`);
-            }
-
-            count_error = check_parameters(currentExport_old, currentExport_new, count_error);
-
         }
-
     });
 };
 
+let expandStarExport = function (node: ts.Node): ts.ExportDeclaration {
+    const ed = node as ts.Node as ts.ExportDeclaration;
+    const exports = [{ name: "x" }];
+    const exportSpecifiers = exports.map(e => ts.createExportSpecifier(e.name, e.name));
+    const exportClause = ts.createNamedExports(exportSpecifiers);
+    const newEd = ts.updateExportDeclaration(ed, ed.decorators, ed.modifiers, exportClause, ed.moduleSpecifier);
+
+    return newEd as ts.ExportDeclaration
+};
 
 /** Generate documentation for all classes in a set of .ts files */
 function generatExportList(fileNames: string[], options: ts.CompilerOptions): void {
     // Build a program using the set of root file names in fileNames
     let program = ts.createProgram(fileNames, options);
-
     // Get the checker, we will use it to find more about classes
     let checker = program.getTypeChecker();
 
@@ -119,7 +104,8 @@ function generatExportList(fileNames: string[], options: ts.CompilerOptions): vo
 
     check_export(export_old, export_new);
 
-    print_error();
+    print_warnings();
+    print_errors();
 
     if (error_array.length > 0) {
         throw new Error('Export problems detected');
@@ -127,72 +113,106 @@ function generatExportList(fileNames: string[], options: ts.CompilerOptions): vo
         return;
     }
 
-    /** visit nodes finding exported classes */
-    function visit(node: ts.Node) {
-        // Only consider exported nodes
-        if (!isNodeExported(node)) {
+    function extractExport(node: ts.Node) {
+        //skip file with export-check: exclude comment
+        if (node.getFullText(node.getSourceFile()).indexOf('export-check: exclude') > 0) {
             return;
         }
 
-        if (ts.isClassDeclaration(node) && node.name) {
+        let { line, character } = node.getSourceFile().getLineAndCharacterOfPosition(node.getStart());
+        //console.log(line + " " + character + " " + node.getSourceFile().fileName);
 
-            //skip file with export-check: exclude comment
-            if (node.getFullText(node.getSourceFile()).indexOf('export-check: exclude') > 0) {
-                console.log(node.getText(node.getSourceFile()));
-                return;
-            }
+        let symbol = checker.getSymbolAtLocation(node);
 
-            let { line, character } = node.getSourceFile().getLineAndCharacterOfPosition(node.getStart());
+        if (symbol) {
+            let className:any = symbol.escapedName;
+            let filename = node.getSourceFile().fileName.substring(node.getSourceFile().fileName.indexOf('lib'), node.getSourceFile().fileName.length);
+            exportCurrentVersion.push(serializeClass(className, line, character, filename));
+        }else{
+            let className:any = (node as ts.ClassDeclaration).name.escapedText;
+            let filename = node.getSourceFile().fileName.substring(node.getSourceFile().fileName.indexOf('lib'), node.getSourceFile().fileName.length);
+            exportCurrentVersion.push(serializeClass(className, line, character, filename));
 
-            // This is a top level class, get its symbol
-            let symbol = checker.getSymbolAtLocation(node.name);
-
-            if (symbol) {
-                let filename = node.getSourceFile().fileName.substring(node.getSourceFile().fileName.indexOf('lib'), node.getSourceFile().fileName.length)
-                exportCurrentVersion.push(serializeClass(symbol, line, character, filename));
-            }
-            // No need to walk any further, class expressions/inner declarations
-            // cannot be exported
         }
-        else if (ts.isModuleDeclaration(node)) {
+    }
+
+    /** visit nodes finding exported classes */
+    function visit(node: ts.Node) {
+        // Only consider exported nodes
+
+        if (node.kind === ts.SyntaxKind.ClassDeclaration) {
+
+            if (node.decorators) {
+                node.decorators.forEach((decorator) => {
+                    visit(decorator as ts.Node);
+                });
+            }
+
+            extractExport(node);
+        }
+
+        if (node.kind === ts.SyntaxKind.PropertyAssignment) {
+            const initializer = (node as ts.PropertyAssignment).initializer;
+
+            visit(initializer as ts.Node);
+        }
+
+        if (node.kind === ts.SyntaxKind.Identifier) {
+            extractExport(node);
+        }
+
+        if (node.kind === ts.SyntaxKind.ArrayLiteralExpression) {
+            (node  as ts.ArrayLiteralExpression).elements.forEach((element) => {
+                visit(element as ts.Node);
+            });
+        }
+
+        if (node.kind === ts.SyntaxKind.Decorator &&
+            ((node as ts.Decorator).expression as any).expression.text === "NgModule") {
+
+            ((node as ts.Decorator).expression as any).arguments.forEach((argument) => {
+                argument.properties.forEach((property) => {
+                    if (property.name.escapedText === "exports") {
+                        visit(property as ts.Node);
+                    }
+                });
+            });
+        }
+
+        if (ts.isExportDeclaration(node)) {
+            if (node.exportClause) {
+                node.exportClause.elements.forEach(exportCurrent => {
+                    extractExport(exportCurrent as ts.Node);
+                });
+            } else {
+                visit(node.moduleSpecifier);
+            }
+
+        }
+
+        if (ts.isModuleDeclaration(node)) {
             // This is a namespace, visit its children
             ts.forEachChild(node, visit);
         }
     }
 
     /** Serialize a symbol into a json object */
-    function serializeSymbol(symbol: ts.Symbol, line?: number, character?: number, fileName?: string): DocEntry {
+    function serializeSymbol(className: string, line?: number, character?: number, fileName?: string): DocEntry {
         return {
             position: {
                 line: line,
                 character: character,
                 fileName: fileName
             },
-            name: symbol.getName(),
-            documentation: ts.displayPartsToString(symbol.getDocumentationComment()),
-            type: checker.typeToString(checker.getTypeOfSymbolAtLocation(symbol, symbol.valueDeclaration!))
+            name: className
         };
     }
 
     /** Serialize a class symbol information */
-    function serializeClass(symbol: ts.Symbol, line?: number, character?: number, fileName?: string) {
-        let details = serializeSymbol(symbol, line, character, fileName);
+    function serializeClass(className: string, line?: number, character?: number, fileName?: string) {
+        let details = serializeSymbol(className, line, character, fileName);
 
-        // Get the construct signatures
-        let constructorType = checker.getTypeOfSymbolAtLocation(symbol, symbol.valueDeclaration!);
-        details.constructors = constructorType.getConstructSignatures().map(serializeSignature);
         return details;
-    }
-
-    /** Serialize a signature (call or construct) */
-    function serializeSignature(signature: ts.Signature) {
-        return {
-            parameters: signature.parameters.map((currentParam) => {
-                return serializeSymbol(currentParam);
-            }),
-            returnType: checker.typeToString(signature.getReturnType()),
-            documentation: ts.displayPartsToString(signature.getDocumentationComment())
-        };
     }
 
     /** True if this is visible outside this file, false otherwise */
