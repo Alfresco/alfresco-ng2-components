@@ -326,7 +326,7 @@ export class FormFieldModel extends FormWidgetModel {
                 if (NumberFieldValidator.isNumber(value)) {
                     dateValue = moment(value);
                 } else {
-                    dateValue = this.isDateTimeField(json) ? moment(value, 'YYYY-MM-DDTHH:mm:ssZ') : moment(value.split('T')[0], 'YYYY-M-D');
+                    dateValue = this.isDateTimeField(json) ? moment(value, 'YYYY-MM-DD hh:mm A') : moment(value.split('T')[0], 'YYYY-M-D');
                 }
                 if (dateValue && dateValue.isValid()) {
                     value = dateValue.format(this.dateDisplayFormat);

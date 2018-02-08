@@ -161,13 +161,8 @@ export class DateFieldValidator implements FormFieldValidator {
 export class MinDateFieldValidator implements FormFieldValidator {
 
     private supportedTypes = [
-        FormFieldTypes.DATE,
-        FormFieldTypes.DATETIME
+        FormFieldTypes.DATE
     ];
-
-    private isDateTimeField(fieldType: string ): boolean {
-        return fieldType === FormFieldTypes.DATETIME;
-    }
 
     isSupported(field: FormFieldModel): boolean {
         return field &&
@@ -183,11 +178,7 @@ export class MinDateFieldValidator implements FormFieldValidator {
                 field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_DATE';
                 isValid = false;
             } else {
-                if (this.isDateTimeField(field.type)) {
-                    isValid = this.checkDateTime(field, dateFormat);
-                } else {
-                    isValid = this.checkDate(field, dateFormat);
-                }
+                isValid = this.checkDate(field, dateFormat);
             }
         }
         return isValid;
@@ -208,27 +199,6 @@ export class MinDateFieldValidator implements FormFieldValidator {
         if (d.isBefore(min)) {
             field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_LESS_THAN`;
             field.validationSummary.attributes.set('minValue', field.minValue.toLocaleString());
-            isValid = false;
-        }
-        return isValid;
-    }
-
-    private checkDateTime(field: FormFieldModel, dateFormat: string): boolean {
-        const MIN_DATE_FORMAT = 'YYYY-MM-DDTHH:mm:ssZ';
-        const CHECK_DATE_FORMAT = 'D-M-YYYY hh:mm:s';
-        let isValid = true;
-        // remove time and timezone info
-        let d;
-        if (typeof field.value === 'string') {
-            d = moment(field.value, dateFormat);
-        } else {
-            d = field.value;
-        }
-        let min = moment(field.minValue, MIN_DATE_FORMAT);
-
-        if (moment(d.format(CHECK_DATE_FORMAT)).isBefore(min.format(CHECK_DATE_FORMAT))) {
-            field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_LESS_THAN`;
-            field.validationSummary.attributes.set('minValue', min.format('D-M-YYYYThh-mm-ss'));
             isValid = false;
         }
         return isValid;
@@ -273,6 +243,179 @@ export class MaxDateFieldValidator implements FormFieldValidator {
             }
         }
         return true;
+    }
+}
+
+export class MinDateTimeFieldValidator implements FormFieldValidator {
+
+    private supportedTypes = [
+        FormFieldTypes.DATETIME
+    ];
+
+    isSupported(field: FormFieldModel): boolean {
+        return field &&
+            this.supportedTypes.indexOf(field.type) > -1 && !!field.minValue;
+    }
+
+    validate(field: FormFieldModel): boolean {
+        let isValid = true;
+        if (this.isSupported(field) && field.value) {
+            const dateFormat = field.dateDisplayFormat;
+
+            if (!DateFieldValidator.isValidDate(field.value, dateFormat)) {
+                field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_DATE';
+                isValid = false;
+            } else {
+                isValid = this.checkDateTime(field, dateFormat);
+            }
+        }
+        return isValid;
+    }
+
+    private checkDateTime(field: FormFieldModel, dateFormat: string): boolean {
+        const MIN_DATE_FORMAT = 'YYYY-MM-DD hh:mm A';
+
+        let isValid = true;
+        let fieldValueDate;
+        if (typeof field.value === 'string') {
+            fieldValueDate = moment(field.value, dateFormat);
+        } else {
+            fieldValueDate = field.value;
+        }
+        let min = moment(field.minValue, MIN_DATE_FORMAT);
+
+        if(this.isBefore(fieldValueDate, min)) {
+            field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_LESS_THAN`;
+            field.validationSummary.attributes.set('minValue', min.format('D-M-YYYY hh-mm A'));
+            isValid = false;
+        }
+        return isValid;
+    }
+
+    private isBefore(actualDate, targetDate): boolean {
+        let isDateBefore: boolean = true;
+        let actualDateTime = actualDate.format('hh:mm A');
+        let targetDateTime = targetDate.format('hh:mm A');
+        let actualDatePeriod = this.getPeriod(actualDateTime);
+        let targetDatePeriod = this.getPeriod(targetDateTime);
+        let actualHour = parseInt(this.getHour(actualDateTime));
+        let targetHour = parseInt(this.getHour(targetDateTime));
+        let actualMinutes = parseInt(this.getMinutes(actualDateTime));
+        let targetMinutes = parseInt(this.getMinutes(targetDateTime));
+
+        if (!actualDate.isSame(targetDate)) {
+            isDateBefore = actualDate.isBefore(targetDate);
+        } else {
+            if (actualDatePeriod === targetDatePeriod) {
+                if (actualHour === targetHour) {
+                    isDateBefore = actualMinutes < targetMinutes;
+                } else {
+                    isDateBefore = actualHour < targetHour;
+                }
+            } else {
+                isDateBefore = actualDatePeriod < targetDatePeriod;
+            }
+        }
+        return isDateBefore;
+    }
+
+    private getHour(timeAndPeriod: string) {
+        return timeAndPeriod.split(' ')[0].split(':')[0];
+    }
+
+    private getMinutes(timeAndPeriod: string) {
+        return timeAndPeriod.split(' ')[0].split(':')[1];
+    }
+
+    private getPeriod(timeAndPeriod: string) {
+        return timeAndPeriod.split(' ')[1];
+    }
+}
+
+export class MaxDateTimeFieldValidator implements FormFieldValidator {
+
+    private supportedTypes = [
+        FormFieldTypes.DATETIME
+    ];
+
+    isSupported(field: FormFieldModel): boolean {
+        return field &&
+            this.supportedTypes.indexOf(field.type) > -1 && !!field.minValue;
+    }
+
+    validate(field: FormFieldModel): boolean {
+        let isValid = true;
+        if (this.isSupported(field) && field.value) {
+            const dateFormat = field.dateDisplayFormat;
+
+            if (!DateFieldValidator.isValidDate(field.value, dateFormat)) {
+                field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_DATE';
+                isValid = false;
+            } else {
+                isValid = this.checkDateTime(field, dateFormat);
+            }
+        }
+        return isValid;
+    }
+
+    private checkDateTime(field: FormFieldModel, dateFormat: string): boolean {
+        const MAX_DATE_FORMAT = 'YYYY-MM-DD hh:mm A';
+
+        let isValid = true;
+        // remove time and timezone info
+        let fieldValueDate;
+        if (typeof field.value === 'string') {
+            fieldValueDate = moment(field.value, dateFormat);
+        } else {
+            fieldValueDate = field.value;
+        }
+        let max = moment(field.maxValue, MAX_DATE_FORMAT);
+
+        if(this.isAfter(fieldValueDate, max)) {
+            field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`;
+            field.validationSummary.attributes.set('maxValue', max.format('D-M-YYYY hh-mm A'));
+            isValid = false;
+        }
+        return isValid;
+    }
+
+    private isAfter(actualDate, targetDate): boolean {
+        let isDateAfter: boolean = true;
+        let actualDateTime = actualDate.format('hh:mm A');
+        let targetDateTime = targetDate.format('hh:mm A');
+        let actualDatePeriod = this.getPeriod(actualDateTime);
+        let targetDatePeriod = this.getPeriod(targetDateTime);
+        let actualHour = parseInt(this.getHour(actualDateTime));
+        let targetHour = parseInt(this.getHour(targetDateTime));
+        let actualMinutes = parseInt(this.getMinutes(actualDateTime));
+        let targetMinutes = parseInt(this.getMinutes(targetDateTime));
+
+        if (!actualDate.isSame(targetDate)) {
+            isDateAfter = actualDate.isAfter(targetDate)
+        } else {
+            if (actualDatePeriod === targetDatePeriod) {
+                if (actualHour === targetHour) {
+                    isDateAfter = actualMinutes > targetMinutes;
+                } else {
+                    isDateAfter = actualHour > targetHour;
+                }
+            } else {
+                isDateAfter = actualDatePeriod > targetDatePeriod;
+            }
+        }
+        return isDateAfter;
+    }
+
+    private getHour(timeAndPeriod: string) {
+        return timeAndPeriod.split(' ')[0].split(':')[0];
+    }
+
+    private getMinutes(timeAndPeriod: string) {
+        return timeAndPeriod.split(' ')[0].split(':')[1];
+    }
+
+    private getPeriod(timeAndPeriod: string) {
+        return timeAndPeriod.split(' ')[1];
     }
 }
 
@@ -465,5 +608,7 @@ export const FORM_FIELD_VALIDATORS = [
     new DateFieldValidator(),
     new MinDateFieldValidator(),
     new MaxDateFieldValidator(),
-    new FixedValueFieldValidator()
+    new FixedValueFieldValidator(),
+    new MinDateTimeFieldValidator(),
+    new MaxDateTimeFieldValidator()
 ];
