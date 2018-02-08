@@ -200,16 +200,8 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         */
     }
 
-    onPrevPage(pagination: Pagination): void {
-        this.taskPage = this.taskListPagination.current - 1;
-    }
-
     onPrevPageProcess(pagination: Pagination): void {
         this.processPage = this.processListPagination.current - 1;
-    }
-
-    onNextPage(pagination: Pagination): void {
-        this.taskPage = this.taskListPagination.current - 1;
     }
 
     onNextPageProcess(pagination: Pagination): void {
@@ -221,17 +213,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.preferenceService.paginationSize = maxItems;
         this.processPage = this.processListPagination.current - 1;
         this.paginationPageSize = maxItems;
-    }
-
-    onChangePageSize(pagination: Pagination): void {
-        const { maxItems } = pagination;
-        this.preferenceService.paginationSize = maxItems;
-        this.taskPage = this.taskListPagination.current - 1;
-        this.paginationPageSize = maxItems;
-    }
-
-    onChangePageNumber(pagination: Pagination): void {
-        this.taskPage = this.taskListPagination.current - 1;
     }
 
     onChangePageNumberProcess(pagination: Pagination): void {
