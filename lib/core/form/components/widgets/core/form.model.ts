@@ -27,6 +27,7 @@ import { FormOutcomeModel } from './form-outcome.model';
 import { FormValues } from './form-values';
 import { FormWidgetModel, FormWidgetModelCache } from './form-widget.model';
 import { TabModel } from './tab.model';
+import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 
 import {
     FORM_FIELD_VALIDATORS,
@@ -78,7 +79,7 @@ export class FormModel {
         return this.outcomes && this.outcomes.length > 0;
     }
 
-    constructor(json?: any, data?: FormValues, readOnly: boolean = false, protected formService?: FormService) {
+    constructor(json?: any, data?: FormValues, readOnly: boolean = false, protected formService?: FormService,  protected visibilityService?: WidgetVisibilityService) {
         this.readOnly = readOnly;
 
         if (json) {
@@ -181,6 +182,10 @@ export class FormModel {
 
         if (this.formService) {
             this.formService.validateForm.next(validateFormEvent);
+        }
+
+        if (this.visibilityService) {
+            this.visibilityService.refreshVisibility(this);
         }
 
         this._isValid = validateFormEvent.isValid;

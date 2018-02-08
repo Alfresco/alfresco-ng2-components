@@ -428,7 +428,7 @@ export class FormComponent implements OnInit, OnChanges {
 
     parseForm(json: any): FormModel {
         if (json) {
-            let form = new FormModel(json, this.data, this.readOnly, this.formService);
+            let form = new FormModel(json, this.data, this.readOnly, this.formService,  this.visibilityService);
             if (!json.fields) {
                 form.outcomes = this.getFormDefinitionOutcomes(form);
             }

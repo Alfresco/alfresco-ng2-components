@@ -80,7 +80,6 @@ describe('FormFieldValidator', () => {
                 required: true
             });
 
-            field.isVisible = true;
             field.emptyOption = <FormFieldOption> { id: '<empty>' };
             expect(validator.validate(field)).toBeFalsy();
 
@@ -96,7 +95,6 @@ describe('FormFieldValidator', () => {
                 options: [{ id: 'two', name: 'two' }]
             });
 
-            field.isVisible = true;
             expect(validator.validate(field)).toBeFalsy();
         });
 
@@ -108,7 +106,6 @@ describe('FormFieldValidator', () => {
                 options: [{ id: 'two', name: 'two' }]
             });
 
-            field.isVisible = true;
             expect(validator.validate(field)).toBeTruthy();
         });
 
@@ -119,7 +116,6 @@ describe('FormFieldValidator', () => {
                 required: true
             });
 
-            field.isVisible = true;
             field.value = null;
             expect(validator.validate(field)).toBeFalsy();
 
@@ -134,7 +130,6 @@ describe('FormFieldValidator', () => {
                 required: true
             });
 
-            field.isVisible = true;
             expect(validator.validate(field)).toBeTruthy();
         });
 
@@ -145,7 +140,6 @@ describe('FormFieldValidator', () => {
                 required: true
             });
 
-            field.isVisible = true;
             field.value = null;
             expect(validator.validate(field)).toBeFalsy();
 
@@ -160,7 +154,6 @@ describe('FormFieldValidator', () => {
                 required: true
             });
 
-            field.isVisible = true;
             expect(validator.validate(field)).toBeTruthy();
         });
 
@@ -171,7 +164,6 @@ describe('FormFieldValidator', () => {
                 required: true
             });
 
-            field.isVisible = true;
             field.value = null;
             expect(validator.validate(field)).toBeFalsy();
 
@@ -186,7 +178,6 @@ describe('FormFieldValidator', () => {
                 required: true
             });
 
-            field.isVisible = true;
             expect(validator.validate(field)).toBeTruthy();
         });
 
