@@ -31,6 +31,47 @@ class PropData {
     docText: string;
 }
 
+class ParamData {
+    name: string;
+    type: string;
+    docText: string;
+
+    getSignature() {
+        return `${this.name}: ${this.type}`;
+    }
+}
+
+class MethodData {
+    name: string;
+    docText: string;
+    params: ParamData[];
+    returnType: string;
+
+    constructor() {
+        this.params = [];
+    }
+
+    getSignature() {
+        let sig = this.name + "(";
+
+        if (this.params.length > 0) {
+            sig += this.params[0].getSignature();
+        }
+
+        for (let i = 1; i < this.params.length; i++) {
+            sig += ", " + this.params[i].getSignature();
+        }
+
+        sig += ")";
+
+        if (this.returnType !== "void") {
+            sig += ": " + this.returnType;
+        }
+
+        return sig;
+    }
+}
+
 class ComponentDocAutoContent implements NgDocAutoContent {
     inputs: PropData[];
     outputs: PropData[];
@@ -111,6 +152,80 @@ class ComponentDocAutoContent implements NgDocAutoContent {
 }
 
 
+class ServiceDocAutoContent implements NgDocAutoContent {
+    props: PropData[];
+    methods: MethodData[];
+
+    constructor() {
+        this.props = [];
+        this.methods = [];
+    }
+
+
+    extractClassInfoFromSource(checker: ts.TypeChecker, classDec: ts.ClassDeclaration) {
+        let sourceFile = classDec.getSourceFile();
+
+        for (var i = 0; i < classDec.members.length; i++) {
+            let member = classDec.members[i];
+
+            if (ts.isMethodDeclaration(member)) {
+                let method: ts.MethodDeclaration = member;
+
+                let mods = ts.getCombinedModifierFlags(method);
+                let nonPrivate = (mods & ts.ModifierFlags.Private) === 0;
+                let memSymbol = checker.getSymbolAtLocation(method.name);
+                
+                if (nonPrivate && memSymbol) {
+                    let methData = new MethodData();
+
+                    methData.name = memSymbol.getName();
+                    let doc = ts.displayPartsToString(memSymbol.getDocumentationComment());
+                    methData.docText = doc.replace(/\r\n/g, " ");
+                    let sig = checker.getSignatureFromDeclaration(method);
+                    let returnType = sig.getReturnType();
+                    methData.returnType = checker.typeToString(returnType);
+                    let returnSymbol = returnType.getSymbol();
+
+                    let params = method.parameters;
+
+                    for (let p = 0; p < params.length; p++){
+                        let pData = new ParamData();
+                        pData.name = params[p].name.getText();
+                        pData.type = params[p].type.getText();
+                        let paramSymbol = checker.getSymbolAtLocation(params[p].name);
+                        pData.docText = ts.displayPartsToString(paramSymbol.getDocumentationComment());
+                        methData.params.push(pData);
+                    }
+
+                    this.methods.push(methData);
+                }
+                
+            }
+            
+        }
+        
+    }
+
+
+    addContentToDoc(tree) {
+        let propsTable = buildPropsTable(this.props);
+        let methodsList = buildMethodsList(this.methods);
+
+        if (propsTable) {
+            heading(tree, "Properties", (before, section, after) => {
+                return [before, propsTable, after];
+            });
+        }
+
+        if (methodsList) {
+            heading(tree, "Methods", (before, section, after) => {
+                return [before, methodsList, after];
+            });
+        }
+    }
+}
+
+
 export function updatePhase(tree, pathname, aggData) {
     let fileNameNoSuffix = path.basename(pathname, ".md");
 
@@ -127,6 +242,8 @@ export function updatePhase(tree, pathname, aggData) {
 
             if (itemType[0] === "component") {
                 classData = new ComponentDocAutoContent();
+            } else if (itemType[0] === "service") {
+                classData = new ServiceDocAutoContent();
             }
 
             getDocSourceData(path.resolve(".", srcPath), className, classData);
@@ -281,6 +398,43 @@ function buildPropsTable(props: PropData[], includeInitializer: boolean = true) 
         spacers.push(null);
 
     return unist.makeTable(spacers, rows);
+}
+
+
+function buildMethodsList(methods: MethodData[]) {
+    if (methods.length === 0)
+        return null;
+    
+    let listItems = [];
+
+    for (let method of methods) {
+        let itemLines = [];
+
+        itemLines.push(unist.makeInlineCode(method.getSignature()));
+        itemLines.push(unist.makeBreak());
+        itemLines.push(unist.makeParagraph(remark().parse(method.docText).children));
+        itemLines.push(unist.makeBreak());
+
+        let paramListItems = [];
+
+        for (let param of method.params) {
+            let currParamSections = [];
+
+            if (param.docText !== "") {
+                currParamSections.push(unist.makeInlineCode(param.name));
+                currParamSections.push(unist.makeText(" - " + param.docText));
+                //currParamSections.push(unist.makeBreak());
+                paramListItems.push(unist.makeListItem(unist.makeParagraph(currParamSections)));
+            }
+        }
+
+        itemLines.push(unist.makeListUnordered(paramListItems));
+        
+
+        listItems.push(unist.makeListItem(unist.makeParagraph(itemLines)));
+    }
+
+    return unist.makeListUnordered(listItems);
 }
 
 
