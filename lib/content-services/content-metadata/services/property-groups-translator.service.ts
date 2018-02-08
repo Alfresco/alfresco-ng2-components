@@ -27,7 +27,7 @@ import {
     CardViewFloatItemModel,
     LogService
 } from '@alfresco/adf-core';
-import { Property, CardViewGroup, PropertyGroup } from '../interfaces/content-metadata.interfaces';
+import { Property, CardViewGroup, OrganisedPropertyGroup } from '../interfaces/content-metadata.interfaces';
 
 const D_TEXT = 'd:text';
 const D_MLTEXT = 'd:mltext';
@@ -46,27 +46,29 @@ export class PropertyGroupTranslatorService {
 
     constructor(private logService: LogService) {}
 
-    public translateToCardViewGroups(propertyGroups: PropertyGroup[], propertyValues): CardViewGroup[] {
+    public translateToCardViewGroups(propertyGroups: OrganisedPropertyGroup[], propertyValues): CardViewGroup[] {
         return propertyGroups.map(propertyGroup => {
             const translatedPropertyGroup: any = Object.assign({}, propertyGroup);
-            translatedPropertyGroup.properties = this.translateProperties(propertyGroup.properties, propertyValues);
+            translatedPropertyGroup.properties = this.translateArray(propertyGroup.properties, propertyValues);
             return translatedPropertyGroup;
         });
     }
 
-    private translateProperties(properties: Property[], propertyValues: any): CardViewItem[] {
+    private translateArray(properties: Property[], propertyValues: any): CardViewItem[] {
         return properties.map(property => {
-            return this.translateProperty(property, propertyValues[property.name]);
+            return this.translate(property, propertyValues[property.name]);
         });
     }
 
-    private translateProperty(property: Property, propertyValue: any): CardViewItem {
+    private translate(property: Property, propertyValue: any): CardViewItem {
         this.checkECMTypeValidity(property.dataType);
+
+        const prefix = 'properties.';
 
         let propertyDefinition: CardViewItemProperties = {
             label: property.title,
             value: propertyValue,
-            key: `properties.${property.name}`,
+            key: `${prefix}${property.name}`,
             default: property.defaultValue,
             editable: true
         };

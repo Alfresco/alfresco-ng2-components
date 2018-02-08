@@ -15,11 +15,9 @@
  * limitations under the License.
  */
 
-import { PropertyGroup } from './property-group.interface';
-import { OrganisedPropertyGroup } from './content-metadata.interfaces';
+import { Property } from './property.interface';
 
-export interface ContentMetadataConfig {
-    isGroupAllowed(groupname: string): boolean;
-    isPropertyAllowed(groupName: string, propertyName: string): boolean;
-    reorganiseByConfig(propertyGroups: PropertyGroup[]): OrganisedPropertyGroup[];
+export interface OrganisedPropertyGroup {
+    title: string;
+    properties: Property[];
 }

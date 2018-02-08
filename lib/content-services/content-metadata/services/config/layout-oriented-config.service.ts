@@ -16,7 +16,14 @@
  */
 
 import { Injectable } from '@angular/core';
-import { ContentMetadataConfig, LayoutOrientedConfig, LayoutOrientedConfigItem } from '../../interfaces/content-metadata.interfaces';
+import {
+    ContentMetadataConfig,
+    LayoutOrientedConfig,
+    LayoutOrientedConfigItem,
+    PropertyGroup,
+    OrganisedPropertyGroup
+} from '../../interfaces/content-metadata.interfaces';
+import { getProperty } from './property-group-reader';
 
 @Injectable()
 export class LayoutOrientedConfigService implements ContentMetadataConfig {
@@ -39,8 +46,39 @@ export class LayoutOrientedConfigService implements ContentMetadataConfig {
         return matchingItems.length > 0;
     }
 
+    public reorganiseByConfig(propertyGroups: PropertyGroup[]): OrganisedPropertyGroup[] {
+        const layoutBlocks = this.config;
+
+        return layoutBlocks.map((layoutBlock) => {
+            const flattenedItems = this.flattenItems(layoutBlock.items),
+                properties = flattenedItems.reduce((props, explodedItem) => {
+                    const property = getProperty(propertyGroups, explodedItem.groupName, explodedItem.propertyName) || [];
+                    return props.concat(property);
+                }, []);
+
+            return {
+                title: layoutBlock.title,
+                properties
+            };
+        });
+    }
+
+    private flattenItems(items) {
+        return items.reduce((accumulator, item) => {
+            const properties = Array.isArray(item.properties) ? item.properties : [item.properties];
+            const flattenedProperties = properties.map(propertyName => {
+                return {
+                    groupName: item.aspect || item.type,
+                    propertyName
+                };
+            });
+
+            return accumulator.concat(flattenedProperties);
+        }, []);
+    }
+
     private getMatchingGroups(groupName: string): LayoutOrientedConfigItem[] {
-        return (<any> this.config)
+        return this.config
             .map(layoutBlock => layoutBlock.items)
             .reduce((accumulator, items) => accumulator.concat(items), [])
             .filter((item) => item.aspect === groupName || item.type === groupName);

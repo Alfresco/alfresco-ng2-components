@@ -26,6 +26,4 @@ export interface LayoutOrientedConfigLayoutBlock {
     items: LayoutOrientedConfigItem[];
 }
 
-export interface LayoutOrientedConfig {
-    [index: number]: LayoutOrientedConfigLayoutBlock;
-}
+export interface LayoutOrientedConfig extends Array<LayoutOrientedConfigLayoutBlock> {}

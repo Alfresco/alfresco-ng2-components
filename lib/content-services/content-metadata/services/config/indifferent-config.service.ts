@@ -16,7 +16,12 @@
  */
 
 import { Injectable } from '@angular/core';
-import { ContentMetadataConfig, InDifferentConfig } from '../../interfaces/content-metadata.interfaces';
+import {
+    ContentMetadataConfig,
+    InDifferentConfig,
+    PropertyGroup,
+    OrganisedPropertyGroup
+} from '../../interfaces/content-metadata.interfaces';
 
 @Injectable()
 export class IndifferentConfigService implements ContentMetadataConfig {
@@ -29,5 +34,9 @@ export class IndifferentConfigService implements ContentMetadataConfig {
 
     public isPropertyAllowed(groupName: string, propertyName: string): boolean {
         return true;
+    }
+
+    public reorganiseByConfig(propertyGroups: PropertyGroup[]): OrganisedPropertyGroup[] {
+        return propertyGroups;
     }
 }

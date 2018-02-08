@@ -16,7 +16,8 @@
  */
 
 import { Injectable } from '@angular/core';
-import { ContentMetadataConfig, AspectOrientedConfig } from '../../interfaces/content-metadata.interfaces';
+import { ContentMetadataConfig, AspectOrientedConfig, PropertyGroup, OrganisedPropertyGroup } from '../../interfaces/content-metadata.interfaces';
+import { getGroup } from './property-group-reader';
 
 @Injectable()
 export class AspectOrientedConfigService implements ContentMetadataConfig {
@@ -38,6 +39,11 @@ export class AspectOrientedConfigService implements ContentMetadataConfig {
         }
 
         return false;
+    }
+
+    public reorganiseByConfig(propertyGroups: PropertyGroup[]): OrganisedPropertyGroup[] {
+        const aspectNames = Object.keys(this.config);
+        return aspectNames.map((aspectName) => getGroup(propertyGroups, aspectName));
     }
 
     private isEveryPropertyAllowedFor(groupName: string): boolean {

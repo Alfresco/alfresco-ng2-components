@@ -30,9 +30,9 @@ export class ContentMetadataService {
 
     constructor(
         private basicPropertiesService: BasicPropertiesService,
-        private propertyGroupTranslatorService: PropertyGroupTranslatorService,
         private propertyDescriptorsService: PropertyDescriptorsService,
-        private contentMetadataConfigFactory: ContentMetadataConfigFactory
+        private contentMetadataConfigFactory: ContentMetadataConfigFactory,
+        private propertyGroupTranslatorService: PropertyGroupTranslatorService
     ) {}
 
     getBasicProperties(node: MinimalNodeEntryEntity): Observable<CardViewItem[]> {
@@ -43,22 +43,7 @@ export class ContentMetadataService {
         const config = this.contentMetadataConfigFactory.get(presetName);
 
         return this.propertyDescriptorsService.loadDescriptors(node.aspectNames, config)
-            .map(groups => this.propertyGroupTranslatorService.translateToCardViewGroups(groups, node.properties) );
+            .map(groups => config.reorganiseByConfig(groups))
+            .map(groups => this.propertyGroupTranslatorService.translateToCardViewGroups(groups, node.properties));
     }
-
-    // private transformByPreset(preset: PresetConfig, propertiesGroups: CardViewGroup[]) {
-    //     if (this.contentMetadataConfigService.isIndifferent(preset)) {
-    //         return propertiesGroups;
-    //     }
-
-    //     else if (this.contentMetadataConfigService.isAspectOriented(preset)) {
-    //         const aspectNames = Object.keys(preset);
-    //         return aspectNames.map((aspectName) => propertiesGroups[aspectName] );
-    //     }
-
-    //     else if (this.contentMetadataConfigService.isLayoutOriented(preset)) {
-    //         console.log('Not supported yet');
-    //         return [];
-    //     }
-    // }
 }

@@ -16,7 +16,7 @@
  */
 
 import { LayoutOrientedConfigService } from './layout-oriented-config.service';
-import { LayoutOrientedConfig } from '../../interfaces/content-metadata.interfaces';
+import { LayoutOrientedConfig, PropertyGroup, Property, OrganisedPropertyGroup } from '../../interfaces/content-metadata.interfaces';
 
 describe('ContentMetadataConfigFactory', () => {
 
@@ -144,6 +144,171 @@ describe('ContentMetadataConfigFactory', () => {
                 const isAllowed = configService.isPropertyAllowed(testCase.groupNameToQuery, testCase.propertyNameToQuery);
 
                 expect(isAllowed).toBe(testCase.expectation);
+            });
+        });
+    });
+
+    describe('reorganiseByConfig', () => {
+
+        interface TestCase {
+            name: string;
+            config: LayoutOrientedConfig;
+            expectations: OrganisedPropertyGroup[];
+        }
+
+        const property1 = <Property> { name: 'property1' },
+            property2 = <Property> { name: 'property2' },
+            property3 = <Property> { name: 'property3' },
+            property4 = <Property> { name: 'property4' };
+
+        const propertyGroups: PropertyGroup[] = [
+            { title: 'Berseria', description: '', name: 'berseria', properties: [ property1, property2 ] },
+            { title: 'Zestiria', description: '', name: 'zestiria', properties: [ property3, property4 ] }
+        ];
+
+        const testCases: TestCase[] = [
+            {
+                name: 'Empty config',
+                config: [],
+                expectations: []
+            },
+            {
+                name: 'First property of a group in one item',
+                config: [
+                    { title: 'First group', items: [
+                        { aspect: 'berseria', properties: [ 'property1' ] }
+                    ]}
+                ],
+                expectations: [
+                    { title: 'First group', properties: [ property1 ] }
+                ]
+            },
+            {
+                name: 'Second property of a group in one item',
+                config: [
+                    { title: 'First group', items: [
+                        { aspect: 'berseria', properties: [ 'property2' ] }
+                    ]}
+                ],
+                expectations: [
+                    { title: 'First group', properties: [ property2 ] }
+                ]
+            },
+            {
+                name: 'More properties from one group in one item',
+                config: [
+                    { title: 'First group', items: [
+                        { aspect: 'berseria', properties: [ 'property2', 'property1' ] }
+                    ]}
+                ],
+                expectations: [
+                    { title: 'First group', properties: [ property2, property1 ] }
+                ]
+            },
+            {
+                name: 'First property of the second group in one item',
+                config: [
+                    { title: 'First group', items: [
+                        { aspect: 'zestiria', properties: [ 'property4' ] }
+                    ]}
+                ],
+                expectations: [
+                    { title: 'First group', properties: [ property4 ] }
+                ]
+            },
+            {
+                name: 'One-one properties from multiple groups in one item',
+                config: [
+                    { title: 'First group', items: [
+                        { aspect: 'zestiria', properties: [ 'property4' ] },
+                        { aspect: 'berseria', properties: [ 'property1' ] }
+                    ]}
+                ],
+                expectations: [
+                    { title: 'First group', properties: [ property4, property1 ] }
+                ]
+            },
+            {
+                name: 'Multiple properties mixed from multiple groups in multiple items',
+                config: [
+                    { title: 'First group', items: [
+                        { aspect: 'zestiria', properties: [ 'property4' ] },
+                        { type: 'berseria', properties: [ 'property1' ] }
+                    ]},
+                    { title: 'Second group', items: [
+                        { aspect: 'zestiria', properties: [ 'property3' ] },
+                        { type: 'berseria', properties: [ 'property2', 'property1' ] },
+                        { aspect: 'zestiria', properties: [ 'property4' ] }
+                    ]}
+                ],
+                expectations: [
+                    { title: 'First group', properties: [ property4, property1 ] },
+                    { title: 'Second group', properties: [ property3, property2, property1, property4 ] }
+                ]
+            },
+            {
+                name: 'Multiple properties mixed from multiple groups in multiple items with "*"',
+                config: [
+                    { title: 'First group', items: [
+                        { aspect: 'zestiria', properties: '*' },
+                        { type: 'berseria', properties: [ 'property1' ] }
+                    ]},
+                    { title: 'Second group', items: [
+                        { type: 'berseria', properties: [ 'property2', 'property1' ] }
+                    ]}
+                ],
+                expectations: [
+                    { title: 'First group', properties: [ property3, property4, property1 ] },
+                    { title: 'Second group', properties: [ property2, property1 ] }
+                ]
+            },
+            {
+                name: 'Not existing property',
+                config: [
+                    { title: 'First group', items: [
+                        { aspect: 'zestiria', properties: '*' },
+                        { type: 'berseria', properties: [ 'not-existing-property' ] },
+                        { type: 'berseria', properties: [ 'property2' ] }
+                    ]}
+                ],
+                expectations: [
+                    { title: 'First group', properties: [ property3, property4, property2 ] }
+                ]
+            },
+            {
+                name: 'Not existing group',
+                config: [
+                    { title: 'First group', items: [
+                        { aspect: 'zestiria', properties: '*' },
+                        { type: 'not-existing-group', properties: '*' },
+                        { type: 'berseria', properties: [ 'property2' ] },
+                        { type: 'not-existing-group', properties: 'not-existing-property' }
+                    ]}
+                ],
+                expectations: [
+                    { title: 'First group', properties: [ property3, property4, property2 ] }
+                ]
+            }
+        ];
+
+        testCases.forEach((testCase) => {
+            it(`should pass for: ${testCase.name}`, () => {
+                configService = createConfigService(testCase.config);
+
+                const organisedPropertyGroups = configService.reorganiseByConfig(propertyGroups);
+
+                expect(organisedPropertyGroups.length).toBe(testCase.expectations.length, 'Group count should match');
+                testCase.expectations.forEach((expectation, i) => {
+                    expect(organisedPropertyGroups[i].title).toBe(expectation.title, 'Group\'s title should match' );
+                    expect(organisedPropertyGroups[i].properties.length).toBe(
+                        expectation.properties.length,
+                        `Property count for "${organisedPropertyGroups[i].title}" group should match.`
+                    );
+
+                    expectation.properties.forEach((property, j) => {
+                        expect(organisedPropertyGroups[i].properties[j]).toBe(property, `Property should match ${property.name}`);
+                    });
+                });
             });
         });
     });
