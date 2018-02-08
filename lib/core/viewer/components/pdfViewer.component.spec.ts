@@ -41,7 +41,6 @@ describe('Test PdfViewer component', () => {
                 ToolbarModule,
                 MaterialModule
             ],
-            declarations: [PdfViewerComponent],
             providers: [
                 SettingsService,
                 AuthenticationService,
@@ -368,14 +367,15 @@ describe('Test PdfViewer component', () => {
                 fixture.whenStable().then(() => {
 
                     expect(component.displayPage).toBe(1);
+
                     component.inputPage('2');
                     fixture.detectChanges();
                     expect(component.displayPage).toBe(2);
-                    let documentContainer = element.querySelector('.viewer-pdf-container');
-                    documentContainer.scrollTop = 100000;
-                    component.watchScroll(documentContainer);
+
+                    component.pdfViewer.currentPageNumber = 6;
                     fixture.detectChanges();
                     expect(component.displayPage).toBe(6);
+                    expect(component.page).toBe(6);
                     done();
                 });
             });

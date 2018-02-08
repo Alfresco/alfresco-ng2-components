@@ -55,6 +55,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     totalPages: number;
     loadingPercent: number;
     pdfViewer: any;
+    documentContainer: any;
     currentScaleMode: string = 'auto';
     currentScale: number = 1;
 
@@ -69,8 +70,6 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     constructor(private renderingQueueServices: RenderingQueueServices,
                 private logService: LogService) {
-        // needed to preserve "this" context when setting as a global document event listener
-        this.onDocumentScroll = this.onDocumentScroll.bind(this);
     }
 
     ngOnChanges(changes) {
@@ -133,13 +132,13 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         PDFJS.verbosity = 1;
         PDFJS.disableWorker = false;
 
-        let documentContainer = document.getElementById('viewer-pdf-container');
-        let viewer: any = document.getElementById('viewer-viewerPdf');
+        const viewer: any = document.getElementById('viewer-viewerPdf');
 
-        window.document.addEventListener('scroll', this.onDocumentScroll, true);
+        this.documentContainer = document.getElementById('viewer-pdf-container');
+        this.documentContainer.addEventListener('pagechange', (event) => this.onPageChange(event), true);
 
         this.pdfViewer = new PDFJS.PDFViewer({
-            container: documentContainer,
+            container: this.documentContainer,
             viewer: viewer,
             renderingQueue: this.renderingQueueServices
         });
@@ -150,7 +149,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     ngOnDestroy() {
-        window.document.removeEventListener('scroll', this.onDocumentScroll, true);
+        this.documentContainer.removeEventListener('pagechange', (event) => this.onPageChange(event), true);
     }
 
     /**
@@ -350,48 +349,13 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     /**
-     * Litener Scroll Event
+     * Page Change Event
      *
-     * @param {any} target
+     * @param {Event} event
      */
-    watchScroll(target) {
-        let outputPage = this.getVisibleElement(target);
-
-        if (outputPage) {
-            this.page = outputPage.id;
-            this.displayPage = this.page;
-        }
-    }
-
-    /**
-     * find out what elements are visible within a scroll pane
-     *
-     * @param {any} target
-     *
-     * @returns {Object} page
-     */
-    getVisibleElement(target) {
-        return this.pdfViewer._pages.find((page) => {
-            return this.isOnScreen(page, target);
-        });
-    }
-
-    /**
-     * check if a page is visible
-     *
-     * @param {any} page
-     * @param {any} target
-     *
-     * @returns {boolean}
-     */
-    isOnScreen(page: any, target: any) {
-        let viewport: any = {};
-        viewport.top = target.scrollTop;
-        viewport.bottom = viewport.top + target.scrollHeight;
-        let bounds: any = {};
-        bounds.top = page.div.offsetTop;
-        bounds.bottom = bounds.top + page.viewport.height;
-        return ((bounds.top <= viewport.bottom) && (bounds.bottom >= viewport.top));
+    onPageChange(event) {
+        this.page = event.pageNumber;
+        this.displayPage = event.pageNumber;
     }
 
     /**
@@ -407,11 +371,4 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             this.previousPage();
         }
     }
-
-    onDocumentScroll(event: Event) {
-        if (event && event.target) {
-            this.watchScroll(event.target);
-        }
-    }
-
 }
