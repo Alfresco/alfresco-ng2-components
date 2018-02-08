@@ -16,11 +16,11 @@ Displays and manages dialogs for selecting content to open, copy or upload.
 -   `openFolderBrowseDialogByFolderId(folderNodeId: string): Observable<MinimalNodeEntryEntity[]>`  
     Opens a folder browser at a chosen folder location.   
     -   `folderNodeId` - ID of the folder to use 
--   `openCopyMoveDialog(action: string, contentEntry: MinimalNodeEntryEntity, permission: string): Observable<MinimalNodeEntryEntity[]>`  
+-   `openCopyMoveDialog(action: string, contentEntry: MinimalNodeEntryEntity, permission?: string): Observable<MinimalNodeEntryEntity[]>`  
     Opens a dialog to copy or move an item to a new location.   
     -   `action` - Name of the action (eg, "Copy" or "Move") to show in the title 
     -   `contentEntry` - Item to be copied or moved 
-    -   `permission` - Permission for the operation 
+    -   `permission` - (Optional) Permission for the operation 
 -   `getTitleTranslation(action: string, name: string): string`  
     Gets the translation of the dialog title.   
     -   `action` - Name of the action to display in the dialog title 

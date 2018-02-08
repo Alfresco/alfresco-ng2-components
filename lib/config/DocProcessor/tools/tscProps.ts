@@ -35,9 +35,21 @@ class ParamData {
     name: string;
     type: string;
     docText: string;
+    initializer: string;
+    optional: boolean;
 
     getSignature() {
-        return `${this.name}: ${this.type}`;
+        let sig =this.name;
+
+        if (this.optional)
+            sig += "?";
+
+        sig += ": " + this.type;
+
+        if (this.initializer)
+            sig += " = " + this.initializer;
+        
+        return sig;
     }
 }
 
@@ -194,6 +206,15 @@ class ServiceDocAutoContent implements NgDocAutoContent {
                         pData.type = params[p].type.getText();
                         let paramSymbol = checker.getSymbolAtLocation(params[p].name);
                         pData.docText = ts.displayPartsToString(paramSymbol.getDocumentationComment());
+                        pData.optional = params[p].questionToken ? true : false;
+
+                        if (params[p].initializer) {
+                            let initText = params[p].initializer.getText();
+
+                            if (initText !== "undefined")
+                                pData.initializer = initText;
+                        }
+
                         methData.params.push(pData);
                     }
 
@@ -422,7 +443,10 @@ function buildMethodsList(methods: MethodData[]) {
 
             if (param.docText !== "") {
                 currParamSections.push(unist.makeInlineCode(param.name));
-                currParamSections.push(unist.makeText(" - " + param.docText));
+
+                let optionalPart = param.optional ? "(Optional) " : "";
+
+                currParamSections.push(unist.makeText(" - " + optionalPart + param.docText));
                 //currParamSections.push(unist.makeBreak());
                 paramListItems.push(unist.makeListItem(unist.makeParagraph(currParamSections)));
             }
