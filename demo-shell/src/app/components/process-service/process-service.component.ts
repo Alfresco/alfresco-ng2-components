@@ -238,10 +238,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.processPage = this.processListPagination.current - 1;
     }
 
-    currentPage(skipCount: number, maxItems: number): number {
-        return (skipCount && maxItems) ? Math.floor(skipCount / maxItems) : 0;
-    }
-
     ngOnInit() {
         if (this.router.url.includes('processes')) {
             this.activeTab = this.tabs.processes;

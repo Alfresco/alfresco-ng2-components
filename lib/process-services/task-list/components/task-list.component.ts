@@ -435,7 +435,16 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit, P
     }
 
     updatePagination(params: PaginationQueryParams) {
+        const needsReload = params.maxItems || params.skipCount;
+        this.size = params.maxItems;
+        this.page = this.currentPage(params.skipCount, params.maxItems);
+        if (needsReload) {
+            this.reload();
+        }
+    }
 
+    currentPage(skipCount: number, maxItems: number): number {
+        return (skipCount && maxItems) ? Math.floor(skipCount / maxItems) : 0;
     }
 
     get supportedPageSizes(): number[] {
