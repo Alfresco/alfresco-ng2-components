@@ -26,7 +26,7 @@ import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
 import { DateWidgetComponent } from './date.widget';
 
-describe('DateWidgetComponent', () => {
+describe('DateTimeWidgetComponent', () => {
 
     let widget: DateWidgetComponent;
     let fixture: ComponentFixture<DateWidgetComponent>;

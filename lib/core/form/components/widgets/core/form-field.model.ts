@@ -203,7 +203,7 @@ export class FormFieldModel extends FormWidgetModel {
 
     private getDefaultDateFormat(jsonField: any): string {
         let originalType = jsonField.type;
-        if( FormFieldTypes.isReadOnlyType(jsonField.type) ) {
+        if ( FormFieldTypes.isReadOnlyType(jsonField.type) ) {
             originalType = jsonField.params.field.type;
         }
         return originalType === FormFieldTypes.DATETIME ? this.deafultDateTimeFormat : this.defaultDateFormat;

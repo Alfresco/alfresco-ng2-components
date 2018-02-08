@@ -284,7 +284,7 @@ export class MinDateTimeFieldValidator implements FormFieldValidator {
         }
         let min = moment(field.minValue, MIN_DATE_FORMAT);
 
-        if(this.isBefore(fieldValueDate, min)) {
+        if (this.isBefore(fieldValueDate, min)) {
             field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_LESS_THAN`;
             field.validationSummary.attributes.set('minValue', min.format('D-M-YYYY hh-mm A'));
             isValid = false;
@@ -298,10 +298,10 @@ export class MinDateTimeFieldValidator implements FormFieldValidator {
         let targetDateTime = targetDate.format('hh:mm A');
         let actualDatePeriod = this.getPeriod(actualDateTime);
         let targetDatePeriod = this.getPeriod(targetDateTime);
-        let actualHour = parseInt(this.getHour(actualDateTime));
-        let targetHour = parseInt(this.getHour(targetDateTime));
-        let actualMinutes = parseInt(this.getMinutes(actualDateTime));
-        let targetMinutes = parseInt(this.getMinutes(targetDateTime));
+        let actualHour = parseInt(this.getHour(actualDateTime), 10);
+        let targetHour = parseInt(this.getHour(targetDateTime), 10);
+        let actualMinutes = parseInt(this.getMinutes(actualDateTime), 10);
+        let targetMinutes = parseInt(this.getMinutes(targetDateTime), 10);
 
         if (!actualDate.isSame(targetDate)) {
             isDateBefore = actualDate.isBefore(targetDate);
@@ -340,7 +340,7 @@ export class MaxDateTimeFieldValidator implements FormFieldValidator {
 
     isSupported(field: FormFieldModel): boolean {
         return field &&
-            this.supportedTypes.indexOf(field.type) > -1 && !!field.minValue;
+            this.supportedTypes.indexOf(field.type) > -1 && !!field.maxValue;
     }
 
     validate(field: FormFieldModel): boolean {
@@ -371,7 +371,7 @@ export class MaxDateTimeFieldValidator implements FormFieldValidator {
         }
         let max = moment(field.maxValue, MAX_DATE_FORMAT);
 
-        if(this.isAfter(fieldValueDate, max)) {
+        if (this.isAfter(fieldValueDate, max)) {
             field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`;
             field.validationSummary.attributes.set('maxValue', max.format('D-M-YYYY hh-mm A'));
             isValid = false;
@@ -385,13 +385,13 @@ export class MaxDateTimeFieldValidator implements FormFieldValidator {
         let targetDateTime = targetDate.format('hh:mm A');
         let actualDatePeriod = this.getPeriod(actualDateTime);
         let targetDatePeriod = this.getPeriod(targetDateTime);
-        let actualHour = parseInt(this.getHour(actualDateTime));
-        let targetHour = parseInt(this.getHour(targetDateTime));
-        let actualMinutes = parseInt(this.getMinutes(actualDateTime));
-        let targetMinutes = parseInt(this.getMinutes(targetDateTime));
+        let actualHour = parseInt(this.getHour(actualDateTime), 10);
+        let targetHour = parseInt(this.getHour(targetDateTime), 10);
+        let actualMinutes = parseInt(this.getMinutes(actualDateTime), 10);
+        let targetMinutes = parseInt(this.getMinutes(targetDateTime), 10);
 
         if (!actualDate.isSame(targetDate)) {
-            isDateAfter = actualDate.isAfter(targetDate)
+            isDateAfter = actualDate.isAfter(targetDate);
         } else {
             if (actualDatePeriod === targetDatePeriod) {
                 if (actualHour === targetHour) {

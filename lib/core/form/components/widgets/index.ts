@@ -82,7 +82,6 @@ export * from './dynamic-table/editors/boolean/boolean.editor';
 export * from './dynamic-table/editors/text/text.editor';
 export * from './text/text-mask.component';
 
-
 export const WIDGET_DIRECTIVES: any[] = [
     UnknownWidgetComponent,
     TabsWidgetComponent,
