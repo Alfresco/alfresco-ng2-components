@@ -1,6 +1,5 @@
 {
     "enabledTools": [
-        "index",
-        "tscProps"
+        "index"
     ]
 }
