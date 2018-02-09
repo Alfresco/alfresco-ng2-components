@@ -25,7 +25,9 @@ import { WidgetVisibilityService } from './../services/widget-visibility.service
 import { FormComponent } from './form.component';
 import { FormFieldModel, FormFieldTypes, FormModel, FormOutcomeEvent, FormOutcomeModel } from './widgets/index';
 
-describe('FormComponent', () => {
+/*tslint:disable:ban*/
+
+fdescribe('FormComponent', () => {
 
     let formService: FormService;
     let formComponent: FormComponent;
@@ -223,6 +225,17 @@ describe('FormComponent', () => {
         formComponent.loadForm();
 
         expect(formComponent.getFormDefinitionByFormId).toHaveBeenCalledWith(formId);
+    });
+
+    it('should refresh visibility when the form is loaded', () => {
+        spyOn(formComponent, 'getFormDefinitionByFormId').and.stub();
+        const formId = '123';
+
+        formComponent.formId = formId;
+        formComponent.loadForm();
+
+        expect(formComponent.getFormDefinitionByFormId).toHaveBeenCalledWith(formId);
+        expect(visibilityService.refreshVisibility).toHaveBeenCalled();
     });
 
     it('should get form definition by form name on load', () => {

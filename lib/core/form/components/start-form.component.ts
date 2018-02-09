@@ -120,6 +120,8 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
                             form.processVariables = intance.variables;
                         }
                         this.form = this.parseForm(form);
+                        this.visibilityService.refreshVisibility(this.form);
+                        this.form.validateForm();
                         this.form.readOnly = this.readOnlyForm;
                         this.onFormLoaded(this.form);
                     },
@@ -135,6 +137,8 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
                 form => {
                     this.formName = form.processDefinitionName;
                     this.form = this.parseForm(form);
+                    this.visibilityService.refreshVisibility(this.form);
+                    this.form.validateForm();
                     this.form.readOnly = this.readOnlyForm;
                     this.onFormLoaded(this.form);
                 },

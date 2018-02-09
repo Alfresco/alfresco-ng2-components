@@ -49,7 +49,7 @@ export class RequiredFieldValidator implements FormFieldValidator {
     isSupported(field: FormFieldModel): boolean {
         return field &&
             this.supportedTypes.indexOf(field.type) > -1 &&
-            field.required;
+            field.required && field.isVisible;
     }
 
     validate(field: FormFieldModel): boolean {
@@ -101,7 +101,7 @@ export class NumberFieldValidator implements FormFieldValidator {
     }
 
     isSupported(field: FormFieldModel): boolean {
-        return field && this.supportedTypes.indexOf(field.type) > -1;
+        return field && this.supportedTypes.indexOf(field.type) > -1 && field.isVisible;
     }
 
     validate(field: FormFieldModel): boolean {
@@ -143,7 +143,7 @@ export class DateFieldValidator implements FormFieldValidator {
     }
 
     isSupported(field: FormFieldModel): boolean {
-        return field && this.supportedTypes.indexOf(field.type) > -1;
+        return field && this.supportedTypes.indexOf(field.type) > -1 && field.isVisible;
     }
 
     validate(field: FormFieldModel): boolean {
@@ -166,7 +166,7 @@ export class MinDateFieldValidator implements FormFieldValidator {
 
     isSupported(field: FormFieldModel): boolean {
         return field &&
-            this.supportedTypes.indexOf(field.type) > -1 && !!field.minValue;
+            this.supportedTypes.indexOf(field.type) > -1 && !!field.minValue && field.isVisible;
     }
 
     validate(field: FormFieldModel): boolean {
@@ -215,7 +215,7 @@ export class MaxDateFieldValidator implements FormFieldValidator {
 
     isSupported(field: FormFieldModel): boolean {
         return field &&
-            this.supportedTypes.indexOf(field.type) > -1 && !!field.maxValue;
+            this.supportedTypes.indexOf(field.type) > -1 && !!field.maxValue && field.isVisible;
     }
 
     validate(field: FormFieldModel): boolean {
@@ -350,7 +350,7 @@ export class MinLengthFieldValidator implements FormFieldValidator {
     isSupported(field: FormFieldModel): boolean {
         return field &&
             this.supportedTypes.indexOf(field.type) > -1 &&
-            field.minLength > 0;
+            field.minLength > 0 && field.isVisible;
     }
 
     validate(field: FormFieldModel): boolean {
@@ -376,7 +376,7 @@ export class MaxLengthFieldValidator implements FormFieldValidator {
     isSupported(field: FormFieldModel): boolean {
         return field &&
             this.supportedTypes.indexOf(field.type) > -1 &&
-            field.maxLength > 0;
+            field.maxLength > 0 && field.isVisible;
     }
 
     validate(field: FormFieldModel): boolean {
@@ -402,7 +402,7 @@ export class MinValueFieldValidator implements FormFieldValidator {
     isSupported(field: FormFieldModel): boolean {
         return field &&
             this.supportedTypes.indexOf(field.type) > -1 &&
-            NumberFieldValidator.isNumber(field.minValue);
+            NumberFieldValidator.isNumber(field.minValue) && field.isVisible;
     }
 
     validate(field: FormFieldModel): boolean {
@@ -432,7 +432,7 @@ export class MaxValueFieldValidator implements FormFieldValidator {
     isSupported(field: FormFieldModel): boolean {
         return field &&
             this.supportedTypes.indexOf(field.type) > -1 &&
-            NumberFieldValidator.isNumber(field.maxValue);
+            NumberFieldValidator.isNumber(field.maxValue) && field.isVisible;
     }
 
     validate(field: FormFieldModel): boolean {
@@ -461,7 +461,7 @@ export class RegExFieldValidator implements FormFieldValidator {
 
     isSupported(field: FormFieldModel): boolean {
         return field &&
-            this.supportedTypes.indexOf(field.type) > -1 && !!field.regexPattern;
+            this.supportedTypes.indexOf(field.type) > -1 && !!field.regexPattern && field.isVisible;
     }
 
     validate(field: FormFieldModel): boolean {
@@ -484,7 +484,7 @@ export class FixedValueFieldValidator implements FormFieldValidator {
     ];
 
     isSupported(field: FormFieldModel): boolean {
-        return field && this.supportedTypes.indexOf(field.type) > -1;
+        return field && this.supportedTypes.indexOf(field.type) > -1 && field.isVisible;
     }
 
     hasValidNameOrValidId(field: FormFieldModel): boolean {
