@@ -188,15 +188,15 @@ export class MinDateFieldValidator implements FormFieldValidator {
         const MIN_DATE_FORMAT = 'DD-MM-YYYY';
         let isValid = true;
         // remove time and timezone info
-        let d;
+        let fieldValueData;
         if (typeof field.value === 'string') {
-            d = moment(field.value.split('T')[0], dateFormat);
+            fieldValueData = moment(field.value.split('T')[0], dateFormat);
         } else {
-            d = field.value;
+            fieldValueData = field.value;
         }
         let min = moment(field.minValue, MIN_DATE_FORMAT);
 
-        if (d.isBefore(min)) {
+        if (fieldValueData.isBefore(min)) {
             field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_LESS_THAN`;
             field.validationSummary.attributes.set('minValue', field.minValue.toLocaleString());
             isValid = false;
