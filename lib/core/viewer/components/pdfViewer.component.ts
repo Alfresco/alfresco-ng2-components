@@ -149,7 +149,9 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.documentContainer.removeEventListener('pagechange', (event) => this.onPageChange(event), true);
+        if(this.documentContainer) {
+            this.documentContainer.removeEventListener('pagechange', (event) => this.onPageChange(event), true);
+        }
     }
 
     /**
