@@ -26,9 +26,7 @@ import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
 import { DateWidgetComponent } from './date.widget';
 
-/*tslint:disable:ban*/
-
-fdescribe('DateWidgetComponent', () => {
+describe('DateWidgetComponent', () => {
 
     let widget: DateWidgetComponent;
     let fixture: ComponentFixture<DateWidgetComponent>;
