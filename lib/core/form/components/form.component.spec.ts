@@ -25,9 +25,7 @@ import { WidgetVisibilityService } from './../services/widget-visibility.service
 import { FormComponent } from './form.component';
 import { FormFieldModel, FormFieldTypes, FormModel, FormOutcomeEvent, FormOutcomeModel } from './widgets/index';
 
-/*tslint:disable:ban*/
-
-fdescribe('FormComponent', () => {
+describe('FormComponent', () => {
 
     let formService: FormService;
     let formComponent: FormComponent;
