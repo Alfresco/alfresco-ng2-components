@@ -133,7 +133,7 @@ export class ContentService {
     /**
      * Get thumbnail URL for the given document node.
      *
-     * @param {string|MinimalNodeEntity} nodeId or node to get URL for.
+     * @param {string|MinimalNodeEntity} node Node to get URL for.
      * @param {boolean} [attachment] Retrieve content as an attachment for download
      * @param {string} [ticket] Custom ticket to use for authentication
      * @returns {string} The URL address pointing to the content.
@@ -166,7 +166,7 @@ export class ContentService {
 
     /**
      * Get content for the given node.
-     * @param nodeId {string}.
+     * @param nodeId ID of the target node
      *
      * @returns {Observable<any>} URL address.
      */
@@ -178,7 +178,9 @@ export class ContentService {
 
     /**
      * Create a folder
-     * @param name - the folder name
+     * @param relativePath Location to create the folder
+     * @param name Folder name
+     * @param parentId Node ID of parent folder
      */
     createFolder(relativePath: string, name: string, parentId?: string): Observable<FolderCreatedEvent> {
         return Observable.fromPromise(this.apiService.getInstance().nodes.createFolder(name, relativePath, parentId))
@@ -195,8 +197,8 @@ export class ContentService {
 
     /**
      * Check if the user has permissions on that node
-     * @param MinimalNode -  node to check allowableOperations
-     * @param PermissionsEnum - create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions
+     * @param node Node to check allowableOperations
+     * @param permission Create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions
      *
      * @returns {boolean} has permission
      */
@@ -221,7 +223,7 @@ export class ContentService {
 
     /**
      * Check if the node has the properties allowableOperations
-     * @param MinimalNode -  node to check allowableOperations
+     * @param node Node to check allowableOperations
      *
      * @returns {boolean} has AllowableOperations
      */
