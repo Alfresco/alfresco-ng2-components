@@ -36,6 +36,7 @@ export class FormFieldModel extends FormWidgetModel {
     private _required: boolean = false;
 
     readonly defaultDateFormat: string = 'D-M-YYYY';
+    readonly deafultDateTimeFormat: string = 'D-M-YYYY hh:mm A';
 
     // model members
     fieldType: string;
@@ -164,7 +165,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.visibilityCondition = <WidgetVisibilityModel> json.visibilityCondition;
             this.enableFractions = <boolean> json.enableFractions;
             this.currency = json.currency;
-            this.dateDisplayFormat = json.dateDisplayFormat || this.defaultDateFormat;
+            this.dateDisplayFormat = json.dateDisplayFormat || this.getDefaultDateFormat(json);
             this._value = this.parseValue(json);
             this.validationSummary = new ErrorMessageModel();
 
@@ -198,6 +199,16 @@ export class FormFieldModel extends FormWidgetModel {
         }
 
         this.updateForm();
+    }
+
+    private getDefaultDateFormat(jsonField: any): string {
+        let originalType = jsonField.type;
+        if (FormFieldTypes.isReadOnlyType(jsonField.type) &&
+            jsonField.params &&
+            jsonField.params.field) {
+            originalType = jsonField.params.field.type;
+        }
+        return originalType === FormFieldTypes.DATETIME ? this.deafultDateTimeFormat : this.defaultDateFormat;
     }
 
     private isTypeaHeadFieldType(type: string): boolean {
@@ -311,13 +322,13 @@ export class FormFieldModel extends FormWidgetModel {
          This is needed due to Activiti displaying/editing dates in d-M-YYYY format
          but storing on server in ISO8601 format (i.e. 2013-02-04T22:44:30.652Z)
          */
-        if (this.isDateField(json)) {
+        if (this.isDateField(json) || this.isDateTimeField(json)) {
             if (value) {
                 let dateValue;
                 if (NumberFieldValidator.isNumber(value)) {
                     dateValue = moment(value);
                 } else {
-                    dateValue = moment(value.split('T')[0], 'YYYY-M-D');
+                    dateValue = this.isDateTimeField(json) ? moment(value, 'YYYY-MM-DD hh:mm A') : moment(value.split('T')[0], 'YYYY-M-D');
                 }
                 if (dateValue && dateValue.isValid()) {
                     value = dateValue.format(this.dateDisplayFormat);
@@ -382,6 +393,15 @@ export class FormFieldModel extends FormWidgetModel {
                     this._value = this.value;
                 }
                 break;
+            case FormFieldTypes.DATETIME:
+                const dateTimeValue = moment(this.value, this.dateDisplayFormat, true);
+                if (dateTimeValue && dateTimeValue.isValid()) {
+                    this.form.values[this.id] = dateTimeValue.format('YYYY-MM-DDTHH:mm:ssZ');
+                } else {
+                    this.form.values[this.id] = null;
+                    this._value = this.value;
+                }
+                break;
             case FormFieldTypes.NUMBER:
                 this.form.values[this.id] = parseInt(this.value, 10);
                 break;
@@ -424,4 +444,12 @@ export class FormFieldModel extends FormWidgetModel {
                 json.params.field.type === FormFieldTypes.DATE ) ||
                 json.type === FormFieldTypes.DATE;
     }
+
+    private isDateTimeField(json: any): boolean {
+        return (json.params &&
+                json.params.field &&
+                json.params.field.type === FormFieldTypes.DATETIME) ||
+                json.type === FormFieldTypes.DATETIME;
+    }
+
 }

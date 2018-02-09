@@ -44,6 +44,7 @@ import { FormService } from './services/form.service';
 import { NodeService } from './services/node.service';
 import { ProcessContentService } from './services/process-content.service';
 import { WidgetVisibilityService } from './services/widget-visibility.service';
+import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
 
 @NgModule({
     imports: [
@@ -55,7 +56,9 @@ import { WidgetVisibilityService } from './services/widget-visibility.service';
         FormsModule,
         ReactiveFormsModule,
         DataColumnModule,
-        PipeModule
+        PipeModule,
+        MatDatetimepickerModule,
+        MatNativeDatetimeModule
     ],
     declarations: [
         ContentWidgetComponent,

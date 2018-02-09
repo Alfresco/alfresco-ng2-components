@@ -42,6 +42,7 @@ import { InputMaskDirective } from './text/text-mask.component';
 import { TextWidgetComponent } from './text/text.widget';
 import { TypeaheadWidgetComponent } from './typeahead/typeahead.widget';
 import { UploadWidgetComponent } from './upload/upload.widget';
+import { DateTimeWidgetComponent } from './date-time/date-time.widget';
 
 // core
 export * from './widget.component';
@@ -70,6 +71,7 @@ export * from './amount/amount.widget';
 export * from './dynamic-table/dynamic-table.widget';
 export * from './error/error.component';
 export { DocumentWidgetComponent } from './document/document.widget';
+export * from './date-time/date-time.widget';
 
 // editors (dynamic table)
 export * from './dynamic-table/dynamic-table.widget.model';
@@ -105,7 +107,8 @@ export const WIDGET_DIRECTIVES: any[] = [
     TextEditorComponent,
     RowEditorComponent,
     ErrorWidgetComponent,
-    DocumentWidgetComponent
+    DocumentWidgetComponent,
+    DateTimeWidgetComponent
 ];
 
 export const MASK_DIRECTIVE: any[] = [
