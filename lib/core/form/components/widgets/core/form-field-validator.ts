@@ -284,51 +284,12 @@ export class MinDateTimeFieldValidator implements FormFieldValidator {
         }
         let min = moment(field.minValue, MIN_DATE_FORMAT);
 
-        if (this.isBefore(fieldValueDate, min)) {
+        if (fieldValueDate.isBefore(min)) {
             field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_LESS_THAN`;
             field.validationSummary.attributes.set('minValue', min.format('D-M-YYYY hh-mm A'));
             isValid = false;
         }
         return isValid;
-    }
-
-    private isBefore(actualDate, targetDate): boolean {
-        let isDateBefore: boolean = true;
-        let actualDateTime = actualDate.format('hh:mm A');
-        let targetDateTime = targetDate.format('hh:mm A');
-        let actualDatePeriod = this.getPeriod(actualDateTime);
-        let targetDatePeriod = this.getPeriod(targetDateTime);
-        let actualHour = parseInt(this.getHour(actualDateTime), 10);
-        let targetHour = parseInt(this.getHour(targetDateTime), 10);
-        let actualMinutes = parseInt(this.getMinutes(actualDateTime), 10);
-        let targetMinutes = parseInt(this.getMinutes(targetDateTime), 10);
-
-        if (!actualDate.isSame(targetDate)) {
-            isDateBefore = actualDate.isBefore(targetDate);
-        } else {
-            if (actualDatePeriod === targetDatePeriod) {
-                if (actualHour === targetHour) {
-                    isDateBefore = actualMinutes < targetMinutes;
-                } else {
-                    isDateBefore = actualHour < targetHour;
-                }
-            } else {
-                isDateBefore = actualDatePeriod < targetDatePeriod;
-            }
-        }
-        return isDateBefore;
-    }
-
-    private getHour(timeAndPeriod: string) {
-        return timeAndPeriod.split(' ')[0].split(':')[0];
-    }
-
-    private getMinutes(timeAndPeriod: string) {
-        return timeAndPeriod.split(' ')[0].split(':')[1];
-    }
-
-    private getPeriod(timeAndPeriod: string) {
-        return timeAndPeriod.split(' ')[1];
     }
 }
 
@@ -360,10 +321,9 @@ export class MaxDateTimeFieldValidator implements FormFieldValidator {
 
     private checkDateTime(field: FormFieldModel, dateFormat: string): boolean {
         const MAX_DATE_FORMAT = 'YYYY-MM-DD hh:mm A';
-
         let isValid = true;
-        // remove time and timezone info
         let fieldValueDate;
+
         if (typeof field.value === 'string') {
             fieldValueDate = moment(field.value, dateFormat);
         } else {
@@ -371,51 +331,12 @@ export class MaxDateTimeFieldValidator implements FormFieldValidator {
         }
         let max = moment(field.maxValue, MAX_DATE_FORMAT);
 
-        if (this.isAfter(fieldValueDate, max)) {
+        if (fieldValueDate.isAfter(max)) {
             field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`;
             field.validationSummary.attributes.set('maxValue', max.format('D-M-YYYY hh-mm A'));
             isValid = false;
         }
         return isValid;
-    }
-
-    private isAfter(actualDate, targetDate): boolean {
-        let isDateAfter: boolean = true;
-        let actualDateTime = actualDate.format('hh:mm A');
-        let targetDateTime = targetDate.format('hh:mm A');
-        let actualDatePeriod = this.getPeriod(actualDateTime);
-        let targetDatePeriod = this.getPeriod(targetDateTime);
-        let actualHour = parseInt(this.getHour(actualDateTime), 10);
-        let targetHour = parseInt(this.getHour(targetDateTime), 10);
-        let actualMinutes = parseInt(this.getMinutes(actualDateTime), 10);
-        let targetMinutes = parseInt(this.getMinutes(targetDateTime), 10);
-
-        if (!actualDate.isSame(targetDate)) {
-            isDateAfter = actualDate.isAfter(targetDate);
-        } else {
-            if (actualDatePeriod === targetDatePeriod) {
-                if (actualHour === targetHour) {
-                    isDateAfter = actualMinutes > targetMinutes;
-                } else {
-                    isDateAfter = actualHour > targetHour;
-                }
-            } else {
-                isDateAfter = actualDatePeriod > targetDatePeriod;
-            }
-        }
-        return isDateAfter;
-    }
-
-    private getHour(timeAndPeriod: string) {
-        return timeAndPeriod.split(' ')[0].split(':')[0];
-    }
-
-    private getMinutes(timeAndPeriod: string) {
-        return timeAndPeriod.split(' ')[0].split(':')[1];
-    }
-
-    private getPeriod(timeAndPeriod: string) {
-        return timeAndPeriod.split(' ')[1];
     }
 }
 
