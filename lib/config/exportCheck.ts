@@ -258,15 +258,17 @@ function generatExportList(fileNames: string[], options: ts.CompilerOptions): vo
             } else {
                 (node.parent as any).resolvedModules.forEach((currentModule) => {
 
-                    let find;
-                    exportedAllPath.forEach((currentExported) => {
-                        if (currentModule.resolvedFileName === currentExported) {
-                            find = currentExported;
-                        }
-                    })
+                    if(currentModule) {
+                        let find;
+                        exportedAllPath.forEach((currentExported) => {
+                            if (currentModule.resolvedFileName === currentExported) {
+                                find = currentExported;
+                            }
+                        })
 
-                    if (!find) {
-                        exportedAllPath.push(currentModule.resolvedFileName);
+                        if (!find) {
+                            exportedAllPath.push(currentModule.resolvedFileName);
+                        }
                     }
                 })
 

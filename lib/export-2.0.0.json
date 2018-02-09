@@ -17,14 +17,6 @@
     },
     {
         "position": {
-            "line": 35,
-            "character": 8,
-            "fileName": "lib/core/collapsable/collapsable.module.ts"
-        },
-        "name": "AccordionGroupComponent"
-    },
-    {
-        "position": {
             "line": 20,
             "character": 0,
             "fileName": "lib/core/collapsable/accordion-group.component.ts"
@@ -33,11 +25,11 @@
     },
     {
         "position": {
-            "line": 26,
-            "character": 0,
-            "fileName": "lib/core/form/services/activiti-alfresco.service.ts"
+            "line": 35,
+            "character": 8,
+            "fileName": "lib/core/collapsable/collapsable.module.ts"
         },
-        "name": "ActivitiContentService"
+        "name": "AccordionGroupComponent"
     },
     {
         "position": {
@@ -81,14 +73,6 @@
     },
     {
         "position": {
-            "line": 22,
-            "character": 0,
-            "fileName": "lib/insights/analytics-process/components/analytics-generator.component.ts"
-        },
-        "name": "AnalyticsGeneratorComponent"
-    },
-    {
-        "position": {
             "line": 71,
             "character": 8,
             "fileName": "lib/insights/analytics-process/analytics-process.module.ts"
@@ -97,17 +81,25 @@
     },
     {
         "position": {
-            "line": 41,
+            "line": 22,
             "character": 0,
-            "fileName": "lib/insights/analytics-process/analytics-process.module.ts"
+            "fileName": "lib/insights/analytics-process/components/analytics-generator.component.ts"
+        },
+        "name": "AnalyticsGeneratorComponent"
+    },
+    {
+        "position": {
+            "line": 57,
+            "character": 8,
+            "fileName": "lib/insights/insights.module.ts"
         },
         "name": "AnalyticsProcessModule"
     },
     {
         "position": {
-            "line": 54,
-            "character": 8,
-            "fileName": "lib/insights/insights.module.ts"
+            "line": 41,
+            "character": 0,
+            "fileName": "lib/insights/analytics-process/analytics-process.module.ts"
         },
         "name": "AnalyticsProcessModule"
     },
@@ -137,17 +129,17 @@
     },
     {
         "position": {
-            "line": 70,
-            "character": 8,
-            "fileName": "lib/insights/analytics-process/analytics-process.module.ts"
+            "line": 40,
+            "character": 0,
+            "fileName": "lib/insights/analytics-process/components/analytics-report-parameters.component.ts"
         },
         "name": "AnalyticsReportParametersComponent"
     },
     {
         "position": {
-            "line": 40,
-            "character": 0,
-            "fileName": "lib/insights/analytics-process/components/analytics-report-parameters.component.ts"
+            "line": 70,
+            "character": 8,
+            "fileName": "lib/insights/analytics-process/analytics-process.module.ts"
         },
         "name": "AnalyticsReportParametersComponent"
     },
@@ -161,7 +153,7 @@
     },
     {
         "position": {
-            "line": 191,
+            "line": 95,
             "character": 8,
             "fileName": "lib/core/core.module.ts"
         },
@@ -169,15 +161,7 @@
     },
     {
         "position": {
-            "line": 128,
-            "character": 8,
-            "fileName": "lib/core/core.module.ts"
-        },
-        "name": "AppConfigModule"
-    },
-    {
-        "position": {
-            "line": 22,
+            "line": 25,
             "character": 0,
             "fileName": "lib/core/app-config/app-config.module.ts"
         },
@@ -209,6 +193,14 @@
     },
     {
         "position": {
+            "line": 37,
+            "character": 8,
+            "fileName": "lib/process-services/app-list/apps-list.module.ts"
+        },
+        "name": "AppsListComponent"
+    },
+    {
+        "position": {
             "line": 24,
             "character": 0,
             "fileName": "lib/process-services/app-list/apps-list.component.ts"
@@ -217,15 +209,7 @@
     },
     {
         "position": {
-            "line": 39,
-            "character": 8,
-            "fileName": "lib/process-services/app-list/apps-list.module.ts"
-        },
-        "name": "AppsListComponent"
-    },
-    {
-        "position": {
-            "line": 62,
+            "line": 65,
             "character": 8,
             "fileName": "lib/process-services/process.module.ts"
         },
@@ -233,7 +217,7 @@
     },
     {
         "position": {
-            "line": 26,
+            "line": 25,
             "character": 0,
             "fileName": "lib/process-services/app-list/apps-list.module.ts"
         },
@@ -249,35 +233,11 @@
     },
     {
         "position": {
-            "line": 33,
+            "line": 20,
             "character": 0,
-            "fileName": "lib/process-services/content-widget/attach-file-widget.component.ts"
+            "fileName": "lib/process-services/attachment/create-task-attachment.component.ts"
         },
-        "name": "AttachFileWidgetComponent"
-    },
-    {
-        "position": {
-            "line": 47,
-            "character": 8,
-            "fileName": "lib/process-services/content-widget/content-widget.module.ts"
-        },
-        "name": "AttachFileWidgetComponent"
-    },
-    {
-        "position": {
-            "line": 29,
-            "character": 0,
-            "fileName": "lib/process-services/content-widget/attach-folder-widget.component.ts"
-        },
-        "name": "AttachFolderWidgetComponent"
-    },
-    {
-        "position": {
-            "line": 48,
-            "character": 8,
-            "fileName": "lib/process-services/content-widget/content-widget.module.ts"
-        },
-        "name": "AttachFolderWidgetComponent"
+        "name": "AttachmentComponent"
     },
     {
         "position": {
@@ -289,15 +249,7 @@
     },
     {
         "position": {
-            "line": 20,
-            "character": 0,
-            "fileName": "lib/process-services/attachment/create-task-attachment.component.ts"
-        },
-        "name": "AttachmentComponent"
-    },
-    {
-        "position": {
-            "line": 63,
+            "line": 66,
             "character": 8,
             "fileName": "lib/process-services/process.module.ts"
         },
@@ -313,6 +265,14 @@
     },
     {
         "position": {
+            "line": 27,
+            "character": 0,
+            "fileName": "lib/core/form/components/widgets/attach/attach.widget.ts"
+        },
+        "name": "AttachWidgetComponent"
+    },
+    {
+        "position": {
             "line": 21,
             "character": 0,
             "fileName": "lib/core/mock/authentication.service.mock.ts"
@@ -321,7 +281,7 @@
     },
     {
         "position": {
-            "line": 33,
+            "line": 32,
             "character": 0,
             "fileName": "lib/core/services/authentication.service.ts"
         },
@@ -329,7 +289,7 @@
     },
     {
         "position": {
-            "line": 25,
+            "line": 26,
             "character": 0,
             "fileName": "lib/core/services/auth-guard.service.ts"
         },
@@ -337,7 +297,7 @@
     },
     {
         "position": {
-            "line": 25,
+            "line": 26,
             "character": 0,
             "fileName": "lib/core/services/auth-guard-bpm.service.ts"
         },
@@ -345,19 +305,11 @@
     },
     {
         "position": {
-            "line": 23,
+            "line": 22,
             "character": 0,
             "fileName": "lib/core/services/auth-guard-ecm.service.ts"
         },
         "name": "AuthGuardEcm"
-    },
-    {
-        "position": {
-            "line": 20,
-            "character": 0,
-            "fileName": "lib/insights/diagram/models/chart/barChart.model.ts"
-        },
-        "name": "BarChart"
     },
     {
         "position": {
@@ -401,19 +353,19 @@
     },
     {
         "position": {
-            "line": 21,
-            "character": 0,
-            "fileName": "lib/content-services/breadcrumb/breadcrumb.component.ts"
-        },
-        "name": "BreadcrumbComponent"
-    },
-    {
-        "position": {
             "line": 32,
             "character": 8,
             "fileName": "lib/content-services/breadcrumb/breadcrumb.module.ts"
         },
         "name": "BreadcrumbComponent"
+    },
+    {
+        "position": {
+            "line": 80,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
+        },
+        "name": "BreadcrumbModule"
     },
     {
         "position": {
@@ -425,81 +377,57 @@
     },
     {
         "position": {
-            "line": 78,
+            "line": 54,
             "character": 8,
-            "fileName": "lib/content-services/content.module.ts"
+            "fileName": "lib/insights/insights.module.ts"
         },
-        "name": "BreadcrumbModule"
+        "name": "BrowserAnimationsModule"
     },
     {
         "position": {
-            "line": 24,
+            "line": 62,
+            "character": 8,
+            "fileName": "lib/process-services/process.module.ts"
+        },
+        "name": "BrowserAnimationsModule"
+    },
+    {
+        "position": {
+            "line": 96,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "BrowserAnimationsModule"
+    },
+    {
+        "position": {
+            "line": 23,
             "character": 0,
-            "fileName": "lib/core/card-view/services/card-item-types.service.ts"
+            "fileName": "lib/core/services/card-item-types.service.ts"
         },
         "name": "CardItemTypeService"
     },
     {
         "position": {
-            "line": 19,
+            "line": 34,
             "character": 0,
-            "fileName": "lib/core/card-view/models/card-view-baseitem.model.ts"
+            "fileName": "lib/core/models/card-view-baseitem.model.ts"
         },
         "name": "CardViewBaseItemModel"
     },
     {
         "position": {
-            "line": 72,
-            "character": 8,
-            "fileName": "lib/core/card-view/card-view.module.ts"
-        },
-        "name": "CardViewBoolItemComponent"
-    },
-    {
-        "position": {
-            "line": 19,
-            "character": 4,
-            "fileName": "lib/core/card-view/public-api.ts"
-        },
-        "name": "CardViewBoolItemComponent"
-    },
-    {
-        "position": {
-            "line": 22,
-            "character": 0,
-            "fileName": "lib/core/card-view/components/card-view-boolitem/card-view-boolitem.component.ts"
-        },
-        "name": "CardViewBoolItemComponent"
-    },
-    {
-        "position": {
-            "line": 22,
-            "character": 0,
-            "fileName": "lib/core/card-view/models/card-view-boolitem.model.ts"
-        },
-        "name": "CardViewBoolItemModel"
-    },
-    {
-        "position": {
-            "line": 71,
-            "character": 8,
-            "fileName": "lib/core/card-view/card-view.module.ts"
-        },
-        "name": "CardViewComponent"
-    },
-    {
-        "position": {
-            "line": 18,
-            "character": 4,
-            "fileName": "lib/core/card-view/public-api.ts"
-        },
-        "name": "CardViewComponent"
-    },
-    {
-        "position": {
             "line": 20,
             "character": 0,
-            "fileName": "lib/core/card-view/components/card-view/card-view.component.ts"
+            "fileName": "lib/core/card-view/card-view.component.ts"
+        },
+        "name": "CardViewComponent"
+    },
+    {
+        "position": {
+            "line": 57,
+            "character": 8,
+            "fileName": "lib/core/card-view/card-view.module.ts"
         },
         "name": "CardViewComponent"
     },
@@ -507,13 +435,13 @@
         "position": {
             "line": 19,
             "character": 0,
-            "fileName": "lib/core/card-view/directives/card-view-content-proxy.directive.ts"
+            "fileName": "lib/core/card-view/card-view-content-proxy.directive.ts"
         },
         "name": "CardViewContentProxyDirective"
     },
     {
         "position": {
-            "line": 73,
+            "line": 60,
             "character": 8,
             "fileName": "lib/core/card-view/card-view.module.ts"
         },
@@ -521,95 +449,39 @@
     },
     {
         "position": {
-            "line": 20,
-            "character": 4,
-            "fileName": "lib/core/card-view/public-api.ts"
+            "line": 28,
+            "character": 0,
+            "fileName": "lib/core/card-view/card-view-dateitem.component.ts"
         },
         "name": "CardViewDateItemComponent"
     },
     {
         "position": {
-            "line": 29,
+            "line": 34,
             "character": 0,
-            "fileName": "lib/core/card-view/components/card-view-dateitem/card-view-dateitem.component.ts"
-        },
-        "name": "CardViewDateItemComponent"
-    },
-    {
-        "position": {
-            "line": 23,
-            "character": 0,
-            "fileName": "lib/core/card-view/models/card-view-dateitem.model.ts"
+            "fileName": "lib/core/models/card-view-dateitem.model.ts"
         },
         "name": "CardViewDateItemModel"
     },
     {
         "position": {
-            "line": 21,
+            "line": 28,
             "character": 0,
-            "fileName": "lib/core/card-view/models/card-view-datetimeitem.model.ts"
-        },
-        "name": "CardViewDatetimeItemModel"
-    },
-    {
-        "position": {
-            "line": 23,
-            "character": 0,
-            "fileName": "lib/core/card-view/models/card-view-floatitem.model.ts"
-        },
-        "name": "CardViewFloatItemModel"
-    },
-    {
-        "position": {
-            "line": 23,
-            "character": 0,
-            "fileName": "lib/core/card-view/models/card-view-intitem.model.ts"
-        },
-        "name": "CardViewIntItemModel"
-    },
-    {
-        "position": {
-            "line": 30,
-            "character": 0,
-            "fileName": "lib/core/card-view/components/card-view-item-dispatcher/card-view-item-dispatcher.component.ts"
+            "fileName": "lib/core/card-view/card-view-item-dispatcher.component.ts"
         },
         "name": "CardViewItemDispatcherComponent"
     },
     {
         "position": {
-            "line": 19,
-            "character": 0,
-            "fileName": "lib/core/card-view/validators/card-view-item-float.validator.ts"
-        },
-        "name": "CardViewItemFloatValidator"
-    },
-    {
-        "position": {
-            "line": 19,
-            "character": 0,
-            "fileName": "lib/core/card-view/validators/card-view-item-int.validator.ts"
-        },
-        "name": "CardViewItemIntValidator"
-    },
-    {
-        "position": {
             "line": 21,
             "character": 0,
-            "fileName": "lib/core/card-view/components/card-view-mapitem/card-view-mapitem.component.ts"
+            "fileName": "lib/core/card-view/card-view-mapitem.component.ts"
         },
         "name": "CardViewMapItemComponent"
     },
     {
         "position": {
-            "line": 21,
-            "character": 4,
-            "fileName": "lib/core/card-view/public-api.ts"
-        },
-        "name": "CardViewMapItemComponent"
-    },
-    {
-        "position": {
-            "line": 74,
+            "line": 59,
             "character": 8,
             "fileName": "lib/core/card-view/card-view.module.ts"
         },
@@ -617,23 +489,15 @@
     },
     {
         "position": {
-            "line": 21,
+            "line": 29,
             "character": 0,
-            "fileName": "lib/core/card-view/models/card-view-mapitem.model.ts"
+            "fileName": "lib/core/models/card-view-mapitem.model.ts"
         },
         "name": "CardViewMapItemModel"
     },
     {
         "position": {
-            "line": 195,
-            "character": 8,
-            "fileName": "lib/core/core.module.ts"
-        },
-        "name": "CardViewModule"
-    },
-    {
-        "position": {
-            "line": 40,
+            "line": 31,
             "character": 0,
             "fileName": "lib/core/card-view/card-view.module.ts"
         },
@@ -641,41 +505,33 @@
     },
     {
         "position": {
-            "line": 132,
+            "line": 102,
             "character": 8,
             "fileName": "lib/core/core.module.ts"
         },
         "name": "CardViewModule"
-    },
-    {
-        "position": {
-            "line": 75,
-            "character": 8,
-            "fileName": "lib/core/card-view/card-view.module.ts"
-        },
-        "name": "CardViewTextItemComponent"
     },
     {
         "position": {
             "line": 21,
             "character": 0,
-            "fileName": "lib/core/card-view/components/card-view-textitem/card-view-textitem.component.ts"
+            "fileName": "lib/core/card-view/card-view-textitem.component.ts"
         },
         "name": "CardViewTextItemComponent"
     },
     {
         "position": {
-            "line": 22,
-            "character": 4,
-            "fileName": "lib/core/card-view/public-api.ts"
+            "line": 58,
+            "character": 8,
+            "fileName": "lib/core/card-view/card-view.module.ts"
         },
         "name": "CardViewTextItemComponent"
     },
     {
         "position": {
-            "line": 22,
+            "line": 38,
             "character": 0,
-            "fileName": "lib/core/card-view/models/card-view-textitem.model.ts"
+            "fileName": "lib/core/models/card-view-textitem.model.ts"
         },
         "name": "CardViewTextItemModel"
     },
@@ -683,17 +539,9 @@
         "position": {
             "line": 39,
             "character": 0,
-            "fileName": "lib/core/card-view/services/card-view-update.service.ts"
+            "fileName": "lib/core/services/card-view-update.service.ts"
         },
         "name": "CardViewUpdateService"
-    },
-    {
-        "position": {
-            "line": 17,
-            "character": 0,
-            "fileName": "lib/insights/diagram/models/chart/chart.model.ts"
-        },
-        "name": "Chart"
     },
     {
         "position": {
@@ -713,7 +561,15 @@
     },
     {
         "position": {
-            "line": 85,
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/process-services/task-list/components/checklist.component.ts"
+        },
+        "name": "ChecklistComponent"
+    },
+    {
+        "position": {
+            "line": 83,
             "character": 8,
             "fileName": "lib/process-services/task-list/task-list.module.ts"
         },
@@ -723,31 +579,15 @@
         "position": {
             "line": 24,
             "character": 0,
-            "fileName": "lib/process-services/task-list/components/checklist.component.ts"
-        },
-        "name": "ChecklistComponent"
-    },
-    {
-        "position": {
-            "line": 196,
-            "character": 8,
-            "fileName": "lib/core/core.module.ts"
-        },
-        "name": "CollapsableModule"
-    },
-    {
-        "position": {
-            "line": 133,
-            "character": 8,
-            "fileName": "lib/core/core.module.ts"
-        },
-        "name": "CollapsableModule"
-    },
-    {
-        "position": {
-            "line": 24,
-            "character": 0,
             "fileName": "lib/core/collapsable/collapsable.module.ts"
+        },
+        "name": "CollapsableModule"
+    },
+    {
+        "position": {
+            "line": 103,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
         },
         "name": "CollapsableModule"
     },
@@ -785,6 +625,14 @@
     },
     {
         "position": {
+            "line": 46,
+            "character": 8,
+            "fileName": "lib/process-services/comments/comments.module.ts"
+        },
+        "name": "CommentsComponent"
+    },
+    {
+        "position": {
             "line": 22,
             "character": 0,
             "fileName": "lib/process-services/comments/comments.component.ts"
@@ -793,11 +641,11 @@
     },
     {
         "position": {
-            "line": 46,
+            "line": 59,
             "character": 8,
-            "fileName": "lib/process-services/comments/comments.module.ts"
+            "fileName": "lib/process-services/process.module.ts"
         },
-        "name": "CommentsComponent"
+        "name": "CommentsModule"
     },
     {
         "position": {
@@ -809,41 +657,25 @@
     },
     {
         "position": {
-            "line": 57,
-            "character": 8,
-            "fileName": "lib/process-services/process.module.ts"
-        },
-        "name": "CommentsModule"
-    },
-    {
-        "position": {
-            "line": 183,
-            "character": 8,
-            "fileName": "lib/core/core.module.ts"
-        },
-        "name": "CommonModule"
-    },
-    {
-        "position": {
-            "line": 56,
-            "character": 8,
-            "fileName": "lib/process-services/process.module.ts"
-        },
-        "name": "CommonModule"
-    },
-    {
-        "position": {
-            "line": 120,
-            "character": 8,
-            "fileName": "lib/core/core.module.ts"
-        },
-        "name": "CommonModule"
-    },
-    {
-        "position": {
-            "line": 49,
+            "line": 51,
             "character": 8,
             "fileName": "lib/insights/insights.module.ts"
+        },
+        "name": "CommonModule"
+    },
+    {
+        "position": {
+            "line": 58,
+            "character": 8,
+            "fileName": "lib/process-services/process.module.ts"
+        },
+        "name": "CommonModule"
+    },
+    {
+        "position": {
+            "line": 97,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
         },
         "name": "CommonModule"
     },
@@ -873,17 +705,17 @@
     },
     {
         "position": {
-            "line": 70,
-            "character": 8,
-            "fileName": "lib/content-services/document-list/document-list.module.ts"
+            "line": 27,
+            "character": 0,
+            "fileName": "lib/content-services/document-list/components/content-action/content-action.component.ts"
         },
         "name": "ContentActionComponent"
     },
     {
         "position": {
-            "line": 27,
-            "character": 0,
-            "fileName": "lib/content-services/document-list/components/content-action/content-action.component.ts"
+            "line": 70,
+            "character": 8,
+            "fileName": "lib/content-services/document-list/document-list.module.ts"
         },
         "name": "ContentActionComponent"
     },
@@ -913,14 +745,6 @@
     },
     {
         "position": {
-            "line": 68,
-            "character": 8,
-            "fileName": "lib/content-services/document-list/document-list.module.ts"
-        },
-        "name": "ContentColumnComponent"
-    },
-    {
-        "position": {
             "line": 25,
             "character": 0,
             "fileName": "lib/content-services/document-list/components/content-column/content-column.component.ts"
@@ -929,17 +753,25 @@
     },
     {
         "position": {
-            "line": 25,
-            "character": 0,
-            "fileName": "lib/content-services/document-list/components/content-column/content-column-list.component.ts"
+            "line": 68,
+            "character": 8,
+            "fileName": "lib/content-services/document-list/document-list.module.ts"
         },
-        "name": "ContentColumnListComponent"
+        "name": "ContentColumnComponent"
     },
     {
         "position": {
             "line": 69,
             "character": 8,
             "fileName": "lib/content-services/document-list/document-list.module.ts"
+        },
+        "name": "ContentColumnListComponent"
+    },
+    {
+        "position": {
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/content-services/document-list/components/content-column/content-column-list.component.ts"
         },
         "name": "ContentColumnListComponent"
     },
@@ -961,15 +793,7 @@
     },
     {
         "position": {
-            "line": 20,
-            "character": 0,
-            "fileName": "lib/content-services/content-metadata/components/content-metadata-card/content-metadata-card.component.ts"
-        },
-        "name": "ContentMetadataCardComponent"
-    },
-    {
-        "position": {
-            "line": 41,
+            "line": 37,
             "character": 8,
             "fileName": "lib/content-services/content-metadata/content-metadata.module.ts"
         },
@@ -977,7 +801,7 @@
     },
     {
         "position": {
-            "line": 40,
+            "line": 36,
             "character": 8,
             "fileName": "lib/content-services/content-metadata/content-metadata.module.ts"
         },
@@ -985,7 +809,15 @@
     },
     {
         "position": {
-            "line": 31,
+            "line": 83,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
+        },
+        "name": "ContentMetadataModule"
+    },
+    {
+        "position": {
+            "line": 27,
             "character": 0,
             "fileName": "lib/content-services/content-metadata/content-metadata.module.ts"
         },
@@ -993,15 +825,7 @@
     },
     {
         "position": {
-            "line": 81,
-            "character": 8,
-            "fileName": "lib/content-services/content.module.ts"
-        },
-        "name": "ContentMetadataModule"
-    },
-    {
-        "position": {
-            "line": 38,
+            "line": 39,
             "character": 0,
             "fileName": "lib/content-services/content.module.ts"
         },
@@ -1009,67 +833,27 @@
     },
     {
         "position": {
-            "line": 29,
-            "character": 0,
-            "fileName": "lib/content-services/content-node-selector/content-node-dialog.service.ts"
-        },
-        "name": "ContentNodeDialogService"
-    },
-    {
-        "position": {
-            "line": 50,
-            "character": 43,
+            "line": 45,
+            "character": 8,
             "fileName": "lib/content-services/content-node-selector/content-node-selector.module.ts"
         },
         "name": "ContentNodeSelectorComponent"
     },
     {
         "position": {
-            "line": 24,
+            "line": 30,
             "character": 0,
-            "fileName": "lib/content-services/content-node-selector/content-node-selector.component.ts"
+            "fileName": "lib/content-services/content-node-selector/content-node-selector.module.ts"
         },
-        "name": "ContentNodeSelectorComponent"
+        "name": "ContentNodeSelectorModule"
     },
     {
         "position": {
-            "line": 80,
+            "line": 82,
             "character": 8,
             "fileName": "lib/content-services/content.module.ts"
         },
         "name": "ContentNodeSelectorModule"
-    },
-    {
-        "position": {
-            "line": 33,
-            "character": 0,
-            "fileName": "lib/content-services/content-node-selector/content-node-selector.module.ts"
-        },
-        "name": "ContentNodeSelectorModule"
-    },
-    {
-        "position": {
-            "line": 50,
-            "character": 8,
-            "fileName": "lib/content-services/content-node-selector/content-node-selector.module.ts"
-        },
-        "name": "ContentNodeSelectorPanelComponent"
-    },
-    {
-        "position": {
-            "line": 43,
-            "character": 0,
-            "fileName": "lib/content-services/content-node-selector/content-node-selector-panel.component.ts"
-        },
-        "name": "ContentNodeSelectorPanelComponent"
-    },
-    {
-        "position": {
-            "line": 25,
-            "character": 0,
-            "fileName": "lib/content-services/content-node-selector/content-node-selector.service.ts"
-        },
-        "name": "ContentNodeSelectorService"
     },
     {
         "position": {
@@ -1097,7 +881,7 @@
     },
     {
         "position": {
-            "line": 22,
+            "line": 20,
             "character": 0,
             "fileName": "lib/core/context-menu/context-menu.directive.ts"
         },
@@ -1129,14 +913,6 @@
     },
     {
         "position": {
-            "line": 194,
-            "character": 8,
-            "fileName": "lib/core/core.module.ts"
-        },
-        "name": "ContextMenuModule"
-    },
-    {
-        "position": {
             "line": 25,
             "character": 0,
             "fileName": "lib/core/context-menu/context-menu.module.ts"
@@ -1145,7 +921,7 @@
     },
     {
         "position": {
-            "line": 131,
+            "line": 101,
             "character": 8,
             "fileName": "lib/core/core.module.ts"
         },
@@ -1169,7 +945,7 @@
     },
     {
         "position": {
-            "line": 19,
+            "line": 17,
             "character": 0,
             "fileName": "lib/core/mock/cookie.service.mock.ts"
         },
@@ -1177,15 +953,7 @@
     },
     {
         "position": {
-            "line": 146,
-            "character": 0,
-            "fileName": "lib/core/core.module.ts"
-        },
-        "name": "CoreModule"
-    },
-    {
-        "position": {
-            "line": 70,
+            "line": 72,
             "character": 8,
             "fileName": "lib/content-services/content.module.ts"
         },
@@ -1193,7 +961,15 @@
     },
     {
         "position": {
-            "line": 48,
+            "line": 54,
+            "character": 0,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "CoreModule"
+    },
+    {
+        "position": {
+            "line": 50,
             "character": 8,
             "fileName": "lib/insights/insights.module.ts"
         },
@@ -1201,11 +977,11 @@
     },
     {
         "position": {
-            "line": 83,
+            "line": 20,
             "character": 0,
-            "fileName": "lib/core/core.module.ts"
+            "fileName": "lib/process-services/attachment/create-process-attachment.component.ts"
         },
-        "name": "CoreModuleLazy"
+        "name": "CreateProcessAttachmentComponent"
     },
     {
         "position": {
@@ -1220,14 +996,6 @@
             "line": 47,
             "character": 8,
             "fileName": "lib/process-services/attachment/attachment.module.ts"
-        },
-        "name": "CreateProcessAttachmentComponent"
-    },
-    {
-        "position": {
-            "line": 20,
-            "character": 0,
-            "fileName": "lib/process-services/attachment/create-process-attachment.component.ts"
         },
         "name": "CreateProcessAttachmentComponent"
     },
@@ -1249,17 +1017,17 @@
     },
     {
         "position": {
-            "line": 32,
-            "character": 8,
-            "fileName": "lib/core/data-column/data-column.module.ts"
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/core/data-column/data-column.component.ts"
         },
         "name": "DataColumnComponent"
     },
     {
         "position": {
-            "line": 21,
-            "character": 0,
-            "fileName": "lib/core/data-column/data-column.component.ts"
+            "line": 32,
+            "character": 8,
+            "fileName": "lib/core/data-column/data-column.module.ts"
         },
         "name": "DataColumnComponent"
     },
@@ -1281,25 +1049,17 @@
     },
     {
         "position": {
-            "line": 138,
-            "character": 8,
-            "fileName": "lib/core/core.module.ts"
-        },
-        "name": "DataColumnModule"
-    },
-    {
-        "position": {
-            "line": 201,
-            "character": 8,
-            "fileName": "lib/core/core.module.ts"
-        },
-        "name": "DataColumnModule"
-    },
-    {
-        "position": {
             "line": 23,
             "character": 0,
             "fileName": "lib/core/data-column/data-column.module.ts"
+        },
+        "name": "DataColumnModule"
+    },
+    {
+        "position": {
+            "line": 110,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
         },
         "name": "DataColumnModule"
     },
@@ -1337,14 +1097,6 @@
     },
     {
         "position": {
-            "line": 22,
-            "character": 0,
-            "fileName": "lib/core/datatable/components/datatable/datatable-cell.component.ts"
-        },
-        "name": "DataTableCellComponent"
-    },
-    {
-        "position": {
             "line": 70,
             "character": 8,
             "fileName": "lib/core/datatable/datatable.module.ts"
@@ -1353,11 +1105,11 @@
     },
     {
         "position": {
-            "line": 40,
+            "line": 22,
             "character": 0,
-            "fileName": "lib/core/datatable/components/datatable/datatable.component.ts"
+            "fileName": "lib/core/datatable/components/datatable/datatable-cell.component.ts"
         },
-        "name": "DataTableComponent"
+        "name": "DataTableCellComponent"
     },
     {
         "position": {
@@ -1369,15 +1121,15 @@
     },
     {
         "position": {
-            "line": 202,
-            "character": 8,
-            "fileName": "lib/core/core.module.ts"
+            "line": 40,
+            "character": 0,
+            "fileName": "lib/core/datatable/components/datatable/datatable.component.ts"
         },
-        "name": "DataTableModule"
+        "name": "DataTableComponent"
     },
     {
         "position": {
-            "line": 139,
+            "line": 111,
             "character": 8,
             "fileName": "lib/core/core.module.ts"
         },
@@ -1449,14 +1201,6 @@
     },
     {
         "position": {
-            "line": 19,
-            "character": 0,
-            "fileName": "lib/insights/diagram/models/chart/detailsTableChart.model.ts"
-        },
-        "name": "DetailsTableChart"
-    },
-    {
-        "position": {
             "line": 222,
             "character": 8,
             "fileName": "lib/insights/diagram/diagram.module.ts"
@@ -1497,25 +1241,9 @@
     },
     {
         "position": {
-            "line": 19,
-            "character": 0,
-            "fileName": "lib/insights/diagram/services/diagram-color.service.ts"
-        },
-        "name": "DiagramColorService"
-    },
-    {
-        "position": {
             "line": 210,
             "character": 8,
             "fileName": "lib/insights/diagram/diagram.module.ts"
-        },
-        "name": "DiagramComponent"
-    },
-    {
-        "position": {
-            "line": 24,
-            "character": 0,
-            "fileName": "lib/insights/diagram/components/diagram.component.ts"
         },
         "name": "DiagramComponent"
     },
@@ -1537,22 +1265,6 @@
     },
     {
         "position": {
-            "line": 20,
-            "character": 0,
-            "fileName": "lib/insights/diagram/models/diagram/diagramElement.model.ts"
-        },
-        "name": "DiagramElementModel"
-    },
-    {
-        "position": {
-            "line": 17,
-            "character": 0,
-            "fileName": "lib/insights/diagram/models/diagram/diagramElementProperty.model.ts"
-        },
-        "name": "DiagramElementPropertyModel"
-    },
-    {
-        "position": {
             "line": 213,
             "character": 8,
             "fileName": "lib/insights/diagram/diagram.module.ts"
@@ -1566,14 +1278,6 @@
             "fileName": "lib/insights/diagram/diagram.module.ts"
         },
         "name": "DiagramEventComponent"
-    },
-    {
-        "position": {
-            "line": 17,
-            "character": 0,
-            "fileName": "lib/insights/diagram/models/diagram/diagramEventDefinition.model.ts"
-        },
-        "name": "DiagramEventDefinitionModel"
     },
     {
         "position": {
@@ -1598,14 +1302,6 @@
             "fileName": "lib/insights/diagram/diagram.module.ts"
         },
         "name": "DiagramExclusiveGatewayComponent"
-    },
-    {
-        "position": {
-            "line": 19,
-            "character": 0,
-            "fileName": "lib/insights/diagram/models/diagram/diagramFlowElement.model.ts"
-        },
-        "name": "DiagramFlowElementModel"
     },
     {
         "position": {
@@ -1785,14 +1481,6 @@
     },
     {
         "position": {
-            "line": 17,
-            "character": 0,
-            "fileName": "lib/insights/diagram/models/diagram/diagramLaneElement.model.ts"
-        },
-        "name": "DiagramLaneElementModel"
-    },
-    {
-        "position": {
             "line": 260,
             "character": 8,
             "fileName": "lib/insights/diagram/diagram.module.ts"
@@ -1806,14 +1494,6 @@
             "fileName": "lib/insights/diagram/diagram.module.ts"
         },
         "name": "DiagramManualTaskComponent"
-    },
-    {
-        "position": {
-            "line": 21,
-            "character": 0,
-            "fileName": "lib/insights/diagram/models/diagram/diagram.model.ts"
-        },
-        "name": "DiagramModel"
     },
     {
         "position": {
@@ -1838,14 +1518,6 @@
             "fileName": "lib/insights/diagram/diagram.module.ts"
         },
         "name": "DiagramPoolComponent"
-    },
-    {
-        "position": {
-            "line": 19,
-            "character": 0,
-            "fileName": "lib/insights/diagram/models/diagram/diagramPoolElement.model.ts"
-        },
-        "name": "DiagramPoolElementModel"
     },
     {
         "position": {
@@ -1889,14 +1561,6 @@
     },
     {
         "position": {
-            "line": 19,
-            "character": 0,
-            "fileName": "lib/insights/diagram/components/diagram-sequence-flow.component.ts"
-        },
-        "name": "DiagramSequenceFlowComponent"
-    },
-    {
-        "position": {
             "line": 229,
             "character": 8,
             "fileName": "lib/insights/diagram/diagram.module.ts"
@@ -1913,27 +1577,11 @@
     },
     {
         "position": {
-            "line": 118,
-            "character": 0,
-            "fileName": "lib/insights/diagram/diagram.module.ts"
-        },
-        "name": "DiagramsModule"
-    },
-    {
-        "position": {
-            "line": 53,
+            "line": 56,
             "character": 8,
             "fileName": "lib/insights/insights.module.ts"
         },
         "name": "DiagramsModule"
-    },
-    {
-        "position": {
-            "line": 22,
-            "character": 0,
-            "fileName": "lib/insights/diagram/services/diagrams.service.ts"
-        },
-        "name": "DiagramsService"
     },
     {
         "position": {
@@ -1985,11 +1633,11 @@
     },
     {
         "position": {
-            "line": 17,
-            "character": 0,
-            "fileName": "lib/insights/diagram/models/diagram/diagramWayPoint.model.ts"
+            "line": 84,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
         },
-        "name": "DiagramWayPointModel"
+        "name": "DialogModule"
     },
     {
         "position": {
@@ -2001,33 +1649,17 @@
     },
     {
         "position": {
-            "line": 82,
+            "line": 116,
             "character": 8,
-            "fileName": "lib/content-services/content.module.ts"
+            "fileName": "lib/core/core.module.ts"
         },
-        "name": "DialogModule"
+        "name": "DirectiveModule"
     },
     {
         "position": {
             "line": 29,
             "character": 0,
             "fileName": "lib/core/directives/directive.module.ts"
-        },
-        "name": "DirectiveModule"
-    },
-    {
-        "position": {
-            "line": 121,
-            "character": 8,
-            "fileName": "lib/core/core.module.ts"
-        },
-        "name": "DirectiveModule"
-    },
-    {
-        "position": {
-            "line": 184,
-            "character": 8,
-            "fileName": "lib/core/core.module.ts"
         },
         "name": "DirectiveModule"
     },
@@ -2049,7 +1681,7 @@
     },
     {
         "position": {
-            "line": 49,
+            "line": 43,
             "character": 0,
             "fileName": "lib/content-services/document-list/models/content-action.model.ts"
         },
@@ -2073,7 +1705,7 @@
     },
     {
         "position": {
-            "line": 59,
+            "line": 58,
             "character": 0,
             "fileName": "lib/content-services/document-list/components/document-list.component.ts"
         },
@@ -2089,7 +1721,7 @@
     },
     {
         "position": {
-            "line": 74,
+            "line": 76,
             "character": 8,
             "fileName": "lib/content-services/content.module.ts"
         },
@@ -2105,19 +1737,19 @@
     },
     {
         "position": {
-            "line": 21,
-            "character": 0,
-            "fileName": "lib/core/form/components/widgets/document/document.widget.ts"
+            "line": 73,
+            "character": 9,
+            "fileName": "lib/core/form/components/widgets/index.ts"
         },
         "name": "DocumentWidgetComponent"
     },
     {
         "position": {
-            "line": 22,
+            "line": 21,
             "character": 0,
-            "fileName": "lib/content-services/dialogs/download-zip.dialog.ts"
+            "fileName": "lib/core/form/components/widgets/document/document.widget.ts"
         },
-        "name": "DownloadZipDialogComponent"
+        "name": "DocumentWidgetComponent"
     },
     {
         "position": {
@@ -2137,14 +1769,6 @@
     },
     {
         "position": {
-            "line": 22,
-            "character": 0,
-            "fileName": "lib/content-services/breadcrumb/dropdown-breadcrumb.component.ts"
-        },
-        "name": "DropdownBreadcrumbComponent"
-    },
-    {
-        "position": {
             "line": 27,
             "character": 0,
             "fileName": "lib/core/form/components/widgets/dynamic-table/editors/dropdown/dropdown.editor.ts"
@@ -2156,14 +1780,6 @@
             "line": 34,
             "character": 8,
             "fileName": "lib/content-services/site-dropdown/sites-dropdown.module.ts"
-        },
-        "name": "DropdownSitesComponent"
-    },
-    {
-        "position": {
-            "line": 21,
-            "character": 0,
-            "fileName": "lib/content-services/site-dropdown/sites-dropdown.component.ts"
         },
         "name": "DropdownSitesComponent"
     },
@@ -2193,7 +1809,7 @@
     },
     {
         "position": {
-            "line": 28,
+            "line": 29,
             "character": 0,
             "fileName": "lib/core/services/dynamic-component-mapper.service.ts"
         },
@@ -2201,7 +1817,7 @@
     },
     {
         "position": {
-            "line": 22,
+            "line": 21,
             "character": 0,
             "fileName": "lib/core/services/dynamic-component-mapper.service.ts"
         },
@@ -2273,17 +1889,17 @@
     },
     {
         "position": {
-            "line": 68,
-            "character": 8,
-            "fileName": "lib/core/datatable/datatable.module.ts"
+            "line": 28,
+            "character": 0,
+            "fileName": "lib/core/datatable/components/datatable/empty-list.component.ts"
         },
         "name": "EmptyListBodyDirective"
     },
     {
         "position": {
-            "line": 28,
-            "character": 0,
-            "fileName": "lib/core/datatable/components/datatable/empty-list.component.ts"
+            "line": 68,
+            "character": 8,
+            "fileName": "lib/core/datatable/datatable.module.ts"
         },
         "name": "EmptyListBodyDirective"
     },
@@ -2369,14 +1985,6 @@
     },
     {
         "position": {
-            "line": 22,
-            "character": 0,
-            "fileName": "lib/content-services/upload/directives/file-draggable.directive.ts"
-        },
-        "name": "FileDraggableDirective"
-    },
-    {
-        "position": {
             "line": 47,
             "character": 8,
             "fileName": "lib/content-services/upload/upload.module.ts"
@@ -2393,14 +2001,6 @@
     },
     {
         "position": {
-            "line": 72,
-            "character": 8,
-            "fileName": "lib/core/datatable/datatable.module.ts"
-        },
-        "name": "FileSizeCellComponent"
-    },
-    {
-        "position": {
             "line": 20,
             "character": 0,
             "fileName": "lib/core/datatable/components/datatable/filesize-cell.component.ts"
@@ -2409,7 +2009,15 @@
     },
     {
         "position": {
-            "line": 20,
+            "line": 72,
+            "character": 8,
+            "fileName": "lib/core/datatable/datatable.module.ts"
+        },
+        "name": "FileSizeCellComponent"
+    },
+    {
+        "position": {
+            "line": 19,
             "character": 0,
             "fileName": "lib/core/pipes/file-size.pipe.ts"
         },
@@ -2465,35 +2073,11 @@
     },
     {
         "position": {
-            "line": 25,
-            "character": 0,
-            "fileName": "lib/content-services/upload/components/file-uploading-dialog.component.ts"
-        },
-        "name": "FileUploadingDialogComponent"
-    },
-    {
-        "position": {
             "line": 51,
             "character": 8,
             "fileName": "lib/content-services/upload/upload.module.ts"
         },
         "name": "FileUploadingListComponent"
-    },
-    {
-        "position": {
-            "line": 21,
-            "character": 0,
-            "fileName": "lib/content-services/upload/components/file-uploading-list.component.ts"
-        },
-        "name": "FileUploadingListComponent"
-    },
-    {
-        "position": {
-            "line": 20,
-            "character": 0,
-            "fileName": "lib/content-services/upload/components/file-uploading-list-row.component.ts"
-        },
-        "name": "FileUploadingListRowComponent"
     },
     {
         "position": {
@@ -2553,7 +2137,7 @@
     },
     {
         "position": {
-            "line": 56,
+            "line": 50,
             "character": 0,
             "fileName": "lib/content-services/document-list/models/content-action.model.ts"
         },
@@ -2577,22 +2161,6 @@
     },
     {
         "position": {
-            "line": 27,
-            "character": 0,
-            "fileName": "lib/content-services/folder-directive/folder-create.directive.ts"
-        },
-        "name": "FolderCreateDirective"
-    },
-    {
-        "position": {
-            "line": 28,
-            "character": 0,
-            "fileName": "lib/content-services/dialogs/folder.dialog.ts"
-        },
-        "name": "FolderDialogComponent"
-    },
-    {
-        "position": {
             "line": 47,
             "character": 8,
             "fileName": "lib/content-services/dialogs/dialog.module.ts"
@@ -2609,7 +2177,7 @@
     },
     {
         "position": {
-            "line": 83,
+            "line": 85,
             "character": 8,
             "fileName": "lib/content-services/content.module.ts"
         },
@@ -2625,33 +2193,17 @@
     },
     {
         "position": {
-            "line": 27,
+            "line": 28,
             "character": 0,
-            "fileName": "lib/content-services/folder-directive/folder-edit.directive.ts"
+            "fileName": "lib/core/form/components/form.component.ts"
         },
-        "name": "FolderEditDirective"
-    },
-    {
-        "position": {
-            "line": 24,
-            "character": 0,
-            "fileName": "lib/process-services/task-list/models/form.model.ts"
-        },
-        "name": "Form"
+        "name": "FormComponent"
     },
     {
         "position": {
             "line": 85,
             "character": 8,
             "fileName": "lib/core/form/form.module.ts"
-        },
-        "name": "FormComponent"
-    },
-    {
-        "position": {
-            "line": 28,
-            "character": 0,
-            "fileName": "lib/core/form/components/form.component.ts"
         },
         "name": "FormComponent"
     },
@@ -2705,17 +2257,17 @@
     },
     {
         "position": {
-            "line": 86,
-            "character": 8,
-            "fileName": "lib/core/form/form.module.ts"
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/core/form/components/form-list.component.ts"
         },
         "name": "FormListComponent"
     },
     {
         "position": {
-            "line": 20,
-            "character": 0,
-            "fileName": "lib/core/form/components/form-list.component.ts"
+            "line": 86,
+            "character": 8,
+            "fileName": "lib/core/form/form.module.ts"
         },
         "name": "FormListComponent"
     },
@@ -2729,14 +2281,6 @@
     },
     {
         "position": {
-            "line": 197,
-            "character": 8,
-            "fileName": "lib/core/core.module.ts"
-        },
-        "name": "FormModule"
-    },
-    {
-        "position": {
             "line": 47,
             "character": 0,
             "fileName": "lib/core/form/form.module.ts"
@@ -2745,7 +2289,7 @@
     },
     {
         "position": {
-            "line": 134,
+            "line": 117,
             "character": 8,
             "fileName": "lib/core/core.module.ts"
         },
@@ -2769,7 +2313,7 @@
     },
     {
         "position": {
-            "line": 41,
+            "line": 43,
             "character": 0,
             "fileName": "lib/core/form/services/form-rendering.service.ts"
         },
@@ -2785,7 +2329,15 @@
     },
     {
         "position": {
-            "line": 50,
+            "line": 98,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
+        },
+        "name": "FormsModule"
+    },
+    {
+        "position": {
+            "line": 52,
             "character": 8,
             "fileName": "lib/insights/insights.module.ts"
         },
@@ -2793,25 +2345,9 @@
     },
     {
         "position": {
-            "line": 122,
-            "character": 8,
-            "fileName": "lib/core/core.module.ts"
-        },
-        "name": "FormsModule"
-    },
-    {
-        "position": {
-            "line": 58,
+            "line": 60,
             "character": 8,
             "fileName": "lib/process-services/process.module.ts"
-        },
-        "name": "FormsModule"
-    },
-    {
-        "position": {
-            "line": 185,
-            "character": 8,
-            "fileName": "lib/core/core.module.ts"
         },
         "name": "FormsModule"
     },
@@ -2833,14 +2369,6 @@
     },
     {
         "position": {
-            "line": 19,
-            "character": 0,
-            "fileName": "lib/insights/diagram/models/chart/heatMapChart.model.ts"
-        },
-        "name": "HeatMapChart"
-    },
-    {
-        "position": {
             "line": 44,
             "character": 8,
             "fileName": "lib/core/directives/directive.module.ts"
@@ -2849,7 +2377,7 @@
     },
     {
         "position": {
-            "line": 22,
+            "line": 20,
             "character": 0,
             "fileName": "lib/core/directives/highlight.directive.ts"
         },
@@ -2857,17 +2385,17 @@
     },
     {
         "position": {
-            "line": 20,
-            "character": 0,
-            "fileName": "lib/core/pipes/text-highlight.pipe.ts"
+            "line": 49,
+            "character": 8,
+            "fileName": "lib/core/pipes/pipe.module.ts"
         },
         "name": "HighlightPipe"
     },
     {
         "position": {
-            "line": 49,
-            "character": 8,
-            "fileName": "lib/core/pipes/pipe.module.ts"
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/core/pipes/text-highlight.pipe.ts"
         },
         "name": "HighlightPipe"
     },
@@ -2905,35 +2433,11 @@
     },
     {
         "position": {
-            "line": 188,
+            "line": 112,
             "character": 8,
             "fileName": "lib/core/core.module.ts"
         },
         "name": "HostSettingsModule"
-    },
-    {
-        "position": {
-            "line": 125,
-            "character": 8,
-            "fileName": "lib/core/core.module.ts"
-        },
-        "name": "HostSettingsModule"
-    },
-    {
-        "position": {
-            "line": 124,
-            "character": 8,
-            "fileName": "lib/core/core.module.ts"
-        },
-        "name": "HttpClientModule"
-    },
-    {
-        "position": {
-            "line": 187,
-            "character": 8,
-            "fileName": "lib/core/core.module.ts"
-        },
-        "name": "HttpClientModule"
     },
     {
         "position": {
@@ -2961,17 +2465,17 @@
     },
     {
         "position": {
-            "line": 35,
-            "character": 8,
-            "fileName": "lib/core/pagination/pagination.module.ts"
+            "line": 29,
+            "character": 0,
+            "fileName": "lib/core/pagination/infinite-pagination.component.ts"
         },
         "name": "InfinitePaginationComponent"
     },
     {
         "position": {
             "line": 35,
-            "character": 0,
-            "fileName": "lib/core/pagination/infinite-pagination.component.ts"
+            "character": 8,
+            "fileName": "lib/core/pagination/pagination.module.ts"
         },
         "name": "InfinitePaginationComponent"
     },
@@ -2993,11 +2497,27 @@
     },
     {
         "position": {
+            "line": 37,
+            "character": 8,
+            "fileName": "lib/core/info-drawer/info-drawer.module.ts"
+        },
+        "name": "InfoDrawerComponent"
+    },
+    {
+        "position": {
             "line": 30,
             "character": 0,
             "fileName": "lib/core/info-drawer/info-drawer-layout.component.ts"
         },
         "name": "InfoDrawerContentDirective"
+    },
+    {
+        "position": {
+            "line": 35,
+            "character": 8,
+            "fileName": "lib/core/info-drawer/info-drawer.module.ts"
+        },
+        "name": "InfoDrawerLayoutComponent"
     },
     {
         "position": {
@@ -3009,7 +2529,7 @@
     },
     {
         "position": {
-            "line": 137,
+            "line": 109,
             "character": 8,
             "fileName": "lib/core/core.module.ts"
         },
@@ -3017,19 +2537,19 @@
     },
     {
         "position": {
-            "line": 200,
-            "character": 8,
-            "fileName": "lib/core/core.module.ts"
-        },
-        "name": "InfoDrawerModule"
-    },
-    {
-        "position": {
-            "line": 35,
+            "line": 24,
             "character": 0,
             "fileName": "lib/core/info-drawer/info-drawer.module.ts"
         },
         "name": "InfoDrawerModule"
+    },
+    {
+        "position": {
+            "line": 36,
+            "character": 8,
+            "fileName": "lib/core/info-drawer/info-drawer.module.ts"
+        },
+        "name": "InfoDrawerTabComponent"
     },
     {
         "position": {
@@ -3049,17 +2569,17 @@
     },
     {
         "position": {
-            "line": 52,
-            "character": 8,
-            "fileName": "lib/core/pipes/pipe.module.ts"
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/core/pipes/user-initial.pipe.ts"
         },
         "name": "InitialUsernamePipe"
     },
     {
         "position": {
-            "line": 21,
-            "character": 0,
-            "fileName": "lib/core/pipes/user-initial.pipe.ts"
+            "line": 52,
+            "character": 8,
+            "fileName": "lib/core/pipes/pipe.module.ts"
         },
         "name": "InitialUsernamePipe"
     },
@@ -3073,7 +2593,7 @@
     },
     {
         "position": {
-            "line": 27,
+            "line": 28,
             "character": 0,
             "fileName": "lib/insights/insights.module.ts"
         },
@@ -3097,25 +2617,17 @@
     },
     {
         "position": {
-            "line": 199,
-            "character": 8,
-            "fileName": "lib/core/core.module.ts"
-        },
-        "name": "LanguageMenuModule"
-    },
-    {
-        "position": {
-            "line": 136,
-            "character": 8,
-            "fileName": "lib/core/core.module.ts"
-        },
-        "name": "LanguageMenuModule"
-    },
-    {
-        "position": {
             "line": 23,
             "character": 0,
             "fileName": "lib/core/language-menu/language-menu.module.ts"
+        },
+        "name": "LanguageMenuModule"
+    },
+    {
+        "position": {
+            "line": 108,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
         },
         "name": "LanguageMenuModule"
     },
@@ -3139,31 +2651,15 @@
         "position": {
             "line": 20,
             "character": 0,
-            "fileName": "lib/content-services/social/like.component.ts"
+            "fileName": "lib/core/datatable/directives/loading-template.directive.ts"
         },
-        "name": "LikeComponent"
-    },
-    {
-        "position": {
-            "line": 19,
-            "character": 0,
-            "fileName": "lib/insights/diagram/models/chart/lineChart.model.ts"
-        },
-        "name": "LineChart"
+        "name": "LoadingContentTemplateDirective"
     },
     {
         "position": {
             "line": 76,
             "character": 8,
             "fileName": "lib/core/datatable/datatable.module.ts"
-        },
-        "name": "LoadingContentTemplateDirective"
-    },
-    {
-        "position": {
-            "line": 20,
-            "character": 0,
-            "fileName": "lib/core/datatable/directives/loading-template.directive.ts"
         },
         "name": "LoadingContentTemplateDirective"
     },
@@ -3225,14 +2721,6 @@
     },
     {
         "position": {
-            "line": 25,
-            "character": 0,
-            "fileName": "lib/core/login/directives/login-header.directive.ts"
-        },
-        "name": "LoginHeaderDirective"
-    },
-    {
-        "position": {
             "line": 46,
             "character": 12,
             "fileName": "lib/core/login/login.module.ts"
@@ -3241,7 +2729,15 @@
     },
     {
         "position": {
-            "line": 135,
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/core/login/directives/login-header.directive.ts"
+        },
+        "name": "LoginHeaderDirective"
+    },
+    {
+        "position": {
+            "line": 106,
             "character": 8,
             "fileName": "lib/core/core.module.ts"
         },
@@ -3252,14 +2748,6 @@
             "line": 28,
             "character": 0,
             "fileName": "lib/core/login/login.module.ts"
-        },
-        "name": "LoginModule"
-    },
-    {
-        "position": {
-            "line": 198,
-            "character": 8,
-            "fileName": "lib/core/core.module.ts"
         },
         "name": "LoginModule"
     },
@@ -3281,17 +2769,17 @@
     },
     {
         "position": {
-            "line": 21,
-            "character": 0,
-            "fileName": "lib/core/directives/logout.directive.ts"
+            "line": 45,
+            "character": 8,
+            "fileName": "lib/core/directives/directive.module.ts"
         },
         "name": "LogoutDirective"
     },
     {
         "position": {
-            "line": 45,
-            "character": 8,
-            "fileName": "lib/core/directives/directive.module.ts"
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/core/directives/logout.directive.ts"
         },
         "name": "LogoutDirective"
     },
@@ -3305,7 +2793,7 @@
     },
     {
         "position": {
-            "line": 127,
+            "line": 118,
             "character": 8,
             "fileName": "lib/core/core.module.ts"
         },
@@ -3313,17 +2801,25 @@
     },
     {
         "position": {
-            "line": 52,
+            "line": 86,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
+        },
+        "name": "MaterialModule"
+    },
+    {
+        "position": {
+            "line": 68,
+            "character": 8,
+            "fileName": "lib/process-services/process.module.ts"
+        },
+        "name": "MaterialModule"
+    },
+    {
+        "position": {
+            "line": 55,
             "character": 8,
             "fileName": "lib/insights/insights.module.ts"
-        },
-        "name": "MaterialModule"
-    },
-    {
-        "position": {
-            "line": 190,
-            "character": 8,
-            "fileName": "lib/core/core.module.ts"
         },
         "name": "MaterialModule"
     },
@@ -3417,27 +2913,11 @@
     },
     {
         "position": {
-            "line": 19,
-            "character": 0,
-            "fileName": "lib/insights/diagram/models/chart/multiBarChart.model.ts"
-        },
-        "name": "MultiBarChart"
-    },
-    {
-        "position": {
             "line": 23,
             "character": 0,
             "fileName": "lib/core/form/components/widgets/multiline-text/multiline-text.widget.ts"
         },
         "name": "MultilineTextWidgetComponentComponent"
-    },
-    {
-        "position": {
-            "line": 74,
-            "character": 8,
-            "fileName": "lib/core/datatable/datatable.module.ts"
-        },
-        "name": "NoContentTemplateDirective"
     },
     {
         "position": {
@@ -3449,7 +2929,15 @@
     },
     {
         "position": {
-            "line": 23,
+            "line": 74,
+            "character": 8,
+            "fileName": "lib/core/datatable/datatable.module.ts"
+        },
+        "name": "NoContentTemplateDirective"
+    },
+    {
+        "position": {
+            "line": 28,
             "character": 0,
             "fileName": "lib/content-services/document-list/services/node-actions.service.ts"
         },
@@ -3457,7 +2945,7 @@
     },
     {
         "position": {
-            "line": 51,
+            "line": 49,
             "character": 0,
             "fileName": "lib/core/directives/node-delete.directive.ts"
         },
@@ -3489,17 +2977,17 @@
     },
     {
         "position": {
-            "line": 47,
-            "character": 8,
-            "fileName": "lib/core/directives/directive.module.ts"
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/core/directives/node-favorite.directive.ts"
         },
         "name": "NodeFavoriteDirective"
     },
     {
         "position": {
-            "line": 26,
-            "character": 0,
-            "fileName": "lib/core/directives/node-favorite.directive.ts"
+            "line": 47,
+            "character": 8,
+            "fileName": "lib/core/directives/directive.module.ts"
         },
         "name": "NodeFavoriteDirective"
     },
@@ -3521,17 +3009,17 @@
     },
     {
         "position": {
-            "line": 20,
-            "character": 0,
-            "fileName": "lib/core/pipes/node-name-tooltip.pipe.ts"
+            "line": 53,
+            "character": 8,
+            "fileName": "lib/core/pipes/pipe.module.ts"
         },
         "name": "NodeNameTooltipPipe"
     },
     {
         "position": {
-            "line": 53,
-            "character": 8,
-            "fileName": "lib/core/pipes/pipe.module.ts"
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/core/pipes/node-name-tooltip.pipe.ts"
         },
         "name": "NodeNameTooltipPipe"
     },
@@ -3553,17 +3041,17 @@
     },
     {
         "position": {
-            "line": 48,
-            "character": 8,
-            "fileName": "lib/core/directives/directive.module.ts"
+            "line": 26,
+            "character": 0,
+            "fileName": "lib/core/directives/node-permission.directive.ts"
         },
         "name": "NodePermissionDirective"
     },
     {
         "position": {
-            "line": 28,
-            "character": 0,
-            "fileName": "lib/core/directives/node-permission.directive.ts"
+            "line": 48,
+            "character": 8,
+            "fileName": "lib/core/directives/directive.module.ts"
         },
         "name": "NodePermissionDirective"
     },
@@ -3577,7 +3065,7 @@
     },
     {
         "position": {
-            "line": 30,
+            "line": 28,
             "character": 0,
             "fileName": "lib/core/directives/node-restore.directive.ts"
         },
@@ -3633,17 +3121,17 @@
     },
     {
         "position": {
-            "line": 80,
-            "character": 8,
-            "fileName": "lib/process-services/task-list/task-list.module.ts"
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/process-services/task-list/components/no-task-detail-template.directive.ts"
         },
         "name": "NoTaskDetailsTemplateDirective"
     },
     {
         "position": {
-            "line": 25,
-            "character": 0,
-            "fileName": "lib/process-services/task-list/components/no-task-detail-template.directive.ts"
+            "line": 78,
+            "character": 8,
+            "fileName": "lib/process-services/task-list/task-list.module.ts"
         },
         "name": "NoTaskDetailsTemplateDirective"
     },
@@ -3729,7 +3217,7 @@
     },
     {
         "position": {
-            "line": 35,
+            "line": 34,
             "character": 0,
             "fileName": "lib/core/pagination/pagination.component.ts"
         },
@@ -3745,7 +3233,7 @@
     },
     {
         "position": {
-            "line": 129,
+            "line": 104,
             "character": 8,
             "fileName": "lib/core/core.module.ts"
         },
@@ -3758,22 +3246,6 @@
             "fileName": "lib/core/pagination/pagination.module.ts"
         },
         "name": "PaginationModule"
-    },
-    {
-        "position": {
-            "line": 192,
-            "character": 8,
-            "fileName": "lib/core/core.module.ts"
-        },
-        "name": "PaginationModule"
-    },
-    {
-        "position": {
-            "line": 17,
-            "character": 0,
-            "fileName": "lib/insights/diagram/models/report/parameterValue.model.ts"
-        },
-        "name": "ParameterValueModel"
     },
     {
         "position": {
@@ -3809,17 +3281,17 @@
     },
     {
         "position": {
-            "line": 25,
-            "character": 0,
-            "fileName": "lib/process-services/people/components/people/people.component.ts"
+            "line": 46,
+            "character": 8,
+            "fileName": "lib/process-services/people/people.module.ts"
         },
         "name": "PeopleComponent"
     },
     {
         "position": {
-            "line": 53,
-            "character": 8,
-            "fileName": "lib/process-services/people/people.module.ts"
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/process-services/people/people.component.ts"
         },
         "name": "PeopleComponent"
     },
@@ -3835,13 +3307,13 @@
         "position": {
             "line": 22,
             "character": 0,
-            "fileName": "lib/process-services/people/components/people-list/people-list.component.ts"
+            "fileName": "lib/process-services/people/people-list.component.ts"
         },
         "name": "PeopleListComponent"
     },
     {
         "position": {
-            "line": 59,
+            "line": 50,
             "character": 8,
             "fileName": "lib/process-services/people/people.module.ts"
         },
@@ -3849,7 +3321,7 @@
     },
     {
         "position": {
-            "line": 64,
+            "line": 67,
             "character": 8,
             "fileName": "lib/process-services/process.module.ts"
         },
@@ -3857,7 +3329,7 @@
     },
     {
         "position": {
-            "line": 33,
+            "line": 28,
             "character": 0,
             "fileName": "lib/process-services/people/people.module.ts"
         },
@@ -3873,7 +3345,15 @@
     },
     {
         "position": {
-            "line": 58,
+            "line": 115,
+            "character": 0,
+            "fileName": "lib/process-services/people/people-search.component.ts"
+        },
+        "name": "PeopleSearchActionLabelDirective"
+    },
+    {
+        "position": {
+            "line": 49,
             "character": 8,
             "fileName": "lib/process-services/people/people.module.ts"
         },
@@ -3881,23 +3361,7 @@
     },
     {
         "position": {
-            "line": 19,
-            "character": 0,
-            "fileName": "lib/process-services/people/directives/people-search-action-label.directive.ts"
-        },
-        "name": "PeopleSearchActionLabelDirective"
-    },
-    {
-        "position": {
-            "line": 22,
-            "character": 0,
-            "fileName": "lib/process-services/people/components/people-search/people-search.component.ts"
-        },
-        "name": "PeopleSearchComponent"
-    },
-    {
-        "position": {
-            "line": 54,
+            "line": 47,
             "character": 8,
             "fileName": "lib/process-services/people/people.module.ts"
         },
@@ -3905,23 +3369,15 @@
     },
     {
         "position": {
-            "line": 55,
-            "character": 8,
-            "fileName": "lib/process-services/people/people.module.ts"
-        },
-        "name": "PeopleSearchFieldComponent"
-    },
-    {
-        "position": {
-            "line": 25,
+            "line": 23,
             "character": 0,
-            "fileName": "lib/process-services/people/components/people-search-field/people-search-field.component.ts"
+            "fileName": "lib/process-services/people/people-search.component.ts"
         },
-        "name": "PeopleSearchFieldComponent"
+        "name": "PeopleSearchComponent"
     },
     {
         "position": {
-            "line": 57,
+            "line": 48,
             "character": 8,
             "fileName": "lib/process-services/people/people.module.ts"
         },
@@ -3929,27 +3385,11 @@
     },
     {
         "position": {
-            "line": 19,
+            "line": 114,
             "character": 0,
-            "fileName": "lib/process-services/people/directives/people-search-title.directive.ts"
+            "fileName": "lib/process-services/people/people-search.component.ts"
         },
         "name": "PeopleSearchTitleDirective"
-    },
-    {
-        "position": {
-            "line": 56,
-            "character": 8,
-            "fileName": "lib/process-services/people/people.module.ts"
-        },
-        "name": "PeopleSelectorComponent"
-    },
-    {
-        "position": {
-            "line": 26,
-            "character": 0,
-            "fileName": "lib/process-services/people/components/people-selector/people-selector.component.ts"
-        },
-        "name": "PeopleSelectorComponent"
     },
     {
         "position": {
@@ -3985,33 +3425,17 @@
     },
     {
         "position": {
-            "line": 19,
-            "character": 0,
-            "fileName": "lib/insights/diagram/models/chart/pieChart.model.ts"
-        },
-        "name": "PieChart"
-    },
-    {
-        "position": {
-            "line": 119,
-            "character": 8,
-            "fileName": "lib/core/core.module.ts"
-        },
-        "name": "PipeModule"
-    },
-    {
-        "position": {
-            "line": 182,
-            "character": 8,
-            "fileName": "lib/core/core.module.ts"
-        },
-        "name": "PipeModule"
-    },
-    {
-        "position": {
             "line": 27,
             "character": 0,
             "fileName": "lib/core/pipes/pipe.module.ts"
+        },
+        "name": "PipeModule"
+    },
+    {
+        "position": {
+            "line": 115,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
         },
         "name": "PipeModule"
     },
@@ -4033,17 +3457,17 @@
     },
     {
         "position": {
-            "line": 26,
-            "character": 0,
-            "fileName": "lib/process-services/process-list/components/process-audit.directive.ts"
+            "line": 77,
+            "character": 8,
+            "fileName": "lib/process-services/process-list/process-list.module.ts"
         },
         "name": "ProcessAuditDirective"
     },
     {
         "position": {
-            "line": 79,
-            "character": 8,
-            "fileName": "lib/process-services/process-list/process-list.module.ts"
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/process-services/process-list/components/process-audit.directive.ts"
         },
         "name": "ProcessAuditDirective"
     },
@@ -4097,7 +3521,7 @@
     },
     {
         "position": {
-            "line": 77,
+            "line": 75,
             "character": 8,
             "fileName": "lib/process-services/process-list/process-list.module.ts"
         },
@@ -4137,11 +3561,19 @@
     },
     {
         "position": {
-            "line": 78,
+            "line": 76,
             "character": 8,
             "fileName": "lib/process-services/process-list/process-list.module.ts"
         },
         "name": "ProcessInstanceDetailsComponent"
+    },
+    {
+        "position": {
+            "line": 78,
+            "character": 8,
+            "fileName": "lib/process-services/process-list/process-list.module.ts"
+        },
+        "name": "ProcessInstanceHeaderComponent"
     },
     {
         "position": {
@@ -4153,15 +3585,7 @@
     },
     {
         "position": {
-            "line": 80,
-            "character": 8,
-            "fileName": "lib/process-services/process-list/process-list.module.ts"
-        },
-        "name": "ProcessInstanceHeaderComponent"
-    },
-    {
-        "position": {
-            "line": 28,
+            "line": 26,
             "character": 0,
             "fileName": "lib/process-services/process-list/components/process-list.component.ts"
         },
@@ -4169,7 +3593,7 @@
     },
     {
         "position": {
-            "line": 76,
+            "line": 74,
             "character": 8,
             "fileName": "lib/process-services/process-list/process-list.module.ts"
         },
@@ -4177,17 +3601,17 @@
     },
     {
         "position": {
-            "line": 81,
-            "character": 8,
-            "fileName": "lib/process-services/process-list/process-list.module.ts"
+            "line": 27,
+            "character": 0,
+            "fileName": "lib/process-services/process-list/components/process-instance-tasks.component.ts"
         },
         "name": "ProcessInstanceTasksComponent"
     },
     {
         "position": {
-            "line": 27,
-            "character": 0,
-            "fileName": "lib/process-services/process-list/components/process-instance-tasks.component.ts"
+            "line": 79,
+            "character": 8,
+            "fileName": "lib/process-services/process-list/process-list.module.ts"
         },
         "name": "ProcessInstanceTasksComponent"
     },
@@ -4201,15 +3625,7 @@
     },
     {
         "position": {
-            "line": 60,
-            "character": 8,
-            "fileName": "lib/process-services/process.module.ts"
-        },
-        "name": "ProcessListModule"
-    },
-    {
-        "position": {
-            "line": 42,
+            "line": 41,
             "character": 0,
             "fileName": "lib/process-services/process-list/process-list.module.ts"
         },
@@ -4217,7 +3633,15 @@
     },
     {
         "position": {
-            "line": 31,
+            "line": 63,
+            "character": 8,
+            "fileName": "lib/process-services/process.module.ts"
+        },
+        "name": "ProcessListModule"
+    },
+    {
+        "position": {
+            "line": 32,
             "character": 0,
             "fileName": "lib/process-services/process.module.ts"
         },
@@ -4225,7 +3649,7 @@
     },
     {
         "position": {
-            "line": 30,
+            "line": 29,
             "character": 0,
             "fileName": "lib/process-services/process-list/services/process.service.ts"
         },
@@ -4457,14 +3881,6 @@
     },
     {
         "position": {
-            "line": 20,
-            "character": 0,
-            "fileName": "lib/content-services/social/rating.component.ts"
-        },
-        "name": "RatingComponent"
-    },
-    {
-        "position": {
             "line": 31,
             "character": 8,
             "fileName": "lib/content-services/social/social.module.ts"
@@ -4473,31 +3889,7 @@
     },
     {
         "position": {
-            "line": 24,
-            "character": 0,
-            "fileName": "lib/content-services/social/services/rating.service.ts"
-        },
-        "name": "RatingService"
-    },
-    {
-        "position": {
-            "line": 186,
-            "character": 8,
-            "fileName": "lib/core/core.module.ts"
-        },
-        "name": "ReactiveFormsModule"
-    },
-    {
-        "position": {
-            "line": 51,
-            "character": 8,
-            "fileName": "lib/insights/insights.module.ts"
-        },
-        "name": "ReactiveFormsModule"
-    },
-    {
-        "position": {
-            "line": 59,
+            "line": 61,
             "character": 8,
             "fileName": "lib/process-services/process.module.ts"
         },
@@ -4505,19 +3897,19 @@
     },
     {
         "position": {
-            "line": 123,
+            "line": 53,
             "character": 8,
-            "fileName": "lib/core/core.module.ts"
+            "fileName": "lib/insights/insights.module.ts"
         },
         "name": "ReactiveFormsModule"
     },
     {
         "position": {
-            "line": 21,
-            "character": 0,
-            "fileName": "lib/core/models/redirection.model.ts"
+            "line": 99,
+            "character": 8,
+            "fileName": "lib/core/core.module.ts"
         },
-        "name": "RedirectionModel"
+        "name": "ReactiveFormsModule"
     },
     {
         "position": {
@@ -4529,51 +3921,11 @@
     },
     {
         "position": {
-            "line": 34,
+            "line": 32,
             "character": 0,
             "fileName": "lib/core/services/renditions.service.ts"
         },
         "name": "RenditionsService"
-    },
-    {
-        "position": {
-            "line": 17,
-            "character": 0,
-            "fileName": "lib/insights/diagram/models/report/reportDateRange.model.ts"
-        },
-        "name": "ReportDateRange"
-    },
-    {
-        "position": {
-            "line": 19,
-            "character": 0,
-            "fileName": "lib/insights/diagram/models/report/reportDefinition.model.ts"
-        },
-        "name": "ReportDefinitionModel"
-    },
-    {
-        "position": {
-            "line": 19,
-            "character": 0,
-            "fileName": "lib/insights/diagram/models/report/reportParameterDetails.model.ts"
-        },
-        "name": "ReportParameterDetailsModel"
-    },
-    {
-        "position": {
-            "line": 19,
-            "character": 0,
-            "fileName": "lib/insights/diagram/models/report/reportParameters.model.ts"
-        },
-        "name": "ReportParametersModel"
-    },
-    {
-        "position": {
-            "line": 19,
-            "character": 0,
-            "fileName": "lib/insights/diagram/models/report/reportQuery.model.ts"
-        },
-        "name": "ReportQuery"
     },
     {
         "position": {
@@ -4593,27 +3945,11 @@
     },
     {
         "position": {
-            "line": 34,
-            "character": 0,
-            "fileName": "lib/content-services/search/components/search.component.ts"
+            "line": 78,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
         },
-        "name": "SearchComponent"
-    },
-    {
-        "position": {
-            "line": 21,
-            "character": 0,
-            "fileName": "lib/core/services/search-configuration.service.ts"
-        },
-        "name": "SearchConfigurationService"
-    },
-    {
-        "position": {
-            "line": 27,
-            "character": 0,
-            "fileName": "lib/content-services/search/components/search-control.component.ts"
-        },
-        "name": "SearchControlComponent"
+        "name": "SearchModule"
     },
     {
         "position": {
@@ -4625,15 +3961,7 @@
     },
     {
         "position": {
-            "line": 76,
-            "character": 8,
-            "fileName": "lib/content-services/content.module.ts"
-        },
-        "name": "SearchModule"
-    },
-    {
-        "position": {
-            "line": 25,
+            "line": 27,
             "character": 0,
             "fileName": "lib/core/services/search.service.ts"
         },
@@ -4641,27 +3969,19 @@
     },
     {
         "position": {
-            "line": 46,
-            "character": 0,
-            "fileName": "lib/content-services/search/components/search-trigger.directive.ts"
-        },
-        "name": "SearchTriggerDirective"
-    },
-    {
-        "position": {
-            "line": 21,
-            "character": 0,
-            "fileName": "lib/process-services/app-list/select-apps-dialog-component.ts"
-        },
-        "name": "SelectAppsDialogComponent"
-    },
-    {
-        "position": {
-            "line": 40,
+            "line": 113,
             "character": 8,
-            "fileName": "lib/process-services/app-list/apps-list.module.ts"
+            "fileName": "lib/core/core.module.ts"
         },
-        "name": "SelectAppsDialogComponent"
+        "name": "ServiceModule"
+    },
+    {
+        "position": {
+            "line": 52,
+            "character": 0,
+            "fileName": "lib/core/services/service.module.ts"
+        },
+        "name": "ServiceModule"
     },
     {
         "position": {
@@ -4699,53 +4019,29 @@
         "position": {
             "line": 19,
             "character": 0,
-            "fileName": "lib/core/sidebar/sidebar-action-menu.component.ts"
+            "fileName": "lib/core/models/site.model.ts"
         },
-        "name": "SidebarActionMenuComponent"
+        "name": "SiteContentsModel"
     },
     {
         "position": {
-            "line": 181,
-            "character": 8,
-            "fileName": "lib/core/core.module.ts"
-        },
-        "name": "SideBarActionModule"
-    },
-    {
-        "position": {
-            "line": 118,
-            "character": 8,
-            "fileName": "lib/core/core.module.ts"
-        },
-        "name": "SideBarActionModule"
-    },
-    {
-        "position": {
-            "line": 43,
+            "line": 31,
             "character": 0,
-            "fileName": "lib/core/sidebar/sidebar-action-menu.component.ts"
+            "fileName": "lib/core/models/site.model.ts"
         },
-        "name": "SidebarMenuDirective"
+        "name": "SiteMembersModel"
     },
     {
         "position": {
-            "line": 45,
+            "line": 53,
             "character": 0,
-            "fileName": "lib/core/sidebar/sidebar-action-menu.component.ts"
+            "fileName": "lib/core/models/site.model.ts"
         },
-        "name": "SidebarMenuExpandIconDirective"
+        "name": "SiteModel"
     },
     {
         "position": {
-            "line": 44,
-            "character": 0,
-            "fileName": "lib/core/sidebar/sidebar-action-menu.component.ts"
-        },
-        "name": "SidebarMenuTitleIconDirective"
-    },
-    {
-        "position": {
-            "line": 77,
+            "line": 79,
             "character": 8,
             "fileName": "lib/content-services/content.module.ts"
         },
@@ -4769,14 +4065,6 @@
     },
     {
         "position": {
-            "line": 71,
-            "character": 8,
-            "fileName": "lib/content-services/content.module.ts"
-        },
-        "name": "SocialModule"
-    },
-    {
-        "position": {
             "line": 25,
             "character": 0,
             "fileName": "lib/content-services/social/social.module.ts"
@@ -4785,17 +4073,25 @@
     },
     {
         "position": {
-            "line": 42,
-            "character": 0,
-            "fileName": "lib/core/form/components/start-form.component.ts"
+            "line": 73,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
         },
-        "name": "StartFormComponent"
+        "name": "SocialModule"
     },
     {
         "position": {
             "line": 87,
             "character": 8,
             "fileName": "lib/core/form/form.module.ts"
+        },
+        "name": "StartFormComponent"
+    },
+    {
+        "position": {
+            "line": 42,
+            "character": 0,
+            "fileName": "lib/core/form/components/start-form.component.ts"
         },
         "name": "StartFormComponent"
     },
@@ -4809,7 +4105,7 @@
     },
     {
         "position": {
-            "line": 82,
+            "line": 80,
             "character": 8,
             "fileName": "lib/process-services/process-list/process-list.module.ts"
         },
@@ -4817,7 +4113,7 @@
     },
     {
         "position": {
-            "line": 40,
+            "line": 24,
             "character": 0,
             "fileName": "lib/process-services/process-list/components/start-process.component.ts"
         },
@@ -4825,17 +4121,17 @@
     },
     {
         "position": {
-            "line": 87,
-            "character": 8,
-            "fileName": "lib/process-services/task-list/task-list.module.ts"
+            "line": 29,
+            "character": 0,
+            "fileName": "lib/process-services/task-list/components/start-task.component.ts"
         },
         "name": "StartTaskComponent"
     },
     {
         "position": {
-            "line": 29,
-            "character": 0,
-            "fileName": "lib/process-services/task-list/components/start-task.component.ts"
+            "line": 85,
+            "character": 8,
+            "fileName": "lib/process-services/task-list/task-list.module.ts"
         },
         "name": "StartTaskComponent"
     },
@@ -4854,14 +4150,6 @@
             "fileName": "lib/core/services/storage.service.ts"
         },
         "name": "StorageService"
-    },
-    {
-        "position": {
-            "line": 19,
-            "character": 0,
-            "fileName": "lib/insights/diagram/models/chart/tableChart.model.ts"
-        },
-        "name": "TableChart"
     },
     {
         "position": {
@@ -4889,22 +4177,6 @@
     },
     {
         "position": {
-            "line": 28,
-            "character": 0,
-            "fileName": "lib/content-services/tag/tag-actions.component.ts"
-        },
-        "name": "TagActionsComponent"
-    },
-    {
-        "position": {
-            "line": 27,
-            "character": 0,
-            "fileName": "lib/content-services/tag/tag-list.component.ts"
-        },
-        "name": "TagListComponent"
-    },
-    {
-        "position": {
             "line": 38,
             "character": 8,
             "fileName": "lib/content-services/tag/tag.module.ts"
@@ -4913,7 +4185,7 @@
     },
     {
         "position": {
-            "line": 72,
+            "line": 74,
             "character": 8,
             "fileName": "lib/content-services/content.module.ts"
         },
@@ -4929,35 +4201,11 @@
     },
     {
         "position": {
-            "line": 27,
-            "character": 0,
-            "fileName": "lib/content-services/tag/tag-node-list.component.ts"
-        },
-        "name": "TagNodeListComponent"
-    },
-    {
-        "position": {
             "line": 39,
             "character": 8,
             "fileName": "lib/content-services/tag/tag.module.ts"
         },
         "name": "TagNodeListComponent"
-    },
-    {
-        "position": {
-            "line": 25,
-            "character": 0,
-            "fileName": "lib/content-services/tag/services/tag.service.ts"
-        },
-        "name": "TagService"
-    },
-    {
-        "position": {
-            "line": 45,
-            "character": 8,
-            "fileName": "lib/process-services/attachment/attachment.module.ts"
-        },
-        "name": "TaskAttachmentListComponent"
     },
     {
         "position": {
@@ -4969,7 +4217,15 @@
     },
     {
         "position": {
-            "line": 84,
+            "line": 45,
+            "character": 8,
+            "fileName": "lib/process-services/attachment/attachment.module.ts"
+        },
+        "name": "TaskAttachmentListComponent"
+    },
+    {
+        "position": {
+            "line": 82,
             "character": 8,
             "fileName": "lib/process-services/task-list/task-list.module.ts"
         },
@@ -4977,7 +4233,7 @@
     },
     {
         "position": {
-            "line": 26,
+            "line": 24,
             "character": 0,
             "fileName": "lib/process-services/task-list/components/task-audit.directive.ts"
         },
@@ -4985,7 +4241,7 @@
     },
     {
         "position": {
-            "line": 39,
+            "line": 38,
             "character": 0,
             "fileName": "lib/process-services/task-list/components/task-details.component.ts"
         },
@@ -4993,7 +4249,7 @@
     },
     {
         "position": {
-            "line": 83,
+            "line": 81,
             "character": 8,
             "fileName": "lib/process-services/task-list/task-list.module.ts"
         },
@@ -5017,7 +4273,7 @@
     },
     {
         "position": {
-            "line": 81,
+            "line": 79,
             "character": 8,
             "fileName": "lib/process-services/task-list/task-list.module.ts"
         },
@@ -5049,7 +4305,7 @@
     },
     {
         "position": {
-            "line": 86,
+            "line": 84,
             "character": 8,
             "fileName": "lib/process-services/task-list/task-list.module.ts"
         },
@@ -5057,15 +4313,7 @@
     },
     {
         "position": {
-            "line": 82,
-            "character": 8,
-            "fileName": "lib/process-services/task-list/task-list.module.ts"
-        },
-        "name": "TaskListComponent"
-    },
-    {
-        "position": {
-            "line": 26,
+            "line": 27,
             "character": 0,
             "fileName": "lib/process-services/task-list/components/task-list.component.ts"
         },
@@ -5073,17 +4321,25 @@
     },
     {
         "position": {
-            "line": 61,
+            "line": 80,
             "character": 8,
-            "fileName": "lib/process-services/process.module.ts"
+            "fileName": "lib/process-services/task-list/task-list.module.ts"
+        },
+        "name": "TaskListComponent"
+    },
+    {
+        "position": {
+            "line": 43,
+            "character": 0,
+            "fileName": "lib/process-services/task-list/task-list.module.ts"
         },
         "name": "TaskListModule"
     },
     {
         "position": {
-            "line": 44,
-            "character": 0,
-            "fileName": "lib/process-services/task-list/task-list.module.ts"
+            "line": 64,
+            "character": 8,
+            "fileName": "lib/process-services/process.module.ts"
         },
         "name": "TaskListModule"
     },
@@ -5137,14 +4393,6 @@
     },
     {
         "position": {
-            "line": 21,
-            "character": 0,
-            "fileName": "lib/core/pipes/time-ago.pipe.ts"
-        },
-        "name": "TimeAgoPipe"
-    },
-    {
-        "position": {
             "line": 50,
             "character": 8,
             "fileName": "lib/core/pipes/pipe.module.ts"
@@ -5153,17 +4401,25 @@
     },
     {
         "position": {
-            "line": 36,
-            "character": 8,
-            "fileName": "lib/core/toolbar/toolbar.module.ts"
+            "line": 21,
+            "character": 0,
+            "fileName": "lib/core/pipes/time-ago.pipe.ts"
         },
-        "name": "ToolbarComponent"
+        "name": "TimeAgoPipe"
     },
     {
         "position": {
             "line": 19,
             "character": 0,
             "fileName": "lib/core/toolbar/toolbar.component.ts"
+        },
+        "name": "ToolbarComponent"
+    },
+    {
+        "position": {
+            "line": 36,
+            "character": 8,
+            "fileName": "lib/core/toolbar/toolbar.module.ts"
         },
         "name": "ToolbarComponent"
     },
@@ -5193,15 +4449,7 @@
     },
     {
         "position": {
-            "line": 193,
-            "character": 8,
-            "fileName": "lib/core/core.module.ts"
-        },
-        "name": "ToolbarModule"
-    },
-    {
-        "position": {
-            "line": 130,
+            "line": 105,
             "character": 8,
             "fileName": "lib/core/core.module.ts"
         },
@@ -5233,15 +4481,7 @@
     },
     {
         "position": {
-            "line": 140,
-            "character": 8,
-            "fileName": "lib/core/core.module.ts"
-        },
-        "name": "TranslateModule"
-    },
-    {
-        "position": {
-            "line": 203,
+            "line": 100,
             "character": 8,
             "fileName": "lib/core/core.module.ts"
         },
@@ -5265,17 +4505,17 @@
     },
     {
         "position": {
-            "line": 22,
-            "character": 0,
-            "fileName": "lib/core/viewer/components/txtViewer.component.ts"
+            "line": 62,
+            "character": 8,
+            "fileName": "lib/core/viewer/viewer.module.ts"
         },
         "name": "TxtViewerComponent"
     },
     {
         "position": {
-            "line": 62,
-            "character": 8,
-            "fileName": "lib/core/viewer/viewer.module.ts"
+            "line": 22,
+            "character": 0,
+            "fileName": "lib/core/viewer/components/txtViewer.component.ts"
         },
         "name": "TxtViewerComponent"
     },
@@ -5313,14 +4553,6 @@
     },
     {
         "position": {
-            "line": 44,
-            "character": 0,
-            "fileName": "lib/content-services/upload/components/upload-button.component.ts"
-        },
-        "name": "UploadButtonComponent"
-    },
-    {
-        "position": {
             "line": 49,
             "character": 8,
             "fileName": "lib/content-services/upload/upload.module.ts"
@@ -5337,7 +4569,7 @@
     },
     {
         "position": {
-            "line": 22,
+            "line": 20,
             "character": 0,
             "fileName": "lib/core/directives/upload.directive.ts"
         },
@@ -5353,15 +4585,7 @@
     },
     {
         "position": {
-            "line": 29,
-            "character": 0,
-            "fileName": "lib/content-services/upload/components/upload-drag-area.component.ts"
-        },
-        "name": "UploadDragAreaComponent"
-    },
-    {
-        "position": {
-            "line": 75,
+            "line": 77,
             "character": 8,
             "fileName": "lib/content-services/content.module.ts"
         },
@@ -5401,27 +4625,11 @@
     },
     {
         "position": {
-            "line": 21,
-            "character": 0,
-            "fileName": "lib/process-services/task-list/models/user-group.model.ts"
-        },
-        "name": "UserGroupModel"
-    },
-    {
-        "position": {
             "line": 58,
             "character": 0,
             "fileName": "lib/content-services/document-list/models/document-library.model.ts"
         },
         "name": "UserInfo"
-    },
-    {
-        "position": {
-            "line": 24,
-            "character": 0,
-            "fileName": "lib/core/userinfo/components/user-info.component.ts"
-        },
-        "name": "UserInfoComponent"
     },
     {
         "position": {
@@ -5433,15 +4641,15 @@
     },
     {
         "position": {
-            "line": 189,
-            "character": 8,
-            "fileName": "lib/core/core.module.ts"
+            "line": 24,
+            "character": 0,
+            "fileName": "lib/core/userinfo/components/user-info.component.ts"
         },
-        "name": "UserInfoModule"
+        "name": "UserInfoComponent"
     },
     {
         "position": {
-            "line": 126,
+            "line": 107,
             "character": 8,
             "fileName": "lib/core/core.module.ts"
         },
@@ -5497,14 +4705,6 @@
     },
     {
         "position": {
-            "line": 21,
-            "character": 0,
-            "fileName": "lib/content-services/version-manager/version-list.component.ts"
-        },
-        "name": "VersionListComponent"
-    },
-    {
-        "position": {
             "line": 37,
             "character": 8,
             "fileName": "lib/content-services/version-manager/version-manager.module.ts"
@@ -5521,25 +4721,17 @@
     },
     {
         "position": {
-            "line": 20,
+            "line": 27,
             "character": 0,
-            "fileName": "lib/content-services/version-manager/version-manager.component.ts"
-        },
-        "name": "VersionManagerComponent"
-    },
-    {
-        "position": {
-            "line": 79,
-            "character": 8,
-            "fileName": "lib/content-services/content.module.ts"
+            "fileName": "lib/content-services/version-manager/version-manager.module.ts"
         },
         "name": "VersionManagerModule"
     },
     {
         "position": {
-            "line": 27,
-            "character": 0,
-            "fileName": "lib/content-services/version-manager/version-manager.module.ts"
+            "line": 81,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
         },
         "name": "VersionManagerModule"
     },
@@ -5577,22 +4769,6 @@
     },
     {
         "position": {
-            "line": 20,
-            "character": 0,
-            "fileName": "lib/content-services/version-manager/version-upload.component.ts"
-        },
-        "name": "VersionUploadComponent"
-    },
-    {
-        "position": {
-            "line": 31,
-            "character": 0,
-            "fileName": "lib/core/viewer/components/viewer.component.ts"
-        },
-        "name": "ViewerComponent"
-    },
-    {
-        "position": {
             "line": 60,
             "character": 8,
             "fileName": "lib/core/viewer/viewer.module.ts"
@@ -5601,11 +4777,11 @@
     },
     {
         "position": {
-            "line": 20,
+            "line": 32,
             "character": 0,
-            "fileName": "lib/core/viewer/directives/viewer-extension.directive.ts"
+            "fileName": "lib/core/viewer/components/viewer.component.ts"
         },
-        "name": "ViewerExtensionDirective"
+        "name": "ViewerComponent"
     },
     {
         "position": {
@@ -5617,11 +4793,11 @@
     },
     {
         "position": {
-            "line": 180,
-            "character": 8,
-            "fileName": "lib/core/core.module.ts"
+            "line": 20,
+            "character": 0,
+            "fileName": "lib/core/viewer/directives/viewer-extension.directive.ts"
         },
-        "name": "ViewerModule"
+        "name": "ViewerExtensionDirective"
     },
     {
         "position": {
@@ -5633,11 +4809,19 @@
     },
     {
         "position": {
-            "line": 117,
+            "line": 114,
             "character": 8,
             "fileName": "lib/core/core.module.ts"
         },
         "name": "ViewerModule"
+    },
+    {
+        "position": {
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/core/viewer/components/viewer-more-actions.component.ts"
+        },
+        "name": "ViewerMoreActionsComponent"
     },
     {
         "position": {
@@ -5651,23 +4835,15 @@
         "position": {
             "line": 19,
             "character": 0,
-            "fileName": "lib/core/viewer/components/viewer-more-actions.component.ts"
+            "fileName": "lib/core/viewer/components/viewer-open-with.component.ts"
         },
-        "name": "ViewerMoreActionsComponent"
+        "name": "ViewerOpenWithComponent"
     },
     {
         "position": {
             "line": 69,
             "character": 8,
             "fileName": "lib/core/viewer/viewer.module.ts"
-        },
-        "name": "ViewerOpenWithComponent"
-    },
-    {
-        "position": {
-            "line": 19,
-            "character": 0,
-            "fileName": "lib/core/viewer/components/viewer-open-with.component.ts"
         },
         "name": "ViewerOpenWithComponent"
     },
@@ -5689,17 +4865,17 @@
     },
     {
         "position": {
-            "line": 67,
-            "character": 8,
-            "fileName": "lib/core/viewer/viewer.module.ts"
+            "line": 19,
+            "character": 0,
+            "fileName": "lib/core/viewer/components/viewer-toolbar.component.ts"
         },
         "name": "ViewerToolbarComponent"
     },
     {
         "position": {
-            "line": 19,
-            "character": 0,
-            "fileName": "lib/core/viewer/components/viewer-toolbar.component.ts"
+            "line": 67,
+            "character": 8,
+            "fileName": "lib/core/viewer/viewer.module.ts"
         },
         "name": "ViewerToolbarComponent"
     },
@@ -5713,17 +4889,17 @@
     },
     {
         "position": {
-            "line": 25,
-            "character": 0,
-            "fileName": "lib/content-services/webscript/webscript.module.ts"
+            "line": 75,
+            "character": 8,
+            "fileName": "lib/content-services/content.module.ts"
         },
         "name": "WebScriptModule"
     },
     {
         "position": {
-            "line": 73,
-            "character": 8,
-            "fileName": "lib/content-services/content.module.ts"
+            "line": 25,
+            "character": 0,
+            "fileName": "lib/content-services/webscript/webscript.module.ts"
         },
         "name": "WebScriptModule"
     },
