@@ -753,20 +753,6 @@ describe('ViewerComponent', () => {
                 content: { getContentUrl: () => contentUrl }
             };
 
-            it('should use the displayName if displayName is set and fileNodeId is set', async(() => {
-                const userDefinedDisplayName = 'user defined display name';
-                component.fileNodeId = '12';
-                component.urlFile = null;
-                component.displayName = userDefinedDisplayName;
-                spyOn(alfrescoApiService, 'getInstance').and.returnValue(alfrescoApiInstanceMock);
-
-                component.ngOnChanges(null);
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual(userDefinedDisplayName);
-                });
-            }));
-
             it('should use the node name if displayName is NOT set and fileNodeId is set', async(() => {
                 component.fileNodeId = '12';
                 component.urlFile = null;
