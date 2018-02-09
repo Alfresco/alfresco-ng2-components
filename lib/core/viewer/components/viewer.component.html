@@ -13,13 +13,32 @@
                         class="adf-viewer-close-button"
                         data-automation-id="toolbar-back"
                         mat-icon-button
-                        matTooltip="{{ 'ADF_VIEWER.ACTIONS.BACK' | translate }}"
+                        matTooltip="{{ 'ADF_VIEWER.ACTIONS.CLOSE' | translate }}"
                         (click)="onBackButtonClick()">
-                        <mat-icon>arrow_back</mat-icon>
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </adf-toolbar-title>
+
+                <div fxFlex="1 1 auto" *ngIf="allowNavigate">
+                    <button
+                        *ngIf="allowNavigate && canNavigateBefore"
+                        data-automation-id="toolbar-pref-file"
+                        mat-icon-button
+                        matTooltip="{{ 'ADF_VIEWER.ACTIONS.PREV_FILE' | translate }}"
+                        (click)="onNavigateBeforeClick()">
+                        <mat-icon>navigate_before</mat-icon>
                     </button>
                     <img class="adf-viewer__mimeicon" [src]="mimeType | adfMimeTypeIcon">
                     <span class="adf-viewer__display-name" id="adf-viewer-display-name">{{ displayName }}</span>
-                </adf-toolbar-title>
+                    <button
+                        *ngIf="allowNavigate && canNavigateNext"
+                        data-automation-id="toolbar-next-file"
+                        mat-icon-button
+                        matTooltip="{{ 'ADF_VIEWER.ACTIONS.NEXT_FILE' | translate }}"
+                        (click)="onNavigateNextClick()">
+                        <mat-icon>navigate_next</mat-icon>
+                    </button>
+                </div>
 
                 <ng-container *ngIf="mnuOpenWith">
                     <button
@@ -121,14 +140,6 @@
                 </div>
             </ng-container>
 
-            <ng-container *ngIf="allowNavigate && canNavigateBefore">
-                <div class="navigate-before">
-                    <button mat-mini-fab color="primary" (click)="onNavigateBeforeClick()">
-                        <mat-icon>navigate_before</mat-icon>
-                    </button>
-                </div>
-            </ng-container>
-
             <div class="adf-viewer-main" fxFlexOrder="{{sidebarPosition !== 'left'? 1 : 4}}" fxFlex="1 1 auto">
                 <div class="adf-viewer-layout-content adf-viewer__fullscreen-container">
                     <div class="adf-viewer-content-container" [ngSwitch]="viewerType">
@@ -162,13 +173,6 @@
                 </div>
             </div>
 
-            <ng-container *ngIf="allowNavigate && canNavigateNext">
-                <div class="navigate-next" fxFlexOrder="{{sidebarPosition !== 'left' ? 3 : 4}}">
-                    <button mat-mini-fab color="primary" (click)="onNavigateNextClick()">
-                        <mat-icon>navigate_next</mat-icon>
-                    </button>
-                </div>
-            </ng-container>
         </div>
     </div>
 </div>
