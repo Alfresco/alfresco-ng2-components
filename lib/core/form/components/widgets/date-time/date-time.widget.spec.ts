@@ -24,12 +24,13 @@ import { EcmModelService } from './../../../services/ecm-model.service';
 import { FormService } from './../../../services/form.service';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
-import { DateWidgetComponent } from './date.widget';
+import { DateTimeWidgetComponent } from './date-time.widget';
+import { UserPreferencesService } from '../../../../services/user-preferences.service';
 
-describe('DateWidgetComponent', () => {
+describe('DateTimeWidgetComponent', () => {
 
-    let widget: DateWidgetComponent;
-    let fixture: ComponentFixture<DateWidgetComponent>;
+    let widget: DateTimeWidgetComponent;
+    let fixture: ComponentFixture<DateTimeWidgetComponent>;
     let element: HTMLElement;
 
     beforeEach(async(() => {
@@ -38,58 +39,65 @@ describe('DateWidgetComponent', () => {
                 MaterialModule
             ],
             declarations: [
-                DateWidgetComponent,
+                DateTimeWidgetComponent,
                 ErrorWidgetComponent
             ],
             providers: [
                 FormService,
-                ActivitiContentService,
-                EcmModelService
+                UserPreferencesService,
+                EcmModelService,
+                ActivitiContentService
             ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(DateWidgetComponent);
+        fixture = TestBed.createComponent(DateTimeWidgetComponent);
 
         element = fixture.nativeElement;
         widget = fixture.componentInstance;
     });
 
+    afterEach(() => {
+        fixture.destroy();
+        TestBed.resetTestingModule();
+    });
+
     it('should setup min value for date picker', () => {
-        let minValue = '13-03-1982';
+        let minValue = '1982-03-13T10:00Z';
         widget.field = new FormFieldModel(null, {
             id: 'date-id',
             name: 'date-name',
-            minValue: minValue
-        });
-
-        widget.ngOnInit();
-
-        let expected = moment(minValue, widget.field.dateDisplayFormat);
-        expect(widget.minDate.isSame(expected)).toBeTruthy();
-    });
-
-    it('should date field be present', () => {
-        let minValue = '13-03-1982';
-        widget.field = new FormFieldModel(null, {
+            type: 'datetime',
             minValue: minValue
         });
 
         fixture.detectChanges();
 
-        expect(element.querySelector('#data-widget')).toBeDefined();
-        expect(element.querySelector('#data-widget')).not.toBeNull();
+        let expected = moment(minValue, 'YYYY-MM-DDTHH:mm:ssZ');
+        expect(widget.minDate.isSame(expected)).toBeTruthy();
+    });
+
+    it('should date field be present', () => {
+        widget.field = new FormFieldModel(null, {
+            id: 'date-id',
+            name: 'date-name',
+            type: 'datetime'
+        });
+        fixture.detectChanges();
+
+        expect(element.querySelector('#data-time-widget')).toBeDefined();
+        expect(element.querySelector('#data-time-widget')).not.toBeNull();
     });
 
     it('should setup max value for date picker', () => {
-        let maxValue = '31-03-1982';
+        let maxValue = '1982-03-13T10:00Z';
         widget.field = new FormFieldModel(null, {
             maxValue: maxValue
         });
-        widget.ngOnInit();
+        fixture.detectChanges();
 
-        let expected = moment(maxValue, widget.field.dateDisplayFormat);
+        let expected = moment(maxValue, 'YYYY-MM-DDTHH:mm:ssZ');
         expect(widget.maxDate.isSame(expected)).toBeTruthy();
     });
 
@@ -99,50 +107,48 @@ describe('DateWidgetComponent', () => {
         let field = new FormFieldModel(new FormModel(), {
             id: 'date-field-id',
             name: 'date-name',
-            value: '9-9-9999',
-            type: 'date',
+            value: '9-12-9999 10:00 AM',
+            type: 'datetime',
             readOnly: 'false'
         });
 
         widget.field = field;
 
-        widget.onDateChanged({ value: moment('12/12/2012') });
+        widget.onDateChanged({ value: moment('13-03-1982 10:00 AM') });
         expect(widget.checkVisibility).toHaveBeenCalledWith(field);
     });
 
     describe('template check', () => {
 
-        beforeEach(() => {
+        it('should show visible date widget', async(() => {
             widget.field = new FormFieldModel(new FormModel(), {
                 id: 'date-field-id',
                 name: 'date-name',
-                value: '9-9-9999',
-                type: 'date',
+                value: '30-11-9999 10:30 AM',
+                type: 'datetime',
                 readOnly: 'false'
             });
-            widget.field.isVisible = true;
             fixture.detectChanges();
-        });
-
-        afterEach(() => {
-            fixture.destroy();
-            TestBed.resetTestingModule();
-        });
-
-        it('should show visible date widget', async(() => {
-            fixture.whenStable().then(() => {
+            fixture.whenStable()
+            .then(() => {
                 expect(element.querySelector('#date-field-id')).toBeDefined();
                 expect(element.querySelector('#date-field-id')).not.toBeNull();
                 let dateElement: any = element.querySelector('#date-field-id');
-                expect(dateElement.value).toContain('9-9-9999');
+                expect(dateElement.value).toBe('30-11-9999 10:30 AM');
             });
         }));
 
         it('should check correctly the min value with different formats', async(() => {
-            widget.field.value = '11-30-9999';
-            widget.field.dateDisplayFormat = 'MM-DD-YYYY';
-            widget.field.minValue = '30-12-9999';
-            widget.ngOnInit();
+            widget.field = new FormFieldModel(new FormModel(), {
+                id: 'date-field-id',
+                name: 'date-name',
+                value: '11-29-9999 10:30 AM',
+                dateDisplayFormat: 'MM-DD-YYYY HH:mm A',
+                type: 'datetime',
+                readOnly: 'false',
+                minValue: '9999-11-30T10:30Z'
+            });
+            fixture.detectChanges();
             widget.field.validate();
             fixture.detectChanges();
             fixture.whenStable()
@@ -150,66 +156,107 @@ describe('DateWidgetComponent', () => {
                     expect(element.querySelector('#date-field-id')).toBeDefined();
                     expect(element.querySelector('#date-field-id')).not.toBeNull();
                     let dateElement: any = element.querySelector('#date-field-id');
-                    expect(dateElement.value).toContain('11-30-9999');
+                    expect(dateElement.value).toContain('11-29-9999 10:30 AM');
                     expect(element.querySelector('.adf-error-text').textContent).toBe('FORM.FIELD.VALIDATOR.NOT_LESS_THAN');
                 });
         }));
 
         it('should show the correct format type', async(() => {
-            widget.field.value = '12-30-9999';
-            widget.field.dateDisplayFormat = 'MM-DD-YYYY';
-            widget.ngOnInit();
+            widget.field = new FormFieldModel(new FormModel(), {
+                id: 'date-field-id',
+                name: 'date-name',
+                value: '12-30-9999 10:30 AM',
+                dateDisplayFormat: 'MM-DD-YYYY HH:mm A',
+                type: 'datetime',
+                readOnly: 'false'
+            });
             fixture.detectChanges();
             fixture.whenStable()
                 .then(() => {
                     expect(element.querySelector('#date-field-id')).toBeDefined();
                     expect(element.querySelector('#date-field-id')).not.toBeNull();
                     let dateElement: any = element.querySelector('#date-field-id');
-                    expect(dateElement.value).toContain('12-30-9999');
+                    expect(dateElement.value).toContain('12-30-9999 10:30 AM');
                 });
         }));
 
         it('should hide not visible date widget', async(() => {
+            widget.field = new FormFieldModel(new FormModel(), {
+                id: 'date-field-id',
+                name: 'date-name',
+                value: '12-30-9999 10:30 AM',
+                dateDisplayFormat: 'MM-DD-YYYY HH:mm A',
+                type: 'datetime',
+                readOnly: 'false'
+            });
+            fixture.detectChanges();
+            expect(element.querySelector('#data-time-widget')).not.toBeNull();
             widget.field.isVisible = false;
             fixture.detectChanges();
             fixture.whenStable()
                 .then(() => {
                     fixture.detectChanges();
-                    expect(element.querySelector('#data-widget')).toBeNull();
+                    expect(element.querySelector('#data-time-widget')).toBeNull();
                 });
         }));
 
         it('should become visibile if the visibility change to true', async(() => {
+            widget.field = new FormFieldModel(new FormModel(), {
+                id: 'date-field-id',
+                name: 'date-name',
+                value: '12-30-9999 10:30 AM',
+                dateDisplayFormat: 'MM-DD-YYYY HH:mm A',
+                type: 'datetime',
+                readOnly: 'false'
+            });
             widget.field.isVisible = false;
             fixture.detectChanges();
+            expect(element.querySelector('#data-time-widget')).toBeNull();
             widget.fieldChanged.subscribe((field) => {
                 field.isVisible = true;
                 fixture.detectChanges();
                 fixture.whenStable()
                     .then(() => {
-                        expect(element.querySelector('#date-field-id')).toBeDefined();
-                        expect(element.querySelector('#date-field-id')).not.toBeNull();
+                        expect(element.querySelector('#data-time-widget')).toBeDefined();
+                        expect(element.querySelector('#data-time-widget')).not.toBeNull();
                         let dateElement: any = element.querySelector('#date-field-id');
-                        expect(dateElement.value).toContain('9-9-9999');
+                        expect(dateElement.value).toContain('12-30-9999 10:30 AM');
                     });
             });
             widget.checkVisibility(widget.field);
         }));
 
         it('should be hided if the visibility change to false', async(() => {
+            widget.field = new FormFieldModel(new FormModel(), {
+                id: 'date-field-id',
+                name: 'date-name',
+                value: '12-30-9999 10:30 AM',
+                dateDisplayFormat: 'MM-DD-YYYY HH:mm A',
+                type: 'datetime',
+                readOnly: 'false'
+            });
+            fixture.detectChanges();
+            expect(element.querySelector('#data-time-widget')).not.toBeNull();
             widget.fieldChanged.subscribe((field) => {
                 field.isVisible = false;
                 fixture.detectChanges();
                 fixture.whenStable()
                     .then(() => {
-                        expect(element.querySelector('#data-widget')).toBeNull();
+                        expect(element.querySelector('#data-time-widget')).toBeNull();
                     });
             });
             widget.checkVisibility(widget.field);
         }));
 
         it('should disable date button when is readonly', async(() => {
-            widget.field.readOnly = false;
+            widget.field = new FormFieldModel(new FormModel(), {
+                id: 'date-field-id',
+                name: 'date-name',
+                value: '12-30-9999 10:30 AM',
+                dateDisplayFormat: 'MM-DD-YYYY HH:mm A',
+                type: 'datetime',
+                readOnly: 'false'
+            });
             fixture.detectChanges();
 
             let dateButton = <HTMLButtonElement> element.querySelector('button');

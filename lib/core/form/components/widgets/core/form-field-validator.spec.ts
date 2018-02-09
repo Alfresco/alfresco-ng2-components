@@ -26,7 +26,9 @@ import {
     MinValueFieldValidator,
     NumberFieldValidator,
     RegExFieldValidator,
-    RequiredFieldValidator
+    RequiredFieldValidator,
+    MaxDateTimeFieldValidator,
+    MinDateTimeFieldValidator
 } from './form-field-validator';
 import { FormFieldModel } from './form-field.model';
 import { FormModel } from './form.model';
@@ -585,6 +587,194 @@ describe('FormFieldValidator', () => {
             });
 
             expect(validator.validate(field)).toBeFalsy();
+        });
+
+    });
+
+    describe('MaxDateTimeFieldValidator', () => {
+
+        let validator: MaxDateTimeFieldValidator;
+
+        beforeEach(() => {
+            validator = new MaxDateTimeFieldValidator();
+        });
+
+        it('should require maxValue defined', () => {
+            let field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATETIME
+            });
+            expect(validator.isSupported(field)).toBeFalsy();
+
+            field.maxValue = '9999-02-08 10:10 AM';
+            expect(validator.isSupported(field)).toBeTruthy();
+        });
+
+        it('should support date time widgets only', () => {
+            let field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATETIME,
+                maxValue: '9999-02-08 10:10 AM'
+            });
+
+            expect(validator.isSupported(field)).toBeTruthy();
+
+            field.type = FormFieldTypes.TEXT;
+            expect(validator.isSupported(field)).toBeFalsy();
+        });
+
+        it('should allow empty values', () => {
+            let field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATETIME,
+                value: null,
+                maxValue: '9999-02-08 10:10 AM'
+            });
+
+            expect(validator.validate(field)).toBeTruthy();
+        });
+
+        it('should succeed for unsupported types', () => {
+            let field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.TEXT
+            });
+
+            expect(validator.validate(field)).toBeTruthy();
+        });
+
+        it('should succeed validating value checking the time', () => {
+            let field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATETIME,
+                value: '08-02-9999 09:10 AM',
+                maxValue: '9999-02-08 10:10 AM'
+            });
+
+            expect(validator.validate(field)).toBeTruthy();
+        });
+
+        it('should fail validating value checking the time', () => {
+            let field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATETIME,
+                value: '08-02-9999 11:10 AM',
+                maxValue: '9999-02-08 10:10 AM'
+            });
+
+            field.validationSummary = new ErrorMessageModel();
+            expect(validator.validate(field)).toBeFalsy();
+            expect(field.validationSummary).not.toBeNull();
+        });
+
+        it('should succeed validating value checking the date', () => {
+            let field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATETIME,
+                value: '08-02-9999 09:10 AM',
+                maxValue: '9999-02-08 10:10 AM'
+            });
+
+            expect(validator.validate(field)).toBeTruthy();
+        });
+
+        it('should fail validating value checking the date', () => {
+            let field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATETIME,
+                value: '08-02-9999 12:10 AM',
+                maxValue: '9999-02-07 10:10 AM'
+            });
+
+            field.validationSummary = new ErrorMessageModel();
+            expect(validator.validate(field)).toBeFalsy();
+            expect(field.validationSummary).not.toBeNull();
+        });
+
+    });
+
+    describe('MinDateTimeFieldValidator', () => {
+
+        let validator: MinDateTimeFieldValidator;
+
+        beforeEach(() => {
+            validator = new MinDateTimeFieldValidator();
+        });
+
+        it('should require minValue defined', () => {
+            let field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATETIME
+            });
+            expect(validator.isSupported(field)).toBeFalsy();
+
+            field.minValue = '9999-02-08 09:10 AM';
+            expect(validator.isSupported(field)).toBeTruthy();
+        });
+
+        it('should support date time widgets only', () => {
+            let field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATETIME,
+                minValue: '9999-02-08 09:10 AM'
+            });
+
+            expect(validator.isSupported(field)).toBeTruthy();
+
+            field.type = FormFieldTypes.TEXT;
+            expect(validator.isSupported(field)).toBeFalsy();
+        });
+
+        it('should allow empty values', () => {
+            let field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATETIME,
+                value: null,
+                minValue: '9999-02-08 09:10 AM'
+            });
+
+            expect(validator.validate(field)).toBeTruthy();
+        });
+
+        it('should succeed for unsupported types', () => {
+            let field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.TEXT
+            });
+
+            expect(validator.validate(field)).toBeTruthy();
+        });
+
+        it('should succeed validating value by time', () => {
+            let field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATETIME,
+                value: '08-02-9999 09:10 AM',
+                minValue: '9999-02-08 09:00 AM'
+            });
+
+            expect(validator.validate(field)).toBeTruthy();
+        });
+
+        it('should succeed validating value by date', () => {
+            let field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATETIME,
+                value: '09-02-9999 09:10 AM',
+                minValue: '9999-02-08 09:10 AM'
+            });
+
+            expect(validator.validate(field)).toBeTruthy();
+        });
+
+        it('should fail validating value by time', () => {
+            let field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATETIME,
+                value: '08-02-9999 09:00 AM',
+                minValue: '9999-02-08 09:10 AM'
+            });
+
+            field.validationSummary = new ErrorMessageModel();
+            expect(validator.validate(field)).toBeFalsy();
+            expect(field.validationSummary).not.toBeNull();
+        });
+
+        it('should fail validating value by date', () => {
+            let field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATETIME,
+                value: '07-02-9999 09:10 AM',
+                minValue: '9999-02-08 09:10 AM'
+            });
+
+            field.validationSummary = new ErrorMessageModel();
+            expect(validator.validate(field)).toBeFalsy();
+            expect(field.validationSummary).not.toBeNull();
         });
 
     });
