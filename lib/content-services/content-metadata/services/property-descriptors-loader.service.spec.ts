@@ -20,6 +20,7 @@ import { PropertyDescriptorsLoaderService } from './property-descriptors-loader.
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { ClassesApi } from 'alfresco-js-api';
+import { PropertyGroup } from '../interfaces/content-metadata.interfaces';
 
 describe('PropertyDescriptorLoaderService', () => {
 
@@ -59,20 +60,20 @@ describe('PropertyDescriptorLoaderService', () => {
 
     it('should merge the forked values', (done) => {
 
-        const exifResponse = {
+        const exifResponse: PropertyGroup = {
             name: 'exif:exif',
-            id: 1,
+            title: '',
             properties: {
-                'exif:1': { id: 'exif:1:id', name: 'exif:1' },
-                'exif:2': { id: 'exif:2:id', name: 'exif:2' }
+                'exif:1': { title: 'exif:1:id', name: 'exif:1', dataType: '', mandatory: false, multiValued: false },
+                'exif:2': { title: 'exif:2:id', name: 'exif:2', dataType: '', mandatory: false, multiValued: false }
             }
         };
 
-        const contentResponse = {
+        const contentResponse: PropertyGroup = {
             name: 'cm:content',
-            id: 2,
+            title: '',
             properties: {
-                'cm:content': { id: 'cm:content:id', name: 'cm:content' }
+                'cm:content': { title: 'cm:content:id', name: 'cm:content', dataType: '', mandatory: false, multiValued: false }
             }
         };
 
@@ -86,8 +87,8 @@ describe('PropertyDescriptorLoaderService', () => {
         propertyDescriptorsLoaderService.load(['exif:exif', 'cm:content'])
             .subscribe({
                 next: (data) => {
-                    expect(data[0]).toBe(exifResponse);
-                    expect(data[1]).toBe(contentResponse);
+                    expect(data['exif:exif']).toBe(exifResponse);
+                    expect(data['cm:content']).toBe(contentResponse);
                 },
                 complete: done
             });

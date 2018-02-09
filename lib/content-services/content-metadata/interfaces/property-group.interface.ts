@@ -21,5 +21,11 @@ export interface PropertyGroup {
     name: string;
     title: string;
     description?: string;
-    properties: Property[];
+    properties: {
+        [key: string]: Property
+    };
+}
+
+export interface PropertyGroupContainer {
+    [key: string]: PropertyGroup;
 }

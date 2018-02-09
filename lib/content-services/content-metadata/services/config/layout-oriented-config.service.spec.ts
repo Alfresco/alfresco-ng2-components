@@ -16,9 +16,9 @@
  */
 
 import { LayoutOrientedConfigService } from './layout-oriented-config.service';
-import { LayoutOrientedConfig, PropertyGroup, Property, OrganisedPropertyGroup } from '../../interfaces/content-metadata.interfaces';
+import { LayoutOrientedConfig, Property, OrganisedPropertyGroup, PropertyGroupContainer } from '../../interfaces/content-metadata.interfaces';
 
-describe('ContentMetadataConfigFactory', () => {
+describe('LayoutOrientedConfigService', () => {
 
     let configService: LayoutOrientedConfigService;
 
@@ -161,10 +161,10 @@ describe('ContentMetadataConfigFactory', () => {
             property3 = <Property> { name: 'property3' },
             property4 = <Property> { name: 'property4' };
 
-        const propertyGroups: PropertyGroup[] = [
-            { title: 'Berseria', description: '', name: 'berseria', properties: [ property1, property2 ] },
-            { title: 'Zestiria', description: '', name: 'zestiria', properties: [ property3, property4 ] }
-        ];
+        const propertyGroups: PropertyGroupContainer = {
+            berseria: { title: 'Berseria', description: '', name: 'berseria', properties: { property1, property2 } },
+            zestiria: { title: 'Zestiria', description: '', name: 'zestiria', properties: { property3, property4 } }
+        };
 
         const testCases: TestCase[] = [
             {

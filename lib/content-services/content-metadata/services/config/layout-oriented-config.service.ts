@@ -20,8 +20,8 @@ import {
     ContentMetadataConfig,
     LayoutOrientedConfig,
     LayoutOrientedConfigItem,
-    PropertyGroup,
-    OrganisedPropertyGroup
+    OrganisedPropertyGroup,
+    PropertyGroupContainer
 } from '../../interfaces/content-metadata.interfaces';
 import { getProperty } from './property-group-reader';
 
@@ -46,7 +46,7 @@ export class LayoutOrientedConfigService implements ContentMetadataConfig {
         return matchingItems.length > 0;
     }
 
-    public reorganiseByConfig(propertyGroups: PropertyGroup[]): OrganisedPropertyGroup[] {
+    public reorganiseByConfig(propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[] {
         const layoutBlocks = this.config;
 
         return layoutBlocks.map((layoutBlock) => {

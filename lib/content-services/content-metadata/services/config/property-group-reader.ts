@@ -15,24 +15,28 @@
  * limitations under the License.
  */
 
-import { PropertyGroup, Property } from '../../interfaces/content-metadata.interfaces';
+import { PropertyGroup, Property, PropertyGroupContainer } from '../../interfaces/content-metadata.interfaces';
 
 const emptyGroup = {
-    properties: []
+    properties: {}
 };
 
-export function getGroup(propertyGroups: PropertyGroup[], groupName: string): PropertyGroup | undefined {
-    return propertyGroups.filter(cardViewGroup => cardViewGroup.name === groupName)[0];
+function convertObjectToArray(object: any): Property[] {
+    return Object.keys(object).map(key => object[key]);
 }
 
-export function getProperty(propertyGroups: PropertyGroup[], groupName: string, propertyName: string): Property | Property[] | undefined {
+export function getGroup(propertyGroups: PropertyGroupContainer, groupName: string): PropertyGroup | undefined {
+    return propertyGroups[groupName];
+}
+
+export function getProperty(propertyGroups: PropertyGroupContainer, groupName: string, propertyName: string): Property | Property[] | undefined {
     const groupDefinition = getGroup(propertyGroups, groupName) || emptyGroup;
     let propertyDefinitions;
 
     if (propertyName === '*') {
-        propertyDefinitions = groupDefinition.properties;
+        propertyDefinitions = convertObjectToArray(groupDefinition.properties);
     } else {
-        propertyDefinitions = groupDefinition.properties.filter((property) => property.name === propertyName )[0];
+        propertyDefinitions = groupDefinition.properties[propertyName];
     }
 
     return propertyDefinitions;

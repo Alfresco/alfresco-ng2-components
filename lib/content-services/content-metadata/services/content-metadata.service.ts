@@ -23,16 +23,16 @@ import { PropertyGroupTranslatorService } from './property-groups-translator.ser
 import { CardViewItem } from '@alfresco/adf-core';
 import { CardViewGroup } from '../interfaces/content-metadata.interfaces';
 import { ContentMetadataConfigFactory } from './config/content-metadata-config.factory';
-import { PropertyDescriptorsService } from './property-descriptors.service';
+import { PropertyDescriptorsLoaderService } from './property-descriptors-loader.service';
 
 @Injectable()
 export class ContentMetadataService {
 
     constructor(
         private basicPropertiesService: BasicPropertiesService,
-        private propertyDescriptorsService: PropertyDescriptorsService,
         private contentMetadataConfigFactory: ContentMetadataConfigFactory,
-        private propertyGroupTranslatorService: PropertyGroupTranslatorService
+        private propertyGroupTranslatorService: PropertyGroupTranslatorService,
+        private propertyDescriptorsLoaderService: PropertyDescriptorsLoaderService
     ) {}
 
     getBasicProperties(node: MinimalNodeEntryEntity): Observable<CardViewItem[]> {
@@ -40,9 +40,10 @@ export class ContentMetadataService {
     }
 
     getGroupedProperties(node: MinimalNodeEntryEntity, presetName: string = 'default'): Observable<CardViewGroup[]> {
-        const config = this.contentMetadataConfigFactory.get(presetName);
+        const config = this.contentMetadataConfigFactory.get(presetName),
+            groupNames = node.aspectNames.filter(groupName => config.isGroupAllowed(groupName));
 
-        return this.propertyDescriptorsService.loadDescriptors(node.aspectNames, config)
+        return this.propertyDescriptorsLoaderService.load(groupNames)
             .map(groups => config.reorganiseByConfig(groups))
             .map(groups => this.propertyGroupTranslatorService.translateToCardViewGroups(groups, node.properties));
     }

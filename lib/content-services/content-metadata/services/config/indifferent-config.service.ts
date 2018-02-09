@@ -19,8 +19,8 @@ import { Injectable } from '@angular/core';
 import {
     ContentMetadataConfig,
     InDifferentConfig,
-    PropertyGroup,
-    OrganisedPropertyGroup
+    OrganisedPropertyGroup,
+    PropertyGroupContainer
 } from '../../interfaces/content-metadata.interfaces';
 
 @Injectable()
@@ -36,7 +36,15 @@ export class IndifferentConfigService implements ContentMetadataConfig {
         return true;
     }
 
-    public reorganiseByConfig(propertyGroups: PropertyGroup[]): OrganisedPropertyGroup[] {
-        return propertyGroups;
+    public reorganiseByConfig(propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[] {
+        return Object.keys(propertyGroups)
+            .map((groupName) => {
+                const propertyGroup = propertyGroups[groupName],
+                    properties = propertyGroup.properties;
+
+                return Object.assign({}, propertyGroup, {
+                    properties: Object.keys(properties).map(propertyName => properties[propertyName])
+                });
+            });
     }
 }

@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { PropertyGroup } from './property-group.interface';
-import { OrganisedPropertyGroup } from './content-metadata.interfaces';
+import { PropertyGroupContainer } from './property-group.interface';
+import { OrganisedPropertyGroup } from './organised-property-group.interface';
 
 export interface ContentMetadataConfig {
     isGroupAllowed(groupname: string): boolean;
     isPropertyAllowed(groupName: string, propertyName: string): boolean;
-    reorganiseByConfig(propertyGroups: PropertyGroup[]): OrganisedPropertyGroup[];
+    reorganiseByConfig(propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[];
 }

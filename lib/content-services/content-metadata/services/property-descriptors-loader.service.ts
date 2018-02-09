@@ -20,17 +20,27 @@ import { AlfrescoApiService } from '@alfresco/adf-core';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { Observable } from 'rxjs/Observable';
 import { defer } from 'rxjs/observable/defer';
+import { PropertyGroup, PropertyGroupContainer } from '../interfaces/content-metadata.interfaces';
 
 @Injectable()
 export class PropertyDescriptorsLoaderService {
 
     constructor(private alfrescoApiService: AlfrescoApiService) {}
 
-    load(groupNames: string[]): Observable<any> {
+    load(groupNames: string[]): Observable<PropertyGroupContainer> {
         const groupFetchStreams = groupNames
             .map(groupName => groupName.replace(':', '_'))
             .map(groupName => defer( () => this.alfrescoApiService.classesApi.getClass(groupName)) );
 
-        return forkJoin(groupFetchStreams);
+        return forkJoin(groupFetchStreams)
+            .map(this.convertToObject);
+    }
+
+    private convertToObject(propertyGroupsArray: PropertyGroup[]): PropertyGroupContainer {
+        return propertyGroupsArray.reduce((propertyGroups, propertyGroup) => {
+            return Object.assign({}, propertyGroups, {
+                [propertyGroup.name]: propertyGroup
+            });
+        }, {});
     }
 }

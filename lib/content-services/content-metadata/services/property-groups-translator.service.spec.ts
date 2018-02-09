@@ -20,7 +20,7 @@ import { BasicPropertiesService } from './basic-properties.service';
 import { PropertyGroupTranslatorService } from './property-groups-translator.service';
 import { PropertyDescriptorsLoaderService } from './property-descriptors-loader.service';
 import { AlfrescoApiService } from '@alfresco/adf-core';
-import { PropertyGroup, Property } from '../interfaces/content-metadata.interfaces';
+import { Property, OrganisedPropertyGroup } from '../interfaces/content-metadata.interfaces';
 import {
     CardViewTextItemModel,
     CardViewDateItemModel,
@@ -34,8 +34,8 @@ import {
 describe('PropertyGroupTranslatorService', () => {
 
     let service: PropertyGroupTranslatorService,
-        propertyGroups: PropertyGroup[],
-        propertyGroup: PropertyGroup,
+        propertyGroups: OrganisedPropertyGroup[],
+        propertyGroup: OrganisedPropertyGroup,
         property: Property,
         propertyValues: { [key: string]: any };
 
@@ -63,9 +63,7 @@ describe('PropertyGroupTranslatorService', () => {
             multiValued: false
         };
         propertyGroup = {
-            name: 'FAS:FAS',
             title: 'Faro Automated Solutions',
-            description: 'Faro Automated Solutions is an old Earth corporation that manufactured robots in the mid-21st century.',
             properties: [property]
         };
         propertyGroups = [];
