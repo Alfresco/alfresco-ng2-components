@@ -4,11 +4,18 @@ Stores key-value data items as browser cookies.
 
 ## Methods
 
-`getItem(key: string): string | null` <br/>
-Gets an item identified by `key`.
+-   `isEnabled(): boolean`  
+    Checks if cookies are enabled.  
 
-` setItem(key: string, data: string, expiration: Date | null, path: string | null): void ` <br/>
-Stores an item under `key`.
+-   `getItem(key: string): string`  
+    Retrieves a cookie by its key.  
+    -   `key` - Key to identify the cookie
+-   `setItem(key: string, data: string, expiration: Date | null, path: string | null)`  
+    Set a cookie.  
+    -   `key` - Key to identify the cookie
+    -   `data` - Data value to set for the cookie
+    -   `expiration` - Expiration date of the data
+    -   `path` - "Pathname" to store the cookie
 
 ## Details
 
@@ -21,10 +28,7 @@ Cookies have a storage size limit that varies between browsers but is often arou
 4KB. Consider using [web storage](storage.service.md) if you need to store data
 beyond this size.
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
 ## See also
 
-- [Content service](content.service.md)
-- [Storage service](storage.service.md)
-<!-- seealso end -->
+-   [Content service](content.service.md)
+-   [Storage service](storage.service.md)

@@ -28,6 +28,9 @@ export class DiscoveryApiService {
 
     constructor(private apiService: AlfrescoApiService) { }
 
+    /**
+     * Gets product information for Content Services.
+     */
     public getEcmProductInfo() {
         return Observable.fromPromise(
             this.apiService.getInstance().discovery.discoveryApi.getRepositoryInformation())
@@ -35,6 +38,9 @@ export class DiscoveryApiService {
             .catch(this.handleError);
     }
 
+    /**
+     * Gets product information for Process Services.
+     */
     public getBpmProductInfo() {
         return Observable.fromPromise(
             this.apiService.getInstance().activiti.aboutApi.getAppVersion())

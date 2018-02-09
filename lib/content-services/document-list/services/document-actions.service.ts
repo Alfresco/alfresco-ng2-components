@@ -41,6 +41,10 @@ export class DocumentActionsService {
         this.setupActionHandlers();
     }
 
+    /**
+     * Gets the handler for an action.
+     * @param key Identifier of the action
+     */
     getHandler(key: string): ContentActionHandler {
         if (key) {
             let lkey = key.toLowerCase();
@@ -49,6 +53,11 @@ export class DocumentActionsService {
         return null;
     }
 
+    /**
+     * Sets a new handler for an action.
+     * @param key Identifier of the action
+     * @param handler Handler for the action
+     */
     setHandler(key: string, handler: ContentActionHandler): boolean {
         if (key) {
             let lkey = key.toLowerCase();
@@ -58,6 +67,10 @@ export class DocumentActionsService {
         return false;
     }
 
+    /**
+     * Checks if actions can be executed for an item.
+     * @param obj Item to receive an action
+     */
     canExecuteAction(obj: any): boolean {
         return this.documentListService && obj && obj.entry.isFile === true;
     }
