@@ -42,7 +42,8 @@ export class RequiredFieldValidator implements FormFieldValidator {
         FormFieldTypes.UPLOAD,
         FormFieldTypes.AMOUNT,
         FormFieldTypes.DYNAMIC_TABLE,
-        FormFieldTypes.DATE
+        FormFieldTypes.DATE,
+        FormFieldTypes.DATETIME
     ];
 
     isSupported(field: FormFieldModel): boolean {
@@ -159,8 +160,6 @@ export class DateFieldValidator implements FormFieldValidator {
 
 export class MinDateFieldValidator implements FormFieldValidator {
 
-    MIN_DATE_FORMAT = 'DD-MM-YYYY';
-
     private supportedTypes = [
         FormFieldTypes.DATE
     ];
@@ -171,30 +170,38 @@ export class MinDateFieldValidator implements FormFieldValidator {
     }
 
     validate(field: FormFieldModel): boolean {
+        let isValid = true;
         if (this.isSupported(field) && field.value) {
             const dateFormat = field.dateDisplayFormat;
 
             if (!DateFieldValidator.isValidDate(field.value, dateFormat)) {
                 field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_DATE';
-                return false;
-            }
-
-            // remove time and timezone info
-            let d;
-            if (typeof field.value === 'string') {
-                d = moment(field.value.split('T')[0], dateFormat);
+                isValid = false;
             } else {
-                d = field.value;
-            }
-            let min = moment(field.minValue, this.MIN_DATE_FORMAT);
-
-            if (d.isBefore(min)) {
-                field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_LESS_THAN`;
-                field.validationSummary.attributes.set('minValue', field.minValue.toLocaleString());
-                return false;
+                isValid = this.checkDate(field, dateFormat);
             }
         }
-        return true;
+        return isValid;
+    }
+
+    private checkDate(field: FormFieldModel, dateFormat: string): boolean {
+        const MIN_DATE_FORMAT = 'DD-MM-YYYY';
+        let isValid = true;
+        // remove time and timezone info
+        let fieldValueData;
+        if (typeof field.value === 'string') {
+            fieldValueData = moment(field.value.split('T')[0], dateFormat);
+        } else {
+            fieldValueData = field.value;
+        }
+        let min = moment(field.minValue, MIN_DATE_FORMAT);
+
+        if (fieldValueData.isBefore(min)) {
+            field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_LESS_THAN`;
+            field.validationSummary.attributes.set('minValue', field.minValue.toLocaleString());
+            isValid = false;
+        }
+        return isValid;
     }
 }
 
@@ -236,6 +243,100 @@ export class MaxDateFieldValidator implements FormFieldValidator {
             }
         }
         return true;
+    }
+}
+
+export class MinDateTimeFieldValidator implements FormFieldValidator {
+
+    private supportedTypes = [
+        FormFieldTypes.DATETIME
+    ];
+
+    isSupported(field: FormFieldModel): boolean {
+        return field &&
+            this.supportedTypes.indexOf(field.type) > -1 && !!field.minValue;
+    }
+
+    validate(field: FormFieldModel): boolean {
+        let isValid = true;
+        if (this.isSupported(field) && field.value) {
+            const dateFormat = field.dateDisplayFormat;
+
+            if (!DateFieldValidator.isValidDate(field.value, dateFormat)) {
+                field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_DATE';
+                isValid = false;
+            } else {
+                isValid = this.checkDateTime(field, dateFormat);
+            }
+        }
+        return isValid;
+    }
+
+    private checkDateTime(field: FormFieldModel, dateFormat: string): boolean {
+        const MIN_DATE_FORMAT = 'YYYY-MM-DD hh:mm A';
+
+        let isValid = true;
+        let fieldValueDate;
+        if (typeof field.value === 'string') {
+            fieldValueDate = moment(field.value, dateFormat);
+        } else {
+            fieldValueDate = field.value;
+        }
+        let min = moment(field.minValue, MIN_DATE_FORMAT);
+
+        if (fieldValueDate.isBefore(min)) {
+            field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_LESS_THAN`;
+            field.validationSummary.attributes.set('minValue', min.format('D-M-YYYY hh-mm A'));
+            isValid = false;
+        }
+        return isValid;
+    }
+}
+
+export class MaxDateTimeFieldValidator implements FormFieldValidator {
+
+    private supportedTypes = [
+        FormFieldTypes.DATETIME
+    ];
+
+    isSupported(field: FormFieldModel): boolean {
+        return field &&
+            this.supportedTypes.indexOf(field.type) > -1 && !!field.maxValue;
+    }
+
+    validate(field: FormFieldModel): boolean {
+        let isValid = true;
+        if (this.isSupported(field) && field.value) {
+            const dateFormat = field.dateDisplayFormat;
+
+            if (!DateFieldValidator.isValidDate(field.value, dateFormat)) {
+                field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_DATE';
+                isValid = false;
+            } else {
+                isValid = this.checkDateTime(field, dateFormat);
+            }
+        }
+        return isValid;
+    }
+
+    private checkDateTime(field: FormFieldModel, dateFormat: string): boolean {
+        const MAX_DATE_FORMAT = 'YYYY-MM-DD hh:mm A';
+        let isValid = true;
+        let fieldValueDate;
+
+        if (typeof field.value === 'string') {
+            fieldValueDate = moment(field.value, dateFormat);
+        } else {
+            fieldValueDate = field.value;
+        }
+        let max = moment(field.maxValue, MAX_DATE_FORMAT);
+
+        if (fieldValueDate.isAfter(max)) {
+            field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`;
+            field.validationSummary.attributes.set('maxValue', max.format('D-M-YYYY hh-mm A'));
+            isValid = false;
+        }
+        return isValid;
     }
 }
 
@@ -428,5 +529,7 @@ export const FORM_FIELD_VALIDATORS = [
     new DateFieldValidator(),
     new MinDateFieldValidator(),
     new MaxDateFieldValidator(),
-    new FixedValueFieldValidator()
+    new FixedValueFieldValidator(),
+    new MinDateTimeFieldValidator(),
+    new MaxDateTimeFieldValidator()
 ];
