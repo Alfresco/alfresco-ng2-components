@@ -62,6 +62,10 @@ export class DocumentListService {
         return this.apiService.getInstance().nodes.getNodeChildren(rootNodeId, params);
     }
 
+    /**
+     * Deletes a node.
+     * @param nodeId ID of the node to delete
+     */
     deleteNode(nodeId: string): Observable<any> {
         return Observable.fromPromise(this.apiService.getInstance().nodes.deleteNode(nodeId));
     }
@@ -70,7 +74,7 @@ export class DocumentListService {
      * Copy a node to destination node
      *
      * @param nodeId The id of the node to be copied
-     * @param targetParentId The id of the folder-node where the node have to be copied to
+     * @param targetParentId The id of the folder where the node will be copied
      */
     copyNode(nodeId: string, targetParentId: string) {
         return Observable.fromPromise(this.apiService.getInstance().nodes.copyNode(nodeId, { targetParentId }))
@@ -81,7 +85,7 @@ export class DocumentListService {
      * Move a node to destination node
      *
      * @param nodeId The id of the node to be moved
-     * @param targetParentId The id of the folder-node where the node have to be moved to
+     * @param targetParentId The id of the folder where the node will be moved
      */
     moveNode(nodeId: string, targetParentId: string) {
         return Observable.fromPromise(this.apiService.getInstance().nodes.moveNode(nodeId, { targetParentId }))
@@ -111,6 +115,10 @@ export class DocumentListService {
             .catch(err => this.handleError(err));
     }
 
+    /**
+     * Gets a folder node via its node ID.
+     * @param nodeId ID of the folder node
+     */
     getFolderNode(nodeId: string): Promise<MinimalNodeEntryEntity> {
         let opts: any = {
             includeSource: true,
@@ -130,14 +138,26 @@ export class DocumentListService {
         return this.thumbnailService.getDocumentThumbnailUrl(node);
     }
 
+    /**
+     * Gets the icon that represents a MIME type.
+     * @param mimeType MIME type to get the icon for
+     */
     getMimeTypeIcon(mimeType: string): string {
         return this.thumbnailService.getMimeTypeIcon(mimeType);
     }
 
+    /**
+     * Gets a default icon for MIME types with no specific icon.
+     */
     getDefaultMimeTypeIcon(): string {
         return this.thumbnailService.getDefaultMimeTypeIcon();
     }
 
+    /**
+     * Checks if a node has the specified permission.
+     * @param node Target node
+     * @param permission Permission level to query
+     */
     hasPermission(node: any, permission: PermissionsEnum|string): boolean {
         return this.contentService.hasPermission(node, permission);
     }

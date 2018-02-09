@@ -4,17 +4,46 @@ Accesses app-generated data objects via URLs and file downloads.
 
 ## Methods
 
-`downloadBlob(blob: Blob, fileName: string): void`<br/>
-Starts downloading the data in `blob` to a named file.
-
-`downloadData(data: any, fileName: string): void`<br/>
-Starts downloading a data object to a named file.
-
-`downloadJSON(json: any, fileName): void`<br/>
-Starts downloading of JSON data to a named file.
-
-`createTrustedUrl(blob: Blob): string`<br/>
-Creates a trusted URL to access the data in `blob`.
+-   `downloadBlob(blob: Blob, fileName: string)`  
+    Invokes content download for a Blob with a file name.  
+    -   `blob` - Content to download.
+    -   `fileName` - Name of the resulting file.
+-   `downloadData(data: any, fileName: string)`  
+    Invokes content download for a data array with a file name.  
+    -   `data` - Data to download.
+    -   `fileName` - Name of the resulting file.
+-   `downloadJSON(json: any, fileName)`  
+    Invokes content download for a JSON object with a file name.  
+    -   `json` - JSON object to download.
+    -   `fileName` - Name of the resulting file.
+-   `createTrustedUrl(blob: Blob): string`  
+    Creates a trusted object URL from the Blob. WARNING: calling this method with untrusted user data exposes your application to XSS security risks!  
+    -   `blob` - Data to wrap into object URL
+-   `getDocumentThumbnailUrl(node: any, attachment?: boolean, ticket?: string): string`  
+    Get thumbnail URL for the given document node.  
+    -   `node` - Node to get URL for.
+    -   `attachment` - (Optional) Retrieve content as an attachment for download
+    -   `ticket` - (Optional) Custom ticket to use for authentication
+-   `getContentUrl(node: any, attachment?: boolean, ticket?: string): string`  
+    Get content URL for the given node.  
+    -   `node` - nodeId or node to get URL for.
+    -   `attachment` - (Optional) Retrieve content as an attachment for download
+    -   `ticket` - (Optional) Custom ticket to use for authentication
+-   `getNodeContent(nodeId: string): Observable<any>`  
+    Get content for the given node.  
+    -   `nodeId` - ID of the target node
+-   `createFolder(relativePath: string, name: string, parentId?: string): Observable<FolderCreatedEvent>`  
+    Create a folder  
+    -   `relativePath` - Location to create the folder
+    -   `name` - Folder name
+    -   `parentId` - (Optional) Node ID of parent folder
+-   `hasPermission(node: any, permission: PermissionsEnum | string): boolean`  
+    Check if the user has permissions on that node  
+    -   `node` - Node to check allowableOperations
+    -   `permission` - Create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions
+-   `hasAllowableOperations(node: any): boolean`  
+    Check if the node has the properties allowableOperations  
+    -   `node` - Node to check allowableOperations
 
 ## Details
 

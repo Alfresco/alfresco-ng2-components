@@ -4,35 +4,41 @@ Implements node operations used by the Document List component.
 
 ## Methods
 
-`deleteNode(nodeId: string): Observable<any>`<br/>
-Deletes a node.
+-   `deleteNode(nodeId: string): Observable<any>`  
+    Deletes a node.  
+    -   `nodeId` - ID of the node to delete
+-   `copyNode(nodeId: string, targetParentId: string): any`  
+    Copy a node to destination node  
+    -   `nodeId` - The id of the node to be copied
+    -   `targetParentId` - The id of the folder where the node will be copied
+-   `moveNode(nodeId: string, targetParentId: string): any`  
+    Move a node to destination node  
+    -   `nodeId` - The id of the node to be moved
+    -   `targetParentId` - The id of the folder where the node will be moved
+-   `createFolder(name: string, parentId: string): Observable<MinimalNodeEntity>`  
+    Create a new folder in the path.  
+    -   `name` - Folder name
+    -   `parentId` - Parent folder ID
+-   `getFolder(folder: string, opts?: any): any`  
+    Gets the folder node with the specified relative name path below the root node.  
+    -   `folder` - Path to folder.
+    -   `opts` - (Optional) Options.
+-   `getFolderNode(nodeId: string): Promise<MinimalNodeEntryEntity>`  
+    Gets a folder node via its node ID.  
+    -   `nodeId` - ID of the folder node
+-   `getDocumentThumbnailUrl(node: MinimalNodeEntity): any`  
+    Get thumbnail URL for the given document node.  
+    -   `node` - Node to get URL for.
+-   `getMimeTypeIcon(mimeType: string): string`  
+    Gets the icon that represents a MIME type.  
+    -   `mimeType` - MIME type to get the icon for
+-   `getDefaultMimeTypeIcon(): string`  
+    Gets a default icon for MIME types with no specific icon.  
 
-`copyNode(nodeId: string, targetParentId: string)`<br/>
-Places a copy of an existing node under a new parent node.
-
-`moveNode(nodeId: string, targetParentId: string)`<br/>
-hasPermission(node: any, permission: PermissionsEnum|string): boolean.
-
-`createFolder(name: string, parentId: string): Observable<MinimalNodeEntity>`<br/>
-Creates a folder.
-
-`getFolder(folder: string, opts?: any): Observable<NodePaging>`<br/>
-Gets a folder node via its pathname from root.
-
-`getFolderNode(nodeId: string): Promise<MinimalNodeEntryEntity>`<br/>
-Gets a folder node via its node ID.
-
-`getDocumentThumbnailUrl(node: MinimalNodeEntity): string`<br/>
-Gets the thumbnail URL for a document node.
-
-`getMimeTypeIcon(mimeType: string): string`<br/>
-Gets the icon that represents a MIME type.
-
-`getDefaultMimeTypeIcon(): string`<br/>
-Gets a default icon for MIME types with no specific icon.
-
-`hasPermission(node: any, permission: PermissionsEnum|string): boolean`<br/>
-Gets a folder node via its pathname from root.
+-   `hasPermission(node: any, permission: PermissionsEnum|string): boolean`  
+    Checks if a node has the specified permission.  
+    -   `node` - Target node
+    -   `permission` - Permission level to query
 
 ## Details
 
@@ -73,12 +79,6 @@ The `hasPermission` method reports whether or not the user has the specified per
 node. The Permissions enum contains the values DELETE, UPDATE, CREATE, UPDATEPERMISSIONS, NOT_DELETE, NOT_UPDATE, NOT_CREATE and NOT_UPDATEPERMISSIONS but you can also supply these
 values via their string equivalents.
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
 ## See also
 
-- [Document list component](document-list.component.md)
-<!-- seealso end -->
-
-
-
+-   [Document list component](document-list.component.md)

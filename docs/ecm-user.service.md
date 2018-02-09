@@ -4,14 +4,15 @@ Gets information about a Content Services user.
 
 ## Methods
 
-`getUserInfo(userName: string): Observable<EcmUserModel>`<br/>
-Gets information about a user identified by their username.
+-   `getUserInfo(userName: string): Observable<EcmUserModel>`  
+    Gets information about a user identified by their username.  
+    -   `userName` - Target username
+-   `getCurrentUserInfo(): Observable<EcmUserModel>`  
+    Gets information about the user who is currently logged-in.  
 
-`getCurrentUserInfo(): Observable<EcmUserModel>`<br/>
-Gets information about the user who is currently logged-in.
-
-`getUserProfileImage(avatarId: string)`<br/>
-Returns a profile image as a URL.
+-   `getUserProfileImage(avatarId: string): string`  
+    Returns a profile image as a URL.  
+    -   `avatarId` - Target avatar
 
 ## Details
 

@@ -39,12 +39,13 @@ class ParamData {
     optional: boolean;
 
     getSignature() {
-        let sig =this.name;
+        let sig = this.name;
 
         if (this.optional)
             sig += "?";
 
-        sig += ": " + this.type;
+        if (this.type)
+            sig += ": " + this.type;
 
         if (this.initializer)
             sig += " = " + this.initializer;
@@ -192,6 +193,10 @@ class ServiceDocAutoContent implements NgDocAutoContent {
 
                     methData.name = memSymbol.getName();
                     let doc = ts.displayPartsToString(memSymbol.getDocumentationComment());
+
+                    if (!doc)
+                        console.log(`Warning: Method ${classDec.name.escapedText}.${methData.name} is not documented`);
+
                     methData.docText = doc.replace(/\r\n/g, " ");
                     let sig = checker.getSignatureFromDeclaration(method);
                     let returnType = sig.getReturnType();
@@ -203,9 +208,18 @@ class ServiceDocAutoContent implements NgDocAutoContent {
                     for (let p = 0; p < params.length; p++){
                         let pData = new ParamData();
                         pData.name = params[p].name.getText();
-                        pData.type = params[p].type.getText();
+
+                        if (params[p].type)
+                            pData.type = params[p].type.getText();
+                        else
+                            pData.type = "";
+
                         let paramSymbol = checker.getSymbolAtLocation(params[p].name);
                         pData.docText = ts.displayPartsToString(paramSymbol.getDocumentationComment());
+                        
+                        if (!pData.docText)
+                            console.log(`Warning: Parameter "${pData.name}" of ${classDec.name.escapedText}.${methData.name} is not documented`);
+
                         pData.optional = params[p].questionToken ? true : false;
 
                         if (params[p].initializer) {
