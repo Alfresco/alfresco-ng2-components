@@ -13,6 +13,9 @@ interface DocEntry {
 
 let error_array = [];
 let warning_array = [];
+let exportedAllPath: Array<string> = [];
+let classList: Array<any> = [];
+
 
 let add_error = function (error: string) {
     error_array.push(error);
@@ -55,7 +58,6 @@ let check_export = function (export_old: any, export_new: any) {
                 add_warning(`${current_error_postion(error)}`);
             })
 
-
         } else if (currentExport_new.length === 0) {
             add_error(`\n[${++count_error}] Not find export ${currentExport_old.name}`);
         }
@@ -89,13 +91,37 @@ function generatExportList(fileNames: string[], options: ts.CompilerOptions): vo
         }
     }
 
+    classList.forEach((classNode) => {
+        if(classNode.symbol.parent) {
+            let pathClass = classNode.symbol.parent.escapedName.replace(/"/g, "");
+
+            exportedAllPath.forEach((currenPath) => {
+                let pathNoExtension = currenPath.replace(/\.[^/.]+$/, "");
+
+                if (pathNoExtension === pathClass) {
+                    // console.log('pathClass'+ pathClass);
+                    // console.log('pathNoExtension   '+ pathNoExtension);
+                    extractExport(classNode);
+                    return;
+                }
+
+            });
+        }
+    });
+
     exportCurrentVersion.sort((nameA, nameB) => nameA.name.localeCompare(nameB.name));
 
     console.log(chalk.green('Saving new export in export-new.json'));
 
     fs.writeFileSync('export-new.json', JSON.stringify(exportCurrentVersion, undefined, 4));
 
-    var export_old = JSON.parse(fs.readFileSync('export-2.0.0.json', 'utf8'));
+    try {
+        var export_old = JSON.parse(fs.readFileSync('export-2.0.0.json', 'utf8'));
+    } catch (error) {
+        console.log(chalk.red('export-2.0.0.json not present'));
+        throw new Error('Undetected export comapring file');
+    }
+
     var export_new = JSON.parse(JSON.stringify(exportCurrentVersion));
 
     console.log(chalk.green('Comparing export-2.0.0.json and export-new.json'));
@@ -123,16 +149,28 @@ function generatExportList(fileNames: string[], options: ts.CompilerOptions): vo
         let symbol = checker.getSymbolAtLocation(node);
 
         if (symbol) {
+            let arryCalls = recursiveStackSave(node);
+
             let className: any = symbol.escapedName;
             let filename = node.getSourceFile().fileName.substring(node.getSourceFile().fileName.indexOf('lib'), node.getSourceFile().fileName.length);
-            exportCurrentVersion.push(serializeClass(className, line, character, filename));
-
-        } else {
-            let className: any = (node as ts.ClassDeclaration).name.escapedText;
-            let filename = node.getSourceFile().fileName.substring(node.getSourceFile().fileName.indexOf('lib'), node.getSourceFile().fileName.length);
-            exportCurrentVersion.push(serializeClass(className, line, character, filename));
+            exportCurrentVersion.push(serializeClass(className, line, character, filename, arryCalls));
 
             // if (className === "ContentMetadataService") {
+            //     console.log(chalk.red("exportedAllPath" + exportedAllPath));
+            //     console.log(chalk.red("ContentMetadataService"));
+            //     recursiveStack(node);
+            // }
+
+        } else {
+
+            let arryCalls = recursiveStackSave(node);
+
+            let className: any = (node as ts.ClassDeclaration).name.escapedText;
+            let filename = node.getSourceFile().fileName.substring(node.getSourceFile().fileName.indexOf('lib'), node.getSourceFile().fileName.length);
+            exportCurrentVersion.push(serializeClass(className, line, character, filename, arryCalls));
+
+            // if (className === "ContentMetadataService") {
+            //     console.log(chalk.greenBright("exportedAllPath" + exportedAllPath));
             //     console.log(chalk.greenBright("ContentMetadataService"));
             //     recursiveStack(node);
             // }
@@ -140,12 +178,30 @@ function generatExportList(fileNames: string[], options: ts.CompilerOptions): vo
         }
     }
 
+    function recursiveStackSave(node: ts.Node, arrayCalls?: string[]) {
+        if (!arrayCalls) {
+            arrayCalls = [];
+        }
+
+        let filename = node.getSourceFile().fileName.substring(node.getSourceFile().fileName.indexOf('lib'), node.getSourceFile().fileName.length);
+        let { line, character } = node.getSourceFile().getLineAndCharacterOfPosition(node.getStart());
+
+        arrayCalls.push(node.getSourceFile().fileName);
+
+        if (node.parent) {
+            recursiveStackSave(node.parent, arrayCalls)
+        }
+
+        return arrayCalls;
+
+    }
+
     function recursiveStack(node: ts.Node) {
         let filename = node.getSourceFile().fileName.substring(node.getSourceFile().fileName.indexOf('lib'), node.getSourceFile().fileName.length);
         let { line, character } = node.getSourceFile().getLineAndCharacterOfPosition(node.getStart());
         console.log(chalk.bgCyan(line + " " + character + " " + node.getSourceFile().fileName));
 
-        if(node.parent){
+        if (node.parent) {
             recursiveStack(node.parent)
         }
 
@@ -163,9 +219,7 @@ function generatExportList(fileNames: string[], options: ts.CompilerOptions): vo
                 });
             }
 
-            if(node.parent.kind !== ts.SyntaxKind.SourceFile){
-                extractExport(node);
-            }
+            classList.push(node);
         }
 
         if (node.kind === ts.SyntaxKind.PropertyAssignment) {
@@ -202,6 +256,20 @@ function generatExportList(fileNames: string[], options: ts.CompilerOptions): vo
                     extractExport(exportCurrent as ts.Node);
                 });
             } else {
+                (node.parent as any).resolvedModules.forEach((currentModule) => {
+
+                    let find;
+                    exportedAllPath.forEach((currentExported) => {
+                        if (currentModule.resolvedFileName === currentExported) {
+                            find = currentExported;
+                        }
+                    })
+
+                    if (!find) {
+                        exportedAllPath.push(currentModule.resolvedFileName);
+                    }
+                })
+
                 visit(node.moduleSpecifier);
             }
 
@@ -214,7 +282,8 @@ function generatExportList(fileNames: string[], options: ts.CompilerOptions): vo
     }
 
     /** Serialize a symbol into a json object */
-    function serializeSymbol(className: string, line?: number, character?: number, fileName?: string): DocEntry {
+    function serializeSymbol(className: string, line?: number, character?: number, fileName?: string, arryCalls?: string[]): DocEntry {
+
         return {
             position: {
                 line: line,
@@ -226,8 +295,8 @@ function generatExportList(fileNames: string[], options: ts.CompilerOptions): vo
     }
 
     /** Serialize a class symbol information */
-    function serializeClass(className: string, line?: number, character?: number, fileName?: string) {
-        let details = serializeSymbol(className, line, character, fileName);
+    function serializeClass(className: string, line?: number, character?: number, fileName?: string, arryCalls?: string[]) {
+        let details = serializeSymbol(className, line, character, fileName, arryCalls);
 
         return details;
     }
