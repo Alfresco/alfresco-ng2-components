@@ -36,6 +36,8 @@ export class ContentNodeDialogService {
                 private siteService: SitesService,
                 private translation: TranslationService) { }
 
+    /** Opens a file browser at a chosen folder location. */
+    /** @param folderNodeId ID of the folder to use */
     openFileBrowseDialogByFolderId(folderNodeId: string): Observable<MinimalNodeEntryEntity[]> {
         return Observable.fromPromise(this.documentListService.getFolderNode(folderNodeId))
             .switchMap((node: MinimalNodeEntryEntity) => {
@@ -43,18 +45,22 @@ export class ContentNodeDialogService {
         });
     }
 
+    /** Opens a file browser at a chosen site location. */
     openFileBrowseDialogBySite(): Observable<MinimalNodeEntryEntity[]> {
        return this.siteService.getSites().switchMap((response: SitePaging) => {
             return this.openFileBrowseDialogByFolderId(response.list.entries[0].entry.guid);
         });
     }
 
+    /** Opens a folder browser at a chosen site location. */
     openFolderBrowseDialogBySite(): Observable<MinimalNodeEntryEntity[]> {
         return this.siteService.getSites().switchMap((response: SitePaging) => {
              return this.openFolderBrowseDialogByFolderId(response.list.entries[0].entry.guid);
          });
      }
 
+    /** Opens a folder browser at a chosen folder location. */
+    /** @param folderNodeId ID of the folder to use */
     openFolderBrowseDialogByFolderId(folderNodeId: string): Observable<MinimalNodeEntryEntity[]> {
         return Observable.fromPromise(this.documentListService.getFolderNode(folderNodeId))
             .switchMap((node: MinimalNodeEntryEntity) => {
@@ -62,6 +68,10 @@ export class ContentNodeDialogService {
         });
     }
 
+    /** Opens a dialog to copy or move an item to a new location. */
+    /** @param action Name of the action (eg, "Copy" or "Move") to show in the title */
+    /** @param contentEntry Item to be copied or moved */
+    /** @param permission Permission for the operation */
     openCopyMoveDialog(action: string, contentEntry: MinimalNodeEntryEntity, permission?: string): Observable<MinimalNodeEntryEntity[]> {
         if (this.contentService.hasPermission(contentEntry, permission)) {
 
@@ -91,10 +101,16 @@ export class ContentNodeDialogService {
         }
     }
 
+    /** Gets the translation of the dialog title. */
+    /** @param action Name of the action to display in the dialog title */
+    /** @param name Name of the item on which the action is being performed */
     getTitleTranslation(action: string, name: string): string {
         return this.translation.instant(`NODE_SELECTOR.${action.toUpperCase()}_ITEM`, {name});
     }
 
+    /** Opens a dialog to choose a folder to upload. */
+    /** @param action Name of the action to show in the title */
+    /** @param contentEntry  Item to upload */
     openUploadFolderDialog(action: string, contentEntry: MinimalNodeEntryEntity): Observable<MinimalNodeEntryEntity[]> {
         const select = new Subject<MinimalNodeEntryEntity[]>();
         select.subscribe({
@@ -115,6 +131,9 @@ export class ContentNodeDialogService {
         return select;
     }
 
+    /** Opens a dialog to choose a file to upload. */
+    /** @param action Name of the action to show in the title */
+    /** @param contentEntry Item to upload */
     openUploadFileDialog(action: string, contentEntry: MinimalNodeEntryEntity): Observable<MinimalNodeEntryEntity[]> {
             const select = new Subject<MinimalNodeEntryEntity[]>();
             select.subscribe({
@@ -173,6 +192,7 @@ export class ContentNodeDialogService {
         return this.contentService.hasPermission(entry, 'create');
     }
 
+    /** Closes the currently open dialog. */
     close() {
         this.dialog.closeAll();
     }
