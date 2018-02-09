@@ -18,7 +18,7 @@
 import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
 import { Component } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { AlfrescoApiService, RenditionsService } from '../../services';
 
 import { MaterialModule } from './../../material.module';
@@ -155,6 +155,40 @@ describe('ViewerComponent', () => {
         }).compileComponents();
     }));
 
+    beforeEach(() => {
+        fixture = TestBed.createComponent(ViewerComponent);
+        element = fixture.nativeElement;
+        component = fixture.componentInstance;
+
+        alfrescoApiService = TestBed.get(AlfrescoApiService);
+    });
+
+    it('should change display name every time node changes', fakeAsync(() => {
+        spyOn(alfrescoApiService.nodesApi, 'getNodeInfo').and.returnValues(
+            Promise.resolve({ name: 'file1', content: {} }),
+            Promise.resolve({ name: 'file2', content: {} })
+        );
+
+        component.urlFile = null;
+        component.displayName = null;
+        component.blobFile = null;
+        component.showViewer = true;
+
+        component.fileNodeId = 'id1';
+        component.ngOnChanges({});
+        tick();
+
+        expect(alfrescoApiService.nodesApi.getNodeInfo).toHaveBeenCalledWith('id1');
+        expect(component.displayName).toBe('file1');
+
+        component.fileNodeId = 'id2';
+        component.ngOnChanges({});
+        tick();
+
+        expect(alfrescoApiService.nodesApi.getNodeInfo).toHaveBeenCalledWith('id2');
+        expect(component.displayName).toBe('file2');
+    }));
+
     describe('Viewer Example Component Rendering', () => {
 
         it('should use custom toolbar', () => {
@@ -193,14 +227,9 @@ describe('ViewerComponent', () => {
     describe('Base component', () => {
 
         beforeEach(() => {
-            fixture = TestBed.createComponent(ViewerComponent);
-            element = fixture.nativeElement;
-            component = fixture.componentInstance;
             component.showToolbar = true;
             component.urlFile = 'base/src/assets/fake-test-file.pdf';
             component.mimeType = 'application/pdf';
-
-            alfrescoApiService = TestBed.get(AlfrescoApiService);
 
             fixture.detectChanges();
         });
@@ -723,20 +752,6 @@ describe('ViewerComponent', () => {
                 nodes: { getNodeInfo: () => Promise.resolve(nodeDetails) },
                 content: { getContentUrl: () => contentUrl }
             };
-
-            it('should use the displayName if displayName is set and fileNodeId is set', async(() => {
-                const userDefinedDisplayName = 'user defined display name';
-                component.fileNodeId = '12';
-                component.urlFile = null;
-                component.displayName = userDefinedDisplayName;
-                spyOn(alfrescoApiService, 'getInstance').and.returnValue(alfrescoApiInstanceMock);
-
-                component.ngOnChanges(null);
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual(userDefinedDisplayName);
-                });
-            }));
 
             it('should use the node name if displayName is NOT set and fileNodeId is set', async(() => {
                 component.fileNodeId = '12';

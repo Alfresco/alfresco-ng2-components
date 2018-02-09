@@ -240,7 +240,7 @@ export class ViewerComponent implements OnChanges {
                 this.setUpUrlFile();
             } else if (this.fileNodeId) {
                 this.isLoading = true;
-                this.apiService.getInstance().nodes.getNodeInfo(this.fileNodeId).then(
+                this.apiService.nodesApi.getNodeInfo(this.fileNodeId).then(
                     (data: MinimalNodeEntryEntity) => {
                         this.setUpNodeFile(data);
                     },
@@ -295,12 +295,12 @@ export class ViewerComponent implements OnChanges {
 
     private setUpNodeFile(data: MinimalNodeEntryEntity) {
         this.mimeType = data.content.mimeType;
-        this.displayName = this.getDisplayName(data.name);
-        this.urlFileContent = this.apiService.getInstance().content.getContentUrl(data.id);
+        this.displayName = data.name;
+        this.urlFileContent = this.apiService.contentApi.getContentUrl(data.id);
         this.extension = this.getFileExtension(data.name);
 
         this.fileName = data.name;
-        this.downloadUrl = this.apiService.getInstance().content.getContentUrl(data.id, true);
+        this.downloadUrl = this.apiService.contentApi.getContentUrl(data.id, true);
 
         this.viewerType = this.getViewerTypeByExtension(this.extension);
         if (this.viewerType === 'unknown') {
