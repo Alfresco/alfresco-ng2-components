@@ -2,6 +2,19 @@
 
 Implements the document menu actions for the Document List component.
 
+## Methods
+
+-   `getHandler(key: string): ContentActionHandler`  
+    Gets the handler for an action.  
+    -   `key` - Identifier of the action
+-   `setHandler(key: string, handler: ContentActionHandler): boolean`  
+    Sets a new handler for an action.  
+    -   `key` - Identifier of the action
+    -   `handler` - Handler for the action
+-   `canExecuteAction(obj: any): boolean`  
+    Checks if actions can be executed for an item.  
+    -   `obj` - Item to receive an action
+
 ## Details
 
 This service implements the built-in actions that can be applied to a document
@@ -72,10 +85,7 @@ export class MyView {
 You will probably want to set up all your custom actions at the application root level or
 with a custom application service.
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
 ## See also
 
-- [Content action component](content-action.component.md)
-- [Folder actions service](folder-actions.service.md)
-<!-- seealso end -->
+-   [Content action component](content-action.component.md)
+-   [Folder actions service](folder-actions.service.md)

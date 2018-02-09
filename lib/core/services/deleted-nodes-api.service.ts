@@ -33,6 +33,10 @@ export class DeletedNodesApiService {
        return this.apiService.getInstance().core.nodesApi;
     }
 
+    /**
+     * Gets a list of nodes in the trash.
+     * @param options Options for JSAPI call
+     */
     getDeletedNodes(options?: Object): Observable<NodePaging> {
         const { nodesApi, handleError } = this;
         const defaultOptions = {

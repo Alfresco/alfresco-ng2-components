@@ -20,6 +20,9 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class CookieService {
 
+    /**
+     * Checks if cookies are enabled.
+     */
     isEnabled(): boolean {
         // for certain scenarios Chrome may say 'true' but have cookies still disabled
         if (navigator.cookieEnabled === false) {
@@ -31,8 +34,8 @@ export class CookieService {
     }
 
     /**
-     * Retrieve cookie by key.
-     *
+     * Retrieves a cookie by its key.
+     * @param key Key to identify the cookie
      * @returns {string | null}
      */
     getItem(key: string): string | null {
@@ -43,10 +46,10 @@ export class CookieService {
 
     /**
      * Set a cookie.
-     * @param key
-     * @param data
-     * @param expiration
-     * @param path
+     * @param key Key to identify the cookie
+     * @param data Data value to set for the cookie
+     * @param expiration Expiration date of the data
+     * @param path "Pathname" to store the cookie
      *
      * @returns {boolean}
      */
