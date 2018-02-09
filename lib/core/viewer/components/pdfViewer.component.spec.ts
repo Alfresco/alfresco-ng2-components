@@ -41,6 +41,7 @@ describe('Test PdfViewer component', () => {
                 ToolbarModule,
                 MaterialModule
             ],
+            declarations: [PdfViewerComponent],
             providers: [
                 SettingsService,
                 AuthenticationService,
