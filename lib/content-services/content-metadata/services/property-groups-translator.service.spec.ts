@@ -16,10 +16,7 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { BasicPropertiesService } from './basic-properties.service';
 import { PropertyGroupTranslatorService } from './property-groups-translator.service';
-import { PropertyDescriptorsLoaderService } from './property-descriptors-loader.service';
-import { AlfrescoApiService } from '@alfresco/adf-core';
 import { Property, OrganisedPropertyGroup } from '../interfaces/content-metadata.interfaces';
 import {
     CardViewTextItemModel,
@@ -42,10 +39,7 @@ describe('PropertyGroupTranslatorService', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             providers: [
-                BasicPropertiesService,
                 PropertyGroupTranslatorService,
-                PropertyDescriptorsLoaderService,
-                AlfrescoApiService,
                 { provide: LogService, useValue: { error: () => {} }}
             ]
         }).compileComponents();

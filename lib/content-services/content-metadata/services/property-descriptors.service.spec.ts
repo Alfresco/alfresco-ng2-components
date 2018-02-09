@@ -17,155 +17,80 @@
 
 import { async, TestBed } from '@angular/core/testing';
 import { PropertyDescriptorsService } from './property-descriptors.service';
-import { PropertyDescriptorsLoaderService } from './property-descriptors-loader.service';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
-import { Property, ContentMetadataConfig } from '../interfaces/content-metadata.interfaces';
-import { IndifferentConfigService } from './config/indifferent-config.service';
-import { AspectOrientedConfigService } from './config/aspect-oriented-config.service';
+import { ClassesApi } from 'alfresco-js-api';
+import { PropertyGroup } from '../interfaces/content-metadata.interfaces';
 
-describe('PropertyDescriptorsService', () => {
+describe('PropertyDescriptorLoaderService', () => {
 
-    let propertyDescriptorsService: PropertyDescriptorsService,
-        propertyDescriptorsLoaderService: PropertyDescriptorsLoaderService,
-        groupNames: string[],
-        config: ContentMetadataConfig;
+    let service: PropertyDescriptorsService,
+        classesApi: ClassesApi;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             providers: [
                 PropertyDescriptorsService,
-                PropertyDescriptorsLoaderService,
                 AlfrescoApiService
             ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
-        propertyDescriptorsService = TestBed.get(PropertyDescriptorsService);
-        propertyDescriptorsLoaderService = TestBed.get(PropertyDescriptorsLoaderService);
+        service = TestBed.get(PropertyDescriptorsService);
+        const alfrescoApiService = TestBed.get(AlfrescoApiService);
+        classesApi = alfrescoApiService.classesApi;
     });
 
     afterEach(() => {
         TestBed.resetTestingModule();
     });
 
-    describe('loadDescriptors', () => {
+    it('should load the groups passed by paramter', () => {
+        spyOn(classesApi, 'getClass');
 
-        beforeEach(() => {
-            groupNames = [ 'exif:exif', 'cm:content', 'custom:custom' ];
+        service.load(['exif:exif', 'cm:content', 'custom:custom'])
+            .subscribe(() => {});
+
+        expect(classesApi.getClass).toHaveBeenCalledTimes(3);
+        expect(classesApi.getClass).toHaveBeenCalledWith('exif_exif');
+        expect(classesApi.getClass).toHaveBeenCalledWith('cm_content');
+        expect(classesApi.getClass).toHaveBeenCalledWith('custom_custom');
+    });
+
+    it('should merge the forked values', (done) => {
+
+        const exifResponse: PropertyGroup = {
+            name: 'exif:exif',
+            title: '',
+            properties: {
+                'exif:1': { title: 'exif:1:id', name: 'exif:1', dataType: '', mandatory: false, multiValued: false },
+                'exif:2': { title: 'exif:2:id', name: 'exif:2', dataType: '', mandatory: false, multiValued: false }
+            }
+        };
+
+        const contentResponse: PropertyGroup = {
+            name: 'cm:content',
+            title: '',
+            properties: {
+                'cm:content': { title: 'cm:content:id', name: 'cm:content', dataType: '', mandatory: false, multiValued: false }
+            }
+        };
+
+        const apiResponses = [ exifResponse, contentResponse ];
+        let counter = 0;
+
+        spyOn(classesApi, 'getClass').and.callFake(() => {
+            return Observable.of(apiResponses[counter++]);
         });
 
-        it('should load the groups of the intersection of AspectOrientedConfigService\'s groups and groupNames', () => {
-            spyOn(propertyDescriptorsLoaderService, 'load').and.callFake(x => Observable.of({}));
-            config = new AspectOrientedConfigService({ 'exif:exif': [], 'custom:custom': [], 'banana:banana': [] });
-
-            propertyDescriptorsService.loadDescriptors(groupNames, config);
-
-            expect(propertyDescriptorsLoaderService.load).toHaveBeenCalledWith(['exif:exif', 'custom:custom']);
-        });
-
-        it('should load everything from groupNames if IndifferentConfigService config is passed', () => {
-            spyOn(propertyDescriptorsLoaderService, 'load').and.callFake(x => Observable.of({}));
-            config = new IndifferentConfigService('*');
-
-            propertyDescriptorsService.loadDescriptors(groupNames, config);
-
-            expect(propertyDescriptorsLoaderService.load).toHaveBeenCalledWith(['exif:exif', 'cm:content', 'custom:custom']);
-        });
-
-        // TODO: move it to the right place
-        it('should filter out properties which are not defined in the particular group', (done) => {
-            spyOn(propertyDescriptorsLoaderService, 'load').and.callFake(() => {
-                return Observable.of([
-                    {
-                        name: 'exif:exif',
-                        properties: [
-                            { name: 'exif:1' },
-                            { name: 'exif:2' }
-                        ]
-                    }
-                ]);
-            });
-
-            config = new AspectOrientedConfigService({ 'exif:exif': ['exif:2'] });
-
-            propertyDescriptorsService.loadDescriptors(groupNames, config).subscribe({
-                next: (aspects) => {
-                    expect(aspects[0].name).toBe('exif:exif');
-                    expect(aspects[0].properties).toContain(<Property> { name: 'exif:2' });
-                    expect(aspects[0].properties).not.toContain(<Property> { name: 'exif:1' });
+        service.load(['exif:exif', 'cm:content'])
+            .subscribe({
+                next: (data) => {
+                    expect(data['exif:exif']).toBe(exifResponse);
+                    expect(data['cm:content']).toBe(contentResponse);
                 },
                 complete: done
             });
-        });
-
-        // TODO: move it to the right place
-        it('should accept "*" wildcard for group properties', (done) => {
-            spyOn(propertyDescriptorsLoaderService, 'load').and.callFake(() => {
-                return Observable.of([
-                    {
-                        name: 'exif:exif',
-                        properties: [
-                            { name: 'exif:1' },
-                            { name: 'exif:2' }
-                        ]
-                    },
-                    {
-                        name: 'custom:custom',
-                        properties: [
-                            { name: 'custom:1' },
-                            { name: 'custom:2' }
-                        ]
-                    }
-                ]);
-            });
-
-            config = new AspectOrientedConfigService({
-                'exif:exif': '*',
-                'custom:custom': ['custom:1']
-            });
-
-            propertyDescriptorsService.loadDescriptors(groupNames, config).subscribe({
-                next: (aspects) => {
-                    expect(aspects.length).toBe(2);
-                    expect(aspects[0].name).toBe('exif:exif');
-                    expect(aspects[0].properties).toContain(<Property> { name: 'exif:1' });
-                    expect(aspects[0].properties).toContain(<Property> { name: 'exif:2' });
-
-                    expect(aspects[1].name).toBe('custom:custom');
-                    expect(aspects[1].properties).toContain(<Property> { name: 'custom:1' });
-                    expect(aspects[1].properties).not.toContain(<Property> { name: 'custom:2' });
-                },
-                complete: done
-            });
-        });
-
-        // TODO: move it to the right place
-        it('should filter out groups which are not present in app config preset', () => {
-            spyOn(propertyDescriptorsLoaderService, 'load').and.callFake(() => {
-                return Observable.of([
-                    {
-                        name: 'exif:exif',
-                        properties: [
-                            { name: 'exif:1' }
-                        ]
-                    }
-                ]);
-            });
-
-            config = new AspectOrientedConfigService({
-                'exif:exif': ['exif:1'],
-                'banana:banana': ['banana:1']
-            });
-
-            propertyDescriptorsService.loadDescriptors(groupNames, config).subscribe({
-                next: (aspects) => {
-                    expect(aspects.length).toBe(1);
-                    expect(aspects[0].name).toBe('exif:exif');
-                    expect(aspects[0].properties).toContain(<Property> { name: 'exif:1' });
-                }
-            });
-        });
     });
 });

@@ -26,7 +26,6 @@ import { MatExpansionModule, MatButtonModule, MatIconModule } from '@angular/mat
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { BasicPropertiesService } from '../../services/basic-properties.service';
 import { PropertyGroupTranslatorService } from '../../services/property-groups-translator.service';
-import { PropertyDescriptorsLoaderService } from '../../services/property-descriptors-loader.service';
 import { PropertyDescriptorsService } from '../../services/property-descriptors.service';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { CardViewBaseItemModel, CardViewComponent, CardViewUpdateService, NodesApiService, LogService } from '@alfresco/adf-core';
@@ -55,7 +54,6 @@ describe('ContentMetadataComponent', () => {
                 ContentMetadataService,
                 BasicPropertiesService,
                 PropertyGroupTranslatorService,
-                PropertyDescriptorsLoaderService,
                 PropertyDescriptorsService,
                 ContentMetadataConfigFactory,
                 AlfrescoApiService,

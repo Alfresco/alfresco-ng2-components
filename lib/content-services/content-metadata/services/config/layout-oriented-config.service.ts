@@ -34,18 +34,6 @@ export class LayoutOrientedConfigService implements ContentMetadataConfig {
         return this.getMatchingGroups(groupName).length > 0;
     }
 
-    public isPropertyAllowed(groupName: string, propertyName: string): boolean {
-        if (this.isEveryPropertyAllowedFor(groupName)) {
-            return true;
-        }
-
-        const matchingItems = this
-            .getMatchingGroups(groupName)
-            .filter(item => item.properties.indexOf(propertyName) !== -1);
-
-        return matchingItems.length > 0;
-    }
-
     public reorganiseByConfig(propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[] {
         const layoutBlocks = this.config;
 
@@ -82,13 +70,5 @@ export class LayoutOrientedConfigService implements ContentMetadataConfig {
             .map(layoutBlock => layoutBlock.items)
             .reduce((accumulator, items) => accumulator.concat(items), [])
             .filter((item) => item.aspect === groupName || item.type === groupName);
-    }
-
-    private isEveryPropertyAllowedFor(groupName: string): boolean {
-        const matchingItems = this
-            .getMatchingGroups(groupName)
-            .filter(item => item.properties === '*');
-
-        return matchingItems.length > 0;
     }
 }

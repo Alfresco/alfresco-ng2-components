@@ -29,18 +29,6 @@ export class AspectOrientedConfigService implements ContentMetadataConfig {
         return groupNames.indexOf(groupName) !== -1;
     }
 
-    public isPropertyAllowed(groupName: string, propertyName: string): boolean {
-        if (this.isEveryPropertyAllowedFor(groupName)) {
-            return true;
-        }
-
-        if (this.config[groupName]) {
-            return this.config[groupName].indexOf(propertyName) !== -1;
-        }
-
-        return false;
-    }
-
     public reorganiseByConfig(propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[] {
         const aspects = this.config,
             aspectNames = Object.keys(aspects);
@@ -73,10 +61,5 @@ export class AspectOrientedConfigService implements ContentMetadataConfig {
         }
 
         return newGroup;
-    }
-
-    private isEveryPropertyAllowedFor(groupName: string): boolean {
-        const allowedProperties = this.config[groupName];
-        return typeof allowedProperties === 'string' && allowedProperties === '*';
     }
 }

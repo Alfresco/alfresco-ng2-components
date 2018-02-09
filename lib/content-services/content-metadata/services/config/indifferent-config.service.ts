@@ -32,10 +32,6 @@ export class IndifferentConfigService implements ContentMetadataConfig {
         return true;
     }
 
-    public isPropertyAllowed(groupName: string, propertyName: string): boolean {
-        return true;
-    }
-
     public reorganiseByConfig(propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[] {
         return Object.keys(propertyGroups)
             .map((groupName) => {

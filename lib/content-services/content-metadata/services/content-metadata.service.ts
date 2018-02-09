@@ -23,7 +23,7 @@ import { PropertyGroupTranslatorService } from './property-groups-translator.ser
 import { CardViewItem } from '@alfresco/adf-core';
 import { CardViewGroup } from '../interfaces/content-metadata.interfaces';
 import { ContentMetadataConfigFactory } from './config/content-metadata-config.factory';
-import { PropertyDescriptorsLoaderService } from './property-descriptors-loader.service';
+import { PropertyDescriptorsService } from './property-descriptors.service';
 
 @Injectable()
 export class ContentMetadataService {
@@ -32,7 +32,7 @@ export class ContentMetadataService {
         private basicPropertiesService: BasicPropertiesService,
         private contentMetadataConfigFactory: ContentMetadataConfigFactory,
         private propertyGroupTranslatorService: PropertyGroupTranslatorService,
-        private propertyDescriptorsLoaderService: PropertyDescriptorsLoaderService
+        private propertyDescriptorsService: PropertyDescriptorsService
     ) {}
 
     getBasicProperties(node: MinimalNodeEntryEntity): Observable<CardViewItem[]> {
@@ -43,7 +43,7 @@ export class ContentMetadataService {
         const config = this.contentMetadataConfigFactory.get(presetName),
             groupNames = node.aspectNames.filter(groupName => config.isGroupAllowed(groupName));
 
-        return this.propertyDescriptorsLoaderService.load(groupNames)
+        return this.propertyDescriptorsService.load(groupNames)
             .map(groups => config.reorganiseByConfig(groups))
             .map(groups => this.propertyGroupTranslatorService.translateToCardViewGroups(groups, node.properties));
     }

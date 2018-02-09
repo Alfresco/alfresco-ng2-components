@@ -16,35 +16,31 @@
  */
 
 import { Injectable } from '@angular/core';
+import { AlfrescoApiService } from '@alfresco/adf-core';
+import { forkJoin } from 'rxjs/observable/forkJoin';
 import { Observable } from 'rxjs/Observable';
-import { PropertyGroup, Property, ContentMetadataConfig } from '../interfaces/content-metadata.interfaces';
-import { PropertyDescriptorsLoaderService } from './property-descriptors-loader.service';
-
-function convertObjectToArray(object: any): Property[] {
-    return Object.keys(object).map(key => object[key]);
-}
+import { defer } from 'rxjs/observable/defer';
+import { PropertyGroup, PropertyGroupContainer } from '../interfaces/content-metadata.interfaces';
 
 @Injectable()
 export class PropertyDescriptorsService {
 
-    constructor(private propertyDescriptorsLoaderService: PropertyDescriptorsLoaderService) {}
+    constructor(private alfrescoApiService: AlfrescoApiService) {}
 
-    loadDescriptors(groupNames: string[], config: ContentMetadataConfig): Observable<PropertyGroup[]> {
-        const groupsToLoad = groupNames.filter(groupName => config.isGroupAllowed(groupName));
+    load(groupNames: string[]): Observable<PropertyGroupContainer> {
+        const groupFetchStreams = groupNames
+            .map(groupName => groupName.replace(':', '_'))
+            .map(groupName => defer( () => this.alfrescoApiService.classesApi.getClass(groupName)) );
 
-        return this.propertyDescriptorsLoaderService.load(groupsToLoad)
-            .map(this.filterPropertiesByWhitelist.bind(this, config));
+        return forkJoin(groupFetchStreams)
+            .map(this.convertToObject);
     }
 
-    private filterPropertiesByWhitelist(config: ContentMetadataConfig, groupDescriptors: PropertyGroup[]): PropertyGroup[] {
-        return groupDescriptors
-            .map((groupDescriptor) => {
-                const filteredPropertiesArray = convertObjectToArray(groupDescriptor.properties)
-                    .filter(property => config.isPropertyAllowed(groupDescriptor.name, property.name));
-
-                return Object.assign({}, groupDescriptor, {
-                    properties: filteredPropertiesArray
-                });
+    private convertToObject(propertyGroupsArray: PropertyGroup[]): PropertyGroupContainer {
+        return propertyGroupsArray.reduce((propertyGroups, propertyGroup) => {
+            return Object.assign({}, propertyGroups, {
+                [propertyGroup.name]: propertyGroup
             });
+        }, {});
     }
 }
