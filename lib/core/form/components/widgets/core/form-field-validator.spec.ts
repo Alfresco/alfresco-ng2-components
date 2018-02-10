@@ -49,12 +49,23 @@ describe('FormFieldValidator', () => {
                 value: '<value>'
             });
 
+            field.isVisible = true;
             field.required = false;
             expect(validator.isSupported(field)).toBeFalsy();
             expect(validator.validate(field)).toBeTruthy();
 
             field.required = true;
             expect(validator.isSupported(field)).toBeTruthy();
+            expect(validator.validate(field)).toBeTruthy();
+        });
+
+        it('should validate as true if the mandatory field is not visible', () => {
+            let field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.TEXT,
+                value: '<value>'
+            });
+            field.required = true;
+            field.isVisible = false;
             expect(validator.validate(field)).toBeTruthy();
         });
 
