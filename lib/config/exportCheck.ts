@@ -27,13 +27,30 @@ let print_errors = function () {
     });
 }
 
-let add_warning = function (error: string) {
-    warning_array.push(error);
+let add_warning = function (warning: string, nameClass: string, arrayCall: string[]) {
+
+    let findWarningClass =false;
+
+        warning_array.forEach((currentWarning) => {
+
+        if (currentWarning.nameClass === nameClass) {
+            findWarningClass = true;
+            return;
+        }
+    });
+
+    if (!findWarningClass) {
+        warning_array.push({
+            warning: warning,
+            nameClass: nameClass,
+            arrayCall: arrayCall
+        });
+    }
 }
 
 let print_warnings = function () {
     warning_array.forEach((current_warning) => {
-        console.log(chalk.yellow(`${current_warning}`));
+        console.log(chalk.yellow(`${current_warning.warning} \n ${current_warning.arrayCall}`));
     });
 }
 
@@ -52,11 +69,14 @@ let check_export = function (export_old: any, export_new: any) {
         });
 
         if (currentExport_new.length > 1) {
-            add_warning(`\n[${++count_warning}] Multiple export ${currentExport_new[0].name} times ${currentExport_new.length}`);
+
+            let arrayCall=[];
 
             currentExport_new.forEach((error) => {
-                add_warning(`${current_error_postion(error)}`);
+                arrayCall.push(`${current_error_postion(error)}`);
             })
+
+            add_warning(`\n[${++count_warning}] Multiple export ${currentExport_new[0].name} times ${currentExport_new.length}`, currentExport_new[0].name, arrayCall);
 
         } else if (currentExport_new.length === 0) {
             add_error(`\n[${++count_error}] Not find export ${currentExport_old.name}`);
@@ -92,7 +112,7 @@ function generatExportList(fileNames: string[], options: ts.CompilerOptions): vo
     }
 
     classList.forEach((classNode) => {
-        if(classNode.symbol.parent) {
+        if (classNode.symbol.parent) {
             let pathClass = classNode.symbol.parent.escapedName.replace(/"/g, "");
 
             exportedAllPath.forEach((currenPath) => {
@@ -258,7 +278,7 @@ function generatExportList(fileNames: string[], options: ts.CompilerOptions): vo
             } else {
                 (node.parent as any).resolvedModules.forEach((currentModule) => {
 
-                    if(currentModule) {
+                    if (currentModule) {
                         let find;
                         exportedAllPath.forEach((currentExported) => {
                             if (currentModule.resolvedFileName === currentExported) {
