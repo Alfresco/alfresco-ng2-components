@@ -70,6 +70,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     constructor(private renderingQueueServices: RenderingQueueServices,
                 private logService: LogService) {
+        // needed to preserve "this" context
+        this.onPageChange = this.onPageChange.bind(this);
     }
 
     ngOnChanges(changes) {
@@ -135,7 +137,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         const viewer: any = document.getElementById('viewer-viewerPdf');
 
         this.documentContainer = document.getElementById('viewer-pdf-container');
-        this.documentContainer.addEventListener('pagechange', (event) => this.onPageChange(event), true);
+        this.documentContainer.addEventListener('pagechange', this.onPageChange, true);
 
         this.pdfViewer = new PDFJS.PDFViewer({
             container: this.documentContainer,
@@ -150,7 +152,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     ngOnDestroy() {
         if(this.documentContainer) {
-            this.documentContainer.removeEventListener('pagechange', (event) => this.onPageChange(event), true);
+            this.documentContainer.removeEventListener('pagechange', this.onPageChange, true);
         }
     }
 
