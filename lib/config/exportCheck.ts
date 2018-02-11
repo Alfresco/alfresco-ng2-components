@@ -17,21 +17,41 @@ let exportedAllPath: Array<string> = [];
 let classList: Array<any> = [];
 
 
-let add_error = function (error: string) {
-    error_array.push(error);
+let add_error = function (error: string, nameClass: string) {
+    let findErrorClass = false;
+
+    error_array.forEach((currentError) => {
+
+        if (currentError.nameClass === nameClass) {
+            findErrorClass = true;
+            return;
+        }
+    });
+
+    if (!findErrorClass) {
+        error_array.push({
+            error: error,
+            nameClass: nameClass
+        });
+    }
+
 }
+
+let count_error = 0;
+let count_warning = 0;
 
 let print_errors = function () {
     error_array.forEach((current_error) => {
-        console.log(chalk.red(`${current_error}`));
+        console.log(chalk.red(`[${++count_error}] ${current_error.error}\n`));
     });
 }
 
+
 let add_warning = function (warning: string, nameClass: string, arrayCall: string[]) {
 
-    let findWarningClass =false;
+    let findWarningClass = false;
 
-        warning_array.forEach((currentWarning) => {
+    warning_array.forEach((currentWarning) => {
 
         if (currentWarning.nameClass === nameClass) {
             findWarningClass = true;
@@ -50,7 +70,7 @@ let add_warning = function (warning: string, nameClass: string, arrayCall: strin
 
 let print_warnings = function () {
     warning_array.forEach((current_warning) => {
-        console.log(chalk.yellow(`${current_warning.warning} \n ${current_warning.arrayCall}`));
+        console.log(chalk.yellow(`[${++count_warning}] ${current_warning.warning} \n ${current_warning.arrayCall} \n`));
     });
 }
 
@@ -59,8 +79,6 @@ let current_error_postion = function (exportEntry) {
 }
 
 let check_export = function (export_old: any, export_new: any) {
-    let count_error = 0;
-    let count_warning = 0;
 
     export_old.forEach((currentExport_old) => {
 
@@ -70,16 +88,16 @@ let check_export = function (export_old: any, export_new: any) {
 
         if (currentExport_new.length > 1) {
 
-            let arrayCall=[];
+            let arrayCall = [];
 
             currentExport_new.forEach((error) => {
                 arrayCall.push(`${current_error_postion(error)}`);
             })
 
-            add_warning(`\n[${++count_warning}] Multiple export ${currentExport_new[0].name} times ${currentExport_new.length}`, currentExport_new[0].name, arrayCall);
+            add_warning(`Multiple export ${currentExport_new[0].name} times ${currentExport_new.length}`, currentExport_new[0].name, arrayCall);
 
         } else if (currentExport_new.length === 0) {
-            add_error(`\n[${++count_error}] Not find export ${currentExport_old.name}`);
+            add_error(`Not find export ${currentExport_old.name}`, currentExport_old.name);
         }
     });
 };
