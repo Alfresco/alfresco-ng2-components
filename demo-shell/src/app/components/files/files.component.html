@@ -48,7 +48,7 @@
                     <button mat-icon-button
                             [disabled]="!hasSelection(documentList.selection)"
                             title="Download"
-                            (click)="downloadNodes(documentList.selection)">
+                            [adfNodeDownload]="documentList.selection">
                         <mat-icon>get_app</mat-icon>
                     </button>
                     <button mat-icon-button

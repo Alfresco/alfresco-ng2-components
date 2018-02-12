@@ -23,7 +23,7 @@ import { AlfrescoApiService } from '@alfresco/adf-core';
 import { DownloadZipDialogComponent } from '../dialogs/download-zip.dialog';
 
 @Directive({
-    selector: 'adfNodeDownload'
+    selector: '[adfNodeDownload]'
 })
 export class NodeDownloadDirective {
 
