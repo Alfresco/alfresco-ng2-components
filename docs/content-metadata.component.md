@@ -32,13 +32,13 @@ The different aspects and their properties to be shown can be configured as appl
 
 ## Application config presets
 
-In the application config file you can define different presets for the metadata component or override the default preset. The **default** preset is "*" if not set, meaning the component will display every aspects and properties of the nodes without filtering. One can think about presets as **whitelist filters** for the content metadata component.
+In the application config file you can define different presets for the metadata component or override the default preset. The **default** preset is "*" if not set, meaning the component will display every aspects and properties of the nodes without filtering. 
 
 Beside the default preset you can define as many presets as you want, if you'd like to use different metadata components with different presets.
 
 To understand presets better, you can have a look at on the following different example configurations.
 
-### Mimicking the default "default" preset
+### Indifferent config
 
 If you don't have any preset configured manually in you application config, this would be equivalent as if you had the application config as defined below:
 
@@ -52,7 +52,12 @@ If you don't have any preset configured manually in you application config, this
 ...
 ```
 
-### Whitelisting only a few aspects in the default preset
+
+### Aspect oriented config
+
+With this type of configuration you are able to "whitelist" aspects and properties for a preset, but everything will be grouped by aspects and there is no further way to group properties. If you want to group different properties in groups you define, scroll down a bit and have a look at on the layout oriented configruration.
+
+#### Whitelisting only a few aspects in the default preset
 
 If you want to restrict to only a few aspects (e.g.: exif, your-custom-aspect), you have to use the name of that particular aspect to be able to whitelist it. In case of exif aspect this is "exif:exif".
 
@@ -69,7 +74,7 @@ If you want to restrict to only a few aspects (e.g.: exif, your-custom-aspect), 
 ...
 ```
 
-### Whitelisting only a few properties of a few aspects in the default preset
+#### Whitelisting only a few properties of a few aspects in the default preset
 
 If you want to filter more, you can do this on property level also. For this, you have to list the names of whitelisted aspect properties in an array of strings. Again, for identifying a property, you have to use its name.
 
@@ -79,14 +84,14 @@ If you want to filter more, you can do this on property level also. For this, yo
     "presets": {
         "default": {
             "custom:aspect": "*",
-            "exif:exif": [ "exif:width", "exif:height"]
+            "exif:exif": [ "exif:pixelXDimension", "exif:pixelYDimension"]
         }
     }
 }
 ...
 ```
 
-### Whitelisting only a few properties of a few aspects in a custom preset
+#### Whitelisting only a few properties of a few aspects in a custom preset
 
 And finally, you can create any custom aspect following the same rules.
 
@@ -97,12 +102,107 @@ And finally, you can create any custom aspect following the same rules.
         "default": "*",
         "kitten-images": {
             "custom:aspect": "*",
-            "exif:exif": [ "exif:width", "exif:height"]
+            "exif:exif": [ "exif:pixelXDimension", "exif:pixelYDimension"]
         }
     }
 }
 ...
 ```
+
+### Layout oriented config
+
+Beside the aspect oriented configuration, it is possible to configure the groups and properties in a more detailed way. With this type of configuration any property of any aspect / type can be "cherry picked"-ed and grouped into and accordion drawer, with defining a translatable title in the preset configuration.
+
+
+#### Basic elements
+
+The following config will result in one accordion group named "TRANSLATABLE_TITLE_FOR_GROUP_1", with all the properties from the custom:aspect followed by the two properties (exif:pixelXDimension, exif:pixelYDimension) from the exif:exif aspect followed by one property (custom:myPropertyName) from custom:type.
+
+```json
+...
+"content-metadata": {
+    "presets": {
+        "kitten-images": [{
+            "title": "TRANSLATABLE_TITLE_FOR_GROUP_1",
+            "items": [
+                { "aspect": "custom:aspect", "properties": "*" },
+                { "aspect": "exif:exif", "properties": [ "exif:pixelXDimension", "exif:pixelYDimension"] },
+                { "type": "custom:type", "properties": [ "custom:myPropertyName" ] },
+            ] 
+        }]
+    }
+}
+...
+```
+
+#### More complex example
+
+As a more complex config, you can study the one below:
+
+```json
+...
+  "content-metadata": {
+    "presets": {
+      "kittens": [
+      {
+        "title": "GROUP-TITLE1-TRANSLATION-KEY",
+        "items": [
+          // We would like to show every property from the exif:exif aspect
+          { 
+            "aspect": "exif:exif",
+            "properties": "*"
+          },
+          // We would like to show the two properties (kitten:custom1, kitten:custom3) from the kitten:vet-  records aspect
+          { 
+            "aspect": "kitten:vet-records", 
+            "properties": [ "kitten:custom1", "kitten:custom3" ]
+          },
+          // We would like to show the owner:name property from the owner:parameters aspect
+          { 
+            "aspect": "owner:parameters", 
+            "properties": [ "owner:name" ]
+          },
+          // We would like to show all the properties from the type kitten:kitten
+          { 
+            "type": "kitten:kitten", 
+            "properties": [ "kitten:name", "kitten:color" ]
+          }
+        ]
+      },
+      {
+        "title": "GROUP-TITLE2-TRANSLATION-KEY",
+        "items": [
+          // We would like to show the two properties (kitten:favourite-food, kitten:recommended-food) from the kitten:food aspect
+          {
+            "aspect": "kitten:food", 
+            "properties": [ "kitten:favourite-food", "kitten:recommended-food" ] 
+          }
+        ]
+      }
+    ]
+  }
+...
+```
+The end result of this config would be two accordion groups with the properties like this:
+
+ 
+|GROUP-TITLE1-TRANSLATION-KEY|
+|---|
+|exif:param1|
+|exif:param2|
+|...|
+|exif:paramN|
+|kitten:custom1|
+|kitten:custom3|
+|owner:name|
+|kitten:name|
+|kitten:color|
+
+
+|GROUP-TITLE2-TRANSLATION-KEY|
+|---|
+|kitten:favourite-food|
+|kitten:recommended-food|
 
 ## What happens when there is a whitelisted aspect in the config but the given node doesn't relate to that aspect
 
