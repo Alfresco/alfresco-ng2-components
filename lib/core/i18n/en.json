@@ -188,7 +188,10 @@
       "SHARE": "Share",
       "MORE_ACTIONS": "More actions",
       "INFO": "Info",
-      "FULLSCREEN": "Activate full-screen mode"
+      "FULLSCREEN": "Activate full-screen mode",
+      "CLOSE": "Close",
+      "NEXT_FILE": "Next File",
+      "PREV_FILE": "Previous File"
     },
     "ARIA": {
       "PREVIOUS_PAGE": "Previous page",

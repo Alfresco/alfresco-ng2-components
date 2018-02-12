@@ -11,28 +11,8 @@
 
     .adf-viewer {
 
-        .navigate-before {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            order: 1;
-            padding-left: 2px;
-            padding-right: 4px;
-            background-color: mat-color($background, background);
-        }
-
         &-main {
             width: 0;
-        }
-
-        .navigate-next {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            order: 3;
-            padding-left: 4px;
-            padding-right: 2px;
-            background-color: mat-color($background, background);
         }
 
         &__mimeicon {
@@ -55,6 +35,12 @@
             font-weight: normal;
             font-style: normal;
             font-stretch: normal;
+
+            max-width: 35ch;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: middle;
         }
 
         &-container {
