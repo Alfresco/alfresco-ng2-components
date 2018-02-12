@@ -88,7 +88,8 @@ export class AlfrescoApiService {
             hostEcm: this.appConfig.get<string>('ecmHost'),
             hostBpm: this.appConfig.get<string>('bpmHost'),
             contextRoot: 'alfresco',
-            disableCsrf: this.storage.getItem('DISABLE_CSRF') === 'true'
+            disableCsrf: this.storage.getItem('DISABLE_CSRF') === 'true',
+            oauth2 : this.appConfig.get<any>('oauth2')
         });
     }
 }

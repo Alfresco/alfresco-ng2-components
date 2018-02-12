@@ -332,6 +332,17 @@
                     }
                 }
             }
+        },
+        "oauth2": {
+          "description": "AUTH configuration parameters",
+          "type": "object",
+          "required": [ "host", "clientId", "secret" ],
+          "properties": {
+              "host": { "type": "string" },
+              "authPath": { "type": "string" },
+              "clientId": { "type": "string" },
+              "secret": { "type": "string" }
+          }
         }
     }
 }
