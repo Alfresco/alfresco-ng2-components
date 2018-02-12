@@ -35,6 +35,12 @@
             font-weight: normal;
             font-style: normal;
             font-stretch: normal;
+
+            max-width: 35ch;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: middle;
         }
 
         &-container {
