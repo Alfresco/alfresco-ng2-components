@@ -226,13 +226,13 @@ describe('FormComponent', () => {
     });
 
     it('should refresh visibility when the form is loaded', () => {
-        spyOn(formComponent, 'getFormDefinitionByFormId').and.stub();
+        spyOn(formService, 'getFormDefinitionById').and.returnValue(Observable.of(fakeForm));
         const formId = '123';
 
         formComponent.formId = formId;
         formComponent.loadForm();
 
-        expect(formComponent.getFormDefinitionByFormId).toHaveBeenCalledWith(formId);
+        expect(formService.getFormDefinitionById).toHaveBeenCalledWith(formId);
         expect(visibilityService.refreshVisibility).toHaveBeenCalled();
     });
 
