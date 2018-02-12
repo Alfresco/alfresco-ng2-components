@@ -259,7 +259,7 @@ export class MinDateTimeFieldValidator implements FormFieldValidator {
 
     validate(field: FormFieldModel): boolean {
         let isValid = true;
-        if (this.isSupported(field) && field.value) {
+        if (this.isSupported(field) && field.value && field.isVisible) {
             const dateFormat = field.dateDisplayFormat;
 
             if (!DateFieldValidator.isValidDate(field.value, dateFormat)) {
@@ -306,7 +306,7 @@ export class MaxDateTimeFieldValidator implements FormFieldValidator {
 
     validate(field: FormFieldModel): boolean {
         let isValid = true;
-        if (this.isSupported(field) && field.value) {
+        if (this.isSupported(field) && field.value && field.isVisible) {
             const dateFormat = field.dateDisplayFormat;
 
             if (!DateFieldValidator.isValidDate(field.value, dateFormat)) {
