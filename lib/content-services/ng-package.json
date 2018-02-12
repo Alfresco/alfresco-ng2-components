@@ -3,8 +3,9 @@
   "workingDirectory" : "./ng_work",
   "src": "../content-services/",
   "dest": "../dist/content-services/",
-  "comments" : "none",
   "lib": {
+    "licensePath": "../config/assets/license_header_add.txt",
+    "comments" : "none",
     "entryFile": "./public-api.ts",
     "flatModuleFile": "adf-content-services",
     "umdModuleIds": {

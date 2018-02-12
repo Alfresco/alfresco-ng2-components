@@ -3,8 +3,9 @@
   "workingDirectory": "./ng_work",
   "src": "../process-services/",
   "dest": "../dist/process-services/",
-  "comments" : "none",
   "lib": {
+    "licensePath": "../config/assets/license_header_add.txt",
+    "comments" : "none",
     "entryFile": "./public-api.ts",
     "umdModuleIds": {
       "alfresco-js-api": "alfresco-js-api",

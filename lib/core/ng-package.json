@@ -3,8 +3,9 @@
   "workingDirectory" : "./ng_work",
   "src": "./core/",
   "dest": "../dist/core/",
-  "comments" : "none",
   "lib": {
+    "licensePath": "../config/assets/license_header_add.txt",
+    "comments" : "none",
     "entryFile": "./public-api.ts",
     "flatModuleFile": "adf-core",
     "umdModuleIds": {

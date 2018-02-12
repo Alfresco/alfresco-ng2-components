@@ -31,7 +31,7 @@
     "build-core": "ng-packagr -p ./core/package.json",
     "build-content": "ng-packagr -p ./content-services/package.json",
     "build-process": "ng-packagr -p ./process-services/package.json",
-    "build-insights": "ng-packagr -p. /insights/package.json",
+    "build-insights": "ng-packagr -p ./insights/package.json",
     "test-export": "node config/test-export.js",
     "webpack": "node node_modules/webpack/bin/webpack.js"
   },
