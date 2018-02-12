@@ -41,10 +41,20 @@ export class ContentMetadataService {
 
     getGroupedProperties(node: MinimalNodeEntryEntity, presetName: string = 'default'): Observable<CardViewGroup[]> {
         const config = this.contentMetadataConfigFactory.get(presetName),
-            groupNames = node.aspectNames.filter(groupName => config.isGroupAllowed(groupName));
+            groupNames = node.aspectNames
+                .concat(node.nodeType)
+                .filter(groupName => config.isGroupAllowed(groupName));
 
-        return this.propertyDescriptorsService.load(groupNames)
-            .map(groups => config.reorganiseByConfig(groups))
-            .map(groups => this.propertyGroupTranslatorService.translateToCardViewGroups(groups, node.properties));
+        let groupedProperties;
+        
+        if (groupNames.length > 0) {
+            groupedProperties = this.propertyDescriptorsService.load(groupNames)
+                .map(groups => config.reorganiseByConfig(groups))
+                .map(groups => this.propertyGroupTranslatorService.translateToCardViewGroups(groups, node.properties));
+        } else {
+            groupedProperties = Observable.of([]);
+        }
+
+        return groupedProperties;
     }
 }
