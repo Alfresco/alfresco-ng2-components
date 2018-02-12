@@ -18,12 +18,13 @@
 import { AuthenticationService, ThumbnailService } from '@alfresco/adf-core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output,
-         QueryList, ViewEncapsulation, ViewChild, ViewChildren, ElementRef } from '@angular/core';
+         QueryList, ViewEncapsulation, ViewChild, ViewChildren, ElementRef, TemplateRef, ContentChild } from '@angular/core';
 import { MinimalNodeEntity, QueryBody } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { SearchComponent } from './search.component';
 import { MatListItem } from '@angular/material';
+import { EmptySearchResult } from './empty-search-result.component';
 
 @Component({
     selector: 'adf-search-control',
@@ -102,8 +103,12 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     @ViewChildren(MatListItem)
     private listResultElement: QueryList<MatListItem>;
 
+    @ContentChild(EmptySearchResult)
+    emptySearchTemplate: any;
+
     searchTerm: string = '';
     subscriptAnimationState: string;
+    noSearchResultTemplate: TemplateRef <any> = null;
 
     private toggleSearch = new Subject<any>();
     private focusSubject = new Subject<FocusEvent>();
@@ -135,6 +140,10 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.subscriptAnimationState = this.expandable ? 'inactive' : 'no-animation';
         this.setupFocusEventHandlers();
+    }
+
+    isNoSearchTemplatePresent(): boolean {
+        return this.emptySearchTemplate ? true: false;
     }
 
     ngOnDestroy(): void {

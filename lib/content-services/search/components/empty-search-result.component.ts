@@ -15,7 +15,11 @@
  * limitations under the License.
  */
 
-export * from './components/search.component';
-export * from './components/search-control.component';
-export * from './components/search-trigger.directive';
-export * from './components/empty-search-result.component';
+import { Component, ViewEncapsulation } from '@angular/core';
+
+@Component({
+    selector: 'adf-empty-search-result',
+    templateUrl: './empty-search-result.component.html',
+    encapsulation: ViewEncapsulation.None
+})
+export class EmptySearchResult {}
