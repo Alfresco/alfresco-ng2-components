@@ -41,7 +41,7 @@ Authenticates to Alfresco Content Services and Alfresco Process Services.
 | logoImageUrl | `string` | `'./assets/images/alfresco-logo.svg'` | Path to a custom logo image.  |
 | backgroundImageUrl | `string` | `'./assets/images/background.svg'` | Path to a custom background image.  |
 | copyrightText | `string` | `'\u00A9 2016 Alfresco Software, Inc. All Rights Reserved.'` | The copyright text below the login box.  |
-| providers | `string` |  | Possible valid values are ECM, BPM or ALL. By default, this component will log in only to ECM. If you want to log in in both systems then use ALL. There is also a way to call your Auth token API using the string "OAUTH" |
+| providers | `string` |  | Possible valid values are ECM, BPM or ALL. By default, this component will log in only to ECM. If you want to log in in both systems then use ALL. There is also a way to call your Auth token API using the string "OAUTH" (supported only for BPM) |
 | fieldsValidation | `any` |  | Custom validation rules for the login form.  |
 | disableCsrf | `boolean` |  | Prevents the CSRF Token from being submitted. Only valid for Alfresco Process Services.  |
 | successRoute | `string` | `null` | Route to redirect to on successful login.  |
