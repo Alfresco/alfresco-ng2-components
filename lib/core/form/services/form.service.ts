@@ -90,6 +90,12 @@ export class FormService {
         return this.apiService.getInstance().activiti.groupsApi;
     }
 
+    /**
+     * Parses JSON data to create a corresponding Form model.
+     * @param json JSON to create the form
+     * @param data Values for the form fields
+     * @param readOnly Should the form fields be read-only?
+     */
     parseForm(json: any, data?: FormValues, readOnly: boolean = false): FormModel {
         if (json) {
             let form = new FormModel(json, data, readOnly, this);
@@ -108,7 +114,8 @@ export class FormService {
     }
 
     /**
-     * Create a Form with a fields for each metadata properties
+     * Create a Form with a field for each metadata property.
+     * @param formName Name of the new form
      * @returns {Observable<any>}
      */
     createFormFromANode(formName: string): Observable<any> {
@@ -130,7 +137,8 @@ export class FormService {
     }
 
     /**
-     * Create a Form
+     * Create a Form.
+     * @param formName Name of the new form
      * @returns {Observable<any>}
      */
     createForm(formName: string): Observable<any> {
@@ -146,6 +154,11 @@ export class FormService {
         );
     }
 
+    /**
+     * Saves a form.
+     * @param formId ID of the form to save
+     * @param formModel Model data for the form
+     */
     saveForm(formId: string, formModel: FormDefinitionModel): Observable<any> {
         return Observable.fromPromise(
             this.editorApi.saveForm(formId, formModel)
@@ -154,7 +167,9 @@ export class FormService {
 
     /**
      * @deprecated in 1.7.0, use saveForm API instead
-     * Add Fileds to A form
+     * Add Fields to A form
+     * @param formId ID of the form
+     * @param formModel Form definition
      * @returns {Observable<any>}
      */
     addFieldsToAForm(formId: string, formModel: FormDefinitionModel): Observable<any> {
@@ -165,7 +180,8 @@ export class FormService {
     }
 
     /**
-     * Search For A Form by name
+     * Search for a form by name.
+     * @param name The form name to search for
      * @returns {Observable<any>}
      */
     searchFrom(name: string): Observable<any> {
@@ -183,7 +199,7 @@ export class FormService {
     }
 
     /**
-     * Get All the forms
+     * Gets all the forms.
      * @returns {Observable<any>}
      */
     getForms(): Observable<any> {
@@ -206,6 +222,10 @@ export class FormService {
             .catch(err => this.handleError(err));
     }
 
+    /**
+     * Get instance variables for a process.
+     * @param processInstanceId ID of the target process
+     */
     getProcessVarablesById(processInstanceId: string): Observable<any[]> {
         return Observable.fromPromise(this.processInstanceVariablesApi.getProcessInstanceVariables(processInstanceId))
             .map(this.toJson)
@@ -213,7 +233,7 @@ export class FormService {
     }
 
     /**
-     * Get All the Tasks
+     * Gets all the tasks.
      * @returns {Observable<any>}
      */
     getTasks(): Observable<any> {
@@ -223,7 +243,7 @@ export class FormService {
     }
 
     /**
-     * Get Task
+     * Gets a task.
      * @param taskId Task Id
      * @returns {Observable<any>}
      */
@@ -234,7 +254,7 @@ export class FormService {
     }
 
     /**
-     * Save Task Form
+     * Save Task Form.
      * @param taskId Task Id
      * @param formValues Form Values
      * @returns {Observable<any>}
@@ -287,8 +307,8 @@ export class FormService {
     }
 
     /**
-     * Returns form definition by a given name.
-     * @param name
+     * Returns form definition with a given name.
+     * @param name The form name
      * @returns {Promise<T>|Promise<ErrorObservable>}
      */
     getFormDefinitionByName(name: string): Observable<any> {
@@ -315,6 +335,10 @@ export class FormService {
             .catch(err => this.handleError(err));
     }
 
+    /**
+     * Gets a process instance.
+     * @param processId ID of the process to get
+     */
     getProcessIntance(processId: string): Observable<any> {
         return Observable.fromPromise(this.processApi.getProcessInstance(processId))
             .map(this.toJson)
@@ -333,26 +357,57 @@ export class FormService {
             .catch(err => this.handleError(err));
     }
 
+    /**
+     * Gets values of fields populated by a REST backend.
+     * @param taskId Task identifier
+     * @param field Field identifier
+     */
     getRestFieldValues(taskId: string, field: string): Observable<any> {
         return Observable.fromPromise(this.taskApi.getRestFieldValues(taskId, field)).catch(err => this.handleError(err));
     }
 
+    /**
+     * Gets values of fields populated by a REST backend using a process ID.
+     * @param processDefinitionId Process identifier
+     * @param field Field identifier
+     */
     getRestFieldValuesByProcessId(processDefinitionId: string, field: string): Observable<any> {
         return Observable.fromPromise(this.processApi.getRestFieldValues(processDefinitionId, field)).catch(err => this.handleError(err));
     }
 
+    /**
+     * Gets column values of fields populated by a REST backend using a process ID.
+     * @param processDefinitionId Process identifier
+     * @param field Field identifier
+     * @param column Column identifier
+     */
     getRestFieldValuesColumnByProcessId(processDefinitionId: string, field: string, column?: string): Observable<any> {
         return Observable.fromPromise(this.processApi.getRestTableFieldValues(processDefinitionId, field, column)).catch(err => this.handleError(err));
     }
 
+    /**
+     * Gets column values of fields populated by a REST backend.
+     * @param taskId Task identifier
+     * @param field Field identifier
+     * @param column Column identifier
+     */
     getRestFieldValuesColumn(taskId: string, field: string, column?: string): Observable<any> {
         return Observable.fromPromise(this.taskApi.getRestFieldValuesColumn(taskId, field, column)).catch(err => this.handleError(err));
     }
 
+    /**
+     * Returns a URL for the profile picture of a user.
+     * @param userId ID of the target user
+     */
     getUserProfileImageApi(userId: number): string {
         return this.apiService.getInstance().activiti.userApi.getUserProfilePictureUrl(userId);
     }
 
+    /**
+     * Gets a list of workflow users.
+     * @param filter Filter to select specific users
+     * @param groupId Group ID for the search
+     */
     getWorkflowUsers(filter: string, groupId?: string): Observable<UserProcessModel[]> {
         let option: any = {filter: filter};
         if (groupId) {
@@ -369,6 +424,11 @@ export class FormService {
             .catch(err => this.handleError(err));
     }
 
+    /**
+     * Gets a list of groups in a workflow.
+     * @param filter Filter to select specific groups
+     * @param groupId Group ID for the search
+     */
     getWorkflowGroups(filter: string, groupId?: string): Observable<GroupModel[]> {
         let option: any = {filter: filter};
         if (groupId) {
@@ -379,6 +439,10 @@ export class FormService {
             .catch(err => this.handleError(err));
     }
 
+    /**
+     * Gets the ID of a form.
+     * @param res Object representing a form
+     */
     getFormId(res: any): string {
         let result = null;
 
@@ -389,6 +453,10 @@ export class FormService {
         return result;
     }
 
+    /**
+     * Creates a JSON representation of form data.
+     * @param res Object representing form data
+     */
     toJson(res: any) {
         if (res) {
             return res || {};
@@ -396,6 +464,10 @@ export class FormService {
         return {};
     }
 
+    /**
+     * Creates a JSON array representation of form data.
+     * @param res Object representing form data
+     */
     toJsonArray(res: any) {
         if (res) {
             return res.data || [];
@@ -403,6 +475,10 @@ export class FormService {
         return [];
     }
 
+    /**
+     * Reports an error message.
+     * @param error Data object with optional `message` and `status` fields for the error
+     */
     handleError(error: any): Observable<any> {
         let errMsg = FormService.UNKNOWN_ERROR_MESSAGE;
         if (error) {

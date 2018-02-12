@@ -41,6 +41,10 @@ export class FolderActionsService {
         this.setupActionHandlers();
     }
 
+    /**
+     * Gets the handler function for an action.
+     * @param key Identifier for the action
+     */
     getHandler(key: string): ContentActionHandler {
         if (key) {
             let lkey = key.toLowerCase();
@@ -49,6 +53,11 @@ export class FolderActionsService {
         return null;
     }
 
+    /**
+     * Sets a new handler function for an action.
+     * @param key Identifier for the action
+     * @param handler The new handler function
+     */
     setHandler(key: string, handler: ContentActionHandler): boolean {
         if (key) {
             let lkey = key.toLowerCase();
@@ -58,6 +67,10 @@ export class FolderActionsService {
         return false;
     }
 
+    /**
+     * Checks if an action is available for a particular item.
+     * @param obj Item to check
+     */
     canExecuteAction(obj: any): boolean {
         return this.documentListService && obj && obj.entry.isFolder === true;
     }

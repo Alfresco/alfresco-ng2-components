@@ -4,14 +4,19 @@ Maps an APS form field type string onto the corresponding form widget component 
 
 ## Methods
 
-`getComponentTypeResolver(fieldType: string, defaultValue: Type<{}> = UnknownWidgetComponent): ComponentTypeResolver`<br/>
-Gets the currently active ComponentTypeResolver function for a field type.
-
-`setComponentTypeResolver(fieldType: string, resolver: ComponentTypeResolver, override: boolean = false)`<br/>
-Sets or optionally replaces a ComponentTypeResolver function for a field type.
-
-`resolveComponentType(field: FormFieldModel, defaultValue: Type<{}> = UnknownWidgetComponent): Type<{}>`<br/>
-Finds the component type that is needed to render a form field.
+-   `getComponentTypeResolver(type: string, defaultValue: Type<{}> = this.defaultValue): DynamicComponentResolveFunction`  
+    Gets the currently active ComponentTypeResolver function for a field type.  
+    -   `type` - The type whose resolver you want
+    -   `defaultValue` - Default type returned for types that are not yet mapped
+-   `setComponentTypeResolver(type: string, resolver: DynamicComponentResolveFunction, override: boolean = false)`  
+    Sets or optionally replaces a ComponentTypeResolver function for a field type.  
+    -   `type` - The type whose resolver you want to set
+    -   `resolver` - The new resolver function
+    -   `override` - The new resolver will only replace an existing one if this parameter is true
+-   `resolveComponentType(model: DynamicComponentModel, defaultValue: Type<{}> = this.defaultValue): Type<{}>`  
+    Finds the component type that is needed to render a form field.  
+    -   `model` - \[Form field model](form-field.model.md) for the field to render
+    -   `defaultValue` - Default type returned for field types that are not yet mapped.
 
 ## Details
 
