@@ -109,7 +109,6 @@ export class FormService {
 
     /**
      * Create a Form with a fields for each metadata properties
-     * @returns {Observable<any>}
      */
     createFormFromANode(formName: string): Observable<any> {
         return Observable.create(observer => {
@@ -131,7 +130,6 @@ export class FormService {
 
     /**
      * Create a Form
-     * @returns {Observable<any>}
      */
     createForm(formName: string): Observable<any> {
         let dataModel = {
@@ -155,7 +153,6 @@ export class FormService {
     /**
      * @deprecated in 1.7.0, use saveForm API instead
      * Add Fileds to A form
-     * @returns {Observable<any>}
      */
     addFieldsToAForm(formId: string, formModel: FormDefinitionModel): Observable<any> {
         this.logService.log('addFieldsToAForm is deprecated in 1.7.0, use saveForm API instead');
@@ -166,7 +163,6 @@ export class FormService {
 
     /**
      * Search For A Form by name
-     * @returns {Observable<any>}
      */
     searchFrom(name: string): Observable<any> {
         let opts = {
@@ -184,7 +180,6 @@ export class FormService {
 
     /**
      * Get All the forms
-     * @returns {Observable<any>}
      */
     getForms(): Observable<any> {
         let opts = {
@@ -198,7 +193,6 @@ export class FormService {
 
     /**
      * Get Process Definitions
-     * @returns {Observable<any>}
      */
     getProcessDefinitions(): Observable<any> {
         return Observable.fromPromise(this.processApi.getProcessDefinitions({}))
@@ -214,7 +208,6 @@ export class FormService {
 
     /**
      * Get All the Tasks
-     * @returns {Observable<any>}
      */
     getTasks(): Observable<any> {
         return Observable.fromPromise(this.taskApi.listTasks({}))
@@ -225,7 +218,6 @@ export class FormService {
     /**
      * Get Task
      * @param taskId Task Id
-     * @returns {Observable<any>}
      */
     getTask(taskId: string): Observable<any> {
         return Observable.fromPromise(this.taskApi.getTask(taskId))
@@ -237,7 +229,6 @@ export class FormService {
      * Save Task Form
      * @param taskId Task Id
      * @param formValues Form Values
-     * @returns {Observable<any>}
      */
     saveTaskForm(taskId: string, formValues: FormValues): Observable<any> {
         let body = JSON.stringify({values: formValues});
@@ -251,7 +242,6 @@ export class FormService {
      * @param taskId Task Id
      * @param formValues Form Values
      * @param outcome Form Outcome
-     * @returns {Observable<any>}
      */
     completeTaskForm(taskId: string, formValues: FormValues, outcome?: string): Observable<any> {
         let data: any = {values: formValues};
@@ -267,7 +257,6 @@ export class FormService {
     /**
      * Get Form related to a taskId
      * @param taskId Task Id
-     * @returns {Observable<any>}
      */
     getTaskForm(taskId: string): Observable<any> {
         return Observable.fromPromise(this.taskApi.getTaskForm(taskId))
@@ -278,7 +267,6 @@ export class FormService {
     /**
      * Get Form Definition
      * @param formId Form Id
-     * @returns {Observable<any>}
      */
     getFormDefinitionById(formId: string): Observable<any> {
         return Observable.fromPromise(this.editorApi.getForm(formId))
@@ -289,7 +277,6 @@ export class FormService {
     /**
      * Returns form definition by a given name.
      * @param name
-     * @returns {Promise<T>|Promise<ErrorObservable>}
      */
     getFormDefinitionByName(name: string): Observable<any> {
         let opts = {
@@ -306,7 +293,6 @@ export class FormService {
     /**
      * Get start form instance for a given processId
      * @param processId Process definition ID
-     * @returns {Observable<any>}
      */
     getStartFormInstance(processId: string): Observable<any> {
         return Observable.fromPromise(
@@ -324,7 +310,6 @@ export class FormService {
     /**
      * Get start form definition for a given process
      * @param processId Process definition ID
-     * @returns {Observable<any>}
      */
     getStartFormDefinition(processId: string): Observable<any> {
         return Observable.fromPromise(

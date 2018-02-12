@@ -73,7 +73,6 @@ export class PeopleProcessService {
     /**
      * Throw the error
      * @param error
-     * @returns {ErrorObservable}
      */
     private handleError(error: Response) {
         this.logService.error(error);

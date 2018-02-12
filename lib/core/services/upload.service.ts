@@ -19,7 +19,12 @@ import { EventEmitter, Injectable } from '@angular/core';
 import * as minimatch_ from 'minimatch';
 import { Subject } from 'rxjs/Subject';
 import { AppConfigService } from '../app-config/app-config.service';
-import { FileUploadCompleteEvent, FileUploadDeleteEvent, FileUploadErrorEvent, FileUploadEvent } from '../events/file.event';
+import {
+    FileUploadCompleteEvent,
+    FileUploadDeleteEvent,
+    FileUploadErrorEvent,
+    FileUploadEvent
+} from '../events/file.event';
 import { FileModel, FileUploadProgress, FileUploadStatus } from '../models/file.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 
@@ -53,9 +58,6 @@ export class UploadService {
 
     /**
      * Checks whether the service is uploading a file.
-     *
-     * @returns {boolean}
-     *
      * @memberof UploadService
      */
     isUploading(): boolean {
@@ -64,8 +66,6 @@ export class UploadService {
 
     /**
      * Returns the file Queue
-     *
-     * @return {FileModel[]} - files in the upload queue.
      */
     getQueue(): FileModel[] {
         return this.queue;
@@ -98,7 +98,7 @@ export class UploadService {
     /**
      * Pick all the files in the queue that are not been uploaded yet and upload it into the directory folder.
      *
-     * @param {EventEmitter<any>} emitter @deprecated emitter to invoke on file status change
+     * @param emitter @deprecated emitter to invoke on file status change
      *
      * @memberof UploadService
      */
@@ -150,8 +150,8 @@ export class UploadService {
 
     getUploadPromise(file: FileModel) {
         let opts: any = {
-                renditions: 'doclib'
-            };
+            renditions: 'doclib'
+        };
 
         if (file.options.newVersion === true) {
             opts.overwrite = true;
@@ -175,21 +175,21 @@ export class UploadService {
         promise.on('progress', (progress: FileUploadProgress) => {
             this.onUploadProgress(file, progress);
         })
-        .on('abort', () => {
-            this.onUploadAborted(file);
-            emitter.emit({ value: 'File aborted' });
-        })
-        .on('error', err => {
-            this.onUploadError(file, err);
-            emitter.emit({ value: 'Error file uploaded' });
-        })
-        .on('success', data => {
-            this.onUploadComplete(file, data);
-            emitter.emit({ value: data });
-        })
-        .catch(err => {
-            throw err;
-        });
+            .on('abort', () => {
+                this.onUploadAborted(file);
+                emitter.emit({ value: 'File aborted' });
+            })
+            .on('error', err => {
+                this.onUploadError(file, err);
+                emitter.emit({ value: 'Error file uploaded' });
+            })
+            .on('success', data => {
+                this.onUploadComplete(file, data);
+                emitter.emit({ value: data });
+            })
+            .catch(err => {
+                throw err;
+            });
 
         return promise;
     }

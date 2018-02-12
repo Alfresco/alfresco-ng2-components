@@ -19,7 +19,6 @@ import { Injectable } from '@angular/core';
  *
  * RenderingQueueServices rendering of the views for pages and thumbnails.
  *
- * @returns {RenderingQueueServices} .
  */
 @Injectable()
 export class RenderingQueueServices {
@@ -43,24 +42,23 @@ export class RenderingQueueServices {
     isThumbnailViewEnabled: any = false;
 
     /**
-     * @param {PDFViewer} pdfViewer
+     * @param pdfViewer
      */
     setViewer(pdfViewer) {
         this.pdfViewer = pdfViewer;
     }
 
     /**
-     * @param {PDFThumbnailViewer} pdfThumbnailViewer
+     * @param pdfThumbnailViewer
      */
     setThumbnailViewer(pdfThumbnailViewer) {
         this.pdfThumbnailViewer = pdfThumbnailViewer;
     }
 
     /**
-     * @param {IRenderableView} view
-     * @returns {boolean}
+     * @param  view
      */
-    isHighestPriority(view: any) {
+    isHighestPriority(view: any): boolean {
         return this.highestPriorityPage === view.renderingId;
     }
 
@@ -129,10 +127,9 @@ export class RenderingQueueServices {
     }
 
     /**
-     * @param {IRenderableView} view
-     * @returns {boolean}
+     * @param view
      */
-    isViewFinished(view) {
+    isViewFinished(view): boolean {
         return view.renderingState === this.renderingStates.FINISHED;
     }
 
@@ -140,7 +137,7 @@ export class RenderingQueueServices {
      * Render a page or thumbnail view. This calls the appropriate function
      * based on the views state. If the view is already rendered it will return
      * false.
-     * @param {IRenderableView} view
+     * @param view
      */
     renderView(view: any) {
         let state = view.renderingState;

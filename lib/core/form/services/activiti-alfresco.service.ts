@@ -39,7 +39,6 @@ export class ActivitiContentService {
      *
      * @param accountId
      * @param folderId
-     * @returns {null}
      */
     getAlfrescoNodes(accountId: string, folderId: string): Observable<[ExternalContent]> {
         let apiService: AlfrescoApi = this.apiService.getInstance();
@@ -54,7 +53,6 @@ export class ActivitiContentService {
      *
      * @param accountId
      * @param folderId
-     * @returns {any}
      */
     getAlfrescoRepositories(tenantId: number, includeAccount: boolean): Observable<any> {
         let apiService: AlfrescoApi = this.apiService.getInstance();
@@ -73,7 +71,6 @@ export class ActivitiContentService {
      * @param accountId
      * @param node
      * @param siteId
-     * @returns {null}
      */
     linkAlfrescoNode(accountId: string, node: ExternalContent, siteId: string): Observable<ExternalContentLink> {
         let apiService: AlfrescoApi = this.apiService.getInstance();

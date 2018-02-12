@@ -255,7 +255,6 @@ export class LoginComponent implements OnInit {
 
     /**
      * Check the require parameter
-     * @returns {boolean}
      */
     private checkRequiredParams(): boolean {
 
@@ -309,7 +308,6 @@ export class LoginComponent implements OnInit {
     /**
      * The method return if a field is valid or not
      * @param field
-     * @returns {boolean}
      */
     isErrorStyle(field: AbstractControl) {
         return !field.valid && field.dirty && !field.pristine;

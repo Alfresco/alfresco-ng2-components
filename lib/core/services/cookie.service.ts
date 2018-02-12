@@ -36,7 +36,6 @@ export class CookieService {
     /**
      * Retrieves a cookie by its key.
      * @param key Key to identify the cookie
-     * @returns {string | null}
      */
     getItem(key: string): string | null {
         const regexp = new RegExp('(?:' + key + '|;\s*' + key + ')=(.*?)(?:;|$)', 'g');
@@ -51,7 +50,6 @@ export class CookieService {
      * @param expiration Expiration date of the data
      * @param path "Pathname" to store the cookie
      *
-     * @returns {boolean}
      */
     setItem(key: string, data: string, expiration: Date | null, path: string | null): void {
         document.cookie = `${key}=${data}` +
