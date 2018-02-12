@@ -21,8 +21,6 @@ import { TagService } from './services/tag.service';
 /**
  *
  * This component provide a list of all the tag inside the ECM
- *
- * @returns {TagList} .
  */
 
 @Component({
