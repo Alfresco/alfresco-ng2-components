@@ -65,6 +65,7 @@ describe('ContentMetadataCardComponent', () => {
         component = fixture.componentInstance;
         node = <MinimalNodeEntryEntity> {
             aspectNames: [],
+            nodeType: '',
             content: {},
             properties: {},
             createdByUser: {},

@@ -46,7 +46,7 @@ export class ContentMetadataService {
                 .filter(groupName => config.isGroupAllowed(groupName));
 
         let groupedProperties;
-        
+
         if (groupNames.length > 0) {
             groupedProperties = this.propertyDescriptorsService.load(groupNames)
                 .map(groups => config.reorganiseByConfig(groups))

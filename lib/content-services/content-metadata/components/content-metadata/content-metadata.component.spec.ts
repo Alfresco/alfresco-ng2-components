@@ -69,6 +69,7 @@ describe('ContentMetadataComponent', () => {
         node = <MinimalNodeEntryEntity> {
             id: 'node-id',
             aspectNames: [],
+            nodeType: '',
             content: {},
             properties: {},
             createdByUser: {},
