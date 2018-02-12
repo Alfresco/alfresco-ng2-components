@@ -8,14 +8,14 @@ interface DocEntry {
         character: number,
         fileName: string
     },
-    name?: string
+    name?: string,
+    skipError?: boolean
 };
 
 let error_array = [];
 let warning_array = [];
 let exportedAllPath: Array<string> = [];
 let classList: Array<any> = [];
-
 
 let add_error = function (error: string, nameClass: string) {
     let findErrorClass = false;
@@ -74,7 +74,7 @@ let print_warnings = function () {
     });
 }
 
-let current_error_postion = function (exportEntry) {
+let currentErrorPostion = function (exportEntry) {
     return ` ${exportEntry.position.fileName} (${exportEntry.position.line},${exportEntry.position.character})`
 }
 
@@ -91,13 +91,15 @@ let check_export = function (export_old: any, export_new: any) {
             let arrayCall = [];
 
             currentExport_new.forEach((error) => {
-                arrayCall.push(`${current_error_postion(error)}`);
+                arrayCall.push(`${currentErrorPostion(error)}`);
             })
 
             add_warning(`Multiple export ${currentExport_new[0].name} times ${currentExport_new.length}`, currentExport_new[0].name, arrayCall);
 
         } else if (currentExport_new.length === 0) {
-            add_error(`Not find export ${currentExport_old.name}`, currentExport_old.name);
+            if (!currentExport_old.skipError) {
+                add_error(`Not find export ${currentExport_old.name} , old path: [${currentErrorPostion(currentExport_old)}]`, currentExport_old.name);
+            }
         }
     });
 };

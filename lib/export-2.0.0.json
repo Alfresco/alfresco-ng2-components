@@ -269,7 +269,8 @@
             "character": 0,
             "fileName": "lib/core/form/components/widgets/attach/attach.widget.ts"
         },
-        "name": "AttachWidgetComponent"
+        "name": "AttachWidgetComponent",
+        "skipError":true
     },
     {
         "position": {
@@ -389,7 +390,8 @@
             "character": 8,
             "fileName": "lib/core/core.module.ts"
         },
-        "name": "BrowserAnimationsModule"
+        "name": "BrowserAnimationsModule",
+        "skipError":true
     },
     {
         "position": {
@@ -397,7 +399,8 @@
             "character": 8,
             "fileName": "lib/insights/insights.module.ts"
         },
-        "name": "BrowserAnimationsModule"
+        "name": "BrowserAnimationsModule",
+        "skipError":true
     },
     {
         "position": {
@@ -405,7 +408,8 @@
             "character": 8,
             "fileName": "lib/process-services/process.module.ts"
         },
-        "name": "BrowserAnimationsModule"
+        "name": "BrowserAnimationsModule",
+        "skipError":true
     },
     {
         "position": {
@@ -4141,7 +4145,8 @@
             "character": 0,
             "fileName": "lib/core/services/service.module.ts"
         },
-        "name": "ServiceModule"
+        "name": "ServiceModule",
+        "skipError" : true
     },
     {
         "position": {
@@ -4149,7 +4154,8 @@
             "character": 8,
             "fileName": "lib/core/core.module.ts"
         },
-        "name": "ServiceModule"
+        "name": "ServiceModule",
+        "skipError" : true
     },
     {
         "position": {
@@ -4189,7 +4195,8 @@
             "character": 0,
             "fileName": "lib/core/models/site.model.ts"
         },
-        "name": "SiteContentsModel"
+        "name": "SiteContentsModel",
+        "skipError" : true
     },
     {
         "position": {
@@ -4197,7 +4204,8 @@
             "character": 0,
             "fileName": "lib/core/models/site.model.ts"
         },
-        "name": "SiteMembersModel"
+        "name": "SiteMembersModel",
+      "skipError" : true
     },
     {
         "position": {
@@ -4205,7 +4213,8 @@
             "character": 0,
             "fileName": "lib/core/models/site.model.ts"
         },
-        "name": "SiteModel"
+        "name": "SiteModel",
+      "skipError": true
     },
     {
         "position": {
