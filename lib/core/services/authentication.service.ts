@@ -174,6 +174,7 @@ export class AuthenticationService {
     saveTickets(): void {
         this.saveTicketEcm();
         this.saveTicketBpm();
+        this.saveTicketAuth();
     }
 
     /**
@@ -191,6 +192,15 @@ export class AuthenticationService {
     saveTicketBpm(): void {
         if (this.alfrescoApi.getInstance() && this.alfrescoApi.getInstance().getTicketBpm()) {
             this.storage.setItem('ticket-BPM', this.alfrescoApi.getInstance().getTicketBpm());
+        }
+    }
+
+    /**
+     * The method save the AUTH ticket in the Storage
+     */
+    saveTicketAuth(): void {
+        if (this.alfrescoApi.getInstance() && (<any>this.alfrescoApi.getInstance()).getTicketAuth()) {
+            this.storage.setItem('ticket-AUTH', (<any>this.alfrescoApi.getInstance()).getTicketAuth());
         }
     }
 
