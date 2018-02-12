@@ -16,11 +16,7 @@
  */
 
 /**
- *
  * This object represent of the Form.
- *
- *
- * @returns {Form} .
  */
 export class Form {
 

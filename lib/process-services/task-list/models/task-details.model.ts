@@ -16,11 +16,7 @@
  */
 
 /**
- *
  * This object represent the details of a task.
- *
- *
- * @returns {TaskDetailsModel} .
  */
 import { UserProcessModel } from '@alfresco/adf-core';
 import { TaskRepresentation } from 'alfresco-js-api';

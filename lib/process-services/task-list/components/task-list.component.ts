@@ -15,9 +15,26 @@
  * limitations under the License.
  */
 
-import { DataColumn, DataRowEvent, DataTableAdapter, ObjectDataColumn, ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/adf-core';
+import {
+    DataColumn,
+    DataRowEvent,
+    DataTableAdapter,
+    ObjectDataColumn,
+    ObjectDataRow,
+    ObjectDataTableAdapter
+} from '@alfresco/adf-core';
 import { AppConfigService, DataColumnListComponent, PaginationComponent } from '@alfresco/adf-core';
-import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import {
+    AfterContentInit,
+    Component,
+    ContentChild,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    SimpleChanges
+} from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskListModel } from '../models/task-list.model';
@@ -128,7 +145,6 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
      * When enabled the component reloads data from it's current source instead of the server side.
      * This allows generating and displaying custom data sets (i.e. filtered out content).
      *
-     * @type {boolean}
      * @memberOf TaskListComponent
      */
     hasCustomDataSource: boolean = false;
@@ -218,14 +234,13 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
 
     private loadTasksByState(): Observable<TaskListModel> {
         return this.requestNode.state === 'all'
-               ? this.taskListService.findAllTasksWithoutState(this.requestNode)
-               : this.taskListService.findTasksByState(this.requestNode);
+            ? this.taskListService.findAllTasksWithoutState(this.requestNode)
+            : this.taskListService.findTasksByState(this.requestNode);
     }
 
     /**
      * Create an array of ObjectDataRow
      * @param instances
-     * @returns {ObjectDataRow[]}
      */
     private createDataRow(instances: any[]): ObjectDataRow[] {
         let instancesRows: ObjectDataRow[] = [];
@@ -280,7 +295,6 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
 
     /**
      * Return the current id
-     * @returns {string}
      */
     getCurrentId(): string {
         return this.currentInstanceId;
@@ -289,15 +303,13 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
     /**
      * Check if the taskId is the same of the selected task
      * @param taskId
-     * @returns {boolean}
      */
-    isEqualToCurrentId(taskId: string) {
+    isEqualToCurrentId(taskId: string): boolean {
         return this.currentInstanceId === taskId ? true : false;
     }
 
     /**
      * Check if the list is empty
-     * @returns {ObjectDataTableAdapter|boolean}
      */
     isListEmpty(): boolean {
         return this.data === undefined ||
@@ -330,9 +342,8 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
     /**
      * Optimize name field
      * @param istances
-     * @returns {any[]}
      */
-    private optimizeNames(istances: any[]) {
+    private optimizeNames(istances: any[]): any[] {
         istances = istances.map(t => {
             t.obj.name = t.obj.name || 'No name';
             return t;

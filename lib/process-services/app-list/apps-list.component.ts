@@ -124,7 +124,6 @@ export class AppsListComponent implements OnInit {
     /**
      * Return true if the appId is the current app
      * @param appId
-     * @returns {boolean}
      */
     isSelected(appId: number): boolean {
         return (this.currentApp !== undefined && appId === this.currentApp.id);
@@ -153,7 +152,6 @@ export class AppsListComponent implements OnInit {
 
     /**
      * Check if the value of the layoutType property is an allowed value
-     * @returns {boolean}
      */
     isValidType(): boolean {
         if (this.layoutType && (this.layoutType === AppsListComponent.LAYOUT_LIST || this.layoutType === AppsListComponent.LAYOUT_GRID)) {
@@ -171,7 +169,6 @@ export class AppsListComponent implements OnInit {
 
     /**
      * Return true if the layout type is LIST
-     * @returns {boolean}
      */
     isList(): boolean {
         return this.layoutType === AppsListComponent.LAYOUT_LIST;
@@ -179,7 +176,6 @@ export class AppsListComponent implements OnInit {
 
     /**
      * Return true if the layout type is GRID
-     * @returns {boolean}
      */
     isGrid(): boolean {
         return this.layoutType === AppsListComponent.LAYOUT_GRID;
