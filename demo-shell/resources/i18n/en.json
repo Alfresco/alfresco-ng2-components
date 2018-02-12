@@ -51,13 +51,13 @@
             "CREATED": "Created"
         },
         "ACTIONS": {
+            "DOWNLOAD": "Download",
             "FOLDER": {
                 "COPY": "Copy",
                 "MOVE": "Move",
                 "DELETE": "Delete"
             },
             "DOCUMENT": {
-                "DOWNLOAD": "Download",
                 "COPY": "Copy",
                 "MOVE": "Move",
                 "DELETE": "Delete",

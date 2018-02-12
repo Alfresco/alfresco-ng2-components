@@ -16,16 +16,27 @@
  */
 
 import { Injectable } from '@angular/core';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity, MinimalNodeEntity } from 'alfresco-js-api';
 import { Subject } from 'rxjs/Subject';
+import { AlfrescoApiService } from '@alfresco/adf-core';
+import { MatDialog } from '@angular/material';
+
 import { DocumentListService } from './document-list.service';
 import { ContentNodeDialogService } from '../../content-node-selector/content-node-dialog.service';
+import { NodeDownloadDirective } from '../../directives/node-download.directive';
 
 @Injectable()
 export class NodeActionsService {
 
     constructor(private contentDialogService: ContentNodeDialogService,
-                private documentListService?: DocumentListService) {}
+                private documentListService?: DocumentListService,
+                private apiService?: AlfrescoApiService,
+                private dialog?: MatDialog) {}
+
+    downloadNode(node: MinimalNodeEntity) {
+        new NodeDownloadDirective(this.apiService, this.dialog)
+            .downloadNode(node);
+    }
 
     /**
      * Copy content node

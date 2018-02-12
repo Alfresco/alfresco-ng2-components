@@ -79,6 +79,11 @@ export class FolderActionsService {
         this.handlers['copy'] = this.copyNode.bind(this);
         this.handlers['move'] = this.moveNode.bind(this);
         this.handlers['delete'] = this.deleteNode.bind(this);
+        this.handlers['download'] = this.downloadNode.bind(this);
+    }
+
+    private downloadNode(obj: MinimalNodeEntity, target?: any, permission?: string) {
+        this.nodeActionsService.downloadNode(obj);
     }
 
     private copyNode(obj: MinimalNodeEntity, target?: any, permission?: string) {

@@ -41,7 +41,12 @@ export class NodeDownloadDirective {
         private dialog: MatDialog) {
     }
 
-    private downloadNodes(selection: Array<MinimalNodeEntity>) {
+    /**
+     * Downloads multiple selected nodes.
+     * Packs result into a .ZIP archive if there is more than one node selected.
+     * @param selection Multiple selected nodes to download
+     */
+    downloadNodes(selection: Array<MinimalNodeEntity>) {
         if (!selection || selection.length === 0) {
             return;
         }
@@ -53,7 +58,12 @@ export class NodeDownloadDirective {
         }
     }
 
-    private downloadNode(node: MinimalNodeEntity) {
+    /**
+     * Downloads a single node.
+     * Packs result into a .ZIP archive is the node is a Folder.
+     * @param node Node to download
+     */
+    downloadNode(node: MinimalNodeEntity) {
         if (node && node.entry) {
             const entry = node.entry;
 
