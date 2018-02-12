@@ -22,3 +22,4 @@ package-lock.*
 .ng_pkg_build/
 /demo-shell/dist-dev-temp/
 /lib/export-new.json
+/lib/config/exportCheck.js
