@@ -31,7 +31,7 @@
                 </mat-card-content>
             </mat-card>
             <mat-card class="example-card" id="search_no_result" *ngIf="data?.list?.entries.length === 0">
-                <p mat-line class="adf-search-fixed-text">{{ 'SEARCH.RESULTS.NONE' | translate:{searchTerm: searchTerm} }}</p>
+                <p mat-line class="adf-search-fixed-text">{{ 'SEARCH.RESULTS.NONE' | translate:{searchTerm: searchedWord} }}</p>
             </mat-card>
         </ng-template>
       </adf-search>
