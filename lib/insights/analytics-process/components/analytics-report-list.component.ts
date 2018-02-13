@@ -128,7 +128,6 @@ export class AnalyticsReportListComponent implements OnInit {
 
     /**
      * Check if the report list is empty
-     * @returns {boolean|ReportParametersModel[]}
      */
     isReportsEmpty(): boolean {
         return this.reports === undefined || (this.reports && this.reports.length === 0);

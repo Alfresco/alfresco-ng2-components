@@ -29,8 +29,6 @@ import 'rxjs/add/operator/takeWhile';
  * @deprecated
  * RenditionsService
  * (this service is deprecated in 2.2.0 and will be removed in future revisions)
- *
- * @returns {RenditionsService} .
  */
 @Injectable()
 export class RenditionsService {

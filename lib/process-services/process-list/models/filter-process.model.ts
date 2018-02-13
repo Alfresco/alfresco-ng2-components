@@ -44,11 +44,7 @@ export class FilterProcessRepresentationModel implements UserProcessInstanceFilt
 }
 
 /**
- *
  * This object represent the parameters of a process filter.
- *
- *
- * @returns {ProcessFilterParamRepresentationModel} .
  */
 export class ProcessFilterParamRepresentationModel implements ProcessFilterRequestRepresentation {
 

@@ -28,7 +28,7 @@ declare let PDFJS: any;
         './pdfViewer.component.scss',
         './pdfViewerHost.component.scss'
     ],
-    providers: [ RenderingQueueServices ],
+    providers: [RenderingQueueServices],
     host: { 'class': 'adf-pdf-viewer' },
     encapsulation: ViewEncapsulation.None
 })
@@ -123,8 +123,6 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     /**
      * return the PDFJS global object (exist to facilitate the mock of PDFJS in the test)
-     *
-     * @returns {PDFJS}
      */
     getPDFJS() {
         return PDFJS;
@@ -151,7 +149,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     ngOnDestroy() {
-        if(this.documentContainer) {
+        if (this.documentContainer) {
             this.documentContainer.removeEventListener('pagechange', this.onPageChange, true);
         }
     }
@@ -159,7 +157,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     /**
      * Method to scale the page current support implementation
      *
-     * @param {string} scaleMode - new scale mode
+     * @param scaleMode - new scale mode
      */
     scalePage(scaleMode) {
         this.currentScaleMode = scaleMode;
@@ -223,7 +221,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     /**
      * Update all the pages with the newScale scale
      *
-     * @param {number} newScale - new scale page
+     * @param newScale - new scale page
      */
     setScaleUpdatePages(newScale: number) {
         if (!this.isSameScale(this.currentScale, newScale)) {
@@ -240,24 +238,21 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     /**
      * Check if the request scale of the page is the same for avoid useless re-rendering
      *
-     * @param {number} oldScale - old scale page
-     * @param {number} newScale - new scale page
+     * @param oldScale - old scale page
+     * @param newScale - new scale page
      *
-     * @returns {boolean}
      */
-    isSameScale(oldScale: number, newScale: number) {
+    isSameScale(oldScale: number, newScale: number): boolean {
         return (newScale === oldScale);
     }
 
     /**
      * Check if is a land scape view
      *
-     * @param {number} width
-     * @param {number} height
-     *
-     * @returns {boolean}
+     * @param width
+     * @param height
      */
-    isLandscape(width: number, height: number) {
+    isLandscape(width: number, height: number): boolean {
         return (width > height);
     }
 
@@ -282,7 +277,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     /**
      * zoom in page pdf
      *
-     * @param {number} ticks
+     * @param ticks
      */
     zoomIn(ticks: number) {
         let newScale: any = this.currentScale;
@@ -298,7 +293,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     /**
      * zoom out page pdf
      *
-     * @param {number} ticks
+     * @param ticks
      */
     zoomOut(ticks: number) {
         let newScale: any = this.currentScale;
@@ -338,7 +333,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     /**
      * load the page in input
      *
-     * @param {string} page - page to load
+     * @param page to load
      */
     inputPage(page: string) {
         let pageInput = parseInt(page, 10);
@@ -355,7 +350,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     /**
      * Page Change Event
      *
-     * @param {Event} event
+     * @param event
      */
     onPageChange(event) {
         this.page = event.pageNumber;
@@ -364,7 +359,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     /**
      * Litener Keyboard Event
-     * @param {KeyboardEvent} event
+     * @param KeyboardEvent event
      */
     @HostListener('document:keydown', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {

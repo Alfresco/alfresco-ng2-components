@@ -1,19 +1,20 @@
 {
   "$schema": "./node_modules/ng-packagr/ng-package.schema.json",
   "workingDirectory" : "./ng_work",
-  "src": "../core/",
-  "dest": "../core/dist/",
+  "src": "../content-services/",
+  "dest": "../dist/content-services/",
   "lib": {
+    "licensePath": "../config/assets/license_header_add.txt",
+    "comments" : "none",
     "entryFile": "./public-api.ts",
-    "flatModuleFile": "adf-core",
-    "externals": {
+    "flatModuleFile": "adf-content-services",
+    "umdModuleIds": {
       "alfresco-js-api": "alfresco-js-api",
       "minimatch": "minimatch",
       "@angular/platform-browser/animations": "@angular/platform-browser/animations",
       "@angular/material": "@angular/material",
-      "@mat-datetimepicker/core": "@mat-datetimepicker/core",
-      "@mat-datetimepicker/moment": "@mat-datetimepicker/moment",
       "@angular/flex-layout": "@angular/flex-layout",
+      "@alfresco/adf-core": "@alfresco/adf-core",
       "@angular/material-moment-adapter": "@angular/material-moment-adapter",
       "@angular/animations": "@angular/animations",
       "@angular/cdk/platform": "@angular/cdk/platform",

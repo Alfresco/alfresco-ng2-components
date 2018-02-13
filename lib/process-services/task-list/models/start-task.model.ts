@@ -16,11 +16,7 @@
  */
 
 /**
- *
  * This object represent of the StartTaskModel.
- *
- *
- * @returns {StartTaskModel} .
  */
 import { UserProcessModel } from '@alfresco/adf-core';
 

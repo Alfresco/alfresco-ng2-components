@@ -253,7 +253,6 @@ export class FormComponent implements OnInit, OnChanges {
     /**
      * Invoked when user clicks outcome button.
      * @param outcome Form outcome model
-     * @returns {boolean} True if outcome action was executed, otherwise false.
      */
     onOutcomeClicked(outcome: FormOutcomeModel): boolean {
         if (!this.readOnly && outcome && this.form) {
@@ -448,7 +447,6 @@ export class FormComponent implements OnInit, OnChanges {
     /**
      * Get custom set of outcomes for a Form Definition.
      * @param form Form definition model.
-     * @returns {FormOutcomeModel[]} Outcomes for a given form definition.
      */
     getFormDefinitionOutcomes(form: FormModel): FormOutcomeModel[] {
         return [

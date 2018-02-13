@@ -16,11 +16,7 @@
  */
 
 /**
- *
  * This object represent the User Event.
- *
- *
- * @returns {UserEventModel} .
  */
 export class UserEventModel {
     type: string = '';

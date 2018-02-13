@@ -22,8 +22,6 @@ import { TagService } from './services/tag.service';
 /**
  *
  * This component, provide a list of the tags relative a node with actions button to add or remove new tag
- *
- * @returns {TagComponent} .
  */
 
 @Component({

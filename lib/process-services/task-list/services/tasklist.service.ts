@@ -43,7 +43,6 @@ export class TaskListService {
      * Return all the filters in the list where the task id belong
      * @param taskId - string
      * @param filter - FilterRepresentationModel []
-     * @returns {FilterRepresentationModel}
      */
     getFilterForTaskById(taskId: string, filterList: FilterRepresentationModel[]): Observable<FilterRepresentationModel> {
         return Observable.from(filterList)
@@ -54,7 +53,6 @@ export class TaskListService {
     /**
      * Return the search node for query task based on the given filter
      * @param filter - FilterRepresentationModel
-     * @returns {TaskQueryRequestRepresentationModel}
      */
     private generateTaskRequestNodeFromFilter(filter: FilterRepresentationModel): TaskQueryRequestRepresentationModel {
         let requestNode = {
@@ -70,7 +68,6 @@ export class TaskListService {
      * Check if a taskId is filtered with the given filter
      * @param taskId - string
      * @param filter - FilterRepresentationModel
-     * @returns {FilterRepresentationModel}
      */
     isTaskRelatedToFilter(taskId: string, filter: FilterRepresentationModel): Observable<FilterRepresentationModel> {
         let requestNodeForFilter = this.generateTaskRequestNodeFromFilter(filter);
@@ -83,7 +80,6 @@ export class TaskListService {
     /**
      * Retrieve all the tasks filtered by filterModel
      * @param filter - TaskFilterRepresentationModel
-     * @returns {any}
      */
     getTasks(requestNode: TaskQueryRequestRepresentationModel): Observable<TaskListModel> {
         return Observable.fromPromise(this.callApiTasksFiltered(requestNode))
@@ -96,7 +92,6 @@ export class TaskListService {
     /**
      * Retrieve tasks filtered by filterModel and state
      * @param filter - TaskFilterRepresentationModel
-     * @returns {any}
      */
     findTasksByState(requestNode: TaskQueryRequestRepresentationModel, state?: string): Observable<TaskListModel> {
         if (state) {
@@ -108,7 +103,6 @@ export class TaskListService {
     /**
      * Retrieve all tasks filtered by filterModel and state
      * @param filter - TaskFilterRepresentationModel
-     * @returns {any}
      */
     findAllTaskByState(requestNode: TaskQueryRequestRepresentationModel, state?: string): Observable<TaskListModel> {
         if (state) {
@@ -123,7 +117,6 @@ export class TaskListService {
     /**
      * Retrieve all tasks filtered by filterModel irrespective of state
      * @param filter - TaskFilterRepresentationModel
-     * @returns {any}
      */
     findAllTasksWithoutState(requestNode: TaskQueryRequestRepresentationModel): Observable<TaskListModel> {
         return Observable.forkJoin(
@@ -142,7 +135,6 @@ export class TaskListService {
     /**
      * Retrieve all the task details
      * @param id - taskId
-     * @returns {<TaskDetailsModel>}
      */
     getTaskDetails(taskId: string): Observable<TaskDetailsModel> {
         return Observable.fromPromise(this.callApiTaskDetails(taskId))
@@ -155,7 +147,6 @@ export class TaskListService {
     /**
      * Retrieve all the task's checklist
      * @param id - taskId
-     * @returns {TaskDetailsModel}
      */
     getTaskChecklist(id: string): Observable<TaskDetailsModel[]> {
         return Observable.fromPromise(this.callApiTaskChecklist(id))
@@ -171,7 +162,6 @@ export class TaskListService {
 
     /**
      * Retrieve all the form shared with this user
-     * @returns {TaskDetailsModel}
      */
     getFormList(): Observable<Form []> {
         let opts = {
@@ -197,7 +187,6 @@ export class TaskListService {
     /**
      * Add a task
      * @param task - TaskDetailsModel
-     * @returns {TaskDetailsModel}
      */
     addTask(task: TaskDetailsModel): Observable<TaskDetailsModel> {
         return Observable.fromPromise(this.callApiAddTask(task))
@@ -219,7 +208,6 @@ export class TaskListService {
     /**
      * Make the task completed
      * @param id - taskId
-     * @returns {TaskDetailsModel}
      */
     completeTask(taskId: string) {
         return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.completeTask(taskId))
@@ -230,7 +218,6 @@ export class TaskListService {
     /**
      * Return the total number of the tasks by filter
      * @param requestNode - TaskFilterRepresentationModel
-     * @returns {any}
      */
     public getTotalTasks(requestNode: TaskQueryRequestRepresentationModel): Observable<any> {
         requestNode.size = 0;
@@ -243,7 +230,6 @@ export class TaskListService {
     /**
      * Create a new standalone task
      * @param task - TaskDetailsModel
-     * @returns {TaskDetailsModel}
      */
     createNewTask(task: TaskDetailsModel): Observable<TaskDetailsModel> {
         return Observable.fromPromise(this.callApiCreateTask(task))
@@ -257,7 +243,6 @@ export class TaskListService {
      * Assign task to user/group
      * @param taskId - string
      * @param requestNode - any
-     * @returns {TaskDetailsModel}
      */
     assignTask(taskId: string, requestNode: any): Observable<TaskDetailsModel> {
         let assignee = {assignee: requestNode.id};

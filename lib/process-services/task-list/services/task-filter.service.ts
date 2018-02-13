@@ -37,7 +37,6 @@ export class TaskFilterService {
     /**
      * Create and return the default filters
      * @param appId
-     * @returns {FilterRepresentationModel[]}
      */
     public createDefaultFilters(appId: number): Observable<FilterRepresentationModel[]> {
         let involvedTasksFilter = this.getInvolvedTasksFilterInstance(appId);
@@ -87,7 +86,6 @@ export class TaskFilterService {
 
     /**
      * Retrieve all the Tasks filters
-     * @returns {Observable<any>}
      */
     getTaskListFilters(appId?: number): Observable<any> {
         return Observable.fromPromise(this.callApiTaskFilters(appId))
@@ -105,7 +103,6 @@ export class TaskFilterService {
      * Retrieve the Tasks filter by id
      * @param filterId - number - The id of the filter
      * @param appId - string - optional - The id of app
-     * @returns {Observable<FilterRepresentationModel>}
      */
     getTaskFilterById(filterId: number, appId?: number): Observable<FilterRepresentationModel> {
         return Observable.fromPromise(this.callApiTaskFilters(appId))
@@ -117,7 +114,6 @@ export class TaskFilterService {
     /**
      * Retrieve the Tasks filter by name
      * @param taskName - string - The name of the filter
-     * @returns {Observable<FilterRepresentationModel>}
      */
     getTaskFilterByName(taskName: string, appId?: number): Observable<FilterRepresentationModel> {
         return Observable.fromPromise(this.callApiTaskFilters(appId))
@@ -129,7 +125,6 @@ export class TaskFilterService {
     /**
      * Add a filter
      * @param filter - FilterRepresentationModel
-     * @returns {FilterRepresentationModel}
      */
     addFilter(filter: FilterRepresentationModel): Observable<FilterRepresentationModel> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.userFiltersApi.createUserTaskFilter(filter))
@@ -150,7 +145,6 @@ export class TaskFilterService {
     /**
      * Return a static Involved filter instance
      * @param appId
-     * @returns {FilterRepresentationModel}
      */
     getInvolvedTasksFilterInstance(appId: number): FilterRepresentationModel {
         return new FilterRepresentationModel({
@@ -165,7 +159,6 @@ export class TaskFilterService {
     /**
      * Return a static My task filter instance
      * @param appId
-     * @returns {FilterRepresentationModel}
      */
     getMyTasksFilterInstance(appId: number): FilterRepresentationModel {
         return new FilterRepresentationModel({
@@ -180,7 +173,6 @@ export class TaskFilterService {
     /**
      * Return a static Queued filter instance
      * @param appId
-     * @returns {FilterRepresentationModel}
      */
     getQueuedTasksFilterInstance(appId: number): FilterRepresentationModel {
         return new FilterRepresentationModel({
@@ -195,7 +187,6 @@ export class TaskFilterService {
     /**
      * Return a static Completed filter instance
      * @param appId
-     * @returns {FilterRepresentationModel}
      */
     getCompletedTasksFilterInstance(appId: number): FilterRepresentationModel {
         return new FilterRepresentationModel({

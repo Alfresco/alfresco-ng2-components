@@ -152,7 +152,7 @@ fi
 for PACKAGE in ${projects[@]}
 do
 
-  DESTDIR="$DIR/../lib/${PACKAGE}/dist"
+  DESTDIR="$DIR/../lib/dist/${PACKAGE}"
   echo "====== MOVE DIR: ${DESTDIR} ===== "
   cd ${DESTDIR}
 

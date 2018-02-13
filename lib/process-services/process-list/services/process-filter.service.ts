@@ -44,7 +44,6 @@ export class ProcessFilterService {
      * Retrieve the process filter by id
      * @param filterId - number - The id of the filter
      * @param appId - string - optional - The id of app
-     * @returns {Observable<FilterProcessRepresentationModel>}
      */
     getProcessFilterById(filterId: number, appId?: number): Observable<FilterProcessRepresentationModel> {
         return Observable.fromPromise(this.callApiProcessFilters(appId))
@@ -57,7 +56,6 @@ export class ProcessFilterService {
      * Retrieve the process filter by name
      * @param filterName - string - The name of the filter
      * @param appId - string - optional - The id of app
-     * @returns {Observable<FilterProcessRepresentationModel>}
      */
     getProcessFilterByName(filterName: string, appId?: number): Observable<FilterProcessRepresentationModel> {
         return Observable.fromPromise(this.callApiProcessFilters(appId))
@@ -69,7 +67,6 @@ export class ProcessFilterService {
     /**
      * Create and return the default filters
      * @param appId
-     * @returns {FilterProcessRepresentationModel[]}
      */
     public createDefaultFilters(appId: number): Observable<FilterProcessRepresentationModel[]> {
         let runningFilter = this.getRunningFilterInstance(appId);
@@ -123,7 +120,6 @@ export class ProcessFilterService {
     /**
      * Return a static Completed filter instance
      * @param appId
-     * @returns {FilterProcessRepresentationModel}
      */
     private getCompletedFilterInstance(appId: number): FilterProcessRepresentationModel {
         return new FilterProcessRepresentationModel({
@@ -138,7 +134,6 @@ export class ProcessFilterService {
     /**
      * Return a static All filter instance
      * @param appId
-     * @returns {FilterProcessRepresentationModel}
      */
     private getAllFilterInstance(appId: number): FilterProcessRepresentationModel {
         return new FilterProcessRepresentationModel({
@@ -153,7 +148,6 @@ export class ProcessFilterService {
     /**
      * Add a filter
      * @param filter - FilterProcessRepresentationModel
-     * @returns {FilterProcessRepresentationModel}
      */
     addProcessFilter(filter: FilterProcessRepresentationModel): Observable<FilterProcessRepresentationModel> {
         return Observable.fromPromise(this.alfrescoApiService.getInstance().activiti.userFiltersApi.createUserProcessInstanceFilter(filter))
