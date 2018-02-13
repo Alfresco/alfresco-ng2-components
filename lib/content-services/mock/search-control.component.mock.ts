@@ -15,7 +15,27 @@
  * limitations under the License.
  */
 
-export * from './components/search.component';
-export * from './components/search-control.component';
-export * from './components/search-trigger.directive';
-export * from './components/empty-search-result.component';
+import { Component } from '@angular/core';
+
+@Component({
+    template: `
+        <adf-search-control [highlight]="true">
+                <adf-empty-search-result>
+                    <span id="custom-no-result">{{customMessage}}</span>
+                </adf-empty-search-result>
+        </adf-search-control>
+    `
+  })
+
+  export class SimpleSearchTestCustomEmptyComponent {
+
+    customMessage: string = '';
+
+    constructor() {
+    }
+
+    setCustomMessageForNoResult(message: string) {
+        this.customMessage = message;
+    }
+
+  }

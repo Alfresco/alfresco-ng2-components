@@ -26,6 +26,9 @@ import { noResult, results } from '../../mock';
 import { SearchControlComponent } from './search-control.component';
 import { SearchTriggerDirective } from './search-trigger.directive';
 import { SearchComponent } from './search.component';
+import { EmptySearchResultComponent } from './empty-search-result.component';
+import { SimpleSearchTestCustomEmptyComponent } from '../../mock';
+import { SearchModule } from '../../index';
 
 describe('SearchControlComponent', () => {
 
@@ -44,7 +47,8 @@ describe('SearchControlComponent', () => {
             declarations: [
                 SearchControlComponent,
                 SearchComponent,
-                SearchTriggerDirective
+                SearchTriggerDirective,
+                EmptySearchResultComponent
             ],
             providers: [
                 ThumbnailService,
@@ -542,4 +546,56 @@ describe('SearchControlComponent', () => {
             });
         }));
     });
+});
+
+describe('SearchControlComponent - No result custom', () => {
+
+    let fixtureCustom: ComponentFixture<SimpleSearchTestCustomEmptyComponent>;
+    let elementCustom: HTMLElement;
+    let componentCustom: SimpleSearchTestCustomEmptyComponent;
+    let authServiceCustom: AuthenticationService;
+    let searchServiceCustom: SearchService;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                SearchModule
+            ],
+            declarations: [
+                SimpleSearchTestCustomEmptyComponent
+            ]
+        }).compileComponents().then(() => {
+            fixtureCustom = TestBed.createComponent(SimpleSearchTestCustomEmptyComponent);
+            componentCustom = fixtureCustom.componentInstance;
+            elementCustom = fixtureCustom.nativeElement;
+            authServiceCustom = TestBed.get(AuthenticationService);
+            searchServiceCustom = TestBed.get(SearchService);
+        });
+    }));
+
+    beforeEach(async(() => {
+        spyOn(authServiceCustom, 'isEcmLoggedIn').and.returnValue(true);
+    }));
+
+    afterEach(async(() => {
+        fixtureCustom.destroy();
+        TestBed.resetTestingModule();
+    }));
+
+    it('should display the custom no results when it is configured', async(() => {
+        const noResultCustomMessage = 'BANDI IS NOTHING';
+        componentCustom.setCustomMessageForNoResult(noResultCustomMessage);
+        spyOn(searchServiceCustom, 'search').and.returnValue(Observable.of(noResult));
+        fixtureCustom.detectChanges();
+
+        let inputDebugElement = fixtureCustom.debugElement.query(By.css('#adf-control-input'));
+        inputDebugElement.nativeElement.value = 'BANDY NOTHING';
+        inputDebugElement.nativeElement.focus();
+        inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
+        fixtureCustom.whenStable().then(() => {
+            fixtureCustom.detectChanges();
+            expect(elementCustom.querySelector('#custom-no-result').textContent).toBe(noResultCustomMessage);
+        });
+    }));
+
 });
