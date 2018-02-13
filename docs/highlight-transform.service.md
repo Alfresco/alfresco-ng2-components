@@ -4,8 +4,11 @@ Adds HTML to a string to highlight chosen sections.
 
 ## Methods
 
-`public highlight(text: string, search: string, wrapperClass: string = 'highlight'): HightlightTransformResult`<br/>
-Searches for `search` string(s) within `text` and highlights all occurrences.
+-   `highlight(text: string, search: string, wrapperClass: string = 'highlight'): HightlightTransformResult`  
+    Searches for `search` string(s) within `text` and highlights all occurrences.  
+    -   `text` - Text to search within
+    -   `search` - Text pattern to search for
+    -   `wrapperClass` - CSS class used to provide highlighting style
 
 ## Details
 
