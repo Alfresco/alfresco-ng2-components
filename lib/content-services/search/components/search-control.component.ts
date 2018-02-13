@@ -24,7 +24,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { SearchComponent } from './search.component';
 import { MatListItem } from '@angular/material';
-import { EmptySearchResult } from './empty-search-result.component';
+import { EmptySearchResultComponent } from './empty-search-result.component';
 
 @Component({
     selector: 'adf-search-control',
@@ -103,8 +103,8 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     @ViewChildren(MatListItem)
     private listResultElement: QueryList<MatListItem>;
 
-    @ContentChild(EmptySearchResult)
-    emptySearchTemplate: any;
+    @ContentChild(EmptySearchResultComponent)
+    emptySearchTemplate: EmptySearchResultComponent;
 
     searchTerm: string = '';
     subscriptAnimationState: string;
@@ -143,7 +143,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     }
 
     isNoSearchTemplatePresent(): boolean {
-        return this.emptySearchTemplate ? true: false;
+        return this.emptySearchTemplate ? true : false;
     }
 
     ngOnDestroy(): void {

@@ -27,13 +27,13 @@ import { SearchTriggerDirective } from './components/search-trigger.directive';
 
 import { SearchControlComponent } from './components/search-control.component';
 import { SearchComponent } from './components/search.component';
-import { EmptySearchResult } from './components/empty-search-result.component';
+import { EmptySearchResultComponent } from './components/empty-search-result.component';
 
 export const ALFRESCO_SEARCH_DIRECTIVES: [any] = [
     SearchComponent,
     SearchControlComponent,
     SearchTriggerDirective,
-    EmptySearchResult
+    EmptySearchResultComponent
 ];
 
 export const ALFRESCO_SEARCH_PROVIDERS: [any] = [

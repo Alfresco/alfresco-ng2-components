@@ -15,11 +15,27 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-    selector: 'adf-empty-search-result',
-    templateUrl: './empty-search-result.component.html',
-    encapsulation: ViewEncapsulation.None
-})
-export class EmptySearchResultComponent {}
+    template: `
+        <adf-search-control [highlight]="true">
+                <adf-empty-search-result>
+                    <span id="custom-no-result">{{customMessage}}</span>
+                </adf-empty-search-result>
+        </adf-search-control>
+    `
+  })
+
+  export class SimpleSearchTestCustomEmptyComponent {
+
+    customMessage: string = '';
+
+    constructor() {
+    }
+
+    setCustomMessageForNoResult(message: string) {
+        this.customMessage = message;
+    }
+
+  }
