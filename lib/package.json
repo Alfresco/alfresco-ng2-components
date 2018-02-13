@@ -74,7 +74,7 @@
     "core-js": "2.4.1",
     "hammerjs": "2.0.8",
     "minimatch": "3.0.4",
-    "moment": "2.18.1",
+    "moment": "2.20.1",
     "moment-es6": "^1.0.0",
     "ng-packagr": "2.0.0",
     "ng2-charts": "1.6.0",
