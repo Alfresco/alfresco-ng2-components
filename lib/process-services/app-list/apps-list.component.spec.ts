@@ -70,6 +70,19 @@ describe('AppsListComponent', () => {
         expect(getAppsSpy).toHaveBeenCalled();
     });
 
+    it('loading should be false by default', () => {
+        expect(component.isLoading).toBeFalsy();
+    });
+
+    it('should show the loading spinner when the apps are loading', () => {
+        component.isLoading = true;
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+        let loadingSpinner = fixture.debugElement.query(By.css('.adf-app-list-loading-screen'));
+        expect(loadingSpinner.nativeElement).not.toBeNull();
+        });
+    });
+
     it('should show the apps filtered by defaultAppId', () => {
         component.filtersAppId = [{defaultAppId: 'fake-app-1'}];
         fixture.detectChanges();
