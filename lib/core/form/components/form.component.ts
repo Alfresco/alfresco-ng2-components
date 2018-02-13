@@ -344,6 +344,7 @@ export class FormComponent implements OnInit, OnChanges {
                         form => {
                             const parsedForm =  this.parseForm(form);
                             this.visibilityService.refreshVisibility(parsedForm);
+                            parsedForm.validateForm();
                             this.form = parsedForm;
                             this.onFormLoaded(this.form);
                             resolve(this.form);
@@ -365,6 +366,8 @@ export class FormComponent implements OnInit, OnChanges {
             form => {
                 this.formName = form.name;
                 this.form = this.parseForm(form);
+                this.visibilityService.refreshVisibility(this.form);
+                this.form.validateForm();
                 this.onFormLoaded(this.form);
             },
             (error) => {
@@ -381,6 +384,8 @@ export class FormComponent implements OnInit, OnChanges {
                 this.formService.getFormDefinitionById(id).subscribe(
                     form => {
                         this.form = this.parseForm(form);
+                        this.visibilityService.refreshVisibility(this.form);
+                        this.form.validateForm();
                         this.onFormLoaded(this.form);
                     },
                     (error) => {
