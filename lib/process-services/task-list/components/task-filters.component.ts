@@ -216,7 +216,6 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
 
     /**
      * Return the current task
-     * @returns {FilterRepresentationModel}
      */
     getCurrentFilter(): FilterRepresentationModel {
         return this.currentFilter;
@@ -224,7 +223,6 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
 
     /**
      * Check if the filter list is empty
-     * @returns {boolean}
      */
     isFilterListEmpty(): boolean {
         return this.filters === undefined || (this.filters && this.filters.length === 0);

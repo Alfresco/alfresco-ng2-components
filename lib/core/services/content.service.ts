@@ -80,8 +80,8 @@ export class ContentService {
     /**
      * Invokes content download for a Blob with a file name.
      *
-     * @param {Blob} blob Content to download.
-     * @param {string} fileName Name of the resulting file.
+     * @param blob Content to download.
+     * @param fileName Name of the resulting file.
      *
      * @memberOf ContentService
      */
@@ -92,8 +92,8 @@ export class ContentService {
     /**
      * Invokes content download for a data array with a file name.
      *
-     * @param {*} data Data to download.
-     * @param {string} fileName Name of the resulting file.
+     * @param data Data to download.
+     * @param fileName Name of the resulting file.
      *
      * @memberOf ContentService
      */
@@ -104,20 +104,19 @@ export class ContentService {
     /**
      * Invokes content download for a JSON object with a file name.
      *
-     * @param {*} json JSON object to download.
-     * @param {any} fileName Name of the resulting file.
+     * @param json JSON object to download.
+     * @param fileName Name of the resulting file.
      *
      * @memberOf ContentService
      */
-    downloadJSON(json: any, fileName): void {
+    downloadJSON(json: any, fileName: string): void {
         this.saveData(json, 'json', fileName);
     }
 
     /**
      * Creates a trusted object URL from the Blob.
      * WARNING: calling this method with untrusted user data exposes your application to XSS security risks!
-     * @param {Blob} blob Data to wrap into object URL
-     * @returns {string} Object URL content.
+     * @param  blob Data to wrap into object URL
      *
      * @memberOf ContentService
      */
@@ -133,10 +132,9 @@ export class ContentService {
     /**
      * Get thumbnail URL for the given document node.
      *
-     * @param {string|MinimalNodeEntity} node Node to get URL for.
-     * @param {boolean} [attachment] Retrieve content as an attachment for download
-     * @param {string} [ticket] Custom ticket to use for authentication
-     * @returns {string} The URL address pointing to the content.
+     * @param node Node to get URL for.
+     * @param [attachment] Retrieve content as an attachment for download
+     * @param [ticket] Custom ticket to use for authentication
      */
     getDocumentThumbnailUrl(node: any, attachment?: boolean, ticket?: string): string {
 
@@ -150,10 +148,9 @@ export class ContentService {
     /**
      * Get content URL for the given node.
      *
-     * @param node {string|MinimalNodeEntity} nodeId or node to get URL for.
-     * @param {boolean} [attachment] Retrieve content as an attachment for download
-     * @param {string} [ticket] Custom ticket to use for authentication
-     * @returns {string} The URL address pointing to the content.
+     * @param nodeId or node to get URL for.
+     * @param [attachment] Retrieve content as an attachment for download
+     * @param [ticket] Custom ticket to use for authentication
      */
     getContentUrl(node: any, attachment?: boolean, ticket?: string): string {
 
@@ -168,7 +165,6 @@ export class ContentService {
      * Get content for the given node.
      * @param nodeId ID of the target node
      *
-     * @returns {Observable<any>} URL address.
      */
     getNodeContent(nodeId: string): Observable<any> {
         return Observable.fromPromise(this.apiService.getInstance().core.nodesApi.getFileContent(nodeId).then((dataContent) => {
@@ -200,7 +196,6 @@ export class ContentService {
      * @param node Node to check allowableOperations
      * @param permission Create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions
      *
-     * @returns {boolean} has permission
      */
     hasPermission(node: any, permission: PermissionsEnum | string): boolean {
         let hasPermission = false;
@@ -225,7 +220,6 @@ export class ContentService {
      * Check if the node has the properties allowableOperations
      * @param node Node to check allowableOperations
      *
-     * @returns {boolean} has AllowableOperations
      */
     hasAllowableOperations(node: any): boolean {
         return node && node.allowableOperations ? true : false;

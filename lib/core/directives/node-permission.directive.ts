@@ -56,7 +56,6 @@ export class NodePermissionDirective implements OnChanges {
     /**
      * Updates disabled state for the decorated elememtn
      *
-     * @returns {boolean} True if decorated element got disabled, otherwise False
      * @memberof NodePermissionDirective
      */
     updateElement(): boolean {
@@ -110,9 +109,8 @@ export class NodePermissionDirective implements OnChanges {
     /**
      * Checks whether all nodes have a particular permission
      *
-     * @param {MinimalNodeEntity[]} nodes Node collection to check
-     * @param {string} permission Permission to check for each node
-     * @returns {boolean} True if all nodes have provided permission, otherwise False
+     * @param  nodes Node collection to check
+     * @param  permission Permission to check for each node
      * @memberof NodePermissionDirective
      */
     hasPermission(nodes: MinimalNodeEntity[], permission: string): boolean {

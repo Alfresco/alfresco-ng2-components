@@ -15,10 +15,34 @@
  * limitations under the License.
  */
 
-import { DataColumn, DataRowEvent, DataSorting, DataTableAdapter, ObjectDataColumn, ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/adf-core';
-import { AppConfigService, DataColumnListComponent, PaginatedComponent, PaginationComponent, PaginationQueryParams, UserPreferencesService } from '@alfresco/adf-core';
+import {
+    DataColumn,
+    DataRowEvent,
+    DataSorting,
+    DataTableAdapter,
+    ObjectDataColumn,
+    ObjectDataRow,
+    ObjectDataTableAdapter
+} from '@alfresco/adf-core';
+import {
+    AppConfigService,
+    DataColumnListComponent,
+    PaginatedComponent,
+    PaginationComponent,
+    PaginationQueryParams,
+    UserPreferencesService
+} from '@alfresco/adf-core';
 import { DatePipe } from '@angular/common';
-import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import {
+    AfterContentInit,
+    Component,
+    ContentChild,
+    EventEmitter,
+    Input,
+    OnChanges,
+    Output,
+    SimpleChanges
+} from '@angular/core';
 import { ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
 import { processPresetsDefaultModel } from '../models/process-preset.model';
 import { ProcessService } from '../services/process.service';
@@ -200,7 +224,6 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     /**
      * Create an array of ObjectDataRow
      * @param instances
-     * @returns {ObjectDataRow[]}
      */
     private createDataRow(instances: any[]): ObjectDataRow[] {
         let instancesRows: ObjectDataRow[] = [];
@@ -255,7 +278,6 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
 
     /**
      * Return the current id
-     * @returns {string}
      */
     getCurrentId(): string {
         return this.currentInstanceId;
@@ -263,7 +285,6 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
 
     /**
      * Check if the list is empty
-     * @returns {ObjectDataTableAdapter|boolean}
      */
     isListEmpty(): boolean {
         return this.data === undefined ||
@@ -295,9 +316,8 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     /**
      * Optimize name field
      * @param instances
-     * @returns {any[]}
      */
-    private optimizeNames(instances: any[]) {
+    private optimizeNames(instances: any[]): any[] {
         instances = instances.map(t => {
             t.obj.name = this.getProcessNameOrDescription(t.obj, 'medium');
             return t;

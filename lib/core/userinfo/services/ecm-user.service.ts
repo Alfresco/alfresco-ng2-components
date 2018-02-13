@@ -63,7 +63,6 @@ export class EcmUserService {
     /**
      * Throw the error
      * @param error
-     * @returns {ErrorObservable}
      */
     private handleError(error: Response) {
         // in a real world app, we may send the error to some remote logging infrastructure

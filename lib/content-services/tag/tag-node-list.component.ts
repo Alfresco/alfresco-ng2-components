@@ -21,8 +21,6 @@ import { TagService } from './services/tag.service';
 /**
  *
  * This component, ShowNodeTag a list of the tag on relative a node
- *
- * @returns {TagNodeList} .
  */
 
 @Component({

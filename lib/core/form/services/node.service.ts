@@ -29,7 +29,6 @@ export class NodeService {
     /**
      * Get All the metadata and the nodeType for a nodeId cleaned by the prefix
      * @param nodeId Node Id
-     * @returns NodeMetadata
      */
     public getNodeMetadata(nodeId: string): Observable<NodeMetadata> {
         return Observable.fromPromise(this.apiService.getInstance().nodes.getNodeInfo(nodeId)).map(this.cleanMetadataFromSemicolon);
@@ -41,7 +40,6 @@ export class NodeService {
      * @param nodeType node type
      * @param nameSpace namespace node
      * @param data data to store
-     * @returns NodeMetadata
      */
     public createNodeMetadata(nodeType: string, nameSpace: any, data: any, path: string, name?: string): Observable<any> {
         let properties = {};
@@ -60,7 +58,6 @@ export class NodeService {
      * @param nodeType node type
      * @param properties namespace node
      * @param path path
-     * @returns NodeMetadata
      */
     public createNode(name: string, nodeType: string, properties: any, path: string): Observable<any> {
         let body = {

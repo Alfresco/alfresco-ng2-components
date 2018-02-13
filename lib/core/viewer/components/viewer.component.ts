@@ -436,8 +436,7 @@ export class ViewerComponent implements OnChanges {
     /**
      * get File name from url
      *
-     * @param {string} url - url file
-     * @returns {string} name file
+     * @param  url - url file
      */
     getFilenameFromUrl(url: string): string {
         let anchor = url.indexOf('#');
@@ -454,8 +453,7 @@ export class ViewerComponent implements OnChanges {
      * http://localhost/test.jpg?cache=1000
      * http://localhost/test.jpg#cache=1000
      *
-     * @param {string} fileName - file name
-     * @returns {string} file name extension
+     * @param fileName - file name
      */
     getFileExtension(fileName: string): string {
         if (fileName) {
@@ -478,7 +476,7 @@ export class ViewerComponent implements OnChanges {
 
     /**
      * Keyboard event listener
-     * @param {KeyboardEvent} event
+     * @param  event
      */
     @HostListener('document:keyup', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {

@@ -158,7 +158,6 @@ export class ThumbnailService {
     /**
      * Get thumbnail URL for the given document node.
      * @param document Node to get URL for.
-     * @returns {string} URL address.
      */
     public getDocumentThumbnailUrl(node: any): string {
         let thumbnail = this.contentService.getDocumentThumbnailUrl(node);
@@ -168,7 +167,6 @@ export class ThumbnailService {
     /**
      * Get mimeType SVG
      * @param mimeType
-     * @returns {string} URL SVG address.
      */
     public getMimeTypeIcon(mimeType: string): string {
         let icon = this.mimeTypeIcons[mimeType];
@@ -177,7 +175,6 @@ export class ThumbnailService {
 
     /**
      * Get default SVG
-     * @returns {string} URL SVG default.
      */
     public getDefaultMimeTypeIcon(): string {
         return this.DEFAULT_ICON;
