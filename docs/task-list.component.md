@@ -125,6 +125,23 @@ You can also use both HTML-based and app.config.json custom schema declaration a
 </adf-tasklist>
 ```
 
+adf-tasklist also supports pagination and the same can be used as shown below.
+
+```html
+<adf-tasklist
+    [appId]="'1'"
+    [page]="page"
+    [size]="size"
+    #taskList>
+</adf-tasklist>
+<adf-pagination
+    *ngIf="taskList"
+    [target]="taskList"
+    [supportedPageSizes]="supportedPages"
+    #taskListPagination>
+</adf-pagination>
+```
+
 ### Properties
 
 | Name | Type | Default | Description |
