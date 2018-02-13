@@ -14,8 +14,7 @@
   "ADF_TASK_LIST": {
     "APPS": {
       "NONE": "No apps found",
-      "TASK_APP_NAME": "Task App",
-      "LOADING": "Loading Apps"
+      "TASK_APP_NAME": "Task App"
     },
     "LIST": {
       "MESSAGES": {

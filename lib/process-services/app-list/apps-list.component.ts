@@ -187,7 +187,11 @@ export class AppsListComponent implements OnInit {
     }
 
     isEmpty(): boolean {
-        return this.appList ? false : true;
+        return this.appList.length === 0;
+    }
+
+    loading(): boolean {
+        return this.isLoading;
     }
 
     getTheme(app: AppDefinitionRepresentationModel): string {
