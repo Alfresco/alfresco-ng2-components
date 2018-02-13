@@ -30,8 +30,6 @@ import { EmptySearchResultComponent } from './empty-search-result.component';
 import { SimpleSearchTestCustomEmptyComponent } from '../../mock';
 import { SearchModule } from '../../index';
 
-/*tslint:disable:ban*/
-
 describe('SearchControlComponent', () => {
 
     let fixture: ComponentFixture<SearchControlComponent>;
