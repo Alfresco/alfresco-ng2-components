@@ -8,8 +8,6 @@
             </mat-expansion-panel-header>
 
             <adf-card-view
-                class="adf-metadata-properties-basic"
-                data-automation-id="adf-metadata-properties-basic"
                 [properties]="basicProperties$ | async"
                 [editable]="editable"
                 [displayEmpty]="displayEmpty">
@@ -17,18 +15,17 @@
         </mat-expansion-panel>
 
         <ng-container *ngIf="expanded">
-            <ng-container *ngIf="aspects$ | async; else loading; let aspects">
-                <div *ngFor="let aspect of aspects" class="adf-metadata-properties-aspect">
+            <ng-container *ngIf="groupedProperties$ | async; else loading; let groupedProperties">
+                <div *ngFor="let group of groupedProperties" class="adf-metadata-grouped-properties-container">
                     <mat-expansion-panel>
                         <mat-expansion-panel-header>
                             <mat-panel-title>
-                                {{aspect.title}}
+                                {{group.title}}
                             </mat-panel-title>
                         </mat-expansion-panel-header>
 
                         <adf-card-view
-                            class="adf-node-aspect-properties"
-                            [properties]="aspect.properties"
+                            [properties]="group.properties"
                             [editable]="editable"
                             [displayEmpty]="displayEmpty">
                         </adf-card-view>

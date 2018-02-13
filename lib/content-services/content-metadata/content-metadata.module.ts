@@ -24,10 +24,10 @@ import { CardViewModule , FileSizePipe } from '@alfresco/adf-core';
 import { ContentMetadataComponent } from './components/content-metadata/content-metadata.component';
 import { ContentMetadataCardComponent } from './components/content-metadata-card/content-metadata-card.component';
 import { PropertyDescriptorsService } from './services/property-descriptors.service';
-import { PropertyDescriptorLoaderService } from './services/properties-loader.service';
-import { AspectWhiteListService } from './services/aspect-whitelist.service';
+import { ContentMetadataConfigFactory } from './services/config/content-metadata-config.factory';
 import { BasicPropertiesService } from './services/basic-properties.service';
 import { ContentMetadataService } from './services/content-metadata.service';
+import { PropertyGroupTranslatorService } from './services/property-groups-translator.service';
 
 @NgModule({
     imports: [
@@ -48,9 +48,9 @@ import { ContentMetadataService } from './services/content-metadata.service';
     providers: [
         ContentMetadataService,
         PropertyDescriptorsService,
-        PropertyDescriptorLoaderService,
-        AspectWhiteListService,
+        ContentMetadataConfigFactory,
         BasicPropertiesService,
+        PropertyGroupTranslatorService,
         FileSizePipe
     ]
 })
