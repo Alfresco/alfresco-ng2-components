@@ -100,6 +100,10 @@ describe('LoginComponent', () => {
         fixture.detectChanges();
     }
 
+    it('should be autocompelte off', () => {
+        expect(element.querySelector('#adf-login-form').getAttribute('autocomplete')).toBe('off');
+    });
+
     it('should redirect to route on successful login', () => {
         spyOn(authService, 'login').and.returnValue(Observable.of({ type: 'type', ticket: 'ticket'}));
         const redirect = '/home';
