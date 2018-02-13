@@ -39,8 +39,7 @@ import { ContentMetadataService } from './services/content-metadata.service';
     ],
     exports: [
         ContentMetadataComponent,
-        ContentMetadataCardComponent,
-        ContentMetadataService
+        ContentMetadataCardComponent
     ],
     declarations: [
         ContentMetadataComponent,
