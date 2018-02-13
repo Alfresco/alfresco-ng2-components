@@ -44,7 +44,7 @@ export class FileUploadingListComponent {
     /**
      * Cancel file upload
      *
-     * @param {FileModel} file File model to cancel upload for.
+     * @param file File model to cancel upload for.
      *
      * @memberOf FileUploadingListComponent
      */
@@ -88,8 +88,7 @@ export class FileUploadingListComponent {
     }
 
     /**
-     * Checks if all the files are uploaded
-     * @returns {boolean} - false if there is at least one file in Progress | Starting | Pending
+     * Checks if all the files are uploaded false if there is at least one file in Progress | Starting | Pending
      */
     isUploadCompleted(): boolean {
          return !this.isUploadCancelled() &&
@@ -103,8 +102,7 @@ export class FileUploadingListComponent {
     }
 
     /**
-     * Check if all the files are Cancelled | Aborted | Error.
-     * @returns {boolean} - false if there is at least one file in uploading states
+     * Check if all the files are Cancelled | Aborted | Error. false if there is at least one file in uploading states
      */
     isUploadCancelled(): boolean {
         return !!this.files.length &&

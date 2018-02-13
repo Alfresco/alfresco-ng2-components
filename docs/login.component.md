@@ -41,7 +41,7 @@ Authenticates to Alfresco Content Services and Alfresco Process Services.
 | logoImageUrl | `string` | `'./assets/images/alfresco-logo.svg'` | Path to a custom logo image.  |
 | backgroundImageUrl | `string` | `'./assets/images/background.svg'` | Path to a custom background image.  |
 | copyrightText | `string` | `'\u00A9 2016 Alfresco Software, Inc. All Rights Reserved.'` | The copyright text below the login box.  |
-| providers | `string` |  | Possible valid values are ECM, BPM or ALL. By default, this component will log in only to ECM. If you want to log in in both systems then use ALL. |
+| providers | `string` |  | Possible valid values are ECM, BPM or ALL. By default, this component will log in only to ECM. If you want to log in in both systems then use ALL. There is also a way to call your Auth token API using the string "OAUTH" (supported only for BPM) |
 | fieldsValidation | `any` |  | Custom validation rules for the login form.  |
 | disableCsrf | `boolean` |  | Prevents the CSRF Token from being submitted. Only valid for Alfresco Process Services.  |
 | successRoute | `string` | `null` | Route to redirect to on successful login.  |
@@ -182,6 +182,46 @@ export class MyCustomLogin {
     ngOnInit() {
         this.alfrescologin.addCustomValidationError('username', 'minlength', 'Username must be at least 8 characters.');
         this.alfrescologin.addCustomValidationError('username', 'maxlength', 'Username must not be longer than 11 characters.');
+    }
+}
+```
+
+### Call an external identity provider to fetch the auth token
+
+If needed it is possible to call an external provider to identify the user.
+
+**app.config.json**
+
+```json
+{
+    "oauth2" : {
+      "host": "http://myhost.com",
+      "authPath": "/my-custom-auth/token",
+      "clientId": "my-client-id",
+      "secret": ""
+    }
+}
+```
+
+**MyCustomLogin.component.html**
+```html
+<adf-login 
+    [providers]="'OAUTH'"
+    (success)="onMyAuthLogin($event)">
+</adf-login>
+```
+
+**MyCustomLogin.component.ts**
+
+```ts
+export class MyCustomLogin {
+ 
+    constructor(public router: Router) {
+    }
+
+    onMyAuthLogin($event) {
+        console.log("My token " + $event.token.ticket)
+        this.router.navigate(['/home']);
     }
 }
 ```

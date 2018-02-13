@@ -48,7 +48,6 @@ export class AuthenticationService {
 
     /**
      * The method return true if the user is logged in
-     * @returns {boolean}
      */
     isLoggedIn(): boolean {
         return !!this.alfrescoApi.getInstance().isLoggedIn();
@@ -58,7 +57,6 @@ export class AuthenticationService {
      * Method to delegate to POST login
      * @param username
      * @param password
-     * @returns {Observable<R>|Observable<T>}
      */
     login(username: string, password: string, rememberMe: boolean = false): Observable<{ type: string, ticket: any }> {
         this.removeTicket();
@@ -94,7 +92,6 @@ export class AuthenticationService {
     /**
      * The method retrieve whether the "remember me" cookie was set or not
      *
-     * @returns {boolean}
      */
     isRememberMeSet(): boolean {
         return (this.cookie.getItem(REMEMBER_ME_COOKIE_KEY) === null) ? false : true;
@@ -104,7 +101,6 @@ export class AuthenticationService {
      * Initialize the alfresco Api with user and password end call the login method
      * @param username
      * @param password
-     * @returns {*|Observable<any>}
      */
     private callApiLogin(username: string, password: string) {
         return this.alfrescoApi.getInstance().login(username, password);
@@ -113,7 +109,6 @@ export class AuthenticationService {
     /**
      * The method remove the ticket from the Storage
      *
-     * @returns {Observable<R>|Observable<T>}
      */
     logout() {
         return Observable.fromPromise(this.callApiLogout())
@@ -127,7 +122,6 @@ export class AuthenticationService {
 
     /**
      *
-     * @returns {*|Observable<string>|Observable<any>|Promise<T>}
      */
     private callApiLogout(): Promise<any> {
         if (this.alfrescoApi.getInstance()) {
@@ -146,7 +140,6 @@ export class AuthenticationService {
 
     /**
      * The method return the ECM ticket stored in the Storage
-     * @returns ticket
      */
     getTicketEcm(): string | null {
         return this.storage.getItem('ticket-ECM');
@@ -154,7 +147,6 @@ export class AuthenticationService {
 
     /**
      * The method return the BPM ticket stored in the Storage
-     * @returns ticket
      */
     getTicketBpm(): string | null {
         return this.storage.getItem('ticket-BPM');
@@ -174,6 +166,7 @@ export class AuthenticationService {
     saveTickets(): void {
         this.saveTicketEcm();
         this.saveTicketBpm();
+        this.saveTicketAuth();
     }
 
     /**
@@ -195,9 +188,17 @@ export class AuthenticationService {
     }
 
     /**
+     * The method save the AUTH ticket in the Storage
+     */
+    saveTicketAuth(): void {
+        if (this.alfrescoApi.getInstance() && (<any>this.alfrescoApi.getInstance()).getTicketAuth()) {
+            this.storage.setItem('ticket-AUTH', (<any>this.alfrescoApi.getInstance()).getTicketAuth());
+        }
+    }
+
+    /**
      * The method return true if user is logged in on ecm provider
      *
-     * @returns {boolean}
      */
     isEcmLoggedIn(): boolean {
         if (this.cookie.isEnabled() && !this.isRememberMeSet()) {
@@ -209,7 +210,6 @@ export class AuthenticationService {
     /**
      * The method return true if user is logged in on bpm provider
      *
-     * @returns {boolean}
      */
     isBpmLoggedIn(): boolean {
         if (this.cookie.isEnabled() && !this.isRememberMeSet()) {
@@ -221,7 +221,6 @@ export class AuthenticationService {
     /**
      * Get the ECM username
      *
-     * @returns {string} The username value
      *
      * @memberof AuthenticationService
      */
@@ -232,7 +231,6 @@ export class AuthenticationService {
     /**
      * Get the BPM username
      *
-     * @returns {string} The username value
      *
      * @memberof AuthenticationService
      */
@@ -259,7 +257,6 @@ export class AuthenticationService {
     /**
      * The method write the error in the console browser
      * @param error
-     * @returns {ErrorObservable}
      */
     handleError(error: any): Observable<any> {
         this.logService.error('Error when logging in', error);

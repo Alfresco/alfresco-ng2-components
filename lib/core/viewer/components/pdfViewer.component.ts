@@ -28,7 +28,7 @@ declare let PDFJS: any;
         './pdfViewer.component.scss',
         './pdfViewerHost.component.scss'
     ],
-    providers: [ RenderingQueueServices ],
+    providers: [RenderingQueueServices],
     host: { 'class': 'adf-pdf-viewer' },
     encapsulation: ViewEncapsulation.None
 })
@@ -55,6 +55,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     totalPages: number;
     loadingPercent: number;
     pdfViewer: any;
+    documentContainer: any;
     currentScaleMode: string = 'auto';
     currentScale: number = 1;
 
@@ -69,8 +70,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     constructor(private renderingQueueServices: RenderingQueueServices,
                 private logService: LogService) {
-        // needed to preserve "this" context when setting as a global document event listener
-        this.onDocumentScroll = this.onDocumentScroll.bind(this);
+        // needed to preserve "this" context
+        this.onPageChange = this.onPageChange.bind(this);
     }
 
     ngOnChanges(changes) {
@@ -122,8 +123,6 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     /**
      * return the PDFJS global object (exist to facilitate the mock of PDFJS in the test)
-     *
-     * @returns {PDFJS}
      */
     getPDFJS() {
         return PDFJS;
@@ -133,13 +132,13 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         PDFJS.verbosity = 1;
         PDFJS.disableWorker = false;
 
-        let documentContainer = document.getElementById('viewer-pdf-container');
-        let viewer: any = document.getElementById('viewer-viewerPdf');
+        const viewer: any = document.getElementById('viewer-viewerPdf');
 
-        window.document.addEventListener('scroll', this.onDocumentScroll, true);
+        this.documentContainer = document.getElementById('viewer-pdf-container');
+        this.documentContainer.addEventListener('pagechange', this.onPageChange, true);
 
         this.pdfViewer = new PDFJS.PDFViewer({
-            container: documentContainer,
+            container: this.documentContainer,
             viewer: viewer,
             renderingQueue: this.renderingQueueServices
         });
@@ -150,13 +149,15 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     ngOnDestroy() {
-        window.document.removeEventListener('scroll', this.onDocumentScroll, true);
+        if (this.documentContainer) {
+            this.documentContainer.removeEventListener('pagechange', this.onPageChange, true);
+        }
     }
 
     /**
      * Method to scale the page current support implementation
      *
-     * @param {string} scaleMode - new scale mode
+     * @param scaleMode - new scale mode
      */
     scalePage(scaleMode) {
         this.currentScaleMode = scaleMode;
@@ -220,7 +221,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     /**
      * Update all the pages with the newScale scale
      *
-     * @param {number} newScale - new scale page
+     * @param newScale - new scale page
      */
     setScaleUpdatePages(newScale: number) {
         if (!this.isSameScale(this.currentScale, newScale)) {
@@ -237,24 +238,21 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     /**
      * Check if the request scale of the page is the same for avoid useless re-rendering
      *
-     * @param {number} oldScale - old scale page
-     * @param {number} newScale - new scale page
+     * @param oldScale - old scale page
+     * @param newScale - new scale page
      *
-     * @returns {boolean}
      */
-    isSameScale(oldScale: number, newScale: number) {
+    isSameScale(oldScale: number, newScale: number): boolean {
         return (newScale === oldScale);
     }
 
     /**
      * Check if is a land scape view
      *
-     * @param {number} width
-     * @param {number} height
-     *
-     * @returns {boolean}
+     * @param width
+     * @param height
      */
-    isLandscape(width: number, height: number) {
+    isLandscape(width: number, height: number): boolean {
         return (width > height);
     }
 
@@ -279,7 +277,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     /**
      * zoom in page pdf
      *
-     * @param {number} ticks
+     * @param ticks
      */
     zoomIn(ticks: number) {
         let newScale: any = this.currentScale;
@@ -295,7 +293,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     /**
      * zoom out page pdf
      *
-     * @param {number} ticks
+     * @param ticks
      */
     zoomOut(ticks: number) {
         let newScale: any = this.currentScale;
@@ -335,7 +333,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     /**
      * load the page in input
      *
-     * @param {string} page - page to load
+     * @param page to load
      */
     inputPage(page: string) {
         let pageInput = parseInt(page, 10);
@@ -350,53 +348,18 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     /**
-     * Litener Scroll Event
+     * Page Change Event
      *
-     * @param {any} target
+     * @param event
      */
-    watchScroll(target) {
-        let outputPage = this.getVisibleElement(target);
-
-        if (outputPage) {
-            this.page = outputPage.id;
-            this.displayPage = this.page;
-        }
-    }
-
-    /**
-     * find out what elements are visible within a scroll pane
-     *
-     * @param {any} target
-     *
-     * @returns {Object} page
-     */
-    getVisibleElement(target) {
-        return this.pdfViewer._pages.find((page) => {
-            return this.isOnScreen(page, target);
-        });
-    }
-
-    /**
-     * check if a page is visible
-     *
-     * @param {any} page
-     * @param {any} target
-     *
-     * @returns {boolean}
-     */
-    isOnScreen(page: any, target: any) {
-        let viewport: any = {};
-        viewport.top = target.scrollTop;
-        viewport.bottom = viewport.top + target.scrollHeight;
-        let bounds: any = {};
-        bounds.top = page.div.offsetTop;
-        bounds.bottom = bounds.top + page.viewport.height;
-        return ((bounds.top <= viewport.bottom) && (bounds.bottom >= viewport.top));
+    onPageChange(event) {
+        this.page = event.pageNumber;
+        this.displayPage = event.pageNumber;
     }
 
     /**
      * Litener Keyboard Event
-     * @param {KeyboardEvent} event
+     * @param KeyboardEvent event
      */
     @HostListener('document:keydown', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
@@ -407,11 +370,4 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             this.previousPage();
         }
     }
-
-    onDocumentScroll(event: Event) {
-        if (event && event.target) {
-            this.watchScroll(event.target);
-        }
-    }
-
 }

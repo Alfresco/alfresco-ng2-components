@@ -64,7 +64,7 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
     /**
      * Method called when files are dropped in the drag area.
      *
-     * @param {File[]} files - files dropped in the drag area.
+     * @param files - files dropped in the drag area.
      */
     onFilesDropped(files: File[]): void {
         if (!this.disabled && files.length) {
@@ -121,7 +121,7 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
     /**
      * Show undo notification bar.
      *
-     * @param {FileModel[]} latestFilesAdded - files in the upload queue enriched with status flag and xhr object.
+     * @param latestFilesAdded - files in the upload queue enriched with status flag and xhr object.
      */
     showUndoNotificationBar(latestFilesAdded: FileModel[]) {
         let messageTranslate: any, actionTranslate: any;
@@ -137,7 +137,6 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
      * Show the error inside Notification bar
      *
      * @param Error message
-     * @private
      */
     showErrorNotificationBar(errorMessage: string) {
         this.notificationService.openSnackMessage(errorMessage, 3000);

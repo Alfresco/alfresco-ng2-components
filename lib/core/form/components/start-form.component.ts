@@ -38,7 +38,6 @@ import { FormOutcomeModel } from './widgets/core/index';
  *  {formSaved} EventEmitter - This event is fired when the form is saved, it pass all the value in the form.
  *  {formCompleted} EventEmitter - This event is fired when the form is completed, it pass all the value in the form.
  *
- * @returns {FormComponent} .
  */
 @Component({
     selector: 'adf-start-form',
@@ -120,6 +119,8 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
                             form.processVariables = intance.variables;
                         }
                         this.form = this.parseForm(form);
+                        this.visibilityService.refreshVisibility(this.form);
+                        this.form.validateForm();
                         this.form.readOnly = this.readOnlyForm;
                         this.onFormLoaded(this.form);
                     },
@@ -135,6 +136,8 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
                 form => {
                     this.formName = form.processDefinitionName;
                     this.form = this.parseForm(form);
+                    this.visibilityService.refreshVisibility(this.form);
+                    this.form.validateForm();
                     this.form.readOnly = this.readOnlyForm;
                     this.onFormLoaded(this.form);
                 },

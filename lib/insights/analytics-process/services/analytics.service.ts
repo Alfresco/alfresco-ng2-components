@@ -40,7 +40,6 @@ export class AnalyticsService {
 
     /**
      * Retrive all the Deployed app
-     * @returns {Observable<any>}
      */
     getReportList(appId: number): Observable<any> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.getReportList())
@@ -59,7 +58,6 @@ export class AnalyticsService {
     /**
      * Retrive Report by name
      * @param reportName - string - The name of report
-     * @returns {Observable<any>}
      */
     getReportByName(reportName: string): Observable<any> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.getReportList())

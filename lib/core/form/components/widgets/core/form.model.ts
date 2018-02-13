@@ -173,7 +173,6 @@ export class FormModel {
     /**
      * Validates entire form and all form fields.
      *
-     * @returns {void}
      * @memberof FormModel
      */
     validateForm(): void {
@@ -203,8 +202,7 @@ export class FormModel {
     /**
      * Validates a specific form field, triggers form validation.
      *
-     * @param {FormFieldModel} field Form field to validate.
-     * @returns {void}
+     * @param field Form field to validate.
      * @memberof FormModel
      */
     validateField(field: FormFieldModel): void {

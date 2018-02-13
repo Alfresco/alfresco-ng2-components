@@ -27,7 +27,6 @@ import 'rxjs/add/observable/throw';
  *
  * BPMUserService retrieve all the information of an Ecm user.
  *
- * @returns {BPMUserService} .
  */
 @Injectable()
 export class BpmUserService {
@@ -53,7 +52,6 @@ export class BpmUserService {
     /**
      * Throw the error
      * @param error
-     * @returns {ErrorObservable}
      */
     private handleError(error: Response) {
         // in a real world app, we may send the error to some remote logging infrastructure

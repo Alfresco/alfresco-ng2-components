@@ -100,7 +100,7 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
     /**
      * Change the style of the drag area when a file drag in.
      *
-     * @param {event} event - DOM event.
+     * @param event - DOM event.
      */
     onDragEnter(event: Event): void {
         if (this.enabled && !event.defaultPrevented) {
@@ -112,7 +112,7 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
     /**
      * Change the style of the drag area when a file drag out.
      *
-     * @param {event} event - DOM event.
+     * @param event - DOM event.
      */
     onDragLeave(event: Event): void {
         if (this.enabled && !event.defaultPrevented) {
@@ -136,7 +136,7 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
     /**
      * Prevent default and stop propagation of the DOM event.
      *
-     * @param {event} $event - DOM event.
+     * @param $event - DOM event.
      */
     preventDefault(event: Event): void {
         event.stopPropagation();

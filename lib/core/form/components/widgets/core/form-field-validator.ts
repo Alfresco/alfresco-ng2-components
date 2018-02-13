@@ -53,7 +53,7 @@ export class RequiredFieldValidator implements FormFieldValidator {
     }
 
     validate(field: FormFieldModel): boolean {
-        if (this.isSupported(field)) {
+        if (this.isSupported(field) && field.isVisible) {
 
             if (field.type === FormFieldTypes.DROPDOWN) {
                 if (field.hasEmptyValue && field.emptyOption) {
@@ -105,7 +105,7 @@ export class NumberFieldValidator implements FormFieldValidator {
     }
 
     validate(field: FormFieldModel): boolean {
-        if (this.isSupported(field)) {
+        if (this.isSupported(field) && field.isVisible) {
             if (field.value === null ||
                 field.value === undefined ||
                 field.value === '') {
@@ -147,7 +147,7 @@ export class DateFieldValidator implements FormFieldValidator {
     }
 
     validate(field: FormFieldModel): boolean {
-        if (this.isSupported(field) && field.value) {
+        if (this.isSupported(field) && field.value && field.isVisible) {
             if (DateFieldValidator.isValidDate(field.value, field.dateDisplayFormat)) {
                 return true;
             }
@@ -171,7 +171,7 @@ export class MinDateFieldValidator implements FormFieldValidator {
 
     validate(field: FormFieldModel): boolean {
         let isValid = true;
-        if (this.isSupported(field) && field.value) {
+        if (this.isSupported(field) && field.value && field.isVisible) {
             const dateFormat = field.dateDisplayFormat;
 
             if (!DateFieldValidator.isValidDate(field.value, dateFormat)) {
@@ -219,7 +219,7 @@ export class MaxDateFieldValidator implements FormFieldValidator {
     }
 
     validate(field: FormFieldModel): boolean {
-        if (this.isSupported(field) && field.value) {
+        if (this.isSupported(field) && field.value && field.isVisible) {
             const dateFormat = field.dateDisplayFormat;
 
             if (!DateFieldValidator.isValidDate(field.value, dateFormat)) {
@@ -259,7 +259,7 @@ export class MinDateTimeFieldValidator implements FormFieldValidator {
 
     validate(field: FormFieldModel): boolean {
         let isValid = true;
-        if (this.isSupported(field) && field.value) {
+        if (this.isSupported(field) && field.value && field.isVisible) {
             const dateFormat = field.dateDisplayFormat;
 
             if (!DateFieldValidator.isValidDate(field.value, dateFormat)) {
@@ -306,7 +306,7 @@ export class MaxDateTimeFieldValidator implements FormFieldValidator {
 
     validate(field: FormFieldModel): boolean {
         let isValid = true;
-        if (this.isSupported(field) && field.value) {
+        if (this.isSupported(field) && field.value && field.isVisible) {
             const dateFormat = field.dateDisplayFormat;
 
             if (!DateFieldValidator.isValidDate(field.value, dateFormat)) {
@@ -354,7 +354,7 @@ export class MinLengthFieldValidator implements FormFieldValidator {
     }
 
     validate(field: FormFieldModel): boolean {
-        if (this.isSupported(field) && field.value) {
+        if (this.isSupported(field) && field.value && field.isVisible) {
             if (field.value.length >= field.minLength) {
                 return true;
             }
@@ -380,7 +380,7 @@ export class MaxLengthFieldValidator implements FormFieldValidator {
     }
 
     validate(field: FormFieldModel): boolean {
-        if (this.isSupported(field) && field.value) {
+        if (this.isSupported(field) && field.value && field.isVisible) {
             if (field.value.length <= field.maxLength) {
                 return true;
             }
@@ -406,7 +406,7 @@ export class MinValueFieldValidator implements FormFieldValidator {
     }
 
     validate(field: FormFieldModel): boolean {
-        if (this.isSupported(field) && field.value) {
+        if (this.isSupported(field) && field.value && field.isVisible) {
             let value: number = +field.value;
             let minValue: number = +field.minValue;
 
@@ -436,7 +436,7 @@ export class MaxValueFieldValidator implements FormFieldValidator {
     }
 
     validate(field: FormFieldModel): boolean {
-        if (this.isSupported(field) && field.value) {
+        if (this.isSupported(field) && field.value && field.isVisible) {
             let value: number = +field.value;
             let maxValue: number = +field.maxValue;
 
@@ -465,7 +465,7 @@ export class RegExFieldValidator implements FormFieldValidator {
     }
 
     validate(field: FormFieldModel): boolean {
-        if (this.isSupported(field) && field.value) {
+        if (this.isSupported(field) && field.value && field.isVisible) {
             if (field.value.length > 0 && field.value.match(new RegExp('^' + field.regexPattern + '$'))) {
                 return true;
             }
@@ -508,7 +508,7 @@ export class FixedValueFieldValidator implements FormFieldValidator {
     }
 
     validate(field: FormFieldModel): boolean {
-        if (this.isSupported(field)) {
+        if (this.isSupported(field) && field.isVisible) {
             if (this.hasStringValue(field) && this.hasOptions(field) && !this.hasValidNameOrValidId(field)) {
                 field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_VALUE';
                 return false;
