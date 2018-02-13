@@ -21,7 +21,6 @@ export class ObjectUtils {
      * ObjectUtils.getValue({ item: { nodeType: 'cm:folder' }}, 'item.nodeType') ==> 'cm:folder'
      * @param target
      * @param key
-     * @returns {string}
      */
     static getValue(target: any, key: string): any {
 

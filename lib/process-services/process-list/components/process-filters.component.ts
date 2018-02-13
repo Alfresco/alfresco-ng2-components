@@ -186,7 +186,6 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
 
     /**
      * Return the current task
-     * @returns {ProcessInstanceFilterRepresentation}
      */
     getCurrentFilter(): ProcessInstanceFilterRepresentation {
         return this.currentFilter;
@@ -194,7 +193,6 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
 
     /**
      * Check if the filter list is empty
-     * @returns {boolean}
      */
     isFilterListEmpty(): boolean {
         return this.filters === undefined || (this.filters && this.filters.length === 0);

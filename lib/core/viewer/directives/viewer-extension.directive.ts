@@ -41,7 +41,7 @@ export class ViewerExtensionDirective implements AfterContentInit {
     }
 
     ngAfterContentInit() {
-        this.templateModel = {template: this.template, isVisible: false};
+        this.templateModel = { template: this.template, isVisible: false };
 
         this.viewerComponent.extensionTemplates.push(this.templateModel);
 
@@ -58,10 +58,8 @@ export class ViewerExtensionDirective implements AfterContentInit {
 
     /**
      * check if the current extension in the viewer is compatible with this extension checking against supportedExtensions
-     *
-     * @returns {boolean}
      */
-    isVisible(fileExtension) {
+    isVisible(fileExtension): boolean {
         let supportedExtension: string;
 
         if (this.supportedExtensions && (this.supportedExtensions instanceof Array)) {

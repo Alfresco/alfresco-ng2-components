@@ -16,8 +16,16 @@
  */
 
 import { PeopleProcessService, UserProcessModel } from '@alfresco/adf-core';
-import { AuthenticationService, CardViewUpdateService, ClickNotification, LogService, UpdateNotification, FormRenderingService } from '@alfresco/adf-core';
-import { Component,
+import {
+    AuthenticationService,
+    CardViewUpdateService,
+    ClickNotification,
+    LogService,
+    UpdateNotification,
+    FormRenderingService
+} from '@alfresco/adf-core';
+import {
+    Component,
     EventEmitter,
     Input,
     OnChanges,
@@ -209,12 +217,11 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
     /**
      * Check if the task has a form
-     * @returns {TaskDetailsModel|string|boolean}
      */
-    hasFormKey() {
+    hasFormKey(): TaskDetailsModel | string | boolean {
         return (this.taskDetails
-        && this.taskDetails.formKey
-        && this.taskDetails.formKey !== 'null');
+            && this.taskDetails.formKey
+            && this.taskDetails.formKey !== 'null');
     }
 
     isTaskActive() {
@@ -339,7 +346,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     }
 
     onFormError(error: any): void {
-        this.errorDialogRef = this.dialog.open(this.errorDialog, {width: '500px'});
+        this.errorDialogRef = this.dialog.open(this.errorDialog, { width: '500px' });
         this.error.emit(error);
     }
 

@@ -38,7 +38,6 @@ import { FormOutcomeModel } from './widgets/core/index';
  *  {formSaved} EventEmitter - This event is fired when the form is saved, it pass all the value in the form.
  *  {formCompleted} EventEmitter - This event is fired when the form is completed, it pass all the value in the form.
  *
- * @returns {FormComponent} .
  */
 @Component({
     selector: 'adf-start-form',

@@ -38,7 +38,6 @@ import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core
  *
  * @Output - success - The event is emitted when the data are recived
  *
- * @returns {WebscriptComponent} .
  */
 @Component({
     selector: 'adf-webscript-get',

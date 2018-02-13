@@ -20,9 +20,6 @@ import { EventEmitter, Injectable, Output } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 
-/**
- * @returns {TagService}
- */
 @Injectable()
 export class TagService {
 
