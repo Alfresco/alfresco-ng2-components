@@ -116,7 +116,6 @@ export class FormService {
     /**
      * Create a Form with a field for each metadata property.
      * @param formName Name of the new form
-     * @returns {Observable<any>}
      */
     createFormFromANode(formName: string): Observable<any> {
         return Observable.create(observer => {
@@ -139,7 +138,6 @@ export class FormService {
     /**
      * Create a Form.
      * @param formName Name of the new form
-     * @returns {Observable<any>}
      */
     createForm(formName: string): Observable<any> {
         let dataModel = {
@@ -170,7 +168,6 @@ export class FormService {
      * Add Fields to A form
      * @param formId ID of the form
      * @param formModel Form definition
-     * @returns {Observable<any>}
      */
     addFieldsToAForm(formId: string, formModel: FormDefinitionModel): Observable<any> {
         this.logService.log('addFieldsToAForm is deprecated in 1.7.0, use saveForm API instead');
@@ -182,7 +179,6 @@ export class FormService {
     /**
      * Search for a form by name.
      * @param name The form name to search for
-     * @returns {Observable<any>}
      */
     searchFrom(name: string): Observable<any> {
         let opts = {
@@ -200,7 +196,6 @@ export class FormService {
 
     /**
      * Gets all the forms.
-     * @returns {Observable<any>}
      */
     getForms(): Observable<any> {
         let opts = {
@@ -233,7 +228,6 @@ export class FormService {
 
     /**
      * Gets all the tasks.
-     * @returns {Observable<any>}
      */
     getTasks(): Observable<any> {
         return Observable.fromPromise(this.taskApi.listTasks({}))
@@ -303,7 +297,6 @@ export class FormService {
     /**
      * Returns form definition with a given name.
      * @param name The form name
-     * @returns {Promise<T>|Promise<ErrorObservable>}
      */
     getFormDefinitionByName(name: string): Observable<any> {
         let opts = {
