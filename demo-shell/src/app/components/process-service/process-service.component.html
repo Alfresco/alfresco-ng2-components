@@ -156,10 +156,6 @@
                         *ngIf="processList"
                         [target]="processList"
                         [supportedPageSizes]="supportedPages"
-                        (changePageNumber)="onChangePageNumberProcess($event)"
-                        (changePageSize)="onChangePageSizeProcess($event)"
-                        (nextPage)="onNextPageProcess($event)"
-                        (prevPage)="onPrevPageProcess($event)"
                         #processListPagination>
                     </adf-pagination>
                 </div>
