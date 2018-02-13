@@ -39,6 +39,7 @@ describe('ActivitiStartForm', () => {
     let component: StartFormComponent;
     let fixture: ComponentFixture<StartFormComponent>;
     let getStartFormSpy: jasmine.Spy;
+    let visibilityService: WidgetVisibilityService;
 
     const exampleId1 = 'my:process1';
     const exampleId2 = 'my:process2';
@@ -71,11 +72,11 @@ describe('ActivitiStartForm', () => {
         fixture = TestBed.createComponent(StartFormComponent);
         component = fixture.componentInstance;
         formService = fixture.debugElement.injector.get(FormService);
+        visibilityService = TestBed.get(WidgetVisibilityService);
 
         getStartFormSpy = spyOn(formService, 'getStartFormDefinition').and.returnValue(Observable.of({
             processDefinitionName: 'my:process'
         }));
-
     });
 
     it('should load start form on change if processDefinitionId defined', () => {
@@ -88,6 +89,14 @@ describe('ActivitiStartForm', () => {
         component.processDefinitionId = exampleId1;
         component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
         expect(formService.getStartFormDefinition).toHaveBeenCalled();
+    });
+
+    it('should check visibility when the start form is loaded', () => {
+        spyOn(visibilityService, 'refreshVisibility');
+        component.processDefinitionId = exampleId1;
+        component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
+        expect(formService.getStartFormDefinition).toHaveBeenCalled();
+        expect(visibilityService.refreshVisibility).toHaveBeenCalled();
     });
 
     it('should not load start form when changes notified but no change to processDefinitionId', () => {
