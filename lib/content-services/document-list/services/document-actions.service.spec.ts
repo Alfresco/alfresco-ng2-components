@@ -15,12 +15,16 @@
  * limitations under the License.
  */
 
+import { async, TestBed } from '@angular/core/testing';
 import { ContentService } from '@alfresco/adf-core';
-import { FileNode, FolderNode, DocumentListServiceMock } from '../../mock';
+
+import { FileNode, FolderNode } from '../../mock';
+import { DocumentListModule } from '../document-list.module';
 import { ContentActionHandler } from '../models/content-action.model';
 import { DocumentActionsService } from './document-actions.service';
 import { DocumentListService } from './document-list.service';
 import { NodeActionsService } from './node-actions.service';
+import { ContentNodeDialogService } from '../../content-node-selector/content-node-dialog.service';
 
 describe('DocumentActionsService', () => {
 
@@ -29,11 +33,22 @@ describe('DocumentActionsService', () => {
     let contentService: ContentService;
     let nodeActionsService: NodeActionsService;
 
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                DocumentListModule
+            ],
+            providers: [
+                ContentNodeDialogService
+            ]
+        }).compileComponents();
+    }));
+
     beforeEach(() => {
-        documentListService = new DocumentListServiceMock();
-        contentService = new ContentService(null, null, null, null);
-        nodeActionsService = new NodeActionsService(null, null);
-        service = new DocumentActionsService(nodeActionsService, documentListService, contentService);
+        documentListService = TestBed.get(DocumentListService);
+        contentService = TestBed.get(ContentService);
+        nodeActionsService = TestBed.get(NodeActionsService);
+        service = TestBed.get(DocumentActionsService);
     });
 
     it('should register default download action', () => {
