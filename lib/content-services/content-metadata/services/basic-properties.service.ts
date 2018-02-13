@@ -24,7 +24,7 @@ export class BasicPropertiesService {
 
     constructor(private fileSizePipe: FileSizePipe) {}
 
-    getBasicProperties(node: MinimalNodeEntryEntity) {
+    getProperties(node: MinimalNodeEntryEntity) {
         return [
             new CardViewTextItemModel({
                 label: 'CORE.METADATA.BASIC.NAME',

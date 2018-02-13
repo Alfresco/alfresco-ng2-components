@@ -20,7 +20,7 @@ import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { CardViewItem, CardViewUpdateService, NodesApiService, LogService } from '@alfresco/adf-core';
 import { ContentMetadataService } from '../../services/content-metadata.service';
-import { CardViewAspect } from '../../interfaces/content-metadata.interfaces';
+import { CardViewGroup } from '../../interfaces/content-metadata.interfaces';
 
 @Component({
     selector: 'adf-content-metadata',
@@ -49,7 +49,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
 
     nodeHasBeenUpdated: boolean = false;
     basicProperties$: Observable<CardViewItem[]>;
-    aspects$: Observable<CardViewAspect[]>;
+    groupedProperties$: Observable<CardViewGroup[]>;
 
     constructor(private contentMetadataService: ContentMetadataService,
                 private cardViewUpdateService: CardViewUpdateService,
@@ -75,7 +75,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
             this.nodeHasBeenUpdated = false;
 
             this.basicProperties$ = this.contentMetadataService.getBasicProperties(node);
-            this.aspects$ = this.contentMetadataService.getAspectProperties(node, this.preset);
+            this.groupedProperties$ = this.contentMetadataService.getGroupedProperties(node, this.preset);
         }
     }
 

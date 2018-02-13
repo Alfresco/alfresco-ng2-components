@@ -17,193 +17,80 @@
 
 import { async, TestBed } from '@angular/core/testing';
 import { PropertyDescriptorsService } from './property-descriptors.service';
-import { PropertyDescriptorLoaderService } from './properties-loader.service';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AlfrescoApiService } from '@alfresco/adf-core';
-import { AspectWhiteListService } from './aspect-whitelist.service';
-import { AppConfigService, LogService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
-import { AspectProperty } from '../interfaces/content-metadata.interfaces';
+import { ClassesApi } from 'alfresco-js-api';
+import { PropertyGroup } from '../interfaces/content-metadata.interfaces';
 
-describe('PropertyDescriptorsService', () => {
+describe('PropertyDescriptorLoaderService', () => {
 
-    let contentMetadataService: PropertyDescriptorsService,
-        aspectProperties: PropertyDescriptorLoaderService,
-        appConfigService: AppConfigService,
-        logService: LogService,
-        node: MinimalNodeEntryEntity,
-        testPresets: any;
+    let service: PropertyDescriptorsService,
+        classesApi: ClassesApi;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             providers: [
                 PropertyDescriptorsService,
-                PropertyDescriptorLoaderService,
-                AppConfigService,
-                AspectWhiteListService,
-                { provide: LogService, useValue: { error: () => {} }},
                 AlfrescoApiService
             ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
-        contentMetadataService = TestBed.get(PropertyDescriptorsService);
-        aspectProperties = TestBed.get(PropertyDescriptorLoaderService);
-        appConfigService = TestBed.get(AppConfigService);
-        logService = TestBed.get(LogService);
+        service = TestBed.get(PropertyDescriptorsService);
+        const alfrescoApiService = TestBed.get(AlfrescoApiService);
+        classesApi = alfrescoApiService.classesApi;
     });
 
     afterEach(() => {
         TestBed.resetTestingModule();
     });
 
-    describe('getAspects', () => {
+    it('should load the groups passed by paramter', () => {
+        spyOn(classesApi, 'getClass');
 
-        beforeEach(() => {
-            node = <MinimalNodeEntryEntity> { aspectNames: [ 'exif:exif', 'cm:content', 'custom:custom' ] };
+        service.load(['exif:exif', 'cm:content', 'custom:custom'])
+            .subscribe(() => {});
 
-            testPresets = {};
-            appConfigService.config['content-metadata'] = {
-                presets: testPresets
-            };
+        expect(classesApi.getClass).toHaveBeenCalledTimes(3);
+        expect(classesApi.getClass).toHaveBeenCalledWith('exif_exif');
+        expect(classesApi.getClass).toHaveBeenCalledWith('cm_content');
+        expect(classesApi.getClass).toHaveBeenCalledWith('custom_custom');
+    });
+
+    it('should merge the forked values', (done) => {
+
+        const exifResponse: PropertyGroup = {
+            name: 'exif:exif',
+            title: '',
+            properties: {
+                'exif:1': { title: 'exif:1:id', name: 'exif:1', dataType: '', mandatory: false, multiValued: false },
+                'exif:2': { title: 'exif:2:id', name: 'exif:2', dataType: '', mandatory: false, multiValued: false }
+            }
+        };
+
+        const contentResponse: PropertyGroup = {
+            name: 'cm:content',
+            title: '',
+            properties: {
+                'cm:content': { title: 'cm:content:id', name: 'cm:content', dataType: '', mandatory: false, multiValued: false }
+            }
+        };
+
+        const apiResponses = [ exifResponse, contentResponse ];
+        let counter = 0;
+
+        spyOn(classesApi, 'getClass').and.callFake(() => {
+            return Observable.of(apiResponses[counter++]);
         });
 
-        it('should call the aspect properties loading for the default aspects related to the given node and defined in the app config', () => {
-            spyOn(aspectProperties, 'load').and.callFake(x => Observable.of({}));
-            testPresets.default = { 'exif:exif': [], 'custom:custom': [], 'banana:banana': [] };
-
-            contentMetadataService.getAspects(node);
-
-            expect(aspectProperties.load).toHaveBeenCalledWith(['exif:exif', 'custom:custom']);
-        });
-
-        it('should call the aspect properties loading for the defined aspects related to the given node and defined in the app config', () => {
-            spyOn(aspectProperties, 'load').and.callFake(x => Observable.of({}));
-            testPresets.pink = { 'cm:content': [], 'custom:custom': [] };
-
-            contentMetadataService.getAspects(node, 'pink');
-
-            expect(aspectProperties.load).toHaveBeenCalledWith(['cm:content', 'custom:custom']);
-        });
-
-        it('should call the aspect properties loading for all the node aspectNames if the "*" widecard is used for the preset', () => {
-            spyOn(aspectProperties, 'load').and.callFake(x => Observable.of({}));
-            testPresets.default = '*';
-
-            contentMetadataService.getAspects(node);
-
-            expect(aspectProperties.load).toHaveBeenCalledWith(['exif:exif', 'cm:content', 'custom:custom']);
-        });
-
-        it('should call the aspect properties loading for all the node aspectNames if there is no preset data defined in the app config', () => {
-            spyOn(aspectProperties, 'load').and.callFake(x => Observable.of({}));
-            spyOn(logService, 'error').and.stub();
-            appConfigService.config['content-metadata'] = undefined;
-
-            contentMetadataService.getAspects(node);
-
-            expect(logService.error).not.toHaveBeenCalled();
-            expect(aspectProperties.load).toHaveBeenCalledWith(['exif:exif', 'cm:content', 'custom:custom']);
-        });
-
-        it('should show meaningful error when invalid preset are given', () => {
-            spyOn(aspectProperties, 'load').and.callFake(x => Observable.of({}));
-            spyOn(logService, 'error').and.stub();
-            testPresets.pink = { 'cm:content': {}, 'custom:custom': {} };
-
-            contentMetadataService.getAspects(node, 'blue');
-
-            expect(logService.error).toHaveBeenCalledWith('No content-metadata preset for: blue');
-        });
-
-        it('should filter out properties which are not defined in the particular aspect', () => {
-            spyOn(aspectProperties, 'load').and.callFake(() => {
-                return Observable.of([
-                    {
-                        name: 'exif:exif',
-                        properties: [
-                            { name: 'exif:1' },
-                            { name: 'exif:2' }
-                        ]
-                    }
-                ]);
+        service.load(['exif:exif', 'cm:content'])
+            .subscribe({
+                next: (data) => {
+                    expect(data['exif:exif']).toBe(exifResponse);
+                    expect(data['cm:content']).toBe(contentResponse);
+                },
+                complete: done
             });
-
-            testPresets.default = { 'exif:exif': ['exif:2'] };
-
-            contentMetadataService.getAspects(node).subscribe({
-                next: (aspects) => {
-                    expect(aspects[0].name).toBe('exif:exif');
-                    expect(aspects[0].properties).toContain(<AspectProperty> { name: 'exif:2' });
-                    expect(aspects[0].properties).not.toContain(<AspectProperty> { name: 'exif:1' });
-                }
-            });
-        });
-
-        it('should accept "*" wildcard for aspect properties', () => {
-            spyOn(aspectProperties, 'load').and.callFake(() => {
-                return Observable.of([
-                    {
-                        name: 'exif:exif',
-                        properties: [
-                            { name: 'exif:1' },
-                            { name: 'exif:2' }
-                        ]
-                    },
-                    {
-                        name: 'custom:custom',
-                        properties: [
-                            { name: 'custom:1' },
-                            { name: 'custom:2' }
-                        ]
-                    }
-                ]);
-            });
-
-            testPresets.default = {
-                'exif:exif': '*',
-                'custom:custom': ['custom:1']
-            };
-
-            contentMetadataService.getAspects(node).subscribe({
-                next: (aspects) => {
-                    expect(aspects.length).toBe(2);
-                    expect(aspects[0].name).toBe('exif:exif');
-                    expect(aspects[0].properties).toContain(<AspectProperty> { name: 'exif:1' });
-                    expect(aspects[0].properties).toContain(<AspectProperty> { name: 'exif:2' });
-
-                    expect(aspects[1].name).toBe('custom:custom');
-                    expect(aspects[1].properties).toContain(<AspectProperty> { name: 'custom:1' });
-                    expect(aspects[1].properties).not.toContain(<AspectProperty> { name: 'custom:2' });
-                }
-            });
-        });
-
-        it('should filter out aspects which are not present in app config preset', () => {
-            spyOn(aspectProperties, 'load').and.callFake(() => {
-                return Observable.of([
-                    {
-                        name: 'exif:exif',
-                        properties: [
-                            { name: 'exif:1' }
-                        ]
-                    }
-                ]);
-            });
-
-            testPresets.default = {
-                'exif:exif': ['exif:1'],
-                'banana:banana': ['banana:1']
-            };
-
-            contentMetadataService.getAspects(node).subscribe({
-                next: (aspects) => {
-                    expect(aspects.length).toBe(1);
-                    expect(aspects[0].name).toBe('exif:exif');
-                    expect(aspects[0].properties).toContain(<AspectProperty> { name: 'exif:1' });
-                }
-            });
-        });
     });
 });

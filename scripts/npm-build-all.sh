@@ -46,6 +46,7 @@ enable_test(){
 enable_testbrowser(){
     if [[ ! -z $1 ]]; then
         if [[  $1 != "-"* ]]; then
+            EXEC_SINGLE_TEST=true
             SINGLE_TEST=$1
         fi
     fi
@@ -104,7 +105,7 @@ while [[ $1 == -* ]]; do
                         shift;
                        fi
                        ;;
-      -d|--debug)  enable_testbrowser $2; shift; shift;;
+      -d|--debug)  enable_testbrowser $2; shift; if $EXEC_SINGLE_TEST == true; then shift; fi ;;
       -ft|--fasttest)  enable_fast_test; shift;;
       -gitjsapi)  enable_js_api_git_link $2; shift 2;;
       -vjsapi)  version_js_api $2; shift 2;;
@@ -166,13 +167,16 @@ if $RUN_TEST == true; then
 fi
 
 if $RUN_TESTBROWSER == true; then
-    for PACKAGE in ${projects[@]}
-    do
-        DESTDIR="$DIR/../lib/"
-        cd $DESTDIR
-        if [[ $PACKAGE == $SINGLE_TEST ]]; then
+      DESTDIR="$DIR/../lib/"
+      cd $DESTDIR
+      if $EXEC_SINGLE_TEST == true; then
+            cp -n "$DESTDIR/config/karma-test-shim.js" "$DESTDIR/$SINGLE_TEST/"
+            debug_project $SINGLE_TEST
+      else
+       for PACKAGE in ${projects[@]}
+        do
             debug_project $PACKAGE
-        fi
-    done
+        done
+      fi
 fi
 
