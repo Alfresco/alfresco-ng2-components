@@ -3,7 +3,7 @@
          <div class="ie11FixerChild">
 
             <mat-card class="adf-login-card-wide">
-                <form [formGroup]="form" (submit)="onSubmit(form.value)">
+                <form id="adf-login-form" [formGroup]="form" (submit)="onSubmit(form.value)" autocomplete="off">
 
                     <mat-card-header>
                         <mat-card-title>
@@ -81,7 +81,7 @@
                                 [class.isChecking]="actualLoginStep === LoginSteps.Checking"
                                 [class.isWelcome]="actualLoginStep === LoginSteps.Welcome"
                                 data-automation-id="login-button" [disabled]="!form.valid">
-                            
+
                             <span *ngIf="actualLoginStep === LoginSteps.Landing" class="adf-login-button-label">{{ 'LOGIN.BUTTON.LOGIN' | translate }}</span>
 
                             <div *ngIf="actualLoginStep === LoginSteps.Checking" class="adf-interactive-login-label">
