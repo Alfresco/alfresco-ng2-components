@@ -284,6 +284,23 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
         return this.taskDetails.assignee.email === this.authService.getBpmUsername();
     }
 
+    isCompleteButtonVisible(): boolean {
+        return this.isAssignedToMe() || this.canInitiatorComplete();
+    }
+
+
+    canInitiatorComplete(): boolean {
+        return this.taskDetails.initiatorCanCompleteTask;
+    }
+
+    isSaveButtonVisible(): boolean {
+        return this.hasSaveButton() && (!this.canInitiatorComplete() || this.isAssignedToMe());
+    }
+
+    hasSaveButton(): boolean {
+        return this.showFormSaveButton;
+    }
+
     /**
      * Retrieve the next open task
      * @param processInstanceId
