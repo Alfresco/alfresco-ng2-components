@@ -25,13 +25,13 @@ import { ContentMetadataComponent } from './content-metadata.component';
 import { MatExpansionModule, MatButtonModule, MatIconModule } from '@angular/material';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { BasicPropertiesService } from '../../services/basic-properties.service';
-import { PropertyDescriptorLoaderService } from '../../services/properties-loader.service';
+import { PropertyGroupTranslatorService } from '../../services/property-groups-translator.service';
 import { PropertyDescriptorsService } from '../../services/property-descriptors.service';
-import { AspectWhiteListService } from '../../services/aspect-whitelist.service';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { CardViewBaseItemModel, CardViewComponent, CardViewUpdateService, NodesApiService, LogService } from '@alfresco/adf-core';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { Observable } from 'rxjs/Observable';
+import { ContentMetadataConfigFactory } from '../../services/config/content-metadata-config.factory';
 
 describe('ContentMetadataComponent', () => {
 
@@ -53,9 +53,9 @@ describe('ContentMetadataComponent', () => {
             providers: [
                 ContentMetadataService,
                 BasicPropertiesService,
-                PropertyDescriptorLoaderService,
+                PropertyGroupTranslatorService,
                 PropertyDescriptorsService,
-                AspectWhiteListService,
+                ContentMetadataConfigFactory,
                 AlfrescoApiService,
                 NodesApiService,
                 { provide: LogService, useValue: { error: jasmine.createSpy('error') } }
@@ -69,6 +69,7 @@ describe('ContentMetadataComponent', () => {
         node = <MinimalNodeEntryEntity> {
             id: 'node-id',
             aspectNames: [],
+            nodeType: '',
             content: {},
             properties: {},
             createdByUser: {},
@@ -198,19 +199,19 @@ describe('ContentMetadataComponent', () => {
             });
         }));
 
-        it('should load the aspect properties on node change', () => {
-            spyOn(contentMetadataService, 'getAspectProperties');
+        it('should load the group properties on node change', () => {
+            spyOn(contentMetadataService, 'getGroupedProperties');
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
-            expect(contentMetadataService.getAspectProperties).toHaveBeenCalledWith(expectedNode, 'custom-preset');
+            expect(contentMetadataService.getGroupedProperties).toHaveBeenCalledWith(expectedNode, 'custom-preset');
         });
 
-        it('should pass through the loaded aspect properties to the card view', async(() => {
+        it('should pass through the loaded group properties to the card view', async(() => {
             const expectedProperties = [];
             component.expanded = true;
             fixture.detectChanges();
-            spyOn(contentMetadataService, 'getAspectProperties').and.callFake(() => {
+            spyOn(contentMetadataService, 'getGroupedProperties').and.callFake(() => {
                 return Observable.of([{ properties: expectedProperties }]);
             });
 
@@ -218,22 +219,22 @@ describe('ContentMetadataComponent', () => {
 
             component.basicProperties$.subscribe(() => {
                 fixture.detectChanges();
-                const firstAspectPropertiesComponent = fixture.debugElement.query(By.css('.adf-metadata-properties-aspect adf-card-view')).componentInstance;
-                expect(firstAspectPropertiesComponent.properties).toBe(expectedProperties);
+                const firstGroupedPropertiesComponent = fixture.debugElement.query(By.css('.adf-metadata-grouped-properties-container adf-card-view')).componentInstance;
+                expect(firstGroupedPropertiesComponent.properties).toBe(expectedProperties);
             });
         }));
 
-        it('should pass through the displayEmpty to the card view of aspect properties', async(() => {
+        it('should pass through the displayEmpty to the card view of grouped properties', async(() => {
             component.expanded = true;
             component.displayEmpty = false;
             fixture.detectChanges();
-            spyOn(contentMetadataService, 'getAspectProperties').and.returnValue(Observable.of([{ properties: [] }]));
+            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(Observable.of([{ properties: [] }]));
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
             component.basicProperties$.subscribe(() => {
                 fixture.detectChanges();
-                const basicPropertiesComponent = fixture.debugElement.query(By.css('.adf-metadata-properties-aspect adf-card-view')).componentInstance;
+                const basicPropertiesComponent = fixture.debugElement.query(By.css('.adf-metadata-grouped-properties-container adf-card-view')).componentInstance;
                 expect(basicPropertiesComponent.displayEmpty).toBe(false);
             });
         }));

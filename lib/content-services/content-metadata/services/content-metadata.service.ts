@@ -17,123 +17,44 @@
 
 import { Injectable } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { PropertyDescriptorsService } from './property-descriptors.service';
 import { BasicPropertiesService } from './basic-properties.service';
-import {
-    CardViewItemProperties,
-    CardViewItem,
-    CardViewTextItemModel,
-    CardViewBoolItemModel,
-    CardViewDateItemModel,
-    CardViewDatetimeItemModel,
-    CardViewIntItemModel,
-    CardViewFloatItemModel,
-    LogService
-} from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
-import { AspectProperty, CardViewAspect, Aspect } from '../interfaces/content-metadata.interfaces';
-
-const D_TEXT = 'd:text';
-const D_MLTEXT = 'd:mltext';
-const D_DATE = 'd:date';
-const D_DATETIME = 'd:datetime';
-const D_INT = 'd:int';
-const D_LONG = 'd:long';
-const D_FLOAT = 'd:float';
-const D_DOUBLE = 'd:double';
-const D_BOOLEAN = 'd:boolean';
+import { PropertyGroupTranslatorService } from './property-groups-translator.service';
+import { CardViewItem } from '@alfresco/adf-core';
+import { CardViewGroup } from '../interfaces/content-metadata.interfaces';
+import { ContentMetadataConfigFactory } from './config/content-metadata-config.factory';
+import { PropertyDescriptorsService } from './property-descriptors.service';
 
 @Injectable()
 export class ContentMetadataService {
 
-    static readonly RECOGNISED_ECM_TYPES = [ D_TEXT, D_MLTEXT, D_DATE, D_DATETIME, D_INT, D_LONG , D_FLOAT, D_DOUBLE, D_BOOLEAN ];
-
-    constructor(private basicPropertiesService: BasicPropertiesService,
-                private propertyDescriptorsService: PropertyDescriptorsService,
-                private logService: LogService) {}
+    constructor(
+        private basicPropertiesService: BasicPropertiesService,
+        private contentMetadataConfigFactory: ContentMetadataConfigFactory,
+        private propertyGroupTranslatorService: PropertyGroupTranslatorService,
+        private propertyDescriptorsService: PropertyDescriptorsService
+    ) {}
 
     getBasicProperties(node: MinimalNodeEntryEntity): Observable<CardViewItem[]> {
-        return Observable.of(this.basicPropertiesService.getBasicProperties(node));
+        return Observable.of(this.basicPropertiesService.getProperties(node));
     }
 
-    getAspectProperties(node: MinimalNodeEntryEntity, preset: string): Observable<CardViewAspect[]> {
-        return this.propertyDescriptorsService.getAspects(node, preset)
-            .map(aspects => this.translateAspects(aspects, node.properties));
-    }
+    getGroupedProperties(node: MinimalNodeEntryEntity, presetName: string = 'default'): Observable<CardViewGroup[]> {
+        const config = this.contentMetadataConfigFactory.get(presetName),
+            groupNames = node.aspectNames
+                .concat(node.nodeType)
+                .filter(groupName => config.isGroupAllowed(groupName));
 
-    private translateAspects(aspects: Aspect[], nodeProperties): CardViewAspect[] {
-        return aspects.map(aspect => {
-            const translatedAspect: any = Object.assign({}, aspect);
-            translatedAspect.properties = this.translateProperties(aspect.properties, nodeProperties);
-            return translatedAspect;
-        });
-    }
+        let groupedProperties;
 
-    private translateProperties(aspectProperties: AspectProperty[], nodeProperties: any): CardViewItem[] {
-        return aspectProperties.map(aspectProperty => {
-            return this.translateProperty(aspectProperty, nodeProperties[aspectProperty.name]);
-        });
-    }
-
-    private translateProperty(aspectProperty: AspectProperty, nodeProperty: any): CardViewItem {
-        this.checkECMTypeValidity(aspectProperty.dataType);
-
-        let propertyDefinition: CardViewItemProperties = {
-            label: aspectProperty.title,
-            value: nodeProperty,
-            key: this.getAspectPropertyKey(aspectProperty.name),
-            default: aspectProperty.defaultValue,
-            editable: true
-        };
-        let property;
-
-        switch (aspectProperty.dataType) {
-
-            case D_MLTEXT:
-                property = new CardViewTextItemModel(Object.assign(propertyDefinition, {
-                    multiline: true
-                }));
-                break;
-
-            case D_INT:
-            case D_LONG:
-                property = new CardViewIntItemModel(propertyDefinition);
-                break;
-
-            case D_FLOAT:
-            case D_DOUBLE:
-                property = new CardViewFloatItemModel(propertyDefinition);
-                break;
-
-            case D_DATE:
-                property = new CardViewDateItemModel(propertyDefinition);
-                break;
-
-            case D_DATETIME:
-                property = new CardViewDatetimeItemModel(propertyDefinition);
-                break;
-
-            case D_BOOLEAN:
-                property = new CardViewBoolItemModel(propertyDefinition);
-                break;
-
-            case D_TEXT:
-            default:
-                property = new CardViewTextItemModel(Object.assign(propertyDefinition, {
-                    multiline: false
-                }));
+        if (groupNames.length > 0) {
+            groupedProperties = this.propertyDescriptorsService.load(groupNames)
+                .map(groups => config.reorganiseByConfig(groups))
+                .map(groups => this.propertyGroupTranslatorService.translateToCardViewGroups(groups, node.properties));
+        } else {
+            groupedProperties = Observable.of([]);
         }
 
-        return property;
-    }
-
-    private checkECMTypeValidity(ecmPropertyType) {
-        if (ContentMetadataService.RECOGNISED_ECM_TYPES.indexOf(ecmPropertyType) === -1) {
-            this.logService.error(`Unknown type for mapping: ${ecmPropertyType}`);
-        }
-    }
-
-    private getAspectPropertyKey(propertyName) {
-        return `properties.${propertyName}`;
+        return groupedProperties;
     }
 }

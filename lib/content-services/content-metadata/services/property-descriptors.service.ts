@@ -16,45 +16,31 @@
  */
 
 import { Injectable } from '@angular/core';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { PropertyDescriptorLoaderService } from './properties-loader.service';
-import { AspectWhiteListService } from './aspect-whitelist.service';
+import { AlfrescoApiService } from '@alfresco/adf-core';
+import { forkJoin } from 'rxjs/observable/forkJoin';
 import { Observable } from 'rxjs/Observable';
-import { Aspect, AspectProperty } from '../interfaces/content-metadata.interfaces';
+import { defer } from 'rxjs/observable/defer';
+import { PropertyGroup, PropertyGroupContainer } from '../interfaces/content-metadata.interfaces';
 
 @Injectable()
 export class PropertyDescriptorsService {
 
-    constructor(private aspectWhiteListService: AspectWhiteListService,
-                private aspectPropertiesService: PropertyDescriptorLoaderService) {}
+    constructor(private alfrescoApiService: AlfrescoApiService) {}
 
-    getAspects(node: MinimalNodeEntryEntity, presetName: string = 'default'): Observable<Aspect[]> {
-        this.aspectWhiteListService.choosePreset(presetName);
+    load(groupNames: string[]): Observable<PropertyGroupContainer> {
+        const groupFetchStreams = groupNames
+            .map(groupName => groupName.replace(':', '_'))
+            .map(groupName => defer( () => this.alfrescoApiService.classesApi.getClass(groupName)) );
 
-        return this.loadAspectDescriptors(node.aspectNames)
-            .map(this.filterPropertiesByWhitelist.bind(this));
+        return forkJoin(groupFetchStreams)
+            .map(this.convertToObject);
     }
 
-    private loadAspectDescriptors(aspectsAssignedToNode: string[]): Observable<any> {
-        const aspectsToLoad = aspectsAssignedToNode
-            .filter(nodeAspectName => this.aspectWhiteListService.isAspectAllowed(nodeAspectName));
-
-        return this.aspectPropertiesService.load(aspectsToLoad);
-    }
-
-    private filterPropertiesByWhitelist(aspectDescriptors): Aspect[] {
-        return aspectDescriptors.map((aspectDescriptor) => {
-            return Object.assign({}, aspectDescriptor, {
-                properties: this.getFilteredPropertiesArray(aspectDescriptor)
+    private convertToObject(propertyGroupsArray: PropertyGroup[]): PropertyGroupContainer {
+        return propertyGroupsArray.reduce((propertyGroups, propertyGroup) => {
+            return Object.assign({}, propertyGroups, {
+                [propertyGroup.name]: propertyGroup
             });
-        });
-    }
-
-    private getFilteredPropertiesArray(aspectDescriptor): AspectProperty[] {
-        const aspectName = aspectDescriptor.name;
-
-        return Object.keys(aspectDescriptor.properties)
-            .map(propertyName => aspectDescriptor.properties[propertyName])
-            .filter(property => this.aspectWhiteListService.isPropertyAllowed(aspectName, property.name));
+        }, {});
     }
 }

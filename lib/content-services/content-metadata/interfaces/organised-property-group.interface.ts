@@ -15,11 +15,9 @@
  * limitations under the License.
  */
 
-import { AspectProperty } from "./aspect-property.interface";
+import { Property } from './property.interface';
 
-export interface Aspect {
-    name: string;
+export interface OrganisedPropertyGroup {
     title: string;
-    description: string;
-    properties: AspectProperty[]
+    properties: Property[];
 }

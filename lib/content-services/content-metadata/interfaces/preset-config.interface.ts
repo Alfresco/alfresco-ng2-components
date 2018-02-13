@@ -15,12 +15,8 @@
  * limitations under the License.
  */
 
-export interface AspectProperty {
-    name: string;
-    title: string;
-    description?: string;
-    dataType: string;
-    defaultValue?: any;
-    mandatory: boolean;
-    multiValued: boolean;
-}
+import { InDifferentConfig } from './indifferent-config.interface';
+import { AspectOrientedConfig } from './aspect-oriented-config.interface';
+import { LayoutOrientedConfig } from './layout-oriented-config.interface';
+
+export declare type PresetConfig = InDifferentConfig | AspectOrientedConfig | LayoutOrientedConfig;
