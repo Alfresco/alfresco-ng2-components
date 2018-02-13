@@ -47,3 +47,18 @@ Displays a input text which shows find-as-you-type suggestions.
 Example of a component that uses the search control. In this example the search term is simply logged to the console
 but instead the component could emit an event to be consumed upstream, or it could trigger a change inside a search
 results component embedded inside the same component.
+
+## Customizable template for no result
+It is possible to customize with your own template what to show when no result are found for the search.
+
+```html
+<adf-search-control [highlight]="true"
+                    (optionClicked)="onItemClicked($event)"
+                    (submit)="onSearchSubmit($event)">
+    <adf-empty-search-result>
+        <!-- YOUR CUSTOM TEMPLATE HERE -->
+        <span>YOUR CUSTOM MESSAGE</span>
+    </adf-empty-search-result>
+</adf-search-control>
+```
+All you need to add is the `adf-empty-search-result` tag in the `adf-search-control` and then put inside the template you want to render when no results are found.
