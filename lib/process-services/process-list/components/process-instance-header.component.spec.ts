@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CardViewUpdateService } from '@alfresco/adf-core';
+import { AppConfigService, CardViewUpdateService } from '@alfresco/adf-core';
 import { MaterialModule } from '../../material.module';
 
 import { ProcessInstance } from '../models/process-instance.model';
@@ -28,6 +28,7 @@ describe('ProcessInstanceHeaderComponent', () => {
 
     let component: ProcessInstanceHeaderComponent;
     let fixture: ComponentFixture<ProcessInstanceHeaderComponent>;
+    let appConfigService: AppConfigService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -39,7 +40,8 @@ describe('ProcessInstanceHeaderComponent', () => {
             ],
             providers: [
                 ProcessService,
-                CardViewUpdateService
+                CardViewUpdateService,
+                AppConfigService
             ]
         }).compileComponents();
     }));
@@ -49,6 +51,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component = fixture.componentInstance;
 
         component.processInstance = new ProcessInstance(exampleProcess);
+        appConfigService = TestBed.get(AppConfigService);
     });
 
     it('should render empty component if no process details provided', () => {
@@ -159,5 +162,33 @@ describe('ProcessInstanceHeaderComponent', () => {
         fixture.detectChanges();
         let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-businessKey"]');
         expect(valueEl.innerText).toBe('ADF_PROCESS_LIST.PROPERTIES.BUSINESS_KEY_DEFAULT');
+    });
+
+    describe('Config Filtering', () => {
+
+        it('should show only the properties from the configuration file', () => {
+            spyOn(appConfigService, 'get').and.returnValue(['status', 'ended']);
+            component.ngOnChanges({});
+            fixture.detectChanges();
+            const propertyList = fixture.nativeElement.querySelectorAll('.adf-property-list .adf-property');
+            expect(propertyList).toBeDefined();
+            expect(propertyList).not.toBeNull();
+            expect(propertyList.length).toBe(2);
+            expect(propertyList[0].nativeElement.innerText).toContain('ADF_PROCESS_LIST.PROPERTIES.STATUS');
+            expect(propertyList[1].nativeElement.innerText).toContain('ADF_PROCESS_LIST.PROPERTIES.ENDED');
+        });
+
+        it('should show all the default properties if there is no configuration', () => {
+            spyOn(appConfigService, 'get').and.returnValue(null);
+            component.ngOnChanges({});
+            fixture.detectChanges();
+            const propertyList = fixture.nativeElement.querySelectorAll('.adf-property-list .adf-property');
+            expect(propertyList).toBeDefined();
+            expect(propertyList).not.toBeNull();
+            expect(propertyList.length).toBe(component.properties.length);
+            expect(propertyList[0].innerText).toContain('ADF_PROCESS_LIST.PROPERTIES.STATUS');
+            expect(propertyList[2].innerText).toContain('ADF_PROCESS_LIST.PROPERTIES.CATEGORY');
+        });
+
     });
 });
