@@ -58,7 +58,7 @@ export class ViewerExtensionDirective implements AfterContentInit {
 
     /**
      * check if the current extension in the viewer is compatible with this extension checking against supportedExtensions
-     **/
+     */
     isVisible(fileExtension): boolean {
         let supportedExtension: string;
 
