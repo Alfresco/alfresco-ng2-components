@@ -388,6 +388,24 @@
                 }
             }
         },
+        "adf-process-instance-header": {
+            "description": "Process instance header component configuration",
+            "type": "object",
+            "properties": {
+                "presets": {
+                    "description": "Presets for process instance header component",
+                    "type": "object",
+                    "properties": {
+                        "properties": {
+                              "type": "array",
+                              "items": {
+                                "enum": [ "status", "ended", "category", "businessKey", "assignee", "created", "id", "description" ]
+                              }
+                        }
+                    }
+                }
+            }
+        },
         "adf-process-list": {
             "description": "Process list component configuration",
             "type": "object",
