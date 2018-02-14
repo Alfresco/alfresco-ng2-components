@@ -29,6 +29,10 @@ export class PeopleContentService {
        return this.apiService.getInstance().core.peopleApi;
     }
 
+    /**
+     * Gets information about a user identified by their username.
+     * @param personId ID of the target user
+     */
     getPerson(personId: string): Observable<any> {
         const { peopleApi, handleError } = this;
         const promise = peopleApi.getPerson(personId);
@@ -38,6 +42,7 @@ export class PeopleContentService {
             .catch(handleError);
     }
 
+    /** Gets information about the user who is currently logged-in. */
     getCurrentPerson(): Observable<any> {
         return this.getPerson('-me-');
     }
