@@ -60,12 +60,20 @@ do
 
 
  if [ $PACKAGE == 'adf-core' ]; then
-     if [ ! -f package/prebuilt-themes/'adf-blue-orange.css' ]; then
+    if [ ! -f package/prebuilt-themes/'adf-blue-orange.css' ]; then
         error_out '31;1' "$PACKAGE prebuilt-theme not found!" >&2
         exit 1
      else
          echo "prebuilt-theme ok!"
-     fi
+    fi
+
+    if [ ! -f package/app-config/'schema.json' ]; then
+        error_out '31;1'  "$PACKAGE schema not found!" >&2
+        exit 1
+    else
+         echo "schema ok!"
+    fi
+
  fi
 
  if [ ! -f package/bundles/$PACKAGE'.umd.js' ]; then
