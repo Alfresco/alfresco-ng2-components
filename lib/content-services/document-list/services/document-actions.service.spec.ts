@@ -25,6 +25,7 @@ import { DocumentListService } from './document-list.service';
 import { NodeActionsService } from './node-actions.service';
 import { DialogModule } from '../../dialogs/dialog.module';
 import { ContentNodeDialogService } from '../../content-node-selector/content-node-dialog.service';
+import { Observable } from 'rxjs/Observable';
 
 describe('DocumentActionsService', () => {
 
@@ -101,7 +102,7 @@ describe('DocumentActionsService', () => {
     });
 
     it('should not delete the file node if there are no permissions', (done) => {
-        spyOn(documentListService, 'deleteNode').and.callThrough();
+        spyOn(documentListService, 'deleteNode').and.returnValue(Observable.of(true));
 
         service.permissionEvent.subscribe((permission) => {
             expect(permission).toBeDefined();
@@ -116,7 +117,7 @@ describe('DocumentActionsService', () => {
     });
 
     it('should call the error on the returned Observable if there are no permissions', (done) => {
-        spyOn(documentListService, 'deleteNode').and.callThrough();
+        spyOn(documentListService, 'deleteNode').and.returnValue(Observable.of(true));
 
         let file = new FileNode();
         const deleteObservable = service.getHandler('delete')(file);
@@ -129,8 +130,8 @@ describe('DocumentActionsService', () => {
         });
     });
 
-    xit('should delete the file node if there is the delete permission', () => {
-        spyOn(documentListService, 'deleteNode').and.callThrough();
+    it('should delete the file node if there is the delete permission', () => {
+        spyOn(documentListService, 'deleteNode').and.returnValue(Observable.of(true));
 
         let permission = 'delete';
         let file = new FileNode();
@@ -158,8 +159,8 @@ describe('DocumentActionsService', () => {
         service.getHandler('delete')(fileWithPermission, null, permission);
     });
 
-    xit('should delete the file node if there is the delete and others permission ', () => {
-        spyOn(documentListService, 'deleteNode').and.callThrough();
+    it('should delete the file node if there is the delete and others permission ', () => {
+        spyOn(documentListService, 'deleteNode').and.returnValue(Observable.of(true));
 
         let permission = 'delete';
         let file = new FileNode();
@@ -174,8 +175,8 @@ describe('DocumentActionsService', () => {
         expect(service.getHandler('download')).toBeDefined();
     });
 
-    xit('should delete file node', () => {
-        spyOn(documentListService, 'deleteNode').and.callThrough();
+    it('should delete file node', () => {
+        spyOn(documentListService, 'deleteNode').and.returnValue(Observable.of(true));
 
         let permission = 'delete';
         let file = new FileNode();
@@ -187,8 +188,8 @@ describe('DocumentActionsService', () => {
         expect(deleteObservale.subscribe).toBeDefined();
     });
 
-    xit('should support deletion only file node', () => {
-        spyOn(documentListService, 'deleteNode').and.callThrough();
+    it('should support deletion only file node', () => {
+        spyOn(documentListService, 'deleteNode').and.returnValue(Observable.of(true));
 
         let folder = new FolderNode();
         service.getHandler('delete')(folder);
@@ -203,7 +204,7 @@ describe('DocumentActionsService', () => {
     });
 
     it('should require node id to delete', () => {
-        spyOn(documentListService, 'deleteNode').and.callThrough();
+        spyOn(documentListService, 'deleteNode').and.returnValue(Observable.of(true));
 
         let file = new FileNode();
         file.entry.id = null;
@@ -212,26 +213,25 @@ describe('DocumentActionsService', () => {
         expect(documentListService.deleteNode).not.toHaveBeenCalled();
     });
 
-    xit('should reload target upon node deletion', () => {
-        spyOn(documentListService, 'deleteNode').and.callThrough();
+    it('should reload target upon node deletion', () => {
+        spyOn(documentListService, 'deleteNode').and.returnValue(Observable.of(true));
 
         let target = jasmine.createSpyObj('obj', ['reload']);
         let permission = 'delete';
-        let file = new FileNode();
-        let fileWithPermission: any = file;
-        fileWithPermission.entry.allowableOperations = [permission];
-        service.getHandler('delete')(fileWithPermission, target, permission);
+        let file: any = new FileNode();
+        file.entry.allowableOperations = ['delete'];
+        service.getHandler('delete')(file, target, permission);
 
         expect(documentListService.deleteNode).toHaveBeenCalled();
         expect(target.reload).toHaveBeenCalled();
     });
 
-    xit('should emit success event upon node deletion', (done) => {
+    it('should emit success event upon node deletion', (done) => {
         service.success.subscribe((nodeId) => {
             expect(nodeId).not.toBeNull();
             done();
         });
-        spyOn(documentListService, 'deleteNode').and.callThrough();
+        spyOn(documentListService, 'deleteNode').and.returnValue(Observable.of(true));
 
         let target = jasmine.createSpyObj('obj', ['reload']);
         let permission = 'delete';
