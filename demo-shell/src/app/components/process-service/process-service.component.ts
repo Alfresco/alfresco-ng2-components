@@ -79,6 +79,9 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     @ViewChild(PaginationComponent)
     processListPagination: PaginationComponent;
 
+    @ViewChild(PaginationComponent)
+    taskListPagination: PaginationComponent;
+
     @ViewChild(TaskListComponent)
     taskList: TaskListComponent;
 
@@ -116,11 +119,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     currentProcessInstanceId: string;
 
     taskSchemaColumns: any[] = [];
-    taskPagination: Pagination = {
-        skipCount: 0,
-        maxItems: 10,
-        totalItems: 0
-    };
     taskPage = 0;
     processPage = 0;
     paginationPageSize = 0;
@@ -163,7 +161,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.dataTasks = new ObjectDataTableAdapter();
         this.dataTasks.setSorting(new DataSorting('created', 'desc'));
         this.supportedPages = this.preferenceService.getDifferentPageSizes();
-        this.taskPagination.maxItems = this.preferenceService.paginationSize;
         this.paginationPageSize = this.preferenceService.paginationSize;
 
         this.defaultProcessName = this.appConfig.get<string>('adf-start-process.name');
@@ -203,18 +200,8 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         */
     }
 
-    onPrevPage(pagination: Pagination): void {
-        this.taskPagination.skipCount = pagination.skipCount;
-        this.taskPage--;
-    }
-
     onPrevPageProcess(pagination: Pagination): void {
         this.processPage = this.processListPagination.current - 1;
-    }
-
-    onNextPage(pagination: Pagination): void {
-        this.taskPagination.skipCount = pagination.skipCount;
-        this.taskPage++;
     }
 
     onNextPageProcess(pagination: Pagination): void {
@@ -228,48 +215,11 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.paginationPageSize = maxItems;
     }
 
-    onChangePageSize(pagination: Pagination): void {
-        const { skipCount, maxItems } = pagination;
-        this.taskPage = this.currentPage(skipCount, maxItems);
-        this.taskPagination.maxItems = maxItems;
-        this.taskPagination.skipCount = skipCount;
-        this.preferenceService.paginationSize = maxItems;
-    }
-
-    onChangePageNumber(pagination: Pagination): void {
-        const { maxItems, skipCount } = pagination;
-        this.taskPage = this.currentPage(skipCount, maxItems);
-        this.taskPagination.maxItems = maxItems;
-        this.taskPagination.skipCount = skipCount;
-    }
-
     onChangePageNumberProcess(pagination: Pagination): void {
         this.processPage = this.processListPagination.current - 1;
     }
 
-    currentPage(skipCount: number, maxItems: number): number {
-        return (skipCount && maxItems) ? Math.floor(skipCount / maxItems) : 0;
-    }
-
     ngOnInit() {
-        this.taskListService.tasksList$.subscribe(
-            (tasks) => {
-                this.taskPagination = {
-                    count: tasks.data.length,
-                    maxItems: this.taskPagination.maxItems,
-                    skipCount: this.taskPagination.skipCount,
-                    totalItems: tasks.total
-                };
-                this.logService.log({
-                    count: tasks.data.length,
-                    maxItems: this.taskPagination.maxItems,
-                    skipCount: this.taskPagination.skipCount,
-                    totalItems: tasks.total
-                });
-            }, (err) => {
-                this.logService.log('err' + err);
-            });
-
         if (this.router.url.includes('processes')) {
             this.activeTab = this.tabs.processes;
         }
@@ -299,7 +249,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     resetTaskPaginationPage() {
         this.taskPage = 0;
-        this.taskPagination.skipCount = 0;
     }
 
     onReportClick(event: any): void {
@@ -417,12 +366,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     onFormCompleted(form): void {
         this.currentTaskId = null;
-        this.taskPagination.totalItems--;
-        const { skipCount, maxItems, totalItems } = this.taskPagination;
-        if (totalItems > 0 && (skipCount >= totalItems)) {
-            this.taskPagination.skipCount -= maxItems;
-        }
-        this.taskPage = this.currentPage(this.taskPagination.skipCount, maxItems);
+        this.taskPage = this.taskListPagination.current - 1;
         if (this.taskList) {
             this.taskList.reload();
         }
