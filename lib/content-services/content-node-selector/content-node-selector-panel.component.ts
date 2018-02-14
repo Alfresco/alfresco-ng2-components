@@ -123,8 +123,9 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     ngOnInit() {
         this.folderIdToShow = this.currentFolderId;
         this.paginationStrategy = PaginationStrategy.Infinite;
-    }
 
+        this.isSelectionValid = this.isSelectionValid ? this.isSelectionValid : defaultValidation;
+    }
     /**
      * Updates the site attribute and starts a new search
      *
