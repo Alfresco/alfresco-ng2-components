@@ -33,6 +33,10 @@ export class SharedLinksApiService {
        return this.apiService.getInstance().core.sharedlinksApi;
     }
 
+    /**
+     * Gets shared links available to the current user.
+     * @param options Options supported by JSAPI
+     */
     getSharedLinks(options: any = {}): Observable<NodePaging> {
         const { sharedLinksApi, handleError } = this;
         const defaultOptions = {

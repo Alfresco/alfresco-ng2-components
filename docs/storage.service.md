@@ -4,20 +4,22 @@ Stores items in the form of key-value pairs.
 
 ## Methods
 
-`getItem(key: string): string | null` <br/>
-Gets an item identified by `key`.
+-   `getItem(key: string): string`  
+    Gets an item.  
+    -   `key` - Key to identify the item
+-   `setItem(key: string, data: string)`  
+    Stores an item  
+    -   `key` - Key to identify the item
+    -   `data` - Data to store
+-   `clear()`  
+    Removes all currently stored items.   
 
-`setItem(key: string, data: string)` <br/>
-Stores an item under `key`.
-
-`clear()` <br/>
-Removes all currently stored items.
-
-`removeItem(key: string)` <br/>
-Removes the item identified by `key`.
-
-`hasItem(key: string): boolean` <br/>
-Is any item currently stored under `key`?
+-   `removeItem(key: string)`  
+    Removes a single item.  
+    -   `key` - Key to identify the item
+-   `hasItem(key: string): boolean`  
+    Is any item currently stored under `key`?  
+    -   `key` - Key identifying item to check
 
 ## Details
 

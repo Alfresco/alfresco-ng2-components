@@ -26,6 +26,10 @@ export class PageTitleService {
         private titleService: Title,
         private appConfig: AppConfigService) {}
 
+    /**
+     * Sets the page title.
+     * @param value The new title
+     */
     setTitle(value: string = '') {
         const name = this.appConfig.get('application.name') || 'Alfresco ADF Application';
         const title = value ? `${value} - ${name}` : `${name}`;

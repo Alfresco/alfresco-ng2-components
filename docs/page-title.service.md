@@ -4,8 +4,9 @@ Sets the page title.
 
 ## Methods
 
-`setTitle(value: string = '')`<br/>
-Sets the page title.
+-   `setTitle(value: string = '')`  
+    Sets the page title.  
+    -   `value` - The new title
 
 ## Details
 

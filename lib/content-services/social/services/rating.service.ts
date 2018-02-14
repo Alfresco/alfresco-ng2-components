@@ -28,12 +28,23 @@ export class RatingService {
     constructor(private apiService: AlfrescoApiService) {
     }
 
+    /**
+     * Gets the current user's rating for a node.
+     * @param nodeId Node to get the rating from
+     * @param ratingType Type of rating (can be "likes" or "fiveStar")
+     */
     getRating(nodeId: string, ratingType: any): any {
         return Observable.fromPromise(this.apiService.getInstance().core.ratingsApi.getRating(nodeId, ratingType))
             .map(res => res)
             .catch(this.handleError);
     }
 
+    /**
+     * Adds the current user's rating for a node.
+     * @param nodeId Target node for the rating
+     * @param ratingType Type of rating (can be "likes" or "fiveStar")
+     * @param vote Rating value (boolean for "likes", numeric 0..5 for "fiveStar")
+     */
     postRating(nodeId: string, ratingType: any, vote: any): any {
         let ratingBody: RatingBody = {
             'id': ratingType,
@@ -44,6 +55,11 @@ export class RatingService {
             .catch(this.handleError);
     }
 
+    /**
+     * Removes the current user's rating for a node.
+     * @param nodeId Target node
+     * @param ratingType Type of rating to remove (can be "likes" or "fiveStar")
+     */
     deleteRating(nodeId: string, ratingType: any): any {
         return Observable.fromPromise(this.apiService.getInstance().core.ratingsApi.removeRating(nodeId, ratingType))
             .map(res => res)

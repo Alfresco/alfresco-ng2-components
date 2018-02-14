@@ -27,6 +27,10 @@ export class StorageService {
         this.useLocalStorage = this.storageAvailable('localStorage');
     }
 
+    /**
+     * Gets an item.
+     * @param key Key to identify the item
+     */
     getItem(key: string): string | null {
         if (this.useLocalStorage) {
             return localStorage.getItem(key);
@@ -35,6 +39,11 @@ export class StorageService {
         }
     }
 
+    /**
+     * Stores an item
+     * @param key Key to identify the item
+     * @param data Data to store
+     */
     setItem(key: string, data: string) {
         if (this.useLocalStorage) {
             localStorage.setItem(key, data);
@@ -43,6 +52,7 @@ export class StorageService {
         }
     }
 
+    /** Removes all currently stored items. */
     clear() {
         if (this.useLocalStorage) {
             localStorage.clear();
@@ -51,6 +61,10 @@ export class StorageService {
         }
     }
 
+    /**
+     * Removes a single item.
+     * @param key Key to identify the item
+     */
     removeItem(key: string) {
         if (this.useLocalStorage) {
             localStorage.removeItem(key);
@@ -59,6 +73,10 @@ export class StorageService {
         }
     }
 
+    /**
+     * Is any item currently stored under `key`?
+     * @param key Key identifying item to check
+     */
     hasItem(key: string): boolean {
         if (this.useLocalStorage) {
             return localStorage.getItem(key) ? true : false;
