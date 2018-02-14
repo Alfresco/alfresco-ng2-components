@@ -62,6 +62,8 @@ jobs:
     include:
         - stage: Check 2.0.0 Project Update
           script: ./scripts/test-e2e-bc.sh
+        - stage: Check ADF exports
+          script: cd lib && npm run test-export
 
 # jobs:
 #   include:
