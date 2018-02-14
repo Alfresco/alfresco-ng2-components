@@ -12,7 +12,8 @@
     <adf-toolbar>
 
         <ng-container *ngIf="allowThumbnails">
-            <button mat-icon-button>
+            <button mat-icon-button
+                (click)="toggleThumbnails()">
                 <mat-icon>dashboard</mat-icon>
             </button>
             <adf-toolbar-divider></adf-toolbar-divider>

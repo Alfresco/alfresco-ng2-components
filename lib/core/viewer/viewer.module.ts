@@ -22,9 +22,12 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
 import { ToolbarModule } from '../toolbar/toolbar.module';
 import { PipeModule } from '../pipes/pipe.module';
+import { InfoDrawerModule } from '../info-drawer/info-drawer.module';
 import { ImgViewerComponent } from './components/imgViewer.component';
 import { MediaPlayerComponent } from './components/mediaPlayer.component';
 import { PdfViewerComponent } from './components/pdfViewer.component';
+import { PdfThumbComponent } from './components/pdfViewer-thumb.component';
+import { PdfThumbListComponent } from './components/pdfViewer-thumbnails.component';
 import { TxtViewerComponent } from './components/txtViewer.component';
 import { UnknownFormatComponent } from './components/unknown-format/unknown-format.component';
 import { ViewerMoreActionsComponent } from './components/viewer-more-actions.component';
@@ -34,6 +37,7 @@ import { ViewerToolbarComponent } from './components/viewer-toolbar.component';
 import { ViewerComponent } from './components/viewer.component';
 import { ViewerExtensionDirective } from './directives/viewer-extension.directive';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { PdfViewerService } from './services/pdf-viewer.service';
 
 @NgModule({
     imports: [
@@ -41,6 +45,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         MaterialModule,
         TranslateModule,
         ToolbarModule,
+        InfoDrawerModule,
         PipeModule,
         FlexLayoutModule
     ],
@@ -50,6 +55,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         TxtViewerComponent,
         MediaPlayerComponent,
         PdfViewerComponent,
+        PdfThumbComponent,
+        PdfThumbListComponent,
         ViewerExtensionDirective,
         UnknownFormatComponent,
         ViewerToolbarComponent,
@@ -57,12 +64,17 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         ViewerOpenWithComponent,
         ViewerMoreActionsComponent
     ],
+    providers: [
+        PdfViewerService
+    ],
     exports: [
         ViewerComponent,
         ImgViewerComponent,
         TxtViewerComponent,
         MediaPlayerComponent,
         PdfViewerComponent,
+        PdfThumbComponent,
+        PdfThumbListComponent,
         ViewerExtensionDirective,
         UnknownFormatComponent,
         ViewerToolbarComponent,

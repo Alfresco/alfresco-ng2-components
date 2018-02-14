@@ -18,7 +18,8 @@
 import { Location } from '@angular/common';
 import {
     Component, ContentChild, EventEmitter, HostListener, ElementRef,
-    Input, OnChanges, Output, SimpleChanges, TemplateRef, ViewEncapsulation
+    Input, OnInit, OnChanges, OnDestroy, Output, SimpleChanges, TemplateRef,
+    ViewEncapsulation
 } from '@angular/core';
 import { MinimalNodeEntryEntity, RenditionEntry } from 'alfresco-js-api';
 import { BaseEvent } from '../../events';
@@ -28,6 +29,8 @@ import { ViewerMoreActionsComponent } from './viewer-more-actions.component';
 import { ViewerOpenWithComponent } from './viewer-open-with.component';
 import { ViewerSidebarComponent } from './viewer-sidebar.component';
 import { ViewerToolbarComponent } from './viewer-toolbar.component';
+import { PdfViewerService } from '../services/pdf-viewer.service';
+import { Subscription } from 'rxjs/Rx';
 
 @Component({
     selector: 'adf-viewer',
@@ -36,7 +39,7 @@ import { ViewerToolbarComponent } from './viewer-toolbar.component';
     host: { 'class': 'adf-viewer' },
     encapsulation: ViewEncapsulation.None
 })
-export class ViewerComponent implements OnChanges {
+export class ViewerComponent implements OnInit, OnChanges, OnDestroy {
 
     @ContentChild(ViewerToolbarComponent)
     toolbar: ViewerToolbarComponent;
@@ -130,6 +133,10 @@ export class ViewerComponent implements OnChanges {
     @Input()
     allowSidebar = false;
 
+    /** Toggles PDF thumbnails. */
+    @Input()
+    allowThumbnails = false;
+
     /** Toggles sidebar visibility. Requires `allowSidebar` to be set to `true`. */
     @Input()
     showSidebar = false;
@@ -141,6 +148,10 @@ export class ViewerComponent implements OnChanges {
     /** The template for the sidebar. The template context contains the loaded node data. */
     @Input()
     sidebarTemplate: TemplateRef<any> = null;
+
+    /** The template for the pdf thumbnails. */
+    @Input()
+    thumbnailsTemplate: TemplateRef<any> = null;
 
     /** MIME type of the file content (when not determined by the filename extension). */
     @Input()
@@ -192,6 +203,7 @@ export class ViewerComponent implements OnChanges {
     @Output()
     navigateNext = new EventEmitter();
 
+    showPdfThumbnails: boolean = false;
     viewerType = 'unknown';
     isLoading = false;
     node: MinimalNodeEntryEntity;
@@ -202,6 +214,8 @@ export class ViewerComponent implements OnChanges {
     otherMenu: any;
     extension: string;
     sidebarTemplateContext: { node: MinimalNodeEntryEntity } = { node: null };
+
+    private subscriptions: Subscription[] = [];
 
     // Extensions that are supported by the Viewer without conversion
     private extensions = {
@@ -220,9 +234,21 @@ export class ViewerComponent implements OnChanges {
     };
 
     constructor(private apiService: AlfrescoApiService,
+                private pdfViewerService: PdfViewerService,
                 private logService: LogService,
                 private location: Location,
                 private el: ElementRef) {
+    }
+
+    ngOnInit() {
+        this.subscriptions.push(
+            this.pdfViewerService.toggleThumbnails
+                .subscribe(() => this.showPdfThumbnails = !this.showPdfThumbnails)
+        );
+    }
+
+    ngOnDestroy() {
+        this.subscriptions.forEach(subscription => subscription.unsubscribe());
     }
 
     isSourceDefined(): boolean {

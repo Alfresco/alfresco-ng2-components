@@ -18,6 +18,7 @@
 import { Component, HostListener, Input, OnChanges, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { LogService } from '../../services/log.service';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
+import { PdfViewerService } from '../services/pdf-viewer.service';
 
 declare let PDFJS: any;
 
@@ -69,6 +70,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     constructor(private renderingQueueServices: RenderingQueueServices,
+                private pdfViewerService: PdfViewerService,
                 private logService: LogService) {
         // needed to preserve "this" context
         this.onPageChange = this.onPageChange.bind(this);
@@ -148,12 +150,18 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         this.renderingQueueServices.setViewer(this.pdfViewer);
 
         this.pdfViewer.setDocument(pdfDocument);
+
+        this.pdfViewerService.setViewer(this.pdfViewer);
     }
 
     ngOnDestroy() {
-        if(this.documentContainer) {
+        if (this.documentContainer) {
             this.documentContainer.removeEventListener('pagechange', this.onPageChange, true);
         }
+    }
+
+    toggleThumbnails() {
+        this.pdfViewerService.toggleThumbnails.next();
     }
 
     /**
