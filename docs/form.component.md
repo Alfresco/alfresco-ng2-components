@@ -269,6 +269,40 @@ formService.formEvents.subscribe((event: Event) => {
 });
 ```
 
+#### Customize form outcomes (buttons) styles
+
+If you want custtomize the outcoumes style of your form you can do it using plain css selectors.
+Any outcome has an Id that is composed in the following way:
+
+
+```
+  adf-form-YOUR_OUTCAME_NAME
+```
+
+Using the CSS you can target any outcome ID and change the style as in this example:
+
+```css
+#adf-form-complete {
+    background-color: blue !important;
+    color: white;
+}
+
+
+#adf-form-save {
+    background-color: green !important;
+    color: white;
+}
+
+#adf-form-customoutcome {
+    background-color: yellow !important;
+    color: white;
+}
+```
+
+![](docassets/images/form-style-sample.png)
+
+
+
 ## See also
 
 -   [Stencils](stencils.md)
