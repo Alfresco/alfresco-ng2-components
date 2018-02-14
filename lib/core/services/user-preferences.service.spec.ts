@@ -100,7 +100,7 @@ describe('UserPreferencesService', () => {
     });
 
     it('should null value return default prefix', () => {
-        preferences.storage.setItem('paginationSize', null);
+        storage.setItem('paginationSize', null);
         const paginationSize = preferences.getPropertyKey('paginationSize');
         expect(preferences.get(paginationSize, 'default')).toBe('default');
     });
