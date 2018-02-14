@@ -18,6 +18,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { PdfThumbListComponent } from './pdfViewer-thumbnails.component';
+import { PdfThumbComponent } from './pdfViewer-thumb.component';
 import { PdfViewerService } from '../services/pdf-viewer.service';
 import { PDFJS } from 'pdfjs-dist';
 
@@ -55,7 +56,8 @@ describe('PdfThumbListComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                PdfThumbListComponent
+                PdfThumbListComponent,
+                PdfThumbComponent
             ],
             providers: [
                 PdfViewerService
