@@ -64,7 +64,7 @@ export class AppsListComponent implements OnInit {
 
     private iconsMDL: IconModel;
 
-    isLoading: boolean = false;
+    loading: boolean = false;
 
     constructor(
         private appsProcessService: AppsProcessService,
@@ -85,7 +85,7 @@ export class AppsListComponent implements OnInit {
     }
 
     private load() {
-        this.isLoading = true;
+        this.loading = true;
         this.appsProcessService.getDeployedApplications()
         .subscribe(
             (res: AppDefinitionRepresentationModel[]) => {
@@ -97,12 +97,12 @@ export class AppsListComponent implements OnInit {
                     } else if (app.deploymentId) {
                         this.appsObserver.next(app);
                     }
-                    this.isLoading = false;
+                    this.loading = false;
                 });
             },
             (err) => {
                 this.error.emit(err);
-                this.isLoading = false;
+                this.loading = false;
             }
         );
     }
@@ -190,8 +190,8 @@ export class AppsListComponent implements OnInit {
         return this.appList.length === 0;
     }
 
-    loading(): boolean {
-        return this.isLoading;
+    isLoading(): boolean {
+        return this.loading;
     }
 
     getTheme(app: AppDefinitionRepresentationModel): string {

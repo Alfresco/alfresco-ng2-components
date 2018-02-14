@@ -71,14 +71,14 @@ describe('AppsListComponent', () => {
     });
 
     it('loading should be false by default', () => {
-        expect(component.isLoading).toBeFalsy();
+        expect(component.loading).toBeFalsy();
     });
 
     it('should show the loading spinner when the apps are loading', () => {
-        component.isLoading = true;
+        component.loading = true;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-        let loadingSpinner = fixture.debugElement.query(By.css('.adf-app-list-loading-screen'));
+        let loadingSpinner = fixture.debugElement.query(By.css('.adf-app-list-spinner'));
         expect(loadingSpinner.nativeElement).not.toBeNull();
         });
     });
