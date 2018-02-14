@@ -29,6 +29,10 @@ export class SitesService {
     constructor(
         private apiService: AlfrescoApiService) { }
 
+    /**
+     * Gets a list of all sites in the repository.
+     * @param opts Options supported by JSAPI
+     */
     getSites(opts: any = {}): Observable<SitePaging> {
         const defaultOptions = {
             skipCount: 0,
@@ -39,11 +43,21 @@ export class SitesService {
             .catch(this.handleError);
     }
 
+    /**
+     * Gets the details for a site.
+     * @param siteId ID of the target site
+     * @param opts Options supported by JSAPI
+     */
     getSite(siteId: string, opts?: any): Observable<SiteEntry> {
         return Observable.fromPromise(this.apiService.getInstance().core.sitesApi.getSite(siteId, opts))
             .catch(this.handleError);
     }
 
+    /**
+     * Deletes a site.
+     * @param siteId Site to delete
+     * @param permanentFlag True: deletion is permanent; False: site is moved to the trash
+     */
     deleteSite(siteId: string, permanentFlag: boolean = true): Observable<any> {
         let options: any = {};
         options.permanent = permanentFlag;
@@ -51,10 +65,18 @@ export class SitesService {
             .catch(this.handleError));
     }
 
+    /**
+     * Gets a site's content.
+     * @param siteId ID of the target site
+     */
     getSiteContent(siteId: string): Observable<SiteEntry> {
         return this.getSite(siteId, { relations: ['containers'] });
     }
 
+    /**
+     * Gets a list of all a site's members.
+     * @param siteId ID of the target site
+     */
     getSiteMembers(siteId: string): Observable<SiteEntry> {
         return this.getSite(siteId, { relations: ['members'] });
     }

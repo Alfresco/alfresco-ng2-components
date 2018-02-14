@@ -4,14 +4,19 @@ Manages ratings for items in Content Services.
 
 ## Methods
 
-`getRating(nodeId: string, ratingType: any): any`<br/>
-Gets the current user's rating for a node.
-
-`postRating(nodeId: string, ratingType: any, vote: any): any`<br/>
-Adds the current user's rating for a node.
-
-`deleteRating(nodeId: string, ratingType: any): any`<br/>
-Removes the current user's rating for a node.
+-   `getRating(nodeId: string, ratingType: any): any`  
+    Gets the current user's rating for a node.  
+    -   `nodeId` - Node to get the rating from
+    -   `ratingType` - Type of rating (can be "likes" or "fiveStar")
+-   `postRating(nodeId: string, ratingType: any, vote: any): any`  
+    Adds the current user's rating for a node.  
+    -   `nodeId` - Target node for the rating
+    -   `ratingType` - Type of rating (can be "likes" or "fiveStar")
+    -   `vote` - Rating value (boolean for "likes", numeric 0..5 for "fiveStar")
+-   `deleteRating(nodeId: string, ratingType: any): any`  
+    Removes the current user's rating for a node.  
+    -   `nodeId` - Target node
+    -   `ratingType` - Type of rating to remove (can be "likes" or "fiveStar")
 
 ## Details
 
