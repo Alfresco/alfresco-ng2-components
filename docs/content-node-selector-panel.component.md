@@ -25,12 +25,14 @@ Opens a [Content Node Selector](content-node-selector.component.md) in its own d
 | rowFilter | RowFilter | null | Custom row filter function. [See More](document-list.component.md#custom-row-filter) |
 | imageResolver | ImageResolver | null | Custom image resolver function. [See More](document-list.component.md#custom-image-resolver) |
 | pageSize | number | 10 | Number of items shown per page in the list |
+| isSelectionValid | ValidationFunction | defaultValidation | Function used to decide if the selected node has permission to be the chosen. The defaultValidation always returns true.  |
+| breadcrumbTransform | (node) => any | null | Action to be performed to the chosen/folder node before building the breadcrumb UI. Can be useful in case a custom formatting is needed to the breadcrumb, so changing the node's path elements that help build the breadcrumb can be done through this function. |
 
 ### Events
 
 | Name | Description |
 | ---- | ----------- |
-| select | Emitted when the user has selected an item |
+| select | Emitted when the user has chosen an item |
 
 ## Details
 
