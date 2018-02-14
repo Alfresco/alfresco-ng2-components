@@ -4,11 +4,12 @@ Gets information about a Content Services user.
 
 ## Methods
 
-`getPerson(personId: string): Observable<any>`<br/>
-Gets information about a user identified by their username.
+-   `getPerson(personId: string): Observable<any>`  
+    Gets information about a user identified by their username.  
+    -   `personId` - ID of the target user
+-   `getCurrentPerson(): Observable<any>`  
+    Gets information about the user who is currently logged-in.   
 
-`getCurrentPerson(): Observable<any>`<br/>
-Gets information about the user who is currently logged-in.
 
 ## Details
 

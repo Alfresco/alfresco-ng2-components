@@ -26,12 +26,23 @@ export class NotificationService {
     constructor(public snackbar: MatSnackBar) {
     }
 
+    /**
+     * Opens a snackbar notification to show a message.
+     * @param message The message to show
+     * @param millisecondsDuration Time before notification disappears after being shown
+     */
     public openSnackMessage(message: string, millisecondsDuration?: number): MatSnackBarRef<any> {
         return this.snackbar.open(message, null, {
             duration: millisecondsDuration || NotificationService.DEFAULT_DURATION_MESSAGE
         });
     }
 
+    /**
+     * Opens a snackbar notification with a message and a response button.
+     * @param message The message to show
+     * @param action Caption for the response button
+     * @param millisecondsDuration Time before the notification disappears (unless the button is clicked)
+     */
     public openSnackMessageAction(message: string, action: string, millisecondsDuration?: number): MatSnackBarRef<any> {
         return this.snackbar.open(message, action, {
             duration: millisecondsDuration || NotificationService.DEFAULT_DURATION_MESSAGE

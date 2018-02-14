@@ -4,20 +4,23 @@ Accesses and manipulates sites from a Content Services repository.
 
 ## Methods
 
-`getSites(opts: any = {}): any`<br/>
-Gets a list of all sites in the repository.
-
-`getSite(siteId: string, opts?: any): any`<br/>
-Gets the details for a site.
-
-`deleteSite(siteId: string, permanentFlag: boolean = true): any`<br/>
-Deletes a site.
-
-`getSiteContent(siteId: string): Observable<any>`<br/>
-Gets a site's content.
-
-`getSiteMembers(siteId: string): Observable<any>`<br/>
-Gets a list of all a site's members.
+-   `getSites(opts: any = {}): Observable<SitePaging>`  
+    Gets a list of all sites in the repository.  
+    -   `opts` - Options supported by JSAPI
+-   `getSite(siteId: string, opts?: any): Observable<SiteEntry>`  
+    Gets the details for a site.  
+    -   `siteId` - ID of the target site
+    -   `opts` - (Optional) Options supported by JSAPI
+-   `deleteSite(siteId: string, permanentFlag: boolean = true): Observable<any>`  
+    Deletes a site.  
+    -   `siteId` - Site to delete
+    -   `permanentFlag` - True: deletion is permanent; False: site is moved to the trash
+-   `getSiteContent(siteId: string): Observable<SiteEntry>`  
+    Gets a site's content.  
+    -   `siteId` - ID of the target site
+-   `getSiteMembers(siteId: string): Observable<SiteEntry>`  
+    Gets a list of all a site's members.  
+    -   `siteId` - ID of the target site
 
 ## Details
 

@@ -4,17 +4,21 @@ Gets information about Process Services users.
 
 ## Methods
 
-`getWorkflowUsers(taskId?: string, searchWord?: string): Observable<UserProcessModel[]>`<br/>
-Gets information about users across all tasks.
-
-`getUserImage(user: UserProcessModel): string`<br/>
-Gets the profile picture URL for the specified user.
-
-`involveUserWithTask(taskId: string, idToInvolve: string): Observable<UserProcessModel[]>`<br/>
-Sets a user to be involved with a task.
-
-`removeInvolvedUser(taskId: string, idToRemove: string): Observable<UserProcessModel[]>`<br/>
-Removes a user who is currently involved with a task.
+-   `getWorkflowUsers(taskId?: string, searchWord?: string): Observable<UserProcessModel[]>`  
+    Gets information about users across all tasks.  
+    -   `taskId` - (Optional) ID of the task
+    -   `searchWord` - (Optional) Filter text to search for
+-   `getUserImage(user: UserProcessModel): string`  
+    Gets the profile picture URL for the specified user.  
+    -   `user` - The target user
+-   `involveUserWithTask(taskId: string, idToInvolve: string): Observable<UserProcessModel[]>`  
+    Sets a user to be involved with a task.  
+    -   `taskId` - ID of the target task
+    -   `idToInvolve` - ID of the user to involve
+-   `removeInvolvedUser(taskId: string, idToRemove: string): Observable<UserProcessModel[]>`  
+    Removes a user who is currently involved with a task.  
+    -   `taskId` - ID of the target task
+    -   `idToRemove` - ID of the user to remove
 
 ## Details
 

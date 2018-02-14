@@ -4,8 +4,9 @@ Finds shared links to Content Services items.
 
 ## Methods
 
-`getSharedLinks(options: any = {}): Observable<NodePaging>`<br/>
-Gets shared links available to the current user.
+-   `getSharedLinks(options: any = {}): Observable<NodePaging>`  
+    Gets shared links available to the current user.  
+    -   `options` - Options supported by JSAPI
 
 ## Details
 

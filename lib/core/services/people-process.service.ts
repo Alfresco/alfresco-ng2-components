@@ -31,6 +31,11 @@ export class PeopleProcessService {
                 private logService: LogService) {
     }
 
+    /**
+     * Gets information about users across all tasks.
+     * @param taskId ID of the task
+     * @param searchWord Filter text to search for
+     */
     getWorkflowUsers(taskId?: string, searchWord?: string): Observable<UserProcessModel[]> {
         let option = { excludeTaskId: taskId, filter: searchWord };
         return Observable.fromPromise(this.getWorkflowUserApi(option))
@@ -38,16 +43,30 @@ export class PeopleProcessService {
             .catch(err => this.handleError(err));
     }
 
+    /**
+     * Gets the profile picture URL for the specified user.
+     * @param user The target user
+     */
     getUserImage(user: UserProcessModel): string {
         return this.getUserProfileImageApi(user.id);
     }
 
+    /**
+     * Sets a user to be involved with a task.
+     * @param taskId ID of the target task
+     * @param idToInvolve ID of the user to involve
+     */
     involveUserWithTask(taskId: string, idToInvolve: string): Observable<UserProcessModel[]> {
         let node = {userId: idToInvolve};
         return Observable.fromPromise(this.involveUserToTaskApi(taskId, node))
             .catch(err => this.handleError(err));
     }
 
+    /**
+     * Removes a user who is currently involved with a task.
+     * @param taskId ID of the target task
+     * @param idToRemove ID of the user to remove
+     */
     removeInvolvedUser(taskId: string, idToRemove: string): Observable<UserProcessModel[]> {
         let node = {userId: idToRemove};
         return Observable.fromPromise(this.removeInvolvedUserFromTaskApi(taskId, node))
