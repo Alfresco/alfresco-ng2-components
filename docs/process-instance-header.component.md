@@ -17,3 +17,21 @@ Sub-component of the process details component, which renders some general infor
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | processInstance | `ProcessInstance` |  | (**required**) Full details of the process instance to display information about.  |
+
+## Customise the properties showed
+By default all the properties are showed :
+***status***, ***ended***, ***category***, ***businessKey***, ***assignee***, ***created***,***id***, ***description***. 
+
+It is possible to customise the showed properties via "app.config.json".
+This is how the configuration looks like:
+
+```json
+
+    "adf-process-instance-header": {
+      "presets": {
+          "properties" : [ "status", "ended", "created", "id"]
+      }
+    }
+
+```
+In this way only the listed properties will be showed.
