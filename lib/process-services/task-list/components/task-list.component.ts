@@ -23,7 +23,14 @@ import {
     ObjectDataRow,
     ObjectDataTableAdapter
 } from '@alfresco/adf-core';
-import { AppConfigService, DataColumnListComponent, PaginationComponent } from '@alfresco/adf-core';
+import {
+    AppConfigService,
+    DataColumnListComponent,
+    PaginationComponent,
+    PaginatedComponent,
+    PaginationQueryParams,
+    UserPreferencesService
+} from '@alfresco/adf-core';
 import {
     AfterContentInit,
     Component,
@@ -36,6 +43,8 @@ import {
     SimpleChanges
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Pagination } from 'alfresco-js-api';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskListModel } from '../models/task-list.model';
 import { taskPresetsDefaultModel } from '../models/task-preset.model';
@@ -46,7 +55,7 @@ import { TaskListService } from './../services/tasklist.service';
     templateUrl: './task-list.component.html',
     styleUrls: ['./task-list.component.css']
 })
-export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
+export class TaskListComponent implements OnChanges, OnInit, AfterContentInit, PaginatedComponent {
 
     requestNode: TaskQueryRequestRepresentationModel;
 
@@ -129,6 +138,7 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
     currentInstanceId: string;
     selectedInstances: any[];
     layoutPresets = {};
+    pagination: BehaviorSubject<Pagination>;
 
     /* The page number of the tasks to fetch. */
     @Input()
@@ -151,7 +161,14 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
     isStreamLoaded = false;
 
     constructor(private taskListService: TaskListService,
-                private appConfig: AppConfigService) {
+        private appConfig: AppConfigService,
+        private userPreferences: UserPreferencesService) {
+        this.size = this.userPreferences.paginationSize;
+        this.pagination = new BehaviorSubject<Pagination>(<Pagination>{
+            maxItems: this.size,
+            skipCount: 0,
+            totalItems: 0
+        });
     }
 
     initStream() {
@@ -164,6 +181,12 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
                     this.selectTask(this.landingTaskId);
                     this.success.emit(tasks);
                     this.isLoading = false;
+                    this.pagination.next({
+                        count: tasks.data.length,
+                        maxItems: this.size,
+                        skipCount: this.page * this.size,
+                        totalItems: tasks.total
+                    });
                 }, (error) => {
                     this.error.emit(error);
                     this.isLoading = false;
@@ -214,9 +237,16 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
         let changed: boolean = true;
 
         let landingTaskId = changes['landingTaskId'];
+        let page = changes['page'];
+        let size = changes['size'];
         if (landingTaskId && landingTaskId.currentValue && this.isEqualToCurrentId(landingTaskId.currentValue)) {
             changed = false;
+        } else if (page && page.currentValue !== page.previousValue) {
+            changed = true;
+        } else if (size && size.currentValue !== size.previousValue) {
+            changed = true;
         }
+
         return changed;
     }
 
@@ -402,5 +432,22 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
 
     private getDefaultLayoutPreset(): DataColumn[] {
         return (this.layoutPresets['default']).map(col => new ObjectDataColumn(col));
+    }
+
+    updatePagination(params: PaginationQueryParams) {
+        const needsReload = params.maxItems || params.skipCount;
+        this.size = params.maxItems;
+        this.page = this.currentPage(params.skipCount, params.maxItems);
+        if (needsReload) {
+            this.reload();
+        }
+    }
+
+    currentPage(skipCount: number, maxItems: number): number {
+        return (skipCount && maxItems) ? Math.floor(skipCount / maxItems) : 0;
+    }
+
+    get supportedPageSizes(): number[] {
+        return this.userPreferences.getDifferentPageSizes();
     }
 }
