@@ -57,7 +57,7 @@ describe('UserPreferencesService', () => {
         appConfig.config = {
             pagination: {
                 'size': 10,
-                'supportedPageSizes': [ 5, 10, 15, 20 ]
+                'supportedPageSizes': [5, 10, 15, 20]
             }
         };
         preferences = TestBed.get(UserPreferencesService);
@@ -97,6 +97,12 @@ describe('UserPreferencesService', () => {
         preferences.set('propertyA', 'valueA');
         const propertyKey = preferences.getPropertyKey('propertyA');
         expect(storage.getItem(propertyKey)).toBe('valueA');
+    });
+
+    it('should null value return default prefix', () => {
+        preferences.storage.setItem('paginationSize', null);
+        const paginationSize = preferences.getPropertyKey('paginationSize');
+        expect(preferences.get(paginationSize, 'default')).toBe('default');
     });
 
     it('should save value with custom prefix', () => {

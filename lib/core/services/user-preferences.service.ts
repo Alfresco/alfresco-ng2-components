@@ -51,7 +51,7 @@ export class UserPreferencesService {
     get(property: string, defaultValue?: string): string {
         const key = this.getPropertyKey(property);
         const value = this.storage.getItem(key);
-        if (value === undefined) {
+        if (value === undefined || value === null) {
             return defaultValue;
         }
         return value;
