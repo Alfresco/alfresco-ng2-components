@@ -25,6 +25,7 @@ import { MaterialModule } from '../../material.module';
 import { ToolbarModule } from '../../toolbar/toolbar.module';
 import { EventMock } from '../../mock/event.mock';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
+import { PdfViewerService } from '../services/pdf-viewer.service';
 import { PdfViewerComponent } from './pdfViewer.component';
 
 declare var require: any;
@@ -46,7 +47,8 @@ describe('Test PdfViewer component', () => {
                 SettingsService,
                 AuthenticationService,
                 AlfrescoApiService,
-                RenderingQueueServices
+                RenderingQueueServices,
+                PdfViewerService
             ]
         }).compileComponents();
     }));
