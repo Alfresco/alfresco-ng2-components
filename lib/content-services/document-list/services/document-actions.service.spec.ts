@@ -26,7 +26,7 @@ import { NodeActionsService } from './node-actions.service';
 import { DialogModule } from '../../dialogs/dialog.module';
 import { ContentNodeDialogService } from '../../content-node-selector/content-node-dialog.service';
 
-fdescribe('DocumentActionsService', () => {
+describe('DocumentActionsService', () => {
 
     let service: DocumentActionsService;
     let documentListService: DocumentListService;
