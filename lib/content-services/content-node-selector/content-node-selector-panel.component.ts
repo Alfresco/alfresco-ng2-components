@@ -70,6 +70,9 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     @Input()
     isSelectionValid: ValidationFunction = defaultValidation;
 
+    @Input()
+    breadcrumbTransform: (node) => any;
+
     @Output()
     select: EventEmitter<MinimalNodeEntryEntity[]> = new EventEmitter<MinimalNodeEntryEntity[]>();
 
@@ -123,6 +126,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     ngOnInit() {
         this.folderIdToShow = this.currentFolderId;
         this.paginationStrategy = PaginationStrategy.Infinite;
+
+        this.breadcrumbTransform = this.breadcrumbTransform ? this.breadcrumbTransform : null ;
     }
 
     /**
@@ -159,11 +164,15 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
      * Returns the actually selected|entered folder node or null in case of searching for the breadcrumb
      */
     get breadcrumbFolderNode(): MinimalNodeEntryEntity | null {
+        let folderNode: MinimalNodeEntryEntity;
+
         if (this.showingSearchResults && this.chosenNode) {
-            return this.chosenNode;
+            folderNode = this.chosenNode;
         } else {
-            return this.documentList.folderNode;
+            folderNode = this.documentList.folderNode;
         }
+
+        return this.breadcrumbTransform ? this.breadcrumbTransform(folderNode) : folderNode;
     }
 
     /**
