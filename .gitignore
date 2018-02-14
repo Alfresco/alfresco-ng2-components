@@ -21,3 +21,5 @@ package-lock.*
 /ng2-components/ng2-alfresco-core/prebuilt-themes/
 .ng_pkg_build/
 /demo-shell/dist-dev-temp/
+/lib/export-new.json
+/lib/config/exportCheck.js

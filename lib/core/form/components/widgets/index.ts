@@ -70,7 +70,7 @@ export * from './date/date.widget';
 export * from './amount/amount.widget';
 export * from './dynamic-table/dynamic-table.widget';
 export * from './error/error.component';
-export { DocumentWidgetComponent } from './document/document.widget';
+export * from './document/document.widget';
 export * from './date-time/date-time.widget';
 
 // editors (dynamic table)
