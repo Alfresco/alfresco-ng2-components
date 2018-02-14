@@ -167,19 +167,25 @@ describe('ProcessInstanceHeaderComponent', () => {
     describe('Config Filtering', () => {
 
         it('should show only the properties from the configuration file', () => {
-            spyOn(appConfigService, 'get').and.returnValue(['status', 'ended']);
+            appConfigService.config = Object.assign(appConfigService.config, {
+                'adf-process-instance-header': {
+                    'presets': {
+                        'properties': ['status', 'ended']
+                    }
+                }
+            });
             component.ngOnChanges({});
             fixture.detectChanges();
             const propertyList = fixture.nativeElement.querySelectorAll('.adf-property-list .adf-property');
             expect(propertyList).toBeDefined();
             expect(propertyList).not.toBeNull();
             expect(propertyList.length).toBe(2);
-            expect(propertyList[0].nativeElement.innerText).toContain('ADF_PROCESS_LIST.PROPERTIES.STATUS');
-            expect(propertyList[1].nativeElement.innerText).toContain('ADF_PROCESS_LIST.PROPERTIES.ENDED');
+            expect(propertyList[0].innerText).toContain('ADF_PROCESS_LIST.PROPERTIES.STATUS');
+            expect(propertyList[1].innerText).toContain('ADF_PROCESS_LIST.PROPERTIES.END_DATE');
         });
 
         it('should show all the default properties if there is no configuration', () => {
-            spyOn(appConfigService, 'get').and.returnValue(null);
+            appConfigService.config = Object.assign(appConfigService.config, {});
             component.ngOnChanges({});
             fixture.detectChanges();
             const propertyList = fixture.nativeElement.querySelectorAll('.adf-property-list .adf-property');
