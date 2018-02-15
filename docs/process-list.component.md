@@ -46,6 +46,25 @@ define custom schema in the app.config.json as shown below json format.
 </adf-process-instance-list>
 ```
 
+### Pagination strategy
+
+adf-process-instance-list also supports pagination and the same can be used as shown below.
+
+```html
+<adf-process-instance-list
+    [appId]="'1'"
+    [page]="page"
+    [size]="size"
+    #processList>
+</adf-process-instance-list>
+<adf-pagination
+    *ngIf="processList"
+    [target]="processList"
+    [supportedPageSizes]="supportedPages"
+    #processListPagination>
+</adf-pagination>
+```
+
 ### Properties
 
 | Name | Description |  |  |
@@ -79,3 +98,8 @@ Example value for the schemaColumn property (see [Properties](#properties) secti
     {type: 'text', key: 'startedBy.email', title: 'Started By', sortable: true}
 ]
 ```
+## See also
+
+-   [Data column component](data-column.component.md)
+-   [DataTableAdapter](DataTableAdapter.md)
+-   [Pagination component](pagination.component.md)
