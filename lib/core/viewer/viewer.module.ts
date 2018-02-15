@@ -22,7 +22,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
 import { ToolbarModule } from '../toolbar/toolbar.module';
 import { PipeModule } from '../pipes/pipe.module';
-import { InfoDrawerModule } from '../info-drawer/info-drawer.module';
 import { ImgViewerComponent } from './components/imgViewer.component';
 import { MediaPlayerComponent } from './components/mediaPlayer.component';
 import { PdfViewerComponent } from './components/pdfViewer.component';
@@ -37,7 +36,6 @@ import { ViewerToolbarComponent } from './components/viewer-toolbar.component';
 import { ViewerComponent } from './components/viewer.component';
 import { ViewerExtensionDirective } from './directives/viewer-extension.directive';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { PdfViewerService } from './services/pdf-viewer.service';
 
 @NgModule({
     imports: [
@@ -45,7 +43,6 @@ import { PdfViewerService } from './services/pdf-viewer.service';
         MaterialModule,
         TranslateModule,
         ToolbarModule,
-        InfoDrawerModule,
         PipeModule,
         FlexLayoutModule
     ],
@@ -63,9 +60,6 @@ import { PdfViewerService } from './services/pdf-viewer.service';
         ViewerSidebarComponent,
         ViewerOpenWithComponent,
         ViewerMoreActionsComponent
-    ],
-    providers: [
-        PdfViewerService
     ],
     exports: [
         ViewerComponent,

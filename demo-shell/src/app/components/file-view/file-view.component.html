@@ -17,19 +17,10 @@
         </adf-info-drawer>
     </ng-template>
 
-    <ng-template #thumbnailsTemplate>
-        <adf-info-drawer-layout>
-            <div info-drawer-content>
-                <adf-pdf-thumbnails></adf-pdf-thumbnails>
-            </div>
-        </adf-info-drawer-layout>
-    </ng-template>
-
     <adf-viewer [fileNodeId]="nodeId"
         [allowSidebar]="true"
-        [sidebarTemplate]="sidebarTemplate"
-        [allowThumbnails]="true"
-        [thumbnailsTemplate]="thumbnailsTemplate">
+        [sidebarTemplate]="sidebarTemplate">
+
         <!--
         <adf-viewer-extension [supportedExtensions]="['json']">
             <ng-template let-urlFileContent="urlFileContent" let-extension="extension">

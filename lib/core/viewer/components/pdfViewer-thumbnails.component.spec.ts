@@ -19,7 +19,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { PdfThumbListComponent } from './pdfViewer-thumbnails.component';
 import { PdfThumbComponent } from './pdfViewer-thumb.component';
-import { PdfViewerService } from '../services/pdf-viewer.service';
 import { PDFJS } from 'pdfjs-dist';
 
 describe('PdfThumbListComponent', () => {
@@ -58,9 +57,6 @@ describe('PdfThumbListComponent', () => {
             declarations: [
                 PdfThumbListComponent,
                 PdfThumbComponent
-            ],
-            providers: [
-                PdfViewerService
             ]
         })
         .compileComponents()
@@ -68,7 +64,7 @@ describe('PdfThumbListComponent', () => {
             fixture = TestBed.createComponent(PdfThumbListComponent);
             component = fixture.componentInstance;
 
-            TestBed.get(PdfViewerService).setViewer(viewerMock);
+            component.pdfViewer = viewerMock;
 
             // provide scrollable container
             fixture.nativeElement.style.display = 'block';

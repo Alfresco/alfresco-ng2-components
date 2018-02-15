@@ -18,7 +18,7 @@
 import { Location } from '@angular/common';
 import {
     Component, ContentChild, EventEmitter, HostListener, ElementRef,
-    Input, OnInit, OnChanges, OnDestroy, Output, SimpleChanges, TemplateRef,
+    Input, OnChanges, Output, SimpleChanges, TemplateRef,
     ViewEncapsulation
 } from '@angular/core';
 import { MinimalNodeEntryEntity, RenditionEntry } from 'alfresco-js-api';
@@ -29,8 +29,6 @@ import { ViewerMoreActionsComponent } from './viewer-more-actions.component';
 import { ViewerOpenWithComponent } from './viewer-open-with.component';
 import { ViewerSidebarComponent } from './viewer-sidebar.component';
 import { ViewerToolbarComponent } from './viewer-toolbar.component';
-import { PdfViewerService } from '../services/pdf-viewer.service';
-import { Subscription } from 'rxjs/Rx';
 
 @Component({
     selector: 'adf-viewer',
@@ -39,7 +37,7 @@ import { Subscription } from 'rxjs/Rx';
     host: { 'class': 'adf-viewer' },
     encapsulation: ViewEncapsulation.None
 })
-export class ViewerComponent implements OnInit, OnChanges, OnDestroy {
+export class ViewerComponent implements OnChanges {
 
     @ContentChild(ViewerToolbarComponent)
     toolbar: ViewerToolbarComponent;
@@ -135,7 +133,7 @@ export class ViewerComponent implements OnInit, OnChanges, OnDestroy {
 
     /** Toggles PDF thumbnails. */
     @Input()
-    allowThumbnails = false;
+    allowThumbnails = true;
 
     /** Toggles sidebar visibility. Requires `allowSidebar` to be set to `true`. */
     @Input()
@@ -215,8 +213,6 @@ export class ViewerComponent implements OnInit, OnChanges, OnDestroy {
     extension: string;
     sidebarTemplateContext: { node: MinimalNodeEntryEntity } = { node: null };
 
-    private subscriptions: Subscription[] = [];
-
     // Extensions that are supported by the Viewer without conversion
     private extensions = {
         image: ['png', 'jpg', 'jpeg', 'gif', 'bpm', 'svg'],
@@ -234,21 +230,9 @@ export class ViewerComponent implements OnInit, OnChanges, OnDestroy {
     };
 
     constructor(private apiService: AlfrescoApiService,
-                private pdfViewerService: PdfViewerService,
                 private logService: LogService,
                 private location: Location,
                 private el: ElementRef) {
-    }
-
-    ngOnInit() {
-        this.subscriptions.push(
-            this.pdfViewerService.toggleThumbnails
-                .subscribe(() => this.showPdfThumbnails = !this.showPdfThumbnails)
-        );
-    }
-
-    ngOnDestroy() {
-        this.subscriptions.forEach(subscription => subscription.unsubscribe());
     }
 
     isSourceDefined(): boolean {

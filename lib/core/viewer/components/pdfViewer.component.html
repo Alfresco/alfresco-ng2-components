@@ -1,9 +1,24 @@
-<div id="viewer-pdf-container" class="viewer-pdf-container" (window:resize)="onResize()">
-    <div id="viewer-viewerPdf" class="pdfViewer">
-        <div id="loader-container" class="loader-container">
-            <div class="loader-item">
-                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-            </div >
+<div class="adf-pdf-viewer__container">
+    <ng-container *ngIf="showThumbnails">
+        <div class="adf-pdf-viewer__thumbnails">
+            <ng-container *ngIf="thumbnailsTemplate">
+                <ng-container *ngTemplateOutlet="thumbnailsTemplate;context:pdfThumbnailsContext"></ng-container>
+            </ng-container>
+            <ng-container *ngIf="!thumbnailsTemplate">
+                <adf-pdf-thumbnails [pdfViewer]="pdfViewer"></adf-pdf-thumbnails>
+            </ng-container>
+        </div>
+    </ng-container>
+
+    <div class="adf-pdf-viewer__content">
+        <div id="viewer-pdf-viewer" class="viewer-pdf-viewer" (window:resize)="onResize()">
+            <div id="viewer-viewerPdf" class="pdfViewer">
+                <div id="loader-container" class="loader-container">
+                    <div class="loader-item">
+                        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                    </div >
+                </div>
+            </div>
         </div>
     </div>
 </div>

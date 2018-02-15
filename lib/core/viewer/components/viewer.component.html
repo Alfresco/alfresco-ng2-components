@@ -140,19 +140,11 @@
                 </div>
             </ng-container>
 
-            <ng-container *ngIf="allowThumbnails && showPdfThumbnails">
-                <div fxFlexOrder="1" class="adf-viewer__thumbnails">
-                    <ng-container *ngIf="thumbnailsTemplate">
-                        <ng-container *ngTemplateOutlet="thumbnailsTemplate"></ng-container>
-                    </ng-container>
-                </div>
-            </ng-container>
-
             <div class="adf-viewer-main" fxFlexOrder="{{sidebarPosition !== 'left'? 1 : 4}}" fxFlex="1 1 auto">
                 <div class="adf-viewer-layout-content adf-viewer__fullscreen-container">
                     <div class="adf-viewer-content-container" [ngSwitch]="viewerType">
                         <ng-container *ngSwitchCase="'pdf'">
-                            <adf-pdf-viewer [allowThumbnails]="allowThumbnails" [blobFile]="blobFile" [urlFile]="urlFileContent" [nameFile]="displayName"></adf-pdf-viewer>
+                            <adf-pdf-viewer [thumbnailsTemplate]="thumbnailsTemplate" [allowThumbnails]="allowThumbnails" [blobFile]="blobFile" [urlFile]="urlFileContent" [nameFile]="displayName"></adf-pdf-viewer>
                         </ng-container>
 
                         <ng-container *ngSwitchCase="'image'">

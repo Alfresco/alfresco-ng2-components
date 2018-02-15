@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, HostListener, Input, OnChanges, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Component, TemplateRef, HostListener, Input, OnChanges, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { LogService } from '../../services/log.service';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
-import { PdfViewerService } from '../services/pdf-viewer.service';
 
 declare let PDFJS: any;
 
@@ -50,6 +49,9 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     @Input()
     allowThumbnails = false;
 
+    @Input()
+    thumbnailsTemplate: TemplateRef<any> = null;
+
     currentPdfDocument: any;
     page: number;
     displayPage: number;
@@ -65,12 +67,14 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     MIN_SCALE: number = 0.25;
     MAX_SCALE: number = 10.0;
 
+    showThumbnails = false;
+    pdfThumbnailsContext: { viewer: any } = { viewer: null };
+
     get currentScaleText(): string {
         return Math.round(this.currentScale * 100) + '%';
     }
 
     constructor(private renderingQueueServices: RenderingQueueServices,
-                private pdfViewerService: PdfViewerService,
                 private logService: LogService) {
         // needed to preserve "this" context
         this.onPageChange = this.onPageChange.bind(this);
@@ -138,7 +142,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
         const viewer: any = document.getElementById('viewer-viewerPdf');
 
-        this.documentContainer = document.getElementById('viewer-pdf-container');
+        this.documentContainer = document.getElementById('viewer-pdf-viewer');
         this.documentContainer.addEventListener('pagechange', this.onPageChange, true);
 
         this.pdfViewer = new PDFJS.PDFViewer({
@@ -151,7 +155,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
         this.pdfViewer.setDocument(pdfDocument);
 
-        this.pdfViewerService.setViewer(this.pdfViewer);
+        this.pdfThumbnailsContext.viewer = this.pdfViewer;
     }
 
     ngOnDestroy() {
@@ -161,7 +165,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     toggleThumbnails() {
-        this.pdfViewerService.toggleThumbnails.next();
+        this.showThumbnails = !this.showThumbnails;
     }
 
     /**
@@ -175,7 +179,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         if (this.pdfViewer) {
 
             let viewerContainer = document.getElementById('viewer-main-container');
-            let documentContainer = document.getElementById('viewer-pdf-container');
+            let documentContainer = document.getElementById('viewer-pdf-viewer');
 
             let widthContainer;
             let heightContainer;

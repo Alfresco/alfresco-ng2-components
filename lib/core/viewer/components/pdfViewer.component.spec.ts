@@ -25,7 +25,6 @@ import { MaterialModule } from '../../material.module';
 import { ToolbarModule } from '../../toolbar/toolbar.module';
 import { EventMock } from '../../mock/event.mock';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
-import { PdfViewerService } from '../services/pdf-viewer.service';
 import { PdfViewerComponent } from './pdfViewer.component';
 
 declare var require: any;
@@ -47,8 +46,7 @@ describe('Test PdfViewer component', () => {
                 SettingsService,
                 AuthenticationService,
                 AlfrescoApiService,
-                RenderingQueueServices,
-                PdfViewerService
+                RenderingQueueServices
             ]
         }).compileComponents();
     }));
@@ -99,7 +97,7 @@ describe('Test PdfViewer component', () => {
 
         it('should Canvas be present', () => {
             expect(element.querySelector('.pdfViewer')).not.toBeNull();
-            expect(element.querySelector('.viewer-pdf-container')).not.toBeNull();
+            expect(element.querySelector('.viewer-pdf-viewer')).not.toBeNull();
         });
 
         it('should Loader be present', () => {
@@ -147,7 +145,7 @@ describe('Test PdfViewer component', () => {
 
         it('should Canvas be present', () => {
             expect(element.querySelector('.pdfViewer')).not.toBeNull();
-            expect(element.querySelector('.viewer-pdf-container')).not.toBeNull();
+            expect(element.querySelector('.viewer-pdf-viewer')).not.toBeNull();
         });
 
         it('should Loader be present', () => {

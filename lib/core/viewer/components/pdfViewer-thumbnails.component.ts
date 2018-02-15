@@ -15,8 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, ContentChild, TemplateRef, HostListener, OnInit, AfterViewInit, ElementRef, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { PdfViewerService } from '../services/pdf-viewer.service';
+import {
+    Component, Input, ContentChild, TemplateRef, HostListener, OnInit,
+    AfterViewInit, ElementRef, OnDestroy, ViewEncapsulation
+} from '@angular/core';
 
 @Component({
     selector: 'adf-pdf-thumbnails',
@@ -26,6 +28,8 @@ import { PdfViewerService } from '../services/pdf-viewer.service';
     encapsulation: ViewEncapsulation.None
 })
 export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
+    @Input() pdfViewer: any;
+
     virtualHeight: number = 0;
     translateY: number = 0;
     renderItems = [];
@@ -41,29 +45,26 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.calculateItems();
     }
 
-    constructor(
-        private pdfViewerService: PdfViewerService,
-        private element: ElementRef) {
-            this.calculateItems = this.calculateItems.bind(this);
-            this.onPageChange = this.onPageChange.bind(this);
-
+    constructor(private element: ElementRef) {
+        this.calculateItems = this.calculateItems.bind(this);
+        this.onPageChange = this.onPageChange.bind(this);
     }
 
     ngOnInit() {
         this.element.nativeElement.addEventListener('scroll', this.calculateItems, true);
-        this.pdfViewerService.getViewer().eventBus.on('pagechange', this.onPageChange);
+        this.pdfViewer.eventBus.on('pagechange', this.onPageChange);
 
         this.items = this.getPages();
         this.calculateItems();
     }
 
     ngAfterViewInit() {
-        setTimeout(() => this.scrollInto(this.pdfViewerService.getViewer().currentPageNumber), 0);
+        setTimeout(() => this.scrollInto(this.pdfViewer.currentPageNumber), 0);
     }
 
     ngOnDestroy() {
         this.element.nativeElement.removeEventListener('scroll', this.calculateItems, true);
-        this.pdfViewerService.getViewer().eventBus.off('pagechange', this.onPageChange);
+        this.pdfViewer.eventBus.off('pagechange', this.onPageChange);
     }
 
     trackByFn(index: number, item: any): number {
@@ -71,11 +72,11 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     isSelected(pageNum: number) {
-        return this.pdfViewerService.getViewer().currentPageNumber === pageNum;
+        return this.pdfViewer.currentPageNumber === pageNum;
     }
 
     goTo(pageNum: number) {
-        this.pdfViewerService.setPage(pageNum);
+        this.pdfViewer.currentPageNumber = pageNum;
     }
 
     scrollInto(item: any) {
@@ -93,11 +94,9 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     getPages() {
-        const viewer = this.pdfViewerService.getViewer();
-
-        return viewer._pages.map((page) => ({
+        return this.pdfViewer._pages.map((page) => ({
             id: page.id,
-            getPage: () => viewer.pdfDocument.getPage(page.id)
+            getPage: () => this.pdfViewer.pdfDocument.getPage(page.id)
         }));
     }
 
