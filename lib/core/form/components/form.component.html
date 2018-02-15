@@ -30,7 +30,7 @@
         </mat-card-content>
         <mat-card-actions *ngIf="form.hasOutcomes()" class="adf-form-mat-card-actions">
             <!--[class.mdl-button--colored]="!outcome.isSystem"-->
-            <button *ngFor="let outcome of form.outcomes" 
+            <button [id]="'adf-form-'+ outcome.name  | lowercase" *ngFor="let outcome of form.outcomes"
                     [color]="getColorForOutcome(outcome.name)"
                     mat-button
                     [disabled]="!isOutcomeButtonEnabled(outcome)"
