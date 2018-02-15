@@ -67,7 +67,7 @@ do
          echo "prebuilt-theme ok!"
     fi
 
-    if [ ! -f package/app-config/'schema.json' ]; then
+    if [ ! -f package/'schema.json' ]; then
         error_out '31;1'  "$PACKAGE schema not found!" >&2
         exit 1
     else
