@@ -87,7 +87,7 @@ export class TaskFilterService {
     /**
      * Retrieve all the Tasks filters
      */
-    getTaskListFilters(appId?: number): Observable<any> {
+    getTaskListFilters(appId?: number): Observable<FilterRepresentationModel[]> {
         return Observable.fromPromise(this.callApiTaskFilters(appId))
             .map((response: any) => {
                 let filters: FilterRepresentationModel[] = [];
