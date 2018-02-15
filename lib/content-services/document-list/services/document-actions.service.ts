@@ -76,23 +76,14 @@ export class DocumentActionsService {
     }
 
     private setupActionHandlers() {
-        this.handlers['download'] = this.download.bind(this);
         this.handlers['copy'] = this.copyNode.bind(this);
         this.handlers['move'] = this.moveNode.bind(this);
         this.handlers['delete'] = this.deleteNode.bind(this);
+        this.handlers['download'] = this.downloadNode.bind(this);
     }
 
-    private download(node: MinimalNodeEntity): Observable<boolean> {
-        if (this.canExecuteAction(node) && this.contentService) {
-            let link = document.createElement('a');
-            document.body.appendChild(link);
-            link.setAttribute('download', node.entry.name);
-            link.href = this.contentService.getContentUrl(node);
-            link.click();
-            document.body.removeChild(link);
-            return Observable.of(true);
-        }
-        return Observable.of(false);
+    private downloadNode(obj: MinimalNodeEntity, target?: any, permission?: string) {
+        this.nodeActionsService.downloadNode(obj);
     }
 
     private copyNode(node: MinimalNodeEntity, target?: any, permission?: string) {
