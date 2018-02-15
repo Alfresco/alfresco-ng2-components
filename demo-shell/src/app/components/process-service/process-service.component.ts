@@ -369,10 +369,16 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.taskPage = this.taskListPagination.current - 1;
         if (this.taskList) {
             this.taskList.reload();
+        } else {
+            this.navigateToProcess();
         }
         if (this.processList) {
             this.processList.reload();
         }
+    }
+
+    navigateToProcess(): void {
+        this.router.navigate([`/activiti/apps/${this.appId}/processes/`]);
     }
 
     onContentClick(content: any): void {

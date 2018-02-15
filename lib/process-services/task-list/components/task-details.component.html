@@ -28,8 +28,8 @@
                           [showTitle]="showFormTitle"
                           [showRefreshButton]="showFormRefreshButton"
                           [showCompleteButton]="showFormCompleteButton"
-                          [disableCompleteButton]="!isAssignedToMe()"
-                          [showSaveButton]="showFormSaveButton"
+                          [disableCompleteButton]="!isCompleteButtonVisible()"
+                          [showSaveButton]="isSaveButtonVisible()"
                           [readOnly]="readOnlyForm"
                           [fieldValidators]="fieldValidators"
                           (formSaved)='onFormSaved($event)'
