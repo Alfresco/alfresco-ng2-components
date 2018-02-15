@@ -288,7 +288,6 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
         return this.isAssignedToMe() || this.canInitiatorComplete();
     }
 
-
     canInitiatorComplete(): boolean {
         return this.taskDetails.initiatorCanCompleteTask;
     }
