@@ -125,6 +125,8 @@ You can also use both HTML-based and app.config.json custom schema declaration a
 </adf-tasklist>
 ```
 
+### Pagination strategy
+
 adf-tasklist also supports pagination and the same can be used as shown below.
 
 ```html
@@ -197,3 +199,4 @@ You can customize the styling of a column and also add features like tooltips an
 
 -   [Data column component](data-column.component.md)
 -   [DataTableAdapter](DataTableAdapter.md)
+-   [Pagination component](pagination.component.md)
