@@ -15,25 +15,40 @@
  * limitations under the License.
  */
 
-import { ContentService } from '@alfresco/adf-core';
-import { FileNode, FolderNode, DocumentListServiceMock } from '../../mock';
+import { async, TestBed } from '@angular/core/testing';
+
+import { FileNode, FolderNode } from '../../mock';
+import { DocumentListModule } from '../document-list.module';
 import { ContentActionHandler } from '../models/content-action.model';
 import { DocumentActionsService } from './document-actions.service';
 import { DocumentListService } from './document-list.service';
 import { NodeActionsService } from './node-actions.service';
+import { DialogModule } from '../../dialogs/dialog.module';
+import { ContentNodeDialogService } from '../../content-node-selector/content-node-dialog.service';
+import { Observable } from 'rxjs/Observable';
 
 describe('DocumentActionsService', () => {
 
     let service: DocumentActionsService;
     let documentListService: DocumentListService;
-    let contentService: ContentService;
     let nodeActionsService: NodeActionsService;
 
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                DialogModule,
+                DocumentListModule
+            ],
+            providers: [
+                ContentNodeDialogService
+            ]
+        }).compileComponents();
+    }));
+
     beforeEach(() => {
-        documentListService = new DocumentListServiceMock();
-        contentService = new ContentService(null, null, null, null);
-        nodeActionsService = new NodeActionsService(null, null);
-        service = new DocumentActionsService(nodeActionsService, documentListService, contentService);
+        documentListService = TestBed.get(DocumentListService);
+        nodeActionsService = TestBed.get(NodeActionsService);
+        service = TestBed.get(DocumentActionsService);
     });
 
     it('should register default download action', () => {
@@ -87,7 +102,7 @@ describe('DocumentActionsService', () => {
     });
 
     it('should not delete the file node if there are no permissions', (done) => {
-        spyOn(documentListService, 'deleteNode').and.callThrough();
+        spyOn(documentListService, 'deleteNode').and.returnValue(Observable.of(true));
 
         service.permissionEvent.subscribe((permission) => {
             expect(permission).toBeDefined();
@@ -102,7 +117,7 @@ describe('DocumentActionsService', () => {
     });
 
     it('should call the error on the returned Observable if there are no permissions', (done) => {
-        spyOn(documentListService, 'deleteNode').and.callThrough();
+        spyOn(documentListService, 'deleteNode').and.returnValue(Observable.of(true));
 
         let file = new FileNode();
         const deleteObservable = service.getHandler('delete')(file);
@@ -116,7 +131,7 @@ describe('DocumentActionsService', () => {
     });
 
     it('should delete the file node if there is the delete permission', () => {
-        spyOn(documentListService, 'deleteNode').and.callThrough();
+        spyOn(documentListService, 'deleteNode').and.returnValue(Observable.of(true));
 
         let permission = 'delete';
         let file = new FileNode();
@@ -145,7 +160,7 @@ describe('DocumentActionsService', () => {
     });
 
     it('should delete the file node if there is the delete and others permission ', () => {
-        spyOn(documentListService, 'deleteNode').and.callThrough();
+        spyOn(documentListService, 'deleteNode').and.returnValue(Observable.of(true));
 
         let permission = 'delete';
         let file = new FileNode();
@@ -160,60 +175,8 @@ describe('DocumentActionsService', () => {
         expect(service.getHandler('download')).toBeDefined();
     });
 
-    it('should execute download action and cleanup', () => {
-        let file = new FileNode();
-        file.entry.name = 'test.png';
-        let url = 'http://<address>';
-
-        spyOn(contentService, 'getContentUrl').and.returnValue(url);
-
-        let link = jasmine.createSpyObj('a', [
-            'setAttribute',
-            'click'
-        ]);
-
-        spyOn(document, 'createElement').and.returnValue(link);
-        spyOn(document.body, 'appendChild').and.stub();
-        spyOn(document.body, 'removeChild').and.stub();
-
-        service.getHandler('download')(file);
-
-        expect(contentService.getContentUrl).toHaveBeenCalledWith(file);
-        expect(document.createElement).toHaveBeenCalledWith('a');
-        expect(link.setAttribute).toHaveBeenCalledWith('download', 'test.png');
-        expect(document.body.appendChild).toHaveBeenCalledWith(link);
-        expect(link.click).toHaveBeenCalled();
-        expect(document.body.removeChild).toHaveBeenCalledWith(link);
-    });
-
-    it('should require internal service for download action', () => {
-        let actionService = new DocumentActionsService(nodeActionsService, null, contentService);
-        let file = new FileNode();
-        let result = actionService.getHandler('download')(file);
-        result.subscribe((value) => {
-            expect(value).toBeFalsy();
-        });
-    });
-
-    it('should require content service for download action', () => {
-        let actionService = new DocumentActionsService(nodeActionsService, documentListService, null);
-        let file = new FileNode();
-        let result = actionService.getHandler('download')(file);
-        result.subscribe((value) => {
-            expect(value).toBeFalsy();
-        });
-    });
-
-    it('should require file node for download action', () => {
-        let folder = new FolderNode();
-        let result = service.getHandler('download')(folder);
-        result.subscribe((value) => {
-            expect(value).toBeFalsy();
-        });
-    });
-
     it('should delete file node', () => {
-        spyOn(documentListService, 'deleteNode').and.callThrough();
+        spyOn(documentListService, 'deleteNode').and.returnValue(Observable.of(true));
 
         let permission = 'delete';
         let file = new FileNode();
@@ -226,7 +189,7 @@ describe('DocumentActionsService', () => {
     });
 
     it('should support deletion only file node', () => {
-        spyOn(documentListService, 'deleteNode').and.callThrough();
+        spyOn(documentListService, 'deleteNode').and.returnValue(Observable.of(true));
 
         let folder = new FolderNode();
         service.getHandler('delete')(folder);
@@ -241,7 +204,7 @@ describe('DocumentActionsService', () => {
     });
 
     it('should require node id to delete', () => {
-        spyOn(documentListService, 'deleteNode').and.callThrough();
+        spyOn(documentListService, 'deleteNode').and.returnValue(Observable.of(true));
 
         let file = new FileNode();
         file.entry.id = null;
@@ -251,14 +214,13 @@ describe('DocumentActionsService', () => {
     });
 
     it('should reload target upon node deletion', () => {
-        spyOn(documentListService, 'deleteNode').and.callThrough();
+        spyOn(documentListService, 'deleteNode').and.returnValue(Observable.of(true));
 
         let target = jasmine.createSpyObj('obj', ['reload']);
         let permission = 'delete';
-        let file = new FileNode();
-        let fileWithPermission: any = file;
-        fileWithPermission.entry.allowableOperations = [permission];
-        service.getHandler('delete')(fileWithPermission, target, permission);
+        let file: any = new FileNode();
+        file.entry.allowableOperations = ['delete'];
+        service.getHandler('delete')(file, target, permission);
 
         expect(documentListService.deleteNode).toHaveBeenCalled();
         expect(target.reload).toHaveBeenCalled();
@@ -269,7 +231,7 @@ describe('DocumentActionsService', () => {
             expect(nodeId).not.toBeNull();
             done();
         });
-        spyOn(documentListService, 'deleteNode').and.callThrough();
+        spyOn(documentListService, 'deleteNode').and.returnValue(Observable.of(true));
 
         let target = jasmine.createSpyObj('obj', ['reload']);
         let permission = 'delete';

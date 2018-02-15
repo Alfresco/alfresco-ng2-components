@@ -48,7 +48,7 @@
                     <button mat-icon-button
                             [disabled]="!hasSelection(documentList.selection)"
                             title="Download"
-                            (click)="downloadNodes(documentList.selection)">
+                            [adfNodeDownload]="documentList.selection">
                         <mat-icon>get_app</mat-icon>
                     </button>
                     <button mat-icon-button
@@ -197,6 +197,11 @@
                 <content-actions>
                     <!-- common actions -->
                     <content-action
+                        icon="get_app"
+                        title="DOCUMENT_LIST.ACTIONS.DOWNLOAD"
+                        handler="download">
+                    </content-action>
+                    <content-action
                         icon="content_copy"
                         title="DOCUMENT_LIST.ACTIONS.FOLDER.COPY"
                         permission="update"
@@ -229,12 +234,6 @@
                         target="document"
                         title="Manage versions..."
                         (execute)="onManageVersions($event)">
-                    </content-action>
-                    <content-action
-                        icon="file_download"
-                        target="document"
-                        title="DOCUMENT_LIST.ACTIONS.DOCUMENT.DOWNLOAD"
-                        handler="download">
                     </content-action>
                     <content-action
                         *ngIf="authenticationService.isBpmLoggedIn()"
