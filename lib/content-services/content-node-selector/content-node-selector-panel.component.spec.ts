@@ -21,7 +21,6 @@ import { By } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity, SiteEntry, SitePaging } from 'alfresco-js-api';
 import {
     AlfrescoApiService,
-    ContentService,
     TranslationService,
     SearchService,
     SitesService,
@@ -76,10 +75,6 @@ describe('ContentNodeSelectorComponent', () => {
         _observer.next(result);
     }
 
-    function returnAlwaysTrue(entry: MinimalNodeEntryEntity) {
-        return true;
-    }
-
     function setupTestbed(plusProviders) {
         TestBed.configureTestingModule({
             imports: [
@@ -95,7 +90,6 @@ describe('ContentNodeSelectorComponent', () => {
             ],
             providers: [
                 AlfrescoApiService,
-                ContentService,
                 SearchService,
                 TranslationService,
                 DocumentListService,
@@ -215,9 +209,6 @@ describe('ContentNodeSelectorComponent', () => {
             });
 
             it('should show the breadcrumb for the selected node when search results are displayed', (done) => {
-                const alfrescoContentService = TestBed.get(ContentService);
-                spyOn(alfrescoContentService, 'hasPermission').and.returnValue(true);
-
                 typeToSearchBox();
 
                 setTimeout(() => {
@@ -238,9 +229,6 @@ describe('ContentNodeSelectorComponent', () => {
             });
 
             it('should NOT show the breadcrumb for the selected node when not on search results list', (done) => {
-                const alfrescoContentService = TestBed.get(ContentService);
-                spyOn(alfrescoContentService, 'hasPermission').and.returnValue(true);
-
                 typeToSearchBox();
 
                 setTimeout(() => {
@@ -699,95 +687,216 @@ describe('ContentNodeSelectorComponent', () => {
             });
         });
 
-        describe('Action button for the chosen node', () => {
+        describe('Chosen node', () => {
 
             const entry: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> { list: {entries: [{}]}};
             const nodePage: NodePaging = <NodePaging> {list: {}, pagination: {}};
             let hasPermission;
 
-            beforeEach(() => {
-                const alfrescoContentService = TestBed.get(ContentService);
-                spyOn(alfrescoContentService, 'hasPermission').and.callFake(() => hasPermission);
-                component.isSelectionValid = returnAlwaysTrue.bind(this);
+            function returnHasPermission(): boolean {
+                return hasPermission;
+            }
+
+            describe('in the case when isSelectionValid is a custom function for checking permissions,', () => {
+
+                beforeEach(() => {
+                    component.isSelectionValid = returnHasPermission;
+                });
+
+                it('should NOT be null after selecting node with the necessary permissions', () => {
+                    hasPermission = true;
+                    component.documentList.folderNode = entry;
+
+                    component.select.subscribe((nodes) => {
+                        expect(nodes).toBeDefined();
+                        expect(nodes).not.toBeNull();
+                        expect(component.chosenNode).toBe(entry);
+                    });
+
+                    component.documentList.ready.emit(nodePage);
+                    fixture.detectChanges();
+                });
+
+                it('should be null after selecting node without the necessary permissions', () => {
+                    hasPermission = false;
+                    component.documentList.folderNode = entry;
+
+                    component.select.subscribe((nodes) => {
+                        expect(nodes).toBeDefined();
+                        expect(nodes).toBeNull();
+                        expect(component.chosenNode).toBeNull();
+                    });
+
+                    component.documentList.ready.emit(nodePage);
+                    fixture.detectChanges();
+                });
+
+                it('should NOT be null after clicking on a node (with the right permissions) in the list (onNodeSelect)', () => {
+                    hasPermission = true;
+
+                    component.select.subscribe((nodes) => {
+                        expect(nodes).toBeDefined();
+                        expect(nodes).not.toBeNull();
+                        expect(component.chosenNode).toBe(entry);
+                    });
+
+                    component.onNodeSelect({ detail: { node: { entry } } });
+                    fixture.detectChanges();
+                });
+
+                it('should remain null when clicking on a node (with the WRONG permissions) in the list (onNodeSelect)', () => {
+                    hasPermission = false;
+
+                    component.select.subscribe((nodes) => {
+                        expect(nodes).toBeDefined();
+                        expect(nodes).toBeNull();
+                        expect(component.chosenNode).toBeNull();
+                    });
+
+                    component.onNodeSelect({ detail: { node: { entry } } });
+                    fixture.detectChanges();
+                });
+
+                it('should become null when clicking on a node (with the WRONG permissions) after previously selecting a right node', () => {
+                    component.select.subscribe((nodes) => {
+
+                        if (hasPermission) {
+                            expect(nodes).toBeDefined();
+                            expect(nodes).not.toBeNull();
+                            expect(component.chosenNode).not.toBeNull();
+
+                        } else {
+                            expect(nodes).toBeDefined();
+                            expect(nodes).toBeNull();
+                            expect(component.chosenNode).toBeNull();
+                        }
+                    });
+
+                    hasPermission = true;
+                    component.onNodeSelect({ detail: { node: { entry } } });
+                    fixture.detectChanges();
+
+                    hasPermission = false;
+                    component.onNodeSelect({ detail: { node: { entry } } });
+                    fixture.detectChanges();
+                });
+
+                it('should be null when the chosenNode is reset', () => {
+                    hasPermission = true;
+                    component.onNodeSelect({ detail: { node: { entry: <MinimalNodeEntryEntity> {} } } });
+                    fixture.detectChanges();
+
+                    component.select.subscribe((nodes) => {
+                        expect(nodes).toBeDefined();
+                        expect(nodes).toBeNull();
+                        expect(component.chosenNode).toBeNull();
+                    });
+
+                    component.resetChosenNode();
+                    fixture.detectChanges();
+                });
             });
 
-            it('should become enabled after loading node with the necessary permissions', async(() => {
-                hasPermission = true;
-                component.documentList.folderNode = entry;
+            describe('in the case when isSelectionValid is null', () => {
 
-                component.select.subscribe((nodes) => {
-                    expect(nodes).toBeDefined();
-                    expect(nodes).not.toBeNull();
+                beforeEach(async(() => {
+                    component.isSelectionValid = null;
+                }));
+
+                it('should NOT be null after selecting node because isSelectionValid would be reset to defaultValidation function', () => {
+                    component.documentList.folderNode = entry;
+
+                    component.select.subscribe((nodes) => {
+                        expect(nodes).toBeDefined();
+                        expect(nodes).not.toBeNull();
+                        expect(component.chosenNode).not.toBeNull();
+                        expect(component.isSelectionValid).not.toBeNull();
+                    });
+
+                    component.documentList.ready.emit(nodePage);
+                    fixture.detectChanges();
                 });
 
-                component.documentList.ready.emit(nodePage);
-                fixture.detectChanges();
-            }));
+                it('should NOT be null after clicking on a node in the list (onNodeSelect)', () => {
+                    fixture.detectChanges();
+                    component.select.subscribe((nodes) => {
+                        expect(nodes).toBeDefined();
+                        expect(nodes).not.toBeNull();
+                        expect(component.chosenNode).not.toBeNull();
+                        expect(component.isSelectionValid).not.toBeNull();
+                    });
 
-            it('should remain disabled after loading node without the necessary permissions', () => {
-                hasPermission = false;
-                component.documentList.folderNode = entry;
-
-                component.select.subscribe((nodes) => {
-                    expect(nodes).toBeDefined();
-                    expect(nodes).not.toBeNull();
+                    component.onNodeSelect({ detail: { node: { entry } } });
+                    fixture.detectChanges();
                 });
 
-                component.documentList.ready.emit(nodePage);
-                fixture.detectChanges();
+                it('should be null when the chosenNode is reset', () => {
+                    fixture.detectChanges();
+                    component.onNodeSelect({ detail: { node: { entry: <MinimalNodeEntryEntity> {} } } });
+                    fixture.detectChanges();
+
+                    component.select.subscribe((nodes) => {
+                        expect(nodes).toBeDefined();
+                        expect(nodes).toBeNull();
+                        expect(component.chosenNode).toBeNull();
+                        expect(component.isSelectionValid).not.toBeNull();
+                    });
+
+                    component.resetChosenNode();
+                    fixture.detectChanges();
+                });
             });
 
-            it('should be enabled when clicking on a node (with the right permissions) in the list (onNodeSelect)', () => {
-                hasPermission = true;
+            describe('in the case when isSelectionValid is not defined', () => {
 
-                component.select.subscribe((nodes) => {
-                    expect(nodes).toBeDefined();
-                    expect(nodes).not.toBeNull();
+                beforeEach(async(() => {
+                    component.isSelectionValid = undefined;
+                }));
+
+                it('should NOT be null after selecting node because isSelectionValid would be the defaultValidation function', () => {
+                    component.documentList.folderNode = entry;
+
+                    component.select.subscribe((nodes) => {
+                        expect(nodes).toBeDefined();
+                        expect(nodes).not.toBeNull();
+                        expect(component.chosenNode).not.toBeNull();
+                        expect(component.isSelectionValid).not.toBeNull();
+                    });
+
+                    component.documentList.ready.emit(nodePage);
+                    fixture.detectChanges();
                 });
 
-                component.onNodeSelect({ detail: { node: { entry } } });
-                fixture.detectChanges();
-            });
+                it('should NOT be null after clicking on a node in the list (onNodeSelect)', () => {
+                    component.select.subscribe((nodes) => {
+                        expect(nodes).toBeDefined();
+                        expect(nodes).not.toBeNull();
+                        expect(component.chosenNode).not.toBeNull();
+                        expect(component.isSelectionValid).not.toBeNull();
+                    });
+                    fixture.detectChanges();
 
-            it('should remain disabled when clicking on a node (with the WRONG permissions) in the list (onNodeSelect)', () => {
-                hasPermission = false;
-
-                component.select.subscribe((nodes) => {
-                    expect(nodes).toBeDefined();
-                    expect(nodes).not.toBeNull();
+                    component.onNodeSelect({ detail: { node: { entry } } });
+                    fixture.detectChanges();
                 });
 
-                component.onNodeSelect({ detail: { node: { entry } } });
-                fixture.detectChanges();
-            });
+                it('should be null when the chosenNode is reset', () => {
+                    fixture.detectChanges();
 
-            it('should become disabled when clicking on a node (with the WRONG permissions) after previously selecting a right node', () => {
-                component.select.subscribe((nodes) => {
-                    expect(nodes).toBeDefined();
-                    expect(nodes).not.toBeNull();
+                    component.onNodeSelect({ detail: { node: { entry: <MinimalNodeEntryEntity> {} } } });
+                    fixture.detectChanges();
+
+                    component.select.subscribe((nodes) => {
+                        expect(nodes).toBeDefined();
+                        expect(nodes).toBeNull();
+                        expect(component.chosenNode).toBeNull();
+                        expect(component.isSelectionValid).not.toBeNull();
+                        // expect(component.isSelectionValid).toBe(() => true);
+                    });
+
+                    component.resetChosenNode();
+                    fixture.detectChanges();
                 });
-
-                hasPermission = true;
-                component.onNodeSelect({ detail: { node: { entry } } });
-                fixture.detectChanges();
-
-                hasPermission = false;
-                component.onNodeSelect({ detail: { node: { entry } } });
-                fixture.detectChanges();
-            });
-
-            it('should emit null when the chosenNode is reset', () => {
-                hasPermission = true;
-                component.onNodeSelect({ detail: { node: { entry: <MinimalNodeEntryEntity> {} } } });
-                fixture.detectChanges();
-
-                component.select.subscribe((nodes) => {
-                    expect(nodes).toBeDefined();
-                    expect(nodes).toBeNull();
-                });
-
-                component.resetChosenNode();
-                fixture.detectChanges();
             });
         });
     });
