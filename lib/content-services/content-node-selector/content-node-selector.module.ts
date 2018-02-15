@@ -48,7 +48,9 @@ import { NameLocationCellComponent } from './name-location-cell/name-location-ce
         PaginationModule
     ],
     exports: [
-        ContentNodeSelectorPanelComponent, ContentNodeSelectorComponent
+        ContentNodeSelectorPanelComponent,
+        NameLocationCellComponent,
+        ContentNodeSelectorComponent
     ],
     entryComponents: [
         ContentNodeSelectorPanelComponent, ContentNodeSelectorComponent
