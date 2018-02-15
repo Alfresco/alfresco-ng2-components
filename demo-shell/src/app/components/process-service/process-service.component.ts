@@ -27,7 +27,7 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Pagination, ProcessInstanceFilterRepresentation } from 'alfresco-js-api';
+import { ProcessInstanceFilterRepresentation } from 'alfresco-js-api';
 import {
     FORM_FIELD_VALIDATORS, FormEvent, FormFieldEvent, FormRenderingService, FormService,
     DynamicTableRow, ValidateDynamicTableRowEvent, AppConfigService, PaginationComponent
@@ -198,25 +198,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
             this.logService.log('Event Target:' + event.target);
         });
         */
-    }
-
-    onPrevPageProcess(pagination: Pagination): void {
-        this.processPage = this.processListPagination.current - 1;
-    }
-
-    onNextPageProcess(pagination: Pagination): void {
-        this.processPage = this.processListPagination.current - 1;
-    }
-
-    onChangePageSizeProcess(pagination: Pagination): void {
-        const { maxItems } = pagination;
-        this.preferenceService.paginationSize = maxItems;
-        this.processPage = this.processListPagination.current - 1;
-        this.paginationPageSize = maxItems;
-    }
-
-    onChangePageNumberProcess(pagination: Pagination): void {
-        this.processPage = this.processListPagination.current - 1;
     }
 
     ngOnInit() {
