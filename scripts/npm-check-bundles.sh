@@ -129,6 +129,7 @@ do
 done
  cd ..
 
+rm -rf temp
 
 set_npm_registry
 
