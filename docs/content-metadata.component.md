@@ -140,29 +140,24 @@ The following config will result in one accordion group named "TRANSLATABLE_TITL
 As a more complex config, you can study the one below:
 
 ```json
-...
   "content-metadata": {
     "presets": {
       "kittens": [
       {
         "title": "GROUP-TITLE1-TRANSLATION-KEY",
         "items": [
-          // We would like to show every property from the exif:exif aspect
           { 
             "aspect": "exif:exif",
             "properties": "*"
           },
-          // We would like to show the two properties (kitten:custom1, kitten:custom3) from the kitten:vet-  records aspect
           { 
             "aspect": "kitten:vet-records", 
             "properties": [ "kitten:custom1", "kitten:custom3" ]
           },
-          // We would like to show the owner:name property from the owner:parameters aspect
           { 
             "aspect": "owner:parameters", 
             "properties": [ "owner:name" ]
           },
-          // We would like to show all the properties from the type kitten:kitten
           { 
             "type": "kitten:kitten", 
             "properties": [ "kitten:name", "kitten:color" ]
@@ -172,7 +167,6 @@ As a more complex config, you can study the one below:
       {
         "title": "GROUP-TITLE2-TRANSLATION-KEY",
         "items": [
-          // We would like to show the two properties (kitten:favourite-food, kitten:recommended-food) from the kitten:food aspect
           {
             "aspect": "kitten:food", 
             "properties": [ "kitten:favourite-food", "kitten:recommended-food" ] 
@@ -181,11 +175,10 @@ As a more complex config, you can study the one below:
       }
     ]
   }
-...
 ```
 The end result of this config would be two accordion groups with the properties like this:
 
- 
+
 |GROUP-TITLE1-TRANSLATION-KEY|
 |---|
 |exif:param1|
