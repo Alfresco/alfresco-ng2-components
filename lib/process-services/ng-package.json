@@ -7,9 +7,9 @@
     "licensePath": "../config/assets/license_header_add.txt",
     "comments" : "none",
     "entryFile": "./public-api.ts",
+    "flatModuleFile": "adf-process-services",
     "umdModuleIds": {
       "alfresco-js-api": "alfresco-js-api",
-      "flatModuleFile": "adf-process-services",
       "minimatch": "minimatch",
       "@angular/platform-browser/animations": "@angular/platform-browser/animations",
       "@angular/material": "@angular/material",
