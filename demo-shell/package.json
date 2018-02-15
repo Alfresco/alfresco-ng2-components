@@ -10,7 +10,7 @@
     "start:dev": " npm run lint && npm run server-versions && rimraf dist && npm run clean-lib-angular && concurrently \"ng serve --host 0.0.0.0 --disable-host-check --app dev pp-dev --proxy-config proxy.conf.js --open\" \"npm run style:dev --watch\" \"npm run copy:dev\" ",
     "start:dist": "npm run server-versions && rimraf dist && node --max_old_space_size=30000 node_modules/.bin/ng serve --prod --build-optimizer=false  --aot=false --host 0.0.0.0 --disable-host-check --app dist",
     "build": "npm run validate-config && npm run server-versions && rimraf dist && ng build  --app dist",
-    "build:dev": "npm run validate-config && npm run lint && npm run style:dev && npm run server-versions && rimraf dist && ng build --app dev",
+    "build:dev": "npm run validate-config && npm run lint && npm run style:dev && npm run server-versions && rimraf dist && ng build  --prod --app dev",
     "build:dist": "npm run validate-config && npm run style:dev && npm run server-versions && rimraf dist && node --max_old_space_size=30000 node_modules/.bin/ng build --prod  --build-optimizer=false  --aot=false --app dist",
     "style:dev": "npm run webpack -- --config  config/webpack.style.js --progress --profile --bail",
     "copy:dev": "node ./config/dev-copy-watch.js",
