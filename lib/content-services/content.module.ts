@@ -35,6 +35,7 @@ import { ContentNodeSelectorModule } from './content-node-selector/content-node-
 import { DialogModule } from './dialogs/dialog.module';
 import { FolderDirectiveModule } from './folder-directive/folder-directive.module';
 import { ContentMetadataModule } from './content-metadata/content-metadata.module';
+import { NodeDownloadDirective } from './directives/node-download.directive';
 
 @NgModule({
     imports: [
@@ -56,6 +57,9 @@ import { ContentMetadataModule } from './content-metadata/content-metadata.modul
         ContentMetadataModule,
         DialogModule,
         FolderDirectiveModule
+    ],
+    declarations: [
+        NodeDownloadDirective
     ],
     providers: [
         {
@@ -81,7 +85,8 @@ import { ContentMetadataModule } from './content-metadata/content-metadata.modul
         ContentNodeSelectorModule,
         ContentMetadataModule,
         DialogModule,
-        FolderDirectiveModule
+        FolderDirectiveModule,
+        NodeDownloadDirective
     ]
 })
 export class ContentModule {

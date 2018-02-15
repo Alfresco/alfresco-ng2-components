@@ -23,13 +23,13 @@ import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity, SiteEntry } from 'alfresco-js-api';
 import {
-    AlfrescoApiService, AuthenticationService, ContentService, TranslationService,
+    AuthenticationService, ContentService, TranslationService,
     FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
     UploadService, DataColumn, DataRow, UserPreferencesService,
     PaginationComponent, FormValues
 } from '@alfresco/adf-core';
 
-import { DocumentListComponent, PermissionStyleModel, DownloadZipDialogComponent } from '@alfresco/adf-content-services';
+import { DocumentListComponent, PermissionStyleModel } from '@alfresco/adf-content-services';
 
 import { SelectAppsDialogComponent } from '@alfresco/adf-process-services';
 
@@ -140,7 +140,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     private onEditFolder: Subscription;
 
     constructor(private changeDetector: ChangeDetectorRef,
-                private apiService: AlfrescoApiService,
                 private notificationService: NotificationService,
                 private uploadService: UploadService,
                 private contentService: ContentService,
@@ -359,73 +358,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     userHasPermissionToManageVersions(): boolean {
         const selection: Array<MinimalNodeEntity> = this.documentList.selection;
         return this.contentService.hasPermission(selection[0].entry, 'update');
-    }
-
-    downloadNodes(selection: Array<MinimalNodeEntity>) {
-        if (!selection || selection.length === 0) {
-            return;
-        }
-
-        if (selection.length === 1) {
-            this.downloadNode(selection[0]);
-        } else {
-            this.downloadZip(selection);
-        }
-    }
-
-    downloadNode(node: MinimalNodeEntity) {
-        if (node && node.entry) {
-            const entry = node.entry;
-
-            if (entry.isFile) {
-                this.downloadFile(node);
-            }
-
-            if (entry.isFolder) {
-                this.downloadZip([node]);
-            }
-        }
-    }
-
-    downloadFile(node: MinimalNodeEntity) {
-        if (node && node.entry) {
-            const contentApi = this.apiService.getInstance().content;
-
-            const url = contentApi.getContentUrl(node.entry.id, true);
-            const fileName = node.entry.name;
-
-            this.download(url, fileName);
-        }
-    }
-
-    downloadZip(selection: Array<MinimalNodeEntity>) {
-        if (selection && selection.length > 0) {
-            const nodeIds = selection.map(node => node.entry.id);
-
-            const dialogRef = this.dialog.open(DownloadZipDialogComponent, {
-                width: '600px',
-                data: {
-                    nodeIds: nodeIds
-                }
-            });
-            dialogRef.afterClosed().subscribe(result => {
-                this.logService.log(result);
-            });
-        }
-    }
-
-    download(url: string, fileName: string) {
-        if (url && fileName) {
-            const link = document.createElement('a');
-
-            link.style.display = 'none';
-            link.download = fileName;
-            link.href = url;
-
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
     }
 
     getNodeNameTooltip(row: DataRow, col: DataColumn): string {

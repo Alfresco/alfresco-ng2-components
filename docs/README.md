@@ -202,6 +202,7 @@ for more information about installing and using the source code.
 | [Folder create directive](folder-create.directive.md) | Allows folders to be created. | [Source](../lib/content-services/folder-directive/folder-create.directive.ts) |
 | [Folder edit directive](folder-edit.directive.md) | Allows folders to be edited. | [Source](../lib/content-services/folder-directive/folder-edit.directive.ts) |
 | [File draggable directive](file-draggable.directive.md) | Provide drag-and-drop features for an element such as a `div`. | [Source](../lib/content-services/upload/directives/file-draggable.directive.ts) |
+| [Node download directive](node-download.directive.md) | Downloads folders and files. Packs folders and/or multiple files into a .ZIP archive. | [Source](../lib/content-services/directives/node-download.directive.ts) |
 
 ## Models
 
