@@ -15,7 +15,6 @@
     "style:dev": "npm run webpack -- --config  config/webpack.style.js --progress --profile --bail",
     "copy:dev": "node ./config/dev-copy-watch.js",
     "test": "ng test",
-
     "lint": "ng lint",
     "e2e": "ng e2e",
     "validate-config": "ajv validate -s ../lib/core/app-config/schema.json -d ./src/app.config.json --errors=text --verbose",
