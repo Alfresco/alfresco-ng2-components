@@ -69,6 +69,8 @@ Using with file url:
 | showSidebar | `boolean` | `false` | Toggles sidebar visibility. Requires `allowSidebar` to be set to `true`.  |
 | sidebarPosition | `string` | `'right'` | The position of the sidebar. Can be `left` or `right`.  |
 | sidebarTemplate | `TemplateRef<any>` | `null` | The template for the sidebar. The template context contains the loaded node data.  |
+| allowThumbnails | `boolean` | `true` | Enables pdf viewer thumbnails.  |
+| thumbnailsTemplate | `TemplateRef<any>` | `null` | Custom template content for thumbnails.  |
 | mimeType | `string` |  | MIME type of the file content (when not determined by the filename extension).  |
 | fileName | `string` |  | Content filename.  |
 | downloadUrl | `string` | `null` | URL to download.  |
@@ -277,6 +279,34 @@ Everything you put inside the "adf-viewer-sidebar" tags is going to be rendered.
     <adf-content-metadata-card [node]="node"></adf-content-metadata-card>
 </ng-template>
 <adf-viewer [allowSidebar]="true" [sidebarTemplate]="sidebarTemplate"></adf-viewer>
+```
+
+### Custom thumbnails
+
+By default, the pdf viewer comes with its own thumbnails list but this can be replaced
+by providing a custom template and binding to context property `viewer` to access PDFJS.PDFViewer
+instance.
+
+```javascript
+import { Component, Input } from '@angular/core';
+
+@Component({
+    selector: 'custom-thumbnails',
+    template: '<p> Custom Thumbnails Component </p>'
+})
+export class CustomThumbnailsComponent {
+    @Input() pdfViewer: any;
+
+    ...
+}
+```
+
+```html
+<ng-template let-pdfViewer="viewer" #customThumbnailsTemplate>
+    <custom-thumbnails [pdfViewer]="pdfViewer"></custom-thumbnails>
+</ng-template>
+
+<adf-viewer [thumbnailsTemplate]="customThumbnailsTemplate"></adf-viewer>
 ```
 
 ### Custom "Open With" menu
