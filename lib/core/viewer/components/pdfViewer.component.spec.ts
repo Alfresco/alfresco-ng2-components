@@ -26,6 +26,8 @@ import { ToolbarModule } from '../../toolbar/toolbar.module';
 import { EventMock } from '../../mock/event.mock';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { PdfViewerComponent } from './pdfViewer.component';
+import { PdfThumbListComponent } from './pdfViewer-thumbnails.component';
+import { PdfThumbComponent } from './pdfViewer-thumb.component';
 
 declare var require: any;
 
@@ -41,7 +43,11 @@ describe('Test PdfViewer component', () => {
                 ToolbarModule,
                 MaterialModule
             ],
-            declarations: [PdfViewerComponent],
+            declarations: [
+                PdfViewerComponent,
+                PdfThumbListComponent,
+                PdfThumbComponent
+            ],
             providers: [
                 SettingsService,
                 AuthenticationService,
