@@ -285,6 +285,10 @@ describe('ContentNodeSelectorComponent', () => {
 
                 spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.resolve(expectedDefaultFolderNode));
                 spyOn(component.documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.resolve());
+
+                const sitesService = TestBed.get(SitesService);
+                spyOn(sitesService, 'getSites').and.returnValue(Observable.of({ list: { entries: [] } }));
+
                 getCorrespondingNodeIdsSpy = spyOn(component.documentList, 'getCorrespondingNodeIds').and
                     .callFake(id => {
                         if (id === '-sites-') {
@@ -689,13 +693,18 @@ describe('ContentNodeSelectorComponent', () => {
 
         describe('Chosen node', () => {
 
-            const entry: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> { list: {entries: [{}]}};
+            const entry: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {};
             const nodePage: NodePaging = <NodePaging> {list: {}, pagination: {}};
             let hasPermission;
 
             function returnHasPermission(): boolean {
                 return hasPermission;
             }
+
+            beforeEach(() => {
+                const sitesService = TestBed.get(SitesService);
+                spyOn(sitesService, 'getSites').and.returnValue(Observable.of({ list: { entries: [] } }));
+            });
 
             describe('in the case when isSelectionValid is a custom function for checking permissions,', () => {
 
@@ -799,12 +808,13 @@ describe('ContentNodeSelectorComponent', () => {
 
             describe('in the case when isSelectionValid is null', () => {
 
-                beforeEach(async(() => {
+                beforeEach(() => {
                     component.isSelectionValid = null;
-                }));
+                });
 
                 it('should NOT be null after selecting node because isSelectionValid would be reset to defaultValidation function', () => {
                     component.documentList.folderNode = entry;
+                    fixture.detectChanges();
 
                     component.select.subscribe((nodes) => {
                         expect(nodes).toBeDefined();
@@ -849,12 +859,13 @@ describe('ContentNodeSelectorComponent', () => {
 
             describe('in the case when isSelectionValid is not defined', () => {
 
-                beforeEach(async(() => {
+                beforeEach(() => {
                     component.isSelectionValid = undefined;
-                }));
+                });
 
                 it('should NOT be null after selecting node because isSelectionValid would be the defaultValidation function', () => {
                     component.documentList.folderNode = entry;
+                    fixture.detectChanges();
 
                     component.select.subscribe((nodes) => {
                         expect(nodes).toBeDefined();
