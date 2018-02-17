@@ -1,5 +1,7 @@
 <div
-    *ngIf="data" class="full-width adf-data-table">
+    *ngIf="data" class="full-width adf-data-table-card"
+    [class.adf-data-table-card]="cardview"
+    [class.adf-data-table]="!cardview">
     <div *ngIf="showHeader" class="adf-datatable-header">
         <div class="adf-datatable-row">
             <!-- Actions (left) -->

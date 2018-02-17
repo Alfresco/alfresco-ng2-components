@@ -53,6 +53,10 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     @Input()
     data: DataTableAdapter;
 
+    /* Enable the cardview mode */
+    @Input()
+    cardview: boolean = false;
+
     /* The rows that the datatable will show */
     @Input()
     rows: any[] = [];

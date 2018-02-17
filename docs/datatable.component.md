@@ -133,8 +133,9 @@ export class DataTableDemo {
 | allowDropFiles | boolean | false | Toggle file drop support for rows (see **ng2-alfresco-core/UploadDirective** for more details) |
 | loading | boolean | false | Flag that indicates if the datatable is in loading state and needs to show the loading template. Read the documentation above to see how to configure a loading template |
 | showHeader | boolean | true | Toggles header visibility |
+| cardview | boolean | true | enable the cardview mode |
 | selection | DataRow\[] | \[] | Contains selected rows |
-
+    
 ### Events
 
 | Name | Description |

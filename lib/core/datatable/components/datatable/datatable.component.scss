@@ -25,6 +25,40 @@
     $data-table-cell-top: $data-table-card-padding / 2;
     $data-table-drag-border: 1px dashed rgb(68, 138, 255);
 
+    .adf-data-table-card {
+
+        .adf-datatable-body {
+            flex-wrap: wrap;
+            display: flex;
+            flex-direction: row-reverse;
+            align-items: flex-start;
+            width: 100%;
+            justify-content: flex-end;
+        }
+
+        .adf-datatable-body > .adf-datatable-row {
+            display: flex;
+            flex: 0 1 24%;
+
+            width: 310px !important;
+            height: 200px !important;
+            max-width: 310px;
+
+            overflow: hidden !important;
+            margin: 6px;
+            box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
+        }
+
+        .adf-datatable-body > .adf-datatable-table-cell {
+            flex: 0 1 24%;
+            height: 136px !important;
+            max-width: 200px;
+            background: red;
+        }
+
+    }
+
+
     .adf-data-table {
         display: table;
         width: 100%;
