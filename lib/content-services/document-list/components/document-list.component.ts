@@ -71,6 +71,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
+    /* Enable the cardview mode */
+    @Input()
+    cardview: boolean = true;
+
     /** Define a set of CSS styles styles to apply depending on the permission
      * of the user on that node. See the Permission Style model
      * page for further details and examples.

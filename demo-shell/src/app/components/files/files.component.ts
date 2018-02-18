@@ -49,6 +49,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     fileNodeId: any;
     showViewer = false;
     showVersions = false;
+    cardview = false;
 
     toolbarColor = 'default';
 
@@ -418,5 +419,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     onPrevPage(event: Pagination): void {
         this.turnedPreviousPage.emit(event);
+    }
+
+    toogleCardview(event: Pagination): void {
+        this.cardview = !this.cardview;
     }
 }

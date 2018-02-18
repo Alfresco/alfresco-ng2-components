@@ -50,6 +50,13 @@
             "CREATED_ON": "Created on",
             "CREATED": "Created"
         },
+         "TOOLBAR": {
+           "CARDVIEW":"Card view mode",
+           "NEW_FOLDER":"New folder",
+           "EDIT_FOLDER":"Edit folder",
+           "DOWNLOAD":"Download",
+           "DELETE":"Delete"
+         }
         "ACTIONS": {
             "DOWNLOAD": "Download",
             "FOLDER": {

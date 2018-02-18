@@ -70,6 +70,7 @@
                 </div>
                 <div *ngFor="let col of data.getColumns()"
                      class="adf-data-table-cell adf-datatable-table-cell adf-data-table-cell--{{col.type || 'text'}} {{col.cssClass}}"
+                     [attr.title]="col.title"
                      tabindex="0"
                      (click)="onRowClick(row, $event)"
                      [context-menu]="getContextMenuActions(row, col)"

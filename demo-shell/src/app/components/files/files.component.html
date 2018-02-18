@@ -36,24 +36,33 @@
                 <div fxFlex="0 0 auto" class="adf-document-action-buttons" fxShow fxHide.lt-sm="true">
                     <button
                         mat-icon-button
+                        title="{{ 'DOCUMENT_LIST.TOOLBAR.CARDVIEW' | translate }}"
+                        (click)="toogleCardview()">
+                        <mat-icon>view_comfy</mat-icon>
+                    </button>
+                    <button
+                        mat-icon-button
                         [disabled]="!canCreateContent(documentList.folderNode)"
+                        title="{{ 'DOCUMENT_LIST.TOOLBAR.NEW_FOLDER' | translate }}"
                         [adf-create-folder]="getDocumentListCurrentFolderId()">
                         <mat-icon>create_new_folder</mat-icon>
                     </button>
                     <button mat-icon-button
                             [disabled]="!canEditFolder(documentList.selection)"
+                            title="{{ 'DOCUMENT_LIST.TOOLBAR.EDIT_FOLDER' | translate }}"
                             [adf-edit-folder]="documentList.selection[0]?.entry">
                         <mat-icon>create</mat-icon>
                     </button>
                     <button mat-icon-button
                             [disabled]="!hasSelection(documentList.selection)"
-                            title="Download"
+                            title="{{ 'DOCUMENT_LIST.TOOLBAR.DOWNLOAD' | translate }}"
                             [adfNodeDownload]="documentList.selection">
                         <mat-icon>get_app</mat-icon>
                     </button>
                     <button mat-icon-button
                             adf-node-permission="delete"
                             [adf-nodes]="documentList.selection"
+                            title="{{ 'DOCUMENT_LIST.TOOLBAR.DELETE' | translate }}"
                             (delete)="documentList.reload()"
                             [adf-delete]="documentList.selection">
                         <mat-icon>delete</mat-icon>
@@ -91,28 +100,33 @@
                 </button>
                 <mat-menu #menu="matMenu">
                     <button mat-menu-item
+                            (click)="toogleCardview()">
+                        <mat-icon>view_comfy</mat-icon>
+                        <span>{{ 'DOCUMENT_LIST.TOOLBAR.CARDVIEW' | translate }}</span>
+                    </button>
+                    <button mat-menu-item
                             [adf-create-folder]="getDocumentListCurrentFolderId()">
                         <mat-icon>create_new_folder</mat-icon>
-                        <span>New folder</span>
+                        <span>{{ 'DOCUMENT_LIST.TOOLBAR.NEW_FOLDER' | translate }}</span>
                     </button>
                     <button mat-menu-item
                             [disabled]="!canEditFolder(documentList.selection)"
                             [adf-edit-folder]="documentList.selection[0]?.entry">
                         <mat-icon>create</mat-icon>
-                        <span>Edit folder</span>
+                        <span>{{ 'DOCUMENT_LIST.TOOLBAR.EDIT_FOLDER' | translate }}</span>
                     </button>
                     <button mat-menu-item
                             [disabled]="!hasSelection(documentList.selection)"
                             title="Download"
                             (click)="downloadNodes(documentList.selection)">
                         <mat-icon>get_app</mat-icon>
-                        <span>Download</span>
+                        <span>{{ 'DOCUMENT_LIST.TOOLBAR.DOWNLOAD' | translate }}</span>
                     </button>
                     <button mat-menu-item
                             adf-node-permission="delete"
                             [adf-nodes]="documentList.selection">
                         <mat-icon>delete</mat-icon>
-                        <span>Delete</span>
+                        <span>{{ 'DOCUMENT_LIST.TOOLBAR.DELETE' | translate }}</span>
                     </button>
                 </mat-menu>
             </adf-toolbar>
@@ -127,6 +141,7 @@
                 [allowDropFiles]="true"
                 [selectionMode]="selectionMode"
                 [multiselect]="multiselect"
+                [cardview]="cardview"
                 [node]="nodeResult"
                 (error)="onNavigationError($event)"
                 (success)="resetError()"
