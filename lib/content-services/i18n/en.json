@@ -156,11 +156,15 @@
       },
       "ACTIONS": {
         "FOLDER": {
-          "DELETE": "Delete"
+          "DELETE": "Delete",
+          "MOVE": "Move",
+          "COPY": "Copy"
         },
         "DOCUMENT": {
           "DOWNLOAD": "Download",
-          "DELETE": "Delete"
+          "DELETE": "Delete",
+          "MOVE": "Move",
+          "COPY": "Copy"
         }
       }
     }
