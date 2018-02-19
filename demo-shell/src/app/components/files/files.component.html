@@ -1,15 +1,33 @@
 <div class="container">
+
+    <div class="adf-recent-container">
+        <mat-list>
+            <mat-list-item><mat-icon>history</mat-icon>{{ 'DOCUMENT_LIST.RECENT' | translate }}</mat-list-item>
+            <mat-divider></mat-divider>
+        </mat-list>
+
+        <adf-document-list
+            [currentFolderId]="'-recent-'"
+            locationFormat="/files"
+            [cardview]="true"
+            [showHeader]="false"
+            [maxItems]="5"
+            (preview)="showFile($event)"
+            selectionMode="null">
+        </adf-document-list>
+    </div>
+
     <div class="adf-site-container-style" id="site-container">
         <adf-sites-dropdown (change)="getSiteContent($event)" [hideMyFiles]="false">
         </adf-sites-dropdown>
     </div>
     <div class="document-list-container" fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="16px">
         <adf-upload-drag-area fxFlex="1 1 auto"
-            [disabled]="disableDragArea"
-            [parentId]="getDocumentListCurrentFolderId()"
-            [versioning]="versioning"
-            [adf-node-permission]="'create'"
-            [adf-nodes]="disableDragArea ? getCurrentDocumentListNode() : []">
+                              [disabled]="disableDragArea"
+                              [parentId]="getDocumentListCurrentFolderId()"
+                              [versioning]="versioning"
+                              [adf-node-permission]="'create'"
+                              [adf-nodes]="disableDragArea ? getCurrentDocumentListNode() : []">
             <div *ngIf="errorMessage" class="error-message">
                 <button (click)="resetError()" mat-icon-button>
                     <mat-icon>highlight_off</mat-icon>
@@ -290,13 +308,13 @@
                 <ng-template #choose_document_template>
                     <div class="adf-manage-versions-empty">
                         <mat-icon class="adf-manage-versions-empty-icon">face</mat-icon>
-                      {{'VERSION.CHOOSE_FILE' | translate}}
+                        {{'VERSION.CHOOSE_FILE' | translate}}
                     </div>
                 </ng-template>
                 <ng-template #no_permission_to_versions>
                     <div class="adf-manage-versions-no-permission">
                         <mat-icon class="adf-manage-versions-no-permission-icon">warning</mat-icon>
-                      {{'VERSION.NO_PERMISSION' | translate}}
+                        {{'VERSION.NO_PERMISSION' | translate}}
                     </div>
                 </ng-template>
             </div>
@@ -306,7 +324,7 @@
 
 <context-menu-holder></context-menu-holder>
 
-<div *ngIf="processId" >
+<div *ngIf="processId">
     <adf-start-process
         [values]="formValues"
         [appId]="processId">
@@ -352,9 +370,9 @@
         </section>
 
         <section>
-          <mat-slide-toggle [color]="'primary'" [(ngModel)]="maxSizeShow">{{'DOCUMENT_LIST.MAX_SIZE' |
-            translate}}
-          </mat-slide-toggle>
+            <mat-slide-toggle [color]="'primary'" [(ngModel)]="maxSizeShow">{{'DOCUMENT_LIST.MAX_SIZE' |
+                translate}}
+            </mat-slide-toggle>
         </section>
 
         <section>
@@ -372,15 +390,15 @@
         <h5>Upload</h5>
         <section *ngIf="acceptedFilesTypeShow">
             <mat-form-field floatPlaceholder="float">
-                <input  matInput
-                        placeholder="Extension accepted"
-                        [(ngModel)]="acceptedFilesType"
-                        data-automation-id="accepted-files-type">
+                <input matInput
+                       placeholder="Extension accepted"
+                       [(ngModel)]="acceptedFilesType"
+                       data-automation-id="accepted-files-type">
             </mat-form-field>
         </section>
         <section *ngIf="maxSizeShow">
             <mat-form-field>
-                <input matInput type="number"  placeholder="Max file size" [(ngModel)]="maxFilesSize"
+                <input matInput type="number" placeholder="Max file size" [(ngModel)]="maxFilesSize"
                        data-automation-id="max-files-size">
             </mat-form-field>
         </section>

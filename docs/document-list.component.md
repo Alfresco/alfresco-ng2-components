@@ -73,6 +73,7 @@ Displays the documents from a repository.
 | maxItems | `number` |  | Default value is stored into user preference settings  |
 | skipCount | `number` | `0` | Number of elements to skip over for pagination purposes  |
 | enableInfiniteScrolling | `boolean` | `false` | Set document list to work in infinite scrolling mode  |
+| showHeader | `boolean` | `true` |  Toggles header visibility   |
 
 ### Events
 

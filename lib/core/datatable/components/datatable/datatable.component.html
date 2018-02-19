@@ -3,7 +3,7 @@
     [class.adf-data-table-card]="cardview"
     [class.adf-data-table]="!cardview">
     <div *ngIf="showHeader" class="adf-datatable-header">
-        <div class="adf-datatable-row">
+        <div class="adf-datatable-row" *ngIf="!cardview">
             <!-- Actions (left) -->
             <div *ngIf="actions && actionsPosition === 'left'" class="actions-column adf-datatable-table-cell-header">
                 <span class="sr-only">Actions</span>
@@ -32,6 +32,18 @@
                 <span class="sr-only">Actions</span>
             </div>
         </div>
+        {{data.getSorting().title}}
+        <mat-form-field *ngIf="cardview">
+            <mat-select [(value)]="data.getSorting().key" >
+                <mat-option *ngFor="let col of data.getColumns()"
+                            [value]="col.key"
+                            (click)="onColumnHeaderClick(col)"
+                            (keyup.enter)="onColumnHeaderClick(col)">
+                   {{  col.title | translate}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
     </div>
 
     <div class="adf-datatable-body">
@@ -62,7 +74,7 @@
                     </mat-menu>
                 </div>
 
-                <div *ngIf="multiselect" class="adf-datatable-table-cell">
+                <div *ngIf="multiselect" class="adf-datatable-table-cell adf-datatable-table-checkbox">
                     <mat-checkbox
                         [checked]="row.isSelected"
                         (change)="onCheckboxChange(row, $event)">
@@ -70,7 +82,7 @@
                 </div>
                 <div *ngFor="let col of data.getColumns()"
                      class="adf-data-table-cell adf-datatable-table-cell adf-data-table-cell--{{col.type || 'text'}} {{col.cssClass}}"
-                     [attr.title]="col.title"
+                     [attr.title]="col.title | translate"
                      tabindex="0"
                      (click)="onRowClick(row, $event)"
                      [context-menu]="getContextMenuActions(row, col)"
@@ -79,7 +91,7 @@
                         <ng-container [ngSwitch]="col.type">
                             <div *ngSwitchCase="'image'" class="cell-value">
                                 <mat-icon *ngIf="isIconValue(row, col)">{{ asIconValue(row, col) }}</mat-icon>
-                                <mat-icon *ngIf="!isIconValue(row, col) && row.isSelected" svgIcon="selected">
+                                <mat-icon class="adf-datatable-selected" *ngIf="!isIconValue(row, col) && row.isSelected" svgIcon="selected">
                                 </mat-icon>
 
                                 <img *ngIf="!isIconValue(row, col) && !row.isSelected"

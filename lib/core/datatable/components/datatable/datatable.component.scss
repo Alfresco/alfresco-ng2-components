@@ -30,23 +30,25 @@
         .adf-datatable-body {
             flex-wrap: wrap;
             display: flex;
-            flex-direction: row-reverse;
-            align-items: flex-start;
+
             width: 100%;
-            justify-content: flex-end;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-content: space-around;
 
             .adf-datatable-row {
                 display: flex;
                 flex-direction: column;
                 flex: 0 1 24%;
 
-                width: 310px !important;
+                width: 288px !important;
                 height: 200px !important;
-                max-width: 310px;
+                max-width: 288px !important;
+                min-width: 288px !important;
 
                 overflow: hidden !important;
                 margin: 6px;
-                padding:15px;
+                padding: 15px;
 
                 @include mat-elevation-transition;
                 @include mat-overridable-elevation(2);
@@ -59,34 +61,43 @@
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 overflow: hidden;
+
+                &:before {
+                    margin-left: 10px;
+                    text-align: left;
+                    content: attr(title);
+                    color: mat-color($foreground, text, 0.4);
+                    float: left;
+                    width: 140px;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                }
+            }
+            .alfresco-datatable__actions-cell {
+                position: absolute;
+                height: 42px !important;
+                width: 303px !important;
+                text-align: right;
             }
 
-            .adf-datatable-table-cell:before {
-                margin-left: 10px;
-                text-align: left;
-                content: attr(title);
-                color: grey;
-                float: left;
-                width: 140px;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                overflow: hidden;
+            .image-table-cell {
+                margin: 8px;
+                overflow: visible;
             }
-        }
 
-        .adf-datatable-table-cell-header {
-            display: table-cell;
+            .adf-datatable-table-checkbox {
+                margin: 8px;
+            }
+
         }
 
         .adf-datatable-header {
-            padding-bottom: 3px;
-            display: table-header-group;
-            vertical-align: middle;
-            border-color: inherit;
+            margin-right: 18px;
+            float: right;
         }
 
     }
-
 
     .adf-data-table {
         display: table;

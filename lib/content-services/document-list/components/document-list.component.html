@@ -11,7 +11,7 @@
     [loading]="loading"
     [cardview]="cardview"
     [noPermission]="noPermission"
-    [showHeader]="!isEmpty()"
+    [showHeader]="!isEmpty() && showHeader"
     (showRowContextMenu)="onShowRowContextMenu($event)"
     (showRowActionsMenu)="onShowRowActionsMenu($event)"
     (executeRowAction)="onExecuteRowAction($event)"
