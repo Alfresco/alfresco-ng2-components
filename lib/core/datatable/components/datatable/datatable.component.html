@@ -32,14 +32,13 @@
                 <span class="sr-only">Actions</span>
             </div>
         </div>
-        {{data.getSorting().title}}
         <mat-form-field *ngIf="cardview">
-            <mat-select [(value)]="data.getSorting().key" >
+            <mat-select [(value)]="data.getSorting().key">
                 <mat-option *ngFor="let col of data.getColumns()"
                             [value]="col.key"
                             (click)="onColumnHeaderClick(col)"
                             (keyup.enter)="onColumnHeaderClick(col)">
-                   {{  col.title | translate}}
+                    {{ col.title | translate}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
@@ -83,6 +82,7 @@
                 <div *ngFor="let col of data.getColumns()"
                      class="adf-data-table-cell adf-datatable-table-cell adf-data-table-cell--{{col.type || 'text'}} {{col.cssClass}}"
                      [attr.title]="col.title | translate"
+                     [attr.filename]="getFilename(row)"
                      tabindex="0"
                      (click)="onRowClick(row, $event)"
                      [context-menu]="getContextMenuActions(row, col)"
@@ -91,7 +91,8 @@
                         <ng-container [ngSwitch]="col.type">
                             <div *ngSwitchCase="'image'" class="cell-value">
                                 <mat-icon *ngIf="isIconValue(row, col)">{{ asIconValue(row, col) }}</mat-icon>
-                                <mat-icon class="adf-datatable-selected" *ngIf="!isIconValue(row, col) && row.isSelected" svgIcon="selected">
+                                <mat-icon class="adf-datatable-selected"
+                                          *ngIf="!isIconValue(row, col) && row.isSelected" svgIcon="selected">
                                 </mat-icon>
 
                                 <img *ngIf="!isIconValue(row, col) && !row.isSelected"
@@ -171,7 +172,9 @@
                 </div>
 
             </div>
-            <div *ngIf="data.getRows().length === 0" class="adf-datatable-row">
+            <div *ngIf="data.getRows().length === 0"
+                 [class.adf-datatable-row]="!cardview"
+                 [class.adf-data-table-card-empty]="cardview">
                 <div class="adf-no-content-container adf-datatable-table-cell"
                      [attr.colspan]="1 + data.getColumns().length">
                     <ng-template *ngIf="noContentTemplate"
@@ -182,7 +185,10 @@
                 </div>
             </div>
         </ng-container>
-        <div *ngIf="!loading && noPermission" class="adf-no-permission__row  adf-datatable-row">
+        <div *ngIf="!loading && noPermission"
+             [class.adf-datatable-row]="!cardview"
+             [class.adf-data-table-card-permissions]="cardview">
+             class="adf-no-permission__row">
             <div class="adf-no-permission__cell adf-no-content-container adf-datatable-table-cell">
                 <ng-template *ngIf="noPermissionTemplate"
                              ngFor [ngForOf]="[data]"
@@ -190,8 +196,10 @@
                 </ng-template>
             </div>
         </div>
-        <div *ngIf="loading" class="adf-datatable-row">
-            <div class="adf-loading-content-container adf-datatable-table-cell"
+        <div *ngIf="loading"
+             [class.adf-datatable-row]="!cardview"
+             [class.adf-data-table-card-loading]="cardview">
+            <div class="adf-datatable-table-cell"
                  [attr.colspan]="1 + data.getColumns().length">
                 <ng-template *ngIf="loadingTemplate"
                              ngFor [ngForOf]="[data]"

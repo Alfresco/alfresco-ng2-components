@@ -487,6 +487,10 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
         return `${row.cssClass} ${this.rowStyleClass}`;
     }
 
+    getFilename(row: DataRow): string {
+        return row.getValue('name');
+    }
+
     private selectRow(row: DataRow, value: boolean) {
         if (row) {
             row.isSelected = value;

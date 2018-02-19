@@ -27,24 +27,34 @@
 
     .adf-data-table-card {
 
+        .sr-only {
+        }
+
         .adf-datatable-body {
-            flex-wrap: wrap;
+            flex-flow: row wrap;
             display: flex;
 
             width: 100%;
             flex-direction: row;
-            justify-content: flex-start;
-            align-content: space-around;
+            justify-content: space-between;
+
+            &:after {
+                content: "";
+                flex: auto;
+            }
 
             .adf-datatable-row {
+                transition: all 0.3s ease;
+                position: relative;
                 display: flex;
                 flex-direction: column;
                 flex: 0 1 24%;
 
                 width: 288px !important;
-                height: 200px !important;
                 max-width: 288px !important;
                 min-width: 288px !important;
+
+                height: 200px !important;
 
                 overflow: hidden !important;
                 margin: 6px;
@@ -54,6 +64,20 @@
                 @include mat-overridable-elevation(2);
             }
 
+            .is-selected {
+                background: mat-color($primary, 100);
+                padding-bottom: 31px;
+            }
+
+            .adf-data-table-card-loading {
+                width: 100%;
+                min-height: 250px;
+
+                .adf-datatable-table-cell{
+                    height: 240px !important;
+                }
+            }
+
             .adf-datatable-table-cell {
                 text-align: left;
                 flex: 0 1 24%;
@@ -61,6 +85,7 @@
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 overflow: hidden;
+                outline: none;
 
                 &:before {
                     margin-left: 10px;
@@ -73,17 +98,39 @@
                     text-overflow: ellipsis;
                     overflow: hidden;
                 }
+
             }
             .alfresco-datatable__actions-cell {
                 position: absolute;
                 height: 42px !important;
-                width: 303px !important;
+                width: 42px !important;
+                right: 0px;
                 text-align: right;
             }
 
             .image-table-cell {
                 margin: 8px;
+                padding: 4px;
                 overflow: visible;
+                backgound-color: red;
+                border-bottom-color: mat-color($foreground, divider);
+                border-bottom-width: 1px;
+                border-bottom-style: solid;
+
+                .cell-container {
+                    float: left;
+                    width: 42px;
+                }
+
+                &:after {
+                    margin: 2px;
+                    content: attr(filename);
+                    float: left;
+                    width: 140px;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                }
             }
 
             .adf-datatable-table-checkbox {
@@ -300,6 +347,7 @@
         /* Loading folder */
         .adf-loading-content-container {
             padding: 0 !important;
+            width: 100%;
 
             & > img {
                 width: 100%;
