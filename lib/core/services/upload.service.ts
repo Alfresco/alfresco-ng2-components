@@ -72,12 +72,8 @@ export class UploadService {
     }
 
     /**
-     * Add files to the uploading queue to be uploaded.
-     *
-     * Examples:
-     *  addToQueue(file); // pass one file
-     *  addToQueue(file1, file2, file3); // pass multiple files
-     *  addToQueue(...[file1, file2, file3]); // pass an array of files
+     * Adds files to the uploading queue to be uploaded
+     * @param files One or more separate parameters or an array of files to queue
      */
     addToQueue(...files: FileModel[]): FileModel[] {
         const allowedFiles = files.filter(f => this.filterElement(f));
@@ -96,9 +92,9 @@ export class UploadService {
     }
 
     /**
-     * Pick all the files in the queue that are not been uploaded yet and upload it into the directory folder.
+     * Finds all the files in the queue that are not yet uploaded and uploads them into the directory folder.
      *
-     * @param emitter @deprecated emitter to invoke on file status change
+     * @param emitter (Deprecated) Emitter to invoke on file status change
      *
      * @memberof UploadService
      */
@@ -127,6 +123,10 @@ export class UploadService {
         }
     }
 
+    /**
+     * Cancels uploading of files.
+     * @param files One or more separate parameters or an array of files
+     */
     cancelUpload(...files: FileModel[]) {
         files.forEach(file => {
             const promise = this.cache[file.id];
@@ -141,6 +141,7 @@ export class UploadService {
         });
     }
 
+    /** Clears the upload queue */
     clearQueue() {
         this.queue = [];
         this.totalComplete = 0;
@@ -148,6 +149,10 @@ export class UploadService {
         this.totalError = 0;
     }
 
+    /**
+     * Gets an upload promise for a file.
+     * @param file The target file
+     */
     getUploadPromise(file: FileModel) {
         let opts: any = {
             renditions: 'doclib'
