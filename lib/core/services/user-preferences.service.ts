@@ -48,6 +48,11 @@ export class UserPreferencesService {
         this.defaults.supportedPageSizes = this.appConfig.get('pagination.supportedPageSizes', this.defaults.supportedPageSizes);
     }
 
+    /**
+     * Gets a preference property.
+     * @param property Name of the property
+     * @param defaultValue Default to return if the property is not found
+     */
     get(property: string, defaultValue?: string): string {
         const key = this.getPropertyKey(property);
         const value = this.storage.getItem(key);
@@ -57,6 +62,11 @@ export class UserPreferencesService {
         return value;
     }
 
+    /**
+     * Sets a preference property.
+     * @param property Name of the property
+     * @param value New value for the property
+     */
     set(property: string, value: any) {
         if (!property) { return; }
 
@@ -66,22 +76,33 @@ export class UserPreferencesService {
         );
     }
 
+    /** Gets the active storage prefix for preferences. */
     getStoragePrefix(): string {
         return this.storage.getItem('USER_PROFILE') || 'GUEST';
     }
 
+    /**
+     * Sets the active storage prefix for preferences.
+     * @param value Name of the prefix
+     */
     setStoragePrefix(value: string) {
         this.storage.setItem('USER_PROFILE', value || 'GUEST');
     }
 
+    /**
+     * Gets the full property key with prefix.
+     * @param property The property name
+     */
     getPropertyKey(property: string): string {
         return `${this.getStoragePrefix()}__${property}`;
     }
 
+    /** Gets an array containing the available page sizes. */
     getDifferentPageSizes(): number[] {
         return this.defaults.supportedPageSizes;
     }
 
+    /** Authorization type (can be "ECM", "BPM" or "ALL"). */
     set authType(value: string) {
         this.storage.setItem('AUTH_TYPE', value);
         this.apiService.reset();
@@ -91,6 +112,7 @@ export class UserPreferencesService {
         return this.storage.getItem('AUTH_TYPE') || 'ALL';
     }
 
+    /** Prevents the CSRF Token from being submitted if true. Only valid for Process Services. */
     set disableCSRF(value: boolean) {
         this.set('DISABLE_CSRF', value);
         this.apiService.reset();
@@ -100,6 +122,7 @@ export class UserPreferencesService {
         return this.get('DISABLE_CSRF') === 'true';
     }
 
+    /** Pagination size. */
     set paginationSize(value: number) {
         this.set('PAGINATION_SIZE', value);
     }
@@ -108,6 +131,7 @@ export class UserPreferencesService {
         return Number(this.get('PAGINATION_SIZE')) || this.defaults.paginationSize;
     }
 
+    /** Current locale setting. */
     get locale(): string {
         const locale = this.get('LOCALE');
         return locale;
@@ -118,6 +142,7 @@ export class UserPreferencesService {
         this.set('LOCALE', value);
     }
 
+    /** Gets the default locale. */
     public getDefaultLocale(): string {
         return this.appConfig.get<string>('locale') || this.translate.getBrowserLang() || 'en';
     }
