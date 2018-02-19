@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DebugElement } from '@angular/core';
+import { DebugElement, Component } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AppsProcessService, CoreModule } from '@alfresco/adf-core';
@@ -78,7 +78,7 @@ describe('AppsListComponent', () => {
         component.loading = true;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-        let loadingSpinner = fixture.debugElement.query(By.css('.adf-app-list-spinner'));
+        let loadingSpinner = fixture.debugElement.query(By.css('.adf-app-list-spinner > mat-spinner'));
         expect(loadingSpinner.nativeElement).not.toBeNull();
         });
     });
@@ -251,4 +251,46 @@ describe('AppsListComponent', () => {
 
     });
 
+});
+
+@Component({
+    template: `
+    <adf-apps>
+        <adf-empty-list>
+            <div adf-empty-list-header class="adf-empty-list-header">No Apps</div>
+        </adf-empty-list>
+    </adf-apps>
+       `
+})
+class CustomEmptyAppListTemplateComponent {
+}
+
+describe('Custom CustomEmptyAppListTemplateComponent', () => {
+    let fixture: ComponentFixture<CustomEmptyAppListTemplateComponent>;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [
+                AppsListComponent,
+                CustomEmptyAppListTemplateComponent
+            ],
+            imports: [
+                MaterialModule
+            ]
+        }).compileComponents();
+    }));
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(CustomEmptyAppListTemplateComponent);
+        fixture.detectChanges();
+    });
+
+    it('should render the custom no-apps template', async(() => {
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            let title: any = fixture.debugElement.queryAll(By.css('[adf-empty-list-header]'));
+            expect(title.length).toBe(1);
+            expect(title[0].nativeElement.innerText).toBe('No Apps');
+        });
+    }));
 });

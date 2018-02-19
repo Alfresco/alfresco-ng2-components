@@ -40,8 +40,16 @@
         <mat-spinner></mat-spinner>
     </div>
 </ng-container>
+
 <ng-template #empty>
-    <div class="menu-container" *ngIf="isEmpty()">
-        {{ 'ADF_TASK_LIST.APPS.NONE' | translate }}
-    </div>
+    
+    <ng-content *ngIf="hasCustomEmptyListTemplate; else defaulEmptyList" class="adf-custom-empty-template"></ng-content>
+    
+    <ng-template #defaulEmptyList>
+        <adf-empty-list *ngIf="isEmpty()">
+            <div adf-empty-list-header class="adf-empty-list-header">
+                {{ 'ADF_TASK_LIST.APPS.NONE' | translate }}
+            </div>
+        </adf-empty-list>
+    </ng-template>
 </ng-template>

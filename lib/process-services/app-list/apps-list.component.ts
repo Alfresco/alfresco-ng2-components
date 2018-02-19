@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { AppsProcessService, TranslationService } from '@alfresco/adf-core';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AppsProcessService, TranslationService, EmptyListComponent } from '@alfresco/adf-core';
+import { AfterContentInit, Component, EventEmitter, Input, OnInit, Output, ContentChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { AppDefinitionRepresentationModel } from '../task-list';
@@ -27,7 +27,7 @@ import { IconModel } from './icon.model';
     templateUrl: 'apps-list.component.html',
     styleUrls: ['./apps-list.component.scss']
 })
-export class AppsListComponent implements OnInit {
+export class AppsListComponent implements OnInit, AfterContentInit {
 
     public static LAYOUT_LIST: string = 'LIST';
     public static LAYOUT_GRID: string = 'GRID';
@@ -40,6 +40,10 @@ export class AppsListComponent implements OnInit {
     /** (**required**) Defines the layout of the apps. There are two possible
      * values, "GRID" and "LIST".
      */
+
+    @ContentChild(EmptyListComponent)
+    emptyTemplate: EmptyListComponent;
+
     @Input()
     layoutType: string = AppsListComponent.LAYOUT_GRID;
 
@@ -66,6 +70,8 @@ export class AppsListComponent implements OnInit {
 
     loading: boolean = false;
 
+    hasCustomEmptyListTemplate: boolean = false;
+
     constructor(
         private appsProcessService: AppsProcessService,
         private translationService: TranslationService) {
@@ -82,6 +88,12 @@ export class AppsListComponent implements OnInit {
         });
         this.iconsMDL = new IconModel();
         this.load();
+    }
+
+    ngAfterContentInit() {
+        if (this.emptyTemplate) {
+            this.hasCustomEmptyListTemplate = true;
+        }
     }
 
     private load() {

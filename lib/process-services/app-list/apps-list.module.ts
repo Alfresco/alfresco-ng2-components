@@ -20,6 +20,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { DataTableModule } from '@alfresco/adf-core';
 
 import { AppsListComponent } from './apps-list.component';
 import { SelectAppsDialogComponent } from './select-apps-dialog-component';
@@ -29,7 +30,8 @@ import { SelectAppsDialogComponent } from './select-apps-dialog-component';
         CommonModule,
         MaterialModule,
         FlexLayoutModule,
-        TranslateModule
+        TranslateModule,
+        DataTableModule
     ],
     declarations: [
         AppsListComponent,
