@@ -25,6 +25,7 @@ import { ObjectUtils } from '../utils/object-utils';
 import { LogService } from './log.service';
 import 'rxjs/observable/forkJoin';
 import 'rxjs/add/observable/forkJoin';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class TranslateLoaderService implements TranslateLoader {
