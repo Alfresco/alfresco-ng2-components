@@ -92,11 +92,12 @@ export class FormFieldComponent implements OnInit, OnDestroy {
                 if (componentType) {
                     let factory = this.componentFactoryResolver.resolveComponentFactory(componentType);
                     this.componentRef = this.container.createComponent(factory);
-                    let instance = <WidgetComponent> this.componentRef.instance;
+                    let instance = <WidgetComponent>this.componentRef.instance;
                     instance.field = this.field;
                     instance.fieldChanged.subscribe(field => {
                         if (field && this.field.form) {
-                            this.visibilityService.refreshVisibility(this.field.form);
+                            this.visibilityService.refreshVisibility(field.form);
+                            field.form.onFormFieldChanged(field);
                         }
                     });
                 }

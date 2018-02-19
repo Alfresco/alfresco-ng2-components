@@ -46,9 +46,9 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
     }
 
     ngOnInit() {
-        if (this.field.form.taskId) {
+        if (this.field.form.taskId && this.field.restUrl) {
             this.getValuesByTaskId();
-        } else if (this.field.form.processDefinitionId) {
+        } else if (this.field.form.processDefinitionId && this.field.restUrl) {
             this.getValuesByProcessDefinitionId();
         }
         if (this.isReadOnlyType()) {
