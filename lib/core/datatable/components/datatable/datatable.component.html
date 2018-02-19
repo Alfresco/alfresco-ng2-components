@@ -2,7 +2,7 @@
     *ngIf="data" class="full-width adf-data-table-card"
     [class.adf-data-table-card]="cardview"
     [class.adf-data-table]="!cardview">
-    <div *ngIf="showHeader" class="adf-datatable-header">
+    <div *ngIf="showHeader && !loading" class="adf-datatable-header">
         <div class="adf-datatable-row" *ngIf="!cardview">
             <!-- Actions (left) -->
             <div *ngIf="actions && actionsPosition === 'left'" class="actions-column adf-datatable-table-cell-header">

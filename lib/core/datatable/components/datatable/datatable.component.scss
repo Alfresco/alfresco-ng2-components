@@ -26,6 +26,8 @@
     $data-table-drag-border: 1px dashed rgb(68, 138, 255);
 
     .adf-data-table-card {
+        
+        border: 1px solid mat-color($foreground, divider);
 
         .sr-only {
         }
@@ -69,12 +71,30 @@
                 padding-bottom: 31px;
             }
 
+            .adf-data-table-card-permission {
+                width: 100%;
+                min-height: 250px;
+
+                .adf-datatable-table-cell {
+                    height: 240px !important;
+                }
+            }
+
             .adf-data-table-card-loading {
                 width: 100%;
                 min-height: 250px;
 
-                .adf-datatable-table-cell{
+                .adf-datatable-table-cell {
                     height: 240px !important;
+                }
+            }
+
+            .adf-data-table-card-empty {
+                width: 100%;
+                min-height: 380px;
+
+                .adf-datatable-table-cell {
+                    height: 370px !important;
                 }
             }
 
