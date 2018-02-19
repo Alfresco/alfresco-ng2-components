@@ -28,6 +28,44 @@ Opens a [Content Node Selector](content-node-selector.component.md) in its own d
 | isSelectionValid | ValidationFunction | defaultValidation | Function used to decide if the selected node has permission to be the chosen. The defaultValidation always returns true.  |
 | breadcrumbTransform | (node) => any | null | Action to be performed to the chosen/folder node before building the breadcrumb UI. Can be useful in case a custom formatting is needed to the breadcrumb, so changing the node's path elements that help build the breadcrumb can be done through this function. |
 
+#### Using breadcrumbTransform example
+
+Before opening the Content Node Selector, you can add a breadcrumbTransform function to the ContentNodeSelectorComponentData to make changes to what is displayed on the breadcrumb. For example, something like this:
+```
+    const data: ContentNodeSelectorComponentData = {
+        title: title,
+        actionName: action,
+        currentFolderId: contentEntry.parentId,
+        imageResolver: this.imageResolver.bind(this),
+        rowFilter : this.rowFilter.bind(this, contentEntry.id),
+        isSelectionValid: this.hasEntityCreatePermission.bind(this),
+        breadcrumbTransform: this.changeBreadcrumbPath.bind(this), // here is the transform function
+        select: select
+    };
+
+    this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');
+```
+where the transform function could be something like this:
+```
+    private changeBreadcrumbPath(node: MinimalNodeEntryEntity) {
+
+        if (node && node.path && node.path.elements) {
+            const elements = node.path.elements;
+
+            if (elements.length > 1) {
+                if (elements[1].name === 'Sites') {
+                    elements.splice(1, 1);
+                }
+            }
+        }
+
+        return node;
+    }
+```
+and here is the display of the breadcrumb before and after transform:
+![Content Node Selector breadcrumbTransfrom before/after screenshot](docassets/images/breadcrumbTransform.png)
+
+
 ### Events
 
 | Name | Description |
