@@ -186,6 +186,64 @@ describe('DocumentList', () => {
         });
     });
 
+    it('should hide the header if showHeader is false', (done) => {
+        documentList.showHeader = false;
+
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(element.querySelector('#adf-datatable-header')).toBe(null);
+            done();
+        });
+    });
+
+    it('should show the header if showHeader is true', (done) => {
+        documentList.showHeader = true;
+
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(element.querySelector('#adf-datatable-header')).toBeDefined();
+            done();
+        });
+    });
+
+    it('should reset selection upon reload', () => {
+        spyOn(documentList, 'resetSelection').and.callThrough();
+
+        documentList.reload();
+        fixture.detectChanges();
+
+        expect(documentList.resetSelection).toHaveBeenCalled();
+    });
+
+    it('should use the cardview style if cardview is true', (done) => {
+        documentList.cardview = true;
+
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(element.querySelector('#adf-data-table-card')).toBeDefined();
+            done();
+        });
+    });
+
+    it('should use the base document list style if cardview is false', (done) => {
+        documentList.cardview = false;
+
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(element.querySelector('#adf-data-table-card')).toBe(null);
+            expect(element.querySelector('#adf-data-table')).toBeDefined();
+            done();
+        });
+    });
+
     it('should reset selection upon reload', () => {
         spyOn(documentList, 'resetSelection').and.callThrough();
 
@@ -1204,4 +1262,5 @@ describe('DocumentList', () => {
 
         expect(documentList.reload).not.toHaveBeenCalled();
     });
+
 });
