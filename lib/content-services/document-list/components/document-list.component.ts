@@ -569,13 +569,15 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         return changePage.skipCount &&
             changePage.skipCount.currentValue !== null &&
             changePage.skipCount.currentValue !== undefined &&
-            changePage.skipCount.currentValue !== changePage.skipCount.previousValue;
+            changePage.skipCount.currentValue !== changePage.skipCount.previousValue &&
+            changePage.skipCount.firstChange === false;
     }
 
     private isMaxItemsChanged(changePage: SimpleChanges) {
         return changePage.maxItems &&
             changePage.maxItems.currentValue &&
-            changePage.maxItems.currentValue !== changePage.maxItems.previousValue;
+            changePage.maxItems.currentValue !== changePage.maxItems.previousValue &&
+            changePage.maxItems.firstChange === false;
     }
 
     private loadTrashcan(merge: boolean = false): void {
