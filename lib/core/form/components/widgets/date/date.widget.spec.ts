@@ -94,7 +94,7 @@ describe('DateWidgetComponent', () => {
     });
 
     it('should eval visibility on date changed', () => {
-        spyOn(widget, 'checkVisibility').and.callThrough();
+        spyOn(widget, 'onFieldChanged').and.callThrough();
 
         let field = new FormFieldModel(new FormModel(), {
             id: 'date-field-id',
@@ -107,7 +107,7 @@ describe('DateWidgetComponent', () => {
         widget.field = field;
 
         widget.onDateChanged({ value: moment('12/12/2012') });
-        expect(widget.checkVisibility).toHaveBeenCalledWith(field);
+        expect(widget.onFieldChanged).toHaveBeenCalledWith(field);
     });
 
     describe('template check', () => {
@@ -167,45 +167,6 @@ describe('DateWidgetComponent', () => {
                     let dateElement: any = element.querySelector('#date-field-id');
                     expect(dateElement.value).toContain('12-30-9999');
                 });
-        }));
-
-        it('should hide not visible date widget', async(() => {
-            widget.field.isVisible = false;
-            fixture.detectChanges();
-            fixture.whenStable()
-                .then(() => {
-                    fixture.detectChanges();
-                    expect(element.querySelector('#data-widget')).toBeNull();
-                });
-        }));
-
-        it('should become visibile if the visibility change to true', async(() => {
-            widget.field.isVisible = false;
-            fixture.detectChanges();
-            widget.fieldChanged.subscribe((field) => {
-                field.isVisible = true;
-                fixture.detectChanges();
-                fixture.whenStable()
-                    .then(() => {
-                        expect(element.querySelector('#date-field-id')).toBeDefined();
-                        expect(element.querySelector('#date-field-id')).not.toBeNull();
-                        let dateElement: any = element.querySelector('#date-field-id');
-                        expect(dateElement.value).toContain('9-9-9999');
-                    });
-            });
-            widget.checkVisibility(widget.field);
-        }));
-
-        it('should be hided if the visibility change to false', async(() => {
-            widget.fieldChanged.subscribe((field) => {
-                field.isVisible = false;
-                fixture.detectChanges();
-                fixture.whenStable()
-                    .then(() => {
-                        expect(element.querySelector('#data-widget')).toBeNull();
-                    });
-            });
-            widget.checkVisibility(widget.field);
         }));
 
         it('should disable date button when is readonly', async(() => {

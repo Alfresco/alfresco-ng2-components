@@ -40,7 +40,8 @@ declare var adf: any;
 @Component({
     selector: 'adf-form-field, form-field',
     template: `
-        <div [hidden]="!field?.isVisible"
+        <div [id]="'field-'+field?.id+'-container'"
+            [hidden]="!field?.isVisible"
             [class.adf-focus]="focus"
             (focusin)="focusToggle()"
             (focusout)="focusToggle()">
@@ -92,7 +93,7 @@ export class FormFieldComponent implements OnInit, OnDestroy {
                 if (componentType) {
                     let factory = this.componentFactoryResolver.resolveComponentFactory(componentType);
                     this.componentRef = this.container.createComponent(factory);
-                    let instance = <WidgetComponent>this.componentRef.instance;
+                    let instance = <WidgetComponent> this.componentRef.instance;
                     instance.field = this.field;
                     instance.fieldChanged.subscribe(field => {
                         if (field && this.field.form) {

@@ -20,7 +20,6 @@
 import { LogService } from '../../../../services/log.service';
 import { ENTER, ESCAPE } from '@angular/cdk/keycodes';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { FormService } from './../../../services/form.service';
 import { FormFieldOption } from './../core/form-field-option';
 import { baseHost, WidgetComponent } from './../widget.component';
@@ -40,7 +39,6 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
     options: FormFieldOption[] = [];
 
     constructor(public formService: FormService,
-                private visibilityService: WidgetVisibilityService,
                 private logService: LogService) {
         super(formService);
     }
@@ -74,8 +72,8 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
                         this.value = toSelect.name;
                     }
                 }
+                this.onFieldChanged(this.field);
                 this.field.updateForm();
-                this.visibilityService.refreshEntityVisibility(this.field);
             },
             err => this.handleError(err)
             );
@@ -99,8 +97,8 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
                         this.value = toSelect.name;
                     }
                 }
+                this.onFieldChanged(this.field);
                 this.field.updateForm();
-                this.visibilityService.refreshEntityVisibility(this.field);
             },
             err => this.handleError(err)
             );
@@ -141,7 +139,7 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
         if (item) {
             this.field.value = item.id;
             this.value = item.name;
-            this.checkVisibility();
+            this.onFieldChanged(this.field);
         }
     }
 
@@ -155,10 +153,6 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
 
     handleError(error: any) {
         this.logService.error(error);
-    }
-
-    checkVisibility() {
-        this.visibilityService.refreshVisibility(this.field.form);
     }
 
     isReadOnlyType(): boolean {

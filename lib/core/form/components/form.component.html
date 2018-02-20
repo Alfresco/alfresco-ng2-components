@@ -19,7 +19,7 @@
         </mat-card-header>
         <mat-card-content>
             <div *ngIf="form.hasTabs()">
-                <tabs-widget [tabs]="form.tabs" (formTabChanged)="checkVisibility($event);"></tabs-widget>
+                <tabs-widget [tabs]="form.tabs" (formTabChanged)="onFieldChanged($event);"></tabs-widget>
             </div>
 
             <div *ngIf="!form.hasTabs() && form.hasFields()">
