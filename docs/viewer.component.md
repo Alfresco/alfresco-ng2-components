@@ -287,6 +287,10 @@ By default, the pdf viewer comes with its own thumbnails list but this can be re
 by providing a custom template and binding to context property `viewer` to access PDFJS.PDFViewer
 instance.
 
+![PDF thumbnails](docassets/images/pdf-thumbnails.png)
+
+#### Using template injection
+
 ```javascript
 import { Component, Input } from '@angular/core';
 
