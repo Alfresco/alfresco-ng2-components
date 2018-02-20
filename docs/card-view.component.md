@@ -4,28 +4,6 @@ Displays a configurable property list renderer.
 
 ![adf-custom-view](docassets/images/adf-custom-view.png)
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
--   [Basic Usage](#basic-usage)
-    -   [Properties](#properties)
--   [Details](#details)
-    -   [Editing](#editing)
-    -   [Defining properties](#defining-properties)
-        -   [Card Text Item](#card-text-item)
-        -   [Card Map Item](#card-map-item)
-        -   [Card Date Item](#card-date-item)
-    -   [Defining your custom card Item](#defining-your-custom-card-item)
-        -   [1. Define the model for the custom type](#1-define-the-model-for-the-custom-type)
-        -   [2. Define the component for the custom type](#2-define-the-component-for-the-custom-type)
-        -   [3. Add you custom component to your module's entryComponents list](#3-add-you-custom-component-to-your-modules-entrycomponents-list)
--   [See also](#see-also)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
-
 ## Basic Usage
 
 ```html
@@ -382,11 +360,6 @@ export class SomeParentComponent {
 }
 ```
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-
-<!-- seealso start -->
-
 ## See also
 
 -   [Card view update service](card-view-update.service.md)
-    <!-- seealso end -->

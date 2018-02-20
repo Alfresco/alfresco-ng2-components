@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Authentication Service
 
 Provides authentication for use with the Login component.

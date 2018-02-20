@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Auth Guard Bpm service
 
 Adds authentication with Process Services to a route within the app.
