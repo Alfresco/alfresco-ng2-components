@@ -25,6 +25,8 @@ import { PipeModule } from '../pipes/pipe.module';
 import { ImgViewerComponent } from './components/imgViewer.component';
 import { MediaPlayerComponent } from './components/mediaPlayer.component';
 import { PdfViewerComponent } from './components/pdfViewer.component';
+import { PdfThumbComponent } from './components/pdfViewer-thumb.component';
+import { PdfThumbListComponent } from './components/pdfViewer-thumbnails.component';
 import { TxtViewerComponent } from './components/txtViewer.component';
 import { UnknownFormatComponent } from './components/unknown-format/unknown-format.component';
 import { ViewerMoreActionsComponent } from './components/viewer-more-actions.component';
@@ -50,6 +52,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         TxtViewerComponent,
         MediaPlayerComponent,
         PdfViewerComponent,
+        PdfThumbComponent,
+        PdfThumbListComponent,
         ViewerExtensionDirective,
         UnknownFormatComponent,
         ViewerToolbarComponent,
@@ -63,6 +67,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         TxtViewerComponent,
         MediaPlayerComponent,
         PdfViewerComponent,
+        PdfThumbComponent,
+        PdfThumbListComponent,
         ViewerExtensionDirective,
         UnknownFormatComponent,
         ViewerToolbarComponent,

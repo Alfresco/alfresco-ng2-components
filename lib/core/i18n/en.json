@@ -210,6 +210,9 @@
     "LOADING": "Loading",
     "UNKNOWN_FORMAT": "Couldn't load preview",
     "SIDEBAR": {
+      "THUMBNAILS": {
+        "PAGE": "Page {{ pageNum }}"
+      },
       "METADATA": {
           "MORE_INFORMATION": "More information",
           "LESS_INFORMATION": "Less information"

@@ -18,7 +18,8 @@
 import { Location } from '@angular/common';
 import {
     Component, ContentChild, EventEmitter, HostListener, ElementRef,
-    Input, OnChanges, Output, SimpleChanges, TemplateRef, ViewEncapsulation
+    Input, OnChanges, Output, SimpleChanges, TemplateRef,
+    ViewEncapsulation
 } from '@angular/core';
 import { MinimalNodeEntryEntity, RenditionEntry } from 'alfresco-js-api';
 import { BaseEvent } from '../../events';
@@ -130,6 +131,10 @@ export class ViewerComponent implements OnChanges {
     @Input()
     allowSidebar = false;
 
+    /** Toggles PDF thumbnails. */
+    @Input()
+    allowThumbnails = true;
+
     /** Toggles sidebar visibility. Requires `allowSidebar` to be set to `true`. */
     @Input()
     showSidebar = false;
@@ -141,6 +146,10 @@ export class ViewerComponent implements OnChanges {
     /** The template for the sidebar. The template context contains the loaded node data. */
     @Input()
     sidebarTemplate: TemplateRef<any> = null;
+
+    /** The template for the pdf thumbnails. */
+    @Input()
+    thumbnailsTemplate: TemplateRef<any> = null;
 
     /** MIME type of the file content (when not determined by the filename extension). */
     @Input()
@@ -192,6 +201,7 @@ export class ViewerComponent implements OnChanges {
     @Output()
     navigateNext = new EventEmitter();
 
+    showPdfThumbnails: boolean = false;
     viewerType = 'unknown';
     isLoading = false;
     node: MinimalNodeEntryEntity;
