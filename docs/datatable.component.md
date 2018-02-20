@@ -18,6 +18,7 @@ See it live: [DataTable Quickstart](https://embed.plnkr.co/80qr4YFBeHjLMdAV0F6l/
     -   [Supplying data for the table](#supplying-data-for-the-table)
     -   [Customizing columns](#customizing-columns)
     -   [DataTable DOM Events](#datatable-dom-events)
+    -   [Card view](#card-view)
     -   [Custom Empty content template](#custom-empty-content-template)
     -   [Loading content template](#loading-content-template)
     -   [Events](#events-1)
@@ -192,6 +193,20 @@ onRowClick(event) {
 ```
 
 ![](docassets/images/datatable-dom-events.png)
+
+### Card view
+
+If you want enable the card view mode you need to set to true the input parameter [cardview] :
+
+```html
+<adf-datatable
+    [data]="data"
+    [cardview]="true">
+</adf-datatable
+```
+
+![card-view](docassets/images/document-list-card-view.png)
+
 
 ### Custom Empty content template
 

@@ -14,6 +14,7 @@ Displays the documents from a repository.
 -   [Details](#details)
 
     -   [DOM Events](#dom-events)
+    -   [Card view](#card-view)
     -   [Pagination strategy](#pagination-strategy)
     -   [Data Sources](#data-sources)
     -   [Setting default folder](#setting-default-folder)
@@ -46,7 +47,7 @@ Displays the documents from a repository.
 ```
 
 ### Properties
-
+    
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | permissionsStyle | `PermissionStyleModel[]` | `[]` | Define a set of CSS styles styles to apply depending on the permission of the user on that node. See the Permission Style model page for further details and examples. |
@@ -74,6 +75,7 @@ Displays the documents from a repository.
 | skipCount | `number` | `0` | Number of elements to skip over for pagination purposes  |
 | enableInfiniteScrolling | `boolean` | `false` | Set document list to work in infinite scrolling mode  |
 | showHeader | `boolean` | `true` |  Toggles header visibility   |
+| cardview | `boolean` | `false` |  Enable the cardview mode    |
 
 ### Events
 
@@ -127,6 +129,20 @@ Below is a basic example of handling DOM events in the parent elements.
     </div>
 </div>
 ```
+
+### Card view
+
+If you want enable the card view mode you need to set to true the input parameter [cardview] :
+
+```html
+<adf-document-list
+    [currentFolderId]="'-my-'"
+    [cardview]="true">
+</adf-document-list>
+```
+
+![card-view](docassets/images/document-list-card-view.png)
+
 
 ### Pagination strategy
 
