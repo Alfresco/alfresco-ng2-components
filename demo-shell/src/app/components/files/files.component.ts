@@ -21,7 +21,7 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity, SiteEntry } from 'alfresco-js-api';
+import { MinimalNodeEntity, NodePaging, Pagination, PathElementEntity, MinimalNodeEntryEntity, SiteEntry } from 'alfresco-js-api';
 import {
     AuthenticationService, ContentService, TranslationService,
     FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
@@ -162,6 +162,10 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     onFolderChange($event) {
         this.currentFolderId = $event.value.id;
         this.router.navigate(['/files', $event.value.id]);
+    }
+
+    onBreadcrumbNavigate(route: PathElementEntity) {
+        this.router.navigate(['/files', route.id]);
     }
 
     toggleFolder() {
