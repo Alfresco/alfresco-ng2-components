@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+export * from './name-location-cell/name-location-cell.component';
 export * from './content-node-selector.component-data.interface';
 export * from './content-node-selector-panel.component';
 export * from './content-node-selector.component';

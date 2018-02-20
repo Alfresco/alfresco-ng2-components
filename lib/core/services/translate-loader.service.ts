@@ -23,6 +23,7 @@ import { Observable } from 'rxjs/Observable';
 import { ComponentTranslationModel } from '../models/component.model';
 import { ObjectUtils } from '../utils/object-utils';
 import { LogService } from './log.service';
+import { map } from 'rxjs/operators'
 import 'rxjs/observable/forkJoin';
 import 'rxjs/add/observable/forkJoin';
 
@@ -63,10 +64,9 @@ export class TranslateLoaderService implements TranslateLoader {
                 const loader = Observable.create(observer => {
                     const translationUrl = `${component.path}/${this.prefix}/${lang}${this.suffix}?v=${Date.now()}`;
 
-                    this.http.get(translationUrl)
-                        .map((res: Response) => {
-                            component.json[lang] = res;
-                        }).subscribe((result) => {
+                    this.http.get(translationUrl).pipe(map((res: Response) => {
+                        component.json[lang] = res;
+                    })).subscribe((result) => {
                         observer.next(result);
                         observer.complete();
                     }, () => {

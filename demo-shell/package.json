@@ -81,7 +81,7 @@
     "@angular/router": "5.1.1",
     "@mat-datetimepicker/core": "^1.0.1",
     "@mat-datetimepicker/moment": "^1.0.1",
-    "@ngx-translate/core": "8.0.0",
+    "@ngx-translate/core": "9.1.1",
     "alfresco-js-api": "2.1.0",
     "chart.js": "2.5.0",
     "classlist.js": "1.1.20150312",
