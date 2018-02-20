@@ -7,6 +7,7 @@ cd "$DIR/../integration/base_ver_2_app"
 ADF_VERSION=$(npm view @alfresco/adf-core version)
 ANGULAR_VERSION="5.1.1"
 MATERIAL_VERSION="5.0.1"
+NGX_TRANSLATE_VERSION="9.1.1"
 
 npm install
 
@@ -19,5 +20,6 @@ npm install --save-exact --save-dev @angular-devkit/core@0.0.28 @angular/compile
 npm install --save  @mat-datetimepicker/core @mat-datetimepicker/moment
 npm install --save-exact --save  @angular/animations@${ANGULAR_VERSION} @angular/common@${ANGULAR_VERSION}  @angular/compiler@${ANGULAR_VERSION} @angular/core@${ANGULAR_VERSION}  @angular/platform-browser@${ANGULAR_VERSION} @angular/router@${ANGULAR_VERSION} @angular/flex-layout@2.0.0-beta.12  @angular/forms@${ANGULAR_VERSION} @angular/forms@${ANGULAR_VERSION} @angular/http@${ANGULAR_VERSION}  @angular/platform-browser-dynamic@${ANGULAR_VERSION}
 npm install --save-exact --save @angular/cdk@${MATERIAL_VERSION} @angular/material@${MATERIAL_VERSION}
+npm install --save-exact --save @ngx-translate/core@${NGX_TRANSLATE_VERSION}
 
 npm run e2e
