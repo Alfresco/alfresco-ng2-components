@@ -235,7 +235,7 @@
     }
 }
 
-.viewer-pdf-container {
+.viewer-pdf-viewer {
     overflow: auto;
     -webkit-overflow-scrolling: touch;
     position: absolute;
@@ -245,9 +245,9 @@
     left: 0;
     outline: none;
 }
-html[dir='ltr'] .viewer-pdf-container {
+html[dir='ltr'] .viewer-pdf-viewer {
     box-shadow: inset 1px 0 0 hsla(0,0%,100%,.05);
 }
-html[dir='rtl'] .viewer-pdf-container {
+html[dir='rtl'] .viewer-pdf-viewer {
     box-shadow: inset -1px 0 0 hsla(0,0%,100%,.05);
 }

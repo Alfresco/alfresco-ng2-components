@@ -30,6 +30,8 @@ import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { ImgViewerComponent } from './imgViewer.component';
 import { MediaPlayerComponent } from './mediaPlayer.component';
 import { PdfViewerComponent } from './pdfViewer.component';
+import { PdfThumbListComponent } from './pdfViewer-thumbnails.component';
+import { PdfThumbComponent } from './pdfViewer-thumb.component';
 import { TxtViewerComponent } from './txtViewer.component';
 import { UnknownFormatComponent } from './unknown-format/unknown-format.component';
 import { ViewerMoreActionsComponent } from './viewer-more-actions.component';
@@ -129,6 +131,8 @@ describe('ViewerComponent', () => {
             declarations: [
                 ViewerComponent,
                 PdfViewerComponent,
+                PdfThumbListComponent,
+                PdfThumbComponent,
                 TxtViewerComponent,
                 MediaPlayerComponent,
                 ImgViewerComponent,

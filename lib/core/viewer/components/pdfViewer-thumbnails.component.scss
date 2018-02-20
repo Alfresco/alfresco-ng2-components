@@ -1,0 +1,39 @@
+@mixin adf-pdf-thumbnails-theme($theme) {
+    $background: map-get($theme, background);
+
+    .pdf-thumbnails {
+        display: block;
+        overflow: hidden;
+        overflow-y: auto;
+        height: 100%;
+        position: relative;
+
+        &__content {
+            top: 0;
+            left: 50%;
+            height: 0;
+            position: absolute;
+        }
+
+        &__thumb:first-child {
+            margin-top: 14px;
+        }
+
+        &__thumb {
+            cursor: pointer;
+            display: block;
+            height: 140px;
+            width: 100px;
+            background: mat-color($background, background);
+            margin-bottom: 14px;
+        }
+
+        &__thumb:hover {
+            box-shadow: 0px 0px 5px 0px $black-87-opacity;
+        }
+
+        &__thumb--selected:not(:hover) {
+            box-shadow: 0px 0px 5px 0px $black-87-opacity;
+        }
+    }
+}

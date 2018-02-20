@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, HostListener, Input, OnChanges, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Component, TemplateRef, HostListener, Input, OnChanges, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { LogService } from '../../services/log.service';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 
@@ -49,6 +49,9 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     @Input()
     allowThumbnails = false;
 
+    @Input()
+    thumbnailsTemplate: TemplateRef<any> = null;
+
     currentPdfDocument: any;
     page: number;
     displayPage: number;
@@ -63,6 +66,9 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     DEFAULT_SCALE_DELTA: number = 1.1;
     MIN_SCALE: number = 0.25;
     MAX_SCALE: number = 10.0;
+
+    showThumbnails = false;
+    pdfThumbnailsContext: { viewer: any } = { viewer: null };
 
     get currentScaleText(): string {
         return Math.round(this.currentScale * 100) + '%';
@@ -134,7 +140,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
         const viewer: any = document.getElementById('viewer-viewerPdf');
 
-        this.documentContainer = document.getElementById('viewer-pdf-container');
+        this.documentContainer = document.getElementById('viewer-pdf-viewer');
         this.documentContainer.addEventListener('pagechange', this.onPageChange, true);
 
         this.pdfViewer = new PDFJS.PDFViewer({
@@ -146,12 +152,18 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         this.renderingQueueServices.setViewer(this.pdfViewer);
 
         this.pdfViewer.setDocument(pdfDocument);
+
+        this.pdfThumbnailsContext.viewer = this.pdfViewer;
     }
 
     ngOnDestroy() {
         if (this.documentContainer) {
             this.documentContainer.removeEventListener('pagechange', this.onPageChange, true);
         }
+    }
+
+    toggleThumbnails() {
+        this.showThumbnails = !this.showThumbnails;
     }
 
     /**
@@ -165,7 +177,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         if (this.pdfViewer) {
 
             let viewerContainer = document.getElementById('viewer-main-container');
-            let documentContainer = document.getElementById('viewer-pdf-container');
+            let documentContainer = document.getElementById('viewer-pdf-viewer');
 
             let widthContainer;
             let heightContainer;
