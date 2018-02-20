@@ -19,16 +19,16 @@ Fetches the Process Audit information in the pdf or json format.
 
 ### Properties
 
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| taskId | string | | (**required**) The id of the task. |
-| format | string | pdf | In whitch format you want the task audit information (pdf or json). |
-| download | boolean | false | True If you want download the file on the click event. |
-| fileName | string | Audit | Represent the name of the file to download in case the format is pdf. |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| processId | `string` |  | ID of the process.  |
+| fileName | `string` | `'Audit'` | Name of the file to download (for PDF downloads).  |
+| format | `string` | `'pdf'` | Format for the audit information (can be "pdf" or "json").  |
+| download | `boolean` | `true` | Enables downloading of the audit file on clicking.  |
 
 ### Events
 
-| Name | Description |
-| --- | --- |
-| clicked | Raised when the task audit info is ready |
-| error | Raised if there is an error during fetching task information |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| clicked | `EventEmitter<any>` | Emitted when the decorated element is clicked.  |
+| error | `EventEmitter<any>` | Emitted when an error occurs.  |

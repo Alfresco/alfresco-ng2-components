@@ -130,6 +130,39 @@
             overflow: auto;
         }
 
+        &__thumbnails {
+            width: 180px;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            background: #e6e6e6;
+
+            .adf-info-drawer-layout {
+                display: flex;
+                flex-direction: column;
+                flex: 1;
+                background: #e6e6e6;
+            }
+
+            .adf-info-drawer-layout-header {
+                margin-bottom: 0;
+            }
+
+            .adf-info-drawer-layout-content {
+                padding: 0;
+                height: 100%;
+            }
+
+            .info-drawer-content {
+                height: 100%;
+            }
+
+            .adf-info-drawer-layout-content > *:last-child {
+                height: 100%;
+                overflow: hidden;
+            }
+        }
+
         &__toolbar {
             &-page-scale {
                 cursor: default;

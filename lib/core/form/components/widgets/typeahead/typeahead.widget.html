@@ -3,7 +3,7 @@
         [class.is-dirty]="value"
         [class.adf-invalid]="!field.isValid"
         [class.adf-readonly]="field.readOnly"
-        id="typehead-div" *ngIf="field.isVisible">
+        id="typehead-div">
         <mat-form-field>
             <label class="adf-label" [attr.for]="field.id">{{field.name}}</label>
             <input matInput class="adf-input"

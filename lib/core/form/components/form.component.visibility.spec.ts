@@ -62,6 +62,10 @@ describe('FormComponent UI and visibiltiy', () => {
         service = fixture.debugElement.injector.get(FormService);
     });
 
+    afterEach(() => {
+        fixture.destroy();
+    });
+
     it('should create instance of FormComponent', () => {
         expect(fixture.componentInstance instanceof FormComponent).toBe(true, 'should create FormComponent');
     });
@@ -124,12 +128,13 @@ describe('FormComponent UI and visibiltiy', () => {
                 component.ngOnChanges({ 'taskId': change });
                 fixture.detectChanges();
 
-                let firstEl = fixture.debugElement.query(By.css('#country'));
-                expect(firstEl).toBeNull();
+                let firstEl = fixture.debugElement.query(By.css('#field-country-container'));
+                expect(firstEl.nativeElement.hidden).toBeTruthy();
 
                 let secondEl = fixture.debugElement.query(By.css('#name'));
                 expect(secondEl).not.toBeNull();
                 expect(secondEl).toBeDefined();
+                expect(fixture.nativeElement.querySelector('#field-name-container').hidden).toBeFalsy();
             });
 
             it('should hide the field based on the previous one', () => {
@@ -143,9 +148,10 @@ describe('FormComponent UI and visibiltiy', () => {
                 let firstEl = fixture.debugElement.query(By.css('#name'));
                 expect(firstEl).not.toBeNull();
                 expect(firstEl).toBeDefined();
+                expect(fixture.nativeElement.querySelector('#field-name-container').hidden).toBeFalsy();
 
-                let secondEl = fixture.debugElement.query(By.css('#country'));
-                expect(secondEl).toBeNull();
+                let secondEl = fixture.debugElement.query(By.css('#field-country-container'));
+                expect(secondEl.nativeElement.hidden).toBeTruthy();
             });
 
             it('should show the hidden field when the visibility condition change to true', () => {
@@ -156,20 +162,19 @@ describe('FormComponent UI and visibiltiy', () => {
                 component.ngOnChanges({ 'taskId': change });
                 fixture.detectChanges();
 
-                let firstEl = fixture.debugElement.query(By.css('#country'));
-                expect(firstEl).toBeNull();
+                let firstEl = fixture.debugElement.query(By.css('#field-country-container'));
+                expect(firstEl.nativeElement.hidden).toBeTruthy();
 
-                const secondEl = fixture.debugElement.query(By.css('#name'));
-                expect(secondEl).not.toBeNull();
+                const secondEl = fixture.debugElement.query(By.css('#field-name-container'));
+                expect(secondEl.nativeElement.hidden).toBeFalsy();
 
-                let el = secondEl.nativeElement;
-
-                el.value = 'italy';
-                el.dispatchEvent(new Event('input'));
+                let inputElement = fixture.nativeElement.querySelector('#name');
+                inputElement.value = 'italy';
+                inputElement.dispatchEvent(new Event('input'));
                 fixture.detectChanges();
 
-                firstEl = fixture.debugElement.query(By.css('#country'));
-                expect(firstEl).not.toBeNull();
+                firstEl = fixture.debugElement.query(By.css('#field-country-container'));
+                expect(firstEl.nativeElement.hidden).toBeFalsy();
             });
         });
 

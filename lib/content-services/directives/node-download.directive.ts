@@ -27,6 +27,7 @@ import { DownloadZipDialogComponent } from '../dialogs/download-zip.dialog';
 })
 export class NodeDownloadDirective {
 
+    /** Nodes to download. */
     // tslint:disable-next-line:no-input-rename
     @Input('adfNodeDownload')
     nodes: MinimalNodeEntity[];

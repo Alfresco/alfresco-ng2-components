@@ -30,17 +30,17 @@ Some sample CSS to show the drag and drop area:
 
 ### Properties
 
-| Name | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| file-draggable | boolean | true | Toggles between enable/disable of the drag-and-drop functionality. |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| enabled | `boolean` | `true` | Enables/disables drag-and-drop functionality.  |
 
 ### Events
 
-| Name | Description |
-| ---- | ----------- |
-| filesEntityDropped | Emitted when one or more files are dragged and dropped onto the draggable element, such as a `div` |
-| folderEntityDropped | Emitted when a directory is dragged and dropped onto the draggable element, such as a `div` |
-| filesDropped | Emitted when one or more files are dragged and dropped onto the draggable element, such as a `div` |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| filesDropped | `EventEmitter<File[]>` | Emitted when one or more files are dragged and dropped onto the draggable element.  |
+| filesEntityDropped | `EventEmitter<any>` | Emitted when one or more files are dragged and dropped onto the draggable element.  |
+| folderEntityDropped | `EventEmitter<any>` | Emitted when a directory is dragged and dropped onto the draggable element.  |
 
 ## Details
 

@@ -25,12 +25,15 @@ import { HighlightTransformService, HightlightTransformResult } from '../service
 })
 export class HighlightDirective {
 
+    /** Class selector for highlightable elements. */
     @Input('adf-highlight-selector')
     selector: string = '';
 
+    /** Text to highlight. */
     @Input('adf-highlight')
     search: string = '';
 
+    /** CSS class used to apply highlighting. */
     @Input('adf-highlight-class')
     classToApply: string = 'adf-highlight';
 

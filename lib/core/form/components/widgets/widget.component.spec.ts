@@ -93,7 +93,7 @@ describe('WidgetComponent', () => {
             done();
         });
 
-        widget.checkVisibility(fakeField);
+        widget.onFieldChanged(fakeField);
     });
 
     it('should eval isRequired state of the field', () => {

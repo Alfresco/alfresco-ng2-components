@@ -16,3 +16,9 @@ Allows folders and/or files to be downloaded. Multiple nodes are packed as a '.Z
  ...
 </adf-document-list>
 ```
+
+### Properties
+
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| nodes | `MinimalNodeEntity[]` |  | Nodes to download.  |

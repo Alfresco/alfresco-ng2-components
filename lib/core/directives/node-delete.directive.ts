@@ -53,12 +53,17 @@ interface ProcessStatus {
     selector: '[adf-delete]'
 })
 export class NodeDeleteDirective implements OnChanges {
+    /** Array of nodes to delete. */
     @Input('adf-delete')
     selection: MinimalNodeEntity[];
 
+    /** If true then the nodes are deleted immediately rather than being
+     * put in the trash.
+     */
     @Input()
     permanent: boolean = false;
 
+    /** Emitted when the nodes have been deleted. */
     @Output()
     delete: EventEmitter<any> = new EventEmitter();
 

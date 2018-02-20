@@ -20,7 +20,6 @@
 import { LogService } from '../../../../services/log.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormService } from '../../../services/form.service';
-import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { FormFieldOption } from './../core/form-field-option';
 import { baseHost , WidgetComponent } from './../widget.component';
 
@@ -34,7 +33,6 @@ import { baseHost , WidgetComponent } from './../widget.component';
 export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
 
     constructor(public formService: FormService,
-                private visibilityService: WidgetVisibilityService,
                 private logService: LogService) {
          super(formService);
     }
@@ -95,10 +93,6 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
             optionValue = option.name;
         }
         return optionValue;
-    }
-
-    checkVisibility() {
-        this.visibilityService.refreshVisibility(this.field.form);
     }
 
     handleError(error: any) {

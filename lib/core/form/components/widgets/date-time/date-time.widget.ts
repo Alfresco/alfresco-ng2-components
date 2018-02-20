@@ -80,7 +80,7 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit {
         } else {
             this.field.value = null;
         }
-        this.checkVisibility(this.field);
+        this.onFieldChanged(this.field);
     }
 
 }

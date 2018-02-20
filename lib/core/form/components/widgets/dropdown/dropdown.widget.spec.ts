@@ -188,27 +188,6 @@ describe('DropdownWidgetComponent', () => {
                     });
             }));
 
-            it('should be not visible when isVisible is false', async(() => {
-                widget.field.isVisible = false;
-                fixture.detectChanges();
-                fixture.whenStable()
-                    .then(() => {
-                        let dropDownElement: HTMLSelectElement = <HTMLSelectElement> element.querySelector('#dropdown-id');
-                        expect(dropDownElement).toBeNull();
-                    });
-            }));
-
-            it('should became visible when isVisible is true', async(() => {
-                widget.field.isVisible = false;
-                fixture.detectChanges();
-                expect(element.querySelector('#dropdown-id')).toBeNull();
-                widget.field.isVisible = true;
-                fixture.detectChanges();
-                fixture.whenStable()
-                    .then(() => {
-                        expect(element.querySelector('#dropdown-id')).not.toBeNull();
-                    });
-            }));
         });
 
         describe('and dropdown is populated via processDefinitionId', () => {

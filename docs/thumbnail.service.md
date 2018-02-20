@@ -4,14 +4,15 @@ Retrieves an SVG thumbnail image to represent a document type.
 
 ## Methods
 
-`public getDocumentThumbnailUrl(document: any): string`<br/>
-Gets a thumbnail URL for a document node.
+-   `getDocumentThumbnailUrl(node: any): string`  
+    Gets a thumbnail URL for the given document node.  
+    -   `node` - Node to get URL for.
+-   `getMimeTypeIcon(mimeType: string): string`  
+    Gets a thumbnail URL for a MIME type.  
+    -   `mimeType` - MIME type for the thumbnail
+-   `getDefaultMimeTypeIcon(): string`  
+    Gets a "miscellaneous" thumbnail URL for types with no other icon defined.  
 
-`public getMimeTypeIcon(mimeType: string): string`<br/>
-Gets a thumbnail URL for a MIME type.
-
-`public getDefaultMimeTypeIcon(): string`<br/>
-Gets a "miscellaneous" thumbnail URL for types with no other icon defined.
 
 ## Details
 
