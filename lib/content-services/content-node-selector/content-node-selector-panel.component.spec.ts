@@ -614,7 +614,7 @@ describe('ContentNodeSelectorComponent', () => {
                     }, 300);
                 });
 
-                it('button\'s callback should load the next batch of results by calling the search api', () => {
+                it('button\'s callback should load the next batch of results by calling the search api', async(() => {
                     const skipCount = 8;
                     component.searchTerm = 'kakarot';
 
@@ -623,7 +623,7 @@ describe('ContentNodeSelectorComponent', () => {
                     fixture.whenStable().then(() => {
                         expect(searchSpy).toHaveBeenCalledWith(defaultSearchOptions('kakarot', undefined, skipCount));
                     });
-                });
+                }));
 
                 it('should be shown when pagination\'s hasMoreItems is true', () => {
                     component.pagination = {
