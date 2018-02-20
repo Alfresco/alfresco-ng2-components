@@ -1204,4 +1204,22 @@ describe('DocumentList', () => {
 
         expect(documentList.reload).not.toHaveBeenCalled();
     });
+
+    it('should NOT reload data on first call of onNgChanges', () => {
+        spyOn(documentList, 'reload').and.stub();
+
+        const firstChange = true;
+        documentList.ngOnChanges({ skipCount: new SimpleChange(undefined, 10, firstChange) });
+
+        expect(documentList.reload).not.toHaveBeenCalled();
+    });
+
+    it('should reload data on NON-first calls of onNgChanges', () => {
+        spyOn(documentList, 'reload').and.stub();
+
+        const firstChange = true;
+        documentList.ngOnChanges({ skipCount: new SimpleChange(undefined, 10, !firstChange) });
+
+        expect(documentList.reload).toHaveBeenCalled();
+    });
 });

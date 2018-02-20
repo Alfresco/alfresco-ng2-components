@@ -567,6 +567,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     private isSkipCountChanged(changePage: SimpleChanges) {
         return changePage.skipCount &&
+            !changePage.skipCount.isFirstChange() &&
             changePage.skipCount.currentValue !== null &&
             changePage.skipCount.currentValue !== undefined &&
             changePage.skipCount.currentValue !== changePage.skipCount.previousValue;
@@ -574,6 +575,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     private isMaxItemsChanged(changePage: SimpleChanges) {
         return changePage.maxItems &&
+            !changePage.maxItems.isFirstChange() &&
             changePage.maxItems.currentValue &&
             changePage.maxItems.currentValue !== changePage.maxItems.previousValue;
     }
