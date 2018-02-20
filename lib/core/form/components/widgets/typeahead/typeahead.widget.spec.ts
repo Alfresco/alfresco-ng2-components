@@ -21,7 +21,6 @@ import { Observable } from 'rxjs/Observable';
 import { By } from '@angular/platform-browser';
 import { EcmModelService } from '../../../services/ecm-model.service';
 import { FormService } from '../../../services/form.service';
-import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { MaterialModule } from '../../../../material.module';
 import { FormFieldOption } from '../core/form-field-option';
 import { FormFieldTypes } from '../core/form-field-types';
@@ -34,13 +33,12 @@ describe('TypeaheadWidgetComponent', () => {
 
     let formService: FormService;
     let widget: TypeaheadWidgetComponent;
-    let visibilityService: WidgetVisibilityService;
 
     beforeEach(() => {
         formService = new FormService(null, null, null);
-        visibilityService = new WidgetVisibilityService(null, null);
-        widget = new TypeaheadWidgetComponent(formService, visibilityService, null);
+        widget = new TypeaheadWidgetComponent(formService, null);
         widget.field = new FormFieldModel(new FormModel({ taskId: 'task-id' }));
+        widget.field.restUrl = 'whateverURL';
     });
 
     it('should request field values from service', () => {
@@ -52,7 +50,8 @@ describe('TypeaheadWidgetComponent', () => {
         });
 
         widget.field = new FormFieldModel(form, {
-            id: fieldId
+            id: fieldId,
+            restUrl: 'whateverURL'
         });
 
         spyOn(formService, 'getRestFieldValues').and.returnValue(Observable.create(observer => {
@@ -61,6 +60,23 @@ describe('TypeaheadWidgetComponent', () => {
         }));
         widget.ngOnInit();
         expect(formService.getRestFieldValues).toHaveBeenCalledWith(taskId, fieldId);
+    });
+
+    it('should not perform any request if restUrl is not present', () => {
+        const taskId = '<form-id>';
+        const fieldId = '<field-id>';
+
+        let form = new FormModel({
+            taskId: taskId
+        });
+
+        widget.field = new FormFieldModel(form, {
+            id: fieldId
+        });
+
+        spyOn(formService, 'getRestFieldValues');
+        widget.ngOnInit();
+        expect(formService.getRestFieldValues).not.toHaveBeenCalled();
     });
 
     it('should handle error when requesting fields with task id', () => {
@@ -72,7 +88,8 @@ describe('TypeaheadWidgetComponent', () => {
         });
 
         widget.field = new FormFieldModel(form, {
-            id: fieldId
+            id: fieldId,
+            restUrl: 'whateverURL'
         });
         const err = 'Error';
         spyOn(formService, 'getRestFieldValues').and.returnValue(Observable.throw(err));
@@ -93,7 +110,8 @@ describe('TypeaheadWidgetComponent', () => {
         });
 
         widget.field = new FormFieldModel(form, {
-            id: fieldId
+            id: fieldId,
+            restUrl: 'whateverURL'
         });
         const err = 'Error';
         spyOn(formService, 'getRestFieldValuesByProcessId').and.returnValue(Observable.throw(err));
@@ -114,6 +132,7 @@ describe('TypeaheadWidgetComponent', () => {
             observer.complete();
         }));
         widget.field.value = '2';
+        widget.field.restUrl = 'whateverURL';
         widget.ngOnInit();
 
         expect(formService.getRestFieldValues).toHaveBeenCalled();
@@ -130,6 +149,7 @@ describe('TypeaheadWidgetComponent', () => {
         }));
 
         widget.field.value = '3';
+        widget.field.restUrl = 'whateverURL';
         widget.ngOnInit();
 
         expect(formService.getRestFieldValues).toHaveBeenCalled();
@@ -156,6 +176,7 @@ describe('TypeaheadWidgetComponent', () => {
             observer.next([]);
             observer.complete();
         }));
+        widget.field.restUrl = 'whateverURL';
 
         spyOn(widget.field, 'updateForm').and.callThrough();
         widget.ngOnInit();
@@ -205,7 +226,7 @@ describe('TypeaheadWidgetComponent', () => {
             TestBed.configureTestingModule({
                 imports: [MaterialModule],
                 declarations: [TypeaheadWidgetComponent, ErrorWidgetComponent],
-                providers: [ FormService, EcmModelService, WidgetVisibilityService ]
+                providers: [ FormService, EcmModelService]
             }).compileComponents().then(() => {
                 fixture = TestBed.createComponent(TypeaheadWidgetComponent);
                 typeaheadWidgetComponent = fixture.componentInstance;
@@ -249,14 +270,13 @@ describe('TypeaheadWidgetComponent', () => {
 
             beforeEach(async(() => {
                 stubFormService = fixture.debugElement.injector.get(FormService);
-                visibilityService = fixture.debugElement.injector.get(WidgetVisibilityService);
-                spyOn(visibilityService, 'refreshVisibility').and.stub();
                 spyOn(stubFormService, 'getRestFieldValues').and.returnValue(Observable.of(fakeOptionList));
                 typeaheadWidgetComponent.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'typeahead-id',
                     name: 'typeahead-name',
                     type: FormFieldTypes.TYPEAHEAD,
-                    readOnly: false
+                    readOnly: false,
+                    restUrl: 'whateverURL'
                 });
                 typeaheadWidgetComponent.field.isVisible = true;
                 fixture.detectChanges();
@@ -322,22 +342,12 @@ describe('TypeaheadWidgetComponent', () => {
                     expect(element.querySelector('.adf-error-text').textContent).toContain('FORM.FIELD.VALIDATOR.INVALID_VALUE');
                 });
             }));
-
-            it('should hide not visible typeahead', async(() => {
-                typeaheadWidgetComponent.field.isVisible = false;
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    expect(element.querySelector('#typeahead-id')).toBeNull();
-                });
-            }));
         });
 
         describe('and typeahead is populated via processDefinitionId', () => {
 
             beforeEach(async(() => {
                 stubFormService = fixture.debugElement.injector.get(FormService);
-                visibilityService = fixture.debugElement.injector.get(WidgetVisibilityService);
-                spyOn(visibilityService, 'refreshVisibility').and.stub();
                 spyOn(stubFormService, 'getRestFieldValuesByProcessId').and.returnValue(Observable.of(fakeOptionList));
                 typeaheadWidgetComponent.field = new FormFieldModel(new FormModel({ processDefinitionId: 'fake-process-id' }), {
                     id: 'typeahead-id',

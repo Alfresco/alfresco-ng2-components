@@ -40,7 +40,8 @@ declare var adf: any;
 @Component({
     selector: 'adf-form-field, form-field',
     template: `
-        <div [hidden]="!field?.isVisible"
+        <div [id]="'field-'+field?.id+'-container'"
+            [hidden]="!field?.isVisible"
             [class.adf-focus]="focus"
             (focusin)="focusToggle()"
             (focusout)="focusToggle()">
@@ -96,7 +97,8 @@ export class FormFieldComponent implements OnInit, OnDestroy {
                     instance.field = this.field;
                     instance.fieldChanged.subscribe(field => {
                         if (field && this.field.form) {
-                            this.visibilityService.refreshVisibility(this.field.form);
+                            this.visibilityService.refreshVisibility(field.form);
+                            field.form.onFormFieldChanged(field);
                         }
                     });
                 }

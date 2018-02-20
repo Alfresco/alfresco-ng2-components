@@ -17,7 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivitiContentService } from '../../../services/activiti-alfresco.service';
-import { fakeFormJson } from '../../../../mock';
+
 import { MaterialModule } from '../../../../material.module';
 import { WIDGET_DIRECTIVES } from '../index';
 import { MASK_DIRECTIVE } from '../index';
@@ -36,7 +36,6 @@ describe('ContainerWidgetComponent', () => {
 
     let widget: ContainerWidgetComponent;
     let fixture: ComponentFixture<ContainerWidgetComponent>;
-    let element: HTMLElement;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -54,9 +53,11 @@ describe('ContainerWidgetComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(ContainerWidgetComponent);
-
-        element = fixture.nativeElement;
         widget = fixture.componentInstance;
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it('should wrap field with model instance', () => {
@@ -123,83 +124,6 @@ describe('ContainerWidgetComponent', () => {
         });
 
         widget.onFieldChanged(fakeField);
-    });
-
-    describe('when template is ready', () => {
-        let fakeContainerVisible;
-        let fakeContainerInvisible;
-
-        beforeEach(() => {
-            fakeContainerVisible = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(fakeFormJson), {
-                fieldType: FormFieldTypes.GROUP,
-                id: 'fake-cont-id-1',
-                name: 'fake-cont-1-name',
-                type: FormFieldTypes.GROUP
-            }));
-            fakeContainerInvisible = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(fakeFormJson), {
-                fieldType: FormFieldTypes.GROUP,
-                id: 'fake-cont-id-2',
-                name: 'fake-cont-2-name',
-                type: FormFieldTypes.GROUP
-            }));
-            fakeContainerVisible.field.isVisible = true;
-            fakeContainerInvisible.field.isVisible = false;
-        });
-
-        afterEach(() => {
-            fixture.destroy();
-            TestBed.resetTestingModule();
-        });
-
-        it('should show the container header when it is visible', () => {
-            widget.content = fakeContainerVisible;
-            fixture.detectChanges();
-            fixture.whenStable()
-                .then(() => {
-                    expect(element.querySelector('.container-widget__header').classList.contains('hidden')).toBe(false);
-                    expect(element.querySelector('#container-header-label')).toBeDefined();
-                    expect(element.querySelector('#container-header-label').innerHTML).toContain('fake-cont-1-name');
-                });
-        });
-
-        it('should not show the container header when it is not visible', () => {
-            widget.content = fakeContainerInvisible;
-            fixture.detectChanges();
-            fixture.whenStable()
-                .then(() => {
-                    expect(element.querySelector('.container-widget__header').getAttribute('hidden')).not.toBeNull();
-                });
-        });
-
-        it('should hide header when it becomes not visible', async(() => {
-            widget.content = fakeContainerVisible;
-            fixture.detectChanges();
-            widget.fieldChanged.subscribe((res) => {
-                widget.content.field.isVisible = false;
-                fixture.detectChanges();
-                fixture.whenStable()
-                    .then(() => {
-                        expect(element.querySelector('.container-widget__header').getAttribute('hidden')).not.toBeNull();
-                    });
-            });
-            widget.onFieldChanged(null);
-        }));
-
-        it('should show header when it becomes visible', async(() => {
-            widget.content = fakeContainerInvisible;
-            widget.fieldChanged.subscribe((res) => {
-                widget.content.field.isVisible = true;
-                fixture.detectChanges();
-                fixture.whenStable()
-                    .then(() => {
-                        expect(element.querySelector('#container-header')).toBeDefined();
-                        expect(element.querySelector('#container-header')).not.toBeNull();
-                        expect(element.querySelector('#container-header-label')).toBeDefined();
-                        expect(element.querySelector('#container-header-label').innerHTML).toContain('fake-cont-2-name');
-                    });
-            });
-            widget.onFieldChanged(null);
-        }));
     });
 
     describe('fields', () => {

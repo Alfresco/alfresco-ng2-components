@@ -1,6 +1,6 @@
 <div class="adf-group-widget {{field.className}}"
      [class.is-dirty]="value"
-     [class.adf-invalid]="!field.isValid" [class.adf-readonly]="field.readOnly" id="functional-group-div" *ngIf="field.isVisible">
+     [class.adf-invalid]="!field.isValid" [class.adf-readonly]="field.readOnly" id="functional-group-div">
     <mat-form-field>
         <label class="adf-label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
         <input matInput

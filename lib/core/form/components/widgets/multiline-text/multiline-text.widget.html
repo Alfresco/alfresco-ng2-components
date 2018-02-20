@@ -9,7 +9,7 @@
                   [id]="field.id"
                   [required]="isRequired()"
                   [(ngModel)]="field.value"
-                  (ngModelChange)="checkVisibility(field)"
+                  (ngModelChange)="onFieldChanged(field)"
                   [disabled]="field.readOnly || readOnly"
                   placeholder="{{field.placeholder}}">
         </textarea>
