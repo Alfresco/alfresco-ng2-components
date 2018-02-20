@@ -712,7 +712,7 @@ describe('ContentNodeSelectorComponent', () => {
                     component.isSelectionValid = returnHasPermission;
                 });
 
-                it('should NOT be null after selecting node with the necessary permissions', () => {
+                it('should NOT be null after selecting node with the necessary permissions', async(() => {
                     hasPermission = true;
                     component.documentList.folderNode = entry;
 
@@ -724,9 +724,9 @@ describe('ContentNodeSelectorComponent', () => {
 
                     component.documentList.ready.emit(nodePage);
                     fixture.detectChanges();
-                });
+                }));
 
-                it('should be null after selecting node without the necessary permissions', () => {
+                it('should be null after selecting node without the necessary permissions', async(() => {
                     hasPermission = false;
                     component.documentList.folderNode = entry;
 
@@ -738,9 +738,9 @@ describe('ContentNodeSelectorComponent', () => {
 
                     component.documentList.ready.emit(nodePage);
                     fixture.detectChanges();
-                });
+                }));
 
-                it('should NOT be null after clicking on a node (with the right permissions) in the list (onNodeSelect)', () => {
+                it('should NOT be null after clicking on a node (with the right permissions) in the list (onNodeSelect)', async(() => {
                     hasPermission = true;
 
                     component.select.subscribe((nodes) => {
@@ -751,9 +751,9 @@ describe('ContentNodeSelectorComponent', () => {
 
                     component.onNodeSelect({ detail: { node: { entry } } });
                     fixture.detectChanges();
-                });
+                }));
 
-                it('should remain null when clicking on a node (with the WRONG permissions) in the list (onNodeSelect)', () => {
+                it('should remain null when clicking on a node (with the WRONG permissions) in the list (onNodeSelect)', async(() => {
                     hasPermission = false;
 
                     component.select.subscribe((nodes) => {
@@ -764,9 +764,9 @@ describe('ContentNodeSelectorComponent', () => {
 
                     component.onNodeSelect({ detail: { node: { entry } } });
                     fixture.detectChanges();
-                });
+                }));
 
-                it('should become null when clicking on a node (with the WRONG permissions) after previously selecting a right node', () => {
+                it('should become null when clicking on a node (with the WRONG permissions) after previously selecting a right node', async(() => {
                     component.select.subscribe((nodes) => {
 
                         if (hasPermission) {
@@ -788,9 +788,9 @@ describe('ContentNodeSelectorComponent', () => {
                     hasPermission = false;
                     component.onNodeSelect({ detail: { node: { entry } } });
                     fixture.detectChanges();
-                });
+                }));
 
-                it('should be null when the chosenNode is reset', () => {
+                it('should be null when the chosenNode is reset', async(() => {
                     hasPermission = true;
                     component.onNodeSelect({ detail: { node: { entry: <MinimalNodeEntryEntity> {} } } });
                     fixture.detectChanges();
@@ -803,7 +803,7 @@ describe('ContentNodeSelectorComponent', () => {
 
                     component.resetChosenNode();
                     fixture.detectChanges();
-                });
+                }));
             });
 
             describe('in the case when isSelectionValid is null', () => {
@@ -812,7 +812,7 @@ describe('ContentNodeSelectorComponent', () => {
                     component.isSelectionValid = null;
                 });
 
-                it('should NOT be null after selecting node because isSelectionValid would be reset to defaultValidation function', () => {
+                it('should NOT be null after selecting node because isSelectionValid would be reset to defaultValidation function', async(() => {
                     component.documentList.folderNode = entry;
                     fixture.detectChanges();
 
@@ -825,9 +825,9 @@ describe('ContentNodeSelectorComponent', () => {
 
                     component.documentList.ready.emit(nodePage);
                     fixture.detectChanges();
-                });
+                }));
 
-                it('should NOT be null after clicking on a node in the list (onNodeSelect)', () => {
+                it('should NOT be null after clicking on a node in the list (onNodeSelect)', async(() => {
                     fixture.detectChanges();
                     component.select.subscribe((nodes) => {
                         expect(nodes).toBeDefined();
@@ -838,9 +838,9 @@ describe('ContentNodeSelectorComponent', () => {
 
                     component.onNodeSelect({ detail: { node: { entry } } });
                     fixture.detectChanges();
-                });
+                }));
 
-                it('should be null when the chosenNode is reset', () => {
+                it('should be null when the chosenNode is reset', async(() => {
                     fixture.detectChanges();
                     component.onNodeSelect({ detail: { node: { entry: <MinimalNodeEntryEntity> {} } } });
                     fixture.detectChanges();
@@ -854,7 +854,7 @@ describe('ContentNodeSelectorComponent', () => {
 
                     component.resetChosenNode();
                     fixture.detectChanges();
-                });
+                }));
             });
 
             describe('in the case when isSelectionValid is not defined', () => {
@@ -863,7 +863,7 @@ describe('ContentNodeSelectorComponent', () => {
                     component.isSelectionValid = undefined;
                 });
 
-                it('should NOT be null after selecting node because isSelectionValid would be the defaultValidation function', () => {
+                it('should NOT be null after selecting node because isSelectionValid would be the defaultValidation function', async(() => {
                     component.documentList.folderNode = entry;
                     fixture.detectChanges();
 
@@ -876,9 +876,9 @@ describe('ContentNodeSelectorComponent', () => {
 
                     component.documentList.ready.emit(nodePage);
                     fixture.detectChanges();
-                });
+                }));
 
-                it('should NOT be null after clicking on a node in the list (onNodeSelect)', () => {
+                it('should NOT be null after clicking on a node in the list (onNodeSelect)', async(() => {
                     component.select.subscribe((nodes) => {
                         expect(nodes).toBeDefined();
                         expect(nodes).not.toBeNull();
@@ -889,9 +889,9 @@ describe('ContentNodeSelectorComponent', () => {
 
                     component.onNodeSelect({ detail: { node: { entry } } });
                     fixture.detectChanges();
-                });
+                }));
 
-                it('should be null when the chosenNode is reset', () => {
+                it('should be null when the chosenNode is reset', async(() => {
                     fixture.detectChanges();
 
                     component.onNodeSelect({ detail: { node: { entry: <MinimalNodeEntryEntity> {} } } });
@@ -902,12 +902,11 @@ describe('ContentNodeSelectorComponent', () => {
                         expect(nodes).toBeNull();
                         expect(component.chosenNode).toBeNull();
                         expect(component.isSelectionValid).not.toBeNull();
-                        // expect(component.isSelectionValid).toBe(() => true);
                     });
 
                     component.resetChosenNode();
                     fixture.detectChanges();
-                });
+                }));
             });
         });
     });
