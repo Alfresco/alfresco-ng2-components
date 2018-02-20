@@ -43,9 +43,14 @@ to work with the Dialog's
 ```ts
 interface ContentNodeSelectorComponentData {
     title: string;
-    currentFolderId?: string;
+    actionName?: string;
+    currentFolderId: string;
+    dropdownHideMyFiles?: boolean;
+    dropdownSiteList?: SitePaging;
     rowFilter?: RowFilter;
     imageResolver?: ImageResolver;
+    isSelectionValid?: (entry: MinimalNodeEntryEntity) => boolean;
+    breadcrumbTransform?: (node) => any;
     select: EventEmitter<MinimalNodeEntryEntity[]>;
 }
 ```

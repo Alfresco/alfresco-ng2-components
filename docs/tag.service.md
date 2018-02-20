@@ -4,17 +4,20 @@ Manages tags in Content Services.
 
 ## Methods
 
-`getTagsByNodeId(nodeId: string): any`<br/>
-Gets a list of tags added to a node.
+-   `getTagsByNodeId(nodeId: string): any`  
+    Gets a list of tags added to a node.  
+    -   `nodeId` - ID of the target node
+-   `getAllTheTags(): any`  
+    Gets a list of all the tags already defined in the repository.   
 
-`getAllTheTags()`<br/>
-Gets a list of all the tags already defined in the repository.
-
-`addTag(nodeId: string, tagName: string): any`<br/>
-Adds a tag to a node.
-
-`removeTag(nodeId: string, tag: string): any`<br/>
-Removes a tag from a node.
+-   `addTag(nodeId: string, tagName: string): any`  
+    Adds a tag to a node.  
+    -   `nodeId` - ID of the target node
+    -   `tagName` - Name of the tag to add
+-   `removeTag(nodeId: string, tag: string): any`  
+    Removes a tag from a node.  
+    -   `nodeId` - ID of the target node
+    -   `tag` - Name of the tag to remove
 
 ## Details
 

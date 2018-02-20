@@ -62,6 +62,11 @@ export class TranslationService {
         });
     }
 
+    /**
+     * Adds a new folder of translation source files.
+     * @param name Name for the translation provider
+     * @param path Path to the folder
+     */
     addTranslationFolder(name: string = '', path: string = '') {
         if (!this.customLoader.providerRegistered(name)) {
             this.customLoader.registerProvider(name, path);
@@ -83,15 +88,29 @@ export class TranslationService {
         }
     }
 
+    /**
+     * Sets the target language for translations.
+     * @param lang Code name for the language
+     */
     use(lang: string): Observable<any> {
         this.customLoader.init(lang);
         return this.translate.use(lang);
     }
 
+    /**
+     * Gets the translation for the supplied key.
+     * @param key Key to translate
+     * @param interpolateParams String(s) to be interpolated into the main message
+     */
     get(key: string|Array<string>, interpolateParams?: Object): Observable<string|any> {
         return this.translate.get(key, interpolateParams);
     }
 
+    /**
+     * Directly returns the translation for the supplied key.
+     * @param key Key to translate
+     * @param interpolateParams String(s) to be interpolated into the main message
+     */
     instant(key: string | Array<string>, interpolateParams?: Object): string | any {
         return this.translate.instant(key, interpolateParams);
     }

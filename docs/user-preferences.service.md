@@ -2,6 +2,32 @@
 
 Stores preferences for components.
 
+## Methods
+
+-   `get(property: string, defaultValue?: string): string`  
+    Gets a preference property.  
+    -   `property` - Name of the property
+    -   `defaultValue` - (Optional) Default to return if the property is not found
+-   `set(property: string, value: any)`  
+    Sets a preference property.  
+    -   `property` - Name of the property
+    -   `value` - New value for the property
+-   `getStoragePrefix(): string`  
+    Gets the active storage prefix for preferences.   
+
+-   `setStoragePrefix(value: string)`  
+    Sets the active storage prefix for preferences.  
+    -   `value` - Name of the prefix
+-   `getPropertyKey(property: string): string`  
+    Gets the full property key with prefix.  
+    -   `property` - The property name
+-   `getDifferentPageSizes(): number[]`  
+    Gets an array containing the available page sizes.   
+
+-   `getDefaultLocale(): string`  
+    Gets the default locale.   
+
+
 ## Details
 
 The preferences are bound to a particular `prefix` so the application can switch between different profiles on demand.
@@ -44,8 +70,11 @@ class AppComponent {
 }
 ```
 
-The service also provides quick access to a set of the "known" properties used across ADF components.
+The service also provides quick access to a set of the "known" properties used across ADF components:
 
-Known properties:
-
-- paginationSize (number) - gets or sets the preferred pagination size
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| authType | `string` | Authorization type (can be "ECM", "BPM" or "ALL"). |
+| disableCSRF | `boolean` | Prevents the CSRF Token from being submitted if true. Only valid for Process Services. |
+| paginationSize | `number` | Pagination size. |
+| locale | `string` | Current locale setting. |

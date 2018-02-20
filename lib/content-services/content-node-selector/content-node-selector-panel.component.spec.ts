@@ -248,6 +248,36 @@ describe('ContentNodeSelectorComponent', () => {
                     done();
                 }, 300);
             });
+
+            it('should keep breadcrumb\'s folderNode unchanged if breadcrumbTransform is NOT defined', (done) => {
+                fixture.detectChanges();
+
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    expect(component.breadcrumbTransform).toBeNull();
+
+                    const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
+                    expect(breadcrumb.componentInstance.folderNode).toBe(expectedDefaultFolderNode);
+                    done();
+                });
+            });
+
+            it('should make changes to breadcrumb\'s folderNode if breadcrumbTransform is defined', (done) => {
+                const transformedFolderNode = <MinimalNodeEntryEntity> { path: { elements: [{id: 'testId', name: 'testName'}] } };
+                component.breadcrumbTransform = (() => {
+                    return transformedFolderNode;
+                });
+                fixture.detectChanges();
+
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    expect(component.breadcrumbTransform).not.toBeNull();
+
+                    const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
+                    expect(breadcrumb.componentInstance.folderNode).toBe(transformedFolderNode);
+                    done();
+                });
+            });
         });
 
         describe('Search functionality', () => {
