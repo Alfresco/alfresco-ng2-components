@@ -19,7 +19,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { PdfThumbListComponent } from './pdfViewer-thumbnails.component';
 import { PdfThumbComponent } from './pdfViewer-thumb.component';
-import { PDFJS } from 'pdfjs-dist';
+
+declare let PDFJS: any;
 
 describe('PdfThumbListComponent', () => {
 
