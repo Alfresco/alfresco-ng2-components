@@ -113,7 +113,7 @@ describe('PeopleComponent', () => {
         it('should show people involved', async(() => {
             fixture.whenStable()
                 .then(() => {
-                    let gatewayElement: any = element.querySelector('#assignment-people-list tbody');
+                    let gatewayElement: any = element.querySelector('#assignment-people-list .adf-datatable-body');
                     expect(gatewayElement).not.toBeNull();
                     expect(gatewayElement.children.length).toBe(2);
                 });
@@ -127,7 +127,7 @@ describe('PeopleComponent', () => {
             fixture.whenStable()
                 .then(() => {
                     fixture.detectChanges();
-                    let gatewayElement: any = element.querySelector('#assignment-people-list tbody');
+                    let gatewayElement: any = element.querySelector('#assignment-people-list .adf-datatable-body');
                     expect(gatewayElement).not.toBeNull();
                     expect(gatewayElement.children.length).toBe(1);
                 });
@@ -141,7 +141,7 @@ describe('PeopleComponent', () => {
             fixture.whenStable()
                 .then(() => {
                     fixture.detectChanges();
-                    let gatewayElement: any = element.querySelector('#assignment-people-list tbody');
+                    let gatewayElement: any = element.querySelector('#assignment-people-list .adf-datatable-body');
                     expect(gatewayElement).not.toBeNull();
                     expect(gatewayElement.children.length).toBe(3);
                 });
@@ -220,7 +220,7 @@ describe('PeopleComponent', () => {
             fixture.whenStable()
                 .then(() => {
                     fixture.detectChanges();
-                    let gatewayElement: any = element.querySelector('#assignment-people-list tbody');
+                    let gatewayElement: any = element.querySelector('#assignment-people-list .adf-datatable-body');
                     expect(gatewayElement).not.toBeNull();
                     expect(gatewayElement.children.length).toBe(2);
                 });
@@ -234,7 +234,7 @@ describe('PeopleComponent', () => {
             fixture.whenStable()
                 .then(() => {
                     fixture.detectChanges();
-                    let gatewayElement: any = element.querySelector('#assignment-people-list tbody');
+                    let gatewayElement: any = element.querySelector('#assignment-people-list .adf-datatable-body');
                     expect(gatewayElement).not.toBeNull();
                     expect(gatewayElement.children.length).toBe(2);
                 });

@@ -286,32 +286,40 @@ describe('DataTable', () => {
     });
 
     it('should put actions menu to the right by default', () => {
-        dataTable.data = new ObjectDataTableAdapter([], [
-            <DataColumn> {},
-            <DataColumn> {},
-            <DataColumn> {}
-        ]);
+        dataTable.data = new ObjectDataTableAdapter(
+            [
+                { name: '1' },
+                { name: '2' },
+                { name: '3' },
+                { name: '4' }
+            ],
+            [new ObjectDataColumn({ key: 'name' })]
+        );
+
         dataTable.actions = true;
         fixture.detectChanges();
 
-        let headers = element.querySelectorAll('th');
-        expect(headers.length).toBe(4);
-        expect(headers[headers.length - 1].classList.contains('actions-column')).toBeTruthy();
+        let actions = element.querySelectorAll('[id^=action_menu_right]');
+        expect(actions.length).toBe(4);
     });
 
     it('should put actions menu to the left', () => {
-        dataTable.data = new ObjectDataTableAdapter([], [
-            <DataColumn> {},
-            <DataColumn> {},
-            <DataColumn> {}
-        ]);
+        dataTable.data = new ObjectDataTableAdapter(
+            [
+                { name: '1' },
+                { name: '2' },
+                { name: '3' },
+                { name: '4' }
+            ],
+            [new ObjectDataColumn({ key: 'name' })]
+        );
+
         dataTable.actions = true;
         dataTable.actionsPosition = 'left';
         fixture.detectChanges();
 
-        let headers = element.querySelectorAll('th');
-        expect(headers.length).toBe(4);
-        expect(headers[0].classList.contains('actions-column')).toBeTruthy();
+        let actions = element.querySelectorAll('[id^=action_menu_left]');
+        expect(actions.length).toBe(4);
     });
 
     it('should initialize default adapter', () => {
