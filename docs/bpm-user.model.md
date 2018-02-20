@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Bpm User model
 
 Contains information about a Process Services user.

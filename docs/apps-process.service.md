@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Apps Process service
 
 Gets details of the Process Services apps that are deployed for the user.

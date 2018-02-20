@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Activiti Analytics List Component
 
 Shows a list of all available reports

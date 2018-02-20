@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Analytics Generator Component
 
 Generates and shows charts

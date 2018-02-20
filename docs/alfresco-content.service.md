@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Alfresco Content service
 
 Gets URLs and access info and creates folders in Content Services.
