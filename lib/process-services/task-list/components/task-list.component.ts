@@ -161,10 +161,10 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit, P
     isStreamLoaded = false;
 
     constructor(private taskListService: TaskListService,
-        private appConfig: AppConfigService,
-        private userPreferences: UserPreferencesService) {
+                private appConfig: AppConfigService,
+                private userPreferences: UserPreferencesService) {
         this.size = this.userPreferences.paginationSize;
-        this.pagination = new BehaviorSubject<Pagination>(<Pagination>{
+        this.pagination = new BehaviorSubject<Pagination>(<Pagination> {
             maxItems: this.size,
             skipCount: 0,
             totalItems: 0
