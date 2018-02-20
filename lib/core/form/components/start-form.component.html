@@ -20,6 +20,7 @@
              <ng-content select="[form-custom-button]"></ng-content>
             <button *ngFor="let outcome of form.outcomes"
                     mat-button
+                    [attr.data-automation-id]="'adf-form-' + outcome.name  | lowercase"
                     [disabled]="!isOutcomeButtonEnabled(outcome)"
                     [class.mdl-button--colored]="!outcome.isSystem"
                     [class.adf-form-hide-button]="!isOutcomeButtonVisible(outcome, form.readOnly)"
