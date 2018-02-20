@@ -25,21 +25,29 @@ import { FileInfo, FileUtils } from '../utils/file-utils';
 })
 export class UploadDirective implements OnInit, OnDestroy {
 
+    /** Enables/disables uploading. */
     @Input('adf-upload')
     enabled: boolean = true;
 
+    /** Data to upload. */
     @Input('adf-upload-data')
     data: any;
 
+    /** Upload mode. Can be "drop" (receives dropped files) or "click"
+     * (clicking opens a file dialog). Both modes can be active at once.
+     */
     @Input()
     mode: string[] = ['drop']; // click|drop
 
+    /** Toggles multiple file uploads. */
     @Input()
     multiple: boolean;
 
+    /** (Click mode only) MIME type filter for files to accept. */
     @Input()
     accept: string;
 
+    /** (Click mode only) Toggles uploading of directories. */
     @Input()
     directory: boolean;
 

@@ -33,21 +33,27 @@ const PDF_FORMAT: string = 'pdf';
 })
 export class TaskAuditDirective implements OnChanges {
 
+    /** (**required**) The id of the task. */
     @Input('task-id')
     taskId: string;
 
+    /** Name of the downloaded file (for PDF downloads). */
     @Input()
     fileName: string = 'Audit';
 
+    /** Format of the audit information. Can be "pdf" or "json". */
     @Input()
     format: string = 'pdf';
 
+    /** Enables downloading of the audit when the decorated element is clicked. */
     @Input()
     download: boolean = true;
 
+    /** Emitted when the decorated element is clicked. */
     @Output()
     clicked: EventEmitter<any> = new EventEmitter<any>();
 
+    /** Emitted when an error occurs. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 

@@ -34,12 +34,15 @@ import 'rxjs/add/operator/mergeMap';
 export class NodeRestoreDirective {
     private restoreProcessStatus;
 
+    /** Array of deleted nodes to restore. */
     @Input('adf-restore')
     selection: DeletedNodeEntry[];
 
+    /** Path to restored node. */
     @Input()
     location: string = '';
 
+    /** Emitted when restoration is complete. */
     @Output()
     restore: EventEmitter<any> = new EventEmitter();
 

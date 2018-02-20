@@ -264,7 +264,7 @@ class ServiceDocAutoContent implements NgDocAutoContent {
 export function updatePhase(tree, pathname, aggData) {
     let fileNameNoSuffix = path.basename(pathname, ".md");
 
-    let itemType = fileNameNoSuffix.match(/component|service/);
+    let itemType = fileNameNoSuffix.match(/component|directive|service/);
 
     if (itemType) {
         let srcData = aggData.srcData[fileNameNoSuffix];
@@ -275,7 +275,7 @@ export function updatePhase(tree, pathname, aggData) {
             
             let classData: NgDocAutoContent;
 
-            if (itemType[0] === "component") {
+            if ((itemType[0] === "component") || (itemType[0] === "directive")) {
                 classData = new ComponentDocAutoContent();
             } else if (itemType[0] === "service") {
                 classData = new ServiceDocAutoContent();
