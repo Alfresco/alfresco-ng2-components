@@ -74,14 +74,14 @@ describe('AppsListComponent', () => {
         expect(component.loading).toBeFalsy();
     });
 
-    it('should show the loading spinner when the apps are loading', () => {
+    it('should show the loading spinner when the apps are loading', async(() => {
         component.loading = true;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-        let loadingSpinner = fixture.debugElement.query(By.css('.adf-app-list-spinner > mat-spinner'));
-        expect(loadingSpinner.nativeElement).not.toBeNull();
+        let loadingSpinner = fixture.nativeElement.querySelector('mat-spinner');
+        expect(loadingSpinner).toBeDefined();
         });
-    });
+    }));
 
     it('should show the apps filtered by defaultAppId', () => {
         component.filtersAppId = [{defaultAppId: 'fake-app-1'}];

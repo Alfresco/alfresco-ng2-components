@@ -37,13 +37,12 @@ export class AppsListComponent implements OnInit, AfterContentInit {
     public static DEFAULT_TASKS_APP_ICON: string = 'glyphicon-asterisk';
     public static DEFAULT_TASKS_APP_MATERIAL_ICON: string = 'favorite_border';
 
-    /** (**required**) Defines the layout of the apps. There are two possible
-     * values, "GRID" and "LIST".
-     */
-
     @ContentChild(EmptyListComponent)
     emptyTemplate: EmptyListComponent;
 
+    /** (**required**) Defines the layout of the apps. There are two possible
+     * values, "GRID" and "LIST".
+     */
     @Input()
     layoutType: string = AppsListComponent.LAYOUT_GRID;
 
