@@ -18,7 +18,6 @@
 /* tslint:disable:component-selector no-input-rename */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { FormService } from './../../../services/form.service';
 import { baseHost , WidgetComponent } from './../widget.component';
 
@@ -30,12 +29,8 @@ import { baseHost , WidgetComponent } from './../widget.component';
 })
 export class CheckboxWidgetComponent extends WidgetComponent {
 
-    constructor(private visibilityService: WidgetVisibilityService, public formService: FormService) {
+    constructor(public formService: FormService) {
         super(formService);
-    }
-
-    onChange() {
-        this.visibilityService.refreshVisibility(this.field.form);
     }
 
 }

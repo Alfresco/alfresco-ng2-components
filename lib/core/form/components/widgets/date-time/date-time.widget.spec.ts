@@ -102,7 +102,7 @@ describe('DateTimeWidgetComponent', () => {
     });
 
     it('should eval visibility on date changed', () => {
-        spyOn(widget, 'checkVisibility').and.callThrough();
+        spyOn(widget, 'onFieldChanged').and.callThrough();
 
         let field = new FormFieldModel(new FormModel(), {
             id: 'date-field-id',
@@ -115,7 +115,7 @@ describe('DateTimeWidgetComponent', () => {
         widget.field = field;
 
         widget.onDateChanged({ value: moment('13-03-1982 10:00 AM') });
-        expect(widget.checkVisibility).toHaveBeenCalledWith(field);
+        expect(widget.onFieldChanged).toHaveBeenCalledWith(field);
     });
 
     describe('template check', () => {
@@ -173,79 +173,12 @@ describe('DateTimeWidgetComponent', () => {
             fixture.detectChanges();
             fixture.whenStable()
                 .then(() => {
+                    fixture.detectChanges();
                     expect(element.querySelector('#date-field-id')).toBeDefined();
                     expect(element.querySelector('#date-field-id')).not.toBeNull();
                     let dateElement: any = element.querySelector('#date-field-id');
                     expect(dateElement.value).toContain('12-30-9999 10:30 AM');
                 });
-        }));
-
-        it('should hide not visible date widget', async(() => {
-            widget.field = new FormFieldModel(new FormModel(), {
-                id: 'date-field-id',
-                name: 'date-name',
-                value: '12-30-9999 10:30 AM',
-                dateDisplayFormat: 'MM-DD-YYYY HH:mm A',
-                type: 'datetime',
-                readOnly: 'false'
-            });
-            fixture.detectChanges();
-            expect(element.querySelector('#data-time-widget')).not.toBeNull();
-            widget.field.isVisible = false;
-            fixture.detectChanges();
-            fixture.whenStable()
-                .then(() => {
-                    fixture.detectChanges();
-                    expect(element.querySelector('#data-time-widget')).toBeNull();
-                });
-        }));
-
-        it('should become visibile if the visibility change to true', async(() => {
-            widget.field = new FormFieldModel(new FormModel(), {
-                id: 'date-field-id',
-                name: 'date-name',
-                value: '12-30-9999 10:30 AM',
-                dateDisplayFormat: 'MM-DD-YYYY HH:mm A',
-                type: 'datetime',
-                readOnly: 'false'
-            });
-            widget.field.isVisible = false;
-            fixture.detectChanges();
-            expect(element.querySelector('#data-time-widget')).toBeNull();
-            widget.fieldChanged.subscribe((field) => {
-                field.isVisible = true;
-                fixture.detectChanges();
-                fixture.whenStable()
-                    .then(() => {
-                        expect(element.querySelector('#data-time-widget')).toBeDefined();
-                        expect(element.querySelector('#data-time-widget')).not.toBeNull();
-                        let dateElement: any = element.querySelector('#date-field-id');
-                        expect(dateElement.value).toContain('12-30-9999 10:30 AM');
-                    });
-            });
-            widget.checkVisibility(widget.field);
-        }));
-
-        it('should be hided if the visibility change to false', async(() => {
-            widget.field = new FormFieldModel(new FormModel(), {
-                id: 'date-field-id',
-                name: 'date-name',
-                value: '12-30-9999 10:30 AM',
-                dateDisplayFormat: 'MM-DD-YYYY HH:mm A',
-                type: 'datetime',
-                readOnly: 'false'
-            });
-            fixture.detectChanges();
-            expect(element.querySelector('#data-time-widget')).not.toBeNull();
-            widget.fieldChanged.subscribe((field) => {
-                field.isVisible = false;
-                fixture.detectChanges();
-                fixture.whenStable()
-                    .then(() => {
-                        expect(element.querySelector('#data-time-widget')).toBeNull();
-                    });
-            });
-            widget.checkVisibility(widget.field);
         }));
 
         it('should disable date button when is readonly', async(() => {

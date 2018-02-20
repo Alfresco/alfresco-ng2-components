@@ -118,7 +118,11 @@ describe('DynamicTableWidgetComponent', () => {
         element = fixture.nativeElement;
         widget = fixture.componentInstance;
         widget.content = table;
+        widget.field = field;
+    });
 
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it('should select row on click', () => {

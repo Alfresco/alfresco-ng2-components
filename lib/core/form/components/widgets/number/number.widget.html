@@ -10,7 +10,7 @@
                [required]="isRequired()"
                [value]="field.value"
                [(ngModel)]="field.value"
-               (ngModelChange)="checkVisibility(field)"
+               (ngModelChange)="onFieldChanged(field)"
                [disabled]="field.readOnly"
                placeholder="{{field.placeholder}}">
     </mat-form-field>

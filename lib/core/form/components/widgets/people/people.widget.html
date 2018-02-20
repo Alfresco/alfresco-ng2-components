@@ -2,8 +2,7 @@
      [class.is-dirty]="value"
      [class.adf-invalid]="!field.isValid"
      [class.adf-readonly]="field.readOnly"
-     id="people-widget-content"
-     *ngIf="field.isVisible">
+     id="people-widget-content">
     <mat-form-field>
         <label class="adf-label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
         <input #inputValue

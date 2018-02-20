@@ -20,7 +20,6 @@ import { Observable } from 'rxjs/Observable';
 
 import { EcmModelService } from '../../../services/ecm-model.service';
 import { FormService } from '../../../services/form.service';
-import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { MaterialModule } from '../../../../material.module';
 import { ContainerModel } from '../core/container.model';
 import { FormFieldTypes } from '../core/form-field-types';
@@ -34,12 +33,10 @@ describe('RadioButtonsWidgetComponent', () => {
 
     let formService: FormService;
     let widget: RadioButtonsWidgetComponent;
-    let visibilityService: WidgetVisibilityService;
 
     beforeEach(() => {
         formService = new FormService(null, null, null);
-        visibilityService = new WidgetVisibilityService(null, null);
-        widget = new RadioButtonsWidgetComponent(formService, visibilityService, null);
+        widget = new RadioButtonsWidgetComponent(formService, null);
         widget.field = new FormFieldModel(new FormModel(), { restUrl: '<url>' });
     });
 
@@ -119,8 +116,8 @@ describe('RadioButtonsWidgetComponent', () => {
         expect(formService.getRestFieldValues).toHaveBeenCalled();
     });
 
-    xit('should update the field value when an option is selected', () => {
-        spyOn(widget, 'checkVisibility').and.stub();
+    it('should update the field value when an option is selected', () => {
+        spyOn(widget, 'onFieldChanged').and.returnValue(Observable.of({}));
         widget.onOptionClick('fake-opt');
 
         expect(widget.field.value).toEqual('fake-opt');
@@ -131,7 +128,6 @@ describe('RadioButtonsWidgetComponent', () => {
         let fixture: ComponentFixture<RadioButtonsWidgetComponent>;
         let element: HTMLElement;
         let stubFormService: FormService;
-        let stubVisibilityService: WidgetVisibilityService;
         let restOption: FormFieldOption[] = [{ id: 'opt-1', name: 'opt-name-1' }, {
             id: 'opt-2',
             name: 'opt-name-2'
@@ -141,7 +137,7 @@ describe('RadioButtonsWidgetComponent', () => {
             TestBed.configureTestingModule({
                 imports: [ MaterialModule ],
                 declarations: [RadioButtonsWidgetComponent, ErrorWidgetComponent],
-                providers: [FormService, EcmModelService, WidgetVisibilityService]
+                providers: [FormService, EcmModelService]
             }).compileComponents().then(() => {
                 fixture = TestBed.createComponent(RadioButtonsWidgetComponent);
                 radioButtonWidget = fixture.componentInstance;
@@ -158,7 +154,6 @@ describe('RadioButtonsWidgetComponent', () => {
 
             beforeEach(async(() => {
                 stubFormService = fixture.debugElement.injector.get(FormService);
-                stubVisibilityService = fixture.debugElement.injector.get(WidgetVisibilityService);
                 spyOn(stubFormService, 'getRestFieldValues').and.returnValue(Observable.of(restOption));
                 radioButtonWidget.field = new FormFieldModel(new FormModel({ taskId: 'task-id' }), {
                     id: 'radio-id',
@@ -172,7 +167,7 @@ describe('RadioButtonsWidgetComponent', () => {
                 fixture.detectChanges();
             }));
 
-            it('should show visible radio buttons', async(() => {
+            it('should show radio buttons', async(() => {
                 expect(element.querySelector('#radio-id')).toBeDefined();
                 expect(element.querySelector('#radio-id-opt-1-input')).not.toBeNull();
                 expect(element.querySelector('#radio-id-opt-1')).not.toBeNull();
@@ -180,29 +175,15 @@ describe('RadioButtonsWidgetComponent', () => {
                 expect(element.querySelector('#radio-id-opt-2')).not.toBeNull();
             }));
 
-            it('should not show invisible radio buttons', async(() => {
-                radioButtonWidget.field.isVisible = false;
-                fixture.detectChanges();
-                fixture.whenStable()
-                    .then(() => {
-                        expect(element.querySelector('#radio-id')).toBeNull();
-                        expect(element.querySelector('#radio-id-opt-1-input')).toBeNull();
-                        expect(element.querySelector('#radio-id-opt-2-input')).toBeNull();
-                    });
-            }));
-
-            it('should evaluate visibility on option click', async(() => {
-                spyOn(stubVisibilityService, 'evaluateVisibility').and.returnValue(false);
+            it('should trigger field changed event on click', async(() => {
                 let option: HTMLElement = <HTMLElement> element.querySelector('#radio-id-opt-1-input');
                 expect(element.querySelector('#radio-id')).not.toBeNull();
                 expect(option).not.toBeNull();
                 option.click();
-                fixture.detectChanges();
-                fixture.whenStable()
-                    .then(() => {
-                        expect(element.querySelector('#radio-id')).toBeNull();
-                        expect(element.querySelector('#radio-id-opt-1-input')).toBeNull();
-                    });
+                widget.fieldChanged.subscribe(field => {
+                    expect(element.querySelector('#radio-id')).toBeNull();
+                    expect(element.querySelector('#radio-id-opt-1-input')).toBeNull();
+                });
             }));
         });
 
