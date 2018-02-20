@@ -1,17 +1,17 @@
-<div [hidden]="!(content?.isGroup() && content?.isVisible)" class="container-widget__header">
+<div [hidden]="!content?.isGroup()" class="container-widget__header">
     <h4 class="container-widget__header-text" id="container-header"
         [class.collapsible]="content?.isCollapsible()">
         <button *ngIf="content?.isCollapsible()"
                 mat-icon-button
                 class="mdl-button--icon"
                 (click)="onExpanderClicked()">
-            <mat-icon>{{ content?.isExpanded ? 'expand_less' : 'expand_more' }}</mat-icon>
+            <mat-icon>{{ content?.isExpanded ? 'expand_more' : 'expand_less' }}</mat-icon>
         </button>
         <span (click)="onExpanderClicked()" id="container-header-label">{{content.name}}</span>
     </h4>
 </div>
 
-<section class="grid-list" [ngClass]="{'hidden':!(content?.isVisible && content?.isExpanded)}">
+<section class="grid-list" *ngIf="content?.isExpanded">
     <div class="grid-list-item" *ngFor="let field of fields" [style.width]="getColumnWith(field)">
         <form-field *ngIf="field" [field]="field"></form-field>
     </div>

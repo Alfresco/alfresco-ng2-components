@@ -20,11 +20,13 @@ import { MaterialModule } from '../../../material.module';
 import { ErrorWidgetComponent } from '../widgets/error/error.component';
 import { FormRenderingService } from './../../services/form-rendering.service';
 import { WidgetVisibilityService } from './../../services/widget-visibility.service';
-import { CheckboxWidgetComponent } from './../widgets/checkbox/checkbox.widget';
 import { FormFieldModel, FormFieldTypes, FormModel } from './../widgets/core/index';
 import { InputMaskDirective } from './../widgets/text/text-mask.component';
-import { TextWidgetComponent } from './../widgets/text/text.widget';
+import { TextWidgetComponent, CheckboxWidgetComponent, WidgetComponent } from '../widgets/index';
 import { FormFieldComponent } from './form-field.component';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { FormService } from '../../services/form.service';
+import { EcmModelService } from '../../services/ecm-model.service';
 
 describe('FormFieldComponent', () => {
 
@@ -35,22 +37,33 @@ describe('FormFieldComponent', () => {
     let formRenderingService: FormRenderingService;
 
     beforeEach(async(() => {
+
         TestBed.configureTestingModule({
-                imports: [
-                    MaterialModule
-                ],
-                declarations: [
-                    FormFieldComponent,
-                    TextWidgetComponent,
-                    CheckboxWidgetComponent,
-                    InputMaskDirective,
-                    ErrorWidgetComponent],
-                providers: [
-                    FormRenderingService,
-                    WidgetVisibilityService
-                ]
-            })
-            .compileComponents();
+            imports: [
+                MaterialModule
+            ],
+            declarations: [
+                FormFieldComponent,
+                WidgetComponent,
+                TextWidgetComponent,
+                CheckboxWidgetComponent,
+                InputMaskDirective,
+                ErrorWidgetComponent],
+            providers: [
+                FormRenderingService,
+                WidgetVisibilityService,
+                FormService,
+                EcmModelService
+            ]
+        });
+
+        TestBed.overrideModule(BrowserDynamicTestingModule, {
+            set: {
+                entryComponents: [WidgetComponent, TextWidgetComponent, CheckboxWidgetComponent]
+            }
+        });
+
+        TestBed.compileComponents();
     }));
 
     beforeEach(() => {
@@ -60,9 +73,14 @@ describe('FormFieldComponent', () => {
         form = new FormModel();
     });
 
-    xit('should create default component instance', () => {
+    afterEach(() => {
+        fixture.destroy();
+    });
+
+    it('should create default component instance', () => {
         let field = new FormFieldModel(form, {
-            type: FormFieldTypes.TEXT
+            type: FormFieldTypes.TEXT,
+            id: 'FAKE-TXT-WIDGET'
         });
 
         component.field = field;
@@ -72,9 +90,10 @@ describe('FormFieldComponent', () => {
         expect(component.componentRef.componentType).toBe(TextWidgetComponent);
     });
 
-    xit('should create custom component instance', () => {
+    it('should create custom component instance', () => {
         let field = new FormFieldModel(form, {
-            type: FormFieldTypes.TEXT
+            type: FormFieldTypes.TEXT,
+            id: 'FAKE-TXT-WIDGET'
         });
 
         formRenderingService.setComponentTypeResolver(FormFieldTypes.TEXT, () => CheckboxWidgetComponent, true);
@@ -87,7 +106,8 @@ describe('FormFieldComponent', () => {
 
     it('should require component type to be resolved', () => {
         let field = new FormFieldModel(form, {
-            type: FormFieldTypes.TEXT
+            type: FormFieldTypes.TEXT,
+            id: 'FAKE-TXT-WIDGET'
         });
 
         spyOn(formRenderingService, 'resolveComponentType').and.returnValue(null);
@@ -96,6 +116,43 @@ describe('FormFieldComponent', () => {
 
         expect(formRenderingService.resolveComponentType).toHaveBeenCalled();
         expect(component.componentRef).toBeUndefined();
+    });
+
+    it('should hide the field when it is not visible', () => {
+        let field = new FormFieldModel(form, {
+            type: FormFieldTypes.TEXT,
+            id: 'FAKE-TXT-WIDGET'
+        });
+
+        component.field = field;
+        component.field.isVisible = false;
+        fixture.detectChanges();
+        expect(fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').hidden).toBeTruthy();
+    });
+
+    it('should show the field when it is visible', () => {
+        let field = new FormFieldModel(form, {
+            type: FormFieldTypes.TEXT,
+            id: 'FAKE-TXT-WIDGET'
+        });
+
+        component.field = field;
+        fixture.detectChanges();
+        expect(fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').hidden).toBeFalsy();
+    });
+
+    it('should hide a visible element', () => {
+        let field = new FormFieldModel(form, {
+            type: FormFieldTypes.TEXT,
+            id: 'FAKE-TXT-WIDGET'
+        });
+
+        component.field = field;
+        fixture.detectChanges();
+        expect(fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').hidden).toBeFalsy();
+        component.field.isVisible = false;
+        fixture.detectChanges();
+        expect(fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').hidden).toBeTruthy();
     });
 
 });
