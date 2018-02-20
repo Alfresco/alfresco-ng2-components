@@ -33,21 +33,27 @@ const PDF_FORMAT: string = 'pdf';
 })
 export class ProcessAuditDirective implements OnChanges {
 
+    /** ID of the process. */
     @Input('process-id')
     processId: string;
 
+    /** Name of the file to download (for PDF downloads). */
     @Input()
     fileName: string = 'Audit';
 
+    /** Format for the audit information (can be "pdf" or "json"). */
     @Input()
     format: string = 'pdf';
 
+    /** Enables downloading of the audit file on clicking. */
     @Input()
     download: boolean = true;
 
+    /** Emitted when the decorated element is clicked. */
     @Output()
     clicked: EventEmitter<any> = new EventEmitter<any>();
 
+    /** Emitted when an error occurs. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 

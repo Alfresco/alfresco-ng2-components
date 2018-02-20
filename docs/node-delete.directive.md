@@ -19,16 +19,16 @@ Deletes multiple files and folders.
 
 ### Properties
 
-| Name | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| adf-delete | MinimalNodeEntity\[] | \[] | Nodes to delete |
-| permanent | boolean | false | Permanent delete |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| selection | `MinimalNodeEntity[]` |  | Array of nodes to delete.  |
+| permanent | `boolean` | `false` | If true then the nodes are deleted immediately rather than being put in the trash. |
 
 ### Events
 
-| Name | Description |
-| ---- | ----------- |
-| delete | emitted when delete process is done |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| delete | `EventEmitter<any>` | Emitted when the nodes have been deleted.  |
 
 ## Details
 

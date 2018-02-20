@@ -31,9 +31,11 @@ import 'rxjs/observable/forkJoin';
 export class NodeFavoriteDirective implements OnChanges {
     private favorites: any[] = [];
 
+    /** Array of nodes to toggle as favorites. */
     @Input('adf-node-favorite')
     selection: MinimalNodeEntity[] = [];
 
+    /** Emitted when the favorite setting is complete. */
     @Output() toggle: EventEmitter<any> = new EventEmitter();
 
     @HostListener('click')

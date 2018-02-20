@@ -31,9 +31,13 @@ export interface NodePermissionSubject {
 })
 export class NodePermissionDirective implements OnChanges {
 
+    /** Node permission to check (create, delete, update, updatePermissions,
+     * !create, !delete, !update, !updatePermissions).
+     */
     @Input('adf-node-permission')
     permission: string  = null;
 
+    /** Nodes to check permission for. */
     @Input('adf-nodes')
     nodes: MinimalNodeEntity[] = [];
 

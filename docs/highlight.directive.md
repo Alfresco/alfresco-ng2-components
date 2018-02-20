@@ -14,6 +14,14 @@ Adds highlighting to selected sections of an HTML element's content.
 </div>
 ```
 
+### Properties
+
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| selector | `string` | `''` | Class selector for highlightable elements.  |
+| search | `string` | `''` | Text to highlight.  |
+| classToApply | `string` | `'adf-highlight'` | CSS class used to apply highlighting.  |
+
 ## Details
 
 Add `adf-highlight` with a search term to an element to highlight occurrences
