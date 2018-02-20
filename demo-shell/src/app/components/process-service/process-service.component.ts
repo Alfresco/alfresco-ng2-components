@@ -24,10 +24,12 @@ import {
     OnDestroy,
     OnInit,
     ViewChild,
-    ViewEncapsulation
+    ViewEncapsulation,
+    EventEmitter,
+    Output
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProcessInstanceFilterRepresentation } from 'alfresco-js-api';
+import { ProcessInstanceFilterRepresentation, Pagination } from 'alfresco-js-api';
 import {
     FORM_FIELD_VALIDATORS, FormEvent, FormFieldEvent, FormRenderingService, FormService,
     DynamicTableRow, ValidateDynamicTableRowEvent, AppConfigService, PaginationComponent
@@ -106,6 +108,9 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     @Input()
     appId: number = null;
 
+    @Output()
+    changePageSize: EventEmitter<Pagination> = new EventEmitter();
+
     fileShowed = false;
     selectFirstReport = false;
 
@@ -160,7 +165,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
                 private preferenceService: UserPreferencesService) {
         this.dataTasks = new ObjectDataTableAdapter();
         this.dataTasks.setSorting(new DataSorting('created', 'desc'));
-        this.supportedPages = this.preferenceService.getDifferentPageSizes();
         this.paginationPageSize = this.preferenceService.paginationSize;
 
         this.defaultProcessName = this.appConfig.get<string>('adf-start-process.name');
@@ -216,6 +220,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
             this.currentProcessInstanceId = null;
         });
         this.layoutType = AppsListComponent.LAYOUT_GRID;
+        this.supportedPages = this.preferenceService.getDifferentPageSizes();
     }
 
     ngOnDestroy() {
@@ -230,6 +235,15 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     resetTaskPaginationPage() {
         this.taskPage = 0;
+    }
+
+    onTabChange(event: Pagination): void {
+        this.paginationPageSize = this.preferenceService.paginationSize;
+    }
+
+    onChangePageSize(event: Pagination): void {
+        this.preferenceService.paginationSize = event.maxItems;
+        this.changePageSize.emit(event);
     }
 
     onReportClick(event: any): void {
