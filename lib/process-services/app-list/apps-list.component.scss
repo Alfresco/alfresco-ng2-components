@@ -24,6 +24,17 @@ $themes: (
     theme-10: (bg: #cabb33, color: #baab23)
 );
 
+.adf-app-list-spinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 85vh;
+    .mat-spinner {
+        margin: 0 auto;
+    }
+}
+
 .adf-app-listgrid {
     padding: 8px;
 
