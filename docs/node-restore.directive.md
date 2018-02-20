@@ -22,16 +22,16 @@ Restores deleted nodes to their original location.
 
 ### Properties
 
-| Name | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| adf-restore | DeletedNodeEntry\[] | \[] | Deleted nodes to restore |
-| location | string | '' | Route path to view restored node |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| selection | `DeletedNodeEntry[]` |  | Array of deleted nodes to restore.  |
+| location | `string` | `''` | Path to restored node.  |
 
 ### Events
 
-| Name | Description |
-| ---- | ----------- |
-| restore | Raised when the restore is done |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| restore | `EventEmitter<any>` | Emitted when restoration is complete.  |
 
 ## Details
 

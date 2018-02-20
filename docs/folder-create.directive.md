@@ -19,9 +19,9 @@ Allows folders to be created.
 
 ### Properties
 
-| Name | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| adf-create-folder | string | '-my-' | Parent folder where the new folder will be located after creation |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| parentNodeId | `string` | `DEFAULT_FOLDER_PARENT_ID` | Parent folder where the new folder will be located after creation.  |
 
 ## Details
 

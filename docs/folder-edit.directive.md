@@ -19,9 +19,9 @@ Allows folders to be edited.
 
 ### Properties
 
-| Name              | Type                   | Default | Description                          |
-| ----------------- | ---------------------- | ------- | -----------------------------------  |
-| adf-edit-folder   | MinimalNodeEntryEntity |         | The folder node entity for editing   |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| folder | `MinimalNodeEntryEntity` |  | Folder node to edit.  |
 
 ## Details
 

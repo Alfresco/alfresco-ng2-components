@@ -31,6 +31,17 @@ You can decorate any element including buttons, for example:
 </button>
 ```
 
+### Properties
+
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| enabled | `boolean` | `true` | Enables/disables uploading.  |
+| data | `any` |  | Data to upload.  |
+| mode | `string[]` | `['drop']` | Upload mode. Can be "drop" (receives dropped files) or "click" (clicking opens a file dialog). Both modes can be active at once. |
+| multiple | `boolean` |  | Toggles multiple file uploads.  |
+| accept | `string` |  | (Click mode only) MIME type filter for files to accept.  |
+| directory | `boolean` |  | (Click mode only) Toggles uploading of directories.  |
+
 ## Details
 
 Used by attaching to an element or component.
