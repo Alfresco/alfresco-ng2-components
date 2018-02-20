@@ -128,6 +128,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
         this.paginationStrategy = PaginationStrategy.Infinite;
 
         this.breadcrumbTransform = this.breadcrumbTransform ? this.breadcrumbTransform : null ;
+        this.isSelectionValid = this.isSelectionValid ? this.isSelectionValid : defaultValidation;
     }
 
     /**
