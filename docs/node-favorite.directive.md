@@ -32,15 +32,15 @@ export class MyComponent {
 
 ### Properties
 
-| Name              | Type                | Default | Description                 |
-| ----------------- | ------------------- | ------- | --------------------------- |
-| adf-node-favorite | MinimalNodeEntity[] | []      | Nodes to toggle as favorite |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| selection | `MinimalNodeEntity[]` | `[]` | Array of nodes to toggle as favorites.  |
 
 ### Events
 
-| Name                      | Description                                  |
-| ------------------------- | -------------------------------------------- |
-| toggle                    | emitted when toggle favorite process is done |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| toggle | `EventEmitter<any>` | Emitted when the favorite setting is complete.  |
 
 ## Details
 
@@ -61,10 +61,9 @@ which provides a method to help further style the element.
 
 The directive performs as follows:
 
-- if there are no favorite nodes in the selection, then all are marked as favorites
-- if there is at least one favorite node in the selection, then only those who are not
-  are being marked
-- if all nodes in the selection are favorites, then they are removed from favorites
-
+-   if there are no favorite nodes in the selection, then all are marked as favorites
+-   if there is at least one favorite node in the selection, then only those who are not
+    are being marked
+-   if all nodes in the selection are favorites, then they are removed from favorites
 
 See **Demo Shell**

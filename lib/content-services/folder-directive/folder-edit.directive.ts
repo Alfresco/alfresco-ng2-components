@@ -31,6 +31,7 @@ import { ContentService } from '@alfresco/adf-core';
 export class FolderEditDirective {
     static DIALOG_WIDTH: number = 400;
 
+    /** Folder node to edit. */
     @Input('adf-edit-folder')
     folder: MinimalNodeEntryEntity;
 

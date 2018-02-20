@@ -6,10 +6,10 @@ Selectively disables an HTML element or Angular component
 
 ### Properties
 
-| Name | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| adf-node-permission | [Permissions](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-core/src/models/permissions.enum.ts) | null | Node permission to check (create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions) |
-| adf-nodes | MinimalNodeEntity\[] | \[] | Nodes to check permission for |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| permission | `string` | `null` | Node permission to check (create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions). |
+| nodes | `MinimalNodeEntity[]` | `[]` | Nodes to check permission for.  |
 
 ## Details
 
