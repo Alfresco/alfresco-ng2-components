@@ -181,7 +181,7 @@ describe('DocumentList', () => {
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(element.querySelector('#adf-document-list-loading')).toBeDefined();
+            expect(element.querySelector('.adf-document-list-loading')).toBeDefined();
             done();
         });
     });
@@ -193,7 +193,7 @@ describe('DocumentList', () => {
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(element.querySelector('#adf-datatable-header')).toBe(null);
+            expect(element.querySelector('.adf-datatable-header')).toBe(null);
             done();
         });
     });
@@ -205,7 +205,7 @@ describe('DocumentList', () => {
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(element.querySelector('#adf-datatable-header')).toBeDefined();
+            expect(element.querySelector('.adf-datatable-header')).toBeDefined();
             done();
         });
     });
@@ -226,7 +226,7 @@ describe('DocumentList', () => {
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(element.querySelector('#adf-data-table-card')).toBeDefined();
+            expect(element.querySelector('.adf-data-table-card')).toBeDefined();
             done();
         });
     });
@@ -238,8 +238,8 @@ describe('DocumentList', () => {
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(element.querySelector('#adf-data-table-card')).toBe(null);
-            expect(element.querySelector('#adf-data-table')).toBeDefined();
+            expect(element.querySelector('.adf-data-table-card')).toBe(null);
+            expect(element.querySelector('.adf-data-table')).toBeDefined();
             done();
         });
     });

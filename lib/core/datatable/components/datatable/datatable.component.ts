@@ -491,6 +491,12 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
         return row.getValue('name');
     }
 
+    getSortingKey(): string {
+        if (this.data.getSorting()) {
+            return this.data.getSorting().key;
+        }
+    }
+
     private selectRow(row: DataRow, value: boolean) {
         if (row) {
             row.isSelected = value;

@@ -51,6 +51,86 @@ describe('DataTable', () => {
         element = fixture.debugElement.nativeElement;
     });
 
+    it('should use the cardview style if cardview is true', () => {
+        let newData = new ObjectDataTableAdapter(
+            [
+                { name: '1' },
+                { name: '2' }
+            ],
+            [new ObjectDataColumn({ key: 'name' })]
+        );
+
+        dataTable.cardview = true;
+        dataTable.ngOnChanges({
+            data: new SimpleChange(null, newData, false)
+        });
+
+        fixture.detectChanges();
+
+        expect(element.querySelector('.adf-data-table-card')).not.toBeNull();
+        expect(element.querySelector('.adf-data-table')).toBeNull();
+    });
+
+    it('should use the cardview style if cardview is false', () => {
+        let newData = new ObjectDataTableAdapter(
+            [
+                { name: '1' },
+                { name: '2' }
+            ],
+            [new ObjectDataColumn({ key: 'name' })]
+        );
+
+        dataTable.cardview = false;
+        dataTable.ngOnChanges({
+            data: new SimpleChange(null, newData, false)
+        });
+
+        fixture.detectChanges();
+
+        expect(element.querySelector('.adf-data-table-card')).toBeNull();
+        expect(element.querySelector('.adf-data-table')).not.toBeNull();
+    });
+
+    it('should hide the header if showHeader is false', () => {
+        let newData = new ObjectDataTableAdapter(
+            [
+                { name: '1' },
+                { name: '2' }
+            ],
+            [new ObjectDataColumn({ key: 'name' })]
+        );
+
+        dataTable.showHeader = false;
+        dataTable.loading = false;
+        dataTable.ngOnChanges({
+            data: new SimpleChange(null, newData, false)
+        });
+
+        fixture.detectChanges();
+
+        expect(element.querySelector('.adf-datatable-header')).toBe(null);
+    });
+
+    it('should show the header if showHeader is true', () => {
+        let newData = new ObjectDataTableAdapter(
+            [
+                { name: '1' },
+                { name: '2' }
+            ],
+            [new ObjectDataColumn({ key: 'name' })]
+        );
+        dataTable.showHeader = true;
+        dataTable.loading = false;
+
+        dataTable.ngOnChanges({
+            data: new SimpleChange(null, newData, false)
+        });
+
+        fixture.detectChanges();
+
+        expect(element.querySelector('.adf-datatable-header')).toBeDefined();
+    });
+
     it('should emit "sorting-changed" DOM event', (done) => {
         const column = new ObjectDataColumn({ key: 'name', sortable: true, direction: 'asc' });
         dataTable.data = new ObjectDataTableAdapter(

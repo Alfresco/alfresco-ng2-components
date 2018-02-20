@@ -33,7 +33,7 @@
             </div>
         </div>
         <mat-form-field *ngIf="cardview">
-            <mat-select [(value)]="data.getSorting().key">
+            <mat-select [value]="getSortingKey()">
                 <mat-option *ngFor="let col of data.getColumns()"
                             [value]="col.key"
                             (click)="onColumnHeaderClick(col)"
