@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Activiti Alfresco Content Service
 
 Gets Alfresco Repository folder content based on a Repository account configured in Alfresco Process Services (APS).

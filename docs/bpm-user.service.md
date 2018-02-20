@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Bpm User service
 
 Gets information about the current Process Services user.
