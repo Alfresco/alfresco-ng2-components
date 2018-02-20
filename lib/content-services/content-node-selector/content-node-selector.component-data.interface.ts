@@ -27,5 +27,6 @@ export interface ContentNodeSelectorComponentData {
     rowFilter?: any;
     imageResolver?: any;
     isSelectionValid?: (entry: MinimalNodeEntryEntity) => boolean;
+    breadcrumbTransform?: (node) => any;
     select: Subject<MinimalNodeEntryEntity[]>;
 }

@@ -198,12 +198,12 @@
                     <!-- common actions -->
                     <content-action
                         icon="get_app"
-                        title="DOCUMENT_LIST.ACTIONS.DOWNLOAD"
+                        title="{{'DOCUMENT_LIST.ACTIONS.DOWNLOAD' | translate}}"
                         handler="download">
                     </content-action>
                     <content-action
                         icon="content_copy"
-                        title="DOCUMENT_LIST.ACTIONS.FOLDER.COPY"
+                        title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.COPY' | translate}}"
                         permission="update"
                         [disableWithNoPermission]="true"
                         (error)="onContentActionError($event)"
@@ -212,7 +212,7 @@
                     </content-action>
                     <content-action
                         icon="redo"
-                        title="DOCUMENT_LIST.ACTIONS.FOLDER.MOVE"
+                        title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.MOVE' | translate}}"
                         permission="update"
                         [disableWithNoPermission]="true"
                         (error)="onContentActionError($event)"
@@ -223,7 +223,7 @@
                         icon="delete"
                         permission="delete"
                         [disableWithNoPermission]="true"
-                        title="DOCUMENT_LIST.ACTIONS.FOLDER.DELETE"
+                        title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.DELETE' | translate}}"
                         (permissionEvent)="handlePermissionError($event)"
                         (success)="onDeleteActionSuccess($event)"
                         handler="delete">

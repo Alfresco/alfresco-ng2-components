@@ -4,17 +4,21 @@ Supports localisation.
 
 ## Methods
 
-`addTranslationFolder(name: string = '', path: string = '')`<br/>
-Adds a new folder of translation source files.
-
-`use(lang: string): Observable<any>`<br/>
-Sets the target language for translations.
-
-`get(key: string|Array<string>, interpolateParams?: Object): Observable<string|any>`<br/>
-Gets the translation for the supplied key.
-
-`instant(key: string | Array<string>, interpolateParams?: Object): string | any`<br/>
-Directly returns the translation for the supplied key.
+-   `addTranslationFolder(name: string = '', path: string = '')`  
+    Adds a new folder of translation source files.  
+    -   `name` - Name for the translation provider
+    -   `path` - Path to the folder
+-   `use(lang: string): Observable<any>`  
+    Sets the target language for translations.  
+    -   `lang` - Code name for the language
+-   `get(key: string|Array<string>, interpolateParams?: Object): Observable<any>`  
+    Gets the translation for the supplied key.  
+    -   `key` - Key to translate
+    -   `interpolateParams` - (Optional) String(s) to be interpolated into the main message
+-   `instant(key: string | Array<string>, interpolateParams?: Object): any`  
+    Directly returns the translation for the supplied key.  
+    -   `key` - Key to translate
+    -   `interpolateParams` - (Optional) String(s) to be interpolated into the main message
 
 ## Details
 
