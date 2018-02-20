@@ -1,4 +1,8 @@
-# AppConfigService
+---
+Added: v2.0.0
+Status: Active
+---
+# App Config service
 
 Supports app configuration settings, stored server side.
 

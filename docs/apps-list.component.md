@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Apps List Component
 
 Shows all available apps.

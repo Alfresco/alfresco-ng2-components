@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Alfresco Api Service
 
 Provides access to initialized **AlfrescoJSApi** instance.
