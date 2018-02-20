@@ -1,0 +1,4 @@
+<ng-container *ngIf="image$ | async as image">
+    <img [src]="image"
+        title="{{ 'ADF_VIEWER.SIDEBAR.THUMBNAILS.PAGE' | translate: { pageNum: page.id } }}">
+</ng-container>

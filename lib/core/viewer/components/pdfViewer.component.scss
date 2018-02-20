@@ -1,7 +1,14 @@
 @mixin adf-pdf-viewer-theme($theme) {
     $foreground: map-get($theme, foreground);
 
+    .adf-viewer-content-container {
+        width: 100%;
+    }
+
     .adf-pdf-viewer {
+        width: 100%;
+        margin: 0;
+
         .loader-container {
             display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
             display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
@@ -12,6 +19,18 @@
             -webkit-flex-direction: row;
             flex-direction: row;
             height:100%;
+        }
+
+        &__thumbnails {
+            position: relative; height: 100%; width: 140px; background-color: rgba(0, 0, 0, 0.12);
+        }
+
+        &__container {
+            display: flex; height: 100%;
+        }
+
+        &__content {
+            flex: 1 1 auto; position: relative;
         }
 
         .loader-item {

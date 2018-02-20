@@ -19,6 +19,8 @@ export * from './components/viewer.component';
 export * from './components/imgViewer.component';
 export * from './components/mediaPlayer.component';
 export * from './components/pdfViewer.component';
+export * from './components/pdfViewer-thumbnails.component';
+export * from './components/pdfViewer-thumb.component';
 export * from './components/txtViewer.component';
 export * from './components/unknown-format/unknown-format.component';
 export * from './components/viewer-more-actions.component';
