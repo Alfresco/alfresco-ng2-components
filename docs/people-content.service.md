@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # People Content service
 
 Gets information about a Content Services user.

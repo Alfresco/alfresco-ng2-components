@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Info drawer layout component
 
 Displays a sidebar-style information panel.

@@ -1,3 +1,5 @@
+---
+---
 # Walkthrough: adding indicators to clearly highlight information about a node
 
 Every node object in the document list holds metadata information. 

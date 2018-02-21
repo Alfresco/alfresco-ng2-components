@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Log Service
 
 Provide a log functionality for your ADF application.

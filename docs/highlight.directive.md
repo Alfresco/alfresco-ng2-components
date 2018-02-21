@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Highlight directive
 
 Adds highlighting to selected sections of an HTML element's content.

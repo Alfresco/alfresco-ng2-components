@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Notification Service
 
 Shows a notification message with optional feedback.

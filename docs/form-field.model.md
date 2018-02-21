@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Form Field model
 
 Contains the value and metadata for a field of an [ADF Form](form.component.md).
