@@ -164,7 +164,8 @@
           "DOWNLOAD": "Download",
           "DELETE": "Delete",
           "MOVE": "Move",
-          "COPY": "Copy"
+          "COPY": "Copy",
+          "PROCESS_ACTION": "Start Process"
         }
       }
     }
