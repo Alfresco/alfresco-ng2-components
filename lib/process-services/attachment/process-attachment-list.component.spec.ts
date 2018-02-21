@@ -155,10 +155,10 @@ describe('ProcessAttachmentListComponent', () => {
     it('should display attachments when the process has attachments', async(() => {
         let change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'processInstanceId': change });
+        fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(fixture.debugElement.queryAll(By.css('adf-datatable tbody tr')).length).toBe(2);
+            expect(fixture.debugElement.queryAll(By.css('.adf-datatable-body > .adf-datatable-row')).length).toBe(2);
         });
     }));
 

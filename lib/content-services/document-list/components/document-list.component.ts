@@ -71,6 +71,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
+    /* Enable the cardview mode */
+    @Input()
+    cardview: boolean = false;
+
     /** Define a set of CSS styles styles to apply depending on the permission
      * of the user on that node. See the Permission Style model
      * page for further details and examples.
@@ -85,6 +89,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     /** Toggles navigation to folder content or file preview */
     @Input()
     navigate: boolean = true;
+
+    /** Toggles the header */
+    @Input()
+    showHeader: boolean = true;
 
     /** User interaction for folder navigation or file preview. Valid values are "click" and "dblclick". */
     @Input()

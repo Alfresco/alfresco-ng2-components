@@ -94,7 +94,7 @@ describe('PeopleSearchComponent', () => {
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            let gatewayElement: any = element.querySelector('#search-people-list tbody');
+            let gatewayElement: any = element.querySelector('#search-people-list .adf-datatable-body');
             expect(gatewayElement).not.toBeNull();
             expect(gatewayElement.children.length).toBe(2);
             done();
@@ -136,7 +136,7 @@ describe('PeopleSearchComponent', () => {
         fixture.whenStable()
             .then(() => {
                 fixture.detectChanges();
-                let gatewayElement: any = element.querySelector('#search-people-list tbody');
+                let gatewayElement: any = element.querySelector('#search-people-list .adf-datatable-body');
                 expect(gatewayElement).not.toBeNull();
                 expect(gatewayElement.children.length).toBe(1);
                 done();

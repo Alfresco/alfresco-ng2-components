@@ -11,7 +11,8 @@
         ],
         "ban": [
           true,
-          "eval"
+          "eval",
+          "fdescribe"
         ],
         "class-name": true,
         "comment-format": [

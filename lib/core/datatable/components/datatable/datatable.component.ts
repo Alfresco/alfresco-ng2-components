@@ -53,6 +53,10 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     @Input()
     data: DataTableAdapter;
 
+    /* Enable the cardview mode */
+    @Input()
+    cardview: boolean = false;
+
     /* The rows that the datatable will show */
     @Input()
     rows: any[] = [];
@@ -481,6 +485,16 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
         row.cssClass = row.cssClass ? row.cssClass : '';
         this.rowStyleClass = this.rowStyleClass ? this.rowStyleClass : '';
         return `${row.cssClass} ${this.rowStyleClass}`;
+    }
+
+    getFilename(row: DataRow): string {
+        return row.getValue('name');
+    }
+
+    getSortingKey(): string {
+        if (this.data.getSorting()) {
+            return this.data.getSorting().key;
+        }
     }
 
     private selectRow(row: DataRow, value: boolean) {
