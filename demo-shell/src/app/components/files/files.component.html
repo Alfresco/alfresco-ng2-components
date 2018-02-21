@@ -240,7 +240,7 @@
                         *ngIf="authenticationService.isBpmLoggedIn()"
                         icon="play_arrow"
                         target="document" 
-                        title="DOCUMENT_LIST.ACTIONS.DOCUMENT.PROCESS_ACTION"
+                        title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.PROCESS_ACTION' | translate}}"
                         (execute)="startProcesAction($event)">
                     </content-action>
                 </content-actions>
