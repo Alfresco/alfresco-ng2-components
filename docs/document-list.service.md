@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Document List service
 
 Implements node operations used by the Document List component.

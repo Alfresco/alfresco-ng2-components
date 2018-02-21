@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Content Action component
 
 Adds options to a Document List actions menu for a particular content type.

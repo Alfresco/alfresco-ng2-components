@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # File Draggable directive
 
 Provide drag-and-drop features for an element such as a `div`.

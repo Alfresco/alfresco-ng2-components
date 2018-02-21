@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Card View component
 
 Displays a configurable property list renderer.

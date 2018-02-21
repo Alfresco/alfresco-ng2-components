@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Checklist Component
 
 Shows the checklist task functionality.

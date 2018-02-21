@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Dropdown Breadcrumb Component
 
 Indicates the current position within a navigation hierarchy using a dropdown menu.

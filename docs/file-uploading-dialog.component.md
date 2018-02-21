@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # File Uploading Dialog Component
 
 Shows a dialog listing all the files uploaded with the Upload Button or Drag Area components.
