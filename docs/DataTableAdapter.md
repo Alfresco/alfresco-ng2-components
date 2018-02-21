@@ -1,22 +1,11 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # DataTableAdapter interface
 
 Defines how table data is supplied to [DataTable](datatable.component.md)
 and [Tasklist](task-list.component.md) components.
-
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Properties](#properties)
-- [Methods](#methods)
-- [Details](#details)
-  * [Columns and rows](#columns-and-rows)
-  * [ObjectDataTableAdapter](#objectdatatableadapter)
-- [See also](#see-also)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
 
 ## Properties
 

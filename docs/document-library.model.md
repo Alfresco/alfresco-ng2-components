@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Document Library model
 
 Defines classes for use with the Content Services node API.

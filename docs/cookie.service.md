@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Cookie service
 
 Stores key-value data items as browser cookies.

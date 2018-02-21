@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Folder Actions service
 
 Implements the folder menu actions for the Document List component.

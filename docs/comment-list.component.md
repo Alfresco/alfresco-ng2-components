@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Comment list component
 
 Shows a list of comments.

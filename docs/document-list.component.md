@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Document List component
 
 Displays the documents from a repository.

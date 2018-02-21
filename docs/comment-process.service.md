@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Comment Process service
 
 Adds and retrieves comments for task and process instances in Process Services.

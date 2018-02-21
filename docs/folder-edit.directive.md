@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Folder Edit directive
 
 Allows folders to be edited.

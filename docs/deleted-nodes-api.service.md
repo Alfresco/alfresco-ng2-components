@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Deleted Nodes Api service
 
 Gets a list of Content Services nodes currently in the trash.

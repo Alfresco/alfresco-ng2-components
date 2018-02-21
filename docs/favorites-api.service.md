@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Favorites Api service
 
 Gets a list of items a user has marked as their favorites.

@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Filter model
 
 Contains classes related to filters in Process Services.

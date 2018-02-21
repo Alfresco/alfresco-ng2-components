@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Comments Component
 
 Displays comments from users involved in a specified task and allows an involved user to add a comment to the task.

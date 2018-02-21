@@ -1,16 +1,10 @@
-# Activiti Diagram Component
+---
+Added: v2.0.0
+Status: Active
+---
+# Diagram Component
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-  * [Properties](#properties)
-  * [Events](#events)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
+Displays process diagrams.
 
 ## Basic Usage
 
