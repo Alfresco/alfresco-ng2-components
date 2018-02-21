@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SimpleChange } from '@angular/core';
+import { Component, SimpleChange, ViewChild } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatProgressSpinnerModule } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
@@ -135,7 +135,7 @@ describe('ProcessInstanceListComponent', () => {
     });
 
     it('should fetch custom schemaColumn when the input presetColumn is defined', () => {
-        component.presetColumn = 'fakeCutomColumns';
+        component.presetColumn = 'fakeCutomSchema';
         component.ngAfterContentInit();
         fixture.detectChanges();
         expect(component.data.getColumns()).toBeDefined();
@@ -481,5 +481,62 @@ describe('ProcessInstanceListComponent', () => {
 
             component.ngOnChanges({'name': change});
         });
+    });
+});
+
+@Component({
+    template: `
+    <adf-process-instance-list #processlistComponentInstance>
+        <data-columns>
+            <data-column key="name" title="ADF_PROCESS_LIST.PROPERTIES.NAME" class="full-width name-column"></data-column>
+            <data-column key="created" title="ADF_PROCESS_LIST.PROPERTIES.END_DATE" class="hidden"></data-column>
+            <data-column key="startedBy" title="ADF_PROCESS_LIST.PROPERTIES.CREATED" class="desktop-only dw-dt-col-3 ellipsis-cell">
+                <ng-template let-entry="$implicit">
+                    <div>{{getFullName(entry.row.obj.startedBy)}}</div>
+                </ng-template>
+            </data-column>
+        </data-columns>
+    </adf-process-instance-list>`
+})
+
+class CustomProcessListComponent {
+
+    @ViewChild(ProcessInstanceListComponent)
+    processList: ProcessInstanceListComponent;
+}
+
+describe('CustomProcessListComponent', () => {
+    let fixture: ComponentFixture<CustomProcessListComponent>;
+    let component: CustomProcessListComponent;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [
+                ProcessInstanceListComponent,
+                CustomProcessListComponent
+            ],
+            providers: [
+                ProcessService
+            ],
+            imports: []
+        }).compileComponents();
+    }));
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(CustomProcessListComponent);
+        fixture.detectChanges();
+        component = fixture.componentInstance;
+    });
+
+    it('should create instance of CustomProcessListComponent', () => {
+        expect(component instanceof CustomProcessListComponent).toBe(true, 'should create CustomProcessListComponent');
+    });
+
+    it('should fetch custom schemaColumn from html', () => {
+        fixture.detectChanges();
+        expect(component.processList.data.getColumns()).toBeDefined();
+        expect(component.processList.data.getColumns()[1].title).toEqual('ADF_PROCESS_LIST.PROPERTIES.END_DATE');
+        expect(component.processList.data.getColumns()[2].title).toEqual('ADF_PROCESS_LIST.PROPERTIES.CREATED');
+        expect(component.processList.data.getColumns().length).toEqual(3);
     });
 });
