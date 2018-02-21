@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Content Node Selector component
 
 Allows a user to select items from a Content Services repository.

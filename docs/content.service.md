@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Content service
 
 Accesses app-generated data objects via URLs and file downloads.

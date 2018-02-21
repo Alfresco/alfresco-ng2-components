@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Document Actions service
 
 Implements the document menu actions for the Document List component.
