@@ -15,7 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, TemplateRef, HostListener, Input, OnChanges, OnDestroy, ViewEncapsulation } from '@angular/core';
+import {
+    Component, TemplateRef, HostListener, Input, OnInit, OnChanges,
+    EventEmitter, OnDestroy, ViewEncapsulation
+} from '@angular/core';
 import { LogService } from '../../services/log.service';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 
@@ -32,7 +35,7 @@ declare let PDFJS: any;
     host: { 'class': 'adf-pdf-viewer' },
     encapsulation: ViewEncapsulation.None
 })
-export class PdfViewerComponent implements OnChanges, OnDestroy {
+export class PdfViewerComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input()
     urlFile: string;
@@ -67,17 +70,23 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     MIN_SCALE: number = 0.25;
     MAX_SCALE: number = 10.0;
 
-    showThumbnails = false;
-    pdfThumbnailsContext: { viewer: any } = { viewer: null };
+    showThumbnails: boolean = false;
+    pdfThumbnailsContext: { viewer: any, close$: EventEmitter<any> } = { viewer: null, close$: null };
 
     get currentScaleText(): string {
         return Math.round(this.currentScale * 100) + '%';
     }
 
+    private closeThumbnails = new EventEmitter<any>();
+
     constructor(private renderingQueueServices: RenderingQueueServices,
                 private logService: LogService) {
         // needed to preserve "this" context
         this.onPageChange = this.onPageChange.bind(this);
+    }
+
+    ngOnInit() {
+        this.closeThumbnails.subscribe(() => this.toggleThumbnails());
     }
 
     ngOnChanges(changes) {
@@ -153,12 +162,19 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
         this.pdfViewer.setDocument(pdfDocument);
 
-        this.pdfThumbnailsContext.viewer = this.pdfViewer;
+        this.pdfThumbnailsContext = {
+            viewer: this.pdfViewer,
+            close$: this.closeThumbnails
+        };
     }
 
     ngOnDestroy() {
         if (this.documentContainer) {
             this.documentContainer.removeEventListener('pagechange', this.onPageChange, true);
+        }
+
+        if (this.closeThumbnails) {
+            this.closeThumbnails.unsubscribe();
         }
     }
 

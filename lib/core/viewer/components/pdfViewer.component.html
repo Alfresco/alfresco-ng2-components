@@ -5,7 +5,15 @@
                 <ng-container *ngTemplateOutlet="thumbnailsTemplate;context:pdfThumbnailsContext"></ng-container>
             </ng-container>
             <ng-container *ngIf="!thumbnailsTemplate">
-                <adf-pdf-thumbnails [pdfViewer]="pdfViewer"></adf-pdf-thumbnails>
+                <div class="thumbnails-template__container">
+                    <div class="thumbnails-template__buttons">
+                        <button mat-icon-button (click)="toggleThumbnails()">
+                                <mat-icon>close</mat-icon>
+                        </button>
+                    </div>
+
+                    <adf-pdf-thumbnails [pdfViewer]="pdfViewer"></adf-pdf-thumbnails>
+                </div>
             </ng-container>
         </div>
     </ng-container>

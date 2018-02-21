@@ -85,6 +85,27 @@ describe('Test PdfViewer component', () => {
 
     });
 
+    describe('OnInit', () => {
+        beforeEach(() => {
+            component.urlFile = require('../assets/fake-test-file.pdf');
+            fixture.detectChanges();
+        });
+
+        it('should subscribe to thumbnails context event', (done) => {
+            component.showThumbnails = false;
+
+            component.ngOnChanges(null).then(() => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    component.pdfThumbnailsContext.close$.emit();
+
+                    expect(component.showThumbnails).toBe(true);
+                    done();
+                });
+            });
+        });
+    });
+
     describe('View with url file', () => {
         beforeEach(() => {
             component.urlFile = require('../assets/fake-test-file.pdf');
@@ -383,6 +404,42 @@ describe('Test PdfViewer component', () => {
                     fixture.detectChanges();
                     expect(component.displayPage).toBe(6);
                     expect(component.page).toBe(6);
+                    done();
+                });
+            });
+        });
+    });
+
+    describe('Thumbnails', () => {
+        beforeEach(() => {
+            component.urlFile = require('../assets/fake-test-file.pdf');
+            component.showThumbnails = false;
+
+            fixture.detectChanges();
+        });
+
+        it('should have own context', (done) => {
+            component.ngOnChanges(null).then(() => {
+                fixture.detectChanges();
+                return fixture.whenStable().then(() => {
+                    expect(component.pdfThumbnailsContext.viewer).not.toBeNull();
+                    expect(component.pdfThumbnailsContext.close$).not.toBeNull();
+
+                    done();
+                });
+            });
+        });
+
+        it('should open thumbnails panel', (done) => {
+            expect(element.querySelector('.adf-pdf-viewer__thumbnails')).toBeNull();
+
+            component.ngOnChanges(null).then(() => {
+                fixture.detectChanges();
+                return fixture.whenStable().then(() => {
+                    component.toggleThumbnails();
+                    fixture.detectChanges();
+
+                    expect(element.querySelector('.adf-pdf-viewer__thumbnails')).not.toBeNull();
                     done();
                 });
             });
