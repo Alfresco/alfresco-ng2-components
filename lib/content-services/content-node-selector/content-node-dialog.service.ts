@@ -189,7 +189,11 @@ export class ContentNodeDialogService {
     }
 
     private hasEntityCreatePermission(entry: MinimalNodeEntryEntity): boolean {
-        return this.contentService.hasPermission(entry, 'create');
+        return this.contentService.hasPermission(entry, 'create') && !this.isSite(entry);
+    }
+
+    private isSite(entry) {
+        return !!entry.guid || entry.nodeType === 'st:site' || entry.nodeType === 'st:sites';
     }
 
     /** Closes the currently open dialog. */
