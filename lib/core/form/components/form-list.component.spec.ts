@@ -16,7 +16,6 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { TranslationService } from '../../index';
 import { DataTableModule } from '../../datatable/datatable.module';
 import { DataColumnModule } from '../../data-column/data-column.module';
@@ -31,6 +30,7 @@ describe('TaskAttachmentList', () => {
     let component: FormListComponent;
     let fixture: ComponentFixture<FormListComponent>;
     let service: FormService;
+    let element: any;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -59,7 +59,7 @@ describe('TaskAttachmentList', () => {
 
         fixture = TestBed.createComponent(FormListComponent);
         component = fixture.componentInstance;
-
+        element = fixture.debugElement.nativeElement;
         service = TestBed.get(FormService);
 
     }));
@@ -71,12 +71,11 @@ describe('TaskAttachmentList', () => {
         ]));
 
         component.ngOnChanges({});
+        fixture.detectChanges();
 
-        fixture.whenStable()
-            .then(() => {
-                fixture.detectChanges();
-                expect(fixture.debugElement.queryAll(By.css('adf-datatable tbody tr')).length).toBe(2);
-            });
-    }));
+        fixture.whenStable().then(() => {
+            expect(element.querySelectorAll('.adf-datatable-body > .adf-datatable-row').length).toBe(2);
+        });
+    });
 
 });

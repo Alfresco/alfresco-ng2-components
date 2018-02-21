@@ -31,7 +31,7 @@
     "@angular/platform-browser-dynamic": "5.0.0",
     "@angular/router": "5.0.0",
     "@ngx-translate/core": "8.0.0",
-    "alfresco-js-api": "^2.1.0-4c702fe0041642c09f12fb939014cf70671d8ed8",
+    "alfresco-js-api": "2.0.0",
     "chart.js": "2.5.0",
     "classlist.js": "1.1.20150312",
     "core-js": "2.4.1",
