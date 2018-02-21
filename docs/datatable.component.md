@@ -18,6 +18,7 @@ See it live: [DataTable Quickstart](https://embed.plnkr.co/80qr4YFBeHjLMdAV0F6l/
     -   [Supplying data for the table](#supplying-data-for-the-table)
     -   [Customizing columns](#customizing-columns)
     -   [DataTable DOM Events](#datatable-dom-events)
+    -   [Card view](#card-view)
     -   [Custom Empty content template](#custom-empty-content-template)
     -   [Loading content template](#loading-content-template)
     -   [Events](#events-1)
@@ -133,8 +134,9 @@ export class DataTableDemo {
 | allowDropFiles | boolean | false | Toggle file drop support for rows (see **ng2-alfresco-core/UploadDirective** for more details) |
 | loading | boolean | false | Flag that indicates if the datatable is in loading state and needs to show the loading template. Read the documentation above to see how to configure a loading template |
 | showHeader | boolean | true | Toggles header visibility |
+| cardview | boolean | true | enable the cardview mode |
 | selection | DataRow\[] | \[] | Contains selected rows |
-
+    
 ### Events
 
 | Name | Description |
@@ -191,6 +193,20 @@ onRowClick(event) {
 ```
 
 ![](docassets/images/datatable-dom-events.png)
+
+### Card view
+
+If you want enable the card view mode you need to set to true the input parameter [cardview] :
+
+```html
+<adf-datatable
+    [data]="data"
+    [cardview]="true">
+</adf-datatable
+```
+
+![card-view](docassets/images/document-list-card-view.png)
+
 
 ### Custom Empty content template
 

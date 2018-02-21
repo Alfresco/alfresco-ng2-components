@@ -30,8 +30,8 @@ adf-document-list ::ng-deep adf-datatable tr.document-list__disable {
     background: red !important;
 }
 
-adf-document-list ::ng-deep adf-datatable > table > tbody > tr.is-selected > td.adf-data-table-cell.adf-data-table-cell--image.image-table-cell > div > div > mat-icon > svg {
-    fill: #00bcd4;
+adf-document-list ::ng-deep .adf-datatable-selected > svg {
+    fill: #00bcd4 !important;
 }
 
 .adf-site-container-style {
@@ -114,6 +114,10 @@ adf-document-list ::ng-deep adf-datatable > table > tbody > tr.is-selected > td.
     font-size: 24px;
     line-height: 1.33;
     letter-spacing: -1px;
+}
+
+.adf-recent-container{
+    border: 1px solid rgba(0, 0, 0, 0.07);
 }
 
 @media (max-width: $minimumDocumentListWidth) {

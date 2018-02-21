@@ -17,14 +17,6 @@
     "lib": [
       "es2016",
       "dom"
-    ],
-    "paths": {
-      "rxjs/*": [
-        "../node_modules/rxjs/*"
-      ],
-      "@angular/*": [
-        "../node_modules/@angular/*"
-      ]
-    }
+    ]
   }
 }

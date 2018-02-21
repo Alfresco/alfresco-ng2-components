@@ -1,4 +1,3 @@
-
 @mixin adf-datatable-theme($theme) {
     $foreground: map-get($theme, foreground);
     $background: map-get($theme, background);
@@ -26,7 +25,148 @@
     $data-table-cell-top: $data-table-card-padding / 2;
     $data-table-drag-border: 1px dashed rgb(68, 138, 255);
 
+    .adf-data-table-card {
+
+        border: 1px solid mat-color($foreground, divider);
+
+        .sr-only {
+        }
+
+        .adf-datatable-body {
+            flex-flow: row wrap;
+            display: flex;
+
+            width: 100%;
+            flex-direction: row;
+            justify-content: space-between;
+
+            &:after {
+                content: "";
+                flex: auto;
+            }
+
+            .adf-datatable-row {
+                transition: all 0.3s ease;
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                flex: 0 1 24%;
+
+                width: 288px !important;
+                max-width: 288px !important;
+                min-width: 288px !important;
+
+                height: 200px !important;
+
+                overflow: hidden !important;
+                margin: 6px;
+                padding: 15px;
+
+                @include mat-elevation-transition;
+                @include mat-overridable-elevation(2);
+            }
+
+            .is-selected {
+                background: mat-color($primary, 100);
+                padding-bottom: 31px;
+            }
+
+            .adf-data-table-card-permission {
+                width: 100%;
+                min-height: 250px;
+
+                .adf-datatable-table-cell {
+                    height: 240px !important;
+                }
+            }
+
+            .adf-data-table-card-loading {
+                width: 100%;
+                min-height: 250px;
+
+                .adf-datatable-table-cell {
+                    height: 240px !important;
+                }
+            }
+
+            .adf-data-table-card-empty {
+                width: 100%;
+                min-height: 380px;
+
+                .adf-datatable-table-cell {
+                    height: 370px !important;
+                }
+            }
+
+            .adf-datatable-table-cell {
+                text-align: left;
+                flex: 0 1 24%;
+                height: 136px !important;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                outline: none;
+
+                &:before {
+                    margin-left: 10px;
+                    text-align: left;
+                    content: attr(title);
+                    color: mat-color($foreground, text, 0.4);
+                    float: left;
+                    width: 140px;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                }
+
+            }
+            .alfresco-datatable__actions-cell {
+                position: absolute;
+                height: 42px !important;
+                width: 42px !important;
+                right: 0px;
+                text-align: right;
+            }
+
+            .image-table-cell {
+                margin: 8px;
+                padding: 4px;
+                overflow: visible;
+                border-bottom-color: mat-color($foreground, divider);
+                border-bottom-width: 1px;
+                border-bottom-style: solid;
+
+                .cell-container {
+                    float: left;
+                    width: 42px;
+                }
+
+                &:after {
+                    margin: 2px;
+                    content: attr(filename);
+                    float: left;
+                    width: 140px;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                }
+            }
+
+            .adf-datatable-table-checkbox {
+                margin: 8px;
+            }
+
+        }
+
+        .adf-datatable-header {
+            margin-right: 18px;
+            float: right;
+        }
+
+    }
+
     .adf-data-table {
+        display: table;
         width: 100%;
         position: relative;
         border: $data-table-dividers;
@@ -38,12 +178,36 @@
         border-collapse: unset;
         border-spacing: 0;
 
-        thead {
-            padding-bottom: 3px;
+        .adf-datatable-row {
+            display: table-row;
+            vertical-align: inherit;
+            border-color: inherit;
         }
 
-        tbody {
-            tr {
+        .adf-datatable-body {
+            display: table-row-group;
+            vertical-align: middle;
+            border-color: inherit;
+        }
+
+        .adf-datatable-table-cell {
+            display: table-cell;
+        }
+
+        .adf-datatable-table-cell-header {
+            display: table-cell;
+        }
+
+        .adf-datatable-header {
+            padding-bottom: 3px;
+            display: table-header-group;
+            vertical-align: middle;
+            border-color: inherit;
+        }
+
+        .adf-datatable-body {
+
+            .adf-datatable-row {
                 cursor: pointer;
                 position: relative;
                 height: $data-table-row-height;
@@ -73,7 +237,7 @@
             }
         }
 
-        td, th {
+        .adf-datatable-table-cell, .adf-datatable-table-cell-header {
             padding: 0 $data-table-column-padding 12px $data-table-column-padding;
             text-align: right;
 
@@ -93,7 +257,7 @@
             }
         }
 
-        td {
+        .adf-datatable-table-cell {
             color: mat-color($foreground, text);
             position: relative;
             vertical-align: middle;
@@ -105,7 +269,7 @@
             @include no-select;
         }
 
-        th {
+        .adf-datatable-table-cell-header {
             @include no-select;
             cursor: pointer;
             position: relative;
@@ -153,7 +317,7 @@
 
         .adf-data-table-cell {
             text-align: left;
-            height: 100%;            
+            height: 100%;
 
             &--text {
                 text-align: left;
@@ -182,7 +346,7 @@
 
             .cell-container {
                 display: flex;
-                align-items: center;    
+                align-items: center;
             }
         }
 
@@ -202,6 +366,7 @@
         /* Loading folder */
         .adf-loading-content-container {
             padding: 0 !important;
+            width: 100%;
 
             & > img {
                 width: 100%;
