@@ -1,4 +1,5 @@
 ---
+Added: v2.2.0
 ---
 # Internationalization in ADF
 
