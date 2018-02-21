@@ -1,0 +1,96 @@
+<div class="inner-layout">
+    <div class="inner-layout__header">
+        <adf-breadcrumb [root]="'APP_LAYOUT.TRASHCAN' | translate">
+        </adf-breadcrumb>
+
+        <adf-toolbar class="inline">
+            <button
+                mat-icon-button
+                [adf-delete]="documentList.selection"
+                (delete)="documentList.reload()"
+                [permanent]="true"
+                *ngIf="documentList.selection.length"
+                title="{{ 'TRASHCAN.ACTIONS.DELETE_PERMANENT' | translate }}">
+                <mat-icon>delete_forever</mat-icon>
+            </button>
+
+            <button
+                mat-icon-button
+                (selection-node-restored)="refresh()"
+                [adf-restore]="documentList.selection"
+                *ngIf="documentList.selection.length"
+                title="{{ 'TRASHCAN.ACTIONS.RESTORE' | translate }}">
+                <mat-icon>restore</mat-icon>
+           </button>
+        </adf-toolbar>
+    </div>
+
+    <div class="inner-layout__content">
+
+        <adf-document-list #documentList
+            [attr.class]="documentList.isEmpty() ? 'empty-list' : ''"
+            currentFolderId="-trashcan-"
+            selectionMode="multiple"
+            [navigate]="false"
+            locationFormat="/files"
+            [sorting]="[ 'archivedAt', 'desc' ]"
+            [contextMenuActions]="true"
+            [contentActions]="false">
+
+            <empty-folder-content>
+                <ng-template>
+                    <div class="empty-list__block">
+                        <mat-icon>delete</mat-icon>
+                        <p class="empty-list__title">{{ 'TRASHCAN.EMPTY_STATE.TITLE' | translate }}</p>
+                        <p class="empty-list__text">{{ 'TRASHCAN.EMPTY_STATE.FIRST_TEXT' | translate }}</p>
+                        <p class="empty-list__text">{{ 'TRASHCAN.EMPTY_STATE.SECOND_TEXT' | translate }}</p>
+                    </div>
+                </ng-template>
+            </empty-folder-content>
+
+            <data-columns>
+
+                <data-column
+                    key="$thumbnail"
+                    type="image"
+                    [sortable]="false"
+                    class="image-table-cell">
+                </data-column>
+
+                <data-column
+                    class="adf-data-table-cell--ellipsis__name"
+                    key="name"
+                    title="DOCUMENT_LIST.COLUMNS.DISPLAY_NAME">
+                    <ng-template let-value="value" let-context>
+                        <span class="adf-datatable-cell" title="{{ context?.row?.obj | adfNodeNameTooltip }}">{{ value }}</span>
+                    </ng-template>
+                </data-column>
+
+                <data-column
+                    key="content.sizeInBytes"
+                    title="DOCUMENT_LIST.COLUMNS.SIZE"
+                    type="fileSize">
+                </data-column>
+
+                <data-column
+                    key="archivedAt"
+                    title="DOCUMENT_LIST.COLUMNS.DELETED_ON">
+                    <ng-template let-value="value">
+                        <span title="{{ value | date:'medium' }}">{{ value | adfTimeAgo }}</span>
+                    </ng-template>
+                </data-column>
+
+                <data-column
+                    class="adf-data-table-cell--ellipsis"
+                    key="archivedByUser.displayName"
+                    title="DOCUMENT_LIST.COLUMNS.DELETED_BY">
+                </data-column>
+
+            </data-columns>
+
+        </adf-document-list>
+        <adf-pagination [ngClass]="{ 'no-border' : documentList.isEmpty()}"
+            [target]="documentList">
+        </adf-pagination>
+    </div>
+</div>

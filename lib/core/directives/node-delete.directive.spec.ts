@@ -36,7 +36,8 @@ class TestComponent {
 
 @Component({
     template: `
-        <div [adf-node-permission]="selection" [adf-delete]="selection"
+        <div [adf-node-permission]="selection"
+             [adf-delete]="selection"
              (delete)="done()">
         </div>`
 })
@@ -46,13 +47,33 @@ class TestWithPermissionsComponent {
     done = jasmine.createSpy('done');
 }
 
+@Component({
+    template: `
+        delete permanent
+        <div id="delete-permanent"
+             [adf-delete]="selection"
+             [permanent]="permanent"
+             (delete)="done()">
+        </div>`
+})
+class TestDeletePermanentComponent {
+    selection = [];
+
+    permanent = true;
+
+    done = jasmine.createSpy('done');
+}
+
 describe('NodeDeleteDirective', () => {
     let fixture: ComponentFixture<TestComponent>;
     let fixtureWithPermissions: ComponentFixture<TestWithPermissionsComponent>;
+    let fixtureWithPermanentComponent: ComponentFixture<TestDeletePermanentComponent>;
     let element: DebugElement;
     let elementWithPermissions: DebugElement;
+    let elementWithPermanentDelete: DebugElement;
     let component: TestComponent;
     let componentWithPermissions: TestWithPermissionsComponent;
+    let componentWithPermanentDelete: TestDeletePermanentComponent;
     let alfrescoApi: AlfrescoApiService;
     let notification: NotificationService;
     let nodeApi;
@@ -62,17 +83,23 @@ describe('NodeDeleteDirective', () => {
 
             declarations: [
                 TestComponent,
-                TestWithPermissionsComponent
+                TestWithPermissionsComponent,
+                TestDeletePermanentComponent
             ]
         })
             .compileComponents()
             .then(() => {
                 fixture = TestBed.createComponent(TestComponent);
                 fixtureWithPermissions = TestBed.createComponent(TestWithPermissionsComponent);
+                fixtureWithPermanentComponent = TestBed.createComponent(TestDeletePermanentComponent);
+
                 component = fixture.componentInstance;
                 componentWithPermissions = fixtureWithPermissions.componentInstance;
+                componentWithPermanentDelete = fixtureWithPermanentComponent.componentInstance;
+
                 element = fixture.debugElement.query(By.directive(NodeDeleteDirective));
                 elementWithPermissions = fixtureWithPermissions.debugElement.query(By.directive(NodeDeleteDirective));
+                elementWithPermanentDelete = fixtureWithPermanentComponent.debugElement.query(By.directive(NodeDeleteDirective));
 
                 alfrescoApi = TestBed.get(AlfrescoApiService);
                 nodeApi = alfrescoApi.getInstance().nodes;
@@ -268,5 +295,43 @@ describe('NodeDeleteDirective', () => {
             expect(elementWithPermissions.nativeElement.disabled).toEqual(false);
         }));
 
+        describe('Permanent', () => {
+
+            it('should call the api with permamnet delete option if permanent directive input is true', fakeAsync(() => {
+                let deleteApi = spyOn(nodeApi, 'deleteNode').and.returnValue(Promise.resolve());
+
+                fixtureWithPermanentComponent.detectChanges();
+
+                componentWithPermanentDelete.selection = [
+                    { entry: { id: '1', name: 'name1'}
+                ];
+
+                fixtureWithPermanentComponent.detectChanges();
+
+                elementWithPermanentDelete.triggerEventHandler('click', null);
+                tick();
+
+                expect(deleteApi).toHaveBeenCalledWith('1', { permanent: true });
+            }));
+
+            it('should call the traschan api if permanent directive input is true and the file is already in the trashcan ', fakeAsync(() => {
+                let deleteApi = spyOn(nodeApi, 'purgeDeletedNode').and.returnValue(Promise.resolve());
+
+                fixtureWithPermanentComponent.detectChanges();
+
+                componentWithPermanentDelete.selection = [
+                    { entry: { id: '1', name: 'name1', archivedAt: 'archived' } }
+                ];
+
+                fixtureWithPermanentComponent.detectChanges();
+
+                elementWithPermanentDelete.triggerEventHandler('click', null);
+                tick();
+
+                expect(deleteApi).toHaveBeenCalledWith('1');
+            }));
+
+        });
     });
+
 });

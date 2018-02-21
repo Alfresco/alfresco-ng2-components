@@ -23,6 +23,7 @@
         "UPLOADER": "Uploader",
         "WEBSCRIPT": "Webscript",
         "TAG": "Tag",
+        "TRASHCAN": "Trashcan",
         "SOCIAL": "Social",
         "SETTINGS": "Settings",
         "OVERLAY_VIEWER": "Overlay Viewer",
@@ -32,6 +33,17 @@
         "WORD_TO_SEARCH":"Search Word",
         "SEARCH_CREATED_BY" : "Created By",
         "SEARCH_SERVICE_APPROACH": "Check this to disable the input property and use the service approach"
+    },
+    "TRASHCAN" :{
+      "ACTIONS":{
+        "DELETE_PERMANENT":"Delete permanent",
+        "RESTORE":"Restore"
+      },
+      "EMPTY_STATE": {
+        "TITLE": "Trash is empty",
+        "FIRST_TEXT": "Items you delete are moved to the Trash.",
+        "SECOND_TEXT": "Empty Trash to permanently delete items."
+      }
     },
     "DOCUMENT_LIST": {
         "MULTISELECT_CHECKBOXES" :"Multiselect (with checkboxes)",
@@ -49,7 +61,10 @@
             "TAG": "Tag",
             "CREATED_BY": "Created by",
             "CREATED_ON": "Created on",
-            "CREATED": "Created"
+            "CREATED": "Created",
+            "SIZE": "Size",
+            "DELETED_ON": "Deleted",
+            "DELETED_BY": "Deleted by"
         },
          "TOOLBAR": {
            "CARDVIEW":"Card view mode",

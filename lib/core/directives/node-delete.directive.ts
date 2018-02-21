@@ -18,7 +18,7 @@
 /* tslint:disable:no-input-rename  */
 
 import { Directive, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output } from '@angular/core';
-import { MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNodeEntity, MinimalNodeEntryEntity, DeletedNodeEntity, DeletedNodeMinimalEntry } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { NotificationService } from '../services/notification.service';
@@ -28,7 +28,7 @@ import 'rxjs/observable/forkJoin';
 import 'rxjs/add/operator/catch';
 
 interface ProcessedNodeData {
-    entry: MinimalNodeEntryEntity;
+    entry: MinimalNodeEntryEntity | DeletedNodeMinimalEntry;
     status: number;
 }
 
@@ -55,7 +55,7 @@ interface ProcessStatus {
 export class NodeDeleteDirective implements OnChanges {
     /** Array of nodes to delete. */
     @Input('adf-delete')
-    selection: MinimalNodeEntity[];
+    selection: MinimalNodeEntity[] | DeletedNodeEntity[];
 
     /** If true then the nodes are deleted immediately rather than being
      * put in the trash.
@@ -92,33 +92,40 @@ export class NodeDeleteDirective implements OnChanges {
         this.elementRef.nativeElement.disabled = disable;
     }
 
-    private process(selection: MinimalNodeEntity[]) {
-        if (!selection.length) {
-            return;
+    private process(selection: MinimalNodeEntity[] | DeletedNodeEntity[]) {
+        if (selection && selection.length) {
+
+            const batch = this.getDeleteNodesBatch(selection);
+
+            Observable.forkJoin(...batch)
+                .subscribe((data: ProcessedNodeData[]) => {
+                    const processedItems: ProcessStatus = this.processStatus(data);
+
+                    this.notify(processedItems);
+
+                    if (processedItems.someSucceeded) {
+                        this.delete.emit();
+                    }
+                });
         }
-
-        const batch = this.getDeleteNodesBatch(selection);
-
-        Observable.forkJoin(...batch)
-            .subscribe((data: ProcessedNodeData[]) => {
-                const processedItems: ProcessStatus = this.processStatus(data);
-
-                this.notify(processedItems);
-
-                if (processedItems.someSucceeded) {
-                    this.delete.emit();
-                }
-            });
     }
 
-    private getDeleteNodesBatch(selection: MinimalNodeEntity[]): Observable<ProcessedNodeData>[] {
-        return selection.map((node) => this.deleteNode(node));
+    private getDeleteNodesBatch(selection: any): Observable<ProcessedNodeData>[] {
+        return selection.forEach((node: any) => {
+            this.deleteNode(node);
+        });
     }
 
-    private deleteNode(node: MinimalNodeEntity): Observable<ProcessedNodeData> {
+    private deleteNode(node: MinimalNodeEntity | DeletedNodeEntity): Observable<ProcessedNodeData> {
         const id = (<any> node.entry).nodeId || node.entry.id;
 
-        const promise = this.alfrescoApiService.getInstance().nodes.deleteNode(id, { permanent: this.permanent });
+        let promise;
+
+        if (node.entry.hasOwnProperty('archivedAt')) {
+            promise = this.alfrescoApiService.getInstance().nodes.purgeDeletedNode(id);
+        } else {
+            promise = this.alfrescoApiService.getInstance().nodes.deleteNode(id, { permanent: this.permanent });
+        }
 
         return Observable.fromPromise(promise)
             .map(() => ({
