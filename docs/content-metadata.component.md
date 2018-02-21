@@ -1,21 +1,12 @@
+---
+Added: v2.1.0
+Status: Active
+---
 # Content Metadata Card component
-
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-<!-- toc -->
-<!-- tocstop -->
-<!-- markdown-toc end -->
 
 Allows a user to display and edit metadata related to a node.
 
 <img src="docassets/images/ContentMetadata.png" width="325">
-
-## Properties
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| node | MinimalNodeEntryEntity | - | (**required**) The node entity to fetch metadata about |
-| displayEmpty | boolean | false | Display empty values in card view or not |
-| preset | string | "*" | The metadata preset's name, which defines aspects and their properties |
 
 ## Basic Usage
 
@@ -30,7 +21,17 @@ The different aspects and their properties to be shown can be configured as appl
 </adf-content-metadata-card>
 ```
 
-## Application config presets
+### Properties
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| node | MinimalNodeEntryEntity | - | (**required**) The node entity to fetch metadata about |
+| displayEmpty | boolean | false | Display empty values in card view or not |
+| preset | string | "*" | The metadata preset's name, which defines aspects and their properties |
+
+## Details
+
+### Application config presets
 
 In the application config file you can define different presets for the metadata component or override the default preset. The **default** preset is "*" if not set, meaning the component will display every aspects and properties of the nodes without filtering. 
 
@@ -51,7 +52,6 @@ If you don't have any preset configured manually in you application config, this
 }
 ...
 ```
-
 
 ### Aspect oriented config
 
@@ -112,7 +112,6 @@ And finally, you can create any custom aspect following the same rules.
 ### Layout oriented config
 
 Beside the aspect oriented configuration, it is possible to configure the groups and properties in a more detailed way. With this type of configuration any property of any aspect / type can be "cherry picked"-ed and grouped into and accordion drawer, with defining a translatable title in the preset configuration.
-
 
 #### Basic elements
 
@@ -178,7 +177,6 @@ As a more complex config, you can study the one below:
 ```
 The end result of this config would be two accordion groups with the properties like this:
 
-
 |GROUP-TITLE1-TRANSLATION-KEY|
 |---|
 |exif:param1|
@@ -191,7 +189,6 @@ The end result of this config would be two accordion groups with the properties 
 |kitten:name|
 |kitten:color|
 
-
 |GROUP-TITLE2-TRANSLATION-KEY|
 |---|
 |kitten:favourite-food|
@@ -200,7 +197,3 @@ The end result of this config would be two accordion groups with the properties 
 ## What happens when there is a whitelisted aspect in the config but the given node doesn't relate to that aspect
 
 Nothing, this aspect (as it is not related to the node) will be simply ignored and not be displayed. The aspects to be displayed are calculated as an intersection of the preset's aspects and the aspects related to the node.
-
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-<!-- seealso start -->
-<!-- seealso end -->

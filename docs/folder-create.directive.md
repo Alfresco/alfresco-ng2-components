@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Folder Create directive
 
 Allows folders to be created.

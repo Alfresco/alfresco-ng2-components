@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Create Task Attachment Component
 
 Displays Upload Component (Drag and Click) to upload the attachment to a specified task

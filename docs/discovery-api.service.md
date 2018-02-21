@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Discovery Api service
 
 Gets version and license information for Process Services and Content Services.

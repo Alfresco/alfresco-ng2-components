@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Context Menu directive
 
 Adds a context menu to a component.
