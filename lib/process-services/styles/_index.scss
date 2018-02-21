@@ -6,6 +6,7 @@
 @import '../task-list/components/start-task.component';
 @import '../task-list/components/task-filters.component';
 @import '../task-list/components/task-header.component';
+@import '../app-list/apps-list.component';
 
 @mixin adf-process-services-theme($theme) {
     @include adf-process-filters-theme($theme);
@@ -16,4 +17,5 @@
     @include adf-task-list-header-theme($theme);
     @include adf-process-attachment-list-theme($theme);
     @include adf-task-attachment-list-theme($theme);
+    @include adf-apps-theme($theme);
 }
