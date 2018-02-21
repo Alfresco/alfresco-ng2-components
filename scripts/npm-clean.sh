@@ -19,11 +19,11 @@ done
 npm install rimraf
 
 cd "$DIR/../demo-shell"
-npm run clean
 npm run clean-lock
+npm run clean
 
 cd "$DIR/../lib"
-npm run clean
 npm run clean-lock
+npm run clean
 
 cd ${DIR}
