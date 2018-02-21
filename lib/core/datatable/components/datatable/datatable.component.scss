@@ -26,7 +26,7 @@
     $data-table-drag-border: 1px dashed rgb(68, 138, 255);
 
     .adf-data-table-card {
-        
+
         border: 1px solid mat-color($foreground, divider);
 
         .sr-only {
@@ -132,7 +132,6 @@
                 margin: 8px;
                 padding: 4px;
                 overflow: visible;
-                backgound-color: red;
                 border-bottom-color: mat-color($foreground, divider);
                 border-bottom-width: 1px;
                 border-bottom-style: solid;
