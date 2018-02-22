@@ -46,6 +46,43 @@ define custom schema in the app.config.json as shown below json format.
 </adf-process-instance-list>
 ```
 
+You can also use both HTML-based and app.config.json custom schema declaration at same time like shown below:
+
+```json
+"adf-process-list": {
+        "presets": {
+            "customSchema": [
+            {
+                    "key": "id",
+                    "type": "text",
+                    "title": "Id",
+                    "sortable": true
+            }],
+            "default": [
+                {
+                    "key": "name",
+                    "type": "text",
+                    "title": "name",
+                    "sortable": true
+            }],
+        }
+}
+```
+
+```html
+<adf-process-instance-list
+    [appId]="'1'" 
+    [presetColumn]="'customSchema'">
+    <data-columns>
+        <data-column key="key" title="title" class="full-width name-column">
+            <ng-template let-entry="$implicit">
+                    <div>{{getFullName(entry.row.obj.assignee)}}</div>
+            </ng-template>
+        </data-column>
+    </data-columns>
+</adf-process-instance-list>
+```
+
 ### Pagination strategy
 
 adf-process-instance-list also supports pagination and the same can be used as shown below.

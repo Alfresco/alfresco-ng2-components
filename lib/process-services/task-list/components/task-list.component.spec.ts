@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SimpleChange } from '@angular/core';
+import { Component, SimpleChange, ViewChild } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MaterialModule } from '../../material.module';
 import { AppConfigService } from '@alfresco/adf-core';
@@ -626,5 +626,62 @@ describe('TaskListComponent', () => {
                 responseText: JSON.stringify(fakeGlobalTask)
             });
         });
+    });
+});
+
+@Component({
+    template: `
+    <adf-tasklist #taskList>
+        <data-columns>
+            <data-column key="name" title="ADF_TASK_LIST.PROPERTIES.NAME" class="full-width name-column"></data-column>
+            <data-column key="created" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="hidden"></data-column>
+            <data-column key="startedBy" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="desktop-only dw-dt-col-3 ellipsis-cell">
+                <ng-template let-entry="$implicit">
+                    <div>{{getFullName(entry.row.obj.startedBy)}}</div>
+                </ng-template>
+            </data-column>
+        </data-columns>
+    </adf-tasklist>`
+})
+
+class CustomTaskListComponent {
+
+    @ViewChild(TaskListComponent)
+    taskList: TaskListComponent;
+}
+
+describe('CustomTaskListComponent', () => {
+    let fixture: ComponentFixture<CustomTaskListComponent>;
+    let component: CustomTaskListComponent;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [
+                TaskListComponent,
+                CustomTaskListComponent
+            ],
+            providers: [
+                TaskListService
+            ],
+            imports: []
+        }).compileComponents();
+    }));
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(CustomTaskListComponent);
+        fixture.detectChanges();
+        component = fixture.componentInstance;
+    });
+
+    it('should create instance of CustomTaskListComponent', () => {
+        expect(component instanceof CustomTaskListComponent).toBe(true, 'should create CustomTaskListComponent');
+    });
+
+    it('should fetch custom schemaColumn from html', () => {
+        fixture.detectChanges();
+        expect(component.taskList.data.getColumns()).toBeDefined();
+        expect(component.taskList.data.getColumns()[0].title).toEqual('ADF_TASK_LIST.PROPERTIES.NAME');
+        expect(component.taskList.data.getColumns()[2].title).toEqual('ADF_TASK_LIST.PROPERTIES.CREATED');
+        expect(component.taskList.data.getColumns().length).toEqual(3);
     });
 });
