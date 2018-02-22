@@ -17,6 +17,7 @@
     "LOGIN": "Войти",
     "CUSTOM_SOURCES": "Пользовательские источники",
     "DATATABLE": "Datatable",
+    "DATATABLE_LAZY": "Таблица данных (частичная загрузка)",
     "FORM": "Форма",
     "FORM_LIST": "Список форм",
     "UPLOADER": "Загрузчик",
@@ -25,7 +26,12 @@
     "SOCIAL": "Социальный",
     "SETTINGS": "Параметры",
     "OVERLAY_VIEWER": "Просмотр наложения",
-    "ABOUT": "О приложении"
+    "ABOUT": "О приложении",
+    "SEARCH": "Расширенный поиск",
+    "EXTENDED_SEARCH_QUERY_BODY": "Расширенный поиск с использованием тела запроса",
+    "WORD_TO_SEARCH": "Искать слово",
+    "SEARCH_CREATED_BY": "Создано пользователем",
+    "SEARCH_SERVICE_APPROACH": "Установите флажок, чтобы отключить свойство ввода и настроить, используя службу."
   },
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Выбор нескольких вариантов (с флажками)",
@@ -37,6 +43,7 @@
     "DESCRIPTION_UPLOAD": "Включить загрузку",
     "ENABLE_INFINITE_SCROLL": "Включить бесконечную прокрутку",
     "MULTISELECT_DESCRIPTION": "Использовать кнопку Cmd (Mac) или Ctrl (Windows) для переключения выбора нескольких элементов",
+    "RECENT": "Недавние файлы",
     "COLUMNS": {
       "DISPLAY_NAME": "Отображаемое имя",
       "TAG": "Метка",
@@ -44,14 +51,21 @@
       "CREATED_ON": "Дата создания",
       "CREATED": "Создано"
     },
+    "TOOLBAR": {
+      "CARDVIEW": "Режим просмотра карты",
+      "NEW_FOLDER": "Новая папка",
+      "EDIT_FOLDER": "Редактировать папку",
+      "DOWNLOAD": "Скачать",
+      "DELETE": "Удалить"
+    },
     "ACTIONS": {
+      "DOWNLOAD": "Скачать",
       "FOLDER": {
         "COPY": "Копировать",
         "MOVE": "Переместить",
         "DELETE": "Удалить"
       },
       "DOCUMENT": {
-        "DOWNLOAD": "Скачать",
         "COPY": "Копировать",
         "MOVE": "Переместить",
         "DELETE": "Удалить",

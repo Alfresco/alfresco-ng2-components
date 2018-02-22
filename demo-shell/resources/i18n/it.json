@@ -17,6 +17,7 @@
     "LOGIN": "Login",
     "CUSTOM_SOURCES": "Fonti personalizzate",
     "DATATABLE": "Datatable",
+    "DATATABLE_LAZY": "Caricamento dati (ottimizzato)",
     "FORM": "Modulo",
     "FORM_LIST": "Elenco moduli",
     "UPLOADER": "Uploader",
@@ -25,7 +26,12 @@
     "SOCIAL": "Social",
     "SETTINGS": "Impostazioni",
     "OVERLAY_VIEWER": "Visualizzatore overlay",
-    "ABOUT": "Informazioni su"
+    "ABOUT": "Informazioni su",
+    "SEARCH": "Ricerca estesa",
+    "EXTENDED_SEARCH_QUERY_BODY": "Ricerca estesa con corpo query",
+    "WORD_TO_SEARCH": "Termine di ricerca",
+    "SEARCH_CREATED_BY": "Creato da",
+    "SEARCH_SERVICE_APPROACH": "Selezionare per disattivare la proprietà di input ed eseguire la configurazione utilizzando il servizio"
   },
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Selezione multipla (con caselle di spunta)",
@@ -37,6 +43,7 @@
     "DESCRIPTION_UPLOAD": "Abilita caricamento",
     "ENABLE_INFINITE_SCROLL": "Abilita scorrimento infinito",
     "MULTISELECT_DESCRIPTION": "Usa Cmd (Mac) o Ctrl (Windows) per attivare/disattivare la selezione di più elementi",
+    "RECENT": "File recenti",
     "COLUMNS": {
       "DISPLAY_NAME": "Nome visualizzato",
       "TAG": "Tag",
@@ -44,14 +51,21 @@
       "CREATED_ON": "Creato il",
       "CREATED": "Creato"
     },
+    "TOOLBAR": {
+      "CARDVIEW": "Modalità di visualizzazione scheda",
+      "NEW_FOLDER": "Nuova cartella",
+      "EDIT_FOLDER": "Modifica cartella",
+      "DOWNLOAD": "Download",
+      "DELETE": "Elimina"
+    },
     "ACTIONS": {
+      "DOWNLOAD": "Download",
       "FOLDER": {
         "COPY": "Copia",
         "MOVE": "Sposta",
         "DELETE": "Elimina"
       },
       "DOCUMENT": {
-        "DOWNLOAD": "Download",
         "COPY": "Copia",
         "MOVE": "Sposta",
         "DELETE": "Elimina",

@@ -1,6 +1,6 @@
 {
   "DIALOG": {
-    "SAVE_MESSAGE": "单击保存以用当前设置将报告添加至报告列表.",
+    "SAVE_MESSAGE": "单击保存以用当前设置将报告添加至报告列表。",
     "EXPORT_MESSAGE": ""
   },
   "DATE-WIDGET": {
@@ -109,7 +109,7 @@
       },
       "ERROR": {
         "TITLE": "无法完成该操作",
-        "DESCRIPTION": "重试或检查您是否有访问权限.",
+        "DESCRIPTION": "重试或检查您是否有访问权限。",
         "CLOSE": "关闭"
       }
     },
@@ -141,6 +141,7 @@
       }
     },
     "PEOPLE": {
+      "ASSIGNEE": "被指派者",
       "DIALOG_CLOSE": "关闭",
       "ADD_USER": "添加",
       "ADD_ASSIGNEE": "指派",
@@ -170,7 +171,7 @@
     },
     "FILTERS": {
       "MESSAGES": {
-        "NONE": "未选择进程实例过滤器."
+        "NONE": "未选择进程实例过滤器。"
       }
     },
     "PROPERTIES": {
@@ -256,7 +257,7 @@
       },
       "ERROR_DIALOG": {
         "TITLE": "无法完成该操作",
-        "DESCRIPTION": "您可能没有要求的访问权限级别，请与 IT 团队确认."
+        "DESCRIPTION": "您可能没有要求的访问权限级别，请与 IT 团队确认。"
       }
     },
     "START_PROCESS": {
@@ -275,8 +276,8 @@
         }
       },
       "ERROR": {
-        "LOAD_PROCESS_DEFS": "无法加载流程定义，请确定您是否有访问权限.",
-        "START": "无法启动新流程实例，请确定您是否有访问权限."
+        "LOAD_PROCESS_DEFS": "无法加载流程定义，请确定您是否有访问权限。",
+        "START": "无法启动新流程实例，请确定您是否有访问权限。"
       }
     },
     "PROCESS-ATTACHMENT": {

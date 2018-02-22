@@ -141,6 +141,7 @@
       }
     },
     "PEOPLE": {
+      "ASSIGNEE": "Toegewezen persoon",
       "DIALOG_CLOSE": "Sluiten",
       "ADD_USER": "Toevoegen",
       "ADD_ASSIGNEE": "Toewijzen",

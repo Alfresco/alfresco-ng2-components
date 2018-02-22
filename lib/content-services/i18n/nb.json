@@ -40,8 +40,11 @@
     "CANCEL": "Avbryt",
     "CHOOSE": "Velg",
     "COPY": "Kopier",
+    "COPY_ITEM": "Kopier {{ name }} til ...",
     "MOVE": "Flytt",
+    "MOVE_ITEM": "Flytt {{ name }}'til ...",
     "NO_RESULTS": "Ingen resultater funnet",
+    "SEARCH": "Søk",
     "SELECT_LOCATION": "Velg plassering"
   },
   "OPERATION": {
@@ -153,11 +156,15 @@
       },
       "ACTIONS": {
         "FOLDER": {
-          "DELETE": "Slett"
+          "DELETE": "Slett",
+          "MOVE": "Flytt",
+          "COPY": "Kopier"
         },
         "DOCUMENT": {
           "DOWNLOAD": "Last ned",
-          "DELETE": "Slett"
+          "DELETE": "Slett",
+          "MOVE": "Flytt",
+          "COPY": "Kopier"
         }
       }
     }

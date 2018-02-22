@@ -40,8 +40,11 @@
     "CANCEL": "Abbrechen",
     "CHOOSE": "Auswählen",
     "COPY": "Kopieren",
+    "COPY_ITEM": "'{{ name }}' kopieren nach...",
     "MOVE": "Verschieben",
+    "MOVE_ITEM": "'{{ name }}' verschieben nach...",
     "NO_RESULTS": "Keine Ergebnisse gefunden",
+    "SEARCH": "Suchen",
     "SELECT_LOCATION": "Speicherort auswählen"
   },
   "OPERATION": {
@@ -153,11 +156,15 @@
       },
       "ACTIONS": {
         "FOLDER": {
-          "DELETE": "Löschen"
+          "DELETE": "Löschen",
+          "MOVE": "Verschieben",
+          "COPY": "Kopieren"
         },
         "DOCUMENT": {
           "DOWNLOAD": "Herunterladen",
-          "DELETE": "Löschen"
+          "DELETE": "Löschen",
+          "MOVE": "Verschieben",
+          "COPY": "Kopieren"
         }
       }
     }
