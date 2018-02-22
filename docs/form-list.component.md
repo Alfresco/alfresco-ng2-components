@@ -1,4 +1,8 @@
-# ADF Form List Component
+---
+Added: v2.0.0
+Status: Active
+---
+# Form List Component
 
 Shows APS forms as a list.
 

@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Highlight Transform service
 
 Adds HTML to a string to highlight chosen sections.

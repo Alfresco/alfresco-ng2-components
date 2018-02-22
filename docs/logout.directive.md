@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Logout directive
 
 Logs the user out when the decorated element is clicked.

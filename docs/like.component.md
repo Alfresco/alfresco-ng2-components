@@ -1,4 +1,8 @@
-# ADF Like component
+---
+Added: v2.0.0
+Status: Active
+---
+# Like component
 
 Allows a user to add "likes" to an item.
 

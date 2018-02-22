@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Form Rendering service
 
 Maps an APS form field type string onto the corresponding form widget component type.

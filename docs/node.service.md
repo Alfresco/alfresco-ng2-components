@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Node Service
 
 Gets Alfresco Repository node metadata and creates nodes with metadata. 
