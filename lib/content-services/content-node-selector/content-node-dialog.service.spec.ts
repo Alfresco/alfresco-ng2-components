@@ -128,30 +128,30 @@ describe('ContentNodeDialogService', () => {
         expect(materialDialog.closeAll).toHaveBeenCalled();
     });
 
-    describe('hasEntityCreatePermission', () => {
+    describe('for the copy/move dialog', () => {
         const siteNode: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
             id: 'site',
-            name: 'site-name',
+            name: 'siteNode',
             nodeType: 'st:site'
         };
         const sites: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
             id: 'sites',
-            name: 'sites-name',
+            name: 'sites',
             nodeType: 'st:sites'
         };
         const site: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
             id: 'site-id',
-            name: 'site-entry-name',
+            name: 'site',
             guid: 'any-guid'
         };
         const nodeEntryWithRightPermissions: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
             id: 'node-id',
-            name: 'node-name',
+            name: 'nodeWithRightPermissions',
             allowableOperations: ['create']
         };
         const nodeEntryNoPermissions: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
             id: 'node-id',
-            name: 'node-name',
+            name: 'nodeWithNoPermissions',
             allowableOperations: []
         };
 
@@ -184,7 +184,7 @@ describe('ContentNodeDialogService', () => {
         ];
 
         fixture.forEach((testData) => {
-            it(`should be \'${testData.expected}\' for given node with ${testData.infoKey} = \'${testData.node[testData.infoKey]}\'`, () => {
+            it(`should ${testData.expected ? '' : 'NOT '}allow selection for ${testData.node.name} (${testData.infoKey} = \'${testData.node[testData.infoKey]}\')`, () => {
 
                 let testContentNodeSelectorComponentData;
                 spyOnDialogOpen.and.callFake((contentNodeSelectorComponent: any, config: any) => {
