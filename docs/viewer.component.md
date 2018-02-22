@@ -284,9 +284,8 @@ Everything you put inside the "adf-viewer-sidebar" tags is going to be rendered.
 ### Custom thumbnails
 
 By default, the pdf viewer comes with its own thumbnails list but this can be replaced
-by providing a custom template and binding to context property `viewer` to access
-PDFJS.PDFViewer instance. In addition, the context exposes `close$` event to toggle thumbs list container.
-
+by providing a custom template and binding to context property `viewer` to access PDFJS.PDFViewer
+instance.
 
 ![PDF thumbnails](docassets/images/pdf-thumbnails.png)
 
@@ -307,9 +306,7 @@ export class CustomThumbnailsComponent {
 ```
 
 ```html
-<ng-template #customThumbnailsTemplate let-pdfViewer="viewer" let-close="close$">
-    <button (click)="close.emit()">Close</button>
-
+<ng-template #customThumbnailsTemplate let-pdfViewer="viewer">
     <custom-thumbnails [pdfViewer]="pdfViewer"></custom-thumbnails>
 </ng-template>
 

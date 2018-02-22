@@ -85,27 +85,6 @@ describe('Test PdfViewer component', () => {
 
     });
 
-    describe('OnInit', () => {
-        beforeEach(() => {
-            component.urlFile = require('../assets/fake-test-file.pdf');
-            fixture.detectChanges();
-        });
-
-        it('should subscribe to thumbnails context event', (done) => {
-            component.showThumbnails = false;
-
-            component.ngOnChanges(null).then(() => {
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    component.pdfThumbnailsContext.close$.emit();
-
-                    expect(component.showThumbnails).toBe(true);
-                    done();
-                });
-            });
-        });
-    });
-
     describe('View with url file', () => {
         beforeEach(() => {
             component.urlFile = require('../assets/fake-test-file.pdf');
@@ -423,8 +402,6 @@ describe('Test PdfViewer component', () => {
                 fixture.detectChanges();
                 return fixture.whenStable().then(() => {
                     expect(component.pdfThumbnailsContext.viewer).not.toBeNull();
-                    expect(component.pdfThumbnailsContext.close$).not.toBeNull();
-
                     done();
                 });
             });

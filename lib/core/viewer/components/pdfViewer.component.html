@@ -1,20 +1,21 @@
 <div class="adf-pdf-viewer__container">
     <ng-container *ngIf="showThumbnails">
         <div class="adf-pdf-viewer__thumbnails">
-            <ng-container *ngIf="thumbnailsTemplate">
-                <ng-container *ngTemplateOutlet="thumbnailsTemplate;context:pdfThumbnailsContext"></ng-container>
-            </ng-container>
-            <ng-container *ngIf="!thumbnailsTemplate">
-                <div class="thumbnails-template__container">
-                    <div class="thumbnails-template__buttons">
-                        <button mat-icon-button (click)="toggleThumbnails()">
-                                <mat-icon>close</mat-icon>
-                        </button>
-                    </div>
-
-                    <adf-pdf-thumbnails [pdfViewer]="pdfViewer"></adf-pdf-thumbnails>
+            <div class="thumbnails-template__container">
+                <div class="thumbnails-template__buttons">
+                    <button mat-icon-button (click)="toggleThumbnails()">
+                            <mat-icon>close</mat-icon>
+                    </button>
                 </div>
-            </ng-container>
+
+                <ng-container *ngIf="thumbnailsTemplate">
+                    <ng-container *ngTemplateOutlet="thumbnailsTemplate;context:pdfThumbnailsContext"></ng-container>
+                </ng-container>
+
+                <ng-container *ngIf="!thumbnailsTemplate">
+                    <adf-pdf-thumbnails [pdfViewer]="pdfViewer"></adf-pdf-thumbnails>
+                </ng-container>
+            </div>
         </div>
     </ng-container>
 
