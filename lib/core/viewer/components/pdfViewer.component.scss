@@ -22,7 +22,25 @@
         }
 
         &__thumbnails {
-            position: relative; height: 100%; width: 140px; background-color: rgba(0, 0, 0, 0.12);
+            position: relative;
+            height: 100%;
+            width: 190px;
+            background-color: rgba(0, 0, 0, 0.12);
+        }
+
+        .thumbnails-template {
+            &__container {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+            }
+
+            &__buttons {
+                height: 45px;
+                justify-content: flex-end;
+                align-items: flex-end;
+                display: flex;
+            }
         }
 
         &__container {

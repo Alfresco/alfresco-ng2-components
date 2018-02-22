@@ -16,16 +16,16 @@
         }
 
         &__thumb:first-child {
-            margin-top: 14px;
+            margin-top: 15px;
         }
 
         &__thumb {
             cursor: pointer;
             display: block;
-            height: 140px;
-            width: 100px;
+            height: 114px;
+            width: 91px;
             background: mat-color($background, background);
-            margin-bottom: 14px;
+            margin-bottom: 15px;
         }
 
         &__thumb:hover {
