@@ -25,7 +25,7 @@ Deletes multiple files and folders.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| selection | `MinimalNodeEntity[]` |  | Array of nodes to delete.  |
+| selection | `MinimalNodeEntity[] | DeletedNodeEntity[]` |  | Array of nodes to delete.  |
 | permanent | `boolean` | `false` | If true then the nodes are deleted immediately rather than being put in the trash. |
 
 ### Events
@@ -36,7 +36,7 @@ Deletes multiple files and folders.
 
 ## Details
 
-See **Demo Shell**
+Note it the file is already in the trashcan so is a DeletedNodeEntity the performing of this action will delete the file premanently
 
 ## See also
 

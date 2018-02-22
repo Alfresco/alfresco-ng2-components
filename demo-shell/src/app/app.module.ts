@@ -29,6 +29,7 @@ import { FormViewerComponent } from './components/process-service/form-viewer.co
 import { FormNodeViewerComponent } from './components/process-service/form-node-viewer.component';
 import { AppsViewComponent } from './components/process-service/apps-view.component';
 import { DataTableComponent } from './components/datatable/datatable.component';
+import { TrashcanComponent } from './components/trashcan/trashcan.component';
 import { FilesComponent } from './components/files/files.component';
 import { FileViewComponent } from './components/file-view/file-view.component';
 import { WebscriptComponent } from './components/webscript/webscript.component';
@@ -78,6 +79,7 @@ import { SharedLinkViewComponent } from './components/shared-link-view/shared-li
         DataTableComponent,
         FilesComponent,
         FileViewComponent,
+        TrashcanComponent,
         FormComponent,
         FormListComponent,
         WebscriptComponent,
