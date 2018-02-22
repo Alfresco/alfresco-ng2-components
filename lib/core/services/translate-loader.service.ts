@@ -23,7 +23,7 @@ import { Observable } from 'rxjs/Observable';
 import { ComponentTranslationModel } from '../models/component.model';
 import { ObjectUtils } from '../utils/object-utils';
 import { LogService } from './log.service';
-import { map } from 'rxjs/operators'
+import { map } from 'rxjs/operators';
 import 'rxjs/observable/forkJoin';
 import 'rxjs/add/observable/forkJoin';
 

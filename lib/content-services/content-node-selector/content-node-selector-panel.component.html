@@ -33,6 +33,9 @@
 
     <adf-toolbar>
         <adf-toolbar-title>
+            <ng-container *ngIf="showingSearchResults && !chosenNode">
+                <span class="search-results-label">{{ 'NODE_SELECTOR.SEARCH_RESULTS' | translate }}</span>
+            </ng-container>
             <adf-dropdown-breadcrumb *ngIf="needBreadcrumbs()"
                 class="adf-content-node-selector-content-breadcrumb"
                 (navigate)="clear()"

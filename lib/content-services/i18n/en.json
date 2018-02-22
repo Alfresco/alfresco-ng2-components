@@ -45,6 +45,7 @@
     "MOVE_ITEM": "Move '{{ name }}' to ...",
     "NO_RESULTS": "No results found",
     "SEARCH": "Search",
+    "SEARCH_RESULTS": "Search results",
     "SELECT_LOCATION": "Select Location"
   },
   "OPERATION": {

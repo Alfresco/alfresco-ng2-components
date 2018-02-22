@@ -3,6 +3,16 @@
     $foreground: map-get($theme, foreground);
     $background: map-get($theme, background);
 
+    .search-results-label {
+        font-weight: 600;
+        font-size: 14px;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 1.43;
+        letter-spacing: -0.2px;
+        color: mat-color($foreground, base, 0.87);
+    }
+
     .adf-content-node-selector {
 
         &-content {
