@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Task Filter Service
 
 Manage Task Filters, which are pre-configured Task Instance queries. 

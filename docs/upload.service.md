@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Upload Service
 
 Provides access to various APIs related to file upload features.

@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Task Details model
 
 Information about a task.

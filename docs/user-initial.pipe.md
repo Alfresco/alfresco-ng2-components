@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # User Initial pipe
 
 Takes the name fields of a UserProcessModel object and extracts and formats the initials.

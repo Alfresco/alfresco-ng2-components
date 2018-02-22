@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Task List component
 
 Renders a list containing all the tasks matched by the parameters specified.

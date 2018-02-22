@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Toolbar Component
 
 Simple container for headers, titles, actions and breadcrumbs.
