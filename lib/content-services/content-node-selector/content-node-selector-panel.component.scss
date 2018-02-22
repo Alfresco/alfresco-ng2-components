@@ -92,6 +92,10 @@
                 .adf-data-table {
                     border: none;
 
+                    .adf-datatable-selected > svg {
+                        fill: #00bcd4 !important;
+                    }
+
                     .adf-no-content-container {
                         text-align: center;
                     }
@@ -157,6 +161,12 @@
 
                             &.adf-content-selector-modifier-cell {
                                 display: none;
+                            }
+
+                            &--image {
+                                padding-left: 16px;
+                                padding-right: 8px;
+                                padding-bottom: 8px;
                             }
                         }
                     }
