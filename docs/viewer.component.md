@@ -306,7 +306,7 @@ export class CustomThumbnailsComponent {
 ```
 
 ```html
-<ng-template let-pdfViewer="viewer" #customThumbnailsTemplate>
+<ng-template #customThumbnailsTemplate let-pdfViewer="viewer">
     <custom-thumbnails [pdfViewer]="pdfViewer"></custom-thumbnails>
 </ng-template>
 

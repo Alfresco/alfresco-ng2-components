@@ -67,7 +67,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     MIN_SCALE: number = 0.25;
     MAX_SCALE: number = 10.0;
 
-    showThumbnails = false;
+    showThumbnails: boolean = false;
     pdfThumbnailsContext: { viewer: any } = { viewer: null };
 
     get currentScaleText(): string {

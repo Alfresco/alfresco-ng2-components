@@ -81,7 +81,7 @@ describe('PdfThumbListComponent', () => {
         fixture.detectChanges();
 
         const renderedIds = component.renderItems.map(item => item.id);
-        const rangeIds = viewerMock._pages.slice(0, 5).map(item => item.id);
+        const rangeIds = viewerMock._pages.slice(0, 7).map(item => item.id);
 
         expect(renderedIds).toEqual(rangeIds);
     });
@@ -91,7 +91,7 @@ describe('PdfThumbListComponent', () => {
         fixture.detectChanges();
 
         const renderedIds = component.renderItems.map(item => item.id);
-        const rangeIds = viewerMock._pages.slice(5, 10).map(item => item.id);
+        const rangeIds = viewerMock._pages.slice(6, 14).map(item => item.id);
 
         expect(renderedIds).toEqual(rangeIds);
     });

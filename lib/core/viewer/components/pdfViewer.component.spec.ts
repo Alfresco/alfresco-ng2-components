@@ -388,4 +388,38 @@ describe('Test PdfViewer component', () => {
             });
         });
     });
+
+    describe('Thumbnails', () => {
+        beforeEach(() => {
+            component.urlFile = require('../assets/fake-test-file.pdf');
+            component.showThumbnails = false;
+
+            fixture.detectChanges();
+        });
+
+        it('should have own context', (done) => {
+            component.ngOnChanges(null).then(() => {
+                fixture.detectChanges();
+                return fixture.whenStable().then(() => {
+                    expect(component.pdfThumbnailsContext.viewer).not.toBeNull();
+                    done();
+                });
+            });
+        });
+
+        it('should open thumbnails panel', (done) => {
+            expect(element.querySelector('.adf-pdf-viewer__thumbnails')).toBeNull();
+
+            component.ngOnChanges(null).then(() => {
+                fixture.detectChanges();
+                return fixture.whenStable().then(() => {
+                    component.toggleThumbnails();
+                    fixture.detectChanges();
+
+                    expect(element.querySelector('.adf-pdf-viewer__thumbnails')).not.toBeNull();
+                    done();
+                });
+            });
+        });
+    });
 });
