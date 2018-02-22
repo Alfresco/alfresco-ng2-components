@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Language Menu component
 
 Displays all the languages that are present in the "app.config.json" or the default one (EN).

@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Mime Type Icon pipe
 
 Retrieves an icon to represent a MIME type.

@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Node Favorite directive
 
 Selectively toggles nodes as favorite

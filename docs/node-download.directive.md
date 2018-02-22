@@ -1,3 +1,7 @@
+---
+Added: v2.2.0
+Status: Active
+---
 # Node Download directive
 
 Allows folders and/or files to be downloaded. Multiple nodes are packed as a '.ZIP' archive.

@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Host settings component
 
 Validates the URLs for ACS and APS and saves them in the user's local storage

@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # People Process service
 
 Gets information about Process Services users.

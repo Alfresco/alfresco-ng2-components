@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Page Title service
 
 Sets the page title.

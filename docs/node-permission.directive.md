@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Node Permission directive
 
 Selectively disables an HTML element or Angular component

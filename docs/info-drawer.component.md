@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # InfoDrawer component
 
 Displays a sidebar-style information panel with tabs.

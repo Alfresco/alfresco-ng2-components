@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # FormFieldValidator interface
 
 Defines how the input fields of [ADF Form](form.component.md) and
