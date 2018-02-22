@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Widget component
 
 Base class for standard and custom widget classes.

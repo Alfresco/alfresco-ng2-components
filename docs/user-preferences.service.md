@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # User Preferences Service
 
 Stores preferences for components.

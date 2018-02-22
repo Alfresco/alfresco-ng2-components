@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Task Attachment List Component
 
 Displays attached documents on a specified task.

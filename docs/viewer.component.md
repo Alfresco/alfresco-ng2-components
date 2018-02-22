@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Viewer component
 
 Displays content from an ACS repository.
