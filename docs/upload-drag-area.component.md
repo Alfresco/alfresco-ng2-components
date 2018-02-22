@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Upload Drag Area Component
 
 Adds a drag and drop area to upload files to Alfresco.

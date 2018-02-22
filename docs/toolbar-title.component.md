@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Toolbar Title Component
 
 Supplies custom HTML to be included in a Toolbar component title.

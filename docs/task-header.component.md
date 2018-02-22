@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Task Header component
 
 Shows all the information related to a task.

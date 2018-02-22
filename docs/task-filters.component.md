@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Task Filters component
 
 Shows all available filters.

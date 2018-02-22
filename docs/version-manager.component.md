@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Experimental
+---
 # Version Manager Component
 
 Displays the version history of a node with the ability to upload a new version.

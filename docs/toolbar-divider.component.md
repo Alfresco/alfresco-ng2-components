@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Toolbar Divider Component
 
 Divides groups of elements in a Toolbar with a visual separator.

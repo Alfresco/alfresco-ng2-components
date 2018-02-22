@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Thumbnail service
 
 Retrieves an SVG thumbnail image to represent a document type.

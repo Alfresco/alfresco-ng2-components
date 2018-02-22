@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Upload Directive
 
 Allows your components or common HTML elements reacting on File drag and drop in order to upload content.
