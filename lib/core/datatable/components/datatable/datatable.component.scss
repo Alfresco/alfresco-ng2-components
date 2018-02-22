@@ -29,9 +29,6 @@
 
         border: 1px solid mat-color($foreground, divider);
 
-        .sr-only {
-        }
-
         .adf-datatable-body {
             flex-flow: row wrap;
             display: flex;
@@ -239,7 +236,7 @@
 
         .adf-datatable-table-cell, .adf-datatable-table-cell-header {
             padding: 0 $data-table-column-padding 12px $data-table-column-padding;
-            text-align: right;
+            text-align: left;
 
             &:first-of-type {
                 padding-left: 24px;
@@ -303,12 +300,6 @@
                     margin-right: 5px;
                     vertical-align: sub;
                 }
-                &:hover {
-                    cursor: pointer;
-                    &:before {
-                        color: $data-table-header-sorted-icon-hover-color;
-                    }
-                }
             }
             &.adf-data-table__header--sorted-desc:before {
                 content: "\e5db";
@@ -332,12 +323,14 @@
             }
 
             &--image {
+                padding-left: 24px;
+                padding-right: 24px;
+                width: 10px;
+                text-align: left;
 
                 .cell-value {
                     height: 24px;
                 }
-
-                text-align: left;
 
                 img {
                     height: 100%;
@@ -350,6 +343,18 @@
             }
         }
 
+        .adf-location-cell {
+            a {
+                text-decoration: none;
+                color: mat-color($foreground, text);
+
+                &:hover {
+                    color: #2196F3;
+                    text-decoration: underline;
+                }
+            }
+        }
+
         .full-width {
             width: 100%;
         }
@@ -357,6 +362,7 @@
         /* Empty folder */
         .adf-no-content-container {
             padding: 0 !important;
+            border: none !important;
 
             & > img {
                 width: 100%;
