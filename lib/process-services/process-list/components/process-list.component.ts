@@ -141,20 +141,11 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
      * If component is assigned with an empty data adater the default schema settings applied.
      */
     setupSchema() {
-        let schema: DataColumn[] = [];
-
-        if (this.columnList && this.columnList.columns && this.columnList.columns.length > 0) {
-            schema = this.columnList.columns.map(c => <DataColumn> c);
-        }
-
+        let schema = this.getSchema();
         if (!this.data) {
-            this.data = new ObjectDataTableAdapter([], schema.length > 0 ? schema : this.getLayoutPreset(this.presetColumn));
-        } else {
-            if (schema && schema.length > 0) {
-                this.data.setColumns(schema);
-            } else if (this.data.getColumns().length === 0) {
-                this.presetColumn ? this.setupDefaultColumns(this.presetColumn) : this.setupDefaultColumns();
-            }
+            this.data = new ObjectDataTableAdapter([], schema);
+        } else if (this.data.getColumns().length === 0) {
+            this.data.setColumns(schema);
         }
     }
 
@@ -355,13 +346,6 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
         return new ProcessFilterParamRepresentationModel(requestNode);
     }
 
-    setupDefaultColumns(preset: string = 'default'): void {
-        if (this.data) {
-            const columns = this.getLayoutPreset(preset);
-            this.data.setColumns(columns);
-        }
-    }
-
     private loadLayoutPresets(): void {
         const externalSettings = this.appConfig.get('adf-process-list.presets', null);
 
@@ -370,11 +354,31 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
         } else {
             this.layoutPresets = processPresetsDefaultModel;
         }
-
     }
 
-    private getLayoutPreset(name: string = 'default'): DataColumn[] {
-        return (this.layoutPresets[name] || this.layoutPresets['default']).map(col => new ObjectDataColumn(col));
+    getSchema(): any {
+        let customSchemaColumns = [];
+        customSchemaColumns = this.getSchemaFromConfig(this.presetColumn).concat(this.getSchemaFromHtml());
+        if (customSchemaColumns.length === 0) {
+            customSchemaColumns = this.getDefaultLayoutPreset();
+        }
+        return customSchemaColumns;
+    }
+
+    getSchemaFromHtml(): any {
+        let schema = [];
+        if (this.columnList && this.columnList.columns && this.columnList.columns.length > 0) {
+            schema = this.columnList.columns.map(c => <DataColumn> c);
+        }
+        return schema;
+    }
+
+    private getSchemaFromConfig(name: string): DataColumn[] {
+        return name ? (this.layoutPresets[name]).map(col => new ObjectDataColumn(col)) : [];
+    }
+
+    private getDefaultLayoutPreset(): DataColumn[] {
+        return (this.layoutPresets['default']).map(col => new ObjectDataColumn(col));
     }
 
     updatePagination(params: PaginationQueryParams) {
