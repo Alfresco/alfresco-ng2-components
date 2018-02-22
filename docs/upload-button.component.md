@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Upload Button Component
 
 Activates a file upload.

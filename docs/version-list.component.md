@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Experimental
+---
 # Version List component
 
 Displays the version history of a node in a [Version Manager component](version-manager.component.md)

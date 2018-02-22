@@ -1,3 +1,6 @@
+---
+Added: v2.0.0
+---
 # Theming an ADF app
 
 The [Material Design](https://material.io/guidelines/material-design/introduction.html)

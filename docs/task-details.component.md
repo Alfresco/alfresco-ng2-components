@@ -1,4 +1,8 @@
-# Activiti Task Details component
+---
+Added: v2.0.0
+Status: Active
+---
+# Task Details component
 
 Shows the details of the task id passed in input
 

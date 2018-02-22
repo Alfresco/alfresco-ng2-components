@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Text Highlight pipe
 
 Adds highlighting to words or sections of text that match a search string.
