@@ -9,7 +9,7 @@
     "FIELD": {
       "LOCALSTORAGE": "Lokal lagring",
       "SOURCE": "Velg kilde fra ",
-      "UPLOAD": "Last opp",
+      "UPLOAD": "Laster opp",
       "REQUIRED": "*Påkrevd",
       "VALIDATOR": {
         "INVALID_NUMBER": "Bruk et annet nummerformat",
@@ -187,14 +187,21 @@
       "PRINT": "Skriv ut",
       "SHARE": "Del",
       "MORE_ACTIONS": "Flere handlinger",
-      "INFO": "Info"
+      "INFO": "Info",
+      "FULLSCREEN": "Aktiver fullskjermmodus",
+      "CLOSE": "Lukk",
+      "NEXT_FILE": "Neste fil",
+      "PREV_FILE": "Forrige fil"
     },
     "ARIA": {
       "PREVIOUS_PAGE": "Forrige side",
       "NEXT_PAGE": "Neste side",
       "ZOOM_IN": "Zoom inn",
       "ZOOM_OUT": "Zoom ut",
-      "FIT_PAGE": "Tilpass side"
+      "FIT_PAGE": "Tilpass side",
+      "ROTATE_LEFT": "Roter mot venstre",
+      "ROTATE_RIGHT": "Roter mot høyre",
+      "RESET": "Tilbakestill"
     },
     "PAGE_LABEL": {
       "SHOWING": "Viser",

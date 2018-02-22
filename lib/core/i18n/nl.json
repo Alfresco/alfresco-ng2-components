@@ -187,14 +187,21 @@
       "PRINT": "Afdrukken",
       "SHARE": "Delen",
       "MORE_ACTIONS": "Meer acties",
-      "INFO": "Info"
+      "INFO": "Info",
+      "FULLSCREEN": "Modus voor volledig scherm activeren",
+      "CLOSE": "Sluiten",
+      "NEXT_FILE": "Volgende bestand",
+      "PREV_FILE": "Vorige bestand"
     },
     "ARIA": {
       "PREVIOUS_PAGE": "Vorige pagina",
       "NEXT_PAGE": "Volgende pagina",
       "ZOOM_IN": "Inzoomen",
       "ZOOM_OUT": "Uitzoomen",
-      "FIT_PAGE": "Aangepast aan pagina"
+      "FIT_PAGE": "Aangepast aan pagina",
+      "ROTATE_LEFT": "Linksom draaien",
+      "ROTATE_RIGHT": "Rechtsom draaien",
+      "RESET": "Opnieuw instellen"
     },
     "PAGE_LABEL": {
       "SHOWING": "Wordt weergegeven",

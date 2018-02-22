@@ -141,6 +141,7 @@
       }
     },
     "PEOPLE": {
+      "ASSIGNEE": "Tilordnet",
       "DIALOG_CLOSE": "Lukk",
       "ADD_USER": "Legg til",
       "ADD_ASSIGNEE": "Tilordne",

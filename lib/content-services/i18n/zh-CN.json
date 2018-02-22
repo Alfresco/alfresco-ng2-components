@@ -3,7 +3,7 @@
     "EMPTY": {
       "HEADER": "此文件夹为空"
     },
-    "NO_PERMISSION": "您没有查看该文件或文件夹的权限.",
+    "NO_PERMISSION": "您没有查看该文件或文件夹的权限。",
     "LAYOUT": {
       "CREATED": "已创建",
       "THUMBNAIL": "缩略图",
@@ -40,8 +40,11 @@
     "CANCEL": "取消",
     "CHOOSE": "选择",
     "COPY": "复制",
+    "COPY_ITEM": "将 '{{ name }}' 复制到...",
     "MOVE": "移动",
+    "MOVE_ITEM": "将 '{{ name }}' 移动到...",
     "NO_RESULTS": "未找到结果",
+    "SEARCH": "搜索",
     "SELECT_LOCATION": "选择位置"
   },
   "OPERATION": {
@@ -56,9 +59,9 @@
       }
     },
     "ERROR": {
-      "CONFLICT": "此名称已使用，请尝试其他名称.",
-      "UNKNOWN": "此操作未成功，请重试或联系您的 IT 团队.",
-      "PERMISSION": "您没有执行此操作的访问权."
+      "CONFLICT": "此名称已使用，请尝试其他名称。",
+      "UNKNOWN": "此操作未成功，请重试或联系您的 IT 团队。",
+      "PERMISSION": "您没有执行此操作的访问权。"
     }
   },
   "TAG": {
@@ -91,7 +94,7 @@
       },
       "MESSAGE": {
         "TITLE": "取消上传",
-        "TEXT": "停止上传并移除已上传文件."
+        "TEXT": "停止上传并移除已上传文件。"
       }
     }
   },
@@ -109,8 +112,8 @@
       "PROGRESS": "正在上传...",
       "FOLDER_ALREADY_EXIST": "文件夹 {0} 已存在",
       "FOLDER_NOT_SUPPORTED": "您的浏览器不支持文件夹上传，请使用其他浏览器",
-      "REMOVE_FILE_ERROR": "{{fileName}} 无法移除，请重试或联系您的 IT 团队.",
-      "REMOVE_FILES_ERROR": "{{total}} 个文件无法移除，请重试或联系您的 IT 团队.",
+      "REMOVE_FILE_ERROR": "{{fileName}} 无法移除，请重试或联系您的 IT 团队。",
+      "REMOVE_FILES_ERROR": "{{total}} 个文件无法移除，请重试或联系您的 IT 团队。",
       "EXCEED_MAX_FILE_SIZE": "文件 {{ fileName }} 超出允许的文件大小"
     },
     "ACTION": {
@@ -125,7 +128,7 @@
     "RESULTS": {
       "SUMMARY": "已找到 {{numResults}} 个 {{searchTerm}} 的结果",
       "NONE": "未找到 {{searchTerm}} 的结果",
-      "ERROR": "搜索过程中遇到问题，请重试.",
+      "ERROR": "搜索过程中遇到问题，请重试。",
       "COLUMNS": {
         "NAME": "显示名称",
         "MODIFIED_BY": "修改人",
@@ -153,11 +156,15 @@
       },
       "ACTIONS": {
         "FOLDER": {
-          "DELETE": "删除"
+          "DELETE": "删除",
+          "MOVE": "移动",
+          "COPY": "复制"
         },
         "DOCUMENT": {
           "DOWNLOAD": "下载",
-          "DELETE": "删除"
+          "DELETE": "删除",
+          "MOVE": "移动",
+          "COPY": "复制"
         }
       }
     }

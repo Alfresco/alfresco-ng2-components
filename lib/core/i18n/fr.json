@@ -152,7 +152,7 @@
       "WELCOME": "Bienvenue"
     },
     "ACTION": {
-      "HELP": "Besoin d'aide?",
+      "HELP": "Besoin d'aide ?",
       "REGISTER": "S'inscrire"
     }
   },
@@ -187,14 +187,21 @@
       "PRINT": "Imprimer",
       "SHARE": "Partager",
       "MORE_ACTIONS": "Plus d'actions",
-      "INFO": "Informations"
+      "INFO": "Informations",
+      "FULLSCREEN": "Activer le mode plein écran",
+      "CLOSE": "Fermer",
+      "NEXT_FILE": "Fichier suivant",
+      "PREV_FILE": "Fichier précédent"
     },
     "ARIA": {
       "PREVIOUS_PAGE": "Page précédente",
       "NEXT_PAGE": "Page suivante",
       "ZOOM_IN": "Zoom avant",
       "ZOOM_OUT": "Zoom arrière",
-      "FIT_PAGE": "Ajuster à la page"
+      "FIT_PAGE": "Ajuster à la page",
+      "ROTATE_LEFT": "Faire pivoter à gauche",
+      "ROTATE_RIGHT": "Faire pivoter à droite",
+      "RESET": "Réinitialiser"
     },
     "PAGE_LABEL": {
       "SHOWING": "Affichage en cours",

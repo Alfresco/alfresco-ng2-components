@@ -17,6 +17,7 @@
     "LOGIN": "Iniciar sesión",
     "CUSTOM_SOURCES": "Fuentes personalizadas",
     "DATATABLE": "Tabla de datos",
+    "DATATABLE_LAZY": "Tabla de datos (diferida)",
     "FORM": "Formulario",
     "FORM_LIST": "Lista de formularios",
     "UPLOADER": "Cargador",
@@ -25,7 +26,12 @@
     "SOCIAL": "Social",
     "SETTINGS": "Configuración",
     "OVERLAY_VIEWER": "Visor de superposición",
-    "ABOUT": "Acerca de"
+    "ABOUT": "Acerca de",
+    "SEARCH": "Búsqueda ampliada",
+    "EXTENDED_SEARCH_QUERY_BODY": "Búsqueda ampliada con cuerpo de consulta",
+    "WORD_TO_SEARCH": "Buscar palabra",
+    "SEARCH_CREATED_BY": "Creado por",
+    "SEARCH_SERVICE_APPROACH": "Marque esto para desactivar la propiedad de entrada y configurar el uso del servicio"
   },
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Selección múltiple (con casillas)",
@@ -37,6 +43,7 @@
     "DESCRIPTION_UPLOAD": "Habilitar carga",
     "ENABLE_INFINITE_SCROLL": "Habilitar desplazamiento infinito",
     "MULTISELECT_DESCRIPTION": "Utilice Cmd (Mac) o Ctrl (Windows) para cambiar la selección de varios elementos",
+    "RECENT": "Ficheros recientes",
     "COLUMNS": {
       "DISPLAY_NAME": "Nombre a mostrar",
       "TAG": "Etiqueta",
@@ -44,7 +51,15 @@
       "CREATED_ON": "Creado",
       "CREATED": "Creado"
     },
+    "TOOLBAR": {
+      "CARDVIEW": "Modo de vista de tarjeta",
+      "NEW_FOLDER": "Nueva carpeta",
+      "EDIT_FOLDER": "Editar carpeta",
+      "DOWNLOAD": "Descargar",
+      "DELETE": "Eliminar"
+    },
     "ACTIONS": {
+      "DOWNLOAD": "Descargar",
       "FOLDER": {
         "COPY": "Copiar",
         "MOVE": "Mover",

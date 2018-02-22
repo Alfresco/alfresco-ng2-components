@@ -40,8 +40,11 @@
     "CANCEL": "Annuleren",
     "CHOOSE": "Kiezen",
     "COPY": "Kopiëren",
+    "COPY_ITEM": "'{{ name }}' kopiëren naar...",
     "MOVE": "Verplaatsen",
+    "MOVE_ITEM": "'{{ name }}' verplaatsen naar...",
     "NO_RESULTS": "Geen resultaten gevonden",
+    "SEARCH": "Zoeken",
     "SELECT_LOCATION": "Locatie selecteren"
   },
   "OPERATION": {
@@ -153,11 +156,15 @@
       },
       "ACTIONS": {
         "FOLDER": {
-          "DELETE": "Verwijderen"
+          "DELETE": "Verwijderen",
+          "MOVE": "Verplaatsen",
+          "COPY": "Kopiëren"
         },
         "DOCUMENT": {
           "DOWNLOAD": "Downloaden",
-          "DELETE": "Verwijderen"
+          "DELETE": "Verwijderen",
+          "MOVE": "Verplaatsen",
+          "COPY": "Kopiëren"
         }
       }
     }

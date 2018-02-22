@@ -17,6 +17,7 @@
     "LOGIN": "Connexion",
     "CUSTOM_SOURCES": "Sources personnalisées",
     "DATATABLE": "Table de données",
+    "DATATABLE_LAZY": "Table de données (différé)",
     "FORM": "Formulaire",
     "FORM_LIST": "Liste de formulaires",
     "UPLOADER": "Chargeur",
@@ -25,7 +26,12 @@
     "SOCIAL": "Réseaux sociaux",
     "SETTINGS": "Paramètres",
     "OVERLAY_VIEWER": "Visualisation de la superposition",
-    "ABOUT": "À propos de"
+    "ABOUT": "À propos de",
+    "SEARCH": "Recherche globale",
+    "EXTENDED_SEARCH_QUERY_BODY": "Recherche globale sur le corps de la requête",
+    "WORD_TO_SEARCH": "Mot recherché",
+    "SEARCH_CREATED_BY": "Créé par",
+    "SEARCH_SERVICE_APPROACH": "Cochez cette option pour désactiver la propriété d'entrée et configurer à partir du service"
   },
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Sélection multiple (avec cases à cocher)",
@@ -37,6 +43,7 @@
     "DESCRIPTION_UPLOAD": "Activer l'importation",
     "ENABLE_INFINITE_SCROLL": "Activer le défilement illimité",
     "MULTISELECT_DESCRIPTION": "Utiliser Cmd (Mac) ou Ctrl (Windows) pour activer/désactiver la sélection d'éléments multiples",
+    "RECENT": "Fichiers récents",
     "COLUMNS": {
       "DISPLAY_NAME": "Nom affiché",
       "TAG": "Tag",
@@ -44,14 +51,21 @@
       "CREATED_ON": "Créé le",
       "CREATED": "Créé"
     },
+    "TOOLBAR": {
+      "CARDVIEW": "Mode d'affichage Carte",
+      "NEW_FOLDER": "Nouveau Dossier",
+      "EDIT_FOLDER": "Modifier le dossier",
+      "DOWNLOAD": "Télécharger",
+      "DELETE": "Supprimer"
+    },
     "ACTIONS": {
+      "DOWNLOAD": "Télécharger",
       "FOLDER": {
         "COPY": "Copier",
         "MOVE": "Déplacer",
         "DELETE": "Supprimer"
       },
       "DOCUMENT": {
-        "DOWNLOAD": "Télécharger",
         "COPY": "Copier",
         "MOVE": "Déplacer",
         "DELETE": "Supprimer",

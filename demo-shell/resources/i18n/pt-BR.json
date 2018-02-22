@@ -17,6 +17,7 @@
     "LOGIN": "Login",
     "CUSTOM_SOURCES": "Origens Personalizadas",
     "DATATABLE": "Datatable",
+    "DATATABLE_LAZY": "Datatable (Sob demanda)",
     "FORM": "Formulário",
     "FORM_LIST": "Lista de Formulário",
     "UPLOADER": "Carregador",
@@ -25,7 +26,12 @@
     "SOCIAL": "Social",
     "SETTINGS": "Configurações",
     "OVERLAY_VIEWER": "Visualizador de sobreposição",
-    "ABOUT": "Sobre"
+    "ABOUT": "Sobre",
+    "SEARCH": "Pesquisa estendida",
+    "EXTENDED_SEARCH_QUERY_BODY": "Pesquisa estendida com corpo de consulta",
+    "WORD_TO_SEARCH": "Pesquisar palavras",
+    "SEARCH_CREATED_BY": "Criado por",
+    "SEARCH_SERVICE_APPROACH": "Marque essa opção para desativar a inserção e configurar a utilização do serviço"
   },
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Seleção Múltipla (com caixas de seleção)",
@@ -37,6 +43,7 @@
     "DESCRIPTION_UPLOAD": "Ativar carregamento",
     "ENABLE_INFINITE_SCROLL": "Ativar rolagem infinita",
     "MULTISELECT_DESCRIPTION": "Use Cmd (Mac) ou Ctrl (Windows) para alternar a seleção de vários itens",
+    "RECENT": "Arquivos recentes",
     "COLUMNS": {
       "DISPLAY_NAME": "Nome de exibição",
       "TAG": "Marca",
@@ -44,14 +51,21 @@
       "CREATED_ON": "Criado em",
       "CREATED": "Criado"
     },
+    "TOOLBAR": {
+      "CARDVIEW": "Modo de visualização de cartão",
+      "NEW_FOLDER": "Nova Pasta",
+      "EDIT_FOLDER": "Editar pasta",
+      "DOWNLOAD": "Download",
+      "DELETE": "Excluir"
+    },
     "ACTIONS": {
+      "DOWNLOAD": "Download",
       "FOLDER": {
         "COPY": "Copiar",
         "MOVE": "Mover",
         "DELETE": "Excluir"
       },
       "DOCUMENT": {
-        "DOWNLOAD": "Download",
         "COPY": "Copiar",
         "MOVE": "Mover",
         "DELETE": "Excluir",

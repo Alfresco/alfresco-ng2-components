@@ -17,6 +17,7 @@
     "LOGIN": "Anmelden",
     "CUSTOM_SOURCES": "Benutzerdefinierte Quellen",
     "DATATABLE": "DataTable",
+    "DATATABLE_LAZY": "DataTable (Lazy)",
     "FORM": "Formular",
     "FORM_LIST": "Formularliste",
     "UPLOADER": "Uploader",
@@ -25,7 +26,12 @@
     "SOCIAL": "Soziale Funktionen",
     "SETTINGS": "Einstellungen",
     "OVERLAY_VIEWER": "Overlay-Viewer",
-    "ABOUT": "Info"
+    "ABOUT": "Info",
+    "SEARCH": "Erweiterte Suche",
+    "EXTENDED_SEARCH_QUERY_BODY": "Erweiterte Suche mit Abfragetext",
+    "WORD_TO_SEARCH": "Suchbegriff",
+    "SEARCH_CREATED_BY": "Erstellt von",
+    "SEARCH_SERVICE_APPROACH": "Aktivieren Sie diese Option, um die Eingabeeigenschaft zu deaktivieren und die Nutzung des Services zu konfigurieren"
   },
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Mehrfachauswahl (mit Kontrollkästchen)",
@@ -37,6 +43,7 @@
     "DESCRIPTION_UPLOAD": "Hochladen aktivieren",
     "ENABLE_INFINITE_SCROLL": "Unendlich Scrollen aktivieren",
     "MULTISELECT_DESCRIPTION": "Mit der Befehls- (Mac) oder der Steuerungstaste (Windows) können Sie die Auswahl mehrerer Elemente umschalten",
+    "RECENT": "Zuletzt verwendete Dateien",
     "COLUMNS": {
       "DISPLAY_NAME": "Namen anzeigen",
       "TAG": "Tag",
@@ -44,14 +51,21 @@
       "CREATED_ON": "Erstellt am",
       "CREATED": "Erstellt"
     },
+    "TOOLBAR": {
+      "CARDVIEW": "Kartenansichtsmodus",
+      "NEW_FOLDER": "Neuer Ordner",
+      "EDIT_FOLDER": "Ordner bearbeiten",
+      "DOWNLOAD": "Herunterladen",
+      "DELETE": "Löschen"
+    },
     "ACTIONS": {
+      "DOWNLOAD": "Herunterladen",
       "FOLDER": {
         "COPY": "Kopieren",
         "MOVE": "Verschieben",
         "DELETE": "Löschen"
       },
       "DOCUMENT": {
-        "DOWNLOAD": "Herunterladen",
         "COPY": "Kopieren",
         "MOVE": "Verschieben",
         "DELETE": "Löschen",

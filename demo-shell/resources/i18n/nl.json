@@ -17,6 +17,7 @@
     "LOGIN": "Aanmelden",
     "CUSTOM_SOURCES": "Aangepaste bronnen",
     "DATATABLE": "Datatable",
+    "DATATABLE_LAZY": "Datatable (vertraagd)",
     "FORM": "Formulier",
     "FORM_LIST": "Formulierlijst",
     "UPLOADER": "Uploader",
@@ -25,7 +26,12 @@
     "SOCIAL": "Sociaal",
     "SETTINGS": "Instellingen",
     "OVERLAY_VIEWER": "Overlay-viewer",
-    "ABOUT": "Info"
+    "ABOUT": "Info",
+    "SEARCH": "Uitgebreid zoeken",
+    "EXTENDED_SEARCH_QUERY_BODY": "Uitgebreid zoeken met queryhoofdcode",
+    "WORD_TO_SEARCH": "Zoekterm",
+    "SEARCH_CREATED_BY": "Gemaakt door",
+    "SEARCH_SERVICE_APPROACH": "Schakel dit in om de invoereigenschap uit te schakelen en om te configureren via de service"
   },
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Multiselect (met selectievakjes)",
@@ -37,6 +43,7 @@
     "DESCRIPTION_UPLOAD": "Uploaden inschakelen",
     "ENABLE_INFINITE_SCROLL": "Oneindig scrollen inschakelen",
     "MULTISELECT_DESCRIPTION": "Cmd (Mac) of Ctrl (Windows) gebruiken om de selectie van meerdere items in of uit te schakelen",
+    "RECENT": "Recente bestanden",
     "COLUMNS": {
       "DISPLAY_NAME": "Getoonde naam",
       "TAG": "Tag",
@@ -44,14 +51,21 @@
       "CREATED_ON": "Gemaakt op",
       "CREATED": "Gemaakt"
     },
+    "TOOLBAR": {
+      "CARDVIEW": "Kaartweergavemodus",
+      "NEW_FOLDER": "Nieuwe map",
+      "EDIT_FOLDER": "Map bewerken",
+      "DOWNLOAD": "Downloaden",
+      "DELETE": "Verwijderen"
+    },
     "ACTIONS": {
+      "DOWNLOAD": "Downloaden",
       "FOLDER": {
         "COPY": "Kopiëren",
         "MOVE": "Verplaatsen",
         "DELETE": "Verwijderen"
       },
       "DOCUMENT": {
-        "DOWNLOAD": "Downloaden",
         "COPY": "Kopiëren",
         "MOVE": "Verplaatsen",
         "DELETE": "Verwijderen",
