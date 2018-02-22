@@ -323,12 +323,14 @@
             }
 
             &--image {
+                padding-left: 24px;
+                padding-right: 24px;
+                width: 10px;
+                text-align: left;
 
                 .cell-value {
                     height: 24px;
                 }
-
-                text-align: left;
 
                 img {
                     height: 100%;
