@@ -29,9 +29,6 @@
 
         border: 1px solid mat-color($foreground, divider);
 
-        .sr-only {
-        }
-
         .adf-datatable-body {
             flex-flow: row wrap;
             display: flex;
@@ -341,6 +338,18 @@
             .cell-container {
                 display: flex;
                 align-items: center;
+            }
+        }
+
+        .adf-location-cell {
+            a {
+                text-decoration: none;
+                color: mat-color($foreground, text);
+
+                &:hover {
+                    color: #2196F3;
+                    text-decoration: underline;
+                }
             }
         }
 
