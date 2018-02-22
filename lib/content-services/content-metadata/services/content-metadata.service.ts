@@ -28,31 +28,32 @@ import { PropertyDescriptorsService } from './property-descriptors.service';
 @Injectable()
 export class ContentMetadataService {
 
-    constructor(
-        private basicPropertiesService: BasicPropertiesService,
-        private contentMetadataConfigFactory: ContentMetadataConfigFactory,
-        private propertyGroupTranslatorService: PropertyGroupTranslatorService,
-        private propertyDescriptorsService: PropertyDescriptorsService
-    ) {}
+    constructor(private basicPropertiesService: BasicPropertiesService,
+                private contentMetadataConfigFactory: ContentMetadataConfigFactory,
+                private propertyGroupTranslatorService: PropertyGroupTranslatorService,
+                private propertyDescriptorsService: PropertyDescriptorsService) {
+    }
 
     getBasicProperties(node: MinimalNodeEntryEntity): Observable<CardViewItem[]> {
         return Observable.of(this.basicPropertiesService.getProperties(node));
     }
 
     getGroupedProperties(node: MinimalNodeEntryEntity, presetName: string = 'default'): Observable<CardViewGroup[]> {
-        const config = this.contentMetadataConfigFactory.get(presetName),
-            groupNames = node.aspectNames
-                .concat(node.nodeType)
-                .filter(groupName => config.isGroupAllowed(groupName));
+        let groupedProperties = Observable.of([]);
 
-        let groupedProperties;
+        if (node.aspectNames) {
+            const config = this.contentMetadataConfigFactory.get(presetName),
+                groupNames = node.aspectNames
+                    .concat(node.nodeType)
+                    .filter(groupName => config.isGroupAllowed(groupName));
 
-        if (groupNames.length > 0) {
-            groupedProperties = this.propertyDescriptorsService.load(groupNames)
-                .map(groups => config.reorganiseByConfig(groups))
-                .map(groups => this.propertyGroupTranslatorService.translateToCardViewGroups(groups, node.properties));
-        } else {
-            groupedProperties = Observable.of([]);
+            if (groupNames.length > 0) {
+                groupedProperties = this.propertyDescriptorsService.load(groupNames)
+                    .map(groups => config.reorganiseByConfig(groups))
+                    .map(groups => this.propertyGroupTranslatorService.translateToCardViewGroups(groups, node.properties));
+            } else {
+                groupedProperties = Observable.of([]);
+            }
         }
 
         return groupedProperties;

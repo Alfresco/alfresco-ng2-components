@@ -28,7 +28,13 @@ import { BasicPropertiesService } from '../../services/basic-properties.service'
 import { PropertyGroupTranslatorService } from '../../services/property-groups-translator.service';
 import { PropertyDescriptorsService } from '../../services/property-descriptors.service';
 import { AlfrescoApiService } from '@alfresco/adf-core';
-import { CardViewBaseItemModel, CardViewComponent, CardViewUpdateService, NodesApiService, LogService } from '@alfresco/adf-core';
+import {
+    CardViewBaseItemModel,
+    CardViewComponent,
+    CardViewUpdateService,
+    NodesApiService,
+    LogService
+} from '@alfresco/adf-core';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { Observable } from 'rxjs/Observable';
 import { ContentMetadataConfigFactory } from '../../services/config/content-metadata-config.factory';
@@ -38,6 +44,7 @@ describe('ContentMetadataComponent', () => {
     let component: ContentMetadataComponent,
         fixture: ComponentFixture<ContentMetadataComponent>,
         node: MinimalNodeEntryEntity,
+        folderNode: MinimalNodeEntryEntity,
         preset = 'custom-preset';
 
     beforeEach(async(() => {
@@ -76,6 +83,14 @@ describe('ContentMetadataComponent', () => {
             modifiedByUser: {}
         };
 
+        folderNode = <MinimalNodeEntryEntity> {
+            id: 'folder-id',
+            aspectNames: [],
+            nodeType: '',
+            createdByUser: {},
+            modifiedByUser: {}
+        };
+
         component.node = node;
         component.preset = preset;
         fixture.detectChanges();
@@ -98,6 +113,22 @@ describe('ContentMetadataComponent', () => {
 
         it('should have expanded input param as false by default', () => {
             expect(component.expanded).toBe(false);
+        });
+    });
+
+    describe('Folder', () => {
+
+        it('should show the folder node', () => {
+            component.expanded = false;
+            fixture.detectChanges();
+
+            component.ngOnChanges({ node: new SimpleChange(node, folderNode, false) });
+
+            component.basicProperties$.subscribe(() => {
+                fixture.detectChanges();
+                const basicPropertiesComponent = fixture.debugElement.query(By.directive(CardViewComponent)).componentInstance;
+                expect(basicPropertiesComponent.properties).toBeDefined();
+            });
         });
     });
 

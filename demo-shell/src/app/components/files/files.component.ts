@@ -34,6 +34,7 @@ import { DocumentListComponent, PermissionStyleModel } from '@alfresco/adf-conte
 import { SelectAppsDialogComponent } from '@alfresco/adf-process-services';
 
 import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-adapter.component';
+import { MetadataDialogAdapterComponent } from './metadata-dialog-adapter.component';
 import { Subscription } from 'rxjs/Subscription';
 
 const DEFAULT_FOLDER_TO_SHOW = '-my-';
@@ -334,6 +335,21 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             this.dialog.open(VersionManagerDialogAdapterComponent, {
                 data: { contentEntry },
                 panelClass: 'adf-version-manager-dialog',
+                width: '630px'
+            });
+        } else {
+            const translatedErrorMessage: any = this.translateService.get('OPERATION.ERROR.PERMISSION');
+            this.notificationService.openSnackMessage(translatedErrorMessage.value, 4000);
+        }
+    }
+
+    onManageMetadata(event) {
+        const contentEntry = event.value.entry;
+
+        if (this.contentService.hasPermission(contentEntry, 'update')) {
+            this.dialog.open(MetadataDialogAdapterComponent, {
+                data: { contentEntry },
+                panelClass: 'adf-metadata-manager-dialog',
                 width: '630px'
             });
         } else {
