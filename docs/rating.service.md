@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Rating service
 
 Manages ratings for items in Content Services.

@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Process Instance Details Header component
 
 Sub-component of the process details component, which renders some general information about the selected process.

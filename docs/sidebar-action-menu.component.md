@@ -1,3 +1,7 @@
+---
+Added: v2.1.0
+Status: Active
+---
 # Sidebar action menu component
 
 Displays a sidebar-action menu information panel.

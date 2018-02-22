@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Tag List component
 
 Shows tags for an item.

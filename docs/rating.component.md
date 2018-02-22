@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Rating component
 
 Allows a user to add ratings to an item.
