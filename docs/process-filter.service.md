@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Process Filter Service
 
 Manage Process Filters, which are pre-configured Process Instance queries. 

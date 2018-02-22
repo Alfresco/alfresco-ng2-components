@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Sites Dropdown component
 
 Displays a dropdown menu to show and interact with the sites of the current user.

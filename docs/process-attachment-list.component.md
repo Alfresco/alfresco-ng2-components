@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Process Attachment List component
 
 Displays attached documents on a specified process instance

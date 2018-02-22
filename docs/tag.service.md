@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Tag service
 
 Manages tags in Content Services.

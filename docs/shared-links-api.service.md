@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Shared Links Api service
 
 Finds shared links to Content Services items.
