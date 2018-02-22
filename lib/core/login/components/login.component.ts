@@ -217,7 +217,8 @@ export class LoginComponent implements OnInit {
 
                     this.actualLoginStep = LoginSteps.Welcome;
                     this.userPreferences.setStoragePrefix(values.username);
-                    this.success.emit(new LoginSuccessEvent(token, values.username, values.password));
+                    values.password = '';
+                    this.success.emit(new LoginSuccessEvent(token, values.username));
 
                     if (redirectUrl) {
                         this.authService.setRedirectUrl(null);

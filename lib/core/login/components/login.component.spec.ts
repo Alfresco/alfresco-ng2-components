@@ -501,7 +501,7 @@ describe('LoginComponent', () => {
         loginWithCredentials('fake-username-ECM-access-error', 'fake-password');
     }));
 
-    it('should emit success event after the login has succeeded', async(() => {
+    it('should emit success event after the login has succeeded and discard password', async(() => {
         component.providers = 'ECM';
 
         component.success.subscribe((event) => {
@@ -509,7 +509,7 @@ describe('LoginComponent', () => {
 
             expect(component.isError).toBe(false);
             expect(event).toEqual(
-                new LoginSuccessEvent({type: 'type', ticket: 'ticket'}, 'fake-username', 'fake-password')
+                new LoginSuccessEvent({type: 'type', ticket: 'ticket'}, 'fake-username', null)
             );
         });
 
