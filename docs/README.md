@@ -3,8 +3,18 @@
 Below is an index of the documentation for ADF. The [User Guide](#user-guide)
 section discusses particular techniques in depth. The other sections are references for the ADF
 libraries. Click the name of an item to see its documentation or click the source link to see
-its main source file. Note that ADF is developed continuously, so the source files for some items
-may be listed here before their documentation is available. 
+its main source file. Note that ADF is developed continuously, so the source files for some items may be listed here before their documentation is available.
+
+See the [Version Index](versionIndex.md) for a list of components ordered by
+the ADF version where they were introduced.
+
+Components are sometimes marked with an icon to show their status. No icon indicates
+that the component is complete and suitable for normal use. The other status levels are:
+
+-   **Deprecated** ![](docassets/images/DeprecatedIcon.png) - The component is still available
+    but is now obsolete and will probably be removed in a future version of ADF.
+-   **Experimental** ![](docassets/images/ExperimentalIcon.png) - The component is available for
+    experimentation but not fully complete and tested for production code.
 
 ## Contents
 
