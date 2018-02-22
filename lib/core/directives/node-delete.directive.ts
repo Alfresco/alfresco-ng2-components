@@ -111,9 +111,7 @@ export class NodeDeleteDirective implements OnChanges {
     }
 
     private getDeleteNodesBatch(selection: any): Observable<ProcessedNodeData>[] {
-        return selection.forEach((node: any) => {
-            this.deleteNode(node);
-        });
+        return selection.map((node) => this.deleteNode(node));
     }
 
     private deleteNode(node: MinimalNodeEntity | DeletedNodeEntity): Observable<ProcessedNodeData> {
