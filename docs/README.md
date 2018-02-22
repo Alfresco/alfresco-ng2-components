@@ -22,7 +22,6 @@ may be listed here before their documentation is available.
 -   [Angular Material Design](angular-material-design.md)
 -   [Theming](theming.md)
 -   [Typography](typography.md)
--   [Internationalization](internationalization.md)
 -   [Walkthrough - adding indicators to highlight information about a node](metadata-indicators.md)
 
 <!--guide end-->
@@ -130,7 +129,7 @@ for more information about installing and using the source code.
 | [Page title service](page-title.service.md) | Sets the page title. | [Source](../lib/core/services/page-title.service.ts) |
 | [People content service](people-content.service.md) | Gets information about a Content Services user. | [Source](../lib/core/services/people-content.service.ts) |
 | [People process service](people-process.service.md) | Gets information about Process Services users. | [Source](../lib/core/services/people-process.service.ts) |
-| [Renditions service](renditions.service.md) | Manages prearranged conversions of content to different formats. | [Source](../lib/core/services/renditions.service.ts) |
+| [Renditions service](renditions.service.md) ![Deprecated](docassets/images/DeprecatedIcon.png) | Manages prearranged conversions of content to different formats. | [Source](../lib/core/services/renditions.service.ts) |
 | [Search configuration service](search-configuration.service.md) | Provides fine control of parameters to a search. | [Source](../lib/core/services/search-configuration.service.ts) |
 | [Shared links api service](shared-links-api.service.md) | Finds shared links to Content Services items. | [Source](../lib/core/services/shared-links-api.service.ts) |
 | [Sites service](sites.service.md) | Accesses and manipulates sites from a Content Services repository. | [Source](../lib/core/services/sites.service.ts) |
@@ -191,18 +190,19 @@ for more information about installing and using the source code.
 | [File uploading dialog component](file-uploading-dialog.component.md) | Shows a dialog listing all the files uploaded with the Upload Button or Drag Area components. | [Source](../lib/content-services/upload/components/file-uploading-dialog.component.ts) |
 | [Upload button component](upload-button.component.md) | Activates a file upload. | [Source](../lib/content-services/upload/components/upload-button.component.ts) |
 | [Upload drag area component](upload-drag-area.component.md) | Adds a drag and drop area to upload files to Alfresco. | [Source](../lib/content-services/upload/components/upload-drag-area.component.ts) |
-| [Version list component](version-list.component.md) | Displays the version history of a node in a [Version Manager component](version-manager.component.md) | [Source](../lib/content-services/version-manager/version-list.component.ts) |
-| [Version manager component](version-manager.component.md) | Displays the version history of a node with the ability to upload a new version. | [Source](../lib/content-services/version-manager/version-manager.component.ts) |
+| [Version list component](version-list.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Displays the version history of a node in a [Version Manager component](version-manager.component.md) | [Source](../lib/content-services/version-manager/version-list.component.ts) |
+| [Version manager component](version-manager.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Displays the version history of a node with the ability to upload a new version. | [Source](../lib/content-services/version-manager/version-manager.component.ts) |
 | [Webscript component](webscript.component.md) | Provides access to Webscript features. | [Source](../lib/content-services/webscript/webscript.component.ts) |
+| _Empty search result component_ | _Not currently documented_ | [Source](../lib/content-services/search/components/empty-search-result.component.ts) |
 
 ## Directives
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
+| [Node download directive](node-download.directive.md) | Allows folders and/or files to be downloaded. Multiple nodes are packed as a '.ZIP' archive. | [Source](../lib/content-services/directives/node-download.directive.ts) |
 | [Folder create directive](folder-create.directive.md) | Allows folders to be created. | [Source](../lib/content-services/folder-directive/folder-create.directive.ts) |
 | [Folder edit directive](folder-edit.directive.md) | Allows folders to be edited. | [Source](../lib/content-services/folder-directive/folder-edit.directive.ts) |
 | [File draggable directive](file-draggable.directive.md) | Provide drag-and-drop features for an element such as a `div`. | [Source](../lib/content-services/upload/directives/file-draggable.directive.ts) |
-| [Node download directive](node-download.directive.md) | Downloads folders and files. Packs folders and/or multiple files into a .ZIP archive. | [Source](../lib/content-services/directives/node-download.directive.ts) |
 
 ## Models
 
@@ -221,6 +221,7 @@ for more information about installing and using the source code.
 | [Folder actions service](folder-actions.service.md) | Implements the folder menu actions for the Document List component. | [Source](../lib/content-services/document-list/services/folder-actions.service.ts) |
 | [Rating service](rating.service.md) | Manages ratings for items in Content Services. | [Source](../lib/content-services/social/services/rating.service.ts) |
 | [Tag service](tag.service.md) | Manages tags in Content Services. | [Source](../lib/content-services/tag/services/tag.service.ts) |
+| _Property groups translator service_ | _Not currently documented_ | [Source](../lib/content-services/content-metadata/services/property-groups-translator.service.ts) |
 
 <!--content-services end-->
 
@@ -311,7 +312,7 @@ for more information about installing and using the source code.
 | [Analytics generator component](analytics-generator.component.md) | Generates and shows charts | [Source](../lib/insights/analytics-process/components/analytics-generator.component.ts) |
 | [Analytics report list component](analytics-report-list.component.md) | Shows a list of all available reports | [Source](../lib/insights/analytics-process/components/analytics-report-list.component.ts) |
 | [Analytics component](analytics.component.md) | Shows the charts related to the reportId passed as input | [Source](../lib/insights/analytics-process/components/analytics.component.ts) |
-| [Diagram component](diagram.component.md) | This component shows the diagram of a process. | [Source](../lib/insights/diagram/components/diagram.component.ts) |
+| [Diagram component](diagram.component.md) | Displays process diagrams. | [Source](../lib/insights/diagram/components/diagram.component.ts) |
 
 <!--insights end-->
 
