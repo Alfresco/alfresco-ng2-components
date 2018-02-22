@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Start Task Component
 
 Creates/Starts new task for the specified app

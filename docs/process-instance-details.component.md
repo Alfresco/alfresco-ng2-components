@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Process Details component
 
 Displays detailed information on a specified process instance

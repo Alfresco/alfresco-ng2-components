@@ -1,3 +1,7 @@
+---
+Added: v2.1.0
+Status: Active
+---
 # Search Configuration service
 
 Provides fine control of parameters to a search.
