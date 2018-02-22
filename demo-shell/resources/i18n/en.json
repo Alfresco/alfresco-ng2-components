@@ -31,7 +31,7 @@
         "EXTENDED_SEARCH_QUERY_BODY": "Extended Search with Query Body",
         "WORD_TO_SEARCH":"Search Word",
         "SEARCH_CREATED_BY" : "Created By",
-        "SEARCH_SERVICE_APPROACH": "Check this to disable the input property and use the service approach"
+        "SEARCH_SERVICE_APPROACH": "Check this to disable the input property and configure using the service"
     },
     "DOCUMENT_LIST": {
         "MULTISELECT_CHECKBOXES" :"Multiselect (with checkboxes)",

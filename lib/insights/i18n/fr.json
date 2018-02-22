@@ -30,7 +30,7 @@
       "PROCESS-INSTANCES-OVERVIEW": {
         "PROCESS-DEFINITION": "Définition de processus",
         "DATE-RANGE": "Plage de dates",
-        "SLOW-PROC-INST-NUMBER": "Combien d'instances de processus les plus lentes doivent être affichées?"
+        "SLOW-PROC-INST-NUMBER": "Combien d'instances de processus les plus lentes doivent être affichées ?"
       },
       "TASK-OVERVIEW": {
         "PROCESS-DEFINITION": "Définition de processus",

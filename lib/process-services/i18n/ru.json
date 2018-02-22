@@ -141,6 +141,7 @@
       }
     },
     "PEOPLE": {
+      "ASSIGNEE": "Исполнитель",
       "DIALOG_CLOSE": "Закрыть",
       "ADD_USER": "Добавить",
       "ADD_ASSIGNEE": "Назначить",

@@ -187,14 +187,21 @@
       "PRINT": "Imprimir",
       "SHARE": "Compartir",
       "MORE_ACTIONS": "Más acciones",
-      "INFO": "Información"
+      "INFO": "Información",
+      "FULLSCREEN": "Activar el modo de pantalla completa",
+      "CLOSE": "Cerrar",
+      "NEXT_FILE": "Fichero siguiente",
+      "PREV_FILE": "Fichero anterior"
     },
     "ARIA": {
       "PREVIOUS_PAGE": "Página anterior",
       "NEXT_PAGE": "Página siguiente",
       "ZOOM_IN": "Acercar",
       "ZOOM_OUT": "Alejar",
-      "FIT_PAGE": "Ajustar página"
+      "FIT_PAGE": "Ajustar página",
+      "ROTATE_LEFT": "Girar a la izquierda",
+      "ROTATE_RIGHT": "Girar a la derecha",
+      "RESET": "Reiniciar"
     },
     "PAGE_LABEL": {
       "SHOWING": "Mostrando",

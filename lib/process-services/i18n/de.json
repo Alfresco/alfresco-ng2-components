@@ -141,6 +141,7 @@
       }
     },
     "PEOPLE": {
+      "ASSIGNEE": "Zugewiesener Benutzer",
       "DIALOG_CLOSE": "Schließen",
       "ADD_USER": "Hinzufügen",
       "ADD_ASSIGNEE": "Zuweisen",
