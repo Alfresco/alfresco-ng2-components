@@ -7,7 +7,7 @@ LANG_ROOT="./i18n"
 show_help() {
     echo "Usage: import-langs.sh --input NAME_FOLDER import the i18n files from a folder"
     echo ""
-    echo "--input or -o to specify a folder otherwise it will be created in i18n"
+    echo "--input or -i to specify a folder where import the new files. (default value i18n)"
 }
 
 input_folder(){
@@ -42,5 +42,5 @@ do :
       echo "\tCopying $FILE to $COMPONENTS_ROOT/$DEST"
       `cp $FILE $COMPONENTS_ROOT/$DEST`
     fi
-    echo "\n"
+    echo ""
 done

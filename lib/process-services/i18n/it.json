@@ -141,6 +141,7 @@
       }
     },
     "PEOPLE": {
+      "ASSIGNEE": "Assegnatario",
       "DIALOG_CLOSE": "Chiudi",
       "ADD_USER": "Aggiungi",
       "ADD_ASSIGNEE": "Assegna",

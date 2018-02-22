@@ -69,7 +69,7 @@ export class TaskListService {
      * @param taskId - string
      * @param filter - FilterRepresentationModel
      */
-    isTaskRelatedToFilter(taskId: string, filter: FilterRepresentationModel): Observable<FilterRepresentationModel> {
+     isTaskRelatedToFilter(taskId: string, filter: FilterRepresentationModel): Observable<FilterRepresentationModel> {
         let requestNodeForFilter = this.generateTaskRequestNodeFromFilter(filter);
         return Observable.fromPromise(this.callApiTasksFiltered(requestNodeForFilter))
             .map((res: any) => {

@@ -17,6 +17,7 @@
     "LOGIN": "Logg på",
     "CUSTOM_SOURCES": "Tilpassede kilder",
     "DATATABLE": "Datatable",
+    "DATATABLE_LAZY": "Datatabell (avventende)",
     "FORM": "Skjema",
     "FORM_LIST": "Skjemaliste",
     "UPLOADER": "Opplaster",
@@ -25,7 +26,12 @@
     "SOCIAL": "Sosial",
     "SETTINGS": "Innstillinger",
     "OVERLAY_VIEWER": "Overleggsfremviser",
-    "ABOUT": "Om"
+    "ABOUT": "Om",
+    "SEARCH": "Utvidet søk",
+    "EXTENDED_SEARCH_QUERY_BODY": "Utvidet søk med spørringsuttrykk",
+    "WORD_TO_SEARCH": "Søkeord",
+    "SEARCH_CREATED_BY": "Opprettet av",
+    "SEARCH_SERVICE_APPROACH": "Velg dette for å deaktivere inndataegenskapen og konfigurere ved hjelp av tjenesten"
   },
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Multivalg (med avskrysningsbokser)",
@@ -37,6 +43,7 @@
     "DESCRIPTION_UPLOAD": "Aktiver opplasting",
     "ENABLE_INFINITE_SCROLL": "Aktiver uendelig rulling",
     "MULTISELECT_DESCRIPTION": "Bruk Cmd (Mac) eller Ctrl (Windows) for å veksle mellom valg av flere elementer",
+    "RECENT": "Nylig brukte filer",
     "COLUMNS": {
       "DISPLAY_NAME": "Vis navn",
       "TAG": "Tagg",
@@ -44,14 +51,21 @@
       "CREATED_ON": "Opprettet",
       "CREATED": "Opprettet"
     },
+    "TOOLBAR": {
+      "CARDVIEW": "Kortvisningsmodus",
+      "NEW_FOLDER": "Ny mappe",
+      "EDIT_FOLDER": "Rediger mappe",
+      "DOWNLOAD": "Last ned",
+      "DELETE": "Slett"
+    },
     "ACTIONS": {
+      "DOWNLOAD": "Last ned",
       "FOLDER": {
         "COPY": "Kopier",
         "MOVE": "Flytt",
         "DELETE": "Slett"
       },
       "DOCUMENT": {
-        "DOWNLOAD": "Last ned",
         "COPY": "Kopier",
         "MOVE": "Flytt",
         "DELETE": "Slett",

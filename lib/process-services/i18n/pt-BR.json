@@ -141,6 +141,7 @@
       }
     },
     "PEOPLE": {
+      "ASSIGNEE": "Destinatário",
       "DIALOG_CLOSE": "Fechar",
       "ADD_USER": "Adicionar",
       "ADD_ASSIGNEE": "Atribuir",

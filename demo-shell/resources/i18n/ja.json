@@ -17,6 +17,7 @@
     "LOGIN": "ログイン",
     "CUSTOM_SOURCES": "カスタムソース",
     "DATATABLE": "Datatable",
+    "DATATABLE_LAZY": "Datatable (遅延読み込み)",
     "FORM": "フォーム",
     "FORM_LIST": "フォームリスト",
     "UPLOADER": "アップローダー",
@@ -25,7 +26,12 @@
     "SOCIAL": "ソーシャル",
     "SETTINGS": "設定",
     "OVERLAY_VIEWER": "オーバーレイビューア",
-    "ABOUT": "バージョン情報"
+    "ABOUT": "バージョン情報",
+    "SEARCH": "詳細検索",
+    "EXTENDED_SEARCH_QUERY_BODY": "クエリ本体を使った詳細検索",
+    "WORD_TO_SEARCH": "語句の検索",
+    "SEARCH_CREATED_BY": "作成者",
+    "SEARCH_SERVICE_APPROACH": "入力プロパティを無効にし、サービスを使って設定する場合は、このチェックボックスをオンにします"
   },
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "複数選択 (チェックボックスを使用)",
@@ -37,6 +43,7 @@
     "DESCRIPTION_UPLOAD": "アップロードを有効にします",
     "ENABLE_INFINITE_SCROLL": "無限スクロールを有効にする",
     "MULTISELECT_DESCRIPTION": "複数選択の切り替えを行うには、Cmd (Mac) キーまたは Ctrl (Windows) キーを押します",
+    "RECENT": "最近使ったファイル",
     "COLUMNS": {
       "DISPLAY_NAME": "表示名",
       "TAG": "タグ",
@@ -44,14 +51,21 @@
       "CREATED_ON": "作成日",
       "CREATED": "作成日"
     },
+    "TOOLBAR": {
+      "CARDVIEW": "カード表示モード",
+      "NEW_FOLDER": "新しいフォルダ",
+      "EDIT_FOLDER": "フォルダの編集",
+      "DOWNLOAD": "ダウンロード",
+      "DELETE": "削除"
+    },
     "ACTIONS": {
+      "DOWNLOAD": "ダウンロード",
       "FOLDER": {
         "COPY": "コピー",
         "MOVE": "移動",
         "DELETE": "削除"
       },
       "DOCUMENT": {
-        "DOWNLOAD": "ダウンロード",
         "COPY": "コピー",
         "MOVE": "移動",
         "DELETE": "削除",

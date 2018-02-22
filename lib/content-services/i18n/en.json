@@ -40,9 +40,9 @@
     "CANCEL": "Cancel",
     "CHOOSE": "Choose",
     "COPY": "Copy",
-    "COPY_ITEM": "Copy '{{ name }}' to ...",
+    "COPY_ITEM": "Copy '{{ name }}' to...",
     "MOVE": "Move",
-    "MOVE_ITEM": "Move '{{ name }}' to ...",
+    "MOVE_ITEM": "Move '{{ name }}' to...",
     "NO_RESULTS": "No results found",
     "SEARCH": "Search",
     "SELECT_LOCATION": "Select Location"

@@ -17,6 +17,7 @@
     "LOGIN": "登录",
     "CUSTOM_SOURCES": "自定义来源",
     "DATATABLE": "Datatable",
+    "DATATABLE_LAZY": "Datatable（迟缓）",
     "FORM": "表单",
     "FORM_LIST": "表单列表",
     "UPLOADER": "上传程序",
@@ -25,7 +26,12 @@
     "SOCIAL": "社交",
     "SETTINGS": "设置",
     "OVERLAY_VIEWER": "重叠查看器",
-    "ABOUT": "关于"
+    "ABOUT": "关于",
+    "SEARCH": "扩展搜索",
+    "EXTENDED_SEARCH_QUERY_BODY": "包含查询主体的扩展搜索",
+    "WORD_TO_SEARCH": "搜索词",
+    "SEARCH_CREATED_BY": "创建者",
+    "SEARCH_SERVICE_APPROACH": "选中此项以禁用输入属性并使用服务进行配置"
   },
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "多选（含复选框）",
@@ -37,6 +43,7 @@
     "DESCRIPTION_UPLOAD": "启用上传",
     "ENABLE_INFINITE_SCROLL": "启用无限滚动",
     "MULTISELECT_DESCRIPTION": "使用 Cmd (Mac) 或 Ctrl (Windows) 切换多个项目的选择",
+    "RECENT": "最近的文件",
     "COLUMNS": {
       "DISPLAY_NAME": "显示名称",
       "TAG": "标签",
@@ -44,14 +51,21 @@
       "CREATED_ON": "创建日期",
       "CREATED": "已创建"
     },
+    "TOOLBAR": {
+      "CARDVIEW": "卡查看模式",
+      "NEW_FOLDER": "新建文件夹",
+      "EDIT_FOLDER": "编辑文件夹",
+      "DOWNLOAD": "下载",
+      "DELETE": "删除"
+    },
     "ACTIONS": {
+      "DOWNLOAD": "下载",
       "FOLDER": {
         "COPY": "复制",
         "MOVE": "移动",
         "DELETE": "删除"
       },
       "DOCUMENT": {
-        "DOWNLOAD": "下载",
         "COPY": "复制",
         "MOVE": "移动",
         "DELETE": "删除",
