@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Node Restore directive
 
 Restores deleted nodes to their original location.

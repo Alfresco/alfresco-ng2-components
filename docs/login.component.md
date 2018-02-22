@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Login component
 
 Authenticates to Alfresco Content Services and Alfresco Process Services.

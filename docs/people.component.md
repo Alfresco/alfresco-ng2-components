@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # People Component
 
 Displays users involved with a specified task

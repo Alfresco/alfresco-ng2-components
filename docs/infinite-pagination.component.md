@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Infinite Pagination component
 
 Adds "infinite" pagination to the component it is used with.

@@ -1,3 +1,6 @@
+---
+Added: v2.2.0
+---
 # Internationalization in ADF
 
 Internationalization (abbreviated to i18n) is the process of providing UI messages

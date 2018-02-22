@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Form component
 
 Shows a Form from APS (see it live: [Form Quickstart](https://embed.plnkr.co/YSLXTqb3DtMhVJSqXKkE/))
