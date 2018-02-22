@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Storage service
 
 Stores items in the form of key-value pairs.

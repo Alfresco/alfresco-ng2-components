@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Start Form component
 
 Displays the Start Form for a process.

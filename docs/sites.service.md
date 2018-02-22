@@ -1,4 +1,8 @@
-# Sites Api service
+---
+Added: v2.0.0
+Status: Active
+---
+# Sites service
 
 Accesses and manipulates sites from a Content Services repository.
 

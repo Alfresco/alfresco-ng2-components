@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Search control component
 
 Displays a input text which shows find-as-you-type suggestions.

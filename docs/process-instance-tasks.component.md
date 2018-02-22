@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Process Instance Tasks component
 
 Lists both the active and completed tasks associated with a particular process instance

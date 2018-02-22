@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Tag Node Actions List component
 
 Shows available actions for tags.

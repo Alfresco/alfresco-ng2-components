@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Tag Node List component
 
 Shows tags for a node.

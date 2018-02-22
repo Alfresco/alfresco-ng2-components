@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Process Instance List
 
 Renders a list containing all the process instances matched by the parameters specified.

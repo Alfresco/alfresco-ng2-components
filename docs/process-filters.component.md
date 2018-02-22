@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Process Filters Component
 
 Collection of criteria used to filter process instances, which may be customized by users.

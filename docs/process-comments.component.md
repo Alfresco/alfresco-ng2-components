@@ -1,3 +1,7 @@
+---
+Added: v2.0.0
+Status: Active
+---
 # Process Instance Comments component
 
 Displays comments associated with a particular process instance and allows the user to add new comments.
