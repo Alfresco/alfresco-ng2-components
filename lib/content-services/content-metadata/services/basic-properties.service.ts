@@ -28,7 +28,7 @@ export class BasicPropertiesService {
     getProperties(node: MinimalNodeEntryEntity) {
 
         const sizeInBytes = node.content ? node.content.sizeInBytes : '',
-            mimeTypeName = node.mimeTypeName ? node.content.mimeTypeName : '',
+            mimeTypeName = node.content ? node.content.mimeTypeName : '',
             author = node.properties ? node.properties['cm:author'] : '',
             description = node.properties ? node.properties['cm:description'] : '',
             title = node.properties ? node.properties['cm:title'] : '';
