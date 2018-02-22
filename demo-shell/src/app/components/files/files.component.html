@@ -1,22 +1,5 @@
 <div class="container">
 
-    <div class="adf-recent-container">
-        <mat-list>
-            <mat-list-item><mat-icon>history</mat-icon>{{ 'DOCUMENT_LIST.RECENT' | translate }}</mat-list-item>
-            <mat-divider></mat-divider>
-        </mat-list>
-
-        <adf-document-list
-            [currentFolderId]="'-recent-'"
-            locationFormat="/files"
-            [cardview]="true"
-            [showHeader]="false"
-            [maxItems]="5"
-            (preview)="showFile($event)"
-            selectionMode="null">
-        </adf-document-list>
-    </div>
-
     <div class="adf-site-container-style" id="site-container">
         <adf-sites-dropdown (change)="getSiteContent($event)" [hideMyFiles]="false">
         </adf-sites-dropdown>
