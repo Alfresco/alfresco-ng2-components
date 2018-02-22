@@ -55,6 +55,7 @@ describe('ContentNodeDialogService', () => {
     let documentListService: DocumentListService;
     let sitesService: SitesService;
     let materialDialog: MatDialog;
+    let spyOnDialogOpen: jasmine.Spy;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -76,7 +77,7 @@ describe('ContentNodeDialogService', () => {
         documentListService = TestBed.get(DocumentListService);
         materialDialog = TestBed.get(MatDialog);
         sitesService =  TestBed.get(SitesService);
-        spyOn(materialDialog, 'open').and.stub();
+        spyOnDialogOpen = spyOn(materialDialog, 'open').and.stub();
         spyOn(materialDialog, 'closeAll').and.stub();
 
     });
@@ -87,14 +88,14 @@ describe('ContentNodeDialogService', () => {
 
     it('should be able to open the dialog when node has permission', () => {
         service.openCopyMoveDialog('fake-action', fakeNode, '!update');
-        expect(materialDialog.open).toHaveBeenCalled();
+        expect(spyOnDialogOpen).toHaveBeenCalled();
     });
 
     it('should NOT be able to open the dialog when node has NOT permission', () => {
         service.openCopyMoveDialog('fake-action', fakeNode, 'noperm').subscribe(
             () => { },
             (error) => {
-                expect(materialDialog.open).not.toHaveBeenCalled();
+                expect(spyOnDialogOpen).not.toHaveBeenCalled();
                 expect(JSON.parse(error.message).error.statusCode).toBe(403);
             });
     });
@@ -103,7 +104,7 @@ describe('ContentNodeDialogService', () => {
         spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.resolve(fakeNode));
         service.openFileBrowseDialogByFolderId('fake-folder-id').subscribe();
         tick();
-        expect(materialDialog.open).toHaveBeenCalled();
+        expect(spyOnDialogOpen).toHaveBeenCalled();
     }));
 
     it('should be able to open the dialog for files using the first user site', fakeAsync(() => {
@@ -111,7 +112,7 @@ describe('ContentNodeDialogService', () => {
         spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.resolve(fakeNode));
         service.openFileBrowseDialogBySite().subscribe();
         tick();
-        expect(materialDialog.open).toHaveBeenCalled();
+        expect(spyOnDialogOpen).toHaveBeenCalled();
     }));
 
     it('should be able to open the dialog for folder using the first user site', fakeAsync(() => {
@@ -119,12 +120,84 @@ describe('ContentNodeDialogService', () => {
         spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.resolve(fakeNode));
         service.openFolderBrowseDialogBySite().subscribe();
         tick();
-        expect(materialDialog.open).toHaveBeenCalled();
+        expect(spyOnDialogOpen).toHaveBeenCalled();
     }));
 
     it('should be able to close the material dialog', () => {
         service.close();
         expect(materialDialog.closeAll).toHaveBeenCalled();
+    });
+
+    describe('hasEntityCreatePermission', () => {
+        const siteNode: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
+            id: 'site',
+            name: 'site-name',
+            nodeType: 'st:site'
+        };
+        const sites: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
+            id: 'sites',
+            name: 'sites-name',
+            nodeType: 'st:sites'
+        };
+        const site: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
+            id: 'site-id',
+            name: 'site-entry-name',
+            guid: 'any-guid'
+        };
+        const nodeEntryWithRightPermissions: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
+            id: 'node-id',
+            name: 'node-name',
+            allowableOperations: ['create']
+        };
+        const nodeEntryNoPermissions: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
+            id: 'node-id',
+            name: 'node-name',
+            allowableOperations: []
+        };
+
+        const fixture = [
+            {
+                node: siteNode,
+                infoKey: 'nodeType',
+                expected: false
+            },
+            {
+                node: sites,
+                infoKey: 'nodeType',
+                expected: false
+            },
+            {
+                node: site,
+                infoKey: 'guid',
+                expected: false
+            },
+            {
+                node: nodeEntryWithRightPermissions,
+                infoKey: 'allowableOperations',
+                expected: true
+            },
+            {
+                node: nodeEntryNoPermissions,
+                infoKey: 'allowableOperations',
+                expected: false
+            }
+        ];
+
+        fixture.forEach((testData) => {
+            it(`should be \'${testData.expected}\' for given node with ${testData.infoKey} = \'${testData.node[testData.infoKey]}\'`, () => {
+
+                let testContentNodeSelectorComponentData;
+                spyOnDialogOpen.and.callFake((contentNodeSelectorComponent: any, config: any) => {
+                    testContentNodeSelectorComponentData = config.data;
+                    return {componentInstance: {}};
+                });
+                service.openCopyMoveDialog('fake-action', fakeNode, '!update');
+
+                expect(spyOnDialogOpen.calls.count()).toEqual(1);
+                expect(testContentNodeSelectorComponentData.isSelectionValid(testData.node)).toBe(testData.expected);
+            });
+
+        });
     });
 
 });
