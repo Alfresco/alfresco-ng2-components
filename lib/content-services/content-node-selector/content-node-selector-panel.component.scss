@@ -44,6 +44,7 @@
             }
 
             .adf-toolbar .mat-toolbar {
+                max-height: 48px;
                 border-bottom-width: 0;
                 font-size: 14px;
 
@@ -85,10 +86,6 @@
                         text-align: center;
                     }
 
-                    thead {
-                        display: none;
-                    }
-
                     .adf-data-table-cell {
                         padding-top: 8px;
                         padding-bottom: 8px;
@@ -112,7 +109,7 @@
                         }
                     }
 
-                    tbody tr {
+                    .adf-datatable-body .adf-datatable-row {
                         height: auto !important;
 
                         &:first-child {

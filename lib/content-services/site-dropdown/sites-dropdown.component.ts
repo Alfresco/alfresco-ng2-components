@@ -15,14 +15,16 @@
  * limitations under the License.
  */
 
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { SitesService } from '@alfresco/adf-core';
 import { SitePaging, SiteEntry } from 'alfresco-js-api';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
     selector: 'adf-sites-dropdown',
     styleUrls: ['./sites-dropdown.component.scss'],
-    templateUrl: './sites-dropdown.component.html'
+    templateUrl: './sites-dropdown.component.html',
+    encapsulation: ViewEncapsulation.None,
+    host: { 'class': 'adf-sites-dropdown' }
 })
 export class DropdownSitesComponent implements OnInit {
 

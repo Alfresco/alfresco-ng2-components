@@ -45,7 +45,8 @@ const defaultValidation = () => true;
     selector: 'adf-content-node-selector-panel',
     styleUrls: ['./content-node-selector-panel.component.scss'],
     templateUrl: './content-node-selector-panel.component.html',
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    host: { 'class': 'adf-content-node-selector-panel' }
 })
 export class ContentNodeSelectorPanelComponent implements OnInit {
 
