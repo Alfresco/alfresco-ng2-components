@@ -303,12 +303,6 @@
                     margin-right: 5px;
                     vertical-align: sub;
                 }
-                &:hover {
-                    cursor: pointer;
-                    &:before {
-                        color: $data-table-header-sorted-icon-hover-color;
-                    }
-                }
             }
             &.adf-data-table__header--sorted-desc:before {
                 content: "\e5db";
