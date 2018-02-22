@@ -8,9 +8,9 @@ ADF version in which they were introduced. See the
 
 ## Versions
 
--   [v2.2.0](#v2.2.0)
--   [v2.1.0](#v2.1.0)
--   [v2.0.0](#v2.0.0)
+-   [v2.2.0](#v220)
+-   [v2.1.0](#v210)
+-   [v2.0.0](#v200)
 
 ## v2.2.0
 
