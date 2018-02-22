@@ -3,6 +3,16 @@
     $foreground: map-get($theme, foreground);
     $background: map-get($theme, background);
 
+    .search-results-label {
+        font-weight: 600;
+        font-size: 14px;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 1.43;
+        letter-spacing: -0.2px;
+        color: mat-color($foreground, base, 0.87);
+    }
+
     .adf-content-node-selector {
 
         &-content {
@@ -44,6 +54,7 @@
             }
 
             .adf-toolbar .mat-toolbar {
+                max-height: 48px;
                 border-bottom-width: 0;
                 font-size: 14px;
 
@@ -81,12 +92,13 @@
                 .adf-data-table {
                     border: none;
 
-                    .adf-no-content-container {
-                        text-align: center;
+                    .adf-datatable-selected > svg {
+                        fill: #00bcd4 !important;
                     }
 
-                    thead {
-                        display: none;
+                    .adf-no-content-container {
+                        text-align: center;
+                        border: none !important;
                     }
 
                     .adf-data-table-cell {
@@ -112,7 +124,7 @@
                         }
                     }
 
-                    tbody tr {
+                    .adf-datatable-body .adf-datatable-row {
                         height: auto !important;
 
                         &:first-child {
@@ -150,6 +162,12 @@
 
                             &.adf-content-selector-modifier-cell {
                                 display: none;
+                            }
+
+                            &--image {
+                                padding-left: 16px;
+                                padding-right: 8px;
+                                padding-bottom: 8px;
                             }
                         }
                     }

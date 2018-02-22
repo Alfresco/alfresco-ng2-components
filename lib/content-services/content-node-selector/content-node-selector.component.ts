@@ -73,7 +73,7 @@ export class ContentNodeSelectorComponent {
     pageSize: number;
 
     buttonActionName: string;
-    private chosenNode: MinimalNodeEntryEntity[];
+    chosenNode: MinimalNodeEntryEntity[];
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: ContentNodeSelectorComponentData) {
         this.buttonActionName = data.actionName ? `NODE_SELECTOR.${data.actionName.toUpperCase()}` : 'NODE_SELECTOR.CHOOSE';
