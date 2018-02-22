@@ -51,8 +51,6 @@ export class ContentMetadataService {
                 groupedProperties = this.propertyDescriptorsService.load(groupNames)
                     .map(groups => config.reorganiseByConfig(groups))
                     .map(groups => this.propertyGroupTranslatorService.translateToCardViewGroups(groups, node.properties));
-            } else {
-                groupedProperties = Observable.of([]);
             }
         }
 
