@@ -190,7 +190,7 @@ If a variable already exist, then its value will be updated.
 
 **Note**. you need to pass in a Process Instance ID here, not a Process Definition ID.
 
-#### deleteProcessInstanceVariable(processDefinitionId: string, variableName: string): Observable`<void>`
+#### deleteProcessInstanceVariable(processInstanceId: string, variableName: string): Observable`<void>`
 
 Delete a variable for a Process Instance: 
 
