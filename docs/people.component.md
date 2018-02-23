@@ -11,7 +11,6 @@ Displays users involved with a specified task
 -   [Basic Usage](#basic-usage)
 
     -   [Properties](#properties)
-    -   [Events](#events)
 
 -   [Details](#details)
 
