@@ -524,6 +524,12 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
         return null;
     }
 
+    getSortableColumns() {
+        return this.data.getColumns().filter((currentColum) => {
+            return currentColum.sortable === true;
+        });
+    }
+
     private emitRowSelectionEvent(name: string, row: DataRow) {
         const domEvent = new CustomEvent(name, {
             detail: {

@@ -19,7 +19,7 @@ $minimumDocumentListWidth: 425px;
 }
 
 .adf-not-overlay-viewer {
-    height:900px;
+    height: 900px;
 }
 
 adf-document-list ::ng-deep adf-datatable tr.document-list__create {
@@ -108,7 +108,7 @@ adf-document-list ::ng-deep .adf-datatable-selected > svg {
     margin-bottom: 20px;
 }
 
-.adf-no-result-message{
+.adf-no-result-message {
     height: 32px;
     opacity: 0.26;
     font-size: 24px;
@@ -116,12 +116,23 @@ adf-document-list ::ng-deep .adf-datatable-selected > svg {
     letter-spacing: -1px;
 }
 
-.adf-recent-container{
-    border: 1px solid rgba(0, 0, 0, 0.07);
+.adf-container-recent {
+    mat-icon {
+        margin-left: 20px;
+    }
+
+    .empty-list__block {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }
 
 @media (max-width: $minimumDocumentListWidth) {
-    adf-document-list ::ng-deep adf-datatable  {
+    adf-document-list ::ng-deep adf-datatable {
         & ::ng-deep .adf-data-table-cell--fileSize {
             display: none;
         }
