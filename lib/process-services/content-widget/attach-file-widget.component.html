@@ -71,22 +71,25 @@
                  tabindex="0"/>
             <span matLine id="{{'file-'+file.id}}" (click)="onAttachFileClicked(file)" (keyup.enter)="onAttachFileClicked(file)"
                   role="button" tabindex="0" class="adf-file">{{file.name}}</span>
-            <button mat-icon-button [matMenuTriggerFor]="fileActionMenu">
+            <button id="{{'file-'+file.id+'-option-menu'}}" mat-icon-button [matMenuTriggerFor]="fileActionMenu">
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #fileActionMenu="matMenu" xPosition="before">
-                <button mat-menu-item (click)="onAttachFileClicked(file)">
-                    <mat-icon>visibility</mat-icon>
-                    <span>Show</span>
+                <button id="{{'file-'+file.id+'-show-file'}}"
+                    mat-menu-item (click)="onAttachFileClicked(file)">
+                    <mat-icon>image</mat-icon>
+                    <span>{{ 'FORM.FIELD.SHOW_FILE' | translate }}</span>
                 </button>
-                <button mat-menu-item (click)="downloadContent(file)">
+                <button id="{{'file-'+file.id+'-download-file'}}"
+                    mat-menu-item (click)="downloadContent(file)">
                     <mat-icon>file_download</mat-icon>
-                    <span>Download</span>
+                    <span>{{ 'FORM.FIELD.DOWNLOAD_FILE' | translate }}</span>
                 </button>
-                <button *ngIf="!field.readOnly" mat-menu-item [id]="'file-'+file.id+'-remove'"
+                <button *ngIf="!field.readOnly" id="{{'file-'+file.id+'-remove-file'}}"
+                        mat-menu-item [id]="'file-'+file.id+'-remove'"
                         (click)="onRemoveAttachFile(file);" (keyup.enter)="onRemoveAttachFile(file);">
                     <mat-icon class="mat-24">highlight_off</mat-icon>
-                    <span>Remove</span>
+                    <span>{{ 'FORM.FIELD.REMOVE_FILE' | translate }}</span>
                 </button>
             </mat-menu>
         </mat-list-item>

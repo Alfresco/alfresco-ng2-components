@@ -112,7 +112,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
 
     isATemporaryFile(file): boolean {
         return this.tempFilesList.indexOf(file) !== -1 ? true : false;
-    };
+    }
 
     openSelectDialogFromFileSource() {
         let params = this.field.params;
@@ -152,7 +152,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         } else {
             this.processContentService.getFileRawContent(file.id).subscribe(
                 (blob: Blob) => {
-                    this.contentService.downloadBlob(blob, file.name)
+                    this.contentService.downloadBlob(blob, file.name);
                 },
                 (err) => {
                     this.logger.error('Impossible retrieve content for download');
