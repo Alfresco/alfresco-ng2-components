@@ -117,7 +117,7 @@ export class NodeDeleteDirective implements OnChanges {
 
         let promise;
 
-        if (node.entry.hasOwnProperty('archivedAt') || this.permanent) {
+        if (node.entry.hasOwnProperty('archivedAt')) {
             promise = this.alfrescoApiService.getInstance().nodes.purgeDeletedNode(id);
         } else {
             promise = this.alfrescoApiService.getInstance().nodes.deleteNode(id, { permanent: this.permanent });
