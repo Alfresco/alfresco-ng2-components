@@ -18,6 +18,19 @@
     </ng-template>
 
     <adf-viewer [fileNodeId]="nodeId" [allowSidebar]="true" [sidebarTemplate]="sidebarTemplate">
+
+        <adf-viewer-toolbar-actions>
+            <button mat-icon-button>
+                <mat-icon>alarm</mat-icon>
+            </button>
+            <button mat-icon-button>
+                <mat-icon>backup</mat-icon>
+            </button>
+            <button mat-icon-button>
+                <mat-icon>bug_report</mat-icon>
+            </button>
+        </adf-viewer-toolbar-actions>
+
         <!--
         <adf-viewer-extension [supportedExtensions]="['json']">
             <ng-template let-urlFileContent="urlFileContent" let-extension="extension">

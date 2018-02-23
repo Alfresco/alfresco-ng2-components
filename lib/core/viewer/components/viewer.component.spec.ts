@@ -55,6 +55,20 @@ import 'rxjs/add/observable/throw';
 class ViewerWithCustomToolbarComponent {}
 
 @Component({
+    selector: 'adf-viewer-container-toolbar-actions',
+    template: `
+        <adf-viewer>
+            <adf-viewer-toolbar-actions>
+                <button mat-icon-button id="custom-button">
+                    <mat-icon>alarm</mat-icon>
+                </button>
+            </adf-viewer-toolbar-actions>
+        </adf-viewer>
+    `
+})
+class ViewerWithCustomToolbarActionsComponent {}
+
+@Component({
     selector: 'adf-viewer-container-sidebar',
     template: `
         <adf-viewer>
@@ -144,7 +158,8 @@ describe('ViewerComponent', () => {
                 ViewerWithCustomToolbarComponent,
                 ViewerWithCustomSidebarComponent,
                 ViewerWithCustomOpenWithComponent,
-                ViewerWithCustomMoreActionsComponent
+                ViewerWithCustomMoreActionsComponent,
+                ViewerWithCustomToolbarActionsComponent
             ],
             providers: [
                 {provide: RenditionsService, useValue: {
@@ -201,6 +216,14 @@ describe('ViewerComponent', () => {
 
             customFixture.detectChanges();
             expect(customElement.querySelector('.custom-toolbar-element')).toBeDefined();
+        });
+
+        it('should use custom toolbar actions', () => {
+            let customFixture = TestBed.createComponent(ViewerWithCustomToolbarActionsComponent);
+            let customElement: HTMLElement = customFixture.nativeElement;
+
+            customFixture.detectChanges();
+            expect(customElement.querySelector('#custom-button')).toBeDefined();
         });
 
         it('should use custom info drawer', () => {
