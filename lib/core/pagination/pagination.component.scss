@@ -92,6 +92,10 @@
             max-height: 250px !important;
         }
 
+         &__pageSize-selector {
+            max-height: 250px !important;
+        }
+
         button[mat-icon-button] {
             width: $adf-pagination--icon-button-size;
             height: $adf-pagination--icon-button-size;
