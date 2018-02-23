@@ -254,6 +254,31 @@ You can replace standard viewer toolbar with your custom implementation.
 
 Everything you put inside the "adf-viewer-toolbar" tags is going to be rendered instead of the toolbar.
 
+### Custom toolbar buttons
+
+If you are okay with the custom toolbar behaviour but want to add some extra buttons,
+you can do that like in the following example:
+
+```html
+<adf-viewer>
+    <adf-viewer-toolbar-actions>
+        <button mat-icon-button>
+            <mat-icon>alarm</mat-icon>
+        </button>
+        <button mat-icon-button>
+            <mat-icon>backup</mat-icon>
+        </button>
+        <button mat-icon-button>
+            <mat-icon>bug_report</mat-icon>
+        </button>
+    </adf-viewer-toolbar-actions>
+</adf-viewer>
+```
+
+You should now see the following result at runtime:
+
+![Custom Toolbar Actions](docassets/images/viewer-toolbar-actions.png)
+
 ### Custom sidebar
 
 The Viewer component also supports custom sidebar components and layouts.

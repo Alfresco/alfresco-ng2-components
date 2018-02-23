@@ -18,6 +18,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MaterialModule } from '../material.module';
 import { ToolbarModule } from '../toolbar/toolbar.module';
@@ -35,7 +36,7 @@ import { ViewerSidebarComponent } from './components/viewer-sidebar.component';
 import { ViewerToolbarComponent } from './components/viewer-toolbar.component';
 import { ViewerComponent } from './components/viewer.component';
 import { ViewerExtensionDirective } from './directives/viewer-extension.directive';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { ViewerToolbarActionsComponent } from './components/viewer-toolbar-actions.component';
 
 @NgModule({
     imports: [
@@ -59,7 +60,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         ViewerToolbarComponent,
         ViewerSidebarComponent,
         ViewerOpenWithComponent,
-        ViewerMoreActionsComponent
+        ViewerMoreActionsComponent,
+        ViewerToolbarActionsComponent
     ],
     exports: [
         ViewerComponent,
@@ -74,7 +76,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         ViewerToolbarComponent,
         ViewerSidebarComponent,
         ViewerOpenWithComponent,
-        ViewerMoreActionsComponent
+        ViewerMoreActionsComponent,
+        ViewerToolbarActionsComponent
     ]
 })
 export class ViewerModule {
