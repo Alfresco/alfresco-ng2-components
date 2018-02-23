@@ -159,7 +159,7 @@ The column layout and row data are supplied to the table using an object that im
 DataTableAdapter interface. This interface hides the internal details of the class that provides
 the data, which gives a lot of flexibility in how the data can be stored and accessed. The DataTable
 library includes a standard adapter class called ObjectDataTableAdapter that is useful for many
-common uses. See the [DataTableAdapter](DataTableAdapter.md) for full details about the interface and
+common uses. See the [DataTableAdapter](datatable-adapter.interface.md) for full details about the interface and
 the ObjectDataTableAdapter class.
 
 ### Customizing columns
@@ -482,6 +482,6 @@ and do corresponding actions.
 
 -   [Data column component](data-column.component.md)
 -   [Pagination component](pagination.component.md)
--   [DataTableAdapter](DataTableAdapter.md)
+-   [DataTableAdapter](datatable-adapter.interface.md)
 -   [Document list component](document-list.component.md)
     <!-- seealso end -->
