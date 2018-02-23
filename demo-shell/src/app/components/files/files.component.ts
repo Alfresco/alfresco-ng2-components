@@ -21,12 +21,19 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { MinimalNodeEntity, NodePaging, Pagination, PathElementEntity, MinimalNodeEntryEntity, SiteEntry } from 'alfresco-js-api';
+import {
+    MinimalNodeEntity,
+    NodePaging,
+    Pagination,
+    PathElementEntity,
+    MinimalNodeEntryEntity,
+    SiteEntry
+} from 'alfresco-js-api';
 import {
     AuthenticationService, ContentService, TranslationService,
     FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
     UploadService, DataColumn, DataRow, UserPreferencesService,
-    PaginationComponent, FormValues
+    PaginationComponent, FormValues, DisplayMode
 } from '@alfresco/adf-core';
 
 import { DocumentListComponent, PermissionStyleModel } from '@alfresco/adf-content-services';
@@ -50,7 +57,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     fileNodeId: any;
     showViewer = false;
     showVersions = false;
-    cardview = false;
+    displayMode = DisplayMode.List;
 
     toolbarColor = 'default';
 
@@ -441,7 +448,11 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.turnedPreviousPage.emit(event);
     }
 
-    toogleCardview(event: Pagination): void {
-        this.cardview = !this.cardview;
+    toogleGalleryView(): void {
+        if (this.displayMode === DisplayMode.List) {
+            this.displayMode = DisplayMode.Gallery;
+        } else {
+            this.displayMode = DisplayMode.List;
+        }
     }
 }

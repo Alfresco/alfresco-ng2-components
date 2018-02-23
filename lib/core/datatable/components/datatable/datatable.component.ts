@@ -38,6 +38,11 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/buffer';
 import 'rxjs/add/operator/filter';
 
+export enum DisplayMode {
+    List = 'list',
+    Gallery = 'gallery'
+}
+
 @Component({
     selector: 'adf-datatable',
     styleUrls: ['./datatable.component.scss'],
@@ -53,9 +58,9 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     @Input()
     data: DataTableAdapter;
 
-    /* Enable the cardview mode */
+    /* change the display mode of the table list or gallery */
     @Input()
-    cardview: boolean = false;
+    display: string = DisplayMode.List;
 
     /* The rows that the datatable will show */
     @Input()

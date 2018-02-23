@@ -11,7 +11,7 @@
             <adf-document-list
                 [currentFolderId]="'-recent-'"
                 locationFormat="/files"
-                [cardview]="true"
+                [display]="'gallery'"
                 [showHeader]="false"
                 [maxItems]="5"
                 (preview)="showFile($event)"
@@ -67,8 +67,9 @@
                     <button
                         mat-icon-button
                         title="{{ 'DOCUMENT_LIST.TOOLBAR.CARDVIEW' | translate }}"
-                        (click)="toogleCardview()">
-                        <mat-icon>view_comfy</mat-icon>
+                        (click)="toogleGalleryView()">
+                        <mat-icon *ngIf="displayMode === 'list'" >view_comfy</mat-icon>
+                        <mat-icon *ngIf="displayMode === 'gallery'">list</mat-icon>
                     </button>
                     <button
                         mat-icon-button
@@ -130,8 +131,9 @@
                 </button>
                 <mat-menu #menu="matMenu">
                     <button mat-menu-item
-                            (click)="toogleCardview()">
-                        <mat-icon>view_comfy</mat-icon>
+                            (click)="toogleGalleryView()">
+                        <mat-icon *ngIf="displayMode === 'list'" >view_comfy</mat-icon>
+                        <mat-icon *ngIf="displayMode === 'gallery'">list</mat-icon>
                         <span>{{ 'DOCUMENT_LIST.TOOLBAR.CARDVIEW' | translate }}</span>
                     </button>
                     <button mat-menu-item
@@ -171,7 +173,7 @@
                 [allowDropFiles]="true"
                 [selectionMode]="selectionMode"
                 [multiselect]="multiselect"
-                [cardview]="cardview"
+                [display]="displayMode"
                 [node]="nodeResult"
                 (error)="onNavigationError($event)"
                 (success)="resetError()"
