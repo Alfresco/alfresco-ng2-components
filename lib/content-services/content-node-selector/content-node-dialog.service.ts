@@ -88,7 +88,7 @@ export class ContentNodeDialogService {
                 currentFolderId: contentEntry.parentId,
                 imageResolver: this.imageResolver.bind(this),
                 rowFilter : this.rowFilter.bind(this, contentEntry.id),
-                isSelectionValid: this.canCopyMoveInsideIt.bind(this),
+                isSelectionValid: this.isCopyMoveSelectionValid.bind(this),
                 select: select
             };
 
@@ -188,7 +188,7 @@ export class ContentNodeDialogService {
         return entry.isFolder;
     }
 
-    private canCopyMoveInsideIt(entry: MinimalNodeEntryEntity): boolean {
+    private isCopyMoveSelectionValid(entry: MinimalNodeEntryEntity): boolean {
         return this.hasEntityCreatePermission(entry) && !this.isSite(entry);
     }
 

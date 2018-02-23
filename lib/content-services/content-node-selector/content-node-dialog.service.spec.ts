@@ -130,73 +130,74 @@ describe('ContentNodeDialogService', () => {
 
     describe('for the copy/move dialog', () => {
         const siteNode: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
-            id: 'site',
-            name: 'siteNode',
+            id: 'site-node-id',
             nodeType: 'st:site'
         };
         const sites: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
-            id: 'sites',
-            name: 'sites',
+            id: 'sites-id',
             nodeType: 'st:sites'
         };
         const site: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
             id: 'site-id',
-            name: 'site',
             guid: 'any-guid'
         };
         const nodeEntryWithRightPermissions: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
             id: 'node-id',
-            name: 'nodeWithRightPermissions',
             allowableOperations: ['create']
         };
         const nodeEntryNoPermissions: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
             id: 'node-id',
-            name: 'nodeWithNoPermissions',
             allowableOperations: []
         };
 
-        const fixture = [
+        const siteFixture = [
             {
                 node: siteNode,
-                infoKey: 'nodeType',
                 expected: false
             },
             {
                 node: sites,
-                infoKey: 'nodeType',
                 expected: false
             },
             {
                 node: site,
-                infoKey: 'guid',
-                expected: false
-            },
-            {
-                node: nodeEntryWithRightPermissions,
-                infoKey: 'allowableOperations',
-                expected: true
-            },
-            {
-                node: nodeEntryNoPermissions,
-                infoKey: 'allowableOperations',
                 expected: false
             }
         ];
 
-        fixture.forEach((testData) => {
-            it(`should ${testData.expected ? '' : 'NOT '}allow selection for ${testData.node.name} (${testData.infoKey} = \'${testData.node[testData.infoKey]}\')`, () => {
+        const permissionFixture = [
+            {
+                node: nodeEntryWithRightPermissions,
+                expected: true
+            },
+            {
+                node: nodeEntryNoPermissions,
+                expected: false
+            }
+        ];
 
-                let testContentNodeSelectorComponentData;
-                spyOnDialogOpen.and.callFake((contentNodeSelectorComponent: any, config: any) => {
-                    testContentNodeSelectorComponentData = config.data;
-                    return {componentInstance: {}};
-                });
-                service.openCopyMoveDialog('fake-action', fakeNode, '!update');
+        let testContentNodeSelectorComponentData;
 
-                expect(spyOnDialogOpen.calls.count()).toEqual(1);
+        beforeEach(() => {
+            spyOnDialogOpen.and.callFake((contentNodeSelectorComponent: any, config: any) => {
+                testContentNodeSelectorComponentData = config.data;
+                return {componentInstance: {}};
+            });
+            service.openCopyMoveDialog('fake-action', fakeNode, '!update');
+        });
+
+        it('should NOT allow selection for sites', () => {
+            expect(spyOnDialogOpen.calls.count()).toEqual(1);
+            siteFixture.forEach((testData) => {
                 expect(testContentNodeSelectorComponentData.isSelectionValid(testData.node)).toBe(testData.expected);
             });
+        });
 
+        it('should allow selection only for nodes with the right permission', () => {
+            expect(spyOnDialogOpen.calls.count()).toEqual(1);
+            permissionFixture.forEach((testData) => {
+                expect(testContentNodeSelectorComponentData.isSelectionValid(testData.node)).toBe(testData.expected);
+            });
         });
     });
 
