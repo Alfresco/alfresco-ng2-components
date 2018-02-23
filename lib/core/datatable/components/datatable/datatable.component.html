@@ -33,7 +33,7 @@
         </div>
         <mat-form-field *ngIf="cardview">
             <mat-select [value]="getSortingKey()">
-                <mat-option *ngFor="let col of data.getColumns()"
+                <mat-option *ngFor="let col of getSortableColumns()"
                             [value]="col.key"
                             (click)="onColumnHeaderClick(col)"
                             (keyup.enter)="onColumnHeaderClick(col)">

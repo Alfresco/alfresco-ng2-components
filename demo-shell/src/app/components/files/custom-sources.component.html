@@ -8,17 +8,6 @@
             </mat-select>
         </mat-form-field>
     </adf-toolbar-title>
-
-    <div fxFlex="0 1 auto" class="adf-document-action-buttons" fxShow fxHide.lt-sm="true">
-        <button mat-icon-button
-                (restore)="documentList.reload()"
-                [disabled]="!documentList.selection.length"
-                *ngIf="selectedSource === '-trashcan-'"
-                location="/files"
-                [adf-restore]="documentList.selection">
-            <mat-icon>restore</mat-icon>
-        </button>
-    </div>
 </adf-toolbar>
 <adf-document-list
     [currentFolderId]="selectedSource"
