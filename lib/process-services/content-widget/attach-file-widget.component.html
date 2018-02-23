@@ -13,7 +13,7 @@
                         [multiple]="multipleOption"
                         type="file"
                         [id]="field.id"
-                        (change)="onFileChanged($event)" />
+                        (change)="onAttachFileChanged($event)" />
             </a>
         </div>
         <div class="adf-attach-widget__menu-upload" *ngIf="isUploadButtonVisible() && isMultipleSourceUpload()">
@@ -32,7 +32,7 @@
                             [multiple]="multipleOption"
                             type="file"
                             [id]="field.id"
-                            (change)="onFileChanged($event)" />
+                            (change)="onAttachFileChanged($event)" />
                 </button>
                 <button mat-menu-item
                         *ngIf="isDefinedSourceFolder()"
@@ -65,16 +65,30 @@
                  [id]="'file-'+file.id+'-icon'"
                  [src]="getIcon(file.mimeType)"
                  [alt]="mimeTypeIcon"
-                 (click)="fileClicked(file)"
-                 (keyup.enter)="fileClicked(file)"
+                 (click)="onAttachFileClicked(file)"
+                 (keyup.enter)="onAttachFileClicked(file)"
                  role="button"
                  tabindex="0"/>
-            <span matLine id="{{'file-'+file.id}}" (click)="fileClicked(file)" (keyup.enter)="fileClicked(file)"
+            <span matLine id="{{'file-'+file.id}}" (click)="onAttachFileClicked(file)" (keyup.enter)="onAttachFileClicked(file)"
                   role="button" tabindex="0" class="adf-file">{{file.name}}</span>
-            <button *ngIf="!field.readOnly" mat-icon-button [id]="'file-'+file.id+'-remove'"
-                    (click)="removeFile(file);" (keyup.enter)="removeFile(file);">
-                <mat-icon class="mat-24">highlight_off</mat-icon>
+            <button mat-icon-button [matMenuTriggerFor]="fileActionMenu">
+                <mat-icon>more_vert</mat-icon>
             </button>
+            <mat-menu #fileActionMenu="matMenu" xPosition="before">
+                <button mat-menu-item (click)="onAttachFileClicked(file)">
+                    <mat-icon>visibility</mat-icon>
+                    <span>Show</span>
+                </button>
+                <button mat-menu-item (click)="downloadContent(file)">
+                    <mat-icon>file_download</mat-icon>
+                    <span>Download</span>
+                </button>
+                <button *ngIf="!field.readOnly" mat-menu-item [id]="'file-'+file.id+'-remove'"
+                        (click)="onRemoveAttachFile(file);" (keyup.enter)="onRemoveAttachFile(file);">
+                    <mat-icon class="mat-24">highlight_off</mat-icon>
+                    <span>Remove</span>
+                </button>
+            </mat-menu>
         </mat-list-item>
     </mat-list>
 </div>
