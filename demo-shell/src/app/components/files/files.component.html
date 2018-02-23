@@ -9,7 +9,7 @@
             </mat-expansion-panel-header>
 
             <adf-document-list
-                [currentFolderId]="'-sharedlinks-'"
+                [currentFolderId]="'-recent-'"
                 locationFormat="/files"
                 [cardview]="true"
                 [showHeader]="false"
@@ -29,7 +29,7 @@
     </mat-accordion>
 
     <div class="adf-site-container-style" id="site-container">
-        <adf-sites-dropdown (change)="getSiteContent($event)" [hideMyFiles]="false">
+        <adf-sites-dropdown (change)="getSiteContent($event)" [hideMyFiles]="false" >
         </adf-sites-dropdown>
     </div>
     <div class="document-list-container" fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="16px">

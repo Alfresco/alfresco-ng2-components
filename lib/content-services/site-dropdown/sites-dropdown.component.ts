@@ -40,6 +40,10 @@ export class DropdownSitesComponent implements OnInit {
     @Input()
     siteList: SitePaging = null;
 
+    /** Id of the select site */
+    @Input()
+    value: string = null;
+
     /** Text or a translation key to act as a placeholder. */
     @Input()
     placeholder: string = 'DROPDOWN.PLACEHOLDER_LABEL';
@@ -50,33 +54,38 @@ export class DropdownSitesComponent implements OnInit {
     @Output()
     change: EventEmitter<SiteEntry> = new EventEmitter();
 
+    selected: SiteEntry = null;
+
     public MY_FILES_VALUE = 'default';
 
-    public siteSelected: string;
-
-    constructor(private sitesService: SitesService) {}
+    constructor(private sitesService: SitesService) {
+    }
 
     ngOnInit() {
         if (!this.siteList) {
-            this.setDefaultSiteList();
+            this.setDefaultSiteList().subscribe((result) => {
+                    this.selected = this.siteList.list.entries.find(site => site.entry.id === this.value);
+                },
+                (error) => {
+                });
         }
+
     }
 
-    selectedSite() {
-        let siteFound;
-        if (this.siteSelected === this.MY_FILES_VALUE) {
-           siteFound = { entry: {}};
-        } else {
-           siteFound = this.siteList.list.entries.find( site => site.entry.guid === this.siteSelected);
-        }
-        this.change.emit(siteFound);
+    selectedSite(event: any) {
+        this.change.emit(event.value);
     }
 
     setDefaultSiteList() {
-        this.sitesService.getSites().subscribe((result) => {
+        let sitesObservable = this.sitesService.getSites();
+
+        sitesObservable.subscribe((result) => {
                 this.siteList = result;
             },
-            (error) => {});
+            (error) => {
+            });
+
+        return sitesObservable;
     }
 
 }

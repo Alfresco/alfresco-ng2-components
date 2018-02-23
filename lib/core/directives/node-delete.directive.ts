@@ -57,9 +57,7 @@ export class NodeDeleteDirective implements OnChanges {
     @Input('adf-delete')
     selection: MinimalNodeEntity[] | DeletedNodeEntity[];
 
-    /** If true then the nodes are deleted immediately rather than being
-     * put in the trash.
-     */
+    /** If true then the nodes are deleted immediately rather than being put in the trash */
     @Input()
     permanent: boolean = false;
 
@@ -119,7 +117,7 @@ export class NodeDeleteDirective implements OnChanges {
 
         let promise;
 
-        if (node.entry.hasOwnProperty('archivedAt')) {
+        if (node.entry.hasOwnProperty('archivedAt') || this.permanent) {
             promise = this.alfrescoApiService.getInstance().nodes.purgeDeletedNode(id);
         } else {
             promise = this.alfrescoApiService.getInstance().nodes.deleteNode(id, { permanent: this.permanent });
