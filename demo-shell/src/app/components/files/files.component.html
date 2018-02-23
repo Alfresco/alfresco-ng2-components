@@ -245,11 +245,16 @@
                         (success)="onDeleteActionSuccess($event)"
                         handler="delete">
                     </content-action>
+                    <content-action
+                        icon="info"
+                        title="{{'DOCUMENT_LIST.ACTIONS.METADATA' | translate}}"
+                        (execute)="onManageMetadata($event)">
+                    </content-action>
                     <!-- document actions -->
                     <content-action
                         icon="storage"
                         target="document"
-                        title="Manage versions..."
+                        title="{{'DOCUMENT_LIST.ACTIONS.VERSIONS' | translate}}"
                         (execute)="onManageVersions($event)">
                     </content-action>
                     <content-action
@@ -281,6 +286,7 @@
         </adf-upload-drag-area>
 
         <adf-info-drawer-layout *ngIf="showVersions" class="adf-manage-versions-sidebar" fxFlex="0 0 auto">
+
             <div info-drawer-content>
                 <ng-container *ngIf="hasOneFileSelected();else choose_document_template">
                     <ng-container *ngIf="userHasPermissionToManageVersions(); else no_permission_to_versions">

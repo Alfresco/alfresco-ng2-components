@@ -9,6 +9,12 @@
         "TITLE": "Manage Versions"
       }
     },
+   "METADATA": {
+      "DIALOG": {
+        "CLOSE": "Close",
+        "TITLE": "Metadata"
+      }
+    },
     "APP_LAYOUT": {
         "APP_NAME": "ADF Demo Application",
         "HOME": "Home",
@@ -74,6 +80,8 @@
            "DELETE":"Delete"
          },
         "ACTIONS": {
+            "VERSIONS": "Manage versions",
+            "METADATA": "Info",
             "DOWNLOAD": "Download",
             "FOLDER": {
                 "COPY": "Copy",
