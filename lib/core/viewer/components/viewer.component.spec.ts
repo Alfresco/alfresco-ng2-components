@@ -38,6 +38,7 @@ import { ViewerMoreActionsComponent } from './viewer-more-actions.component';
 import { ViewerOpenWithComponent } from './viewer-open-with.component';
 import { ViewerSidebarComponent } from './viewer-sidebar.component';
 import { ViewerToolbarComponent } from './viewer-toolbar.component';
+import { ViewerToolbarActionsComponent } from './viewer-toolbar-actions.component';
 import { ViewerComponent } from './viewer.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import 'rxjs/add/observable/throw';
@@ -155,6 +156,7 @@ describe('ViewerComponent', () => {
                 ViewerToolbarComponent,
                 ViewerOpenWithComponent,
                 ViewerMoreActionsComponent,
+                ViewerToolbarActionsComponent,
                 ViewerWithCustomToolbarComponent,
                 ViewerWithCustomSidebarComponent,
                 ViewerWithCustomOpenWithComponent,
