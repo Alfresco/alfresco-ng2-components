@@ -91,8 +91,8 @@ const fakePngAnswer = {
     'previewStatus': 'queued',
     'thumbnailStatus': 'queued'
 };
-/*tslint:disable:ban*/
-fdescribe('AttachFileWidgetComponent', () => {
+
+describe('AttachFileWidgetComponent', () => {
 
     let widget: AttachFileWidgetComponent;
     let fixture: ComponentFixture<AttachFileWidgetComponent>;
