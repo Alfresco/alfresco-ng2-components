@@ -28,8 +28,9 @@ that the component is complete and suitable for normal use. The other status lev
 
 <!--guide start-->
 
--   [Form Extensibility and Customisation](extensibility.md)
 -   [Angular Material Design](angular-material-design.md)
+-   [Form Extensibility and Customisation](extensibility.md)
+-   [Internationalization in ADF](internationalization.md)
 -   [Theming](theming.md)
 -   [Typography](typography.md)
 -   [Walkthrough - adding indicators to highlight information about a node](metadata-indicators.md)
@@ -203,7 +204,6 @@ for more information about installing and using the source code.
 | [Version list component](version-list.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Displays the version history of a node in a [Version Manager component](version-manager.component.md) | [Source](../lib/content-services/version-manager/version-list.component.ts) |
 | [Version manager component](version-manager.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Displays the version history of a node with the ability to upload a new version. | [Source](../lib/content-services/version-manager/version-manager.component.ts) |
 | [Webscript component](webscript.component.md) | Provides access to Webscript features. | [Source](../lib/content-services/webscript/webscript.component.ts) |
-| _Empty search result component_ | _Not currently documented_ | [Source](../lib/content-services/search/components/empty-search-result.component.ts) |
 
 ## Directives
 
@@ -231,7 +231,6 @@ for more information about installing and using the source code.
 | [Folder actions service](folder-actions.service.md) | Implements the folder menu actions for the Document List component. | [Source](../lib/content-services/document-list/services/folder-actions.service.ts) |
 | [Rating service](rating.service.md) | Manages ratings for items in Content Services. | [Source](../lib/content-services/social/services/rating.service.ts) |
 | [Tag service](tag.service.md) | Manages tags in Content Services. | [Source](../lib/content-services/tag/services/tag.service.ts) |
-| _Property groups translator service_ | _Not currently documented_ | [Source](../lib/content-services/content-metadata/services/property-groups-translator.service.ts) |
 
 <!--content-services end-->
 
@@ -273,8 +272,6 @@ for more information about installing and using the source code.
 | [Task filters component](task-filters.component.md) | Shows all available filters. | [Source](../lib/process-services/task-list/components/task-filters.component.ts) |
 | [Task header component](task-header.component.md) | Shows all the information related to a task. | [Source](../lib/process-services/task-list/components/task-header.component.ts) |
 | [Task list component](task-list.component.md) | Renders a list containing all the tasks matched by the parameters specified. | [Source](../lib/process-services/task-list/components/task-list.component.ts) |
-| _People search field component_ | _Not currently documented_ | [Source](../lib/process-services/people/components/people-search-field/people-search-field.component.ts) |
-| _People selector component_ | _Not currently documented_ | [Source](../lib/process-services/people/components/people-selector/people-selector.component.ts) |
 
 ## Directives
 
@@ -282,8 +279,6 @@ for more information about installing and using the source code.
 | ---- | ----------- | ----------- |
 | [Process audit directive](process-audit.directive.md) | Fetches the Process Audit information in the pdf or json format. | [Source](../lib/process-services/process-list/components/process-audit.directive.ts) |
 | [Task audit directive](task-audit.directive.md) | Fetches the Task Audit information in the pdf or json format. | [Source](../lib/process-services/task-list/components/task-audit.directive.ts) |
-| _People search action label directive_ | _Not currently documented_ | [Source](../lib/process-services/people/directives/people-search-action-label.directive.ts) |
-| _People search title directive_ | _Not currently documented_ | [Source](../lib/process-services/people/directives/people-search-title.directive.ts) |
 
 ## Models
 
