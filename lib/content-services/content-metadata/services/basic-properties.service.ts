@@ -22,9 +22,17 @@ import { CardViewDateItemModel, CardViewTextItemModel, FileSizePipe } from '@alf
 @Injectable()
 export class BasicPropertiesService {
 
-    constructor(private fileSizePipe: FileSizePipe) {}
+    constructor(private fileSizePipe: FileSizePipe) {
+    }
 
     getProperties(node: MinimalNodeEntryEntity) {
+
+        const sizeInBytes = node.content ? node.content.sizeInBytes : '',
+            mimeTypeName = node.content ? node.content.mimeTypeName : '',
+            author = node.properties ? node.properties['cm:author'] : '',
+            description = node.properties ? node.properties['cm:description'] : '',
+            title = node.properties ? node.properties['cm:title'] : '';
+
         return [
             new CardViewTextItemModel({
                 label: 'CORE.METADATA.BASIC.NAME',
@@ -34,7 +42,7 @@ export class BasicPropertiesService {
             }),
             new CardViewTextItemModel({
                 label: 'CORE.METADATA.BASIC.TITLE',
-                value: node.properties['cm:title'],
+                value: title,
                 key: 'properties.cm:title',
                 editable: true
             }),
@@ -52,7 +60,7 @@ export class BasicPropertiesService {
             }),
             new CardViewTextItemModel({
                 label: 'CORE.METADATA.BASIC.SIZE',
-                value: node.content.sizeInBytes,
+                value: sizeInBytes,
                 key: 'content.sizeInBytes',
                 pipes: [{ pipe: this.fileSizePipe }],
                 editable: false
@@ -71,19 +79,19 @@ export class BasicPropertiesService {
             }),
             new CardViewTextItemModel({
                 label: 'CORE.METADATA.BASIC.MIMETYPE',
-                value: node.content.mimeTypeName,
+                value: mimeTypeName,
                 key: 'content.mimeTypeName',
                 editable: false
             }),
             new CardViewTextItemModel({
                 label: 'CORE.METADATA.BASIC.AUTHOR',
-                value: node.properties['cm:author'],
+                value: author,
                 key: 'properties.cm:author',
                 editable: true
             }),
             new CardViewTextItemModel({
                 label: 'CORE.METADATA.BASIC.DESCRIPTION',
-                value: node.properties['cm:description'],
+                value: description,
                 key: 'properties.cm:description',
                 multiline: true,
                 editable: true
