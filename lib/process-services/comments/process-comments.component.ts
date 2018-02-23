@@ -23,7 +23,7 @@ import { Observer } from 'rxjs/Observer';
 @Component({
     selector: 'adf-process-instance-comments',
     templateUrl: './process-comments.component.html',
-    styleUrls: ['./process-comments.component.css']
+    styleUrls: ['./process-comments.component.scss']
 })
 export class ProcessCommentsComponent implements OnChanges {
 

@@ -1,8 +1,10 @@
 @mixin adf-task-list-people-theme($theme) {
     $primary: map-get($theme, primary);
+    $foreground: map-get($theme, foreground);
+    $header-border: 1px solid mat-color($foreground, divider);
 
     .assignment-header {
-        border-bottom: 1px solid #eee;
+        border-bottom: $header-border;
         padding: 6px 20px;
     }
 
@@ -25,7 +27,7 @@
     }
 
     .assignment-top-container.mat-card {
-        border-top: 2px solid #eee;
+        border-top: $header-border;
         margin: 0px;
         padding: 0px;
         display: flex;
@@ -43,7 +45,7 @@
 
     .assignment-container {
         padding: 10px 20px;
-        border-bottom: 1px solid #eee;
+        border-bottom: $header-border;
         max-width: 100%;
     }
 
@@ -76,7 +78,6 @@
     }
 
     .adf-people-search-people-pic {
-        background: mat-color($primary);
         width: 30px;
         padding: 10px 5px;
         border-radius: 100px;

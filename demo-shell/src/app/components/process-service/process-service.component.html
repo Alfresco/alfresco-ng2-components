@@ -74,7 +74,7 @@
                                            (assignTask)="onAssignTask()"
                                            (taskDeleted)="onTaskDeleted($event)">
                     </adf-task-details>
-                    <hr>
+                    <mat-divider></mat-divider>
                     <div *ngIf="currentTaskId">
                         {{'PS-TAB.TASK-AUDIT-LOG' | translate}}
                         <button
@@ -84,7 +84,7 @@
                             mat-icon-button (clicked)="onAuditClick($event)" (error)="onAuditError($event)">
                             <mat-icon>assignment_ind</mat-icon>
                         </button>
-                        <hr>
+                        <mat-divider></mat-divider>
                     </div>
                     <mat-card>
                         <mat-card-content>
@@ -168,7 +168,7 @@
                         (showProcessDiagram)="onShowProcessDiagram($event)"
                         (taskClick)="onProcessDetailsTaskClick($event)">
                     </adf-process-instance-details>
-                    <hr>
+                    <mat-divider></mat-divider>
                     <div *ngIf="currentProcessInstanceId">
                         {{'PS-TAB.PROCESS-AUDIT-LOG' | translate}}
                         <button adf-process-audit
@@ -179,7 +179,7 @@
                                 (error)="onAuditError($event)">
                             <mat-icon>assignment_ind</mat-icon>
                         </button>
-                        <hr>
+                        <mat-divider></mat-divider>
                     </div>
                     <mat-card>
                         <mat-card-content>
@@ -205,7 +205,7 @@
         <div class="adf-grid" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="stretch">
             <div class="adf-grid-item adf-reports-menu" fxFlex.gt-md="300px">
                 <span><h5>Report List</h5></span>
-                <hr>
+                <mat-divider></mat-divider>
                 <analytics-report-list
                     [appId]="appId"
                     [selectFirst]="selectFirstReport"

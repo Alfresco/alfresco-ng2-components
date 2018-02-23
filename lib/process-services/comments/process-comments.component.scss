@@ -1,0 +1,62 @@
+@mixin adf-process-comment-theme($theme) {
+    $foreground: map-get($theme, foreground);
+    $header-border: 1px solid mat-color($foreground, divider);
+
+    :host {
+        width: 100%;
+    }
+
+    .activiti-label {
+        font-weight: bolder;
+        vertical-align: top;
+    }
+
+    .activiti-label + .icon {
+        position: relative;
+        top: -2px;
+    }
+
+    .list-wrap {
+        word-wrap: break-word;
+        word-break: break-all;
+        -moz-hyphens: auto;
+        -webkit-hyphens: auto;
+        -o-hyphens: auto;
+        hyphens: auto;
+    }
+
+    .hide-long-names {
+        overflow: auto;
+    }
+
+    .adf-comments-container {
+        height: 100%;
+        width: 100%;
+        overflow: auto;
+    }
+
+    .adf-comments-header {
+        padding: 10px 20px;
+        font-size: 14px;
+        font-weight: 600;
+        border-bottom: $header-border;
+    }
+
+    .adf-comments-input-container {
+        padding: 0 15px;
+        width: calc(100% - 30px);
+        padding-top: 8px;
+        border-bottom: $header-border;
+    }
+
+    .adf-full-width {
+        width: 100%;
+    }
+
+    adf-comment-list {
+        float: left;
+        overflow: auto;
+        height: calc(100% - 101px);
+        width: 100%;
+    }
+}
