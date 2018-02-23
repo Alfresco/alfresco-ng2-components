@@ -18,6 +18,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { SitesService } from '@alfresco/adf-core';
 import { SitePaging, SiteEntry } from 'alfresco-js-api';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
     selector: 'adf-sites-dropdown',
@@ -76,7 +77,7 @@ export class DropdownSitesComponent implements OnInit {
         this.change.emit(event.value);
     }
 
-    setDefaultSiteList() {
+    private setDefaultSiteList(): Observable<SitePaging> {
         let sitesObservable = this.sitesService.getSites();
 
         sitesObservable.subscribe((result) => {
