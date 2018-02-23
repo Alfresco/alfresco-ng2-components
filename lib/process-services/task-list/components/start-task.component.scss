@@ -2,11 +2,13 @@
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
     $warn: map-get($theme, warn);
+    $foreground: map-get($theme, foreground);
+    $header-border: 1px solid mat-color($foreground, divider);
 
     .adf-new-task-heading {
         padding: 12px 20px;
         font-weight: bold;
-        border-bottom: 1px solid #eee;
+        border-bottom: $header-border;
         font-size: 18px;
         float: left;
         text-align: left;

@@ -88,7 +88,7 @@ export class ContentNodeDialogService {
                 currentFolderId: contentEntry.parentId,
                 imageResolver: this.imageResolver.bind(this),
                 rowFilter : this.rowFilter.bind(this, contentEntry.id),
-                isSelectionValid: this.hasEntityCreatePermission.bind(this),
+                isSelectionValid: this.isCopyMoveSelectionValid.bind(this),
                 select: select
             };
 
@@ -188,8 +188,16 @@ export class ContentNodeDialogService {
         return entry.isFolder;
     }
 
+    private isCopyMoveSelectionValid(entry: MinimalNodeEntryEntity): boolean {
+        return this.hasEntityCreatePermission(entry) && !this.isSite(entry);
+    }
+
     private hasEntityCreatePermission(entry: MinimalNodeEntryEntity): boolean {
         return this.contentService.hasPermission(entry, 'create');
+    }
+
+    private isSite(entry) {
+        return !!entry.guid || entry.nodeType === 'st:site' || entry.nodeType === 'st:sites';
     }
 
     /** Closes the currently open dialog. */

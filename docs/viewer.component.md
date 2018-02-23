@@ -19,7 +19,7 @@ See it live: [Viewer Quickstart](https://embed.plnkr.co/iTuG1lFIXfsP95l6bDW6/)
 
     -   [Integrating with DocumentList component](#integrating-with-documentlist-component)
     -   [Supported file formats](#supported-file-formats)
-    -   [PDF Conversion](#pdf-conversion)
+    -   [Content renditions](#content-renditions)
     -   [Configuring PDF.js library](#configuring-pdfjs-library)
     -   [Custom toolbar](#custom-toolbar)
     -   [Custom sidebar](#custom-sidebar)
@@ -253,6 +253,31 @@ You can replace standard viewer toolbar with your custom implementation.
 ```
 
 Everything you put inside the "adf-viewer-toolbar" tags is going to be rendered instead of the toolbar.
+
+### Custom toolbar buttons
+
+If you are okay with the custom toolbar behaviour but want to add some extra buttons,
+you can do that like in the following example:
+
+```html
+<adf-viewer>
+    <adf-viewer-toolbar-actions>
+        <button mat-icon-button>
+            <mat-icon>alarm</mat-icon>
+        </button>
+        <button mat-icon-button>
+            <mat-icon>backup</mat-icon>
+        </button>
+        <button mat-icon-button>
+            <mat-icon>bug_report</mat-icon>
+        </button>
+    </adf-viewer-toolbar-actions>
+</adf-viewer>
+```
+
+You should now see the following result at runtime:
+
+![Custom Toolbar Actions](docassets/images/viewer-toolbar-actions.png)
 
 ### Custom sidebar
 

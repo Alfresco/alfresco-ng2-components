@@ -165,7 +165,7 @@ adf-tasklist also supports pagination and the same can be used as shown below.
 | hasIcon | boolean | true | Toggle the icon on the left . |
 | landingTaskId | string |  | Define which task id should be selected after the reloading. If the task id doesn't exist or nothing is passed it will select the first task |
 | sort | string |  | Define the sort of the processes. Possible values are : `created-desc`, `created-asc`, `due-desc`, `due-asc` |
-| data | [DataTableAdapter](DataTableAdapter.md) |  | JSON object that represent the number and the type of the columns that you want show (see the [example](#datatableadapter-example) section below) |
+| data | [DataTableAdapter](datatable-adapter.interface.md) |  | JSON object that represent the number and the type of the columns that you want show (see the [example](#datatableadapter-example) section below) |
 
 ### Events
 
@@ -182,7 +182,7 @@ render details of any chosen instance.
 
 ### DataTableAdapter example
 
-See the [DataTableAdapter](DataTableAdapter.md) page for full details of the interface and its standard
+See the [DataTableAdapter](datatable-adapter.interface.md) page for full details of the interface and its standard
 implementation, ObjectDataTableAdapter. Below is an example of how you can set up the adapter for a
 typical tasklist.
 
@@ -202,5 +202,5 @@ You can customize the styling of a column and also add features like tooltips an
 ## See also
 
 -   [Data column component](data-column.component.md)
--   [DataTableAdapter](DataTableAdapter.md)
+-   [DataTableAdapter](datatable-adapter.interface.md)
 -   [Pagination component](pagination.component.md)

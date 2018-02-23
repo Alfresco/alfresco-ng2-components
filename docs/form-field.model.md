@@ -47,7 +47,7 @@ Contains the value and metadata for a field of an [ADF Form](form.component.md).
 | fields | FormFieldModel\[] | \[] | Fields contained within a container field |
 | columns | ContainerColumnModel\[] | \[] | Column definitions for a container field |
 | emptyOption | FormFieldOption |  | Dropdown menu item to use when no option is chosen |
-| validationSummary | string |  | Error/information message added during field validation (see [FormFieldValidator](FormFieldValidator.md) interface) |
+| validationSummary | string |  | Error/information message added during field validation (see [FormFieldValidator](form-field-validator.interface.md) interface) |
 
 ## Details
 
@@ -70,7 +70,7 @@ check to a field. A number of `FormFieldModel` properties are used by validators
 example, `minValue` and `maxValue` are used to check that a numeric value falls within an
 allowed range and `regexPattern` defines a regular expression that a text field should
 match. Also, the `validationSummary` is used to send a message back from the validator
-for the user to read. See the [FormFieldValidator](FormFieldValidator.md) page for more information about implementing validators.
+for the user to read. See the [FormFieldValidator](form-field-validator.interface.md) page for more information about implementing validators.
 
 ### REST properties
 
@@ -94,6 +94,6 @@ contains full details about how the REST calls work, along with a worked example
 ## See also
 
 -   [Extensibility](extensibility.md)
--   [FormFieldValidator](FormFieldValidator.md)
+-   [FormFieldValidator](form-field-validator.interface.md)
 -   [Form rendering service](form-rendering.service.md)
 -   [Form component](form.component.md)

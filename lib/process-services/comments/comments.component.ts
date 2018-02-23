@@ -23,7 +23,7 @@ import { Observer } from 'rxjs/Observer';
 @Component({
     selector: 'adf-comments',
     templateUrl: './comments.component.html',
-    styleUrls: ['./comments.component.css']
+    styleUrls: ['./comments.component.scss']
 })
 export class CommentsComponent implements OnChanges {
 
