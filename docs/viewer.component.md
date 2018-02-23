@@ -19,7 +19,7 @@ See it live: [Viewer Quickstart](https://embed.plnkr.co/iTuG1lFIXfsP95l6bDW6/)
 
     -   [Integrating with DocumentList component](#integrating-with-documentlist-component)
     -   [Supported file formats](#supported-file-formats)
-    -   [PDF Conversion](#pdf-conversion)
+    -   [Content renditions](#content-renditions)
     -   [Configuring PDF.js library](#configuring-pdfjs-library)
     -   [Custom toolbar](#custom-toolbar)
     -   [Custom sidebar](#custom-sidebar)

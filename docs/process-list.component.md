@@ -142,5 +142,5 @@ Example value for the schemaColumn property (see [Properties](#properties) secti
 ## See also
 
 -   [Data column component](data-column.component.md)
--   [DataTableAdapter](DataTableAdapter.md)
+-   [DataTableAdapter](datatable-adapter.interface.md)
 -   [Pagination component](pagination.component.md)
