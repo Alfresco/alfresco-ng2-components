@@ -277,7 +277,7 @@ describe('AttachFileWidgetComponent', () => {
             });
         }));
 
-        it('should show the choice menu', async(() => {
+        it('should show the action menu', async(() => {
             let menuButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#file-1155-option-menu');
             expect(menuButton).not.toBeNull();
             menuButton.click();

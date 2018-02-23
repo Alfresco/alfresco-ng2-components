@@ -110,7 +110,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
             !!this.field.params.fileSource.selectedFolder;
     }
 
-    isATemporaryFile(file): boolean {
+    isTemporaryFile(file): boolean {
         return this.tempFilesList.indexOf(file) !== -1 ? true : false;
     }
 
@@ -132,14 +132,14 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     }
 
     onRemoveAttachFile(file: any) {
-        if (this.isATemporaryFile(file.contentBlob)) {
+        if (this.isTemporaryFile(file.contentBlob)) {
             this.tempFilesList.splice(this.tempFilesList.indexOf(file.contentBlob), 1);
         }
         this.removeFile(file);
     }
 
     onAttachFileClicked(file: any) {
-        if (this.isATemporaryFile(file.contentBlob)) {
+        if (this.isTemporaryFile(file.contentBlob)) {
             this.formService.formContentClicked.next(file);
         } else {
             this.fileClicked(file);
@@ -147,7 +147,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     }
 
     downloadContent(file: any): void {
-        if (this.isATemporaryFile(file.contentBlob)) {
+        if (this.isTemporaryFile(file.contentBlob)) {
             this.contentService.downloadBlob(file.contentBlob, file.name);
         } else {
             this.processContentService.getFileRawContent(file.id).subscribe(
