@@ -105,9 +105,9 @@ Every cell in the DataTable component is bound to the dynamic data context conta
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| data | [DataTableAdapter](DataTableAdapter.md) | Data adapter instance. |
-| row | [DataRow](DataTableAdapter.md) | Current data row instance. |
-| col | [DataColumn](DataTableAdapter.md) | Current data column instance. |
+| data | [DataTableAdapter](datatable-adapter.interface.md) | Data adapter instance. |
+| row | [DataRow](datatable-adapter.interface.md) | Current data row instance. |
+| col | [DataColumn](datatable-adapter.interface.md) | Current data column instance. |
 
 You can use all three properties to gain full access to underlying data from within your custom templates. 
 In order to wire HTML templates with the data context you will need defining a variable that is bound to `$implicit` like shown below:

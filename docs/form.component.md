@@ -11,7 +11,6 @@ Shows a Form from APS (see it live: [Form Quickstart](https://embed.plnkr.co/YSL
 -   [Basic Usage](#basic-usage)
 
     -   [Properties](#properties)
-    -   [Advanced properties](#advanced-properties)
     -   [Events](#events)
 
 -   [Details](#details)
@@ -233,7 +232,7 @@ property. Each validator implements checks for a particular type of data (eg, a
 date validator might check that the date in the field falls between 1980 and 2017).
 ADF supplies a standard set of validators that handle most common cases but you can
 also implement your own custom validators to replace or extend the set. See the
-[FormFieldValidator](FormFieldValidator.md) class for full details and examples.
+[FormFieldValidator](form-field-validator.interface.md) class for full details and examples.
 
 ## Other documentation
 
@@ -310,7 +309,7 @@ Using the CSS you can target any outcome ID and change the style as in this exam
 ## See also
 
 -   [Stencils](stencils.md)
--   [FormFieldValidator](FormFieldValidator.md)
+-   [FormFieldValidator](form-field-validator.interface.md)
 -   [Extensibility](extensibility.md)
 -   [Form rendering service](form-rendering.service.md)
 -   [Form field model](form-field.model.md)
