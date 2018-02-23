@@ -1,5 +1,33 @@
 <div class="container">
 
+    <mat-accordion class="adf-container-recent">
+        <mat-expansion-panel  hideToggle="true">
+            <mat-expansion-panel-header >
+                <mat-panel-title>
+                    {{ 'DOCUMENT_LIST.RECENT.TITLE' | translate }}<mat-icon>history</mat-icon>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <adf-document-list
+                [currentFolderId]="'-sharedlinks-'"
+                locationFormat="/files"
+                [cardview]="true"
+                [showHeader]="false"
+                [maxItems]="5"
+                (preview)="showFile($event)"
+                selectionMode="null">
+                <empty-folder-content>
+                    <ng-template>
+                        <div class="empty-list__block">
+                            <mat-icon>history</mat-icon>
+                            <p class="empty-list__title">{{ 'DOCUMENT_LIST.RECENT.EMPTY_STATE.TITLE' | translate}}</p>
+                        </div>
+                    </ng-template>
+                </empty-folder-content>
+            </adf-document-list>
+        </mat-expansion-panel>
+    </mat-accordion>
+
     <div class="adf-site-container-style" id="site-container">
         <adf-sites-dropdown (change)="getSiteContent($event)" [hideMyFiles]="false">
         </adf-sites-dropdown>

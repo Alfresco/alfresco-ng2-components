@@ -17,25 +17,27 @@
             <button
                 mat-icon-button
                 (selection-node-restored)="refresh()"
+                (restore)="documentList.reload()"
                 [adf-restore]="documentList.selection"
                 *ngIf="documentList.selection.length"
                 title="{{ 'TRASHCAN.ACTIONS.RESTORE' | translate }}">
                 <mat-icon>restore</mat-icon>
-           </button>
+            </button>
         </adf-toolbar>
     </div>
 
     <div class="inner-layout__content">
 
         <adf-document-list #documentList
-            [attr.class]="documentList.isEmpty() ? 'empty-list' : ''"
-            currentFolderId="-trashcan-"
-            selectionMode="multiple"
-            [navigate]="false"
-            locationFormat="/files"
-            [sorting]="[ 'archivedAt', 'desc' ]"
-            [contextMenuActions]="true"
-            [contentActions]="false">
+                           [attr.class]="documentList.isEmpty() ? 'empty-list' : ''"
+                           currentFolderId="-trashcan-"
+                           selectionMode="multiple"
+                           [multiselect]="true"
+                           [navigate]="false"
+                           locationFormat="/files"
+                           [sorting]="[ 'archivedAt', 'desc' ]"
+                           [contextMenuActions]="true"
+                           [contentActions]="false">
 
             <empty-folder-content>
                 <ng-template>
@@ -90,7 +92,7 @@
 
         </adf-document-list>
         <adf-pagination [ngClass]="{ 'no-border' : documentList.isEmpty()}"
-            [target]="documentList">
+                        [target]="documentList">
         </adf-pagination>
     </div>
 </div>
