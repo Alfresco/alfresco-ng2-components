@@ -46,5 +46,9 @@
     "task-upload",
     "aspect-whitelist",
     "basic-properties",
-    "content-metadata"
+    "content-metadata",
+    "empty-search-result",
+    "property-group",
+    "people-search-",
+    "people-selector"
 ]
