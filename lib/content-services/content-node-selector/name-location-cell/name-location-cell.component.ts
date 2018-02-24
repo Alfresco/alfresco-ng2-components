@@ -15,29 +15,36 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { DataTableCellComponent } from '@alfresco/adf-core';
+import { Input, ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { DataRow } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-name-location-cell',
     template: `
-    <div class="adf-name-location-cell-name">{{ name }}</div>
-    <div class="adf-name-location-cell-location" [title]="path?.name">{{ path?.name }}</div>
+        <div class="adf-name-location-cell-name">{{ name }}</div>
+        <div class="adf-name-location-cell-location" [title]="path">{{ path }}</div>
     `,
     styleUrls: ['./name-location-cell.component.scss'],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: { class: 'adf-name-location-cell' }
 })
-export class NameLocationCellComponent extends DataTableCellComponent implements OnInit {
+export class NameLocationCellComponent implements OnInit {
 
-    path: string = '';
     name: string = '';
+    path: string = '';
+
+    @Input()
+    row: DataRow;
 
     ngOnInit() {
         if (this.row) {
-            this.path = this.row.getValue('path');
             this.name = this.row.getValue('name');
+
+            const fullPath = this.row.getValue('path');
+            if (fullPath) {
+                this.path = fullPath.name || '';
+            }
         }
     }
 }
