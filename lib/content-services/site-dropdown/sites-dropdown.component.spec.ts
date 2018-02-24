@@ -122,7 +122,11 @@ describe('DropdownSitesComponent', () => {
         it('should show the "My files" option by default', async(() => {
             component.hideMyFiles = false;
             fixture.detectChanges();
-            jasmine.Ajax.requests.mostRecent().respondWith({ status: 200, contentType: 'json', responseText: sitesList });
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: sitesList
+            });
 
             openSelectbox();
 
@@ -135,7 +139,11 @@ describe('DropdownSitesComponent', () => {
         it('should hide the "My files" option if the developer desires that way', async(() => {
             component.hideMyFiles = true;
             fixture.detectChanges();
-            jasmine.Ajax.requests.mostRecent().respondWith({ status: 200, contentType: 'json', responseText: sitesList });
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: sitesList
+            });
 
             openSelectbox();
 
@@ -147,7 +155,11 @@ describe('DropdownSitesComponent', () => {
 
         it('should show the default placeholder label by default', async(() => {
             fixture.detectChanges();
-            jasmine.Ajax.requests.mostRecent().respondWith({ status: 200, contentType: 'json', responseText: sitesList });
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: sitesList
+            });
 
             openSelectbox();
 
@@ -160,7 +172,11 @@ describe('DropdownSitesComponent', () => {
         it('should show custom placeholder label when the \'placeholder\' input property is given a value', async(() => {
             component.placeholder = 'NODE_SELECTOR.SELECT_LOCATION';
             fixture.detectChanges();
-            jasmine.Ajax.requests.mostRecent().respondWith({ status: 200, contentType: 'json', responseText: sitesList });
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: sitesList
+            });
 
             openSelectbox();
 
@@ -203,9 +219,8 @@ describe('DropdownSitesComponent', () => {
             });
 
             component.change.subscribe(() => {
-                expect(options[0].attributes['ng-reflect-value']).toBe('default');
-                expect(options[1].attributes['ng-reflect-value']).toBe('-my-');
-                expect(options[2].attributes['ng-reflect-value']).toBe('-mysites-');
+                expect(options[1].nativeElement.innerText).toContain('PERSONAL_FILES');
+                expect(options[2].nativeElement.innerText).toContain('FILE_LIBRARIES');
             });
         }));
 
@@ -228,9 +243,8 @@ describe('DropdownSitesComponent', () => {
             });
 
             component.change.subscribe(() => {
-                expect(options[0].attributes['ng-reflect-value']).toBe('default');
-                expect(options[1].attributes['ng-reflect-value']).toBe('fake-1');
-                expect(options[2].attributes['ng-reflect-value']).toBe('fake-2');
+                expect(options[1].nativeElement.innerText).toContain('fake-test-site');
+                expect(options[2].nativeElement.innerText).toContain('fake-test-2');
 
                 done();
             });
@@ -249,7 +263,7 @@ describe('DropdownSitesComponent', () => {
                 debug.query(By.css('.mat-select-trigger')).triggerEventHandler('click', null);
                 fixture.detectChanges();
                 let options: any = debug.queryAll(By.css('mat-option'));
-                options[1].triggerEventHandler('click', null);
+                options[1].nativeElement.click();
                 fixture.detectChanges();
             });
 
@@ -258,5 +272,22 @@ describe('DropdownSitesComponent', () => {
                 done();
             });
         });
+
+        it('should be possiblle to select the default value', (done) => {
+            component.value = 'swsdp';
+            fixture.detectChanges();
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: sitesList
+            });
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                expect(component.selected.entry.title).toBe('fake-test-2');
+                done();
+            });
+        });
+
     });
 });
