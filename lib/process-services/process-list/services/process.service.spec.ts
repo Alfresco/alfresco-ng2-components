@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { TestBed } from '@angular/core/testing';
 import { async } from '@angular/core/testing';
 import { AlfrescoApi } from 'alfresco-js-api';
 import { AlfrescoApiService } from '@alfresco/adf-core';
@@ -24,6 +23,7 @@ import { mockError, fakeProcessDef, fakeTasksList } from '../../mock';
 import { ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessService } from './process.service';
+import { AlfrescoApiService, LogService, AppConfigService, StorageService } from '@alfresco/adf-core';
 
 declare let moment: any;
 
@@ -34,13 +34,8 @@ describe('ProcessService', () => {
     let alfrescoApi: AlfrescoApi;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            providers: [
-                ProcessService
-            ]
-        });
-        service = TestBed.get(ProcessService);
-        apiService = TestBed.get(AlfrescoApiService);
+        apiService = new AlfrescoApiService(new AppConfigService(), new StorageService() );
+        service = new ProcessService(apiService, new LogService());
         alfrescoApi = apiService.getInstance();
     });
 

@@ -22,6 +22,7 @@ import { AlfrescoApiService } from '@alfresco/adf-core';
 import { mockError, fakeProcessFilters } from '../../mock';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterService } from './process-filter.service';
+import { AlfrescoApiService, LogService, AppConfigService, StorageService } from '@alfresco/adf-core';
 
 declare let jasmine: any;
 
@@ -32,14 +33,8 @@ describe('Process filter', () => {
     let alfrescoApi: AlfrescoApi;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({
-
-            providers: [
-                ProcessFilterService
-            ]
-        });
-        service = TestBed.get(ProcessFilterService);
-        apiService = TestBed.get(AlfrescoApiService);
+        apiService = new AlfrescoApiService(new AppConfigService(), new StorageService() );
+        service = new ProcessFilterService(apiService, new LogService());
         alfrescoApi = apiService.getInstance();
     });
 
