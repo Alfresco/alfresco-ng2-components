@@ -1,10 +1,6 @@
 @mixin adf-process-attachment-list-theme($theme) {
 
-    adf-datatable ::ng-deep th span {
-        color: #232323;
-    }
-
-    adf-datatable ::ng-deep .data-cell {
+    .data-cell {
         cursor: pointer !important;
     }
 
@@ -19,7 +15,6 @@
         font-size: 24px;
         line-height: 1.33;
         letter-spacing: -1px;
-        color: #000000;
     }
 
     .adf-empty-list-drag_drop {
@@ -28,7 +23,6 @@
         font-size: 56px;
         line-height: 1;
         letter-spacing: -2px;
-        color: #000000;
         margin-top: 40px !important;
         word-break: break-all;
         white-space: pre-line;
@@ -40,7 +34,6 @@
         font-size: 16px;
         line-height: 1.5;
         letter-spacing: -0.4px;
-        color: #000000;
         margin-top: 17px;
         word-break: break-all;
         white-space: pre-line;
