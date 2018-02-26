@@ -1,6 +1,8 @@
 <adf-datatable
+    class="adf-task-people-list"
     [rows]="users"
     [actions]="hasActions()"
+    [showHeader]="false"
     (rowClick)="selectUser($event)"
     (rowDblClick)="selectUser($event)"
     (showRowActionsMenu)="onShowRowActionsMenu($event)"

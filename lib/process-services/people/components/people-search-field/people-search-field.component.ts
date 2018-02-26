@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { UserProcessModel, TranslationService } from '@alfresco/adf-core';
+import { UserProcessModel, TranslationService, PeopleProcessService } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
@@ -47,7 +47,8 @@ export class PeopleSearchFieldComponent {
 
     defaultPlaceholder = 'ADF_TASK_LIST.PEOPLE.SEARCH_USER';
 
-    constructor(private translationService: TranslationService) {
+    constructor(public peopleProcessService: PeopleProcessService,
+                private translationService: TranslationService) {
         this.users$ = this.searchUser.valueChanges
             .pipe(debounceTime(200))
             .switchMap((searchWord: string) => {
