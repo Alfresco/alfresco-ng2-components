@@ -29,7 +29,8 @@ import {
     LogService,
     ThumbnailService,
     SitesService,
-    FormFieldMetadata
+    FormFieldMetadata,
+    ContentService
 } from '@alfresco/adf-core';
 import { ContentNodeDialogService, DocumentListService } from '@alfresco/adf-content-services';
 import { MaterialModule } from '../material.module';
@@ -99,6 +100,8 @@ describe('AttachFileWidgetComponent', () => {
     let activitiContentService: ActivitiContentService;
     let contentNodeDialogService: ContentNodeDialogService;
     let processContentService: ProcessContentService;
+    let contentService: ContentService;
+    let formService: FormService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -113,7 +116,8 @@ describe('AttachFileWidgetComponent', () => {
                         LogService,
                         SitesService,
                         DocumentListService,
-                        ContentNodeDialogService
+                        ContentNodeDialogService,
+                        ContentService
                     ]
         }).compileComponents().then(() => {
             fixture = TestBed.createComponent(AttachFileWidgetComponent);
@@ -122,6 +126,8 @@ describe('AttachFileWidgetComponent', () => {
             activitiContentService = TestBed.get(ActivitiContentService);
             contentNodeDialogService = TestBed.get(ContentNodeDialogService);
             processContentService = TestBed.get(ProcessContentService);
+            contentService = TestBed.get(ContentService);
+            formService = TestBed.get(FormService);
         });
     }));
 
@@ -133,7 +139,8 @@ describe('AttachFileWidgetComponent', () => {
         expect(widget).not.toBeNull();
     });
 
-    it('should show up as simple upload when is configured for only local files', () => {
+    it('should show up as simple upload when is configured for only local files', async(() => {
+        spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(Observable.of(null));
         widget.field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.UPLOAD,
             value: []
@@ -141,103 +148,187 @@ describe('AttachFileWidgetComponent', () => {
         widget.field.id = 'simple-upload-button';
         widget.field.params = <FormFieldMetadata> onlyLocalParams;
         fixture.detectChanges();
-        expect(element.querySelector('#simple-upload-button')).not.toBeNull();
-    });
+        fixture.whenStable().then(() => {
+            expect(element.querySelector('#simple-upload-button')).not.toBeNull();
+        });
+    }));
 
-    it('should show up all the repository option on menu list', () => {
+    it('should show up all the repository option on menu list', async(() => {
         widget.field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.UPLOAD,
             value: []
         });
         widget.field.id = 'attach-file-attach';
-        widget.field.params = <FormFieldMetadata>  allSourceParams;
+        widget.field.params = <FormFieldMetadata> allSourceParams;
         spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(Observable.of(fakeRepositoryListAnswer));
         fixture.detectChanges();
+        fixture.whenRenderingDone().then(() => {
+            let attachButton: HTMLButtonElement = element.querySelector('#attach-file-attach');
+            expect(attachButton).not.toBeNull();
+            attachButton.click();
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(fixture.debugElement.queryAll(By.css('#attach-local-file'))).not.toBeNull();
+                expect(fixture.debugElement.queryAll(By.css('#attach-local-file'))).not.toBeUndefined();
+                expect(fixture.debugElement.queryAll(By.css('#attach-SHAREME'))).not.toBeNull();
+                expect(fixture.debugElement.queryAll(By.css('#attach-SHAREME'))).not.toBeUndefined();
+                expect(fixture.debugElement.queryAll(By.css('#attach-GOKUSHARE'))).not.toBeNull();
+                expect(fixture.debugElement.queryAll(By.css('#attach-GOKUSHARE'))).not.toBeUndefined();
+            });
+        });
+    }));
 
-        let attachButton: HTMLButtonElement = element.querySelector('#attach-file-attach');
-        expect(attachButton).not.toBeNull();
-        attachButton.click();
-        fixture.detectChanges();
-
-        expect(fixture.debugElement.queryAll(By.css('#attach-local-file'))).not.toBeNull();
-        expect(fixture.debugElement.queryAll(By.css('#attach-local-file'))).not.toBeUndefined();
-        expect(fixture.debugElement.queryAll(By.css('#attach-SHAREME'))).not.toBeNull();
-        expect(fixture.debugElement.queryAll(By.css('#attach-SHAREME'))).not.toBeUndefined();
-        expect(fixture.debugElement.queryAll(By.css('#attach-GOKUSHARE'))).not.toBeNull();
-        expect(fixture.debugElement.queryAll(By.css('#attach-GOKUSHARE'))).not.toBeUndefined();
-    });
-
-    it('should be able to upload files coming from content node selector', () => {
+    it('should be able to upload files coming from content node selector', async(() => {
         widget.field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.UPLOAD,
             value: []
         });
         widget.field.id = 'attach-file-attach';
-        widget.field.params = <FormFieldMetadata>  allSourceParams;
+        widget.field.params = <FormFieldMetadata> allSourceParams;
         spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(Observable.of(fakeRepositoryListAnswer));
         spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValue(Observable.of(fakePngAnswer));
         spyOn(contentNodeDialogService, 'openFileBrowseDialogBySite').and.returnValue(Observable.of([fakeMinimalNode]));
         fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            let attachButton: HTMLButtonElement = element.querySelector('#attach-file-attach');
+            expect(attachButton).not.toBeNull();
+            attachButton.click();
+            fixture.detectChanges();
+            fixture.debugElement.query(By.css('#attach-SHAREME')).nativeElement.click();
+            fixture.detectChanges();
 
-        let attachButton: HTMLButtonElement = element.querySelector('#attach-file-attach');
-        expect(attachButton).not.toBeNull();
-        attachButton.click();
-        fixture.detectChanges();
-        fixture.debugElement.query(By.css('#attach-SHAREME')).nativeElement.click();
-        fixture.detectChanges();
+            expect(element.querySelector('#file-1155-icon')).not.toBeNull();
+        });
+    }));
 
-        expect(element.querySelector('#file-1155-icon')).not.toBeNull();
-    });
-
-    it('should be able to upload files when a defined folder is selected', () => {
+    it('should be able to upload files when a defined folder is selected', async(() => {
         widget.field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.UPLOAD,
             value: []
         });
         widget.field.id = 'attach-file-attach';
-        widget.field.params = <FormFieldMetadata>  definedSourceParams;
+        widget.field.params = <FormFieldMetadata> definedSourceParams;
         spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(Observable.of(fakeRepositoryListAnswer));
         spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValue(Observable.of(fakePngAnswer));
         spyOn(contentNodeDialogService, 'openFileBrowseDialogByFolderId').and.returnValue(Observable.of([fakeMinimalNode]));
         fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            let attachButton: HTMLButtonElement = element.querySelector('#attach-file-attach');
+            expect(attachButton).not.toBeNull();
+            attachButton.click();
+            fixture.detectChanges();
+            fixture.debugElement.query(By.css('#attach-pippo-baudo')).nativeElement.click();
+            fixture.detectChanges();
 
-        let attachButton: HTMLButtonElement = element.querySelector('#attach-file-attach');
-        expect(attachButton).not.toBeNull();
-        attachButton.click();
-        fixture.detectChanges();
-        fixture.debugElement.query(By.css('#attach-pippo-baudo')).nativeElement.click();
-        fixture.detectChanges();
+            expect(element.querySelector('#file-1155-icon')).not.toBeNull();
+        });
+    }));
 
-        expect(element.querySelector('#file-1155-icon')).not.toBeNull();
-    });
-
-    it('should be able to upload files from local source', () => {
+    it('should be able to upload files from local source', async(() => {
+        spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(Observable.of(null));
         widget.field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.UPLOAD,
             value: []
         });
         widget.field.id = 'attach-file-attach';
-        widget.field.params = <FormFieldMetadata>  onlyLocalParams;
+        widget.field.params = <FormFieldMetadata> onlyLocalParams;
         spyOn(processContentService, 'createTemporaryRawRelatedContent').and.returnValue(Observable.of(fakePngAnswer));
         fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            let inputDebugElement = fixture.debugElement.query(By.css('#attach-file-attach'));
+            inputDebugElement.triggerEventHandler('change', { target: { files: [fakePngAnswer] } });
+            fixture.detectChanges();
 
-        let inputDebugElement = fixture.debugElement.query(By.css('#attach-file-attach'));
-        inputDebugElement.triggerEventHandler('change', {target: {files: [fakePngAnswer]}});
-        fixture.detectChanges();
+            expect(element.querySelector('#file-1155-icon')).not.toBeNull();
+        });
+    }));
 
-        expect(element.querySelector('#file-1155-icon')).not.toBeNull();
-    });
-
-    it('should display file list when field has value', () => {
+    it('should display file list when field has value', async(() => {
         widget.field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.UPLOAD,
             value: [fakePngAnswer]
         });
+        spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(Observable.of(null));
         widget.field.id = 'attach-file-attach';
-        widget.field.params = <FormFieldMetadata>  onlyLocalParams;
+        widget.field.params = <FormFieldMetadata> onlyLocalParams;
         fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            expect(element.querySelector('#file-1155-icon')).not.toBeNull();
+        });
+    }));
 
-        expect(element.querySelector('#file-1155-icon')).not.toBeNull();
+    describe('when a file is uploaded', () => {
+
+        beforeEach(async(() => {
+            widget.field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.UPLOAD,
+                value: []
+            });
+            widget.field.id = 'attach-file-attach';
+            widget.field.params = <FormFieldMetadata>  onlyLocalParams;
+            spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(Observable.of(null));
+            spyOn(processContentService, 'createTemporaryRawRelatedContent').and.returnValue(Observable.of(fakePngAnswer));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                let inputDebugElement = fixture.debugElement.query(By.css('#attach-file-attach'));
+                inputDebugElement.triggerEventHandler('change', {target: {files: [fakePngAnswer]}});
+                fixture.detectChanges();
+                expect(element.querySelector('#file-1155-icon')).not.toBeNull();
+            });
+        }));
+
+        it('should show the action menu', async(() => {
+            let menuButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#file-1155-option-menu');
+            expect(menuButton).not.toBeNull();
+            menuButton.click();
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(fixture.debugElement.query(By.css('#file-1155-show-file'))).not.toBeNull();
+                expect(fixture.debugElement.query(By.css('#file-1155-download-file'))).not.toBeNull();
+                expect(fixture.debugElement.query(By.css('#file-1155-remove'))).not.toBeNull();
+            });
+        }));
+
+        it('should remove file when remove is clicked', async(() => {
+            let menuButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#file-1155-option-menu');
+            expect(menuButton).not.toBeNull();
+            menuButton.click();
+            fixture.detectChanges();
+            const removeOption: HTMLButtonElement = <HTMLButtonElement> fixture.debugElement.query(By.css('#file-1155-remove')).nativeElement;
+            removeOption.click();
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(element.querySelector('#file-1155')).toBeNull();
+            });
+        }));
+
+        it('should download file when download is clicked', async(() => {
+            spyOn(contentService, 'downloadBlob').and.stub();
+            let menuButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#file-1155-option-menu');
+            expect(menuButton).not.toBeNull();
+            menuButton.click();
+            fixture.detectChanges();
+            const downloadOption: HTMLButtonElement = <HTMLButtonElement> fixture.debugElement.query(By.css('#file-1155-download-file')).nativeElement;
+            downloadOption.click();
+            fixture.whenStable().then(() => {
+                expect(contentService.downloadBlob).toHaveBeenCalled();
+            });
+        }));
+
+        it('should raise formContentClicked event when show file is clicked', async(() => {
+            spyOn(processContentService, 'getFileRawContent').and.returnValue(Observable.of(fakePngAnswer));
+            formService.formContentClicked.subscribe((file) => {
+                expect(file).not.toBeNull();
+                expect(file.id).toBe(1155);
+            });
+            let menuButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#file-1155-option-menu');
+            expect(menuButton).not.toBeNull();
+            menuButton.click();
+            fixture.detectChanges();
+            const showOption: HTMLButtonElement = <HTMLButtonElement> fixture.debugElement.query(By.css('#file-1155-show-file')).nativeElement;
+            showOption.click();
+        }));
+
     });
 
 });

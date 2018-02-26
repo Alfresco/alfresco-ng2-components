@@ -9,6 +9,9 @@
     "FIELD": {
       "LOCALSTORAGE" : "Local storage",
       "SOURCE": "Select source from ",
+      "SHOW_FILE": "Show",
+      "DOWNLOAD_FILE": "Download",
+      "REMOVE_FILE":"Remove",
       "UPLOAD": "UPLOAD",
       "REQUIRED": "*Required",
       "VALIDATOR": {
