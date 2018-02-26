@@ -60,7 +60,7 @@ describe('DataTable', () => {
             [new ObjectDataColumn({ key: 'name' })]
         );
 
-        dataTable.cardview = true;
+        dataTable.display = 'gallery';
         dataTable.ngOnChanges({
             data: new SimpleChange(null, newData, false)
         });
@@ -80,7 +80,7 @@ describe('DataTable', () => {
             [new ObjectDataColumn({ key: 'name' })]
         );
 
-        dataTable.cardview = false;
+
         dataTable.ngOnChanges({
             data: new SimpleChange(null, newData, false)
         });

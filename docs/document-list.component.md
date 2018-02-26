@@ -79,7 +79,7 @@ Displays the documents from a repository.
 | skipCount | `number` | `0` | Number of elements to skip over for pagination purposes  |
 | enableInfiniteScrolling | `boolean` | `false` | Set document list to work in infinite scrolling mode  |
 | showHeader | `boolean` | `true` |  Toggles header visibility   |
-| cardview | `boolean` | `false` |  Enable the cardview mode    |
+| display | string | 'list' | change the display mode can be one of the values provided by the enum : **list**, **gallery** |
 
 ### Events
 
@@ -141,7 +141,7 @@ If you want enable the card view mode you need to set to true the input paramete
 ```html
 <adf-document-list
     [currentFolderId]="'-my-'"
-    [cardview]="true">
+    [display]="'gallery'">
 </adf-document-list>
 ```
 
