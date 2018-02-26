@@ -111,6 +111,19 @@ describe('DataTable', () => {
         expect(element.querySelector('.adf-datatable-header')).toBe(null);
     });
 
+    it('should hide the header if there are no elements inside', () => {
+        let newData = new ObjectDataTableAdapter(
+        );
+
+        dataTable.ngOnChanges({
+            data: new SimpleChange(null, newData, false)
+        });
+
+        fixture.detectChanges();
+
+        expect(element.querySelector('.adf-datatable-header')).toBe(null);
+    });
+
     it('should show the header if showHeader is true', () => {
         let newData = new ObjectDataTableAdapter(
             [

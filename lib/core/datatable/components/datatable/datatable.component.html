@@ -2,7 +2,7 @@
     *ngIf="data" class="full-width"
     [class.adf-data-table-card]="display === 'gallery'"
     [class.adf-data-table]="display === 'list'">
-    <div *ngIf="showHeader && !loading" class="adf-datatable-header">
+    <div *ngIf="isHeaderVisible()" class="adf-datatable-header">
         <div class="adf-datatable-row" *ngIf="display === 'list'">
             <!-- Actions (left) -->
             <div *ngIf="actions && actionsPosition === 'left'" class="actions-column adf-datatable-table-cell-header">
@@ -173,11 +173,10 @@
                 </div>
 
             </div>
-            <div *ngIf="data.getRows().length === 0"
+            <div *ngIf="isEmpty()"
                  [class.adf-datatable-row]="display === 'list'"
                  [class.adf-data-table-card-empty]="display === 'gallery'">
-                <div class="adf-no-content-container adf-datatable-table-cell"
-                     [attr.colspan]="1 + data.getColumns().length">
+                <div class="adf-no-content-container adf-datatable-table-cell">
                     <ng-template *ngIf="noContentTemplate"
                                  ngFor [ngForOf]="[data]"
                                  [ngForTemplate]="noContentTemplate">
@@ -200,8 +199,7 @@
         <div *ngIf="loading"
              [class.adf-datatable-row]="display === 'list'"
              [class.adf-data-table-card-loading]="display === 'gallery'">
-            <div class="adf-datatable-table-cell"
-                 [attr.colspan]="1 + data.getColumns().length">
+            <div class="adf-datatable-table-cell" >
                 <ng-template *ngIf="loadingTemplate"
                              ngFor [ngForOf]="[data]"
                              [ngForTemplate]="loadingTemplate">
