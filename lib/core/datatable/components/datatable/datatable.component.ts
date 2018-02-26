@@ -535,6 +535,14 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
         });
     }
 
+    isEmpty() {
+        return this.data.getRows().length === 0;
+    }
+
+    isHeaderVisible() {
+        return this.showHeader && !this.loading && !this.isEmpty();
+    }
+
     private emitRowSelectionEvent(name: string, row: DataRow) {
         const domEvent = new CustomEvent(name, {
             detail: {
