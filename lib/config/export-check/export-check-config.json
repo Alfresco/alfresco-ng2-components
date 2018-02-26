@@ -1,0 +1,7 @@
+{
+  "export-last-version": "export-new.json",
+  "export-versions": [
+    "export-2.0.0.json",
+    "export-2.1.0.json"
+  ]
+}
