@@ -365,8 +365,13 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    getSiteContent(site: SiteEntry) {
-        this.currentFolderId = site && site.entry.guid ? site.entry.guid : DEFAULT_FOLDER_TO_SHOW;
+    onSiteChange(site: SiteEntry) {
+
+        if (site === 'default') {
+            this.currentFolderId = DEFAULT_FOLDER_TO_SHOW;
+        }
+
+        this.currentFolderId = site.entry.guid;
     }
 
     getDocumentListCurrentFolderId() {
