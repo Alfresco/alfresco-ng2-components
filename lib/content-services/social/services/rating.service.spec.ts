@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { AlfrescoApiService, LogService, AppConfigService, StorageService } from '@alfresco/adf-core';
 import { RatingService } from './rating.service';
 
 declare let jasmine: any;
@@ -24,17 +24,8 @@ describe('Rating service', () => {
 
     let service;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [],
-            providers: [
-                RatingService
-            ]
-        }).compileComponents();
-    }));
-
     beforeEach(() => {
-        service = TestBed.get(RatingService);
+        service = new RatingService(new AlfrescoApiService(new AppConfigService(null), new StorageService()));
     });
 
     beforeEach(() => {
