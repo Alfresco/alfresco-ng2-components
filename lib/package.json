@@ -32,8 +32,8 @@
     "build-content": "ng-packagr -p ./content-services/package.json",
     "build-process": "ng-packagr -p ./process-services/package.json",
     "build-insights": "ng-packagr -p ./insights/package.json",
-    "build-export-check": "tsc ./config/exportCheck.ts",
-    "export-check": "node ./config/exportCheck.js ./core/public-api.ts ./process-services/public-api.ts ./content-services/public-api.ts ./insights/public-api.ts",
+    "build-export-check": "tsc ./config/export-check/exportCheck.ts",
+    "export-check": "node ./config/export-check/exportCheck.js ./core/public-api.ts ./process-services/public-api.ts ./content-services/public-api.ts ./insights/public-api.ts",
     "test-export": "npm run build-export-check && npm run export-check",
     "webpack": "node node_modules/webpack/bin/webpack.js"
   },
@@ -126,6 +126,7 @@
     "markdown-toc": "1.1.0",
     "markdownlint-cli": "^0.3.1",
     "merge-stream": "1.0.1",
+    "nconf": "^0.10.0",
     "node-sass": "4.5.3",
     "null-loader": "0.1.1",
     "raw-loader": "0.5.1",
