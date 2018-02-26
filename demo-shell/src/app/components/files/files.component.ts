@@ -366,11 +366,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onSiteChange(site: SiteEntry) {
-
-        if (site === 'default') {
-            this.currentFolderId = DEFAULT_FOLDER_TO_SHOW;
-        }
-
         this.currentFolderId = site.entry.guid;
     }
 
