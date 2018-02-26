@@ -25,7 +25,9 @@ import {
     LogService,
     ThumbnailService,
     ProcessContentService,
-    ActivitiContentService
+    ActivitiContentService,
+    ContentService,
+    FormEvent
 } from '@alfresco/adf-core';
 import { ContentNodeDialogService } from '@alfresco/adf-content-services';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
@@ -41,12 +43,14 @@ import { Observable } from 'rxjs/Observable';
 export class AttachFileWidgetComponent extends UploadWidgetComponent implements OnInit {
 
     repositoryList = [];
+    private tempFilesList = [];
 
     constructor(public formService: FormService,
                 private logger: LogService,
                 public thumbnails: ThumbnailService,
                 public processContentService: ProcessContentService,
                 private activitiContentService: ActivitiContentService,
+                private contentService: ContentService,
                 private contentDialog: ContentNodeDialogService) {
         super(formService, logger, thumbnails, processContentService);
     }
@@ -58,8 +62,15 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
             this.hasFile = true;
         }
         this.getMultipleFileParam();
+
         this.activitiContentService.getAlfrescoRepositories(null, true).subscribe((repoList) => {
             this.repositoryList = repoList;
+        });
+
+        this.formService.taskSaved.subscribe((formSaved: FormEvent) => {
+            if (formSaved.form.id === this.field.form.id) {
+                this.tempFilesList = [];
+            }
         });
     }
 
@@ -99,6 +110,10 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
             !!this.field.params.fileSource.selectedFolder;
     }
 
+    isTemporaryFile(file): boolean {
+        return this.tempFilesList.indexOf(file) !== -1 ? true : false;
+    }
+
     openSelectDialogFromFileSource() {
         let params = this.field.params;
         if (this.isDefinedSourceFolder()) {
@@ -108,6 +123,41 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
                         this.field.params.fileSource.selectedFolder.accountId,
                         this.field.params.fileSource.selectedFolder.siteId);
                 });
+        }
+    }
+
+    onAttachFileChanged(event: any) {
+        this.tempFilesList.push(...Array.from(event.target.files));
+        this.onFileChanged(event);
+    }
+
+    onRemoveAttachFile(file: any) {
+        if (this.isTemporaryFile(file.contentBlob)) {
+            this.tempFilesList.splice(this.tempFilesList.indexOf(file.contentBlob), 1);
+        }
+        this.removeFile(file);
+    }
+
+    onAttachFileClicked(file: any) {
+        if (this.isTemporaryFile(file.contentBlob)) {
+            this.formService.formContentClicked.next(file);
+        } else {
+            this.fileClicked(file);
+        }
+    }
+
+    downloadContent(file: any): void {
+        if (this.isTemporaryFile(file.contentBlob)) {
+            this.contentService.downloadBlob(file.contentBlob, file.name);
+        } else {
+            this.processContentService.getFileRawContent(file.id).subscribe(
+                (blob: Blob) => {
+                    this.contentService.downloadBlob(blob, file.name);
+                },
+                (err) => {
+                    this.logger.error('Impossible retrieve content for download');
+                }
+            );
         }
     }
 
