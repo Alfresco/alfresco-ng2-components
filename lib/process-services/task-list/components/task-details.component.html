@@ -28,7 +28,7 @@
                           [showTitle]="showFormTitle"
                           [showRefreshButton]="showFormRefreshButton"
                           [showCompleteButton]="showFormCompleteButton"
-                          [disableCompleteButton]="!isCompleteButtonVisible()"
+                          [disableCompleteButton]="!isCompleteButtonEnabled()"
                           [showSaveButton]="isSaveButtonVisible()"
                           [readOnly]="readOnlyForm"
                           [fieldValidators]="fieldValidators"
@@ -45,7 +45,7 @@
                 {{ 'ADF_TASK_LIST.DETAILS.MESSAGES.CLAIM' | translate }}
             </div>
             <button mat-raised-button class="activiti-task-details__action-button"
-                    *ngIf="!hasFormKey() && isTaskActive() && isCompleteButtonVisible()" (click)="onComplete()">
+                    *ngIf="isCompleteButtonVisible()" (click)="onComplete()">
                 {{ 'ADF_TASK_LIST.DETAILS.BUTTON.COMPLETE' | translate }}
             </button>
         </div>
