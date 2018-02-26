@@ -135,7 +135,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     @Output()
     deleteElementSuccess: EventEmitter<any> = new EventEmitter();
 
-    @ViewChild(DocumentListComponent)
+    @ViewChild('documentList')
     documentList: DocumentListComponent;
 
     @ViewChild(PaginationComponent)
