@@ -21,6 +21,7 @@ import {
     DataRowActionEvent,
     DataSorting,
     DataTableComponent,
+    DisplayMode,
     ObjectDataColumn,
     PaginatedComponent,
     PaginationQueryParams
@@ -71,9 +72,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
-    /* Enable the cardview mode */
+    /* change the display mode of the table list or gallery */
     @Input()
-    cardview: boolean = false;
+    display: string = DisplayMode.List;
 
     /** Define a set of CSS styles styles to apply depending on the permission
      * of the user on that node. See the Permission Style model
