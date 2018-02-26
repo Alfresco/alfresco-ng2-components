@@ -2,6 +2,16 @@ import * as ts from "typescript";
 import * as fs from "fs";
 import chalk from "chalk";
 
+var nconf = require('nconf');
+var baseParh = "./config/export-check/";
+
+nconf.add('config', { type: 'file', file: `${baseParh}export-check-config.json` });
+
+var newLibExports = baseParh + nconf.get('export-last-version');
+var exportFilesVersions = nconf.get('export-versions').map((currentFile) => {
+    return baseParh + currentFile;
+});
+
 interface DocEntry {
     position?: {
         line: number,
@@ -78,27 +88,27 @@ let currentErrorPostion = function (exportEntry) {
     return ` ${exportEntry.position.fileName} (${exportEntry.position.line},${exportEntry.position.character})`
 }
 
-let check_export = function (export_old: any, export_new: any) {
+let check_export = function (exportLastMajor: any, exportNew: any) {
 
-    export_old.forEach((currentExport_old) => {
+    exportLastMajor.forEach((currentexportLastMajor) => {
 
-        let currentExport_new = export_new.filter((currentExport_new) => {
-            return currentExport_new.name === currentExport_old.name;
+        let currentexportNew = exportNew.filter((currentexportNew) => {
+            return currentexportNew.name === currentexportLastMajor.name;
         });
 
-        if (currentExport_new.length > 1) {
+        if (currentexportNew.length > 1) {
 
             let arrayCall = [];
 
-            currentExport_new.forEach((error) => {
+            currentexportNew.forEach((error) => {
                 arrayCall.push(`${currentErrorPostion(error)}`);
             })
 
-            add_warning(`Multiple export ${currentExport_new[0].name} times ${currentExport_new.length}`, currentExport_new[0].name, arrayCall);
+            add_warning(`Multiple export ${currentexportNew[0].name} times ${currentexportNew.length}`, currentexportNew[0].name, arrayCall);
 
-        } else if (currentExport_new.length === 0) {
-            if (!currentExport_old.skipError) {
-                add_error(`Not find export ${currentExport_old.name} , old path: [${currentErrorPostion(currentExport_old)}]`, currentExport_old.name);
+        } else if (currentexportNew.length === 0) {
+            if (!currentexportLastMajor.skipError) {
+                add_error(`Not find export ${currentexportLastMajor.name} , old path: [${currentErrorPostion(currentexportLastMajor)}]`, currentexportLastMajor.name);
             }
         }
     });
@@ -151,31 +161,40 @@ function generatExportList(fileNames: string[], options: ts.CompilerOptions): vo
 
     exportCurrentVersion.sort((nameA, nameB) => nameA.name.localeCompare(nameB.name));
 
-    console.log(chalk.green('Saving new export in export-new.json'));
+    console.log(chalk.green(`Saving new export in ${newLibExports}`));
 
-    fs.writeFileSync('export-new.json', JSON.stringify(exportCurrentVersion, undefined, 4));
+    fs.writeFileSync(newLibExports, JSON.stringify(exportCurrentVersion, undefined, 4));
 
-    try {
-        var export_old = JSON.parse(fs.readFileSync('export-2.0.0.json', 'utf8'));
-    } catch (error) {
-        console.log(chalk.red('export-2.0.0.json not present'));
-        throw new Error('Undetected export comapring file');
-    }
+    var exportNewJSON = JSON.parse(JSON.stringify(exportCurrentVersion));
 
-    var export_new = JSON.parse(JSON.stringify(exportCurrentVersion));
+    exportFilesVersions.forEach((currentExportVersionFile) => {
 
-    console.log(chalk.green('Comparing export-2.0.0.json and export-new.json'));
+        error_array = [];
+        warning_array = [];
 
-    check_export(export_old, export_new);
+        try {
+            var currentExportVersionJSON = JSON.parse(fs.readFileSync(`${currentExportVersionFile}`, 'utf8'));
+        } catch (error) {
+            console.log(chalk.red(`${currentExportVersionFile} json not present`));
+            throw new Error(`Undetected export comapring file ${currentExportVersionFile}`);
+        }
 
-    print_warnings();
-    print_errors();
 
-    if (error_array.length > 0) {
-        throw new Error('Export problems detected');
-    } else {
-        return;
-    }
+        console.log(chalk.green(`Comparing ${newLibExports} and ${currentExportVersionFile}`));
+
+        check_export(currentExportVersionJSON, exportNewJSON);
+
+        print_warnings();
+        print_errors();
+
+
+        if (error_array.length > 0) {
+            throw new Error('Export problems detected');
+        } else {
+            return;
+        }
+
+    })
 
     function extractExport(node: ts.Node) {
         //skip file with export-check: exclude comment
