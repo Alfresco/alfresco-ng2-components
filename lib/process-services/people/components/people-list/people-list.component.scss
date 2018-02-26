@@ -1,0 +1,9 @@
+@mixin  adf-task-people-list-theme($theme) {
+
+    .adf-task-people-list {
+        .adf-data-table {
+            width: 0;
+        }
+    }
+
+}
