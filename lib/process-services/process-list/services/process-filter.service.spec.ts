@@ -15,14 +15,12 @@
  * limitations under the License.
  */
 
-import { TestBed } from '@angular/core/testing';
 import { async } from '@angular/core/testing';
 import { AlfrescoApi } from 'alfresco-js-api';
-import { AlfrescoApiService } from '@alfresco/adf-core';
 import { mockError, fakeProcessFilters } from '../../mock';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterService } from './process-filter.service';
-import { AlfrescoApiService, LogService, AppConfigService, StorageService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AppConfigService, StorageService } from '@alfresco/adf-core';
 
 declare let jasmine: any;
 
@@ -33,8 +31,8 @@ describe('Process filter', () => {
     let alfrescoApi: AlfrescoApi;
 
     beforeEach(() => {
-        apiService = new AlfrescoApiService(new AppConfigService(), new StorageService() );
-        service = new ProcessFilterService(apiService, new LogService(new AppConfigService()));
+        apiService = new AlfrescoApiService(new AppConfigService(null), new StorageService() );
+        service = new ProcessFilterService(apiService);
         alfrescoApi = apiService.getInstance();
     });
 

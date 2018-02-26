@@ -17,13 +17,12 @@
 
 import { async } from '@angular/core/testing';
 import { AlfrescoApi } from 'alfresco-js-api';
-import { AlfrescoApiService } from '@alfresco/adf-core';
 import { exampleProcess, fakeProcessInstances } from '../../mock';
 import { mockError, fakeProcessDef, fakeTasksList } from '../../mock';
 import { ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessService } from './process.service';
-import { AlfrescoApiService, LogService, AppConfigService, StorageService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AppConfigService, StorageService } from '@alfresco/adf-core';
 
 declare let moment: any;
 
@@ -34,8 +33,8 @@ describe('ProcessService', () => {
     let alfrescoApi: AlfrescoApi;
 
     beforeEach(() => {
-        apiService = new AlfrescoApiService(new AppConfigService(), new StorageService() );
-        service = new ProcessService(apiService, new LogService(new AppConfigService()));
+        apiService = new AlfrescoApiService(new AppConfigService(null), new StorageService() );
+        service = new ProcessService(apiService);
         alfrescoApi = apiService.getInstance();
     });
 

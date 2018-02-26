@@ -46,7 +46,7 @@ describe('Activiti TaskList Service', () => {
     let service: TaskListService;
 
     beforeEach(async(() => {
-        service = new TaskListService(new AlfrescoApiService(new AppConfigService(), new StorageService() ), new LogService(new AppConfigService()));
+        service = new TaskListService(new AlfrescoApiService(new AppConfigService(null), new StorageService() ), new LogService(new AppConfigService(null)));
         jasmine.Ajax.install();
     }));
 
