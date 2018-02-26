@@ -1,9 +1,9 @@
 <div
-    *ngIf="data" class="full-width adf-data-table-card"
-    [class.adf-data-table-card]="cardview"
-    [class.adf-data-table]="!cardview">
+    *ngIf="data" class="full-width"
+    [class.adf-data-table-card]="display === 'gallery'"
+    [class.adf-data-table]="display === 'list'">
     <div *ngIf="showHeader && !loading" class="adf-datatable-header">
-        <div class="adf-datatable-row" *ngIf="!cardview">
+        <div class="adf-datatable-row" *ngIf="display === 'list'">
             <!-- Actions (left) -->
             <div *ngIf="actions && actionsPosition === 'left'" class="actions-column adf-datatable-table-cell-header">
                 <span class="sr-only">Actions</span>
@@ -31,7 +31,7 @@
                 <span class="sr-only">Actions</span>
             </div>
         </div>
-        <mat-form-field *ngIf="cardview">
+        <mat-form-field *ngIf="display === 'gallery'">
             <mat-select [value]="getSortingKey()">
                 <mat-option *ngFor="let col of getSortableColumns()"
                             [value]="col.key"
@@ -174,8 +174,8 @@
 
             </div>
             <div *ngIf="data.getRows().length === 0"
-                 [class.adf-datatable-row]="!cardview"
-                 [class.adf-data-table-card-empty]="cardview">
+                 [class.adf-datatable-row]="display === 'list'"
+                 [class.adf-data-table-card-empty]="display === 'gallery'">
                 <div class="adf-no-content-container adf-datatable-table-cell"
                      [attr.colspan]="1 + data.getColumns().length">
                     <ng-template *ngIf="noContentTemplate"
@@ -187,8 +187,8 @@
             </div>
         </ng-container>
         <div *ngIf="!loading && noPermission"
-             [class.adf-datatable-row]="!cardview"
-             [class.adf-data-table-card-permissions]="cardview">
+             [class.adf-datatable-row]="display === 'list'"
+             [class.adf-data-table-card-permissions]="display === 'gallery'">
              class="adf-no-permission__row">
             <div class="adf-no-permission__cell adf-no-content-container adf-datatable-table-cell">
                 <ng-template *ngIf="noPermissionTemplate"
@@ -198,8 +198,8 @@
             </div>
         </div>
         <div *ngIf="loading"
-             [class.adf-datatable-row]="!cardview"
-             [class.adf-data-table-card-loading]="cardview">
+             [class.adf-datatable-row]="display === 'list'"
+             [class.adf-data-table-card-loading]="display === 'gallery'">
             <div class="adf-datatable-table-cell"
                  [attr.colspan]="1 + data.getColumns().length">
                 <ng-template *ngIf="loadingTemplate"

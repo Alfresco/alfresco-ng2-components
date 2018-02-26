@@ -220,7 +220,7 @@ describe('DocumentList', () => {
     });
 
     it('should use the cardview style if cardview is true', (done) => {
-        documentList.cardview = true;
+        documentList.display = 'gallery';
 
         fixture.detectChanges();
 
@@ -232,7 +232,7 @@ describe('DocumentList', () => {
     });
 
     it('should use the base document list style if cardview is false', (done) => {
-        documentList.cardview = false;
+        documentList.display = 'list';
 
         fixture.detectChanges();
 
