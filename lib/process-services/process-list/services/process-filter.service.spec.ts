@@ -34,7 +34,7 @@ describe('Process filter', () => {
 
     beforeEach(() => {
         apiService = new AlfrescoApiService(new AppConfigService(), new StorageService() );
-        service = new ProcessFilterService(apiService, new LogService());
+        service = new ProcessFilterService(apiService, new LogService(new AppConfigService()));
         alfrescoApi = apiService.getInstance();
     });
 

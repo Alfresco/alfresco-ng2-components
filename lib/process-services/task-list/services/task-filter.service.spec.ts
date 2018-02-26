@@ -31,7 +31,7 @@ describe('Activiti Task filter Service', () => {
 
     let service: TaskFilterService;
     beforeEach(async(() => {
-        service = new TaskFilterService(new AlfrescoApiService(new AppConfigService(), new StorageService() ), new LogService());
+        service = new TaskFilterService(new AlfrescoApiService(new AppConfigService(), new StorageService() ), new LogService(new AppConfigService()));
         jasmine.Ajax.install();
     }));
 
