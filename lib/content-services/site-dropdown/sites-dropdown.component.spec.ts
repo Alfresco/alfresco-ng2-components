@@ -23,48 +23,13 @@ import { DropdownSitesComponent } from './sites-dropdown.component';
 
 declare let jasmine: any;
 
-let sitesList = {
-    'list': {
-        'pagination': {
-            'count': 2,
-            'hasMoreItems': false,
-            'totalItems': 2,
-            'skipCount': 0,
-            'maxItems': 100
-        },
-        'entries': [
-            {
-                'entry': {
-                    'role': 'SiteManager',
-                    'visibility': 'PUBLIC',
-                    'guid': 'fake-1',
-                    'description': 'fake-test-site',
-                    'id': 'fake-test-site',
-                    'preset': 'site-dashboard',
-                    'title': 'fake-test-site'
-                }
-            },
-            {
-                'entry': {
-                    'role': 'SiteManager',
-                    'visibility': 'PUBLIC',
-                    'guid': 'fake-2',
-                    'description': 'This is a Sample Alfresco Team site.',
-                    'id': 'swsdp',
-                    'preset': 'site-dashboard',
-                    'title': 'fake-test-2'
-                }
-            }
-        ]
-    }
-};
-
 describe('DropdownSitesComponent', () => {
 
     let component: any;
     let fixture: ComponentFixture<DropdownSitesComponent>;
     let debug: DebugElement;
     let element: HTMLElement;
+    let sitesList: any;
 
     beforeEach(async(() => {
 
@@ -83,6 +48,42 @@ describe('DropdownSitesComponent', () => {
         debug = fixture.debugElement;
         element = fixture.nativeElement;
         component = fixture.componentInstance;
+
+        sitesList = {
+            'list': {
+                'pagination': {
+                    'count': 2,
+                    'hasMoreItems': false,
+                    'totalItems': 2,
+                    'skipCount': 0,
+                    'maxItems': 100
+                },
+                'entries': [
+                    {
+                        'entry': {
+                            'role': 'SiteManager',
+                            'visibility': 'PUBLIC',
+                            'guid': 'fake-1',
+                            'description': 'fake-test-site',
+                            'id': 'fake-test-site',
+                            'preset': 'site-dashboard',
+                            'title': 'fake-test-site'
+                        }
+                    },
+                    {
+                        'entry': {
+                            'role': 'SiteManager',
+                            'visibility': 'PUBLIC',
+                            'guid': 'fake-2',
+                            'description': 'This is a Sample Alfresco Team site.',
+                            'id': 'swsdp',
+                            'preset': 'site-dashboard',
+                            'title': 'fake-test-2'
+                        }
+                    }
+                ]
+            }
+        };
     });
 
     describe('Rendering tests', () => {
@@ -128,13 +129,14 @@ describe('DropdownSitesComponent', () => {
                 responseText: sitesList
             });
 
-            openSelectbox();
-
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(window.document.querySelector('[data-automation-id="site-my-files-option"]')).not.toBeNull();
+                debug.query(By.css('.mat-select-trigger')).triggerEventHandler('click', null);
+                fixture.detectChanges();
+                let options: any = debug.queryAll(By.css('mat-option'));
+                expect(options[0].nativeElement.innerText).toContain('DROPDOWN.MY_FILES_OPTION');
             });
-        }));
+        });
 
         it('should hide the "My files" option if the developer desires that way', async(() => {
             component.hideMyFiles = true;
@@ -145,11 +147,12 @@ describe('DropdownSitesComponent', () => {
                 responseText: sitesList
             });
 
-            openSelectbox();
-
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(window.document.querySelector('[data-automation-id="site-my-files-option"]')).toBeNull();
+                debug.query(By.css('.mat-select-trigger')).triggerEventHandler('click', null);
+                fixture.detectChanges();
+                let options: any = debug.queryAll(By.css('mat-option'));
+                expect(options[0].nativeElement.innerText).not.toContain('DROPDOWN.MY_FILES_OPTION');
             });
         }));
 
@@ -219,12 +222,12 @@ describe('DropdownSitesComponent', () => {
             });
 
             component.change.subscribe(() => {
-                expect(options[1].nativeElement.innerText).toContain('PERSONAL_FILES');
-                expect(options[2].nativeElement.innerText).toContain('FILE_LIBRARIES');
+                expect(options[2].nativeElement.innerText).toContain('PERSONAL_FILES');
+                expect(options[3].nativeElement.innerText).toContain('FILE_LIBRARIES');
             });
         }));
 
-        it('should load sites by default', (done) => {
+        it('should load sites by default', async(() => {
             fixture.detectChanges();
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -232,23 +235,15 @@ describe('DropdownSitesComponent', () => {
                 responseText: sitesList
             });
 
-            openSelectbox();
-
-            let options: any = [];
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                options = debug.queryAll(By.css('mat-option'));
-                options[0].triggerEventHandler('click', null);
+                debug.query(By.css('.mat-select-trigger')).triggerEventHandler('click', null);
                 fixture.detectChanges();
-            });
-
-            component.change.subscribe(() => {
+                let options: any = debug.queryAll(By.css('mat-option'));
                 expect(options[1].nativeElement.innerText).toContain('fake-test-site');
                 expect(options[2].nativeElement.innerText).toContain('fake-test-2');
-
-                done();
             });
-        });
+        }));
 
         it('should raise an event when a site is selected', (done) => {
             fixture.detectChanges();

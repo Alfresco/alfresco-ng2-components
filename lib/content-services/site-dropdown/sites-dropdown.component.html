@@ -1,6 +1,7 @@
 <div id="site-dropdown-container" class="adf-site-dropdown-container">
     <mat-form-field>
         <mat-select
+            data-automation-id="site-my-files-option"
             class="adf-site-dropdown-list-element"
             id="site-dropdown"
             placeholder="{{placeholder | translate}}"
@@ -8,7 +9,6 @@
             data-automation-id="site-my-files-select"
             [(value)]="selected"
             (selectionChange)="selectedSite($event)">
-            <mat-option *ngIf="!hideMyFiles" data-automation-id="site-my-files-option" id="default_site_option" [value]="MY_FILES_VALUE">{{'DROPDOWN.MY_FILES_OPTION' | translate}}</mat-option>
             <mat-option *ngFor="let site of siteList?.list.entries" [value]="site">
                 {{ site.entry.title | translate}}
             </mat-option>
