@@ -136,7 +136,7 @@ Below is a basic example of handling DOM events in the parent elements.
 
 ### Card view
 
-If you want to enable the card view mode you need to set to 'gallery' the display input parameter [cardview] :
+If you want to enable the card view mode you need to set to 'gallery' the input parameter [display] :
 
 ```html
 <adf-document-list
