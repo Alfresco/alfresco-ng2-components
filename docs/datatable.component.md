@@ -200,7 +200,7 @@ onRowClick(event) {
 
 ### Card view
 
-If you want enable the card view mode you need to set to true the input parameter [cardview] :
+If you want to enable the card view mode you need to set to 'gallery' the input parameter [display] :
 
 ```html
 <adf-datatable
