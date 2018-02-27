@@ -28,7 +28,7 @@ describe('ShareDataTableAdapter', () => {
     beforeEach(() => {
         let imageUrl: string = 'http://<addresss>';
         let contentService = new ContentService(null, null, null, null);
-        documentListService = new DocumentListService(null, contentService, null, null);
+        documentListService = new DocumentListService(null, contentService, null, null, null);
         spyOn(documentListService, 'getDocumentThumbnailUrl').and.returnValue(imageUrl);
     });
 
