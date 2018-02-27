@@ -195,7 +195,6 @@ describe('Test PdfViewer component', () => {
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
-
                     expect(component.totalPages).toEqual(6);
                 });
             });
@@ -210,7 +209,6 @@ describe('Test PdfViewer component', () => {
                     fixture.detectChanges();
                     expect(component.displayPage).toBe(2);
                 });
-
             });
         }));
 
@@ -229,7 +227,7 @@ describe('Test PdfViewer component', () => {
             });
         }));
 
-        it('should event keyboard change pages', async () => {
+        it('should event keyboard change pages', async(() => {
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -242,7 +240,7 @@ describe('Test PdfViewer component', () => {
                     expect(component.displayPage).toBe(2);
                 });
             });
-        });
+        }));
 
         it('should previous page move to the previous page', async(() => {
             let previousPageButton: any = element.querySelector('#viewer-previous-page-button');
