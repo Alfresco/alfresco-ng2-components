@@ -18,7 +18,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { SitesService } from '@alfresco/adf-core';
 import { SitePaging, SiteEntry } from 'alfresco-js-api';
-import { Observable } from 'rxjs/Observable';
 
 @Component({
     selector: 'adf-sites-dropdown',
@@ -57,18 +56,14 @@ export class DropdownSitesComponent implements OnInit {
 
     selected: SiteEntry = null;
 
-    public MY_FILES_VALUE = 'default';
+    public MY_FILES_VALUE = '-my-';
 
     constructor(private sitesService: SitesService) {
     }
 
     ngOnInit() {
         if (!this.siteList) {
-            this.setDefaultSiteList().subscribe((result) => {
-                    this.selected = this.siteList.list.entries.find(site => site.entry.id === this.value);
-                },
-                (error) => {
-                });
+            this.setDefaultSiteList();
         }
 
     }
@@ -77,16 +72,25 @@ export class DropdownSitesComponent implements OnInit {
         this.change.emit(event.value);
     }
 
-    private setDefaultSiteList(): Observable<SitePaging> {
-        let sitesObservable = this.sitesService.getSites();
-
-        sitesObservable.subscribe((result) => {
+    private setDefaultSiteList() {
+        this.sitesService.getSites().subscribe((result) => {
                 this.siteList = result;
+
+                if (!this.hideMyFiles) {
+                    let myItem = { entry: { id: '-my-', guid: '-my-', title: 'DROPDOWN.MY_FILES_OPTION' } };
+
+                    this.siteList.list.entries.unshift(myItem);
+
+                    if (!this.value) {
+                        this.value = '-my-';
+                    }
+                }
+
+                this.selected = this.siteList.list.entries.find(site => site.entry.id === this.value);
             },
             (error) => {
             });
 
-        return sitesObservable;
     }
 
 }

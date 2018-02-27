@@ -80,7 +80,6 @@ export function createTranslateLoader(http: HttpClient, logService: LogService) 
     return new TranslateLoaderService(http, logService);
 }
 
-
 export function providers() {
     return [
         AuthenticationService,
