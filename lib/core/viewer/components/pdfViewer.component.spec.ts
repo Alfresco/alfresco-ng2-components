@@ -183,24 +183,25 @@ describe('Test PdfViewer component', () => {
 
     describe('User interaction', () => {
 
-        beforeEach(async(async(() => {
+        beforeEach(async(() => {
             component.urlFile = require('../assets/fake-test-file.pdf');
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 component.inputPage('1');
             });
-        })));
+        }));
 
-        it('should Total number of pages be loaded', async(() => {
+        it('should Total number of pages be loaded', (done) => {
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(component.totalPages).toEqual(6);
+                    done();
                 });
             });
-        }));
+        });
 
-        it('should right arrow move to the next page', async(() => {
+        it('should right arrow move to the next page', (done) => {
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -208,11 +209,12 @@ describe('Test PdfViewer component', () => {
                     EventMock.keyDown(39);
                     fixture.detectChanges();
                     expect(component.displayPage).toBe(2);
+                    done();
                 });
             });
-        }));
+        });
 
-        it('should nextPage move to the next page', async(() => {
+        it('should nextPage move to the next page', (done) => {
             let nextPageButton: any = element.querySelector('#viewer-next-page-button');
 
             component.ngOnChanges(null).then(() => {
@@ -223,11 +225,12 @@ describe('Test PdfViewer component', () => {
                     nextPageButton.click();
                     fixture.detectChanges();
                     expect(component.displayPage).toBe(2);
+                    done();
                 });
             });
-        }));
+        });
 
-        it('should event keyboard change pages', async(() => {
+        it('should event keyboard change pages', (done) => {
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -238,11 +241,12 @@ describe('Test PdfViewer component', () => {
                     EventMock.keyDown(37);
                     fixture.detectChanges();
                     expect(component.displayPage).toBe(2);
+                    done();
                 });
             });
-        }));
+        });
 
-        it('should previous page move to the previous page', async(() => {
+        it('should previous page move to the previous page', (done) => {
             let previousPageButton: any = element.querySelector('#viewer-previous-page-button');
             let nextPageButton: any = element.querySelector('#viewer-next-page-button');
 
@@ -256,11 +260,12 @@ describe('Test PdfViewer component', () => {
                     previousPageButton.click();
                     fixture.detectChanges();
                     expect(component.displayPage).toBe(2);
+                    done();
                 });
             });
-        }));
+        });
 
-        it('should previous page not move to the previous page if is page 1', async(() => {
+        it('should previous page not move to the previous page if is page 1', (done) => {
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -269,11 +274,12 @@ describe('Test PdfViewer component', () => {
                     component.previousPage();
                     fixture.detectChanges();
                     expect(component.displayPage).toBe(1);
+                    done();
                 });
             });
-        }));
+        });
 
-        it('should Input page move to the inserted page', async(() => {
+        it('should Input page move to the inserted page', (done) => {
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -282,9 +288,10 @@ describe('Test PdfViewer component', () => {
                     component.inputPage('2');
                     fixture.detectChanges();
                     expect(component.displayPage).toBe(2);
+                    done();
                 });
             });
-        }));
+        });
     });
 
     describe('Zoom', () => {
@@ -298,7 +305,7 @@ describe('Test PdfViewer component', () => {
             });
         }));
 
-        it('should zoom in increment the scale value', async(() => {
+        it('should zoom in increment the scale value', (done) => {
             let zoomInButton: any = element.querySelector('#viewer-zoom-in-button');
 
             component.ngOnChanges(null).then(() => {
@@ -307,10 +314,11 @@ describe('Test PdfViewer component', () => {
                 expect(component.currentScaleMode).toBe('auto');
                 let currentZoom = component.currentScale;
                 expect(zoomBefore < currentZoom).toBe(true);
+                done();
             });
-        }));
+        });
 
-        it('should zoom out decrement the scale value', async(() => {
+        it('should zoom out decrement the scale value', (done) => {
             let zoomOutButton: any = element.querySelector('#viewer-zoom-out-button');
 
             component.ngOnChanges(null).then(() => {
@@ -319,10 +327,11 @@ describe('Test PdfViewer component', () => {
                 expect(component.currentScaleMode).toBe('auto');
                 let currentZoom = component.currentScale;
                 expect(zoomBefore > currentZoom).toBe(true);
+                done();
             });
-        }));
+        });
 
-        it('should fit-in button toggle page-fit and auto scale mode', async(() => {
+        it('should fit-in button toggle page-fit and auto scale mode', (done) => {
             let fitPage: any = element.querySelector('#viewer-scale-page-button');
 
             component.ngOnChanges(null).then(() => {
@@ -331,8 +340,9 @@ describe('Test PdfViewer component', () => {
                 expect(component.currentScaleMode).toBe('page-fit');
                 fitPage.click();
                 expect(component.currentScaleMode).toBe('auto');
+                done();
             });
-        }));
+        });
     });
 
     describe('Resize interaction', () => {
@@ -346,7 +356,7 @@ describe('Test PdfViewer component', () => {
             });
         }));
 
-        it('should resize event trigger setScaleUpdatePages', async(() => {
+        it('should resize event trigger setScaleUpdatePages', (done) => {
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -354,9 +364,10 @@ describe('Test PdfViewer component', () => {
                     spyOn(component, 'onResize');
                     EventMock.resizeMobileView();
                     expect(component.onResize).toHaveBeenCalled();
+                    done();
                 });
             });
-        }));
+        });
     });
 
     describe('scroll interaction', () => {
@@ -370,7 +381,7 @@ describe('Test PdfViewer component', () => {
             });
         }));
 
-        it('should scroll page return the current page', async(() => {
+        it('should scroll page return the current page', (done) => {
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -385,9 +396,10 @@ describe('Test PdfViewer component', () => {
                     fixture.detectChanges();
                     expect(component.displayPage).toBe(6);
                     expect(component.page).toBe(6);
+                    done();
                 });
             });
-        }));
+        });
     });
 
     describe('Thumbnails', () => {
@@ -400,27 +412,29 @@ describe('Test PdfViewer component', () => {
             });
         });
 
-        it('should have own context', async(() => {
+        it('should have own context', (done) => {
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
-                return fixture.whenStable().then(() => {
+                fixture.whenStable().then(() => {
                     expect(component.pdfThumbnailsContext.viewer).not.toBeNull();
+                    done();
                 });
             });
-        }));
+        });
 
-        it('should open thumbnails panel', async(() => {
+        it('should open thumbnails panel', (done) => {
             expect(element.querySelector('.adf-pdf-viewer__thumbnails')).toBeNull();
 
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
-                return fixture.whenStable().then(() => {
+                fixture.whenStable().then(() => {
                     component.toggleThumbnails();
                     fixture.detectChanges();
 
                     expect(element.querySelector('.adf-pdf-viewer__thumbnails')).not.toBeNull();
+                    done();
                 });
             });
-        }));
+        });
     });
 });
