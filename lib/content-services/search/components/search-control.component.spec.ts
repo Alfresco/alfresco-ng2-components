@@ -17,7 +17,6 @@
 
 import { DebugElement } from '@angular/core';
 import { async, discardPeriodicTasks, fakeAsync, ComponentFixture, TestBed, tick } from '@angular/core/testing';
-import { MaterialModule } from '../../material.module';
 import { By } from '@angular/platform-browser';
 import { AuthenticationService, SearchService } from '@alfresco/adf-core';
 import { ThumbnailService } from '@alfresco/adf-core';
@@ -41,9 +40,6 @@ describe('SearchControlComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-                MaterialModule
-            ],
             declarations: [
                 SearchControlComponent,
                 SearchComponent,

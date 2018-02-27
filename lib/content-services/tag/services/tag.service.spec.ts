@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { AppConfigService, CoreModule } from '@alfresco/adf-core';
-import { TagService } from './tag.service';
 import { AlfrescoApiService, LogService, AppConfigService, StorageService } from '@alfresco/adf-core';
+import { TagService } from './tag.service';
 
 declare let jasmine: any;
 

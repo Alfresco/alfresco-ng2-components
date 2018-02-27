@@ -23,7 +23,6 @@ import { ContentNodeSelectorComponent } from './content-node-selector.component'
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
 import { ContentNodeSelectorService } from './content-node-selector.service';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { MaterialModule } from '../material.module';
 import { By } from '@angular/platform-browser';
 import {
         EmptyFolderContentDirective,
@@ -41,7 +40,6 @@ describe('ContentNodeSelectorDialogComponent', () => {
     function setupTestbed(plusProviders) {
         TestBed.configureTestingModule({
             imports: [
-                MaterialModule
             ],
             declarations: [
                 ContentNodeSelectorComponent,

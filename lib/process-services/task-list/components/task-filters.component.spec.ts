@@ -22,7 +22,6 @@ import { Observable } from 'rxjs/Observable';
 import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
 import { TaskListService } from '../services/tasklist.service';
 import { TaskFilterService } from '../services/task-filter.service';
-import { MaterialModule } from '../../material.module';
 import { TaskFiltersComponent } from './task-filters.component';
 
 describe('TaskFiltersComponent', () => {
@@ -65,9 +64,6 @@ describe('TaskFiltersComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-                MaterialModule
-            ],
             declarations: [
                 TaskFiltersComponent
             ],

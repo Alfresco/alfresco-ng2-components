@@ -20,7 +20,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from '../services/tasklist.service';
 import { ChecklistComponent } from './checklist.component';
-import { MaterialModule } from '../../material.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
@@ -40,7 +39,6 @@ describe('ChecklistComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                MaterialModule,
                 TranslateModule
             ],
             declarations: [

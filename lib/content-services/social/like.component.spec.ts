@@ -17,7 +17,6 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LikeComponent } from './like.component';
-import { MaterialModule } from '../material.module';
 import { RatingService } from './services/rating.service';
 
 declare let jasmine: any;
@@ -30,7 +29,6 @@ describe('Like component', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [ MaterialModule ],
             declarations: [ LikeComponent ],
             providers: [ RatingService ]
         }).compileComponents();

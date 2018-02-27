@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService, AppConfigService, StorageService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AppConfigService, StorageService } from '@alfresco/adf-core';
 import { RatingService } from './rating.service';
 
 declare let jasmine: any;

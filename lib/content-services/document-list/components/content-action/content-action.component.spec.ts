@@ -20,7 +20,6 @@ import { EventEmitter } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
 import { ContentService } from '@alfresco/adf-core';
 import { DataTableModule } from '@alfresco/adf-core';
-import { MaterialModule } from '../../../material.module';
 import { FileNode } from '../../../mock';
 import { DocumentListService } from '../../services/document-list.service';
 import { ContentActionHandler } from './../../models/content-action.model';
@@ -45,8 +44,7 @@ describe('ContentAction', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                DataTableModule,
-                MaterialModule
+                DataTableModule
             ],
             providers: [
                 DocumentListService

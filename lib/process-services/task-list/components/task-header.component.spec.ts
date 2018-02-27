@@ -19,7 +19,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CardViewUpdateService, AppConfigService } from '@alfresco/adf-core';
 import { BpmUserService } from '@alfresco/adf-core';
-import { MaterialModule } from '../../material.module';
 import { Observable } from 'rxjs/Observable';
 import {
     completedTaskDetailsMock,
@@ -57,9 +56,6 @@ describe('TaskHeaderComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-                MaterialModule
-            ],
             declarations: [
                 TaskHeaderComponent
             ],

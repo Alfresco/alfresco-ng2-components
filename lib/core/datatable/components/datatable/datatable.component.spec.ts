@@ -80,7 +80,6 @@ describe('DataTable', () => {
             [new ObjectDataColumn({ key: 'name' })]
         );
 
-
         dataTable.ngOnChanges({
             data: new SimpleChange(null, newData, false)
         });

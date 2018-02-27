@@ -20,7 +20,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PathElementEntity } from 'alfresco-js-api';
 import { DataTableModule } from '@alfresco/adf-core';
 import { fakeNodeWithCreatePermission } from '../mock';
-import { MaterialModule } from '../material.module';
 import { DocumentListService, DocumentListComponent } from '../document-list';
 import { BreadcrumbComponent } from './breadcrumb.component';
 
@@ -35,8 +34,7 @@ describe('Breadcrumb', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                DataTableModule,
-                MaterialModule
+                DataTableModule
             ],
             declarations: [
                 DocumentListComponent,

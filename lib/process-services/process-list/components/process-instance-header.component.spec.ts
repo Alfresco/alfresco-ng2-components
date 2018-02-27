@@ -17,7 +17,6 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigService, CardViewUpdateService } from '@alfresco/adf-core';
-import { MaterialModule } from '../../material.module';
 
 import { ProcessInstance } from '../models/process-instance.model';
 import { exampleProcess } from '../../mock';
@@ -32,9 +31,6 @@ describe('ProcessInstanceHeaderComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-                MaterialModule
-            ],
             declarations: [
                 ProcessInstanceHeaderComponent
             ],
