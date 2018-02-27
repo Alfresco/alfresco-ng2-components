@@ -15,14 +15,11 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
-import { DataColumn, DataRow, DataSorting, ContentService, ThumbnailService } from '@alfresco/adf-core';
+import { DataColumn, DataRow, DataSorting, ContentService } from '@alfresco/adf-core';
 import { FileNode, FolderNode } from './../../mock';
 import { DocumentListService } from './../services/document-list.service';
 import { ShareDataRow } from './share-data-row.model';
 import { ShareDataTableAdapter } from './share-datatable-adapter';
-import { MatIconRegistry } from '@angular/material';
-import { DomSanitizer } from '@angular/platform-browser';
 
 describe('ShareDataTableAdapter', () => {
 
