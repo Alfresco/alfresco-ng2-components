@@ -268,10 +268,6 @@ export class FormModel {
             if (data[field.id]) {
                 field.json.value = data[field.id];
                 field.value = field.parseValue(field.json);
-                if (field.type === FormFieldTypes.DROPDOWN ||
-                    field.type === FormFieldTypes.RADIO_BUTTONS) {
-                    field.value = data[field.id].id;
-                }
             }
         }
     }

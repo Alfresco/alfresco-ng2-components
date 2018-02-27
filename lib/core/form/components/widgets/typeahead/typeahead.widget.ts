@@ -67,7 +67,7 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
 
                 let fieldValue = this.field.value;
                 if (fieldValue) {
-                    let toSelect = options.find(item => item.id === fieldValue);
+                    let toSelect = options.find(item => item.id === fieldValue || item.name.toLocaleLowerCase() === fieldValue.toLocaleLowerCase());
                     if (toSelect) {
                         this.value = toSelect.name;
                     }
