@@ -41,7 +41,7 @@ export class VersionUploadComponent {
         this.success.emit(event);
     }
 
-    onUploadFail(event): void {
+    onUploadError(event): void {
         this.error.emit(event);
     }
 

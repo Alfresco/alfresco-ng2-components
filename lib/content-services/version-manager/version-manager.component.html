@@ -1,5 +1,5 @@
 <div class="adf-new-version-uploader-container" fxLayout="row" fxLayoutAlign="end center">
-    <adf-version-upload [node]="node" (success)="onUploadSuccess($event)" (error)="onUploadFail($event)"></adf-version-upload>
+    <adf-version-upload [node]="node" (success)="onUploadSuccess($event)" (error)="onUploadError($event)"></adf-version-upload>
 </div>
 <div class="adf-version-list-container">
     <adf-version-list [id]="node.id"></adf-version-list>
