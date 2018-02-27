@@ -4,5 +4,7 @@
     staticTitle="Upload new version"
     [rootFolderId]="node.parentId"
     tooltip="Restriction: upload file with the same name to create a new version of it"
-    [versioning]="true">
+    [versioning]="true"
+    (success)="onUploadSuccess($event)"
+    (error)="onUploadError($event)">
 </adf-upload-button>
