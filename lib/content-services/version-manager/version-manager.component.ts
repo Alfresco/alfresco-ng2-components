@@ -33,13 +33,13 @@ export class VersionManagerComponent {
     uploadSuccess: EventEmitter<any> = new EventEmitter();
 
     @Output()
-    uploadFail: EventEmitter<any> = new EventEmitter();
+    uploadError: EventEmitter<any> = new EventEmitter();
 
     onUploadSuccess(event): void {
         this.uploadSuccess.emit(event);
     }
 
-    onUploadFail(event): any {
-        this.uploadFail.emit(event);
+    onUploadError(event): any {
+        this.uploadError.emit(event);
     }
 }
