@@ -108,7 +108,7 @@ adf-process-instance-list also supports pagination and the same can be used as s
 
 ### Properties
 
-| Name | Description |  |  |
+| Name | Type | Default | Description |
 | ---- | ----------- | --- | --- |
 | appId | The id of the app. |  |  |
 | processDefinitionKey | The processDefinitionKey of the process. |  |  |
@@ -118,6 +118,8 @@ adf-process-instance-list also supports pagination and the same can be used as s
 | page | number | 0 | The page of the tasks to fetch. |
 | size | number | 25 | The number of tasks to fetch. |
 | schemaColumn | List of columns to display in the process instances datatable (see the [Details](#details) section below) |  |  |
+| multiselect | boolean | false | Toggles multiple row selection, renders checkboxes at the beginning of each row. |
+| selectionMode | string | 'single' | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
 
 ### Events
 

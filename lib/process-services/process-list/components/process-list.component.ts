@@ -97,6 +97,17 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     @Input()
     data: DataTableAdapter;
 
+    /* Toggles multiple row selection, renders checkboxes at the beginning of each row */
+    @Input()
+    multiselect: boolean = false;
+
+    /* Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode,
+     * you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for
+     * multiple rows.
+     */
+    @Input()
+    selectionMode: string = 'single'; // none|single|multiple
+
     /** Emitted when a row in the process list is clicked. */
     @Output()
     rowClick: EventEmitter<string> = new EventEmitter<string>();
@@ -111,7 +122,7 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
 
     currentInstanceId: string;
     isLoading: boolean = true;
-    layoutPresets = {};
+    layoutPresets = {}; 
 
     pagination: BehaviorSubject<Pagination>;
 
