@@ -589,6 +589,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     private loadTrashcan(merge: boolean = false): void {
+        this.folderNode = null;
+        this.currentFolderId = '-trashcan-';
+        this.skipCount = 0;
+
         const options = {
             include: ['path', 'properties'],
             maxItems: this.maxItems,
@@ -600,6 +604,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     private loadSharedLinks(merge: boolean = false): void {
+        this.folderNode = null;
+        this.currentFolderId = '-sharedlinks-';
+        this.skipCount = 0;
+
         const options = {
             include: ['properties', 'allowableOperations', 'path'],
             maxItems: this.maxItems,
@@ -611,6 +619,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     private loadSites(merge: boolean = false): void {
+        this.folderNode = null;
+        this.currentFolderId = '-sites-';
+        this.skipCount = 0;
+
         const options = {
             include: ['properties'],
             maxItems: this.maxItems,
@@ -631,6 +643,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     private loadMemberSites(merge: boolean = false): void {
+        this.folderNode = null;
+        this.currentFolderId = '-mysites-';
+        this.skipCount = 0;
+
         const options = {
             include: ['properties'],
             maxItems: this.maxItems,
@@ -659,6 +675,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     private loadFavorites(merge: boolean = false): void {
+        this.folderNode = null;
+        this.currentFolderId = '-favorites-';
+        this.skipCount = 0;
+
         const options = {
             maxItems: this.maxItems,
             skipCount: this.skipCount,
@@ -690,6 +710,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     private loadRecent(merge: boolean = false): void {
+        this.folderNode = null;
+        this.currentFolderId = '-recent-';
+        this.skipCount = 0;
+
         this.getRecentFiles('-me-')
             .then((page: NodePaging) => this.onPageLoaded(page, merge))
             .catch(error => this.error.emit(error));
