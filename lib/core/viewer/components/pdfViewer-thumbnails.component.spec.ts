@@ -133,7 +133,7 @@ describe('PdfThumbListComponent', () => {
         spyOn(component, 'scrollInto');
         fixture.detectChanges();
 
-        expect(component.renderItems[component.renderItems.length - 1]).toBe(6);
+        expect(component.renderItems[component.renderItems.length - 1].id).toBe(6);
         expect(fixture.debugElement.nativeElement.scrollTop).toBe(0);
 
         viewerMock.currentPageNumber = 6;
