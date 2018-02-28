@@ -21,11 +21,6 @@ export class DemoForm {
         return {
             'id': 1001,
             'name': 'ISSUE_FORM',
-            'processDefinitionId': 'ISSUE_APP:1:2504',
-            'processDefinitionName': 'ISSUE_APP',
-            'processDefinitionKey': 'ISSUE_APP',
-            'taskId': '2510',
-            'taskDefinitionKey': 'sid-F67A2996-1684-4774-855A-4591490081FD',
             'tabs': [],
             'fields': [
                 {
