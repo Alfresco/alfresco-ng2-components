@@ -146,4 +146,11 @@ describe('UserPreferencesService', () => {
         expect(preferences.locale).toBe('fake-store-locate');
     });
 
+    it('should stream the page size value when is set', async(() => {
+        preferences.paginationSize = 5;
+        preferences.paginationSize$.subscribe((pageSize) => {
+            expect(pageSize).toBe(5);
+        });
+    }));
+
 });
