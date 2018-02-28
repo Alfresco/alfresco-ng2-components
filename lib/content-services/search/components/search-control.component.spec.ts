@@ -267,7 +267,7 @@ describe('SearchControlComponent', () => {
             });
         }));
 
-        it('should close the autocomplete when user press ESCAPE', async(() => {
+        it('should close the autocomplete when user press ESCAPE', (done) => {
             spyOn(component, 'isSearchBarActive').and.returnValue(true);
             spyOn(searchService, 'search').and.returnValue(Observable.of(results));
             fixture.detectChanges();
@@ -286,11 +286,12 @@ describe('SearchControlComponent', () => {
                     fixture.detectChanges();
                     resultElement = <HTMLElement> element.querySelector('#result_option_0');
                     expect(resultElement).toBeNull();
+                    done();
                 });
             });
-        }));
+        });
 
-        it('should close the autocomplete when user press ENTER on input', async(() => {
+        it('should close the autocomplete when user press ENTER on input', (done) => {
             spyOn(component, 'isSearchBarActive').and.returnValue(true);
             spyOn(searchService, 'search').and.returnValue(Observable.of(results));
             fixture.detectChanges();
@@ -309,9 +310,10 @@ describe('SearchControlComponent', () => {
                     fixture.detectChanges();
                     resultElement = <HTMLElement> element.querySelector('#result_option_0');
                     expect(resultElement).toBeNull();
+                    done();
                 });
             });
-        }));
+        });
 
         it('should focus input element when autocomplete list is cancelled', async(() => {
             spyOn(component, 'isSearchBarActive').and.returnValue(true);
@@ -379,7 +381,7 @@ describe('SearchControlComponent', () => {
             });
         }));
 
-        it('should focus the input search when ARROW UP is pressed on the first list item', async(() => {
+        it('should focus the input search when ARROW UP is pressed on the first list item', (done) => {
             spyOn(searchService, 'search').and.returnValue(Observable.of(results));
             fixture.detectChanges();
             let inputDebugElement = debugElement.query(By.css('#adf-control-input'));
@@ -400,9 +402,10 @@ describe('SearchControlComponent', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(document.activeElement.id).toBe('adf-control-input');
+                    done();
                 });
             });
-        }));
+        });
 
     });
 
@@ -505,7 +508,7 @@ describe('SearchControlComponent', () => {
             });
         }));
 
-        it('should set deactivate the search after element is clicked', async(() => {
+        it('should set deactivate the search after element is clicked', (done) => {
             spyOn(component, 'isSearchBarActive').and.returnValue(true);
             spyOn(searchService, 'search').and.returnValue(Observable.of(results));
             component.optionClicked.subscribe((item) => {
@@ -521,8 +524,9 @@ describe('SearchControlComponent', () => {
                 fixture.detectChanges();
                 let firstOption: DebugElement = debugElement.query(By.css('#result_name_0'));
                 firstOption.triggerEventHandler('click', null);
+                done();
             });
-        }));
+        });
 
         it('should NOT reset the search term after element is clicked', async(() => {
             spyOn(component, 'isSearchBarActive').and.returnValue(true);
