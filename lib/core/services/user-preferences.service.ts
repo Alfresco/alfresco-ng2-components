@@ -34,6 +34,8 @@ export class UserPreferencesService {
 
     private localeSubject: BehaviorSubject<string> ;
     locale$: Observable<string>;
+    private paginationSizeSubject: BehaviorSubject<number> ;
+    paginationSize$: Observable<number>;
 
     constructor(
         public translate: TranslateService,
@@ -42,9 +44,11 @@ export class UserPreferencesService {
         private apiService: AlfrescoApiService
     ) {
         const currentLocale = this.locale || this.getDefaultLocale();
+        const currentPageSize = this.appConfig.get('pagination.size', this.defaults.paginationSize);
         this.localeSubject = new BehaviorSubject(currentLocale);
         this.locale$ = this.localeSubject.asObservable();
-        this.defaults.paginationSize = this.appConfig.get('pagination.size', this.defaults.paginationSize);
+        this.paginationSizeSubject = new BehaviorSubject(currentPageSize);
+        this.paginationSize$ = this.paginationSizeSubject.asObservable();
         this.defaults.supportedPageSizes = this.appConfig.get('pagination.supportedPageSizes', this.defaults.supportedPageSizes);
     }
 
@@ -124,6 +128,7 @@ export class UserPreferencesService {
 
     /** Pagination size. */
     set paginationSize(value: number) {
+        this.paginationSizeSubject.next(value);
         this.set('PAGINATION_SIZE', value);
     }
 

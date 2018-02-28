@@ -27,7 +27,7 @@ import { UserPreferencesService } from './user-preferences.service';
 
 describe('UserPreferencesService', () => {
 
-    const defaultPaginationSize: number = 10;
+    const defaultPaginationSize: number = 25;
     const supportedPaginationSize = [5, 10, 15, 20];
     let preferences: UserPreferencesService;
     let storage: StorageService;
@@ -66,6 +66,7 @@ describe('UserPreferencesService', () => {
     });
 
     it('should get default pagination from app config', () => {
+        appConfig.config.pagination.size = 0;
         expect(preferences.defaults.paginationSize).toBe(defaultPaginationSize);
     });
 

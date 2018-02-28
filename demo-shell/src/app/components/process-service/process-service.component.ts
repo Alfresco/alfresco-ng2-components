@@ -165,7 +165,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
                 private preferenceService: UserPreferencesService) {
         this.dataTasks = new ObjectDataTableAdapter();
         this.dataTasks.setSorting(new DataSorting('created', 'desc'));
-        this.paginationPageSize = this.preferenceService.paginationSize;
+
 
         this.defaultProcessName = this.appConfig.get<string>('adf-start-process.name');
         this.defaultProcessDefinitionName = this.appConfig.get<string>('adf-start-process.processDefinitionName');
@@ -182,6 +182,10 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
         formService.formFieldValueChanged.subscribe((e: FormFieldEvent) => {
             this.logService.log(`Field value changed. Form: ${e.form.id}, Field: ${e.field.id}, Value: ${e.field.value}`);
+        });
+
+        this.preferenceService.paginationSize$.subscribe((pageSize) => {
+            this.paginationPageSize = pageSize;
         });
 
         formService.validateDynamicTableRow.subscribe(
