@@ -17,6 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { PdfThumbListComponent } from './pdfViewer-thumbnails.component';
 import { PdfThumbComponent } from './pdfViewer-thumb.component';
 
@@ -55,6 +56,9 @@ describe('PdfThumbListComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
+            imports: [
+                NoopAnimationsModule
+            ],
             declarations: [
                 PdfThumbListComponent,
                 PdfThumbComponent
@@ -81,7 +85,7 @@ describe('PdfThumbListComponent', () => {
         fixture.detectChanges();
 
         const renderedIds = component.renderItems.map(item => item.id);
-        const rangeIds = viewerMock._pages.slice(0, 7).map(item => item.id);
+        const rangeIds = viewerMock._pages.slice(0, 6).map(item => item.id);
 
         expect(renderedIds).toEqual(rangeIds);
     });
@@ -91,24 +95,23 @@ describe('PdfThumbListComponent', () => {
         fixture.detectChanges();
 
         const renderedIds = component.renderItems.map(item => item.id);
-        const rangeIds = viewerMock._pages.slice(6, 14).map(item => item.id);
+        const rangeIds = viewerMock._pages.slice(5, 12).map(item => item.id);
 
         expect(renderedIds).toEqual(rangeIds);
     });
 
     it('should render items containing current document page', () => {
-        fixture.nativeElement.scrollTop = 1700;
         fixture.detectChanges();
 
         const renderedIds = component.renderItems.map(item => item.id);
 
-        expect(renderedIds).not.toContain(3);
+        expect(renderedIds).not.toContain(10);
 
-        viewerMock.eventBus.dispatch('pagechange', { pageNumber: 3 });
+        component.scrollInto(10);
 
         const newRenderedIds = component.renderItems.map(item => item.id);
 
-        expect(newRenderedIds).toContain(3);
+        expect(newRenderedIds).toContain(10);
     });
 
     it('should not change items if range contains current document page', () => {
@@ -126,6 +129,19 @@ describe('PdfThumbListComponent', () => {
         expect(newRenderedIds).toContain(12);
     });
 
+    it('should show the buffer thumbnail onPageChange if range contains current page', () => {
+        spyOn(component, 'scrollInto');
+        fixture.detectChanges();
+
+        expect(component.renderItems[component.renderItems.length - 1]).toBe(6);
+        expect(fixture.debugElement.nativeElement.scrollTop).toBe(0);
+
+        viewerMock.currentPageNumber = 6;
+
+        expect(component.scrollInto).not.toHaveBeenCalled();
+        expect(fixture.debugElement.nativeElement.scrollTop).toBe(128);
+    });
+
     it('should return current viewed page as selected', () => {
         fixture.nativeElement.scrollTop = 0;
         fixture.detectChanges();
@@ -136,17 +152,10 @@ describe('PdfThumbListComponent', () => {
     });
 
     it('should go to selected page', () => {
-        fixture.nativeElement.scrollTop = 0;
         fixture.detectChanges();
-
-        const renderedIds = component.renderItems.map(item => item.id);
-
-        expect(renderedIds).not.toContain(12);
 
         component.goTo(12);
 
-        const newRenderedIds = component.renderItems.map(item => item.id);
-
-        expect(newRenderedIds).toContain(12);
+        expect(viewerMock.currentPageNumber).toBe(12);
     });
 });
