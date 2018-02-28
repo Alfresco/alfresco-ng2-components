@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 
 @Component({
@@ -26,7 +26,21 @@ import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 })
 export class VersionManagerComponent {
 
-    /** The node whose version history you want to manage. */
     @Input()
     node: MinimalNodeEntryEntity;
+
+    @Output()
+    uploadSuccess: EventEmitter<any> = new EventEmitter();
+
+    @Output()
+    uploadError: EventEmitter<any> = new EventEmitter();
+
+    onUploadSuccess(event): void {
+        this.uploadSuccess.emit(event);
+    }
+
+    onUploadError(event): any {
+        this.uploadError.emit(event);
+    }
 }
+

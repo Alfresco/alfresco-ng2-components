@@ -13,14 +13,25 @@ Displays the version history of a node with the ability to upload a new version.
 ## Basic Usage
 
 ```html
-<adf-version-manager [node]="aMinimalNodeEntryEntity"></adf-version-manager>
+<adf-version-manager 
+    [node]="aMinimalNodeEntryEntity"
+    (uploadSuccess)="customMethod($event)"
+    (uploadError)="customMethod2($event)">
+</adf-version-manager>
 ```
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| node | `MinimalNodeEntryEntity` |  | The node whose version history you want to manage.  |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| node | [MinimalNodeEntryEntity](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md) | The node you want to manage the version history of. |
+
+### Events
+
+| Name | Description |
+| --- | --- |
+| uploadSuccess | Raised when the file is uploaded |
+| uploadError | Emitted when an error occurs.|
 
 ## Details
 
