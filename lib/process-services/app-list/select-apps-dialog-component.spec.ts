@@ -20,7 +20,6 @@ import { async, TestBed } from '@angular/core/testing';
 import { ComponentFixture } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { MaterialModule } from '../material.module';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { MatDialog } from '@angular/material';
 import { OverlayContainer } from '@angular/cdk/overlay';
@@ -70,7 +69,6 @@ describe('Select app dialog', () => {
 
         TestBed.configureTestingModule({
             imports: [
-                MaterialModule,
                 FormsModule,
                 ReactiveFormsModule,
                 BrowserDynamicTestingModule

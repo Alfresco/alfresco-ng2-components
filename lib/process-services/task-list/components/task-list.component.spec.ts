@@ -17,7 +17,6 @@
 
 import { Component, SimpleChange, ViewChild } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MaterialModule } from '../../material.module';
 import { AppConfigService } from '@alfresco/adf-core';
 import { DataRowEvent, ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/adf-core';
 import { TaskListService } from '../services/tasklist.service';
@@ -128,9 +127,7 @@ describe('TaskListComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-                MaterialModule
-            ],
+
             declarations: [
                 TaskListComponent
             ],

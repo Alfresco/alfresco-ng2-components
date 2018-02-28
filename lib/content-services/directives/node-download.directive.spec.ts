@@ -21,7 +21,6 @@ import { MatDialog } from '@angular/material';
 import { Component, DebugElement } from '@angular/core';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 
-import { MaterialModule } from '../material.module';
 import { DialogModule } from '../dialogs/dialog.module';
 import { NodeDownloadDirective } from './node-download.directive';
 
@@ -44,8 +43,7 @@ describe('NodeDownloadDirective', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                DialogModule,
-                MaterialModule
+                DialogModule
             ],
             declarations: [
                 TestComponent,

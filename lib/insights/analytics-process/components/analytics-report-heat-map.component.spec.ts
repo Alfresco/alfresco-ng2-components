@@ -19,7 +19,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DiagramsModule } from '../../diagram/diagram.module';
 import { AnalyticsReportHeatMapComponent } from '../components/analytics-report-heat-map.component';
 import { AnalyticsProcessModule } from '../analytics-process.module';
-import { MaterialModule } from '../../material.module';
 
 declare let jasmine: any;
 
@@ -41,7 +40,6 @@ describe('AnalyticsReportHeatMapComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 DiagramsModule,
-                MaterialModule,
                 AnalyticsProcessModule
             ]
         }).compileComponents();

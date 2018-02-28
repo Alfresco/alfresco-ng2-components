@@ -18,7 +18,6 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { MaterialModule } from '../material.module';
 import { DropdownSitesComponent } from './sites-dropdown.component';
 
 declare let jasmine: any;
@@ -34,9 +33,6 @@ describe('DropdownSitesComponent', () => {
     beforeEach(async(() => {
 
         TestBed.configureTestingModule({
-            imports: [
-                MaterialModule
-            ],
             declarations: [
                 DropdownSitesComponent
             ]

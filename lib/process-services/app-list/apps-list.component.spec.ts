@@ -18,10 +18,9 @@
 import { DebugElement, Component } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppsProcessService, CoreModule } from '@alfresco/adf-core';
+import { AppsProcessService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 
-import { MaterialModule } from '../material.module';
 import { defaultApp, deployedApps, nonDeployedApps } from '../mock/apps-list.mock';
 import { AppsListComponent } from './apps-list.component';
 import { TranslateModule } from '@ngx-translate/core';
@@ -37,8 +36,6 @@ describe('AppsListComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
-                MaterialModule,
                 TranslateModule
             ],
             declarations: [
@@ -273,9 +270,6 @@ describe('Custom CustomEmptyAppListTemplateComponent', () => {
             declarations: [
                 AppsListComponent,
                 CustomEmptyAppListTemplateComponent
-            ],
-            imports: [
-                MaterialModule
             ]
         }).compileComponents();
     }));

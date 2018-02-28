@@ -17,7 +17,6 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MaterialModule } from '../material.module';
 import { ProcessContentService } from '@alfresco/adf-core';
 import { TranslationService } from '@alfresco/adf-core';
 import { CreateProcessAttachmentComponent } from './create-process-attachment.component';
@@ -51,7 +50,6 @@ describe('Activiti Process Create Attachment', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                MaterialModule
             ],
             declarations: [
                 CreateProcessAttachmentComponent

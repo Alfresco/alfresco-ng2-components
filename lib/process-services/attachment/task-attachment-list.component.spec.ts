@@ -18,7 +18,6 @@
 import { SimpleChange, Component } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { MaterialModule } from '../material.module';
 import { Observable } from 'rxjs/Observable';
 import { TaskAttachmentListComponent } from './task-attachment-list.component';
 import { ProcessContentService } from '@alfresco/adf-core';
@@ -35,9 +34,6 @@ describe('TaskAttachmentList', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-                MaterialModule
-            ],
             declarations: [
                 TaskAttachmentListComponent
             ],
@@ -327,9 +323,6 @@ describe('Custom CustomEmptyTemplateComponent', () => {
             declarations: [
                 TaskAttachmentListComponent,
                 CustomEmptyTemplateComponent
-            ],
-            imports: [
-                MaterialModule
             ]
         }).compileComponents();
     }));

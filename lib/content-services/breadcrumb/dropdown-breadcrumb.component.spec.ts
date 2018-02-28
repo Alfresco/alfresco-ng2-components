@@ -20,7 +20,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DataTableModule } from '@alfresco/adf-core';
 import { fakeNodeWithCreatePermission } from '../mock';
-import { MaterialModule } from '../material.module';
 import { DocumentListComponent, DocumentListService } from '../document-list';
 import { DropdownBreadcrumbComponent } from './dropdown-breadcrumb.component';
 
@@ -33,8 +32,7 @@ describe('DropdownBreadcrumb', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                DataTableModule,
-                MaterialModule
+                DataTableModule
             ],
             declarations: [
                 DocumentListComponent,
