@@ -129,7 +129,7 @@ describe('PdfThumbListComponent', () => {
         expect(newRenderedIds).toContain(12);
     });
 
-    it('should show the buffer thumbnail onPageChange if range contains current page', () => {
+    it('should scroll thumbnail height amount to buffer thumbnail onPageChange event', () => {
         spyOn(component, 'scrollInto');
         fixture.detectChanges();
 
@@ -139,7 +139,7 @@ describe('PdfThumbListComponent', () => {
         viewerMock.currentPageNumber = 6;
 
         expect(component.scrollInto).not.toHaveBeenCalled();
-        expect(fixture.debugElement.nativeElement.scrollTop).toBe(128);
+        expect(fixture.debugElement.nativeElement.scrollTop).toBe(129);
     });
 
     it('should return current viewed page as selected', () => {
