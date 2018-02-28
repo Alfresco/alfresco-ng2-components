@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService, CoreModule } from '@alfresco/adf-core';
+import { AppConfigService } from '@alfresco/adf-core';
 import { DataTableModule } from '@alfresco/adf-core';
 import { WebscriptComponent } from './webscript.component';
 
@@ -31,7 +31,6 @@ describe('WebscriptComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
                 DataTableModule
             ],
             declarations: [

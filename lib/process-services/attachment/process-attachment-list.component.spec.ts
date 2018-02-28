@@ -18,7 +18,6 @@
 import { NgZone, SimpleChange, Component } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatProgressSpinnerModule } from '@angular/material';
-import { MaterialModule } from '../material.module';
 import { By } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { ProcessContentService } from '@alfresco/adf-core';
@@ -325,7 +324,6 @@ describe('Custom CustomEmptyTemplateComponent', () => {
                 CustomEmptyTemplateComponent
             ],
             imports: [
-                MaterialModule
             ]
         }).compileComponents();
     }));

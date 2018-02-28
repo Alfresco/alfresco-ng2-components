@@ -17,7 +17,6 @@
 
 import { DebugElement, NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MaterialModule } from '../../material.module';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
 
@@ -39,7 +38,6 @@ describe('ProcessInstanceDetailsComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                MaterialModule,
                 FormModule,
                 TaskListModule
             ],

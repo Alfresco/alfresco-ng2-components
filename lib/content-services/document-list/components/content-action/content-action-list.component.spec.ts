@@ -18,7 +18,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
 import { DataTableModule } from '@alfresco/adf-core';
-import { MaterialModule } from '../../../material.module';
 import { DocumentListService } from '../../services/document-list.service';
 import { ContentActionModel } from './../../models/content-action.model';
 import { DocumentListComponent } from './../document-list.component';
@@ -32,8 +31,7 @@ describe('ContentColumnList', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                DataTableModule,
-                MaterialModule
+                DataTableModule
             ],
             declarations: [
                 DocumentListComponent

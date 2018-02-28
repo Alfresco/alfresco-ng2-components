@@ -21,7 +21,6 @@ import { ReportParametersModel } from '../../diagram/models/report/reportParamet
 import * as analyticParamsMock from '../../mock';
 import { AnalyticsReportParametersComponent } from '../components/analytics-report-parameters.component';
 import { AnalyticsProcessModule } from '../analytics-process.module';
-import { MaterialModule } from '../../material.module';
 
 declare let jasmine: any;
 
@@ -34,7 +33,6 @@ describe('AnalyticsReportParametersComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                MaterialModule,
                 AnalyticsProcessModule
             ]
         }).compileComponents();

@@ -15,41 +15,32 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
-import { TranslationService, AppConfigService, NotificationService } from '@alfresco/adf-core';
+import {  TestBed } from '@angular/core/testing';
+import {
+    AlfrescoApiService,
+    AppConfigService,
+    StorageService,
+    ContentService
+} from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { FileNode, FolderNode } from '../../mock';
 import { ContentActionHandler } from '../models/content-action.model';
 import { DocumentListService } from './document-list.service';
 import { FolderActionsService } from './folder-actions.service';
-import { NodeActionsService } from './node-actions.service';
-import { ContentNodeDialogService } from '../../content-node-selector/content-node-dialog.service';
 
 describe('FolderActionsService', () => {
 
     let service: FolderActionsService;
     let documentListService: DocumentListService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [],
-            providers: [
-                DocumentListService,
-                FolderActionsService,
-                NodeActionsService,
-                TranslationService,
-                NotificationService,
-                ContentNodeDialogService
-            ]
-        }).compileComponents();
-    }));
-
     beforeEach(() => {
         let appConfig: AppConfigService = TestBed.get(AppConfigService);
         appConfig.config.ecmHost = 'http://localhost:9876/ecm';
 
-        service = TestBed.get(FolderActionsService);
-        documentListService = TestBed.get(DocumentListService);
+        let contentService = new ContentService(null, null, null, null);
+        let alfrescoApiService = new AlfrescoApiService(new AppConfigService(null), new StorageService());
+        documentListService = new DocumentListService(null, contentService, alfrescoApiService, null, null);
+        service = new FolderActionsService(null, documentListService, contentService);
     });
 
     it('should register custom action handler', () => {

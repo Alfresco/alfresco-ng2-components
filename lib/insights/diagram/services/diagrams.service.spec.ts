@@ -16,7 +16,7 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { AppConfigService, CoreModule } from '@alfresco/adf-core';
+import { AppConfigService } from '@alfresco/adf-core';
 import { DiagramsService } from './diagrams.service';
 
 declare let jasmine: any;
@@ -27,9 +27,6 @@ describe('DiagramsService', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-                CoreModule
-            ],
             providers: [
                 DiagramsService
             ]

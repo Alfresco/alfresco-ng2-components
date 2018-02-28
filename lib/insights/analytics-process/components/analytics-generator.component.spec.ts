@@ -18,8 +18,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ChartsModule } from 'ng2-charts';
 
-import { MaterialModule } from '../../material.module';
-
 import { DiagramsModule } from '../../diagram/diagram.module';
 import { Chart } from '../../diagram/models/chart/chart.model';
 import { ReportQuery } from '../../diagram/models/report/reportQuery.model';
@@ -37,7 +35,6 @@ describe('AnalyticsGeneratorComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                MaterialModule,
                 ChartsModule,
                 DiagramsModule,
                 AnalyticsProcessModule

@@ -31,7 +31,6 @@ import {
     fakeGetSitesAnswer,
     fakeGetSiteMembership
 } from '../../mock';
-import { MaterialModule } from '../../material.module';
 import { ContentActionModel } from '../models/content-action.model';
 import { NodeMinimal, NodeMinimalEntry, NodePaging } from '../models/document-library.model';
 import { ImageResolver } from './../data/image-resolver.model';
@@ -56,8 +55,7 @@ describe('DocumentList', () => {
 
         TestBed.configureTestingModule({
             imports: [
-                DataTableModule,
-                MaterialModule
+                DataTableModule
             ],
             declarations: [
                 DocumentListComponent

@@ -17,7 +17,6 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MaterialModule } from '../../material.module';
 import { ContentService, UploadService, TranslationService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { UploadButtonComponent } from './upload-button.component';
@@ -50,9 +49,6 @@ describe('UploadButtonComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-                MaterialModule
-            ],
             declarations: [
                 UploadButtonComponent
             ],
