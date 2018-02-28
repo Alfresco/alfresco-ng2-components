@@ -81,17 +81,17 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     @Input()
     name: string;
 
-    /** The presetColumn of the custom schema to fetch. */
+    /* The page number of the processes to fetch. */
     @Input()
     page: number = 0;
 
+    /* The page number processes to fetch. */
     @Input()
     size: number = PaginationComponent.DEFAULT_PAGINATION.maxItems;
 
+    /** The presetColumn of the custom schema to fetch. */
     @Input()
     presetColumn: string;
-
-    requestNode: ProcessFilterParamRepresentationModel;
 
     /** Data source to define the datatable. */
     @Input()
@@ -120,9 +120,10 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
+    requestNode: ProcessFilterParamRepresentationModel;
     currentInstanceId: string;
     isLoading: boolean = true;
-    layoutPresets = {}; 
+    layoutPresets = {};
 
     pagination: BehaviorSubject<Pagination>;
 

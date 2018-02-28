@@ -110,14 +110,15 @@ adf-process-instance-list also supports pagination and the same can be used as s
 
 | Name | Type | Default | Description |
 | ---- | ----------- | --- | --- |
-| appId | The id of the app. |  |  |
-| processDefinitionKey | The processDefinitionKey of the process. |  |  |
-| presetColumn | string |  | The presetColumn of the custom schema to fetch. |
-| state | Define state of the processes. Possible values are `running`, `completed` and `all` |  |  |
-| sort | Define sort of the processes. Possible values are `created-desc`, `created-asc`, `ended-desc`, `ended-asc` |  |  |
-| page | number | 0 | The page of the tasks to fetch. |
-| size | number | 25 | The number of tasks to fetch. |
-| schemaColumn | List of columns to display in the process instances datatable (see the [Details](#details) section below) |  |  |
+| appId | number |  | The id of the app. |
+| processDefinitionKey | string |  | The processDefinitionKey of the process. |
+| presetColumn | string | | The presetColumn of the custom schema to fetch. |
+| state | string |  | Define state of the processes. Possible values are `running`, `completed` and `all` |
+| sort | string |  | Define sort of the processes. Possible values are `created-desc`, `created-asc`, `ended-desc`, `ended-asc` |
+| name | string | | The name of the list. |
+| page | number | 0 | The page of the processes to fetch. |
+| size | number | 25 | The number of processes to fetch. |
+| data | DataTableAdapter |  | Data source to define the datatable. |
 | multiselect | boolean | false | Toggles multiple row selection, renders checkboxes at the beginning of each row. |
 | selectionMode | string | 'single' | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
 
@@ -129,17 +130,6 @@ adf-process-instance-list also supports pagination and the same can be used as s
 | success | Emitted when the list of process instances has been loaded successfully from the server |
 | error | Emitted when an error is encountered loading the list of process instances from the server |
 
-## Details
-
-Example value for the schemaColumn property (see [Properties](#properties) section above):
-
-```json
-[
-    {type: 'text', key: 'id', title: 'Id', sortable: true},
-    {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
-    {type: 'text', key: 'started', title: 'Started', sortable: true},
-    {type: 'text', key: 'startedBy.email', title: 'Started By', sortable: true}
-]
 ```
 ## See also
 
