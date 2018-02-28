@@ -19,7 +19,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DiagramsModule } from '../../diagram/diagram.module';
 import { AnalyticsProcessModule } from '../analytics-process.module';
 import { AnalyticsReportListComponent } from '../components/analytics-report-list.component';
-import { MaterialModule } from '../../material.module';
 import { ReportParametersModel } from '../../diagram/models/report/reportParameters.model';
 
 declare let jasmine: any;
@@ -43,7 +42,6 @@ describe('AnalyticsReportListComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                MaterialModule,
                 DiagramsModule,
                 AnalyticsProcessModule
             ]

@@ -29,7 +29,6 @@ import {
 import { DataTableModule } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
-import { MaterialModule } from '../material.module';
 import { EmptyFolderContentDirective, DocumentListComponent, DocumentListService } from '../document-list';
 import { DropdownSitesComponent } from '../site-dropdown';
 import { DropdownBreadcrumbComponent } from '../breadcrumb';
@@ -78,8 +77,7 @@ describe('ContentNodeSelectorComponent', () => {
     function setupTestbed(plusProviders) {
         TestBed.configureTestingModule({
             imports: [
-                DataTableModule,
-                MaterialModule
+                DataTableModule
             ],
             declarations: [
                 DocumentListComponent,

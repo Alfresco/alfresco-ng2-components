@@ -16,7 +16,6 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MaterialModule } from '../../material.module';
 import { TranslationService, TranslationMock } from '@alfresco/adf-core';
 import { PeopleSelectorComponent, PeopleSearchFieldComponent, PeopleListComponent } from '../../people';
 import { Observable } from 'rxjs/Observable';
@@ -47,9 +46,6 @@ describe('StartTaskComponent', () => {
     let testUser = {id: 1001, firstName: 'fakeName', email: 'fake@app.activiti.com'};
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-                MaterialModule
-            ],
             declarations: [
                 StartTaskComponent,
                 PeopleSearchFieldComponent,

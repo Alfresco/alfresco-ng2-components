@@ -16,10 +16,9 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService, CoreModule } from '@alfresco/adf-core';
+import { AppConfigService } from '@alfresco/adf-core';
 import { TagService } from './services/tag.service';
 import { TagListComponent } from '././tag-list.component';
-import { MaterialModule } from '../material.module';
 
 declare let jasmine: any;
 
@@ -48,10 +47,6 @@ describe('TagList', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-                MaterialModule,
-                CoreModule
-            ],
             declarations: [
                 TagListComponent
             ],

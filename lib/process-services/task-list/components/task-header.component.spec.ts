@@ -19,7 +19,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CardViewUpdateService, AppConfigService } from '@alfresco/adf-core';
 import { BpmUserService } from '@alfresco/adf-core';
-import { MaterialModule } from '../../material.module';
 import { Observable } from 'rxjs/Observable';
 import {
     completedTaskDetailsMock,
@@ -27,7 +26,8 @@ import {
     claimableTaskDetailsMock,
     claimedTaskDetailsMock,
     claimedByGroupMemberMock,
-    taskDetailsWithOutCandidateGroup } from '../../mock';
+    taskDetailsWithOutCandidateGroup
+} from '../../mock';
 
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
@@ -57,9 +57,6 @@ describe('TaskHeaderComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-                MaterialModule
-            ],
             declarations: [
                 TaskHeaderComponent
             ],
@@ -82,236 +79,303 @@ describe('TaskHeaderComponent', () => {
         appConfigService = TestBed.get(AppConfigService);
     });
 
-    it('should render empty component if no task details provided', () => {
+    it('should render empty component if no task details provided', async(() => {
         component.taskDetails = undefined;
         fixture.detectChanges();
         expect(fixture.debugElement.children.length).toBe(0);
-    });
+    }));
 
-    it('should display assignee', () => {
-        component.ngOnChanges({});
+    it('should display assignee', async(() => {
+        component.refreshData();
         fixture.detectChanges();
-        let formNameEl = fixture.debugElement.query(By.css('[data-automation-id="header-assignee"] .adf-property-value'));
-        expect(formNameEl.nativeElement.innerText).toBe('Wilbur Adams');
-    });
 
-    it('should display placeholder if no assignee', () => {
+        fixture.whenStable().then(() => {
+            let formNameEl = fixture.debugElement.query(By.css('[data-automation-id="header-assignee"] .adf-property-value'));
+            expect(formNameEl.nativeElement.innerText).toBe('Wilbur Adams');
+        });
+    }));
+
+    it('should display placeholder if no assignee', async(() => {
         component.taskDetails.assignee = null;
-        component.ngOnChanges({});
+        component.refreshData();
         fixture.detectChanges();
-        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-assignee"] .adf-property-value'));
-        expect(valueEl.nativeElement.innerText).toBe('ADF_TASK_LIST.PROPERTIES.ASSIGNEE_DEFAULT');
-    });
 
-    it('should display created-by', () => {
-        component.ngOnChanges({});
+        fixture.whenStable().then(() => {
+            let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-assignee"] .adf-property-value'));
+            expect(valueEl.nativeElement.innerText).toBe('ADF_TASK_LIST.PROPERTIES.ASSIGNEE_DEFAULT');
+        });
+
+    }));
+
+    it('should display created-by', async(() => {
+        component.refreshData();
         fixture.detectChanges();
-        let formNameEl = fixture.debugElement.query(By.css('[data-automation-id="header-created-by"] .adf-property-value'));
-        expect(formNameEl.nativeElement.innerText).toBe('Wilbur Adams');
-    });
 
-    it('should display priority', () => {
+        fixture.whenStable().then(() => {
+            let formNameEl = fixture.debugElement.query(By.css('[data-automation-id="header-created-by"] .adf-property-value'));
+            expect(formNameEl.nativeElement.innerText).toBe('Wilbur Adams');
+        });
+    }));
+
+    it('should display priority', async(() => {
         component.taskDetails.priority = 27;
-        component.ngOnChanges({});
+        component.refreshData();
         fixture.detectChanges();
-        let formNameEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-priority"]'));
-        expect(formNameEl.nativeElement.innerText).toBe('27');
-    });
 
-    it('should set editable to false if the task has already completed', () => {
+        fixture.whenStable().then(() => {
+            let formNameEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-priority"]'));
+            expect(formNameEl.nativeElement.innerText).toBe('27');
+        });
+    }));
+
+    it('should set editable to false if the task has already completed', async(() => {
         component.taskDetails.endDate = new Date('05/05/2002');
-        component.ngOnChanges({});
+        component.refreshData();
         fixture.detectChanges();
 
-        let datePicker = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-dueDate"]`));
-        expect(datePicker).toBeNull('Datepicker should NOT be in DOM');
-    });
+        fixture.whenStable().then(() => {
+            let datePicker = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-dueDate"]`));
+            expect(datePicker).toBeNull('Datepicker should NOT be in DOM');
+        });
+    }));
 
-    it('should set editable to true if the task has not completed yet', () => {
+    it('should set editable to true if the task has not completed yet', async(() => {
         component.taskDetails.endDate = undefined;
-        component.ngOnChanges({});
+        component.refreshData();
         fixture.detectChanges();
 
-        let datePicker = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-dueDate"]`));
-        expect(datePicker).not.toBeNull('Datepicker should be in DOM');
-    });
+        fixture.whenStable().then(() => {
+            let datePicker = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-dueDate"]`));
+            expect(datePicker).not.toBeNull('Datepicker should be in DOM');
+        });
+    }));
 
     describe('Claiming', () => {
 
-        it('should display the claim button if no assignee', () => {
+        it('should display the claim button if no assignee', async(() => {
             component.taskDetails = new TaskDetailsModel(claimableTaskDetailsMock);
 
-            component.ngOnChanges({});
+            component.refreshData();
             fixture.detectChanges();
 
-            let claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
-            expect(claimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.CLAIM');
-        });
+            fixture.whenStable().then(() => {
+                let claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
+                expect(claimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.CLAIM');
+            });
+        }));
 
-        it('should display the claim button if the task is claimable', () => {
+        it('should display the claim button if the task is claimable', async(() => {
             component.taskDetails = new TaskDetailsModel(claimableTaskDetailsMock);
-            component.ngOnChanges({});
+            component.refreshData();
             fixture.detectChanges();
-            let claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
-            expect(component.isTaskClaimable()).toBeTruthy();
-            expect(claimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.CLAIM');
-        });
 
-        it('should not display the claim/requeue button if the task is not claimable ', () => {
+            fixture.whenStable().then(() => {
+                let claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
+                expect(component.isTaskClaimable()).toBeTruthy();
+                expect(claimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.CLAIM');
+            });
+
+        }));
+
+        it('should not display the claim/requeue button if the task is not claimable ', async(() => {
             component.taskDetails = new TaskDetailsModel(taskDetailsWithOutCandidateGroup);
-            component.ngOnChanges({});
+            component.refreshData();
             fixture.detectChanges();
-            let claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
+
+            fixture.whenStable().then(() => {
+                let claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
+                let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
+                expect(component.isTaskClaimable()).toBeFalsy();
+                expect(component.isTaskClaimedByCandidateMember()).toBeFalsy();
+                expect(unclaimButton).toBeNull();
+                expect(claimButton).toBeNull();
+            });
+        }));
+    });
+
+    it('should display the requeue button if task is claimed by the current logged-in user', async(() => {
+        component.taskDetails = new TaskDetailsModel(claimedTaskDetailsMock);
+        component.refreshData();
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
             let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
-            expect(component.isTaskClaimable()).toBeFalsy();
+            expect(component.isTaskClaimedByCandidateMember()).toBeTruthy();
+            expect(unclaimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.UNCLAIM');
+        });
+    }));
+
+    it('should not display the requeue button to logged in user if task is claimed by other candidate member', async(() => {
+        component.taskDetails = new TaskDetailsModel(claimedByGroupMemberMock);
+        component.refreshData();
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
             expect(component.isTaskClaimedByCandidateMember()).toBeFalsy();
             expect(unclaimButton).toBeNull();
-            expect(claimButton).toBeNull();
         });
-    });
+    }));
 
-    it('should display the requeue button if task is claimed by the current logged-in user', () => {
-        component.taskDetails = new TaskDetailsModel(claimedTaskDetailsMock);
-        component.ngOnChanges({});
-        fixture.detectChanges();
-        let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
-        expect(component.isTaskClaimedByCandidateMember()).toBeTruthy();
-        expect(unclaimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.UNCLAIM');
-    });
-
-    it('should not display the requeue button to logged in user if task is claimed by other candidate member', () => {
-        component.taskDetails = new TaskDetailsModel(claimedByGroupMemberMock);
-        component.ngOnChanges({});
-        fixture.detectChanges();
-        let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
-        expect(component.isTaskClaimedByCandidateMember()).toBeFalsy();
-        expect(unclaimButton).toBeNull();
-    });
-
-    it('should display the claime button if the task is claimable by candidates members', () => {
+    it('should display the claime button if the task is claimable by candidates members', async(() => {
         component.taskDetails = new TaskDetailsModel(claimableTaskDetailsMock);
-        component.ngOnChanges({});
+        component.refreshData();
         fixture.detectChanges();
-        let claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
-        expect(component.isTaskClaimable()).toBeTruthy();
-        expect(component.isTaskClaimedByCandidateMember()).toBeFalsy();
-        expect(claimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.CLAIM');
-    });
 
-    it('should not display the requeue button if the task is completed', () => {
+        fixture.whenStable().then(() => {
+            let claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
+            expect(component.isTaskClaimable()).toBeTruthy();
+            expect(component.isTaskClaimedByCandidateMember()).toBeFalsy();
+            expect(claimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.CLAIM');
+        });
+    }));
+
+    it('should not display the requeue button if the task is completed', async(() => {
         component.taskDetails = new TaskDetailsModel(completedTaskDetailsMock);
-        component.ngOnChanges({});
+        component.refreshData();
         fixture.detectChanges();
-        let claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
-        let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
-        expect(claimButton).toBeNull();
-        expect(unclaimButton).toBeNull();
-    });
 
-    it('should call the service\'s unclaim method on unclaiming', () => {
+        fixture.whenStable().then(() => {
+            let claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
+            let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
+            expect(claimButton).toBeNull();
+            expect(unclaimButton).toBeNull();
+        });
+    }));
+
+    it('should call the service\'s unclaim method on unclaiming', async(() => {
         spyOn(service, 'unclaimTask');
         component.taskDetails = new TaskDetailsModel(claimedTaskDetailsMock);
-        component.ngOnChanges({});
+        component.refreshData();
         fixture.detectChanges();
 
-        let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
-        unclaimButton.triggerEventHandler('click', {});
+        fixture.whenStable().then(() => {
+            let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
+            unclaimButton.triggerEventHandler('click', {});
 
-        expect(service.unclaimTask).toHaveBeenCalledWith('91');
-    });
+            expect(service.unclaimTask).toHaveBeenCalledWith('91');
+        });
+    }));
 
-    it('should trigger the unclaim event on successfull unclaiming', () => {
+    it('should trigger the unclaim event on successfull unclaiming', async(() => {
         let unclaimed: boolean = false;
         spyOn(service, 'unclaimTask').and.returnValue(Observable.of(true));
         component.taskDetails = new TaskDetailsModel(claimedTaskDetailsMock);
-        component.ngOnChanges({});
+        component.refreshData();
         fixture.detectChanges();
-        component.unclaim.subscribe(() => { unclaimed = true; });
 
-        let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
-        unclaimButton.triggerEventHandler('click', {});
+        fixture.whenStable().then(() => {
+            component.unclaim.subscribe(() => {
+                unclaimed = true;
+            });
 
-        expect(unclaimed).toBeTruthy();
-    });
+            let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
+            unclaimButton.triggerEventHandler('click', {});
 
-    it('should display due date', () => {
+            expect(unclaimed).toBeTruthy();
+        });
+    }));
+
+    it('should display due date', async(() => {
         component.taskDetails.dueDate = new Date('2016-11-03');
-        component.ngOnChanges({});
+        component.refreshData();
         fixture.detectChanges();
-        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value'));
-        expect(valueEl.nativeElement.innerText.trim()).toBe('Nov 03 2016');
-    });
 
-    it('should display placeholder if no due date', () => {
+        fixture.whenStable().then(() => {
+            let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value'));
+            expect(valueEl.nativeElement.innerText.trim()).toBe('Nov 03 2016');
+        });
+    }));
+
+    it('should display placeholder if no due date', async(() => {
         component.taskDetails.dueDate = null;
-        component.ngOnChanges({});
+        component.refreshData();
         fixture.detectChanges();
-        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value'));
-        expect(valueEl.nativeElement.innerText.trim()).toBe('ADF_TASK_LIST.PROPERTIES.DUE_DATE_DEFAULT');
-    });
 
-    it('should display form name', () => {
+        fixture.whenStable().then(() => {
+            let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value'));
+            expect(valueEl.nativeElement.innerText.trim()).toBe('ADF_TASK_LIST.PROPERTIES.DUE_DATE_DEFAULT');
+        });
+    }));
+
+    it('should display form name', async(() => {
         component.formName = 'test form';
-        component.ngOnChanges({});
+        component.refreshData();
         fixture.detectChanges();
-        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-formName"] .adf-property-value'));
-        expect(valueEl.nativeElement.innerText).toBe('test form');
-    });
 
-    it('should display the default parent value if is undefined', () => {
+        fixture.whenStable().then(() => {
+            let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-formName"] .adf-property-value'));
+            expect(valueEl.nativeElement.innerText).toBe('test form');
+        });
+    }));
+
+    it('should display the default parent value if is undefined', async(() => {
         component.taskDetails.processInstanceId = null;
-        component.ngOnChanges({});
+        component.refreshData();
         fixture.detectChanges();
-        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-parentName"] .adf-property-value'));
-        expect(valueEl.nativeElement.innerText.trim()).toEqual('ADF_TASK_LIST.PROPERTIES.PARENT_NAME_DEFAULT');
-    });
 
-    it('should display the Parent name value', () => {
+        fixture.whenStable().then(() => {
+            let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-parentName"] .adf-property-value'));
+            expect(valueEl.nativeElement.innerText.trim()).toEqual('ADF_TASK_LIST.PROPERTIES.PARENT_NAME_DEFAULT');
+        });
+    }));
+
+    it('should display the Parent name value', async(() => {
         component.taskDetails.processInstanceId = '1';
         component.taskDetails.processDefinitionName = 'Parent Name';
-        component.ngOnChanges({});
+        component.refreshData();
         fixture.detectChanges();
-        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-parentName"] .adf-property-value'));
-        expect(valueEl.nativeElement.innerText.trim()).toEqual('Parent Name');
-    });
 
-    it('should not display form name if no form name provided', () => {
-        component.ngOnChanges({});
+        fixture.whenStable().then(() => {
+            let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-parentName"] .adf-property-value'));
+            expect(valueEl.nativeElement.innerText.trim()).toEqual('Parent Name');
+        });
+    }));
+
+    it('should not display form name if no form name provided', async(() => {
+        component.refreshData();
         fixture.detectChanges();
-        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-formName"] .adf-property-value'));
-        expect(valueEl.nativeElement.innerText).toBe('ADF_TASK_LIST.PROPERTIES.FORM_NAME_DEFAULT');
-    });
+
+        fixture.whenStable().then(() => {
+            let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-formName"] .adf-property-value'));
+            expect(valueEl.nativeElement.innerText).toBe('ADF_TASK_LIST.PROPERTIES.FORM_NAME_DEFAULT');
+        });
+    }));
 
     describe('Config Filtering', () => {
 
-        it('should show only the properties from the configuration file', () => {
+        it('should show only the properties from the configuration file', async(() => {
             spyOn(appConfigService, 'get').and.returnValue(['assignee', 'status']);
             component.taskDetails.processInstanceId = '1';
             component.taskDetails.processDefinitionName = 'Parent Name';
-            component.ngOnChanges({});
+            component.refreshData();
             fixture.detectChanges();
             let propertyList = fixture.debugElement.queryAll(By.css('.adf-property-list .adf-property'));
-            expect(propertyList).toBeDefined();
-            expect(propertyList).not.toBeNull();
-            expect(propertyList.length).toBe(2);
-            expect(propertyList[0].nativeElement.textContent).toContain('ADF_TASK_LIST.PROPERTIES.ASSIGNEE');
-            expect(propertyList[1].nativeElement.textContent).toContain('ADF_TASK_LIST.PROPERTIES.STATUS');
-        });
 
-        it('should show all the default properties if there is no configuration', () => {
+            fixture.whenStable().then(() => {
+                expect(propertyList).toBeDefined();
+                expect(propertyList).not.toBeNull();
+                expect(propertyList.length).toBe(2);
+                expect(propertyList[0].nativeElement.textContent).toContain('ADF_TASK_LIST.PROPERTIES.ASSIGNEE');
+                expect(propertyList[1].nativeElement.textContent).toContain('ADF_TASK_LIST.PROPERTIES.STATUS');
+            });
+        }));
+
+        it('should show all the default properties if there is no configuration', async(() => {
             spyOn(appConfigService, 'get').and.returnValue(null);
             component.taskDetails.processInstanceId = '1';
             component.taskDetails.processDefinitionName = 'Parent Name';
-            component.ngOnChanges({});
+            component.refreshData();
             fixture.detectChanges();
-            let propertyList = fixture.debugElement.queryAll(By.css('.adf-property-list .adf-property'));
-            expect(propertyList).toBeDefined();
-            expect(propertyList).not.toBeNull();
-            expect(propertyList.length).toBe(component.properties.length);
-            expect(propertyList[0].nativeElement.textContent).toContain('ADF_TASK_LIST.PROPERTIES.ASSIGNEE');
-            expect(propertyList[1].nativeElement.textContent).toContain('ADF_TASK_LIST.PROPERTIES.STATUS');
-        });
 
+            fixture.whenStable().then(() => {
+                let propertyList = fixture.debugElement.queryAll(By.css('.adf-property-list .adf-property'));
+                expect(propertyList).toBeDefined();
+                expect(propertyList).not.toBeNull();
+                expect(propertyList.length).toBe(component.properties.length);
+                expect(propertyList[0].nativeElement.textContent).toContain('ADF_TASK_LIST.PROPERTIES.ASSIGNEE');
+                expect(propertyList[1].nativeElement.textContent).toContain('ADF_TASK_LIST.PROPERTIES.STATUS');
+            });
+        }));
     });
-
 });

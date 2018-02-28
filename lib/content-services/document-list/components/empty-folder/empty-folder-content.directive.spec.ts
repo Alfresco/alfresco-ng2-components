@@ -18,7 +18,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
 import { DataTableComponent, DataTableModule } from '@alfresco/adf-core';
-import { MaterialModule } from '../../../material.module';
 import { DocumentListService } from '../../services/document-list.service';
 
 import { DocumentListComponent } from './../document-list.component';
@@ -32,8 +31,7 @@ describe('EmptyFolderContent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                DataTableModule,
-                MaterialModule
+                DataTableModule
             ],
             declarations: [
                 DocumentListComponent

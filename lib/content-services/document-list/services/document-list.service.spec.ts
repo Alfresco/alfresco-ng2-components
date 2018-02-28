@@ -15,9 +15,12 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
-import { CookieService, LogService } from '@alfresco/adf-core';
-import { CookieServiceMock } from '@alfresco/adf-core';
+import {
+    AlfrescoApiService,
+    AppConfigService,
+    StorageService,
+    ContentService
+} from '@alfresco/adf-core';
 import { DocumentListService } from './document-list.service';
 
 declare let jasmine: any;
@@ -87,19 +90,10 @@ describe('DocumentListService', () => {
         }
     };
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [],
-            providers: [
-                DocumentListService,
-                { provide: CookieService, useClass: CookieServiceMock },
-                LogService
-            ]
-        }).compileComponents();
-    }));
-
     beforeEach(() => {
-        service = TestBed.get(DocumentListService);
+        let contentService = new ContentService(null, null, null, null);
+        let alfrescoApiService = new AlfrescoApiService(new AppConfigService(null), new StorageService());
+        service = new DocumentListService(null, contentService, alfrescoApiService, null, null);
         jasmine.Ajax.install();
     });
 

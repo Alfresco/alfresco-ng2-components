@@ -33,7 +33,6 @@ import {
     ContentService
 } from '@alfresco/adf-core';
 import { ContentNodeDialogService, DocumentListService } from '@alfresco/adf-content-services';
-import { MaterialModule } from '../material.module';
 import { Observable } from 'rxjs/Observable';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 
@@ -105,7 +104,6 @@ describe('AttachFileWidgetComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule],
             declarations: [AttachFileWidgetComponent],
             providers: [
                         FormService,
