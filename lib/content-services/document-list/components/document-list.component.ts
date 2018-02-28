@@ -468,6 +468,14 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.folderChange.emit(new NodeEntryEvent(node.entry));
     }
 
+    updateCustomSourceData(nodeId: string, merge: boolean): void {
+        this.folderNode = null;
+        this.currentFolderId = nodeId;
+        if (!merge) {
+            this.skipCount = 0;
+        }
+    }
+
     /**
      * Invoked when executing content action for a document or folder.
      * @param node Node to be the context of the execution.
@@ -589,9 +597,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     private loadTrashcan(merge: boolean = false): void {
-        this.folderNode = null;
-        this.currentFolderId = '-trashcan-';
-        this.skipCount = 0;
+        this.updateCustomSourceData('-trashcan-', merge);
 
         const options = {
             include: ['path', 'properties'],
@@ -604,9 +610,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     private loadSharedLinks(merge: boolean = false): void {
-        this.folderNode = null;
-        this.currentFolderId = '-sharedlinks-';
-        this.skipCount = 0;
+        this.updateCustomSourceData('-sharedlinks-', merge);
 
         const options = {
             include: ['properties', 'allowableOperations', 'path'],
@@ -619,9 +623,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     private loadSites(merge: boolean = false): void {
-        this.folderNode = null;
-        this.currentFolderId = '-sites-';
-        this.skipCount = 0;
+        this.updateCustomSourceData('-sites-', merge);
 
         const options = {
             include: ['properties'],
@@ -643,9 +645,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     private loadMemberSites(merge: boolean = false): void {
-        this.folderNode = null;
-        this.currentFolderId = '-mysites-';
-        this.skipCount = 0;
+        this.updateCustomSourceData('-mysites-', merge);
 
         const options = {
             include: ['properties'],
@@ -675,9 +675,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     private loadFavorites(merge: boolean = false): void {
-        this.folderNode = null;
-        this.currentFolderId = '-favorites-';
-        this.skipCount = 0;
+        this.updateCustomSourceData('-favorites-', merge);
 
         const options = {
             maxItems: this.maxItems,
@@ -710,9 +708,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     private loadRecent(merge: boolean = false): void {
-        this.folderNode = null;
-        this.currentFolderId = '-recent-';
-        this.skipCount = 0;
+        this.updateCustomSourceData('-recent-', merge);
 
         this.getRecentFiles('-me-')
             .then((page: NodePaging) => this.onPageLoaded(page, merge))
