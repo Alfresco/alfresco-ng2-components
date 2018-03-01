@@ -1,4 +1,6 @@
 @mixin adf-image-viewer-theme($theme) {
+    $background: map-get($theme, background);
+
     .adf-image-viewer {
         .image-container {
             display: flex;
@@ -22,7 +24,7 @@
 
             .adf-toolbar .mat-toolbar {
                 max-height: 48px;
-                background-color: mat-color($primary, default-contrast, 1);
+                background-color: mat-color($background, card, 0.87);
                 border-width: 0;
                 border-radius: 2px;
                 box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12);
