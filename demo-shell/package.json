@@ -14,7 +14,7 @@
     "build:dist": "npm run validate-config && npm run style:dev && npm run server-versions && rimraf dist && node --max_old_space_size=30000 node_modules/.bin/ng build --prod  --build-optimizer=false  --aot=false --app dist",
     "style:dev": "npm run webpack -- --config  config/webpack.style.js --progress --profile --bail",
     "copy:dev": "node ./config/dev-copy-watch.js",
-    "test": "ng test",
+    "test": " npm run clean-lib-angular && ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "validate-config": "ajv validate -s ../lib/core/app-config/schema.json -d ./src/app.config.json --errors=text --verbose",
