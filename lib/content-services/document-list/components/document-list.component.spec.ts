@@ -1278,4 +1278,30 @@ describe('DocumentList', () => {
 
         expect(documentList.reload).toHaveBeenCalled();
     });
+
+    it('should NOT reload data on onNgChanges upon reset of skipCount to 0', () => {
+        spyOn(documentList, 'reload').and.stub();
+
+        documentList.maxItems = 10;
+        documentList.skipCount = 10;
+
+        const firstChange = true;
+        documentList.ngOnChanges({ skipCount: new SimpleChange(undefined, 0, !firstChange) });
+
+        expect(documentList.reload).not.toHaveBeenCalled();
+    });
+
+    it('should reload data upon changing pagination setting skipCount to 0', () => {
+        spyOn(documentList, 'reload').and.stub();
+
+        documentList.maxItems = 5;
+        documentList.skipCount = 5;
+
+        documentList.updatePagination({
+            maxItems: 5,
+            skipCount: 0
+        });
+
+        expect(documentList.reload).toHaveBeenCalled();
+    });
 });
