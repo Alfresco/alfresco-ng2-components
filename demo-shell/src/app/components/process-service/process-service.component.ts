@@ -147,6 +147,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     dataTasks: ObjectDataTableAdapter;
     dataProcesses: ObjectDataTableAdapter;
     presetColoum = 'default';
+    showProcessPagination = false;
 
     fieldValidators = [
         ...FORM_FIELD_VALIDATORS,
@@ -237,7 +238,8 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.taskPage = 0;
     }
 
-    onTabChange(event: Pagination): void {
+    onTabChange(event: any): void {
+        this.showProcessPagination = event.index === 1;
         this.paginationPageSize = this.preferenceService.paginationSize;
     }
 
@@ -289,6 +291,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     onSuccessProcessList(event: any): void {
+        this.showProcessPagination = true;
         this.currentProcessInstanceId = this.processList.getCurrentId();
     }
 
@@ -336,6 +339,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     onStartProcessInstance(instance: ProcessInstance): void {
+        this.showProcessPagination = false;
         this.currentProcessInstanceId = instance.id;
         this.activitiStartProcess.reset();
         this.activitiprocessfilter.selectRunningFilter();
