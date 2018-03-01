@@ -52,7 +52,7 @@ export class VersionListComponent implements OnChanges {
             .then(this.loadVersionHistory.bind(this));
     }
 
-    private loadVersionHistory() {
+    loadVersionHistory() {
         this.isLoading = true;
         this.versionsApi.listVersionHistory(this.id).then((data) => {
             this.versions = data.list.entries;
