@@ -32,7 +32,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProcessInstanceFilterRepresentation, Pagination } from 'alfresco-js-api';
 import {
     FORM_FIELD_VALIDATORS, FormEvent, FormFieldEvent, FormRenderingService, FormService,
-    DynamicTableRow, ValidateDynamicTableRowEvent, AppConfigService, PaginationComponent
+    DynamicTableRow, ValidateDynamicTableRowEvent, AppConfigService, PaginationComponent, UserPreferenceValues
 } from '@alfresco/adf-core';
 
 import { AnalyticsReportListComponent } from '@alfresco/adf-insights';
@@ -184,7 +184,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
             this.logService.log(`Field value changed. Form: ${e.form.id}, Field: ${e.field.id}, Value: ${e.field.value}`);
         });
 
-        this.preferenceService.paginationSize$.subscribe((pageSize) => {
+        this.preferenceService.select('PAGINATION_SIZE').subscribe((pageSize) => {
             this.paginationPageSize = pageSize;
         });
 

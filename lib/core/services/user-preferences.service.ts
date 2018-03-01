@@ -22,6 +22,17 @@ import { Observable } from 'rxjs/Observable';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { StorageService } from './storage.service';
+import 'rxjs/add/operator/distinctUntilChanged';
+
+
+export enum UserPreferenceValues {
+    PaginationSize = 'PAGINATION_SIZE',
+    DisableCSRF = 'DISABLE_CSRF',
+    Locale = 'LOCALE',
+    UserProfile = 'USER_PROFILE',
+    AuthenticationType = 'AUTH_TYPE',
+    SupportedPageSizes = 'supportedPageSizes'
+}
 
 @Injectable()
 export class UserPreferencesService {
@@ -32,10 +43,23 @@ export class UserPreferencesService {
         locale: 'en'
     };
 
-    private localeSubject: BehaviorSubject<string> ;
+    private userPreferenceStatus: any = {
+        paginationSize: 25,
+        supportedPageSizes: [5, 10, 15, 20],
+        locale: 'en',
+        storagePrefix: '',
+        authType: '',
+        disableCSRF: false
+    };
+
+    /**
+     * @deprecated we are grouping every value changed on the user preference in a single stream : userPreferenceValue$
+     */
     locale$: Observable<string>;
-    private paginationSizeSubject: BehaviorSubject<number> ;
-    paginationSize$: Observable<number>;
+    private localeSubject: BehaviorSubject<string> ;
+
+    private onChangeSubject: BehaviorSubject<any>;
+    onChange: Observable<any>;
 
     constructor(
         public translate: TranslateService,
@@ -43,13 +67,24 @@ export class UserPreferencesService {
         private storage: StorageService,
         private apiService: AlfrescoApiService
     ) {
-        const currentLocale = this.locale || this.getDefaultLocale();
-        const currentPageSize = this.appConfig.get('pagination.size', this.defaults.paginationSize);
-        this.localeSubject = new BehaviorSubject(currentLocale);
+        this.initUserPreferenceStatus();
+        this.localeSubject = new BehaviorSubject(this.defaults.locale);
         this.locale$ = this.localeSubject.asObservable();
-        this.paginationSizeSubject = new BehaviorSubject(currentPageSize);
-        this.paginationSize$ = this.paginationSizeSubject.asObservable();
-        this.defaults.supportedPageSizes = this.appConfig.get('pagination.supportedPageSizes', this.defaults.supportedPageSizes);
+        this.onChangeSubject = new BehaviorSubject(this.userPreferenceStatus);
+        this.onChange = this.onChangeSubject.asObservable();
+    }
+
+    private initUserPreferenceStatus() {
+        this.userPreferenceStatus[UserPreferenceValues.Locale] = this.locale || this.getDefaultLocale();
+        this.userPreferenceStatus[UserPreferenceValues.PaginationSize] = this.appConfig.get('pagination.size', this.defaults.paginationSize);
+        this.userPreferenceStatus[UserPreferenceValues.SupportedPageSizes] = this.appConfig.get('pagination.supportedPageSizes', this.defaults.supportedPageSizes);
+        this.userPreferenceStatus[UserPreferenceValues.AuthenticationType] = this.authType;
+        this.userPreferenceStatus[UserPreferenceValues.UserProfile] = this.getStoragePrefix();
+        this.userPreferenceStatus[UserPreferenceValues.DisableCSRF] = this.disableCSRF;
+    }
+
+    select(property: string): Observable<any> {
+        return this.onChange.map((userPreferenceStatus) => userPreferenceStatus[property]).distinctUntilChanged();
     }
 
     /**
@@ -73,11 +108,12 @@ export class UserPreferencesService {
      */
     set(property: string, value: any) {
         if (!property) { return; }
-
         this.storage.setItem(
             this.getPropertyKey(property),
             value
         );
+        this.userPreferenceStatus[property] = value;
+        this.onChangeSubject.next(this.userPreferenceStatus);
     }
 
     /** Gets the active storage prefix for preferences. */
@@ -128,7 +164,6 @@ export class UserPreferencesService {
 
     /** Pagination size. */
     set paginationSize(value: number) {
-        this.paginationSizeSubject.next(value);
         this.set('PAGINATION_SIZE', value);
     }
 
