@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
+import { Component, Input, ViewEncapsulation, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { VersionListComponent } from './version-list.component';
 
 @Component({
     selector: 'adf-version-manager',
@@ -35,7 +36,11 @@ export class VersionManagerComponent {
     @Output()
     uploadError: EventEmitter<any> = new EventEmitter();
 
+    @ViewChild('versionList')
+    versionListComponent: VersionListComponent;
+
     onUploadSuccess(event): void {
+        this.versionListComponent.loadVersionHistory();
         this.uploadSuccess.emit(event);
     }
 
