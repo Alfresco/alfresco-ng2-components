@@ -579,6 +579,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             !changePage.skipCount.isFirstChange() &&
             changePage.skipCount.currentValue !== null &&
             changePage.skipCount.currentValue !== undefined &&
+            changePage.skipCount.currentValue !== 0 &&
             changePage.skipCount.currentValue !== changePage.skipCount.previousValue;
     }
 
