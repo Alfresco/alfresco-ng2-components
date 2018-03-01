@@ -197,7 +197,7 @@ if $EXEC_TEST == true; then
   npm run test
 fi
 
-if EXEC_E2E == true; then
+if $EXEC_E2E == true; then
   echo "====== Demo shell e2e ====="
   npm run e2e
 fi
