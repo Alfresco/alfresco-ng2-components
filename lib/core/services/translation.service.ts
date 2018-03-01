@@ -75,6 +75,7 @@ export class TranslationService {
                     this.translate.getTranslation(this.userLang).subscribe(
                         () => {
                             this.translate.use(this.userLang);
+                            this.onTranslationChanged(this.userLang);
                         }
                     );
                 });
@@ -82,10 +83,18 @@ export class TranslationService {
                 this.translate.getTranslation(this.userLang).subscribe(
                     () => {
                         this.translate.use(this.userLang);
+                        this.onTranslationChanged(this.userLang);
                     }
                 );
             }
         }
+    }
+
+    private onTranslationChanged(lang: string): void {
+        this.translate.onTranslationChange.next({
+            lang: lang,
+            translations: this.customLoader.getFullTranslationJSON(lang)
+        });
     }
 
     /**
