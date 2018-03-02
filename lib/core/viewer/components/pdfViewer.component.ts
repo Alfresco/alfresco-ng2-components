@@ -18,6 +18,8 @@
 import { Component, TemplateRef, HostListener, Input, OnChanges, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { LogService } from '../../services/log.service';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
+import { PdfPasswordDialogComponent } from './pdfViewer-password-dialog';
+import { MatDialog } from '@angular/material';
 
 declare let PDFJS: any;
 
@@ -74,8 +76,10 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         return Math.round(this.currentScale * 100) + '%';
     }
 
-    constructor(private renderingQueueServices: RenderingQueueServices,
-                private logService: LogService) {
+    constructor(
+        private dialog: MatDialog,
+        private renderingQueueServices: RenderingQueueServices,
+        private logService: LogService) {
         // needed to preserve "this" context
         this.onPageChange = this.onPageChange.bind(this);
     }
@@ -102,6 +106,10 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     executePdf(src, resolve, reject) {
         let loadingTask = this.getPDFJS().getDocument(src);
+
+        loadingTask.onPassword = (callback, reason) => {
+            this.onPdfPassword(callback, reason);
+        };
 
         loadingTask.onProgress = (progressData) => {
             let level = progressData.loaded / progressData.total;
@@ -367,6 +375,20 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     onPageChange(event) {
         this.page = event.pageNumber;
         this.displayPage = event.pageNumber;
+    }
+
+    onPdfPassword(callback, reason) {
+        this.dialog
+            .open(PdfPasswordDialogComponent, {
+                width: '400px',
+                disableClose: true,
+                data: { reason }
+            })
+            .afterClosed().subscribe(password => {
+                if (password) {
+                    callback(password);
+                }
+            });
     }
 
     /**
