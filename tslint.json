@@ -126,7 +126,6 @@
     "no-string-literal": false,
     "no-string-throw": true,
     "prefer-const": false,
-    "typeof-compare": true,
     "unified-signatures": true,
     "whitespace": [
       true,
