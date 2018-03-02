@@ -32,6 +32,12 @@ import { PdfThumbComponent } from './pdfViewer-thumb.component';
 import { RIGHT_ARROW, LEFT_ARROW } from '@angular/cdk/keycodes';
 
 @Component({
+    selector: 'adf-test-dialog-component',
+    template: ''
+})
+class TestDialogComponent {}
+
+@Component({
     template: `
         <adf-pdf-viewer [allowThumbnails]="true"
                         [showToolbar]="true"
@@ -96,6 +102,7 @@ describe('Test PdfViewer component', () => {
     let fixture: ComponentFixture<PdfViewerComponent>;
     let element: HTMLElement;
     let change: any;
+    let dialog: MatDialog;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -104,6 +111,7 @@ describe('Test PdfViewer component', () => {
                 MaterialModule
             ],
             declarations: [
+                TestDialogComponent,
                 PdfViewerComponent,
                 PdfThumbListComponent,
                 PdfThumbComponent,
@@ -111,12 +119,21 @@ describe('Test PdfViewer component', () => {
                 BlobTestComponent
             ],
             providers: [
+                {
+                    provide: MatDialog, useValue: { open: () => {} }
+                },
                 SettingsService,
                 AuthenticationService,
                 AlfrescoApiService,
                 RenderingQueueServices
             ]
-        }).compileComponents();
+        })
+        .overrideModule(ViewerModule, {
+            set: {
+                 entryComponents: [ TestDialogComponent ]
+            }
+        })
+        .compileComponents();
     }));
 
     beforeEach((done) => {
@@ -491,5 +508,65 @@ describe('Test PdfViewer component', () => {
             }, 5000);
         });
 
+    });
+
+    describe('Password protection dialog', () => {
+        beforeEach(() => {
+
+            spyOn(dialog, 'open').and.callFake((comp, context) => {
+                if (context.data.reason === PDFJS.PasswordResponses.NEED_PASSWORD) {
+                    return {
+                        afterClosed: () => Observable.of('wrong_password')
+                    };
+                }
+
+                if (context.data.reason === PDFJS.PasswordResponses.INCORRECT_PASSWORD ) {
+                    return {
+                        afterClosed: () => Observable.of('password')
+                    };
+                }
+            });
+
+            component.urlFile = require('../assets/fake-test-password-file.pdf');
+            fixture.detectChanges();
+        });
+
+        it('should try to access protected pdf', (done) => {
+            component.ngOnChanges(null).then(() => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+
+                    expect(dialog.open).toHaveBeenCalledTimes(2);
+                    done();
+                });
+            });
+        });
+
+        it('should raise dialog asking for password', (done) => {
+            component.ngOnChanges(null).then(() => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    expect(dialog.open['calls'].all()[0].args[1].data).toEqual({
+                        reason: PDFJS.PasswordResponses.NEED_PASSWORD
+                    });
+                    done();
+                });
+            });
+        });
+
+        it('it should raise dialog with incorrect password', (done) => {
+            component.ngOnChanges(null).then(() => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    expect(dialog.open['calls'].all()[1].args[1].data).toEqual({
+                         reason: PDFJS.PasswordResponses.INCORRECT_PASSWORD
+                    });
+                    done();
+                });
+            });
+        });
     });
 });

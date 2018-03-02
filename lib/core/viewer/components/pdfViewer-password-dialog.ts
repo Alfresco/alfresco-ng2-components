@@ -19,6 +19,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormControl, Validators } from '@angular/forms';
 
+declare let PDFJS: any;
+
 @Component({
     selector: 'adf-pdf-viewer-password-dialog',
     templateUrl: './pdfViewer-password-dialog.html',
@@ -37,7 +39,7 @@ export class PdfPasswordDialogComponent implements OnInit {
     }
 
     isError(): boolean {
-        return this.data.reason === 2;
+        return this.data.reason === PDFJS.PasswordResponses.INCORRECT_PASSWORD;
     }
 
     isValid(): boolean {

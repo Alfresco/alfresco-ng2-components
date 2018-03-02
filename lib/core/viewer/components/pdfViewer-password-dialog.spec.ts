@@ -20,6 +20,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { MaterialModule } from '../../material.module';
 import { PdfPasswordDialogComponent } from './pdfViewer-password-dialog';
 
+declare let PDFJS: any;
+
 describe('PdfPasswordDialogComponent', () => {
     let component: PdfPasswordDialogComponent;
     let fixture: ComponentFixture<PdfPasswordDialogComponent>;
@@ -68,13 +70,13 @@ describe('PdfPasswordDialogComponent', () => {
         });
 
         it('should return false', () => {
-            component.data.reason = 1;
+            component.data.reason = PDFJS.PasswordResponses.NEED_PASSWORD;
 
             expect(component.isError()).toBe(false);
         });
 
         it('should return true', () => {
-            component.data.reason = 2;
+            component.data.reason = PDFJS.PasswordResponses.INCORRECT_PASSWORD;
 
             expect(component.isError()).toBe(true);
         });
