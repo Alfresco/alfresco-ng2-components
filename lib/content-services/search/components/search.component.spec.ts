@@ -59,7 +59,7 @@ describe('SearchComponent', () => {
             fixture.destroy();
         });
 
-        it('should clear results straight away when a new search term is entered', async(() => {
+        it('should clear results straight away when a new search term is entered', (done) => {
             spyOn(searchService, 'search')
                 .and.returnValues(Observable.of(result), Observable.of(differentResult));
 
@@ -75,11 +75,12 @@ describe('SearchComponent', () => {
                     fixture.detectChanges();
                     optionShowed = element.querySelectorAll('#autocomplete-search-result-list > li').length;
                     expect(optionShowed).toBe(1);
+                    done();
                 });
             });
-        }));
+        });
 
-        it('should display the returned search results', async(() => {
+        it('should display the returned search results', (done) => {
             spyOn(searchService, 'search')
                 .and.returnValue(Observable.of(result));
 
@@ -89,10 +90,11 @@ describe('SearchComponent', () => {
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('#result_option_0').textContent.trim()).toBe('MyDoc');
+                done();
             });
-        }));
+        });
 
-        it('should emit error event when search call fail', async(() => {
+        it('should emit error event when search call fail', (done) => {
             spyOn(searchService, 'search')
                 .and.returnValue(Observable.fromPromise(Promise.reject({ status: 402 })));
             component.setSearchWordTo('searchTerm');
@@ -101,10 +103,11 @@ describe('SearchComponent', () => {
                 fixture.detectChanges();
                 let message: HTMLElement = <HTMLElement> element.querySelector('#component-result-message');
                 expect(message.textContent).toBe('ERROR');
+                done();
             });
-        }));
+        });
 
-        it('should be able to hide the result panel', async(() => {
+        it('should be able to hide the result panel', (done) => {
             spyOn(searchService, 'search')
                 .and.returnValues(Observable.of(result), Observable.of(differentResult));
 
@@ -120,9 +123,10 @@ describe('SearchComponent', () => {
                     fixture.detectChanges();
                     let elementList = element.querySelector('#adf-search-results-content');
                     expect(elementList.classList).toContain('adf-search-hide');
+                    done();
                 });
             });
-        }));
+        });
     });
 
     describe('search node', () => {
@@ -131,7 +135,7 @@ describe('SearchComponent', () => {
             fixture.destroy();
         });
 
-        it('should perform a search based on the query node given', async(() => {
+        it('should perform a search based on the query node given', (done) => {
             spyOn(searchService, 'searchByQueryBody')
                     .and.callFake((searchObj) => fakeNodeResultSearch(searchObj));
             let fakeSearchNode: QueryBody = {
@@ -151,10 +155,11 @@ describe('SearchComponent', () => {
                 expect(optionShowed).toBe(1);
                 let folderOption: HTMLElement = <HTMLElement> element.querySelector('#result_option_0');
                 expect(folderOption.textContent.trim()).toBe('MyFolder');
+                done();
             });
-        }));
+        });
 
-        it('should perform a search with a defaultNode if no searchnode is given', async(() => {
+        it('should perform a search with a defaultNode if no searchnode is given', (done) => {
             spyOn(searchService, 'search')
                 .and.returnValue(Observable.of(result));
             component.setSearchWordTo('searchTerm');
@@ -165,10 +170,11 @@ describe('SearchComponent', () => {
                 expect(optionShowed).toBe(1);
                 let folderOption: HTMLElement = <HTMLElement> element.querySelector('#result_option_0');
                 expect(folderOption.textContent.trim()).toBe('MyDoc');
+                done();
             });
-        }));
+        });
 
-        it('should perform a search with the searchNode given', async(() => {
+        it('should perform a search with the searchNode given', (done) => {
             spyOn(searchService, 'searchByQueryBody')
                 .and.callFake((searchObj) => fakeNodeResultSearch(searchObj));
             let fakeSearchNode: QueryBody = {
@@ -188,7 +194,8 @@ describe('SearchComponent', () => {
                 expect(optionShowed).toBe(1);
                 let folderOption: HTMLElement = <HTMLElement> element.querySelector('#result_option_0');
                 expect(folderOption.textContent.trim()).toBe('TEST_DOC');
+                done();
             });
-        }));
+        });
     });
 });
