@@ -24,10 +24,11 @@ import { AppConfigModule } from '../app-config/app-config.module';
 import { StorageService } from './storage.service';
 import { TranslateLoaderService } from './translate-loader.service';
 import { UserPreferencesService } from './user-preferences.service';
+import { UserPreferenceValues } from './user-preferences.service';
 
 describe('UserPreferencesService', () => {
 
-    const defaultPaginationSize: number = 10;
+    const defaultPaginationSize: number = 25;
     const supportedPaginationSize = [5, 10, 15, 20];
     let preferences: UserPreferencesService;
     let storage: StorageService;
@@ -66,6 +67,7 @@ describe('UserPreferencesService', () => {
     });
 
     it('should get default pagination from app config', () => {
+        appConfig.config.pagination.size = 0;
         expect(preferences.defaults.paginationSize).toBe(defaultPaginationSize);
     });
 
@@ -75,6 +77,7 @@ describe('UserPreferencesService', () => {
     });
 
     it('should use [GUEST] as default storage prefix', () => {
+        preferences.setStoragePrefix(null);
         expect(preferences.getStoragePrefix()).toBe('GUEST');
     });
 
@@ -144,5 +147,26 @@ describe('UserPreferencesService', () => {
         spyOn(translate, 'getBrowserLang').and.returnValue('fake-locate-browser');
         expect(preferences.locale).toBe('fake-store-locate');
     });
+
+    it('should stream the page size value when is set', async(() => {
+        preferences.paginationSize = 5;
+        preferences.onChange.subscribe((userPreferenceStatus) => {
+            expect(userPreferenceStatus.PAGINATION_SIZE).toBe(5);
+        });
+    }));
+
+    it('should stream the user preference status when changed', async(() => {
+        preferences.set('propertyA', 'valueA');
+        preferences.onChange.subscribe((userPreferenceStatus) => {
+            expect(userPreferenceStatus.propertyA).toBe('valueA');
+        });
+    }));
+
+    it('should stream only the selected attribute changes when using select', async(() => {
+        preferences.disableCSRF = true;
+        preferences.select(UserPreferenceValues.DisableCSRF).subscribe((disableCSRFFlag) => {
+            expect(disableCSRFFlag).toBeTruthy();
+        });
+    }));
 
 });

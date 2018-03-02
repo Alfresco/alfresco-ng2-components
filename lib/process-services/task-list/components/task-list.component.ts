@@ -29,7 +29,8 @@ import {
     PaginationComponent,
     PaginatedComponent,
     PaginationQueryParams,
-    UserPreferencesService
+    UserPreferencesService,
+    UserPreferenceValues
 } from '@alfresco/adf-core';
 import {
     AfterContentInit,
@@ -163,7 +164,11 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit, P
     constructor(private taskListService: TaskListService,
                 private appConfig: AppConfigService,
                 private userPreferences: UserPreferencesService) {
-        this.size = this.userPreferences.paginationSize;
+
+        this.userPreferences.select(UserPreferenceValues.PaginationSize).subscribe((pageSize) => {
+            this.size = pageSize;
+        });
+
         this.pagination = new BehaviorSubject<Pagination>(<Pagination> {
             maxItems: this.size,
             skipCount: 0,
