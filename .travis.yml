@@ -12,24 +12,6 @@ before_install:
     - export DISPLAY=:99.0
     - sh -e /etc/init.d/xvfb start
 
-env:
-  matrix:
-    - MODULE=core
-    - MODULE=insights
-    - MODULE=process-services
-    - MODULE=content-services
-    - MODULE=demo-shell
-    - MODULE=packaging
-
-install:
-    - if ([ "$MODULE" != "demo-shell" ]); then
-        if ([ "$TRAVIS_BRANCH" = "master" ]); then
-            (./scripts/npm-build-all.sh  || exit 1;);
-        else
-            (./scripts/npm-build-all.sh  -vjsapi alpha || exit 1;);
-        fi
-      fi
-
 jobs:
     include:
         - stage: Update Generator
