@@ -32,7 +32,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProcessInstanceFilterRepresentation, Pagination } from 'alfresco-js-api';
 import {
     FORM_FIELD_VALIDATORS, FormEvent, FormFieldEvent, FormRenderingService, FormService,
-    DynamicTableRow, ValidateDynamicTableRowEvent, AppConfigService, PaginationComponent
+    DynamicTableRow, ValidateDynamicTableRowEvent, AppConfigService, PaginationComponent, UserPreferenceValues
 } from '@alfresco/adf-core';
 
 import { AnalyticsReportListComponent } from '@alfresco/adf-insights';
@@ -166,7 +166,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
                 private preferenceService: UserPreferencesService) {
         this.dataTasks = new ObjectDataTableAdapter();
         this.dataTasks.setSorting(new DataSorting('created', 'desc'));
-        this.paginationPageSize = this.preferenceService.paginationSize;
+
 
         this.defaultProcessName = this.appConfig.get<string>('adf-start-process.name');
         this.defaultProcessDefinitionName = this.appConfig.get<string>('adf-start-process.processDefinitionName');
@@ -183,6 +183,10 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
         formService.formFieldValueChanged.subscribe((e: FormFieldEvent) => {
             this.logService.log(`Field value changed. Form: ${e.form.id}, Field: ${e.field.id}, Value: ${e.field.value}`);
+        });
+
+        this.preferenceService.select(UserPreferenceValues.PaginationSize).subscribe((pageSize) => {
+            this.paginationPageSize = pageSize;
         });
 
         formService.validateDynamicTableRow.subscribe(
