@@ -57,6 +57,30 @@ export class FilterParamsModel {
     }
 }
 
+export class FilterParamRepresentationModel {
+    processDefinitionId: string;
+    processDefinitionKey: string;
+    name: string;
+    state: string;
+    sort: string;
+    assignment: string;
+    dueAfter: Date;
+    dueBefore: Date;
+
+    constructor(obj?: any) {
+        if (obj) {
+            this.processDefinitionId = obj.processDefinitionId || null;
+            this.processDefinitionKey = obj.processDefinitionKey || null;
+            this.name = obj.name || null;
+            this.state = obj.state || null;
+            this.sort = obj.sort || null;
+            this.assignment = obj.assignment || null;
+            this.dueAfter = obj.dueAfter || null;
+            this.dueBefore = obj.dueBefore || null;
+        }
+    }
+}
+
 export class FilterRepresentationModel implements UserTaskFilterRepresentation {
     id: number;
     appId: number;
@@ -80,30 +104,6 @@ export class FilterRepresentationModel implements UserTaskFilterRepresentation {
 
     hasFilter() {
         return this.filter ? true : false;
-    }
-}
-
-export class FilterParamRepresentationModel {
-    processDefinitionId: string;
-    processDefinitionKey: string;
-    name: string;
-    state: string;
-    sort: string;
-    assignment: string;
-    dueAfter: Date;
-    dueBefore: Date;
-
-    constructor(obj?: any) {
-        if (obj) {
-            this.processDefinitionId = obj.processDefinitionId || null;
-            this.processDefinitionKey = obj.processDefinitionKey || null;
-            this.name = obj.name || null;
-            this.state = obj.state || null;
-            this.sort = obj.sort || null;
-            this.assignment = obj.assignment || null;
-            this.dueAfter = obj.dueAfter || null;
-            this.dueBefore = obj.dueBefore || null;
-        }
     }
 }
 

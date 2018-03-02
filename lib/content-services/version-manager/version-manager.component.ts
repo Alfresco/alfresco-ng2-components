@@ -43,4 +43,3 @@ export class VersionManagerComponent {
         this.uploadError.emit(event);
     }
 }
-
