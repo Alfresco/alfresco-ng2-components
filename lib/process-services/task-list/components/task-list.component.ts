@@ -38,7 +38,6 @@ import {
     EventEmitter,
     Input,
     OnChanges,
-    OnInit,
     Output,
     SimpleChanges
 } from '@angular/core';
@@ -55,7 +54,7 @@ import { TaskListService } from './../services/tasklist.service';
     templateUrl: './task-list.component.html',
     styleUrls: ['./task-list.component.css']
 })
-export class TaskListComponent implements OnChanges, OnInit, AfterContentInit, PaginatedComponent {
+export class TaskListComponent implements OnChanges, AfterContentInit, PaginatedComponent {
 
     requestNode: TaskQueryRequestRepresentationModel;
 
@@ -158,7 +157,6 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit, P
      * @memberOf TaskListComponent
      */
     hasCustomDataSource: boolean = false;
-    isStreamLoaded = false;
 
     constructor(private taskListService: TaskListService,
                 private appConfig: AppConfigService,
@@ -171,39 +169,12 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit, P
         });
     }
 
-    initStream() {
-        if (!this.isStreamLoaded) {
-            this.isStreamLoaded = true;
-            this.taskListService.tasksList$.subscribe(
-                (tasks) => {
-                    let instancesRow = this.createDataRow(tasks.data);
-                    this.renderInstances(instancesRow);
-                    this.selectTask(this.landingTaskId);
-                    this.success.emit(tasks);
-                    this.isLoading = false;
-                    this.pagination.next({
-                        count: tasks.data.length,
-                        maxItems: this.size,
-                        skipCount: this.page * this.size,
-                        totalItems: tasks.total
-                    });
-                }, (error) => {
-                    this.error.emit(error);
-                    this.isLoading = false;
-                });
-        }
-    }
-
-    ngOnInit() {
-        if (this.data === undefined) {
-            this.data = new ObjectDataTableAdapter();
-        }
-        this.initStream();
-    }
-
     ngAfterContentInit() {
         this.loadLayoutPresets();
         this.setupSchema();
+        if (this.appId) {
+            this.reload();
+        }
     }
 
     /**
@@ -220,7 +191,6 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit, P
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        this.initStream();
         if (this.isPropertyChanged(changes)) {
             this.reload();
         }
@@ -259,7 +229,23 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit, P
 
     private load(requestNode: TaskQueryRequestRepresentationModel) {
         this.isLoading = true;
-        this.loadTasksByState().subscribe();
+        this.loadTasksByState().subscribe(
+            (tasks) => {
+                let instancesRow = this.createDataRow(tasks.data);
+                this.renderInstances(instancesRow);
+                this.selectTask(this.landingTaskId);
+                this.success.emit(tasks);
+                this.isLoading = false;
+                this.pagination.next({
+                    count: tasks.data.length,
+                    maxItems: this.size,
+                    skipCount: this.page * this.size,
+                    totalItems: tasks.total
+                });
+            }, (error) => {
+                this.error.emit(error);
+                this.isLoading = false;
+            });
     }
 
     private loadTasksByState(): Observable<TaskListModel> {
