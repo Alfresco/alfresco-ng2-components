@@ -24,6 +24,7 @@ import { AppConfigModule } from '../app-config/app-config.module';
 import { StorageService } from './storage.service';
 import { TranslateLoaderService } from './translate-loader.service';
 import { UserPreferencesService } from './user-preferences.service';
+import { UserPreferenceValues } from './user-preferences.service';
 
 describe('UserPreferencesService', () => {
 
@@ -76,6 +77,7 @@ describe('UserPreferencesService', () => {
     });
 
     it('should use [GUEST] as default storage prefix', () => {
+        preferences.setStoragePrefix(null);
         expect(preferences.getStoragePrefix()).toBe('GUEST');
     });
 
@@ -148,8 +150,22 @@ describe('UserPreferencesService', () => {
 
     it('should stream the page size value when is set', async(() => {
         preferences.paginationSize = 5;
-        preferences.paginationSize$.subscribe((pageSize) => {
-            expect(pageSize).toBe(5);
+        preferences.onChange.subscribe((userPreferenceStatus) => {
+            expect(userPreferenceStatus.PAGINATION_SIZE).toBe(5);
+        });
+    }));
+
+    it('should stream the user preference status when changed', async(() => {
+        preferences.set('propertyA', 'valueA');
+        preferences.onChange.subscribe((userPreferenceStatus) => {
+            expect(userPreferenceStatus.propertyA).toBe('valueA');
+        });
+    }));
+
+    it('should stream only the selected attribute changes when using select', async(() => {
+        preferences.disableCSRF = true;
+        preferences.select(UserPreferenceValues.DisableCSRF).subscribe((disableCSRFFlag) => {
+            expect(disableCSRFFlag).toBeTruthy();
         });
     }));
 

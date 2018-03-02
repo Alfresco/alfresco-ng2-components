@@ -24,13 +24,10 @@ import { AlfrescoApiService } from './alfresco-api.service';
 import { StorageService } from './storage.service';
 import 'rxjs/add/operator/distinctUntilChanged';
 
-
 export enum UserPreferenceValues {
     PaginationSize = 'PAGINATION_SIZE',
     DisableCSRF = 'DISABLE_CSRF',
     Locale = 'LOCALE',
-    UserProfile = 'USER_PROFILE',
-    AuthenticationType = 'AUTH_TYPE',
     SupportedPageSizes = 'supportedPageSizes'
 }
 
@@ -46,10 +43,7 @@ export class UserPreferencesService {
     private userPreferenceStatus: any = {
         paginationSize: 25,
         supportedPageSizes: [5, 10, 15, 20],
-        locale: 'en',
-        storagePrefix: '',
-        authType: '',
-        disableCSRF: false
+        LOCALE: 'en'
     };
 
     /**
@@ -78,8 +72,6 @@ export class UserPreferencesService {
         this.userPreferenceStatus[UserPreferenceValues.Locale] = this.locale || this.getDefaultLocale();
         this.userPreferenceStatus[UserPreferenceValues.PaginationSize] = this.appConfig.get('pagination.size', this.defaults.paginationSize);
         this.userPreferenceStatus[UserPreferenceValues.SupportedPageSizes] = this.appConfig.get('pagination.supportedPageSizes', this.defaults.supportedPageSizes);
-        this.userPreferenceStatus[UserPreferenceValues.AuthenticationType] = this.authType;
-        this.userPreferenceStatus[UserPreferenceValues.UserProfile] = this.getStoragePrefix();
         this.userPreferenceStatus[UserPreferenceValues.DisableCSRF] = this.disableCSRF;
     }
 

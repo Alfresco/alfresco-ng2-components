@@ -165,7 +165,7 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit, P
                 private appConfig: AppConfigService,
                 private userPreferences: UserPreferencesService) {
 
-        this.userPreferences.select('PAGINATION_SIZE').subscribe((pageSize) => {
+        this.userPreferences.select(UserPreferenceValues.PaginationSize).subscribe((pageSize) => {
             this.size = pageSize;
         });
 

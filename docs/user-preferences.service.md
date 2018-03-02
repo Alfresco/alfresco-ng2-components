@@ -31,6 +31,9 @@ Stores preferences for components.
 -   `getDefaultLocale(): string`  
     Gets the default locale.   
 
+-   `select : Observable`
+    Return the value for the user status property changed 
+
 
 ## Details
 
@@ -82,3 +85,24 @@ The service also provides quick access to a set of the "known" properties used a
 | disableCSRF | `boolean` | Prevents the CSRF Token from being submitted if true. Only valid for Process Services. |
 | paginationSize | `number` | Pagination size. |
 | locale | `string` | Current locale setting. |
+
+## User Preference onChange Stream
+Whenever a property is set to the user preference service an onChange event is sent with the whole set of user properties. This comes in handy when a component wants to react to some property change.
+
+```ts
+    userPreferences.paginationSize = 10;
+    userPreferences.onChange().subscribe((userStatusValues) => {
+        console.log(userStatusValues.PAGINATION_SIZE); //this will be 10
+    });
+```
+
+We have added also the `select` method where the user can give the property name which wants to be notified the changes and get the updated value.
+A set of basic properties is added into the enumeration `UserPreferenceValues` which gives you the key value to access the standard user preference service properties : **PaginationSize**, **DisableCSRF**, **Locale** and **SupportedPageSizes**.
+
+```ts
+    userPreferences.disableCSRF = true;
+    userPreferences.select(UserPreferenceValues.DisableCSRF).subscribe((CSRFflag) => {
+        console.log(CSRFflag); //this will be true;
+    });
+```
+

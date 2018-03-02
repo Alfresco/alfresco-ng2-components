@@ -184,7 +184,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
             this.logService.log(`Field value changed. Form: ${e.form.id}, Field: ${e.field.id}, Value: ${e.field.value}`);
         });
 
-        this.preferenceService.select('PAGINATION_SIZE').subscribe((pageSize) => {
+        this.preferenceService.select(UserPreferenceValues.PaginationSize).subscribe((pageSize) => {
             this.paginationPageSize = pageSize;
         });
 
