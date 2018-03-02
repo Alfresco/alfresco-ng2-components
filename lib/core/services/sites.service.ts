@@ -81,6 +81,31 @@ export class SitesService {
         return this.getSite(siteId, { relations: ['members'] });
     }
 
+    /**
+     * Gets a list of all sites in the repository.
+     * @param opts Options supported by JSAPI
+     */
+    getMembershipSites(): Observable<SitePaging> {
+        const options = {
+            skipCount: 0,
+            include: ['properties'],
+            relations: ['members']
+        };
+        const loggedUserName = this.apiService.getInstance().ecmAuth.username;
+        return this.getSites(options).map( (site) => this.isCurrentUserMember(site, loggedUserName));
+    }
+
+    private isCurrentUserMember(sitePage: SitePaging, loggedUserName): SitePaging {
+        sitePage.list.entries = sitePage.list.entries.filter(
+                (site: any) => {
+                    return site.entry.visibility === 'PUBLIC' ||
+                        !!site.relations.members.list.entries.find((member) => {
+                            return member.entry.id === loggedUserName;
+                        }) ;
+        });
+        return sitePage;
+    }
+
     private handleError(error: Response): any {
         console.error(error);
         return Observable.throw(error || 'Server error');

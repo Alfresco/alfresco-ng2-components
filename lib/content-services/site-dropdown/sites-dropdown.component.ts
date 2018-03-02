@@ -65,7 +65,6 @@ export class DropdownSitesComponent implements OnInit {
         if (!this.siteList) {
             this.setDefaultSiteList();
         }
-
     }
 
     selectedSite(event: any) {
@@ -73,24 +72,23 @@ export class DropdownSitesComponent implements OnInit {
     }
 
     private setDefaultSiteList() {
-        this.sitesService.getSites().subscribe((result) => {
-                this.siteList = result;
+        this.sitesService.getMembershipSites().subscribe((result) => {
+            this.siteList = result;
 
-                if (!this.hideMyFiles) {
-                    let myItem = { entry: { id: '-my-', guid: '-my-', title: 'DROPDOWN.MY_FILES_OPTION' } };
+            if (!this.hideMyFiles) {
+                let myItem = { entry: { id: '-my-', guid: '-my-', title: 'DROPDOWN.MY_FILES_OPTION' } };
 
-                    this.siteList.list.entries.unshift(myItem);
+                this.siteList.list.entries.unshift(myItem);
 
-                    if (!this.value) {
-                        this.value = '-my-';
-                    }
+                if (!this.value) {
+                    this.value = '-my-';
                 }
+            }
 
-                this.selected = this.siteList.list.entries.find(site => site.entry.id === this.value);
-            },
+            this.selected = this.siteList.list.entries.find(site => site.entry.id === this.value);
+        },
             (error) => {
             });
-
     }
 
 }
