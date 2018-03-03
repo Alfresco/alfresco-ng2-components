@@ -194,7 +194,7 @@ fi
 
 if $EXEC_TEST == true; then
   echo "====== Demo shell Test ====="
-  npm run test
+  npm install && npm run test
 fi
 
 if $EXEC_E2E == true; then

@@ -183,13 +183,14 @@ describe('Test PdfViewer component', () => {
 
     describe('User interaction', () => {
 
-        beforeEach(async(() => {
+        beforeEach((done) => {
             component.urlFile = require('../assets/fake-test-file.pdf');
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 component.inputPage('1');
+                done();
             });
-        }));
+        });
 
         it('should Total number of pages be loaded', (done) => {
             component.ngOnChanges(null).then(() => {
@@ -199,7 +200,7 @@ describe('Test PdfViewer component', () => {
                     done();
                 });
             });
-        });
+        }, 5000);
 
         it('should right arrow move to the next page', (done) => {
             component.ngOnChanges(null).then(() => {
@@ -212,7 +213,7 @@ describe('Test PdfViewer component', () => {
                     done();
                 });
             });
-        });
+        }, 5000);
 
         it('should nextPage move to the next page', (done) => {
             let nextPageButton: any = element.querySelector('#viewer-next-page-button');
@@ -228,7 +229,7 @@ describe('Test PdfViewer component', () => {
                     done();
                 });
             });
-        });
+        }, 5000);
 
         it('should event keyboard change pages', (done) => {
             component.ngOnChanges(null).then(() => {
@@ -244,7 +245,7 @@ describe('Test PdfViewer component', () => {
                     done();
                 });
             });
-        });
+        }, 5000);
 
         it('should previous page move to the previous page', (done) => {
             let previousPageButton: any = element.querySelector('#viewer-previous-page-button');
@@ -263,7 +264,7 @@ describe('Test PdfViewer component', () => {
                     done();
                 });
             });
-        });
+        }, 5000);
 
         it('should previous page not move to the previous page if is page 1', (done) => {
             component.ngOnChanges(null).then(() => {
@@ -277,7 +278,7 @@ describe('Test PdfViewer component', () => {
                     done();
                 });
             });
-        });
+        }, 5000);
 
         it('should Input page move to the inserted page', (done) => {
             component.ngOnChanges(null).then(() => {
@@ -291,7 +292,7 @@ describe('Test PdfViewer component', () => {
                     done();
                 });
             });
-        });
+        }, 5000);
     });
 
     describe('Zoom', () => {
