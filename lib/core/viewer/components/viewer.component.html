@@ -85,7 +85,7 @@
                 </button>
 
                 <button
-                    *ngIf="allowFullScreen"
+                    *ngIf="viewerType !== 'media' && allowFullScreen"
                     mat-icon-button
                     matTooltip="{{ 'ADF_VIEWER.ACTIONS.FULLSCREEN' | translate }}"
                     data-automation-id="toolbar-fullscreen"
