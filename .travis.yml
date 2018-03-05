@@ -15,7 +15,7 @@ before_install:
 jobs:
     include:
         - stage: Update Generator
-          script: ./scripts/update_generator.sh -v TRAVIS_TAG
+          script: ./scripts/update-generator.sh -v TRAVIS_TAG
 # jobs:
 #   include:
 #     - stage: Publish alpha to NPM
