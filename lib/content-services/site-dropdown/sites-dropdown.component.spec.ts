@@ -412,13 +412,14 @@ describe('DropdownSitesComponent', () => {
             component.relations = Relations.Members;
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                fixture.detectChanges();
                 debug.query(By.css('.mat-select-trigger')).triggerEventHandler('click', null);
                 fixture.detectChanges();
-                let options: any = debug.queryAll(By.css('mat-option'));
-                expect(options[1].nativeElement.innerText).toContain('FAKE-SITE-PUBLIC');
-                expect(options[2].nativeElement.innerText).toContain('FAKE-PRIVATE-SITE-MEMBER');
-                expect(options[3].nativeElement.innerText).toBeNull();
+                fixture.whenStable().then(() => {
+                    let options: any = debug.queryAll(By.css('mat-option'));
+                    expect(options[1].nativeElement.innerText).toContain('FAKE-SITE-PUBLIC');
+                    expect(options[2].nativeElement.innerText).toContain('FAKE-PRIVATE-SITE-MEMBER');
+                    expect(options[3].nativeElement.innerText).toBeNull();
+                });
             });
         }));
 
@@ -430,13 +431,14 @@ describe('DropdownSitesComponent', () => {
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
-                fixture.detectChanges();
                 debug.query(By.css('.mat-select-trigger')).triggerEventHandler('click', null);
                 fixture.detectChanges();
-                let options: any = debug.queryAll(By.css('mat-option'));
-                expect(options[1].nativeElement.innerText).toContain('FAKE-MODERATED-SITE');
-                expect(options[2].nativeElement.innerText).toContain('FAKE-SITE-PUBLIC');
-                expect(options[3].nativeElement.innerText).toContain('FAKE-PRIVATE-SITE-MEMBER');
+                fixture.whenStable().then(() => {
+                    let options: any = debug.queryAll(By.css('mat-option'));
+                    expect(options[1].nativeElement.innerText).toContain('FAKE-MODERATED-SITE');
+                    expect(options[2].nativeElement.innerText).toContain('FAKE-SITE-PUBLIC');
+                    expect(options[3].nativeElement.innerText).toContain('FAKE-PRIVATE-SITE-MEMBER');
+                });
             });
         }));
 
