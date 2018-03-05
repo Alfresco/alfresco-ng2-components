@@ -91,7 +91,7 @@ export class SitesService {
             include: ['properties'],
             relations: ['members']
         };
-        const loggedUserName = this.apiService.getInstance().ecmAuth.username;
+        const loggedUserName = this.getEcmCurrentLoggedUserName();
         return this.getSites(options).map( (site) => this.isCurrentUserMember(site, loggedUserName));
     }
 
@@ -104,6 +104,10 @@ export class SitesService {
                         }) ;
         });
         return sitePage;
+    }
+
+    getEcmCurrentLoggedUserName(): string {
+        return this.apiService.getInstance().ecmAuth.username;
     }
 
     private handleError(error: Response): any {
