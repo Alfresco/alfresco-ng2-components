@@ -1,4 +1,4 @@
-FROM nginx
+FROM nginx:alpine
 
 COPY demo-shell/nginx.conf /etc/nginx/nginx.conf
 
