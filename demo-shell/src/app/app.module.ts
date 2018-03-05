@@ -48,6 +48,8 @@ import { TaskAttachmentsComponent } from './components/process-service/task-atta
 import { ProcessAttachmentsComponent } from './components/process-service/process-attachments.component';
 import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
+import { FacetsModule } from './components/search/facets/facets.module';
+import { FacetContainerComponent } from './components/search/facets/facet-container.component';
 
 
 @NgModule({
@@ -62,7 +64,8 @@ import { DemoPermissionComponent } from './components/permissions/demo-permissio
         ThemePickerModule,
         FlexLayoutModule,
         ChartsModule,
-        HttpClientModule
+        HttpClientModule,
+        FacetsModule
     ],
     declarations: [
         AppComponent,
@@ -96,7 +99,8 @@ import { DemoPermissionComponent } from './components/permissions/demo-permissio
         OverlayViewerComponent,
         SharedLinkViewComponent,
         FormLoadingComponent,
-        DemoPermissionComponent
+        DemoPermissionComponent,
+        FacetContainerComponent
     ],
     providers: [
         { provide: AppConfigService, useClass: DebugAppConfigService },
@@ -119,7 +123,8 @@ import { DemoPermissionComponent } from './components/permissions/demo-permissio
     ],
     entryComponents: [
         VersionManagerDialogAdapterComponent,
-        MetadataDialogAdapterComponent
+        MetadataDialogAdapterComponent,
+        FacetContainerComponent
     ],
     bootstrap: [AppComponent]
 })

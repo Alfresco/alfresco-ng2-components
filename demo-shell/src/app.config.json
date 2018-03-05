@@ -51,6 +51,54 @@
             "label": "Simplified Chinese"
         }
     ],
+    "search": {
+      "facets": [
+        {
+          "id": "broken",
+          "name": "Broken Facet",
+          "enabled": false,
+          "component": {
+            "selector": "app-text-facet",
+            "settings": {
+              "field": "fieldname"
+            }
+          }
+        },
+        {
+          "id": "facet1",
+          "name": "Category 1",
+          "enabled": true,
+          "component": {
+            "selector": "app-text-facet",
+            "settings": {
+              "field": "fieldname"
+            }
+          }
+        },
+        {
+          "id": "facet2",
+          "name": "Category 2",
+          "enabled": true,
+          "component": {
+            "selector": "app-button-facet",
+            "settings": {
+              "field": "fieldname"
+            }
+          }
+        },
+        {
+          "id": "facet3",
+          "name": "Category 3",
+          "enabled": true,
+          "component": {
+            "selector": "app-text-facet",
+            "settings": {
+              "field": "fieldname"
+            }
+          }
+        }
+      ]
+    },
     "pagination": {
         "size": 25,
         "supportedPageSizes": [ 5, 10, 15, 20 ]

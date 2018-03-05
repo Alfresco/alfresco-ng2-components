@@ -1,19 +1,27 @@
-<adf-search [searchTerm]="searchedWord"
-            [maxResults]="maxItems"
-            [skipResults]="skipCount"
-            (resultLoaded)="onSearchResultLoaded($event)"
-            #search>
-</adf-search>
+<div class="adf-search-results">
+    <div class="adf-search-results__facets">
+        <mat-accordion multi="true" displayMode="flat">
+            <mat-expansion-panel *ngFor="let facet of facets">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        {{ facet.name }}
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <app-facet-container
+                    [selector]="facet.component.selector"
+                    [settings]="facet.component.settings">
+                </app-facet-container>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
 
-<app-files-component
-        [currentFolderId]="null"
-        [nodeResult]="resultNodePageList"
-        [disableDragArea]="true"
-        [pagination]="pagination"
-        (changedPageSize)="onRefreshPagination($event)"
-        (changedPageNumber)="onRefreshPagination($event)"
-        (turnedNextPage)="onRefreshPagination($event)"
-        (loadNext)="onRefreshPagination($event)"
-        (turnedPreviousPage)="onRefreshPagination($event)"
-        (deleteElementSuccess)="onDeleteElementSuccess($event)">
-</app-files-component>
+    <div class="adf-search-results__content">
+        <adf-document-list
+            #documentList
+            [node]="data">
+        </adf-document-list>
+        <adf-pagination
+            [target]="documentList">
+        </adf-pagination>
+    </div>
+</div>

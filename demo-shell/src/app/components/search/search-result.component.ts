@@ -15,11 +15,30 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Optional, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-import { NodePaging, Pagination } from 'alfresco-js-api';
-import { SearchComponent } from '@alfresco/adf-content-services';
-import { UserPreferencesService } from '@alfresco/adf-core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+import { NodePaging } from 'alfresco-js-api';
+import { UserPreferencesService, SearchService, AppConfigService } from '@alfresco/adf-core';
+
+interface FacetConfig {
+    id: string;
+    name: string;
+    enabled: boolean;
+    component: FacetComponentConfig;
+}
+
+interface FacetComponentConfig {
+    selector: string;
+    settings: FacetComponentSettingsConfig;
+}
+
+interface FacetComponentSettingsConfig {
+    field: string;
+}
+
+interface SearchConfig {
+    facets: Array<FacetConfig>;
+}
 
 @Component({
     selector: 'app-search-result-component',
@@ -28,42 +47,36 @@ import { UserPreferencesService } from '@alfresco/adf-core';
 })
 export class SearchResultComponent implements OnInit {
 
-    @ViewChild('search')
-    search: SearchComponent;
+    data: NodePaging;
+    config: SearchConfig;
 
-    queryParamName = 'q';
-    searchedWord = '';
-    resultNodePageList: NodePaging;
-    maxItems: number;
-    skipCount = 0;
-    pagination: Pagination;
+    facets: Array<FacetConfig> = [];
 
-    constructor(public router: Router,
-                private preferences: UserPreferencesService,
-                @Optional() private route: ActivatedRoute) {
-        this.maxItems = this.preferences.paginationSize;
+    constructor(private preferences: UserPreferencesService,
+                private route: ActivatedRoute,
+                private searchService: SearchService,
+                appConfig: AppConfigService) {
+        this.config = appConfig.get<SearchConfig>('search');
+        this.facets = this.config.facets.filter(f => f.enabled);
     }
 
     ngOnInit() {
         if (this.route) {
             this.route.params.forEach((params: Params) => {
-                this.searchedWord = params.hasOwnProperty(this.queryParamName) ? params[this.queryParamName] : null;
+                const searchedWord = params['q'];
+
+                this.searchService.search(
+                    searchedWord,
+                    this.preferences.paginationSize.toString(),
+                    '0'
+                ).subscribe(result => {
+                    this.onDataLoaded(result);
+                });
             });
         }
-        this.maxItems = this.preferences.paginationSize;
     }
 
-    onSearchResultLoaded(nodePaging: NodePaging) {
-        this.resultNodePageList = nodePaging;
-        this.pagination = nodePaging.list.pagination;
-    }
-
-    onRefreshPagination(pagination: Pagination) {
-         this.maxItems = pagination.maxItems;
-         this.skipCount = pagination.skipCount;
-    }
-
-    onDeleteElementSuccess(element: any) {
-        this.search.reload();
+    onDataLoaded(data: NodePaging) {
+        this.data = data;
     }
 }
