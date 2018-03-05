@@ -418,6 +418,7 @@ describe('DropdownSitesComponent', () => {
                 let options: any = debug.queryAll(By.css('mat-option'));
                 expect(options[1].nativeElement.innerText).toContain('FAKE-SITE-PUBLIC');
                 expect(options[2].nativeElement.innerText).toContain('FAKE-PRIVATE-SITE-MEMBER');
+                expect(options[3].nativeElement.innerText).toBeNull();
             });
         }));
 
