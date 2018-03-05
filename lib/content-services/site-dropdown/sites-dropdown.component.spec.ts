@@ -18,7 +18,9 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { DropdownSitesComponent } from './sites-dropdown.component';
+import { DropdownSitesComponent, Relations } from './sites-dropdown.component';
+import { SitesService, LogService } from '@alfresco/adf-core';
+import { Observable } from 'rxjs/Observable';
 
 declare let jasmine: any;
 
@@ -29,13 +31,16 @@ describe('DropdownSitesComponent', () => {
     let debug: DebugElement;
     let element: HTMLElement;
     let sitesList: any;
+    let siteListWitMembers: any;
+    let siteService: SitesService;
 
     beforeEach(async(() => {
 
         TestBed.configureTestingModule({
             declarations: [
                 DropdownSitesComponent
-            ]
+            ],
+            providers: [SitesService, LogService]
         }).compileComponents();
     }));
 
@@ -44,6 +49,7 @@ describe('DropdownSitesComponent', () => {
         debug = fixture.debugElement;
         element = fixture.nativeElement;
         component = fixture.componentInstance;
+        siteService = TestBed.get(SitesService);
 
         sitesList = {
             'list': {
@@ -77,6 +83,126 @@ describe('DropdownSitesComponent', () => {
                             'title': 'fake-test-2'
                         }
                     }
+                ]
+            }
+        };
+
+        siteListWitMembers = {
+            'list': {
+                'entries': [{
+                    'entry': {
+                        'visibility': 'MODERATED',
+                        'guid': 'b4cff62a-664d-4d45-9302-98723eac1319',
+                        'description': 'This is a Sample Alfresco Team site.',
+                        'id': 'MODERATED-SITE',
+                        'preset': 'site-dashboard',
+                        'title': 'FAKE-MODERATED-SITE'
+                    },
+                    'relations': {
+                        'members': {
+                            'list': {
+                                'pagination': {
+                                    'count': 3,
+                                    'hasMoreItems': false,
+                                    'skipCount': 0,
+                                    'maxItems': 100
+                                },
+                                'entries': [
+                                    {
+                                        'entry': {
+                                            'role': 'SiteManager',
+                                            'person': {
+                                                'firstName': 'Administrator',
+                                                'emailNotificationsEnabled': true,
+                                                'company': {},
+                                                'id': 'admin',
+                                                'enabled': true,
+                                                'email': 'admin@alfresco.com'
+                                            },
+                                            'id': 'admin'
+                                        }
+                                    },
+                                    {
+                                        'entry': {
+                                            'role': 'SiteCollaborator',
+                                            'person': {
+                                                'lastName': 'Beecher',
+                                                'userStatus': 'Helping to design the look and feel of the new web site',
+                                                'jobTitle': 'Graphic Designer',
+                                                'statusUpdatedAt': '2011-02-15T20:20:13.432+0000',
+                                                'mobile': '0112211001100',
+                                                'emailNotificationsEnabled': true,
+                                                'description': 'Alice is a demo user for the sample Alfresco Team site.',
+                                                'telephone': '0112211001100',
+                                                'enabled': false,
+                                                'firstName': 'Alice',
+                                                'skypeId': 'abeecher',
+                                                'avatarId': '198500fc-1e99-4f5f-8926-248cea433366',
+                                                'location': 'Tilbury, UK',
+                                                'company': {
+                                                    'organization': 'Moresby, Garland and Wedge',
+                                                    'address1': '200 Butterwick Street',
+                                                    'address2': 'Tilbury',
+                                                    'address3': 'UK',
+                                                    'postcode': 'ALF1 SAM1'
+                                                },
+                                                'id': 'abeecher',
+                                                'email': 'abeecher@example.com'
+                                            },
+                                            'id': 'abeecher'
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }, {
+                    'entry': {
+                        'visibility': 'PUBLIC',
+                        'guid': 'b4cff62a-664d-4d45-9302-98723eac1319',
+                        'description': 'This is a Sample Alfresco Team site.',
+                        'id': 'PUBLIC-SITE',
+                        'preset': 'site-dashboard',
+                        'title': 'FAKE-SITE-PUBLIC'
+                    }
+                }, {
+                    'entry': {
+                        'visibility': 'PRIVATE',
+                        'guid': 'b4cff62a-664d-4d45-9302-98723eac1319',
+                        'description': 'This is a Sample Alfresco Team site.',
+                        'id': 'MEMBER-SITE',
+                        'preset': 'site-dashboard',
+                        'title': 'FAKE-PRIVATE-SITE-MEMBER'
+                    },
+                    'relations': {
+                        'members': {
+                            'list': {
+                                'pagination': {
+                                    'count': 3,
+                                    'hasMoreItems': false,
+                                    'skipCount': 0,
+                                    'maxItems': 100
+                                },
+                                'entries': [
+                                    {
+                                        'entry': {
+                                            'role': 'SiteManager',
+                                            'person': {
+                                                'firstName': 'Administrator',
+                                                'emailNotificationsEnabled': true,
+                                                'company': {},
+                                                'id': 'admin',
+                                                'enabled': true,
+                                                'email': 'admin@alfresco.com'
+                                            },
+                                            'id': 'test'
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
                 ]
             }
         };
@@ -279,6 +405,39 @@ describe('DropdownSitesComponent', () => {
                 done();
             });
         });
+
+        it('should show only sites which logged user is member of when member relation is set', async(() => {
+            spyOn(siteService, 'getEcmCurrentLoggedUserName').and.returnValue('test');
+            spyOn(siteService, 'getSites').and.returnValue(Observable.of(siteListWitMembers));
+            component.relations = Relations.Members;
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                debug.query(By.css('.mat-select-trigger')).triggerEventHandler('click', null);
+                fixture.detectChanges();
+                let options: any = debug.queryAll(By.css('mat-option'));
+                expect(options[1].nativeElement.innerText).toContain('FAKE-SITE-PUBLIC');
+                expect(options[2].nativeElement.innerText).toContain('FAKE-PRIVATE-SITE-MEMBER');
+            });
+        }));
+
+        it('should show all the sites if no relation is set', async(() => {
+            spyOn(siteService, 'getEcmCurrentLoggedUserName').and.returnValue('test');
+            spyOn(siteService, 'getSites').and.returnValue(Observable.of(siteListWitMembers));
+            component.siteList = null;
+            component.relations = null;
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                debug.query(By.css('.mat-select-trigger')).triggerEventHandler('click', null);
+                fixture.detectChanges();
+                let options: any = debug.queryAll(By.css('mat-option'));
+                expect(options[1].nativeElement.innerText).toContain('FAKE-MODERATED-SITE');
+                expect(options[2].nativeElement.innerText).toContain('FAKE-SITE-PUBLIC');
+                expect(options[3].nativeElement.innerText).toContain('FAKE-PRIVATE-SITE-MEMBER');
+            });
+        }));
 
     });
 });

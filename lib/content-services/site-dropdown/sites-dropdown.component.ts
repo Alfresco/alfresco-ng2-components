@@ -16,8 +16,13 @@
  */
 
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { SitesService } from '@alfresco/adf-core';
+import { SitesService, LogService } from '@alfresco/adf-core';
 import { SitePaging, SiteEntry } from 'alfresco-js-api';
+
+export enum Relations {
+    Members = 'members',
+    Containers = 'containers'
+}
 
 @Component({
     selector: 'adf-sites-dropdown',
@@ -48,6 +53,9 @@ export class DropdownSitesComponent implements OnInit {
     @Input()
     placeholder: string = 'DROPDOWN.PLACEHOLDER_LABEL';
 
+    @Input()
+    relations: string;
+
     /** Emitted when the user selects a site. When the default option is selected,
      * an empty model is emitted.
      */
@@ -58,7 +66,8 @@ export class DropdownSitesComponent implements OnInit {
 
     public MY_FILES_VALUE = '-my-';
 
-    constructor(private sitesService: SitesService) {
+    constructor(private sitesService: SitesService,
+                private logService: LogService) {
     }
 
     ngOnInit() {
@@ -72,8 +81,13 @@ export class DropdownSitesComponent implements OnInit {
     }
 
     private setDefaultSiteList() {
-        this.sitesService.getMembershipSites().subscribe((result) => {
-            this.siteList = result;
+        let extendedOptions = null;
+        if (this.relations) {
+            extendedOptions = { relations: [this.relations] };
+        }
+        this.sitesService.getSites(extendedOptions).subscribe((result) => {
+
+            this.siteList = this.relations === Relations.Members ? this.filteredResultsByMember(result) : result;
 
             if (!this.hideMyFiles) {
                 let myItem = { entry: { id: '-my-', guid: '-my-', title: 'DROPDOWN.MY_FILES_OPTION' } };
@@ -87,7 +101,21 @@ export class DropdownSitesComponent implements OnInit {
 
             this.selected = this.siteList.list.entries.find(site => site.entry.id === this.value);
         },
-            (error) => {
+        (error) => {
+            this.logService.error(error);
+        });
+    }
+
+    private filteredResultsByMember(sites: SitePaging): SitePaging {
+        const loggedUserName = this.sitesService.getEcmCurrentLoggedUserName();
+        sites.list.entries = sites.list.entries.filter( (site) => this.isCurrentUserMember(site, loggedUserName));
+        return sites;
+    }
+
+    private isCurrentUserMember(site, loggedUserName) {
+        return site.entry.visibility === 'PUBLIC' ||
+            !!site.relations.members.list.entries.find((member) => {
+                return member.entry.id === loggedUserName;
             });
     }
 
