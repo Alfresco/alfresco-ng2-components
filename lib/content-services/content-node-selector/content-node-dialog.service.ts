@@ -72,33 +72,40 @@ export class ContentNodeDialogService {
     /** @param action Name of the action (eg, "Copy" or "Move") to show in the title */
     /** @param contentEntry Item to be copied or moved */
     /** @param permission Permission for the operation */
-    openCopyMoveDialog(action: string, contentEntry: MinimalNodeEntryEntity, permission?: string): Observable<MinimalNodeEntryEntity[]> {
+    openMoveDialog(action: string, contentEntry: MinimalNodeEntryEntity, permission?: string): Observable<MinimalNodeEntryEntity[]> {
         if (this.contentService.hasPermission(contentEntry, permission)) {
-
-            const select = new Subject<MinimalNodeEntryEntity[]>();
-            select.subscribe({
-                complete: this.close.bind(this)
-            });
-
-            const title = this.getTitleTranslation(action, contentEntry.name);
-
-            const data: ContentNodeSelectorComponentData = {
-                title: title,
-                actionName: action,
-                currentFolderId: contentEntry.parentId,
-                imageResolver: this.imageResolver.bind(this),
-                rowFilter : this.rowFilter.bind(this, contentEntry.id),
-                isSelectionValid: this.isCopyMoveSelectionValid.bind(this),
-                select: select
-            };
-
-            this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');
-
-            return select;
+            this.openDialog(action, contentEntry);
         } else {
-            let errors = new Error(JSON.stringify({ error: { statusCode: 403 } } ));
+            let errors = new Error(JSON.stringify({ error: { statusCode: 403 } }));
             return Observable.throw(errors);
         }
+    }
+
+    openCopyDialog(action: string, contentEntry: MinimalNodeEntryEntity): Observable<MinimalNodeEntryEntity[]> {
+        return this.openDialog(action, contentEntry);
+    }
+
+    private openDialog(action: string, contentEntry: MinimalNodeEntryEntity): Subject<MinimalNodeEntryEntity[]> {
+        const select = new Subject<MinimalNodeEntryEntity[]>();
+        select.subscribe({
+            complete: this.close.bind(this)
+        });
+
+        const title = this.getTitleTranslation(action, contentEntry.name);
+
+        const data: ContentNodeSelectorComponentData = {
+            title: title,
+            actionName: action,
+            currentFolderId: contentEntry.parentId,
+            imageResolver: this.imageResolver.bind(this),
+            rowFilter: this.rowFilter.bind(this, contentEntry.id),
+            isSelectionValid: this.isCopyMoveSelectionValid.bind(this),
+            select: select
+        };
+
+        this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');
+
+        return select;
     }
 
     /** Gets the translation of the dialog title. */

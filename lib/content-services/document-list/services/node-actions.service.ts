@@ -45,7 +45,7 @@ export class NodeActionsService {
      * @param permission permission which is needed to apply the action
      */
     public copyContent(contentEntry: MinimalNodeEntryEntity, permission?: string): Subject<string> {
-        return this.doFileOperation('copy', 'content', contentEntry, permission);
+        return this.doCopyOperation('content', contentEntry);
     }
 
     /**
@@ -55,7 +55,7 @@ export class NodeActionsService {
      * @param permission permission which is needed to apply the action
      */
     public copyFolder(contentEntry: MinimalNodeEntryEntity, permission?: string): Subject<string> {
-        return this.doFileOperation('copy', 'folder', contentEntry, permission);
+        return this.doCopyOperation('content', contentEntry);
     }
 
     /**
@@ -65,7 +65,7 @@ export class NodeActionsService {
      * @param permission permission which is needed to apply the action
      */
     public moveContent(contentEntry: MinimalNodeEntryEntity, permission?: string): Subject<string> {
-        return this.doFileOperation('move', 'content', contentEntry, permission);
+        return this.doMoveOperation('content', contentEntry, permission);
     }
 
     /**
@@ -75,27 +75,54 @@ export class NodeActionsService {
      * @param permission permission which is needed to apply the action
      */
     public moveFolder(contentEntry: MinimalNodeEntryEntity, permission?: string): Subject<string> {
-        return this.doFileOperation('move', 'folder', contentEntry, permission);
+        return this.doMoveOperation('folder', contentEntry, permission);
     }
 
     /**
-     * General method for performing the given operation (copy|move)
+     * Method for performing the move operation
      *
-     * @param action the action to perform (copy|move)
+     * @param action the action to perform
      * @param type type of the content (content|folder)
      * @param contentEntry the contentEntry which has to have the action performed on
      * @param permission permission which is needed to apply the action
      */
-    private doFileOperation(action: string, type: string, contentEntry: MinimalNodeEntryEntity, permission?: string): Subject<string> {
+    private doMoveOperation(type: string, contentEntry: MinimalNodeEntryEntity, permission?: string): Subject<string> {
         const observable: Subject<string> = new Subject<string>();
 
         this.contentDialogService
-            .openCopyMoveDialog(action, contentEntry, permission)
+            .openMoveDialog('move', contentEntry, permission)
             .subscribe((selections: MinimalNodeEntryEntity[]) => {
                 const selection = selections[0];
-                this.documentListService[`${action}Node`].call(this.documentListService, contentEntry.id, selection.id)
+                this.documentListService[`moveNode`].call(this.documentListService, contentEntry.id, selection.id)
                     .subscribe(
-                    observable.next.bind(observable, `OPERATION.SUCCES.${type.toUpperCase()}.${action.toUpperCase()}`),
+                    observable.next.bind(observable, `OPERATION.SUCCES.${type.toUpperCase()}.${'move'.toUpperCase()}`),
+                    observable.error.bind(observable)
+                    );
+            },
+            (error) => {
+                observable.error(error);
+                return observable;
+            });
+        return observable;
+    }
+
+    /**
+     * Method for performing the copy operation
+     *
+     * @param action the action to perform (copy|move)
+     * @param type type of the content (content|folder)
+     * @param contentEntry the contentEntry which has to have the action performed on
+     */
+    private doCopyOperation(type: string, contentEntry: MinimalNodeEntryEntity): Subject<string> {
+        const observable: Subject<string> = new Subject<string>();
+
+        this.contentDialogService
+            .openCopyDialog('copy', contentEntry)
+            .subscribe((selections: MinimalNodeEntryEntity[]) => {
+                const selection = selections[0];
+                this.documentListService[`copyNode`].call(this.documentListService, contentEntry.id, selection.id)
+                    .subscribe(
+                    observable.next.bind(observable, `OPERATION.SUCCES.${type.toUpperCase()}.${'copy'.toUpperCase()}`),
                     observable.error.bind(observable)
                     );
             },
