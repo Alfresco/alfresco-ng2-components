@@ -37,6 +37,7 @@
 
         <ng-container *ngIf="allowThumbnails">
             <button mat-icon-button
+                [disabled]="isPanelDisabled"
                 (click)="toggleThumbnails()">
                 <mat-icon>dashboard</mat-icon>
             </button>
