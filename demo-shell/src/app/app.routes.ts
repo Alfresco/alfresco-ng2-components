@@ -46,6 +46,8 @@ import { FormListComponent } from './components/form/form-list.component';
 import { OverlayViewerComponent } from './components/overlay-viewer/overlay-viewer.component';
 import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
 import { FormLoadingComponent } from './components/form/form-loading.component';
+import { BreadcrumbSwapComponent } from './components/breadcrumb-swap/breadcrumb-swap.component';
+
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -177,6 +179,11 @@ export const appRoutes: Routes = [
             {
                 path: 'datatable-lazy',
                 loadChildren: 'app/components/lazy-loading/lazy-loading.module#LazyLoadingModule'
+            },
+            {
+                path: 'breadcrumb-swap',
+                component: BreadcrumbSwapComponent,
+                canActivate: [AuthGuardEcm]
             }
         ]
     }

@@ -47,6 +47,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TaskAttachmentsComponent } from './components/process-service/task-attachments.component';
 import { ProcessAttachmentsComponent } from './components/process-service/process-attachments.component';
 import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
+import { BreadcrumbSwapComponent } from './components/breadcrumb-swap/breadcrumb-swap.component';
 
 
 @NgModule({
@@ -94,7 +95,8 @@ import { SharedLinkViewComponent } from './components/shared-link-view/shared-li
         ProcessAttachmentsComponent,
         OverlayViewerComponent,
         SharedLinkViewComponent,
-        FormLoadingComponent
+        FormLoadingComponent,
+        BreadcrumbSwapComponent
     ],
     providers: [
         { provide: AppConfigService, useClass: DebugAppConfigService },
