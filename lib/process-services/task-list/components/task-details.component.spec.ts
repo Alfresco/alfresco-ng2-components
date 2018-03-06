@@ -108,6 +108,20 @@ describe('TaskDetailsComponent', () => {
         expect(getTaskDetailsSpy).not.toHaveBeenCalled();
     });
 
+    it('should send a claim task event when a task is claimed', async(() => {
+        component.claimedTask.subscribe((taskId) => {
+            expect(taskId).toBe('FAKE-TASK-CLAIM');
+        });
+        component.onClaimAction('FAKE-TASK-CLAIM');
+    }));
+
+    it('should send a unclaim task event when a task is unclaimed', async(() => {
+        component.claimedTask.subscribe((taskId) => {
+            expect(taskId).toBe('FAKE-TASK-UNCLAIM');
+        });
+        component.onUnclaimAction('FAKE-TASK-UNCLAIM');
+    }));
+
     it('should set a placeholder message when taskId not initialised', () => {
         fixture.detectChanges();
         expect(fixture.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.MESSAGES.NONE');

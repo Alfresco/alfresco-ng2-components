@@ -46,6 +46,8 @@ Shows the details of the task id passed in input
 | error | `EventEmitter<any>` | Emitted when an error occurs. |
 | executeOutcome | `EventEmitter<any>` | Emitted when any outcome is executed. Default behaviour can be prevented via `event.preventDefault()`. |
 | assignTask | `EventEmitter<void>` | Emitted when a task is assigned. |
+| claimedTask | `EventEmitter<string>` | Emitted when a task is claimed. |
+| unClaimedTask | `EventEmitter<string>` | Emitted when a task is unclaimed. |
 
 ## Details
 

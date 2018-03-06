@@ -69,7 +69,7 @@
                         [taskDetails]="taskDetails"
                         [formName]="taskFormName"
                         (claim)="onClaimAction($event)"
-                        (unclaim)="onClaimAction($event)">
+                        (unclaim)="onUnclaimAction($event)">
                     </adf-task-header>
                     <adf-people *ngIf="showInvolvePeople" #people
                                 [people]="taskPeople"
