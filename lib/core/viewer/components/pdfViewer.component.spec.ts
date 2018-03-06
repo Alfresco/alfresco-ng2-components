@@ -182,18 +182,21 @@ describe('Test PdfViewer component', () => {
     });
 
     describe('User interaction', () => {
+        let urlFile: any;
+        let change: any;
 
         beforeEach((done) => {
-            component.urlFile = require('../assets/fake-test-file.pdf');
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
+            urlFile = require('../assets/fake-test-file.pdf');
+            change = new SimpleChange(null, urlFile, true);
+
+            component.ngOnChanges({ 'urlFile': change }).then(() => {
                 component.inputPage('1');
                 done();
             });
         });
 
         it('should Total number of pages be loaded', (done) => {
-            component.ngOnChanges(null).then(() => {
+             component.ngOnChanges({ 'urlFile': change }).then(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(component.totalPages).toEqual(6);
@@ -203,7 +206,7 @@ describe('Test PdfViewer component', () => {
         }, 5000);
 
         it('should right arrow move to the next page', (done) => {
-            component.ngOnChanges(null).then(() => {
+             component.ngOnChanges({ 'urlFile': change }).then(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(component.displayPage).toBe(1);
@@ -218,7 +221,7 @@ describe('Test PdfViewer component', () => {
         it('should nextPage move to the next page', (done) => {
             let nextPageButton: any = element.querySelector('#viewer-next-page-button');
 
-            component.ngOnChanges(null).then(() => {
+             component.ngOnChanges({ 'urlFile': change }).then(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
 
@@ -232,7 +235,7 @@ describe('Test PdfViewer component', () => {
         }, 5000);
 
         it('should event keyboard change pages', (done) => {
-            component.ngOnChanges(null).then(() => {
+             component.ngOnChanges({ 'urlFile': change }).then(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
 
@@ -251,7 +254,7 @@ describe('Test PdfViewer component', () => {
             let previousPageButton: any = element.querySelector('#viewer-previous-page-button');
             let nextPageButton: any = element.querySelector('#viewer-next-page-button');
 
-            component.ngOnChanges(null).then(() => {
+             component.ngOnChanges({ 'urlFile': change }).then(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
 
@@ -267,7 +270,7 @@ describe('Test PdfViewer component', () => {
         }, 5000);
 
         it('should previous page not move to the previous page if is page 1', (done) => {
-            component.ngOnChanges(null).then(() => {
+             component.ngOnChanges({ 'urlFile': change }).then(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
 
@@ -281,7 +284,7 @@ describe('Test PdfViewer component', () => {
         }, 5000);
 
         it('should Input page move to the inserted page', (done) => {
-            component.ngOnChanges(null).then(() => {
+             component.ngOnChanges({ 'urlFile': change }).then(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
 
