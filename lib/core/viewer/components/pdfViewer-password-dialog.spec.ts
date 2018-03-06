@@ -22,7 +22,7 @@ import { PdfPasswordDialogComponent } from './pdfViewer-password-dialog';
 
 declare let PDFJS: any;
 
-xdescribe('PdfPasswordDialogComponent', () => {
+describe('PdfPasswordDialogComponent', () => {
     let component: PdfPasswordDialogComponent;
     let fixture: ComponentFixture<PdfPasswordDialogComponent>;
     let dialogRef: MatDialogRef<PdfPasswordDialogComponent>;
