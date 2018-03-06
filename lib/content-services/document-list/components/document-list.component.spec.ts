@@ -1218,6 +1218,27 @@ describe('DocumentList', () => {
         expect(documentList.folderNode).toBeNull();
     });
 
+    it('should reset folder node on loading folder by node id', () => {
+        documentList.folderNode = <any> {};
+
+        const sitesApi = apiService.getInstance().core.sitesApi;
+        spyOn(sitesApi, 'getSites').and.returnValue(Promise.resolve(null));
+
+        documentList.loadFolderByNodeId('-sites-');
+
+        expect(documentList.folderNode).toBeNull();
+    });
+
+    it('should have correct currentFolderId on loading folder by node id', () => {
+        documentList.currentFolderId = '12345-some-id-6789';
+
+        const peopleApi = apiService.getInstance().core.peopleApi;
+        spyOn(peopleApi, 'getSiteMembership').and.returnValue(Promise.resolve());
+
+        documentList.loadFolderByNodeId('-mysites-');
+        expect(documentList.currentFolderId).toBe('-mysites-');
+    });
+
     it('should update pagination settings', () => {
         spyOn(documentList, 'reload').and.stub();
 
@@ -1303,5 +1324,22 @@ describe('DocumentList', () => {
         });
 
         expect(documentList.reload).toHaveBeenCalled();
+    });
+
+    it('should reset skipCount from  pagination settings on loading folder by node id', () => {
+        spyOn(documentList, 'reload').and.stub();
+        const favoritesApi = apiService.getInstance().core.favoritesApi;
+        spyOn(favoritesApi, 'getFavorites').and.returnValue(Promise.resolve(null));
+
+        documentList.maxItems = 0;
+        documentList.skipCount = 0;
+
+        documentList.updatePagination({
+            maxItems: 10,
+            skipCount: 10
+        });
+
+        documentList.loadFolderByNodeId('-favorites-');
+        expect(documentList.skipCount).toBe(0, 'skipCount is reset');
     });
 });
