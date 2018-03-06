@@ -9,14 +9,10 @@
         position: relative;
 
         &__content {
-            top: 0;
+            top: 5px;
             left: 50%;
             height: 0;
             position: absolute;
-        }
-
-        &__thumb:first-child {
-            margin-top: 15px;
         }
 
         &__thumb {

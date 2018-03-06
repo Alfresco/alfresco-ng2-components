@@ -519,4 +519,56 @@ describe('Test PdfViewer component', () => {
             });
         });
     });
+
+    describe('Viewer events', () => {
+        beforeEach(() => {
+            component.urlFile = require('../assets/fake-test-file.pdf');
+            fixture.detectChanges();
+        });
+
+        it('should emit pagechange event', (done) => {
+            component.ngOnChanges(null).then(() => {
+                fixture.detectChanges();
+                return fixture.whenStable().then(() => {
+                    expect(component.displayPage).toBe(1);
+
+                    const args = {
+                        pageNumber: 6,
+                        source: {
+                            container: component.documentContainer
+                        }
+                    };
+
+                    component.pdfViewer.eventBus.dispatch('pagechange', args);
+                    fixture.detectChanges();
+
+                    expect(component.displayPage).toBe(6);
+                    expect(component.page).toBe(6);
+                    done();
+                });
+            });
+        });
+
+        it('should emit pagesloaded event', (done) => {
+            component.ngOnChanges(null).then(() => {
+                fixture.detectChanges();
+                return fixture.whenStable().then(() => {
+                    expect(component.isPanelDisabled).toBe(true);
+
+                    const args = {
+                        pagesCount: 10,
+                        source: {
+                            container: component.documentContainer
+                        }
+                    };
+
+                    component.pdfViewer.eventBus.dispatch('pagesloaded', args);
+                    fixture.detectChanges();
+
+                    expect(component.isPanelDisabled).toBe(false);
+                    done();
+                });
+            });
+        });
+    });
 });

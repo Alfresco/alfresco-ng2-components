@@ -69,6 +69,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     MIN_SCALE: number = 0.25;
     MAX_SCALE: number = 10.0;
 
+    isPanelDisabled = true;
     showThumbnails: boolean = false;
     pdfThumbnailsContext: { viewer: any } = { viewer: null };
 
@@ -82,6 +83,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         private logService: LogService) {
         // needed to preserve "this" context
         this.onPageChange = this.onPageChange.bind(this);
+        this.onPagesLoaded = this.onPagesLoaded.bind(this);
     }
 
     ngOnChanges(changes) {
@@ -150,6 +152,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
         this.documentContainer = document.getElementById('viewer-pdf-viewer');
         this.documentContainer.addEventListener('pagechange', this.onPageChange, true);
+        this.documentContainer.addEventListener('pagesloaded', this.onPagesLoaded, true);
 
         this.pdfViewer = new PDFJS.PDFViewer({
             container: this.documentContainer,
@@ -167,6 +170,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     ngOnDestroy() {
         if (this.documentContainer) {
             this.documentContainer.removeEventListener('pagechange', this.onPageChange, true);
+            this.documentContainer.removeEventListener('pagesloaded', this.onPagesLoaded, true);
         }
     }
 
@@ -389,6 +393,15 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
                     callback(password);
                 }
             });
+    }
+
+    /**
+     * Pages Loaded Event
+     *
+     * @param event
+     */
+    onPagesLoaded(event) {
+        this.isPanelDisabled = false;
     }
 
     /**
