@@ -22,42 +22,22 @@ To simplify development and reduce the time to get the application started, we h
 
 The settings above address most common scenarios for running ACS on port 8080 and APS on port 9999 and allow you to skip the CORS configuration.
 
-If you would like to change default proxy settings, please edit the `config/webpack.common.js` file.
+If you would like to change default proxy settings, please edit the `proxy.conf.js` file.
 
 ## Application settings (server-side)
 
-All server-side application settings are stored in the `app.config-dev.json` and `app.config-prod.json` files. 
+All server-side application settings are stored in the [src/app.config.json](src/app.config.json). 
 By default the configuration files have the content similar to the following one:
 
 ```json
 {
-    "ecmHost": "http://localhost:3000/ecm",
-    "bpmHost": "http://localhost:3000/bpm",
+    "$schema": "../../lib/core/app-config/schema.json",
+    "ecmHost": "http://{hostname}:{port}",
+    "bpmHost": "http://{hostname}:{port}",
     "application": {
-        "name": "Alfresco"
+        "name": "Alfresco ADF Application"
     }
 }
-```
-
-You can add any additional settings to the application configuration file if needed.
-
-Configuration files are picked based on environment settings (see `app.module.ts` for more details).
-
-```ts
-let appConfigFile = 'app.config-dev.json';
-if (process.env.ENV === 'production') {
-    appConfigFile = 'app.config-prod.json';
-}
-
-@NgModule({
-    imports: [
-        ...
-        CoreModule.forRoot({
-            appConfigFile: appConfigFile
-        }),
-        ...
-    ]
-})
 ```
 
 ## Development build
@@ -85,17 +65,10 @@ This command builds project in `production` mode.
 All output is placed to `dist` folder and can be served to your preferred web server.
 You should need no additional files outside the `dist` folder.
 
-### Important notes
-
-By default demo application is configured to use [wsrv](https://www.npmjs.com/package/wsrv) tool (lightweight web server)
-to serve production build output. It will be running at `0.0.0.0` address with port `3000` and allow you to access your application
-via network. However, you can use any web server of your choice in production.
-
 ## Development branch build
 
 If you want to run the demo shell with the latest changes from the development branch, use the following command from the /script folder:
 
 ```sh
-./npm-clean.sh
-./start-linked.sh -install
+npm run start:dev
 ```
