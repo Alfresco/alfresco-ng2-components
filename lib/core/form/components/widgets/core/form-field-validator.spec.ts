@@ -82,9 +82,9 @@ describe('FormFieldValidator', () => {
             let field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.RADIO_BUTTONS,
                 required: true,
-                value: 'one',
                 options: [{ id: 'two', name: 'two' }]
             });
+            field.value = 'one';
 
             expect(validator.validate(field)).toBeFalsy();
         });

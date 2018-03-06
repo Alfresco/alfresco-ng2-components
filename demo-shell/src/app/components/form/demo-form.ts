@@ -2,14 +2,14 @@
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the 'License');
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
+ * distributed under the License is distributed on an 'AS IS' BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -1448,6 +1448,273 @@ export class DemoForm {
             'gridsterForm': false,
             'globalDateFormat': 'D-M-YYYY'
         };
+    }
+
+    static getSimpleFormDefinition(): any {
+        return {
+            'id': 1001,
+            'name': 'SIMPLE_FORM_EXAMPLE',
+            'description': '',
+            'version': 1,
+            'lastUpdatedBy': 2,
+            'lastUpdatedByFullName': 'Test01 01Test',
+            'lastUpdated': '2018-02-26T17:44:04.543+0000',
+            'stencilSetId': 0,
+            'referenceId': null,
+            'taskId': '9999',
+            'formDefinition': {
+              'tabs': [],
+              'fields': [
+                {
+                  'fieldType': 'ContainerRepresentation',
+                  'id': '1519666726245',
+                  'name': 'Label',
+                  'type': 'container',
+                  'value': null,
+                  'required': false,
+                  'readOnly': false,
+                  'overrideId': false,
+                  'colspan': 1,
+                  'placeholder': null,
+                  'minLength': 0,
+                  'maxLength': 0,
+                  'minValue': null,
+                  'maxValue': null,
+                  'regexPattern': null,
+                  'optionType': null,
+                  'hasEmptyValue': null,
+                  'options': null,
+                  'restUrl': null,
+                  'restResponsePath': null,
+                  'restIdProperty': null,
+                  'restLabelProperty': null,
+                  'tab': null,
+                  'className': null,
+                  'dateDisplayFormat': null,
+                  'layout': null,
+                  'sizeX': 2,
+                  'sizeY': 1,
+                  'row': -1,
+                  'col': -1,
+                  'visibilityCondition': null,
+                  'numberOfColumns': 2,
+                  'fields': {
+                    '1': [
+                      {
+                        'fieldType': 'RestFieldRepresentation',
+                        'id': 'typeahedField',
+                        'name': 'TypeahedField',
+                        'type': 'typeahead',
+                        'value': null,
+                        'required': false,
+                        'readOnly': false,
+                        'overrideId': false,
+                        'colspan': 1,
+                        'placeholder': null,
+                        'minLength': 0,
+                        'maxLength': 0,
+                        'minValue': null,
+                        'maxValue': null,
+                        'regexPattern': null,
+                        'optionType': null,
+                        'hasEmptyValue': null,
+                        'options': null,
+                        'restUrl': 'https://jsonplaceholder.typicode.com/users',
+                        'restResponsePath': null,
+                        'restIdProperty': 'id',
+                        'restLabelProperty': 'name',
+                        'tab': null,
+                        'className': null,
+                        'params': {
+                          'existingColspan': 1,
+                          'maxColspan': 2
+                        },
+                        'dateDisplayFormat': null,
+                        'layout': {
+                          'row': -1,
+                          'column': -1,
+                          'colspan': 1
+                        },
+                        'sizeX': 1,
+                        'sizeY': 1,
+                        'row': -1,
+                        'col': -1,
+                        'visibilityCondition': null,
+                        'endpoint': null,
+                        'requestHeaders': null
+                      }
+                    ],
+                    '2': [
+                      {
+                        'fieldType': 'RestFieldRepresentation',
+                        'id': 'radioButton',
+                        'name': 'RadioButtons',
+                        'type': 'radio-buttons',
+                        'value': null,
+                        'required': false,
+                        'readOnly': false,
+                        'overrideId': false,
+                        'colspan': 1,
+                        'placeholder': null,
+                        'minLength': 0,
+                        'maxLength': 0,
+                        'minValue': null,
+                        'maxValue': null,
+                        'regexPattern': null,
+                        'optionType': null,
+                        'hasEmptyValue': null,
+                        'options': [
+                          {
+                            'id': 'option_1',
+                            'name': 'Option 1'
+                          },
+                          {
+                            'id': 'option_2',
+                            'name': 'Option 2'
+                          },
+                          {
+                            'id': 'option_3',
+                            'name': 'Option 3'
+                          }
+                        ],
+                        'restUrl': null,
+                        'restResponsePath': null,
+                        'restIdProperty': null,
+                        'restLabelProperty': null,
+                        'tab': null,
+                        'className': null,
+                        'params': {
+                          'existingColspan': 1,
+                          'maxColspan': 1
+                        },
+                        'dateDisplayFormat': null,
+                        'layout': {
+                          'row': -1,
+                          'column': -1,
+                          'colspan': 1
+                        },
+                        'sizeX': 1,
+                        'sizeY': 2,
+                        'row': -1,
+                        'col': -1,
+                        'visibilityCondition': null,
+                        'endpoint': null,
+                        'requestHeaders': null
+                      }
+                    ]
+                  }
+                },
+                {
+                  'fieldType': 'ContainerRepresentation',
+                  'id': '1519666735185',
+                  'name': 'Label',
+                  'type': 'container',
+                  'value': null,
+                  'required': false,
+                  'readOnly': false,
+                  'overrideId': false,
+                  'colspan': 1,
+                  'placeholder': null,
+                  'minLength': 0,
+                  'maxLength': 0,
+                  'minValue': null,
+                  'maxValue': null,
+                  'regexPattern': null,
+                  'optionType': null,
+                  'hasEmptyValue': null,
+                  'options': null,
+                  'restUrl': null,
+                  'restResponsePath': null,
+                  'restIdProperty': null,
+                  'restLabelProperty': null,
+                  'tab': null,
+                  'className': null,
+                  'dateDisplayFormat': null,
+                  'layout': null,
+                  'sizeX': 2,
+                  'sizeY': 1,
+                  'row': -1,
+                  'col': -1,
+                  'visibilityCondition': null,
+                  'numberOfColumns': 2,
+                  'fields': {
+                    '1': [
+                      {
+                        'fieldType': 'RestFieldRepresentation',
+                        'id': 'selectBox',
+                        'name': 'SelectBox',
+                        'type': 'dropdown',
+                        'value': 'Choose one...',
+                        'required': false,
+                        'readOnly': false,
+                        'overrideId': false,
+                        'colspan': 1,
+                        'placeholder': null,
+                        'minLength': 0,
+                        'maxLength': 0,
+                        'minValue': null,
+                        'maxValue': null,
+                        'regexPattern': null,
+                        'optionType': 'manual',
+                        'hasEmptyValue': true,
+                        'options': [
+                          {
+                            'id': 'empty',
+                            'name': 'Choose one...'
+                          },
+                          {
+                            'id': 'option_1',
+                            'name': '1'
+                          },
+                          {
+                            'id': 'option_2',
+                            'name': '2'
+                          },
+                          {
+                            'id': 'option_3',
+                            'name': '3'
+                          }
+                        ],
+                        'restUrl': null,
+                        'restResponsePath': null,
+                        'restIdProperty': null,
+                        'restLabelProperty': null,
+                        'tab': null,
+                        'className': null,
+                        'params': {
+                          'existingColspan': 1,
+                          'maxColspan': 2
+                        },
+                        'dateDisplayFormat': null,
+                        'layout': {
+                          'row': -1,
+                          'column': -1,
+                          'colspan': 1
+                        },
+                        'sizeX': 1,
+                        'sizeY': 1,
+                        'row': -1,
+                        'col': -1,
+                        'visibilityCondition': null,
+                        'endpoint': null,
+                        'requestHeaders': null
+                      }
+                    ],
+                    '2': []
+                  }
+                }
+              ],
+              'outcomes': [],
+              'javascriptEvents': [],
+              'className': '',
+              'style': '',
+              'customFieldTemplates': {},
+              'metadata': {},
+              'variables': [],
+              'customFieldsValueInfo': {},
+              'gridsterForm': false
+            }
+          };
     }
 
 }
