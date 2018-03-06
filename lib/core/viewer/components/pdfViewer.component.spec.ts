@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import {
     AlfrescoApiService,
