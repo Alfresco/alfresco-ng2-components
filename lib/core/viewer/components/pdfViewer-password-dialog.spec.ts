@@ -22,7 +22,7 @@ import { PdfPasswordDialogComponent } from './pdfViewer-password-dialog';
 
 declare let PDFJS: any;
 
-describe('PdfPasswordDialogComponent', () => {
+xdescribe('PdfPasswordDialogComponent', () => {
     let component: PdfPasswordDialogComponent;
     let fixture: ComponentFixture<PdfPasswordDialogComponent>;
     let dialogRef: MatDialogRef<PdfPasswordDialogComponent>;
@@ -100,7 +100,7 @@ describe('PdfPasswordDialogComponent', () => {
         });
     });
 
-    xit('should close dialog with input value', () => {
+    it('should close dialog with input value', () => {
         fixture.detectChanges();
 
         component.passwordFormControl.setValue('some-value');
