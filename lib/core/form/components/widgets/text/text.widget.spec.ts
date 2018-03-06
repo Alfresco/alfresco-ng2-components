@@ -131,7 +131,8 @@ describe('TextWidgetComponent', () => {
                     value: '',
                     params: {inputMask: '##-##0,00%'},
                     type: FormFieldTypes.TEXT,
-                    readOnly: false
+                    readOnly: false,
+                    placeholder: 'simple palceholder'
                 });
 
                 fixture.detectChanges();
@@ -141,6 +142,12 @@ describe('TextWidgetComponent', () => {
             it('should show text widget', () => {
                 expect(element.querySelector('#text-id')).toBeDefined();
                 expect(element.querySelector('#text-id')).not.toBeNull();
+            });
+
+            it('should show the field placeholder', () => {
+                expect(inputElement).toBeDefined();
+                expect(inputElement).not.toBeNull();
+                expect(inputElement.placeholder).toBe('simple palceholder');
             });
 
             it('should prevent text to be written if is not allowed by the mask on keyUp event', async(() => {
@@ -246,6 +253,30 @@ describe('TextWidgetComponent', () => {
                     expect(textEle.value).toBe('12,34%');
                 });
             }));
+        });
+
+        describe('and a mask placeholder is configured', () => {
+
+            beforeEach(() => {
+                widget.field = new FormFieldModel(new FormModel({taskId: 'fake-task-id'}), {
+                    id: 'text-id',
+                    name: 'text-name',
+                    value: '',
+                    params: {inputMask: '##-##0,00%', inputMaskPlaceholder: 'Phone : (__) ___-___'},
+                    type: FormFieldTypes.TEXT,
+                    readOnly: false,
+                    placeholder: 'simple palceholder'
+                });
+
+                fixture.detectChanges();
+            });
+
+            it('should show the input mask placeholder', () => {
+                const inputElement: HTMLInputElement = <HTMLInputElement> element.querySelector('#text-id');
+                expect(inputElement).toBeDefined();
+                expect(inputElement).not.toBeNull();
+                expect(inputElement.placeholder).toBe('Phone : (__) ___-___');
+            });
         });
     });
 });

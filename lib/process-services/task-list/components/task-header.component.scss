@@ -26,5 +26,15 @@
         &-card-container {
             font-family: inherit;
         }
+
     }
+
+    @media screen and  ($mat-small) {
+        adf-card-view .adf-property-value {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+    }
+
 }

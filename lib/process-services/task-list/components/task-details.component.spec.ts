@@ -24,9 +24,9 @@ import { Observable } from 'rxjs/Observable';
 import { FormModule, FormModel, FormOutcomeEvent, FormOutcomeModel, FormService } from '@alfresco/adf-core';
 import { CommentProcessService, LogService } from '@alfresco/adf-core';
 
-import { PeopleProcessService, UserProcessModel } from '@alfresco/adf-core';
+import { PeopleProcessService, UserProcessModel, AuthenticationService } from '@alfresco/adf-core';
 import { TaskDetailsModel } from '../models/task-details.model';
-import { noDataMock, taskDetailsMock, taskFormMock, tasksMock } from '../../mock';
+import { noDataMock, taskDetailsMock, taskFormMock, tasksMock, taskDetailsWithOutAssigneeMock } from '../../mock';
 import { TaskListService } from './../services/tasklist.service';
 import { PeopleSearchComponent } from '../../people';
 import { TaskDetailsComponent } from './task-details.component';
@@ -67,7 +67,8 @@ describe('TaskDetailsComponent', () => {
             providers: [
                 TaskListService,
                 PeopleProcessService,
-                CommentProcessService
+                CommentProcessService,
+                AuthenticationService
             ],
             schemas: [NO_ERRORS_SCHEMA]
         }).compileComponents();
@@ -108,6 +109,20 @@ describe('TaskDetailsComponent', () => {
         expect(getTaskDetailsSpy).not.toHaveBeenCalled();
     });
 
+    it('should send a claim task event when a task is claimed', async(() => {
+        component.claimedTask.subscribe((taskId) => {
+            expect(taskId).toBe('FAKE-TASK-CLAIM');
+        });
+        component.onClaimAction('FAKE-TASK-CLAIM');
+    }));
+
+    it('should send a unclaim task event when a task is unclaimed', async(() => {
+        component.claimedTask.subscribe((taskId) => {
+            expect(taskId).toBe('FAKE-TASK-UNCLAIM');
+        });
+        component.onUnclaimAction('FAKE-TASK-UNCLAIM');
+    }));
+
     it('should set a placeholder message when taskId not initialised', () => {
         fixture.detectChanges();
         expect(fixture.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.MESSAGES.NONE');
@@ -129,6 +144,42 @@ describe('TaskDetailsComponent', () => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(fixture.debugElement.query(By.css('adf-form'))).toBeNull();
+        });
+    }));
+
+    it('should display task standalone component when the task does not have an associated form', async(() => {
+        component.taskId = '123';
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(fixture.debugElement.query(By.css('adf-task-standalone'))).not.toBeNull();
+        });
+    }));
+
+    it('should not display task standalone component when the task have an associated form', async(() => {
+        component.taskId = '123';
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(fixture.debugElement.query(By.css('adf-task-standalone'))).not.toBeNull();
+        });
+    }));
+
+    it('should display the claim message when the task is not assigned', async(() => {
+        component.taskDetails = taskDetailsWithOutAssigneeMock;
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            const claimMessage = fixture.nativeElement.querySelector('#claim-message-id');
+            expect(claimMessage).toBeDefined();
+            expect(claimMessage.innerText).toBe('ADF_TASK_LIST.DETAILS.MESSAGES.CLAIM');
+        });
+    }));
+
+    it('should not display the claim message when the task is assigned', async(() => {
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            const claimMessage = fixture.nativeElement.querySelector('#claim-message-id');
+            expect(claimMessage).toBeNull();
         });
     }));
 

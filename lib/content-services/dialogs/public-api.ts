@@ -17,3 +17,4 @@
 
 export * from './download-zip.dialog';
 export * from './folder.dialog';
+export * from './share.dialog';

@@ -16,7 +16,7 @@
  */
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity, SiteEntry, SitePaging } from 'alfresco-js-api';
 import {
@@ -54,6 +54,7 @@ const ONE_FOLDER_RESULT = {
 };
 
 describe('ContentNodeSelectorComponent', () => {
+    const debounceSearch = 200;
     let component: ContentNodeSelectorPanelComponent;
     let fixture: ComponentFixture<ContentNodeSelectorPanelComponent>;
     let searchService: SearchService;
@@ -138,6 +139,20 @@ describe('ContentNodeSelectorComponent', () => {
                 });
 
                 component.chosenNode = expectedNode;
+            });
+
+            it('should update skipCount on folder loaded', () => {
+                component.skipCount = 8;
+
+                component.onFolderLoaded({
+                    list: {
+                        pagination: {
+                            skipCount: 10
+                        }
+                    }
+                });
+
+                expect(component.skipCount).toBe(10, 'skipCount is updated');
             });
         });
 
@@ -261,7 +276,7 @@ describe('ContentNodeSelectorComponent', () => {
             });
 
             it('should make changes to breadcrumb\'s folderNode if breadcrumbTransform is defined', (done) => {
-                const transformedFolderNode = <MinimalNodeEntryEntity> { path: { elements: [{id: 'testId', name: 'testName'}] } };
+                const transformedFolderNode = <MinimalNodeEntryEntity> { id: 'trans-node', name: 'trans-node-name', path: { elements: [{id: 'testId', name: 'testName'}] } };
                 component.breadcrumbTransform = (() => {
                     return transformedFolderNode;
                 });
@@ -272,7 +287,8 @@ describe('ContentNodeSelectorComponent', () => {
                     expect(component.breadcrumbTransform).not.toBeNull();
 
                     const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
-                    expect(breadcrumb.componentInstance.folderNode).toBe(transformedFolderNode);
+                    expect(breadcrumb.componentInstance.route[0].name).toBe('testName');
+                    expect(breadcrumb.componentInstance.route[0].id).toBe('testId');
                     done();
                 });
             });
@@ -291,8 +307,8 @@ describe('ContentNodeSelectorComponent', () => {
                     },
                     include: ['path', 'allowableOperations'],
                     paging: {
-                        maxItems: '25',
-                        skipCount: skipCount.toString()
+                        maxItems: 25,
+                        skipCount: skipCount
                     },
                     filterQueries: [
                         { query: "TYPE:'cm:folder'" },
@@ -481,6 +497,44 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(component.chosenNode).toBeNull();
                 expect(component.showingSearchResults).toBeFalsy();
             });
+
+            it('should clear the search field, nodes and chosenNode when deleting the search input',  fakeAsync(() => {
+                spyOn(component, 'clear').and.callThrough();
+                typeToSearchBox('a');
+
+                tick(debounceSearch);
+                fixture.detectChanges();
+
+                expect(searchSpy.calls.count()).toBe(1);
+
+                typeToSearchBox('');
+
+                tick(debounceSearch);
+                fixture.detectChanges();
+
+                expect(searchSpy.calls.count()).toBe(1, 'no other search has been performed');
+                expect(component.clear).toHaveBeenCalled();
+                expect(component.folderIdToShow).toBe('cat-girl-nuku-nuku', 'back to the folder in which the search was performed');
+            }));
+
+            it('should clear the search field, nodes and chosenNode on folder navigation in the results list', fakeAsync(() => {
+                spyOn(component, 'clearSearch').and.callThrough();
+                typeToSearchBox('a');
+
+                tick(debounceSearch);
+                fixture.detectChanges();
+
+                respondWithSearchResults(ONE_FOLDER_RESULT);
+
+                tick();
+                fixture.detectChanges();
+
+                component.onFolderChange();
+                fixture.detectChanges();
+
+                expect(component.clearSearch).toHaveBeenCalled();
+
+            }));
 
             it('should show nodes from the same folder as selected in the dropdown on clearing the search input', (done) => {
                 typeToSearchBox('piccolo');

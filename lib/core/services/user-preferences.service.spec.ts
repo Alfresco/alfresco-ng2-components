@@ -72,7 +72,7 @@ describe('UserPreferencesService', () => {
     });
 
     it('should return supported page sizes defined in the app config', () => {
-        const supportedPages = preferences.getDifferentPageSizes();
+        const supportedPages = preferences.getDefaultPageSizes();
         expect(supportedPages).toEqual(supportedPaginationSize);
     });
 

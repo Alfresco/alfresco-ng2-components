@@ -29,7 +29,7 @@
     </mat-accordion>
 
     <div class="adf-site-container-style" id="site-container">
-        <adf-sites-dropdown (change)="onSiteChange($event)" [hideMyFiles]="false" >
+        <adf-sites-dropdown (change)="onSiteChange($event)" [hideMyFiles]="false" [relations]="'members'">
         </adf-sites-dropdown>
     </div>
     <div class="document-list-container" fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="16px">
@@ -94,7 +94,7 @@
                             adf-node-permission="delete"
                             [adf-nodes]="documentList.selection"
                             title="{{ 'DOCUMENT_LIST.TOOLBAR.DELETE' | translate }}"
-                            (delete)="documentList.reload()"
+                            (delete)="onDeleteActionSuccess($event)"
                             [adf-delete]="documentList.selection">
                         <mat-icon>delete</mat-icon>
                     </button>
@@ -104,6 +104,14 @@
                             [adf-node-favorite]="documentList.selection">
                         <mat-icon>
                             {{ favorite.hasFavorites() ? 'star' :'star_border' }}
+                        </mat-icon>
+                    </button>
+                    <button mat-icon-button
+                            [disabled]="!documentList.selection.length"
+                            [baseShareUrl]="baseShareUrl"
+                            [adf-share]="documentList.selection[0]">
+                        <mat-icon>
+                            share
                         </mat-icon>
                     </button>
                 </div>
@@ -156,7 +164,9 @@
                     </button>
                     <button mat-menu-item
                             adf-node-permission="delete"
-                            [adf-nodes]="documentList.selection">
+                            [adf-nodes]="documentList.selection"
+                            (delete)="onDeleteActionSuccess($event)"
+                            [adf-delete]="documentList.selection">
                         <mat-icon>delete</mat-icon>
                         <span>{{ 'DOCUMENT_LIST.TOOLBAR.DELETE' | translate }}</span>
                     </button>
@@ -245,13 +255,13 @@
                     <!-- common actions -->
                     <content-action
                         icon="get_app"
-                        title="{{'DOCUMENT_LIST.ACTIONS.DOWNLOAD' | translate}}"
+                        title="DOCUMENT_LIST.ACTIONS.DOWNLOAD"
                         handler="download">
                     </content-action>
                     <content-action
                         icon="content_copy"
-                        title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.COPY' | translate}}"
-                        permission="update"
+                        title="DOCUMENT_LIST.ACTIONS.FOLDER.COPY"
+                        permission="copy"
                         [disableWithNoPermission]="true"
                         (error)="onContentActionError($event)"
                         (success)="onContentActionSuccess($event)"
@@ -259,7 +269,7 @@
                     </content-action>
                     <content-action
                         icon="redo"
-                        title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.MOVE' | translate}}"
+                        title="DOCUMENT_LIST.ACTIONS.FOLDER.MOVE"
                         permission="update"
                         [disableWithNoPermission]="true"
                         (error)="onContentActionError($event)"
@@ -270,28 +280,28 @@
                         icon="delete"
                         permission="delete"
                         [disableWithNoPermission]="true"
-                        title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.DELETE' | translate}}"
+                        title="DOCUMENT_LIST.ACTIONS.FOLDER.DELETE"
                         (permissionEvent)="handlePermissionError($event)"
                         (success)="onDeleteActionSuccess($event)"
                         handler="delete">
                     </content-action>
                     <content-action
                         icon="info"
-                        title="{{'DOCUMENT_LIST.ACTIONS.METADATA' | translate}}"
+                        title="DOCUMENT_LIST.ACTIONS.METADATA"
                         (execute)="onManageMetadata($event)">
                     </content-action>
                     <!-- document actions -->
                     <content-action
                         icon="storage"
                         target="document"
-                        title="{{'DOCUMENT_LIST.ACTIONS.VERSIONS' | translate}}"
+                        title="DOCUMENT_LIST.ACTIONS.VERSIONS"
                         (execute)="onManageVersions($event)">
                     </content-action>
                     <content-action
                         *ngIf="authenticationService.isBpmLoggedIn()"
                         icon="play_arrow"
                         target="document" 
-                        title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.PROCESS_ACTION' | translate}}"
+                        title="DOCUMENT_LIST.ACTIONS.DOCUMENT.PROCESS_ACTION"
                         (execute)="startProcesAction($event)">
                     </content-action>
                 </content-actions>
@@ -342,7 +352,7 @@
     </div>
 </div>
 
-<context-menu-holder></context-menu-holder>
+<adf-context-menu-holder></adf-context-menu-holder>
 
 <div *ngIf="processId">
     <adf-start-process

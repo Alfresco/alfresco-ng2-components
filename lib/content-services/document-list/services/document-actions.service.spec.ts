@@ -204,19 +204,6 @@ describe('DocumentActionsService', () => {
         expect(documentListService.deleteNode).not.toHaveBeenCalled();
     });
 
-    it('should reload target upon node deletion', () => {
-        spyOn(documentListService, 'deleteNode').and.returnValue(Observable.of(true));
-
-        let target = jasmine.createSpyObj('obj', ['reload']);
-        let permission = 'delete';
-        let file: any = new FileNode();
-        file.entry.allowableOperations = ['delete'];
-        service.getHandler('delete')(file, target, permission);
-
-        expect(documentListService.deleteNode).toHaveBeenCalled();
-        expect(target.reload).toHaveBeenCalled();
-    });
-
     it('should emit success event upon node deletion', (done) => {
         service.success.subscribe((nodeId) => {
             expect(nodeId).not.toBeNull();

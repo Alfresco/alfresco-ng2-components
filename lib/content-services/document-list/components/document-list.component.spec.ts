@@ -344,6 +344,27 @@ describe('DocumentList', () => {
 
     });
 
+    it('should not disable the action if there is copy permission', () => {
+        let documentMenu = new ContentActionModel({
+            disableWithNoPermission: true,
+            permission: 'copy',
+            target: 'document',
+            title: 'FileAction'
+        });
+
+        documentList.actions = [
+            documentMenu
+        ];
+
+        let nodeFile = { entry: { isFile: true, name: 'xyz', allowableOperations: ['create', 'update'] } };
+
+        let actions = documentList.getNodeActions(nodeFile);
+        expect(actions.length).toBe(1);
+        expect(actions[0].title).toEqual('FileAction');
+        expect(actions[0].disabled).toBeFalsy();
+
+    });
+
     it('should disable the action if there is no permission for the folder and disableWithNoPermission true', () => {
         let documentMenu = new ContentActionModel({
             disableWithNoPermission: true,
@@ -938,6 +959,38 @@ describe('DocumentList', () => {
         documentList.loadFolderByNodeId('123');
     });
 
+    it('should reset noPermission on loading folder by node id', () => {
+        documentList.noPermission = true;
+        fixture.detectChanges();
+
+        documentList.loadFolderByNodeId('-trashcan-');
+        fixture.detectChanges();
+
+        expect(documentList.noPermission).toBeFalsy();
+    });
+
+    it('should reset noPermission upon reload', () => {
+        documentList.noPermission = true;
+        fixture.detectChanges();
+
+        documentList.reload();
+        fixture.detectChanges();
+
+        expect(documentList.noPermission).toBeFalsy();
+    });
+
+    it('should reload contents if node data changes after previously got noPermission error', () => {
+        spyOn(documentList.data, 'loadPage').and.callThrough();
+
+        documentList.noPermission = true;
+        fixture.detectChanges();
+
+        documentList.ngOnChanges({ node: new SimpleChange(null, {list: {entities: {}}}, true) });
+
+        expect(documentList.data.loadPage).toHaveBeenCalled();
+        expect(documentList.noPermission).toBeFalsy();
+    });
+
     xit('should load previous page if there are no other elements in multi page table', (done) => {
         documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
         documentList.folderNode = new NodeMinimal();
@@ -1218,6 +1271,27 @@ describe('DocumentList', () => {
         expect(documentList.folderNode).toBeNull();
     });
 
+    it('should reset folder node on loading folder by node id', () => {
+        documentList.folderNode = <any> {};
+
+        const sitesApi = apiService.getInstance().core.sitesApi;
+        spyOn(sitesApi, 'getSites').and.returnValue(Promise.resolve(null));
+
+        documentList.loadFolderByNodeId('-sites-');
+
+        expect(documentList.folderNode).toBeNull();
+    });
+
+    it('should have correct currentFolderId on loading folder by node id', () => {
+        documentList.currentFolderId = '12345-some-id-6789';
+
+        const peopleApi = apiService.getInstance().core.peopleApi;
+        spyOn(peopleApi, 'getSiteMembership').and.returnValue(Promise.resolve());
+
+        documentList.loadFolderByNodeId('-mysites-');
+        expect(documentList.currentFolderId).toBe('-mysites-');
+    });
+
     it('should update pagination settings', () => {
         spyOn(documentList, 'reload').and.stub();
 
@@ -1277,5 +1351,48 @@ describe('DocumentList', () => {
         documentList.ngOnChanges({ skipCount: new SimpleChange(undefined, 10, !firstChange) });
 
         expect(documentList.reload).toHaveBeenCalled();
+    });
+
+    it('should NOT reload data on onNgChanges upon reset of skipCount to 0', () => {
+        spyOn(documentList, 'reload').and.stub();
+
+        documentList.maxItems = 10;
+        documentList.skipCount = 10;
+
+        const firstChange = true;
+        documentList.ngOnChanges({ skipCount: new SimpleChange(undefined, 0, !firstChange) });
+
+        expect(documentList.reload).not.toHaveBeenCalled();
+    });
+
+    it('should reload data upon changing pagination setting skipCount to 0', () => {
+        spyOn(documentList, 'reload').and.stub();
+
+        documentList.maxItems = 5;
+        documentList.skipCount = 5;
+
+        documentList.updatePagination({
+            maxItems: 5,
+            skipCount: 0
+        });
+
+        expect(documentList.reload).toHaveBeenCalled();
+    });
+
+    it('should reset skipCount from  pagination settings on loading folder by node id', () => {
+        spyOn(documentList, 'reload').and.stub();
+        const favoritesApi = apiService.getInstance().core.favoritesApi;
+        spyOn(favoritesApi, 'getFavorites').and.returnValue(Promise.resolve(null));
+
+        documentList.maxItems = 0;
+        documentList.skipCount = 0;
+
+        documentList.updatePagination({
+            maxItems: 10,
+            skipCount: 10
+        });
+
+        documentList.loadFolderByNodeId('-favorites-');
+        expect(documentList.skipCount).toBe(0, 'skipCount is reset');
     });
 });

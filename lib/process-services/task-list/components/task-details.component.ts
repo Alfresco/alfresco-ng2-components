@@ -160,6 +160,14 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     @Output()
     assignTask: EventEmitter<void> = new EventEmitter<void>();
 
+    /** Emitted when a task is claimed. */
+    @Output()
+    claimedTask: EventEmitter<string> = new EventEmitter<string>();
+
+    /** Emitted when a task is unclaimed. */
+    @Output()
+    unClaimedTask: EventEmitter<string> = new EventEmitter<string>();
+
     taskDetails: TaskDetailsModel;
     taskFormName: string = null;
 
@@ -281,11 +289,15 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     }
 
     isAssignedToMe(): boolean {
-        return this.taskDetails.assignee.email === this.authService.getBpmUsername();
+        return this.isAssigned() ? this.taskDetails.assignee.email === this.authService.getBpmUsername() : false;
+    }
+
+    isCompleteButtonEnabled(): boolean {
+        return this.isAssignedToMe() || this.canInitiatorComplete();
     }
 
     isCompleteButtonVisible(): boolean {
-        return this.isAssignedToMe() || this.canInitiatorComplete();
+        return !this.hasFormKey() && this.isTaskActive() && this.isCompleteButtonEnabled();
     }
 
     canInitiatorComplete(): boolean {
@@ -375,6 +387,12 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     }
 
     onClaimAction(taskId: string): void {
+        this.claimedTask.emit(taskId);
+        this.loadDetails(taskId);
+    }
+
+    onUnclaimAction(taskId: string): void {
+        this.unClaimedTask.emit(taskId);
         this.loadDetails(taskId);
     }
 

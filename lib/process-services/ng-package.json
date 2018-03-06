@@ -13,6 +13,7 @@
       "minimatch": "minimatch",
       "@angular/platform-browser/animations": "@angular/platform-browser/animations",
       "@angular/material": "@angular/material",
+      "@mat-datetimepicker": "@mat-datetimepicker",
       "@angular/flex-layout": "@angular/flex-layout",
       "@alfresco/adf-core": "@alfresco/adf-core",
       "@alfresco/adf-content-services": "@alfresco/adf-content-services",

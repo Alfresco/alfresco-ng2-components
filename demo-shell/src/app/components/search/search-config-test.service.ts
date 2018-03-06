@@ -23,7 +23,7 @@ export class TestSearchConfigurationService implements SearchConfigurationInterf
     constructor() {
     }
 
-    public generateQueryBody(searchTerm: string, maxResults: string, skipCount: string): QueryBody {
+    public generateQueryBody(searchTerm: string, maxResults: number, skipCount: number): QueryBody {
         const defaultQueryBody: QueryBody = {
             query: {
                 query: searchTerm ? `${searchTerm}* OR name:${searchTerm}*` : searchTerm

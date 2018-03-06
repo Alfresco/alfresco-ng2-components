@@ -298,6 +298,8 @@ export class FormFieldModel extends FormWidgetModel {
                     let emptyOption = json.options[0];
                     if (value === '' || value === emptyOption.id || value === emptyOption.name) {
                         value = emptyOption.id;
+                    } else if (value.id && value.name) {
+                        value = value.id;
                     }
                 }
             }
@@ -311,9 +313,12 @@ export class FormFieldModel extends FormWidgetModel {
             // Activiti has a bug with default radio button value where initial selection passed as `name` value
             // so try resolving current one with a fallback to first entry via name or id
             // TODO: needs to be reported and fixed at Activiti side
-            let entry: FormFieldOption[] = this.options.filter(opt => opt.id === value || opt.name === value);
+            let entry: FormFieldOption[] = this.options.filter(opt =>
+                opt.id === value || opt.name === value || (value && (opt.id === value.id || opt.name === value.name)));
             if (entry.length > 0) {
                 value = entry[0].id;
+            } else {
+                value = this.options[0] ? this.options[0].id : json.value;
             }
         }
 
@@ -376,7 +381,7 @@ export class FormFieldModel extends FormWidgetModel {
                 }
                 break;
             case FormFieldTypes.TYPEAHEAD:
-                let taEntry: FormFieldOption[] = this.options.filter(opt => opt.id === this.value);
+                let taEntry: FormFieldOption[] = this.options.filter(opt => opt.id === this.value || opt.name === this.value);
                 if (taEntry.length > 0) {
                     this.form.values[this.id] = taEntry[0];
                 } else if (this.options.length > 0) {

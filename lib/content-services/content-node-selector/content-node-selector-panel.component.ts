@@ -50,30 +50,57 @@ const defaultValidation = () => true;
 })
 export class ContentNodeSelectorPanelComponent implements OnInit {
 
+    /** Node ID of the folder currently listed. */
     @Input()
     currentFolderId: string = null;
 
+    /** Hide the "My Files" option added to the site list by default.
+     * See the [Sites Dropdown component](sites-dropdown.component.md)
+     * for more information.
+     */
     @Input()
     dropdownHideMyFiles: boolean = false;
 
+    /** Custom site for site dropdown same as siteList. See the
+     * [Sites Dropdown component](sites-dropdown.component.md)
+     * for more information.
+     */
     @Input()
     dropdownSiteList: SitePaging = null;
 
+    /** Custom row filter function. See the
+     * [Document List component](document-list.component.md#custom-row-filter)
+     * for more information.
+     */
     @Input()
     rowFilter: RowFilter = null;
 
+    /** Custom image resolver function. See the
+     * [Document List component](document-list.component.md#custom-row-filter)
+     * for more information.
+     */
     @Input()
     imageResolver: ImageResolver = null;
 
+    /** Number of items shown per page in the list. */
     @Input()
     pageSize: number;
 
+    /** Function used to decide if the selected node has permission to be selected.
+     * Default value is a function that always returns true.
+     */
     @Input()
     isSelectionValid: ValidationFunction = defaultValidation;
 
+    /** Transformation to be performed on the chosen/folder node before building the
+     * breadcrumb UI. Can be useful when custom formatting is needed for the breadcrumb.
+     * You can change the path elements from the node that are used to build the
+     * breadcrumb using this function.
+     */
     @Input()
     breadcrumbTransform: (node) => any;
 
+    /** Emitted when the user has chosen an item. */
     @Output()
     select: EventEmitter<MinimalNodeEntryEntity[]> = new EventEmitter<MinimalNodeEntryEntity[]>();
 
@@ -174,19 +201,26 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
             folderNode = this.documentList.folderNode;
         }
 
-        return this.breadcrumbTransform ? this.breadcrumbTransform(folderNode) : folderNode;
+        return folderNode;
     }
 
     /**
-     * Clear the search input
+     * Clear the search input and reset to last folder node in which search was performed
      */
     clear(): void {
+        this.clearSearch();
+        this.folderIdToShow = this.siteId || this.currentFolderId;
+    }
+
+    /**
+     * Clear the search input and search related data
+     */
+    clearSearch() {
         this.searchTerm = '';
         this.nodes = null;
         this.skipCount = 0;
         this.chosenNode = null;
         this.showingSearchResults = false;
-        this.folderIdToShow = this.siteId || this.currentFolderId;
     }
 
     /**
@@ -194,7 +228,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
      */
     private updateResults(): void {
         if (this.searchTerm.length === 0) {
-            this.folderIdToShow = this.siteId || this.currentFolderId;
+            this.clear();
         } else {
             this.startNewSearch();
         }
@@ -279,9 +313,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
      * Sets showingSearchResults state to be able to differentiate between search results or folder results
      */
     onFolderChange(): void {
-        this.skipCount = 0;
         this.infiniteScroll = false;
-        this.showingSearchResults = false;
+        this.clearSearch();
     }
 
     /**
@@ -290,6 +323,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     onFolderLoaded(nodePage: NodePaging): void {
         this.attemptNodeSelection(this.documentList.folderNode);
         this.pagination = nodePage.list.pagination;
+        this.skipCount = nodePage.list.pagination.skipCount;
     }
 
     /**

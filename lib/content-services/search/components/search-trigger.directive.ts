@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:no-input-rename  */
+/* tslint:disable: no-input-rename no-use-before-declare no-input-rename  */
 
 import { ENTER, ESCAPE } from '@angular/cdk/keycodes';
 import {

@@ -20,6 +20,7 @@ import { SearchExtendedComponent } from './components/search/search-extended.com
 import { AboutComponent } from './components/about/about.component';
 import { FormComponent } from './components/form/form.component';
 import { FormListComponent } from './components/form/form-list.component';
+import { FormLoadingComponent } from './components/form/form-loading.component';
 import { CustomSourcesComponent } from './components/files/custom-sources.component';
 import { OverlayViewerComponent } from './components/overlay-viewer/overlay-viewer.component';
 
@@ -92,7 +93,8 @@ import { SharedLinkViewComponent } from './components/shared-link-view/shared-li
         TaskAttachmentsComponent,
         ProcessAttachmentsComponent,
         OverlayViewerComponent,
-        SharedLinkViewComponent
+        SharedLinkViewComponent,
+        FormLoadingComponent
     ],
     providers: [
         { provide: AppConfigService, useClass: DebugAppConfigService },

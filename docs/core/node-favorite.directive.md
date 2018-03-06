@@ -1,0 +1,77 @@
+---
+Added: v2.0.0
+Status: Active
+---
+# Node Favorite directive
+
+Selectively toggles nodes as favorite
+
+## Basic Usage
+
+```html
+<adf-toolbar>
+    <button mat-icon-button
+            (toggle)="done()"
+            [adf-node-favorite]="documentList.selection">
+    </button>
+</adf-toolbar>
+
+<adf-document-list #documentList ...>
+ ...
+</adf-document-list>
+```
+
+```ts
+@Component({
+    selector: 'my-component'
+})
+export class MyComponent {
+
+    done() {
+        // ...
+    }
+
+}
+```
+
+### Properties
+
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| selection | `MinimalNodeEntity[]` | `[]` | Array of nodes to toggle as favorites.  |
+
+### Events
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| toggle | `EventEmitter<any>` | Emitted when the favorite setting is complete.  |
+
+## Details
+
+The `NodeFavoriteDirective` instance can be bound to a template variable through **adfFavorite** reference,
+which provides a method to help further style the element.
+
+<!-- {% raw %} -->
+
+```html
+<button
+    mat-menu-item
+    #selection="adfFavorite"
+    [ngClass]="{ 'icon-highlight': selection.hasFavorites() }"
+    [adf-node-favorite]="documentList.selection">
+    <mat-icon [ngClass]="{ 'icon-highlight': selection.hasFavorites() }">
+        {{ selection.hasFavorites() ? 'star' : 'star_border' }}
+    </mat-icon>
+</button>
+```
+
+<!-- {% endraw %} -->
+
+The directive performs as follows:
+
+-   if there are no favorite nodes in the selection, then all are marked as favorites
+-   if there is at least one favorite node in the selection, then only those who are not
+    are being marked
+-   if all nodes in the selection are favorites, then they are removed from favorites
+
+See **Demo Shell**

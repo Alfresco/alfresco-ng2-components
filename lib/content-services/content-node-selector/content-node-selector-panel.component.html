@@ -38,8 +38,9 @@
             </ng-container>
             <adf-dropdown-breadcrumb *ngIf="needBreadcrumbs()"
                 class="adf-content-node-selector-content-breadcrumb"
-                (navigate)="clear()"
+                (navigate)="clearSearch()"
                 [target]="documentList"
+                [transform]="breadcrumbTransform"
                 [folderNode]="breadcrumbFolderNode"
                 data-automation-id="content-node-selector-content-breadcrumb">
             </adf-dropdown-breadcrumb>

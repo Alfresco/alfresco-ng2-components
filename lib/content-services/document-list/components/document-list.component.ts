@@ -24,7 +24,8 @@ import {
     DisplayMode,
     ObjectDataColumn,
     PaginatedComponent,
-    PaginationQueryParams
+    PaginationQueryParams,
+    PermissionsEnum
 } from '@alfresco/adf-core';
 import { AlfrescoApiService, AppConfigService, DataColumnListComponent, UserPreferencesService } from '@alfresco/adf-core';
 import {
@@ -72,7 +73,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
-    /* change the display mode of the table list or gallery */
+    /** Change the display mode of the table. Can be "list" or "gallery". */
     @Input()
     display: string = DisplayMode.List;
 
@@ -95,7 +96,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     showHeader: boolean = true;
 
-    /** User interaction for folder navigation or file preview. Valid values are "click" and "dblclick". */
+    /** User interaction for folder navigation or file preview.
+     * Valid values are "click" and "dblclick". Default value: "dblclick"
+     */
     @Input()
     navigationMode: string = DocumentListComponent.DOUBLE_CLICK_NAVIGATION; // click|dblclick
 
@@ -125,7 +128,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     contextMenuActions: boolean = false;
 
-    /** Custom image for empty folder */
+    /** Custom image for empty folder. Default value: './assets/images/empty_doc_lib.svg' */
     @Input()
     emptyFolderImageUrl: string = './assets/images/empty_doc_lib.svg';
 
@@ -336,6 +339,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         } else if (this.data) {
             if (changes.node && changes.node.currentValue) {
                 this.resetSelection();
+
                 this.data.loadPage(changes.node.currentValue);
                 this.pagination.next(changes.node.currentValue.list.pagination);
             } else if (changes.rowFilter) {
@@ -420,7 +424,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     checkPermission(node: any, action: ContentActionModel): ContentActionModel {
-        if (action.permission) {
+        if (action.permission && action.permission !== PermissionsEnum.COPY) {
             if (this.hasPermissions(node)) {
                 let permissions = node.entry.allowableOperations;
                 let findPermission = permissions.find(permission => permission === action.permission);
@@ -466,6 +470,14 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.currentNodeAllowableOperations = node.entry['allowableOperations'] ? node.entry['allowableOperations'] : [];
         this.loadFolder();
         this.folderChange.emit(new NodeEntryEvent(node.entry));
+    }
+
+    updateCustomSourceData(nodeId: string, merge: boolean): void {
+        this.folderNode = null;
+        this.currentFolderId = nodeId;
+        if (!merge) {
+            this.skipCount = 0;
+        }
     }
 
     /**
@@ -548,6 +560,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     loadFolderNodesByFolderNodeId(id: string, maxItems: number, skipCount: number, merge: boolean = false): Promise<any> {
         return new Promise((resolve, reject) => {
             this.resetSelection();
+
             this.documentListService
                 .getFolder(null, {
                     maxItems: maxItems,
@@ -572,13 +585,13 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     resetSelection() {
         this.dataTable.resetSelection();
         this.selection = [];
+        this.noPermission = false;
     }
 
     private isSkipCountChanged(changePage: SimpleChanges) {
         return changePage.skipCount &&
             !changePage.skipCount.isFirstChange() &&
-            changePage.skipCount.currentValue !== null &&
-            changePage.skipCount.currentValue !== undefined &&
+            changePage.skipCount.currentValue &&
             changePage.skipCount.currentValue !== changePage.skipCount.previousValue;
     }
 
@@ -590,6 +603,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     private loadTrashcan(merge: boolean = false): void {
+        this.updateCustomSourceData('-trashcan-', merge);
+
         const options = {
             include: ['path', 'properties'],
             maxItems: this.maxItems,
@@ -601,6 +616,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     private loadSharedLinks(merge: boolean = false): void {
+        this.updateCustomSourceData('-sharedlinks-', merge);
+
         const options = {
             include: ['properties', 'allowableOperations', 'path'],
             maxItems: this.maxItems,
@@ -612,6 +629,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     private loadSites(merge: boolean = false): void {
+        this.updateCustomSourceData('-sites-', merge);
+
         const options = {
             include: ['properties'],
             maxItems: this.maxItems,
@@ -632,6 +651,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     private loadMemberSites(merge: boolean = false): void {
+        this.updateCustomSourceData('-mysites-', merge);
+
         const options = {
             include: ['properties'],
             maxItems: this.maxItems,
@@ -660,6 +681,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     private loadFavorites(merge: boolean = false): void {
+        this.updateCustomSourceData('-favorites-', merge);
+
         const options = {
             maxItems: this.maxItems,
             skipCount: this.skipCount,
@@ -691,6 +714,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     private loadRecent(merge: boolean = false): void {
+        this.updateCustomSourceData('-recent-', merge);
+
         this.getRecentFiles('-me-')
             .then((page: NodePaging) => this.onPageLoaded(page, merge))
             .catch(error => this.error.emit(error));
@@ -915,7 +940,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     get supportedPageSizes(): number[] {
-        return this.preferences.getDifferentPageSizes();
+        return this.preferences.getDefaultPageSizes();
     }
 
     ngOnDestroy() {

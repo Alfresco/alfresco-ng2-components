@@ -58,12 +58,27 @@ script:
             (./scripts/start.sh -dev -t -ss -vjsapi alpha || exit 1;);
        fi
       fi
+
 jobs:
     include:
+        - stage: Check build demo shell in production mode AND e2e
+          script: ./scripts/test-dist.sh
         - stage: Check 2.0.0 Project Update
           script: ./scripts/test-e2e-bc.sh
         - stage: Check ADF exports
           script: cd lib && npm run test-export
+        - stage: Update Generator
+          if: tag =~ .*beta.*
+          script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n generator-ng2-alfresco-app
+        - stage: Update Content app
+          if: tag =~ .*beta.*
+          script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n alfresco-content-app
+        - stage: Update DW
+          if: tag =~ .*beta.*
+          script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n adf-app-manager-ui
+        - stage: Update ng2-components
+          if: tag =~ .*beta.*
+          script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n alfresco-ng2-components
 
 # jobs:
 #   include:

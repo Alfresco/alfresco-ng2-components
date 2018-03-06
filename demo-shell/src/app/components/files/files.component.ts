@@ -30,10 +30,10 @@ import {
     SiteEntry
 } from 'alfresco-js-api';
 import {
-    AuthenticationService, ContentService, TranslationService,
+    AuthenticationService, AppConfigService, ContentService, TranslationService,
     FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
     UploadService, DataColumn, DataRow, UserPreferencesService,
-    PaginationComponent, FormValues, DisplayMode
+    PaginationComponent, FormValues, DisplayMode, UserPreferenceValues
 } from '@alfresco/adf-core';
 
 import { DocumentListComponent, PermissionStyleModel } from '@alfresco/adf-content-services';
@@ -58,6 +58,8 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     showViewer = false;
     showVersions = false;
     displayMode = DisplayMode.List;
+
+    baseShareUrl = this.appConfig.get<string>('ecmHost') + '/preview/s/';
 
     toolbarColor = 'default';
 
@@ -158,7 +160,12 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 private logService: LogService,
                 private preference: UserPreferencesService,
                 @Optional() private route: ActivatedRoute,
+                private appConfig: AppConfigService,
                 public authenticationService: AuthenticationService) {
+        this.preference.select(UserPreferenceValues.SupportedPageSizes)
+            .subscribe((pages) => {
+                this.supportedPages = pages;
+            });
     }
 
     showFile(event) {
@@ -205,7 +212,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.contentService.folderCreated.subscribe(value => this.onFolderCreated(value));
         this.onCreateFolder = this.contentService.folderCreate.subscribe(value => this.onFolderAction(value));
         this.onEditFolder = this.contentService.folderEdit.subscribe(value => this.onFolderAction(value));
-        this.supportedPages = this.preference.getDifferentPageSizes();
+        this.supportedPages = this.supportedPages ? this.supportedPages : this.preference.getDefaultPageSizes();
 
         // this.permissionsStyle.push(new PermissionStyleModel('document-list__create', PermissionsEnum.CREATE));
         // this.permissionsStyle.push(new PermissionStyleModel('document-list__disable', PermissionsEnum.NOT_CREATE, false, true));
@@ -295,7 +302,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     emitReadyEvent(event: any) {
-        if (this.pageIsEmpty(event)) {
+        if (this.standardPagination && this.pageIsEmpty(event)) {
             this.standardPagination.goPrevious();
         } else {
             this.documentListReady.emit(event);
@@ -328,11 +335,20 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     onContentActionSuccess(message) {
         const translatedMessage: any = this.translateService.get(message);
         this.notificationService.openSnackMessage(translatedMessage.value, 4000);
+        this.reloadForInfiniteScrolling();
     }
 
     onDeleteActionSuccess(message) {
         this.uploadService.fileDeleted.next(message);
         this.deleteElementSuccess.emit();
+        this.reloadForInfiniteScrolling();
+    }
+
+    private reloadForInfiniteScrolling() {
+        if (this.infiniteScrolling) {
+            this.documentList.skipCount = 0;
+        }
+        this.documentList.reload();
     }
 
     onManageVersions(event) {
