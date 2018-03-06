@@ -3,6 +3,8 @@
     <adf-datatable
         [data]="data"
         [loading]="isLoading"
+        [selectionMode]="selectionMode"
+        [multiselect]="multiselect"
         (rowClick)="onRowClick($event)"
         (row-keyup)="onRowKeyUp($event)">
         <loading-content-template>
