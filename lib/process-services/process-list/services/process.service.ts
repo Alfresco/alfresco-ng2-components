@@ -101,6 +101,17 @@ export class ProcessService {
             .catch(err => this.handleProcessError(err));
     }
 
+    getProcessDefinitionVersions(appId?: number): Observable<ProcessDefinitionRepresentation[]> {
+        const opts = appId ? { appDefinitionId: appId } : {};
+
+        return Observable.fromPromise(
+            this.alfrescoApiService.getInstance().activiti.processApi.getProcessDefinitions(opts)
+        )
+            .map(this.extractData)
+            .map(processDefs => processDefs.map((pd) => new ProcessDefinitionRepresentation(pd)))
+            .catch(err => this.handleProcessError(err));
+    }
+
     startProcess(processDefinitionId: string, name: string, outcome?: string, startFormValues?: FormValues, variables?: ProcessInstanceVariable[]): Observable<ProcessInstance> {
         let startRequest: any = {
             name: name,
