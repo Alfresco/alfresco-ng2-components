@@ -33,3 +33,18 @@
         width: 52px;
     }
 }
+
+@media (max-width: 425px) {
+    adf-content-node-selector {
+        .adf-content-node-selector-content-list {
+            .adf-data-table-cell {
+                display: none;
+            }
+
+            .adf-data-table-cell:first-child,
+            .adf-data-table-cell:nth-child(2) {
+                display: table-cell;
+            }            
+        }
+    }
+}

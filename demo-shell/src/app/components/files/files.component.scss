@@ -146,4 +146,12 @@ adf-document-list ::ng-deep .adf-datatable-selected > svg {
             width: 100%;
         }
     }
+
+    file-uploading-dialog ::ng-deep .upload-dialog {
+        width: 80%; 
+
+        & ::ng-deep adf-file-uploading-list ::ng-deep adf-file-uploading-list-row .adf-file-uploading-row__group {
+            min-width: 0;
+        }
+    }    
 }
