@@ -24,5 +24,5 @@ import { Component } from '@angular/core';
 })
 export class TagComponent {
 
-    nodeId = '74cd8a96-8a21-47e5-9b3b-a1b3e296787d';
+    nodeId = '';
 }
