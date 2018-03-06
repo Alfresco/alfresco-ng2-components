@@ -26,6 +26,7 @@
         "DATATABLE_LAZY": "Datatable (Lazy)",
         "FORM": "Form",
         "FORM_LIST": "Form List",
+        "FORM_LOADING": "Form Loading",
         "UPLOADER": "Uploader",
         "WEBSCRIPT": "Webscript",
         "TAG": "Tag",
@@ -125,6 +126,13 @@
     "FORM-LIST": {
         "STORE": "Store",
         "RESTORE": "Restore"
+    },
+    "FORM-LOADING": {
+      "FORM_DATA" : "Form Data",
+      "FORM_DATA_MESSAGE": "Type values to populate the form",
+      "TYPEAHEAD_PLACEHOLDER": "Typeahead",
+      "RADIO_PLACEHOLDER": "Radio Button",
+      "SELECT_PLACEHOLDER": "DropDown"
     },
     "LOGIN": {
         "CONTENT_SERVICES": "Content Services",

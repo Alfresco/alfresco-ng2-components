@@ -266,8 +266,8 @@ describe('FormFieldModel', () => {
         let field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.RADIO_BUTTONS,
             options: [
-                {id: 'opt1', value: 'Option 1'},
-                {id: 'opt2', value: 'Option 2'}
+                {id: 'opt1', name: 'Option 1'},
+                {id: 'opt2', name: 'Option 2'}
             ],
             value: 'opt2'
         });
@@ -319,8 +319,8 @@ describe('FormFieldModel', () => {
             id: 'radio-1',
             type: FormFieldTypes.RADIO_BUTTONS,
             options: [
-                {id: 'opt1', value: 'Option 1'},
-                {id: 'opt2', value: 'Option 2'}
+                {id: 'opt1', name: 'Option 1'},
+                {id: 'opt2', name: 'Option 2'}
             ]
         });
 
@@ -334,8 +334,8 @@ describe('FormFieldModel', () => {
             id: 'radio-2',
             type: FormFieldTypes.RADIO_BUTTONS,
             options: [
-                {id: 'opt1', value: 'Option 1'},
-                {id: 'opt2', value: 'Option 2'}
+                {id: 'opt1', name: 'Option 1'},
+                {id: 'opt2', name: 'Option 2'}
             ]
         });
 

@@ -45,6 +45,7 @@ import { CustomSourcesComponent } from './components/files/custom-sources.compon
 import { FormListComponent } from './components/form/form-list.component';
 import { OverlayViewerComponent } from './components/overlay-viewer/overlay-viewer.component';
 import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
+import { FormLoadingComponent } from './components/form/form-loading.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -167,6 +168,7 @@ export const appRoutes: Routes = [
             { path: 'about', component: AboutComponent },
             { path: 'form', component: FormComponent },
             { path: 'form-list', component: FormListComponent },
+            { path: 'form-loading', component: FormLoadingComponent },
             {
                 path: 'overlay-viewer',
                 component: OverlayViewerComponent,
