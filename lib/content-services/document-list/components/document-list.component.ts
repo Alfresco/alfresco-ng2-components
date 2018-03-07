@@ -335,8 +335,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.loadFolderByNodeId(changes.currentFolderId.currentValue);
         } else if (this.data) {
             if (changes.node && changes.node.currentValue) {
-                this.resetSelection();
-                this.noPermission = false;
+                this.resetCurrentState();
 
                 this.data.loadPage(changes.node.currentValue);
                 this.pagination.next(changes.node.currentValue.list.pagination);
@@ -353,8 +352,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     reload(merge: boolean = false) {
         this.ngZone.run(() => {
-            this.resetSelection();
-            this.noPermission = false;
+            this.resetCurrentState();
 
             if (this.folderNode) {
                 this.loadFolder(merge);
@@ -522,8 +520,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     // gets folder node and its content
     loadFolderByNodeId(nodeId: string, merge: boolean = false) {
         this.loading = true;
-        this.resetSelection();
-        this.noPermission = false;
+        this.resetCurrentState();
 
         if (nodeId === '-trashcan-') {
             this.loadTrashcan(merge);
@@ -559,8 +556,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     loadFolderNodesByFolderNodeId(id: string, maxItems: number, skipCount: number, merge: boolean = false): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.resetSelection();
-            this.noPermission = false;
+            this.resetCurrentState();
 
             this.documentListService
                 .getFolder(null, {
@@ -581,6 +577,11 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 });
         });
 
+    }
+
+    resetCurrentState() {
+        this.resetSelection();
+        this.noPermission = false;
     }
 
     resetSelection() {
