@@ -59,7 +59,7 @@ describe('NodeActionsService', () => {
 
     it('should be able to copy content', async(() => {
         spyOn(documentListService, 'copyNode').and.returnValue(Observable.of('FAKE-OK'));
-        spyOn(contentDialogService, 'openCopyMoveDialog').and.returnValue(Observable.of([fakeNode]));
+        spyOn(contentDialogService, 'openCopyDialog').and.returnValue(Observable.of([fakeNode]));
 
         service.copyContent(fakeNode, 'allowed').subscribe((value) => {
             expect(value).toBe('OPERATION.SUCCES.CONTENT.COPY');
@@ -68,7 +68,7 @@ describe('NodeActionsService', () => {
 
     it('should be able to move content', async(() => {
         spyOn(documentListService, 'moveNode').and.returnValue(Observable.of('FAKE-OK'));
-        spyOn(contentDialogService, 'openCopyMoveDialog').and.returnValue(Observable.of([fakeNode]));
+        spyOn(contentDialogService, 'openMoveDialog').and.returnValue(Observable.of([fakeNode]));
 
         service.moveContent(fakeNode, 'allowed').subscribe((value) => {
             expect(value).toBe('OPERATION.SUCCES.CONTENT.MOVE');
@@ -77,7 +77,7 @@ describe('NodeActionsService', () => {
 
     it('should be able to move folder', async(() => {
         spyOn(documentListService, 'moveNode').and.returnValue(Observable.of('FAKE-OK'));
-        spyOn(contentDialogService, 'openCopyMoveDialog').and.returnValue(Observable.of([fakeNode]));
+        spyOn(contentDialogService, 'openMoveDialog').and.returnValue(Observable.of([fakeNode]));
 
         service.moveFolder(fakeNode, 'allowed').subscribe((value) => {
             expect(value).toBe('OPERATION.SUCCES.FOLDER.MOVE');
@@ -86,16 +86,26 @@ describe('NodeActionsService', () => {
 
     it('should be able to copy folder', async(() => {
         spyOn(documentListService, 'copyNode').and.returnValue(Observable.of('FAKE-OK'));
-        spyOn(contentDialogService, 'openCopyMoveDialog').and.returnValue(Observable.of([fakeNode]));
+        spyOn(contentDialogService, 'openCopyDialog').and.returnValue(Observable.of([fakeNode]));
 
         service.copyFolder(fakeNode, 'allowed').subscribe((value) => {
             expect(value).toBe('OPERATION.SUCCES.FOLDER.COPY');
         });
     }));
 
-    it('should be able to propagate the dialog error', async(() => {
+    it('should be able to propagate the dialog error on move', async(() => {
+        spyOn(documentListService, 'moveNode').and.returnValue(Observable.throw('FAKE-KO'));
+        spyOn(contentDialogService, 'openMoveDialog').and.returnValue(Observable.of([fakeNode]));
+
+        service.moveFolder(fakeNode, '!allowed').subscribe((value) => {
+        }, (error) => {
+            expect(error).toBe('FAKE-KO');
+        });
+    }));
+
+    it('should be able to propagate the dialog error on copy', async(() => {
         spyOn(documentListService, 'copyNode').and.returnValue(Observable.throw('FAKE-KO'));
-        spyOn(contentDialogService, 'openCopyMoveDialog').and.returnValue(Observable.of([fakeNode]));
+        spyOn(contentDialogService, 'openCopyDialog').and.returnValue(Observable.of([fakeNode]));
 
         service.copyFolder(fakeNode, '!allowed').subscribe((value) => {
         }, (error) => {

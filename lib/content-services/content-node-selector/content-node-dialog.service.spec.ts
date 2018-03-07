@@ -86,13 +86,18 @@ describe('ContentNodeDialogService', () => {
         expect(service).not.toBeNull();
     });
 
-    it('should be able to open the dialog when node has permission', () => {
-        service.openCopyMoveDialog('fake-action', fakeNode, '!update');
+    it('should be able to open the move dialog when node has permission', () => {
+        service.openMoveDialog('fake-action', fakeNode, '!update');
+        expect(spyOnDialogOpen).toHaveBeenCalled();
+    });
+
+    it('should be able to always open the copy dialog', () => {
+        service.openCopyDialog('fake-action', fakeNode);
         expect(spyOnDialogOpen).toHaveBeenCalled();
     });
 
     it('should NOT be able to open the dialog when node has NOT permission', () => {
-        service.openCopyMoveDialog('fake-action', fakeNode, 'noperm').subscribe(
+        service.openMoveDialog('fake-action', fakeNode, 'noperm').subscribe(
             () => { },
             (error) => {
                 expect(spyOnDialogOpen).not.toHaveBeenCalled();
@@ -183,7 +188,7 @@ describe('ContentNodeDialogService', () => {
                 testContentNodeSelectorComponentData = config.data;
                 return {componentInstance: {}};
             });
-            service.openCopyMoveDialog('fake-action', fakeNode, '!update');
+            service.openMoveDialog('fake-action', fakeNode, '!update');
         });
 
         it('should NOT allow selection for sites', () => {
