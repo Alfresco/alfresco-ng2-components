@@ -151,6 +151,11 @@ describe('ContentService', () => {
         expect(contentService.hasPermission(permissionNode, null)).toBeFalsy();
     });
 
+    it('should havePermission return true if permission parameter is copy', () => {
+        let permissionNode = null;
+        expect(contentService.hasPermission(permissionNode, 'copy')).toBeTruthy();
+    });
+
     describe('Download blob', () => {
 
         it('Should use native msSaveOrOpenBlob if the browser is IE', (done) => {
