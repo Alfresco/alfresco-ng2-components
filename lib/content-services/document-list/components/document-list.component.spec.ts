@@ -344,6 +344,27 @@ describe('DocumentList', () => {
 
     });
 
+    it('should not disable the action if there is copy permission', () => {
+        let documentMenu = new ContentActionModel({
+            disableWithNoPermission: true,
+            permission: 'copy',
+            target: 'document',
+            title: 'FileAction'
+        });
+
+        documentList.actions = [
+            documentMenu
+        ];
+
+        let nodeFile = { entry: { isFile: true, name: 'xyz', allowableOperations: ['create', 'update'] } };
+
+        let actions = documentList.getNodeActions(nodeFile);
+        expect(actions.length).toBe(1);
+        expect(actions[0].title).toEqual('FileAction');
+        expect(actions[0].disabled).toBeFalsy();
+
+    });
+
     it('should disable the action if there is no permission for the folder and disableWithNoPermission true', () => {
         let documentMenu = new ContentActionModel({
             disableWithNoPermission: true,
