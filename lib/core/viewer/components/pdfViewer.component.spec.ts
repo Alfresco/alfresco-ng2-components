@@ -93,12 +93,6 @@ describe('Test PdfViewer component', () => {
         });
     });
 
-    afterEach(() => {
-        if (component.loadingTask) {
-            component.loadingTask.destroy();
-        }
-    });
-
     it('should Loader be present', () => {
         expect(element.querySelector('.loader-container')).not.toBeNull();
     });
