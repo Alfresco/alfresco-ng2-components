@@ -46,7 +46,8 @@ export class AppLayoutComponent {
         { href: '/settings', icon: 'settings', title: 'APP_LAYOUT.SETTINGS' },
         { href: '/extendedSearch', icon: 'search', title: 'APP_LAYOUT.SEARCH' },
         { href: '/overlay-viewer', icon: 'pageview', title: 'APP_LAYOUT.OVERLAY_VIEWER' },
-        { href: '/about', icon: 'info_outline', title: 'APP_LAYOUT.ABOUT' }
+        { href: '/about', icon: 'info_outline', title: 'APP_LAYOUT.ABOUT' },
+        { href: '/breadcrumb-swap', icon: 'linear_scale', title: 'APP_LAYOUT.BREADCRUMB_SWAP' },
     ];
 
     constructor() {

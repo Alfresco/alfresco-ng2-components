@@ -1,0 +1,29 @@
+<mat-grid-list cols="2" rowHeight="150px">
+    <mat-grid-tile
+        [colspan]="2"
+        [rowspan]="1">
+        <adf-breadcrumb
+            [target]="FileList"
+            [folderNode]="currentNode">
+        </adf-breadcrumb>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="1" [rowspan]="2">
+        <adf-document-list #FileList
+            [currentFolderId]="'-my-'"
+            [contextMenuActions]="false"
+            [contentActions]="false"
+            [selectionMode]="'single'"
+            (nodeClick)="onRowClicked($event)">
+        </adf-document-list>
+    </mat-grid-tile>
+    <mat-grid-tile
+        [colspan]="1"
+        [rowspan]="2">
+        <adf-document-list
+            [currentFolderId]="currentNode?.id"
+            [contextMenuActions]="false"
+            [contentActions]="false"
+            [selectionMode]="'single'">
+        </adf-document-list>
+    </mat-grid-tile>
+  </mat-grid-list>
