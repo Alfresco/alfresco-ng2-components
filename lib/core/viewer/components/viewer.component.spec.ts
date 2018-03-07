@@ -251,7 +251,7 @@ describe('ViewerComponent', () => {
         });
     });
 
-    xdescribe('Base component', () => {
+    describe('Base component', () => {
 
         beforeEach(() => {
             component.showToolbar = true;
@@ -304,7 +304,7 @@ describe('ViewerComponent', () => {
             });
         });
 
-        describe('Toolbar', () => {
+        xdescribe('Toolbar', () => {
 
             it('should render fullscreen button', () => {
                 expect(element.querySelector('[data-automation-id="toolbar-fullscreen"]')).toBeDefined();
