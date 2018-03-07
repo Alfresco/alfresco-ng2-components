@@ -304,7 +304,7 @@ describe('ViewerComponent', () => {
             });
         });
 
-        xdescribe('Toolbar', () => {
+        describe('Toolbar', () => {
 
             it('should render fullscreen button', () => {
                 expect(element.querySelector('[data-automation-id="toolbar-fullscreen"]')).toBeDefined();
@@ -431,7 +431,7 @@ describe('ViewerComponent', () => {
 
         });
 
-        describe('View', () => {
+        xdescribe('View', () => {
 
             describe('Overlay mode true', () => {
 
