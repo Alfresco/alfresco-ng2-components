@@ -251,7 +251,7 @@ describe('ViewerComponent', () => {
         });
     });
 
-    describe('Base component', () => {
+    xdescribe('Base component', () => {
 
         beforeEach(() => {
             component.showToolbar = true;
@@ -614,7 +614,7 @@ describe('ViewerComponent', () => {
             }));
         });
 
-        xdescribe('MimeType handling', () => {
+        describe('MimeType handling', () => {
 
             it('should display a PDF file identified by mimetype when the filename has no extension', async(() => {
                 component.urlFile = 'content';
