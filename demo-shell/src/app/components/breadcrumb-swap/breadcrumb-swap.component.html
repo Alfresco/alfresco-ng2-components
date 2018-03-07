@@ -4,7 +4,7 @@
         [rowspan]="1">
         <adf-breadcrumb
             [target]="FileList"
-            [folderNode]="FileList?.folderNode">
+            [folderNode]="currentNode">
         </adf-breadcrumb>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="1" [rowspan]="2">
@@ -19,7 +19,7 @@
     <mat-grid-tile
         [colspan]="1"
         [rowspan]="2">
-        <adf-document-list #FileList
+        <adf-document-list
             [currentFolderId]="currentNode?.id"
             [contextMenuActions]="false"
             [contentActions]="false"
