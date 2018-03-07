@@ -52,6 +52,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     @Input()
     thumbnailsTemplate: TemplateRef<any> = null;
 
+    loadingTask: any;
     currentPdfDocument: any;
     page: number;
     displayPage: number;
@@ -83,34 +84,39 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     ngOnChanges(changes) {
-        if (!this.urlFile && !this.blobFile) {
-            throw new Error('Attribute urlFile or blobFile is required');
-        }
+        let blobFile = changes['blobFile'];
 
-        if (this.urlFile) {
-            return new Promise((resolve, reject) => {
-                this.executePdf(this.urlFile, resolve, reject);
-            });
-        } else {
+        if (blobFile && blobFile.currentValue) {
             return new Promise((resolve, reject) => {
                 let reader = new FileReader();
                 reader.onload = () => {
                     this.executePdf(reader.result, resolve, reject);
                 };
-                reader.readAsArrayBuffer(this.blobFile);
+                reader.readAsArrayBuffer(blobFile.currentValue);
             });
+        }
+
+        let urlFile = changes['urlFile'];
+        if (urlFile && urlFile.currentValue) {
+            return new Promise((resolve, reject) => {
+                this.executePdf(urlFile.currentValue, resolve, reject);
+            });
+        }
+
+        if (!this.urlFile && !this.blobFile) {
+            throw new Error('Attribute urlFile or blobFile is required');
         }
     }
 
     executePdf(src, resolve, reject) {
-        let loadingTask = this.getPDFJS().getDocument(src);
+        this.loadingTask = this.getPDFJS().getDocument(src);
 
-        loadingTask.onProgress = (progressData) => {
+        this.loadingTask.onProgress = (progressData) => {
             let level = progressData.loaded / progressData.total;
             this.loadingPercent = Math.round(level * 100);
         };
 
-        loadingTask.then((pdfDocument) => {
+        this.loadingTask.then((pdfDocument) => {
             this.currentPdfDocument = pdfDocument;
             this.totalPages = pdfDocument.numPages;
             this.page = 1;
@@ -163,6 +169,10 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         if (this.documentContainer) {
             this.documentContainer.removeEventListener('pagechange', this.onPageChange, true);
             this.documentContainer.removeEventListener('pagesloaded', this.onPagesLoaded, true);
+        }
+
+        if (this.loadingTask) {
+            this.loadingTask.destroy();
         }
     }
 
