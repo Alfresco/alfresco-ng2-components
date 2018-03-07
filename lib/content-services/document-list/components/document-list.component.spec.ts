@@ -938,6 +938,38 @@ describe('DocumentList', () => {
         documentList.loadFolderByNodeId('123');
     });
 
+    it('should reset noPermission on loading folder by node id', () => {
+        documentList.noPermission = true;
+        fixture.detectChanges();
+
+        documentList.loadFolderByNodeId('-trashcan-');
+        fixture.detectChanges();
+
+        expect(documentList.noPermission).toBeFalsy();
+    });
+
+    it('should reset noPermission upon reload', () => {
+        documentList.noPermission = true;
+        fixture.detectChanges();
+
+        documentList.reload();
+        fixture.detectChanges();
+
+        expect(documentList.noPermission).toBeFalsy();
+    });
+
+    it('should reload contents if node data changes after previously got noPermission error', () => {
+        spyOn(documentList.data, 'loadPage').and.callThrough();
+
+        documentList.noPermission = true;
+        fixture.detectChanges();
+
+        documentList.ngOnChanges({ node: new SimpleChange(null, {list: {entities: {}}}, true) });
+
+        expect(documentList.data.loadPage).toHaveBeenCalled();
+        expect(documentList.noPermission).toBeFalsy();
+    });
+
     xit('should load previous page if there are no other elements in multi page table', (done) => {
         documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
         documentList.folderNode = new NodeMinimal();

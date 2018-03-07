@@ -336,6 +336,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         } else if (this.data) {
             if (changes.node && changes.node.currentValue) {
                 this.resetSelection();
+                this.noPermission = false;
+
                 this.data.loadPage(changes.node.currentValue);
                 this.pagination.next(changes.node.currentValue.list.pagination);
             } else if (changes.rowFilter) {
@@ -352,6 +354,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     reload(merge: boolean = false) {
         this.ngZone.run(() => {
             this.resetSelection();
+            this.noPermission = false;
 
             if (this.folderNode) {
                 this.loadFolder(merge);
@@ -520,6 +523,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     loadFolderByNodeId(nodeId: string, merge: boolean = false) {
         this.loading = true;
         this.resetSelection();
+        this.noPermission = false;
 
         if (nodeId === '-trashcan-') {
             this.loadTrashcan(merge);
@@ -556,6 +560,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     loadFolderNodesByFolderNodeId(id: string, maxItems: number, skipCount: number, merge: boolean = false): Promise<any> {
         return new Promise((resolve, reject) => {
             this.resetSelection();
+            this.noPermission = false;
+
             this.documentListService
                 .getFolder(null, {
                     maxItems: maxItems,
