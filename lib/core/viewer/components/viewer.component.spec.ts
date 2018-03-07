@@ -614,7 +614,7 @@ describe('ViewerComponent', () => {
             }));
         });
 
-        describe('MimeType handling', () => {
+        xdescribe('MimeType handling', () => {
 
             it('should display a PDF file identified by mimetype when the filename has no extension', async(() => {
                 component.urlFile = 'content';
