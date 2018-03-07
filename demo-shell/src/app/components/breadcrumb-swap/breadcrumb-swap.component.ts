@@ -18,7 +18,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'breadcrumb-swap',
+    selector: 'app-breadcrumb-swap',
     templateUrl: 'breadcrumb-swap.component.html',
     styleUrls: ['breadcrumb-swap.component.scss']
 })
