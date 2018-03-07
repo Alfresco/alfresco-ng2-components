@@ -24,7 +24,8 @@ import {
     DisplayMode,
     ObjectDataColumn,
     PaginatedComponent,
-    PaginationQueryParams
+    PaginationQueryParams,
+    PermissionsEnum
 } from '@alfresco/adf-core';
 import { AlfrescoApiService, AppConfigService, DataColumnListComponent, UserPreferencesService } from '@alfresco/adf-core';
 import {
@@ -420,7 +421,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     checkPermission(node: any, action: ContentActionModel): ContentActionModel {
-        if (action.permission) {
+        if (action.permission && action.permission !== PermissionsEnum.COPY) {
             if (this.hasPermissions(node)) {
                 let permissions = node.entry.allowableOperations;
                 let findPermission = permissions.find(permission => permission === action.permission);

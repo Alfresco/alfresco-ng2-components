@@ -213,6 +213,10 @@ export class ContentService {
             }
         }
 
+        if (permission === PermissionsEnum.COPY) {
+            hasPermission = true;
+        }
+
         return hasPermission;
     }
 
