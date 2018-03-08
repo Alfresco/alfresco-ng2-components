@@ -37,13 +37,14 @@ import { FacetComponent, QueryBuilderContext, FacetComponentSettingsConfig } fro
 export class TextFacetComponent implements FacetComponent, OnInit {
 
     @Input()
-    value: string = '';
+    value = '';
 
     id: string;
     settings: FacetComponentSettingsConfig;
     context: QueryBuilderContext;
 
     ngOnInit() {
+        // tslint:disable-next-line:no-console
         console.log(this.id, this.context);
 
         if (this.context) {

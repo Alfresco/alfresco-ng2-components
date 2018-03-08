@@ -46,20 +46,21 @@ export class SearchResultComponent implements OnInit {
             query: {},
             config: this.config,
             update: () => this.updateQuery()
-        }
+        };
     }
 
     async ngOnInit() {
         if (this.route) {
             this.route.params.subscribe(params => {
                 const searchTerm = params['q'];
-                const query = this.searchConfig.generateQueryBody(searchTerm, "100", "0");
+                const query = this.searchConfig.generateQueryBody(searchTerm, '100', '0');
                 this.api.searchApi.search(query).then(data => this.onDataLoaded(data));
             });
         }
     }
 
     async updateQuery() {
+        // tslint:disable-next-line:no-console
         console.log(this.context);
         this.search();
     }
@@ -86,6 +87,7 @@ export class SearchResultComponent implements OnInit {
                 query += facetQuery;
             }
         });
+        // tslint:disable-next-line:no-console
         console.log(query);
 
         const result: QueryBody = {
@@ -100,7 +102,7 @@ export class SearchResultComponent implements OnInit {
                 skipCount: `${skipCount}`
             },
             filterQueries: [
-                { query: "TYPE:'cm:folder' OR TYPE:'cm:content'" },
+                { query: `TYPE:'cm:folder' OR TYPE:'cm:content'` },
                 { query: 'NOT cm:creator:System' }
             ]
         };

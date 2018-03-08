@@ -37,7 +37,7 @@ export interface FacetComponentConfig {
 /** Settings to pass to a particular facet component upon creation */
 export interface FacetComponentSettingsConfig {
     field: string;
-    [indexer: string] : any;
+    [indexer: string]: any;
 }
 
 /** Runtime context for query builder, all facet components has access to it. */
@@ -51,5 +51,5 @@ export interface QueryBuilderContext {
 export interface FacetComponent {
     id: string;
     settings?: FacetComponentSettingsConfig;
-    context?: QueryBuilderContext
+    context?: QueryBuilderContext;
 }
