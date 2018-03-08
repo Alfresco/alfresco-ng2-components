@@ -73,7 +73,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
-    /* change the display mode of the table list or gallery */
+    /** Change the display mode of the table. Can be "list" or "gallery". */
     @Input()
     display: string = DisplayMode.List;
 
@@ -96,7 +96,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     showHeader: boolean = true;
 
-    /** User interaction for folder navigation or file preview. Valid values are "click" and "dblclick". */
+    /** User interaction for folder navigation or file preview.
+     * Valid values are "click" and "dblclick". Default value: "dblclick"
+     */
     @Input()
     navigationMode: string = DocumentListComponent.DOUBLE_CLICK_NAVIGATION; // click|dblclick
 
@@ -126,7 +128,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     contextMenuActions: boolean = false;
 
-    /** Custom image for empty folder */
+    /** Custom image for empty folder. Default value: './assets/images/empty_doc_lib.svg' */
     @Input()
     emptyFolderImageUrl: string = './assets/images/empty_doc_lib.svg';
 
