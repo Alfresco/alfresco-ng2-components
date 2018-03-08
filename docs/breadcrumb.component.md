@@ -25,7 +25,7 @@ Indicates the current position within a navigation hierarchy.
 | root | `string` | `null` | (optional) Name of the root element of the breadcrumb. You can use this property to rename "Company Home" to "Personal Files" for example. You can use an i18n resource key for the property value. |
 | rootId | `string` | `null` | (optional) The id of the root element. You can use this property to set a custom element the breadcrumb should start with. |
 | target | `DocumentListComponent` |  | (optional) Document List component to operate with. The list will update when the breadcrumb is clicked. |
-| transform | (node) => any | null | Action to be performed to the chosen/folder node before building the breadcrumb UI. Can be useful in case a custom formatting is needed to the breadcrumb, so changing the node's path elements that help build the breadcrumb can be done through this function. |
+| transform | (node) => any | null | Action to be performed to the chosen/folder node before building the breadcrumb UI. Can be useful when custom formatting is needed to the breadcrumb, so changing the node's path elements that help build the breadcrumb can be done through this function. |
 
 ### Events
 
