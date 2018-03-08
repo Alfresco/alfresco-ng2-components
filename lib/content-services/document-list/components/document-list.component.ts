@@ -335,7 +335,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.loadFolderByNodeId(changes.currentFolderId.currentValue);
         } else if (this.data) {
             if (changes.node && changes.node.currentValue) {
-                this.resetCurrentState();
+                this.resetSelection();
 
                 this.data.loadPage(changes.node.currentValue);
                 this.pagination.next(changes.node.currentValue.list.pagination);
@@ -352,7 +352,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     reload(merge: boolean = false) {
         this.ngZone.run(() => {
-            this.resetCurrentState();
+            this.resetSelection();
 
             if (this.folderNode) {
                 this.loadFolder(merge);
@@ -520,7 +520,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     // gets folder node and its content
     loadFolderByNodeId(nodeId: string, merge: boolean = false) {
         this.loading = true;
-        this.resetCurrentState();
+        this.resetSelection();
 
         if (nodeId === '-trashcan-') {
             this.loadTrashcan(merge);
@@ -556,7 +556,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     loadFolderNodesByFolderNodeId(id: string, maxItems: number, skipCount: number, merge: boolean = false): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.resetCurrentState();
+            this.resetSelection();
 
             this.documentListService
                 .getFolder(null, {
@@ -579,14 +579,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     }
 
-    resetCurrentState() {
-        this.resetSelection();
-        this.noPermission = false;
-    }
-
     resetSelection() {
         this.dataTable.resetSelection();
         this.selection = [];
+        this.noPermission = false;
     }
 
     private isSkipCountChanged(changePage: SimpleChanges) {
