@@ -205,4 +205,26 @@ describe('Breadcrumb', () => {
         expect(route[0].id).toBe('custom-id');
         expect(route[0].name).toBe('custom-name');
     });
+
+    it('should apply the transformation function when there is one', () => {
+        const node: any = {
+            id: 'test-id',
+            name: 'test-name',
+            path: {
+                elements: [
+                    { id: 'element-1-id', name: 'element-1-name' },
+                    { id: 'element-2-id', name: 'element-2-name' },
+                    { id: 'element-3-id', name: 'element-3-name' }
+                ]
+            }
+        };
+        component.transform = (() => {
+            return node;
+        });
+        let change = new SimpleChange(null, {}, true);
+        component.ngOnChanges({'folderNode': change});
+        expect(component.route.length).toBe(4);
+        expect(component.route[0].id).toBe('element-1-id');
+        expect(component.route[0].name).toBe('element-1-name');
+    });
 });
