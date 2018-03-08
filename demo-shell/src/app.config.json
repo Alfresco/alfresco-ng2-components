@@ -92,9 +92,15 @@
           "name": "Type",
           "enabled": true,
           "component": {
-            "selector": "app-text-facet",
+            "selector": "app-radio-facet",
             "settings": {
-              "field": "TYPE"
+              "field": null,
+              "options": [
+                { "name": "None", "value": "", "default": true },
+                { "name": "All", "value": "TYPE:'cm:folder' OR TYPE:'cm:content'" },
+                { "name": "Folder", "value": "TYPE:'cm:folder'" },
+                { "name": "Document", "value": "TYPE:'cm:content'" }
+              ]
             }
           }
         }

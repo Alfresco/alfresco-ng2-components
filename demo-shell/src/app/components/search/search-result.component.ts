@@ -67,9 +67,10 @@ export class SearchResultComponent implements OnInit {
 
     async search() {
         const query = this.buildQuery(this.preferences.paginationSize, 0);
-        const data: NodePaging = await this.api.searchApi.search(query);
-
-        this.onDataLoaded(data);
+        if (query) {
+            const data: NodePaging = await this.api.searchApi.search(query);
+            this.onDataLoaded(data);
+        }
     }
 
     onDataLoaded(data: NodePaging) {
@@ -84,29 +85,34 @@ export class SearchResultComponent implements OnInit {
                 if (query.length > 0) {
                     query += ' AND ';
                 }
-                query += facetQuery;
+                query += `(${facetQuery})`;
             }
         });
         // tslint:disable-next-line:no-console
         console.log(query);
 
-        const result: QueryBody = {
-            query: {
-                query: query,
-                language: 'afts'
-            },
-            include: ['path', 'allowableOperations'],
-            paging: {
-                // https://issues.alfresco.com/jira/browse/ADF-2448
-                maxItems: `${maxResults}`,
-                skipCount: `${skipCount}`
-            },
-            filterQueries: [
-                { query: `TYPE:'cm:folder' OR TYPE:'cm:content'` },
-                { query: 'NOT cm:creator:System' }
-            ]
-        };
+        if (query) {
 
-        return result;
+            const result: QueryBody = {
+                query: {
+                    query: query,
+                    language: 'afts'
+                },
+                include: ['path', 'allowableOperations'],
+                paging: {
+                    // https://issues.alfresco.com/jira/browse/ADF-2448
+                    maxItems: `${maxResults}`,
+                    skipCount: `${skipCount}`
+                },
+                filterQueries: [
+                    { query: `TYPE:'cm:folder' OR TYPE:'cm:content'` },
+                    { query: 'NOT cm:creator:System' }
+                ]
+            };
+
+            return result;
+        }
+
+        return null;
     }
 }

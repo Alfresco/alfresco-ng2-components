@@ -17,25 +17,31 @@
 
 import { NgModule } from '@angular/core';
 import { TextFacetComponent } from './text-facet.component';
-import { ButtonFacetComponent } from './button-facet.component';
-import { MatButtonModule, MatInputModule } from '@angular/material';
+import { MatButtonModule, MatInputModule, MatRadioModule } from '@angular/material';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { RadioFacetComponent } from './radio-facet.component';
 
 @NgModule({
     imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
         MatButtonModule,
-        MatInputModule
+        MatInputModule,
+        MatRadioModule
     ],
     declarations: [
         TextFacetComponent,
-        ButtonFacetComponent
+        RadioFacetComponent
     ],
     exports: [
         TextFacetComponent,
-        ButtonFacetComponent
+        RadioFacetComponent
     ],
     entryComponents: [
         TextFacetComponent,
-        ButtonFacetComponent
+        RadioFacetComponent
     ]
 })
 export class FacetsModule {
