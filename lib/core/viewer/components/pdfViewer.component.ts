@@ -15,7 +15,17 @@
  * limitations under the License.
  */
 
-import { Component, TemplateRef, HostListener, Input, OnChanges, OnDestroy, ViewEncapsulation } from '@angular/core';
+import {
+    Component,
+    TemplateRef,
+    HostListener,
+    Output,
+    Input,
+    OnChanges,
+    OnDestroy,
+    ViewEncapsulation,
+    EventEmitter
+} from '@angular/core';
 import { LogService } from '../../services/log.service';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 
@@ -52,6 +62,12 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     @Input()
     thumbnailsTemplate: TemplateRef<any> = null;
 
+    @Output()
+    rendered = new EventEmitter<any>();
+
+    @Output()
+    error = new EventEmitter<any>();
+
     loadingTask: any;
     currentPdfDocument: any;
     page: number;
@@ -81,26 +97,23 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         // needed to preserve "this" context
         this.onPageChange = this.onPageChange.bind(this);
         this.onPagesLoaded = this.onPagesLoaded.bind(this);
+        this.onPagerendered = this.onPagerendered.bind(this);
     }
 
     ngOnChanges(changes) {
         let blobFile = changes['blobFile'];
 
         if (blobFile && blobFile.currentValue) {
-            return new Promise((resolve, reject) => {
-                let reader = new FileReader();
-                reader.onload = () => {
-                    this.executePdf(reader.result, resolve, reject);
-                };
-                reader.readAsArrayBuffer(blobFile.currentValue);
-            });
+            let reader = new FileReader();
+            reader.onload = () => {
+                this.executePdf(reader.result);
+            };
+            reader.readAsArrayBuffer(blobFile.currentValue);
         }
 
         let urlFile = changes['urlFile'];
         if (urlFile && urlFile.currentValue) {
-            return new Promise((resolve, reject) => {
-                this.executePdf(urlFile.currentValue, resolve, reject);
-            });
+            this.executePdf(urlFile.currentValue);
         }
 
         if (!this.urlFile && !this.blobFile) {
@@ -108,7 +121,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         }
     }
 
-    executePdf(src, resolve, reject) {
+    executePdf(src) {
         this.loadingTask = this.getPDFJS().getDocument(src);
 
         this.loadingTask.onProgress = (progressData) => {
@@ -125,13 +138,12 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
             this.currentPdfDocument.getPage(1).then(() => {
                 this.scalePage('auto');
-                resolve();
             }, (error) => {
-                reject(error);
+                this.error.emit();
             });
 
         }, (error) => {
-            reject(error);
+            this.error.emit();
         });
     }
 
@@ -151,6 +163,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         this.documentContainer = document.getElementById('viewer-pdf-viewer');
         this.documentContainer.addEventListener('pagechange', this.onPageChange, true);
         this.documentContainer.addEventListener('pagesloaded', this.onPagesLoaded, true);
+        this.documentContainer.addEventListener('textlayerrendered', this.onPagerendered, true);
 
         this.pdfViewer = new PDFJS.PDFViewer({
             container: this.documentContainer,
@@ -169,6 +182,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         if (this.documentContainer) {
             this.documentContainer.removeEventListener('pagechange', this.onPageChange, true);
             this.documentContainer.removeEventListener('pagesloaded', this.onPagesLoaded, true);
+            this.documentContainer.removeEventListener('textlayerrendered', this.onPagerendered, true);
         }
 
         if (this.loadingTask) {
@@ -381,6 +395,13 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     onPageChange(event) {
         this.page = event.pageNumber;
         this.displayPage = event.pageNumber;
+    }
+
+    /**
+     * Page Rendered Event
+     */
+    onPagerendered() {
+        this.rendered.emit();
     }
 
     /**
