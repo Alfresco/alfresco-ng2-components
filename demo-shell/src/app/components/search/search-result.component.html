@@ -8,6 +8,8 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <app-facet-container
+                    [id]="facet.id"
+                    [context]="context"
                     [selector]="facet.component.selector"
                     [settings]="facet.component.settings">
                 </app-facet-container>

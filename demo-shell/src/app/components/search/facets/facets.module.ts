@@ -18,11 +18,12 @@
 import { NgModule } from '@angular/core';
 import { TextFacetComponent } from './text-facet.component';
 import { ButtonFacetComponent } from './button-facet.component';
-import { MatButtonModule } from '@angular/material';
+import { MatButtonModule, MatInputModule } from '@angular/material';
 
 @NgModule({
     imports: [
-        MatButtonModule
+        MatButtonModule,
+        MatInputModule
     ],
     declarations: [
         TextFacetComponent,

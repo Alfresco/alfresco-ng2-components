@@ -15,12 +15,48 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, Input } from '@angular/core';
+import { FacetComponent, QueryBuilderContext, FacetComponentSettingsConfig } from './facets-api';
 
 @Component({
     selector: 'app-text-facet',
-    template: '<p>Hello, I\'m a tiny text facet.</p>'
+    template: `
+        <div>
+            <mat-form-field>
+                <input
+                    matInput
+                    [placeholder]="settings?.placeholder"
+                    [value]="value"
+                    (change)="onChangedHandler($event)">
+            </mat-form-field>
+        </div>
+    `,
+    encapsulation: ViewEncapsulation.None,
+    host: { class: 'app-text-facet' }
 })
-export class TextFacetComponent {
+export class TextFacetComponent implements FacetComponent, OnInit {
+
+    @Input()
+    value: string = '';
+
+    id: string;
+    settings: FacetComponentSettingsConfig;
+    context: QueryBuilderContext;
+
+    ngOnInit() {
+        console.log(this.id, this.context);
+
+        if (this.context) {
+            this.value = this.context.query[this.id] || '';
+        }
+    }
+
+    onChangedHandler(event) {
+        this.value = event.target.value;
+        if (this.value) {
+            this.context.query[this.id] = `${this.settings.field}:'${this.value}'`;
+            this.context.update();
+        }
+    }
 
 }

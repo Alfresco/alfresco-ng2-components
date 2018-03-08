@@ -16,6 +16,7 @@
  */
 
 import { Component } from '@angular/core';
+import { FacetComponent, QueryBuilderContext, FacetComponentSettingsConfig } from './facets-api';
 
 @Component({
     selector: 'app-button-facet',
@@ -25,6 +26,9 @@ import { Component } from '@angular/core';
         </p>
     `
 })
-export class ButtonFacetComponent {
+export class ButtonFacetComponent implements FacetComponent {
 
+    id: string;
+    settings?: FacetComponentSettingsConfig;
+    context: QueryBuilderContext;
 }

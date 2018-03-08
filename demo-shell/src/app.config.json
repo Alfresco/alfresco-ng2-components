@@ -66,12 +66,13 @@
         },
         {
           "id": "facet1",
-          "name": "Category 1",
+          "name": "Name",
           "enabled": true,
           "component": {
             "selector": "app-text-facet",
             "settings": {
-              "field": "fieldname"
+              "field": "cm:name",
+              "placeholder": "Enter the name filter"
             }
           }
         },
@@ -88,12 +89,12 @@
         },
         {
           "id": "facet3",
-          "name": "Category 3",
+          "name": "Type",
           "enabled": true,
           "component": {
             "selector": "app-text-facet",
             "settings": {
-              "field": "fieldname"
+              "field": "TYPE"
             }
           }
         }

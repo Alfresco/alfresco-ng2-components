@@ -17,20 +17,19 @@
 
 import { Component, Input, ViewChild, ViewContainerRef, OnInit, OnDestroy, Compiler, ModuleWithComponentFactories, ComponentRef } from '@angular/core';
 import { FacetsModule } from './facets.module';
+import { QueryBuilderContext } from './facets-api';
 
 @Component({
     selector: 'app-facet-container',
-    template: `
-        <div>
-            <p>Facet goes here</p>
-            <div #content></div>
-        </div>
-    `
+    template: '<div #content></div>'
 })
 export class FacetContainerComponent implements OnInit, OnDestroy {
 
     @ViewChild('content', { read: ViewContainerRef })
     content: ViewContainerRef;
+
+    @Input()
+    id: string;
 
     @Input()
     selector: string;
@@ -40,6 +39,9 @@ export class FacetContainerComponent implements OnInit, OnDestroy {
 
     @Input()
     config: any;
+
+    @Input()
+    context: QueryBuilderContext;
 
     private module: ModuleWithComponentFactories<FacetsModule>;
     private componentRef: ComponentRef<any>;
@@ -53,6 +55,15 @@ export class FacetContainerComponent implements OnInit, OnDestroy {
         if (factory) {
             this.content.clear();
             this.componentRef = this.content.createComponent(factory, 0);
+            this.setupFacet(this.componentRef);
+        }
+    }
+
+    private setupFacet(ref: ComponentRef<any>) {
+        if (ref && ref.instance) {
+            ref.instance.id = this.id;
+            ref.instance.settings = { ...this.settings };
+            ref.instance.context = this.context;
         }
     }
 

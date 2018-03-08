@@ -16,29 +16,10 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { NodePaging } from 'alfresco-js-api';
-import { UserPreferencesService, SearchService, AppConfigService } from '@alfresco/adf-core';
-
-interface FacetConfig {
-    id: string;
-    name: string;
-    enabled: boolean;
-    component: FacetComponentConfig;
-}
-
-interface FacetComponentConfig {
-    selector: string;
-    settings: FacetComponentSettingsConfig;
-}
-
-interface FacetComponentSettingsConfig {
-    field: string;
-}
-
-interface SearchConfig {
-    facets: Array<FacetConfig>;
-}
+import { ActivatedRoute } from '@angular/router';
+import { NodePaging, QueryBody } from 'alfresco-js-api';
+import { UserPreferencesService, AppConfigService, AlfrescoApiService, SearchConfigurationService } from '@alfresco/adf-core';
+import { SearchConfig, FacetConfig, QueryBuilderContext } from './facets/facets-api';
 
 @Component({
     selector: 'app-search-result-component',
@@ -51,32 +32,79 @@ export class SearchResultComponent implements OnInit {
     config: SearchConfig;
 
     facets: Array<FacetConfig> = [];
+    context: QueryBuilderContext;
 
     constructor(private preferences: UserPreferencesService,
                 private route: ActivatedRoute,
-                private searchService: SearchService,
-                appConfig: AppConfigService) {
+                private api: AlfrescoApiService,
+                appConfig: AppConfigService,
+                private searchConfig: SearchConfigurationService) {
         this.config = appConfig.get<SearchConfig>('search');
         this.facets = this.config.facets.filter(f => f.enabled);
+
+        this.context = {
+            query: {},
+            config: this.config,
+            update: () => this.updateQuery()
+        }
     }
 
-    ngOnInit() {
+    async ngOnInit() {
         if (this.route) {
-            this.route.params.forEach((params: Params) => {
-                const searchedWord = params['q'];
-
-                this.searchService.search(
-                    searchedWord,
-                    this.preferences.paginationSize.toString(),
-                    '0'
-                ).subscribe(result => {
-                    this.onDataLoaded(result);
-                });
+            this.route.params.subscribe(params => {
+                const searchTerm = params['q'];
+                const query = this.searchConfig.generateQueryBody(searchTerm, "100", "0");
+                this.api.searchApi.search(query).then(data => this.onDataLoaded(data));
             });
         }
     }
 
+    async updateQuery() {
+        console.log(this.context);
+        this.search();
+    }
+
+    async search() {
+        const query = this.buildQuery(this.preferences.paginationSize, 0);
+        const data: NodePaging = await this.api.searchApi.search(query);
+
+        this.onDataLoaded(data);
+    }
+
     onDataLoaded(data: NodePaging) {
         this.data = data;
+    }
+
+    buildQuery(maxResults: number, skipCount: number): QueryBody {
+        let query = '';
+        this.facets.forEach(facet => {
+            const facetQuery = this.context.query[facet.id];
+            if (facetQuery) {
+                if (query.length > 0) {
+                    query += ' AND ';
+                }
+                query += facetQuery;
+            }
+        });
+        console.log(query);
+
+        const result: QueryBody = {
+            query: {
+                query: query,
+                language: 'afts'
+            },
+            include: ['path', 'allowableOperations'],
+            paging: {
+                // https://issues.alfresco.com/jira/browse/ADF-2448
+                maxItems: `${maxResults}`,
+                skipCount: `${skipCount}`
+            },
+            filterQueries: [
+                { query: "TYPE:'cm:folder' OR TYPE:'cm:content'" },
+                { query: 'NOT cm:creator:System' }
+            ]
+        };
+
+        return result;
     }
 }
