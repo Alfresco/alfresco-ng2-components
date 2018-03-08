@@ -184,7 +184,7 @@ describe('Test PdfViewer component', () => {
                 expect(elementUrlTestComponent.querySelector('.viewer-pdf-viewer')).not.toBeNull();
                 done();
             });
-        });
+        }, 5000);
 
         it('should Next an Previous Buttons be present', (done) => {
             fixtureUrlTestComponent.detectChanges();
@@ -193,7 +193,7 @@ describe('Test PdfViewer component', () => {
                 expect(elementUrlTestComponent.querySelector('#viewer-next-page-button')).not.toBeNull();
                 done();
             });
-        });
+        }, 5000);
 
         it('should Input Page elements be present', (done) => {
 
@@ -206,7 +206,7 @@ describe('Test PdfViewer component', () => {
                 expect(elementUrlTestComponent.querySelector('#viewer-next-page-button')).not.toBeNull();
                 done();
             });
-        });
+        }, 5000);
 
         it('should Toolbar be hide if showToolbar is false', (done) => {
             component.showToolbar = false;
@@ -217,7 +217,7 @@ describe('Test PdfViewer component', () => {
                 expect(elementUrlTestComponent.querySelector('.viewer-toolbar-pagination')).toBeNull();
                 done();
             });
-        });
+        }, 5000);
     });
 
     describe('View with blob file', () => {
@@ -246,7 +246,7 @@ describe('Test PdfViewer component', () => {
                 expect(elementBlobTestComponent.querySelector('.viewer-pdf-viewer')).not.toBeNull();
                 done();
             };
-        });
+        }, 5000);
 
         it('should Next an Previous Buttons be present', (done) => {
             fixtureBlobTestComponent.detectChanges();
@@ -256,7 +256,7 @@ describe('Test PdfViewer component', () => {
                 expect(elementBlobTestComponent.querySelector('#viewer-next-page-button')).not.toBeNull();
                 done();
             };
-        });
+        }, 5000);
 
         it('should Input Page elements be present', (done) => {
             fixtureBlobTestComponent.detectChanges();
@@ -269,7 +269,7 @@ describe('Test PdfViewer component', () => {
                 expect(elementBlobTestComponent.querySelector('#viewer-next-page-button')).not.toBeNull();
                 done();
             };
-        });
+        }, 5000);
 
         it('should Toolbar be hide if showToolbar is false', (done) => {
             componentBlobTestComponent.pdfViewerComponent.showToolbar = false;
@@ -281,7 +281,7 @@ describe('Test PdfViewer component', () => {
                 expect(elementBlobTestComponent.querySelector('.viewer-toolbar-pagination')).toBeNull();
                 done();
             };
-        });
+        }, 5000);
     });
 
     describe('User interaction', () => {
@@ -309,7 +309,7 @@ describe('Test PdfViewer component', () => {
                 expect(componentUrlTestComponent.pdfViewerComponent.totalPages).toBe(6);
                 done();
             });
-        });
+        }, 5000);
 
         it('should nextPage move to the next page', (done) => {
             let nextPageButton: any = elementUrlTestComponent.querySelector('#viewer-next-page-button');
@@ -321,7 +321,7 @@ describe('Test PdfViewer component', () => {
                 expect(componentUrlTestComponent.pdfViewerComponent.displayPage).toBe(2);
                 done();
             });
-        });
+        }, 5000);
 
         it('should event RIGHT_ARROW keyboard change pages', (done) => {
             EventMock.keyDown(RIGHT_ARROW);
@@ -332,7 +332,7 @@ describe('Test PdfViewer component', () => {
                 expect(componentUrlTestComponent.pdfViewerComponent.displayPage).toBe(2);
                 done();
             });
-        });
+        }, 5000);
 
         it('should event LEFT_ARROW keyboard change pages', (done) => {
             component.inputPage('2');
@@ -349,7 +349,7 @@ describe('Test PdfViewer component', () => {
                     done();
                 });
             });
-        });
+        }, 5000);
 
         it('should previous page move to the previous page', (done) => {
             let previousPageButton: any = elementUrlTestComponent.querySelector('#viewer-previous-page-button');
@@ -364,7 +364,7 @@ describe('Test PdfViewer component', () => {
                 expect(componentUrlTestComponent.pdfViewerComponent.displayPage).toBe(2);
                 done();
             });
-        });
+        }, 5000);
 
         it('should previous page not move to the previous page if is page 1', (done) => {
             component.previousPage();
@@ -374,7 +374,7 @@ describe('Test PdfViewer component', () => {
                 expect(componentUrlTestComponent.pdfViewerComponent.displayPage).toBe(1);
                 done();
             });
-        });
+        }, 5000);
 
         it('should Input page move to the inserted page', (done) => {
             componentUrlTestComponent.pdfViewerComponent.inputPage('2');
@@ -384,7 +384,7 @@ describe('Test PdfViewer component', () => {
                 expect(componentUrlTestComponent.pdfViewerComponent.displayPage).toBe(2);
                 done();
             });
-        });
+        }, 5000);
 
         describe('Zoom', () => {
 
@@ -396,7 +396,7 @@ describe('Test PdfViewer component', () => {
                 expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
                 let currentZoom = componentUrlTestComponent.pdfViewerComponent.currentScale;
                 expect(zoomBefore < currentZoom).toBe(true);
-            });
+            }, 5000);
 
             it('should zoom out decrement the scale value', () => {
                 let zoomOutButton: any = elementUrlTestComponent.querySelector('#viewer-zoom-out-button');
@@ -406,7 +406,7 @@ describe('Test PdfViewer component', () => {
                 expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
                 let currentZoom = componentUrlTestComponent.pdfViewerComponent.currentScale;
                 expect(zoomBefore > currentZoom).toBe(true);
-            });
+            }, 5000);
 
             it('should it-in button toggle page-fit and auto scale mode', () => {
                 let itPage: any = elementUrlTestComponent.querySelector('#viewer-scale-page-button');
@@ -416,7 +416,7 @@ describe('Test PdfViewer component', () => {
                 expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('page-fit');
                 itPage.click();
                 expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
-            });
+            }, 5000);
         });
 
         describe('Resize interaction', () => {
@@ -425,14 +425,14 @@ describe('Test PdfViewer component', () => {
                 spyOn(componentUrlTestComponent.pdfViewerComponent, 'onResize');
                 EventMock.resizeMobileView();
                 expect(componentUrlTestComponent.pdfViewerComponent.onResize).toHaveBeenCalled();
-            });
+            }, 5000);
         });
 
         describe('Thumbnails', () => {
 
             it('should have own context', () => {
                 expect(componentUrlTestComponent.pdfViewerComponent.pdfThumbnailsContext.viewer).not.toBeNull();
-            });
+            }, 5000);
 
             it('should open thumbnails panel', (done) => {
                 expect(elementUrlTestComponent.querySelector('.adf-pdf-viewer__thumbnails')).toBeNull();
@@ -444,7 +444,7 @@ describe('Test PdfViewer component', () => {
                     expect(elementUrlTestComponent.querySelector('.adf-pdf-viewer__thumbnails')).not.toBeNull();
                     done();
                 });
-            });
+            }, 5000);
         });
 
         describe('Viewer events', () => {
@@ -468,7 +468,7 @@ describe('Test PdfViewer component', () => {
                         done();
                     });
                 });
-            });
+            }, 5000);
 
             it('should react on the emit of pagesloaded event', (done) => {
                 fixtureUrlTestComponent.detectChanges();
@@ -490,7 +490,7 @@ describe('Test PdfViewer component', () => {
                         done();
                     });
                 });
-            });
+            }, 5000);
         });
 
     });
