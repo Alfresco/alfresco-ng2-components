@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Document List component
 
 Displays the documents from a repository.
@@ -51,20 +52,22 @@ Displays the documents from a repository.
 ```
 
 ### Properties
-    
+
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
+| display | `string` | `DisplayMode.List` | Change the display mode of the table. Can be "list" or "gallery".  |
 | permissionsStyle | `PermissionStyleModel[]` | `[]` | Define a set of CSS styles styles to apply depending on the permission of the user on that node. See the Permission Style model page for further details and examples. |
 | locationFormat | `string` | `'/'` | The default route for all the location-based columns (if declared).  |
 | navigate | `boolean` | `true` | Toggles navigation to folder content or file preview  |
-| navigationMode | `string` | `DocumentListComponent.DOUBLE_CLICK_NAVIGATION` | User interaction for folder navigation or file preview. Valid values are "click" and "dblclick".  |
+| showHeader | `boolean` | `true` | Toggles the header  |
+| navigationMode | `string` | See description | User interaction for folder navigation or file preview. Valid values are "click" and "dblclick". Default value: "dblclick" |
 | thumbnails | `boolean` | `false` | Show document thumbnails rather than icons  |
 | selectionMode | `string` | `'single'` | Row selection mode. Can be null, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
 | multiselect | `boolean` | `false` | Toggles multiselect mode  |
 | contentActions | `boolean` | `false` | Toggles content actions for each row  |
 | contentActionsPosition | `string` | `'right'` | Position of the content actions dropdown menu. Can be set to "left" or "right".  |
 | contextMenuActions | `boolean` | `false` | Toggles context menus for each row  |
-| emptyFolderImageUrl | `string` | `'./assets/images/empty_doc_lib.svg'` | Custom image for empty folder  |
+| emptyFolderImageUrl | `string` | See description | Custom image for empty folder. Default value: './assets/images/empty_doc_lib.svg'  |
 | allowDropFiles | `boolean` | `false` | Toggle file drop support for rows (see Upload Directive for further details  |
 | sorting | `string[]` |  | Defines default sorting. The format is an array of 2 strings `[key, direction]` i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want to override the default sorting detected by the component based on columns. |
 | rowStyle | `string` |  | The inline style to apply to every row. See the Angular NgStyle docs for more details and usage examples. |
@@ -78,19 +81,17 @@ Displays the documents from a repository.
 | maxItems | `number` |  | Default value is stored into user preference settings  |
 | skipCount | `number` | `0` | Number of elements to skip over for pagination purposes  |
 | enableInfiniteScrolling | `boolean` | `false` | Set document list to work in infinite scrolling mode  |
-| showHeader | `boolean` | `true` |  Toggles header visibility   |
-| display | string | 'list' | change the display mode can be one of the values provided by the enum : **list**, **gallery** |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| nodeClick | `EventEmitter<NodeEntityEvent>` | Emitted when the user clicks a list node |
-| nodeDblClick | `EventEmitter<NodeEntityEvent>` | Emitted when the user double-clicks a list node |
-| folderChange | `EventEmitter<NodeEntryEvent>` | Emitted when the current display folder changes |
+| nodeClick | `EventEmitter<NodeEntityEvent>` | Emitted when the user clicks a list node  |
+| nodeDblClick | `EventEmitter<NodeEntityEvent>` | Emitted when the user double-clicks a list node  |
+| folderChange | `EventEmitter<NodeEntryEvent>` | Emitted when the current display folder changes  |
 | preview | `EventEmitter<NodeEntityEvent>` | Emitted when the user acts upon files with either single or double click (depends on `navigation-mode`). Useful for integration with the Viewer component. |
-| ready | `EventEmitter<NodePaging>` | Emitted when the Document List has loaded all items and is ready for use |
-| error | `EventEmitter<any>` | Emitted when the API fails to get the Document List data |
+| ready | `EventEmitter<NodePaging>` | Emitted when the Document List has loaded all items and is ready for use  |
+| error | `EventEmitter<any>` | Emitted when the API fails to get the Document List data  |
 
 ## Details
 
@@ -146,7 +147,6 @@ If you want to enable the card view mode you need to set to 'gallery' the input 
 ```
 
 ![card-view](docassets/images/document-list-card-view.png)
-
 
 ### Pagination strategy
 
