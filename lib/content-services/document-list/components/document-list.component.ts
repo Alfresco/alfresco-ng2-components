@@ -337,6 +337,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         } else if (this.data) {
             if (changes.node && changes.node.currentValue) {
                 this.resetSelection();
+
                 this.data.loadPage(changes.node.currentValue);
                 this.pagination.next(changes.node.currentValue.list.pagination);
             } else if (changes.rowFilter) {
@@ -557,6 +558,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     loadFolderNodesByFolderNodeId(id: string, maxItems: number, skipCount: number, merge: boolean = false): Promise<any> {
         return new Promise((resolve, reject) => {
             this.resetSelection();
+
             this.documentListService
                 .getFolder(null, {
                     maxItems: maxItems,
@@ -581,6 +583,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     resetSelection() {
         this.dataTable.resetSelection();
         this.selection = [];
+        this.noPermission = false;
     }
 
     private isSkipCountChanged(changePage: SimpleChanges) {
