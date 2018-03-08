@@ -174,7 +174,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
             folderNode = this.documentList.folderNode;
         }
 
-        return this.breadcrumbTransform ? this.breadcrumbTransform(folderNode) : folderNode;
+        return folderNode;
     }
 
     /**

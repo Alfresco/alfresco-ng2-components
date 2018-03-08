@@ -261,7 +261,7 @@ describe('ContentNodeSelectorComponent', () => {
             });
 
             it('should make changes to breadcrumb\'s folderNode if breadcrumbTransform is defined', (done) => {
-                const transformedFolderNode = <MinimalNodeEntryEntity> { path: { elements: [{id: 'testId', name: 'testName'}] } };
+                const transformedFolderNode = <MinimalNodeEntryEntity> { id: 'trans-node', name: 'trans-node-name', path: { elements: [{id: 'testId', name: 'testName'}] } };
                 component.breadcrumbTransform = (() => {
                     return transformedFolderNode;
                 });
@@ -272,7 +272,8 @@ describe('ContentNodeSelectorComponent', () => {
                     expect(component.breadcrumbTransform).not.toBeNull();
 
                     const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
-                    expect(breadcrumb.componentInstance.folderNode).toBe(transformedFolderNode);
+                    expect(breadcrumb.componentInstance.route[0].name).toBe('testName');
+                    expect(breadcrumb.componentInstance.route[0].id).toBe('testId');
                     done();
                 });
             });
