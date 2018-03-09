@@ -49,7 +49,7 @@ class UrlTestComponent {
     urlFile: any;
 
     constructor() {
-        this.urlFile = require('../assets/fake-test-file.pdf');
+        this.urlFile = './fake-test-file.pdf';
     }
 }
 

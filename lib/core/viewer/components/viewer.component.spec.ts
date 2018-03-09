@@ -593,7 +593,7 @@ describe('ViewerComponent', () => {
             }));
 
             it('should extension file txt be loaded', async(() => {
-                component.urlFile = require('../assets/fake-test-file.txt');
+                component.urlFile = 'fake-test-file.txt';
                 component.ngOnChanges(null);
                 fixture.detectChanges();
 
@@ -681,7 +681,7 @@ describe('ViewerComponent', () => {
             it('should display the txt viewer  if the file identified by mimetype is a txt when the filename has wrong extension', async(() => {
                 component.urlFile = 'content.bin';
                 component.mimeType = 'text/plain';
-                component.urlFile = require('../assets/fake-test-file.txt');
+                component.urlFile = 'base/src/assets/fake-test-file.pdf';
                 fixture.detectChanges();
                 component.ngOnChanges(null);
 
