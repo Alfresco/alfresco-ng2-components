@@ -1,10 +1,11 @@
-<adf-upload-button
+<adf-upload-version-button
     data-automation-id="adf-new-version-file-upload"
     class="adf-new-version-file-upload"
     staticTitle="Upload new version"
+    [node]="node"
     [rootFolderId]="node.parentId"
     tooltip="Restriction: upload file with the same name to create a new version of it"
     [versioning]="true"
     (success)="onUploadSuccess($event)"
     (error)="onUploadError($event)">
-</adf-upload-button>
+</adf-upload-version-button>

@@ -181,7 +181,7 @@ export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionS
      *
      * @param file
      */
-    private createFileModel(file: File): FileModel {
+    protected createFileModel(file: File): FileModel {
         return new FileModel(file, {
             newVersion: this.versioning,
             parentId: this.rootFolderId,
