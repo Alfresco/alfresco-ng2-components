@@ -24,8 +24,6 @@ import {
 } from '../../services';
 import { TxtViewerComponent } from './txtViewer.component';
 
-declare var require: any;
-
 describe('Text View component', () => {
 
     let component: TxtViewerComponent;
@@ -54,7 +52,7 @@ describe('Text View component', () => {
 
         it('Should text container be present with urlfile', (done) => {
             fixture.detectChanges();
-            let urlFile = require('../assets/fake-test-file.txt');
+            let urlFile = './fake-test-file.txt';
             let change = new SimpleChange(null, urlFile, true);
 
             component.ngOnChanges({ 'urlFile': change }).then(() => {
