@@ -114,9 +114,10 @@ export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionS
     private permissionValue: Subject<boolean> = new Subject<boolean>();
 
     constructor(private uploadService: UploadService,
-                private translateService: TranslationService,
-                private logService: LogService,
-                private apiService: AlfrescoApiService) {
+                private apiService: AlfrescoApiService,
+                protected translateService: TranslationService,
+                protected logService: LogService
+            ) {
     }
 
     ngOnInit() {
@@ -194,7 +195,7 @@ export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionS
      *
      * @param file FileModel
      */
-    private isFileAcceptable(file: FileModel): boolean {
+    protected isFileAcceptable(file: FileModel): boolean {
         if (this.acceptedFilesType === '*') {
             return true;
         }

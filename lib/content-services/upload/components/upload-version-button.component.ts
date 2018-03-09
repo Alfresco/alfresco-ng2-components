@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, forwardRef, Input, ViewEncapsulation} from '@angular/core';
+import { Component, forwardRef, Input, OnChanges, SimpleChanges, ViewEncapsulation} from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { UploadButtonComponent } from './upload-button.component';
 import { FileModel, EXTENDIBLE_COMPONENT } from '@alfresco/adf-core';
@@ -29,14 +29,30 @@ import { FileModel, EXTENDIBLE_COMPONENT } from '@alfresco/adf-core';
     ],
     encapsulation: ViewEncapsulation.None
 })
-export class UploadVersionButtonComponent extends UploadButtonComponent {
+export class UploadVersionButtonComponent extends UploadButtonComponent implements OnChanges {
 
     @Input()
     node: MinimalNodeEntryEntity;
 
+    ngOnChanges(changes: SimpleChanges) {
+        super.ngOnChanges(changes);
+
+        if (changes['acceptedFilesType']) {
+            const message = this.translateService.instant('FILE_UPLOAD.VERSION.MESSAGES.NO_ACCEPTED_FILE_TYPES');
+            this.logService.error(message);
+        }
+        this.acceptedFilesType = '.' + this.node.name.split('.').pop();
+    }
+
     protected createFileModel(file: File): FileModel {
         const fileModel = super.createFileModel(file);
         fileModel.options.newVersionBaseName = this.node.name;
+
+        if (!this.isFileAcceptable(fileModel)) {
+            const message = this.translateService.instant('FILE_UPLOAD.VERSION.MESSAGES.INCOMPATIBLE_VERSION');
+            this.error.emit(message);
+        }
+
         return fileModel;
     }
 }
