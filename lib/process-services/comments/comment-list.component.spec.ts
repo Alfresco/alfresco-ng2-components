@@ -133,4 +133,13 @@ describe('CommentListComponent', () => {
         expect(elements[0].innerText).toContain(commentList.getUserShortName(testComment.createdBy));
         expect(fixture.nativeElement.querySelector('#comment-user-icon:empty')).toBeNull();
     });
+
+    it('should hide the datatable header in comment-list as showHeader is false', (done) => {
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(element.querySelector('.adf-datatable-header')).toBe(null);
+            done();
+        });
+    });
 });

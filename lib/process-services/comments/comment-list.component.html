@@ -1,5 +1,6 @@
 <adf-datatable
     [rows]="comments"
+    [showHeader]="false"
     (rowClick)="selectComment($event)" *ngIf="hasComments()">
 
     <data-columns>
