@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, forwardRef, Input, OnChanges, SimpleChanges, ViewEncapsulation} from '@angular/core';
+import { Component, forwardRef, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { UploadButtonComponent } from './upload-button.component';
 import { FileModel, EXTENDIBLE_COMPONENT } from '@alfresco/adf-core';
