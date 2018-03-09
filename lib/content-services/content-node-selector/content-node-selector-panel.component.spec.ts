@@ -483,6 +483,43 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(component.showingSearchResults).toBeFalsy();
             });
 
+            it('should clear the search field, nodes and chosenNode when deleting the search input',  async(() => {
+                spyOn(component, 'clear').and.callThrough();
+                typeToSearchBox('a');
+
+                setTimeout(() => {
+                    expect(searchSpy.calls.count()).toBe(1);
+
+                    typeToSearchBox('');
+
+                    setTimeout(() => {
+                        expect(searchSpy.calls.count()).toBe(1, 'no other search has been performed');
+                        expect(component.clear).toHaveBeenCalled();
+                        expect(component.folderIdToShow).toBe('cat-girl-nuku-nuku', 'back to the folder in which the search was performed');
+                    }, 300);
+                }, 300);
+
+            }));
+
+            it('should clear the search field, nodes and chosenNode on folder navigation in the results list', (done) => {
+                spyOn(component, 'clearSearch').and.callThrough();
+                typeToSearchBox('a');
+
+                setTimeout(() => {
+                    respondWithSearchResults(ONE_FOLDER_RESULT);
+                    fixture.whenStable().then(() => {
+                        fixture.detectChanges();
+
+                        component.onFolderChange();
+                        fixture.detectChanges();
+
+                        expect(component.clearSearch).toHaveBeenCalled();
+                        done();
+                    });
+                }, 300);
+
+            });
+
             it('should show nodes from the same folder as selected in the dropdown on clearing the search input', (done) => {
                 typeToSearchBox('piccolo');
 
