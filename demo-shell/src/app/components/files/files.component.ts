@@ -295,7 +295,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     emitReadyEvent(event: any) {
-        if (this.pageIsEmpty(event)) {
+        if (this.standardPagination && this.pageIsEmpty(event)) {
             this.standardPagination.goPrevious();
         } else {
             this.documentListReady.emit(event);
@@ -328,11 +328,19 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     onContentActionSuccess(message) {
         const translatedMessage: any = this.translateService.get(message);
         this.notificationService.openSnackMessage(translatedMessage.value, 4000);
+        if (this.infiniteScrolling) {
+            this.documentList.skipCount = 0;
+            this.documentList.reload();
+        }
     }
 
     onDeleteActionSuccess(message) {
         this.uploadService.fileDeleted.next(message);
         this.deleteElementSuccess.emit();
+        if (this.infiniteScrolling) {
+            this.documentList.skipCount = 0;
+            this.documentList.reload();
+        }
     }
 
     onManageVersions(event) {

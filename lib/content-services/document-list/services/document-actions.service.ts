@@ -101,10 +101,7 @@ export class DocumentActionsService {
     private prepareHandlers(actionObservable, type: string, action: string, target?: any, permission?: string): void {
         actionObservable.subscribe(
             (fileOperationMessage) => {
-                if (target && typeof target.reload === 'function') {
-                    target.reload();
-                }
-                this.success.next(fileOperationMessage);
+                  this.success.next(fileOperationMessage);
             },
             this.error.next.bind(this.error)
         );
@@ -117,9 +114,6 @@ export class DocumentActionsService {
             if (this.contentService.hasPermission(node.entry, permission)) {
                 handlerObservable = this.documentListService.deleteNode(node.entry.id);
                 handlerObservable.subscribe(() => {
-                    if (target && typeof target.reload === 'function') {
-                        target.reload();
-                    }
                     this.success.next(node.entry.id);
                 });
                 return handlerObservable;
