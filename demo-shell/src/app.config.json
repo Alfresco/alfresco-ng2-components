@@ -72,18 +72,24 @@
             "selector": "app-text-facet",
             "settings": {
               "field": "cm:name",
-              "placeholder": "Enter the name filter"
+              "placeholder": "Enter the name"
             }
           }
         },
         {
           "id": "facet2",
-          "name": "Category 2",
+          "name": "Fields",
           "enabled": true,
           "component": {
-            "selector": "app-button-facet",
+            "selector": "app-fields-facet",
             "settings": {
-              "field": "fieldname"
+              "field": null,
+              "options": [
+                { "name": "Name", "value": "name", "fields": ["name"], "default": true },
+                { "name": "File Size", "value": "content.sizeInBytes", "fields": ["content"], "default": true },
+                { "name": "Modified On", "value": "modifiedAt", "fields": ["modifiedAt"], "default": true },
+                { "name": "Modified By", "value": "modifiedByUser.displayName", "fields": ["modifiedByUser"], "default": true }
+              ]
             }
           }
         },

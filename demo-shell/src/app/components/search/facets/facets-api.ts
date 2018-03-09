@@ -44,6 +44,7 @@ export interface FacetComponentSettingsConfig {
 export interface QueryBuilderContext {
     config: SearchConfig;
     query: { [id: string]: string };
+    fields: { [id: string]: string };
     update: Function;
 }
 

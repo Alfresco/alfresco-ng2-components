@@ -43,8 +43,9 @@ export class SearchResultComponent implements OnInit {
         this.facets = this.config.facets.filter(f => f.enabled);
 
         this.context = {
-            query: {},
             config: this.config,
+            query: {},
+            fields: {},
             update: () => this.updateQuery()
         };
     }
@@ -53,8 +54,10 @@ export class SearchResultComponent implements OnInit {
         if (this.route) {
             this.route.params.subscribe(params => {
                 const searchTerm = params['q'];
-                const query = this.searchConfig.generateQueryBody(searchTerm, '100', '0');
-                this.api.searchApi.search(query).then(data => this.onDataLoaded(data));
+                if (searchTerm) {
+                    const query = this.searchConfig.generateQueryBody(searchTerm, '100', '0');
+                    this.api.searchApi.search(query).then(data => this.onDataLoaded(data));
+                }
             });
         }
     }
@@ -79,6 +82,8 @@ export class SearchResultComponent implements OnInit {
 
     buildQuery(maxResults: number, skipCount: number): QueryBody {
         let query = '';
+        const fields = [];
+
         this.facets.forEach(facet => {
             const facetQuery = this.context.query[facet.id];
             if (facetQuery) {
@@ -87,9 +92,19 @@ export class SearchResultComponent implements OnInit {
                 }
                 query += `(${facetQuery})`;
             }
+
+            const facetFields = this.context.fields[facet.id];
+            if (facetFields && facetFields.length > 0) {
+                for (const field of facetFields) {
+                    if (!fields.includes(field)) {
+                        fields.push(field);
+                    }
+                }
+            }
         });
+
         // tslint:disable-next-line:no-console
-        console.log(query);
+        console.log(query, fields);
 
         if (query) {
 
@@ -99,6 +114,7 @@ export class SearchResultComponent implements OnInit {
                     language: 'afts'
                 },
                 include: ['path', 'allowableOperations'],
+                fields: fields,
                 paging: {
                     // https://issues.alfresco.com/jira/browse/ADF-2448
                     maxItems: `${maxResults}`,
