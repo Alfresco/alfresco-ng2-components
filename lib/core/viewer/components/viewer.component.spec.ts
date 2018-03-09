@@ -127,8 +127,6 @@ class ViewerWithCustomOpenWithComponent {}
 })
 class ViewerWithCustomMoreActionsComponent {}
 
-declare var require: any;
-
 describe('ViewerComponent', () => {
 
     let component: ViewerComponent;

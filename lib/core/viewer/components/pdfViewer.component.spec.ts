@@ -31,8 +31,6 @@ import { PdfThumbListComponent } from './pdfViewer-thumbnails.component';
 import { PdfThumbComponent } from './pdfViewer-thumb.component';
 import { RIGHT_ARROW, LEFT_ARROW } from '@angular/cdk/keycodes';
 
-declare var require: any;
-
 @Component({
     template: `
         <adf-pdf-viewer [allowThumbnails]="true"
