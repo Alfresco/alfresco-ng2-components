@@ -44,9 +44,6 @@ export class TextFacetComponent implements FacetComponent, OnInit {
     context: QueryBuilderContext;
 
     ngOnInit() {
-        // tslint:disable-next-line:no-console
-        console.log(this.id, this.context);
-
         if (this.context) {
             this.value = this.context.query[this.id] || '';
         }

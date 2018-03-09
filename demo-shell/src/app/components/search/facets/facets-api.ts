@@ -18,6 +18,10 @@
 /** Holds entire Search configuration  */
 export interface SearchConfig {
     facets: Array<FacetConfig>;
+    limits?: {
+        permissionEvaluationTime?: number;
+        permissionEvaluationCount?: number;
+    };
 }
 
 /** Single facet configuration */

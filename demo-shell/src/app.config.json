@@ -52,6 +52,10 @@
         }
     ],
     "search": {
+      "limits": {
+        "permissionEvaluationTime": null,
+        "permissionEvaluationCount": null
+      },
       "facets": [
         {
           "id": "broken",

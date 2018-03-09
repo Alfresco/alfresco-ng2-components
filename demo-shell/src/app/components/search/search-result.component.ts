@@ -40,6 +40,9 @@ export class SearchResultComponent implements OnInit {
                 appConfig: AppConfigService,
                 private searchConfig: SearchConfigurationService) {
         this.config = appConfig.get<SearchConfig>('search');
+        // tslint:disable-next-line:no-console
+        console.log(this.config);
+
         this.facets = this.config.facets.filter(f => f.enabled);
 
         this.context = {
@@ -123,7 +126,8 @@ export class SearchResultComponent implements OnInit {
                 filterQueries: [
                     { query: `TYPE:'cm:folder' OR TYPE:'cm:content'` },
                     { query: 'NOT cm:creator:System' }
-                ]
+                ],
+                limits: this.config.limits
             };
 
             return result;

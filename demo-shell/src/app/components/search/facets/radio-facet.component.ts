@@ -54,18 +54,9 @@ export class RadioFacetComponent implements FacetComponent, OnInit {
     context: QueryBuilderContext;
 
     ngOnInit() {
-        // tslint:disable-next-line:no-console
-        console.log(this.id, this.context);
-
         this.setValue(
             this.getSelectedValue()
         );
-
-        /*
-        if (this.context) {
-            this.value = this.context.query[this.id] || '';
-        }
-        */
     }
 
     private getSelectedValue(): string {
