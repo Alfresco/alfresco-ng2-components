@@ -127,8 +127,6 @@ class ViewerWithCustomOpenWithComponent {}
 })
 class ViewerWithCustomMoreActionsComponent {}
 
-declare var require: any;
-
 describe('ViewerComponent', () => {
 
     let component: ViewerComponent;
@@ -593,7 +591,7 @@ describe('ViewerComponent', () => {
             }));
 
             it('should extension file txt be loaded', async(() => {
-                component.urlFile = require('../assets/fake-test-file.txt');
+                component.urlFile = 'fake-test-file.txt';
                 component.ngOnChanges(null);
                 fixture.detectChanges();
 
@@ -678,18 +676,18 @@ describe('ViewerComponent', () => {
                 });
             }));
 
-            it('should display the txt viewer  if the file identified by mimetype is a txt when the filename has wrong extension', async(() => {
+            it('should display the txt viewer if the file identified by mimetype is a txt when the filename has wrong extension', (done) => {
                 component.urlFile = 'content.bin';
                 component.mimeType = 'text/plain';
-                component.urlFile = require('../assets/fake-test-file.txt');
                 fixture.detectChanges();
                 component.ngOnChanges(null);
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(element.querySelector('adf-txt-viewer')).not.toBeNull();
+                    done();
                 });
-            }));
+            });
 
             it('should display the media player if the file identified by mimetype is a media when the filename has no extension', async(() => {
                 component.urlFile = 'content';

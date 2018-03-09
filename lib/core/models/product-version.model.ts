@@ -33,29 +33,6 @@ export class BpmProductVersionModel {
     }
 }
 
-export class EcmProductVersionModel {
-    edition: string;
-    version: VersionModel;
-    license: LicenseModel;
-    status: VersionStatusModel;
-    modules: VersionModuleModel[] = [];
-
-    constructor(obj?: any) {
-        if (obj && obj.entry && obj.entry.repository) {
-            this.edition = obj.entry.repository.edition || null;
-            this.version = new VersionModel(obj.entry.repository.version);
-            this.license = new LicenseModel(obj.entry.repository.license);
-            this.status = new VersionStatusModel(obj.entry.repository.status);
-            if (obj.entry.repository.modules) {
-                obj.entry.repository.modules.forEach((module) => {
-                    this.modules.push(new VersionModuleModel(module));
-                });
-            }
-        }
-    }
-
-}
-
 export class VersionModel {
     major: string;
     minor: string;
@@ -138,4 +115,27 @@ export class VersionModuleModel {
             this.versionMax = obj.versionMax || null;
         }
     }
+}
+
+export class EcmProductVersionModel {
+    edition: string;
+    version: VersionModel;
+    license: LicenseModel;
+    status: VersionStatusModel;
+    modules: VersionModuleModel[] = [];
+
+    constructor(obj?: any) {
+        if (obj && obj.entry && obj.entry.repository) {
+            this.edition = obj.entry.repository.edition || null;
+            this.version = new VersionModel(obj.entry.repository.version);
+            this.license = new LicenseModel(obj.entry.repository.license);
+            this.status = new VersionStatusModel(obj.entry.repository.status);
+            if (obj.entry.repository.modules) {
+                obj.entry.repository.modules.forEach((module) => {
+                    this.modules.push(new VersionModuleModel(module));
+                });
+            }
+        }
+    }
+
 }
