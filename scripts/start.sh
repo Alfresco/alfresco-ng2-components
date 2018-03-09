@@ -12,6 +12,7 @@ eval EXEC_GIT_NPM_INSTALL_JSAPI=false
 eval EXEC_VERSION_JSAPI=false
 eval EXEC_START=true
 eval EXEC_TEST=false
+eval EXEC_E2E=false
 eval JSAPI_VERSION=""
 eval NG2_COMPONENTS_VERSION=""
 eval GIT_ISH=""
@@ -28,6 +29,7 @@ show_help() {
     echo "-dev or -develop start the demo shell using the relative lib folder to link the components"
     echo "-dist create the disbuild the demo shell in dist mode"
     echo "-t or -test execute test"
+    echo "--e2e execute e2e test"
     echo "-u or -update start the demo shell and update the dependencies"
     echo "-c or -clean  clean the demo shell and reinstall the dependencies"
     echo "-r or -registry to download the packages from an alternative npm registry example -registry 'http://npm.local.me:8080/' "
@@ -57,7 +59,11 @@ disable_start() {
 }
 
 enable_test() {
-    EXEC_TEST=false
+    EXEC_TEST=true
+}
+
+enable_e2e() {
+    EXEC_E2E=true
 }
 
 enable_js_api_git_link() {
@@ -113,6 +119,7 @@ while [[ $1  == -* ]]; do
       -u|--update) update; shift;;
       -c|--clean) clean; shift;;
       -t|--test) enable_test; shift;;
+      --e2e) enable_e2e; shift;;
       -r|--registry)  change_registry $2; shift 2;;
       -v|--version)  version_component $2; shift 2;;
       -si|--skipinstall) install; shift;;
@@ -186,8 +193,13 @@ if $EXEC_VERSION_JSAPI == true; then
 fi
 
 if $EXEC_TEST == true; then
-  echo "====== Demo shell Test====="
-  npm run test
+  echo "====== Demo shell Test ====="
+  npm install && npm run test
+fi
+
+if $EXEC_E2E == true; then
+  echo "====== Demo shell e2e ====="
+  npm run e2e
 fi
 
 if $EXEC_START == true; then
