@@ -49,6 +49,9 @@ export interface QueryBuilderContext {
     config: SearchConfig;
     query: { [id: string]: string };
     fields: { [id: string]: string };
+    scope: {
+        locations?: string
+    };
     update: Function;
 }
 

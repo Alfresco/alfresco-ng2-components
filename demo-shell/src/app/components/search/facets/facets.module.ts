@@ -17,11 +17,12 @@
 
 import { NgModule } from '@angular/core';
 import { TextFacetComponent } from './text-facet.component';
-import { MatButtonModule, MatInputModule, MatRadioModule, MatCheckboxModule } from '@angular/material';
+import { MatButtonModule, MatInputModule, MatRadioModule, MatCheckboxModule, MatSelectModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RadioFacetComponent } from './radio-facet.component';
 import { FieldsFacetComponent } from './fields-facet.component';
+import { ScopeLocationsFacetComponent } from './scope-locations-facet.component';
 
 @NgModule({
     imports: [
@@ -31,22 +32,26 @@ import { FieldsFacetComponent } from './fields-facet.component';
         MatButtonModule,
         MatInputModule,
         MatRadioModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatSelectModule
     ],
     declarations: [
         TextFacetComponent,
         RadioFacetComponent,
-        FieldsFacetComponent
+        FieldsFacetComponent,
+        ScopeLocationsFacetComponent
     ],
     exports: [
         TextFacetComponent,
         RadioFacetComponent,
-        FieldsFacetComponent
+        FieldsFacetComponent,
+        ScopeLocationsFacetComponent
     ],
     entryComponents: [
         TextFacetComponent,
         RadioFacetComponent,
-        FieldsFacetComponent
+        FieldsFacetComponent,
+        ScopeLocationsFacetComponent
     ]
 })
 export class FacetsModule {

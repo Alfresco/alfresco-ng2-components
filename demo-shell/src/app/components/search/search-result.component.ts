@@ -49,6 +49,9 @@ export class SearchResultComponent implements OnInit {
             config: this.config,
             query: {},
             fields: {},
+            scope: {
+                locations: null // nodes|deleted-nodes|versions
+            },
             update: () => this.updateQuery()
         };
     }
@@ -107,7 +110,7 @@ export class SearchResultComponent implements OnInit {
         });
 
         // tslint:disable-next-line:no-console
-        console.log(query, fields);
+        console.log(query, fields, this.context.scope);
 
         if (query) {
 
@@ -127,7 +130,8 @@ export class SearchResultComponent implements OnInit {
                     { query: `TYPE:'cm:folder' OR TYPE:'cm:content'` },
                     { query: 'NOT cm:creator:System' }
                 ],
-                limits: this.config.limits
+                limits: this.config.limits,
+                scope: this.context.scope
             };
 
             return result;

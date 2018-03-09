@@ -113,6 +113,23 @@
               ]
             }
           }
+        },
+        {
+          "id": "facet4",
+          "name": "Locations",
+          "enabled": true,
+          "component": {
+            "selector": "app-scope-locations-facet",
+            "settings": {
+              "field": null,
+              "options": [
+                { "name": "Default", "value": "nodes", "default": true },
+                { "name": "Nodes", "value": "nodes" },
+                { "name": "Deleted Nodes", "value": "deleted-nodes" },
+                { "name": "Versions", "value": "versions" }
+              ]
+            }
+          }
         }
       ]
     },
