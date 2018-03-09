@@ -9,7 +9,7 @@
             <adf-info-drawer-tab label="Versions">
                 <mat-card>
                     <mat-card-content>
-                        <adf-version-manager [node]="node">
+                        <adf-version-manager [node]="node" (uploadError)="uploadError($event)">
                         </adf-version-manager>
                     </mat-card-content>
                 </mat-card>

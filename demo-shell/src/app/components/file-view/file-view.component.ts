@@ -18,6 +18,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlfrescoApiService } from '@alfresco/adf-core';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
     selector: 'app-file-view',
@@ -30,6 +31,7 @@ export class FileViewComponent implements OnInit {
     constructor(
         private router: Router,
         private route: ActivatedRoute,
+        private snackBar: MatSnackBar,
         private apiService: AlfrescoApiService) {}
 
     ngOnInit() {
@@ -51,4 +53,7 @@ export class FileViewComponent implements OnInit {
         });
     }
 
+    uploadError(errorMessage: string) {
+        this.snackBar.open(errorMessage, '', { duration: 4000 });
+    }
 }
