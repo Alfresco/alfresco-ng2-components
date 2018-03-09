@@ -1,6 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-03-07
 ---
 # Viewer component
 
@@ -14,18 +15,24 @@ See it live: [Viewer Quickstart](https://embed.plnkr.co/iTuG1lFIXfsP95l6bDW6/)
 
     -   [Properties](#properties)
     -   [Events](#events)
+    -   [Keyboard shortcuts](#keyboard-shortcuts)
 
 -   [Details](#details)
 
-    -   [Integrating with DocumentList component](#integrating-with-documentlist-component)
+    -   [Integrating with the Document List component](#integrating-with-the-document-list-component)
+    -   [Custom file parameters](#custom-file-parameters)
     -   [Supported file formats](#supported-file-formats)
-    -   [Content renditions](#content-renditions)
+    -   [Content Renditions](#content-renditions)
     -   [Configuring PDF.js library](#configuring-pdfjs-library)
     -   [Custom toolbar](#custom-toolbar)
+    -   [Custom toolbar buttons](#custom-toolbar-buttons)
     -   [Custom sidebar](#custom-sidebar)
+    -   [Custom thumbnails](#custom-thumbnails)
     -   [Custom "Open With" menu](#custom-open-with-menu)
     -   [Custom "More actions" menu](#custom-more-actions-menu)
     -   [Extending the Viewer](#extending-the-viewer)
+
+-   [See also](#see-also)
 
 ## Basic usage
 
@@ -70,11 +77,11 @@ Using with file url:
 | canNavigateBefore | `boolean` | `true` | Toggles the "before" ("&lt;") button. Requires `allowNavigate` to be enabled.  |
 | canNavigateNext | `boolean` | `true` | Toggles the next (">") button. Requires `allowNavigate` to be enabled.  |
 | allowSidebar | `boolean` | `false` | Toggles the sidebar.  |
+| allowThumbnails | `boolean` | `true` | Toggles PDF thumbnails.  |
 | showSidebar | `boolean` | `false` | Toggles sidebar visibility. Requires `allowSidebar` to be set to `true`.  |
 | sidebarPosition | `string` | `'right'` | The position of the sidebar. Can be `left` or `right`.  |
 | sidebarTemplate | `TemplateRef<any>` | `null` | The template for the sidebar. The template context contains the loaded node data.  |
-| allowThumbnails | `boolean` | `true` | Enables pdf viewer thumbnails.  |
-| thumbnailsTemplate | `TemplateRef<any>` | `null` | Custom template content for thumbnails.  |
+| thumbnailsTemplate | `TemplateRef<any>` | `null` | The template for the pdf thumbnails.  |
 | mimeType | `string` |  | MIME type of the file content (when not determined by the filename extension).  |
 | fileName | `string` |  | Content filename.  |
 | downloadUrl | `string` | `null` | URL to download.  |
@@ -84,14 +91,14 @@ Using with file url:
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| goBack | `EventEmitter<BaseEvent<any>>` | Emitted when user clicks the 'Back' button. |
-| download | `EventEmitter<BaseEvent<any>>` | Emitted when user clicks the 'Download' button. |
-| print | `EventEmitter<BaseEvent<any>>` | Emitted when user clicks the 'Print' button. |
-| share | `EventEmitter<BaseEvent<any>>` | Emitted when user clicks the 'Share' button. |
-| showViewerChange | `EventEmitter<boolean>` | Emitted when the viewer is shown or hidden. |
-| extensionChange | `EventEmitter<string>` | Emitted when the filename extension changes. |
-| navigateBefore | `EventEmitter<{}>` | Emitted when user clicks 'Navigate Before' ("&lt;") button. |
-| navigateNext | `EventEmitter<{}>` | Emitted when user clicks 'Navigate Next' (">") button. |
+| goBack | `EventEmitter<BaseEvent<any>>` | Emitted when user clicks the 'Back' button.  |
+| download | `EventEmitter<BaseEvent<any>>` | Emitted when user clicks the 'Download' button.  |
+| print | `EventEmitter<BaseEvent<any>>` | Emitted when user clicks the 'Print' button.  |
+| share | `EventEmitter<BaseEvent<any>>` | Emitted when user clicks the 'Share' button.  |
+| showViewerChange | `EventEmitter<boolean>` | Emitted when the viewer is shown or hidden.  |
+| extensionChange | `EventEmitter<string>` | Emitted when the filename extension changes.  |
+| navigateBefore | `EventEmitter<{}>` | Emitted when user clicks 'Navigate Before' ("&lt;") button.  |
+| navigateNext | `EventEmitter<{}>` | Emitted when user clicks 'Navigate Next' (">") button.  |
 
 ### Keyboard shortcuts
 
@@ -104,9 +111,10 @@ Using with file url:
 
 ## Details
 
-### Integrating with DocumentList component
+### Integrating with the Document List component
 
-Below is the most simple integration of Viewer and DocumentList components within your custom component:
+Below is the most simple integration of the Viewer and 
+[Document List](document-list.component.md) components within your custom component:
 
 ```html
 <adf-document-list
@@ -121,7 +129,7 @@ Below is the most simple integration of Viewer and DocumentList components withi
 </adf-viewer>
 ```
 
-And the component controller class implementation can look like the following:
+The component controller class implementation might look like the following:
 
 ```ts
 export class OverlayViewerComponent {
@@ -199,21 +207,23 @@ The Viewer component consists of separate Views that handle particular types of 
 
 ### Content Renditions
 
-For those extensions and mime types that cannot be natively displayed in the browser, the Viewer will try to fetch corresponding rendition by utilising the [renditions service api](https://community.alfresco.com/docs/DOC-5879-rendition-service).
+For those extensions and mime types that cannot be natively displayed in the browser, the Viewer will try to fetch the corresponding rendition using the [renditions service api](https://community.alfresco.com/docs/DOC-5879-rendition-service).
 
 For the full list of supported types please refer to: [File types that support preview and thumbnail generation](http://docs.alfresco.com/5.2/references/valid-transformations-preview.html).
 
 ### Configuring PDF.js library
 
-In order to configure your webpack-enabled application with the PDF.js library please follow the next steps.
+Configure your webpack-enabled application with the PDF.js library as follows.
 
-Install pdfjs-dist
+1.  Install pdfjs-dist
 
 ```sh
 npm install pdfjs-dist
 ```
 
-Update `vendors.ts` by appending the following:
+2.  Update `vendors.ts` by appending the following code. This will enable the viewer component
+    and compatibility mode for all browsers. It will also configure the web worker for the PDF.js
+    library to render PDF files in the background:
 
 ```ts
 // PDF.js
@@ -223,10 +233,7 @@ pdfjsLib.PDFJS.workerSrc = './pdf.worker.js';
 require('pdfjs-dist/web/pdf_viewer.js');
 ```
 
-The code above enables the "viewer" component and "compatibility" mode for all the browsers.
-It also configures the web worker for PDF.js library to render PDF files in the background.
-
-Update the `plugins` section of the `webpack.common.js` file with the next lines:
+3.  Update the `plugins` section of the `webpack.common.js` file with the following lines:
 
 ```js
 new CopyWebpackPlugin([
@@ -238,11 +245,11 @@ new CopyWebpackPlugin([
 ])
 ```
 
-The Viewer component now should be able displaying PDF files.
+The Viewer component now should be able to display PDF files.
 
 ### Custom toolbar
 
-You can replace standard viewer toolbar with your custom implementation.
+You can replace the standard viewer toolbar with your own custom implementation:
 
 ```html
 <adf-viewer>
@@ -252,12 +259,13 @@ You can replace standard viewer toolbar with your custom implementation.
 </adf-viewer>
 ```
 
-Everything you put inside the "adf-viewer-toolbar" tags is going to be rendered instead of the toolbar.
+Everything you put inside the "adf-viewer-toolbar" tags will be rendered instead of the
+standard toolbar.
 
 ### Custom toolbar buttons
 
-If you are okay with the custom toolbar behaviour but want to add some extra buttons,
-you can do that like in the following example:
+If you are happy with the custom toolbar's behaviour but want to add some extra buttons
+then you can do so as shown in the following example:
 
 ```html
 <adf-viewer>
@@ -275,19 +283,19 @@ you can do that like in the following example:
 </adf-viewer>
 ```
 
-You should now see the following result at runtime:
+The result should look like this:
 
 ![Custom Toolbar Actions](docassets/images/viewer-toolbar-actions.png)
 
 ### Custom sidebar
 
 The Viewer component also supports custom sidebar components and layouts.
-The `allowSidebar` property should be set to `true` to enable this feature.
+Set the `allowSidebar` property to `true` to enable this feature.
 
-Custom sidebar for the viewer can be injected in two different ways:
+The custom sidebar can be injected in two different ways:
 
 -   using transclusion
--   using template **(only works when using the viewer with fileNodeId)**
+-   using a template **(only works when using the viewer with fileNodeId)**
 
 #### Using transclusion
 
@@ -299,7 +307,7 @@ Custom sidebar for the viewer can be injected in two different ways:
 </adf-viewer>
 ```
 
-Everything you put inside the "adf-viewer-sidebar" tags is going to be rendered.
+Everything you put inside the "adf-viewer-sidebar" tags will be rendered.
 
 #### Using template injection (only works when using the viewer with fileNodeId)
 
@@ -312,8 +320,8 @@ Everything you put inside the "adf-viewer-sidebar" tags is going to be rendered.
 
 ### Custom thumbnails
 
-By default, the pdf viewer comes with its own thumbnails list but this can be replaced
-by providing a custom template and binding to context property `viewer` to access PDFJS.PDFViewer
+The PDF viewer comes with its own default list of thumbnails but you can replace this
+by providing a custom template and binding to the context property `viewer` to access the PDFJS.PDFViewer
 instance.
 
 ![PDF thumbnails](docassets/images/pdf-thumbnails.png)
@@ -344,7 +352,8 @@ export class CustomThumbnailsComponent {
 
 ### Custom "Open With" menu
 
-You can enable custom "Open With" menu by providing at least one action inside the "adf-viewer-open-with" tag:
+You can enable a custom "Open With" menu by providing at least one action inside the
+`adf-viewer-open-with` tag:
 
 ```html
 <adf-viewer [fileNodeId]="nodeId">
@@ -371,7 +380,7 @@ You can enable custom "Open With" menu by providing at least one action inside t
 
 ### Custom "More actions" menu
 
-You can enable custom "More actions" menu by providing at least one action inside the "adf-viewer-more-actions" tag:
+You can enable a custom "More actions" menu by providing at least one action inside the `adf-viewer-more-actions` tag:
 
 ```html
 <adf-viewer [fileNodeId]="nodeId">
@@ -398,10 +407,9 @@ You can enable custom "More actions" menu by providing at least one action insid
 
 ### Extending the Viewer
 
-If you want to handle other file formats that are not yet supported by the Viewer component,
-you can define your own custom handler.
-
-Below you can find an example with the use of `adf-viewer-extension` if you can handle 3d files
+You can define your own custom handle to handle other file formats that are not yet supported by
+the Viewer component. Below is an example that shows how to use the `adf-viewer-extension`
+to handle 3D data files:
 
 ```html
 <adf-viewer [fileNodeId]="fileNodeId">
@@ -418,9 +426,9 @@ Below you can find an example with the use of `adf-viewer-extension` if you can 
 </adf-viewer> 
 ```
 
-Note: you need adding `ng2-3d-editor` dependency to your `package.json` file to make the example above work.
+Note: you need to add the `ng2-3d-editor` dependency to your `package.json` file to make the example above work.
 
-It is possible to define multiple `adf-viewer-extension` templates:
+You can define multiple `adf-viewer-extension` templates if required:
 
 ```html
 <adf-viewer [fileNodeId]="fileNodeId">
@@ -442,3 +450,7 @@ It is possible to define multiple `adf-viewer-extension` templates:
     </adf-viewer-extension>
 </adf-viewer> 
 ```
+
+## See also
+
+-   [Document List component](document-list.component.md)
