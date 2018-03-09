@@ -16,6 +16,7 @@
  */
 
 export * from './components/upload-button.component';
+export * from './components/upload-version-button.component';
 export * from './components/file-uploading-dialog.component';
 export * from './components/upload-drag-area.component';
 export * from './components/file-uploading-list.component';

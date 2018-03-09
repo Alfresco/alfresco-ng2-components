@@ -164,6 +164,20 @@ describe('UploadService', () => {
         expect(jasmine.Ajax.requests.mostRecent().params.has('majorVersion')).toBe(true);
     });
 
+    it('If newVersionBaseName is set, name should be a param', () => {
+        let emitter = new EventEmitter();
+
+        const filesFake = new FileModel(<File> { name: 'fake-name', size: 10 }, {
+            newVersion: true,
+            newVersionBaseName: 'name-under-test'
+        });
+        service.addToQueue(filesFake);
+        service.uploadFilesInTheQueue(emitter);
+
+        expect(jasmine.Ajax.requests.mostRecent().params.has('name')).toBe(true);
+        expect(jasmine.Ajax.requests.mostRecent().params.get('name')).toBe('name-under-test');
+    });
+
     it('should use custom root folder ID given to the service', (done) => {
         let emitter = new EventEmitter();
 

@@ -164,6 +164,11 @@ export class UploadService {
         } else {
             opts.autoRename = true;
         }
+
+        if (file.options.newVersionBaseName) {
+            opts.name = file.options.newVersionBaseName;
+        }
+
         return this.apiService.getInstance().upload.uploadFile(
             file.file,
             file.options.path,
