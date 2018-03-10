@@ -28,7 +28,12 @@ const testUser: UserProcessModel = new UserProcessModel({
     email: 'tu@domain.com'
 });
 const testDate = new Date();
-const testComment: CommentProcessModel = new CommentProcessModel({id: 1, message: 'Test Comment', created: testDate.toDateString(), createdBy: testUser});
+const testComment: CommentProcessModel = new CommentProcessModel({
+    id: 1,
+    message: 'Test Comment',
+    created: testDate.toDateString(),
+    createdBy: testUser
+});
 
 describe('CommentListComponent', () => {
 
@@ -69,69 +74,101 @@ describe('CommentListComponent', () => {
         commentList.selectComment(rowEvent);
     });
 
-    it('should not show comment list if no input is given', () => {
+    it('should not show comment list if no input is given', (done) => {
         fixture.detectChanges();
-        expect(fixture.nativeElement.querySelector('adf-datatable')).toBeNull();
+
+        fixture.whenStable().then(() => {
+            expect(fixture.nativeElement.querySelector('adf-datatable')).toBeNull();
+            done();
+        });
     });
 
-    it('should show comment message when input is given', () => {
+    it('should show comment message when input is given', (done) => {
         commentList.comments = [testComment];
         fixture.detectChanges();
-        let elements = fixture.nativeElement.querySelectorAll('#comment-message');
-        expect(elements.length).toBe(1);
-        expect(elements[0].innerText).toBe(testComment.message);
-        expect(fixture.nativeElement.querySelector('#comment-message:empty')).toBeNull();
+
+        fixture.whenStable().then(() => {
+            let elements = fixture.nativeElement.querySelectorAll('#comment-message');
+            expect(elements.length).toBe(1);
+            expect(elements[0].innerText).toBe(testComment.message);
+            expect(fixture.nativeElement.querySelector('#comment-message:empty')).toBeNull();
+            done();
+        });
     });
 
-    it('should show comment user when input is given', () => {
+    it('should show comment user when input is given', (done) => {
         commentList.comments = [testComment];
         fixture.detectChanges();
-        let elements = fixture.nativeElement.querySelectorAll('#comment-user');
-        expect(elements.length).toBe(1);
-        expect(elements[0].innerText).toBe(testComment.createdBy.firstName + ' ' + testComment.createdBy.lastName);
-        expect(fixture.nativeElement.querySelector('#comment-user:empty')).toBeNull();
+
+        fixture.whenStable().then(() => {
+            let elements = fixture.nativeElement.querySelectorAll('#comment-user');
+            expect(elements.length).toBe(1);
+            expect(elements[0].innerText).toBe(testComment.createdBy.firstName + ' ' + testComment.createdBy.lastName);
+            expect(fixture.nativeElement.querySelector('#comment-user:empty')).toBeNull();
+            done();
+        });
     });
 
-    it('should show comment date time when input is given', () => {
+    it('should show comment date time when input is given', (done) => {
         commentList.comments = [testComment];
         fixture.detectChanges();
-        let elements = fixture.nativeElement.querySelectorAll('#comment-time');
-        expect(elements.length).toBe(1);
-        expect(elements[0].innerText).toBe(commentList.transformDate(testDate.toDateString()));
-        expect(fixture.nativeElement.querySelector('#comment-time:empty')).toBeNull();
+
+        fixture.whenStable().then(() => {
+            let elements = fixture.nativeElement.querySelectorAll('#comment-time');
+            expect(elements.length).toBe(1);
+            expect(elements[0].innerText).toBe(commentList.transformDate(testDate.toDateString()));
+            expect(fixture.nativeElement.querySelector('#comment-time:empty')).toBeNull();
+            done();
+        });
     });
 
-    it('comment date time should start with Today when comment date is today', () => {
+    it('comment date time should start with Today when comment date is today', (done) => {
         commentList.comments = [testComment];
         fixture.detectChanges();
-        element = fixture.nativeElement.querySelector('#comment-time');
-        expect(element.innerText).toContain('Today');
+
+        fixture.whenStable().then(() => {
+            element = fixture.nativeElement.querySelector('#comment-time');
+            expect(element.innerText).toContain('Today');
+            done();
+        });
     });
 
-    it('comment date time should start with Yesterday when comment date is yesterday', () => {
+    it('comment date time should start with Yesterday when comment date is yesterday', (done) => {
         testComment.created = new Date((Date.now() - 24 * 3600 * 1000));
         commentList.comments = [testComment];
         fixture.detectChanges();
-        element = fixture.nativeElement.querySelector('#comment-time');
-        expect(element.innerText).toContain('Yesterday');
+
+        fixture.whenStable().then(() => {
+            element = fixture.nativeElement.querySelector('#comment-time');
+            expect(element.innerText).toContain('Yesterday');
+            done();
+        });
     });
 
-    it('comment date time should not start with Today/Yesterday when comment date is before yesterday', () => {
+    it('comment date time should not start with Today/Yesterday when comment date is before yesterday', (done) => {
         testComment.created = new Date((Date.now() - 24 * 3600 * 1000 * 2));
         commentList.comments = [testComment];
         fixture.detectChanges();
-        element = fixture.nativeElement.querySelector('#comment-time');
-        expect(element.innerText).not.toContain('Today');
-        expect(element.innerText).not.toContain('Yesterday');
+
+        fixture.whenStable().then(() => {
+            element = fixture.nativeElement.querySelector('#comment-time');
+            expect(element.innerText).not.toContain('Today');
+            expect(element.innerText).not.toContain('Yesterday');
+            done();
+        });
     });
 
-    it('should show user icon when input is given', () => {
+    it('should show user icon when input is given', (done) => {
         commentList.comments = [testComment];
         fixture.detectChanges();
-        let elements = fixture.nativeElement.querySelectorAll('#comment-user-icon');
-        expect(elements.length).toBe(1);
-        expect(elements[0].innerText).toContain(commentList.getUserShortName(testComment.createdBy));
-        expect(fixture.nativeElement.querySelector('#comment-user-icon:empty')).toBeNull();
+
+        fixture.whenStable().then(() => {
+            let elements = fixture.nativeElement.querySelectorAll('#comment-user-icon');
+            expect(elements.length).toBe(1);
+            expect(elements[0].innerText).toContain(commentList.getUserShortName(testComment.createdBy));
+            expect(fixture.nativeElement.querySelector('#comment-user-icon:empty')).toBeNull();
+            done();
+        });
     });
 
     it('should hide the datatable header in comment-list as showHeader is false', (done) => {
