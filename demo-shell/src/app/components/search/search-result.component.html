@@ -1,17 +1,17 @@
 <div class="adf-search-results">
     <div class="adf-search-results__facets">
         <mat-accordion multi="true" displayMode="flat">
-            <mat-expansion-panel *ngFor="let facet of facets">
+            <mat-expansion-panel *ngFor="let category of categories">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        {{ facet.name }}
+                        {{ category.name }}
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <app-facet-container
-                    [id]="facet.id"
+                    [id]="category.id"
                     [context]="context"
-                    [selector]="facet.component.selector"
-                    [settings]="facet.component.settings">
+                    [selector]="category.component.selector"
+                    [settings]="category.component.settings">
                 </app-facet-container>
             </mat-expansion-panel>
         </mat-accordion>

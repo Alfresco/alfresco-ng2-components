@@ -19,7 +19,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NodePaging, QueryBody } from 'alfresco-js-api';
 import { UserPreferencesService, AppConfigService, AlfrescoApiService, SearchConfigurationService } from '@alfresco/adf-core';
-import { SearchConfig, FacetConfig, QueryBuilderContext } from './facets/facets-api';
+import { SearchConfig, SearchCategoryConfig, QueryBuilderContext } from './facets/facets-api';
 
 @Component({
     selector: 'app-search-result-component',
@@ -31,7 +31,7 @@ export class SearchResultComponent implements OnInit {
     data: NodePaging;
     config: SearchConfig;
 
-    facets: Array<FacetConfig> = [];
+    categories: Array<SearchCategoryConfig> = [];
     context: QueryBuilderContext;
 
     constructor(private preferences: UserPreferencesService,
@@ -43,7 +43,7 @@ export class SearchResultComponent implements OnInit {
         // tslint:disable-next-line:no-console
         console.log(this.config);
 
-        this.facets = this.config.facets.filter(f => f.enabled);
+        this.categories = this.config.query.categories.filter(f => f.enabled);
 
         this.context = {
             config: this.config,
@@ -78,6 +78,8 @@ export class SearchResultComponent implements OnInit {
         const query = this.buildQuery(this.preferences.paginationSize, 0);
         if (query) {
             const data: NodePaging = await this.api.searchApi.search(query);
+            // tslint:disable-next-line:no-console
+            console.log(data);
             this.onDataLoaded(data);
         }
     }
@@ -90,7 +92,7 @@ export class SearchResultComponent implements OnInit {
         let query = '';
         const fields = [];
 
-        this.facets.forEach(facet => {
+        this.categories.forEach(facet => {
             const facetQuery = this.context.query[facet.id];
             if (facetQuery) {
                 if (query.length > 0) {
@@ -130,6 +132,24 @@ export class SearchResultComponent implements OnInit {
                     { query: `TYPE:'cm:folder' OR TYPE:'cm:content'` },
                     { query: 'NOT cm:creator:System' }
                 ],
+                facetQueries: [
+                    { query: 'created:2018', label: 'CreatedThisYear' },
+                    { query: 'content.mimetype', label: 'Type' },
+                    {'query': 'content.size:[0 TO 10240]', 'label': 'xtra small'},
+                    {'query': 'content.size:[10240 TO 102400]', 'label': 'small'},
+                    {'query': 'content.size:[102400 TO 1048576]', 'label': 'medium'},
+                    {'query': 'content.size:[1048576 TO 16777216]', 'label': 'large'},
+                    {'query': 'content.size:[16777216 TO 134217728]', 'label': 'xtra large'},
+                    {'query': 'content.size:[134217728 TO MAX]', 'label': 'XX large'}
+                ],
+                facetFields: {
+                    facets: [
+                        { field: 'content.mimetype' },
+                        { field: 'content.size' }
+                        // { field: 'creator', mincount: 1 },
+                        // { field: 'modifier', mincount: 1 }
+                    ]
+                },
                 limits: this.config.limits,
                 scope: this.context.scope
             };

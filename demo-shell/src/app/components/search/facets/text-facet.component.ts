@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewEncapsulation, OnInit, Input } from '@angular/core';
-import { FacetComponent, QueryBuilderContext, FacetComponentSettingsConfig } from './facets-api';
+import { FacetComponent, QueryBuilderContext, SearchComponentSettingsConfig } from './facets-api';
 
 @Component({
     selector: 'app-text-facet',
@@ -40,7 +40,7 @@ export class TextFacetComponent implements FacetComponent, OnInit {
     value = '';
 
     id: string;
-    settings: FacetComponentSettingsConfig;
+    settings: SearchComponentSettingsConfig;
     context: QueryBuilderContext;
 
     ngOnInit() {

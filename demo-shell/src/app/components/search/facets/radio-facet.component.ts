@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewEncapsulation, OnInit, Input } from '@angular/core';
-import { FacetComponent, QueryBuilderContext, FacetComponentSettingsConfig } from './facets-api';
+import { FacetComponent, QueryBuilderContext, SearchComponentSettingsConfig } from './facets-api';
 import { MatRadioChange } from '@angular/material';
 
 @Component({
@@ -50,7 +50,7 @@ export class RadioFacetComponent implements FacetComponent, OnInit {
     value: string;
 
     id: string;
-    settings: FacetComponentSettingsConfig;
+    settings: SearchComponentSettingsConfig;
     context: QueryBuilderContext;
 
     ngOnInit() {

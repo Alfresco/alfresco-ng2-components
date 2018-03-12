@@ -56,8 +56,9 @@
         "permissionEvaluationTime": null,
         "permissionEvaluationCount": null
       },
-      "facets": [
-        {
+      "query": {
+        "categories": [
+          {
           "id": "broken",
           "name": "Broken Facet",
           "enabled": false,
@@ -131,7 +132,8 @@
             }
           }
         }
-      ]
+        ]
+      }
     },
     "pagination": {
         "size": 25,
