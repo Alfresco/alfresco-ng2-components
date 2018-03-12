@@ -77,7 +77,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
 
     /** Custom image resolver function. See the
      * [Document List component](document-list.component.md#custom-row-filter)
-     * for more information. */
+     * for more information.
+     */
     @Input()
     imageResolver: ImageResolver = null;
 
