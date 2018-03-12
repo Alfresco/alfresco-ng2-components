@@ -407,6 +407,6 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     }
 
     get supportedPageSizes(): number[] {
-        return this.userPreferences.getDifferentPageSizes();
+        return this.userPreferences.getDefaultPageSizes();
     }
 }

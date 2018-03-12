@@ -940,7 +940,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     get supportedPageSizes(): number[] {
-        return this.preferences.getDifferentPageSizes();
+        return this.preferences.getDefaultPageSizes();
     }
 
     ngOnDestroy() {
