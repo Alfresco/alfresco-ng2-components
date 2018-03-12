@@ -53,8 +53,8 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Card view component](card-view.component.md) | Displays a configurable property list renderer. | [Source](../lib/core/card-view/components/card-view/card-view.component.ts) |
-| [Accordion group component](accordion-group.component.md) | Adds a collapsible panel to an [accordion menu](accordion.component.md). | [Source](../lib/core/collapsable/accordion-group.component.ts) |
-| [Accordion component](accordion.component.md) | Creates a collapsible accordion menu. | [Source](../lib/core/collapsable/accordion.component.ts) |
+| [Accordion group component](core/accordion-group.component.md) | Adds a collapsible panel to an accordion menu. | [Source](../lib/core/collapsable/accordion-group.component.ts) |
+| [Accordion component](core/accordion.component.md) | Creates a collapsible accordion menu. | [Source](../lib/core/collapsable/accordion.component.ts) |
 | [Data column component](data-column.component.md) | Defines column properties for DataTable, Tasklist, Document List and other components. | [Source](../lib/core/data-column/data-column.component.ts) |
 | [Datatable component](datatable.component.md) | Displays data as a table with customizable columns and presentation. | [Source](../lib/core/datatable/components/datatable/datatable.component.ts) |
 | [Form field component](form-field.component.md) | A form field in an APS form. | [Source](../lib/core/form/components/form-field/form-field.component.ts) |
@@ -81,35 +81,35 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Context menu directive](context-menu.directive.md) | Adds a context menu to a component. | [Source](../lib/core/context-menu/context-menu.directive.ts) |
-| [Highlight directive](highlight.directive.md) | Adds highlighting to selected sections of an HTML element's content. | [Source](../lib/core/directives/highlight.directive.ts) |
+| [Highlight directive](core/highlight.directive.md) | Adds highlighting to selected sections of an HTML element's content. | [Source](../lib/core/directives/highlight.directive.ts) |
 | [Logout directive](logout.directive.md) | Logs the user out when the decorated element is clicked. | [Source](../lib/core/directives/logout.directive.ts) |
 | [Node delete directive](node-delete.directive.md) | Deletes multiple files and folders. | [Source](../lib/core/directives/node-delete.directive.ts) |
 | [Node favorite directive](node-favorite.directive.md) | Selectively toggles nodes as favorite | [Source](../lib/core/directives/node-favorite.directive.ts) |
 | [Node permission directive](node-permission.directive.md) | Selectively disables an HTML element or Angular component | [Source](../lib/core/directives/node-permission.directive.ts) |
 | [Node restore directive](node-restore.directive.md) | Restores deleted nodes to their original location. | [Source](../lib/core/directives/node-restore.directive.ts) |
-| [Upload directive](upload.directive.md) | Allows your components or common HTML elements reacting on File drag and drop in order to upload content. | [Source](../lib/core/directives/upload.directive.ts) |
+| [Upload directive](core/upload.directive.md) | Allows your components or common HTML elements reacting on File drag and drop in order to upload content. | [Source](../lib/core/directives/upload.directive.ts) |
 
 ## Models
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Form field model](form-field.model.md) | Contains the value and metadata for a field of an [ADF Form](form.component.md). | [Source](../lib/core/form/components/widgets/core/form-field.model.ts) |
-| [Comment process model](comment-process.model.md) | Represents a comment added to a Process Services task or process instance. | [Source](../lib/core/models/comment-process.model.ts) |
-| [Product version model](product-version.model.md) | Contains version and license information classes for Alfresco products. | [Source](../lib/core/models/product-version.model.ts) |
-| [User process model](user-process.model.md) | Represents a Process Services user. | [Source](../lib/core/models/user-process.model.ts) |
-| [Bpm user model](bpm-user.model.md) | Contains information about a Process Services user. | [Source](../lib/core/userinfo/models/bpm-user.model.ts) |
-| [Ecm user model](ecm-user.model.md) | Contains information about a Content Services user. | [Source](../lib/core/userinfo/models/ecm-user.model.ts) |
+| [Comment process model](core/comment-process.model.md) | Represents a comment added to a Process Services task or process instance. | [Source](../lib/core/models/comment-process.model.ts) |
+| [Product version model](core/product-version.model.md) | Contains version and license information classes for Alfresco products. | [Source](../lib/core/models/product-version.model.ts) |
+| [User process model](core/user-process.model.md) | Represents a Process Services user. | [Source](../lib/core/models/user-process.model.ts) |
+| [Bpm user model](core/bpm-user.model.md) | Contains information about a Process Services user. | [Source](../lib/core/userinfo/models/bpm-user.model.ts) |
+| [Ecm user model](core/ecm-user.model.md) | Contains information about a Content Services user. | [Source](../lib/core/userinfo/models/ecm-user.model.ts) |
 
 ## Pipes
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [File size pipe](file-size.pipe.md) | Converts a number of bytes to the equivalent in KB, MB, etc. | [Source](../lib/core/pipes/file-size.pipe.ts) |
-| [Mime type icon pipe](mime-type-icon.pipe.md) | Retrieves an icon to represent a MIME type. | [Source](../lib/core/pipes/mime-type-icon.pipe.ts) |
-| [Node name tooltip pipe](node-name-tooltip.pipe.md) | Formats the tooltip for a Node. | [Source](../lib/core/pipes/node-name-tooltip.pipe.ts) |
-| [Text highlight pipe](text-highlight.pipe.md) | Adds highlighting to words or sections of text that match a search string. | [Source](../lib/core/pipes/text-highlight.pipe.ts) |
-| [Time ago pipe](time-ago.pipe.md) | Converts a recent past date into a number of days ago. | [Source](../lib/core/pipes/time-ago.pipe.ts) |
-| [User initial pipe](user-initial.pipe.md) | Takes the name fields of a UserProcessModel object and extracts and formats the initials. | [Source](../lib/core/pipes/user-initial.pipe.ts) |
+| [File size pipe](core/file-size.pipe.md) | Converts a number of bytes to the equivalent in KB, MB, etc. | [Source](../lib/core/pipes/file-size.pipe.ts) |
+| [Mime type icon pipe](core/mime-type-icon.pipe.md) | Retrieves an icon to represent a MIME type. | [Source](../lib/core/pipes/mime-type-icon.pipe.ts) |
+| [Node name tooltip pipe](core/node-name-tooltip.pipe.md) | Formats the tooltip for a Node. | [Source](../lib/core/pipes/node-name-tooltip.pipe.ts) |
+| [Text highlight pipe](core/text-highlight.pipe.md) | Adds highlighting to words or sections of text that match a search string. | [Source](../lib/core/pipes/text-highlight.pipe.ts) |
+| [Time ago pipe](core/time-ago.pipe.md) | Converts a recent past date into a number of days ago. | [Source](../lib/core/pipes/time-ago.pipe.ts) |
+| [User initial pipe](core/user-initial.pipe.md) | Takes the name fields of a UserProcessModel object and extracts and formats the initials. | [Source](../lib/core/pipes/user-initial.pipe.ts) |
 
 ## Services
 
@@ -127,30 +127,30 @@ for more information about installing and using the source code.
 | [Auth guard ecm service](auth-guard-ecm.service.md) | Adds authentication with Content Services to a route within the app. | [Source](../lib/core/services/auth-guard-ecm.service.ts) |
 | [Auth guard service](auth-guard.service.md) | Adds authentication to a route within the app. | [Source](../lib/core/services/auth-guard.service.ts) |
 | [Authentication service](authentication.service.md) | Provides authentication for use with the Login component. | [Source](../lib/core/services/authentication.service.ts) |
-| [Comment process service](comment-process.service.md) | Adds and retrieves comments for task and process instances in Process Services. | [Source](../lib/core/services/comment-process.service.ts) |
-| [Content service](content.service.md) | Accesses app-generated data objects via URLs and file downloads. | [Source](../lib/core/services/content.service.ts) |
-| [Cookie service](cookie.service.md) | Stores key-value data items as browser cookies. | [Source](../lib/core/services/cookie.service.ts) |
+| [Comment process service](core/comment-process.service.md) | Adds and retrieves comments for task and process instances in Process Services. | [Source](../lib/core/services/comment-process.service.ts) |
+| [Content service](core/content.service.md) | Accesses app-generated data objects via URLs and file downloads. | [Source](../lib/core/services/content.service.ts) |
+| [Cookie service](core/cookie.service.md) | Stores key-value data items as browser cookies. | [Source](../lib/core/services/cookie.service.ts) |
 | [Deleted nodes api service](deleted-nodes-api.service.md) | Gets a list of Content Services nodes currently in the trash. | [Source](../lib/core/services/deleted-nodes-api.service.ts) |
-| [Discovery api service](discovery-api.service.md) | Gets version and license information for Process Services and Content Services. | [Source](../lib/core/services/discovery-api.service.ts) |
+| [Discovery api service](core/discovery-api.service.md) | Gets version and license information for Process Services and Content Services. | [Source](../lib/core/services/discovery-api.service.ts) |
 | [Favorites api service](favorites-api.service.md) | Gets a list of items a user has marked as their favorites. | [Source](../lib/core/services/favorites-api.service.ts) |
-| [Highlight transform service](highlight-transform.service.md) | Adds HTML to a string to highlight chosen sections. | [Source](../lib/core/services/highlight-transform.service.ts) |
+| [Highlight transform service](core/highlight-transform.service.md) | Adds HTML to a string to highlight chosen sections. | [Source](../lib/core/services/highlight-transform.service.ts) |
 | [Log service](log.service.md) | Provide a log functionality for your ADF application. | [Source](../lib/core/services/log.service.ts) |
 | [Nodes api service](nodes-api.service.md) | Accesses and manipulates ACS document nodes using their node IDs. | [Source](../lib/core/services/nodes-api.service.ts) |
-| [Notification service](notification.service.md) | Shows a notification message with optional feedback. | [Source](../lib/core/services/notification.service.ts) |
-| [Page title service](page-title.service.md) | Sets the page title. | [Source](../lib/core/services/page-title.service.ts) |
-| [People content service](people-content.service.md) | Gets information about a Content Services user. | [Source](../lib/core/services/people-content.service.ts) |
-| [People process service](people-process.service.md) | Gets information about Process Services users. | [Source](../lib/core/services/people-process.service.ts) |
+| [Notification service](core/notification.service.md) | Shows a notification message with optional feedback. | [Source](../lib/core/services/notification.service.ts) |
+| [Page title service](core/page-title.service.md) | Sets the page title. | [Source](../lib/core/services/page-title.service.ts) |
+| [People content service](core/people-content.service.md) | Gets information about a Content Services user. | [Source](../lib/core/services/people-content.service.ts) |
+| [People process service](core/people-process.service.md) | Gets information about Process Services users. | [Source](../lib/core/services/people-process.service.ts) |
 | [Renditions service](renditions.service.md) ![Deprecated](docassets/images/DeprecatedIcon.png) | Manages prearranged conversions of content to different formats. | [Source](../lib/core/services/renditions.service.ts) |
 | [Search configuration service](search-configuration.service.md) | Provides fine control of parameters to a search. | [Source](../lib/core/services/search-configuration.service.ts) |
-| [Shared links api service](shared-links-api.service.md) | Finds shared links to Content Services items. | [Source](../lib/core/services/shared-links-api.service.ts) |
+| [Shared links api service](core/shared-links-api.service.md) | Finds shared links to Content Services items. | [Source](../lib/core/services/shared-links-api.service.ts) |
 | [Sites service](sites.service.md) | Accesses and manipulates sites from a Content Services repository. | [Source](../lib/core/services/sites.service.ts) |
-| [Storage service](storage.service.md) | Stores items in the form of key-value pairs. | [Source](../lib/core/services/storage.service.ts) |
-| [Thumbnail service](thumbnail.service.md) | Retrieves an SVG thumbnail image to represent a document type. | [Source](../lib/core/services/thumbnail.service.ts) |
+| [Storage service](core/storage.service.md) | Stores items in the form of key-value pairs. | [Source](../lib/core/services/storage.service.ts) |
+| [Thumbnail service](core/thumbnail.service.md) | Retrieves an SVG thumbnail image to represent a document type. | [Source](../lib/core/services/thumbnail.service.ts) |
 | [Translation service](translation.service.md) | Supports localisation. | [Source](../lib/core/services/translation.service.ts) |
 | [Upload service](upload.service.md) | Provides access to various APIs related to file upload features. | [Source](../lib/core/services/upload.service.ts) |
 | [User preferences service](user-preferences.service.md) | Stores preferences for components. | [Source](../lib/core/services/user-preferences.service.ts) |
-| [Bpm user service](bpm-user.service.md) | Gets information about the current Process Services user. | [Source](../lib/core/userinfo/services/bpm-user.service.ts) |
-| [Ecm user service](ecm-user.service.md) | Gets information about a Content Services user. | [Source](../lib/core/userinfo/services/ecm-user.service.ts) |
+| [Bpm user service](core/bpm-user.service.md) | Gets information about the current Process Services user. | [Source](../lib/core/userinfo/services/bpm-user.service.ts) |
+| [Ecm user service](core/ecm-user.service.md) | Gets information about a Content Services user. | [Source](../lib/core/userinfo/services/ecm-user.service.ts) |
 
 ## Widgets
 
@@ -204,6 +204,7 @@ for more information about installing and using the source code.
 | [Version list component](version-list.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Displays the version history of a node in a [Version Manager component](version-manager.component.md) | [Source](../lib/content-services/version-manager/version-list.component.ts) |
 | [Version manager component](version-manager.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Displays the version history of a node with the ability to upload a new version. | [Source](../lib/content-services/version-manager/version-manager.component.ts) |
 | [Webscript component](webscript.component.md) | Provides access to Webscript features. | [Source](../lib/content-services/webscript/webscript.component.ts) |
+| _Upload version button component_ | _Not currently documented_ | [Source](../lib/content-services/upload/components/upload-version-button.component.ts) |
 
 ## Directives
 
@@ -292,7 +293,7 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Process filter service](process-filter.service.md) | Manage Process Filters, which are pre-configured Process Instance queries.  | [Source](../lib/process-services/process-list/services/process-filter.service.ts) |
-| [Process service](process.service.md) | Manage Process Instances, Process Variables, and Process Audit Log.  | [Source](../lib/process-services/process-list/services/process.service.ts) |
+| [Process service](process.service.md) | Manages Process Instances, Process Variables, and Process Audit Log.  | [Source](../lib/process-services/process-list/services/process.service.ts) |
 | [Task filter service](task-filter.service.md) | Manage Task Filters, which are pre-configured Task Instance queries.  | [Source](../lib/process-services/task-list/services/task-filter.service.ts) |
 | [Tasklist service](tasklist.service.md) | Manage Task Instances.  | [Source](../lib/process-services/task-list/services/tasklist.service.ts) |
 

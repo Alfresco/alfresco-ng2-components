@@ -4,9 +4,9 @@ Status: Active
 ---
 # Accordion Group component
 
-Adds a collapsible panel to an [accordion menu](accordion.component.md).
+Adds a collapsible panel to an accordion menu.
 
-![Accordion menu screenshot](docassets/images/accordion-menu.png)
+![Accordion menu screenshot](../docassets/images/accordion-menu.png)
 
 ## Basic Usage
 

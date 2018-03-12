@@ -59,7 +59,7 @@ You can use inside the filterParam one of the properties from [FilterParamsModel
 
 ### How to create an accordion menu with the task filter
 
-The task filter often works well as an item in an accordion menu. See the [Accordion component](accordion.component.md)
+The task filter often works well as an item in an accordion menu. See the [Accordion component](core/accordion.component.md)
 page for an example of how to do set this up.
 
 ## See also
