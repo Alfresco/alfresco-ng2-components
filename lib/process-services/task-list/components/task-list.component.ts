@@ -61,23 +61,23 @@ export class TaskListComponent implements OnChanges, AfterContentInit, Paginated
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
-    /* The id of the app. */
+    /** The id of the app. */
     @Input()
     appId: number;
 
-    /* The Instance Id of the process. */
+    /** The Instance Id of the process. */
     @Input()
     processInstanceId: string;
 
-    /* The Definition Key of the process. */
+    /** The Definition Key of the process. */
     @Input()
     processDefinitionKey: string;
 
-    /* Current state of the process. Possible values are: `completed`, `active`. */
+    /** Current state of the process. Possible values are: `completed`, `active`. */
     @Input()
     state: string;
 
-    /* The assignment of the process. Possible values are: "assignee" (the current user
+    /** The assignment of the process. Possible values are: "assignee" (the current user
      * is the assignee), candidate (the current user is a task candidate", "group_x" (the task
      * is assigned to a group where the current user is a member,
      * no value(the current user is involved).
@@ -85,53 +85,56 @@ export class TaskListComponent implements OnChanges, AfterContentInit, Paginated
     @Input()
     assignment: string;
 
-    /* Define the sort order of the processes. Possible values are : `created-desc`,
+    /** Define the sort order of the processes. Possible values are : `created-desc`,
      * `created-asc`, `due-desc`, `due-asc`
      */
     @Input()
     sort: string;
 
+    /** Name of the tasklist. */
     @Input()
     name: string;
 
-    /* Define which task id should be selected after reloading. If the task id doesn't
+    /** Define which task id should be selected after reloading. If the task id doesn't
      * exist or nothing is passed then the first task will be selected.
      */
     @Input()
     landingTaskId: string;
 
-    /* Data source object that represents the number and the type of the columns that
+    /** Data source object that represents the number and the type of the columns that
      * you want to show.
      */
     @Input()
     data: DataTableAdapter;
 
-    /* Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode,
+    /** Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode,
      * you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for
      * multiple rows.
      */
     @Input()
     selectionMode: string = 'single'; // none|single|multiple
 
+    /** Custom preset column schema in JSON format. */
     @Input()
     presetColumn: string;
 
-    /* Toggles multiple row selection, renders checkboxes at the beginning of each row */
+    /** Toggles multiple row selection, renders checkboxes at the beginning of each row */
     @Input()
     multiselect: boolean = false;
 
-    /* Emitted when a task in the list is clicked */
+    /** Emitted when a task in the list is clicked */
     @Output()
     rowClick: EventEmitter<string> = new EventEmitter<string>();
 
-    /* Emitted when rows are selected/unselected */
+    /** Emitted when rows are selected/unselected */
     @Output()
     rowsSelected: EventEmitter<any[]> = new EventEmitter<any[]>();
 
-    /* Emitted when the task list is loaded */
+    /** Emitted when the task list is loaded */
     @Output()
     success: EventEmitter<any> = new EventEmitter<any>();
 
+    /** Emitted when an error occurs. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
@@ -140,11 +143,11 @@ export class TaskListComponent implements OnChanges, AfterContentInit, Paginated
     layoutPresets = {};
     pagination: BehaviorSubject<Pagination>;
 
-    /* The page number of the tasks to fetch. */
+    /** The page number of the tasks to fetch. */
     @Input()
     page: number = 0;
 
-    /* The number of tasks to fetch. */
+    /** The number of tasks to fetch. Default value: 25. */
     @Input()
     size: number = PaginationComponent.DEFAULT_PAGINATION.maxItems;
 
