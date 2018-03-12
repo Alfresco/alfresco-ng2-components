@@ -60,6 +60,11 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     @Input()
     target: DocumentListComponent;
 
+    /** Transformation to be performed on the chosen/folder node before building
+     * the breadcrumb UI. Can be useful when custom formatting is needed for the
+     * breadcrumb. You can change the path elements from the node that are used to
+     * build the breadcrumb using this function.
+     */
     @Input()
     transform: (node) => any;
 

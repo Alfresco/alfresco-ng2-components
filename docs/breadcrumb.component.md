@@ -1,7 +1,9 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-03-12
 ---
+
 # Breadcrumb Component
 
 Indicates the current position within a navigation hierarchy.
@@ -25,13 +27,64 @@ Indicates the current position within a navigation hierarchy.
 | root | `string` | `null` | (optional) Name of the root element of the breadcrumb. You can use this property to rename "Company Home" to "Personal Files" for example. You can use an i18n resource key for the property value. |
 | rootId | `string` | `null` | (optional) The id of the root element. You can use this property to set a custom element the breadcrumb should start with. |
 | target | `DocumentListComponent` |  | (optional) Document List component to operate with. The list will update when the breadcrumb is clicked. |
-| transform | (node) => any | null | Action to be performed to the chosen/folder node before building the breadcrumb UI. Can be useful when custom formatting is needed to the breadcrumb, so changing the node's path elements that help build the breadcrumb can be done through this function. |
+| transform | `(node: any) => any` |  | Transformation to be performed on the chosen/folder node before building the breadcrumb UI. Can be useful when custom formatting is needed for the breadcrumb. You can change the path elements from the node that are used to build the breadcrumb using this function. |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| navigate | `EventEmitter<PathElementEntity>` | Emitted when the user clicks on a breadcrumb. |
+| navigate | `EventEmitter<PathElementEntity>` | Emitted when the user clicks on a breadcrumb.  |
+
+## Details
+
+### Using the transform function
+
+The function supplied in the `transform` property lets you modify the Node object that the component
+uses to find the "crumbs" for the list. You can use this, for example, to remove unwanted items from
+the list by altering the node's `path.elements` property.
+
+Below is an example of how you might do this with the
+[Content Node Selector component](content-node-selector.component.md). In this case, you pass the 
+transform function via the `breadcrumbTransform` property of `ContentNodeSelectorComponentData` during
+initialization:
+
+```ts
+    const data: ContentNodeSelectorComponentData = {
+        title: title,
+        actionName: action,
+        currentFolderId: contentEntry.parentId,
+        imageResolver: this.imageResolver.bind(this),
+        rowFilter : this.rowFilter.bind(this, contentEntry.id),
+        isSelectionValid: this.hasEntityCreatePermission.bind(this),
+        breadcrumbTransform: this.changeBreadcrumbPath.bind(this), // here is the transform function
+        select: select
+    };
+
+    this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');
+```
+
+A transform function to remove the "Sites" folder from the path would look something like this:
+
+```ts
+    private changeBreadcrumbPath(node: MinimalNodeEntryEntity) {
+
+        if (node && node.path && node.path.elements) {
+            const elements = node.path.elements;
+
+            if (elements.length > 1) {
+                if (elements[1].name === 'Sites') {
+                    elements.splice(1, 1);
+                }
+            }
+        }
+
+        return node;
+    }
+```
+
+Below, the breadcrumb is shown before and after the transform function is applied:
+
+![Content Node Selector breadcrumbTransfrom before/after screenshot](docassets/images/breadcrumbTransform.png)
 
 ## See also
 
