@@ -225,7 +225,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
             this.currentProcessInstanceId = null;
         });
         this.layoutType = AppsListComponent.LAYOUT_GRID;
-        this.supportedPages = this.preferenceService.getDifferentPageSizes();
+        this.supportedPages = this.preferenceService.getDefaultPageSizes();
     }
 
     ngOnDestroy() {

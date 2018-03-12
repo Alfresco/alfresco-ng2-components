@@ -205,7 +205,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.contentService.folderCreated.subscribe(value => this.onFolderCreated(value));
         this.onCreateFolder = this.contentService.folderCreate.subscribe(value => this.onFolderAction(value));
         this.onEditFolder = this.contentService.folderEdit.subscribe(value => this.onFolderAction(value));
-        this.supportedPages = this.preference.getDifferentPageSizes();
+        this.supportedPages = this.preference.getDefaultPageSizes();
 
         // this.permissionsStyle.push(new PermissionStyleModel('document-list__create', PermissionsEnum.CREATE));
         // this.permissionsStyle.push(new PermissionStyleModel('document-list__disable', PermissionsEnum.NOT_CREATE, false, true));
