@@ -130,7 +130,7 @@ export class UserPreferencesService {
     }
 
     /** Gets an array containing the available page sizes. */
-    getDifferentPageSizes(): number[] {
+    getDefaultPageSizes(): number[] {
         return this.defaults.supportedPageSizes;
     }
 
