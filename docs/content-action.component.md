@@ -182,7 +182,7 @@ an item for users who don't have permission to use it (set `disableWithNoPermiss
 
 You can also implement the `permissionEvent` to handle permission errors
 (to show the user a notification, for example). Subscribe to this event from your component
-and use the [Notification service](notification.service.md) to show a message.
+and use the [Notification service](core/notification.service.md) to show a message.
 
 ```html
 <adf-document-list [contentActions]="true"...>

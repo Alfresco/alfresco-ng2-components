@@ -6,7 +6,7 @@ Status: Active
 
 Creates a collapsible accordion menu.
 
-![Accordion menu screenshot](docassets/images/accordion-menu.png)
+![Accordion menu screenshot](../docassets/images/accordion-menu.png)
 
 ## Basic Usage
 
@@ -44,7 +44,7 @@ properties (title, selection status, etc).
 
 ### Example
 
-You can use an accordion menu to wrap a [process filter](process-filters.component.md), as shown in
+You can use an accordion menu to wrap a [process filter](../process-filters.component.md), as shown in
 the following example:
 
 ```html
@@ -62,7 +62,7 @@ the following example:
 </adf-accordion>
 ```
 
-![how-create-accordion-menu](docassets/images/how-to-create-accordion-menu.png)
+![how-create-accordion-menu](../docassets/images/how-to-create-accordion-menu.png)
 
 ## See also
 
