@@ -328,15 +328,16 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     onContentActionSuccess(message) {
         const translatedMessage: any = this.translateService.get(message);
         this.notificationService.openSnackMessage(translatedMessage.value, 4000);
-        if (this.infiniteScrolling) {
-            this.documentList.skipCount = 0;
-            this.documentList.reload();
-        }
+        this.reloadForInfiniteScrolling();
     }
 
     onDeleteActionSuccess(message) {
         this.uploadService.fileDeleted.next(message);
         this.deleteElementSuccess.emit();
+        this.reloadForInfiniteScrolling();
+    }
+
+    private reloadForInfiniteScrolling() {
         if (this.infiniteScrolling) {
             this.documentList.skipCount = 0;
             this.documentList.reload();
