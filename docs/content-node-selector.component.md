@@ -1,6 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-03-12
 ---
 # Content Node Selector component
 
@@ -9,18 +10,6 @@ Allows a user to select items from a Content Services repository.
 ![Content Node Selector screenshot](docassets/images/ContentNodeSelector.png)
 
 ## Basic Usage
-
-### Properties
-
-| Name | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| title | string | "" | Text shown at the top of the selector |
-| currentFolderId | string | null | Node ID of the folder currently listed |
-| dropdownHideMyFiles | boolean | false | Hide the "My Files" option added to the site list by default. [See More](sites-dropdown.component.md) |
-| dropdownSiteList | [SitePaging](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md) |  | custom site for site dropdown same as siteList. [See More](sites-dropdown.component.md#properties) |
-| rowFilter | RowFilter | null | Custom row filter function. [See More](document-list.component.md#custom-row-filter) |
-| imageResolver | ImageResolver | null | Custom image resolver function. [See More](document-list.component.md#custom-image-resolver) |
-| pageSize | number | 10 | Number of items shown per page in the list |
 
 ### Events
 
@@ -114,6 +103,14 @@ function (to select an image to show in a particular list cell). For example, yo
 a row filter to hide document nodes in a folder selector. See the
 [Advanced Usage and Customization](document-list.component.md#advanced-usage-and-customization)
 section of the Document List page to learn how these functions are implemented.
+
+### Using the breadcrumbTransform function
+
+The `breadcrumbTransform` property of `ContentNodeSelectorComponentData` lets you modify
+the Node object that is used to generate the
+list of breadcrumbs. You can use this, for example, to remove path elements that are not
+relevant to the use case. See the [Breadcrumb component](breadcrumb.component.md) page for an
+example of how to use this function.
 
 ## See also
 
