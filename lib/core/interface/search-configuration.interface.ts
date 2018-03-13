@@ -19,6 +19,6 @@ import { QueryBody } from 'alfresco-js-api';
 
 export interface SearchConfigurationInterface {
 
-    generateQueryBody(searchTerm: string, maxResults: string, skipCount: string): QueryBody;
+    generateQueryBody(searchTerm: string, maxResults: number, skipCount: number): QueryBody;
 
 }

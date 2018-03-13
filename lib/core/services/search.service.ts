@@ -37,7 +37,7 @@ export class SearchService {
             .catch(err => this.handleError(err));
     }
 
-    search(searchTerm: string, maxResults: string, skipCount: string): Observable<NodePaging> {
+    search(searchTerm: string, maxResults: number, skipCount: number): Observable<NodePaging> {
         const searchQuery = Object.assign(this.searchConfigurationService.generateQueryBody(searchTerm, maxResults, skipCount));
         const promise = this.apiService.getInstance().search.searchApi.search(searchQuery);
 
