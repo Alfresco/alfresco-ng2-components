@@ -26,14 +26,14 @@ export class CustomEditorComponent extends WidgetComponent {}
 | Name | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
 | readOnly | boolean | false | Does the widget show a read-only value? (ie, can't be edited) |
-| field | [FormFieldModel](form-field.model.md) |  | Data to be displayed in the field |
+| field | [FormFieldModel](../form-field.model.md) |  | Data to be displayed in the field |
 
 ## Details
 
 The Widget component is the base class for all standard and custom form widgets. See the
-[Form Extensibility and Customisation](extensibility.md) page for full details about
+[Form Extensibility and Customisation](../extensibility.md) page for full details about
 implementing custom widgets.
 
 ## See also
 
--   [Extensibility](extensibility.md)
+-   [Extensibility](../extensibility.md)

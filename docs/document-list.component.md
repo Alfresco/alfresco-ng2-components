@@ -535,7 +535,7 @@ You can also use the HTML-based schema declaration used by
 </adf-datatable>
 ```
 
-You can also add tooltips, styling, automatic column title translation and other features. See the [DataColumn component page](data-column.component.md) for more information about specifying and customizing columns.
+You can also add tooltips, styling, automatic column title translation and other features. See the [DataColumn component page](core/data-column.component.md) for more information about specifying and customizing columns.
 
 ### Date Column
 
@@ -602,7 +602,7 @@ you can also define your own actions. See the
 [Content Action component](content-action.component.md)
 for more information and examples.
 
-You can also use the [Context Menu directive](context-menu.directive.md) from the 
+You can also use the [Context Menu directive](core/context-menu.directive.md) from the 
 [ADF Core](https://www.npmjs.com/package/ng2-alfresco-core) library to show the
 actions you have defined in a context menu:
 
@@ -802,7 +802,7 @@ This will give the following output:
 ## See also
 
 -   [Datatable component](datatable.component.md)
--   [Data column component](data-column.component.md)
+-   [Data column component](core/data-column.component.md)
 -   [Pagination component](pagination.component.md)
 -   [Infinite pagination component](infinite-pagination.component.md)
 -   [Sites dropdown component](sites-dropdown.component.md)

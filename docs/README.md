@@ -52,27 +52,27 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Card view component](card-view.component.md) | Displays a configurable property list renderer. | [Source](../lib/core/card-view/components/card-view/card-view.component.ts) |
+| [Card view component](core/card-view.component.md) | Displays a configurable property list renderer. | [Source](../lib/core/card-view/components/card-view/card-view.component.ts) |
 | [Accordion group component](core/accordion-group.component.md) | Adds a collapsible panel to an accordion menu. | [Source](../lib/core/collapsable/accordion-group.component.ts) |
 | [Accordion component](core/accordion.component.md) | Creates a collapsible accordion menu. | [Source](../lib/core/collapsable/accordion.component.ts) |
-| [Data column component](data-column.component.md) | Defines column properties for DataTable, Tasklist, Document List and other components. | [Source](../lib/core/data-column/data-column.component.ts) |
+| [Data column component](core/data-column.component.md) | Defines column properties for DataTable, Tasklist, Document List and other components. | [Source](../lib/core/data-column/data-column.component.ts) |
 | [Datatable component](datatable.component.md) | Displays data as a table with customizable columns and presentation. | [Source](../lib/core/datatable/components/datatable/datatable.component.ts) |
 | [Form field component](form-field.component.md) | A form field in an APS form. | [Source](../lib/core/form/components/form-field/form-field.component.ts) |
 | [Form list component](form-list.component.md) | Shows APS forms as a list. | [Source](../lib/core/form/components/form-list.component.ts) |
 | [Form component](form.component.md) | Shows a Form from APS (see it live: [Form Quickstart](https://embed.plnkr.co/YSLXTqb3DtMhVJSqXKkE/)) | [Source](../lib/core/form/components/form.component.ts) |
 | [Start form component](start-form.component.md) | Displays the Start Form for a process. | [Source](../lib/core/form/components/start-form.component.ts) |
-| [Text mask component](text-mask.component.md) | Implements text field input masks. | [Source](../lib/core/form/components/widgets/text/text-mask.component.ts) |
-| [Info drawer layout component](info-drawer-layout.component.md) | Displays a sidebar-style information panel. | [Source](../lib/core/info-drawer/info-drawer-layout.component.ts) |
-| [Info drawer component](info-drawer.component.md) | Displays a sidebar-style information panel with tabs. | [Source](../lib/core/info-drawer/info-drawer.component.ts) |
-| [Language menu component](language-menu.component.md) | Displays all the languages that are present in the "app.config.json" or the default one (EN). | [Source](../lib/core/language-menu/language-menu.component.ts) |
+| [Text mask component](core/text-mask.component.md) | Implements text field input masks. | [Source](../lib/core/form/components/widgets/text/text-mask.component.ts) |
+| [Info drawer layout component](core/info-drawer-layout.component.md) | Displays a sidebar-style information panel. | [Source](../lib/core/info-drawer/info-drawer-layout.component.ts) |
+| [Info drawer component](core/info-drawer.component.md) | Displays a sidebar-style information panel with tabs. | [Source](../lib/core/info-drawer/info-drawer.component.ts) |
+| [Language menu component](core/language-menu.component.md) | Displays all the languages that are present in the "app.config.json" or the default one (EN). | [Source](../lib/core/language-menu/language-menu.component.ts) |
 | [Login component](login.component.md) | Authenticates to Alfresco Content Services and Alfresco Process Services. | [Source](../lib/core/login/components/login.component.ts) |
 | [Infinite pagination component](infinite-pagination.component.md) | Adds "infinite" pagination to the component it is used with. | [Source](../lib/core/pagination/infinite-pagination.component.ts) |
 | [Pagination component](pagination.component.md) | Adds pagination to the component it is used with. | [Source](../lib/core/pagination/pagination.component.ts) |
 | [Host settings component](host-settings.component.md) | Validates the URLs for ACS and APS and saves them in the user's local storage | [Source](../lib/core/settings/host-settings.component.ts) |
-| [Sidebar action menu component](sidebar-action-menu.component.md) | Displays a sidebar-action menu information panel. | [Source](../lib/core/sidebar/sidebar-action-menu.component.ts) |
-| [Toolbar divider component](toolbar-divider.component.md) | Divides groups of elements in a Toolbar with a visual separator. | [Source](../lib/core/toolbar/toolbar-divider.component.ts) |
-| [Toolbar title component](toolbar-title.component.md) | Supplies custom HTML to be included in a Toolbar component title. | [Source](../lib/core/toolbar/toolbar-title.component.ts) |
-| [Toolbar component](toolbar.component.md) | Simple container for headers, titles, actions and breadcrumbs. | [Source](../lib/core/toolbar/toolbar.component.ts) |
+| [Sidebar action menu component](core/sidebar-action-menu.component.md) | Displays a sidebar-action menu information panel. | [Source](../lib/core/sidebar/sidebar-action-menu.component.ts) |
+| [Toolbar divider component](core/toolbar-divider.component.md) | Divides groups of elements in a Toolbar with a visual separator. | [Source](../lib/core/toolbar/toolbar-divider.component.ts) |
+| [Toolbar title component](core/toolbar-title.component.md) | Supplies custom HTML to be included in a Toolbar component title. | [Source](../lib/core/toolbar/toolbar-title.component.ts) |
+| [Toolbar component](core/toolbar.component.md) | Simple container for headers, titles, actions and breadcrumbs. | [Source](../lib/core/toolbar/toolbar.component.ts) |
 | [User info component](user-info.component.md) | Shows user information. | [Source](../lib/core/userinfo/components/user-info.component.ts) |
 | [Viewer component](viewer.component.md) | Displays content from an ACS repository. | [Source](../lib/core/viewer/components/viewer.component.ts) |
 
@@ -80,13 +80,13 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Context menu directive](context-menu.directive.md) | Adds a context menu to a component. | [Source](../lib/core/context-menu/context-menu.directive.ts) |
+| [Context menu directive](core/context-menu.directive.md) | Adds a context menu to a component. | [Source](../lib/core/context-menu/context-menu.directive.ts) |
 | [Highlight directive](core/highlight.directive.md) | Adds highlighting to selected sections of an HTML element's content. | [Source](../lib/core/directives/highlight.directive.ts) |
 | [Logout directive](logout.directive.md) | Logs the user out when the decorated element is clicked. | [Source](../lib/core/directives/logout.directive.ts) |
-| [Node delete directive](node-delete.directive.md) | Deletes multiple files and folders. | [Source](../lib/core/directives/node-delete.directive.ts) |
-| [Node favorite directive](node-favorite.directive.md) | Selectively toggles nodes as favorite | [Source](../lib/core/directives/node-favorite.directive.ts) |
-| [Node permission directive](node-permission.directive.md) | Selectively disables an HTML element or Angular component | [Source](../lib/core/directives/node-permission.directive.ts) |
-| [Node restore directive](node-restore.directive.md) | Restores deleted nodes to their original location. | [Source](../lib/core/directives/node-restore.directive.ts) |
+| [Node delete directive](core/node-delete.directive.md) | Deletes multiple files and folders. | [Source](../lib/core/directives/node-delete.directive.ts) |
+| [Node favorite directive](core/node-favorite.directive.md) | Selectively toggles nodes as favorite | [Source](../lib/core/directives/node-favorite.directive.ts) |
+| [Node permission directive](core/node-permission.directive.md) | Selectively disables an HTML element or Angular component | [Source](../lib/core/directives/node-permission.directive.ts) |
+| [Node restore directive](core/node-restore.directive.md) | Restores deleted nodes to their original location. | [Source](../lib/core/directives/node-restore.directive.ts) |
 | [Upload directive](core/upload.directive.md) | Allows your components or common HTML elements reacting on File drag and drop in order to upload content. | [Source](../lib/core/directives/upload.directive.ts) |
 
 ## Models
@@ -115,7 +115,7 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Card view update service](card-view-update.service.md) | Reports edits and clicks within fields of a [Card View component](card-view.component.md). | [Source](../lib/core/card-view/services/card-view-update.service.ts) |
+| [Card view update service](core/card-view-update.service.md) | Reports edits and clicks within fields of a Card View component. | [Source](../lib/core/card-view/services/card-view-update.service.ts) |
 | [Activiti alfresco service](activiti-alfresco.service.md) | Gets Alfresco Repository folder content based on a Repository account configured in Alfresco Process Services (APS). | [Source](../lib/core/form/services/activiti-alfresco.service.ts) |
 | [Form rendering service](form-rendering.service.md) | Maps an APS form field type string onto the corresponding form widget component type. | [Source](../lib/core/form/services/form-rendering.service.ts) |
 | [Form service](form.service.md) | Implements Process Services form methods | [Source](../lib/core/form/services/form.service.ts) |
@@ -123,14 +123,14 @@ for more information about installing and using the source code.
 | [Process content service](process-content.service.md) | Manipulates content related to a Process Instance or Task Instance in APS. | [Source](../lib/core/form/services/process-content.service.ts) |
 | [Alfresco api service](alfresco-api.service.md) | Provides access to initialized **AlfrescoJSApi** instance. | [Source](../lib/core/services/alfresco-api.service.ts) |
 | [Apps process service](apps-process.service.md) | Gets details of the Process Services apps that are deployed for the user. | [Source](../lib/core/services/apps-process.service.ts) |
-| [Auth guard bpm service](auth-guard-bpm.service.md) | Adds authentication with Process Services to a route within the app. | [Source](../lib/core/services/auth-guard-bpm.service.ts) |
-| [Auth guard ecm service](auth-guard-ecm.service.md) | Adds authentication with Content Services to a route within the app. | [Source](../lib/core/services/auth-guard-ecm.service.ts) |
-| [Auth guard service](auth-guard.service.md) | Adds authentication to a route within the app. | [Source](../lib/core/services/auth-guard.service.ts) |
+| [Auth guard bpm service](core/auth-guard-bpm.service.md) | Adds authentication with Process Services to a route within the app. | [Source](../lib/core/services/auth-guard-bpm.service.ts) |
+| [Auth guard ecm service](core/auth-guard-ecm.service.md) | Adds authentication with Content Services to a route within the app. | [Source](../lib/core/services/auth-guard-ecm.service.ts) |
+| [Auth guard service](core/auth-guard.service.md) | Adds authentication to a route within the app. | [Source](../lib/core/services/auth-guard.service.ts) |
 | [Authentication service](authentication.service.md) | Provides authentication for use with the Login component. | [Source](../lib/core/services/authentication.service.ts) |
 | [Comment process service](core/comment-process.service.md) | Adds and retrieves comments for task and process instances in Process Services. | [Source](../lib/core/services/comment-process.service.ts) |
 | [Content service](core/content.service.md) | Accesses app-generated data objects via URLs and file downloads. | [Source](../lib/core/services/content.service.ts) |
 | [Cookie service](core/cookie.service.md) | Stores key-value data items as browser cookies. | [Source](../lib/core/services/cookie.service.ts) |
-| [Deleted nodes api service](deleted-nodes-api.service.md) | Gets a list of Content Services nodes currently in the trash. | [Source](../lib/core/services/deleted-nodes-api.service.ts) |
+| [Deleted nodes api service](core/deleted-nodes-api.service.md) | Gets a list of Content Services nodes currently in the trash. | [Source](../lib/core/services/deleted-nodes-api.service.ts) |
 | [Discovery api service](core/discovery-api.service.md) | Gets version and license information for Process Services and Content Services. | [Source](../lib/core/services/discovery-api.service.ts) |
 | [Favorites api service](favorites-api.service.md) | Gets a list of items a user has marked as their favorites. | [Source](../lib/core/services/favorites-api.service.ts) |
 | [Highlight transform service](core/highlight-transform.service.md) | Adds HTML to a string to highlight chosen sections. | [Source](../lib/core/services/highlight-transform.service.ts) |
@@ -143,12 +143,12 @@ for more information about installing and using the source code.
 | [Renditions service](renditions.service.md) ![Deprecated](docassets/images/DeprecatedIcon.png) | Manages prearranged conversions of content to different formats. | [Source](../lib/core/services/renditions.service.ts) |
 | [Search configuration service](search-configuration.service.md) | Provides fine control of parameters to a search. | [Source](../lib/core/services/search-configuration.service.ts) |
 | [Shared links api service](core/shared-links-api.service.md) | Finds shared links to Content Services items. | [Source](../lib/core/services/shared-links-api.service.ts) |
-| [Sites service](sites.service.md) | Accesses and manipulates sites from a Content Services repository. | [Source](../lib/core/services/sites.service.ts) |
+| [Sites service](core/sites.service.md) | Accesses and manipulates sites from a Content Services repository. | [Source](../lib/core/services/sites.service.ts) |
 | [Storage service](core/storage.service.md) | Stores items in the form of key-value pairs. | [Source](../lib/core/services/storage.service.ts) |
 | [Thumbnail service](core/thumbnail.service.md) | Retrieves an SVG thumbnail image to represent a document type. | [Source](../lib/core/services/thumbnail.service.ts) |
 | [Translation service](translation.service.md) | Supports localisation. | [Source](../lib/core/services/translation.service.ts) |
 | [Upload service](upload.service.md) | Provides access to various APIs related to file upload features. | [Source](../lib/core/services/upload.service.ts) |
-| [User preferences service](user-preferences.service.md) | Stores preferences for components. | [Source](../lib/core/services/user-preferences.service.ts) |
+| [User preferences service](core/user-preferences.service.md) | Stores preferences for components. | [Source](../lib/core/services/user-preferences.service.ts) |
 | [Bpm user service](core/bpm-user.service.md) | Gets information about the current Process Services user. | [Source](../lib/core/userinfo/services/bpm-user.service.ts) |
 | [Ecm user service](core/ecm-user.service.md) | Gets information about a Content Services user. | [Source](../lib/core/userinfo/services/ecm-user.service.ts) |
 
@@ -314,11 +314,11 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Widget component](widget.component.md) | Base class for standard and custom widget classes. | [Source](../lib/insights/analytics-process/components/widgets/widget.component.ts) |
-| [Analytics generator component](analytics-generator.component.md) | Generates and shows charts | [Source](../lib/insights/analytics-process/components/analytics-generator.component.ts) |
-| [Analytics report list component](analytics-report-list.component.md) | Shows a list of all available reports | [Source](../lib/insights/analytics-process/components/analytics-report-list.component.ts) |
-| [Analytics component](analytics.component.md) | Shows the charts related to the reportId passed as input | [Source](../lib/insights/analytics-process/components/analytics.component.ts) |
-| [Diagram component](diagram.component.md) | Displays process diagrams. | [Source](../lib/insights/diagram/components/diagram.component.ts) |
+| [Widget component](insights/widget.component.md) | Base class for standard and custom widget classes. | [Source](../lib/insights/analytics-process/components/widgets/widget.component.ts) |
+| [Analytics generator component](insights/analytics-generator.component.md) | Generates and shows charts | [Source](../lib/insights/analytics-process/components/analytics-generator.component.ts) |
+| [Analytics report list component](insights/analytics-report-list.component.md) | Shows a list of all available reports | [Source](../lib/insights/analytics-process/components/analytics-report-list.component.ts) |
+| [Analytics component](insights/analytics.component.md) | Shows the charts related to the reportId passed as input | [Source](../lib/insights/analytics-process/components/analytics.component.ts) |
+| [Diagram component](insights/diagram.component.md) | Displays process diagrams. | [Source](../lib/insights/diagram/components/diagram.component.ts) |
 
 <!--insights end-->
 

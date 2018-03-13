@@ -197,10 +197,10 @@ typical tasklist.
 
 ### DataColumn Features
 
-You can customize the styling of a column and also add features like tooltips and automatic translation of column titles. See the [DataColumn](data-column.component.md) page for more information about these features.
+You can customize the styling of a column and also add features like tooltips and automatic translation of column titles. See the [DataColumn](core/data-column.component.md) page for more information about these features.
 
 ## See also
 
--   [Data column component](data-column.component.md)
+-   [Data column component](core/data-column.component.md)
 -   [DataTableAdapter](datatable-adapter.interface.md)
 -   [Pagination component](pagination.component.md)
