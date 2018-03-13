@@ -317,6 +317,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     onFolderLoaded(nodePage: NodePaging): void {
         this.attemptNodeSelection(this.documentList.folderNode);
         this.pagination = nodePage.list.pagination;
+        this.skipCount = nodePage.list.pagination.skipCount;
     }
 
     /**
