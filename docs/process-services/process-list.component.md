@@ -130,9 +130,8 @@ adf-process-instance-list also supports pagination and the same can be used as s
 | success | Emitted when the list of process instances has been loaded successfully from the server |
 | error | Emitted when an error is encountered loading the list of process instances from the server |
 
-```
 ## See also
 
--   [Data column component](data-column.component.md)
--   [DataTableAdapter](datatable-adapter.interface.md)
--   [Pagination component](pagination.component.md)
+-   [Data column component](../core/data-column.component.md)
+-   [DataTableAdapter](../datatable-adapter.interface.md)
+-   [Pagination component](../pagination.component.md)

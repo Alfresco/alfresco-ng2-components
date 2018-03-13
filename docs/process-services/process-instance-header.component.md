@@ -6,7 +6,7 @@ Status: Active
 
 Sub-component of the process details component, which renders some general information about the selected process.
 
-![adf-process-instance-header](docassets/images/adf-process-instance-header-attachment.png)
+![adf-process-instance-header](../docassets/images/adf-process-instance-header-attachment.png)
 
 ## Basic Usage
 

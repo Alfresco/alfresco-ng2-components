@@ -6,7 +6,7 @@ Status: Active
 
 Shows all available apps.
 
-![how-filter-apps](docassets/images/how-filter-apps.png)
+![how-filter-apps](../docassets/images/how-filter-apps.png)
 
 ## Basic Usage
 
@@ -60,7 +60,7 @@ If you want to show some specific apps you can specify them through the filtersA
 
 In this specific case only the Tasks app, the app with deploymentId 15037 and the app with "my app name" will be shown.
 
-![how-filter-apps](docassets/images/how-filter-apps.png)
+![how-filter-apps](../docassets/images/how-filter-apps.png)
 
 You can use inside the filter one of the following property 
 

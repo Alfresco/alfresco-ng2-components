@@ -44,7 +44,7 @@ properties (title, selection status, etc).
 
 ### Example
 
-You can use an accordion menu to wrap a [process filter](../process-filters.component.md), as shown in
+You can use an accordion menu to wrap a [process filter](../process-services/process-filters.component.md), as shown in
 the following example:
 
 ```html

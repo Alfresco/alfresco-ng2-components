@@ -6,7 +6,7 @@ Status: Active
 
 Displays Upload Component (Drag and Click) to upload the attachment to a specified process instance
 
-![process-create-attachment](docassets/images/process-create-attachment.png)
+![process-create-attachment](../docassets/images/process-create-attachment.png)
 
 ## Basic Usage
 

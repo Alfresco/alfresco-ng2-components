@@ -6,7 +6,7 @@ Status: Active
 
 Displays attached documents on a specified process instance
 
-![process-attachment-list-sample](docassets/images/process-attachment-list.png)
+![process-attachment-list-sample](../docassets/images/process-attachment-list.png)
 
 ## Basic Usage
 
@@ -19,7 +19,7 @@ Displays attached documents on a specified process instance
 
 If the List is empty, a default no content template is displayed.
 
-![default-no-content-template-sample](docassets/images/default-no-content-template.png)
+![default-no-content-template-sample](../docassets/images/default-no-content-template.png)
 
 Make sure to override the UploadService with the ProcessUploadService
 
@@ -80,4 +80,4 @@ If we want user to be able to upload attachments for empty lists, We can wrap ou
 
 If the List is empty, the custom no-content template we passed is displayed.
 
-![custom-no-content-drag-drop-template-sample](docassets/images/custom-no-content-drag-drop-template.png)
+![custom-no-content-drag-drop-template-sample](../docassets/images/custom-no-content-drag-drop-template.png)

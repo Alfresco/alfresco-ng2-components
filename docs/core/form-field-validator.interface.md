@@ -4,8 +4,7 @@ Status: Active
 ---
 # FormFieldValidator interface
 
-Defines how the input fields of [ADF Form](form.component.md) and
-[ADF Task Details](task-details.component.md) components are validated.
+Defines how the input fields of Form and Task Details components are validated.
 
 ## Basic Usage
 
@@ -146,7 +145,7 @@ custom validator set:
 
 If you now run the application and try to enter "admin" in one of the text fields (either optional or required), you should see the following error:
 
-![](docassets/images/demo-validator.png)
+![](../docassets/images/demo-validator.png)
 
 ## See also
 
