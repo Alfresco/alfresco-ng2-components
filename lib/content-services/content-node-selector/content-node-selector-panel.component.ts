@@ -205,15 +205,22 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     }
 
     /**
-     * Clear the search input
+     * Clear the search input and reset to last folder node in which search was performed
      */
     clear(): void {
+        this.clearSearch();
+        this.folderIdToShow = this.siteId || this.currentFolderId;
+    }
+
+    /**
+     * Clear the search input and search related data
+     */
+    clearSearch() {
         this.searchTerm = '';
         this.nodes = null;
         this.skipCount = 0;
         this.chosenNode = null;
         this.showingSearchResults = false;
-        this.folderIdToShow = this.siteId || this.currentFolderId;
     }
 
     /**
@@ -221,7 +228,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
      */
     private updateResults(): void {
         if (this.searchTerm.length === 0) {
-            this.folderIdToShow = this.siteId || this.currentFolderId;
+            this.clear();
         } else {
             this.startNewSearch();
         }
@@ -306,9 +313,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
      * Sets showingSearchResults state to be able to differentiate between search results or folder results
      */
     onFolderChange(): void {
-        this.skipCount = 0;
         this.infiniteScroll = false;
-        this.showingSearchResults = false;
+        this.clearSearch();
     }
 
     /**
