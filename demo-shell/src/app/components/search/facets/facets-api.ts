@@ -24,15 +24,10 @@ export interface SearchConfig {
         permissionEvaluationTime?: number;
         permissionEvaluationCount?: number;
     };
-    facetQueries: Array<{
-        query: string,
-        label: string
-    }>;
+    filterQueries: Array<FilterQuery>;
+    facetQueries: Array<FacetQuery>;
     facetFields: {
-        facets: Array<{
-            field: string;
-            mincount: number;
-        }>
+        facets: Array<FacetField>
     };
 }
 
@@ -72,4 +67,26 @@ export interface FacetComponent {
     id: string;
     settings?: SearchComponentSettingsConfig;
     context?: QueryBuilderContext;
+}
+
+// https://docs.alfresco.com/5.2/concepts/search-api-filterQueries.html
+export interface FilterQuery {
+    query: string;
+}
+
+// https://docs.alfresco.com/5.2/concepts/search-api-facetQueries.html
+export interface FacetQuery {
+    query: string;
+    label: string;
+
+    $checked?: boolean;
+}
+
+// https://docs.alfresco.com/5.2/concepts/search-api-facetFields.html
+export interface FacetField {
+    field: string;
+    label: string;
+    mincount: number;
+
+    $checked?: boolean;
 }

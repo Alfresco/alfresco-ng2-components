@@ -19,7 +19,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NodePaging, QueryBody } from 'alfresco-js-api';
 import { UserPreferencesService, AppConfigService, AlfrescoApiService, SearchConfigurationService } from '@alfresco/adf-core';
-import { SearchConfig, SearchCategoryConfig, QueryBuilderContext } from './facets/facets-api';
+import { SearchConfig, SearchCategoryConfig, QueryBuilderContext, FacetQuery, FacetField, FilterQuery } from './facets/facets-api';
+import { MatCheckboxChange } from '@angular/material';
 
 @Component({
     selector: 'app-search-result-component',
@@ -34,8 +35,11 @@ export class SearchResultComponent implements OnInit {
     categories: Array<SearchCategoryConfig> = [];
     context: QueryBuilderContext;
 
-    resultFacetQueries: any[] = [];
-    resultFacetFields: any[] = [];
+    resultFacetQueries: FacetQuery[] = [];
+    resultFacetFields: FacetField[] = [];
+    filterQueries: FilterQuery[] = [];
+
+    selectedFacetQueries: FacetQuery[] = [];
 
     constructor(private preferences: UserPreferencesService,
                 private route: ActivatedRoute,
@@ -44,6 +48,7 @@ export class SearchResultComponent implements OnInit {
                 private searchConfig: SearchConfigurationService) {
         this.config = appConfig.get<SearchConfig>('search');
         this.categories = this.config.query.categories.filter(f => f.enabled);
+        this.filterQueries = this.config.filterQueries || [];
 
         this.context = {
             config: this.config,
@@ -87,7 +92,13 @@ export class SearchResultComponent implements OnInit {
         const context = data.list.context;
 
         if (context) {
-            this.resultFacetQueries = context.facetQueries;
+            const selected = this.selectedFacetQueries.map(q => q.label);
+            this.resultFacetQueries = (context.facetQueries || []).map(q => {
+                if (selected.includes(q.label)) {
+                    q.$checked = true;
+                }
+                return q;
+            });
             this.resultFacetFields = context.facetsFields;
         } else {
             this.resultFacetQueries = [];
@@ -131,10 +142,7 @@ export class SearchResultComponent implements OnInit {
                     maxItems: maxResults,
                     skipCount: skipCount
                 },
-                filterQueries: [
-                    { query: `TYPE:'cm:folder' OR TYPE:'cm:content'` },
-                    { query: 'NOT cm:creator:System' }
-                ],
+                filterQueries: this.filterQueries,
                 facetQueries: this.config.facetQueries,
                 facetFields: this.config.facetFields,
                 limits: this.config.limits,
@@ -145,5 +153,37 @@ export class SearchResultComponent implements OnInit {
         }
 
         return null;
+    }
+
+    onFacetQueryToggle(event: MatCheckboxChange, query: FacetQuery) {
+        const facetQuery = this.config.facetQueries.find(q => q.label === query.label);
+
+        if (event.checked) {
+            this.selectedFacetQueries.push({ ...facetQuery });
+            if (facetQuery) {
+                this.filterQueries.push({ query: facetQuery.query });
+            }
+            query.$checked = true;
+        } else {
+            this.selectedFacetQueries = this.selectedFacetQueries.filter(q => q.label !== query.label);
+            if (facetQuery) {
+                this.filterQueries = this.filterQueries.filter(f => f.query !== facetQuery.query);
+            }
+            query.$checked = false;
+        }
+
+        this.search();
+    }
+
+    removeFacetQuery(query: FacetQuery) {
+        this.selectedFacetQueries = this.selectedFacetQueries.filter(q => q.label !== query.label);
+        this.filterQueries = this.filterQueries.filter(f => f.query !== query.query);
+
+        this.search();
+    }
+
+    onFacetToggle(event: MatCheckboxChange, field: any, bucket: any) {
+        // tslint:disable-next-line:no-console
+        console.log(event, field, bucket);
     }
 }

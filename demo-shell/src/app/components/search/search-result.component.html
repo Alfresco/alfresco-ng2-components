@@ -1,13 +1,12 @@
 <div class="adf-search-results">
     <div class="adf-search-results__panel">
         <div class="adf-search-results__facets">
-            <mat-chip-list>
-                <mat-chip [removable]="true">
-                    Facet 1
-                    <mat-icon matChipRemove>cancel</mat-icon>
-                </mat-chip>
-                <mat-chip [removable]="true">
-                        Facet 2
+            <mat-chip-list *ngIf="selectedFacetQueries.length > 0">
+                <mat-chip
+                    *ngFor="let query of selectedFacetQueries"
+                    [removable]="true"
+                    (remove)="removeFacetQuery(query)">
+                    {{ query.label }}
                     <mat-icon matChipRemove>cancel</mat-icon>
                 </mat-chip>
             </mat-chip-list>
@@ -34,10 +33,14 @@
                     <mat-panel-title>Facet Queries</mat-panel-title>
                 </mat-expansion-panel-header>
                 <div class="checklist">
-                    <mat-checkbox
-                        *ngFor="let query of resultFacetQueries">
-                        {{ query.label }} ({{ query.count }})
-                    </mat-checkbox>
+                    <ng-container *ngFor="let query of resultFacetQueries">
+                        <mat-checkbox
+                            *ngIf="query.count > 0"
+                            [checked]="query.$checked"
+                            (change)="onFacetQueryToggle($event, query)">
+                            {{ query.label }} ({{ query.count }})
+                        </mat-checkbox>
+                    </ng-container>
                 </div>
             </mat-expansion-panel>
 
@@ -46,7 +49,9 @@
                     <mat-panel-title>{{ field.label }}</mat-panel-title>
                 </mat-expansion-panel-header>
                 <div class="checklist">
-                    <mat-checkbox *ngFor="let bucket of field.buckets">
+                    <mat-checkbox
+                        *ngFor="let bucket of field.buckets"
+                        (change)="onFacetToggle($event, field, bucket)">
                         {{ bucket.display || bucket.label }} ({{ bucket.count }})
                     </mat-checkbox>
                 </div>
