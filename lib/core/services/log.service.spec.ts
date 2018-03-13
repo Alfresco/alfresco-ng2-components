@@ -143,6 +143,18 @@ describe('Log Service', () => {
         expect(console.error).toHaveBeenCalled();
     });
 
+    it('message Observable', (done) => {
+        appConfigService.config['logLevel'] = 'trace';
+        providesLogComponent = TestBed.createComponent(ProvidesLogComponent);
+
+        providesLogComponent.componentInstance.logService.onMessage.subscribe((message) => {
+            done();
+        });
+
+        providesLogComponent.componentInstance.log();
+
+    });
+
 });
 
 @Component({
