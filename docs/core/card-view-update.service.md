@@ -4,7 +4,7 @@ Status: Active
 ---
 # Card View Update service
 
-Reports edits and clicks within fields of a [Card View component](card-view.component.md).
+Reports edits and clicks within fields of a Card View component.
 
 ## Details
 

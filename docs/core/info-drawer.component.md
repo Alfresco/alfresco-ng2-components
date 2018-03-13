@@ -6,7 +6,7 @@ Status: Active
 
 Displays a sidebar-style information panel with tabs.
 
-![Info drawer screenshot](docassets/images/activities-infodrawer.png)
+![Info drawer screenshot](../docassets/images/activities-infodrawer.png)
 
 ## Basic usage
 

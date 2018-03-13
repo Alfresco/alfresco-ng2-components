@@ -6,7 +6,7 @@ Status: Active
 
 Simple container for headers, titles, actions and breadcrumbs.
 
-![](docassets/images/adf-toolbar-01.png)
+![](../docassets/images/adf-toolbar-01.png)
 
 ## Basic Usage
 
@@ -45,7 +45,7 @@ You can use any HTML layout or Angular component as a content of the Title secti
 
 The toolbar should now look similar to the following:
 
-![](docassets/images/adf-toolbar-02.png)
+![](../docassets/images/adf-toolbar-02.png)
 
 ### Divider
 
@@ -90,11 +90,11 @@ You can use the following example to create a dropdown menu:
 
 The code above is based on the `<mat-menu>` component from the `@angular/material` library. You can use any custom menu component as well.
 
-![](docassets/images/adf-toolbar-03.png)
+![](../docassets/images/adf-toolbar-03.png)
 
 Once you click the menu button you should see the following menu items as defined earlier:
 
-![](docassets/images/adf-toolbar-04.png)
+![](../docassets/images/adf-toolbar-04.png)
 
 ### Custom color
 
@@ -104,11 +104,11 @@ Depending on the overall application theme the colors of the toolbar should chan
 
 For example:
 
-![](docassets/images/adf-toolbar-05.png)
+![](../docassets/images/adf-toolbar-05.png)
 
-![](docassets/images/adf-toolbar-06.png)
+![](../docassets/images/adf-toolbar-06.png)
 
-![](docassets/images/adf-toolbar-07.png)
+![](../docassets/images/adf-toolbar-07.png)
 
 ## See also
 
