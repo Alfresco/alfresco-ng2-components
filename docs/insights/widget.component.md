@@ -26,7 +26,7 @@ export class CustomEditorComponent extends WidgetComponent {}
 | Name | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
 | readOnly | boolean | false | Does the widget show a read-only value? (ie, can't be edited) |
-| field | [FormFieldModel](../form-field.model.md) |  | Data to be displayed in the field |
+| field | [FormFieldModel](../core/form-field.model.md) |  | Data to be displayed in the field |
 
 ## Details
 

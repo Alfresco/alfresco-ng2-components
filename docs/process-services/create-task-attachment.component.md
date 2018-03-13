@@ -6,7 +6,7 @@ Status: Active
 
 Displays Upload Component (Drag and Click) to upload the attachment to a specified task
 
-![task-create-attachment](docassets/images/task-create-attachment.png)
+![task-create-attachment](../docassets/images/task-create-attachment.png)
 
 ## Basic Usage
 

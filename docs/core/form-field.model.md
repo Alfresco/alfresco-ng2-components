@@ -4,7 +4,7 @@ Status: Active
 ---
 # Form Field model
 
-Contains the value and metadata for a field of an [ADF Form](form.component.md).
+Contains the value and metadata for a field of a Form component.
 
 ## Properties
 
@@ -60,11 +60,11 @@ You will need to use the properties of `FormFieldModel` if you want to implement
 custom widgets. Aside from the `value` property (which contains the data value entered into
 the field), there are also a few other fields that are used for specific types of data. For
 example, the `currency` property holds the currency symbol to be displayed next to the value
-(such as the dollar sign $) and the `dateDisplayFormat` defines how the elements of a date/time will be arranged. See the [Form Extensibility and Customization](extensibility.md) for more information about creating custom widgets.
+(such as the dollar sign $) and the `dateDisplayFormat` defines how the elements of a date/time will be arranged. See the [Form Extensibility and Customization](../extensibility.md) for more information about creating custom widgets.
 
 ### Validation
 
-A [Form](form.component.md) or [Task Details](task-details.component.md) component can
+A [Form](form.component.md) or [Task Details](../task-details.component.md) component can
 be supplied with a set of validator objects. Each validator applies a particular kind of
 check to a field. A number of `FormFieldModel` properties are used by validators. For
 example, `minValue` and `maxValue` are used to check that a numeric value falls within an
@@ -93,7 +93,7 @@ contains full details about how the REST calls work, along with a worked example
 
 ## See also
 
--   [Extensibility](extensibility.md)
+-   [Extensibility](../extensibility.md)
 -   [FormFieldValidator](form-field-validator.interface.md)
 -   [Form rendering service](form-rendering.service.md)
 -   [Form component](form.component.md)

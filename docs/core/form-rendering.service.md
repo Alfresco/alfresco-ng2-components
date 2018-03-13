@@ -19,7 +19,7 @@ Maps an APS form field type string onto the corresponding form widget component 
     -   `override` - The new resolver will only replace an existing one if this parameter is true
 -   `resolveComponentType(model: DynamicComponentModel, defaultValue: Type<{}> = this.defaultValue): Type<{}>`  
     Finds the component type that is needed to render a form field.  
-    -   `model` - \[Form field model](form-field.model.md) for the field to render
+    -   `model` - [Form field model](form-field.model.md) for the field to render
     -   `defaultValue` - Default type returned for field types that are not yet mapped.
 
 ## Details
@@ -90,11 +90,11 @@ formRenderingService.setComponentTypeResolver('text', newResolver, true);
 
 You would typically use this to replace an existing widget with your own custom version that
 implements a modified layout or responds differently when the data is entered. See the
-[Form Extensibility and Customisation](extensibility.md) guide for further details and examples
+[Form Extensibility and Customisation](../extensibility.md) guide for further details and examples
 of this technique.
 
 ## See also
 
--   [Extensibility](extensibility.md)
+-   [Extensibility](../extensibility.md)
 -   [Form field model](form-field.model.md)
 -   [Form component](form.component.md)
