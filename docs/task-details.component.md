@@ -1,10 +1,12 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-03-13
 ---
+
 # Task Details component
 
-Shows the details of the task id passed in input
+Shows the details of the task ID passed in as input.
 
 ## Basic Usage
 
@@ -37,29 +39,25 @@ Shows the details of the task id passed in input
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| formSaved | `EventEmitter<any>` | Emitted when the form is submitted with the `Save` or custom outcomes. |
-| formCompleted | `EventEmitter<any>` | Emitted when the form is submitted with the `Complete` outcome. |
-| formContentClicked | `EventEmitter<any>` | Emitted when the form field content is clicked. |
-| formLoaded | `EventEmitter<any>` | Emitted when the form is loaded or reloaded. |
-| taskCreated | `EventEmitter<TaskDetailsModel>` | Emitted when a checklist task is created. |
-| taskDeleted | `EventEmitter<string>` | Emitted when a checklist task is deleted. |
-| error | `EventEmitter<any>` | Emitted when an error occurs. |
+| formSaved | `EventEmitter<any>` | Emitted when the form is submitted with the `Save` or custom outcomes.  |
+| formCompleted | `EventEmitter<any>` | Emitted when the form is submitted with the `Complete` outcome.  |
+| formContentClicked | `EventEmitter<any>` | Emitted when the form field content is clicked.  |
+| formLoaded | `EventEmitter<any>` | Emitted when the form is loaded or reloaded.  |
+| taskCreated | `EventEmitter<TaskDetailsModel>` | Emitted when a checklist task is created.  |
+| taskDeleted | `EventEmitter<string>` | Emitted when a checklist task is deleted.  |
+| error | `EventEmitter<any>` | Emitted when an error occurs.  |
 | executeOutcome | `EventEmitter<any>` | Emitted when any outcome is executed. Default behaviour can be prevented via `event.preventDefault()`. |
-| assignTask | `EventEmitter<void>` | Emitted when a task is assigned. |
-| claimedTask | `EventEmitter<string>` | Emitted when a task is claimed. |
-| unClaimedTask | `EventEmitter<string>` | Emitted when a task is unclaimed. |
+| assignTask | `EventEmitter<void>` | Emitted when a task is assigned.  |
+| claimedTask | `EventEmitter<string>` | Emitted when a task is claimed.  |
+| unClaimedTask | `EventEmitter<string>` | Emitted when a task is unclaimed.  |
 
 ## Details
 
-### Custom 'empty Activiti Task Details' template
+### Custom 'empty Task Details' template
 
-By default the Activiti Task Details provides the following message for the empty task details:
-
-```html
-No Tasks
-```
-
-This can be changed by adding the following custom html template:
+By default the Task Details component shows a simple "No Tasks"  message when there are
+no details. You can change this by adding the a custom HTML template as in the following
+example:
 
 ```html
 <adf-task-details [taskId]="taskId">
@@ -72,4 +70,4 @@ This can be changed by adding the following custom html template:
 </adf-task-details>    
 ```
 
-Note that can put any HTML content as part of the template, including other Angular components.
+Note that you can use any HTML content in the template, including other Angular components.

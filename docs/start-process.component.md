@@ -1,7 +1,9 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-03-13
 ---
+
 # Start Process component
 
 Starts a process.
@@ -35,7 +37,9 @@ Starts a process.
 | cancel | `EventEmitter<ProcessInstance>` | Emitted when the process is canceled |
 | error | `EventEmitter<ProcessInstance>` | Emitted when the start process operation fails |
 
-### Start a process with a default name and pre-selected process definition name
+## Details
+
+### Starting a process with a default name and pre-selected process definition name
 
 ```html
  <adf-start-process 
@@ -45,9 +49,11 @@ Starts a process.
  </adf-start-process>		 
 ```
 
-If your app has more than one process definition, with the property processDefinitionName you can select as dropdown default value your PROCESS_DEFINITION_NAME. The name will be the PROCESS_NAME.
+You can use the `processDefinitionName` property to select which process will be selected by
+default on the dropdown (when there is more than one process to choose from). Use the `name`
+property to set the name shown on the dropdown item.
 
-### Start a process not included in an app
+### Starting a process not included in an app
 
 ```html
  <adf-start-process 
@@ -55,12 +61,12 @@ If your app has more than one process definition, with the property processDefin
  </adf-start-process>		 
 ```
 
-With the property processDefinitionName you can select as dropdown default value your PROCESS_DEFINITION_NAME. 
+Use `processDefinitionName` to set the dropdown item as in the example above. 
 
 ### Custom data example
 
-Here is an example of how to pass in form field values to initialize the start form that has been
-defined for the process:
+The following example shows how to pass in form field values to initialize the
+start form for the process:
 
 ```ts
 const formValues: FormValues  = {
@@ -82,9 +88,11 @@ const formValues: FormValues  = {
 
 ### Attaching a File to the start form of the process
 
-After the repository is created in APS, you can it in the Alfresco Repositories list.
-If the ID is set to 1 then all default values are fine. 
-However, if it is set to something else, for example, _1002_ and the name is _alfresco_, you must set the property `alfrescoRepositoryName` in your `app.config.json` file to  _alfresco-1002_:
+You can see a repository in the Alfresco Repositories list once it is created in APS.
+If the repository is set up with an ID value of anything other than 1 then you will need
+to declare it in `app.config.json`. For example, if the repository's ID is 1002 and its
+name is _alfresco_ then you would set the `alfrescoRepositoryName` property in`app.config.json`
+to _alfresco-1002_ as follows:
 
 ```json
         {
