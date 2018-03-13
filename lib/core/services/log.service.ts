@@ -15,24 +15,23 @@
  * limitations under the License.
  */
 
+/* tslint:disable:no-console  */
+
 import { Injectable } from '@angular/core';
 import { AppConfigService } from '../app-config/app-config.service';
 import { logLevels, LogLevelsEnum } from '../models/log-levels.model';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class LogService {
 
     currentLogLevel: LogLevelsEnum = LogLevelsEnum.TRACE;
 
-    private onMessageSubject: BehaviorSubject<any>;
-    onMessage: Observable<any>;
+    onMessage: Subject<any>;
 
     constructor(appConfig: AppConfigService) {
 
-        this.onMessageSubject = new BehaviorSubject('');
-        this.onMessage = this.onMessageSubject.asObservable();
+        this.onMessage = new Subject();
 
         if (appConfig) {
             let configLevel: string = appConfig.get<string>('logLevel');
@@ -126,7 +125,7 @@ export class LogService {
         return referencedLevel ? referencedLevel.level : 5;
     }
 
-    messageBus(message: string, logLevel: string) {
-        this.onMessageSubject.next({ text: text, type: logLevel });
+    messageBus(text: string, logLevel: string) {
+        this.onMessage.next({ text: text, type: logLevel });
     }
 }
