@@ -15,7 +15,7 @@ before_install:
 jobs:
     include:
         - stage: Update Generator
-          script: ./scripts/update-generator.sh -t $GITHUB_TOKEN
+          script: ./scripts/update-generator.sh -gnu -t $GITHUB_TOKEN
 # jobs:
 #   include:
 #     - stage: Publish alpha to NPM
