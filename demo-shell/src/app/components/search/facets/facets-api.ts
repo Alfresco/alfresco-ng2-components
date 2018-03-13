@@ -90,3 +90,17 @@ export interface FacetField {
 
     $checked?: boolean;
 }
+
+export interface ResponseFacetField {
+    label: string;
+    buckets: Array<FacetFieldBucket>;
+}
+
+export interface FacetFieldBucket {
+    count: number;
+    display?: string;
+    label: string;
+    filterQuery: string;
+
+    $checked?: boolean;
+}

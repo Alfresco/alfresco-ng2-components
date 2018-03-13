@@ -33,7 +33,7 @@
                     <mat-panel-title>Facet Queries</mat-panel-title>
                 </mat-expansion-panel-header>
                 <div class="checklist">
-                    <ng-container *ngFor="let query of resultFacetQueries">
+                    <ng-container *ngFor="let query of responseFacetQueries">
                         <mat-checkbox
                             *ngIf="query.count > 0"
                             [checked]="query.$checked"
@@ -44,13 +44,14 @@
                 </div>
             </mat-expansion-panel>
 
-            <mat-expansion-panel *ngFor="let field of resultFacetFields">
+            <mat-expansion-panel *ngFor="let field of responseFacetFields">
                 <mat-expansion-panel-header>
                     <mat-panel-title>{{ field.label }}</mat-panel-title>
                 </mat-expansion-panel-header>
                 <div class="checklist">
                     <mat-checkbox
                         *ngFor="let bucket of field.buckets"
+                        [checked]="bucket.$checked"
                         (change)="onFacetToggle($event, field, bucket)">
                         {{ bucket.display || bucket.label }} ({{ bucket.count }})
                     </mat-checkbox>

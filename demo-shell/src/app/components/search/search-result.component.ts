@@ -19,7 +19,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NodePaging, QueryBody } from 'alfresco-js-api';
 import { UserPreferencesService, AppConfigService, AlfrescoApiService, SearchConfigurationService } from '@alfresco/adf-core';
-import { SearchConfig, SearchCategoryConfig, QueryBuilderContext, FacetQuery, FacetField, FilterQuery } from './facets/facets-api';
+import { SearchConfig, SearchCategoryConfig, QueryBuilderContext, FacetQuery, FacetField, FilterQuery, FacetFieldBucket, ResponseFacetField } from './facets/facets-api';
 import { MatCheckboxChange } from '@angular/material';
 
 @Component({
@@ -35,11 +35,12 @@ export class SearchResultComponent implements OnInit {
     categories: Array<SearchCategoryConfig> = [];
     context: QueryBuilderContext;
 
-    resultFacetQueries: FacetQuery[] = [];
-    resultFacetFields: FacetField[] = [];
+    responseFacetQueries: FacetQuery[] = [];
+    responseFacetFields: FacetField[] = [];
     filterQueries: FilterQuery[] = [];
 
     selectedFacetQueries: FacetQuery[] = [];
+    selectedBuckets: FacetFieldBucket[] = [];
 
     constructor(private preferences: UserPreferencesService,
                 private route: ActivatedRoute,
@@ -92,17 +93,28 @@ export class SearchResultComponent implements OnInit {
         const context = data.list.context;
 
         if (context) {
-            const selected = this.selectedFacetQueries.map(q => q.label);
-            this.resultFacetQueries = (context.facetQueries || []).map(q => {
-                if (selected.includes(q.label)) {
+            const queryLabels = this.selectedFacetQueries.map(q => q.label);
+            this.responseFacetQueries = (context.facetQueries || []).map(q => {
+                if (queryLabels.includes(q.label)) {
                     q.$checked = true;
                 }
                 return q;
             });
-            this.resultFacetFields = context.facetsFields;
+
+            const bucketLabels = this.selectedBuckets.map(b => b.label);
+            this.responseFacetFields = (context.facetsFields || []).map(
+                (f: ResponseFacetField) => {
+                    (f.buckets || []).forEach(b => {
+                        if (bucketLabels.includes(b.label)) {
+                            b.$checked = true;
+                        }
+                    });
+                    return f;
+                }
+            );
         } else {
-            this.resultFacetQueries = [];
-            this.resultFacetFields = [];
+            this.responseFacetQueries = [];
+            this.responseFacetFields = [];
         }
     }
 
@@ -111,17 +123,17 @@ export class SearchResultComponent implements OnInit {
         const fields = [];
 
         this.categories.forEach(facet => {
-            const facetQuery = this.context.query[facet.id];
-            if (facetQuery) {
+            const customQuery = this.context.query[facet.id];
+            if (customQuery) {
                 if (query.length > 0) {
                     query += ' AND ';
                 }
-                query += `(${facetQuery})`;
+                query += `(${customQuery})`;
             }
 
-            const facetFields = this.context.fields[facet.id];
-            if (facetFields && facetFields.length > 0) {
-                for (const field of facetFields) {
+            const customFields = this.context.fields[facet.id];
+            if (customFields && customFields.length > 0) {
+                for (const field of customFields) {
                     if (!fields.includes(field)) {
                         fields.push(field);
                     }
@@ -182,8 +194,19 @@ export class SearchResultComponent implements OnInit {
         this.search();
     }
 
-    onFacetToggle(event: MatCheckboxChange, field: any, bucket: any) {
+    onFacetToggle(event: MatCheckboxChange, field: ResponseFacetField, bucket: FacetFieldBucket) {
         // tslint:disable-next-line:no-console
         console.log(event, field, bucket);
+        if (event.checked) {
+            this.selectedBuckets.push({ ...bucket });
+            this.filterQueries.push({ query: bucket.filterQuery });
+            bucket.$checked = true;
+        } else {
+            this.selectedBuckets = this.selectedBuckets.filter(b => b.label !== bucket.label);
+            this.filterQueries = this.filterQueries.filter(f => f.query !== bucket.filterQuery);
+            bucket.$checked = false;
+        }
+
+        this.search();
     }
 }
