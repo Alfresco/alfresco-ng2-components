@@ -292,8 +292,8 @@ describe('ContentNodeSelectorComponent', () => {
                     },
                     include: ['path', 'allowableOperations'],
                     paging: {
-                        maxItems: '25',
-                        skipCount: skipCount.toString()
+                        maxItems: 25,
+                        skipCount: skipCount
                     },
                     filterQueries: [
                         { query: "TYPE:'cm:folder'" },
