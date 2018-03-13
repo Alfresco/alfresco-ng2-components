@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewEncapsulation, OnInit, Input } from '@angular/core';
-import { FacetComponent, QueryBuilderContext, SearchComponentSettingsConfig } from './facets-api';
+import { FacetComponent, QueryBuilderContext, SearchComponentSettings } from './facets-api';
 import { MatSelectChange } from '@angular/material';
 
 @Component({
@@ -45,7 +45,7 @@ export class ScopeLocationsFacetComponent implements FacetComponent, OnInit {
     value: string;
 
     id: string;
-    settings: SearchComponentSettingsConfig;
+    settings: SearchComponentSettings;
     context: QueryBuilderContext;
 
     ngOnInit() {

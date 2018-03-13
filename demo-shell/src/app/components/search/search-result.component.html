@@ -14,7 +14,11 @@
 
         <mat-accordion class="adf-search-results__widgets" multi="true" displayMode="flat">
 
-            <mat-expansion-panel *ngFor="let category of categories">
+            <mat-expansion-panel
+                *ngFor="let category of categories"
+                [expanded]="category.expanded"
+                (opened)="onCategoryExpanded(category)"
+                (closed)="onCategoryCollapsed(category)">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         {{ category.name }}
@@ -44,7 +48,11 @@
                 </div>
             </mat-expansion-panel>
 
-            <mat-expansion-panel *ngFor="let field of responseFacetFields">
+            <mat-expansion-panel
+                *ngFor="let field of responseFacetFields"
+                [expanded]="field.$expanded ? true : false"
+                (opened)="onFacetFieldExpanded(field)"
+                (closed)="onFacetFieldCollapsed(field)">
                 <mat-expansion-panel-header>
                     <mat-panel-title>{{ field.label }}</mat-panel-title>
                 </mat-expansion-panel-header>

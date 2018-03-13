@@ -84,6 +84,7 @@
           "id": "broken",
           "name": "Broken Facet",
           "enabled": false,
+          "expanded": false,
           "component": {
             "selector": "app-text-facet",
             "settings": {
@@ -95,6 +96,7 @@
           "id": "facet1",
           "name": "Name",
           "enabled": true,
+          "expanded": true,
           "component": {
             "selector": "app-text-facet",
             "settings": {
@@ -107,6 +109,7 @@
           "id": "facet2",
           "name": "Fields",
           "enabled": true,
+          "expanded": false,
           "component": {
             "selector": "app-fields-facet",
             "settings": {
@@ -124,6 +127,7 @@
           "id": "facet3",
           "name": "Type",
           "enabled": true,
+          "expanded": false,
           "component": {
             "selector": "app-radio-facet",
             "settings": {
@@ -141,6 +145,7 @@
           "id": "facet4",
           "name": "Locations",
           "enabled": true,
+          "expanded": false,
           "component": {
             "selector": "app-scope-locations-facet",
             "settings": {

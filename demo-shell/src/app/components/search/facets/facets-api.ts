@@ -18,7 +18,7 @@
 /** Holds entire Search configuration  */
 export interface SearchConfig {
     query: {
-        categories: Array<SearchCategoryConfig>
+        categories: Array<SearchCategory>
     };
     limits?: {
         permissionEvaluationTime?: number;
@@ -32,21 +32,19 @@ export interface SearchConfig {
 }
 
 /** Custom search category configuration */
-export interface SearchCategoryConfig {
+export interface SearchCategory {
     id: string;
     name: string;
     enabled: boolean;
-    component: SearchComponentConfig;
-}
-
-/** Custom search component configuration  */
-export interface SearchComponentConfig {
-    selector: string;
-    settings: SearchComponentSettingsConfig;
+    expanded: boolean;
+    component: {
+        selector: string;
+        settings: SearchComponentSettings;
+    };
 }
 
 /** Settings to pass to a particular facet component upon creation */
-export interface SearchComponentSettingsConfig {
+export interface SearchComponentSettings {
     field: string;
     [indexer: string]: any;
 }
@@ -65,7 +63,7 @@ export interface QueryBuilderContext {
 /** Contract for a facet component implementation */
 export interface FacetComponent {
     id: string;
-    settings?: SearchComponentSettingsConfig;
+    settings?: SearchComponentSettings;
     context?: QueryBuilderContext;
 }
 
@@ -94,6 +92,8 @@ export interface FacetField {
 export interface ResponseFacetField {
     label: string;
     buckets: Array<FacetFieldBucket>;
+
+    $expanded?: boolean;
 }
 
 export interface FacetFieldBucket {
@@ -103,4 +103,5 @@ export interface FacetFieldBucket {
     filterQuery: string;
 
     $checked?: boolean;
+    $field?: string;
 }

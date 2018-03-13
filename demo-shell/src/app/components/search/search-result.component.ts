@@ -19,7 +19,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NodePaging, QueryBody } from 'alfresco-js-api';
 import { UserPreferencesService, AppConfigService, AlfrescoApiService, SearchConfigurationService } from '@alfresco/adf-core';
-import { SearchConfig, SearchCategoryConfig, QueryBuilderContext, FacetQuery, FacetField, FilterQuery, FacetFieldBucket, ResponseFacetField } from './facets/facets-api';
+import { SearchConfig, SearchCategory, QueryBuilderContext, FacetQuery, FilterQuery, FacetFieldBucket, ResponseFacetField } from './facets/facets-api';
 import { MatCheckboxChange } from '@angular/material';
 
 @Component({
@@ -32,11 +32,11 @@ export class SearchResultComponent implements OnInit {
     data: NodePaging;
     config: SearchConfig;
 
-    categories: Array<SearchCategoryConfig> = [];
+    categories: Array<SearchCategory> = [];
     context: QueryBuilderContext;
 
     responseFacetQueries: FacetQuery[] = [];
-    responseFacetFields: FacetField[] = [];
+    responseFacetFields: ResponseFacetField[] = [];
     filterQueries: FilterQuery[] = [];
 
     selectedFacetQueries: FacetQuery[] = [];
@@ -76,7 +76,7 @@ export class SearchResultComponent implements OnInit {
 
     async updateQuery() {
         // tslint:disable-next-line:no-console
-        console.log(this.context);
+        // console.log(this.context);
         this.search();
     }
 
@@ -88,28 +88,58 @@ export class SearchResultComponent implements OnInit {
         }
     }
 
+    private mapResponseFacetQueries(): { [id: string]: FacetQuery } {
+        const result = {};
+        this.selectedFacetQueries.forEach(query => {
+            result[query.label] = query;
+        });
+        return result;
+    }
+
+    private mapResponseFacetFields(): { [id: string]: ResponseFacetField } {
+        const result = {};
+        this.responseFacetFields.forEach(field => {
+            result[field.label] = field;
+        });
+        return result;
+    }
+
     onDataLoaded(data: any) {
         this.data = data;
         const context = data.list.context;
 
         if (context) {
-            const queryLabels = this.selectedFacetQueries.map(q => q.label);
+            const previousQueries = this.mapResponseFacetQueries();
             this.responseFacetQueries = (context.facetQueries || []).map(q => {
-                if (queryLabels.includes(q.label)) {
+                if (previousQueries[q.label]) {
                     q.$checked = true;
                 }
                 return q;
             });
 
-            const bucketLabels = this.selectedBuckets.map(b => b.label);
+            const previousFields = this.mapResponseFacetFields();
+
             this.responseFacetFields = (context.facetsFields || []).map(
-                (f: ResponseFacetField) => {
-                    (f.buckets || []).forEach(b => {
-                        if (bucketLabels.includes(b.label)) {
+                (field: ResponseFacetField) => {
+                    if (previousFields[field.label]) {
+                        field.$expanded = previousFields[field.label].$expanded;
+                    }
+                    // const previousBuckets = this.selectedBuckets.map(b => b.label);fi
+                    (field.buckets || []).forEach(bucket => {
+                        bucket.$field = field.label;
+                        /*
+                        if (previousBuckets.includes(b.label)) {
                             b.$checked = true;
                         }
+                        */
+                       const previousBucket = this.selectedBuckets.find(
+                           b => b.$field === bucket.$field && b.label === bucket.label
+                        );
+                       if (previousBucket) {
+                           bucket.$checked = true;
+                       }
                     });
-                    return f;
+                    return field;
                 }
             );
         } else {
@@ -195,18 +225,46 @@ export class SearchResultComponent implements OnInit {
     }
 
     onFacetToggle(event: MatCheckboxChange, field: ResponseFacetField, bucket: FacetFieldBucket) {
-        // tslint:disable-next-line:no-console
-        console.log(event, field, bucket);
         if (event.checked) {
             this.selectedBuckets.push({ ...bucket });
             this.filterQueries.push({ query: bucket.filterQuery });
             bucket.$checked = true;
         } else {
-            this.selectedBuckets = this.selectedBuckets.filter(b => b.label !== bucket.label);
+            const idx = this.selectedBuckets.findIndex(
+                b => b.$field === bucket.$field && b.label === bucket.label
+            );
+
+            if (idx >= 0) {
+                this.selectedBuckets.splice(idx, 1);
+            }
             this.filterQueries = this.filterQueries.filter(f => f.query !== bucket.filterQuery);
             bucket.$checked = false;
         }
 
         this.search();
+    }
+
+    onCategoryExpanded(category: SearchCategory) {
+        category.expanded = true;
+        // tslint:disable-next-line:no-console
+        // console.log(category);
+    }
+
+    onCategoryCollapsed(category: SearchCategory) {
+        category.expanded = false;
+        // tslint:disable-next-line:no-console
+        // console.log(category);
+    }
+
+    onFacetFieldExpanded(field: ResponseFacetField) {
+        field.$expanded = true;
+        // tslint:disable-next-line:no-console
+        // console.log(field);
+    }
+
+    onFacetFieldCollapsed(field: ResponseFacetField) {
+        field.$expanded = false;
+        // tslint:disable-next-line:no-console
+        // console.log(field);
     }
 }
