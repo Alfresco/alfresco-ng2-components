@@ -23,7 +23,7 @@ while [[ $1 == -* ]]; do
 done
 
 rm -rf $TEMP_GENERATOR_DIR;
-git clone git@github.com:Alfresco/generator-ng2-alfresco-app.git $TEMP_GENERATOR_DIR
+git clone https://github.com/Alfresco/generator-ng2-alfresco-app.git $TEMP_GENERATOR_DIR
 cd $TEMP_GENERATOR_DIR
 git checkout development
 
