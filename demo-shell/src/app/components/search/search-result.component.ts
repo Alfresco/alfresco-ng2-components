@@ -34,15 +34,15 @@ export class SearchResultComponent implements OnInit {
     categories: Array<SearchCategoryConfig> = [];
     context: QueryBuilderContext;
 
+    resultFacetQueries: any[] = [];
+    resultFacetFields: any[] = [];
+
     constructor(private preferences: UserPreferencesService,
                 private route: ActivatedRoute,
                 private api: AlfrescoApiService,
                 appConfig: AppConfigService,
                 private searchConfig: SearchConfigurationService) {
         this.config = appConfig.get<SearchConfig>('search');
-        // tslint:disable-next-line:no-console
-        console.log(this.config);
-
         this.categories = this.config.query.categories.filter(f => f.enabled);
 
         this.context = {
@@ -77,15 +77,22 @@ export class SearchResultComponent implements OnInit {
     async search() {
         const query = this.buildQuery(this.preferences.paginationSize, 0);
         if (query) {
-            const data: NodePaging = await this.api.searchApi.search(query);
-            // tslint:disable-next-line:no-console
-            console.log(data);
+            const data = await this.api.searchApi.search(query);
             this.onDataLoaded(data);
         }
     }
 
-    onDataLoaded(data: NodePaging) {
+    onDataLoaded(data: any) {
         this.data = data;
+        const context = data.list.context;
+
+        if (context) {
+            this.resultFacetQueries = context.facetQueries;
+            this.resultFacetFields = context.facetsFields;
+        } else {
+            this.resultFacetQueries = [];
+            this.resultFacetFields = [];
+        }
     }
 
     buildQuery(maxResults: number, skipCount: number): QueryBody {
@@ -111,9 +118,6 @@ export class SearchResultComponent implements OnInit {
             }
         });
 
-        // tslint:disable-next-line:no-console
-        console.log(query, fields, this.context.scope);
-
         if (query) {
 
             const result: QueryBody = {
@@ -124,32 +128,15 @@ export class SearchResultComponent implements OnInit {
                 include: ['path', 'allowableOperations'],
                 fields: fields,
                 paging: {
-                    // https://issues.alfresco.com/jira/browse/ADF-2448
-                    maxItems: `${maxResults}`,
-                    skipCount: `${skipCount}`
+                    maxItems: maxResults,
+                    skipCount: skipCount
                 },
                 filterQueries: [
                     { query: `TYPE:'cm:folder' OR TYPE:'cm:content'` },
                     { query: 'NOT cm:creator:System' }
                 ],
-                facetQueries: [
-                    { query: 'created:2018', label: 'CreatedThisYear' },
-                    { query: 'content.mimetype', label: 'Type' },
-                    {'query': 'content.size:[0 TO 10240]', 'label': 'xtra small'},
-                    {'query': 'content.size:[10240 TO 102400]', 'label': 'small'},
-                    {'query': 'content.size:[102400 TO 1048576]', 'label': 'medium'},
-                    {'query': 'content.size:[1048576 TO 16777216]', 'label': 'large'},
-                    {'query': 'content.size:[16777216 TO 134217728]', 'label': 'xtra large'},
-                    {'query': 'content.size:[134217728 TO MAX]', 'label': 'XX large'}
-                ],
-                facetFields: {
-                    facets: [
-                        { field: 'content.mimetype' },
-                        { field: 'content.size' }
-                        // { field: 'creator', mincount: 1 },
-                        // { field: 'modifier', mincount: 1 }
-                    ]
-                },
+                facetQueries: this.config.facetQueries,
+                facetFields: this.config.facetFields,
                 limits: this.config.limits,
                 scope: this.context.scope
             };

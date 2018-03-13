@@ -1,12 +1,29 @@
 .adf-search-results {
     display: flex;
 
-    &__facets {
+    &__panel {
         width: 260px;
         border: 1px solid #eee;
     }
 
+    &__facets {
+        margin: 5px;
+    }
+
+    &__widgets {
+        font: inherit;
+    }
+
     &__content {
         flex: 1;
+    }
+
+    .checklist {
+        display: flex;
+        flex-direction: column;
+
+        .mat-checkbox {
+            margin: 5px;
+        }
     }
 }

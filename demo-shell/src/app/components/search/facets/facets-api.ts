@@ -24,6 +24,16 @@ export interface SearchConfig {
         permissionEvaluationTime?: number;
         permissionEvaluationCount?: number;
     };
+    facetQueries: Array<{
+        query: string,
+        label: string
+    }>;
+    facetFields: {
+        facets: Array<{
+            field: string;
+            mincount: number;
+        }>
+    };
 }
 
 /** Custom search category configuration */

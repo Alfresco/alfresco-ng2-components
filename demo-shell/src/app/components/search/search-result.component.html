@@ -1,6 +1,20 @@
 <div class="adf-search-results">
-    <div class="adf-search-results__facets">
-        <mat-accordion multi="true" displayMode="flat">
+    <div class="adf-search-results__panel">
+        <div class="adf-search-results__facets">
+            <mat-chip-list>
+                <mat-chip [removable]="true">
+                    Facet 1
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+                <mat-chip [removable]="true">
+                        Facet 2
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+            </mat-chip-list>
+        </div>
+
+        <mat-accordion class="adf-search-results__widgets" multi="true" displayMode="flat">
+
             <mat-expansion-panel *ngFor="let category of categories">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
@@ -13,6 +27,29 @@
                     [selector]="category.component.selector"
                     [settings]="category.component.settings">
                 </app-facet-container>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Facet Queries</mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="checklist">
+                    <mat-checkbox
+                        *ngFor="let query of resultFacetQueries">
+                        {{ query.label }} ({{ query.count }})
+                    </mat-checkbox>
+                </div>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel *ngFor="let field of resultFacetFields">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>{{ field.label }}</mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="checklist">
+                    <mat-checkbox *ngFor="let bucket of field.buckets">
+                        {{ bucket.display || bucket.label }} ({{ bucket.count }})
+                    </mat-checkbox>
+                </div>
             </mat-expansion-panel>
         </mat-accordion>
     </div>
