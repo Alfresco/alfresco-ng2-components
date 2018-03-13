@@ -25,7 +25,7 @@ export class SearchConfigurationService implements SearchConfigurationInterface 
     constructor() {
     }
 
-    public generateQueryBody(searchTerm: string, maxResults: string, skipCount: string): QueryBody {
+    public generateQueryBody(searchTerm: string, maxResults: number, skipCount: number): QueryBody {
         let defaultQueryBody: QueryBody = {
             query: {
                 query: searchTerm ? `${searchTerm}* OR name:${searchTerm}*` : searchTerm

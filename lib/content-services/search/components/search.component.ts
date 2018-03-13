@@ -158,7 +158,7 @@ export class SearchComponent implements AfterContentInit, OnChanges {
                 search$ = this.searchService.searchByQueryBody(this.queryBody);
             } else {
                 search$ = this.searchService
-                    .search(searchTerm, this.maxResults.toString(), this.skipResults.toString());
+                    .search(searchTerm, this.maxResults, this.skipResults);
             }
             search$.subscribe(
                     results => {
