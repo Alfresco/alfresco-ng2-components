@@ -1,7 +1,9 @@
 ---
 Added: v2.1.0
 Status: Active
+Last reviewed: 2018-03-13
 ---
+
 # Content Node Dialog service
 
 Displays and manages dialogs for selecting content to open, copy or upload.

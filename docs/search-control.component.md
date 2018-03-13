@@ -1,6 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-03-13
 ---
 # Search control component
 
@@ -28,7 +29,7 @@ Displays a input text which shows find-as-you-type suggestions.
 | autocomplete | `boolean` | `false` | Toggles auto-completion of the search input field.  |
 | liveSearchEnabled | `boolean` | `true` | Toggles "find-as-you-type" suggestions for possible matches.  |
 | liveSearchMaxResults | `number` | `5` | Maximum number of results to show in the live search.  |
-| customQueryBody | `QueryBody` |  |  |
+| customQueryBody | `QueryBody` |  | Deprecated in v2.1.0. |
 
 ### Events
 
@@ -40,6 +41,8 @@ Displays a input text which shows find-as-you-type suggestions.
 
 ## Details
 
+Below is an example of a component that uses the search control. In this example the search term is simply logged to the console. However, the component could instead emit an event to be consumed upstream,or it could trigger a change inside a search results component embedded inside the same component.
+
 ```html
 <adf-search-control 
     [highlight]="true"
@@ -48,12 +51,9 @@ Displays a input text which shows find-as-you-type suggestions.
 </adf-search-control>
 ```
 
-Example of a component that uses the search control. In this example the search term is simply logged to the console
-but instead the component could emit an event to be consumed upstream, or it could trigger a change inside a search
-results component embedded inside the same component.
+### Customizable template for no result
 
-## Customizable template for no result
-It is possible to customize with your own template what to show when no result are found for the search.
+You can show your own custom template when no results are found for the search:
 
 ```html
 <adf-search-control [highlight]="true"
@@ -65,4 +65,6 @@ It is possible to customize with your own template what to show when no result a
     </adf-empty-search-result>
 </adf-search-control>
 ```
-All you need to add is the `adf-empty-search-result` tag in the `adf-search-control` and then put inside the template you want to render when no results are found.
+
+Place the `adf-empty-search-result` tag inside the `adf-search-control` and then within it, put
+whatever content you want to show for an "empty" result.
