@@ -240,7 +240,7 @@ also implement your own custom validators to replace or extend the set. See the
 
 #### Render form by using form definition JSON
 
-Please give a look to the [demo-form](docassets/demo-form.json) as a sample of form definition JSON.
+Please give a look to the [demo-form](../docassets/demo-form.json) as a sample of form definition JSON.
 
 The component below with the form definition JSON assigned to the variable `formDefinitionJSON`, shows how a form is rendered by using form definition JSON.
 
@@ -288,7 +288,7 @@ You subscribe to the `formFieldValueChanged` event and check whether event is ra
 
 The result should be as following:
 
-![](docassets/images/form-service-sample-01.png)
+![](../docassets/images/form-service-sample-01.png)
 
 #### Listen all form Events
 
@@ -331,14 +331,13 @@ Using the CSS you can target any outcome ID and change the style as in this exam
 }
 ```
 
-![](docassets/images/form-style-sample.png)
+![](../docassets/images/form-style-sample.png)
 
 
 
 ## See also
 
--   [Stencils](stencils.md)
 -   [FormFieldValidator](form-field-validator.interface.md)
--   [Extensibility](extensibility.md)
+-   [Extensibility](../extensibility.md)
 -   [Form rendering service](form-rendering.service.md)
 -   [Form field model](form-field.model.md)

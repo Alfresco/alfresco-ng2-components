@@ -6,7 +6,7 @@ Status: Active
 
 Fetches the Process Audit information in the pdf or json format.
 
-![adf-process-audit-directive](docassets/images/adf-process-audit-directive.png)
+![adf-process-audit-directive](../docassets/images/adf-process-audit-directive.png)
 
 ## Basic Usage
 

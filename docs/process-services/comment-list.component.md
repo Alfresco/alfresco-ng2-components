@@ -6,7 +6,7 @@ Status: Active
 
 Shows a list of comments.
 
-![ADF Comment List](docassets/images/adf-comment-list.png)
+![ADF Comment List](../docassets/images/adf-comment-list.png)
 
 ## Basic Usage
 

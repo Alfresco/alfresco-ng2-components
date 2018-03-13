@@ -6,7 +6,7 @@ Status: Active
 
 Shows a list of users (people).
 
-![ADF People List](docassets/images/adf-people-list.png)
+![ADF People List](../docassets/images/adf-people-list.png)
 
 ## Basic Usage
 
@@ -64,7 +64,8 @@ In the component template use the people list component:
 </adf-people-list>
 ```
 
-Note that the people list component is based on the [Datatable component](datatable.component.md).
+Note that the people list component is based on the
+[Datatable component](../datatable.component.md).
 
 ### Properties
 
