@@ -4,7 +4,7 @@ eval GNU=false
 
 set -e
 TEMP_GENERATOR_DIR=".tmp-generator";
-VERSION=$(npm view @alfresco/adf-core@beta version)example12
+VERSION=$(npm view @alfresco/adf-core@beta version)example13
 
 
 show_help() {
