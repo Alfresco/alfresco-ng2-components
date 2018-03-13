@@ -16,7 +16,7 @@
  */
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity, SiteEntry, SitePaging } from 'alfresco-js-api';
 import {
@@ -54,6 +54,7 @@ const ONE_FOLDER_RESULT = {
 };
 
 describe('ContentNodeSelectorComponent', () => {
+    const debounceSearch = 200;
     let component: ContentNodeSelectorPanelComponent;
     let fixture: ComponentFixture<ContentNodeSelectorPanelComponent>;
     let searchService: SearchService;
@@ -483,42 +484,43 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(component.showingSearchResults).toBeFalsy();
             });
 
-            it('should clear the search field, nodes and chosenNode when deleting the search input',  async(() => {
+            it('should clear the search field, nodes and chosenNode when deleting the search input',  fakeAsync(() => {
                 spyOn(component, 'clear').and.callThrough();
                 typeToSearchBox('a');
 
-                setTimeout(() => {
-                    expect(searchSpy.calls.count()).toBe(1);
+                tick(debounceSearch);
+                fixture.detectChanges();
 
-                    typeToSearchBox('');
+                expect(searchSpy.calls.count()).toBe(1);
 
-                    setTimeout(() => {
-                        expect(searchSpy.calls.count()).toBe(1, 'no other search has been performed');
-                        expect(component.clear).toHaveBeenCalled();
-                        expect(component.folderIdToShow).toBe('cat-girl-nuku-nuku', 'back to the folder in which the search was performed');
-                    }, 300);
-                }, 300);
+                typeToSearchBox('');
 
+                tick(debounceSearch);
+                fixture.detectChanges();
+
+                expect(searchSpy.calls.count()).toBe(1, 'no other search has been performed');
+                expect(component.clear).toHaveBeenCalled();
+                expect(component.folderIdToShow).toBe('cat-girl-nuku-nuku', 'back to the folder in which the search was performed');
             }));
 
-            it('should clear the search field, nodes and chosenNode on folder navigation in the results list', (done) => {
+            it('should clear the search field, nodes and chosenNode on folder navigation in the results list', fakeAsync(() => {
                 spyOn(component, 'clearSearch').and.callThrough();
                 typeToSearchBox('a');
 
-                setTimeout(() => {
-                    respondWithSearchResults(ONE_FOLDER_RESULT);
-                    fixture.whenStable().then(() => {
-                        fixture.detectChanges();
+                tick(debounceSearch);
+                fixture.detectChanges();
 
-                        component.onFolderChange();
-                        fixture.detectChanges();
+                respondWithSearchResults(ONE_FOLDER_RESULT);
 
-                        expect(component.clearSearch).toHaveBeenCalled();
-                        done();
-                    });
-                }, 300);
+                tick();
+                fixture.detectChanges();
 
-            });
+                component.onFolderChange();
+                fixture.detectChanges();
+
+                expect(component.clearSearch).toHaveBeenCalled();
+
+            }));
 
             it('should show nodes from the same folder as selected in the dropdown on clearing the search input', (done) => {
                 typeToSearchBox('piccolo');
