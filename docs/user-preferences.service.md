@@ -25,7 +25,7 @@ Stores preferences for components.
 -   `getPropertyKey(property: string): string`  
     Gets the full property key with prefix.  
     -   `property` - The property name
--   `getDifferentPageSizes(): number[]`  
+-   `getDefaultPageSizes(): number[]`  
     Gets an array containing the available page sizes.   
 
 -   `getDefaultLocale(): string`  
