@@ -191,30 +191,30 @@ You can use interpolations with the `translate` pipe in a similar way:
 
 ## Selecting the display language
 
-ADF provides a [Language Menu component](language-menu.component.md) that
+ADF provides a [Language Menu component](core/language-menu.component.md) that
 you can add to a page to let the user choose their preferred language. The
 available languages are defined in the `app.config.json` file for the app.
 
 Note that when the user selects an item from the menu, it simply changes the "locale"
-preference (which you can get via the [User Preferences service](user-preferences.service.md)).
+preference (which you can get via the [User Preferences service](core/user-preferences.service.md)).
 The `translate` pipe reacts automatically to this and changes the page text
 immediately to the new language. However, text added via a variable set using
 `TranslationService.get`, as in the example above, will not be updated like this;
 you will need to get a new translation and set the variable's value again explicitly
 from the code.
 
-See the [Language Menu component](language-menu.component.md) page for further
+See the [Language Menu component](core/language-menu.component.md) page for further
 details and usage examples.
 
 ## Support for i18n within ADF components
 
 Some components allow you to use translation keys in places where you would normally
 supply your own messages directly. For example, the
-[Data Column component](data-column.component.md) can accept a key instead of
+[Data Column component](core/data-column.component.md) can accept a key instead of
 normal text to specify the column title. Consult the documentation for a
 component to see if it has built-in support for i18n.
 
 ## See also
 
 -   [Translation service](translation.service.md)
--   [Language Menu component](language-menu.component.md)
+-   [Language Menu component](core/language-menu.component.md)

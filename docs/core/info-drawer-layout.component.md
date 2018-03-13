@@ -6,7 +6,7 @@ Status: Active
 
 Displays a sidebar-style information panel.
 
-![Info drawer layout screenshot](docassets/images/infodrawerlayout.png)
+![Info drawer layout screenshot](../docassets/images/infodrawerlayout.png)
 
 ## Basic usage
 

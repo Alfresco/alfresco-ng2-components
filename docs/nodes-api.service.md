@@ -167,11 +167,11 @@ to delete the node immediately if you have the right permissions. See the
 and
 [restoreNode](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodesApi.md#restoreNode)
 pages in the Alfresco JS API for further details and options. Note that you can also use the
-[Deleted Nodes Api service](deleted-nodes-api.service.md) get a list of all items currently in the trashcan.
+[Deleted Nodes Api service](core/deleted-nodes-api.service.md) get a list of all items currently in the trashcan.
 
 ## See also
 
 -   [Document library model](document-library.model.md)
--   [Deleted nodes api service](deleted-nodes-api.service.md)
+-   [Deleted nodes api service](core/deleted-nodes-api.service.md)
 -   [Document list component](document-list.component.md)
 -   [Node service](node.service.md)

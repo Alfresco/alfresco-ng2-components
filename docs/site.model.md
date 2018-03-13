@@ -8,7 +8,7 @@ Provides information about a site in a Content Services repository.
 
 ## Details
 
-`SiteModel` is returned by methods from the [Sites Api service](sites.service.md).
+`SiteModel` is returned by methods from the [Sites Api service](core/sites.service.md).
 Also, the
 [`getSite`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitesApi.md#getSite)
 and
@@ -46,4 +46,4 @@ class SiteMembersModel {
 
 ## See also
 
--   [Sites service](sites.service.md)
+-   [Sites service](core/sites.service.md)
