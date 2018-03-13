@@ -262,4 +262,4 @@ At runtime you should now see your custom Angular component rendered in place of
 -   [Form field model](form-field.model.md)
 -   [Form rendering service](form-rendering.service.md)
 -   [Form component](form.component.md)
--   [Widget component](widget.component.md)
+-   [Widget component](insights/widget.component.md)

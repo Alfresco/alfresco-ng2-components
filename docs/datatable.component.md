@@ -480,7 +480,7 @@ and do corresponding actions.
 
 ## See also
 
--   [Data column component](data-column.component.md)
+-   [Data column component](core/data-column.component.md)
 -   [Pagination component](pagination.component.md)
 -   [DataTableAdapter](datatable-adapter.interface.md)
 -   [Document list component](document-list.component.md)

@@ -105,9 +105,9 @@ Every cell in the DataTable component is bound to the dynamic data context conta
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| data | [DataTableAdapter](datatable-adapter.interface.md) | Data adapter instance. |
-| row | [DataRow](datatable-adapter.interface.md) | Current data row instance. |
-| col | [DataColumn](datatable-adapter.interface.md) | Current data column instance. |
+| data | [DataTableAdapter](../datatable-adapter.interface.md) | Data adapter instance. |
+| row | [DataRow](../datatable-adapter.interface.md) | Current data row instance. |
+| col | [DataColumn](../datatable-adapter.interface.md) | Current data column instance. |
 
 You can use all three properties to gain full access to underlying data from within your custom templates. 
 In order to wire HTML templates with the data context you will need defining a variable that is bound to `$implicit` like shown below:
@@ -156,7 +156,7 @@ In the Example below we will prepend `Hi!` to each file and folder name in the l
 </data-column>
 ```
 
-In the Example below we will integrate the [adf-tag-node-list](tag-node-list.component.md) component
+In the Example below we will integrate the [adf-tag-node-list](../tag-node-list.component.md) component
 with the document list.
 
 ```html
@@ -171,7 +171,7 @@ with the document list.
 </data-column>
 ```
 
-![Tag component in document List](docassets/images/document-list-tag-template.png)
+![Tag component in document List](../docassets/images/document-list-tag-template.png)
 
 ### Styling Techniques
 
@@ -210,7 +210,7 @@ adf-document-list ::ng-deep adf-datatable > table > tbody > tr.is-selected > td.
 
 Once your application starts you should see the following icon for each selected row:
 
-![view-child](docassets/images/document-list-custom-icon.png)
+![view-child](../docassets/images/document-list-custom-icon.png)
 
 #### Hiding columns on small screens
 
@@ -264,11 +264,11 @@ Now you can declare columns and assign `desktop-only` class where needed:
 
 **Desktop View**
 
-![Responsive Desktop](docassets/images/responsive-desktop.png)
+![Responsive Desktop](../docassets/images/responsive-desktop.png)
 
 **Mobile View**
 
-![Responsive Mobile](docassets/images/responsive-mobile.png)
+![Responsive Mobile](../docassets/images/responsive-mobile.png)
 
 <!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
 
@@ -276,7 +276,7 @@ Now you can declare columns and assign `desktop-only` class where needed:
 
 ## See also
 
--   [Document list component](document-list.component.md)
--   [Datatable component](datatable.component.md)
--   [Task list component](task-list.component.md)
+-   [Document list component](../document-list.component.md)
+-   [Datatable component](../datatable.component.md)
+-   [Task list component](../task-list.component.md)
     <!-- seealso end -->

@@ -6,7 +6,7 @@ Status: Active
 
 Supplies custom HTML to be included in a Toolbar component title.
 
-![](docassets/images/adf-toolbar-02.png)
+![](../docassets/images/adf-toolbar-02.png)
 
 ## Basic Usage
 
