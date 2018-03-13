@@ -6,7 +6,7 @@ Status: Active
 
 Displays all the languages that are present in the "app.config.json" or the default one (EN).
 
-![Language Menu screenshot](docassets/images/languages-menu.png)
+![Language Menu screenshot](../docassets/images/languages-menu.png)
 
 ## Basic usage
 
@@ -64,7 +64,7 @@ How to attach an ADF Language Menu as nested menu
 </mat-menu>
 ```
 
-![Nested Language Menu screenshot](docassets/images/languages-menu-nested.png)
+![Nested Language Menu screenshot](../docassets/images/languages-menu-nested.png)
 
 ### Nested menu details
 
