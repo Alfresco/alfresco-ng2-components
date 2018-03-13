@@ -12,10 +12,62 @@ before_install:
     - export DISPLAY=:99.0
     - sh -e /etc/init.d/xvfb start
 
+env:
+  matrix:
+    - MODULE=core
+    - MODULE=insights
+    - MODULE=process-services
+    - MODULE=content-services
+    - MODULE=demo-shell
+    - MODULE=packaging
+
+install:
+    - if ([ "$MODULE" != "demo-shell" ]); then
+        if ([ "$TRAVIS_BRANCH" = "master" ]); then
+            (./scripts/npm-build-all.sh  || exit 1;);
+        else
+            (./scripts/npm-build-all.sh  -vjsapi alpha || exit 1;);
+        fi
+      fi
+
+script:
+    - if ([ "$MODULE" == "core" ]); then
+            (./scripts/npm-build-all.sh -si -sb -t "core" || exit 1;);
+      fi
+
+    - if ([ "$MODULE" == "process-services" ]); then
+            (./scripts/npm-build-all.sh -si -sb -t "process-services" || exit 1;);
+      fi
+
+    - if ([ "$MODULE" == "insights" ]); then
+            (./scripts/npm-build-all.sh -si -sb -t "insights" || exit 1;);
+      fi
+
+    - if ([ "$MODULE" == "content-services" ]); then
+            (./scripts/npm-build-all.sh -si -sb -t "content-services" || exit 1;);
+      fi
+
+    - if ([ "$MODULE" == "packaging" ]); then
+            (cd lib && npm run new-build || exit 1;);
+      fi
+
+    - if ([ "$MODULE" == "demo-shell" ]); then
+       if ([ "$TRAVIS_BRANCH" = "master" ]); then
+            (./scripts/start.sh -t -ss || exit 1;);
+       else
+            (./scripts/start.sh -dev -t -ss -vjsapi alpha || exit 1;);
+       fi
+      fi
 jobs:
     include:
+        - stage: Check 2.0.0 Project Update
+          script: ./scripts/test-e2e-bc.sh
+        - stage: Check ADF exports
+          script: cd lib && npm run test-export
         - stage: Update Generator
+          if: tag = ^beta.*$
           script: ./scripts/update-generator.sh -gnu -t $GITHUB_TOKEN
+
 # jobs:
 #   include:
 #     - stage: Publish alpha to NPM
