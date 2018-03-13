@@ -140,6 +140,20 @@ describe('ContentNodeSelectorComponent', () => {
 
                 component.chosenNode = expectedNode;
             });
+
+            it('should update skipCount on folder loaded', () => {
+                component.skipCount = 8;
+
+                component.onFolderLoaded({
+                    list: {
+                        pagination: {
+                            skipCount: 10
+                        }
+                    }
+                });
+
+                expect(component.skipCount).toBe(10, 'skipCount is updated');
+            });
         });
 
         describe('Breadcrumbs', () => {
