@@ -55,10 +55,12 @@ export class TagNodeListComponent implements OnChanges {
     }
 
     refreshTag() {
-        this.tagService.getTagsByNodeId(this.nodeId).subscribe((data) => {
-            this.tagsEntries = data.list.entries;
-            this.results.emit(this.tagsEntries);
-        });
+        if(this.nodeId) {
+            this.tagService.getTagsByNodeId(this.nodeId).subscribe((data) => {
+                this.tagsEntries = data.list.entries;
+                this.results.emit(this.tagsEntries);
+            });
+        }
     }
 
     removeTag(tag: string) {

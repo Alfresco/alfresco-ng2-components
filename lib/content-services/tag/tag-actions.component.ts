@@ -67,15 +67,17 @@ export class TagActionsComponent implements OnChanges {
     }
 
     refreshTag() {
-        this.tagService.getTagsByNodeId(this.nodeId).subscribe((data) => {
-            this.tagsEntries = data.list.entries;
-            this.disableAddTag = false;
-            this.result.emit(this.tagsEntries);
-        }, () => {
-            this.tagsEntries = null;
-            this.disableAddTag = true;
-            this.result.emit(this.tagsEntries);
-        });
+        if(this.nodeId) {
+            this.tagService.getTagsByNodeId(this.nodeId).subscribe((data) => {
+                this.tagsEntries = data.list.entries;
+                this.disableAddTag = false;
+                this.result.emit(this.tagsEntries);
+            }, () => {
+                this.tagsEntries = null;
+                this.disableAddTag = true;
+                this.result.emit(this.tagsEntries);
+            });
+        }
     }
 
     addTag() {
