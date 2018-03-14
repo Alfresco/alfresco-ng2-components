@@ -120,21 +120,6 @@ export class ProcessService {
     }
 
     /**
-     * Gets the versions of process definitions associated with an app.
-     * @param appId ID of a target app
-     */
-    getProcessDefinitionVersions(appId?: number): Observable<ProcessDefinitionRepresentation[]> {
-        const opts = appId ? { appDefinitionId: appId } : {};
-
-        return Observable.fromPromise(
-            this.alfrescoApiService.getInstance().activiti.processApi.getProcessDefinitions(opts)
-        )
-            .map(this.extractData)
-            .map(processDefs => processDefs.map((pd) => new ProcessDefinitionRepresentation(pd)))
-            .catch(err => this.handleProcessError(err));
-    }
-
-    /**
      * Starts a process based on a process definition, name, form values or variables.
      * @param processDefinitionId Process definition ID
      * @param name Process name
