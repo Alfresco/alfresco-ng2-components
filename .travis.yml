@@ -66,13 +66,13 @@ jobs:
           script: cd lib && npm run test-export
         - stage: Update Generator
           if: tag = ^beta.*$
-          script: ./scripts/update-generator.sh -gnu -t $GITHUB_TOKEN
+          script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -name generator-ng2-alfresco-app
         - stage: Update Content app
           if: tag = ^beta.*$
-          script: ./scripts/update-aca.sh -gnu -t $GITHUB_TOKEN
+          script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -name alfresco-content-app
         - stage: Update DW
           if: tag = ^beta.*$
-          script: ./scripts/update-dw.sh -gnu -t $GITHUB_TOKEN
+          script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -name adf-app-manager-ui
 
 # jobs:
 #   include:
