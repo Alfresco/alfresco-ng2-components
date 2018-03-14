@@ -340,3 +340,33 @@ This script test that the update from 2.0.0 to 2.x.x is still smooth
 ```sh
 ./test-e2e-bc
 ```
+
+***update-project.sh*** 
+
+Update an external project and create a PR with last beta of ADF
+
+## Options
+
+| Option | Description |
+| --- | --- |
+| -n or --name  | name of the project  |
+| -gnu  | for linux machine |
+| -t or --token  | GITHUB token |
+
+## Examples
+
+```sh
+./update-project.sh -t YOUR_GITHUB_TOKEN -n NAME_PROJECT
+```
+
+# test-e2e-bc.sh
+
+***test-e2e-bc.sh*** 
+
+This script test that the update from 2.0.0 to 2.x.x is still smooth 
+
+## Examples
+
+```sh
+./test-e2e-bc
+```
