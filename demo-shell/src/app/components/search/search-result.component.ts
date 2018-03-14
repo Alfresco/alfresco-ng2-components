@@ -67,7 +67,7 @@ export class SearchResultComponent implements OnInit {
             this.route.params.subscribe(params => {
                 const searchTerm = params['q'];
                 if (searchTerm) {
-                    const query = this.searchConfig.generateQueryBody(searchTerm, '100', '0');
+                    const query = this.searchConfig.generateQueryBody(searchTerm, 100, 0);
                     this.api.searchApi.search(query).then(data => this.onDataLoaded(data));
                 }
             });
