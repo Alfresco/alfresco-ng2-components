@@ -6,7 +6,7 @@ Status: Active
 
 Adds options to a Document List actions menu for a particular content type.
 
-![Document Actions](docassets/images/document-actions.png)
+![Document Actions](../docassets/images/document-actions.png)
 
 ## Contents
 
@@ -150,7 +150,7 @@ type and other details of the item just deleted:
   }
 ```
 
-![Custom delete message screenshot](docassets/images/ContentActSnackMessage.png)
+![Custom delete message screenshot](../docassets/images/ContentActSnackMessage.png)
 
 ### Built-in action examples
 
@@ -178,11 +178,11 @@ an item for users who don't have permission to use it (set `disableWithNoPermiss
 </adf-document-list>
 ```
 
-![Delete disable action button](docassets/images/content-action-disable-delete-button.png)
+![Delete disable action button](../docassets/images/content-action-disable-delete-button.png)
 
 You can also implement the `permissionEvent` to handle permission errors
 (to show the user a notification, for example). Subscribe to this event from your component
-and use the [Notification service](core/notification.service.md) to show a message.
+and use the [Notification service](../core/notification.service.md) to show a message.
 
 ```html
 <adf-document-list [contentActions]="true"...>
@@ -210,7 +210,7 @@ export class MyComponent {
 }
 ```
 
-![Delete show notification message](docassets/images/content-action-notification-message.png)
+![Delete show notification message](../docassets/images/content-action-notification-message.png)
 
 #### Download
 
@@ -230,7 +230,7 @@ This action simply starts a download of the corresponding document file.
 </adf-document-list>
 ```
 
-![Download document action](docassets/images/document-action-download.png)
+![Download document action](../docassets/images/document-action-download.png)
 
 #### Copy and move
 
@@ -238,7 +238,7 @@ These actions show the destination chooser dialog for copy and move actions. By 
 the destination chooser lists all the folders of the subject item's parent. However, it won't
 allow the item being copied/moved to be the destination if it is itself a folder.
 
-![Copy/move dialog](docassets/images/document-action-copymovedialog.png)
+![Copy/move dialog](../docassets/images/document-action-copymovedialog.png)
 
 ```html
 <adf-document-list [contentActions]="true"...>
@@ -280,7 +280,7 @@ Defining error, permission and success callbacks are pretty much the same as doi
 -   The success callback's only parameter is the translatable success message string (could be used for showing in snackbar for example)
 -   The permissionEvent callback is the same as described above with the delete action
 
-![Copy/move document action](docassets/images/document-action-copymove.png)
+![Copy/move document action](../docassets/images/document-action-copymove.png)
 
 ### Customizing built-in actions
 

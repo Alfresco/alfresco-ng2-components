@@ -114,7 +114,7 @@ Using with file url:
 ### Integrating with the Document List component
 
 Below is the most simple integration of the Viewer and 
-[Document List](document-list.component.md) components within your custom component:
+[Document List](../content-services/document-list.component.md) components within your custom component:
 
 ```html
 <adf-document-list
@@ -285,7 +285,7 @@ then you can do so as shown in the following example:
 
 The result should look like this:
 
-![Custom Toolbar Actions](docassets/images/viewer-toolbar-actions.png)
+![Custom Toolbar Actions](../docassets/images/viewer-toolbar-actions.png)
 
 ### Custom sidebar
 
@@ -324,7 +324,7 @@ The PDF viewer comes with its own default list of thumbnails but you can replace
 by providing a custom template and binding to the context property `viewer` to access the PDFJS.PDFViewer
 instance.
 
-![PDF thumbnails](docassets/images/pdf-thumbnails.png)
+![PDF thumbnails](../docassets/images/pdf-thumbnails.png)
 
 #### Using template injection
 
@@ -376,7 +376,7 @@ You can enable a custom "Open With" menu by providing at least one action inside
 </adf-viewer>
 ```
 
-![Open with](docassets/images/viewer-open-with.png)
+![Open with](../docassets/images/viewer-open-with.png)
 
 ### Custom "More actions" menu
 
@@ -403,7 +403,7 @@ You can enable a custom "More actions" menu by providing at least one action ins
 </adv-viewer>
 ```
 
-![More actions](docassets/images/viewer-more-actions.png)
+![More actions](../docassets/images/viewer-more-actions.png)
 
 ### Extending the Viewer
 
@@ -453,4 +453,4 @@ You can define multiple `adf-viewer-extension` templates if required:
 
 ## See also
 
--   [Document List component](document-list.component.md)
+-   [Document List component](../content-services/document-list.component.md)

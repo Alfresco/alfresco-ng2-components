@@ -8,7 +8,7 @@ Last reviewed: 2018-03-09
 
 Displays the documents from a repository.
 
-![Custom columns](docassets/images/custom-columns.png)
+![Custom columns](../docassets/images/custom-columns.png)
 
 ## Contents
 
@@ -122,7 +122,7 @@ have at least the following properties as part of the `Event.detail` property va
 }
 ```
 
-See the [DataTable](datatable.component.md) documentation for further details about
+See the [DataTable](../datatable.component.md) documentation for further details about
 the other DOM events that the Document List component bubbles up from the DataTable.
 
 Below is a basic example of handling DOM events in the parent elements.
@@ -145,7 +145,7 @@ Below is a basic example of handling DOM events in the parent elements.
 The Document List has an option to display items as "cards" instead of the
 standard view:
 
-![card-view](docassets/images/document-list-card-view.png)
+![card-view](../docassets/images/document-list-card-view.png)
 
 Set the `[display]` property to "gallery" to enable card view mode:
 
@@ -359,7 +359,7 @@ export class FilesComponent implements OnInit {
 The `console.log(node)` for the `getNodeInfo` callback is just for study and debug purposes. 
 It is useful for examining other information that you can access if necessary:
 
-![documentLibrary](docassets/images/documentLibrary.png)
+![documentLibrary](../docassets/images/documentLibrary.png)
 
 **Important note**: for this particular scenario you must also trigger `changeDetector.detectChanges()` as in the example above. 
 
@@ -420,7 +420,7 @@ export class MyAppComponent implements AfterViewInit {
 
 The example above should produce the following browser console output:
 
-![view-child](docassets/images/viewchild.png)
+![view-child](../docassets/images/viewchild.png)
 
 Now you can access Document List properties or call methods directly:
 
@@ -518,10 +518,10 @@ A custom set of columns might look like the following:
 </adf-document-list>
 ```
 
-![Custom columns](docassets/images/custom-columns.png)
+![Custom columns](../docassets/images/custom-columns.png)
 
 You can also use the HTML-based schema declaration used by
-[DataTable](datatable.component.md), [Task List](task-list.component.md) and other components:
+[DataTable](../datatable.component.md), [Task List](../task-list.component.md) and other components:
 
 ```html
 <adf-datatable [data]="data" ...>
@@ -535,7 +535,7 @@ You can also use the HTML-based schema declaration used by
 </adf-datatable>
 ```
 
-You can also add tooltips, styling, automatic column title translation and other features. See the [DataColumn component page](core/data-column.component.md) for more information about specifying and customizing columns.
+You can also add tooltips, styling, automatic column title translation and other features. See the [DataColumn component page](../core/data-column.component.md) for more information about specifying and customizing columns.
 
 ### Date Column
 
@@ -602,7 +602,7 @@ you can also define your own actions. See the
 [Content Action component](content-action.component.md)
 for more information and examples.
 
-You can also use the [Context Menu directive](core/context-menu.directive.md) from the 
+You can also use the [Context Menu directive](../core/context-menu.directive.md) from the 
 [ADF Core](https://www.npmjs.com/package/ng2-alfresco-core) library to show the
 actions you have defined in a context menu:
 
@@ -618,7 +618,7 @@ export class MyView {
 }
 ```
 
-![Folder context menu](docassets/images/folder-context-menu.png)
+![Folder context menu](../docassets/images/folder-context-menu.png)
 
 This single extra line in the template enables context menu items for documents and folders.
 
@@ -758,7 +758,7 @@ export class View1 {
 
 By default, the Document List provides the following content for the empty folder:
 
-![Default empty folder](docassets/images/empty-folder-template-default.png)
+![Default empty folder](../docassets/images/empty-folder-template-default.png)
 
 However, you can change this by defining your own custom HTML template:
 
@@ -774,14 +774,14 @@ However, you can change this by defining your own custom HTML template:
 
 This will give the following output:
 
-![Custom empty folder](docassets/images/empty-folder-template-custom.png)
+![Custom empty folder](../docassets/images/empty-folder-template-custom.png)
 
 ### Custom 'permission denied' template
 
 By default, the Document List shows the following content when permission
 is denied:
 
-![Default no permission](docassets/images/no-permission-default.png)
+![Default no permission](../docassets/images/no-permission-default.png)
 
 You can change this by defining your own custom HTML template:
 
@@ -797,18 +797,18 @@ You can change this by defining your own custom HTML template:
 
 This will give the following output:
 
-![Custom no permission](docassets/images/no-permission-custom.png)
+![Custom no permission](../docassets/images/no-permission-custom.png)
 
 ## See also
 
--   [Datatable component](datatable.component.md)
--   [Data column component](core/data-column.component.md)
--   [Pagination component](pagination.component.md)
--   [Infinite pagination component](infinite-pagination.component.md)
+-   [Datatable component](../datatable.component.md)
+-   [Data column component](../core/data-column.component.md)
+-   [Pagination component](../pagination.component.md)
+-   [Infinite pagination component](../infinite-pagination.component.md)
 -   [Sites dropdown component](sites-dropdown.component.md)
--   [Metadata indicators](metadata-indicators.md)
+-   [Metadata indicators](../metadata-indicators.md)
 -   [Document library model](document-library.model.md)
--   [Nodes api service](nodes-api.service.md)
+-   [Nodes api service](../core/nodes-api.service.md)
 -   [Breadcrumb component](breadcrumb.component.md)
 -   [Content action component](content-action.component.md)
 -   [Content node selector component](content-node-selector.component.md)
@@ -816,4 +816,4 @@ This will give the following output:
 -   [Dropdown breadcrumb component](dropdown-breadcrumb.component.md)
 -   [Permissions style model](permissions-style.model.md)
 -   [Version manager component](version-manager.component.md)
--   [Viewer component](viewer.component.md)
+-   [Viewer component](../core/viewer.component.md)

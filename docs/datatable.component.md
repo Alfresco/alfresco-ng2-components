@@ -483,5 +483,5 @@ and do corresponding actions.
 -   [Data column component](core/data-column.component.md)
 -   [Pagination component](pagination.component.md)
 -   [DataTableAdapter](datatable-adapter.interface.md)
--   [Document list component](document-list.component.md)
+-   [Document list component](content-services/document-list.component.md)
     <!-- seealso end -->

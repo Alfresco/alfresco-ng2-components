@@ -26,5 +26,5 @@ example code.
 
 ## See also
 
--   [Search component](search.component.md)
+-   [Search component](../content-services/search.component.md)
 -   [Search configuration interface](search-configuration.interface.md)

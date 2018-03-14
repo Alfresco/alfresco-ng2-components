@@ -116,7 +116,7 @@ const formValues: FormValues  = {
 ```
 
 Note that in the object above, the key `file` is the name of the attach file field in the start form of the process. The value of the `file` property must be a
-[MinimalNodeEntryEntity](document-library.model.md):
+[MinimalNodeEntryEntity](content-services/document-library.model.md):
 
 ```html
 <adf-start-process 

@@ -8,7 +8,7 @@ Last reviewed: 2018-03-13
 
 Displays a dropdown menu to show and interact with the sites of the current user.
 
-![Dropdown sites](docassets/images/document-list-dropdown-list.png)
+![Dropdown sites](../docassets/images/document-list-dropdown-list.png)
 
 ## Basic Usage
 
@@ -32,4 +32,4 @@ Displays a dropdown menu to show and interact with the sites of the current user
 
 | Name | Returned Type | Description |
 | ---- | ------------- | ----------- |
-| change | [SiteModel](site.model.md) | Emitted when user selects a site. When default option is selected an empty model is emitted |
+| change | [SiteModel](../site.model.md) | Emitted when user selects a site. When default option is selected an empty model is emitted |

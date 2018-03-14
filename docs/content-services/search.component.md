@@ -53,7 +53,7 @@ You have to add a template that will be shown when the results are loaded.
 
 The results are provided via the [$implicit variable of angular2](https://angular.io/api/common/NgTemplateOutlet) and can be accessed via the sugar sintax 'let-yourChosenName'. As per example above the result will be something like : 
 
-![adf-search-control](docassets/images/search-component-simple-template.png)
+![adf-search-control](../docassets/images/search-component-simple-template.png)
 
 But you can define even a more complex template : 
 
@@ -99,7 +99,7 @@ But you can define even a more complex template :
 
 Which will look like :
 
-![adf-search-control](docassets/images/search-component-complex-template.png)
+![adf-search-control](../docassets/images/search-component-complex-template.png)
 
 ### Attach an input field to the search
 
@@ -125,12 +125,12 @@ In this way it is possible to fetch the results from the word typed into the inp
 You can get finer control over the parameters of a search by defining them in a custom
 [QueryBody](https://github.com/Alfresco/alfresco-js-api/blob/1.6.0/src/alfresco-search-rest-api/docs/QueryBody.md)
 object. The recommended way to do this is with a custom implementation of the
-[Search Configuration interface](search-configuration.interface.md) (the `queryBody` parameter of the `Search component` is now deprecated). The ADF source provides a standard implementation of this
+[Search Configuration interface](../core/search-configuration.interface.md) (the `queryBody` parameter of the `Search component` is now deprecated). The ADF source provides a standard implementation of this
 interface, `SearchConfigurationService` that you can use as a base to adapt to your needs. See the
-[Search Configuration interface](search-configuration.interface.md) page for full details of how to
+[Search Configuration interface](../core/search-configuration.interface.md) page for full details of how to
 customize your search.
 
 ## See Also
 
--   [Search configuration interface](search-configuration.interface.md)
--   [Search configuration service](search-configuration.service.md)
+-   [Search configuration interface](../core/search-configuration.interface.md)
+-   [Search configuration service](../core/search-configuration.service.md)
