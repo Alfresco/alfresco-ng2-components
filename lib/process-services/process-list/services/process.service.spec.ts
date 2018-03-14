@@ -341,65 +341,6 @@ describe('ProcessService', () => {
 
     });
 
-    describe('process definition versions', () => {
-
-        let getProcessDefinitionVersions: jasmine.Spy;
-
-        beforeEach(() => {
-            getProcessDefinitionVersions = spyOn(alfrescoApi.activiti.processApi, 'getProcessDefinitions')
-                .and
-                .returnValue(Promise.resolve({ data: [ fakeProcessDef, fakeProcessDef ] }));
-        });
-
-        it('should return the correct number of process defs', async(() => {
-            service.getProcessDefinitionVersions().subscribe((defs) => {
-                expect(defs.length).toBe(2);
-            });
-        }));
-
-        it('should return the correct process def data', async(() => {
-            service.getProcessDefinitionVersions().subscribe((defs) => {
-                expect(defs[0].id).toBe(fakeProcessDef.id);
-                expect(defs[0].key).toBe(fakeProcessDef.key);
-                expect(defs[0].name).toBe(fakeProcessDef.name);
-            });
-        }));
-
-        it('should call API with correct parameters when no appId provided', () => {
-            service.getProcessDefinitionVersions();
-            expect(getProcessDefinitionVersions).toHaveBeenCalledWith({});
-        });
-
-        it('should call API with correct parameters when appId provided', () => {
-            const appId = 1;
-            service.getProcessDefinitionVersions(appId);
-            expect(getProcessDefinitionVersions).toHaveBeenCalledWith({
-                appDefinitionId: appId
-            });
-        });
-
-        it('should pass on any error that is returned by the API', async(() => {
-            getProcessDefinitionVersions = getProcessDefinitionVersions.and.returnValue(Promise.reject(mockError));
-            service.getProcessDefinitionVersions().subscribe(
-                () => {},
-                (res) => {
-                    expect(res).toBe(mockError);
-                }
-            );
-        }));
-
-        it('should return a default error if no data is returned by the API', async(() => {
-            getProcessDefinitionVersions = getProcessDefinitionVersions.and.returnValue(Promise.reject(null));
-            service.getProcessDefinitionVersions().subscribe(
-                () => {},
-                (res) => {
-                    expect(res).toBe('Server error');
-                }
-            );
-        }));
-
-    });
-
     describe('process instance tasks', () => {
 
         const processId = '1001';
