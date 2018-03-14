@@ -67,6 +67,12 @@ jobs:
         - stage: Update Generator
           if: tag = ^beta.*$
           script: ./scripts/update-generator.sh -gnu -t $GITHUB_TOKEN
+        - stage: Update Content app
+          if: tag = ^beta.*$
+          script: ./scripts/update-aca.sh -gnu -t $GITHUB_TOKEN
+        - stage: Update DW
+          if: tag = ^beta.*$
+          script: ./scripts/update-dw.sh -gnu -t $GITHUB_TOKEN
 
 # jobs:
 #   include:
