@@ -3,7 +3,7 @@ dist: trusty
 sudo: required
 node_js:
   - "8"
-if: tag IS present
+if: type IN (pull_request) AND tag IS present
 
 addons:
     chrome: stable
