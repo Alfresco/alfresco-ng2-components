@@ -10,6 +10,7 @@ show_help() {
     echo "Usage: update-generator.sh"
     echo ""
     echo "-t or --token  Github ouath token"
+    echo "-n or --name  Github name of the project"
     echo "-gnu for gnu"
 }
 
