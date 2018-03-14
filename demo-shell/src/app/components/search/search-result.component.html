@@ -50,7 +50,7 @@
 
             <mat-expansion-panel
                 *ngFor="let field of responseFacetFields"
-                [expanded]="field.$expanded ? true : false"
+                [expanded]="field.$expanded"
                 (opened)="onFacetFieldExpanded(field)"
                 (closed)="onFacetFieldCollapsed(field)">
                 <mat-expansion-panel-header>

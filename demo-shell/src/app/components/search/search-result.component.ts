@@ -113,6 +113,8 @@ export class SearchResultComponent implements OnInit {
             this.responseFacetQueries = (context.facetQueries || []).map(q => {
                 if (previousQueries[q.label]) {
                     q.$checked = true;
+                } else {
+                    q.$checked = false;
                 }
                 return q;
             });
@@ -121,23 +123,21 @@ export class SearchResultComponent implements OnInit {
 
             this.responseFacetFields = (context.facetsFields || []).map(
                 (field: ResponseFacetField) => {
+                    field.$expanded = false;
+
                     if (previousFields[field.label]) {
                         field.$expanded = previousFields[field.label].$expanded;
                     }
-                    // const previousBuckets = this.selectedBuckets.map(b => b.label);fi
                     (field.buckets || []).forEach(bucket => {
                         bucket.$field = field.label;
-                        /*
-                        if (previousBuckets.includes(b.label)) {
-                            b.$checked = true;
-                        }
-                        */
-                       const previousBucket = this.selectedBuckets.find(
-                           b => b.$field === bucket.$field && b.label === bucket.label
+                        bucket.$checked = false;
+
+                        const previousBucket = this.selectedBuckets.find(
+                            b => b.$field === bucket.$field && b.label === bucket.label
                         );
-                       if (previousBucket) {
+                        if (previousBucket) {
                            bucket.$checked = true;
-                       }
+                        }
                     });
                     return field;
                 }
