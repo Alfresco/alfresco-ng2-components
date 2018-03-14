@@ -52,11 +52,9 @@ export class TagListComponent implements OnInit {
     }
 
     refreshTag() {
-        if(this.tagsEntries) {
-            this.tagService.getAllTheTags().subscribe((data) => {
-                this.tagsEntries = data.list.entries;
-                this.result.emit(this.tagsEntries);
-            });
-        }
+        this.tagService.getAllTheTags().subscribe((data) => {
+            this.tagsEntries = data.list.entries;
+            this.result.emit(this.tagsEntries);
+        });
     }
 }

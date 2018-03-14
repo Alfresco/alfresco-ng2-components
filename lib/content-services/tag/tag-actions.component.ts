@@ -67,7 +67,7 @@ export class TagActionsComponent implements OnChanges {
     }
 
     refreshTag() {
-        if(this.nodeId) {
+        if (this.nodeId) {
             this.tagService.getTagsByNodeId(this.nodeId).subscribe((data) => {
                 this.tagsEntries = data.list.entries;
                 this.disableAddTag = false;
