@@ -9,11 +9,11 @@ Defines classes for use with the Content Services node API.
 ## Details
 
 ADF provides several services that give higher-level access to
-underlying [Alfresco JS Api](alfresco-api.service.md) functionality.
+underlying [Alfresco JS Api](../alfresco-api.service.md) functionality.
 The classes defined below are used in some of these services to access
 the Content Services nodes API. You can use these services to access
 the nodes (ie, documents and folders) of a repository using their
-associated ID strings. See [Nodes Api service](nodes-api.service.md)
+associated ID strings. See [Nodes Api service](../core/nodes-api.service.md)
 for more detail about the usage of these classes.
 
 ## Node information
@@ -23,7 +23,7 @@ These classes contain basic information about nodes (see
 about some of the properties). For example, this is used by the
 [Document List component](document-list.component.md) to supply
 a [data context](document-list.component.md#underlying-node-object)
-for each row of the list. The [Nodes Api service](nodes-api.service.md)
+for each row of the list. The [Nodes Api service](../core/nodes-api.service.md)
 has methods for getting the full information for a node ID string.
 
 ```ts
@@ -113,5 +113,5 @@ class PathElementEntity {
 ## See also
 
 - [Document list component](document-list.component.md)
-- [Nodes api service](nodes-api.service.md)
+- [Nodes api service](../core/nodes-api.service.md)
 <!-- seealso end -->

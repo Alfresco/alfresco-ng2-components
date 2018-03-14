@@ -6,7 +6,7 @@ Status: Active
 
 Allows a user to display and edit metadata related to a node.
 
-<img src="docassets/images/ContentMetadata.png" width="325">
+<img src="../docassets/images/ContentMetadata.png" width="325">
 
 ## Basic Usage
 

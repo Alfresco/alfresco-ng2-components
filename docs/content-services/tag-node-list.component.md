@@ -6,7 +6,7 @@ Status: Active
 
 Shows tags for a node.
 
-![Custom columns](docassets/images/tag1.png)
+![Custom columns](../docassets/images/tag1.png)
 
 ## Basic Usage
 

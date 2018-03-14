@@ -6,7 +6,7 @@ Status: Active
 
 Indicates the current position within a navigation hierarchy using a dropdown menu.
 
-![Dropdown Breadcrumb screenshot](docassets/images/DropdownBreadcrumb.png)
+![Dropdown Breadcrumb screenshot](../docassets/images/DropdownBreadcrumb.png)
 
 ## Basic Usage
 

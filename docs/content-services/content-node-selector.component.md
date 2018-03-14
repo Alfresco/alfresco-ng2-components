@@ -7,7 +7,7 @@ Last reviewed: 2018-03-12
 
 Allows a user to select items from a Content Services repository.
 
-![Content Node Selector screenshot](docassets/images/ContentNodeSelector.png)
+![Content Node Selector screenshot](../docassets/images/ContentNodeSelector.png)
 
 ## Basic Usage
 

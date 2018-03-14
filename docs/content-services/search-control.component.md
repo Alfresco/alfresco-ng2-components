@@ -7,7 +7,7 @@ Last reviewed: 2018-03-13
 
 Displays a input text which shows find-as-you-type suggestions.
 
-![adf-search-control](docassets/images/search-control-component.png)
+![adf-search-control](../docassets/images/search-control-component.png)
 
 ## Basic usage
 

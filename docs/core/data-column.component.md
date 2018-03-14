@@ -156,7 +156,7 @@ In the Example below we will prepend `Hi!` to each file and folder name in the l
 </data-column>
 ```
 
-In the Example below we will integrate the [adf-tag-node-list](../tag-node-list.component.md) component
+In the Example below we will integrate the [adf-tag-node-list](../content-services/tag-node-list.component.md) component
 with the document list.
 
 ```html
@@ -276,7 +276,7 @@ Now you can declare columns and assign `desktop-only` class where needed:
 
 ## See also
 
--   [Document list component](../document-list.component.md)
+-   [Document list component](../content-services/document-list.component.md)
 -   [Datatable component](../datatable.component.md)
 -   [Task list component](../task-list.component.md)
     <!-- seealso end -->

@@ -41,7 +41,7 @@ If the List is empty, a default "no content" template is displayed.
 
 ### How to Add Drag and Drop Functionality
 
-You can wrap the component with an [Upload Drag Area component](upload-drag-area.component.md)
+You can wrap the component with an [Upload Drag Area component](content-services/upload-drag-area.component.md)
 to enable the user to upload attachments for empty lists. When you do this, you can also pass
 a custom _no content template_ as shown below. The component invites the user to drag files to
 upload whenever the list is empty.
@@ -82,7 +82,7 @@ export class MyCustomTaskAttachmentComponent {
 }
 ```
 
-[Upload Drag Area Component](./upload-drag-area.component.md)
+[Upload Drag Area Component](content-services/upload-drag-area.component.md)
 
 If the List is empty, the custom no-content template we passed is displayed. 
 
