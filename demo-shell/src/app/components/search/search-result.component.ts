@@ -130,11 +130,25 @@ export class SearchResultComponent implements OnInit {
         this.queryBuilder.update();
     }
 
+    /* chip list */
     onRemoveFacetQuery(label: string) {
         const facetQuery = this.queryBuilder.getFacetQuery(label);
         this.selectedFacetQueries = this.selectedFacetQueries.filter(q => q !== label);
 
         this.queryBuilder.removeFilterQuery(facetQuery.query);
+        this.queryBuilder.update();
+    }
+
+    /* chip list */
+    onRemoveSelectedBucket(bucket: FacetFieldBucket) {
+        const idx = this.selectedBuckets.findIndex(
+            b => b.$field === bucket.$field && b.label === bucket.label
+        );
+
+        if (idx >= 0) {
+            this.selectedBuckets.splice(idx, 1);
+        }
+        this.queryBuilder.removeFilterQuery(bucket.filterQuery);
         this.queryBuilder.update();
     }
 

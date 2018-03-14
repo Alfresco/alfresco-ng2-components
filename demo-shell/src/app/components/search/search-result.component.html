@@ -1,10 +1,17 @@
 <div class="adf-search-results__facets">
-    <mat-chip-list *ngIf="selectedFacetQueries.length > 0">
+    <mat-chip-list>
         <mat-chip
             *ngFor="let label of selectedFacetQueries"
             [removable]="true"
             (remove)="onRemoveFacetQuery(label)">
             {{ label }}
+            <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+        <mat-chip
+            *ngFor="let bucket of selectedBuckets"
+            [removable]="true"
+            (remove)="onRemoveSelectedBucket(bucket)">
+            {{ bucket.display || bucket.label }}
             <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip>
     </mat-chip-list>
