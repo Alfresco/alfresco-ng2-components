@@ -1,17 +1,17 @@
+<div class="adf-search-results__facets">
+    <mat-chip-list *ngIf="selectedFacetQueries.length > 0">
+        <mat-chip
+            *ngFor="let label of selectedFacetQueries"
+            [removable]="true"
+            (remove)="onRemoveFacetQuery(label)">
+            {{ label }}
+            <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+    </mat-chip-list>
+</div>
+
 <div class="adf-search-results">
     <div class="adf-search-results__panel">
-        <div class="adf-search-results__facets">
-            <mat-chip-list *ngIf="selectedFacetQueries.length > 0">
-                <mat-chip
-                    *ngFor="let query of selectedFacetQueries"
-                    [removable]="true"
-                    (remove)="removeFacetQuery(query)">
-                    {{ query.label }}
-                    <mat-icon matChipRemove>cancel</mat-icon>
-                </mat-chip>
-            </mat-chip-list>
-        </div>
-
         <mat-accordion class="adf-search-results__widgets" multi="true" displayMode="flat">
 
             <mat-expansion-panel

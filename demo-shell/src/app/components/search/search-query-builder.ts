@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SearchConfig, SearchCategory, FilterQuery } from './search-config-api';
+import { SearchConfig, SearchCategory, FilterQuery, FacetQuery } from './search-config-api';
 import { Subject } from 'rxjs/Subject';
 import { QueryBody } from 'alfresco-js-api';
 
@@ -54,6 +54,13 @@ export class SearchQueryBuilder {
         if (query) {
             this.filterQueries = this.filterQueries.filter(f => f.query !== query);
         }
+    }
+
+    getFacetQuery(label: string): FacetQuery {
+        if (label) {
+            return this.config.facetQueries.find(q => q.label === label);
+        }
+        return null;
     }
 
     update(): void {

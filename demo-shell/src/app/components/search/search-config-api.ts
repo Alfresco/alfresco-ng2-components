@@ -67,13 +67,18 @@ export interface FilterQuery {
 export interface FacetQuery {
     query: string;
     label: string;
-
-    $checked?: boolean;
 }
 
 // https://docs.alfresco.com/5.2/concepts/search-api-facetFields.html
 export interface FacetField {
     field: string;
+    label: string;
+    mincount: number;
+
+    $checked?: boolean;
+}
+
+export interface ResponseFacetQuery {
     label: string;
     mincount: number;
 

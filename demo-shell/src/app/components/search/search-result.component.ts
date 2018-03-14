@@ -19,7 +19,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NodePaging, QueryBody } from 'alfresco-js-api';
 import { AppConfigService, AlfrescoApiService, SearchConfigurationService } from '@alfresco/adf-core';
-import { SearchConfig, SearchCategory, FacetQuery, FacetFieldBucket, ResponseFacetField } from './search-config-api';
+import { SearchConfig, SearchCategory, FacetQuery, FacetFieldBucket, ResponseFacetField, ResponseFacetQuery } from './search-config-api';
 import { MatCheckboxChange } from '@angular/material';
 import { SearchQueryBuilder } from './search-query-builder';
 
@@ -38,7 +38,7 @@ export class SearchResultComponent implements OnInit {
     responseFacetQueries: FacetQuery[] = [];
     responseFacetFields: ResponseFacetField[] = [];
 
-    selectedFacetQueries: FacetQuery[] = [];
+    selectedFacetQueries: string[] = [];
     selectedBuckets: FacetFieldBucket[] = [];
 
     constructor(private route: ActivatedRoute,
@@ -72,45 +72,22 @@ export class SearchResultComponent implements OnInit {
         }
     }
 
-    private mapResponseFacetQueries(): { [id: string]: FacetQuery } {
-        const result = {};
-        this.selectedFacetQueries.forEach(query => {
-            result[query.label] = query;
-        });
-        return result;
-    }
-
-    private mapResponseFacetFields(): { [id: string]: ResponseFacetField } {
-        const result = {};
-        this.responseFacetFields.forEach(field => {
-            result[field.label] = field;
-        });
-        return result;
-    }
-
     onDataLoaded(data: any) {
         this.data = data;
         const context = data.list.context;
 
         if (context) {
-            const previousQueries = this.mapResponseFacetQueries();
             this.responseFacetQueries = (context.facetQueries || []).map(q => {
-                if (previousQueries[q.label]) {
-                    q.$checked = true;
-                } else {
-                    q.$checked = false;
-                }
+                q.$checked = this.selectedFacetQueries.includes(q.label);
                 return q;
             });
 
-            const previousFields = this.mapResponseFacetFields();
+            const expandedFields = this.responseFacetFields.filter(f => f.$expanded).map(f => f.label);
+
             this.responseFacetFields = (context.facetsFields || []).map(
                 (field: ResponseFacetField) => {
-                    field.$expanded = false;
+                    field.$expanded = expandedFields.includes(field.label);
 
-                    if (previousFields[field.label]) {
-                        field.$expanded = previousFields[field.label].$expanded;
-                    }
                     (field.buckets || []).forEach(bucket => {
                         bucket.$field = field.label;
                         bucket.$checked = false;
@@ -131,19 +108,19 @@ export class SearchResultComponent implements OnInit {
         }
     }
 
-    onFacetQueryToggle(event: MatCheckboxChange, query: FacetQuery) {
-        const facetQuery = this.config.facetQueries.find(q => q.label === query.label);
+    onFacetQueryToggle(event: MatCheckboxChange, query: ResponseFacetQuery) {
+        const facetQuery = this.queryBuilder.getFacetQuery(query.label);
 
         if (event.checked) {
             query.$checked = true;
-            this.selectedFacetQueries.push({ ...facetQuery });
+            this.selectedFacetQueries.push(facetQuery.label);
 
             if (facetQuery) {
                 this.queryBuilder.addFilterQuery(facetQuery.query);
             }
         } else {
             query.$checked = false;
-            this.selectedFacetQueries = this.selectedFacetQueries.filter(q => q.label !== query.label);
+            this.selectedFacetQueries = this.selectedFacetQueries.filter(q => q !== query.label);
 
             if (facetQuery) {
                 this.queryBuilder.removeFilterQuery(facetQuery.query);
@@ -153,10 +130,11 @@ export class SearchResultComponent implements OnInit {
         this.queryBuilder.update();
     }
 
-    removeFacetQuery(query: FacetQuery) {
-        this.selectedFacetQueries = this.selectedFacetQueries.filter(q => q.label !== query.label);
+    onRemoveFacetQuery(label: string) {
+        const facetQuery = this.queryBuilder.getFacetQuery(label);
+        this.selectedFacetQueries = this.selectedFacetQueries.filter(q => q !== label);
 
-        this.queryBuilder.removeFilterQuery(query.query);
+        this.queryBuilder.removeFilterQuery(facetQuery.query);
         this.queryBuilder.update();
     }
 
