@@ -15,7 +15,7 @@
         <mat-accordion class="adf-search-results__widgets" multi="true" displayMode="flat">
 
             <mat-expansion-panel
-                *ngFor="let category of categories"
+                *ngFor="let category of queryBuilder.categories"
                 [expanded]="category.expanded"
                 (opened)="onCategoryExpanded(category)"
                 (closed)="onCategoryCollapsed(category)">
@@ -26,7 +26,7 @@
                 </mat-expansion-panel-header>
                 <app-facet-container
                     [id]="category.id"
-                    [context]="context"
+                    [context]="queryBuilder"
                     [selector]="category.component.selector"
                     [settings]="category.component.settings">
                 </app-facet-container>

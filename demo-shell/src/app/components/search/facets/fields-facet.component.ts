@@ -16,8 +16,9 @@
  */
 
 import { Component, ViewEncapsulation, OnInit, Input } from '@angular/core';
-import { FacetComponent, QueryBuilderContext, SearchComponentSettings } from './facets-api';
+import { FacetComponent, SearchComponentSettings } from '../search-config-api';
 import { MatCheckboxChange } from '@angular/material';
+import { SearchQueryBuilder } from '../search-query-builder';
 
 @Component({
     selector: 'app-fields-facet',
@@ -49,7 +50,7 @@ export class FieldsFacetComponent implements FacetComponent, OnInit {
 
     id: string;
     settings: SearchComponentSettings;
-    context: QueryBuilderContext;
+    context: SearchQueryBuilder;
 
     ngOnInit() {
         const defaultOptions = (this.settings.options || [])

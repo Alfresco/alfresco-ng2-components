@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { SearchQueryBuilder } from './search-query-builder';
+
 /** Holds entire Search configuration  */
 export interface SearchConfig {
     query: {
@@ -49,22 +51,11 @@ export interface SearchComponentSettings {
     [indexer: string]: any;
 }
 
-/** Runtime context for query builder, all facet components has access to it. */
-export interface QueryBuilderContext {
-    config: SearchConfig;
-    query: { [id: string]: string };
-    fields: { [id: string]: string };
-    scope: {
-        locations?: string
-    };
-    update: Function;
-}
-
 /** Contract for a facet component implementation */
 export interface FacetComponent {
     id: string;
     settings?: SearchComponentSettings;
-    context?: QueryBuilderContext;
+    context?: SearchQueryBuilder;
 }
 
 // https://docs.alfresco.com/5.2/concepts/search-api-filterQueries.html

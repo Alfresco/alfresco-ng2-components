@@ -16,7 +16,8 @@
  */
 
 import { Component, ViewEncapsulation, OnInit, Input } from '@angular/core';
-import { FacetComponent, QueryBuilderContext, SearchComponentSettings } from './facets-api';
+import { FacetComponent, SearchComponentSettings } from '../search-config-api';
+import { SearchQueryBuilder } from '../search-query-builder';
 
 @Component({
     selector: 'app-text-facet',
@@ -41,18 +42,18 @@ export class TextFacetComponent implements FacetComponent, OnInit {
 
     id: string;
     settings: SearchComponentSettings;
-    context: QueryBuilderContext;
+    context: SearchQueryBuilder;
 
     ngOnInit() {
         if (this.context) {
-            this.value = this.context.query[this.id] || '';
+            this.value = this.context.queryFragments[this.id] || '';
         }
     }
 
     onChangedHandler(event) {
         this.value = event.target.value;
         if (this.value) {
-            this.context.query[this.id] = `${this.settings.field}:'${this.value}'`;
+            this.context.queryFragments[this.id] = `${this.settings.field}:'${this.value}'`;
             this.context.update();
         }
     }

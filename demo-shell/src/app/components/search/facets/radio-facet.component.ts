@@ -16,8 +16,9 @@
  */
 
 import { Component, ViewEncapsulation, OnInit, Input } from '@angular/core';
-import { FacetComponent, QueryBuilderContext, SearchComponentSettings } from './facets-api';
+import { FacetComponent, SearchComponentSettings } from '../search-config-api';
 import { MatRadioChange } from '@angular/material';
+import { SearchQueryBuilder } from '../search-query-builder';
 
 @Component({
     selector: 'app-radio-facet',
@@ -51,7 +52,7 @@ export class RadioFacetComponent implements FacetComponent, OnInit {
 
     id: string;
     settings: SearchComponentSettings;
-    context: QueryBuilderContext;
+    context: SearchQueryBuilder;
 
     ngOnInit() {
         this.setValue(
@@ -73,7 +74,7 @@ export class RadioFacetComponent implements FacetComponent, OnInit {
 
     private setValue(newValue: string) {
         this.value = newValue;
-        this.context.query[this.id] = newValue;
+        this.context.queryFragments[this.id] = newValue;
         this.context.update();
     }
 

@@ -69,14 +69,14 @@
         ]
       },
       "facetQueries": [
-        { "query": "created:2018", "label": "CreatedThisYear" },
+        { "query": "created:2018", "label": "Created This Year" },
         { "query": "content.mimetype", "label": "Type" },
-        { "query": "content.size:[0 TO 10240]", "label": "xtra small"},
-        { "query": "content.size:[10240 TO 102400]", "label": "small"},
-        { "query": "content.size:[102400 TO 1048576]", "label": "medium" },
-        { "query": "content.size:[1048576 TO 16777216]", "label": "large" },
-        { "query": "content.size:[16777216 TO 134217728]", "label": "xtra large" },
-        { "query": "content.size:[134217728 TO MAX]", "label": "XX large" }
+        { "query": "content.size:[0 TO 10240]", "label": "Size: xtra small"},
+        { "query": "content.size:[10240 TO 102400]", "label": "Size: small"},
+        { "query": "content.size:[102400 TO 1048576]", "label": "Size: medium" },
+        { "query": "content.size:[1048576 TO 16777216]", "label": "Size: large" },
+        { "query": "content.size:[16777216 TO 134217728]", "label": "Size: xtra large" },
+        { "query": "content.size:[134217728 TO MAX]", "label": "Size: XX large" }
       ],
       "query": {
         "categories": [

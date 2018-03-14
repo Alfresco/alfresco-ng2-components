@@ -17,7 +17,7 @@
 
 import { Component, Input, ViewChild, ViewContainerRef, OnInit, OnDestroy, Compiler, ModuleWithComponentFactories, ComponentRef } from '@angular/core';
 import { FacetsModule } from './facets.module';
-import { QueryBuilderContext } from './facets-api';
+import { SearchQueryBuilder } from '../search-query-builder';
 
 @Component({
     selector: 'app-facet-container',
@@ -41,7 +41,7 @@ export class FacetContainerComponent implements OnInit, OnDestroy {
     config: any;
 
     @Input()
-    context: QueryBuilderContext;
+    context: SearchQueryBuilder;
 
     private module: ModuleWithComponentFactories<FacetsModule>;
     private componentRef: ComponentRef<any>;
