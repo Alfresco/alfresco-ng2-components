@@ -77,4 +77,4 @@ export class SomeComponent implements OnInit {
 
 ## See also
 
--   [Upload Drag Area component](upload-drag-area.component.md)
+-   [Upload Drag Area component](../content-services/upload-drag-area.component.md)

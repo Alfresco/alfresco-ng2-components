@@ -88,5 +88,5 @@ described below.
 
 ## See also
 
--   [Search component](search.component.md)
+-   [Search component](../content-services/search.component.md)
 -   [Search configuration service](search-configuration.service.md)

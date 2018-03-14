@@ -80,7 +80,7 @@ This sample Web Scripts reside in your Alfresco Server. You can access the folde
 </adf-webscript-get>
 ```
 
-![Custom columns](docassets/images/HTML.png)                         
+![Custom columns](../docassets/images/HTML.png)                         
 
 ### Webscript View DATATABLE example
 
@@ -137,7 +137,7 @@ data: [
 
 that will render the following table
 
-![Custom columns](docassets/images/datatable.png)
+![Custom columns](../docassets/images/datatable.png)
 
 ### Webscript View JSON example
 

@@ -4,7 +4,7 @@ Status: Active
 ---
 # Permission Style model
 
-Sets custom CSS styles for rows of a [Document List](document-list.component.md) according to the item's permissions.
+Sets custom CSS styles for rows of a Document List according to the item's permissions.
 
 ## Properties
 

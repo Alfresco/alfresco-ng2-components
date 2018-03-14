@@ -6,7 +6,7 @@ Status: Active
 
 Shows available actions for tags.
 
-![Custom columns](docassets/images/tag3.png)
+![Custom columns](../docassets/images/tag3.png)
 
 ## Basic Usage
 

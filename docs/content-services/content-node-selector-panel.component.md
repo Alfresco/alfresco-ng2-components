@@ -6,9 +6,9 @@ Last reviewed: 2018-03-12
 
 # Content Node Selector Panel component
 
-Opens a [Content Node Selector](content-node-selector.component.md) in its own dialog window.
+Opens a Content Node Selector in its own dialog window.
 
-![Content Node Selector screenshot](docassets/images/ContentNodeSelector.png)
+![Content Node Selector screenshot](../docassets/images/ContentNodeSelector.png)
 
 ## Basic Usage
 

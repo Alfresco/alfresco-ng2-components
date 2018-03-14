@@ -8,7 +8,7 @@ Last reviewed: 2018-03-12
 
 Indicates the current position within a navigation hierarchy.
 
-![Breadcrumb](docassets/images/breadcrumb.png)
+![Breadcrumb](../docassets/images/breadcrumb.png)
 
 ## Basic Usage
 
@@ -84,7 +84,7 @@ A transform function to remove the "Sites" folder from the path would look somet
 
 Below, the breadcrumb is shown before and after the transform function is applied:
 
-![Content Node Selector breadcrumbTransfrom before/after screenshot](docassets/images/breadcrumbTransform.png)
+![Content Node Selector breadcrumbTransfrom before/after screenshot](../docassets/images/breadcrumbTransform.png)
 
 ## See also
 

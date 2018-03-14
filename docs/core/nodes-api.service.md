@@ -57,7 +57,7 @@ The Nodes Api Service has methods for getting information about nodes and
 managing them within the repository (creating, deleting, etc).
 
 Other lower level interfaces to the ACS nodes API are also available - see the
-[Alfresco Api service](alfresco-api.service.md), the 
+[Alfresco Api service](../alfresco-api.service.md), the 
 [Alfresco JS API docs](https://github.com/Alfresco/alfresco-js-api/tree/master/src/alfresco-core-rest-api)
 and the
 [REST API Explorer](https://api-explorer.alfresco.com/api-explorer/#/nodes)
@@ -93,8 +93,8 @@ modification dates, etc. Also, the `id` and `parentId` properties contain the no
 ID strings for the current node and its enclosing folder.
 
 Sometimes, a MinimalNode is provided directly, for example, the `folderNode` property
-of a [Document List component](document-list.component.md) or the data context of a
-[Document List row](document-list.component.md#underlying-node-object). In these cases,
+of a [Document List component](../content-services/document-list.component.md) or the data context of a
+[Document List row](../content-services/document-list.component.md#underlying-node-object). In these cases,
 you might pass the `id` or `parentId` as a [route parameter](https://angular.io/guide/router)
 to a page describing the node in full detail. The component receiving the node ID can
 use the Nodes Api service to "decode" the ID string into a MinimalNodeEntryEntity:
@@ -135,8 +135,8 @@ page in the Alfresco JS API docs for more information.
 ### Getting folder node contents
 
 The `getNodeChildren` method returns the contents of a folder
-as a list of items. See the [Paging section](document-library.model.md#paging)
-of [Document Library model](document-library.model.md) for
+as a list of items. See the [Paging section](../content-services/document-library.model.md#paging)
+of [Document Library model](../content-services/document-library.model.md) for
 more information about the structure of the list. Also, the
 [getNodeChildren](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodesApi.md#getNodeChildren)
 page in the Alfresco JS API gives more information about the structure of the
@@ -167,11 +167,11 @@ to delete the node immediately if you have the right permissions. See the
 and
 [restoreNode](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodesApi.md#restoreNode)
 pages in the Alfresco JS API for further details and options. Note that you can also use the
-[Deleted Nodes Api service](core/deleted-nodes-api.service.md) get a list of all items currently in the trashcan.
+[Deleted Nodes Api service](deleted-nodes-api.service.md) get a list of all items currently in the trashcan.
 
 ## See also
 
--   [Document library model](document-library.model.md)
--   [Deleted nodes api service](core/deleted-nodes-api.service.md)
--   [Document list component](document-list.component.md)
+-   [Document library model](../content-services/document-library.model.md)
+-   [Deleted nodes api service](deleted-nodes-api.service.md)
+-   [Document list component](../content-services/document-list.component.md)
 -   [Node service](node.service.md)
