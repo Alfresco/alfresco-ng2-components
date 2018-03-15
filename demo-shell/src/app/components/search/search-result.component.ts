@@ -20,7 +20,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatCheckboxChange } from '@angular/material';
 import { NodePaging, QueryBody } from 'alfresco-js-api';
 import {
-    AppConfigService, AlfrescoApiService, SearchConfigurationService,
+    AppConfigService, AlfrescoApiService,
     SearchConfiguration, SearchCategory, FacetQuery, FacetFieldBucket, ResponseFacetField, ResponseFacetQuery, SearchQueryBuilder
 } from '@alfresco/adf-core';
 
@@ -44,8 +44,7 @@ export class SearchResultComponent implements OnInit {
 
     constructor(private route: ActivatedRoute,
                 private api: AlfrescoApiService,
-                appConfig: AppConfigService,
-                private searchConfig: SearchConfigurationService) {
+                appConfig: AppConfigService) {
         this.config = appConfig.get<SearchConfiguration>('search');
 
         this.queryBuilder = new SearchQueryBuilder(this.config);
@@ -59,8 +58,8 @@ export class SearchResultComponent implements OnInit {
             this.route.params.subscribe(params => {
                 const searchTerm = params['q'];
                 if (searchTerm) {
-                    const query = this.searchConfig.generateQueryBody(searchTerm, 100, 0);
-                    this.api.searchApi.search(query).then(data => this.onDataLoaded(data));
+                    this.queryBuilder.queryFragments['queryName'] = `cm:name:'${searchTerm}'`;
+                    this.queryBuilder.update();
                 }
             });
         }

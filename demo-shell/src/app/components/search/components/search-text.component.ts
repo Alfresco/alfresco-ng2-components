@@ -45,8 +45,13 @@ export class SearchTextComponent implements SearchComponent, OnInit {
     context: SearchQueryBuilder;
 
     ngOnInit() {
-        if (this.context) {
-            this.value = this.context.queryFragments[this.id] || '';
+        if (this.context && this.settings) {
+            const pattern = new RegExp(this.settings.pattern, 'g');
+            const match = pattern.exec(this.context.queryFragments[this.id] || '');
+
+            if (match && match.length > 1) {
+                this.value = match[1];
+            }
         }
     }
 
