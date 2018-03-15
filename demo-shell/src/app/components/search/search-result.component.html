@@ -1,25 +1,15 @@
 <div class="adf-search-results__facets">
-    <mat-chip-list>
-        <mat-chip
-            *ngFor="let label of selectedFacetQueries"
-            [removable]="true"
-            (remove)="onRemoveFacetQuery(label)">
-            {{ label }}
-            <mat-icon matChipRemove>cancel</mat-icon>
-        </mat-chip>
-        <mat-chip
-            *ngFor="let bucket of selectedBuckets"
-            [removable]="true"
-            (remove)="onRemoveSelectedBucket(bucket)">
-            {{ bucket.display || bucket.label }}
-            <mat-icon matChipRemove>cancel</mat-icon>
-        </mat-chip>
-    </mat-chip-list>
+    <adf-selected-facets
+        [facetQueries]="selectedFacetQueries"
+        [facetBuckets]="selectedBuckets"
+        (removeFacetQuery)="onRemoveFacetQuery($event)"
+        (removeFacetBucket)="onRemoveSelectedBucket($event)">
+    </adf-selected-facets>
 </div>
 
 <div class="adf-search-results">
-    <div class="adf-search-results__panel">
-        <mat-accordion class="adf-search-results__widgets" multi="true" displayMode="flat">
+    <adf-search-settings>
+        <mat-accordion multi="true" displayMode="flat">
 
             <mat-expansion-panel
                 *ngFor="let category of queryBuilder.categories"
@@ -73,7 +63,7 @@
                 </div>
             </mat-expansion-panel>
         </mat-accordion>
-    </div>
+    </adf-search-settings>
 
     <div class="adf-search-results__content">
         <adf-document-list

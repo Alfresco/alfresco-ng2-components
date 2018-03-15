@@ -29,12 +29,16 @@ import { SearchControlComponent } from './components/search-control.component';
 import { SearchComponent } from './components/search.component';
 import { EmptySearchResultComponent } from './components/empty-search-result.component';
 import { SearchWidgetContainerComponent } from './components/search-widget-container/search-widget-container.component';
+import { SearchSettingsComponent } from './components/search-settings/search-settings.component';
+import { SelectedFacetsComponent } from '.';
 
 export const ALFRESCO_SEARCH_DIRECTIVES: any[] = [
     SearchComponent,
     SearchControlComponent,
     SearchTriggerDirective,
-    EmptySearchResultComponent
+    EmptySearchResultComponent,
+    SearchSettingsComponent,
+    SelectedFacetsComponent
 ];
 
 @NgModule({

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FacetFieldBucket } from "./facet-field-bucket.interface";
+import { FacetFieldBucket } from './facet-field-bucket.interface';
 
 export interface ResponseFacetField {
     label: string;

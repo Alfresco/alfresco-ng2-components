@@ -15,18 +15,27 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
-import { SearchQueryBuilder } from '../../search-query-builder';
+import { Component, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
+import { FacetFieldBucket } from '../../facet-field-bucket.interface';
 
 @Component({
-    selector: 'adf-search-settings',
-    templateUrl: './search-settings.component.html',
-    styleUrls: ['./search-settings.component.scss'],
+    selector: 'adf-selected-facets',
+    templateUrl: './selected-facets.component.html',
+    styleUrls: ['././selected-facets.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-search-settings' }
+    host: { class: 'adf-selected-facets' }
 })
-export class SearchSettingsComponent {
+export class SelectedFacetsComponent {
 
-    queryBuilder: SearchQueryBuilder;
+    @Input()
+    facetQueries: string[] = [];
 
+    @Input()
+    facetBuckets: FacetFieldBucket[] = [];
+
+    @Output()
+    removeFacetQuery = new EventEmitter<string>();
+
+    @Output()
+    removeFacetBucket = new EventEmitter<FacetFieldBucket>();
 }

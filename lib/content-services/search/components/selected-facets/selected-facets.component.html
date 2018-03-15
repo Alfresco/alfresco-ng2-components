@@ -1,0 +1,16 @@
+<mat-chip-list>
+    <mat-chip
+        *ngFor="let label of facetQueries"
+        [removable]="true"
+        (remove)="removeFacetQuery.next(label)">
+        {{ label }}
+        <mat-icon matChipRemove>cancel</mat-icon>
+    </mat-chip>
+    <mat-chip
+        *ngFor="let bucket of facetBuckets"
+        [removable]="true"
+        (remove)="removeFacetBucket.next(bucket)">
+        {{ bucket.display || bucket.label }}
+        <mat-icon matChipRemove>cancel</mat-icon>
+    </mat-chip>
+</mat-chip-list>
