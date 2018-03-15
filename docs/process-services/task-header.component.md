@@ -6,7 +6,7 @@ Status: Active
 
 Shows all the information related to a task.
 
-![adf-task-header](docassets/images/adf-task-header.png)
+![adf-task-header](../docassets/images/adf-task-header.png)
 
 ## Basic Usage
 

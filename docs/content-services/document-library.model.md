@@ -9,7 +9,7 @@ Defines classes for use with the Content Services node API.
 ## Details
 
 ADF provides several services that give higher-level access to
-underlying [Alfresco JS Api](../alfresco-api.service.md) functionality.
+underlying [Alfresco JS Api](../core/alfresco-api.service.md) functionality.
 The classes defined below are used in some of these services to access
 the Content Services nodes API. You can use these services to access
 the nodes (ie, documents and folders) of a repository using their

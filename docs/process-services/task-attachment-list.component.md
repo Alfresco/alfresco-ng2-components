@@ -7,7 +7,7 @@ Last reviewed: 2018-03-13
 
 Displays attached documents on a specified task.
 
-![task-attachment-list-sample](docassets/images/task-attachment-list.png)
+![task-attachment-list-sample](../docassets/images/task-attachment-list.png)
 
 ## Basic Usage
 
@@ -37,11 +37,11 @@ Displays attached documents on a specified task.
 
 If the List is empty, a default "no content" template is displayed.
 
-![default-no-content-template-sample](docassets/images/default-no-content-template.png)
+![default-no-content-template-sample](../docassets/images/default-no-content-template.png)
 
 ### How to Add Drag and Drop Functionality
 
-You can wrap the component with an [Upload Drag Area component](content-services/upload-drag-area.component.md)
+You can wrap the component with an [Upload Drag Area component](../content-services/upload-drag-area.component.md)
 to enable the user to upload attachments for empty lists. When you do this, you can also pass
 a custom _no content template_ as shown below. The component invites the user to drag files to
 upload whenever the list is empty.
@@ -82,8 +82,8 @@ export class MyCustomTaskAttachmentComponent {
 }
 ```
 
-[Upload Drag Area Component](content-services/upload-drag-area.component.md)
+[Upload Drag Area Component](../content-services/upload-drag-area.component.md)
 
 If the List is empty, the custom no-content template we passed is displayed. 
 
-![custom-no-content-drag-drop-template-sample](docassets/images/custom-no-content-drag-drop-template.png)
+![custom-no-content-drag-drop-template-sample](../docassets/images/custom-no-content-drag-drop-template.png)

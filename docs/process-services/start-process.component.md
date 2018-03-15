@@ -8,7 +8,7 @@ Last reviewed: 2018-03-13
 
 Starts a process.
 
-![adf-start-process ](docassets/images/startProcess.png)
+![adf-start-process ](../docassets/images/startProcess.png)
 
 ## Basic Usage
 
@@ -116,7 +116,7 @@ const formValues: FormValues  = {
 ```
 
 Note that in the object above, the key `file` is the name of the attach file field in the start form of the process. The value of the `file` property must be a
-[MinimalNodeEntryEntity](content-services/document-library.model.md):
+[MinimalNodeEntryEntity](../content-services/document-library.model.md):
 
 ```html
 <adf-start-process 
@@ -127,7 +127,7 @@ Note that in the object above, the key `file` is the name of the attach file fie
 
 The result will be the start form prefilled with the file data:
 
-![Start process load file](docassets/images/start_process.png)
+![Start process load file](../docassets/images/start_process.png)
 
 ## See also
 

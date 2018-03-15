@@ -71,7 +71,7 @@ notation (so `FORM.START_FORM.TITLE` would be the key for the "Start Form"
 string here). This is useful for grouping related messages and providing
 singular and plural versions, among other things.
 
-The [Translation service](translation.service.md) defines the `get` method to
+The [Translation service](core/translation.service.md) defines the `get` method to
 get the translation of a key in the current language. A simple component might
 contain code like this:
 
@@ -146,7 +146,7 @@ component's `.ts` file:
 The built-in translations certainly won't cover everything you will need for
 your app but you can easily replace them with your own lists. This involves
 making copies of the existing lists in your app's folder and adding your
-own keys. See the [Translation service](translation.service.md) page for
+own keys. See the [Translation service](core/translation.service.md) page for
 full details and examples.
 
 ## Interpolations
@@ -216,5 +216,5 @@ component to see if it has built-in support for i18n.
 
 ## See also
 
--   [Translation service](translation.service.md)
+-   [Translation service](core/translation.service.md)
 -   [Language Menu component](core/language-menu.component.md)

@@ -2,7 +2,7 @@
 
 Shows how to write a Markdown file for a component.
 
-![Screenshot goes here if necessary](docassets/images/adf-toolbar-01.png)
+![Screenshot goes here if necessary](../docassets/images/adf-toolbar-01.png)
 
 <!-- Most doc files don't need a table of contents. Delete this part unless
 you have added about five subsections in the Details part.

@@ -6,7 +6,7 @@ Status: Active
 
 Creates/Starts new task for the specified app
 
-![adf-start-task](docassets/images/adf-start-task.png)
+![adf-start-task](../docassets/images/adf-start-task.png)
 
 ## Basic Usage
 
