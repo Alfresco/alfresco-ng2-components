@@ -17,11 +17,12 @@
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NodePaging, QueryBody } from 'alfresco-js-api';
-import { AppConfigService, AlfrescoApiService, SearchConfigurationService } from '@alfresco/adf-core';
-import { SearchConfig, SearchCategory, FacetQuery, FacetFieldBucket, ResponseFacetField, ResponseFacetQuery } from './search-config-api';
 import { MatCheckboxChange } from '@angular/material';
-import { SearchQueryBuilder } from './search-query-builder';
+import { NodePaging, QueryBody } from 'alfresco-js-api';
+import {
+    AppConfigService, AlfrescoApiService, SearchConfigurationService,
+    SearchConfiguration, SearchCategory, FacetQuery, FacetFieldBucket, ResponseFacetField, ResponseFacetQuery, SearchQueryBuilder
+} from '@alfresco/adf-core';
 
 @Component({
     selector: 'app-search-result-component',
@@ -31,7 +32,7 @@ import { SearchQueryBuilder } from './search-query-builder';
 export class SearchResultComponent implements OnInit {
 
     data: NodePaging;
-    config: SearchConfig;
+    config: SearchConfiguration;
 
     queryBuilder: SearchQueryBuilder;
 
@@ -45,7 +46,7 @@ export class SearchResultComponent implements OnInit {
                 private api: AlfrescoApiService,
                 appConfig: AppConfigService,
                 private searchConfig: SearchConfigurationService) {
-        this.config = appConfig.get<SearchConfig>('search');
+        this.config = appConfig.get<SearchConfiguration>('search');
 
         this.queryBuilder = new SearchQueryBuilder(this.config);
         this.queryBuilder.updated.subscribe(query => {

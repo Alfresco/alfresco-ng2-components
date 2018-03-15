@@ -16,9 +16,8 @@
  */
 
 import { Component, ViewEncapsulation, OnInit, Input } from '@angular/core';
-import { FacetComponent, SearchComponentSettings } from '../search-config-api';
+import { SearchComponent, SearchComponentSettings, SearchQueryBuilder } from '@alfresco/adf-core';
 import { MatRadioChange } from '@angular/material';
-import { SearchQueryBuilder } from '../search-query-builder';
 
 @Component({
     selector: 'app-radio-facet',
@@ -45,7 +44,7 @@ import { SearchQueryBuilder } from '../search-query-builder';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'app-radio-facet' }
 })
-export class RadioFacetComponent implements FacetComponent, OnInit {
+export class RadioFacetComponent implements SearchComponent, OnInit {
 
     @Input()
     value: string;

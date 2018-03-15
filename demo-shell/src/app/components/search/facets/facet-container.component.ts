@@ -17,13 +17,13 @@
 
 import { Component, Input, ViewChild, ViewContainerRef, OnInit, OnDestroy, Compiler, ModuleWithComponentFactories, ComponentRef } from '@angular/core';
 import { FacetsModule } from './facets.module';
-import { SearchQueryBuilder } from '../search-query-builder';
+import { SearchQueryBuilder } from '@alfresco/adf-core';
 
 @Component({
     selector: 'app-facet-container',
     template: '<div #content></div>'
 })
-export class FacetContainerComponent implements OnInit, OnDestroy {
+export class SearchContainerComponent implements OnInit, OnDestroy {
 
     @ViewChild('content', { read: ViewContainerRef })
     content: ViewContainerRef;

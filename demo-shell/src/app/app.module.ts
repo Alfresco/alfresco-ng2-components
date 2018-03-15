@@ -49,7 +49,7 @@ import { ProcessAttachmentsComponent } from './components/process-service/proces
 import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 import { FacetsModule } from './components/search/facets/facets.module';
-import { FacetContainerComponent } from './components/search/facets/facet-container.component';
+import { SearchContainerComponent } from './components/search/facets/facet-container.component';
 
 
 @NgModule({
@@ -100,7 +100,8 @@ import { FacetContainerComponent } from './components/search/facets/facet-contai
         SharedLinkViewComponent,
         FormLoadingComponent,
         DemoPermissionComponent,
-        FacetContainerComponent
+        FacetContainerComponent,
+        SearchContainerComponent
     ],
     providers: [
         { provide: AppConfigService, useClass: DebugAppConfigService },
@@ -124,7 +125,7 @@ import { FacetContainerComponent } from './components/search/facets/facet-contai
     entryComponents: [
         VersionManagerDialogAdapterComponent,
         MetadataDialogAdapterComponent,
-        FacetContainerComponent
+        SearchContainerComponent
     ],
     bootstrap: [AppComponent]
 })

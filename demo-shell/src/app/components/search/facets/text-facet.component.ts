@@ -16,8 +16,7 @@
  */
 
 import { Component, ViewEncapsulation, OnInit, Input } from '@angular/core';
-import { FacetComponent, SearchComponentSettings } from '../search-config-api';
-import { SearchQueryBuilder } from '../search-query-builder';
+import { SearchComponent, SearchComponentSettings, SearchQueryBuilder } from '@alfresco/adf-core';
 
 @Component({
     selector: 'app-text-facet',
@@ -35,7 +34,7 @@ import { SearchQueryBuilder } from '../search-query-builder';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'app-text-facet' }
 })
-export class TextFacetComponent implements FacetComponent, OnInit {
+export class TextFacetComponent implements SearchComponent, OnInit {
 
     @Input()
     value = '';

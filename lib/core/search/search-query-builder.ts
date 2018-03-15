@@ -15,9 +15,13 @@
  * limitations under the License.
  */
 
-import { SearchConfig, SearchCategory, FilterQuery, FacetQuery, SearchRange } from './search-config-api';
 import { Subject } from 'rxjs/Subject';
 import { QueryBody } from 'alfresco-js-api';
+import { SearchCategory } from './search-category.interface';
+import { FilterQuery } from './filter-query.interface';
+import { SearchRange } from './search-range.interface';
+import { SearchConfiguration } from './search-configuration.interface';
+import { FacetQuery } from './facet-query.interface';
 
 export class SearchQueryBuilder {
 
@@ -30,7 +34,7 @@ export class SearchQueryBuilder {
     filterQueries: FilterQuery[] = [];
     ranges: { [id: string]: SearchRange } = {};
 
-    constructor(public config: SearchConfig) {
+    constructor(public config: SearchConfiguration) {
         if (!config) {
             throw new Error('Search configuration not found.');
         }
@@ -71,7 +75,7 @@ export class SearchQueryBuilder {
 
     buildQuery(): QueryBody {
         let query = '';
-        const fields = [];
+        const fields: string[] = [];
 
         this.categories.forEach(facet => {
             const customQuery = this.queryFragments[facet.id];

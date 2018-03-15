@@ -16,9 +16,8 @@
  */
 
 import { Component, ViewEncapsulation, OnInit, Input } from '@angular/core';
-import { FacetComponent, SearchComponentSettings } from '../search-config-api';
+import { SearchComponent, SearchComponentSettings, SearchQueryBuilder } from '@alfresco/adf-core';
 import { MatSelectChange } from '@angular/material';
-import { SearchQueryBuilder } from '../search-query-builder';
 
 @Component({
     selector: 'app-scope-locations-facet',
@@ -40,7 +39,7 @@ import { SearchQueryBuilder } from '../search-query-builder';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'app-scope-locations-facet' }
 })
-export class ScopeLocationsFacetComponent implements FacetComponent, OnInit {
+export class ScopeLocationsFacetComponent implements SearchComponent, OnInit {
 
     @Input()
     value: string;
