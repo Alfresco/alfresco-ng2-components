@@ -49,7 +49,8 @@ import { ProcessAttachmentsComponent } from './components/process-service/proces
 import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 import { FacetsModule } from './components/search/facets/facets.module';
-import { SearchContainerComponent } from './components/search/facets/facet-container.component';
+import { SearchComponentsModule } from './components/search/components/search-components.module';
+import { SearchContainerComponent } from './components/search/components/search-container.component';
 
 
 @NgModule({
@@ -65,7 +66,7 @@ import { SearchContainerComponent } from './components/search/facets/facet-conta
         FlexLayoutModule,
         ChartsModule,
         HttpClientModule,
-        FacetsModule
+        SearchComponentsModule
     ],
     declarations: [
         AppComponent,

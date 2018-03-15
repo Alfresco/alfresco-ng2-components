@@ -31,12 +31,12 @@
                         {{ category.name }}
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <app-facet-container
+                <adf-search-container
                     [id]="category.id"
                     [context]="queryBuilder"
                     [selector]="category.component.selector"
                     [settings]="category.component.settings">
-                </app-facet-container>
+                </adf-search-container>
             </mat-expansion-panel>
 
             <mat-expansion-panel>

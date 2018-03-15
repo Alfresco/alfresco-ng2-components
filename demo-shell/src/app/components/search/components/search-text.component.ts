@@ -19,7 +19,8 @@ import { Component, ViewEncapsulation, OnInit, Input } from '@angular/core';
 import { SearchComponent, SearchComponentSettings, SearchQueryBuilder } from '@alfresco/adf-core';
 
 @Component({
-    selector: 'app-text-facet',
+    // tslint:disable-next-line:component-selector
+    selector: 'adf-search-text',
     template: `
         <div>
             <mat-form-field>
@@ -32,9 +33,9 @@ import { SearchComponent, SearchComponentSettings, SearchQueryBuilder } from '@a
         </div>
     `,
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'app-text-facet' }
+    host: { class: 'adf-search-text' }
 })
-export class TextFacetComponent implements SearchComponent, OnInit {
+export class SearchTextComponent implements SearchComponent, OnInit {
 
     @Input()
     value = '';

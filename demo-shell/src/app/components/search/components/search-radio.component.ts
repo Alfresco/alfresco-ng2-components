@@ -20,7 +20,8 @@ import { SearchComponent, SearchComponentSettings, SearchQueryBuilder } from '@a
 import { MatRadioChange } from '@angular/material';
 
 @Component({
-    selector: 'app-radio-facet',
+    // tslint:disable-next-line:component-selector
+    selector: 'adf-search-radio',
     template: `
         <div>
             <mat-radio-group [(ngModel)]="value" (change)="changeHandler($event)">
@@ -32,19 +33,19 @@ import { MatRadioChange } from '@angular/material';
         </div>
     `,
     styles: [`
-        .app-radio-facet .mat-radio-group {
+        .adf-search-radio .mat-radio-group {
             display: inline-flex;
             flex-direction: column;
         }
 
-        .app-radio-facet .mat-radio-button {
+        .adf-search-radio .mat-radio-button {
             margin: 5px;
         }
     `],
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'app-radio-facet' }
+    host: { class: 'adf-search-radio' }
 })
-export class RadioFacetComponent implements SearchComponent, OnInit {
+export class SearchRadioComponent implements SearchComponent, OnInit {
 
     @Input()
     value: string;

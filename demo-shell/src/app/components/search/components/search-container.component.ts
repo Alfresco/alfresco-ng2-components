@@ -16,11 +16,12 @@
  */
 
 import { Component, Input, ViewChild, ViewContainerRef, OnInit, OnDestroy, Compiler, ModuleWithComponentFactories, ComponentRef } from '@angular/core';
-import { FacetsModule } from './facets.module';
 import { SearchQueryBuilder } from '@alfresco/adf-core';
+import { SearchComponentsModule } from '../components/search-components.module';
 
 @Component({
-    selector: 'app-facet-container',
+    // tslint:disable-next-line:component-selector
+    selector: 'adf-search-container',
     template: '<div #content></div>'
 })
 export class SearchContainerComponent implements OnInit, OnDestroy {
@@ -43,11 +44,11 @@ export class SearchContainerComponent implements OnInit, OnDestroy {
     @Input()
     context: SearchQueryBuilder;
 
-    private module: ModuleWithComponentFactories<FacetsModule>;
+    private module: ModuleWithComponentFactories<SearchComponentsModule>;
     private componentRef: ComponentRef<any>;
 
     constructor(compiler: Compiler) {
-        this.module = compiler.compileModuleAndAllComponentsSync(FacetsModule);
+        this.module = compiler.compileModuleAndAllComponentsSync(SearchComponentsModule);
     }
 
     ngOnInit() {

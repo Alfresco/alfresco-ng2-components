@@ -16,13 +16,13 @@
  */
 
 import { NgModule } from '@angular/core';
-import { TextFacetComponent } from './text-facet.component';
 import { MatButtonModule, MatInputModule, MatRadioModule, MatCheckboxModule, MatSelectModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RadioFacetComponent } from './radio-facet.component';
-import { FieldsFacetComponent } from './fields-facet.component';
-import { ScopeLocationsFacetComponent } from './scope-locations-facet.component';
+import { SearchTextComponent } from '../components/search-text.component';
+import { SearchFieldsComponent } from '../components/search-fields.component';
+import { SearchScopeLocationsComponent } from '../components/search-scope-locations.component';
+import { SearchRadioComponent } from '../components/search-radio.component';
 
 @NgModule({
     imports: [
@@ -36,23 +36,23 @@ import { ScopeLocationsFacetComponent } from './scope-locations-facet.component'
         MatSelectModule
     ],
     declarations: [
-        TextFacetComponent,
-        RadioFacetComponent,
-        FieldsFacetComponent,
-        ScopeLocationsFacetComponent
+        SearchTextComponent,
+        SearchRadioComponent,
+        SearchFieldsComponent,
+        SearchScopeLocationsComponent
     ],
     exports: [
-        TextFacetComponent,
-        RadioFacetComponent,
-        FieldsFacetComponent,
-        ScopeLocationsFacetComponent
+        SearchTextComponent,
+        SearchRadioComponent,
+        SearchFieldsComponent,
+        SearchScopeLocationsComponent
     ],
     entryComponents: [
-        TextFacetComponent,
-        RadioFacetComponent,
-        FieldsFacetComponent,
-        ScopeLocationsFacetComponent
+        SearchTextComponent,
+        SearchRadioComponent,
+        SearchFieldsComponent,
+        SearchScopeLocationsComponent
     ]
 })
-export class FacetsModule {
+export class SearchComponentsModule {
 }

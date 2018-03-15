@@ -86,7 +86,7 @@
           "enabled": false,
           "expanded": false,
           "component": {
-            "selector": "app-text-facet",
+            "selector": "adf-search-text",
             "settings": {
               "field": "fieldname"
             }
@@ -98,7 +98,7 @@
           "enabled": true,
           "expanded": true,
           "component": {
-            "selector": "app-text-facet",
+            "selector": "adf-search-text",
             "settings": {
               "field": "cm:name",
               "placeholder": "Enter the name"
@@ -111,7 +111,7 @@
           "enabled": true,
           "expanded": false,
           "component": {
-            "selector": "app-fields-facet",
+            "selector": "adf-search-fields",
             "settings": {
               "field": null,
               "options": [
@@ -129,7 +129,7 @@
           "enabled": true,
           "expanded": false,
           "component": {
-            "selector": "app-radio-facet",
+            "selector": "adf-search-radio",
             "settings": {
               "field": null,
               "options": [
@@ -147,7 +147,7 @@
           "enabled": true,
           "expanded": false,
           "component": {
-            "selector": "app-scope-locations-facet",
+            "selector": "adf-search-scope-locations",
             "settings": {
               "field": null,
               "options": [

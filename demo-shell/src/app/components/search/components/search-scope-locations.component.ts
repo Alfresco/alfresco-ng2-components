@@ -20,7 +20,8 @@ import { SearchComponent, SearchComponentSettings, SearchQueryBuilder } from '@a
 import { MatSelectChange } from '@angular/material';
 
 @Component({
-    selector: 'app-scope-locations-facet',
+    // tslint:disable-next-line:component-selector
+    selector: 'adf-search-scope-locations',
     template: `
         <mat-form-field>
             <mat-select
@@ -37,9 +38,9 @@ import { MatSelectChange } from '@angular/material';
     styles: [`
     `],
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'app-scope-locations-facet' }
+    host: { class: 'adf-search-scope-locations' }
 })
-export class ScopeLocationsFacetComponent implements SearchComponent, OnInit {
+export class SearchScopeLocationsComponent implements SearchComponent, OnInit {
 
     @Input()
     value: string;

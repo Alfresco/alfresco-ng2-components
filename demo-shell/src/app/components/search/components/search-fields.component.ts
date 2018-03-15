@@ -20,7 +20,8 @@ import { SearchComponent, SearchComponentSettings, SearchQueryBuilder } from '@a
 import { MatCheckboxChange } from '@angular/material';
 
 @Component({
-    selector: 'app-fields-facet',
+    // tslint:disable-next-line:component-selector
+    selector: 'adf-search-fields',
     template: `
         <mat-checkbox
             *ngFor="let option of settings.options"
@@ -30,19 +31,19 @@ import { MatCheckboxChange } from '@angular/material';
         </mat-checkbox>
     `,
     styles: [`
-        .app-fields-facet {
+        .adf-search-fields {
             display: flex;
             flex-direction: column;
         }
 
-        .app-fields-facet .mat-checkbox {
+        .adf-search-fields .mat-checkbox {
             margin: 5px;
         }
     `],
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'app-fields-facet' }
+    host: { class: 'adf-search-fields' }
 })
-export class FieldsFacetComponent implements SearchComponent, OnInit {
+export class SearchFieldsComponent implements SearchComponent, OnInit {
 
     @Input()
     value: string;
