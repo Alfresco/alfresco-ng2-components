@@ -15,11 +15,13 @@
  * limitations under the License.
  */
 
-import { SearchComponentSettings } from "./search-component-settings.interface";
-import { SearchQueryBuilder } from "./search-query-builder";
+import { Component } from '@angular/core';
 
-export interface SearchComponent {
-    id: string;
-    settings?: SearchComponentSettings;
-    context?: SearchQueryBuilder;
+@Component({
+    selector: 'adf-search-settings',
+    templateUrl: './search-settings.component.html',
+    styleUrls: ['./search-settings.component.scss']
+})
+export class SearchSettingsComponent {
+
 }

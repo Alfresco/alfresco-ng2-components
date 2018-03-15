@@ -15,6 +15,19 @@
  * limitations under the License.
  */
 
+export { FacetFieldBucket } from './facet-field-bucket.interface';
+export { FacetField } from './facet-field.interface';
+export { FacetQuery } from './facet-query.interface';
+export { FilterQuery } from './filter-query.interface';
+export { ResponseFacetField } from './response-facet-field.interface';
+export { ResponseFacetQuery } from './response-facet-query.interface';
+export { SearchCategory } from './search-category.interface';
+export { SearchWidgetSettings } from './search-widget-settings.interface';
+export { SearchWidget } from './search-widget.interface';
+export { SearchConfiguration } from './search-configuration.interface';
+export { SearchQueryBuilder } from './search-query-builder';
+export { SearchRange } from './search-range.interface';
+
 export * from './components/search.component';
 export * from './components/search-control.component';
 export * from './components/search-trigger.directive';

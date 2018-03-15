@@ -28,6 +28,7 @@ import { SearchTriggerDirective } from './components/search-trigger.directive';
 import { SearchControlComponent } from './components/search-control.component';
 import { SearchComponent } from './components/search.component';
 import { EmptySearchResultComponent } from './components/empty-search-result.component';
+import { SearchWidgetContainerComponent } from './components/search-widget-container/search-widget-container.component';
 
 export const ALFRESCO_SEARCH_DIRECTIVES: any[] = [
     SearchComponent,
@@ -46,10 +47,15 @@ export const ALFRESCO_SEARCH_DIRECTIVES: any[] = [
         TranslateModule
     ],
     declarations: [
-        ...ALFRESCO_SEARCH_DIRECTIVES
+        ...ALFRESCO_SEARCH_DIRECTIVES,
+        SearchWidgetContainerComponent
     ],
     exports: [
-        ...ALFRESCO_SEARCH_DIRECTIVES
+        ...ALFRESCO_SEARCH_DIRECTIVES,
+        SearchWidgetContainerComponent
+    ],
+    entryComponents: [
+        SearchWidgetContainerComponent
     ]
 })
 export class SearchModule {}

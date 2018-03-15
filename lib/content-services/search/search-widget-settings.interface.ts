@@ -15,15 +15,7 @@
  * limitations under the License.
  */
 
-import { SearchComponentSettings } from "./search-component-settings.interface";
-
-export interface SearchCategory {
-    id: string;
-    name: string;
-    enabled: boolean;
-    expanded: boolean;
-    component: {
-        selector: string;
-        settings: SearchComponentSettings;
-    };
+export interface SearchWidgetSettings {
+    field: string;
+    [indexer: string]: any;
 }

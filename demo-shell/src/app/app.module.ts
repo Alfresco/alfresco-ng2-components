@@ -48,25 +48,23 @@ import { TaskAttachmentsComponent } from './components/process-service/task-atta
 import { ProcessAttachmentsComponent } from './components/process-service/process-attachments.component';
 import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
-import { FacetsModule } from './components/search/facets/facets.module';
 import { SearchComponentsModule } from './components/search/components/search-components.module';
 import { SearchContainerComponent } from './components/search/components/search-container.component';
 
 
 @NgModule({
     imports: [
+        BrowserModule,
         BrowserAnimationsModule,
         ReactiveFormsModule,
-        BrowserModule,
         routing,
         FormsModule,
-        AdfModule,
         MaterialModule,
         ThemePickerModule,
         FlexLayoutModule,
         ChartsModule,
         HttpClientModule,
-        SearchComponentsModule
+        AdfModule
     ],
     declarations: [
         AppComponent,
@@ -102,7 +100,8 @@ import { SearchContainerComponent } from './components/search/components/search-
         FormLoadingComponent,
         DemoPermissionComponent,
         FacetContainerComponent,
-        SearchContainerComponent
+        SearchContainerComponent,
+        FormLoadingComponent
     ],
     providers: [
         { provide: AppConfigService, useClass: DebugAppConfigService },
@@ -125,8 +124,7 @@ import { SearchContainerComponent } from './components/search/components/search-
     ],
     entryComponents: [
         VersionManagerDialogAdapterComponent,
-        MetadataDialogAdapterComponent,
-        SearchContainerComponent
+        MetadataDialogAdapterComponent
     ],
     bootstrap: [AppComponent]
 })

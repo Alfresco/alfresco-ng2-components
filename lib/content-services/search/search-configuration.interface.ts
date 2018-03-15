@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { FilterQuery } from "./filter-query.interface";
-import { FacetQuery } from "./facet-query.interface";
-import { FacetField } from "./facet-field.interface";
-import { SearchCategory } from "./search-category.interface";
+import { FilterQuery } from './filter-query.interface';
+import { FacetQuery } from './facet-query.interface';
+import { FacetField } from './facet-field.interface';
+import { SearchCategory } from './search-category.interface';
 
 export interface SearchConfiguration {
     query: {

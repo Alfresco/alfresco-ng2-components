@@ -52,7 +52,6 @@ export * from './collapsable';
 export * from './card-view';
 export * from './app-config';
 export * from './form';
-export * from './search';
 
 export * from './pipes';
 export * from './services';

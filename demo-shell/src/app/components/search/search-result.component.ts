@@ -19,10 +19,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatCheckboxChange } from '@angular/material';
 import { NodePaging, QueryBody } from 'alfresco-js-api';
+import { AppConfigService, AlfrescoApiService } from '@alfresco/adf-core';
 import {
-    AppConfigService, AlfrescoApiService,
-    SearchConfiguration, SearchCategory, FacetQuery, FacetFieldBucket, ResponseFacetField, ResponseFacetQuery, SearchQueryBuilder
-} from '@alfresco/adf-core';
+    SearchConfiguration, SearchCategory, FacetQuery, FacetFieldBucket,
+    ResponseFacetField, ResponseFacetQuery, SearchQueryBuilder
+} from '@alfresco/adf-content-services';
 
 @Component({
     selector: 'app-search-result-component',

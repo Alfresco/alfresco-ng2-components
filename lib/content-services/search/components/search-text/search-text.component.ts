@@ -16,32 +16,23 @@
  */
 
 import { Component, ViewEncapsulation, OnInit, Input } from '@angular/core';
-import { SearchComponent, SearchComponentSettings, SearchQueryBuilder } from '@alfresco/adf-core';
+import { SearchWidget } from '../../search-widget.interface';
+import { SearchWidgetSettings } from '../../search-widget-settings.interface';
+import { SearchQueryBuilder } from '../../search-query-builder';
 
 @Component({
-    // tslint:disable-next-line:component-selector
     selector: 'adf-search-text',
-    template: `
-        <div>
-            <mat-form-field>
-                <input
-                    matInput
-                    [placeholder]="settings?.placeholder"
-                    [value]="value"
-                    (change)="onChangedHandler($event)">
-            </mat-form-field>
-        </div>
-    `,
+    templateUrl: './search-text.component.html',
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-text' }
 })
-export class SearchTextComponent implements SearchComponent, OnInit {
+export class SearchTextComponent implements SearchWidget, OnInit {
 
     @Input()
     value = '';
 
     id: string;
-    settings: SearchComponentSettings;
+    settings: SearchWidgetSettings;
     context: SearchQueryBuilder;
 
     ngOnInit() {

@@ -1,0 +1,6 @@
+<mat-checkbox
+    *ngFor="let option of settings.options"
+    [checked]="option.checked"
+    (change)="changeHandler($event, option)">
+    {{ option.name }}
+</mat-checkbox>

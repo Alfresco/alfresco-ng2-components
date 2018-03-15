@@ -15,4 +15,11 @@
  * limitations under the License.
  */
 
-export * from './public-api';
+import { SearchWidgetSettings } from './search-widget-settings.interface';
+import { SearchQueryBuilder } from './search-query-builder';
+
+export interface SearchWidget {
+    id: string;
+    settings?: SearchWidgetSettings;
+    context?: SearchQueryBuilder;
+}

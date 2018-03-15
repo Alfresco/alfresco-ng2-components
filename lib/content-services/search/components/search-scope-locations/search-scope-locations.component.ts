@@ -16,37 +16,25 @@
  */
 
 import { Component, ViewEncapsulation, OnInit, Input } from '@angular/core';
-import { SearchComponent, SearchComponentSettings, SearchQueryBuilder } from '@alfresco/adf-core';
 import { MatSelectChange } from '@angular/material';
 
+import { SearchWidget } from '../../search-widget.interface';
+import { SearchWidgetSettings } from '../../search-widget-settings.interface';
+import { SearchQueryBuilder } from '../../search-query-builder';
+
 @Component({
-    // tslint:disable-next-line:component-selector
     selector: 'adf-search-scope-locations',
-    template: `
-        <mat-form-field>
-            <mat-select
-                [(value)]="value"
-                (selectionChange)="changeHandler($event)">
-                <mat-option
-                    *ngFor="let option of settings.options"
-                    [value]="option.value">
-                    {{option.name}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-    `,
-    styles: [`
-    `],
+    templateUrl: './search-scope-locations.component.html',
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-scope-locations' }
 })
-export class SearchScopeLocationsComponent implements SearchComponent, OnInit {
+export class SearchScopeLocationsComponent implements SearchWidget, OnInit {
 
     @Input()
     value: string;
 
     id: string;
-    settings: SearchComponentSettings;
+    settings: SearchWidgetSettings;
     context: SearchQueryBuilder;
 
     ngOnInit() {

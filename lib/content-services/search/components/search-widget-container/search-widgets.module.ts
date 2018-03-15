@@ -19,10 +19,10 @@ import { NgModule } from '@angular/core';
 import { MatButtonModule, MatInputModule, MatRadioModule, MatCheckboxModule, MatSelectModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { SearchTextComponent } from '../components/search-text.component';
-import { SearchFieldsComponent } from '../components/search-fields.component';
-import { SearchScopeLocationsComponent } from '../components/search-scope-locations.component';
-import { SearchRadioComponent } from '../components/search-radio.component';
+import { SearchTextComponent } from '../search-text/search-text.component';
+import { SearchRadioComponent } from '../search-radio/search-radio.component';
+import { SearchFieldsComponent } from '../search-fields/search-fields.component';
+import { SearchScopeLocationsComponent } from '../search-scope-locations/search-scope-locations.component';
 
 @NgModule({
     imports: [
@@ -54,5 +54,5 @@ import { SearchRadioComponent } from '../components/search-radio.component';
         SearchScopeLocationsComponent
     ]
 })
-export class SearchComponentsModule {
+export class SearchWidgetsModule {
 }

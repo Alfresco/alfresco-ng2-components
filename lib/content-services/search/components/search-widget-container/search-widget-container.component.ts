@@ -16,15 +16,14 @@
  */
 
 import { Component, Input, ViewChild, ViewContainerRef, OnInit, OnDestroy, Compiler, ModuleWithComponentFactories, ComponentRef } from '@angular/core';
-import { SearchQueryBuilder } from '@alfresco/adf-core';
-import { SearchComponentsModule } from '../components/search-components.module';
+import { SearchWidgetsModule } from './search-widgets.module';
+import { SearchQueryBuilder } from '../../search-query-builder';
 
 @Component({
-    // tslint:disable-next-line:component-selector
-    selector: 'adf-search-container',
+    selector: 'adf-search-widget-container',
     template: '<div #content></div>'
 })
-export class SearchContainerComponent implements OnInit, OnDestroy {
+export class SearchWidgetContainerComponent implements OnInit, OnDestroy {
 
     @ViewChild('content', { read: ViewContainerRef })
     content: ViewContainerRef;
@@ -44,11 +43,11 @@ export class SearchContainerComponent implements OnInit, OnDestroy {
     @Input()
     context: SearchQueryBuilder;
 
-    private module: ModuleWithComponentFactories<SearchComponentsModule>;
+    private module: ModuleWithComponentFactories<SearchWidgetsModule>;
     private componentRef: ComponentRef<any>;
 
     constructor(compiler: Compiler) {
-        this.module = compiler.compileModuleAndAllComponentsSync(SearchComponentsModule);
+        this.module = compiler.compileModuleAndAllComponentsSync(SearchWidgetsModule);
     }
 
     ngOnInit() {
@@ -56,11 +55,11 @@ export class SearchContainerComponent implements OnInit, OnDestroy {
         if (factory) {
             this.content.clear();
             this.componentRef = this.content.createComponent(factory, 0);
-            this.setupFacet(this.componentRef);
+            this.setupWidget(this.componentRef);
         }
     }
 
-    private setupFacet(ref: ComponentRef<any>) {
+    private setupWidget(ref: ComponentRef<any>) {
         if (ref && ref.instance) {
             ref.instance.id = this.id;
             ref.instance.settings = { ...this.settings };

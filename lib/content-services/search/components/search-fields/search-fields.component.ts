@@ -16,40 +16,26 @@
  */
 
 import { Component, ViewEncapsulation, OnInit, Input } from '@angular/core';
-import { SearchComponent, SearchComponentSettings, SearchQueryBuilder } from '@alfresco/adf-core';
 import { MatCheckboxChange } from '@angular/material';
 
-@Component({
-    // tslint:disable-next-line:component-selector
-    selector: 'adf-search-fields',
-    template: `
-        <mat-checkbox
-            *ngFor="let option of settings.options"
-            [checked]="option.checked"
-            (change)="changeHandler($event, option)">
-            {{ option.name }}
-        </mat-checkbox>
-    `,
-    styles: [`
-        .adf-search-fields {
-            display: flex;
-            flex-direction: column;
-        }
+import { SearchWidget } from '../../search-widget.interface';
+import { SearchWidgetSettings } from '../../search-widget-settings.interface';
+import { SearchQueryBuilder } from '../../search-query-builder';
 
-        .adf-search-fields .mat-checkbox {
-            margin: 5px;
-        }
-    `],
+@Component({
+    selector: 'adf-search-fields',
+    templateUrl: './search-fields.component.html',
+    styleUrls: ['./search-fields.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-fields' }
 })
-export class SearchFieldsComponent implements SearchComponent, OnInit {
+export class SearchFieldsComponent implements SearchWidget, OnInit {
 
     @Input()
     value: string;
 
     id: string;
-    settings: SearchComponentSettings;
+    settings: SearchWidgetSettings;
     context: SearchQueryBuilder;
 
     ngOnInit() {

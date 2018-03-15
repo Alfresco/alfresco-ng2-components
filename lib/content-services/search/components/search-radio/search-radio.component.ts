@@ -16,42 +16,26 @@
  */
 
 import { Component, ViewEncapsulation, OnInit, Input } from '@angular/core';
-import { SearchComponent, SearchComponentSettings, SearchQueryBuilder } from '@alfresco/adf-core';
 import { MatRadioChange } from '@angular/material';
 
-@Component({
-    // tslint:disable-next-line:component-selector
-    selector: 'adf-search-radio',
-    template: `
-        <div>
-            <mat-radio-group [(ngModel)]="value" (change)="changeHandler($event)">
-                <mat-radio-button
-                    *ngFor="let option of settings.options" [value]="option.value">
-                    {{ option.name }}
-                </mat-radio-button>
-            </mat-radio-group>
-        </div>
-    `,
-    styles: [`
-        .adf-search-radio .mat-radio-group {
-            display: inline-flex;
-            flex-direction: column;
-        }
+import { SearchWidget } from '../../search-widget.interface';
+import { SearchWidgetSettings } from '../../search-widget-settings.interface';
+import { SearchQueryBuilder } from '../../search-query-builder';
 
-        .adf-search-radio .mat-radio-button {
-            margin: 5px;
-        }
-    `],
+@Component({
+    selector: 'adf-search-radio',
+    templateUrl: './search-radio.component.html',
+    styleUrls: ['./search-radio.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-radio' }
 })
-export class SearchRadioComponent implements SearchComponent, OnInit {
+export class SearchRadioComponent implements SearchWidget, OnInit {
 
     @Input()
     value: string;
 
     id: string;
-    settings: SearchComponentSettings;
+    settings: SearchWidgetSettings;
     context: SearchQueryBuilder;
 
     ngOnInit() {
@@ -79,8 +63,6 @@ export class SearchRadioComponent implements SearchComponent, OnInit {
     }
 
     changeHandler(event: MatRadioChange) {
-        // tslint:disable-next-line:no-console
-        console.log(event);
         this.setValue(event.value);
     }
 }
