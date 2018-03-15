@@ -17,12 +17,13 @@
 
 import { CommentProcessModel, PeopleProcessService, UserProcessModel } from '@alfresco/adf-core';
 import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 
 @Component({
     selector: 'adf-comment-list',
     templateUrl: './comment-list.component.html',
-    styleUrls: ['./comment-list.component.scss']
+    styleUrls: ['./comment-list.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 
 export class CommentListComponent {
@@ -35,13 +36,17 @@ export class CommentListComponent {
     @Output()
     clickRow: EventEmitter<CommentProcessModel> = new EventEmitter<CommentProcessModel>();
 
-    selectedComment: CommentProcessModel;
+    selectedComment: any;
 
     constructor(private datePipe: DatePipe, public peopleProcessService: PeopleProcessService) {
     }
 
-    selectComment(event: any): void {
-        this.selectedComment = event.value.obj;
+    selectComment(comment: any): void {
+        if (this.selectedComment) {
+            this.selectedComment.isSelected = false;
+        }
+        comment.isSelected = true;
+        this.selectedComment = comment;
         this.clickRow.emit(this.selectedComment);
     }
 
