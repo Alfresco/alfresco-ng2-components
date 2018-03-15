@@ -133,5 +133,5 @@ adf-process-instance-list also supports pagination and the same can be used as s
 ## See also
 
 -   [Data column component](../core/data-column.component.md)
--   [DataTableAdapter](../datatable-adapter.interface.md)
--   [Pagination component](../pagination.component.md)
+-   [DataTableAdapter](../core/datatable-adapter.interface.md)
+-   [Pagination component](../core/pagination.component.md)

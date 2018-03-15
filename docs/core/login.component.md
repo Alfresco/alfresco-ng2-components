@@ -6,7 +6,7 @@ Status: Active
 
 Authenticates to Alfresco Content Services and Alfresco Process Services.
 
-![Login component](docassets/images/custom-footer.png)
+![Login component](../docassets/images/custom-footer.png)
 
 ## Contents
 
@@ -89,7 +89,7 @@ export class AppComponent {
 
 ### Change footer content
 
-![Login with custom footer](docassets/images/custom-footer.png)
+![Login with custom footer](../docassets/images/custom-footer.png)
 
 You can replace the entire content in the footer of the login component with your custom content.
 
@@ -101,7 +101,7 @@ You can replace the entire content in the footer of the login component with you
 
 ### Change header content
 
-![Login with custom header](docassets/images/custom-header.png)
+![Login with custom header](../docassets/images/custom-header.png)
 
 You can replace the entire content in the header of the login component with your custom content.
 
@@ -126,7 +126,7 @@ This becomes handy in case you need to extend it with custom input fields handle
 
 Here's an example of custom content:
 
-![Login with custom content](docassets/images/login-extra-content.png)
+![Login with custom content](../docassets/images/login-extra-content.png)
 
 ### Custom logo and background
 
@@ -141,7 +141,7 @@ It is possible changing logo and background images to custom values.
 
 Should give you something like the following:
 
-![Login with custom logo and background](docassets/images/custom-login.png)
+![Login with custom logo and background](../docassets/images/custom-login.png)
 
 Alternatively you can bind to your component properties and provide values dynamically if needed:
 

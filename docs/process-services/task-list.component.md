@@ -53,7 +53,7 @@ render details of any chosen instance.
 
 ### Setting the column schema
 
-You can pass a [DataTableAdapter instance](datatable-adapter.interface.md)
+You can pass a [DataTableAdapter instance](../core/datatable-adapter.interface.md)
 to set a column schema for the tasklist as shown below :
 
 ```ts
@@ -186,7 +186,7 @@ The Tasklist also supports pagination as shown in the example below:
 
 ### DataTableAdapter example
 
-See the [DataTableAdapter](datatable-adapter.interface.md) page for full details of the interface and its standard
+See the [DataTableAdapter](../core/datatable-adapter.interface.md) page for full details of the interface and its standard
 implementation, ObjectDataTableAdapter. Below is an example of how you can set up the adapter for a
 typical tasklist.
 
@@ -201,10 +201,10 @@ typical tasklist.
 
 ### DataColumn Features
 
-You can customize the styling of a column and also add features like tooltips and automatic translation of column titles. See the [DataColumn](core/data-column.component.md) page for more information about these features.
+You can customize the styling of a column and also add features like tooltips and automatic translation of column titles. See the [DataColumn](../core/data-column.component.md) page for more information about these features.
 
 ## See also
 
--   [Data column component](core/data-column.component.md)
--   [DataTableAdapter](datatable-adapter.interface.md)
--   [Pagination component](pagination.component.md)
+-   [Data column component](../core/data-column.component.md)
+-   [DataTableAdapter](../core/datatable-adapter.interface.md)
+-   [Pagination component](../core/pagination.component.md)

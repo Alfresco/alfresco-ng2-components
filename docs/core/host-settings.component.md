@@ -6,7 +6,7 @@ Status: Active
 
 Validates the URLs for ACS and APS and saves them in the user's local storage
 
-![Host settings](docassets/images/host-settings-component.png)
+![Host settings](../docassets/images/host-settings-component.png)
 
 ## Basic Usage
 

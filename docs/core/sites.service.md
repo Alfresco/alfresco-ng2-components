@@ -30,7 +30,7 @@ Accesses and manipulates sites from a Content Services repository.
 
 You can use `getSites` to get a list of all sites in the repository.
 The sites are returned as `Observable<SiteModel[]>` (see
-[Site Model](../site.model.md) for more information about this class).
+[Site Model](site.model.md) for more information about this class).
 If you are only interested in a single site and you have its ID, you
 can use `getSite` to access it. Alternatively, you can use `getSiteContent`
 or `getSiteMembers` to extract just the `contents` and `members` properties
@@ -49,4 +49,4 @@ for more information about the available options.
 
 ## See also
 
--   [Site model](../site.model.md)
+-   [Site model](site.model.md)

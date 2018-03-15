@@ -62,7 +62,7 @@ Displays the Start Form for a process.
 
 ## Details
 
-The [Start Process component](../start-process.component.md) uses the Start Form component
+The [Start Process component](../process-services/start-process.component.md) uses the Start Form component
 to display the
 [start form](http://docs.alfresco.com/process-services1.6/topics/none_start_event.html)
 for the process.

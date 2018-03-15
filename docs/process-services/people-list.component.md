@@ -65,7 +65,7 @@ In the component template use the people list component:
 ```
 
 Note that the people list component is based on the
-[Datatable component](../datatable.component.md).
+[Datatable component](../core/datatable.component.md).
 
 ### Properties
 

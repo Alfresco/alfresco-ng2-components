@@ -6,7 +6,7 @@ Status: Active
 
 Adds pagination to the component it is used with.
 
-![](docassets/images/basic.png)
+![](../docassets/images/basic.png)
 
 ## Basic Usage
 

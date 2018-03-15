@@ -56,7 +56,7 @@ for more information about installing and using the source code.
 | [Accordion group component](core/accordion-group.component.md) | Adds a collapsible panel to an accordion menu. | [Source](../lib/core/collapsable/accordion-group.component.ts) |
 | [Accordion component](core/accordion.component.md) | Creates a collapsible accordion menu. | [Source](../lib/core/collapsable/accordion.component.ts) |
 | [Data column component](core/data-column.component.md) | Defines column properties for DataTable, Tasklist, Document List and other components. | [Source](../lib/core/data-column/data-column.component.ts) |
-| [Datatable component](datatable.component.md) | Displays data as a table with customizable columns and presentation. | [Source](../lib/core/datatable/components/datatable/datatable.component.ts) |
+| [Datatable component](core/datatable.component.md) | Displays data as a table with customizable columns and presentation. | [Source](../lib/core/datatable/components/datatable/datatable.component.ts) |
 | [Form field component](core/form-field.component.md) | A form field in an APS form. | [Source](../lib/core/form/components/form-field/form-field.component.ts) |
 | [Form list component](core/form-list.component.md) | Shows APS forms as a list. | [Source](../lib/core/form/components/form-list.component.ts) |
 | [Form component](core/form.component.md) | Shows a Form from APS (see it live: [Form Quickstart](https://embed.plnkr.co/YSLXTqb3DtMhVJSqXKkE/)) | [Source](../lib/core/form/components/form.component.ts) |
@@ -65,15 +65,15 @@ for more information about installing and using the source code.
 | [Info drawer layout component](core/info-drawer-layout.component.md) | Displays a sidebar-style information panel. | [Source](../lib/core/info-drawer/info-drawer-layout.component.ts) |
 | [Info drawer component](core/info-drawer.component.md) | Displays a sidebar-style information panel with tabs. | [Source](../lib/core/info-drawer/info-drawer.component.ts) |
 | [Language menu component](core/language-menu.component.md) | Displays all the languages that are present in the "app.config.json" or the default one (EN). | [Source](../lib/core/language-menu/language-menu.component.ts) |
-| [Login component](login.component.md) | Authenticates to Alfresco Content Services and Alfresco Process Services. | [Source](../lib/core/login/components/login.component.ts) |
-| [Infinite pagination component](infinite-pagination.component.md) | Adds "infinite" pagination to the component it is used with. | [Source](../lib/core/pagination/infinite-pagination.component.ts) |
-| [Pagination component](pagination.component.md) | Adds pagination to the component it is used with. | [Source](../lib/core/pagination/pagination.component.ts) |
-| [Host settings component](host-settings.component.md) | Validates the URLs for ACS and APS and saves them in the user's local storage | [Source](../lib/core/settings/host-settings.component.ts) |
+| [Login component](core/login.component.md) | Authenticates to Alfresco Content Services and Alfresco Process Services. | [Source](../lib/core/login/components/login.component.ts) |
+| [Infinite pagination component](core/infinite-pagination.component.md) | Adds "infinite" pagination to the component it is used with. | [Source](../lib/core/pagination/infinite-pagination.component.ts) |
+| [Pagination component](core/pagination.component.md) | Adds pagination to the component it is used with. | [Source](../lib/core/pagination/pagination.component.ts) |
+| [Host settings component](core/host-settings.component.md) | Validates the URLs for ACS and APS and saves them in the user's local storage | [Source](../lib/core/settings/host-settings.component.ts) |
 | [Sidebar action menu component](core/sidebar-action-menu.component.md) | Displays a sidebar-action menu information panel. | [Source](../lib/core/sidebar/sidebar-action-menu.component.ts) |
 | [Toolbar divider component](core/toolbar-divider.component.md) | Divides groups of elements in a Toolbar with a visual separator. | [Source](../lib/core/toolbar/toolbar-divider.component.ts) |
 | [Toolbar title component](core/toolbar-title.component.md) | Supplies custom HTML to be included in a Toolbar component title. | [Source](../lib/core/toolbar/toolbar-title.component.ts) |
 | [Toolbar component](core/toolbar.component.md) | Simple container for headers, titles, actions and breadcrumbs. | [Source](../lib/core/toolbar/toolbar.component.ts) |
-| [User info component](user-info.component.md) | Shows user information. | [Source](../lib/core/userinfo/components/user-info.component.ts) |
+| [User info component](core/user-info.component.md) | Shows user information. | [Source](../lib/core/userinfo/components/user-info.component.ts) |
 | [Viewer component](core/viewer.component.md) | Displays content from an ACS repository. | [Source](../lib/core/viewer/components/viewer.component.ts) |
 
 ## Directives
@@ -82,7 +82,7 @@ for more information about installing and using the source code.
 | ---- | ----------- | ----------- |
 | [Context menu directive](core/context-menu.directive.md) | Adds a context menu to a component. | [Source](../lib/core/context-menu/context-menu.directive.ts) |
 | [Highlight directive](core/highlight.directive.md) | Adds highlighting to selected sections of an HTML element's content. | [Source](../lib/core/directives/highlight.directive.ts) |
-| [Logout directive](logout.directive.md) | Logs the user out when the decorated element is clicked. | [Source](../lib/core/directives/logout.directive.ts) |
+| [Logout directive](core/logout.directive.md) | Logs the user out when the decorated element is clicked. | [Source](../lib/core/directives/logout.directive.ts) |
 | [Node delete directive](core/node-delete.directive.md) | Deletes multiple files and folders. | [Source](../lib/core/directives/node-delete.directive.ts) |
 | [Node favorite directive](core/node-favorite.directive.md) | Selectively toggles nodes as favorite | [Source](../lib/core/directives/node-favorite.directive.ts) |
 | [Node permission directive](core/node-permission.directive.md) | Selectively disables an HTML element or Angular component | [Source](../lib/core/directives/node-permission.directive.ts) |
@@ -116,25 +116,25 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Card view update service](core/card-view-update.service.md) | Reports edits and clicks within fields of a Card View component. | [Source](../lib/core/card-view/services/card-view-update.service.ts) |
-| [Activiti alfresco service](activiti-alfresco.service.md) | Gets Alfresco Repository folder content based on a Repository account configured in Alfresco Process Services (APS). | [Source](../lib/core/form/services/activiti-alfresco.service.ts) |
+| [Activiti alfresco service](core/activiti-alfresco.service.md) | Gets Alfresco Repository folder content based on a Repository account configured in Alfresco Process Services (APS). | [Source](../lib/core/form/services/activiti-alfresco.service.ts) |
 | [Form rendering service](core/form-rendering.service.md) | Maps an APS form field type string onto the corresponding form widget component type. | [Source](../lib/core/form/services/form-rendering.service.ts) |
 | [Form service](core/form.service.md) | Implements Process Services form methods | [Source](../lib/core/form/services/form.service.ts) |
 | [Node service](core/node.service.md) | Gets Alfresco Repository node metadata and creates nodes with metadata.  | [Source](../lib/core/form/services/node.service.ts) |
 | [Process content service](process-services/process-content.service.md) | Manipulates content related to a Process Instance or Task Instance in APS. | [Source](../lib/core/form/services/process-content.service.ts) |
-| [Alfresco api service](alfresco-api.service.md) | Provides access to initialized **AlfrescoJSApi** instance. | [Source](../lib/core/services/alfresco-api.service.ts) |
-| [Apps process service](apps-process.service.md) | Gets details of the Process Services apps that are deployed for the user. | [Source](../lib/core/services/apps-process.service.ts) |
+| [Alfresco api service](core/alfresco-api.service.md) | Provides access to initialized **AlfrescoJSApi** instance. | [Source](../lib/core/services/alfresco-api.service.ts) |
+| [Apps process service](process-services/apps-process.service.md) | Gets details of the Process Services apps that are deployed for the user. | [Source](../lib/core/services/apps-process.service.ts) |
 | [Auth guard bpm service](core/auth-guard-bpm.service.md) | Adds authentication with Process Services to a route within the app. | [Source](../lib/core/services/auth-guard-bpm.service.ts) |
 | [Auth guard ecm service](core/auth-guard-ecm.service.md) | Adds authentication with Content Services to a route within the app. | [Source](../lib/core/services/auth-guard-ecm.service.ts) |
 | [Auth guard service](core/auth-guard.service.md) | Adds authentication to a route within the app. | [Source](../lib/core/services/auth-guard.service.ts) |
-| [Authentication service](authentication.service.md) | Provides authentication to ACS and APS. | [Source](../lib/core/services/authentication.service.ts) |
+| [Authentication service](core/authentication.service.md) | Provides authentication to ACS and APS. | [Source](../lib/core/services/authentication.service.ts) |
 | [Comment process service](core/comment-process.service.md) | Adds and retrieves comments for task and process instances in Process Services. | [Source](../lib/core/services/comment-process.service.ts) |
 | [Content service](core/content.service.md) | Accesses app-generated data objects via URLs and file downloads. | [Source](../lib/core/services/content.service.ts) |
 | [Cookie service](core/cookie.service.md) | Stores key-value data items as browser cookies. | [Source](../lib/core/services/cookie.service.ts) |
 | [Deleted nodes api service](core/deleted-nodes-api.service.md) | Gets a list of Content Services nodes currently in the trash. | [Source](../lib/core/services/deleted-nodes-api.service.ts) |
 | [Discovery api service](core/discovery-api.service.md) | Gets version and license information for Process Services and Content Services. | [Source](../lib/core/services/discovery-api.service.ts) |
-| [Favorites api service](favorites-api.service.md) | Gets a list of items a user has marked as their favorites. | [Source](../lib/core/services/favorites-api.service.ts) |
+| [Favorites api service](core/favorites-api.service.md) | Gets a list of items a user has marked as their favorites. | [Source](../lib/core/services/favorites-api.service.ts) |
 | [Highlight transform service](core/highlight-transform.service.md) | Adds HTML to a string to highlight chosen sections. | [Source](../lib/core/services/highlight-transform.service.ts) |
-| [Log service](log.service.md) | Provide a log functionality for your ADF application. | [Source](../lib/core/services/log.service.ts) |
+| [Log service](process-services/log.service.md) | Provide a log functionality for your ADF application. | [Source](../lib/core/services/log.service.ts) |
 | [Nodes api service](core/nodes-api.service.md) | Accesses and manipulates ACS document nodes using their node IDs. | [Source](../lib/core/services/nodes-api.service.ts) |
 | [Notification service](core/notification.service.md) | Shows a notification message with optional feedback. | [Source](../lib/core/services/notification.service.ts) |
 | [Page title service](core/page-title.service.md) | Sets the page title. | [Source](../lib/core/services/page-title.service.ts) |
@@ -146,8 +146,8 @@ for more information about installing and using the source code.
 | [Sites service](core/sites.service.md) | Accesses and manipulates sites from a Content Services repository. | [Source](../lib/core/services/sites.service.ts) |
 | [Storage service](core/storage.service.md) | Stores items in the form of key-value pairs. | [Source](../lib/core/services/storage.service.ts) |
 | [Thumbnail service](core/thumbnail.service.md) | Retrieves an SVG thumbnail image to represent a document type. | [Source](../lib/core/services/thumbnail.service.ts) |
-| [Translation service](translation.service.md) | Supports localisation. | [Source](../lib/core/services/translation.service.ts) |
-| [Upload service](upload.service.md) | Provides access to various APIs related to file upload features. | [Source](../lib/core/services/upload.service.ts) |
+| [Translation service](core/translation.service.md) | Supports localisation. | [Source](../lib/core/services/translation.service.ts) |
+| [Upload service](core/upload.service.md) | Provides access to various APIs related to file upload features. | [Source](../lib/core/services/upload.service.ts) |
 | [User preferences service](core/user-preferences.service.md) | Stores preferences for components. | [Source](../lib/core/services/user-preferences.service.ts) |
 | [Bpm user service](core/bpm-user.service.md) | Gets information about the current Process Services user. | [Source](../lib/core/userinfo/services/bpm-user.service.ts) |
 | [Ecm user service](core/ecm-user.service.md) | Gets information about a Content Services user. | [Source](../lib/core/userinfo/services/ecm-user.service.ts) |
@@ -156,7 +156,7 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Content widget](content.widget.md) | Shows the content preview. | [Source](../lib/core/form/components/widgets/content/content.widget.ts) |
+| [Content widget](core/content.widget.md) | Shows the content preview. | [Source](../lib/core/form/components/widgets/content/content.widget.ts) |
 
 <!--core end-->
 
@@ -164,7 +164,7 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Data Table Adapter interface](datatable-adapter.interface.md) | Defines how table data is supplied to DataTable and Tasklist components. | [Source](../lib/core/datatable/data/datatable-adapter.ts) |
+| [Data Table Adapter interface](core/datatable-adapter.interface.md) | Defines how table data is supplied to DataTable and Tasklist components. | [Source](../lib/core/datatable/data/datatable-adapter.ts) |
 | [Form Field Validator interface](core/form-field-validator.interface.md) | Defines how the input fields of Form and Task Details components are validated. | [Source](../lib/core/form/components/widgets/core/form-field-validator.ts) |
 | [Search Configuration interface](core/search-configuration.interface.md) | Provides fine control of parameters to a search. | [Source](../lib/core/services/search-configuration.service.ts) |
 
@@ -254,7 +254,7 @@ for more information about installing and using the source code.
 | [Create process attachment component](process-services/create-process-attachment.component.md) | Displays Upload Component (Drag and Click) to upload the attachment to a specified process instance | [Source](../lib/process-services/attachment/create-process-attachment.component.ts) |
 | [Create task attachment component](process-services/create-task-attachment.component.md) | Displays Upload Component (Drag and Click) to upload the attachment to a specified task | [Source](../lib/process-services/attachment/create-task-attachment.component.ts) |
 | [Process attachment list component](process-services/process-attachment-list.component.md) | Displays attached documents on a specified process instance | [Source](../lib/process-services/attachment/process-attachment-list.component.ts) |
-| [Task attachment list component](task-attachment-list.component.md) | Displays attached documents on a specified task. | [Source](../lib/process-services/attachment/task-attachment-list.component.ts) |
+| [Task attachment list component](process-services/task-attachment-list.component.md) | Displays attached documents on a specified task. | [Source](../lib/process-services/attachment/task-attachment-list.component.ts) |
 | [Comment list component](process-services/comment-list.component.md) | Shows a list of comments. | [Source](../lib/process-services/comments/comment-list.component.ts) |
 | [Comments component](process-services/comments.component.md) | Displays comments from users involved in a specified task and allows an involved user to add a comment to the task. | [Source](../lib/process-services/comments/comments.component.ts) |
 | [Process comments component](process-services/process-comments.component.md) | Displays comments associated with a particular process instance and allows the user to add new comments. | [Source](../lib/process-services/comments/process-comments.component.ts) |
@@ -266,27 +266,27 @@ for more information about installing and using the source code.
 | [Process instance header component](process-services/process-instance-header.component.md) | Sub-component of the process details component, which renders some general information about the selected process. | [Source](../lib/process-services/process-list/components/process-instance-header.component.ts) |
 | [Process instance tasks component](process-services/process-instance-tasks.component.md) | Lists both the active and completed tasks associated with a particular process instance | [Source](../lib/process-services/process-list/components/process-instance-tasks.component.ts) |
 | [Process list component](process-services/process-list.component.md) | Renders a list containing all the process instances matched by the parameters specified. | [Source](../lib/process-services/process-list/components/process-list.component.ts) |
-| [Start process component](start-process.component.md) | Starts a process. | [Source](../lib/process-services/process-list/components/start-process.component.ts) |
+| [Start process component](process-services/start-process.component.md) | Starts a process. | [Source](../lib/process-services/process-list/components/start-process.component.ts) |
 | [Checklist component](process-services/checklist.component.md) | Shows the checklist task functionality. | [Source](../lib/process-services/task-list/components/checklist.component.ts) |
-| [Start task component](start-task.component.md) | Creates/Starts new task for the specified app | [Source](../lib/process-services/task-list/components/start-task.component.ts) |
-| [Task details component](task-details.component.md) | Shows the details of the task ID passed in as input. | [Source](../lib/process-services/task-list/components/task-details.component.ts) |
-| [Task filters component](task-filters.component.md) | Shows all available filters. | [Source](../lib/process-services/task-list/components/task-filters.component.ts) |
-| [Task header component](task-header.component.md) | Shows all the information related to a task. | [Source](../lib/process-services/task-list/components/task-header.component.ts) |
-| [Task list component](task-list.component.md) | Renders a list containing all the tasks matched by the parameters specified. | [Source](../lib/process-services/task-list/components/task-list.component.ts) |
+| [Start task component](process-services/start-task.component.md) | Creates/Starts new task for the specified app | [Source](../lib/process-services/task-list/components/start-task.component.ts) |
+| [Task details component](process-services/task-details.component.md) | Shows the details of the task ID passed in as input. | [Source](../lib/process-services/task-list/components/task-details.component.ts) |
+| [Task filters component](process-services/task-filters.component.md) | Shows all available filters. | [Source](../lib/process-services/task-list/components/task-filters.component.ts) |
+| [Task header component](process-services/task-header.component.md) | Shows all the information related to a task. | [Source](../lib/process-services/task-list/components/task-header.component.ts) |
+| [Task list component](process-services/task-list.component.md) | Renders a list containing all the tasks matched by the parameters specified. | [Source](../lib/process-services/task-list/components/task-list.component.ts) |
 
 ## Directives
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Process audit directive](process-services/process-audit.directive.md) | Fetches the Process Audit information in the pdf or json format. | [Source](../lib/process-services/process-list/components/process-audit.directive.ts) |
-| [Task audit directive](task-audit.directive.md) | Fetches the Task Audit information in the pdf or json format. | [Source](../lib/process-services/task-list/components/task-audit.directive.ts) |
+| [Task audit directive](process-services/task-audit.directive.md) | Fetches the Task Audit information in the pdf or json format. | [Source](../lib/process-services/task-list/components/task-audit.directive.ts) |
 
 ## Models
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Filter model](filter.model.md) | Contains classes related to filters in Process Services. | [Source](../lib/process-services/task-list/models/filter.model.ts) |
-| [Task details model](task-details.model.md) | Information about a task. | [Source](../lib/process-services/task-list/models/task-details.model.ts) |
+| [Filter model](process-services/filter.model.md) | Contains classes related to filters in Process Services. | [Source](../lib/process-services/task-list/models/filter.model.ts) |
+| [Task details model](process-services/task-details.model.md) | Information about a task. | [Source](../lib/process-services/task-list/models/task-details.model.ts) |
 
 ## Services
 
@@ -294,8 +294,8 @@ for more information about installing and using the source code.
 | ---- | ----------- | ----------- |
 | [Process filter service](process-services/process-filter.service.md) | Manage Process Filters, which are pre-configured Process Instance queries.  | [Source](../lib/process-services/process-list/services/process-filter.service.ts) |
 | [Process service](process-services/process.service.md) | Manages Process Instances, Process Variables, and Process Audit Log.  | [Source](../lib/process-services/process-list/services/process.service.ts) |
-| [Task filter service](task-filter.service.md) | Manage Task Filters, which are pre-configured Task Instance queries.  | [Source](../lib/process-services/task-list/services/task-filter.service.ts) |
-| [Tasklist service](tasklist.service.md) | Manage Task Instances.  | [Source](../lib/process-services/task-list/services/tasklist.service.ts) |
+| [Task filter service](process-services/task-filter.service.md) | Manage Task Filters, which are pre-configured Task Instance queries.  | [Source](../lib/process-services/task-list/services/task-filter.service.ts) |
+| [Tasklist service](process-services/tasklist.service.md) | Manage Task Instances.  | [Source](../lib/process-services/task-list/services/tasklist.service.ts) |
 
 <!--process-services end-->
 

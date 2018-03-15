@@ -57,7 +57,7 @@ The Nodes Api Service has methods for getting information about nodes and
 managing them within the repository (creating, deleting, etc).
 
 Other lower level interfaces to the ACS nodes API are also available - see the
-[Alfresco Api service](../alfresco-api.service.md), the 
+[Alfresco Api service](alfresco-api.service.md), the 
 [Alfresco JS API docs](https://github.com/Alfresco/alfresco-js-api/tree/master/src/alfresco-core-rest-api)
 and the
 [REST API Explorer](https://api-explorer.alfresco.com/api-explorer/#/nodes)
