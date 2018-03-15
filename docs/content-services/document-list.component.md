@@ -122,7 +122,7 @@ have at least the following properties as part of the `Event.detail` property va
 }
 ```
 
-See the [DataTable](../datatable.component.md) documentation for further details about
+See the [DataTable](../core/datatable.component.md) documentation for further details about
 the other DOM events that the Document List component bubbles up from the DataTable.
 
 Below is a basic example of handling DOM events in the parent elements.
@@ -521,7 +521,7 @@ A custom set of columns might look like the following:
 ![Custom columns](../docassets/images/custom-columns.png)
 
 You can also use the HTML-based schema declaration used by
-[DataTable](../datatable.component.md), [Task List](../task-list.component.md) and other components:
+[DataTable](../core/datatable.component.md), [Task List](../process-services/task-list.component.md) and other components:
 
 ```html
 <adf-datatable [data]="data" ...>
@@ -801,10 +801,10 @@ This will give the following output:
 
 ## See also
 
--   [Datatable component](../datatable.component.md)
+-   [Datatable component](../core/datatable.component.md)
 -   [Data column component](../core/data-column.component.md)
--   [Pagination component](../pagination.component.md)
--   [Infinite pagination component](../infinite-pagination.component.md)
+-   [Pagination component](../core/pagination.component.md)
+-   [Infinite pagination component](../core/infinite-pagination.component.md)
 -   [Sites dropdown component](sites-dropdown.component.md)
 -   [Metadata indicators](../metadata-indicators.md)
 -   [Document library model](document-library.model.md)

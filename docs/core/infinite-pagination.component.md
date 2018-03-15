@@ -6,7 +6,7 @@ Status: Active
 
 Adds "infinite" pagination to the component it is used with.
 
-![Infinite Pagination screenshot](docassets/images/InfPagination.png)
+![Infinite Pagination screenshot](../docassets/images/InfPagination.png)
 
 ## Basic Usage
 
@@ -61,5 +61,5 @@ See the [Pagination component](pagination.component.md) for more information abo
 
 ## See also
 
--   [Document list component](content-services/document-list.component.md)
+-   [Document list component](../content-services/document-list.component.md)
 -   [Pagination component](pagination.component.md)

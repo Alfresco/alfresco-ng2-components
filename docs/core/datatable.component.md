@@ -6,7 +6,7 @@ Status: Active
 
 Displays data as a table with customizable columns and presentation.
 
-![DataTable demo](docassets/images/datatable-demo.png)
+![DataTable demo](../docassets/images/datatable-demo.png)
 
 See it live: [DataTable Quickstart](https://embed.plnkr.co/80qr4YFBeHjLMdAV0F6l/)
 
@@ -196,7 +196,7 @@ onRowClick(event) {
 }
 ```
 
-![](docassets/images/datatable-dom-events.png)
+![](../docassets/images/datatable-dom-events.png)
 
 ### Card view
 
@@ -209,7 +209,7 @@ If you want to enable the card view mode you need to set to 'gallery' the input 
 </adf-datatable
 ```
 
-![card-view](docassets/images/document-list-card-view.png)
+![card-view](../docassets/images/document-list-card-view.png)
 
 
 ### Custom Empty content template
@@ -270,7 +270,7 @@ You can use any HTML layout or Angular component as a content of the empty templ
 | dragDropMsg | String | Drag and drop | The default drag and drop message |
 | additionalMsg | String | Drag and drop | The default additional message |
 
-![](docassets/images/adf-empty-list.png)
+![](../docassets/images/adf-empty-list.png)
 
 ### Loading content template
 
@@ -463,9 +463,9 @@ onExecuteRowAction(event: DataRowActionEvent) {
 }
 ```
 
-![](docassets/images/datatable-actions-ui.png)
+![](../docassets/images/datatable-actions-ui.png)
 
-![](docassets/images/datatable-actions-console.png)
+![](../docassets/images/datatable-actions-console.png)
 
 Developers are allowed to use any payloads as row actions.
 The only requirement for the objects is having `title` property.
@@ -480,8 +480,8 @@ and do corresponding actions.
 
 ## See also
 
--   [Data column component](core/data-column.component.md)
+-   [Data column component](data-column.component.md)
 -   [Pagination component](pagination.component.md)
 -   [DataTableAdapter](datatable-adapter.interface.md)
--   [Document list component](content-services/document-list.component.md)
+-   [Document list component](../content-services/document-list.component.md)
     <!-- seealso end -->

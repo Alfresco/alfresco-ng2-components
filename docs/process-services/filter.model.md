@@ -68,6 +68,6 @@ class TaskQueryRequestRepresentationModel implements TaskQueryRequestRepresentat
 
 ## See also
 
--   [Process filters component](process-services/process-filters.component.md)
+-   [Process filters component](process-filters.component.md)
 -   [Task filters component](task-filters.component.md)
 -   [Apps process service](apps-process.service.md)

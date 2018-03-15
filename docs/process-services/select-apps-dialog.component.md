@@ -6,7 +6,7 @@ Status: Active
 
 Show all available apps and return the selected app.
 
-![select-apps-dialog](docassets/images/select-apps-dialog.png)
+![select-apps-dialog](../docassets/images/select-apps-dialog.png)
 
 ## Basic Usage
 

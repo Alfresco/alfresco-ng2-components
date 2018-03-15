@@ -64,7 +64,7 @@ example, the `currency` property holds the currency symbol to be displayed next 
 
 ### Validation
 
-A [Form](form.component.md) or [Task Details](../task-details.component.md) component can
+A [Form](form.component.md) or [Task Details](../process-services/task-details.component.md) component can
 be supplied with a set of validator objects. Each validator applies a particular kind of
 check to a field. A number of `FormFieldModel` properties are used by validators. For
 example, `minValue` and `maxValue` are used to check that a numeric value falls within an

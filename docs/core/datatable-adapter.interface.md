@@ -5,7 +5,7 @@ Status: Active
 # DataTableAdapter interface
 
 Defines how table data is supplied to [DataTable](datatable.component.md)
-and [Tasklist](task-list.component.md) components.
+and [Tasklist](../process-services/task-list.component.md) components.
 
 ## Properties
 
@@ -37,7 +37,7 @@ Sort the table with a specified key and direction (ascending or descending).
 ## Details
 
 You can implement DataTableAdapter in your own class to display your data with the [DataTable](datatable.component.md)
-and [Tasklist](task-list.component.md) components.
+and [Tasklist](../process-services/task-list.component.md) components.
 This interface (along with other interfaces for column and row data) hides the details of your class from the caller, so you can store your data internally however you like. The DataTable library implements the interface in the [ObjectDataTableAdapter](#objectdatatableadapter) class which is the standard adapter for the Datatable component.
 
 The basic idea of DataTableAdapter is that the caller can request your class to return an array of column
@@ -113,7 +113,7 @@ let data = new ObjectDataTableAdapter(
 );
 ```
 
-![DataTable demo](docassets/images/datatable-demo.png)
+![DataTable demo](../docassets/images/datatable-demo.png)
 
 If you don't specify the column array then the constructor will infer the layout of the columns from
 the structure of the row objects. The field names ('id' and 'name' in the example below) will be used
@@ -151,5 +151,5 @@ let schema = ObjectDataTableAdapter.generateSchema(data);
 ## See also
 
 - [Datatable component](datatable.component.md)
-- [Task list component](task-list.component.md)
+- [Task list component](../process-services/task-list.component.md)
 <!-- seealso end -->

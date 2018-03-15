@@ -32,4 +32,4 @@ Displays a dropdown menu to show and interact with the sites of the current user
 
 | Name | Returned Type | Description |
 | ---- | ------------- | ----------- |
-| change | [SiteModel](../site.model.md) | Emitted when user selects a site. When default option is selected an empty model is emitted |
+| change | [SiteModel](../core/site.model.md) | Emitted when user selects a site. When default option is selected an empty model is emitted |

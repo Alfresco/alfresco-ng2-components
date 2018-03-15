@@ -29,7 +29,7 @@ Checks if the the node has the `allowableOperations` property.
 ## Details
 
 The methods that take a `node` parameter can receive the node as either a node ID string
-or as a [MinimalNode](content-services/document-library.model.md) object. You can obtain the `ticket` string,
+or as a [MinimalNode](../content-services/document-library.model.md) object. You can obtain the `ticket` string,
 if you need it, from the [Authentication service](authentication.service.md). If
 `attachment` is false then the content can be viewed in the browser but not downloaded; the
 default value of true allows a download to take place.
