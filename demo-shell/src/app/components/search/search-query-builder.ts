@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SearchConfig, SearchCategory, FilterQuery, FacetQuery } from './search-config-api';
+import { SearchConfig, SearchCategory, FilterQuery, FacetQuery, SearchRange } from './search-config-api';
 import { Subject } from 'rxjs/Subject';
 import { QueryBody } from 'alfresco-js-api';
 
@@ -28,6 +28,7 @@ export class SearchQueryBuilder {
     fields: { [id: string]: string } = {};
     scope: { locations?: string };
     filterQueries: FilterQuery[] = [];
+    ranges: { [id: string]: SearchRange } = {};
 
     constructor(public config: SearchConfig) {
         if (!config) {

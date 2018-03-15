@@ -78,6 +78,19 @@ export interface FacetField {
     $checked?: boolean;
 }
 
+// https://docs.alfresco.com/5.2/concepts/search-api-range.html
+export interface SearchRange {
+    field: string;
+    start: string;
+    end: string;
+    gap: string;
+    hardend: boolean;
+    other: Array<string>;
+    include: Array<string>;
+    label: string;
+    excludeFilters: Array<string>;
+}
+
 export interface ResponseFacetQuery {
     label: string;
     mincount: number;
