@@ -806,7 +806,7 @@ This will give the following output:
 -   [Pagination component](../core/pagination.component.md)
 -   [Infinite pagination component](../core/infinite-pagination.component.md)
 -   [Sites dropdown component](sites-dropdown.component.md)
--   [Metadata indicators](../metadata-indicators.md)
+-   [Metadata indicators](../user-guide/metadata-indicators.md)
 -   [Document library model](document-library.model.md)
 -   [Nodes api service](../core/nodes-api.service.md)
 -   [Breadcrumb component](breadcrumb.component.md)

@@ -90,11 +90,11 @@ formRenderingService.setComponentTypeResolver('text', newResolver, true);
 
 You would typically use this to replace an existing widget with your own custom version that
 implements a modified layout or responds differently when the data is entered. See the
-[Form Extensibility and Customisation](../extensibility.md) guide for further details and examples
+[Form Extensibility and Customisation](../user-guide/extensibility.md) guide for further details and examples
 of this technique.
 
 ## See also
 
--   [Extensibility](../extensibility.md)
+-   [Extensibility](../user-guide/extensibility.md)
 -   [Form field model](form-field.model.md)
 -   [Form component](form.component.md)

@@ -60,7 +60,7 @@ You will need to use the properties of `FormFieldModel` if you want to implement
 custom widgets. Aside from the `value` property (which contains the data value entered into
 the field), there are also a few other fields that are used for specific types of data. For
 example, the `currency` property holds the currency symbol to be displayed next to the value
-(such as the dollar sign $) and the `dateDisplayFormat` defines how the elements of a date/time will be arranged. See the [Form Extensibility and Customization](../extensibility.md) for more information about creating custom widgets.
+(such as the dollar sign $) and the `dateDisplayFormat` defines how the elements of a date/time will be arranged. See the [Form Extensibility and Customization](../user-guide/extensibility.md) for more information about creating custom widgets.
 
 ### Validation
 
@@ -93,7 +93,7 @@ contains full details about how the REST calls work, along with a worked example
 
 ## See also
 
--   [Extensibility](../extensibility.md)
+-   [Extensibility](../user-guide/extensibility.md)
 -   [FormFieldValidator](form-field-validator.interface.md)
 -   [Form rendering service](form-rendering.service.md)
 -   [Form component](form.component.md)

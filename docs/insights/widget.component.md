@@ -31,9 +31,9 @@ export class CustomEditorComponent extends WidgetComponent {}
 ## Details
 
 The Widget component is the base class for all standard and custom form widgets. See the
-[Form Extensibility and Customisation](../extensibility.md) page for full details about
+[Form Extensibility and Customisation](../user-guide/extensibility.md) page for full details about
 implementing custom widgets.
 
 ## See also
 
--   [Extensibility](../extensibility.md)
+-   [Extensibility](../user-guide/extensibility.md)
