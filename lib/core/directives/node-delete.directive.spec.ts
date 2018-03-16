@@ -144,7 +144,7 @@ fdescribe('NodeleteDirective', () => {
             });
         });
 
-        fit('should notify failed node deletion', (done) => {
+        it('should notify failed node deletion', (done) => {
             spyOn(nodeApi, 'deleteNode').and.returnValue(Promise.reject('error'));
 
             component.selection = [{ entry: { id: '1', name: 'name1' } }];
@@ -195,7 +195,7 @@ fdescribe('NodeleteDirective', () => {
 
             component.deleteDirective.delete.subscribe((message) => {
                 expect(message).toBe(
-                    'CORE.DELETE_NODE.PLURAL'
+                    'CORE.DELETE_NODE.ERROR_PLURAL'
                 );
                 done();
             });
@@ -258,7 +258,7 @@ fdescribe('NodeleteDirective', () => {
 
             component.deleteDirective.delete.subscribe((message) => {
                 expect(message).toBe(
-                    'CORE.DELETE_NODE.PARTIAL_SINGULAR'
+                    'CORE.DELETE_NODE.PARTIAL_PLURAL'
                 );
                 done();
             });
