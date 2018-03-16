@@ -16,6 +16,7 @@
  */
 
 import { Subject } from 'rxjs/Subject';
+import { AlfrescoApiService } from '@alfresco/adf-core';
 import { QueryBody } from 'alfresco-js-api';
 import { SearchCategory } from './search-category.interface';
 import { FilterQuery } from './filter-query.interface';
@@ -26,6 +27,7 @@ import { FacetQuery } from './facet-query.interface';
 export class SearchQueryBuilder {
 
     updated: Subject<QueryBody> = new Subject();
+    executed: Subject<any> = new Subject();
 
     categories: Array<SearchCategory> = [];
     queryFragments: { [id: string]: string } = {};
@@ -34,7 +36,7 @@ export class SearchQueryBuilder {
     filterQueries: FilterQuery[] = [];
     ranges: { [id: string]: SearchRange } = {};
 
-    constructor(public config: SearchConfiguration) {
+    constructor(public config: SearchConfiguration,  private api: AlfrescoApiService) {
         if (!config) {
             throw new Error('Search configuration not found.');
         }
@@ -71,6 +73,12 @@ export class SearchQueryBuilder {
     update(): void {
         const query = this.buildQuery();
         this.updated.next(query);
+    }
+
+    async execute() {
+        const query = this.buildQuery();
+        const data = await this.api.searchApi.search(query);
+        this.executed.next(data);
     }
 
     buildQuery(): QueryBody {

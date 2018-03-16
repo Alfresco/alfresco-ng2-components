@@ -21,7 +21,6 @@ import { FacetFieldBucket } from '../../facet-field-bucket.interface';
 @Component({
     selector: 'adf-selected-facets',
     templateUrl: './selected-facets.component.html',
-    styleUrls: ['././selected-facets.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-selected-facets' }
 })

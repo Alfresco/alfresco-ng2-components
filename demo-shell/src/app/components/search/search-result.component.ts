@@ -17,13 +17,9 @@
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatCheckboxChange } from '@angular/material';
-import { NodePaging, QueryBody } from 'alfresco-js-api';
+import { NodePaging } from 'alfresco-js-api';
 import { AppConfigService, AlfrescoApiService } from '@alfresco/adf-core';
-import {
-    SearchConfiguration, FacetQuery, FacetFieldBucket,
-    ResponseFacetField, ResponseFacetQuery, SearchQueryBuilder
-} from '@alfresco/adf-content-services';
+import { SearchConfiguration, SearchQueryBuilder } from '@alfresco/adf-content-services';
 
 @Component({
     selector: 'app-search-result-component',
@@ -33,24 +29,20 @@ import {
 export class SearchResultComponent implements OnInit {
 
     data: NodePaging;
-    config: SearchConfiguration;
-
     queryBuilder: SearchQueryBuilder;
 
-    responseFacetQueries: FacetQuery[] = [];
-    responseFacetFields: ResponseFacetField[] = [];
-
-    selectedFacetQueries: string[] = [];
-    selectedBuckets: FacetFieldBucket[] = [];
-
     constructor(private route: ActivatedRoute,
-                private api: AlfrescoApiService,
+                api: AlfrescoApiService,
                 appConfig: AppConfigService) {
-        this.config = appConfig.get<SearchConfiguration>('search');
+        const config = appConfig.get<SearchConfiguration>('search');
 
-        this.queryBuilder = new SearchQueryBuilder(this.config);
+        this.queryBuilder = new SearchQueryBuilder(config, api);
         this.queryBuilder.updated.subscribe(query => {
-            this.search(query);
+            this.queryBuilder.execute();
+        });
+
+        this.queryBuilder.executed.subscribe(data => {
+            this.onDataLoaded(data);
         });
     }
 
@@ -66,115 +58,7 @@ export class SearchResultComponent implements OnInit {
         }
     }
 
-    async search(query: QueryBody) {
-        if (query) {
-            const data = await this.api.searchApi.search(query);
-            this.onDataLoaded(data);
-        }
-    }
-
     onDataLoaded(data: any) {
         this.data = data;
-        const context = data.list.context;
-
-        if (context) {
-            this.responseFacetQueries = (context.facetQueries || []).map(q => {
-                q.$checked = this.selectedFacetQueries.includes(q.label);
-                return q;
-            });
-
-            const expandedFields = this.responseFacetFields.filter(f => f.$expanded).map(f => f.label);
-
-            this.responseFacetFields = (context.facetsFields || []).map(
-                (field: ResponseFacetField) => {
-                    field.$expanded = expandedFields.includes(field.label);
-
-                    (field.buckets || []).forEach(bucket => {
-                        bucket.$field = field.label;
-                        bucket.$checked = false;
-
-                        const previousBucket = this.selectedBuckets.find(
-                            b => b.$field === bucket.$field && b.label === bucket.label
-                        );
-                        if (previousBucket) {
-                           bucket.$checked = true;
-                        }
-                    });
-                    return field;
-                }
-            );
-        } else {
-            this.responseFacetQueries = [];
-            this.responseFacetFields = [];
-        }
-    }
-
-    onFacetQueryToggle(e: { event: MatCheckboxChange, query: ResponseFacetQuery }) {
-        const event = e.event;
-        const query = e.query;
-        const facetQuery = this.queryBuilder.getFacetQuery(query.label);
-
-        if (event.checked) {
-            query.$checked = true;
-            this.selectedFacetQueries.push(facetQuery.label);
-
-            if (facetQuery) {
-                this.queryBuilder.addFilterQuery(facetQuery.query);
-            }
-        } else {
-            query.$checked = false;
-            this.selectedFacetQueries = this.selectedFacetQueries.filter(q => q !== query.label);
-
-            if (facetQuery) {
-                this.queryBuilder.removeFilterQuery(facetQuery.query);
-            }
-        }
-
-        this.queryBuilder.update();
-    }
-
-    /* chip list */
-    onRemoveFacetQuery(label: string) {
-        const facetQuery = this.queryBuilder.getFacetQuery(label);
-        this.selectedFacetQueries = this.selectedFacetQueries.filter(q => q !== label);
-
-        this.queryBuilder.removeFilterQuery(facetQuery.query);
-        this.queryBuilder.update();
-    }
-
-    /* chip list */
-    onRemoveSelectedBucket(bucket: FacetFieldBucket) {
-        const idx = this.selectedBuckets.findIndex(
-            b => b.$field === bucket.$field && b.label === bucket.label
-        );
-
-        if (idx >= 0) {
-            this.selectedBuckets.splice(idx, 1);
-        }
-        this.queryBuilder.removeFilterQuery(bucket.filterQuery);
-        this.queryBuilder.update();
-    }
-
-    onFacetToggle(e: { event: MatCheckboxChange, field: ResponseFacetField, bucket: FacetFieldBucket }) {
-        const event = e.event;
-        const bucket = e.bucket;
-
-        if (event.checked) {
-            bucket.$checked = true;
-            this.selectedBuckets.push({ ...bucket });
-            this.queryBuilder.addFilterQuery(bucket.filterQuery);
-        } else {
-            bucket.$checked = false;
-            const idx = this.selectedBuckets.findIndex(
-                b => b.$field === bucket.$field && b.label === bucket.label
-            );
-
-            if (idx >= 0) {
-                this.selectedBuckets.splice(idx, 1);
-            }
-            this.queryBuilder.removeFilterQuery(bucket.filterQuery);
-        }
-
-        this.queryBuilder.update();
     }
 }
