@@ -92,11 +92,12 @@ describe('FolderEditDirective', () => {
         spyOn(dialog, 'open').and.returnValue(dialogRefMock);
     });
 
-    it('should emit folderEdit event when input value is not undefined', () => {
+    it('should emit folderEdit event when input value is not undefined', (done) => {
         spyOn(dialogRefMock, 'afterClosed').and.returnValue(Observable.of(node));
 
         contentService.folderEdit.subscribe((val) => {
             expect(val).toBe(node);
+            done();
         });
 
         element.triggerEventHandler('click', event);

@@ -21,7 +21,6 @@ import { Directive, ElementRef, EventEmitter, HostListener, Input, OnChanges, Ou
 import { MinimalNodeEntity, MinimalNodeEntryEntity, DeletedNodeEntity, DeletedNodeMinimalEntry } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
-import { NotificationService } from '../services/notification.service';
 import { TranslationService } from '../services/translation.service';
 import 'rxjs/add/observable/fromPromise';
 import 'rxjs/observable/forkJoin';
@@ -70,8 +69,7 @@ export class NodeDeleteDirective implements OnChanges {
         this.process(this.selection);
     }
 
-    constructor(private notification: NotificationService,
-                private alfrescoApiService: AlfrescoApiService,
+    constructor(private alfrescoApiService: AlfrescoApiService,
                 private translation: TranslationService,
                 private elementRef: ElementRef) {
     }
@@ -99,11 +97,7 @@ export class NodeDeleteDirective implements OnChanges {
                 .subscribe((data: ProcessedNodeData[]) => {
                     const processedItems: ProcessStatus = this.processStatus(data);
 
-                    this.notify(processedItems);
-
-                    if (processedItems.someSucceeded) {
-                        this.delete.emit();
-                    }
+                    this.delete.emit(this.getMessage(processedItems));
                 });
         }
     }
@@ -174,27 +168,23 @@ export class NodeDeleteDirective implements OnChanges {
         );
     }
 
-    private notify(status) {
-        this.getMessage(status).subscribe((message) => this.notification.openSnackMessage(message));
-    }
-
     private getMessage(status): Observable<string> {
         if (status.allFailed && !status.oneFailed) {
-            return this.translation.get(
+            return this.translation.instant(
                 'CORE.DELETE_NODE.ERROR_PLURAL',
                 { number: status.failed.length }
             );
         }
 
         if (status.allSucceeded && !status.oneSucceeded) {
-            return this.translation.get(
+            return this.translation.instant(
                 'CORE.DELETE_NODE.PLURAL',
                 { number: status.success.length }
             );
         }
 
         if (status.someFailed && status.someSucceeded && !status.oneSucceeded) {
-            return this.translation.get(
+            return this.translation.instant(
                 'CORE.DELETE_NODE.PARTIAL_PLURAL',
                 {
                     success: status.success.length,
@@ -204,7 +194,7 @@ export class NodeDeleteDirective implements OnChanges {
         }
 
         if (status.someFailed && status.oneSucceeded) {
-            return this.translation.get(
+            return this.translation.instant(
                 'CORE.DELETE_NODE.PARTIAL_SINGULAR',
                 {
                     success: status.success.length,
@@ -214,14 +204,14 @@ export class NodeDeleteDirective implements OnChanges {
         }
 
         if (status.oneFailed && !status.someSucceeded) {
-            return this.translation.get(
+            return this.translation.instant(
                 'CORE.DELETE_NODE.ERROR_SINGULAR',
                 { name: status.failed[0].entry.name }
             );
         }
 
         if (status.oneSucceeded && !status.someFailed) {
-            return this.translation.get(
+            return this.translation.instant(
                 'CORE.DELETE_NODE.SINGULAR',
                 { name: status.success[0].entry.name }
             );

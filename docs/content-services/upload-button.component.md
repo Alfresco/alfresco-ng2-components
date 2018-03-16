@@ -17,7 +17,7 @@ Activates a file upload.
     [versioning]="false"
     (success)="customMethod($event)">
 </adf-upload-button>
-<file-uploading-dialog></file-uploading-dialog>
+<adf-file-uploading-dialog></adf-file-uploading-dialog>
 ```
 
 ### Properties

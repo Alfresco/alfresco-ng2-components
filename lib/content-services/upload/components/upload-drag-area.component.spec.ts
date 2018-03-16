@@ -95,7 +95,7 @@ describe('UploadDragAreaComponent', () => {
             spyOn(uploadService, 'uploadFilesInTheQueue');
             fixture.detectChanges();
 
-            const file = <File> {name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json'};
+            const file = <File> { name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json' };
             let filesList = [file];
             component.onFilesDropped(filesList);
 
@@ -115,7 +115,7 @@ describe('UploadDragAreaComponent', () => {
                 isFile: true,
                 name: 'file-fake.png',
                 file: (callbackFile) => {
-                    let fileFake = new File(['fakefake'], 'file-fake.png', {type: 'image/png'});
+                    let fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
                     callbackFile(fileFake);
                 }
             };
@@ -161,7 +161,7 @@ describe('UploadDragAreaComponent', () => {
                 isFile: true,
                 name: 'file-fake.png',
                 file: (callbackFile) => {
-                    let fileFake = new File(['fakefake'], 'file-fake.png', {type: 'image/png'});
+                    let fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
                     callbackFile(fileFake);
                 }
             };
@@ -182,7 +182,7 @@ describe('UploadDragAreaComponent', () => {
         uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
 
         fixture.detectChanges();
-        const file = <File> {name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json'};
+        const file = <File> { name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json' };
         let filesList = [file];
 
         spyOn(uploadService, 'addToQueue').and.callFake((f: FileModel) => {
@@ -205,7 +205,7 @@ describe('UploadDragAreaComponent', () => {
             isFile: true,
             name: 'file-fake.png',
             file: (callbackFile) => {
-                let fileFake = new File(['fakefake'], 'file-fake.png', {type: 'image/png'});
+                let fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
                 callbackFile(fileFake);
             }
         };
@@ -226,7 +226,7 @@ describe('UploadDragAreaComponent', () => {
             isFile: true,
             name: 'file-fake.png',
             file: (callbackFile) => {
-                let fileFake = new File(['fakefake'], 'file-fake.png', {type: 'image/png'});
+                let fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
                 callbackFile(fileFake);
             }
         };
@@ -242,7 +242,7 @@ describe('UploadDragAreaComponent', () => {
             isFile: true,
             name: 'file-fake.png',
             file: (callbackFile) => {
-                let fileFake = new File(['fakefake'], 'file-fake.png', {type: 'image/png'});
+                let fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
                 callbackFile(fileFake);
             }
         };
@@ -262,4 +262,16 @@ describe('UploadDragAreaComponent', () => {
 
         component.onUploadFiles(fakeCustomEvent);
     }));
+
+    describe('UploadDragAreaComponent', () => {
+        it('should raise an error if upload a file goes wrong', (done) => {
+            component.error.subscribe((error) => {
+                expect(error).not.toBeNull();
+                done();
+            });
+
+            fixture.detectChanges();
+            spyOn(uploadService, 'fileUploadError').and.returnValue('error');
+        });
+    });
 });
