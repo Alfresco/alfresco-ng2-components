@@ -22,6 +22,7 @@ export class CommentProcessModel implements CommentRepresentation {
     message: string;
     created: Date;
     createdBy: LightUserRepresentation;
+    isSelected: boolean;
 
     constructor(obj?: any) {
         if (obj) {
@@ -29,6 +30,7 @@ export class CommentProcessModel implements CommentRepresentation {
             this.message = obj.message;
             this.created = obj.created;
             this.createdBy = obj.createdBy;
+            this.isSelected = obj.isSelected ?  obj.isSelected : false;
         }
     }
 }
