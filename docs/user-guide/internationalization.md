@@ -71,7 +71,7 @@ notation (so `FORM.START_FORM.TITLE` would be the key for the "Start Form"
 string here). This is useful for grouping related messages and providing
 singular and plural versions, among other things.
 
-The [Translation service](core/translation.service.md) defines the `get` method to
+The [Translation service](../core/translation.service.md) defines the `get` method to
 get the translation of a key in the current language. A simple component might
 contain code like this:
 
@@ -107,7 +107,7 @@ export class HomeComponent implements OnInit {
 
 In the browser, this is displayed as:
 
-![English translation text](docassets/images/TransExEn.png)
+![English translation text](../docassets/images/TransExEn.png)
 
 English is used by default but you can easily change the language with the
 `use` method:
@@ -124,7 +124,7 @@ ngOnInit() {
 
 The user will now see:
 
-![German translation text](docassets/images/TransExDe.png)
+![German translation text](../docassets/images/TransExDe.png)
 
 Note that an unrecognized key will be returned unchanged as the "translation".
 If you see strings like "FORM.START_FORM.TITLE" displayed in your app then you
@@ -146,7 +146,7 @@ component's `.ts` file:
 The built-in translations certainly won't cover everything you will need for
 your app but you can easily replace them with your own lists. This involves
 making copies of the existing lists in your app's folder and adding your
-own keys. See the [Translation service](core/translation.service.md) page for
+own keys. See the [Translation service](../core/translation.service.md) page for
 full details and examples.
 
 ## Interpolations
@@ -191,30 +191,30 @@ You can use interpolations with the `translate` pipe in a similar way:
 
 ## Selecting the display language
 
-ADF provides a [Language Menu component](core/language-menu.component.md) that
+ADF provides a [Language Menu component](../core/language-menu.component.md) that
 you can add to a page to let the user choose their preferred language. The
 available languages are defined in the `app.config.json` file for the app.
 
 Note that when the user selects an item from the menu, it simply changes the "locale"
-preference (which you can get via the [User Preferences service](core/user-preferences.service.md)).
+preference (which you can get via the [User Preferences service](../core/user-preferences.service.md)).
 The `translate` pipe reacts automatically to this and changes the page text
 immediately to the new language. However, text added via a variable set using
 `TranslationService.get`, as in the example above, will not be updated like this;
 you will need to get a new translation and set the variable's value again explicitly
 from the code.
 
-See the [Language Menu component](core/language-menu.component.md) page for further
+See the [Language Menu component](../core/language-menu.component.md) page for further
 details and usage examples.
 
 ## Support for i18n within ADF components
 
 Some components allow you to use translation keys in places where you would normally
 supply your own messages directly. For example, the
-[Data Column component](core/data-column.component.md) can accept a key instead of
+[Data Column component](../core/data-column.component.md) can accept a key instead of
 normal text to specify the column title. Consult the documentation for a
 component to see if it has built-in support for i18n.
 
 ## See also
 
--   [Translation service](core/translation.service.md)
--   [Language Menu component](core/language-menu.component.md)
+-   [Translation service](../core/translation.service.md)
+-   [Language Menu component](../core/language-menu.component.md)

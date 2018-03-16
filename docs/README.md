@@ -28,12 +28,12 @@ that the component is complete and suitable for normal use. The other status lev
 
 <!--guide start-->
 
--   [Angular Material Design](angular-material-design.md)
--   [Form Extensibility and Customisation](extensibility.md)
--   [Internationalization in ADF](internationalization.md)
--   [Theming](theming.md)
--   [Typography](typography.md)
--   [Walkthrough - adding indicators to highlight information about a node](metadata-indicators.md)
+-   [Angular Material Design](user-guide/angular-material-design.md)
+-   [Form Extensibility and Customisation](user-guide/extensibility.md)
+-   [Internationalization in ADF](user-guide/internationalization.md)
+-   [Theming](user-guide/theming.md)
+-   [Typography](user-guide/typography.md)
+-   [Walkthrough - adding indicators to highlight information about a node](user-guide/metadata-indicators.md)
 
 <!--guide end-->
 
