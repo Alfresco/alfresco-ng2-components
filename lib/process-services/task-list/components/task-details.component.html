@@ -38,16 +38,18 @@
                           (formLoaded)='onFormLoaded($event)'
                           (error)='onFormError($event)'
                           (executeOutcome)='onFormExecuteOutcome($event)'>
-                    <div empty-form><h3 class="adf-task-title">Please select a Task</h3></div>
                 </adf-form>
+                <adf-task-standalone *ngIf="!hasFormKey()" 
+                [taskName]= "taskDetails.name"
+                [isCompleted]="isCompletedTask()"
+                [hasCompletePermission]="isCompleteButtonEnabled()"
+                [hideCancelButton]="true"
+                (complete)="onComplete()">
+                </adf-task-standalone>
             </div>
             <div *ngIf="!isAssigned()">
                 {{ 'ADF_TASK_LIST.DETAILS.MESSAGES.CLAIM' | translate }}
             </div>
-            <button mat-raised-button class="activiti-task-details__action-button"
-                    *ngIf="isCompleteButtonVisible()" (click)="onComplete()">
-                {{ 'ADF_TASK_LIST.DETAILS.BUTTON.COMPLETE' | translate }}
-            </button>
         </div>
         <div class="adf-task-details-core-sidebar">
             <adf-info-drawer *ngIf="showHeaderContent" title="{{ 'ADF_TASK_LIST.DETAILS.LABELS.INFO_DRAWER_TITLE' | translate }}" class="adf-task-details-core-sidebar-drawer">
