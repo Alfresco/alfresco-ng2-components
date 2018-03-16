@@ -36,12 +36,12 @@ export class CommentListComponent {
     @Output()
     clickRow: EventEmitter<CommentProcessModel> = new EventEmitter<CommentProcessModel>();
 
-    selectedComment: any;
+    selectedComment: CommentProcessModel;
 
     constructor(private datePipe: DatePipe, public peopleProcessService: PeopleProcessService) {
     }
 
-    selectComment(comment: any): void {
+    selectComment(comment: CommentProcessModel): void {
         if (this.selectedComment) {
             this.selectedComment.isSelected = false;
         }
@@ -79,9 +79,4 @@ export class CommentListComponent {
         }
         return formattedDate;
     }
-
-    hasComments(): boolean {
-        return this.comments && this.comments.length && true;
-    }
-
 }
