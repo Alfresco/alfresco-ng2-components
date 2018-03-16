@@ -21,7 +21,7 @@ import { MatCheckboxChange } from '@angular/material';
 import { NodePaging, QueryBody } from 'alfresco-js-api';
 import { AppConfigService, AlfrescoApiService } from '@alfresco/adf-core';
 import {
-    SearchConfiguration, SearchCategory, FacetQuery, FacetFieldBucket,
+    SearchConfiguration, FacetQuery, FacetFieldBucket,
     ResponseFacetField, ResponseFacetQuery, SearchQueryBuilder
 } from '@alfresco/adf-content-services';
 
@@ -109,7 +109,9 @@ export class SearchResultComponent implements OnInit {
         }
     }
 
-    onFacetQueryToggle(event: MatCheckboxChange, query: ResponseFacetQuery) {
+    onFacetQueryToggle(e: { event: MatCheckboxChange, query: ResponseFacetQuery }) {
+        const event = e.event;
+        const query = e.query;
         const facetQuery = this.queryBuilder.getFacetQuery(query.label);
 
         if (event.checked) {
@@ -153,7 +155,10 @@ export class SearchResultComponent implements OnInit {
         this.queryBuilder.update();
     }
 
-    onFacetToggle(event: MatCheckboxChange, field: ResponseFacetField, bucket: FacetFieldBucket) {
+    onFacetToggle(e: { event: MatCheckboxChange, field: ResponseFacetField, bucket: FacetFieldBucket }) {
+        const event = e.event;
+        const bucket = e.bucket;
+
         if (event.checked) {
             bucket.$checked = true;
             this.selectedBuckets.push({ ...bucket });
@@ -171,21 +176,5 @@ export class SearchResultComponent implements OnInit {
         }
 
         this.queryBuilder.update();
-    }
-
-    onCategoryExpanded(category: SearchCategory) {
-        category.expanded = true;
-    }
-
-    onCategoryCollapsed(category: SearchCategory) {
-        category.expanded = false;
-    }
-
-    onFacetFieldExpanded(field: ResponseFacetField) {
-        field.$expanded = true;
-    }
-
-    onFacetFieldCollapsed(field: ResponseFacetField) {
-        field.$expanded = false;
     }
 }

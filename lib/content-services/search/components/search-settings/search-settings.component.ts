@@ -15,8 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, Input, EventEmitter, Output } from '@angular/core';
+import { MatCheckboxChange } from '@angular/material';
 import { SearchQueryBuilder } from '../../search-query-builder';
+import { FacetQuery } from '../../facet-query.interface';
+import { ResponseFacetField } from '../../response-facet-field.interface';
+import { FacetFieldBucket } from '../../facet-field-bucket.interface';
+import { SearchCategory } from '../../search-category.interface';
+import { ResponseFacetQuery } from '../../response-facet-query.interface';
 
 @Component({
     selector: 'adf-search-settings',
@@ -27,6 +33,46 @@ import { SearchQueryBuilder } from '../../search-query-builder';
 })
 export class SearchSettingsComponent {
 
+    selectedFacetQueries: string[] = [];
+    selectedBuckets: FacetFieldBucket[] = [];
+
+    @Input()
     queryBuilder: SearchQueryBuilder;
+
+    @Input()
+    responseFacetQueries: FacetQuery[] = [];
+
+    @Input()
+    responseFacetFields: ResponseFacetField[] = [];
+
+    @Output()
+    facetQueryToggle = new EventEmitter<{ event: MatCheckboxChange, query: ResponseFacetQuery }>();
+
+    @Output()
+    facetFieldToggle = new EventEmitter<{ event: MatCheckboxChange, field: ResponseFacetField, bucket: FacetFieldBucket }>();
+
+    onCategoryExpanded(category: SearchCategory) {
+        category.expanded = true;
+    }
+
+    onCategoryCollapsed(category: SearchCategory) {
+        category.expanded = false;
+    }
+
+    onFacetFieldExpanded(field: ResponseFacetField) {
+        field.$expanded = true;
+    }
+
+    onFacetFieldCollapsed(field: ResponseFacetField) {
+        field.$expanded = false;
+    }
+
+    onFacetQueryToggle(event: MatCheckboxChange, query: ResponseFacetQuery) {
+        this.facetQueryToggle.next({event, query});
+    }
+
+    onFacetToggle(event: MatCheckboxChange, field: ResponseFacetField, bucket: FacetFieldBucket) {
+        this.facetFieldToggle.next({ event, field, bucket });
+    }
 
 }
