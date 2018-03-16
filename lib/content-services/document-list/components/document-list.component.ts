@@ -243,6 +243,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     selection = new Array<MinimalNodeEntity>();
 
     pagination: BehaviorSubject<Pagination>;
+    isSkipCountUpdated = false;
 
     private layoutPresets = {};
     private currentNodeAllowableOperations: string[] = [];
@@ -484,7 +485,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     updateCustomSourceData(nodeId: string, merge: boolean): void {
         this.folderNode = null;
         this.currentFolderId = nodeId;
-        if (!merge) {
+        if (!merge && !this.isSkipCountUpdated) {
             this.skipCount = 0;
         }
     }
@@ -935,10 +936,13 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         } else {
             this.pagination.next(null);
         }
+        this.isSkipCountUpdated = false;
     }
 
     updatePagination(params: PaginationQueryParams) {
-        const needsReload = this.maxItems !== params.maxItems || this.skipCount !== params.skipCount;
+        this.isSkipCountUpdated = this.skipCount !== params.skipCount;
+
+        const needsReload = this.maxItems !== params.maxItems || this.isSkipCountUpdated;
 
         this.maxItems = params.maxItems;
         this.skipCount = params.skipCount;
