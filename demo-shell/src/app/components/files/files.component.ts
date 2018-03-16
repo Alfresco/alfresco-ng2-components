@@ -188,7 +188,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnInit() {
-
         if (!this.pagination) {
             this.pagination = <Pagination>{
                 maxItems: this.preference.paginationSize,
