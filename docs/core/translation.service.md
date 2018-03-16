@@ -149,4 +149,4 @@ class MyComponent {
 
 ## See Also
 
--   [Internationalization](../internationalization.md)
+-   [Internationalization](../user-guide/internationalization.md)

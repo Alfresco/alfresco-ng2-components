@@ -12,7 +12,7 @@ throughout the app) and the **accent** color (used mainly for highlighting and c
 out specific UI elements). Each of these colors is defined in a number of shades. For
 example, a blue/orange theme could define shades like the following:
 
-![Theme swatches](docassets/images/ThemeSwatches.png)
+![Theme swatches](../docassets/images/ThemeSwatches.png)
 
 Each shade is related to a particular purpose or set of purposes within the app. So for
 example, the shade that works best for text isn't necessarily the same shade you would use

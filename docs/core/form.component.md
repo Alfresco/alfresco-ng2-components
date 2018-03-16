@@ -338,6 +338,6 @@ Using the CSS you can target any outcome ID and change the style as in this exam
 ## See also
 
 -   [FormFieldValidator](form-field-validator.interface.md)
--   [Extensibility](../extensibility.md)
+-   [Extensibility](../user-guide/extensibility.md)
 -   [Form rendering service](form-rendering.service.md)
 -   [Form field model](form-field.model.md)
