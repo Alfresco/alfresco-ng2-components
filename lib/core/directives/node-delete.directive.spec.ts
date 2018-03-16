@@ -72,7 +72,7 @@ class TestDeletePermanentComponent {
     onDelete = jasmine.createSpy('onDelete');
 }
 
-fdescribe('NodeleteDirective', () => {
+describe('NodeleteDirective', () => {
     let fixture: ComponentFixture<TestComponent>;
     let fixtureWithPermissions: ComponentFixture<TestWithPermissionsComponent>;
     let fixtureWithPermanentComponent: ComponentFixture<TestDeletePermanentComponent>;
