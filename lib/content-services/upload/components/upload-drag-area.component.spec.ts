@@ -20,6 +20,7 @@ import { FileModel, LogService, UploadService } from '@alfresco/adf-core';
 
 import { FileDraggableDirective } from '../directives/file-draggable.directive';
 import { UploadDragAreaComponent } from './upload-drag-area.component';
+import { Observable } from 'rxjs/Observable';
 
 function getFakeShareDataRow(allowableOperations = ['delete', 'update', 'create']) {
     return {
@@ -263,15 +264,35 @@ describe('UploadDragAreaComponent', () => {
         component.onUploadFiles(fakeCustomEvent);
     }));
 
-    describe('UploadDragAreaComponent', () => {
+    describe('Events', () => {
         it('should raise an error if upload a file goes wrong', (done) => {
+            let fakeItem = {
+                fullPath: '/folder-fake/file-fake.png',
+                isDirectory: false,
+                isFile: true,
+                name: 'file-fake.png',
+                file: (callbackFile) => {
+                    let fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
+                    callbackFile(fileFake);
+                }
+            };
+
+            fixture.detectChanges();
+            spyOn(uploadService, 'fileUploadError').and.returnValue(Observable.throw(new Error()));
+
             component.error.subscribe((error) => {
                 expect(error).not.toBeNull();
                 done();
             });
 
-            fixture.detectChanges();
-            spyOn(uploadService, 'fileUploadError').and.returnValue('error');
+            let fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
+                detail: {
+                    data: getFakeShareDataRow(),
+                    files: [fakeItem]
+                }
+            });
+
+            component.onUploadFiles(fakeCustomEvent);
         });
     });
 });
