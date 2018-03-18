@@ -29,14 +29,14 @@ import { SearchControlComponent } from './components/search-control.component';
 import { SearchComponent } from './components/search.component';
 import { EmptySearchResultComponent } from './components/empty-search-result.component';
 
-export const ALFRESCO_SEARCH_DIRECTIVES: [any] = [
+export const ALFRESCO_SEARCH_DIRECTIVES: any[] = [
     SearchComponent,
     SearchControlComponent,
     SearchTriggerDirective,
     EmptySearchResultComponent
 ];
 
-export const ALFRESCO_SEARCH_PROVIDERS: [any] = [
+export const ALFRESCO_SEARCH_PROVIDERS: any[] = [
     SearchService
 ];
 
