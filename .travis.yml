@@ -73,6 +73,9 @@ jobs:
         - stage: Update DW
           if: tag =~ .*beta.*
           script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n adf-app-manager-ui
+        - stage: Update ng2-components
+          if: tag =~ .*beta.*
+          script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n alfresco-ng2-components
 
 # jobs:
 #   include:

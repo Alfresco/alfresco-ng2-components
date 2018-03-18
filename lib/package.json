@@ -127,7 +127,7 @@
     "markdownlint-cli": "^0.3.1",
     "merge-stream": "1.0.1",
     "nconf": "^0.10.0",
-    "ng-packagr": "2.0.0",
+    "ng-packagr": "2.2.0",
     "node-sass": "4.5.3",
     "null-loader": "0.1.1",
     "raw-loader": "0.5.1",
