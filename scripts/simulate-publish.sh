@@ -8,8 +8,8 @@ npm install -g verdaccio
 npm install -g concurrently
 npm install -g verdaccio-auth-memory
 
-npm set registry http://localhost:4873/
-
 $DIR/update-version.sh -nextalpha
+
+npm set registry http://localhost:4873/
 
 concurrently "verdaccio --listen 4873 --config $DIR/../assets/config-verdaccio.yaml" "$DIR/npm-publish.sh"
