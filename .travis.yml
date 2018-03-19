@@ -61,8 +61,8 @@ script:
 
 jobs:
     include:
-        - stage: Simulate publish
-          script: ./scripts/simulate-publish.sh
+        - stage: Check build demo shell in production mode
+          script: ./scripts/test-dist.sh
         - stage: Check 2.0.0 Project Update
           script: ./scripts/test-e2e-bc.sh
         - stage: Check ADF exports

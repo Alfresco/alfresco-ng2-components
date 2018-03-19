@@ -25,5 +25,3 @@ package-lock.*
 /lib/config/exportCheck.js
 /lib/config/export-check/export-new.json
 /lib/config/export-check/exportCheck.js
-/assets/.verdaccio_test_env/
-/assets/storage/
