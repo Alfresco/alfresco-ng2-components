@@ -31,7 +31,7 @@ export class SearchQueryBuilder {
 
     categories: Array<SearchCategory> = [];
     queryFragments: { [id: string]: string } = {};
-    fields: { [id: string]: string } = {};
+    fields: { [id: string]: string[] } = {};
     scope: { locations?: string };
     filterQueries: FilterQuery[] = [];
     ranges: { [id: string]: SearchRange } = {};
@@ -41,7 +41,10 @@ export class SearchQueryBuilder {
             throw new Error('Search configuration not found.');
         }
 
-        this.categories = config.query.categories.filter(f => f.enabled);
+        if (config.query && config.query.categories) {
+            this.categories = config.query.categories.filter(f => f.enabled);
+        }
+
         this.filterQueries = config.filterQueries || [];
         this.scope = {
             locations: null
@@ -65,7 +68,8 @@ export class SearchQueryBuilder {
 
     getFacetQuery(label: string): FacetQuery {
         if (label) {
-            return this.config.facetQueries.find(q => q.label === label);
+            const queries = this.config.facetQueries || [];
+            return queries.find(q => q.label === label);
         }
         return null;
     }

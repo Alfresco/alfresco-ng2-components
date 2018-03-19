@@ -21,16 +21,16 @@ import { FacetField } from './facet-field.interface';
 import { SearchCategory } from './search-category.interface';
 
 export interface SearchConfiguration {
-    query: {
+    query?: {
         categories: Array<SearchCategory>
     };
     limits?: {
         permissionEvaluationTime?: number;
         permissionEvaluationCount?: number;
     };
-    filterQueries: Array<FilterQuery>;
-    facetQueries: Array<FacetQuery>;
-    facetFields: {
+    filterQueries?: Array<FilterQuery>;
+    facetQueries?: Array<FacetQuery>;
+    facetFields?: {
         facets: Array<FacetField>
     };
 }
