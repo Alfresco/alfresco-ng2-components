@@ -145,7 +145,6 @@ describe('TextWidgetComponent', () => {
             });
 
             it('should show the field placeholder', () => {
-                const inputElement: HTMLInputElement = <HTMLInputElement> element.querySelector('#text-id');
                 expect(inputElement).toBeDefined();
                 expect(inputElement).not.toBeNull();
                 expect(inputElement.placeholder).toBe('simple palceholder');
@@ -258,8 +257,6 @@ describe('TextWidgetComponent', () => {
 
         describe('and a mask placeholder is configured', () => {
 
-            let inputElement: HTMLInputElement;
-
             beforeEach(() => {
                 widget.field = new FormFieldModel(new FormModel({taskId: 'fake-task-id'}), {
                     id: 'text-id',
@@ -272,7 +269,6 @@ describe('TextWidgetComponent', () => {
                 });
 
                 fixture.detectChanges();
-                inputElement = <HTMLInputElement> element.querySelector('#text-id');
             });
 
             it('should show the input mask placeholder', () => {
