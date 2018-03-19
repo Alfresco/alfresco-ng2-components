@@ -26,7 +26,7 @@ import { CommentProcessService, LogService } from '@alfresco/adf-core';
 
 import { PeopleProcessService, UserProcessModel, AuthenticationService } from '@alfresco/adf-core';
 import { TaskDetailsModel } from '../models/task-details.model';
-import { noDataMock, taskDetailsMock, taskFormMock, tasksMock } from '../../mock';
+import { noDataMock, taskDetailsMock, taskFormMock, tasksMock, taskDetailsWithOutAssigneeMock } from '../../mock';
 import { TaskListService } from './../services/tasklist.service';
 import { PeopleSearchComponent } from '../../people';
 import { TaskDetailsComponent } from './task-details.component';
@@ -170,6 +170,24 @@ describe('TaskDetailsComponent', () => {
         fixture.whenStable().then(() => {
             const completeBtn = fixture.nativeElement.querySelector('.activiti-task-details__action-button');
             expect(completeBtn).toBeNull();
+        });
+    }));
+
+    it('should display the claim message when the task is not assigned', async(() => {
+        component.taskDetails = taskDetailsWithOutAssigneeMock;
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            const claimMessage = fixture.nativeElement.querySelector('#claim-message-id');
+            expect(claimMessage).toBeDefined();
+            expect(claimMessage.innerText).toBe('ADF_TASK_LIST.DETAILS.MESSAGES.CLAIM');
+        });
+    }));
+
+    it('should not display the claim message when the task is assigned', async(() => {
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            const claimMessage = fixture.nativeElement.querySelector('#claim-message-id');
+            expect(claimMessage).toBeNull();
         });
     }));
 
