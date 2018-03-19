@@ -80,7 +80,7 @@ export class MyView {
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| title | `string` | `'Action'` | The title of the action as shown in the menu.  |
+| title | `string` | `'Action'` | The title of the action as shown in the menu. If the title is a translation key the translation will be automatically showed.  |
 | icon | `string` |  | The name of the icon to display next to the menu command (can be left blank).  |
 | handler | `string` |  | System actions. Can be "delete", "download", "copy" or "move".  |
 | target | `string` | [ContentActionTarget.All](https://github.com/Alfresco/alfresco-ng2-components/blob/development/lib/content-services/document-list/models/content-action.model.ts) | Type of item that the action applies to. Can be one of the values provided by the enum : **All**, **Folder**, **Document**  |
