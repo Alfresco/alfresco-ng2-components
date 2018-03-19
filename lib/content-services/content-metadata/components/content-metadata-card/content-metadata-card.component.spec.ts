@@ -170,4 +170,17 @@ describe('ContentMetadataCardComponent', () => {
 
         expect(buttonLabel.nativeElement.innerText.trim()).toBe('ADF_VIEWER.SIDEBAR.METADATA.LESS_INFORMATION');
     });
+
+    it('should show the edit button by default', () => {
+        const button = fixture.debugElement.query(By.css('[data-automation-id="mata-data-card-toggle-edit"]'));
+        expect(button).not.toBeNull();
+    });
+
+    it('should hode the edit button in canEdit is false', () => {
+        component.canEdit = false;
+        fixture.detectChanges();
+
+        const button = fixture.debugElement.query(By.css('[data-automation-id="mata-data-card-toggle-edit"]'));
+        expect(button).toBeNull();
+    });
 });

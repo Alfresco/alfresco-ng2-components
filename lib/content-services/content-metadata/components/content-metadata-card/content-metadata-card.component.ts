@@ -35,6 +35,9 @@ export class ContentMetadataCardComponent {
     @Input()
     preset: string;
 
+    @Input()
+    canEdit = true;
+
     editable: boolean = false;
     expanded: boolean = false;
 
