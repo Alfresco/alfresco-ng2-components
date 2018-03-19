@@ -19,7 +19,6 @@ env:
     - MODULE=process-services
     - MODULE=content-services
     - MODULE=demo-shell
-    - MODULE=demo-shell-production
     - MODULE=packaging
 
 install:
@@ -60,15 +59,10 @@ script:
        fi
       fi
 
-    - if ([ "$MODULE" == "demo-shell-production" ]); then
-       if ([ "$TRAVIS_BRANCH" = "master" ]); then
-            (./scripts/start.sh -dist -t -ss || exit 1;);
-       else
-            (./scripts/start.sh -dist -t -ss -vjsapi alpha || exit 1;);
-       fi
-      fi
 jobs:
     include:
+        - stage: Simulate publish
+          script: ./scripts/simulate-publish.sh
         - stage: Check 2.0.0 Project Update
           script: ./scripts/test-e2e-bc.sh
         - stage: Check ADF exports
