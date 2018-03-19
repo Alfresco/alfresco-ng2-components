@@ -289,7 +289,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     }
 
     isAssignedToMe(): boolean {
-        return this.taskDetails.assignee.email === this.authService.getBpmUsername();
+        return this.isAssigned() ? this.taskDetails.assignee.email === this.authService.getBpmUsername() : false;
     }
 
     isCompleteButtonEnabled(): boolean {
