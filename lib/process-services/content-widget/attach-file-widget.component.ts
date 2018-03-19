@@ -32,6 +32,7 @@ import {
 import { ContentNodeDialogService } from '@alfresco/adf-content-services';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/from';
 
 @Component({
     selector: 'attach-widget',
