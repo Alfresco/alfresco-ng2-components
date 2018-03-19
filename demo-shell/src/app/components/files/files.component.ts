@@ -340,8 +340,8 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     private reloadForInfiniteScrolling() {
         if (this.infiniteScrolling) {
             this.documentList.skipCount = 0;
-            this.documentList.reload();
         }
+        this.documentList.reload();
     }
 
     onManageVersions(event) {
