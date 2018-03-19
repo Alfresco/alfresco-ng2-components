@@ -38,6 +38,9 @@ export class ContentMetadataCardComponent {
     @Input()
     canEdit = true;
 
+    @Input()
+    multi = false;
+
     editable: boolean = false;
     expanded: boolean = false;
 
