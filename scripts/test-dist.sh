@@ -2,23 +2,23 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-#echo "====== Install demo-shell ===== "
-#
-#cd $DIR/../demo-shell
-#npm install
-#
-#echo "====== Install lib ===== "
-#
-#cd $DIR/../lib
-#npm install
-#
-#echo "====== Install JS-API alpha ===== "
-#
-#npm install alfresco-js-api@alpha
-#
-#echo "====== Build ADF ===== "
-#
-#npm run new-build
+echo "====== Install demo-shell ===== "
+
+cd $DIR/../demo-shell
+npm install
+
+echo "====== Install lib ===== "
+
+cd $DIR/../lib
+npm install
+
+echo "====== Install JS-API alpha ===== "
+
+npm install alfresco-js-api@alpha
+
+echo "====== Build ADF ===== "
+
+npm run new-build
 
 echo "====== COPY new build in demo shell node_modules ===== "
 
