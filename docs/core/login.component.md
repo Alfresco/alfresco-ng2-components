@@ -1,7 +1,9 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-03-19
 ---
+
 # Login component
 
 Authenticates to Alfresco Content Services and Alfresco Process Services.
@@ -18,12 +20,13 @@ Authenticates to Alfresco Content Services and Alfresco Process Services.
 -   [Details](#details)
 
     -   [Handling events](#handling-events)
-    -   [Change footer content](#change-footer-content)
-    -   [Change header content](#change-header-content)
-    -   [Extra content](#extra-content)
+    -   [Changing content](#changing-content)
     -   [Custom logo and background](#custom-logo-and-background)
-    -   [Customize Validation rules](#customize-validation-rules)
+    -   [Customizing validation rules](#customizing-validation-rules)
+    -   [Call an external identity provider to fetch the auth token](#call-an-external-identity-provider-to-fetch-the-auth-token)
     -   [Controlling form submit execution behaviour](#controlling-form-submit-execution-behaviour)
+
+-   [See Also](#see-also)
 
 ## Basic usage
 
@@ -38,17 +41,17 @@ Authenticates to Alfresco Content Services and Alfresco Process Services.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| showRememberMe | `boolean` | `true` | Should the `Remember me` checkbox be shown?  |
-| showLoginActions | `boolean` | `true` | Should the extra actions (`Need Help`, `Register`, etc) be shown?  |
-| needHelpLink | `string` | `''` | Sets the URL of the NEED HELP link in the footer.  |
-| registerLink | `string` | `''` | Sets the URL of the REGISTER link in the footer.  |
-| logoImageUrl | `string` | `'./assets/images/alfresco-logo.svg'` | Path to a custom logo image.  |
-| backgroundImageUrl | `string` | `'./assets/images/background.svg'` | Path to a custom background image.  |
-| copyrightText | `string` | `'\u00A9 2016 Alfresco Software, Inc. All Rights Reserved.'` | The copyright text below the login box.  |
+| showRememberMe | `boolean` | `true` | Should the `Remember me` checkbox be shown? |
+| showLoginActions | `boolean` | `true` | Should the extra actions (`Need Help`, `Register`, etc) be shown? |
+| needHelpLink | `string` | `''` | Sets the URL of the NEED HELP link in the footer. |
+| registerLink | `string` | `''` | Sets the URL of the REGISTER link in the footer. |
+| logoImageUrl | `string` | `'./assets/images/alfresco-logo.svg'` | Path to a custom logo image. |
+| backgroundImageUrl | `string` | `'./assets/images/background.svg'` | Path to a custom background image. |
+| copyrightText | `string` | `'\u00A9 2016 Alfresco Software, Inc. All Rights Reserved.'` | The copyright text below the login box. |
 | providers | `string` |  | Possible valid values are ECM, BPM or ALL. By default, this component will log in only to ECM. If you want to log in in both systems then use ALL. There is also a way to call your Auth token API using the string "OAUTH" (supported only for BPM) |
-| fieldsValidation | `any` |  | Custom validation rules for the login form.  |
-| disableCsrf | `boolean` |  | Prevents the CSRF Token from being submitted. Only valid for Alfresco Process Services.  |
-| successRoute | `string` | `null` | Route to redirect to on successful login.  |
+| fieldsValidation | `any` |  | Custom validation rules for the login form. |
+| disableCsrf | `boolean` |  | Prevents the CSRF Token from being submitted. Only valid for Alfresco Process Services. |
+| successRoute | `string` | `null` | Route to redirect to on successful login. |
 
 ### Events
 
@@ -87,11 +90,10 @@ export class AppComponent {
 }
 ```
 
-### Change footer content
+### Changing content
 
-![Login with custom footer](../docassets/images/custom-footer.png)
-
-You can replace the entire content in the footer of the login component with your custom content.
+You can replace the content of the header and footer of the Login component with
+your own custom content, as shown in the examples below:
 
 ```html
 <adf-login ...>
@@ -99,11 +101,7 @@ You can replace the entire content in the footer of the login component with you
 </adf-login>`
 ```
 
-### Change header content
-
-![Login with custom header](../docassets/images/custom-header.png)
-
-You can replace the entire content in the header of the login component with your custom content.
+![Login with custom footer](../docassets/images/custom-footer.png)
 
 ```html
 <adf-login ...>
@@ -111,10 +109,10 @@ You can replace the entire content in the header of the login component with you
 </adf-login>`
 ```
 
-### Extra content
+![Login with custom header](../docassets/images/custom-header.png)
 
-You can put additional html content between `alfresco-login` tags to get it rendered as part of the login dialog.
-This becomes handy in case you need to extend it with custom input fields handled by your application or parent component:
+Also, any content that you put inside the &lt;adf-login> tags will be rendered as part
+of the Login dialog:
 
 ```html
 <adf-login ...>
@@ -124,13 +122,15 @@ This becomes handy in case you need to extend it with custom input fields handle
 </adf-login>
 ```
 
-Here's an example of custom content:
+This is useful if you need to extend the functionality of the dialog
+with custom input fields handled by your application or parent component:
 
 ![Login with custom content](../docassets/images/login-extra-content.png)
 
 ### Custom logo and background
 
-It is possible changing logo and background images to custom values.
+You can change the logo and background images using the `backgroundImageUrl` and
+`logoImageUrl` properties:
 
 ```html
 <adf-login 
@@ -139,11 +139,9 @@ It is possible changing logo and background images to custom values.
 </adf-login>
 ```
 
-Should give you something like the following:
-
 ![Login with custom logo and background](../docassets/images/custom-login.png)
 
-Alternatively you can bind to your component properties and provide values dynamically if needed:
+You can also bind to your component properties and provide values dynamically if you need to:
 
 ```html
 <adf-login
@@ -152,10 +150,10 @@ Alternatively you can bind to your component properties and provide values dynam
 </adf-login>
 ```
 
-### Customize Validation rules
+### Customizing validation rules
 
-If needed it is possible to customise the validation rules of the login
-form. You can add/modify the default rules of the login form.
+You can add to or modify the default validation rules of the login form if you
+need your own custom validation:
 
 **MyCustomLogin.component.html**
 
@@ -192,7 +190,7 @@ export class MyCustomLogin {
 
 ### Call an external identity provider to fetch the auth token
 
-If needed it is possible to call an external provider to identify the user.
+You can access an external provider to get an auth token for a user:
 
 **app.config.json**
 
@@ -208,6 +206,7 @@ If needed it is possible to call an external provider to identify the user.
 ```
 
 **MyCustomLogin.component.html**
+
 ```html
 <adf-login 
     [providers]="'OAUTH'"
@@ -232,14 +231,15 @@ export class MyCustomLogin {
 
 ### Controlling form submit execution behaviour
 
-If absolutely needed it is possible taking full control over form 
-submit execution by means of `executeSubmit` event. 
-This event is fired on form submit.
+The standard form submission system is suitable for most tasks but you can
+take full control of submission if you need to. Use the `executeSubmit` event
+to modify the submission process with your own code just after the form is
+submitted.
 
-You can prevent default behaviour by calling `event.preventDefault()`. 
-This allows for example having custom form validation scenarios and/or additional validation summary presentation.
-
-Alternatively you may want just running additional code without suppressing default one.
+If you want to replace the submission process completely (rather than just extend
+it), you can use `event.preventDefault()` in the handler to avoid the default
+behavior. You could use this, for example, to customize the validation heavily or
+to present a summary of validation before submitting the form.
 
 **MyCustomLogin.component.html**
 
@@ -269,8 +269,8 @@ export class MyCustomLogin {
 }
 ```
 
-**Please note that if `event.preventDefault()` is not called then default behaviour 
-will also be executed after your custom code.**
+Note that if you do not call `event.preventDefault()` then the default behaviour 
+will execute _after_ your custom code has completed.
 
 ## See Also
 
