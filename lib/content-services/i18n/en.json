@@ -182,17 +182,26 @@
   },
   "METADATA": {
     "BASIC": {
-        "HEADER": "Properties",
-        "NAME": "Name",
-        "TITLE": "Title",
-        "DESCRIPTION": "Description",
-        "AUTHOR": "Author",
-        "MIMETYPE": "Mimetype",
-        "SIZE": "Size",
-        "CREATOR": "Creator",
-        "CREATED_DATE": "Created Date",
-        "MODIFIER": "Modifier",
-        "MODIFIED_DATE": "Modified Date"
+      "HEADER": "Properties",
+      "NAME": "Name",
+      "TITLE": "Title",
+      "DESCRIPTION": "Description",
+      "AUTHOR": "Author",
+      "MIMETYPE": "Mimetype",
+      "SIZE": "Size",
+      "CREATOR": "Creator",
+      "CREATED_DATE": "Created Date",
+      "MODIFIER": "Modifier",
+      "MODIFIED_DATE": "Modified Date"
+    }
+  },
+  "SHARE": {
+    "TITLE": "Share",
+    "PUBLIC-LINK": "Public link",
+    "ACTIONS": {
+      "SHARE": "SHARE",
+      "CLOSE": "CLOSE",
+      "COPY-LINK": "COPY LINK"
     }
   }
 }

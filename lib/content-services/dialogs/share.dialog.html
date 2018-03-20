@@ -1,0 +1,24 @@
+<h1 matDialogTitle>{{ 'SHARE.TITLE' | translate }} {{fileName}}</h1>
+<div mat-dialog-actions>
+    <span class="spacer"></span>
+
+    <mat-slide-toggle [checked]="sharedId" (change)="onSlideShareChange($event)">{{ 'SHARE.ACTIONS.SHARE' | translate }}</mat-slide-toggle>
+
+    <span class="spacer"></span>
+
+    <form>
+        <mat-icon matPrefix>link</mat-icon>
+        <mat-form-field>
+            <input matInput placeholder="{{ 'SHARE.PUBLIC-LINK' | translate }}" [value]="sharedId">
+        </mat-form-field>
+    </form>
+
+    <button mat-button color="primary" (click)="cancelShare()">
+        {{ 'SHARE.ACTIONS.COPY-LINK' | translate }}
+    </button>
+
+    <button mat-button color="primary" (click)="cancelShare()">
+        {{ 'SHARE.ACTIONS.CLOSE' | translate }}
+    </button>
+
+</div>

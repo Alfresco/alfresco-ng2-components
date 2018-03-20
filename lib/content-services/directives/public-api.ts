@@ -15,6 +15,5 @@
  * limitations under the License.
  */
 
-export * from './download-zip.dialog';
-export * from './folder.dialog';
-export * from './share.dialog';
+export * from './node-download.directive';
+export * from './node-share.directive';
