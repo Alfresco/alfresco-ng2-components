@@ -39,6 +39,8 @@ Searches items for supplied search terms.
 
 You have to add a template that will be shown when the results are loaded.
 
+<!-- {% raw %} -->
+
 ```html
 <adf-search [searchTerm]="searchTerm">
     <ng-template let-result>
@@ -51,11 +53,15 @@ You have to add a template that will be shown when the results are loaded.
 </adf-search>
 ```
 
+<!-- {% endraw %} -->
+
 The results are provided via the [$implicit variable of angular2](https://angular.io/api/common/NgTemplateOutlet) and can be accessed via the sugar sintax 'let-yourChosenName'. As per example above the result will be something like : 
 
 ![adf-search-control](../docassets/images/search-component-simple-template.png)
 
 But you can define even a more complex template : 
+
+<!-- {% raw %} -->
 
 ```html
 <adf-search class="adf-search-result-autocomplete"
@@ -97,6 +103,8 @@ But you can define even a more complex template :
 </adf-search>
 ```
 
+<!-- {% endraw %} -->
+
 Which will look like :
 
 ![adf-search-control](../docassets/images/search-component-complex-template.png)
@@ -105,6 +113,8 @@ Which will look like :
 
 You can also attach your input field to the adf-search component via the trigger [searchAutocomplete]
 Yuo can do this by exporting the adf-search panel instance into a local template variable (here we called it "search"), and binding that variable to the input's searchAutocomplete property.
+
+<!-- {% raw %} -->
 
 ```html
 <input type="text" [searchAutocomplete]="search">
@@ -117,6 +127,8 @@ Yuo can do this by exporting the adf-search panel instance into a local template
     </ng-template>
 </adf-search>        
 ```
+
+<!-- {% endraw %} -->
 
 In this way it is possible to fetch the results from the word typed into the input text straight into the adf-search component via the custom template variable.
 

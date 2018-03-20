@@ -101,9 +101,13 @@ export class HomeComponent implements OnInit {
 
 ...with very simple corresponding HTML:
 
+<!-- {% raw %} -->
+
 ```html
 {{translatedText}}
 ```
+
+<!-- {% endraw %} -->
 
 In the browser, this is displayed as:
 
@@ -139,7 +143,11 @@ corresponding text. For example, the following will display the
 "Start Form" text as above but without any code or variables in the
 component's `.ts` file:
 
+<!-- {% raw %} -->
+
     {{ "FORM.START_FORM.TITLE" | translate }}
+
+<!-- {% endraw %} -->
 
 ## Adding your own messages
 
@@ -156,6 +164,8 @@ string at a specified position within a message). This is very useful for
 messages whose content can change at runtime. For example, in the built-in
 `en.json` there is the `CORE.PAGINATION.ITEMS_RANGE` key:
 
+<!-- {% raw %} -->
+
 ```json
   ...
 "CORE": {
@@ -167,6 +177,8 @@ messages whose content can change at runtime. For example, in the built-in
       },
     ...
 ```
+
+<!-- {% endraw %} -->
 
 The sections in curly braces are _interpolation variables_ that you supply
 at runtime. You can specify them by passing an extra parameter to
@@ -187,7 +199,11 @@ this.trans.get(
 
 You can use interpolations with the `translate` pipe in a similar way:
 
+<!-- {% raw %} -->
+
     {{ "CORE.PAGINATION.ITEMS_RANGE" | translate: { range: "1..10", total: "122"} }}
+
+<!-- {% endraw %} -->
 
 ## Selecting the display language
 

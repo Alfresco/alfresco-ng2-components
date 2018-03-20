@@ -8,6 +8,8 @@ Formats the tooltip for a Node.
 
 ## Basic Usage
 
+<!-- {% raw %} -->
+
 ```html
 <data-column
     key="name"
@@ -17,6 +19,8 @@ Formats the tooltip for a Node.
     </ng-template>
 </data-column>
 ```
+
+<!-- {% endraw %} -->
 
 ## Details
 
