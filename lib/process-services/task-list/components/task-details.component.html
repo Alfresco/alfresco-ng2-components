@@ -41,7 +41,7 @@
                     <div empty-form><h3 class="adf-task-title">Please select a Task</h3></div>
                 </adf-form>
             </div>
-            <div *ngIf="!isAssigned()">
+            <div *ngIf="!isAssigned()" id="claim-message-id">
                 {{ 'ADF_TASK_LIST.DETAILS.MESSAGES.CLAIM' | translate }}
             </div>
             <button mat-raised-button class="activiti-task-details__action-button"
