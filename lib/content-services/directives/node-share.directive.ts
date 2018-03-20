@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, Input, HostListener, ElementRef } from '@angular/core';
+import { Directive, Input, HostListener, ElementRef, OnChanges } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { MinimalNodeEntity } from 'alfresco-js-api';
 
@@ -24,10 +24,10 @@ import { ShareDialogComponent } from '../dialogs/share.dialog';
 @Directive({
     selector: '[adf-share]'
 })
-export class NodeSharedDirective {
+export class NodeSharedDirective implements OnChanges {
 
     /** Node to share. */
-        // tslint:disable-next-line:no-input-rename
+    // tslint:disable-next-line:no-input-rename
     @Input('adf-share')
     node: MinimalNodeEntity;
 
@@ -44,8 +44,7 @@ export class NodeSharedDirective {
     }
 
     shareNode(node: MinimalNodeEntity) {
-
-        if (node.entry.isFile) {
+        if (node.entry && node.entry.isFile) {
             this.setDisableAttribute(true);
             this.dialog.open(ShareDialogComponent, {
                 width: '600px',

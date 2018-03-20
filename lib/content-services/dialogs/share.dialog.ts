@@ -85,7 +85,7 @@ export class ShareDialogComponent implements OnInit {
 
     private deleteSharedLink(sharedId: string) {
         this.sharedLinksApiService.deleteSharedLink(sharedId).subscribe(() => {
-                this.isFileShared = false
+                this.isFileShared = false;
                 this.isDisabled = false;
             },
             () => {
