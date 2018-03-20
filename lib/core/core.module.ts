@@ -71,7 +71,7 @@ import { SitesService } from './services/sites.service';
 import { StorageService } from './services/storage.service';
 import { ThumbnailService } from './services/thumbnail.service';
 import { TranslateLoaderService } from './services/translate-loader.service';
-import { TRANSLATION_PROVIDER, TranslationService } from './services/translation.service';
+import { TranslationService } from './services/translation.service';
 import { UploadService } from './services/upload.service';
 import { UserPreferencesService } from './services/user-preferences.service';
 import { SearchConfigurationService } from './services/search-configuration.service';
@@ -241,14 +241,6 @@ export class CoreModuleLazy {
         TranslateModule
     ],
     providers: [
-        {
-            provide: TRANSLATION_PROVIDER,
-            multi: true,
-            useValue: {
-                name: 'adf-core',
-                source: 'assets/adf-core'
-            }
-        },
         ...providers()
     ]
 })
@@ -257,14 +249,6 @@ export class CoreModule {
         return {
             ngModule: CoreModule,
             providers: [
-                {
-                    provide: TRANSLATION_PROVIDER,
-                    multi: true,
-                    useValue: {
-                        name: 'adf-core',
-                        source: 'assets/adf-core'
-                    }
-                },
                 ...providers()
             ]
         };
@@ -274,5 +258,9 @@ export class CoreModule {
         return {
             ngModule: CoreModuleLazy
         };
+    }
+
+    constructor(translation: TranslationService) {
+        translation.addTranslationFolder('adf-core', 'assets/adf-core');
     }
 }
