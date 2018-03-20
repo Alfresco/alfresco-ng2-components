@@ -15,6 +15,26 @@
  * limitations under the License.
  */
 
-export * from './download-zip.dialog';
-export * from './folder.dialog';
-export * from './share.dialog';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { MaterialModule } from '../material.module';
+
+import { NodeDownloadDirective } from './node-download.directive';
+import { NodeSharedDirective } from './node-share.directive';
+
+@NgModule({
+    imports: [
+        CommonModule,
+        MaterialModule
+    ],
+    declarations: [
+        NodeDownloadDirective,
+        NodeSharedDirective
+    ],
+    exports: [
+        NodeDownloadDirective,
+        NodeSharedDirective
+    ]
+})
+export class ContentDirectiveModule {
+}

@@ -182,17 +182,29 @@
   },
   "METADATA": {
     "BASIC": {
-        "HEADER": "Properties",
-        "NAME": "Name",
-        "TITLE": "Title",
-        "DESCRIPTION": "Description",
-        "AUTHOR": "Author",
-        "MIMETYPE": "Mimetype",
-        "SIZE": "Size",
-        "CREATOR": "Creator",
-        "CREATED_DATE": "Created Date",
-        "MODIFIER": "Modifier",
-        "MODIFIED_DATE": "Modified Date"
+      "HEADER": "Properties",
+      "NAME": "Name",
+      "TITLE": "Title",
+      "DESCRIPTION": "Description",
+      "AUTHOR": "Author",
+      "MIMETYPE": "Mimetype",
+      "SIZE": "Size",
+      "CREATOR": "Creator",
+      "CREATED_DATE": "Created Date",
+      "MODIFIER": "Modifier",
+      "MODIFIED_DATE": "Modified Date"
+    }
+  },
+  "SHARE": {
+    "TITLE": "Share",
+    "PUBLIC-LINK": "Public link",
+    "UNSHARED": "File not shared",
+    "DESCRIPTION": "This is a link to your file",
+    "ALERT": "Anyone with this link can acces to it",
+    "ACTIONS": {
+      "SHARE": "SHARE",
+      "CLOSE": "CLOSE",
+      "COPY-LINK": "COPY LINK"
     }
   }
 }
