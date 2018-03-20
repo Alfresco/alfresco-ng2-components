@@ -31,7 +31,7 @@
             "rxjs/*": ["./node_modules/rxjs/*"]
         },
         "lib": [
-            "es2015",
+            "es2016",
             "dom"
         ],
         "suppressImplicitAnyIndexErrors": true,
