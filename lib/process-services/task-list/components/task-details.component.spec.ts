@@ -52,7 +52,6 @@ describe('TaskDetailsComponent', () => {
     let completeTaskSpy: jasmine.Spy;
     let logService: LogService;
     let commentProcessService: CommentProcessService;
-    let authService: AuthenticationService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -85,7 +84,6 @@ describe('TaskDetailsComponent', () => {
         service = fixture.debugElement.injector.get(TaskListService);
         formService = fixture.debugElement.injector.get(FormService);
         commentProcessService = TestBed.get(CommentProcessService);
-        authService = TestBed.get(AuthenticationService);
 
         getTaskDetailsSpy = spyOn(service, 'getTaskDetails').and.returnValue(Observable.of(taskDetailsMock));
         spyOn(formService, 'getTaskForm').and.returnValue(Observable.of(taskFormMock));
@@ -149,27 +147,21 @@ describe('TaskDetailsComponent', () => {
         });
     }));
 
-    it('should display complete button when task without form is assigned to current user', async(() => {
-        spyOn(authService, 'getBpmUsername').and.returnValue(taskDetailsMock.assignee.email);
-        taskDetailsMock.formKey = undefined;
+    it('should display task standalone component when the task does not have an associated form', async(() => {
         component.taskId = '123';
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            const completeBtn = fixture.nativeElement.querySelector('button');
-            expect(completeBtn).toBeDefined();
-            expect(completeBtn.disabled).toBeFalsy();
-            expect(completeBtn.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.COMPLETE');
+            fixture.detectChanges();
+            expect(fixture.debugElement.query(By.css('adf-task-standalone'))).not.toBeNull();
         });
     }));
 
-    it('should not display complete button when task without form is not assigned to current user', async(() => {
-        spyOn(authService, 'getBpmUsername').and.returnValue('');
+    it('should not display task standalone component when the task have an associated form', async(() => {
         component.taskId = '123';
-        taskDetailsMock.formKey = undefined;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            const completeBtn = fixture.nativeElement.querySelector('.activiti-task-details__action-button');
-            expect(completeBtn).toBeNull();
+            fixture.detectChanges();
+            expect(fixture.debugElement.query(By.css('adf-task-standalone'))).not.toBeNull();
         });
     }));
 
