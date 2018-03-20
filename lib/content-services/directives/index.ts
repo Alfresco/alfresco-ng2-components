@@ -15,6 +15,4 @@
  * limitations under the License.
  */
 
-export * from './download-zip.dialog';
-export * from './folder.dialog';
-export * from './share.dialog';
+export * from './public-api';

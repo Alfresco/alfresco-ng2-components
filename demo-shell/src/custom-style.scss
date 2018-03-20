@@ -1,7 +1,6 @@
 @import './app/components/app-layout/app-layout.component.scss';
 
 @import '~@alfresco/adf-content-services/theming';
-@import '~@alfresco/adf-process-services/theming';
 @import '~@alfresco/adf-insights/theming';
 @import '~@alfresco/adf-core/theming';
 
@@ -18,7 +17,6 @@ $theme:   mat-light-theme($primary, $accent, $warn);
 @include adf-app-layout-theme($theme);
 
 @include adf-content-services-theme($theme);
-@include adf-process-services-theme($theme);
 @include adf-insights-theme($theme);
 @include adf-core-theme($theme);
 

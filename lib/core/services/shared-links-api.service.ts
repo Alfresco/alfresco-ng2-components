@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { NodePaging } from 'alfresco-js-api';
+import { NodePaging, SharedLinkEntry } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { UserPreferencesService } from './user-preferences.service';
@@ -25,12 +25,12 @@ import 'rxjs/add/observable/fromPromise';
 @Injectable()
 export class SharedLinksApiService {
 
-    constructor(
-        private apiService: AlfrescoApiService,
-        private preferences: UserPreferencesService) {}
+    constructor(private apiService: AlfrescoApiService,
+                private preferences: UserPreferencesService) {
+    }
 
     private get sharedLinksApi() {
-       return this.apiService.getInstance().core.sharedlinksApi;
+        return this.apiService.getInstance().core.sharedlinksApi;
     }
 
     /**
@@ -42,11 +42,40 @@ export class SharedLinksApiService {
         const defaultOptions = {
             maxItems: this.preferences.paginationSize,
             skipCount: 0,
-            include: [ 'properties', 'allowableOperations' ]
+            include: ['properties', 'allowableOperations']
         };
         const queryOptions = Object.assign({}, defaultOptions, options);
         const promise = sharedLinksApi
             .findSharedLinks(queryOptions);
+
+        return Observable
+            .fromPromise(promise)
+            .catch(handleError);
+    }
+
+    /**
+     * Create a shared links available to the current user.
+     * @param nodeId
+     * @param options Options supported by JSAPI
+     */
+    createSharedLinks(nodeId: string, options: any = {}): Observable<SharedLinkEntry> {
+        const { sharedLinksApi, handleError } = this;
+
+        const promise = sharedLinksApi.addSharedLink({ nodeId: nodeId });
+
+        return Observable
+            .fromPromise(promise)
+            .catch(handleError);
+    }
+
+    /**
+     * delete shared links
+     * @param sharedId to delete
+     */
+    deleteSharedLink(sharedId: string): Observable<SharedLinkEntry> {
+        const { sharedLinksApi, handleError } = this;
+
+        const promise = sharedLinksApi.deleteSharedLink(sharedId);
 
         return Observable
             .fromPromise(promise)
