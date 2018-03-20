@@ -95,7 +95,6 @@ export class PaginationComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         if (this.target) {
-            this.supportedPageSizes = this.target.supportedPageSizes;
             this.paginationSubscription = this.target.pagination.subscribe(page => {
                 this.pagination = page;
                 this.cdr.detectChanges();

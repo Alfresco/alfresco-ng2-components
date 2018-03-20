@@ -22,6 +22,10 @@ import { PaginationQueryParams } from './pagination-query-params.interface';
 
 export interface PaginatedComponent {
     pagination: BehaviorSubject<Pagination>;
+    /**
+     * @deprecated : the supported page size should be retrieved via the user preferences
+     * and given to the pagination component, and not retrieved by the paginated object
+     */
     supportedPageSizes: number[];
     updatePagination(params: PaginationQueryParams);
 }

@@ -33,7 +33,7 @@ import {
     AuthenticationService, ContentService, TranslationService,
     FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
     UploadService, DataColumn, DataRow, UserPreferencesService,
-    PaginationComponent, FormValues, DisplayMode
+    PaginationComponent, FormValues, DisplayMode, UserPreferenceValues
 } from '@alfresco/adf-core';
 
 import { DocumentListComponent, PermissionStyleModel } from '@alfresco/adf-content-services';
@@ -159,6 +159,10 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 private preference: UserPreferencesService,
                 @Optional() private route: ActivatedRoute,
                 public authenticationService: AuthenticationService) {
+        this.preference.select(UserPreferenceValues.SupportedPageSizes)
+            .subscribe((pages) => {
+                this.supportedPages = pages;
+            });
     }
 
     showFile(event) {
@@ -205,7 +209,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.contentService.folderCreated.subscribe(value => this.onFolderCreated(value));
         this.onCreateFolder = this.contentService.folderCreate.subscribe(value => this.onFolderAction(value));
         this.onEditFolder = this.contentService.folderEdit.subscribe(value => this.onFolderAction(value));
-        this.supportedPages = this.preference.getDefaultPageSizes();
+        this.supportedPages = this.supportedPages ? this.supportedPages : this.preference.getDefaultPageSizes();
 
         // this.permissionsStyle.push(new PermissionStyleModel('document-list__create', PermissionsEnum.CREATE));
         // this.permissionsStyle.push(new PermissionStyleModel('document-list__disable', PermissionsEnum.NOT_CREATE, false, true));
