@@ -1,0 +1,7 @@
+@mixin adf-permission-display-theme($theme) {
+
+    .adf-display-permission {
+            display: flex;
+            justify-content: space-around;
+        }
+}
