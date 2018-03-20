@@ -184,8 +184,8 @@ describe('ContentMetadataCardComponent', () => {
         expect(button).not.toBeNull();
     });
 
-    it('should hode the edit button in canEdit is false', () => {
-        component.canEdit = false;
+    it('should hode the edit button in readOnly is true', () => {
+        component.readOnly = true;
         fixture.detectChanges();
 
         const button = fixture.debugElement.query(By.css('[data-automation-id="mata-data-card-toggle-edit"]'));

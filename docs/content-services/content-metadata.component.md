@@ -27,7 +27,7 @@ The different aspects and their properties to be shown can be configured as appl
 | --- | --- | --- | --- |
 | node | MinimalNodeEntryEntity | - | (**required**) The node entity to fetch metadata about |
 | displayEmpty | boolean | false | Display empty values in card view or not |
-| canEdit | boolean | true | Whether the edit button to be shown or not |
+| readOnly | boolean | true | Whether the edit button to be shown or not |
 | multi | boolean | false | multi parameter of the underlying material expansion panel |
 | preset | string | "*" | The metadata preset's name, which defines aspects and their properties |
 
