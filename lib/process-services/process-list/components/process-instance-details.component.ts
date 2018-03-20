@@ -90,7 +90,7 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
     }
 
     /**
-     * Reset the task detail to undefined
+     * Reset the task detail
      */
     reset() {
         this.processInstanceDetails = null;

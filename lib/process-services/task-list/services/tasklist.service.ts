@@ -27,6 +27,7 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/forkJoin';
 import 'rxjs/add/observable/fromPromise';
 import 'rxjs/operator/switchMap';
+import 'rxjs/add/observable/from';
 
 @Injectable()
 export class TaskListService {
