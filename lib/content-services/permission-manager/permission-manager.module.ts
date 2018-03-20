@@ -21,7 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
 import { PermissionDisplayComponent } from './components/permission-display/permission-display.component';
-import { DataTableModule } from '@alfresco/adf-core';
+import { DataTableModule, DataColumnModule } from '@alfresco/adf-core';
 
 @NgModule({
     imports: [
@@ -30,7 +30,8 @@ import { DataTableModule } from '@alfresco/adf-core';
         ReactiveFormsModule,
         MaterialModule,
         TranslateModule,
-        DataTableModule
+        DataTableModule,
+        DataColumnModule
     ],
     declarations: [
         PermissionDisplayComponent

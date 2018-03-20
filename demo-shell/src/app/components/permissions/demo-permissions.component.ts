@@ -30,7 +30,7 @@ export class DemoPermissionComponent implements OnInit {
     constructor(@Optional() private route: ActivatedRoute) {
     }
 
-    ngOnInit(){
+    ngOnInit() {
         if (this.route) {
             this.route.params.forEach((params: Params) => {
                 if (params['id']) {

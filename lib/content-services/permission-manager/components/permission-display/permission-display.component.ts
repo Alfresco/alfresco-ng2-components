@@ -16,12 +16,14 @@
  */
 
 import { Component, ViewEncapsulation, Input, OnInit } from '@angular/core';
-import { NodesApiService, ObjectDataTableAdapter } from '@alfresco/adf-core';
+import { NodesApiService } from '@alfresco/adf-core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { PermissionDisplayModel } from '../../models/permission.model';
 
 @Component({
     selector: 'adf-permission-display',
     templateUrl: './permission-display.component.html',
+    styleUrls: ['./permission-display.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class PermissionDisplayComponent implements OnInit {
@@ -29,7 +31,7 @@ export class PermissionDisplayComponent implements OnInit {
     @Input()
     nodeId: string = '';
 
-    permissionList: ObjectDataTableAdapter;
+    permissionList: PermissionDisplayModel[];
 
     constructor(private nodeService: NodesApiService) {
 
@@ -39,13 +41,28 @@ export class PermissionDisplayComponent implements OnInit {
         this.nodeService.getNode(this.nodeId).subscribe((node: MinimalNodeEntryEntity) => {
             /*tslint:disable-next-line*/
             console.log(node);
-            const allPermissionList = node.permissions.locallySet ? node.permissions.inherited.concat(node.permissions.locallySet) : node.permissions.inherited;
-            this.permissionList = new ObjectDataTableAdapter(allPermissionList, [
-                {type: 'text', key: 'accessStatus', title: 'Accessed Status', sortable: true},
-                {type: 'text', key: 'authorityId', title: 'Authority ID', sortable: true},
-                {type: 'text', key: 'name', title: 'Name', sortable: true},
-                {type: 'boolean', key: 'inherited', title: 'Inherited', sortable: true}
-            ]);
+            this.permissionList = this.getPermissionList(node);
         });
     }
+
+    private getPermissionList(node: MinimalNodeEntryEntity): PermissionDisplayModel[] {
+                    /*tslint:disable-next-line*/
+                    console.log('AFAMMOCC');
+        let allPermissions: PermissionDisplayModel[] = [];
+        if (node.permissions.locallySet) {
+            node.permissions.locallySet.map((element) => {
+                let permission = new PermissionDisplayModel(element);
+                allPermissions.push(permission);
+            });
+        }
+        if (node.permissions.inherited) {
+            node.permissions.inherited.map((element) => {
+                let permissionInherited = new PermissionDisplayModel(element);
+                permissionInherited.isInherited = true;
+                allPermissions.push(permissionInherited);
+            });
+        }
+        return allPermissions;
+    }
+
 }

@@ -15,6 +15,18 @@
  * limitations under the License.
  */
 
- export * from './components/permission-display/permission-display.component';
+export class PermissionDisplayModel {
+    accessStatus: string;
+    authorityId: string;
+    name: string;
+    isInherited: boolean = false;
 
- export * from './models/permission.model';
+    constructor(obj?: any) {
+        if (obj) {
+            this.accessStatus = obj.accessStatus;
+            this.authorityId = obj.authorityId;
+            this.name = obj.name;
+            this.isInherited = obj.isInherited;
+        }
+    }
+}
