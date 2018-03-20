@@ -73,6 +73,8 @@ You can also use both HTML-based and app.config.json custom schema declaration a
 }
 ```
 
+<!-- {% raw %} -->
+
 ```html
 <adf-process-instance-list
     [appId]="'1'" 
@@ -86,6 +88,8 @@ You can also use both HTML-based and app.config.json custom schema declaration a
     </data-columns>
 </adf-process-instance-list>
 ```
+
+<!-- {% endraw %} -->
 
 ### Pagination strategy
 

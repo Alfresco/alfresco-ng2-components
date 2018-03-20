@@ -51,6 +51,8 @@ export class MyComponent {
 The `NodeFavoriteDirective` instance can be bound to a template variable through **adfFavorite** reference,
 which provides a method to help further style the element.
 
+<!-- {% raw %} -->
+
 ```html
 <button
     mat-menu-item
@@ -62,6 +64,8 @@ which provides a method to help further style the element.
     </mat-icon>
 </button>
 ```
+
+<!-- {% endraw %} -->
 
 The directive performs as follows:
 

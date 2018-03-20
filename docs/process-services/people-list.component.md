@@ -43,6 +43,8 @@ export class SomeComponent implements OnInit {
 
 In the component template use the people list component:
 
+<!-- {% raw %} -->
+
 ```html
 <adf-people-list
   [users]="people"
@@ -63,6 +65,8 @@ In the component template use the people list component:
   </data-columns>
 </adf-people-list>
 ```
+
+<!-- {% endraw %} -->
 
 Note that the people list component is based on the
 [Datatable component](../core/datatable.component.md).

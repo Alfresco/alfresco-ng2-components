@@ -8,11 +8,15 @@ Retrieves an icon to represent a MIME type.
 
 ## Basic Usage
 
+<!-- {% raw %} -->
+
 ```HTML
 <div>
     <img src='{{ "image/jpeg" | adfMimeTypeIcon }}' />
 </div>
 ```
+
+<!-- {% endraw %} -->
 
 ## Details
 

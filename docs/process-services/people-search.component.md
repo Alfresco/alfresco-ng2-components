@@ -28,6 +28,8 @@ Searches users/people.
 
 ## Details
 
+<!-- {% raw %} -->
+
 ```html
 <adf-people-search
        (searchPeople)="searchUser($event)"
@@ -38,3 +40,5 @@ Searches users/people.
            <action-button-label>{{ 'PEOPLE.ADD_USER' | translate }}</action-button-label>
        </adf-people-search>
 ```
+
+<!-- {% endraw %} -->

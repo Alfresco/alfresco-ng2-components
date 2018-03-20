@@ -40,12 +40,16 @@ This value will be used as field type when form gets rendered.
 
 This should be a valid Angular component template that you want to render in `<activiti-form>` component:
 
+<!-- {% raw %} -->
+
 ```html
 <div>
     <div>Angular Component</div>
     <div>Created by: {{name}}</div>
 </div>
 ```
+
+<!-- {% endraw %} -->
 
 ## Form editor template
 

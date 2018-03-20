@@ -30,7 +30,11 @@ In the `get` and `instant` methods, the `interpolateParams` parameter supplies
 interpolation strings for keys that include them. For example, in the standard
 `en.json`, the `CORE.PAGINATION.ITEMS_RANGE` key is defined as:
 
+<!-- {% raw %} -->
+
     "Showing {{ range }} of {{ total }}"
+
+<!-- {% endraw %} -->
 
 The `range` and `total` interpolations are supplied to the `get` method using
 an object with fields of the same name:
