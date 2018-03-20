@@ -8,11 +8,15 @@ Converts a number of bytes to the equivalent in KB, MB, etc.
 
 ## Basic Usage
 
+<!-- {% raw %} -->
+
 ```HTML
 <div>
     File Size: {{ sizeInBytes | adfFileSize:"2" }}
 </div>
 ```
+
+<!-- {% endraw %} -->
 
 ## Details
 

@@ -59,6 +59,8 @@ export class MyCustomProcessAttachmentComponent {
 
 If we want user to be able to upload attachments for empty lists, We can wrap our component with upload drag area component. In that case, We should also pass a custom _no content template_ as shown below with our component urging the user to drag files to upload whenever the list is empty.
 
+<!-- {% raw %} -->
+
 ```html
 <adf-upload-drag-area
     [parentId]="YOUR_PROCESS_ID"
@@ -77,6 +79,8 @@ If we want user to be able to upload attachments for empty lists, We can wrap ou
     </adf-process-attachment-list>
 </adf-upload-drag-area>
 ```
+
+<!-- {% endraw %} -->
 
 If the List is empty, the custom no-content template we passed is displayed.
 

@@ -135,6 +135,8 @@ context.row.getValue('createdByUser.displayName')
 
 You may want using **row** api to get raw value access.
 
+<!-- {% raw %} -->
+
 ```html
 <data-column title="Name" key="name" sortable="true" class="full-width ellipsis-cell">
     <ng-template let-context="$implicit">
@@ -144,9 +146,13 @@ You may want using **row** api to get raw value access.
 </data-column>
 ```
 
+<!-- {% endraw %} -->
+
 Use **data** api to get values with post-processing, like datetime/icon conversion.\_
 
 In the Example below we will prepend `Hi!` to each file and folder name in the list: 
+
+<!-- {% raw %} -->
 
 ```html
 <data-column title="Name" key="name" sortable="true" class="full-width ellipsis-cell">
@@ -156,8 +162,12 @@ In the Example below we will prepend `Hi!` to each file and folder name in the l
 </data-column>
 ```
 
+<!-- {% endraw %} -->
+
 In the Example below we will integrate the [adf-tag-node-list](../content-services/tag-node-list.component.md) component
 with the document list.
+
+<!-- {% raw %} -->
 
 ```html
 <data-column
@@ -170,6 +180,8 @@ with the document list.
     </ng-template>
 </data-column>
 ```
+
+<!-- {% endraw %} -->
 
 ![Tag component in document List](../docassets/images/document-list-tag-template.png)
 
