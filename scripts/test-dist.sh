@@ -38,3 +38,7 @@ echo "====== Build dist demo shell ===== "
 
 cd $DIR/../demo-shell
 npm run build:dist
+
+echo "====== e2e test ===== "
+
+npm run e2e

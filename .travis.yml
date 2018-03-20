@@ -61,7 +61,7 @@ script:
 
 jobs:
     include:
-        - stage: Check build demo shell in production mode
+        - stage: Check build demo shell in production mode AND e2e
           script: ./scripts/test-dist.sh
         - stage: Check 2.0.0 Project Update
           script: ./scripts/test-e2e-bc.sh
