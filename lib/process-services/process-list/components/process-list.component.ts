@@ -108,6 +108,10 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     @Input()
     selectionMode: string = 'single'; // none|single|multiple
 
+    /* Toggles default selection of the first instance */
+    @Input()
+    selectFirstRow: boolean = true;
+
     /** Emitted when a row in the process list is clicked. */
     @Output()
     rowClick: EventEmitter<string> = new EventEmitter<string>();
@@ -266,16 +270,18 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
      * Select the first instance of a list if present
      */
     selectFirst() {
-        if (!this.isListEmpty()) {
-            let row = this.data.getRows()[0];
-            row.isSelected = true;
-            this.data.selectedRow = row;
-            this.currentInstanceId = row.getValue('id');
-        } else {
-            if (this.data) {
-                this.data.selectedRow = null;
+        if (this.selectFirstRow) {
+            if (!this.isListEmpty()) {
+                let row = this.data.getRows()[0];
+                row.isSelected = true;
+                this.data.selectedRow = row;
+                this.currentInstanceId = row.getValue('id');
+            } else {
+                if (this.data) {
+                    this.data.selectedRow = null;
+                }
+                this.currentInstanceId = null;
             }
-            this.currentInstanceId = null;
         }
     }
 
