@@ -1,7 +1,9 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-03-20
 ---
+
 # Pagination Component
 
 Adds pagination to the component it is used with.
@@ -22,15 +24,6 @@ Adds pagination to the component it is used with.
 </adf-pagination>
 ```
 
-## Integrating with Document List
-
-```html
-<adf-document-list #documentList ...></adf-document-list>
-
-<adf-pagination [target]="documentList" ...>
-</adf-pagination>
-```
-
 ### Properties
 
 | Name | Type | Default value | Description |
@@ -43,26 +36,42 @@ Adds pagination to the component it is used with.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| change | `EventEmitter<PaginationQueryParams>` | Emitted when paginaton changes in any way. |
-| changePageNumber | `EventEmitter<Pagination>` | Emitted when the page number changes. |
-| changePageSize | `EventEmitter<Pagination>` | Emitted when the page size changes. |
-| nextPage | `EventEmitter<Pagination>` | Emitted when the next page is requested. |
-| prevPage | `EventEmitter<Pagination>` | Emitted when the previous page is requested. |
+| change | `EventEmitter<PaginationQueryParams>` | Emitted when pagination changes in any way.  |
+| changePageNumber | `EventEmitter<Pagination>` | Emitted when the page number changes.  |
+| changePageSize | `EventEmitter<Pagination>` | Emitted when the page size changes.  |
+| nextPage | `EventEmitter<Pagination>` | Emitted when the next page is requested.  |
+| prevPage | `EventEmitter<Pagination>` | Emitted when the previous page is requested.  |
 
 ## Details
 
-The pagination object is a generic component to paginate component. The Alfresco API are paginated and return a Pagination object. You can use the pagination object to feed the pagination component and then listen to the event which returns the current pagination and query again the API with the options chosen by the user.
+You can use the Pagination component to add pagination features to other components. The Alfresco
+APIs make use of pagination to reduce the amount of data transferred in a single call. The start offset
+and number of items in the page are passed during the call. The items of interest will be
+returned along with a Pagination object. You can use this object to set up the pagination component
+and then subscribe to one of the page change events. This will return updated pagination data that you
+can pass to a subsequent API call.
 
-Each event helps to detect the certain action that user have made using the component.
+Each event corresponds to a particular action from the user. For the `change` event, a
+[PaginationQueryParams](https://github.com/Alfresco/alfresco-ng2-components/blob/development/ng2-components/ng2-alfresco-core/src/components/pagination/pagination-query-params.interface.ts) object is returned. This contains the query
+parameters supported by the REST API, `skipCount` and `maxItems`. 
 
-For `change` event, a [PaginationQueryParams](https://github.com/Alfresco/alfresco-ng2-components/blob/development/ng2-components/ng2-alfresco-core/src/components/pagination/pagination-query-params.interface.ts) (including the query parameters supported by the REST API, `skipCount` and `maxItems`) is returned.
+For all events other than `change`, a new Pagination object is returned as in the following example. The
+new object contains updated properties that you can use to fetch the next page of information.
 
-For all events other than `change`, a new Pagination object is returned as in the following example, with updated properties to be used to query further.
+### Integrating with the Document List component
+
+```html
+<adf-document-list #documentList ...></adf-document-list>
+
+<adf-pagination [target]="documentList" ...>
+</adf-pagination>
+```
 
 ### Custom pagination
 
-The component also provides light integration with external implementations of the pagination.
-Any component can implement the `PaginatedComponent` and be used as a value for the `target` property.
+The component also makes it easy to integrate your own implementation of pagination.
+You can supply any component that implements the `PaginatedComponent` interface as the value of the
+`target` property.
 
 ```js
 export interface PaginatedComponent {
@@ -73,8 +82,9 @@ export interface PaginatedComponent {
 }
 ```
 
-Your component needs to provide a `pagination` subject to allow Pagination component to reflect to changes.
-Every time user interacts with the Pagination, it will call the `updatePagination` method and pass the parameters.
+Your component must provide a `pagination` subject to allow the Pagination component to respond to changes.
+Every time user interacts with the Pagination component, it will call the `updatePagination` method
+and pass the updated parameters.
 
 ## See also
 
