@@ -70,7 +70,7 @@ export class ShareDialogComponent implements OnInit {
         }
     }
 
-    private createSharedLinks(nodeId: string) {
+    createSharedLinks(nodeId: string) {
         this.sharedLinksApiService.createSharedLinks(nodeId).subscribe((sharedLink: SharedLinkEntry) => {
                 if (sharedLink.entry) {
                     this.sharedId = sharedLink.entry.id;
@@ -84,7 +84,7 @@ export class ShareDialogComponent implements OnInit {
             });
     }
 
-    private deleteSharedLink(sharedId: string) {
+    deleteSharedLink(sharedId: string) {
         this.sharedLinksApiService.deleteSharedLink(sharedId).subscribe(() => {
                 this.isFileShared = false;
                 this.isDisabled = false;

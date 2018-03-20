@@ -22,14 +22,12 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { Observable } from 'rxjs/Observable';
 
-import { SharedLinksApiService } from '@alfresco/adf-core';
 import { ShareDialogComponent } from './share.dialog';
 
 describe('ShareDialogComponent', () => {
 
     let fixture: ComponentFixture<ShareDialogComponent>;
     let component: ShareDialogComponent;
-    let shareApiService: SharedLinksApiService;
     let dialogRef;
 
     let data: any = {
@@ -71,7 +69,6 @@ describe('ShareDialogComponent', () => {
         fixture = TestBed.createComponent(ShareDialogComponent);
         component = fixture.componentInstance;
 
-        shareApiService = TestBed.get(SharedLinksApiService);
         fixture.detectChanges();
     });
 
