@@ -116,15 +116,17 @@ export class SearchSettingsComponent implements OnInit {
     }
 
     unselectFacetBucket(bucket: FacetFieldBucket) {
-        const idx = this.selectedBuckets.findIndex(
-            b => b.$field === bucket.$field && b.label === bucket.label
-        );
+        if (bucket) {
+            const idx = this.selectedBuckets.findIndex(
+                b => b.$field === bucket.$field && b.label === bucket.label
+            );
 
-        if (idx >= 0) {
-            this.selectedBuckets.splice(idx, 1);
+            if (idx >= 0) {
+                this.selectedBuckets.splice(idx, 1);
+            }
+            this.queryBuilder.removeFilterQuery(bucket.filterQuery);
+            this.queryBuilder.update();
         }
-        this.queryBuilder.removeFilterQuery(bucket.filterQuery);
-        this.queryBuilder.update();
     }
 
     onDataLoaded(data: any) {
