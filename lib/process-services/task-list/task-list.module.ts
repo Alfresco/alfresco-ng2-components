@@ -41,6 +41,7 @@ import { TaskDetailsComponent } from './components/task-details.component';
 import { TaskFiltersComponent } from './components/task-filters.component';
 import { TaskHeaderComponent } from './components/task-header.component';
 import { TaskListComponent } from './components/task-list.component';
+import { TaskStandaloneComponent } from './components/task-standalone.component';
 
 @NgModule({
     imports: [
@@ -68,7 +69,8 @@ import { TaskListComponent } from './components/task-list.component';
         TaskAuditDirective,
         ChecklistComponent,
         TaskHeaderComponent,
-        StartTaskComponent
+        StartTaskComponent,
+        TaskStandaloneComponent
     ],
     providers: [
         TaskListService,
@@ -85,7 +87,8 @@ import { TaskListComponent } from './components/task-list.component';
         TaskAuditDirective,
         ChecklistComponent,
         TaskHeaderComponent,
-        StartTaskComponent
+        StartTaskComponent,
+        TaskStandaloneComponent
     ]
 })
 export class TaskListModule {}
