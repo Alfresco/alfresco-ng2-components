@@ -45,6 +45,9 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
     expanded: boolean = false;
 
     @Input()
+    multi = false;
+
+    @Input()
     preset: string;
 
     nodeHasBeenUpdated: boolean = false;
