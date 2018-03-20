@@ -199,6 +199,8 @@
     "TITLE": "Share",
     "PUBLIC-LINK": "Public link",
     "UNSHARED": "File not shared",
+    "DESCRIPTION": "This is a link to your file",
+    "ALERT": "Anyone with this link can acces to it",
     "ACTIONS": {
       "SHARE": "SHARE",
       "CLOSE": "CLOSE",

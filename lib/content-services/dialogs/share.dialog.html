@@ -9,6 +9,11 @@
 
     <span class="spacer"></span>
 
+    .
+
+    <h2 *ngIf="isFileShared">{{ 'SHARE.DESCRIPTION' | translate }}</h2>
+    <div *ngIf="isFileShared">{{ 'SHARE.ALERT' | translate }}</div>
+
     <form *ngIf="isFileShared">
         <mat-form-field class="full-width">
             <input class="adf-share-link" matInput placeholder="{{ 'SHARE.PUBLIC-LINK' | translate }}" [value]="baseShareUrl + sharedId">
