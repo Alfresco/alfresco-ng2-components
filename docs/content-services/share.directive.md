@@ -2,9 +2,9 @@
 Added: v2.3.0
 Status: Active
 ---
-# Node Share directive
+# Node Public file Share Directive
 
-Allows files to be shared (Note the folder can not be shared)
+Create and manage public shared links for files
 
 ![adf-share](../docassets/images/share-directive.png)
 
