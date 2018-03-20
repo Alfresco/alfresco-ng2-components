@@ -68,7 +68,7 @@ export class PaginationComponent implements OnInit, OnDestroy {
     @Input()
     pagination: Pagination;
 
-    /** Emitted when paginaton changes in any way. */
+    /** Emitted when pagination changes in any way. */
     @Output()
     change: EventEmitter<PaginationQueryParams> = new EventEmitter<PaginationQueryParams>();
 
