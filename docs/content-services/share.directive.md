@@ -26,3 +26,4 @@ Allows folders and/or files to be shared
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | node | `MinimalNodeEntity` |  | Nodes to share.  |
+| node | `MinimalNodeEntity` |  | Nodes to share.  |

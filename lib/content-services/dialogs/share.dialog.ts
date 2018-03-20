@@ -39,7 +39,8 @@ export class ShareDialogComponent implements OnInit {
 
     constructor(private sharedLinksApiService: SharedLinksApiService,
                 private dialogRef: MatDialogRef<ShareDialogComponent>,
-                @Inject(MAT_DIALOG_DATA) private data: any) {
+                @Inject(MAT_DIALOG_DATA)
+                public data: any) {
     }
 
     ngOnInit() {
@@ -47,11 +48,11 @@ export class ShareDialogComponent implements OnInit {
             this.fileName = this.data.node.entry.name;
             this.baseShareUrl = this.data.baseShareUrl;
 
-            if (this.data.node.entry.properties['qshare:sharedId']) {
+            if (this.data.node.entry.properties && this.data.node.entry.properties['qshare:sharedId']) {
                 this.sharedId = this.data.node.entry.properties['qshare:sharedId'];
                 this.isFileShared = true;
             } else {
-                this.crreateSharedLink(this.data.node.entry.id);
+                this.createSharedLinks(this.data.node.entry.id);
             }
         }
     }
@@ -63,13 +64,13 @@ export class ShareDialogComponent implements OnInit {
     onSlideShareChange(event: any) {
         this.isDisabled = true;
         if (event.checked) {
-            this.crreateSharedLink(this.data.node.entry.id);
+            this.createSharedLinks(this.data.node.entry.id);
         } else {
             this.deleteSharedLink(this.sharedId);
         }
     }
 
-    private crreateSharedLink(nodeId: string) {
+    private createSharedLinks(nodeId: string) {
         this.sharedLinksApiService.createSharedLinks(nodeId).subscribe((sharedLink: SharedLinkEntry) => {
                 if (sharedLink.entry) {
                     this.sharedId = sharedLink.entry.id;
