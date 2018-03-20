@@ -30,7 +30,7 @@ import {
     SiteEntry
 } from 'alfresco-js-api';
 import {
-    AuthenticationService, ContentService, TranslationService,
+    AuthenticationService, AppConfigService, ContentService, TranslationService,
     FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
     UploadService, DataColumn, DataRow, UserPreferencesService,
     PaginationComponent, FormValues, DisplayMode
@@ -58,6 +58,8 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     showViewer = false;
     showVersions = false;
     displayMode = DisplayMode.List;
+
+    baseShareUrl = this.appConfig.get<string>('ecmHost') + '/preview/s/';
 
     toolbarColor = 'default';
 
@@ -158,6 +160,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 private logService: LogService,
                 private preference: UserPreferencesService,
                 @Optional() private route: ActivatedRoute,
+                private appConfig: AppConfigService,
                 public authenticationService: AuthenticationService) {
     }
 

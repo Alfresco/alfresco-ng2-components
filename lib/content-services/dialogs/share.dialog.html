@@ -1,24 +1,27 @@
-<h1 matDialogTitle>{{ 'SHARE.TITLE' | translate }} {{fileName}}</h1>
-<div mat-dialog-actions>
+<h1 mat-dialog-title>{{ 'SHARE.TITLE' | translate }} {{fileName}}</h1>
+
+<mat-dialog-content>
     <span class="spacer"></span>
 
-    <mat-slide-toggle [checked]="sharedId" (change)="onSlideShareChange($event)">{{ 'SHARE.ACTIONS.SHARE' | translate }}</mat-slide-toggle>
+    <mat-slide-toggle [checked]="isFileShared" [disabled]="isDisabled" (change)="onSlideShareChange($event)">
+        {{ 'SHARE.ACTIONS.SHARE' | translate }}
+    </mat-slide-toggle>
 
     <span class="spacer"></span>
 
-    <form>
-        <mat-icon matPrefix>link</mat-icon>
-        <mat-form-field>
-            <input matInput placeholder="{{ 'SHARE.PUBLIC-LINK' | translate }}" [value]="sharedId">
+    <form *ngIf="isFileShared">
+        <mat-form-field class="full-width">
+            <input class="adf-share-link" matInput placeholder="{{ 'SHARE.PUBLIC-LINK' | translate }}" [value]="baseShareUrl + sharedId">
+            <mat-icon matPrefix>link</mat-icon>
         </mat-form-field>
     </form>
 
-    <button mat-button color="primary" (click)="cancelShare()">
-        {{ 'SHARE.ACTIONS.COPY-LINK' | translate }}
-    </button>
+    <h2 *ngIf="!isFileShared">{{ 'SHARE.UNSHARED' | translate }}</h2>
 
+</mat-dialog-content>
+
+<mat-dialog-actions>
     <button mat-button color="primary" (click)="cancelShare()">
         {{ 'SHARE.ACTIONS.CLOSE' | translate }}
     </button>
-
-</div>
+</mat-dialog-actions>

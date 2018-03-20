@@ -108,6 +108,7 @@
                     </button>
                     <button mat-icon-button
                             [disabled]="!documentList.selection.length"
+                            [baseShareUrl]="baseShareUrl"
                             [adf-share]="documentList.selection[0]">
                         <mat-icon>
                             share

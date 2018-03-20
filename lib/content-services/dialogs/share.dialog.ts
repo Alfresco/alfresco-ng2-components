@@ -32,8 +32,10 @@ export class ShareDialogComponent implements OnInit {
     sharedId: string;
 
     fileName: string;
+    baseShareUrl: string;
 
     isFileShared: boolean = false;
+    isDisabled: boolean = false;
 
     constructor(private sharedLinksApiService: SharedLinksApiService,
                 private dialogRef: MatDialogRef<ShareDialogComponent>,
@@ -43,6 +45,7 @@ export class ShareDialogComponent implements OnInit {
     ngOnInit() {
         if (this.data.node && this.data.node.entry) {
             this.fileName = this.data.node.entry.name;
+            this.baseShareUrl = this.data.baseShareUrl;
 
             if (this.data.node.entry.properties['qshare:sharedId']) {
                 this.sharedId = this.data.node.entry.properties['qshare:sharedId'];
@@ -58,6 +61,7 @@ export class ShareDialogComponent implements OnInit {
     }
 
     onSlideShareChange(event: any) {
+        this.isDisabled = true;
         if (event.checked) {
             this.crreateSharedLink(this.data.node.entry.id);
         } else {
@@ -67,16 +71,26 @@ export class ShareDialogComponent implements OnInit {
 
     private crreateSharedLink(nodeId: string) {
         this.sharedLinksApiService.createSharedLinks(nodeId).subscribe((sharedLink: SharedLinkEntry) => {
-            if(sharedLink.entry) {
-                this.sharedId = sharedLink.entry.id;
-                this.isFileShared = true;
-            }
-        });
+                if (sharedLink.entry) {
+                    this.sharedId = sharedLink.entry.id;
+                    this.isFileShared = true;
+                    this.isDisabled = false;
+                }
+            },
+            () => {
+                this.isFileShared = false;
+                this.isDisabled = false;
+            });
     }
 
     private deleteSharedLink(sharedId: string) {
         this.sharedLinksApiService.deleteSharedLink(sharedId).subscribe(() => {
-            this.isFileShared = false
-        });
+                this.isFileShared = false
+                this.isDisabled = false;
+            },
+            () => {
+                this.isFileShared = true;
+                this.isDisabled = false;
+            });
     }
 }

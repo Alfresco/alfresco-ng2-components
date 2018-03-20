@@ -198,6 +198,7 @@
   "SHARE": {
     "TITLE": "Share",
     "PUBLIC-LINK": "Public link",
+    "UNSHARED": "File not shared",
     "ACTIONS": {
       "SHARE": "SHARE",
       "CLOSE": "CLOSE",
