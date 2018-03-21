@@ -159,7 +159,7 @@ describe('DocumentListService', () => {
     });
 
     it('should add the includeTypes in the request Node Children if required', () => {
-        let spyGetNodeInfo = spyOn(alfrescoApiService.getInstance().node, 'getNodeChildren');
+        let spyGetNodeInfo = spyOn(alfrescoApiService.getInstance().nodes, 'getNodeChildren');
 
         service.getFolder('/fake-root/fake-name', {}, ['isLocked']);
 
@@ -168,10 +168,10 @@ describe('DocumentListService', () => {
             include: ['path', 'properties', 'allowableOperations', 'isLocked'],
             relativePath: '/fake-root/fake-name'
         });
-    );
+    });
 
     it('should not add the includeTypes in the request Node Children if is duplicated', () => {
-        let spyGetNodeInfo = spyOn(alfrescoApiService.getInstance().node, 'getNodeChildren');
+        let spyGetNodeInfo = spyOn(alfrescoApiService.getInstance().nodes, 'getNodeChildren');
 
         service.getFolder('/fake-root/fake-name', {}, ['allowableOperations']);
 
@@ -180,22 +180,21 @@ describe('DocumentListService', () => {
             include: ['path', 'properties', 'allowableOperations'],
             relativePath: '/fake-root/fake-name'
         });
-    );
+    });
 
     it('should add the includeTypes in the request getFolderNode if required', () => {
-        let spyGetNodeInfo = spyOn(alfrescoApiService.getInstance().node, 'getNodeInfo');
+        let spyGetNodeInfo = spyOn(alfrescoApiService.getInstance().nodes, 'getNodeInfo');
 
         service.getFolderNode('test-id', ['isLocked']);
 
         expect(spyGetNodeInfo).toHaveBeenCalledWith('test-id', {
-                includeSource: true,
-                include: ['path', 'properties', 'allowableOperations', 'isLocked']
-            }
-        );
-    );
+            includeSource: true,
+            include: ['path', 'properties', 'allowableOperations', 'isLocked']
+        });
+    });
 
     it('should not add the includeTypes in the request getFolderNode if is duplicated', () => {
-        let spyGetNodeInfo = spyOn(alfrescoApiService.getInstance().node, 'getNodeInfo');
+        let spyGetNodeInfo = spyOn(alfrescoApiService.getInstance().nodes, 'getNodeInfo');
 
         service.getFolderNode('test-id', ['allowableOperations']);
 
@@ -204,39 +203,38 @@ describe('DocumentListService', () => {
                 include: ['path', 'properties', 'allowableOperations']
             }
         );
-    );
-});
-
-it('should delete the folder', () => {
-    service.deleteNode('fake-id').subscribe(
-        res => {
-            expect(res).toBeNull();
-        }
-    );
-
-    jasmine.Ajax.requests.mostRecent().respondWith({
-        status: 204,
-        contentType: 'json'
     });
-});
 
-it('should copy a node', (done) => {
-    service.copyNode('node-id', 'parent-id').subscribe(done);
+    it('should delete the folder', () => {
+        service.deleteNode('fake-id').subscribe(
+            res => {
+                expect(res).toBeNull();
+            }
+        );
 
-    expect(jasmine.Ajax.requests.mostRecent().method).toBe('POST');
-    expect(jasmine.Ajax.requests.mostRecent().url).toContain('/nodes/node-id/copy');
-    expect(jasmine.Ajax.requests.mostRecent().params).toEqual(JSON.stringify({ targetParentId: 'parent-id' }));
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            status: 204,
+            contentType: 'json'
+        });
+    });
 
-    jasmine.Ajax.requests.mostRecent().respondWith({ status: 200, contentType: 'json' });
-});
+    it('should copy a node', (done) => {
+        service.copyNode('node-id', 'parent-id').subscribe(done);
 
-it('should move a node', (done) => {
-    service.moveNode('node-id', 'parent-id').subscribe(done);
+        expect(jasmine.Ajax.requests.mostRecent().method).toBe('POST');
+        expect(jasmine.Ajax.requests.mostRecent().url).toContain('/nodes/node-id/copy');
+        expect(jasmine.Ajax.requests.mostRecent().params).toEqual(JSON.stringify({ targetParentId: 'parent-id' }));
 
-    expect(jasmine.Ajax.requests.mostRecent().method).toBe('POST');
-    expect(jasmine.Ajax.requests.mostRecent().url).toContain('/nodes/node-id/move');
-    expect(jasmine.Ajax.requests.mostRecent().params).toEqual(JSON.stringify({ targetParentId: 'parent-id' }));
+        jasmine.Ajax.requests.mostRecent().respondWith({ status: 200, contentType: 'json' });
+    });
 
-    jasmine.Ajax.requests.mostRecent().respondWith({ status: 200, contentType: 'json' });
-});
+    it('should move a node', (done) => {
+        service.moveNode('node-id', 'parent-id').subscribe(done);
+
+        expect(jasmine.Ajax.requests.mostRecent().method).toBe('POST');
+        expect(jasmine.Ajax.requests.mostRecent().url).toContain('/nodes/node-id/move');
+        expect(jasmine.Ajax.requests.mostRecent().params).toEqual(JSON.stringify({ targetParentId: 'parent-id' }));
+
+        jasmine.Ajax.requests.mostRecent().respondWith({ status: 200, contentType: 'json' });
+    });
 })
