@@ -32,7 +32,7 @@ import { Component, EventEmitter, forwardRef, Input, Output, ViewEncapsulation }
     templateUrl: './upload-drag-area.component.html',
     styleUrls: ['./upload-drag-area.component.css'],
     viewProviders: [
-        { provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadDragAreaComponent)}
+        { provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadDragAreaComponent) }
     ],
     encapsulation: ViewEncapsulation.None
 })
@@ -55,6 +55,10 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
     /** Emitted when the file is uploaded. */
     @Output()
     success = new EventEmitter();
+
+    /** Raised when the file upload goes in error. */
+    @Output()
+    error = new EventEmitter();
 
     constructor(private uploadService: UploadService,
                 private translateService: TranslationService,
@@ -91,8 +95,8 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
                     parentId: this.parentId,
                     path: item.fullPath.replace(item.name, '')
                 });
-                this.uploadService.addToQueue(fileModel);
-                this.uploadService.uploadFilesInTheQueue(this.success);
+
+                this.addNodeInUploadQueue([fileModel]);
             });
         }
     }
@@ -112,8 +116,18 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
                         path: entry.relativeFolder
                     });
                 });
-                this.uploadService.addToQueue(...files);
-                this.uploadService.uploadFilesInTheQueue(this.success);
+
+                this.addNodeInUploadQueue(files);
+            });
+        }
+    }
+
+    private addNodeInUploadQueue(files: FileModel[]) {
+        if (files.length) {
+            this.uploadService.addToQueue(...files);
+            this.uploadService.uploadFilesInTheQueue(this.success);
+            this.uploadService.fileUploadError.subscribe((error) => {
+                this.error.emit(error);
             });
         }
     }
@@ -131,15 +145,6 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
         this.notificationService.openSnackMessageAction(messageTranslate.value, actionTranslate.value, 3000).onAction().subscribe(() => {
             this.uploadService.cancelUpload(...latestFilesAdded);
         });
-    }
-
-    /**
-     * Show the error inside Notification bar
-     *
-     * @param Error message
-     */
-    showErrorNotificationBar(errorMessage: string) {
-        this.notificationService.openSnackMessage(errorMessage, 3000);
     }
 
     /** Returns true or false considering the component options and node permissions */
@@ -168,20 +173,8 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
                     path: fileInfo.relativeFolder,
                     parentId: parentId
                 }));
-                this.uploadFiles(fileModels);
+                this.addNodeInUploadQueue(fileModels);
             }
-        }
-    }
-
-    /**
-     * Does the actual file uploading and show the notification
-     *
-     * @param files
-     */
-    private uploadFiles(files: FileModel[]): void {
-        if (files.length) {
-            this.uploadService.addToQueue(...files);
-            this.uploadService.uploadFilesInTheQueue(this.success);
         }
     }
 

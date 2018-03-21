@@ -14,7 +14,7 @@ Adds a drag and drop area to upload files to Alfresco.
         DRAG HERE
     </div>
 </adf-upload-drag-area>
-<file-uploading-dialog></file-uploading-dialog>
+<adf-file-uploading-dialog></adf-file-uploading-dialog>
 ```
 
 ```ts
@@ -40,3 +40,4 @@ export class AppComponent {
 | Name | Description |
 | --- | --- |
 | success | Raised when the file is uploaded |
+| error | Raised when the file upload goes in error |

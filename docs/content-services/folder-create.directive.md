@@ -27,6 +27,12 @@ Allows folders to be created.
 | ---- | ---- | ------------- | ----------- |
 | parentNodeId | `string` | `DEFAULT_FOLDER_PARENT_ID` | Parent folder where the new folder will be located after creation.  |
 
+### Events
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| error | `EventEmitter<any>` | Emitted when an error occurs. |
+
 ## Details
 
 'FolderCreateDirective' directive needs the id of the parent folder where we want the new folder node to be created. If no value is provided, the '-my-' alias is used.

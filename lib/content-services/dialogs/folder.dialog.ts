@@ -17,12 +17,12 @@
 
 import { Observable } from 'rxjs/Observable';
 
-import { Component, Inject, OnInit, Optional } from '@angular/core';
+import { Component, Inject, OnInit, Optional, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { NodesApiService, NotificationService, TranslationService } from '@alfresco/adf-core';
+import { NodesApiService, TranslationService } from '@alfresco/adf-core';
 
 import { forbidEndingDot, forbidOnlySpaces, forbidSpecialCharacters } from './folder-name.validators';
 
@@ -32,15 +32,21 @@ import { forbidEndingDot, forbidOnlySpaces, forbidSpecialCharacters } from './fo
     templateUrl: './folder.dialog.html'
 })
 export class FolderDialogComponent implements OnInit {
+
     form: FormGroup;
+
     folder: MinimalNodeEntryEntity = null;
+
+    /** Emitted when the edit/create folder give error for example a folder with same name already exist
+     */
+    @Output()
+    error: EventEmitter<any> = new EventEmitter<any>();
 
     constructor(
         private formBuilder: FormBuilder,
         private dialog: MatDialogRef<FolderDialogComponent>,
         private nodesApi: NodesApiService,
         private translation: TranslationService,
-        private notification: NotificationService,
         @Optional()
         @Inject(MAT_DIALOG_DATA)
         public data: any
@@ -121,19 +127,17 @@ export class FolderDialogComponent implements OnInit {
     }
 
     handleError(error: any): any {
-        let i18nMessageString = 'CORE.MESSAGES.ERRORS.GENERIC';
+        let errorMessage = 'CORE.MESSAGES.ERRORS.GENERIC';
 
         try {
             const { error: { statusCode } } = JSON.parse(error.message);
 
             if (statusCode === 409) {
-                i18nMessageString = 'CORE.MESSAGES.ERRORS.EXISTENT_FOLDER';
+                errorMessage = 'CORE.MESSAGES.ERRORS.EXISTENT_FOLDER';
             }
         } catch (err) { /* Do nothing, keep the original message */ }
 
-        this.translation.get(i18nMessageString).subscribe(message => {
-            this.notification.openSnackMessage(message, 3000);
-        });
+        this.error.emit(this.translation.instant(errorMessage));
 
         return error;
     }

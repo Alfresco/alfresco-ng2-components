@@ -27,6 +27,12 @@ Allows folders to be edited.
 | ---- | ---- | ------------- | ----------- |
 | folder | `MinimalNodeEntryEntity` |  | Folder node to edit.  |
 
+### Events
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| error | `EventEmitter<any>` | Emitted when an error occurs. |
+
 ## Details
 
 'FolderEditDirective' directive needs a selection folder entry of #documentList to open the folder dialog component to edit the name and description properties of that selected folder.
