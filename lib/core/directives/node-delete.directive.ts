@@ -168,7 +168,7 @@ export class NodeDeleteDirective implements OnChanges {
         );
     }
 
-    private getMessage(status): Observable<string> {
+    private getMessage(status): string {
         if (status.allFailed && !status.oneFailed) {
             return this.translation.instant(
                 'CORE.DELETE_NODE.ERROR_PLURAL',

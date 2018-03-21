@@ -76,7 +76,7 @@ describe('NodeRestoreDirective', () => {
     }));
 
     beforeEach(() => {
-        spyOn(translation, 'instant').and.returnValue(Observable.of('message'));
+        spyOn(translation, 'instant').and.returnValue('message');
     });
 
     it('should not restore when selection is empty', () => {
