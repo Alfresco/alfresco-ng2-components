@@ -128,15 +128,11 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     executePdf(src) {
         this.loadingTask = this.getPDFJS().getDocument(src);
 
-        loadingTask.onPassword = (callback, reason) => {
+        this.loadingTask.onPassword = (callback, reason) => {
             this.onPdfPassword(callback, reason);
         };
 
-        loadingTask.onPassword = (callback, reason) => {
-            this.onPdfPassword(callback, reason);
-        };
-
-        loadingTask.onProgress = (progressData) => {
+        this.loadingTask.onProgress = (progressData) => {
             let level = progressData.loaded / progressData.total;
             this.loadingPercent = Math.round(level * 100);
         };
