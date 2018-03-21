@@ -48,7 +48,7 @@ export class DocumentListService {
             rootNodeId = opts.rootFolderId;
         }
 
-        let includeFieldsRequest = ['path', 'properties', 'allowableOperations', ...includeFields]
+        let includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', ...includeFields]
             .filter((element, index, array) => index === array.indexOf(element));
 
         let params: any = {
@@ -129,12 +129,12 @@ export class DocumentListService {
      */
     getFolderNode(nodeId: string, includeFields: string[] = []): Promise<MinimalNodeEntryEntity> {
 
-        let includeFieldsRequest = ['path', 'properties', 'allowableOperations', ...includeFields]
+        let includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', ...includeFields]
             .filter((element, index, array) => index === array.indexOf(element));
 
         let opts: any = {
             includeSource: true,
-            include: ['path', 'properties', 'allowableOperations', 'permissions']
+            include: includeFieldsRequest
         };
 
         let nodes: any = this.apiService.getInstance().nodes;
