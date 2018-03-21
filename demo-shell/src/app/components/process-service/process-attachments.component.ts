@@ -19,13 +19,23 @@ import { Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { ProcessInstance, ProcessService ,
     ProcessAttachmentListComponent, ProcessUploadService } from '@alfresco/adf-process-services';
 import { UploadService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AppConfigService } from '@alfresco/adf-core';
+
+export function processUploadServiceFactory(api: AlfrescoApiService, config: AppConfigService) {
+    return new ProcessUploadService(api, config);
+}
 
 @Component({
     selector: 'app-process-attachments',
     templateUrl: './process-attachments.component.html',
     styleUrls: ['./process-attachments.component.css'],
     providers: [
-        { provide: UploadService, useClass: ProcessUploadService }
+        {
+            provide: UploadService,
+            useFactory: (processUploadServiceFactory),
+            deps: [AlfrescoApiService, AppConfigService]
+        }
     ]
 })
 

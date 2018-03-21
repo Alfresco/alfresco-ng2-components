@@ -23,11 +23,8 @@ import 'rxjs/add/observable/throw';
 @Injectable()
 export class TaskUploadService extends UploadService {
 
-    instanceApi: AlfrescoApiService;
-
     constructor(apiService: AlfrescoApiService, appConfigService: AppConfigService) {
         super(apiService, appConfigService);
-        this.instanceApi = apiService;
     }
 
     getUploadPromise(file: any): any {
@@ -35,7 +32,7 @@ export class TaskUploadService extends UploadService {
             isRelatedContent: true
         };
         let taskId = file.options.parentId;
-        let promise = this.instanceApi.getInstance().activiti.contentApi.createRelatedContentOnTask(taskId, file.file, opts);
+        let promise = this.apiService.getInstance().activiti.contentApi.createRelatedContentOnTask(taskId, file.file, opts);
 
         promise.catch(err => this.handleError(err));
 
