@@ -36,7 +36,6 @@ import { ContentDirectiveModule } from './directives/content-directive.module';
 import { DialogModule } from './dialogs/dialog.module';
 import { FolderDirectiveModule } from './folder-directive/folder-directive.module';
 import { ContentMetadataModule } from './content-metadata/content-metadata.module';
-import { NodeDownloadDirective } from './directives/node-download.directive';
 import { PermissionManagerModule } from './permission-manager/permission-manager.module';
 
 @NgModule({
@@ -61,9 +60,6 @@ import { PermissionManagerModule } from './permission-manager/permission-manager
         FolderDirectiveModule,
         ContentDirectiveModule,
         PermissionManagerModule
-    ],
-    declarations: [
-        NodeDownloadDirective
     ],
     providers: [
         {
@@ -91,7 +87,6 @@ import { PermissionManagerModule } from './permission-manager/permission-manager
         DialogModule,
         FolderDirectiveModule,
         ContentDirectiveModule,
-        NodeDownloadDirective,
         PermissionManagerModule
     ]
 })
