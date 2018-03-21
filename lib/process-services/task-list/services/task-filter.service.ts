@@ -35,8 +35,8 @@ export class TaskFilterService {
     }
 
     /**
-     * Create and return the default filters
-     * @param appId
+     * Creates and returns the default filters for a process app.
+     * @param appId ID of the target app
      */
     public createDefaultFilters(appId: number): Observable<FilterRepresentationModel[]> {
         let involvedTasksFilter = this.getInvolvedTasksFilterInstance(appId);
@@ -85,7 +85,8 @@ export class TaskFilterService {
     }
 
     /**
-     * Retrieve all the Tasks filters
+     * Gets all task filters for a process app.
+     * @param appId Optional ID for a specific app
      */
     getTaskListFilters(appId?: number): Observable<FilterRepresentationModel[]> {
         return Observable.fromPromise(this.callApiTaskFilters(appId))
@@ -100,9 +101,9 @@ export class TaskFilterService {
     }
 
     /**
-     * Retrieve the Tasks filter by id
-     * @param filterId - number - The id of the filter
-     * @param appId - string - optional - The id of app
+     * Gets a task filter by ID.
+     * @param filterId ID of the filter
+     * @param appId ID of the app for the filter
      */
     getTaskFilterById(filterId: number, appId?: number): Observable<FilterRepresentationModel> {
         return Observable.fromPromise(this.callApiTaskFilters(appId))
@@ -112,8 +113,9 @@ export class TaskFilterService {
     }
 
     /**
-     * Retrieve the Tasks filter by name
-     * @param taskName - string - The name of the filter
+     * Gets a task filter by name.
+     * @param taskName Name of the filter
+     * @param appId ID of the app for the filter
      */
     getTaskFilterByName(taskName: string, appId?: number): Observable<FilterRepresentationModel> {
         return Observable.fromPromise(this.callApiTaskFilters(appId))
@@ -123,8 +125,8 @@ export class TaskFilterService {
     }
 
     /**
-     * Add a filter
-     * @param filter - FilterRepresentationModel
+     * Adds a new task filter
+     * @param filter The new filter to add
      */
     addFilter(filter: FilterRepresentationModel): Observable<FilterRepresentationModel> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.userFiltersApi.createUserTaskFilter(filter))
@@ -134,6 +136,10 @@ export class TaskFilterService {
             }).catch(err => this.handleError(err));
     }
 
+    /**
+     * Calls `getUserTaskFilters` from the Alfresco JS API.
+     * @param appId ID of the target app
+     */
     callApiTaskFilters(appId?: number) {
         if (appId) {
             return this.apiService.getInstance().activiti.userFiltersApi.getUserTaskFilters({appId: appId});
@@ -143,8 +149,8 @@ export class TaskFilterService {
     }
 
     /**
-     * Return a static Involved filter instance
-     * @param appId
+     * Creates and returns a filter for "Involved" task instances.
+     * @param appId ID of the target app
      */
     getInvolvedTasksFilterInstance(appId: number): FilterRepresentationModel {
         return new FilterRepresentationModel({
@@ -157,8 +163,8 @@ export class TaskFilterService {
     }
 
     /**
-     * Return a static My task filter instance
-     * @param appId
+     * Creates and returns a filter for "My Tasks" task instances.
+     * @param appId ID of the target app
      */
     getMyTasksFilterInstance(appId: number): FilterRepresentationModel {
         return new FilterRepresentationModel({
@@ -171,8 +177,8 @@ export class TaskFilterService {
     }
 
     /**
-     * Return a static Queued filter instance
-     * @param appId
+     * Creates and returns a filter for "Queued Tasks" task instances.
+     * @param appId ID of the target app
      */
     getQueuedTasksFilterInstance(appId: number): FilterRepresentationModel {
         return new FilterRepresentationModel({
@@ -185,8 +191,8 @@ export class TaskFilterService {
     }
 
     /**
-     * Return a static Completed filter instance
-     * @param appId
+     * Creates and returns a filter for "Completed" task instances.
+     * @param appId ID of the target app
      */
     getCompletedTasksFilterInstance(appId: number): FilterRepresentationModel {
         return new FilterRepresentationModel({

@@ -67,3 +67,4 @@ such as 'Running', 'Completed', 'All', etc.
 ## See also
 
 - [Process Filters component](process-filters.component.md)
+- [Task Filter service](task-filter.service.md)
