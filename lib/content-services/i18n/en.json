@@ -206,5 +206,13 @@
       "CLOSE": "CLOSE",
       "COPY-LINK": "COPY LINK"
     }
+  },
+  "PERMISSION_MANAGER": {
+      "PERMISSION_DISPLAY": {
+         "INHERITED" : "Inherited",
+         "AUTHORITY_ID" : "Authority ID",
+         "NAME": "Name",
+         "LOCALLY_SET" : "Locally set"
+      }
   }
 }
