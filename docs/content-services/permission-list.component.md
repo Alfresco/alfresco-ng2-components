@@ -4,14 +4,15 @@ Status: Active
 Last reviewed: 2018-03-12
 ---
 
-# Permission Display Component
+# Permission List Component
 
+![Permission List](../docassets/images/adf-permission-list.png)
 
 ## Basic Usage
 
 ```html
-<adf-permission-display [nodeId]="nodeId">
-</adf-permission-display>
+<adf-permission-list [nodeId]="nodeId">
+</adf-permission-list>
 ```
 
 ### Properties

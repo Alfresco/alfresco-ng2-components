@@ -15,6 +15,6 @@
  * limitations under the License.
  */
 
- export * from './components/permission-display/permission-display.component';
+ export * from './components/permission-display/permission-list.component';
 
  export * from './models/permission.model';

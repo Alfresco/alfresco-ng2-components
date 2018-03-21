@@ -31,7 +31,6 @@ export * from './dialogs/dialog.module';
 export * from './folder-directive/folder-directive.module';
 export * from './content-metadata/content-metadata.module';
 export * from './directives/content-directive.module';
-export { NodeDownloadDirective } from './directives/node-download.directive';
 export * from './permission-manager/permission-manager.module';
 
 export * from './directives';

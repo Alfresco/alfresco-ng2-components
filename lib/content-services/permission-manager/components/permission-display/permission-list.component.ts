@@ -21,12 +21,12 @@ import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { PermissionDisplayModel } from '../../models/permission.model';
 
 @Component({
-    selector: 'adf-permission-display',
-    templateUrl: './permission-display.component.html',
-    styleUrls: ['./permission-display.component.scss'],
+    selector: 'adf-permission-list',
+    templateUrl: './permission-list.component.html',
+    styleUrls: ['./permission-list.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class PermissionDisplayComponent implements OnInit {
+export class PermissionListComponent implements OnInit {
 
     @Input()
     nodeId: string = '';
