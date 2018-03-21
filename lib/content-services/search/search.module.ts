@@ -36,10 +36,6 @@ export const ALFRESCO_SEARCH_DIRECTIVES: any[] = [
     EmptySearchResultComponent
 ];
 
-export const ALFRESCO_SEARCH_PROVIDERS: any[] = [
-    SearchService
-];
-
 @NgModule({
     imports: [
         CommonModule,
@@ -51,9 +47,6 @@ export const ALFRESCO_SEARCH_PROVIDERS: any[] = [
     ],
     declarations: [
         ...ALFRESCO_SEARCH_DIRECTIVES
-    ],
-    providers: [
-        ...ALFRESCO_SEARCH_PROVIDERS
     ],
     exports: [
         ...ALFRESCO_SEARCH_DIRECTIVES
