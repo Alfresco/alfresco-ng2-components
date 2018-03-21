@@ -20,6 +20,7 @@ export class PermissionDisplayModel {
     authorityId: string;
     name: string;
     isInherited: boolean = false;
+    icon: string;
 
     constructor(obj?: any) {
         if (obj) {
@@ -27,6 +28,7 @@ export class PermissionDisplayModel {
             this.authorityId = obj.authorityId;
             this.name = obj.name;
             this.isInherited = obj.isInherited;
+            this.icon = obj.icon ? obj.icon : 'lock_open';
         }
     }
 }
