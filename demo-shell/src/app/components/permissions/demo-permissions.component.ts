@@ -15,8 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, Optional, OnInit } from '@angular/core';
+import { Component, Optional, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params} from '@angular/router';
+import { PermissionDisplayComponent } from '@alfresco/adf-content-services'
+import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 
 @Component({
     selector: 'app-permissions',
@@ -24,6 +26,9 @@ import { ActivatedRoute, Params} from '@angular/router';
     styleUrls: ['./demo-permissions.component.scss']
 })
 export class DemoPermissionComponent implements OnInit {
+
+    @ViewChild(PermissionDisplayComponent)
+    displayPermissionComponent: PermissionDisplayComponent;
 
     nodeId: string;
 
@@ -38,6 +43,10 @@ export class DemoPermissionComponent implements OnInit {
                 }
             });
         }
+    }
+
+    onUpdatedPermissions(node: MinimalNodeEntryEntity) {
+        this.displayPermissionComponent.reload();
     }
 
 }

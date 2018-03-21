@@ -34,10 +34,18 @@ export class PermissionDisplayComponent implements OnInit {
     permissionList: PermissionDisplayModel[];
 
     constructor(private nodeService: NodesApiService) {
-
     }
 
     ngOnInit() {
+        this.fetchNodePermissions();
+    }
+
+    reload() {
+        this.fetchNodePermissions();
+    }
+
+    private fetchNodePermissions() {
+        this.permissionList = [];
         this.nodeService.getNode(this.nodeId).subscribe((node: MinimalNodeEntryEntity) => {
             this.permissionList = this.getPermissionList(node);
         });
