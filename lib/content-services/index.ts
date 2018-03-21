@@ -31,6 +31,7 @@ export * from './dialogs/dialog.module';
 export * from './folder-directive/folder-directive.module';
 export * from './content-metadata/content-metadata.module';
 export * from './directives/content-directive.module';
+export * from './permission-manager/permission-manager.module';
 
 export * from './directives';
 export * from './social';
@@ -46,3 +47,4 @@ export * from './content-node-selector';
 export * from './dialogs';
 export * from './folder-directive';
 export * from './content-metadata';
+export * from './permission-manager';

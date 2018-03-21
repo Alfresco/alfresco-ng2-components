@@ -36,6 +36,7 @@ import { ContentDirectiveModule } from './directives/content-directive.module';
 import { DialogModule } from './dialogs/dialog.module';
 import { FolderDirectiveModule } from './folder-directive/folder-directive.module';
 import { ContentMetadataModule } from './content-metadata/content-metadata.module';
+import { PermissionManagerModule } from './permission-manager/permission-manager.module';
 
 @NgModule({
     imports: [
@@ -57,7 +58,8 @@ import { ContentMetadataModule } from './content-metadata/content-metadata.modul
         ContentMetadataModule,
         DialogModule,
         FolderDirectiveModule,
-        ContentDirectiveModule
+        ContentDirectiveModule,
+        PermissionManagerModule
     ],
     providers: [
         {
@@ -84,7 +86,8 @@ import { ContentMetadataModule } from './content-metadata/content-metadata.modul
         ContentMetadataModule,
         DialogModule,
         FolderDirectiveModule,
-        ContentDirectiveModule
+        ContentDirectiveModule,
+        PermissionManagerModule
     ]
 })
 export class ContentModule {

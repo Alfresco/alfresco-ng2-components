@@ -89,6 +89,7 @@
             "VERSIONS": "Manage versions",
             "METADATA": "Info",
             "DOWNLOAD": "Download",
+            "PERMISSION": "Permission",
             "FOLDER": {
                 "COPY": "Copy",
                 "MOVE": "Move",
