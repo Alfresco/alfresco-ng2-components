@@ -165,7 +165,7 @@ describe('DocumentListService', () => {
 
         expect(spyGetNodeInfo).toHaveBeenCalledWith('-root-', {
             includeSource: true,
-            include: ['path', 'properties', 'allowableOperations', 'isLocked'],
+            include: ['path', 'properties', 'allowableOperations', 'permissions', 'isLocked'],
             relativePath: '/fake-root/fake-name'
         });
     });
@@ -177,7 +177,7 @@ describe('DocumentListService', () => {
 
         expect(spyGetNodeInfo).toHaveBeenCalledWith('-root-', {
             includeSource: true,
-            include: ['path', 'properties', 'allowableOperations'],
+            include: ['path', 'properties', 'allowableOperations', 'permissions'],
             relativePath: '/fake-root/fake-name'
         });
     });
@@ -189,7 +189,7 @@ describe('DocumentListService', () => {
 
         expect(spyGetNodeInfo).toHaveBeenCalledWith('test-id', {
             includeSource: true,
-            include: ['path', 'properties', 'allowableOperations', 'isLocked']
+            include: ['path', 'properties', 'allowableOperations', 'permissions', 'isLocked']
         });
     });
 
@@ -200,7 +200,7 @@ describe('DocumentListService', () => {
 
         expect(spyGetNodeInfo).toHaveBeenCalledWith('test-id', {
                 includeSource: true,
-                include: ['path', 'properties', 'allowableOperations']
+                include: ['path', 'properties', 'allowableOperations', 'permissions']
             }
         );
     });
