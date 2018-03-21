@@ -189,6 +189,7 @@
                 [multiselect]="multiselect"
                 [display]="displayMode"
                 [node]="nodeResult"
+                [includeFields]="includeFields"
                 (error)="onNavigationError($event)"
                 (success)="resetError()"
                 (ready)="emitReadyEvent($event)"
@@ -240,6 +241,15 @@
                         </ng-template>
                     </data-column>
                     -->
+                    <data-column
+                        class="desktop-only"
+                        title="{{'DOCUMENT_LIST.COLUMNS.IS_LOCKED' | translate}}"
+                        key="isLocked">
+                        <ng-template let-entry="$implicit">
+                            <mat-icon *ngIf="entry.data.getValue(entry.row, entry.col)">lock</mat-icon>
+                            <mat-icon *ngIf="!entry.data.getValue(entry.row, entry.col)">lock_open</mat-icon>
+                        </ng-template>
+                    </data-column>
                     <data-column
                         title="{{'DOCUMENT_LIST.COLUMNS.CREATED_BY' | translate}}"
                         key="createdByUser.displayName"
