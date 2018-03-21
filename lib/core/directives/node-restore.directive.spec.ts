@@ -76,7 +76,7 @@ describe('NodeRestoreDirective', () => {
     }));
 
     beforeEach(() => {
-        spyOn(translation, 'get').and.returnValue(Observable.of('message'));
+        spyOn(translation, 'instant').and.returnValue('message');
     });
 
     it('should not restore when selection is empty', () => {
@@ -201,7 +201,7 @@ describe('NodeRestoreDirective', () => {
             element.triggerEventHandler('click', null);
             tick();
 
-            expect(translation.get).toHaveBeenCalledWith(
+            expect(translation.instant).toHaveBeenCalledWith(
                 'CORE.RESTORE_NODE.PARTIAL_PLURAL',
                 { number: 2 }
             );
@@ -221,7 +221,7 @@ describe('NodeRestoreDirective', () => {
             element.triggerEventHandler('click', null);
             tick();
 
-            expect(translation.get).toHaveBeenCalledWith(
+            expect(translation.instant).toHaveBeenCalledWith(
                 'CORE.RESTORE_NODE.NODE_EXISTS',
                 { name: 'name1' }
             );
@@ -241,7 +241,7 @@ describe('NodeRestoreDirective', () => {
             element.triggerEventHandler('click', null);
             tick();
 
-            expect(translation.get).toHaveBeenCalledWith(
+            expect(translation.instant).toHaveBeenCalledWith(
                 'CORE.RESTORE_NODE.GENERIC',
                 { name: 'name1' }
             );
@@ -261,7 +261,7 @@ describe('NodeRestoreDirective', () => {
             element.triggerEventHandler('click', null);
             tick();
 
-            expect(translation.get).toHaveBeenCalledWith(
+            expect(translation.instant).toHaveBeenCalledWith(
                 'CORE.RESTORE_NODE.LOCATION_MISSING',
                 { name: 'name1' }
             );
@@ -288,7 +288,7 @@ describe('NodeRestoreDirective', () => {
             element.triggerEventHandler('click', null);
             tick();
 
-            expect(translation.get).toHaveBeenCalledWith(
+            expect(translation.instant).toHaveBeenCalledWith(
                 'CORE.RESTORE_NODE.PLURAL'
             );
         }));
@@ -305,7 +305,7 @@ describe('NodeRestoreDirective', () => {
             element.triggerEventHandler('click', null);
             tick();
 
-            expect(translation.get).toHaveBeenCalledWith(
+            expect(translation.instant).toHaveBeenCalledWith(
                 'CORE.RESTORE_NODE.SINGULAR',
                 { name: 'name1' }
             );

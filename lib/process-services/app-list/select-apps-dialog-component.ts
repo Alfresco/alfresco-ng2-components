@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AppsProcessService, NotificationService, TranslationService } from '@alfresco/adf-core';
+import { AppsProcessService } from '@alfresco/adf-core';
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
@@ -30,8 +30,6 @@ export class SelectAppsDialogComponent {
     selectedProcess: any;
 
     constructor(private appsProcessService: AppsProcessService,
-                private translateService: TranslationService,
-                private notificationService: NotificationService,
                 public dialogRef: MatDialogRef<SelectAppsDialogComponent>,
                 @Inject(MAT_DIALOG_DATA) public data: any) {
 
@@ -40,14 +38,8 @@ export class SelectAppsDialogComponent {
                 this.processApps = apps.filter((currentApp) => {
                     return currentApp.id;
                 });
-            },
-            (err) => {
-                this.translateService.get('TAG.MESSAGES.EXIST').subscribe((error) => {
-                    this.notificationService.openSnackMessage(error, 4000);
-                });
             }
         );
-
     }
 
     onStart(): void {

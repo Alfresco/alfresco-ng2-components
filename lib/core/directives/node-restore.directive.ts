@@ -51,16 +51,14 @@ export class NodeRestoreDirective {
         this.recover(this.selection);
     }
 
-    constructor(
-        private alfrescoApiService: AlfrescoApiService,
-        private translation: TranslationService,
-        private router: Router,
-        private notification: NotificationService
-    ) {
+    constructor(private alfrescoApiService: AlfrescoApiService,
+                private translation: TranslationService,
+                private router: Router,
+                private notification: NotificationService) {
         this.restoreProcessStatus = this.processStatus();
     }
 
-    private recover(selection: any)  {
+    private recover(selection: any) {
         if (!selection.length) {
             return;
         }
@@ -109,7 +107,7 @@ export class NodeRestoreDirective {
 
     private getDeletedNodes(): Observable<DeletedNodesPaging> {
         const promise = this.alfrescoApiService.getInstance()
-            .core.nodesApi.getDeletedNodes({ include: [ 'path' ] });
+            .core.nodesApi.getDeletedNodes({ include: ['path'] });
 
         return Observable.from(promise);
     }
@@ -138,10 +136,10 @@ export class NodeRestoreDirective {
     private navigateLocation(path: PathInfoEntity) {
         const parent = path.elements[path.elements.length - 1];
 
-        this.router.navigate([ this.location,  parent.id ]);
+        this.router.navigate([this.location, parent.id]);
     }
 
-    private diff(selection , list, fromList = true): any {
+    private diff(selection, list, fromList = true): any {
         const ids = selection.map(item => item.entry.id);
 
         return list.filter(item => {
@@ -195,11 +193,11 @@ export class NodeRestoreDirective {
         );
     }
 
-    private getRestoreMessage(): Observable<string|any> {
+    private getRestoreMessage(): string {
         const { restoreProcessStatus: status } = this;
 
         if (status.someFailed && !status.oneFailed) {
-            return this.translation.get(
+            return this.translation.instant(
                 'CORE.RESTORE_NODE.PARTIAL_PLURAL',
                 {
                     number: status.fail.length
@@ -209,14 +207,14 @@ export class NodeRestoreDirective {
 
         if (status.oneFailed && status.fail[0].statusCode) {
             if (status.fail[0].statusCode === 409) {
-                return this.translation.get(
+                return this.translation.instant(
                     'CORE.RESTORE_NODE.NODE_EXISTS',
                     {
                         name: status.fail[0].entry.name
                     }
                 );
             } else {
-                return this.translation.get(
+                return this.translation.instant(
                     'CORE.RESTORE_NODE.GENERIC',
                     {
                         name: status.fail[0].entry.name
@@ -226,7 +224,7 @@ export class NodeRestoreDirective {
         }
 
         if (status.oneFailed && !status.fail[0].statusCode) {
-            return this.translation.get(
+            return this.translation.instant(
                 'CORE.RESTORE_NODE.LOCATION_MISSING',
                 {
                     name: status.fail[0].entry.name
@@ -235,11 +233,11 @@ export class NodeRestoreDirective {
         }
 
         if (status.allSucceeded && !status.oneSucceeded) {
-            return this.translation.get('CORE.RESTORE_NODE.PLURAL');
+            return this.translation.instant('CORE.RESTORE_NODE.PLURAL');
         }
 
         if (status.allSucceeded && status.oneSucceeded) {
-            return this.translation.get(
+            return this.translation.instant(
                 'CORE.RESTORE_NODE.SINGULAR',
                 {
                     name: status.success[0].entry.name
@@ -251,17 +249,13 @@ export class NodeRestoreDirective {
     private restoreNotification(): void {
         const status = Object.assign({}, this.restoreProcessStatus);
 
-        Observable.zip(
-            this.getRestoreMessage(),
-            this.translation.get('CORE.RESTORE_NODE.VIEW')
-        ).subscribe((messages) => {
-            const [ message, actionLabel ] = messages;
-            const action = (status.oneSucceeded && !status.someFailed) ? actionLabel : '';
+        let message = this.getRestoreMessage();
 
-            this.notification.openSnackMessageAction(message, action)
-                .onAction()
-                .subscribe(() => this.navigateLocation(status.success[0].entry.path));
-        });
+        const action = (status.oneSucceeded && !status.someFailed) ? this.translation.instant('CORE.RESTORE_NODE.VIEW') : '';
+
+        this.notification.openSnackMessageAction(message, action)
+            .onAction()
+            .subscribe(() => this.navigateLocation(status.success[0].entry.path));
     }
 
     private refresh(): void {

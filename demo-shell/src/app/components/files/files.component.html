@@ -75,12 +75,14 @@
                         mat-icon-button
                         [disabled]="!canCreateContent(documentList.folderNode)"
                         title="{{ 'DOCUMENT_LIST.TOOLBAR.NEW_FOLDER' | translate }}"
+                        (error)="openSnackMessage($event)"
                         [adf-create-folder]="getDocumentListCurrentFolderId()">
                         <mat-icon>create_new_folder</mat-icon>
                     </button>
                     <button mat-icon-button
                             [disabled]="!canEditFolder(documentList.selection)"
                             title="{{ 'DOCUMENT_LIST.TOOLBAR.EDIT_FOLDER' | translate }}"
+                            (error)="openSnackMessage($event)"
                             [adf-edit-folder]="documentList.selection[0]?.entry">
                         <mat-icon>create</mat-icon>
                     </button>
@@ -145,12 +147,14 @@
                         <span>{{ 'DOCUMENT_LIST.TOOLBAR.CARDVIEW' | translate }}</span>
                     </button>
                     <button mat-menu-item
+                            (error)="openSnackMessage($event)"
                             [adf-create-folder]="getDocumentListCurrentFolderId()">
                         <mat-icon>create_new_folder</mat-icon>
                         <span>{{ 'DOCUMENT_LIST.TOOLBAR.NEW_FOLDER' | translate }}</span>
                     </button>
                     <button mat-menu-item
                             [disabled]="!canEditFolder(documentList.selection)"
+                            (error)="openSnackMessage($event)"
                             [adf-edit-folder]="documentList.selection[0]?.entry">
                         <mat-icon>create</mat-icon>
                         <span>{{ 'DOCUMENT_LIST.TOOLBAR.EDIT_FOLDER' | translate }}</span>
@@ -442,7 +446,7 @@
                 [multipleFiles]="multipleFileUpload"
                 [uploadFolders]="folderUpload"
                 [maxFilesSize]="maxSizeShow ? maxFilesSize : null"
-                (error)="handleUploadError($event)"
+                (error)="openSnackMessage($event)"
                 [versioning]="versioning"
                 [adf-node-permission]="'create'"
                 [adf-nodes]="enableUpload ? getCurrentDocumentListNode() : []"
@@ -460,7 +464,7 @@
                 [multipleFiles]="multipleFileUpload"
                 [uploadFolders]="folderUpload"
                 [versioning]="versioning"
-                (error)="handleUploadError($event)"
+                (error)="openSnackMessage($event)"
                 [adf-node-permission]="'create'"
                 [adf-nodes]="enableUpload ? getCurrentDocumentListNode() : []"
                 (permissionEvent)="handlePermissionError($event)">
@@ -487,4 +491,4 @@
     </div>
 </div>
 
-<file-uploading-dialog #fileDialog></file-uploading-dialog>
+<adf-file-uploading-dialog #fileDialog (error)="openSnackMessage($event)" ></adf-file-uploading-dialog>

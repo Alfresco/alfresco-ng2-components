@@ -60,6 +60,7 @@
         class="upload-dialog__content"
         [class.upload-dialog--padding]="isConfirmation">
         <adf-file-uploading-list
+            (error)="onError($event)"
             [class.upload-dialog--hide]="isConfirmation"
             #uploadList
             [files]="filesUploadingList">

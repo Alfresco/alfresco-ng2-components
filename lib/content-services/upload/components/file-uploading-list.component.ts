@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { FileModel, FileUploadStatus, NodesApiService, NotificationService, TranslationService, UploadService } from '@alfresco/adf-core';
-import { Component, ContentChild, Input, TemplateRef } from '@angular/core';
+import { FileModel, FileUploadStatus, NodesApiService, TranslationService, UploadService } from '@alfresco/adf-core';
+import { Component, ContentChild, Input, Output, TemplateRef, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
@@ -34,10 +34,13 @@ export class FileUploadingListComponent {
     @Input()
     files: FileModel[] = [];
 
+    /** Emitted when a file in the list has an error. */
+    @Output()
+    error: EventEmitter<any> = new EventEmitter();
+
     constructor(
         private uploadService: UploadService,
         private nodesApi: NodesApiService,
-        private notificationService: NotificationService,
         private translateService: TranslationService) {
     }
 
@@ -130,24 +133,23 @@ export class FileUploadingListComponent {
     }
 
     private notifyError(...files: FileModel[]) {
-        let translateSubscription = null;
+        let messageError: string = null;
 
         if (files.length === 1) {
-            translateSubscription = this.translateService
-                .get(
+            messageError = this.translateService
+                .instant(
                     'FILE_UPLOAD.MESSAGES.REMOVE_FILE_ERROR',
                     { fileName: files[0].name}
                 );
         } else {
-            translateSubscription = this.translateService
-                .get(
+            messageError = this.translateService
+                .instant(
                     'FILE_UPLOAD.MESSAGES.REMOVE_FILES_ERROR',
                     { total: files.length }
                 );
         }
 
-        translateSubscription
-            .subscribe(message => this.notificationService.openSnackMessage(message, 4000));
+        this.error.emit(messageError);
     }
 
     private getUploadingFiles() {

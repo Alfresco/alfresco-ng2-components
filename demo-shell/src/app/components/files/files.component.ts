@@ -294,7 +294,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         });
     }
 
-    handleUploadError(event: any) {
+    openSnackMessage(event: any) {
         this.notificationService.openSnackMessage(
             event,
             4000
