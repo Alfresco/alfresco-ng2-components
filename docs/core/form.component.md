@@ -1,10 +1,14 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-03-21
 ---
+
 # Form component
 
-Shows a Form from APS (see it live: [Form Quickstart](https://embed.plnkr.co/YSLXTqb3DtMhVJSqXKkE/))
+Shows a Form from APS
+
+(See it live: [Form Quickstart](https://embed.plnkr.co/YSLXTqb3DtMhVJSqXKkE/))
 
 ## Contents
 
@@ -15,12 +19,10 @@ Shows a Form from APS (see it live: [Form Quickstart](https://embed.plnkr.co/YSL
 
 -   [Details](#details)
 
+    -   [Displaying a form](#displaying-a-form)
     -   [Custom empty form template](#custom-empty-form-template)
     -   [Controlling outcome execution behaviour](#controlling-outcome-execution-behaviour)
     -   [Field Validators](#field-validators)
-
--   [Other documentation](#other-documentation)
-
     -   [Common scenarios](#common-scenarios)
 
 -   [See also](#see-also)
@@ -30,75 +32,6 @@ Shows a Form from APS (see it live: [Form Quickstart](https://embed.plnkr.co/YSL
 ```html
 <adf-form 
     [taskId]="taskId">
-</adf-form>
-```
-
-**Display form instance by task id:**
-
-```html
-<adf-form 
-    [taskId]="selectedTask?.id">
-</adf-form>
-```
-
-For an existing Task both form and values will be fetched and displayed.
-
-**Display form definition by form id:**
-
-```html
-<adf-form 
-    [formId]="selectedFormDefinition?.id"
-    [data]="customData">
-</adf-form>
-```
-
-Only form definition will be fetched.
-
-**Display form definition by form name:**
-
-```html
-<adf-form 
-    [formName]="selectedFormDefinition?.name"
-    [data]="customData">
-</adf-form>
-```
-
-**Display form definition by ECM nodeId:**
-
-In this case the metadata of the node are showed in an activiti Form.
-If there is no form definied in activiti for the type of the node,
-a new form will be automaticaly created in Activiti.
-
-```html
-<adf-form 
-    [nodeId]="'e280be3a-6584-45a1-8bb5-89bfe070262e'">
-</adf-form>
-```
-
-**Display form definition by form name, and store the form field as metadata:**
-
-The param nameNode is optional.
-
-```html
-<adf-form 
-    [formName]="'activitiForms:patientFolder'"
-    [saveMetadata]="true"
-    [path]="'/Sites/swsdp/documentLibrary'"
-    [nameNode]="'test'">
-</adf-form>
-```
-
-**Display form definition by ECM nodeId:**
-
-In this case the metadata of the node are shown in an activiti Form,
-and store the form field as metadata. The param nameNode is optional.
-
-```html
-<adf-form 
-    [nodeId]="'e280be3a-6584-45a1-8bb5-89bfe070262e'"
-    [saveMetadata]="true"
-    [path]="'/Sites/swsdp/documentLibrary'"
-    [nameNode]="'test'">
 </adf-form>
 ```
 
@@ -130,17 +63,17 @@ and store the form field as metadata. The param nameNode is optional.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| formSaved | `EventEmitter<FormModel>` | Emitted when the form is submitted with the `Save` or custom outcomes. |
-| formCompleted | `EventEmitter<FormModel>` | Emitted when the form is submitted with the `Complete` outcome. |
-| formContentClicked | `EventEmitter<ContentLinkModel>` | Emitted when form content is clicked. |
-| formLoaded | `EventEmitter<FormModel>` | Emitted when the form is loaded or reloaded. |
-| formDataRefreshed | `EventEmitter<FormModel>` | Emitted when form values are refreshed due to a data property change. |
+| formSaved | `EventEmitter<FormModel>` | Emitted when the form is submitted with the `Save` or custom outcomes.  |
+| formCompleted | `EventEmitter<FormModel>` | Emitted when the form is submitted with the `Complete` outcome.  |
+| formContentClicked | `EventEmitter<ContentLinkModel>` | Emitted when form content is clicked.  |
+| formLoaded | `EventEmitter<FormModel>` | Emitted when the form is loaded or reloaded.  |
+| formDataRefreshed | `EventEmitter<FormModel>` | Emitted when form values are refreshed due to a data property change.  |
 | executeOutcome | `EventEmitter<FormOutcomeEvent>` | Emitted when any outcome is executed. Default behaviour can be prevented via `event.preventDefault()`. |
-| onError | `EventEmitter<any>` | Emitted when any error occurs. |
+| onError | `EventEmitter<any>` | Emitted when any error occurs.  |
 
 ## Details
 
-All `form*` events receive an instance of the `FormModel` as event argument for ease of development:
+All `formXXX` events receive a `FormModel` instance as their argument:
 
 **MyView.component.html**
 
@@ -159,9 +92,82 @@ onFormSaved(form: FormModel) {
 }
 ```
 
+### Displaying a form
+
+There are various ways to display a form. The common scenarios are detailed below.
+
+#### Displaying a form instance by task id
+
+```html
+<adf-form 
+    [taskId]="selectedTask?.id">
+</adf-form>
+```
+
+For an existing Task both the form and its values will be fetched and displayed.
+
+#### Displaying a form definition by form id
+
+```html
+<adf-form 
+    [formId]="selectedFormDefinition?.id"
+    [data]="customData">
+</adf-form>
+```
+
+In this case, only the form definition will be fetched.
+
+#### Displaying a form definition by form name
+
+```html
+<adf-form 
+    [formName]="selectedFormDefinition?.name"
+    [data]="customData">
+</adf-form>
+```
+
+#### Displaying a form definition by ACS nodeId
+
+```html
+<adf-form 
+    [nodeId]="'e280be3a-6584-45a1-8bb5-89bfe070262e'">
+</adf-form>
+```
+
+Here, the node metadata is shown in an APS form.
+If there is no form defined in APS for the type of node being used then
+APS will automatically create a new form.
+
+#### Displaying a form definition by form name, storing the form fields as metadata
+
+```html
+<adf-form 
+    [formName]="'activitiForms:patientFolder'"
+    [saveMetadata]="true"
+    [path]="'/Sites/swsdp/documentLibrary'"
+    [nameNode]="'test'">
+</adf-form>
+```
+
+The `nameNode` parameter is optional.
+
+#### Displaying a form definition by ECM nodeId
+
+```html
+<adf-form 
+    [nodeId]="'e280be3a-6584-45a1-8bb5-89bfe070262e'"
+    [saveMetadata]="true"
+    [path]="'/Sites/swsdp/documentLibrary'"
+    [nameNode]="'test'">
+</adf-form>
+```
+
+Here, the node metadata is shown in an APS Form,
+with the form fields themselves saved as metadata. The `nameNode` parameter is optional.
+
 ### Custom empty form template
 
-You can add a template that will be show if no form definition has been found
+You can add a template that will be shown when no form definition is found:
 
 ```html
 <adf-form .... >
@@ -175,13 +181,14 @@ You can add a template that will be show if no form definition has been found
 
 ### Controlling outcome execution behaviour
 
-If absolutely needed it is possible taking full control over form outcome execution by means of `executeOutcome` event.
-This event is fired upon each outcome execution, both system and custom ones.
+In unusual circumstances, you may need to take complete control of form outcome execution.
+You can do this by implementing the `executeOutcome` event, which is emitted for both system
+outcomes and custom ones.
 
-You can prevent default behaviour by calling `event.preventDefault()`.
-This allows for example having custom form validation scenarios and/or additional validation summary presentation.
-
-Alternatively you may want just running additional code on outcome execution without suppressing default one.
+Note that by default, the code in your `executeOutcome` handler is executed _before_ the default
+behavior but you can switch the default behavior off using `event.preventDefault()`.
+You might want to do this, for example, to provide custom form validation or to show a summary
+of the form validation before it is submitted.
 
 **MyView.component.html**
 
@@ -217,32 +224,28 @@ export class MyView {
 }
 ```
 
-There are two additional functions that can be of a great value when controlling outcomes:
+There are two other functions that can be very useful when you need to control form outcomes:
 
--   `saveTaskForm()` - saves current form
--   `completeTaskForm(outcome?: string)` - save and complete form with a given outcome name
-
-**Please note that if `event.preventDefault()` is not called then default outcome behaviour
-will also be executed after your custom code.**
+-   `saveTaskForm()` - Saves the current form
+-   `completeTaskForm(outcome?: string)` Saves and completes the form with a given outcome name
 
 ### Field Validators
 
 You can supply a set of validator objects to the form using the `fieldValidators`
-property. Each validator implements checks for a particular type of data (eg, a
+property. Each validator implements a check for a particular type of data (eg, a
 date validator might check that the date in the field falls between 1980 and 2017).
 ADF supplies a standard set of validators that handle most common cases but you can
 also implement your own custom validators to replace or extend the set. See the
-[FormFieldValidator](form-field-validator.interface.md) class for full details and examples.
-
-## Other documentation
+[Form Field Validator](form-field-validator.interface.md) interface for full details and examples.
 
 ### Common scenarios
 
-#### Render form by using form definition JSON
+#### Rendering a form using form definition JSON
 
-Please give a look to the [demo-form](../docassets/demo-form.json) as a sample of form definition JSON.
+See the [demo-form](../docassets/demo-form.json) file for an example of form definition JSON.
 
-The component below with the form definition JSON assigned to the variable `formDefinitionJSON`, shows how a form is rendered by using form definition JSON.
+The component below (with the JSON assigned to the `formDefinitionJSON` property), shows how a
+form definition is rendered:
 
 ```ts
 @Component({
@@ -267,9 +270,15 @@ export class SampleFormComponent implements OnInit {
 }
 ```
 
-#### Changing field value based on another field
+#### Changing a field value based on another field
 
-Create a simple Form with a dropdown widget (id: `type`), and a multiline text (id: `description`).
+A common scenario is to set the contents of one form field based on the value of another. You
+could use this, say, to provide two alternative ways of entering the same information or to set
+up default values that can be edited.
+
+You can implement this in ADF using the `formFieldValueChanged` event of the
+[Form service](form.service.md). For example, if you had a form with a dropdown widget (id: `type`)
+and a multiline text (id:`description`), you could synchronize their values as follows:
 
 ```ts
 formService.formFieldValueChanged.subscribe((e: FormFieldEvent) => {
@@ -284,15 +293,18 @@ formService.formFieldValueChanged.subscribe((e: FormFieldEvent) => {
 });
 ```
 
-You subscribe to the `formFieldValueChanged` event and check whether event is raised for the `type` widget, then you search for a `description` widget and assign its value to some simple text.
+The code shown above subscribes to the `formFieldValueChanged` event to check whether an event
+is emitted for the `type` widget. Then it finds the `description` widget and assigns some text
+to its `value` property.
 
-The result should be as following:
+The result should look like the following:
 
 ![](../docassets/images/form-service-sample-01.png)
 
-#### Listen all form Events
+#### Responding to all form events
 
-If you want to listen all the events fired in the form you can subscribe to this Subject :
+Subscribe to the `formEvents` event of the [Form service](form.service.md) to get notification
+of all form events:
 
 ```ts
 formService.formEvents.subscribe((event: Event) => {
@@ -301,17 +313,14 @@ formService.formEvents.subscribe((event: Event) => {
 });
 ```
 
-#### Customize form outcomes (buttons) styles
+#### Customizing the styles of form outcome buttons
 
-If you want custtomize the outcoumes style of your form you can do it using plain css selectors.
-Any outcome has an Id that is composed in the following way:
+You can use normal CSS selectors to style the outcome buttons of your form.
+Every outcome has an CSS id value following a simple pattern:
 
+      adf-form-OUTCOME_NAME
 
-```
-  adf-form-YOUR_OUTCAME_NAME
-```
-
-Using the CSS you can target any outcome ID and change the style as in this example:
+In the CSS, you can target any outcome ID and change the style as in this example:
 
 ```css
 #adf-form-complete {
@@ -333,11 +342,10 @@ Using the CSS you can target any outcome ID and change the style as in this exam
 
 ![](../docassets/images/form-style-sample.png)
 
-
-
 ## See also
 
--   [FormFieldValidator](form-field-validator.interface.md)
+-   [Form Field Validator interface](form-field-validator.interface.md)
 -   [Extensibility](../user-guide/extensibility.md)
 -   [Form rendering service](form-rendering.service.md)
 -   [Form field model](form-field.model.md)
+-   [Form service](form.service.md)

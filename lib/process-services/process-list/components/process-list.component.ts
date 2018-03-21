@@ -89,7 +89,7 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     @Input()
     size: number = PaginationComponent.DEFAULT_PAGINATION.maxItems;
 
-    /** The presetColumn of the custom schema to fetch. */
+    /** Name of a custom schema to fetch from `app.config.json`. */
     @Input()
     presetColumn: string;
 
