@@ -39,15 +39,11 @@ export class PermissionDisplayComponent implements OnInit {
 
     ngOnInit() {
         this.nodeService.getNode(this.nodeId).subscribe((node: MinimalNodeEntryEntity) => {
-            /*tslint:disable-next-line*/
-            console.log(node);
             this.permissionList = this.getPermissionList(node);
         });
     }
 
     private getPermissionList(node: MinimalNodeEntryEntity): PermissionDisplayModel[] {
-                    /*tslint:disable-next-line*/
-                    console.log('AFAMMOCC');
         let allPermissions: PermissionDisplayModel[] = [];
         if (node.permissions.locallySet) {
             node.permissions.locallySet.map((element) => {

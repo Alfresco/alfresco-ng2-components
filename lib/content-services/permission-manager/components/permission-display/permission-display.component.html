@@ -1,16 +1,17 @@
-<div class="adf-display-permission">
-    <adf-datatable [rows]="permissionList" >
+<div id="adf-permission-display-container" class="adf-display-permission-container">
+    <adf-datatable [rows]="permissionList" class="adf-datatable-permission">
         <data-columns>
-            <data-column key="accessStatus" title="Accessed Status"></data-column>
+            <data-column key="icon" type="icon" [sortable]="false">
+            </data-column>
             <data-column key="authorityId" title="Authority ID"></data-column>
             <data-column title="Name" key="name"></data-column>
             <data-column key="isInherited" title="Inherited">
                 <ng-template let-entry="$implicit">
                     <mat-chip-list>
-                    <mat-chip *ngIf="!!entry.data.getValue(entry.row, entry.col) else not_inherited_chip"
+                    <mat-chip *ngIf="!!entry.data.getValue(entry.row, entry.col) else locally_set_chip"
                                 color="primary" selected="true">Inherited</mat-chip>
                     </mat-chip-list>
-                    <ng-template #not_inherited_chip>
+                    <ng-template #locally_set_chip>
                             <mat-chip-list>
                                     <mat-chip color="accent" selected="true">Locally Set</mat-chip>
                             </mat-chip-list>
