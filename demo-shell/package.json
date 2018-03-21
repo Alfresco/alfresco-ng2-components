@@ -7,7 +7,7 @@
     "ng": "ng",
     "prestart": "npm run validate-config",
     "start": "npm run server-versions && rimraf dist && ng serve --host 0.0.0.0 --proxy-config proxy.conf.js --app dist --open",
-    "start:dev": " npm run lint && npm run server-versions && rimraf dist && concurrently \"ng serve --host 0.0.0.0 --disable-host-check --app dev pp-dev --proxy-config proxy.conf.js --open\" \"npm run style:dev --watch\" \"npm run copy:dev\" ",
+    "start:dev": " npm run lint && npm run server-versions && rimraf dist && npm run clean-lib-angular && concurrently \"ng serve --host 0.0.0.0 --disable-host-check --app dev pp-dev --proxy-config proxy.conf.js --open\" \"npm run style:dev --watch\" \"npm run copy:dev\" ",
     "start:dist": "npm run server-versions && rimraf dist && node --max_old_space_size=30000 node_modules/.bin/ng serve --prod --host 0.0.0.0 --disable-host-check --app dist",
     "build": "npm run validate-config && npm run server-versions && rimraf dist && ng build --app dist",
     "build:dev": "npm run validate-config && npm run lint && npm run style:dev && npm run server-versions && rimraf dist && ng build --app dev",
@@ -20,6 +20,7 @@
     "validate-config": "ajv validate -s ../lib/core/app-config/schema.json -d ./src/app.config.json --errors=text --verbose",
     "server-versions": "rimraf ./src/versions.json && npm list --depth=0 --json=true --prod=true > ./src/versions.json  || exit 0",
     "clean": "rimraf dist node_modules typings",
+    "clean-lib-angular": "rimraf ../lib/node_modules/@angular",
     "clean-lock": "rimraf package-lock.json",
     "webpack": "node node_modules/webpack/bin/webpack.js"
   },
@@ -100,7 +101,7 @@
   },
   "devDependencies": {
     "@angular-devkit/core": "0.0.28",
-    "@angular/cli": "1.7.3",
+    "@angular/cli": "1.6.5",
     "@angular/compiler-cli": "^5.2.0",
     "@angular/language-service": "^5.2.0",
     "@types/jasmine": "~2.8.3",
