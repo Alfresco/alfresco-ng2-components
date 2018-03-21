@@ -30,8 +30,9 @@ export * from './content-node-selector/content-node-selector.module';
 export * from './dialogs/dialog.module';
 export * from './folder-directive/folder-directive.module';
 export * from './content-metadata/content-metadata.module';
-export { NodeDownloadDirective } from './directives/node-download.directive';
+export * from './directives/content-directive.module';
 
+export * from './directives';
 export * from './social';
 export * from './tag';
 export * from './webscript';

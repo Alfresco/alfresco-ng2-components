@@ -21,6 +21,7 @@ import { MaterialModule } from '../material.module';
 
 import { DownloadZipDialogComponent } from './download-zip.dialog';
 import { FolderDialogComponent } from './folder.dialog';
+import { ShareDialogComponent } from './share.dialog';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
@@ -36,7 +37,8 @@ import { NodesApiService, NotificationService, TranslationService } from '@alfre
     ],
     declarations: [
         DownloadZipDialogComponent,
-        FolderDialogComponent
+        FolderDialogComponent,
+        ShareDialogComponent
     ],
     providers: [
         NodesApiService,
@@ -45,11 +47,13 @@ import { NodesApiService, NotificationService, TranslationService } from '@alfre
     ],
     exports: [
         DownloadZipDialogComponent,
-        FolderDialogComponent
+        FolderDialogComponent,
+        ShareDialogComponent
     ],
     entryComponents: [
         DownloadZipDialogComponent,
-        FolderDialogComponent
+        FolderDialogComponent,
+        ShareDialogComponent
     ]
 })
 export class DialogModule {}

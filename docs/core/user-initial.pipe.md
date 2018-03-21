@@ -8,11 +8,15 @@ Takes the name fields of a UserProcessModel object and extracts and formats the 
 
 ## Basic Usage
 
+<!-- {% raw %} -->
+
 ```HTML
 <div>
     Project Leader: {{ user | usernameInitials:"initialsClass" }}
 </div>
 ```
+
+<!-- {% endraw %} -->
 
 ## Details
 

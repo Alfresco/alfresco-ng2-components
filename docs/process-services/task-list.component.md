@@ -151,6 +151,8 @@ You can use an HTML-based schema and an `app.config.json` custom schema declarat
 }
 ```
 
+<!-- {% raw %} -->
+
 ```html
 <adf-tasklist
     [appId]="'1'" 
@@ -164,6 +166,8 @@ You can use an HTML-based schema and an `app.config.json` custom schema declarat
     </data-columns>
 </adf-tasklist>
 ```
+
+<!-- {% endraw %} -->
 
 ### Pagination strategy
 

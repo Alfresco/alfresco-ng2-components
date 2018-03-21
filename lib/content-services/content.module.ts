@@ -32,10 +32,10 @@ import { SitesDropdownModule } from './site-dropdown/sites-dropdown.module';
 import { BreadcrumbModule } from './breadcrumb/breadcrumb.module';
 import { VersionManagerModule } from './version-manager/version-manager.module';
 import { ContentNodeSelectorModule } from './content-node-selector/content-node-selector.module';
+import { ContentDirectiveModule } from './directives/content-directive.module';
 import { DialogModule } from './dialogs/dialog.module';
 import { FolderDirectiveModule } from './folder-directive/folder-directive.module';
 import { ContentMetadataModule } from './content-metadata/content-metadata.module';
-import { NodeDownloadDirective } from './directives/node-download.directive';
 
 @NgModule({
     imports: [
@@ -56,10 +56,8 @@ import { NodeDownloadDirective } from './directives/node-download.directive';
         ContentNodeSelectorModule,
         ContentMetadataModule,
         DialogModule,
-        FolderDirectiveModule
-    ],
-    declarations: [
-        NodeDownloadDirective
+        FolderDirectiveModule,
+        ContentDirectiveModule
     ],
     providers: [
         {
@@ -86,7 +84,7 @@ import { NodeDownloadDirective } from './directives/node-download.directive';
         ContentMetadataModule,
         DialogModule,
         FolderDirectiveModule,
-        NodeDownloadDirective
+        ContentDirectiveModule
     ]
 })
 export class ContentModule {

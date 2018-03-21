@@ -68,7 +68,7 @@ export class PaginationComponent implements OnInit, OnDestroy {
     @Input()
     pagination: Pagination;
 
-    /** Emitted when paginaton changes in any way. */
+    /** Emitted when pagination changes in any way. */
     @Output()
     change: EventEmitter<PaginationQueryParams> = new EventEmitter<PaginationQueryParams>();
 
@@ -95,7 +95,6 @@ export class PaginationComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         if (this.target) {
-            this.supportedPageSizes = this.target.supportedPageSizes;
             this.paginationSubscription = this.target.pagination.subscribe(page => {
                 this.pagination = page;
                 this.cdr.detectChanges();

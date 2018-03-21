@@ -72,6 +72,8 @@ So once rendered our component will automatically have access to entire set of n
 
 For demonstration purposes we are going to display several icons if underlying node has version `2.0`, and just a plain text version value for all other versions.
 
+<!-- {% raw %} -->
+
 ```html
 <div *ngIf="metadata">
     <ng-container *ngIf="metadata['cm:versionLabel'] === '2.0'">
@@ -84,6 +86,8 @@ For demonstration purposes we are going to display several icons if underlying n
     </div>
 </div>
 ```
+
+<!-- {% endraw %} -->
 
 Note: For a list of the icons that can be used with `<mat-icon>` component please refer to this resource: [material.io/icons](https://material.io/icons/)
 
@@ -105,6 +109,8 @@ You can see on the screenshot above that only files with version `2.0` got extra
 ## Conclusion
 
 The full source code of the component can be found below:
+
+<!-- {% raw %} -->
 
 ```ts
 import { Component, Input } from '@angular/core';
@@ -131,5 +137,7 @@ export class MetadataIconsComponent {
 
 }
 ```
+
+<!-- {% endraw %} -->
 
 You can use this idea to build more complex indication experience based on the actual metadata state. 

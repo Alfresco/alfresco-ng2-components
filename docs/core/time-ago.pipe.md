@@ -8,11 +8,15 @@ Converts a recent past date into a number of days ago.
 
 ## Basic Usage
 
+<!-- {% raw %} -->
+
 ```HTML
 <div>
     Last modified: {{ date | adfTimeAgo }}
 </div>
 ```
+
+<!-- {% endraw %} -->
 
 ## Details
 

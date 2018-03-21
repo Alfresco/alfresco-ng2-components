@@ -370,3 +370,27 @@ This script test that the update from 2.0.0 to 2.x.x is still smooth
 ```sh
 ./test-e2e-bc
 ```
+
+# simulate-publish.sh
+
+***simulate-publish.sh*** 
+
+This script run a verdaccio server and simulate a publish on it 
+
+## Examples
+
+```sh
+./simulate-publish
+```
+
+# test-dist.sh
+
+***test-dist.sh*** 
+
+This script test the distribution of ADF against the demo shell 
+
+## Examples
+
+```sh
+./test-dist
+```

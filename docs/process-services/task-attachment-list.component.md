@@ -46,6 +46,8 @@ to enable the user to upload attachments for empty lists. When you do this, you 
 a custom _no content template_ as shown below. The component invites the user to drag files to
 upload whenever the list is empty.
 
+<!-- {% raw %} -->
+
 ```html
 <adf-upload-drag-area
     [parentId]="YOUR_TASK_ID"
@@ -62,6 +64,8 @@ upload whenever the list is empty.
     </adf-task-attachment-list>
 </adf-upload-drag-area>
 ```
+
+<!-- {% endraw %} -->
 
 ```ts
 import { UploadService } from '@alfresco/adf-core';
