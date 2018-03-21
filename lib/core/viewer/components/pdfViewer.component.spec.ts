@@ -30,6 +30,18 @@ import { PdfViewerComponent } from './pdfViewer.component';
 import { PdfThumbListComponent } from './pdfViewer-thumbnails.component';
 import { PdfThumbComponent } from './pdfViewer-thumb.component';
 import { RIGHT_ARROW, LEFT_ARROW } from '@angular/cdk/keycodes';
+import { MatDialog } from '@angular/material';
+import { Observable } from 'rxjs/Observable';
+import { ViewerModule } from '../viewer.module';
+
+declare let PDFJS: any;
+
+@Component({
+    selector: 'adf-test-dialog-component',
+    template: ''
+})
+class TestDialogComponent {
+}
 
 @Component({
     template: `
@@ -48,6 +60,26 @@ class UrlTestComponent {
 
     constructor() {
         this.urlFile = './fake-test-file.pdf';
+    }
+}
+
+@Component({
+    template: `
+        <adf-pdf-viewer [allowThumbnails]="true"
+                        [showToolbar]="true"
+                        [urlFile]="urlFile">
+        </adf-pdf-viewer>
+    `
+})
+class UrlTestPasswordComponent {
+
+    @ViewChild(PdfViewerComponent)
+    pdfViewerComponent: PdfViewerComponent;
+
+    urlFile: any;
+
+    constructor() {
+        this.urlFile = './fake-test-password-file.pdf';
     }
 }
 
@@ -96,6 +128,7 @@ describe('Test PdfViewer component', () => {
     let fixture: ComponentFixture<PdfViewerComponent>;
     let element: HTMLElement;
     let change: any;
+    let dialog: MatDialog;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -104,23 +137,38 @@ describe('Test PdfViewer component', () => {
                 MaterialModule
             ],
             declarations: [
+                TestDialogComponent,
                 PdfViewerComponent,
                 PdfThumbListComponent,
                 PdfThumbComponent,
                 UrlTestComponent,
+                UrlTestPasswordComponent,
                 BlobTestComponent
             ],
             providers: [
+                {
+                    provide: MatDialog, useValue: {
+                    open: () => {
+                    }
+                }
+                },
                 SettingsService,
                 AuthenticationService,
                 AlfrescoApiService,
                 RenderingQueueServices
             ]
-        }).compileComponents();
+        })
+            .overrideModule(ViewerModule, {
+                set: {
+                    entryComponents: [TestDialogComponent]
+                }
+            })
+            .compileComponents();
     }));
 
     beforeEach((done) => {
         fixture = TestBed.createComponent(PdfViewerComponent);
+        dialog = TestBed.get(MatDialog);
 
         element = fixture.nativeElement;
         component = fixture.componentInstance;
@@ -489,7 +537,71 @@ describe('Test PdfViewer component', () => {
                     });
                 });
             }, 5000);
+
         });
 
+    });
+
+    describe('Password protection dialog', () => {
+
+        let fixtureUrlTestPasswordComponent: ComponentFixture<UrlTestPasswordComponent>;
+        let componentUrlTestPasswordComponent: UrlTestPasswordComponent;
+
+        beforeEach((done) => {
+            fixtureUrlTestPasswordComponent = TestBed.createComponent(UrlTestPasswordComponent);
+            componentUrlTestPasswordComponent = fixtureUrlTestPasswordComponent.componentInstance;
+
+            spyOn(dialog, 'open').and.callFake((comp, context) => {
+                if (context.data.reason === PDFJS.PasswordResponses.NEED_PASSWORD) {
+                    return {
+                        afterClosed: () => Observable.of('wrong_password')
+                    };
+                }
+
+                if (context.data.reason === PDFJS.PasswordResponses.INCORRECT_PASSWORD) {
+                    return {
+                        afterClosed: () => Observable.of('password')
+                    };
+                }
+            });
+
+            fixtureUrlTestPasswordComponent.detectChanges();
+
+            componentUrlTestPasswordComponent.pdfViewerComponent.rendered.subscribe(() => {
+                done();
+            });
+        });
+
+        it('should try to access protected pdf', (done) => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+
+                expect(dialog.open).toHaveBeenCalledTimes(2);
+                done();
+            });
+        });
+
+        it('should raise dialog asking for password', (done) => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(dialog.open['calls'].all()[0].args[1].data).toEqual({
+                    reason: PDFJS.PasswordResponses.NEED_PASSWORD
+                });
+                done();
+            });
+        });
+
+        it('it should raise dialog with incorrect password', (done) => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(dialog.open['calls'].all()[1].args[1].data).toEqual({
+                    reason: PDFJS.PasswordResponses.INCORRECT_PASSWORD
+                });
+                done();
+            });
+        });
     });
 });
