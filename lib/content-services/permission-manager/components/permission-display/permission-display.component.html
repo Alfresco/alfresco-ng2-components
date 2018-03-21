@@ -3,17 +3,21 @@
         <data-columns>
             <data-column key="icon" type="icon" [sortable]="false">
             </data-column>
-            <data-column key="authorityId" title="Authority ID"></data-column>
-            <data-column title="Name" key="name"></data-column>
-            <data-column key="isInherited" title="Inherited">
+            <data-column key="authorityId" title="{{'PERMISSION_MANAGER.PERMISSION_DISPLAY.AUTHORITY_ID' | translate}}"></data-column>
+            <data-column title="{{'PERMISSION_MANAGER.PERMISSION_DISPLAY.NAME' | translate}}" key="name"></data-column>
+            <data-column key="isInherited" title="{{'PERMISSION_MANAGER.PERMISSION_DISPLAY.INHERITED' | translate}}">
                 <ng-template let-entry="$implicit">
                     <mat-chip-list>
                     <mat-chip *ngIf="!!entry.data.getValue(entry.row, entry.col) else locally_set_chip"
-                                color="primary" selected="true">Inherited</mat-chip>
+                      id="adf-permission-inherited-label"
+                                color="primary" selected="true">{{'PERMISSION_MANAGER.PERMISSION_DISPLAY.INHERITED' | translate}}</mat-chip>
                     </mat-chip-list>
                     <ng-template #locally_set_chip>
                             <mat-chip-list>
-                                    <mat-chip color="accent" selected="true">Locally Set</mat-chip>
+                                    <mat-chip id="adf-permission-locallyset-label"
+                                              color="accent" selected="true">
+                                              {{'PERMISSION_MANAGER.PERMISSION_DISPLAY.LOCALLY_SET' | translate}}
+                                    </mat-chip>
                             </mat-chip-list>
                     </ng-template>
                 </ng-template>
