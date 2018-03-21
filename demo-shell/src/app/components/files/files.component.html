@@ -308,6 +308,13 @@
                         title="DOCUMENT_LIST.ACTIONS.DOCUMENT.PROCESS_ACTION"
                         (execute)="startProcesAction($event)">
                     </content-action>
+                    <content-action
+                        icon="settings_input_component"
+                        title="{{'DOCUMENT_LIST.ACTIONS.PERMISSION' | translate}}"
+                        permission="copy"
+                        (error)="onContentActionError($event)"
+                        (execute)="onPermissionRequested($event)">
+                    </content-action>
                 </content-actions>
             </adf-document-list>
             <adf-pagination

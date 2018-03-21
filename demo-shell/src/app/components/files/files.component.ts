@@ -344,6 +344,10 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.reloadForInfiniteScrolling();
     }
 
+    onPermissionRequested(node) {
+        this.router.navigate(['/permissions', node.value.entry.id]);
+    }
+
     private reloadForInfiniteScrolling() {
         if (this.infiniteScrolling) {
             this.documentList.skipCount = 0;

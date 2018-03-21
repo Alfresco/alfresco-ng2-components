@@ -46,7 +46,7 @@ export class NodesApiService {
     getNode(nodeId: string, options: any = {}): Observable<MinimalNodeEntryEntity> {
         const { nodesApi, handleError, getEntryFromEntity } = this;
         const defaults = {
-            include: [ 'path', 'properties', 'allowableOperations' ]
+            include: [ 'path', 'properties', 'allowableOperations', 'permissions' ]
         };
         const queryOptions = Object.assign(defaults, options);
         const promise = nodesApi
@@ -68,7 +68,7 @@ export class NodesApiService {
         const defaults = {
             maxItems: this.preferences.paginationSize,
             skipCount: 0,
-            include: [ 'path', 'properties', 'allowableOperations' ]
+            include: [ 'path', 'properties', 'allowableOperations', 'permissions' ]
         };
         const queryOptions = Object.assign(defaults, options);
         const promise = nodesApi

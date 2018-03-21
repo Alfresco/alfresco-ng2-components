@@ -46,6 +46,7 @@ import { FormListComponent } from './components/form/form-list.component';
 import { OverlayViewerComponent } from './components/overlay-viewer/overlay-viewer.component';
 import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
 import { FormLoadingComponent } from './components/form/form-loading.component';
+import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -163,6 +164,11 @@ export const appRoutes: Routes = [
             {
                 path: 'social',
                 component: SocialComponent,
+                canActivate: [AuthGuardEcm]
+            },
+            {
+                path: 'permissions/:id',
+                component: DemoPermissionComponent,
                 canActivate: [AuthGuardEcm]
             },
             { path: 'about', component: AboutComponent },
