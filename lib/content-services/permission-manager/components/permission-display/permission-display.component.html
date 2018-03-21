@@ -3,9 +3,9 @@
         <data-columns>
             <data-column key="icon" type="icon" [sortable]="false">
             </data-column>
-            <data-column key="authorityId" title="{{'PERMISSION_MANAGER.PERMISSION_DISPLAY.AUTHORITY_ID' | translate}}"></data-column>
+            <data-column title="{{'PERMISSION_MANAGER.PERMISSION_DISPLAY.AUTHORITY_ID' | translate}}" key="authorityId"></data-column>
             <data-column title="{{'PERMISSION_MANAGER.PERMISSION_DISPLAY.NAME' | translate}}" key="name"></data-column>
-            <data-column key="isInherited" title="{{'PERMISSION_MANAGER.PERMISSION_DISPLAY.INHERITED' | translate}}">
+            <data-column title="{{'PERMISSION_MANAGER.PERMISSION_DISPLAY.INHERITED' | translate}}" key="isInherited">
                 <ng-template let-entry="$implicit">
                     <mat-chip-list>
                     <mat-chip *ngIf="!!entry.data.getValue(entry.row, entry.col) else locally_set_chip"
