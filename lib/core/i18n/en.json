@@ -220,6 +220,12 @@
           "MORE_INFORMATION": "More information",
           "LESS_INFORMATION": "Less information"
       }
+    },
+    "PDF_DIALOG": {
+      "SUBMIT": "Submit",
+      "CLOSE": "Close",
+      "PLACEHOLDER": "Password",
+      "ERROR": "Password is wrong"
     }
   }
 }
