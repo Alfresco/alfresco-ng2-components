@@ -19,8 +19,7 @@ import { SearchSettingsComponent } from './search-settings.component';
 import { SearchQueryBuilder } from '../../search-query-builder';
 import { SearchConfiguration } from '../../search-configuration.interface';
 
-// tslint:disable-next-line:ban
-fdescribe('SearchSettingsComponent', () => {
+describe('SearchSettingsComponent', () => {
 
     let component: SearchSettingsComponent;
 
