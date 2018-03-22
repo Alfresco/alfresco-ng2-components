@@ -112,7 +112,7 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     @Input()
     selectionMode: string = 'single'; // none|single|multiple
 
-    /* Toggles default selection of the first instance */
+    /* Toggles default selection of the first row */
     @Input()
     selectFirstRow: boolean = true;
 
