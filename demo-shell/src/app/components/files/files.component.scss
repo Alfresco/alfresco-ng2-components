@@ -1,157 +1,163 @@
-$minimumDocumentListWidth: 425px;
+@mixin adf-file-component-theme($theme) {
+    $minimumDocumentListWidth: 425px;
 
-.container {
-    margin: 10px;
-}
-
-@media only screen and (max-width: 640px) {
     .container {
-        margin: 0;
-    }
-}
-
-.error-message {
-    text-align: left;
-}
-
-.error-message--text {
-    color: #d50000;
-}
-
-.adf-not-overlay-viewer {
-    height: 900px;
-}
-
-adf-document-list ::ng-deep adf-datatable tr.document-list__create {
-    background: green !important;
-}
-
-adf-document-list ::ng-deep adf-datatable tr.document-list__disable {
-    background: red !important;
-}
-
-adf-document-list ::ng-deep .adf-datatable-selected > svg {
-    fill: #00bcd4 !important;
-}
-
-.adf-site-container-style {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    width: 100%;
-    min-width: 200px;
-}
-
-.adf-content-service-settings {
-    padding: 16px;
-}
-
-.adf-files-toolbar {
-    .adf-toolbar-title {
-        display: flex;
-        width: 100%;
-
-        .adf-breadcrumb {
-            width: 0;
-        }
-    }
-}
-
-.adf-manage-versions-sidebar {
-    width: 300px;
-    color: rgba(0, 0, 0, 0.87);
-
-    .adf-manage-versions-empty,
-    .adf-manage-versions-no-permission {
-        margin: 24px;
-        color: grey;
-        text-align: justify;
-
-        &-icon {
-            display: block;
-            font-size: 48px;
-            margin: 0 auto 32px auto;
-        }
+        margin: 10px;
     }
 
-    & ::ng-deep .adf-info-drawer-layout-header {
-        display: none;
-    }
-
-    & ::ng-deep .adf-info-drawer-layout-content {
-        padding: 0;
-
-        .adf-version-upload,
-        .adf-new-version-file-upload {
-            width: 100%;
-
-            & .mat-raised-button {
-                width: 100%;
-            }
+    @media screen and ($mat-xsmall) {
+        .container {
+            margin: 0;
         }
 
-        .adf-new-version-uploader-container {
-            padding: 8px 24px 16px 24px;
-        }
-    }
-}
-
-.adf-no-result__empty_doc_lib {
-    width: 565px;
-    height: 161px;
-    object-fit: contain;
-    margin-top: 17px;
-}
-
-.adf-empty_template {
-    text-align: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-.adf-no-result-message {
-    height: 32px;
-    opacity: 0.26;
-    font-size: 24px;
-    line-height: 1.33;
-    letter-spacing: -1px;
-}
-
-.adf-container-recent {
-    mat-icon {
-        margin-left: 20px;
-    }
-
-    .empty-list__block {
-        height: 100%;
-        padding: 0;
-        margin: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-}
-
-@media (max-width: $minimumDocumentListWidth) {
-    adf-document-list ::ng-deep adf-datatable {
-        & ::ng-deep .adf-data-table-cell--fileSize {
+        .adf-show-versions-button.mat-icon-button {
             display: none;
         }
     }
 
-    .adf-site-container-style {
-        width: 100%;
-        display: block;
+    .error-message {
+        text-align: left;
+    }
 
-        & ::ng-deep .adf-site-dropdown-list-element {
+    .error-message--text {
+        color: #d50000;
+    }
+
+    .adf-not-overlay-viewer {
+        height: 900px;
+    }
+
+    adf-document-list ::ng-deep adf-datatable tr.document-list__create {
+        background: green !important;
+    }
+
+    adf-document-list ::ng-deep adf-datatable tr.document-list__disable {
+        background: red !important;
+    }
+
+    adf-document-list ::ng-deep .adf-datatable-selected > svg {
+        fill: #00bcd4 !important;
+    }
+
+    .adf-site-container-style {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        width: 100%;
+        min-width: 200px;
+    }
+
+    .adf-content-service-settings {
+        padding: 16px;
+    }
+
+    .adf-files-toolbar {
+        .adf-toolbar-title {
+            display: flex;
             width: 100%;
+
+            .adf-breadcrumb {
+                width: 0;
+            }
         }
     }
 
-    adf-file-uploading-dialog ::ng-deep .upload-dialog {
+    .adf-manage-versions-sidebar {
+        width: 300px;
+        color: rgba(0, 0, 0, 0.87);
+
+        .adf-manage-versions-empty,
+        .adf-manage-versions-no-permission {
+            margin: 24px;
+            color: grey;
+            text-align: justify;
+
+            &-icon {
+                display: block;
+                font-size: 48px;
+                margin: 0 auto 32px auto;
+            }
+        }
+
+        & ::ng-deep .adf-info-drawer-layout-header {
+            display: none;
+        }
+
+        & ::ng-deep .adf-info-drawer-layout-content {
+            padding: 0;
+
+            .adf-version-upload,
+            .adf-new-version-file-upload {
+                width: 100%;
+
+                & .mat-raised-button {
+                    width: 100%;
+                }
+            }
+
+            .adf-new-version-uploader-container {
+                padding: 8px 24px 16px 24px;
+            }
+        }
+    }
+
+    .adf-no-result__empty_doc_lib {
+        width: 565px;
+        height: 161px;
+        object-fit: contain;
+        margin-top: 17px;
+    }
+
+    .adf-empty_template {
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .adf-no-result-message {
+        height: 32px;
+        opacity: 0.26;
+        font-size: 24px;
+        line-height: 1.33;
+        letter-spacing: -1px;
+    }
+
+    .adf-container-recent {
+        mat-icon {
+            margin-left: 20px;
+        }
+
+        .empty-list__block {
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    @media (max-width: $minimumDocumentListWidth) {
+        adf-document-list ::ng-deep adf-datatable {
+            & ::ng-deep .adf-data-table-cell--fileSize {
+                display: none;
+            }
+        }
+
+        .adf-site-container-style {
+            width: 100%;
+            display: block;
+
+            & ::ng-deep .adf-site-dropdown-list-element {
+                width: 100%;
+            }
+        }
+
+        adf-file-uploading-dialog ::ng-deep .upload-dialog {
         width: 80%;
 
-        & ::ng-deep adf-file-uploading-list ::ng-deep adf-file-uploading-list-row .adf-file-uploading-row__group {
-            min-width: 0;
+            & ::ng-deep adf-file-uploading-list ::ng-deep adf-file-uploading-list-row .adf-file-uploading-row__group {
+                min-width: 0;
+            }
         }
     }
 }

@@ -16,6 +16,7 @@ $theme:   mat-light-theme($primary, $accent, $warn);
 
 @include angular-material-theme($theme);
 @include adf-app-layout-theme($theme);
+@include adf-file-component-theme($theme);
 
 @include adf-content-services-theme($theme);
 @include adf-process-services-theme($theme);
