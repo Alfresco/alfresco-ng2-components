@@ -52,13 +52,13 @@ describe('InheritPermissionDirective', () => {
         TestBed.resetTestingModule();
     }));
 
-    it('should be able to render the simple component', () => {
+    it('should be able to render the simple component', async(() => {
         fixture.detectChanges();
         expect(element.querySelector('#sample-button-permission')).not.toBeNull();
         expect(element.querySelector('#update-notification')).toBeNull();
-    });
+    }));
 
-    it('should be able to add inherited permission', () => {
+    it('should be able to add inherited permission', async(() => {
         spyOn(nodeService, 'getNode').and.returnValue(Observable.of(fakeNodeNoInherit));
         spyOn(nodeService, 'updateNode').and.callFake((nodeId, nodeBody) => {
             if (nodeBody.permissions.isInheritanceEnabled) {
@@ -76,9 +76,9 @@ describe('InheritPermissionDirective', () => {
         fixture.whenStable().then(() => {
             expect(element.querySelector('#update-notification')).not.toBeNull();
         });
-    });
+    }));
 
-    it('should be able to remove inherited permission', () => {
+    it('should be able to remove inherited permission', async(() => {
         spyOn(nodeService, 'getNode').and.returnValue(Observable.of(fakeNodeWithInherit));
         spyOn(nodeService, 'updateNode').and.callFake((nodeId, nodeBody) => {
             if (nodeBody.permissions.isInheritanceEnabled) {
@@ -97,6 +97,6 @@ describe('InheritPermissionDirective', () => {
         fixture.whenStable().then(() => {
             expect(element.querySelector('#update-notification')).toBeNull();
         });
-    });
+    }));
 
 });
