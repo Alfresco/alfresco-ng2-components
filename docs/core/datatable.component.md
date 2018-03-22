@@ -1,7 +1,9 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-03-21
 ---
+
 # DataTable component
 
 Displays data as a table with customizable columns and presentation.
@@ -25,7 +27,7 @@ See it live: [DataTable Quickstart](https://embed.plnkr.co/80qr4YFBeHjLMdAV0F6l/
     -   [Card view](#card-view)
     -   [Custom Empty content template](#custom-empty-content-template)
     -   [Loading content template](#loading-content-template)
-    -   [Events](#events-1)
+    -   [Using events](#using-events)
 
 -   [See also](#see-also)
 
@@ -123,33 +125,33 @@ export class DataTableDemo {
 
 ### Properties
 
-| Name | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| selectionMode | string | 'single' | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
-| rowStyle | string |  | The inline style to apply to every row, see [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html) docs for more details and usage examples |
-| rowStyleClass | string |  | The CSS class to apply to every row |
-| data | DataTableAdapter | instance of **ObjectDataTableAdapter** | data source |
-| rows | Object\[] | \[] | The rows that the datatable should show |
-| multiselect | boolean | false | Toggles multiple row selection, renders checkboxes at the beginning of each row |
-| actions | boolean | false | Toggles data actions column |
-| actionsPosition | string (left\|right) | right | Position of the actions dropdown menu. |
-| fallbackThumbnail | string |  | Fallback image for row where thumbnail is missing |
-| contextMenu | boolean | false | Toggles custom context menu for the component |
-| allowDropFiles | boolean | false | Toggle file drop support for rows (see **ng2-alfresco-core/UploadDirective** for more details) |
-| loading | boolean | false | Flag that indicates if the datatable is in loading state and needs to show the loading template. Read the documentation above to see how to configure a loading template |
-| showHeader | boolean | true | Toggles header visibility |
-| display | string | 'list' | change the display mode can be one of the values provided by the enum : **list**, **gallery** |
-| selection | DataRow\[] | \[] | Contains selected rows |
-    
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| data | `DataTableAdapter` |  | Data source for the table  |
+| display | `string` | `DisplayMode.List` | Selects the display mode of the table. Can be "list" or "gallery".  |
+| rows | `any[]` | `[]` | The rows that the datatable will show.  |
+| selectionMode | `string` | `'single'` | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
+| multiselect | `boolean` | `false` | Toggles multiple row selection, which renders checkboxes at the beginning of each row.  |
+| actions | `boolean` | `false` | Toggles the data actions column.  |
+| actionsPosition | `string` | `'right'` | Position of the actions dropdown menu. Can be "left" or "right".  |
+| fallbackThumbnail | `string` |  | Fallback image for rows where the thumbnail is missing.  |
+| contextMenu | `boolean` | `false` | Toggles custom context menu for the component.  |
+| allowDropFiles | `boolean` | `false` | Toggles file drop support for rows (see  [Upload directive](upload.directive.md) for further details). |
+| rowStyle | `string` |  | The inline style to apply to every row. See [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html) docs for more details and usage examples. |
+| rowStyleClass | `string` | `''` | The CSS class to apply to every row.  |
+| showHeader | `boolean` | `true` | Toggles the header.  |
+| loading | `boolean` | `false` | Flag that indicates if the datatable is in loading state and needs to show the loading template (see the docs to learn how to configure a loading template). |
+| noPermission | `boolean` | `false` | Flag that indicates if the datatable should show the "no permission" template.  |
+
 ### Events
 
-| Name | Description |
-| ---- | ----------- |
-| [rowClick](#rowclick-event) | Emitted when user clicks the row |
-| [rowDblClick](#rowdblclick-event) | Emitted when user double-clicks the row |
-| [showRowContextMenu](#showrowcontextmenu-event) | Emitted before context menu is displayed for a row |
-| [showRowActionsMenu](#showrowactionsmenu-event) | Emitted before actions menu is displayed for a row |
-| [executeRowAction](#executerowaction-event) | Emitted when row action is executed by user |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| rowClick | `EventEmitter<DataRowEvent>` | Emitted when the user clicks a row.  |
+| rowDblClick | `EventEmitter<DataRowEvent>` | Emitted when the user double-clicks a row.  |
+| showRowContextMenu | `EventEmitter<DataCellEvent>` | Emitted before the context menu is displayed for a row.  |
+| showRowActionsMenu | `EventEmitter<DataCellEvent>` | Emitted before the actions menu is displayed for a row.  |
+| executeRowAction | `EventEmitter<DataRowActionEvent>` | Emitted when the user executes a row action.  |
 
 ## Details
 
@@ -158,17 +160,17 @@ export class DataTableDemo {
 The column layout and row data are supplied to the table using an object that implements the
 DataTableAdapter interface. This interface hides the internal details of the class that provides
 the data, which gives a lot of flexibility in how the data can be stored and accessed. The DataTable
-library includes a standard adapter class called ObjectDataTableAdapter that is useful for many
-common uses. See the [DataTableAdapter](datatable-adapter.interface.md) for full details about the interface and
-the ObjectDataTableAdapter class.
+library includes a standard adapter class called `ObjectDataTableAdapter` that is useful in many
+common cases. See the [DataTableAdapter](datatable-adapter.interface.md) for full details about the interface and the `ObjectDataTableAdapter` class.
 
 ### Customizing columns
 
-You can define custom HTML templates for columns and also add tooltips, automatic column title translation and other features. See the DataColumn component page for more information.
+You can define custom HTML templates for columns and also add tooltips, automatic column title translation and other features. See the [Data Column component](data-column.component.md) page
+for more information.
 
 ### DataTable DOM Events
 
-Below are the DOM events raised by DataTable component.
+Below are the DOM events emitted by the DataTable component.
 These events bubble up the component tree and can be handled by any parent component.
 
 | Name | Description |
@@ -200,7 +202,7 @@ onRowClick(event) {
 
 ### Card view
 
-If you want to enable the card view mode you need to set to 'gallery' the input parameter [display] :
+Set the `display` property to "gallery" to enable Card View mode:
 
 ```html
 <adf-datatable
@@ -211,10 +213,9 @@ If you want to enable the card view mode you need to set to 'gallery' the input 
 
 ![card-view](../docassets/images/document-list-card-view.png)
 
-
 ### Custom Empty content template
 
-You can add a template that will be shown when there are no results in your datatable:
+You can add a template that will be shown when there are no rows in your datatable:
 
 ```html
 <adf-datatable
@@ -238,9 +239,11 @@ You can add a template that will be shown when there are no results in your data
 </adf-datatable>
 ```
 
-You can use the empty list component if you want to show the default ADF empty template.
+You can use the empty list component to show the default ADF empty template.
 
-You can use any HTML layout or Angular component as a content of the empty template section by using the special `<adf-empty-list-header>, <adf-empty-list-body>, <adf-empty-list-footer>` elements:
+You can place any HTML layout or Angular component as content in the empty template section
+by using the `<adf-empty-list-header>`, `<adf-empty-list-body>`, and `<adf-empty-list-footer>`
+elements:
 
 ```html
 <adf-datatable
@@ -265,7 +268,7 @@ You can use any HTML layout or Angular component as a content of the empty templ
 
 | Name | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
-| emptyListImageUrl | String | empty_doc_lib.svg | The default image used as background |
+| emptyListImageUrl | String | empty_doc_lib.svg | The default image used as the background |
 | emptyMsg | String | This list is empty | The default title message |
 | dragDropMsg | String | Drag and drop | The default drag and drop message |
 | additionalMsg | String | Drag and drop | The default additional message |
@@ -274,7 +277,7 @@ You can use any HTML layout or Angular component as a content of the empty templ
 
 ### Loading content template
 
-You can add a template that will be shown during the loading of your data:
+You can add a template to be shown while your data is loading:
 
 ```html
 <adf-datatable
@@ -308,15 +311,15 @@ You can add a template that will be shown during the loading of your data:
     }
 ```
 
-Note: the `<loading-content-template>` and `<no-content-template>` can be used together
+Note: the `<loading-content-template>` and `<no-content-template>` can be used together.
 
-### Events
+### Using events
 
 #### row-keyup DOM event
 
-Raised on the 'keyup' event for the focused row. 
+Emitted on the 'keyup' event for the focused row. 
 
-This is an instance of the `CustomEvent` with the `details` property containing the following object:
+This is an instance of `CustomEvent` with the `details` property containing the following object:
 
 ```ts
 row: DataRow,
@@ -326,7 +329,7 @@ sender: any
 
 #### rowClick event
 
-Emitted when user clicks a row.
+Emitted when the user clicks a row.
 
 Event properties:
 
@@ -344,11 +347,11 @@ onRowClicked(event: DataRowEvent) {
 }
 ```
 
-This event is cancellable, you can use `event.preventDefault()` to prevent default behaviour.
+This event is cancellable. You can use `event.preventDefault()` to prevent the default behavior.
 
 #### rowDblClick event
 
-Emitted when user double-clicks a row.
+Emitted when the user double-clicks a row.
 
 Event properties:
 
@@ -366,14 +369,14 @@ onRowDblClicked(event: DataRowEvent) {
 }
 ```
 
-This event is cancellable, you can use `event.preventDefault()` to prevent default behaviour.
+This event is cancellable. You can use `event.preventDefault()` to prevent the default behavior.
 
 #### showRowContextMenu event
 
-Emitted before context menu is displayed for a row.
+Emitted before the context menu is displayed for a row.
 
-Note that DataTable itself does not populate context menu items,
-you can provide all necessary content via handler.
+Note that the DataTable itself does not populate the context menu with items.
+You can provide all necessary content via the handler.
 
 Event properties:
 
@@ -396,17 +399,17 @@ onShowRowContextMenu(event: DataCellEvent) {
 }
 ```
 
-This event is cancellable, you can use `event.preventDefault()` to prevent default behaviour.
+This event is cancellable. You can use `event.preventDefault()` to prevent the default behavior.
 
-DataTable will automatically render provided menu items.
+The DataTable will automatically render the supplied menu items.
 
 See the [ContextMenu](https://www.npmjs.com/package/ng2-alfresco-core)
-documentation for more details on context actions format and behaviour.
+documentation for more details on the format and behavior of context actions.
 
 #### showRowActionsMenu event
 
-Emitted before actions menu is displayed for a row.
-Requires `actions` property to be set to `true`.
+Emitted before the actions menu is displayed for a row.
+Requires the `actions` property to be set to `true`.
 
 Event properties:
 
@@ -417,19 +420,19 @@ value: {
 }
 ```
 
-Note that DataTable itself does not populate action menu items,
-you can provide all necessary content via handler.
+Note that the DataTable itself does not populate the action menu with items.
+You can provide all necessary content via the handler.
 
-This event is cancellable, you can use `event.preventDefault()` to prevent default behaviour.
+This event is cancellable. You can use `event.preventDefault()` to prevent the default behavior.
 
 #### executeRowAction event
 
-Emitted when a row action is executed by the user.
+Emitted when the user executes a row action.
 
-Usually accompanies `showRowActionsMenu` event. 
-DataTable itself does not execute actions but provides support for external
-integration. If there were actions provided with `showRowActionsMenu` event
-then `executeRowAction` will be automatically executed when user clicks 
+This usually accompanies a `showRowActionsMenu` event. 
+The DataTable itself does not execute actions but provides support for external
+integration. If actions are provided using the `showRowActionsMenu` event
+then `executeRowAction` will be automatically executed when the user clicks a
 corresponding menu item.
 
 ```html
@@ -467,16 +470,12 @@ onExecuteRowAction(event: DataRowActionEvent) {
 
 ![](../docassets/images/datatable-actions-console.png)
 
-Developers are allowed to use any payloads as row actions.
-The only requirement for the objects is having `title` property.
+You can use any payloads for row actions. The only requirement for the objects is that they
+must have a `title` property.
 
-Once corresponding action is clicked in the dropdown menu DataTable invokes `executeRowAction` event
-where you can handle the process, inspect the action payload and all custom properties defined earlier,
-and do corresponding actions.
-
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-
-<!-- seealso start -->
+When an action is selected in the dropdown menu, the DataTable invokes the `executeRowAction` event.
+Use this to handle the response, inspect the action payload (and all custom properties defined
+earlier), and perform the corresponding actions.
 
 ## See also
 
@@ -484,4 +483,3 @@ and do corresponding actions.
 -   [Pagination component](pagination.component.md)
 -   [DataTableAdapter](datatable-adapter.interface.md)
 -   [Document list component](../content-services/document-list.component.md)
-    <!-- seealso end -->

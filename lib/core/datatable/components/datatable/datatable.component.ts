@@ -54,89 +54,92 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     @ContentChild(DataColumnListComponent)
     columnList: DataColumnListComponent;
 
-    /* Data source for the table */
+    /** Data source for the table */
     @Input()
     data: DataTableAdapter;
 
-    /* change the display mode of the table list or gallery */
+    /** Selects the display mode of the table. Can be "list" or "gallery". */
     @Input()
     display: string = DisplayMode.List;
 
-    /* The rows that the datatable will show */
+    /** The rows that the datatable will show. */
     @Input()
     rows: any[] = [];
 
-    /* Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode,
+    /** Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode,
      * you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows.
      */
     @Input()
     selectionMode: string = 'single'; // none|single|multiple
 
-    /* Toggles multiple row selection, which renders checkboxes at the beginning of each row */
+    /** Toggles multiple row selection, which renders checkboxes at the beginning of each row. */
     @Input()
     multiselect: boolean = false;
 
-    /* Toggles data actions column */
+    /** Toggles the data actions column. */
     @Input()
     actions: boolean = false;
 
-    /* Position of the actions dropdown menu. Can be "left" or "right". */
+    /** Position of the actions dropdown menu. Can be "left" or "right". */
     @Input()
     actionsPosition: string = 'right'; // left|right
 
-    /* Fallback image for row where thumbnail is missing */
+    /** Fallback image for rows where the thumbnail is missing. */
     @Input()
     fallbackThumbnail: string;
 
-    /* Toggles custom context menu for the component */
+    /** Toggles custom context menu for the component. */
     @Input()
     contextMenu: boolean = false;
 
-    /* Toggle file drop support for rows (see Upload Directive for further details) */
+    /** Toggles file drop support for rows (see
+     * [Upload directive](upload.directive.md) for further details).
+     */
     @Input()
     allowDropFiles: boolean = false;
 
-    /* The inline style to apply to every row. See
+    /** The inline style to apply to every row. See
      * [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html)
      * docs for more details and usage examples.
      */
     @Input()
     rowStyle: string;
 
-    /* The CSS class to apply to every row */
+    /** The CSS class to apply to every row. */
     @Input()
     rowStyleClass: string = '';
 
-    /* Toggles the header */
+    /** Toggles the header. */
     @Input()
     showHeader: boolean = true;
 
-    /* Emitted when user clicks the row */
+    /** Emitted when the user clicks a row. */
     @Output()
     rowClick = new EventEmitter<DataRowEvent>();
 
-    /* Emitted when user double-clicks the row */
+    /** Emitted when the user double-clicks a row. */
     @Output()
     rowDblClick = new EventEmitter<DataRowEvent>();
 
-    /* Emitted before context menu is displayed for a row */
+    /** Emitted before the context menu is displayed for a row. */
     @Output()
     showRowContextMenu = new EventEmitter<DataCellEvent>();
 
-    /* Emitted before actions menu is displayed for a row */
+    /** Emitted before the actions menu is displayed for a row. */
     @Output()
     showRowActionsMenu = new EventEmitter<DataCellEvent>();
 
-    /* Emitted when row action is executed by user */
+    /** Emitted when the user executes a row action. */
     @Output()
     executeRowAction = new EventEmitter<DataRowActionEvent>();
 
-    /* Flag that indicates if the datatable is in loading state and needs to show the
+    /** Flag that indicates if the datatable is in loading state and needs to show the
      * loading template (see the docs to learn how to configure a loading template).
      */
     @Input()
     loading: boolean = false;
 
+    /** Flag that indicates if the datatable should show the "no permission" template. */
     @Input()
     noPermission: boolean = false;
 
