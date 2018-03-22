@@ -41,16 +41,19 @@ export class DocumentListService {
                 private thumbnailService: ThumbnailService) {
     }
 
-    private getNodesPromise(folder: string, opts?: any): Promise<NodePaging> {
+    private getNodesPromise(folder: string, opts?: any, includeFields: string[] = []): Promise<NodePaging> {
 
         let rootNodeId = DocumentListService.ROOT_ID;
         if (opts && opts.rootFolderId) {
             rootNodeId = opts.rootFolderId;
         }
 
+        let includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', ...includeFields]
+            .filter((element, index, array) => index === array.indexOf(element));
+
         let params: any = {
             includeSource: true,
-            include: ['path', 'properties', 'allowableOperations', 'permissions']
+            include: includeFieldsRequest
         };
 
         if (folder) {
@@ -114,8 +117,8 @@ export class DocumentListService {
      * @param folder Path to folder.
      * @param opts Options.
      */
-    getFolder(folder: string, opts?: any): Observable<NodePaging> {
-        return Observable.fromPromise(this.getNodesPromise(folder, opts))
+    getFolder(folder: string, opts?: any, includeFields: string[] = []): Observable<NodePaging> {
+        return Observable.fromPromise(this.getNodesPromise(folder, opts, includeFields))
             .map(res => <NodePaging> res)
             .catch(err => this.handleError(err));
     }
@@ -124,10 +127,14 @@ export class DocumentListService {
      * Gets a folder node via its node ID.
      * @param nodeId ID of the folder node
      */
-    getFolderNode(nodeId: string): Promise<MinimalNodeEntryEntity> {
+    getFolderNode(nodeId: string, includeFields: string[] = []): Promise<MinimalNodeEntryEntity> {
+
+        let includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', ...includeFields]
+            .filter((element, index, array) => index === array.indexOf(element));
+
         let opts: any = {
             includeSource: true,
-            include: ['path', 'properties', 'allowableOperations', 'permissions']
+            include: includeFieldsRequest
         };
 
         let nodes: any = this.apiService.getInstance().nodes;

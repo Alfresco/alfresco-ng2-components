@@ -124,7 +124,8 @@ describe('DocumentList', () => {
     it('should call action\'s handler with node', () => {
         let node = new FileNode();
         let action = new ContentActionModel();
-        action.handler = () => { };
+        action.handler = () => {
+        };
 
         spyOn(action, 'handler').and.stub();
 
@@ -136,7 +137,8 @@ describe('DocumentList', () => {
     it('should call action\'s handler with node and permission', () => {
         let node = new FileNode();
         let action = new ContentActionModel();
-        action.handler = () => { };
+        action.handler = () => {
+        };
         action.permission = 'fake-permission';
         spyOn(action, 'handler').and.stub();
 
@@ -148,7 +150,8 @@ describe('DocumentList', () => {
     it('should call action\'s execute with node if it is defined', () => {
         let node = new FileNode();
         let action = new ContentActionModel();
-        action.execute = () => { };
+        action.execute = () => {
+        };
         spyOn(action, 'execute').and.stub();
 
         documentList.executeContentAction(node, action);
@@ -161,7 +164,8 @@ describe('DocumentList', () => {
         let node = new FileNode();
         let action = new ContentActionModel();
         action.handler = () => deleteObservable;
-        action.execute = () => { };
+        action.execute = () => {
+        };
         spyOn(action, 'execute').and.stub();
 
         documentList.executeContentAction(node, action);
@@ -985,7 +989,7 @@ describe('DocumentList', () => {
         documentList.noPermission = true;
         fixture.detectChanges();
 
-        documentList.ngOnChanges({ node: new SimpleChange(null, {list: {entities: {}}}, true) });
+        documentList.ngOnChanges({ node: new SimpleChange(null, { list: { entities: {} } }, true) });
 
         expect(documentList.data.loadPage).toHaveBeenCalled();
         expect(documentList.noPermission).toBeFalsy();
@@ -1394,5 +1398,19 @@ describe('DocumentList', () => {
 
         documentList.loadFolderByNodeId('-favorites-');
         expect(documentList.skipCount).toBe(0, 'skipCount is reset');
+    });
+
+    it('should add includeFields in the server request when present', () => {
+        documentList.currentFolderId = 'fake-id';
+        documentList.includeFields = ['test-include'];
+        spyOn(documentListService, 'getFolder');
+
+        documentList.ngOnChanges({ rowFilter: new SimpleChange(null, <RowFilter> {}, true) });
+
+        expect(documentListService.getFolder).toHaveBeenCalledWith(null, {
+            maxItems: 25,
+            skipCount: 0,
+            rootFolderId: 'fake-id'
+        }, ['test-include']);
     });
 });

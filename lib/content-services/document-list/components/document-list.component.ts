@@ -27,7 +27,12 @@ import {
     PaginationQueryParams,
     PermissionsEnum
 } from '@alfresco/adf-core';
-import { AlfrescoApiService, AppConfigService, DataColumnListComponent, UserPreferencesService } from '@alfresco/adf-core';
+import {
+    AlfrescoApiService,
+    AppConfigService,
+    DataColumnListComponent,
+    UserPreferencesService
+} from '@alfresco/adf-core';
 import {
     AfterContentInit, Component, ContentChild, ElementRef, EventEmitter, HostListener, Input, NgZone,
     OnChanges, OnDestroy, OnInit, Output, SimpleChanges, TemplateRef, ViewChild, ViewEncapsulation
@@ -72,6 +77,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     static DEFAULT_PAGE_SIZE: number = 20;
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
+
+    /** Include additional information about the node in the server request.for example: association, isLink, isLocked and others. */
+    @Input()
+    includeFields: string[];
 
     /** Change the display mode of the table. Can be "list" or "gallery". */
     @Input()
@@ -539,7 +548,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.loadRecent(merge);
         } else {
             this.documentListService
-                .getFolderNode(nodeId)
+                .getFolderNode(nodeId, this.includeFields)
                 .then(node => {
                     this.folderNode = node;
                     this.currentFolderId = node.id;
@@ -566,18 +575,18 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                     maxItems: maxItems,
                     skipCount: skipCount,
                     rootFolderId: id
-                })
+                }, this.includeFields)
                 .subscribe(
-                val => {
-                    this.data.loadPage(<NodePaging> val, merge);
-                    this.loading = false;
-                    this.infiniteLoading = false;
-                    this.onDataReady(val);
-                    resolve(true);
-                },
-                error => {
-                    reject(error);
-                });
+                    val => {
+                        this.data.loadPage(<NodePaging> val, merge);
+                        this.loading = false;
+                        this.infiniteLoading = false;
+                        this.onDataReady(val);
+                        resolve(true);
+                    },
+                    error => {
+                        reject(error);
+                    });
         });
 
     }
@@ -640,13 +649,13 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.apiService.sitesApi.getSites(options)
             .then((page: NodePaging) => {
                 page.list.entries.map(
-                    ({entry}: any) => {
+                    ({ entry }: any) => {
                         entry.name = entry.name || entry.title;
-                        return {entry};
+                        return { entry };
                     }
                 );
                 this.onPageLoaded(page, merge);
-        })
+            })
             .catch(error => this.error.emit(error));
     }
 
@@ -664,7 +673,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 let page: NodePaging = {
                     list: {
                         entries: result.list.entries
-                            .map(({entry: {site}}: any) => {
+                            .map(({ entry: { site } }: any) => {
                                 site.allowableOperations = site.allowableOperations ? site.allowableOperations : [this.CREATE_PERMISSION];
                                 site.name = site.name || site.title;
                                 return {
@@ -976,8 +985,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 .then(result => result.list.entries.map(node => node.entry.id));
 
         } else if (nodeId) {
-            return this.documentListService.getFolderNode(nodeId)
-                .then(node => [ node.id ]);
+            return this.documentListService.getFolderNode(nodeId, this.includeFields)
+                .then(node => [node.id]);
         }
 
         return new Promise((resolve) => {

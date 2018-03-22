@@ -9,7 +9,7 @@ addons:
 before_script:
     - "sudo chown root /opt/google/chrome/chrome-sandbox"
     - "sudo chmod 4755 /opt/google/chrome/chrome-sandbox"
-    
+
 before_install:
     - export CHROME_BIN=chromium-browser
     - export DISPLAY=:99.0
@@ -68,7 +68,7 @@ jobs:
           before_install:
             - "export DISPLAY=:99.0"
             - "sh -e /etc/init.d/xvfb start"
-          script: ./scripts/test-dist.sh
+          script: travis_wait 30 ./scripts/test-dist.sh
         - stage: Check 2.0.0 Project Update
           script: ./scripts/test-e2e-bc.sh
         - stage: Check ADF exports
