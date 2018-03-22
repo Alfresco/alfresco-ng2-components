@@ -21,7 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
 
-import { PipeModule, SearchService } from '@alfresco/adf-core';
+import { PipeModule } from '@alfresco/adf-core';
 
 import { SearchTriggerDirective } from './components/search-trigger.directive';
 
@@ -36,10 +36,6 @@ export const ALFRESCO_SEARCH_DIRECTIVES: any[] = [
     EmptySearchResultComponent
 ];
 
-export const ALFRESCO_SEARCH_PROVIDERS: any[] = [
-    SearchService
-];
-
 @NgModule({
     imports: [
         CommonModule,
@@ -51,9 +47,6 @@ export const ALFRESCO_SEARCH_PROVIDERS: any[] = [
     ],
     declarations: [
         ...ALFRESCO_SEARCH_DIRECTIVES
-    ],
-    providers: [
-        ...ALFRESCO_SEARCH_PROVIDERS
     ],
     exports: [
         ...ALFRESCO_SEARCH_DIRECTIVES

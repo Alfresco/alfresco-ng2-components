@@ -17,14 +17,22 @@
 
 import { Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { TaskListService, TaskAttachmentListComponent, TaskDetailsModel, TaskUploadService } from '@alfresco/adf-process-services';
-import { UploadService } from '@alfresco/adf-core';
+import { UploadService, AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
+
+export function taskUploadServiceFactory(api: AlfrescoApiService, config: AppConfigService) {
+    return new TaskUploadService(api, config);
+}
 
 @Component({
     selector: 'app-task-attachments',
     templateUrl: './task-attachments.component.html',
     styleUrls: ['./task-attachments.component.css'],
     providers: [
-        { provide: UploadService, useClass: TaskUploadService }
+        {
+            provide: UploadService,
+            useFactory: (taskUploadServiceFactory),
+            deps: [AlfrescoApiService, AppConfigService]
+        }
     ]
 })
 
