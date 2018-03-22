@@ -39,10 +39,10 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Node download directive](node-download.directive.md) | Allows folders and/or files to be downloaded. Multiple nodes are packed as a '.ZIP' archive. | [Source](../../lib/content-services/directives/node-download.directive.ts) |
+| [Node share directive](node-share.directive.md) | Create and manage public shared links for files | [Source](../../lib/content-services/directives/node-share.directive.ts) |
 | [Folder create directive](folder-create.directive.md) | Allows folders to be created. | [Source](../../lib/content-services/folder-directive/folder-create.directive.ts) |
 | [Folder edit directive](folder-edit.directive.md) | Allows folders to be edited. | [Source](../../lib/content-services/folder-directive/folder-edit.directive.ts) |
 | [File draggable directive](file-draggable.directive.md) | Provide drag-and-drop features for an element such as a `div`. | [Source](../../lib/content-services/upload/directives/file-draggable.directive.ts) |
-| [Share Directive](share.directive.md) | Proide a pop up that generat a public linlk to share a file | [Source](../../lib/content-services/upload/directives/share.directive.ts) |
 
 ## Models
 

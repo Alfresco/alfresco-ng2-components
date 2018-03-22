@@ -81,6 +81,9 @@ export class SitesService {
         return this.getSite(siteId, { relations: ['members'] });
     }
 
+    /**
+     * Gets the username of the user currently logged into ACS.
+     */
     getEcmCurrentLoggedUserName(): string {
         return this.apiService.getInstance().ecmAuth.username;
     }
