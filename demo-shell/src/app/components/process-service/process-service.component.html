@@ -121,6 +121,7 @@
                         <adf-accordion-group [heading]="'Processes'" [isSelected]="true" [isOpen]="true"
                                              [headingIcon]="'assessment'">
                             <adf-process-instance-filters
+                                #activitiprocessfilter
                                 [filterParam]="{index: 0}"
                                 [appId]="appId"
                                 (filterClick)="onProcessFilterClick($event)"
@@ -163,6 +164,7 @@
                 </div>
                 <div class="adf-grid-item adf-processes-details" *ngIf="!isStartProcessMode()" fxFlex.gt-md="1 1 auto">
                     <adf-process-instance-details
+                        #activitiprocessdetails
                         [processInstanceId]="currentProcessInstanceId"
                         (processCancelled)="processCancelled()"
                         (showProcessDiagram)="onShowProcessDiagram($event)"
@@ -190,6 +192,7 @@
                 <div class="adf-grid-item adf-processes-start" fxFlex.gt-md="1 1 auto"
                      *ngIf="isStartProcessMode()">
                     <adf-start-process
+                        #activitiStartProcess
                         [appId]="appId"
                         [name]="defaultProcessName"
                         [processDefinitionName]="defaultProcessDefinitionName"

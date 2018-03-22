@@ -20,7 +20,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
-import { CardViewModule , FileSizePipe } from '@alfresco/adf-core';
+import { CardViewModule } from '@alfresco/adf-core';
 import { ContentMetadataComponent } from './components/content-metadata/content-metadata.component';
 import { ContentMetadataCardComponent } from './components/content-metadata-card/content-metadata-card.component';
 import { PropertyDescriptorsService } from './services/property-descriptors.service';
@@ -50,8 +50,7 @@ import { PropertyGroupTranslatorService } from './services/property-groups-trans
         PropertyDescriptorsService,
         ContentMetadataConfigFactory,
         BasicPropertiesService,
-        PropertyGroupTranslatorService,
-        FileSizePipe
+        PropertyGroupTranslatorService
     ]
 })
 export class ContentMetadataModule {}

@@ -75,34 +75,34 @@ const currentTaskIdNew = '__NEW__';
 })
 export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit {
 
-    @ViewChild(TaskFiltersComponent)
+    @ViewChild('activitifilter')
     activitifilter: TaskFiltersComponent;
 
-    @ViewChild(PaginationComponent)
+    @ViewChild('processListPagination')
     processListPagination: PaginationComponent;
 
-    @ViewChild(PaginationComponent)
+    @ViewChild('taskListPagination')
     taskListPagination: PaginationComponent;
 
-    @ViewChild(TaskListComponent)
+    @ViewChild('taskList')
     taskList: TaskListComponent;
 
-    @ViewChild(ProcessFiltersComponent)
+    @ViewChild('activitiprocessfilter')
     activitiprocessfilter: ProcessFiltersComponent;
 
-    @ViewChild(ProcessInstanceListComponent)
+    @ViewChild('processList')
     processList: ProcessInstanceListComponent;
 
-    @ViewChild(ProcessInstanceDetailsComponent)
+    @ViewChild('activitiprocessdetails')
     activitiprocessdetails: ProcessInstanceDetailsComponent;
 
-    @ViewChild(TaskDetailsComponent)
+    @ViewChild('activitidetails')
     activitidetails: TaskDetailsComponent;
 
-    @ViewChild(StartProcessInstanceComponent)
+    @ViewChild('activitiStartProcess')
     activitiStartProcess: StartProcessInstanceComponent;
 
-    @ViewChild(AnalyticsReportListComponent)
+    @ViewChild('analyticsreportlist')
     analyticsreportlist: AnalyticsReportListComponent;
 
     @Input()

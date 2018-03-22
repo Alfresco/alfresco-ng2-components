@@ -229,7 +229,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Output()
     error: EventEmitter<any> = new EventEmitter();
 
-    @ViewChild(DataTableComponent)
+    @ViewChild('dataTable')
     dataTable: DataTableComponent;
 
     errorMessage;
