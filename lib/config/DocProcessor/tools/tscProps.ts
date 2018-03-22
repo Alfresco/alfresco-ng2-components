@@ -12,6 +12,12 @@ import { JsxEmit, isClassDeclaration, PropertyDeclaration } from "typescript";
 // Max number of characters in the text for the default value column.
 const maxDefaultTextLength = 20;
 
+let nameExceptions = {
+    "datatable.component": "DataTableComponent",
+    "tasklist.service": "TaskListService"
+}
+
+
 export function initPhase(aggData) {
 }
 
@@ -301,6 +307,9 @@ function initialCap(str: string) {
 
 
 function fixAngularFilename(rawName: string) {
+    if (nameExceptions[rawName])
+        return nameExceptions[rawName];
+
 	var name = rawName.replace(/\]|\(|\)/g, '');
 	
     var fileNameSections = name.split('.');
