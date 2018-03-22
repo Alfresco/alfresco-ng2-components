@@ -178,65 +178,111 @@ describe('UploadDragAreaComponent', () => {
         });
     });
 
-    it('should upload the list of files dropped', (done) => {
-        component.success = null;
-        uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
+    describe('Upload Files', () => {
+        let addToQueueSpy;
 
-        fixture.detectChanges();
-        const file = <File> { name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json' };
-        let filesList = [file];
+        beforeEach(async(() => {
+            addToQueueSpy = spyOn(uploadService, 'addToQueue');
+        }));
 
-        spyOn(uploadService, 'addToQueue').and.callFake((f: FileModel) => {
-            expect(f.file).toBe(file);
-            done();
-        });
+        it('should upload the list of files dropped', async(() => {
+            component.success = null;
+            uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
+            fixture.detectChanges();
+            const file = <File> { name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json' };
+            let filesList = [file];
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                addToQueueSpy.and.callFake((f: FileModel) => {
+                    expect(f.file).toBe(file);
+                });
+                component.onFilesDropped(filesList);
+            });
+        }));
 
-        component.onFilesDropped(filesList);
-    });
+        it('should only upload those files whose fileTypes are in acceptedFilesType', async(() => {
+            spyOn(uploadService, 'uploadFilesInTheQueue');
+            component.success = null;
+            component.acceptedFilesType = '.jpg,.pdf';
+            fixture.detectChanges();
+            const files: File[] = [
+                <File> { name: 'phobos.jpg' },
+                <File> { name: 'deimos.pdf' },
+                <File> { name: 'ganymede.bmp' }
+            ];
+            component.onFilesDropped(files);
+            fixture.whenStable().then(() => {
+                expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith(null);
+                const filesCalledWith = addToQueueSpy.calls.mostRecent().args;
+                expect(filesCalledWith.length).toBe(2, 'Files should contain two elements');
+                expect(filesCalledWith[0].name).toBe('phobos.jpg');
+                expect(filesCalledWith[1].name).toBe('deimos.pdf');
+            });
+        }));
 
-    it('should upload a file when dropped', () => {
-        component.success = null;
+        it('should upload a file if fileType is in acceptedFilesType', async(() => {
+            spyOn(uploadService, 'uploadFilesInTheQueue');
+            component.success = null;
+            component.acceptedFilesType = '.png';
+            fixture.detectChanges();
+            let itemEntity = {
+                fullPath: '/folder-fake/file-fake.png',
+                isDirectory: false,
+                isFile: true,
+                name: 'file-fake.png',
+                file: (callbackFile) => {
+                    let fileFake = new File(['fakefake'], 'file-fake.png', {type: 'image/png'});
+                    callbackFile(fileFake);
+                }
+            };
+            fixture.whenStable().then(() => {
+                component.onFilesEntityDropped(itemEntity);
+                expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith(null);
+            });
+        }));
 
-        fixture.detectChanges();
-        spyOn(uploadService, 'uploadFilesInTheQueue');
+        it('should not upload a file if fileType is not in acceptedFilesType', async(() => {
+            component.success = null;
+            component.acceptedFilesType = '.pdf';
+            fixture.detectChanges();
+            spyOn(uploadService, 'uploadFilesInTheQueue');
 
-        let itemEntity = {
-            fullPath: '/folder-fake/file-fake.png',
-            isDirectory: false,
-            isFile: true,
-            name: 'file-fake.png',
-            file: (callbackFile) => {
-                let fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
-                callbackFile(fileFake);
-            }
-        };
+            let itemEntity = {
+                fullPath: '/folder-fake/file-fake.png',
+                isDirectory: false,
+                isFile: true,
+                name: 'file-fake.png',
+                file: (callbackFile) => {
+                    let fileFake = new File(['fakefake'], 'file-fake.png', {type: 'image/png'});
+                    callbackFile(fileFake);
+                }
+            };
+            fixture.whenStable().then(() => {
+                component.onFilesEntityDropped(itemEntity);
+                expect(uploadService.uploadFilesInTheQueue).not.toHaveBeenCalledWith(null);
+            });
+        }));
 
-        component.onFilesEntityDropped(itemEntity);
-        expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith(null);
-    });
+        it('should upload a file with a custom root folder ID when dropped', async(() => {
+            component.success = null;
+            fixture.detectChanges();
+            spyOn(uploadService, 'uploadFilesInTheQueue');
 
-    it('should upload a file with a custom root folder ID when dropped', () => {
-        component.success = null;
+            let itemEntity = {
+                fullPath: '/folder-fake/file-fake.png',
+                isDirectory: false,
+                isFile: true,
+                name: 'file-fake.png',
+                file: (callbackFile) => {
+                    let fileFake = new File(['fakefake'], 'file-fake.png', {type: 'image/png'});
+                    callbackFile(fileFake);
+                }
+            };
+            component.onFilesEntityDropped(itemEntity);
+            expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith(null);
+        }));
 
-        fixture.detectChanges();
-        spyOn(uploadService, 'uploadFilesInTheQueue');
-
-        let itemEntity = {
-            fullPath: '/folder-fake/file-fake.png',
-            isDirectory: false,
-            isFile: true,
-            name: 'file-fake.png',
-            file: (callbackFile) => {
-                let fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
-                callbackFile(fileFake);
-            }
-        };
-
-        component.onFilesEntityDropped(itemEntity);
-        expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith(null);
-    });
-
-    it('should upload a file when user has create permission on target folder', async(() => {
+        it('should upload a file when user has create permission on target folder', async(() => {
         let fakeItem = {
             fullPath: '/folder-fake/file-fake.png',
             isDirectory: false,
@@ -248,22 +294,16 @@ describe('UploadDragAreaComponent', () => {
             }
         };
 
-        fixture.detectChanges();
-        spyOn(uploadService, 'uploadFilesInTheQueue').and.returnValue(Promise.resolve(fakeItem));
-        component.success.subscribe((val) => {
-            expect(val).not.toBeNull();
-        });
-
         let fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
-            detail: {
-                data: getFakeShareDataRow(),
-                files: [fakeItem]
-            }
-        });
+                detail: {
+                    data: getFakeShareDataRow(),
+                    files: [fakeItem]
+                }
+            });
 
         component.onUploadFiles(fakeCustomEvent);
     }));
-
+});
     describe('Events', () => {
         it('should raise an error if upload a file goes wrong', (done) => {
             let fakeItem = {

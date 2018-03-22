@@ -34,6 +34,7 @@ export class AppComponent {
 | disabled | boolean | false | Toggle component disabled state |
 | parentId | string | '-root-' | The ID of the folder in which the files will be uploaded. |
 | versioning | boolean | false |  Versioning false is the default uploader behaviour and it renames the file using an integer suffix if there is a name clash. Versioning true to indicate that a major version should be created  | 
+| acceptedFilesType | `string` | `'*'` | List of allowed file extensions, for example: ".jpg,.gif,.png,.svg".  |
 
 ### Events
 
