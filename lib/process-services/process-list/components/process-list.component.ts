@@ -19,6 +19,7 @@ import {
     DataColumn,
     DataRowEvent,
     DataSorting,
+    DataTableComponent,
     DataTableAdapter,
     ObjectDataColumn,
     ObjectDataRow,
@@ -41,7 +42,8 @@ import {
     Input,
     OnChanges,
     Output,
-    SimpleChanges
+    SimpleChanges,
+    ViewChild
 } from '@angular/core';
 import { ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
 import { processPresetsDefaultModel } from '../models/process-preset.model';
@@ -58,6 +60,8 @@ import { ProcessListModel } from '../models/process-list.model';
 export class ProcessInstanceListComponent implements OnChanges, AfterContentInit, PaginatedComponent {
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
+
+    @ViewChild('dataTable') dataTable: DataTableComponent;
 
     /** The id of the app. */
     @Input()
@@ -247,6 +251,7 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
      */
     private renderInstances(instances: any[]) {
         instances = this.optimizeNames(instances);
+        this.dataTable.resetSelection();
         this.setDatatableSorting();
         this.data.setRows(instances);
     }
