@@ -1,4 +1,6 @@
 @import './app/components/app-layout/app-layout.component.scss';
+@import './app/components/files/files.component.scss';
+
 
 @import 'content-services/styles/index';
 @import 'process-services/styles/index';
@@ -16,6 +18,7 @@ $theme:   mat-light-theme($primary, $accent, $warn);
 
 @include angular-material-theme($theme);
 @include adf-app-layout-theme($theme);
+@include adf-file-component-theme($theme);
 
 @include adf-content-services-theme($theme);
 @include adf-process-services-theme($theme);
