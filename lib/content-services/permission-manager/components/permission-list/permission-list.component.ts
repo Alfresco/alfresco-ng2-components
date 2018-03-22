@@ -38,6 +38,14 @@ export class PermissionListComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.fetchNodePermissions();
+    }
+
+    reload() {
+        this.fetchNodePermissions();
+    }
+
+    private fetchNodePermissions() {
         this.nodeService.getNode(this.nodeId).subscribe((node: MinimalNodeEntryEntity) => {
             this.permissionList = this.getPermissionList(node);
         });
