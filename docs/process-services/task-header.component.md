@@ -1,7 +1,9 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-03-21
 ---
+
 # Task Header component
 
 Shows all the information related to a task.
@@ -32,14 +34,14 @@ Shows all the information related to a task.
 
 ## Details
 
-The purpose of the component is to populate the local variable called `properties` (array of CardViewModel), with all the information that we want to display.
+The component populates an internal array of 
+[CardViewModel](../core/card-view.component.md) with the information that we want to display.
 
-## Customise the property showed
-By default all the property are showed :
+By default all properties are displayed:
+
 ***assignee***, ***status***, ***priority***, ***dueDate***, ***category***, ***parentName***, ***created-by***, ***created***, ***id***, ***description***, ***formName***. 
 
-It is possible to customise the showed property via the "app.config.json".
-This is how the configuration looks like:
+However, you can also choose which properties to show using a configuration in `app.config.json`:
 
 ```json
 
@@ -50,7 +52,7 @@ This is how the configuration looks like:
     },
 
 ```
-In this way only the listed property will be showed.
+With this configuration, only the four listed properties will be shown.
 
 ## See also
 

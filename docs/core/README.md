@@ -18,7 +18,7 @@ for more information about installing and using the source code.
 | [Datatable component](datatable.component.md) | Displays data as a table with customizable columns and presentation. | [Source](../../lib/core/datatable/components/datatable/datatable.component.ts) |
 | [Form field component](form-field.component.md) | A form field in an APS form. | [Source](../../lib/core/form/components/form-field/form-field.component.ts) |
 | [Form list component](form-list.component.md) | Shows APS forms as a list. | [Source](../../lib/core/form/components/form-list.component.ts) |
-| [Form component](form.component.md) | Shows a Form from APS (see it live: [Form Quickstart](https://embed.plnkr.co/YSLXTqb3DtMhVJSqXKkE/)) | [Source](../../lib/core/form/components/form.component.ts) |
+| [Form component](form.component.md) | Shows a Form from APS | [Source](../../lib/core/form/components/form.component.ts) |
 | [Start form component](start-form.component.md) | Displays the Start Form for a process. | [Source](../../lib/core/form/components/start-form.component.ts) |
 | [Text mask component](text-mask.component.md) | Implements text field input masks. | [Source](../../lib/core/form/components/widgets/text/text-mask.component.ts) |
 | [Info drawer layout component](info-drawer-layout.component.md) | Displays a sidebar-style information panel. | [Source](../../lib/core/info-drawer/info-drawer-layout.component.ts) |

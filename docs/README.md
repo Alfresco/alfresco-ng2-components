@@ -59,7 +59,7 @@ for more information about installing and using the source code.
 | [Datatable component](core/datatable.component.md) | Displays data as a table with customizable columns and presentation. | [Source](../lib/core/datatable/components/datatable/datatable.component.ts) |
 | [Form field component](core/form-field.component.md) | A form field in an APS form. | [Source](../lib/core/form/components/form-field/form-field.component.ts) |
 | [Form list component](core/form-list.component.md) | Shows APS forms as a list. | [Source](../lib/core/form/components/form-list.component.ts) |
-| [Form component](core/form.component.md) | Shows a Form from APS (see it live: [Form Quickstart](https://embed.plnkr.co/YSLXTqb3DtMhVJSqXKkE/)) | [Source](../lib/core/form/components/form.component.ts) |
+| [Form component](core/form.component.md) | Shows a Form from APS | [Source](../lib/core/form/components/form.component.ts) |
 | [Start form component](core/start-form.component.md) | Displays the Start Form for a process. | [Source](../lib/core/form/components/start-form.component.ts) |
 | [Text mask component](core/text-mask.component.md) | Implements text field input masks. | [Source](../lib/core/form/components/widgets/text/text-mask.component.ts) |
 | [Info drawer layout component](core/info-drawer-layout.component.md) | Displays a sidebar-style information panel. | [Source](../lib/core/info-drawer/info-drawer-layout.component.ts) |
@@ -211,6 +211,7 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Node download directive](content-services/node-download.directive.md) | Allows folders and/or files to be downloaded. Multiple nodes are packed as a '.ZIP' archive. | [Source](../lib/content-services/directives/node-download.directive.ts) |
+| [Node share directive](content-services/node-share.directive.md) | Create and manage public shared links for files | [Source](../lib/content-services/directives/node-share.directive.ts) |
 | [Folder create directive](content-services/folder-create.directive.md) | Allows folders to be created. | [Source](../lib/content-services/folder-directive/folder-create.directive.ts) |
 | [Folder edit directive](content-services/folder-edit.directive.md) | Allows folders to be edited. | [Source](../lib/content-services/folder-directive/folder-edit.directive.ts) |
 | [File draggable directive](core/file-draggable.directive.md) | Provide drag-and-drop features for an element such as a `div`. | [Source](../lib/content-services/upload/directives/file-draggable.directive.ts) |
@@ -273,6 +274,7 @@ for more information about installing and using the source code.
 | [Task filters component](process-services/task-filters.component.md) | Shows all available filters. | [Source](../lib/process-services/task-list/components/task-filters.component.ts) |
 | [Task header component](process-services/task-header.component.md) | Shows all the information related to a task. | [Source](../lib/process-services/task-list/components/task-header.component.ts) |
 | [Task list component](process-services/task-list.component.md) | Renders a list containing all the tasks matched by the parameters specified. | [Source](../lib/process-services/task-list/components/task-list.component.ts) |
+| [Task standalone component](process-services/task-standalone.component.md) | This component can be used when there is no form attached to a task. | [Source](../lib/process-services/task-list/components/task-standalone.component.ts) |
 
 ## Directives
 

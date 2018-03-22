@@ -1,7 +1,9 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-03-21
 ---
+
 # Process Instance List
 
 Renders a list containing all the process instances matched by the parameters specified.
@@ -17,9 +19,34 @@ Renders a list containing all the process instances matched by the parameters sp
 </adf-process-instance-list>
 ```
 
-You can also use custom schema declaration as shown below:
+### Properties
 
-define custom schema in the app.config.json as shown below json format.
+| Name | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| appId | number |  | The id of the app. |
+| processDefinitionKey | string |  | The processDefinitionKey of the process. |
+| presetColumn | string |  | Name of a custom schema to fetch from `app.config.json`. |
+| state | string |  | Define state of the processes. Possible values are `running`, `completed` and `all` |
+| sort | string |  | Define sort of the processes. Possible values are `created-desc`, `created-asc`, `ended-desc`, `ended-asc` |
+| name | string |  | The name of the list. |
+| page | number | 0 | The page of the processes to fetch. |
+| size | number | 25 | The number of processes to fetch. |
+| data | DataTableAdapter |  | Data source to define the datatable. |
+| multiselect | boolean | false | Toggles multiple row selection, renders checkboxes at the beginning of each row. |
+| selectionMode | string | 'single' | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
+
+### Events
+
+| Name | Description |
+| ---- | ----------- |
+| rowClick | Emitted when a row in the process list is clicked |
+| success | Emitted when the list of process instances has been loaded successfully from the server |
+| error | Emitted when an error is encountered loading the list of process instances from the server |
+
+## Details
+
+You can define a custom schema for the list in the `app.config.json` file and access it with the
+`presetColumn` property as shown below:
 
 ```json
 "adf-process-list": {
@@ -50,7 +77,9 @@ define custom schema in the app.config.json as shown below json format.
 </adf-process-instance-list>
 ```
 
-You can also use both HTML-based and app.config.json custom schema declaration at same time like shown below:
+You can also define the schema in the HTML using the
+[Data column component](../core/data-column.component.md). You can combine this with schema
+information defined in `app.config.json` as in the example below:
 
 ```json
 "adf-process-list": {
@@ -93,7 +122,7 @@ You can also use both HTML-based and app.config.json custom schema declaration a
 
 ### Pagination strategy
 
-adf-process-instance-list also supports pagination and the same can be used as shown below.
+The Process Instance List also supports pagination:
 
 ```html
 <adf-process-instance-list
@@ -110,32 +139,8 @@ adf-process-instance-list also supports pagination and the same can be used as s
 </adf-pagination>
 ```
 
-### Properties
-
-| Name | Type | Default | Description |
-| ---- | ----------- | --- | --- |
-| appId | number |  | The id of the app. |
-| processDefinitionKey | string |  | The processDefinitionKey of the process. |
-| presetColumn | string | | The presetColumn of the custom schema to fetch. |
-| state | string |  | Define state of the processes. Possible values are `running`, `completed` and `all` |
-| sort | string |  | Define sort of the processes. Possible values are `created-desc`, `created-asc`, `ended-desc`, `ended-asc` |
-| name | string | | The name of the list. |
-| page | number | 0 | The page of the processes to fetch. |
-| size | number | 25 | The number of processes to fetch. |
-| data | DataTableAdapter |  | Data source to define the datatable. |
-| multiselect | boolean | false | Toggles multiple row selection, renders checkboxes at the beginning of each row. |
-| selectionMode | string | 'single' | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
-
-### Events
-
-| Name | Description |
-| ---- | ----------- |
-| rowClick | Emitted when a row in the process list is clicked |
-| success | Emitted when the list of process instances has been loaded successfully from the server |
-| error | Emitted when an error is encountered loading the list of process instances from the server |
-
 ## See also
 
 -   [Data column component](../core/data-column.component.md)
--   [DataTableAdapter](../core/datatable-adapter.interface.md)
+-   [Data Table Adapter interface](../core/datatable-adapter.interface.md)
 -   [Pagination component](../core/pagination.component.md)

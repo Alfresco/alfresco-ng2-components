@@ -1,7 +1,9 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-03-21
 ---
+
 # Sites service
 
 Accesses and manipulates sites from a Content Services repository.
@@ -25,6 +27,8 @@ Accesses and manipulates sites from a Content Services repository.
 -   `getSiteMembers(siteId: string): Observable<SiteEntry>`  
     Gets a list of all a site's members.  
     -   `siteId` - ID of the target site
+-   `getEcmCurrentLoggedUserName(): string`  
+    Gets the username of the user currently logged into ACS.  
 
 ## Details
 

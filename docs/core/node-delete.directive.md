@@ -1,7 +1,9 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-03-21
 ---
+
 # Node Delete directive
 
 Deletes multiple files and folders.
@@ -36,7 +38,8 @@ Deletes multiple files and folders.
 
 ## Details
 
-Note it the file is already in the trashcan so is a DeletedNodeEntity the performing of this action will delete the file premanently
+Note that if a target item is already in the trashcan (and is therefore a `DeletedNodeEntity`) then
+this action will delete the file permanently.
 
 ## See also
 
