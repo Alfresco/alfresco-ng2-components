@@ -15,7 +15,27 @@
  * limitations under the License.
  */
 
- export * from './components/permission-list/permission-list.component';
- export * from './components/inherited-button.directive';
+import { Component } from '@angular/core';
 
- export * from './models/permission.model';
+@Component({
+    template: `
+    <button id="sample-button-permission" adf-inherit-permission [nodeId]="nodeId"
+            (updated)="onUpdate($event)"> PERMISSION </button>
+        <span id="update-notification" *ngIf="updatedNode"> NODE UPDATED </span>
+    `
+})
+
+export class SimpleInheritedPermissionTestComponent {
+
+    message: string = '';
+    nodeId: string = 'fake-node-id';
+    updatedNode: boolean = false;
+
+    constructor() {
+    }
+
+    onUpdate(node: any) {
+        this.updatedNode = node.permissions.isInheritanceEnabled;
+    }
+
+}

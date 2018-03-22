@@ -153,5 +153,8 @@
         "LIST":"List Tags Content Services",
         "INSERT":"Insert Node ID",
         "NODE_LIST":"Tag list By Node ID"
+    },
+    "DEMO_PERMISSION": {
+      "INHERIT_PERMISSION_BUTTON" :"Inherit Permission"
     }
 }
