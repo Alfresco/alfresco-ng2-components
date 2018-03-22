@@ -22,7 +22,7 @@ import { CreateProcessAttachmentComponent } from './create-process-attachment.co
 
 declare let jasmine: any;
 
-fdescribe('Activiti Process Create Attachment', () => {
+describe('Activiti Process Create Attachment', () => {
 
     let component: CreateProcessAttachmentComponent;
     let fixture: ComponentFixture<CreateProcessAttachmentComponent>;
