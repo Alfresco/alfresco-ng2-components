@@ -17,7 +17,7 @@
 
 import { Component, Optional, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params} from '@angular/router';
-import { PermissionDisplayComponent } from '@alfresco/adf-content-services'
+import { PermissionListComponent } from '@alfresco/adf-content-services';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 
 @Component({
@@ -27,8 +27,8 @@ import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 })
 export class DemoPermissionComponent implements OnInit {
 
-    @ViewChild(PermissionDisplayComponent)
-    displayPermissionComponent: PermissionDisplayComponent;
+    @ViewChild(PermissionListComponent)
+    displayPermissionComponent: PermissionListComponent;
 
     nodeId: string;
 

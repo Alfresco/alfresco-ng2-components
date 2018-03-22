@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
- export * from './components/permission-display/permission-list.component';
+ export * from './components/permission-list/permission-list.component';
+ export * from './components/inherited-button.directive';
 
  export * from './models/permission.model';

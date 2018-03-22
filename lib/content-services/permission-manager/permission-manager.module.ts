@@ -1,4 +1,4 @@
-3/*!
+/*!
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
  *
@@ -20,7 +20,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
-import { PermissionListComponent } from './components/permission-display/permission-list.component';
+import { PermissionListComponent } from './components/permission-list/permission-list.component';
 import { DataTableModule, DataColumnModule } from '@alfresco/adf-core';
 import { InheritPermissionDirective } from './components/inherited-button.directive';
 
