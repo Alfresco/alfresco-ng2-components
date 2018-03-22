@@ -26,6 +26,7 @@ import {
     UploadService
 } from '@alfresco/adf-core';
 import { Component, EventEmitter, forwardRef, Input, Output, ViewEncapsulation } from '@angular/core';
+import { UploadBase } from './base-upload/upload-base';
 
 @Component({
     selector: 'adf-upload-drag-area',
@@ -36,7 +37,7 @@ import { Component, EventEmitter, forwardRef, Input, Output, ViewEncapsulation }
     ],
     encapsulation: ViewEncapsulation.None
 })
-export class UploadDragAreaComponent implements NodePermissionSubject {
+export class UploadDragAreaComponent extends UploadBase implements NodePermissionSubject {
 
     /** Toggle component disabled state. */
     @Input()
@@ -63,6 +64,7 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
     constructor(private uploadService: UploadService,
                 private translateService: TranslationService,
                 private notificationService: NotificationService) {
+                    super();
     }
 
     /**
@@ -76,9 +78,8 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
                 newVersion: this.versioning,
                 path: '/',
                 parentId: this.parentId
-            }));
-            this.uploadService.addToQueue(...fileModels);
-            this.uploadService.uploadFilesInTheQueue(this.success);
+            })).filter(this.isFileAcceptable.bind(this));
+            this.addNodeInUploadQueue(fileModels);
         }
     }
 
@@ -95,8 +96,9 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
                     parentId: this.parentId,
                     path: item.fullPath.replace(item.name, '')
                 });
-
-                this.addNodeInUploadQueue([fileModel]);
+                if (this.isFileAcceptable(fileModel)) {
+                    this.addNodeInUploadQueue([fileModel]);
+                }
             });
         }
     }
@@ -115,8 +117,7 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
                         parentId: this.parentId,
                         path: entry.relativeFolder
                     });
-                });
-
+                }).filter(this.isFileAcceptable.bind(this));
                 this.addNodeInUploadQueue(files);
             });
         }
@@ -128,7 +129,7 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
             this.uploadService.uploadFilesInTheQueue(this.success);
             this.uploadService.fileUploadError.subscribe((error) => {
                 this.error.emit(error);
-            });
+                });
         }
     }
 
@@ -172,7 +173,7 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
                     newVersion: this.versioning,
                     path: fileInfo.relativeFolder,
                     parentId: parentId
-                }));
+                })).filter(this.isFileAcceptable.bind(this));
                 this.addNodeInUploadQueue(fileModels);
             }
         }
