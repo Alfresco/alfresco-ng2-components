@@ -24,14 +24,24 @@
 }
 
 @media (min-width: 721px) {
-    .mobile-settings {
+    .mobile-settings, .mobile-setting-button {
         display: none;
     }
 }
 
 @media (max-width: 720px) {
-    .settings {
+    .settings,  .setting-button {
         display: none;
+    }
+
+    .mobile-setting-button.mat-raised-button {
+        background-color: rgb(68,138,255);
+        line-height: 25px;
+    }
+
+    .mobile-settings {
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     }
 }
 
