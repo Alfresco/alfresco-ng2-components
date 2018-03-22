@@ -82,6 +82,7 @@ Displays the documents from a repository.
 | maxItems | `number` |  | Default value is stored into user preference settings  |
 | skipCount | `number` | `0` | Number of elements to skip over for pagination purposes  |
 | enableInfiniteScrolling | `boolean` | `false` | Set document list to work in infinite scrolling mode  |
+| includeFields | `string[]` | `[]` | Include additional information about the node in the server request.for example: association, isLink, isLocked and others. |
 
 ### Events
 
