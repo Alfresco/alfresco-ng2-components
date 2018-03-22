@@ -34,9 +34,10 @@
         display: none;
     }
 
-    .mobile-setting-button.mat-raised-button {
+    .mobile-setting-button {
         background-color: rgb(68,138,255);
-        line-height: 25px;
+        color: white;
+        width: 100%;
     }
 
     .mobile-settings {
