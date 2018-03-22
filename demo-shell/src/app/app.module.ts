@@ -48,9 +48,6 @@ import { TaskAttachmentsComponent } from './components/process-service/task-atta
 import { ProcessAttachmentsComponent } from './components/process-service/process-attachments.component';
 import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
-import { SearchComponentsModule } from './components/search/components/search-components.module';
-import { SearchContainerComponent } from './components/search/components/search-container.component';
-
 
 @NgModule({
     imports: [
@@ -99,8 +96,6 @@ import { SearchContainerComponent } from './components/search/components/search-
         SharedLinkViewComponent,
         FormLoadingComponent,
         DemoPermissionComponent,
-        FacetContainerComponent,
-        SearchContainerComponent,
         FormLoadingComponent
     ],
     providers: [
