@@ -37,6 +37,7 @@ import { DialogModule } from './dialogs/dialog.module';
 import { FolderDirectiveModule } from './folder-directive/folder-directive.module';
 import { ContentMetadataModule } from './content-metadata/content-metadata.module';
 import { PermissionManagerModule } from './permission-manager/permission-manager.module';
+import { RatingService } from './social/services/rating.service';
 
 @NgModule({
     imports: [
@@ -69,7 +70,8 @@ import { PermissionManagerModule } from './permission-manager/permission-manager
                 name: 'adf-content-services',
                 source: 'assets/adf-content-services'
             }
-        }
+        },
+        RatingService
     ],
     exports: [
         CoreModule,
