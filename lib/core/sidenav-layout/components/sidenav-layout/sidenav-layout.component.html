@@ -1,0 +1,23 @@
+<div class="sidenav-layout">
+    <ng-container *ngIf="!isHeaderInside">
+        <ng-container *ngTemplateOutlet="headerTemplate; context:templateContext"></ng-container>
+    </ng-container>
+
+    <adf-layout-container #container
+        [sidenavMin]="sidenavMin"
+        [sidenavMax]="sidenavMax"
+        [mediaQueryList]="mediaQueryList"
+        [hideSidenav]="hideSidenav"
+        data-automation-id="adf-layout-container"
+        class="layout__content">
+
+        <ng-container app-layout-navigation *ngTemplateOutlet="navigationTemplate; context:templateContext"></ng-container>
+
+        <ng-container app-layout-content>
+            <ng-container *ngIf="isHeaderInside">
+                <ng-container *ngTemplateOutlet="headerTemplate; context:templateContext"></ng-container>
+            </ng-container>
+            <ng-container *ngTemplateOutlet="contentTemplate; context:templateContext"></ng-container>
+        </ng-container>
+    </adf-layout-container>
+</div>

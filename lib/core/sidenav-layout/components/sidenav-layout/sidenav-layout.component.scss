@@ -1,0 +1,12 @@
+:host {
+    display: flex;
+    flex: 1;
+
+    .sidenav-layout {
+        width: 100%;
+    }
+
+    router-outlet {
+        flex: 0 0;
+    }
+}
