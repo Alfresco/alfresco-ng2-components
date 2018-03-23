@@ -33,7 +33,7 @@ import { DocumentListComponent } from '@alfresco/adf-content-services';
 export class TrashcanComponent {
 
     @ViewChild('documentList')
-    documentList;
+    documentList: DocumentListComponent;
 
     refresh() {
         this.documentList.loadTrashcan();
