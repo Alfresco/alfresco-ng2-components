@@ -79,7 +79,6 @@ const appRoutes: Routes = [
     DocumentlistComponent,
     StartProcessComponent
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

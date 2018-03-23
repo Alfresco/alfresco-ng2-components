@@ -37,7 +37,6 @@ import { SelectAppsDialogComponent } from './select-apps-dialog-component';
         AppsListComponent,
         SelectAppsDialogComponent
     ],
-    providers: [],
     exports: [
         AppsListComponent,
         SelectAppsDialogComponent
