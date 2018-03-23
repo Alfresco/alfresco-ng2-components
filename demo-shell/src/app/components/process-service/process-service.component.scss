@@ -97,10 +97,6 @@
         @media screen and ($mat-small) {
             container-widget .grid-list {
                 flex-direction: column;
-
-                .grid-list-item {
-                    flex: 1 0 100%;
-                }
             }
         }
     }
