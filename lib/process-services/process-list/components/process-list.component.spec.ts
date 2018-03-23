@@ -279,6 +279,27 @@ describe('ProcessInstanceListComponent', () => {
         expect(dataRow[1].isSelected).toEqual(false);
     });
 
+    it('should not select first row when selectFirstRow is false', () => {
+        component.data = new ObjectDataTableAdapter(
+            [
+                { id: '999', name: 'Fake-name' },
+                { id: '888', name: 'Fake-name-888' }
+            ],
+            [
+                { type: 'text', key: 'id', title: 'Id' },
+                { type: 'text', key: 'name', title: 'Name' }
+            ]
+        );
+        component.selectFirstRow = false;
+        component.selectFirst();
+        const dataRow = component.data.getRows();
+        expect(dataRow).toBeDefined();
+        expect(dataRow[0].getValue('id')).toEqual('999');
+        expect(dataRow[0].isSelected).toEqual(false);
+        expect(dataRow[1].getValue('id')).toEqual('888');
+        expect(dataRow[1].isSelected).toEqual(false);
+    });
+
     it('should throw an exception when the response is wrong', fakeAsync(() => {
         let emitSpy: jasmine.Spy = spyOn(component.error, 'emit');
         let mockError = 'Fake server error';

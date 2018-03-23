@@ -34,6 +34,7 @@ Renders a list containing all the process instances matched by the parameters sp
 | data | DataTableAdapter |  | Data source to define the datatable. |
 | multiselect | boolean | false | Toggles multiple row selection, renders checkboxes at the beginning of each row. |
 | selectionMode | string | 'single' | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
+| selectFirstRow | boolean | true | Toggles default selection of the first row. |
 
 ### Events
 
