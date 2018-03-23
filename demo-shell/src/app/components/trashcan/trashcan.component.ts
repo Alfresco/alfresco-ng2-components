@@ -36,7 +36,7 @@ export class TrashcanComponent {
     documentList: DocumentListComponent;
 
     refresh() {
-        this.documentList.loadTrashcan();
+        this.documentList.reload();
         this.documentList.resetSelection();
     }
 
