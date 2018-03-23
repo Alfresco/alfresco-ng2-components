@@ -25,7 +25,6 @@ import { ShareDialogComponent } from './share.dialog';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { NodesApiService, NotificationService, TranslationService } from '@alfresco/adf-core';
 
 @NgModule({
     imports: [
@@ -39,11 +38,6 @@ import { NodesApiService, NotificationService, TranslationService } from '@alfre
         DownloadZipDialogComponent,
         FolderDialogComponent,
         ShareDialogComponent
-    ],
-    providers: [
-        NodesApiService,
-        NotificationService,
-        TranslationService
     ],
     exports: [
         DownloadZipDialogComponent,
