@@ -141,7 +141,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     @ViewChild('documentList')
     documentList: DocumentListComponent;
 
-    @ViewChild(PaginationComponent)
+    @ViewChild('standardPagination')
     standardPagination: PaginationComponent;
 
     permissionsStyle: PermissionStyleModel[] = [];

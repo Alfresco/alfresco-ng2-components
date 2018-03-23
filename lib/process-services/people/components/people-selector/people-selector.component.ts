@@ -41,7 +41,7 @@ export class PeopleSelectorComponent {
     @Output()
     peopleIdChange: EventEmitter<number>;
 
-    @ViewChild(PeopleSearchFieldComponent)
+    @ViewChild('peopleSearchField')
     searchFieldComponent: PeopleSearchFieldComponent;
 
     performSearch: PerformSearchCallback;
