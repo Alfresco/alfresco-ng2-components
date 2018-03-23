@@ -104,7 +104,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     @Output()
     select: EventEmitter<MinimalNodeEntryEntity[]> = new EventEmitter<MinimalNodeEntryEntity[]>();
 
-    @ViewChild(DocumentListComponent)
+    @ViewChild('documentList')
     documentList: DocumentListComponent;
 
     @ViewChild(HighlightDirective)
