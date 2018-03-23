@@ -32,7 +32,7 @@ import 'rxjs/add/observable/merge';
     styleUrls: ['./file-uploading-dialog.component.scss']
 })
 export class FileUploadingDialogComponent implements OnInit, OnDestroy {
-    @ViewChild(FileUploadingListComponent)
+    @ViewChild('uploadList')
     uploadList: FileUploadingListComponent;
 
     /** Dialog position. Can be 'left' or 'right'. */

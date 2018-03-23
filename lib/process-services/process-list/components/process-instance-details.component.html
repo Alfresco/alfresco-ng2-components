@@ -5,6 +5,7 @@
     </mat-card-header>
     <mat-card-content>
         <adf-process-instance-header
+            #processInstanceHeader
             [processInstance]="processInstanceDetails"
             (showProcessDiagram)="onShowProcessDiagram($event)">
         </adf-process-instance-header>
@@ -14,6 +15,7 @@
         <mat-card>
             <mat-card-content>
                 <adf-process-instance-tasks
+                    #processInstanceTasks
                     [processInstanceDetails]="processInstanceDetails"
                     (taskClick)="onTaskClicked($event)">
                 </adf-process-instance-tasks>

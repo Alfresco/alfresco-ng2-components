@@ -51,7 +51,7 @@ export class CardViewDateItemComponent implements OnInit {
     @Input()
     displayEmpty: boolean = true;
 
-    @ViewChild(MatDatetimepicker)
+    @ViewChild('datetimePicker')
     public datepicker: MatDatetimepicker<any>;
 
     valueDate: Moment;

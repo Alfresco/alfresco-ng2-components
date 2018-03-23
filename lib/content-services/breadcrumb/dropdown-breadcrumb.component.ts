@@ -31,7 +31,7 @@ import { BreadcrumbComponent } from './breadcrumb.component';
 })
 export class DropdownBreadcrumbComponent extends BreadcrumbComponent implements OnChanges {
 
-    @ViewChild(MatSelect)
+    @ViewChild('select')
     selectbox: MatSelect;
 
     currentNode: PathElementEntity;

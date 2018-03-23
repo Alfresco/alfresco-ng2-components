@@ -94,7 +94,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     @Output()
     optionClicked: EventEmitter<any> = new EventEmitter();
 
-    @ViewChild(SearchComponent)
+    @ViewChild('search')
     searchAutocomplete: SearchComponent;
 
     @ViewChild('searchInput')
