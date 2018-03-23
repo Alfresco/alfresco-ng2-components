@@ -19,6 +19,7 @@ import {
     DataColumn,
     DataRowEvent,
     DataSorting,
+    DataTableComponent,
     DataTableAdapter,
     ObjectDataColumn,
     ObjectDataRow,
@@ -41,7 +42,8 @@ import {
     Input,
     OnChanges,
     Output,
-    SimpleChanges
+    SimpleChanges,
+    ViewChild
 } from '@angular/core';
 import { ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
 import { processPresetsDefaultModel } from '../models/process-preset.model';
@@ -58,6 +60,8 @@ import { ProcessListModel } from '../models/process-list.model';
 export class ProcessInstanceListComponent implements OnChanges, AfterContentInit, PaginatedComponent {
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
+
+    @ViewChild('dataTable') dataTable: DataTableComponent;
 
     /** The id of the app. */
     @Input()
@@ -107,6 +111,10 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
      */
     @Input()
     selectionMode: string = 'single'; // none|single|multiple
+
+    /* Toggles default selection of the first row */
+    @Input()
+    selectFirstRow: boolean = true;
 
     /** Emitted when a row in the process list is clicked. */
     @Output()
@@ -243,6 +251,7 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
      */
     private renderInstances(instances: any[]) {
         instances = this.optimizeNames(instances);
+        this.dataTable.resetSelection();
         this.setDatatableSorting();
         this.data.setRows(instances);
     }
@@ -266,16 +275,18 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
      * Select the first instance of a list if present
      */
     selectFirst() {
-        if (!this.isListEmpty()) {
-            let row = this.data.getRows()[0];
-            row.isSelected = true;
-            this.data.selectedRow = row;
-            this.currentInstanceId = row.getValue('id');
-        } else {
-            if (this.data) {
-                this.data.selectedRow = null;
+        if (this.selectFirstRow) {
+            if (!this.isListEmpty()) {
+                let row = this.data.getRows()[0];
+                row.isSelected = true;
+                this.data.selectedRow = row;
+                this.currentInstanceId = row.getValue('id');
+            } else {
+                if (this.data) {
+                    this.data.selectedRow = null;
+                }
+                this.currentInstanceId = null;
             }
-            this.currentInstanceId = null;
         }
     }
 
