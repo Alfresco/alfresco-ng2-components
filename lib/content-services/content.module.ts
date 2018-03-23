@@ -38,6 +38,11 @@ import { FolderDirectiveModule } from './folder-directive/folder-directive.modul
 import { ContentMetadataModule } from './content-metadata/content-metadata.module';
 import { PermissionManagerModule } from './permission-manager/permission-manager.module';
 import { RatingService } from './social/services/rating.service';
+import { ContentMetadataService } from './content-metadata/services/content-metadata.service';
+import { PropertyDescriptorsService } from './content-metadata/services/property-descriptors.service';
+import { ContentMetadataConfigFactory } from './content-metadata/services/config/content-metadata-config.factory';
+import { BasicPropertiesService } from './content-metadata/services/basic-properties.service';
+import { PropertyGroupTranslatorService } from './content-metadata/services/property-groups-translator.service';
 
 @NgModule({
     imports: [
@@ -71,7 +76,12 @@ import { RatingService } from './social/services/rating.service';
                 source: 'assets/adf-content-services'
             }
         },
-        RatingService
+        RatingService,
+        ContentMetadataService,
+        PropertyDescriptorsService,
+        ContentMetadataConfigFactory,
+        BasicPropertiesService,
+        PropertyGroupTranslatorService
     ],
     exports: [
         CoreModule,

@@ -23,11 +23,6 @@ import { MaterialModule } from '../material.module';
 import { CardViewModule } from '@alfresco/adf-core';
 import { ContentMetadataComponent } from './components/content-metadata/content-metadata.component';
 import { ContentMetadataCardComponent } from './components/content-metadata-card/content-metadata-card.component';
-import { PropertyDescriptorsService } from './services/property-descriptors.service';
-import { ContentMetadataConfigFactory } from './services/config/content-metadata-config.factory';
-import { BasicPropertiesService } from './services/basic-properties.service';
-import { ContentMetadataService } from './services/content-metadata.service';
-import { PropertyGroupTranslatorService } from './services/property-groups-translator.service';
 
 @NgModule({
     imports: [
@@ -44,13 +39,6 @@ import { PropertyGroupTranslatorService } from './services/property-groups-trans
     declarations: [
         ContentMetadataComponent,
         ContentMetadataCardComponent
-    ],
-    providers: [
-        ContentMetadataService,
-        PropertyDescriptorsService,
-        ContentMetadataConfigFactory,
-        BasicPropertiesService,
-        PropertyGroupTranslatorService
     ]
 })
 export class ContentMetadataModule {}

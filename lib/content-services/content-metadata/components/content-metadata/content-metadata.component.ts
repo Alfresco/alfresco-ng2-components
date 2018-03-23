@@ -18,7 +18,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges, SimpleChange, ViewEncapsulation } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
-import { CardViewItem, CardViewUpdateService, NodesApiService, LogService } from '@alfresco/adf-core';
+import { CardViewItem, NodesApiService, LogService, CardViewUpdateService } from '@alfresco/adf-core';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { CardViewGroup } from '../../interfaces/content-metadata.interfaces';
 
@@ -27,8 +27,7 @@ import { CardViewGroup } from '../../interfaces/content-metadata.interfaces';
     templateUrl: './content-metadata.component.html',
     styleUrls: ['./content-metadata.component.scss'],
     host: { 'class': 'adf-content-metadata' },
-    encapsulation: ViewEncapsulation.None,
-    providers: [ CardViewUpdateService ]
+    encapsulation: ViewEncapsulation.None
 })
 export class ContentMetadataComponent implements OnChanges, OnInit {
 
