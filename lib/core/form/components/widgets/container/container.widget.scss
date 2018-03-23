@@ -51,6 +51,12 @@
             padding-right: 1%;
         }
 
+        @media screen and ($mat-small) {
+            .grid-list-item {
+                width: 100% !important;
+            }
+        }
+
         .mat-form-field {
             width: 100%;
         }
