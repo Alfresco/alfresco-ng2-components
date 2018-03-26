@@ -473,7 +473,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     performCustomSourceNavigation(node: MinimalNodeEntity): boolean {
-        if (this.isCustomSource(this.currentFolderId)) {
+        if (this.customResourcesService.isCustomSource(this.currentFolderId)) {
             this.updateFolderData(node);
             return true;
         }
@@ -538,7 +538,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     loadFolderByNodeId(nodeId: string, merge: boolean = false) {
-        if (this.isCustomSource(nodeId)) {
+        if (this.customResourcesService.isCustomSource(nodeId)) {
             this.updateCustomSourceData(nodeId, merge);
             this.documentListService.loadFolderByNodeId(nodeId, this.paginationValue, this.includeFields).subscribe((page: NodePaging) => {
                 this.onPageLoaded(page, merge);
@@ -756,7 +756,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     canNavigateFolder(node: MinimalNodeEntity): boolean {
-        if (this.isCustomSource(this.currentFolderId)) {
+        if (this.customResourcesService.isCustomSource(this.currentFolderId)) {
             return false;
         }
 
@@ -765,17 +765,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
 
         return false;
-    }
-
-    isCustomSource(folderId: string): boolean {
-        var isCustomSources = false;
-        const sources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-'];
-
-        if (sources.indexOf(folderId) > -1) {
-            isCustomSources = true;
-        }
-
-        return isCustomSources;
     }
 
     hasCurrentNodePermission(permission: string): boolean {

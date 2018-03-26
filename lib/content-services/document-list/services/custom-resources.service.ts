@@ -205,6 +205,17 @@ export class CustomResourcesService {
         return this.getRecentFiles('-me-', pagination);
     }
 
+    isCustomSource(folderId: string): boolean {
+        var isCustomSources = false;
+        const sources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-'];
+
+        if (sources.indexOf(folderId) > -1) {
+            isCustomSources = true;
+        }
+
+        return isCustomSources;
+    }
+
     private getIncludesFields(includeFields: string[]): string[] {
         return ['path', 'properties', 'allowableOperations', 'permissions', ...includeFields]
             .filter((element, index, array) => index === array.indexOf(element));
