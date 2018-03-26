@@ -19,12 +19,12 @@ import { Component, ViewEncapsulation, Input, Output, EventEmitter } from '@angu
 import { FacetFieldBucket } from '../../facet-field-bucket.interface';
 
 @Component({
-    selector: 'adf-selected-facets',
-    templateUrl: './selected-facets.component.html',
+    selector: 'adf-search-chip-list',
+    templateUrl: './search-chip-list.component.html',
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-selected-facets' }
+    host: { class: 'adf-search-chip-list' }
 })
-export class SelectedFacetsComponent {
+export class SearchChipListComponent {
 
     @Input()
     facetQueries: string[] = [];

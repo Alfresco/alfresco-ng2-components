@@ -25,13 +25,13 @@ import { SearchCategory } from '../../search-category.interface';
 import { ResponseFacetQuery } from '../../response-facet-query.interface';
 
 @Component({
-    selector: 'adf-search-settings',
-    templateUrl: './search-settings.component.html',
-    styleUrls: ['./search-settings.component.scss'],
+    selector: 'adf-search-filter',
+    templateUrl: './search-filter.component.html',
+    styleUrls: ['./search-filter.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-search-settings' }
+    host: { class: 'adf-search-filter' }
 })
-export class SearchSettingsComponent implements OnInit {
+export class SearchFilterComponent implements OnInit {
 
     selectedFacetQueries: string[] = [];
     selectedBuckets: FacetFieldBucket[] = [];

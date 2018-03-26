@@ -1,16 +1,16 @@
 <div class="adf-search-results__facets">
-    <adf-selected-facets
+    <adf-search-chip-list
         [facetQueries]="settings.selectedFacetQueries"
         [facetBuckets]="settings.selectedBuckets"
         (removeFacetQuery)="settings.unselectFacetQuery($event)"
         (removeFacetBucket)="settings.unselectFacetBucket($event)">
-    </adf-selected-facets>
+    </adf-search-chip-list>
 </div>
 
 <div class="adf-search-results">
-    <adf-search-settings #settings
+    <adf-search-filter #settings
         [queryBuilder]="queryBuilder">
-    </adf-search-settings>
+    </adf-search-filter>
 
     <div class="adf-search-results__content">
         <adf-document-list

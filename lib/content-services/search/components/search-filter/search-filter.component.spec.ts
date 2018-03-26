@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import { SearchSettingsComponent } from './search-settings.component';
+import { SearchFilterComponent } from './search-filter.component';
 import { SearchQueryBuilder } from '../../search-query-builder';
 import { SearchConfiguration } from '../../search-configuration.interface';
 
 describe('SearchSettingsComponent', () => {
 
-    let component: SearchSettingsComponent;
+    let component: SearchFilterComponent;
 
     beforeEach(() => {
-        component = new SearchSettingsComponent();
+        component = new SearchFilterComponent();
         component.queryBuilder = new SearchQueryBuilder({}, null);
         component.ngOnInit();
     });
