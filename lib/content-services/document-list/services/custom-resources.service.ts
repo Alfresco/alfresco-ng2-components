@@ -35,7 +35,8 @@ export class CustomResourcesService {
 
     private CREATE_PERMISSION = 'create';
 
-    constructor(private apiService: AlfrescoApiService, private logService: LogService) {
+    constructor(private apiService: AlfrescoApiService,
+                private logService: LogService) {
     }
 
     getRecentFiles(personId: string, pagination: Pagination): Observable<NodePaging> {
@@ -214,6 +215,43 @@ export class CustomResourcesService {
         }
 
         return isCustomSources;
+    }
+
+    // TODO: remove it from here
+    getCorrespondingNodeIds(nodeId: string, pagination : Pagination): Observable<string[]> {
+        if (nodeId === '-trashcan-') {
+            return Observable.of(this.apiService.nodesApi.getDeletedNodes()
+                .then(result => result.list.entries.map(node => node.entry.id)));
+
+        } else if (nodeId === '-sharedlinks-') {
+            return Observable.of(this.apiService.sharedLinksApi.findSharedLinks()
+                .then(result => result.list.entries.map(node => node.entry.nodeId)));
+
+        } else if (nodeId === '-sites-') {
+            return Observable.of(this.apiService.sitesApi.getSites()
+                .then(result => result.list.entries.map(node => node.entry.guid)));
+
+        } else if (nodeId === '-mysites-') {
+            return Observable.of(this.apiService.peopleApi.getSiteMembership('-me-')
+                .then(result => result.list.entries.map(node => node.entry.guid)));
+
+        } else if (nodeId === '-favorites-') {
+            return Observable.of(this.apiService.favoritesApi.getFavorites('-me-')
+                .then(result => result.list.entries.map(node => node.entry.targetGuid)));
+
+        } else if (nodeId === '-recent-') {
+            return new Observable(observer => {
+                this.getRecentFiles('-me-', pagination)
+                    .subscribe((recentFiles) => {
+                        let recentFilesIdS = recentFiles.list.entries.map(node => node.entry.id)
+                        observer.next(recentFilesIdS);
+                        observer.complete();
+                    })
+            })
+
+        }
+
+        return Observable.of([]);
     }
 
     private getIncludesFields(includeFields: string[]): string[] {

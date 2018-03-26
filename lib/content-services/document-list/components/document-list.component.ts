@@ -28,7 +28,6 @@ import {
     PermissionsEnum
 } from '@alfresco/adf-core';
 import {
-    AlfrescoApiService,
     AppConfigService,
     DataColumnListComponent,
     UserPreferencesService
@@ -252,7 +251,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     constructor(private documentListService: DocumentListService,
                 private ngZone: NgZone,
                 private elementRef: ElementRef,
-                private apiService: AlfrescoApiService,
                 private appConfig: AppConfigService,
                 private preferences: UserPreferencesService,
                 private customResourcesService: CustomResourcesService) {
@@ -756,15 +754,15 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     canNavigateFolder(node: MinimalNodeEntity): boolean {
+        let canNavigateFolder:boolean = false;
+
         if (this.customResourcesService.isCustomSource(this.currentFolderId)) {
-            return false;
+            canNavigateFolder = false;
+        } else if (node && node.entry && node.entry.isFolder) {
+            canNavigateFolder = true;
         }
 
-        if (node && node.entry && node.entry.isFolder) {
-            return true;
-        }
-
-        return false;
+        return canNavigateFolder;
     }
 
     hasCurrentNodePermission(permission: string): boolean {
@@ -829,36 +827,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     // TODO: remove it from here
     getCorrespondingNodeIds(nodeId: string): Observable<string[]> {
-        if (nodeId === '-trashcan-') {
-            return Observable.of(this.apiService.nodesApi.getDeletedNodes()
-                .then(result => result.list.entries.map(node => node.entry.id)));
-
-        } else if (nodeId === '-sharedlinks-') {
-            return Observable.of(this.apiService.sharedLinksApi.findSharedLinks()
-                .then(result => result.list.entries.map(node => node.entry.nodeId)));
-
-        } else if (nodeId === '-sites-') {
-            return Observable.of(this.apiService.sitesApi.getSites()
-                .then(result => result.list.entries.map(node => node.entry.guid)));
-
-        } else if (nodeId === '-mysites-') {
-            return Observable.of(this.apiService.peopleApi.getSiteMembership('-me-')
-                .then(result => result.list.entries.map(node => node.entry.guid)));
-
-        } else if (nodeId === '-favorites-') {
-            return Observable.of(this.apiService.favoritesApi.getFavorites('-me-')
-                .then(result => result.list.entries.map(node => node.entry.targetGuid)));
-
-        } else if (nodeId === '-recent-') {
-            return new Observable(observer => {
-                this.customResourcesService.getRecentFiles('-me-', this.paginationValue)
-                    .subscribe((recentFiles) => {
-                        let recentFilesIdS = recentFiles.list.entries.map(node => node.entry.id)
-                        observer.next(recentFilesIdS);
-                        observer.complete();
-                    })
-            })
-
+        if (this.customResourcesService.isCustomSource(nodeId)) {
+            return this.customResourcesService.getCorrespondingNodeIds(nodeId, this.paginationValue);
         } else if (nodeId) {
             return new Observable(observer => {
                 this.documentListService.getFolderNode(nodeId, this.includeFields)
@@ -869,7 +839,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             });
         }
 
-        return Observable.of([]);
     }
 
 }
