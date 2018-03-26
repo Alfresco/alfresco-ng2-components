@@ -102,18 +102,7 @@ function hasInputDecorator(decs: Decorator[]) {
     return false;
 }
 
-/*
-function getPropertyInfo(propRef: Reflection): PropInfo {
-    let info = new PropInfo();
-    
-    info.name = propRef.name;
-    info.docText = propRef.comment ? propRef.comment.shortText : "";
 
-    propRef.traverse(traverse);
-
-    
-}
-*/
 function initialCap(str: string) {
     return str[0].toUpperCase() + str.substr(1);
 }
