@@ -25,9 +25,10 @@ import {
 } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
-import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
+import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, Pagination } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
+import { CustomResourcesService } from './../services/custom-resources.service';
 
 @Injectable()
 export class DocumentListService {
@@ -38,7 +39,8 @@ export class DocumentListService {
                 private contentService: ContentService,
                 private apiService: AlfrescoApiService,
                 private logService: LogService,
-                private thumbnailService: ThumbnailService) {
+                private thumbnailService: ThumbnailService,
+                private customResourcesService: CustomResourcesService) {
     }
 
     private getNodesPromise(folder: string, opts?: any, includeFields: string[] = []): Promise<NodePaging> {
@@ -135,7 +137,7 @@ export class DocumentListService {
      * @param includeFields Extra information to include (available options are "aspectNames", "isLink" and "association")
      * @returns Details of the folder
      */
-    getFolderNode(nodeId: string, includeFields: string[] = []): Promise<MinimalNodeEntryEntity> {
+    getFolderNode(nodeId: string, includeFields: string[] = []): Observable<MinimalNodeEntryEntity> {
 
         let includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', ...includeFields]
             .filter((element, index, array) => index === array.indexOf(element));
@@ -145,8 +147,7 @@ export class DocumentListService {
             include: includeFieldsRequest
         };
 
-        let nodes: any = this.apiService.getInstance().nodes;
-        return nodes.getNodeInfo(nodeId, opts);
+        return Observable.fromPromise(this.apiService.getInstance().nodes.getNodeInfo(nodeId, opts));
     }
 
     /**
@@ -184,6 +185,25 @@ export class DocumentListService {
     hasPermission(node: any, permission: PermissionsEnum | string): boolean {
         return this.contentService.hasPermission(node, permission);
     }
+
+    loadFolderByNodeId(nodeId: string, pagination: Pagination, includeFields: string[]): Observable<MinimalNodeEntity> {
+        if (nodeId === '-trashcan-') {
+            return this.customResourcesService.loadTrashcan(pagination, includeFields);
+        } else if (nodeId === '-sharedlinks-') {
+            return this.customResourcesService.loadSharedLinks(pagination, includeFields);
+        } else if (nodeId === '-sites-') {
+            return this.customResourcesService.loadSites(pagination);
+        } else if (nodeId === '-mysites-') {
+            return this.customResourcesService.loadMemberSites(pagination);
+        } else if (nodeId === '-favorites-') {
+            this.customResourcesService.loadFavorites(pagination, includeFields);
+        } else if (nodeId === '-recent-') {
+            return this.customResourcesService.loadRecent(pagination);
+        } else {
+            return this.getFolderNode(nodeId, includeFields);
+        }
+    }
+
 
     private handleError(error: Response) {
         // in a real world app, we may send the error to some remote logging infrastructure

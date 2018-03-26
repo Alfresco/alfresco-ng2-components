@@ -38,35 +38,42 @@ export class CustomResourcesService {
     constructor(private apiService: AlfrescoApiService, private logService: LogService) {
     }
 
-    getRecentFiles(personId: string, pagination: Pagination, includeFields: string[] = []): Promise<NodePaging> {
-        let includeFieldsRequest = this.getIncludesFields(includeFields);
-
-        return this.apiService.peopleApi.getPerson(personId)
-            .then((person: PersonEntry) => {
-                const username = person.entry.id;
-                const query = {
-                    query: {
-                        query: '*',
-                        language: 'afts'
+    getRecentFiles(personId: string, pagination: Pagination): Observable<NodePaging> {
+        return new Observable(observer => {
+            this.apiService.peopleApi.getPerson(personId)
+                .then((person: PersonEntry) => {
+                        const username = person.entry.id;
+                        const query = {
+                            query: {
+                                query: '*',
+                                language: 'afts'
+                            },
+                            filterQueries: [
+                                { query: `cm:modified:[NOW/DAY-30DAYS TO NOW/DAY+1DAY]` },
+                                { query: `cm:modifier:${username} OR cm:creator:${username}` },
+                                { query: `TYPE:"content" AND -TYPE:"app:filelink" AND -TYPE:"fm:post"` }
+                            ],
+                            include: ['path', 'properties', 'allowableOperations'],
+                            sort: [{
+                                type: 'FIELD',
+                                field: 'cm:modified',
+                                ascending: false
+                            }],
+                            paging: {
+                                maxItems: pagination.maxItems,
+                                skipCount: pagination.skipCount
+                            }
+                        };
+                        return this.apiService.searchApi.search(query).then((serachResult) => {
+                            observer.next(serachResult);
+                            observer.complete();
+                        });
                     },
-                    filterQueries: [
-                        { query: `cm:modified:[NOW/DAY-30DAYS TO NOW/DAY+1DAY]` },
-                        { query: `cm:modifier:${username} OR cm:creator:${username}` },
-                        { query: `TYPE:"content" AND -TYPE:"app:filelink" AND -TYPE:"fm:post"` }
-                    ],
-                    include: includeFieldsRequest,
-                    sort: [{
-                        type: 'FIELD',
-                        field: 'cm:modified',
-                        ascending: false
-                    }],
-                    paging: {
-                        maxItems: pagination.maxItems,
-                        skipCount: pagination.skipCount
-                    }
-                };
-                return this.apiService.searchApi.search(query);
-            }).catch(err => this.handleError(err));
+                    (err) => {
+                        observer.error(err);
+                        observer.complete();
+                    })
+        }).catch(err => this.handleError(err));
     }
 
     loadFavorites(pagination: Pagination, includeFields: string[] = []): Observable<NodePaging> {
@@ -192,6 +199,10 @@ export class CustomResourcesService {
         };
 
         return Observable.fromPromise(this.apiService.sharedLinksApi.findSharedLinks(options)).catch(err => this.handleError(err));
+    }
+
+    loadRecent(pagination: Pagination): Observable<NodePaging> {
+        return this.getRecentFiles('-me-', pagination);
     }
 
     private getIncludesFields(includeFields: string[]): string[] {

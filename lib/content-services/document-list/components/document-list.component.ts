@@ -53,9 +53,9 @@ import { ShareDataTableAdapter } from './../data/share-datatable-adapter';
 import { ContentActionModel } from './../models/content-action.model';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { DocumentListService } from './../services/document-list.service';
-import { CustomResourcesService } from './../services/custom-resources.service';
 import { NodeEntityEvent, NodeEntryEvent } from './node.event';
 import { Subscription } from 'rxjs/Subscription';
+import { CustomResourcesService } from './../services/custom-resources.service';
 
 export enum PaginationStrategy {
     Finite,
@@ -241,6 +241,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     selection = new Array<MinimalNodeEntity>();
 
     pagination: BehaviorSubject<Pagination>;
+    paginationValue: BehaviorSubject<Pagination>;
     isSkipCountChanged = false;
 
     private layoutPresets = {};
@@ -257,12 +258,14 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 private customResourcesService: CustomResourcesService) {
         this.maxItems = this.preferences.paginationSize;
 
-        this.pagination = new BehaviorSubject<Pagination>(<Pagination> {
+        this.paginationValue = <Pagination> {
             maxItems: this.preferences.paginationSize,
             skipCount: 0,
             totalItems: 0,
             hasMoreItems: false
-        });
+        };
+
+        this.pagination = new BehaviorSubject<Pagination>(this.paginationValue);
     }
 
     getContextActions(node: MinimalNodeEntity) {
@@ -344,6 +347,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             if (!this.hasCustomLayout) {
                 this.setupDefaultColumns(changes.currentFolderId.currentValue);
             }
+
+            this.loading = true;
+            this.resetSelection();
             this.loadFolderByNodeId(changes.currentFolderId.currentValue);
         } else if (this.data) {
             if (changes.node && changes.node.currentValue) {
@@ -369,6 +375,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             if (this.folderNode) {
                 this.loadFolder(merge);
             } else if (this.currentFolderId) {
+                this.loading = true;
+                this.resetSelection();
                 this.loadFolderByNodeId(this.currentFolderId, merge);
             } else if (this.node) {
                 this.data.loadPage(this.node);
@@ -529,49 +537,22 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
     }
 
-    // gets folder node and its content
     loadFolderByNodeId(nodeId: string, merge: boolean = false) {
-        this.loading = true;
-        this.resetSelection();
-
-        if (nodeId === '-trashcan-') {
-            this.updateCustomSourceData('-trashcan-', merge);
-            this.customResourcesService.loadTrashcan(this.pagination, this.includeFields).subscribe((page: NodePaging) => {
+        if (this.isCustomSource(nodeId)) {
+            this.updateCustomSourceData(nodeId, merge);
+            this.documentListService.loadFolderByNodeId(nodeId, this.paginationValue, this.includeFields).subscribe((page: NodePaging) => {
                 this.onPageLoaded(page, merge);
             });
-        } else if (nodeId === '-sharedlinks-') {
-            this.updateCustomSourceData('-sharedlinks-', merge);
-            this.customResourcesService.loadSharedLinks(this.pagination, this.includeFields).subscribe((page: NodePaging) => {
-                this.onPageLoaded(page, merge);
-            });
-        } else if (nodeId === '-sites-') {
-            this.updateCustomSourceData('-sites-', merge);
-            this.customResourcesService.loadSites(this.pagination).subscribe((page: NodePaging) => {
-                this.onPageLoaded(page, merge);
-            });
-        } else if (nodeId === '-mysites-') {
-            this.updateCustomSourceData('-mysites-', merge);
-            this.customResourcesService.loadMemberSites(this.pagination).subscribe((page: NodePaging) => {
-                this.onPageLoaded(page, merge);
-            });
-        } else if (nodeId === '-favorites-') {
-            this.updateCustomSourceData('-favorites-', merge);
-            this.customResourcesService.loadFavorites(this.pagination, this.includeFields).subscribe((page: NodePaging) => {
-                this.onPageLoaded(page, merge);
-            });
-        } else if (nodeId === '-recent-') {
-            this.loadRecent(merge);
         } else {
             this.documentListService
-                .getFolderNode(nodeId, this.includeFields)
-                .then(node => {
+                .loadFolderByNodeId(nodeId, this.paginationValue, this.includeFields)
+                .subscribe(node => {
                     this.folderNode = node;
                     this.currentFolderId = node.id;
                     this.skipCount = 0;
                     this.currentNodeAllowableOperations = node['allowableOperations'] ? node['allowableOperations'] : [];
                     return this.loadFolderNodesByFolderNodeId(node.id, this.maxItems, this.skipCount, merge);
-                })
-                .catch(err => {
+                }, err => {
                     if (JSON.parse(err.message).error.statusCode === 403) {
                         this.loading = false;
                         this.noPermission = true;
@@ -624,14 +605,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             !changePage.maxItems.isFirstChange() &&
             changePage.maxItems.currentValue &&
             changePage.maxItems.currentValue !== changePage.maxItems.previousValue;
-    }
-
-    private loadRecent(merge: boolean = false): void {
-        this.updateCustomSourceData('-recent-', merge);
-
-        this.customResourcesService.getRecentFiles('-me-', this.pagination)
-            .then((page: NodePaging) => this.onPageLoaded(page, merge))
-            .catch(error => this.error.emit(error));
     }
 
     private onPageLoaded(page: NodePaging, merge: boolean = false) {
@@ -795,13 +768,14 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     isCustomSource(folderId: string): boolean {
+        var isCustomSources = false;
         const sources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-'];
 
         if (sources.indexOf(folderId) > -1) {
-            return true;
+            isCustomSources = true;
         }
 
-        return false;
+        return isCustomSources;
     }
 
     hasCurrentNodePermission(permission: string): boolean {
@@ -831,8 +805,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.ready.emit(page);
 
         if (page && page.list && page.list.pagination) {
+            this.paginationValue = page.list.pagination;
             this.pagination.next(page.list.pagination);
         } else {
+            this.paginationValue = null;
             this.pagination.next(null);
         }
         this.isSkipCountChanged = false;
@@ -862,39 +838,49 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
     }
 
-    getCorrespondingNodeIds(nodeId: string): Promise<string[]> {
+    // TODO: remove it from here
+    getCorrespondingNodeIds(nodeId: string): Observable<string[]> {
         if (nodeId === '-trashcan-') {
-            return this.apiService.nodesApi.getDeletedNodes()
-                .then(result => result.list.entries.map(node => node.entry.id));
+            return Observable.of(this.apiService.nodesApi.getDeletedNodes()
+                .then(result => result.list.entries.map(node => node.entry.id)));
 
         } else if (nodeId === '-sharedlinks-') {
-            return this.apiService.sharedLinksApi.findSharedLinks()
-                .then(result => result.list.entries.map(node => node.entry.nodeId));
+            return Observable.of(this.apiService.sharedLinksApi.findSharedLinks()
+                .then(result => result.list.entries.map(node => node.entry.nodeId)));
 
         } else if (nodeId === '-sites-') {
-            return this.apiService.sitesApi.getSites()
-                .then(result => result.list.entries.map(node => node.entry.guid));
+            return Observable.of(this.apiService.sitesApi.getSites()
+                .then(result => result.list.entries.map(node => node.entry.guid)));
 
         } else if (nodeId === '-mysites-') {
-            return this.apiService.peopleApi.getSiteMembership('-me-')
-                .then(result => result.list.entries.map(node => node.entry.guid));
+            return Observable.of(this.apiService.peopleApi.getSiteMembership('-me-')
+                .then(result => result.list.entries.map(node => node.entry.guid)));
 
         } else if (nodeId === '-favorites-') {
-            return this.apiService.favoritesApi.getFavorites('-me-')
-                .then(result => result.list.entries.map(node => node.entry.targetGuid));
+            return Observable.of(this.apiService.favoritesApi.getFavorites('-me-')
+                .then(result => result.list.entries.map(node => node.entry.targetGuid)));
 
         } else if (nodeId === '-recent-') {
-            return this.customResourcesService.getRecentFiles('-me-', this.pagination)
-                .then(result => result.list.entries.map(node => node.entry.id));
+            return new Observable(observer => {
+                this.customResourcesService.getRecentFiles('-me-', this.paginationValue)
+                    .subscribe((recentFiles) => {
+                        let recentFilesIdS = recentFiles.list.entries.map(node => node.entry.id)
+                        observer.next(recentFilesIdS);
+                        observer.complete();
+                    })
+            })
 
         } else if (nodeId) {
-            return this.documentListService.getFolderNode(nodeId, this.includeFields)
-                .then(node => [node.id]);
+            return new Observable(observer => {
+                this.documentListService.getFolderNode(nodeId, this.includeFields)
+                    .subscribe((node) => {
+                        observer.next(node.id);
+                        observer.complete();
+                    })
+            });
         }
 
-        return new Promise((resolve) => {
-            resolve([]);
-        });
+        return Observable.of([]);
     }
 
 }
