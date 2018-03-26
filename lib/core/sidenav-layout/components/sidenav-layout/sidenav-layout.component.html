@@ -1,6 +1,6 @@
 <div class="sidenav-layout">
     <ng-container *ngIf="!isHeaderInside">
-        <ng-container *ngTemplateOutlet="headerTemplate; context:templateContext"></ng-container>
+        <ng-container class="adf-sidenav-layout-outer-header" *ngTemplateOutlet="headerTemplate; context:templateContext"></ng-container>
     </ng-container>
 
     <adf-layout-container #container
@@ -8,6 +8,7 @@
         [sidenavMax]="sidenavMax"
         [mediaQueryList]="mediaQueryList"
         [hideSidenav]="hideSidenav"
+        [expandedSidenav]="expandedSidenav"
         data-automation-id="adf-layout-container"
         class="layout__content">
 

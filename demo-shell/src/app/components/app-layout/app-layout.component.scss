@@ -27,12 +27,19 @@
     display: flex;
     flex: 1;
     min-width: $minimumAppWidth;
-    height: calc(100% - 64px);
+    height: 100%;
 
     .adf-nav-container {
       display: block;
       min-width: $minimumAppWidth;
       height: 100%;
+    }
+
+    .adf-sidenav-linklist {
+      height: 100%;
+      overflow: auto;
+      padding-bottom: 8px;
+      box-sizing: border-box;
     }
 
     .adf-sidenav-link {

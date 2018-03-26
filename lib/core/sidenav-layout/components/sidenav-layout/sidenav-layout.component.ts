@@ -34,6 +34,7 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
     @Input() sidenavMax: number;
     @Input() stepOver: number;
     @Input() hideSidenav = false;
+    @Input() expandedSidenav = true;
 
     @ContentChild(SidenavLayoutHeaderDirective, {read: TemplateRef}) headerTemplate: TemplateRef<any>;
     @ContentChild(SidenavLayoutNavigationDirective, {read: TemplateRef}) navigationTemplate: TemplateRef<any>;
@@ -42,7 +43,7 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
     @ViewChild('container') container: any;
 
     mediaQueryList: MediaQueryList;
-    isMenuMinimized = false;
+    isMenuMinimized;
     templateContext = {
         toggleMenu: () => {},
         isMenuMinimized: () => this.isMenuMinimized
@@ -54,6 +55,7 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
 
     ngOnInit() {
         const stepOver = this.stepOver || SidenavLayoutComponent.STEP_OVER;
+        this.isMenuMinimized = !this.expandedSidenav;
         this.mediaQueryList = this.mediaMatcher.matchMedia(`(max-width: ${stepOver}px)`);
         this.mediaQueryList.addListener(this.onMediaQueryChange);
     }

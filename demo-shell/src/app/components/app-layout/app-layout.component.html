@@ -1,5 +1,5 @@
 
-<adf-sidenav-layout [sidenavMin]="70" [sidenavMax]="220" [stepOver]="600" [hideSidenav]="false">
+<adf-sidenav-layout [sidenavMin]="70" [sidenavMax]="220" [stepOver]="600" [hideSidenav]="false" [expandedSidenav]="false">
 
     <ng-template adf-sidenav-layout-header let-toggleMenu="toggleMenu">
         <mat-toolbar color="primary" class="adf-app-layout-toolbar mat-elevation-z6">
@@ -30,7 +30,7 @@
     </ng-template>
 
     <ng-template adf-sidenav-layout-navigation let-isMenuMinimized="isMenuMinimized">
-        <mat-nav-list>
+        <mat-nav-list class="adf-sidenav-linklist">
             <a mat-list-item *ngFor="let link of links" [routerLink]="link.href" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="adf-sidenav-link">
                 <mat-icon matListIcon class="sidenav-menu-icon">{{link.icon}}</mat-icon>
                 <div class="sidenav-menu-label" *ngIf="!isMenuMinimized()">{{link.title | translate }}</div>
