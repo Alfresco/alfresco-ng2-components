@@ -38,7 +38,6 @@ import {
     OnChanges, OnDestroy, OnInit, Output, SimpleChanges, TemplateRef, ViewChild, ViewEncapsulation
 } from '@angular/core';
 import {
-    DeletedNodesPaging,
     MinimalNodeEntity,
     MinimalNodeEntryEntity,
     NodePaging,
@@ -536,11 +535,20 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.resetSelection();
 
         if (nodeId === '-trashcan-') {
-            this.loadTrashcan(merge);
+            this.updateCustomSourceData('-trashcan-', merge);
+            this.customResourcesService.loadTrashcan(this.pagination, this.includeFields).subscribe((page: NodePaging) => {
+                this.onPageLoaded(page, merge);
+            });
         } else if (nodeId === '-sharedlinks-') {
-            this.loadSharedLinks(merge);
+            this.updateCustomSourceData('-sharedlinks-', merge);
+            this.customResourcesService.loadSharedLinks(this.pagination, this.includeFields).subscribe((page: NodePaging) => {
+                this.onPageLoaded(page, merge);
+            });
         } else if (nodeId === '-sites-') {
-            this.loadSites(merge);
+            this.updateCustomSourceData('-sites-', merge);
+            this.customResourcesService.loadSites(this.pagination).subscribe((page: NodePaging) => {
+                this.onPageLoaded(page, merge);
+            });
         } else if (nodeId === '-mysites-') {
             this.updateCustomSourceData('-mysites-', merge);
             this.customResourcesService.loadMemberSites(this.pagination).subscribe((page: NodePaging) => {
@@ -548,7 +556,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             });
         } else if (nodeId === '-favorites-') {
             this.updateCustomSourceData('-favorites-', merge);
-            this.customResourcesService.loadFavorites(this.pagination).subscribe((page: NodePaging) => {
+            this.customResourcesService.loadFavorites(this.pagination, this.includeFields).subscribe((page: NodePaging) => {
                 this.onPageLoaded(page, merge);
             });
         } else if (nodeId === '-recent-') {
@@ -616,54 +624,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             !changePage.maxItems.isFirstChange() &&
             changePage.maxItems.currentValue &&
             changePage.maxItems.currentValue !== changePage.maxItems.previousValue;
-    }
-
-    private loadTrashcan(merge: boolean = false): void {
-        this.updateCustomSourceData('-trashcan-', merge);
-
-        const options = {
-            include: ['path', 'properties'],
-            maxItems: this.maxItems,
-            skipCount: this.skipCount
-        };
-        this.apiService.nodesApi.getDeletedNodes(options)
-            .then((page: DeletedNodesPaging) => this.onPageLoaded(page, merge))
-            .catch(error => this.error.emit(error));
-    }
-
-    private loadSharedLinks(merge: boolean = false): void {
-        this.updateCustomSourceData('-sharedlinks-', merge);
-
-        const options = {
-            include: ['properties', 'allowableOperations', 'path'],
-            maxItems: this.maxItems,
-            skipCount: this.skipCount
-        };
-        this.apiService.sharedLinksApi.findSharedLinks(options)
-            .then((page: NodePaging) => this.onPageLoaded(page, merge))
-            .catch(error => this.error.emit(error));
-    }
-
-    private loadSites(merge: boolean = false): void {
-        this.updateCustomSourceData('-sites-', merge);
-
-        const options = {
-            include: ['properties'],
-            maxItems: this.maxItems,
-            skipCount: this.skipCount
-        };
-
-        this.apiService.sitesApi.getSites(options)
-            .then((page: NodePaging) => {
-                page.list.entries.map(
-                    ({ entry }: any) => {
-                        entry.name = entry.name || entry.title;
-                        return { entry };
-                    }
-                );
-                this.onPageLoaded(page, merge);
-            })
-            .catch(error => this.error.emit(error));
     }
 
     private loadRecent(merge: boolean = false): void {

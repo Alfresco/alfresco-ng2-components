@@ -24,7 +24,8 @@ import {
     NodePaging,
     PersonEntry,
     Pagination,
-    SitePaging
+    SitePaging,
+    DeletedNodesPaging
 } from 'alfresco-js-api';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
@@ -38,7 +39,6 @@ export class CustomResourcesService {
     }
 
     getRecentFiles(personId: string, pagination: Pagination, includeFields: string[] = []): Promise<NodePaging> {
-
         let includeFieldsRequest = this.getIncludesFields(includeFields);
 
         return this.apiService.peopleApi.getPerson(personId)
@@ -70,7 +70,6 @@ export class CustomResourcesService {
     }
 
     loadFavorites(pagination: Pagination, includeFields: string[] = []): Observable<NodePaging> {
-
         let includeFieldsRequest = this.getIncludesFields(includeFields);
 
         const options = {
@@ -142,6 +141,57 @@ export class CustomResourcesService {
                         observer.complete();
                     });
         }).catch(err => this.handleError(err));
+    }
+
+    loadSites(pagination: Pagination): Observable<NodePaging> {
+        const options = {
+            include: ['properties'],
+            maxItems: pagination.maxItems,
+            skipCount: pagination.skipCount
+        };
+
+        return new Observable(observer => {
+            this.apiService.sitesApi.getSites(options)
+                .then((page: NodePaging) => {
+                        page.list.entries.map(
+                            ({ entry }: any) => {
+                                entry.name = entry.name || entry.title;
+                                return { entry };
+                            }
+                        );
+                        observer.next(page);
+                        observer.complete();
+                    },
+                    (err) => {
+                        observer.error(err);
+                        observer.complete();
+                    })
+        }).catch(err => this.handleError(err));
+    }
+
+    loadTrashcan(pagination: Pagination, includeFields: string[] = []): Observable<DeletedNodesPaging> {
+        let includeFieldsRequest = this.getIncludesFields(includeFields);
+
+        const options = {
+            include: includeFieldsRequest,
+            maxItems: pagination.maxItems,
+            skipCount: pagination.skipCount
+        };
+
+        return Observable.fromPromise(this.apiService.nodesApi.getDeletedNodes(options)).catch(err => this.handleError(err));
+
+    }
+
+    loadSharedLinks(pagination: Pagination, includeFields: string[] = []): Observable<NodePaging> {
+        let includeFieldsRequest = this.getIncludesFields(includeFields);
+
+        const options = {
+            include: includeFieldsRequest,
+            maxItems: pagination.maxItems,
+            skipCount: pagination.skipCount
+        };
+
+        return Observable.fromPromise(this.apiService.sharedLinksApi.findSharedLinks(options)).catch(err => this.handleError(err));
     }
 
     private getIncludesFields(includeFields: string[]): string[] {
