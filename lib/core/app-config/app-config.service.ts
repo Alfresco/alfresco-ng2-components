@@ -60,8 +60,8 @@ export class AppConfigService {
         return location.port ? prefix + location.port : '';
     }
 
-    load(): Promise<any> {
-        return new Promise(resolve => {
+    async load(): Promise<any> {
+        await new Promise(resolve => {
             this.http.get('app.config.json').subscribe(
                 (data: any) => {
                     this.config = Object.assign({}, this.config, data || {});
