@@ -48,10 +48,7 @@ import { AttachFileWidgetComponent, AttachFolderWidgetComponent } from '../../co
 @Component({
     selector: 'adf-task-details',
     templateUrl: './task-details.component.html',
-    styleUrls: ['./task-details.component.scss'],
-    providers: [
-        CardViewUpdateService
-    ]
+    styleUrls: ['./task-details.component.scss']
 })
 export class TaskDetailsComponent implements OnInit, OnChanges {
 
