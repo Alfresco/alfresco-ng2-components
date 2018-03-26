@@ -25,8 +25,7 @@ import {
     ObjectDataColumn,
     PaginatedComponent,
     PaginationQueryParams,
-    PermissionsEnum,
-    ContentService
+    PermissionsEnum
 } from '@alfresco/adf-core';
 import {
     AlfrescoApiService,
@@ -43,8 +42,6 @@ import {
     MinimalNodeEntity,
     MinimalNodeEntryEntity,
     NodePaging,
-    PersonEntry,
-    SitePaging,
     Pagination
 } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
@@ -57,6 +54,7 @@ import { ShareDataTableAdapter } from './../data/share-datatable-adapter';
 import { ContentActionModel } from './../models/content-action.model';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { DocumentListService } from './../services/document-list.service';
+import { CustomResourcesService } from './../services/custom-resources.service';
 import { NodeEntityEvent, NodeEntryEvent } from './node.event';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -248,7 +246,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     private layoutPresets = {};
     private currentNodeAllowableOperations: string[] = [];
-    private CREATE_PERMISSION = 'create';
 
     private contextActionHandlerSubscription: Subscription;
 
@@ -258,7 +255,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 private apiService: AlfrescoApiService,
                 private appConfig: AppConfigService,
                 private preferences: UserPreferencesService,
-                private contentService?: ContentService) {
+                private customResourcesService: CustomResourcesService) {
         this.maxItems = this.preferences.paginationSize;
 
         this.pagination = new BehaviorSubject<Pagination>(<Pagination> {
@@ -437,7 +434,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     checkPermission(node: any, action: ContentActionModel): ContentActionModel {
-        if (action.permission && !~[PermissionsEnum.COPY, PermissionsEnum.LOCK].indexOf(action.permission)) {
+        if (action.permission && action.permission !== PermissionsEnum.COPY) {
             if (this.hasPermissions(node)) {
                 let permissions = node.entry.allowableOperations;
                 let findPermission = permissions.find(permission => permission === action.permission);
@@ -446,11 +443,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 }
             }
         }
-
-        if (action.permission === PermissionsEnum.LOCK) {
-            action.disabled = !this.contentService.hasPermission(node.entry, PermissionsEnum.LOCK);
-        }
-
         return action;
     }
 
@@ -550,9 +542,15 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         } else if (nodeId === '-sites-') {
             this.loadSites(merge);
         } else if (nodeId === '-mysites-') {
-            this.loadMemberSites(merge);
+            this.updateCustomSourceData('-mysites-', merge);
+            this.customResourcesService.loadMemberSites(this.pagination).subscribe((page: NodePaging) => {
+                this.onPageLoaded(page, merge);
+            });
         } else if (nodeId === '-favorites-') {
-            this.loadFavorites(merge);
+            this.updateCustomSourceData('-favorites-', merge);
+            this.customResourcesService.loadFavorites(this.pagination).subscribe((page: NodePaging) => {
+                this.onPageLoaded(page, merge);
+            });
         } else if (nodeId === '-recent-') {
             this.loadRecent(merge);
         } else {
@@ -668,73 +666,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             .catch(error => this.error.emit(error));
     }
 
-    private loadMemberSites(merge: boolean = false): void {
-        this.updateCustomSourceData('-mysites-', merge);
-
-        const options = {
-            include: ['properties'],
-            maxItems: this.maxItems,
-            skipCount: this.skipCount
-        };
-
-        this.apiService.peopleApi.getSiteMembership('-me-', options)
-            .then((result: SitePaging) => {
-                let page: NodePaging = {
-                    list: {
-                        entries: result.list.entries
-                            .map(({ entry: { site } }: any) => {
-                                site.allowableOperations = site.allowableOperations ? site.allowableOperations : [this.CREATE_PERMISSION];
-                                site.name = site.name || site.title;
-                                return {
-                                    entry: site
-                                };
-                            }),
-                        pagination: result.list.pagination
-                    }
-                };
-
-                this.onPageLoaded(page, merge);
-            })
-            .catch(error => this.error.emit(error));
-    }
-
-    private loadFavorites(merge: boolean = false): void {
-        this.updateCustomSourceData('-favorites-', merge);
-
-        const options = {
-            maxItems: this.maxItems,
-            skipCount: this.skipCount,
-            where: '(EXISTS(target/file) OR EXISTS(target/folder))',
-            include: ['properties', 'allowableOperations', 'path']
-        };
-
-        this.apiService.favoritesApi.getFavorites('-me-', options)
-            .then((result: NodePaging) => {
-                let page: NodePaging = {
-                    list: {
-                        entries: result.list.entries
-                            .map(({ entry: { target } }: any) => ({
-                                entry: target.file || target.folder
-                            }))
-                            .map(({ entry }: any) => {
-                                entry.properties = {
-                                    'cm:title': entry.title,
-                                    'cm:description': entry.description
-                                };
-                                return { entry };
-                            }),
-                        pagination: result.list.pagination
-                    }
-                };
-                this.onPageLoaded(page, merge);
-            })
-            .catch(error => this.error.emit(error));
-    }
-
     private loadRecent(merge: boolean = false): void {
         this.updateCustomSourceData('-recent-', merge);
 
-        this.getRecentFiles('-me-')
+        this.customResourcesService.getRecentFiles('-me-', this.pagination)
             .then((page: NodePaging) => this.onPageLoaded(page, merge))
             .catch(error => this.error.emit(error));
     }
@@ -918,10 +853,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         return hasPermission;
     }
 
-    hasCreatePermission() {
-        return this.hasCurrentNodePermission(this.CREATE_PERMISSION);
-    }
-
     private loadLayoutPresets(): void {
         const externalSettings = this.appConfig.get('document-list.presets', null);
 
@@ -993,7 +924,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 .then(result => result.list.entries.map(node => node.entry.targetGuid));
 
         } else if (nodeId === '-recent-') {
-            return this.getRecentFiles('-me-')
+            return this.customResourcesService.getRecentFiles('-me-', this.pagination)
                 .then(result => result.list.entries.map(node => node.entry.id));
 
         } else if (nodeId) {
@@ -1006,32 +937,4 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         });
     }
 
-    getRecentFiles(personId: string): Promise<NodePaging> {
-        return this.apiService.peopleApi.getPerson(personId)
-            .then((person: PersonEntry) => {
-                const username = person.entry.id;
-                const query = {
-                    query: {
-                        query: '*',
-                        language: 'afts'
-                    },
-                    filterQueries: [
-                        { query: `cm:modified:[NOW/DAY-30DAYS TO NOW/DAY+1DAY]` },
-                        { query: `cm:modifier:${username} OR cm:creator:${username}` },
-                        { query: `TYPE:"content" AND -TYPE:"app:filelink" AND -TYPE:"fm:post"` }
-                    ],
-                    include: ['path', 'properties', 'allowableOperations'],
-                    sort: [{
-                        type: 'FIELD',
-                        field: 'cm:modified',
-                        ascending: false
-                    }],
-                    paging: {
-                        maxItems: this.maxItems,
-                        skipCount: this.skipCount
-                    }
-                };
-                return this.apiService.searchApi.search(query);
-            });
-    }
 }
