@@ -23,7 +23,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormModule } from '@alfresco/adf-core';
 import { MaterialModule } from '../material.module';
 
-import { CardViewModule, CardViewUpdateService, DataColumnModule, DataTableModule, DirectiveModule, PipeModule } from '@alfresco/adf-core';
+import { CardViewModule, DataColumnModule, DataTableModule, DirectiveModule, PipeModule } from '@alfresco/adf-core';
 import { TaskListModule } from '../task-list/task-list.module';
 import { PeopleModule } from '../people/people.module';
 import { CommentsModule } from '../comments/comments.module';
@@ -70,8 +70,7 @@ import { ProcessFilterService } from './services/process-filter.service';
     ],
     providers: [
         ProcessService,
-        ProcessFilterService,
-        CardViewUpdateService
+        ProcessFilterService
     ],
     exports: [
         ProcessInstanceListComponent,

@@ -15,5 +15,12 @@
  * limitations under the License.
  */
 
-export * from './components/content-metadata-card/content-metadata-card.component';
-export * from './services/content-metadata.service';
+export { ContentMetadataCardComponent } from './components/content-metadata-card/content-metadata-card.component';
+export { BasicPropertiesService } from './services/basic-properties.service';
+export { ContentMetadataService } from './services/content-metadata.service';
+export { PropertyDescriptorsService } from './services/property-descriptors.service';
+export { PropertyGroupTranslatorService } from './services/property-groups-translator.service';
+export { AspectOrientedConfigService } from './services/config/aspect-oriented-config.service';
+export { ContentMetadataConfigFactory } from './services/config/content-metadata-config.factory';
+export { IndifferentConfigService } from './services/config/indifferent-config.service';
+export { LayoutOrientedConfigService } from './services/config/layout-oriented-config.service';
