@@ -1,5 +1,6 @@
 @import './app/components/app-layout/app-layout.component.scss';
 @import './app/components/files/files.component.scss';
+@import './app/components/login/login.component.scss';
 
 @import '~@alfresco/adf-content-services/theming';
 @import '~@alfresco/adf-process-services/theming';
@@ -18,6 +19,7 @@ $theme:   mat-light-theme($primary, $accent, $warn);
 @include angular-material-theme($theme);
 @include adf-app-layout-theme($theme);
 @include adf-file-component-theme($theme);
+@include adf-login-component-theme($theme);
 
 @include adf-content-services-theme($theme);
 @include adf-process-services-theme($theme);
