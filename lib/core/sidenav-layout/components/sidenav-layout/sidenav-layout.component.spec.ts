@@ -23,14 +23,14 @@ import { SidenavLayoutComponent } from './sidenav-layout.component';
 import { Component, Input } from '@angular/core';
 import { LayoutModule, MediaMatcher } from '@angular/cdk/layout';
 import { PlatformModule } from '@angular/cdk/platform';
-import { MaterialModule } from '../material.module';
-import { SidenavLayoutContentDirective } from './sidenav-layout-content.directive';
-import { SidenavLayoutHeaderDirective } from './sidenav-layout-header.directive';
-import { SidenavLayoutNavigationDirective } from './sidenav-layout-navigation.directive';
+import { MaterialModule } from '../../../material.module';
+import { SidenavLayoutContentDirective } from '../../directives/sidenav-layout-content.directive';
+import { SidenavLayoutHeaderDirective } from '../../directives/sidenav-layout-header.directive';
+import { SidenavLayoutNavigationDirective } from '../../directives/sidenav-layout-navigation.directive';
 import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'app-layout-container',
+    selector: 'adf-layout-container',
     template: `
         <ng-content select="[app-layout-navigation]"></ng-content>
         <ng-content select="[app-layout-content]"></ng-content>`
@@ -40,6 +40,7 @@ export class DummyLayoutContainerComponent {
     @Input() sidenavMax: number;
     @Input() mediaQueryList: MediaQueryList;
     @Input() hideSidenav: boolean;
+    @Input() expandedSidenav: boolean;
     toggleMenu () {}
 }
 
@@ -86,19 +87,19 @@ describe('SidenavLayoutComponent', () => {
     describe('Template transclusion', () => {
 
         @Component({
-            selector: 'app-test-component-for-sidenav',
+            selector: 'adf-test-component-for-sidenav',
             template: `
             <adf-sidenav-layout [sidenavMin]="70" [sidenavMax]="320" [stepOver]="600" [hideSidenav]="false">
 
-                <ng-template appLayoutHeader let-toggleMenu="toggleMenu">
+                <ng-template adf-sidenav-layout-header let-toggleMenu="toggleMenu">
                     <div id="header-test" (click)="toggleMenu()"></div>
                 </ng-template>
 
-                <ng-template appLayoutNavigation let-isMenuMinimized="isMenuMinimized">
+                <ng-template adf-sidenav-layout-navigation let-isMenuMinimized="isMenuMinimized">
                     <div id="nav-test">{{ isMenuMinimized !== undefined ? 'variable-is-injected' : 'variable-is-not-injected' }}</div>
                 </ng-template>
 
-                <ng-template appLayoutContent>
+                <ng-template adf-sidenav-layout-content>
                     <div id="content-test"></div>
                 </ng-template>
             </adf-sidenav-layout>`
@@ -117,7 +118,7 @@ describe('SidenavLayoutComponent', () => {
             fixture.detectChanges();
         });
 
-        describe('appLayoutNavigation', () => {
+        describe('adf-sidenav-layout-navigation', () => {
 
             const injectedElementSelector = By.css('[data-automation-id="adf-layout-container"] #nav-test');
 
@@ -134,7 +135,7 @@ describe('SidenavLayoutComponent', () => {
             });
         });
 
-        describe('appLayoutHeader', () => {
+        describe('adf-sidenav-layout-header', () => {
 
             const outerHeaderSelector = By.css('.sidenav-layout > #header-test'),
                 innerHeaderSelector = By.css('.sidenav-layout [data-automation-id="adf-layout-container"] #header-test');
@@ -172,7 +173,7 @@ describe('SidenavLayoutComponent', () => {
             });
         });
 
-        describe('appLayoutContent', () => {
+        describe('adf-sidenav-layout-content', () => {
 
             const injectedElementSelector = By.css('[data-automation-id="adf-layout-container"] #content-test');
 
@@ -210,6 +211,7 @@ describe('SidenavLayoutComponent', () => {
             component.sidenavMin = 1;
             component.sidenavMax = 2;
             component.hideSidenav = true;
+            component.expandedSidenav = false;
             fixture.detectChanges();
 
             const layoutContainerComponent = fixture.debugElement.query(By.directive(DummyLayoutContainerComponent)).componentInstance;
@@ -217,6 +219,7 @@ describe('SidenavLayoutComponent', () => {
             expect(layoutContainerComponent.sidenavMin).toBe(component.sidenavMin);
             expect(layoutContainerComponent.sidenavMax).toBe(component.sidenavMax);
             expect(layoutContainerComponent.hideSidenav).toBe(component.hideSidenav);
+            expect(layoutContainerComponent.expandedSidenav).toBe(component.expandedSidenav);
             expect(layoutContainerComponent.mediaQueryList.originalMediaQueryPassed).toBe(`(max-width: 600px)`);
         });
 
