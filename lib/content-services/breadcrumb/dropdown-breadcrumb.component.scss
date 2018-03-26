@@ -7,7 +7,8 @@
         &-dropdown-breadcrumb {
             display: flex;
             justify-content: flex-start;
-            height: 25px;
+            width: 65%;
+            max-width: 200px;
         }
 
         &-dropdown-breadcumb-trigger {
@@ -36,9 +37,11 @@
         &-current-folder {
             margin-left: $dropdownHorizontalOffset;
             line-height: 26px;
-            white-space: pre-wrap;
+            white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            display: inline-block;
+            width: 100%;
         }
 
         &-current-folder.isRoot {
