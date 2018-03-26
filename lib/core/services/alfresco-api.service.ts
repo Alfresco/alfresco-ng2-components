@@ -76,11 +76,19 @@ export class AlfrescoApiService {
 
     constructor(private appConfig: AppConfigService,
                 private storage: StorageService) {
-
-        this.reset();
     }
 
-    reset() {
+    async load() {
+        await this.appConfig.load().then(() => {
+            this.initAlfrescoApi();
+        });
+    }
+
+    async reset() {
+        this.initAlfrescoApi();
+    }
+
+    private initAlfrescoApi() {
         this.alfrescoApi = <AlfrescoApi> new alfrescoApi({
             provider: this.storage.getItem('AUTH_TYPE'),
             ticketEcm: this.storage.getItem('ticket-ECM'),
@@ -89,7 +97,7 @@ export class AlfrescoApiService {
             hostBpm: this.appConfig.get<string>('bpmHost'),
             contextRoot: 'alfresco',
             disableCsrf: this.storage.getItem('DISABLE_CSRF') === 'true',
-            oauth2 : this.appConfig.get<any>('oauth2')
+            oauth2: this.appConfig.get<any>('oauth2')
         });
     }
 }
