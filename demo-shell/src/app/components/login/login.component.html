@@ -41,7 +41,7 @@
 
 <!--SETTING BUTTON-->
 
-<a mat-fab class="setting-button" data-automation-id="settings" href="" routerLink="/settings">
+<a mat-fab class="setting-button" data-automation-id="settings" href="" routerLink="/settings" color="accent">
     <mat-icon>settings</mat-icon>
 </a>
 
@@ -92,5 +92,7 @@
                 {{ 'LOGIN.LOGIN_FOOTER'| translate }}
             </mat-slide-toggle>
         </p>
+        <button type="button" mat-raised-button color="accent" class="mobile-setting-button" routerLink="/settings" data-automation-id="settings">{{ 'APP_LAYOUT.SETTINGS'| translate }}</button>
+
     </div>
 </adf-login>
