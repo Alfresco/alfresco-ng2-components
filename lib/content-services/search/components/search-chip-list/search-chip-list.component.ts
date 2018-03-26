@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
-import { FacetFieldBucket } from '../../facet-field-bucket.interface';
+import { Component, ViewEncapsulation, Input } from '@angular/core';
+import { SearchFilterComponent } from '../../components/search-filter/search-filter.component';
 
 @Component({
     selector: 'adf-search-chip-list',
@@ -27,14 +27,5 @@ import { FacetFieldBucket } from '../../facet-field-bucket.interface';
 export class SearchChipListComponent {
 
     @Input()
-    facetQueries: string[] = [];
-
-    @Input()
-    facetBuckets: FacetFieldBucket[] = [];
-
-    @Output()
-    removeFacetQuery = new EventEmitter<string>();
-
-    @Output()
-    removeFacetBucket = new EventEmitter<FacetFieldBucket>();
+    searchFilter: SearchFilterComponent;
 }

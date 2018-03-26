@@ -1,16 +1,20 @@
 <mat-chip-list>
-    <mat-chip
-        *ngFor="let label of facetQueries"
-        [removable]="true"
-        (remove)="removeFacetQuery.next(label)">
-        {{ label }}
-        <mat-icon matChipRemove>cancel</mat-icon>
-    </mat-chip>
-    <mat-chip
-        *ngFor="let bucket of facetBuckets"
-        [removable]="true"
-        (remove)="removeFacetBucket.next(bucket)">
-        {{ bucket.display || bucket.label }}
-        <mat-icon matChipRemove>cancel</mat-icon>
-    </mat-chip>
+    <ng-container *ngIf="searchFilter && searchFilter.selectedFacetQueries">
+        <mat-chip
+            *ngFor="let label of searchFilter.selectedFacetQueries"
+            [removable]="true"
+            (remove)="searchFilter.unselectFacetQuery(label)">
+            {{ label }}
+            <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+    </ng-container>
+    <ng-container *ngIf="searchFilter && searchFilter.selectedBuckets">
+        <mat-chip
+            *ngFor="let bucket of searchFilter.selectedBuckets"
+            [removable]="true"
+            (remove)="searchFilter.unselectFacetBucket(bucket)">
+            {{ bucket.display || bucket.label }}
+            <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+    </ng-container>
 </mat-chip-list>

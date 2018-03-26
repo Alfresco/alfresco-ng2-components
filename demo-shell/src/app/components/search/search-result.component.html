@@ -1,14 +1,10 @@
 <div class="adf-search-results__facets">
-    <adf-search-chip-list
-        [facetQueries]="settings.selectedFacetQueries"
-        [facetBuckets]="settings.selectedBuckets"
-        (removeFacetQuery)="settings.unselectFacetQuery($event)"
-        (removeFacetBucket)="settings.unselectFacetBucket($event)">
+    <adf-search-chip-list [searchFilter]="searchFilter">
     </adf-search-chip-list>
 </div>
 
 <div class="adf-search-results">
-    <adf-search-filter #settings
+    <adf-search-filter #searchFilter
         [queryBuilder]="queryBuilder">
     </adf-search-filter>
 
