@@ -1,10 +1,12 @@
 ---
 Added: v2.3.0
 Status: Active
-Last reviewed: 2018-03-12
+Last reviewed: 2018-03-23
 ---
 
 # Permission List Component
+
+Shows node permissions as a table.
 
 ![Permission List](../docassets/images/adf-permission-list.png)
 
@@ -19,8 +21,9 @@ Last reviewed: 2018-03-12
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| nodeId | `string` | `null` | node id which we want to show the permissions  |
+| nodeId | `string` | `null` | ID of the node whose permissions you want to show.  |
 
 ## Details
 
-This component use the `datatable` to show the permission retrieved from the node service.
+This component uses a [Datatable component](../core/datatable.component.md) to show the
+permissions retrieved from the [Node service](../core/node.service.md).

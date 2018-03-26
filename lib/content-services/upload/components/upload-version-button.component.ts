@@ -31,6 +31,7 @@ import { FileModel, EXTENDIBLE_COMPONENT } from '@alfresco/adf-core';
 })
 export class UploadVersionButtonComponent extends UploadButtonComponent implements OnChanges {
 
+    /** (**Required**) The node to be versioned. */
     @Input()
     node: MinimalNodeEntryEntity;
 
