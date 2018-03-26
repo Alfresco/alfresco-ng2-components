@@ -57,6 +57,6 @@ for more information about installing and using the source code.
 | [Process filter service](process-filter.service.md) | Manage Process Filters, which are pre-configured Process Instance queries.  | [Source](../../lib/process-services/process-list/services/process-filter.service.ts) |
 | [Process service](process.service.md) | Manages Process Instances, Process Variables, and Process Audit Log.  | [Source](../../lib/process-services/process-list/services/process.service.ts) |
 | [Task filter service](task-filter.service.md) | Manage Task Filters, which are pre-configured Task Instance queries.  | [Source](../../lib/process-services/task-list/services/task-filter.service.ts) |
-| [Tasklist service](tasklist.service.md) | Manage Task Instances.  | [Source](../../lib/process-services/task-list/services/tasklist.service.ts) |
+| [Tasklist service](tasklist.service.md) | Manages Task Instances. | [Source](../../lib/process-services/task-list/services/tasklist.service.ts) |
 
 <!--process-services end-->

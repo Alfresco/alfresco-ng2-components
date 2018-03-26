@@ -20,6 +20,7 @@ import { Input } from '@angular/core';
 
 export abstract class UploadBase {
 
+    /** Filter for accepted file types. */
     @Input()
     acceptedFilesType: string = '*';
 

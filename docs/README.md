@@ -190,6 +190,7 @@ for more information about installing and using the source code.
 | [Content node selector component](content-services/content-node-selector.component.md) | Allows a user to select items from a Content Services repository. | [Source](../lib/content-services/content-node-selector/content-node-selector.component.ts) |
 | [Content action component](content-services/content-action.component.md) | Adds options to a Document List actions menu for a particular content type. | [Source](../lib/content-services/document-list/components/content-action/content-action.component.ts) |
 | [Document list component](content-services/document-list.component.md) | Displays the documents from a repository. | [Source](../lib/content-services/document-list/components/document-list.component.ts) |
+| [Permission list component](content-services/permission-list.component.md) | Shows node permissions as a table. | [Source](../lib/content-services/permission-manager/components/permission-list/permission-list.component.ts) |
 | [Search control component](content-services/search-control.component.md) | Displays a input text which shows find-as-you-type suggestions. | [Source](../lib/content-services/search/components/search-control.component.ts) |
 | [Search component](content-services/search.component.md) | Searches items for supplied search terms.  | [Source](../lib/content-services/search/components/search.component.ts) |
 | [Sites dropdown component](content-services/sites-dropdown.component.md) | Displays a dropdown menu to show and interact with the sites of the current user. | [Source](../lib/content-services/site-dropdown/sites-dropdown.component.ts) |
@@ -201,10 +202,10 @@ for more information about installing and using the source code.
 | [File uploading dialog component](content-services/file-uploading-dialog.component.md) | Shows a dialog listing all the files uploaded with the Upload Button or Drag Area components. | [Source](../lib/content-services/upload/components/file-uploading-dialog.component.ts) |
 | [Upload button component](content-services/upload-button.component.md) | Activates a file upload. | [Source](../lib/content-services/upload/components/upload-button.component.ts) |
 | [Upload drag area component](content-services/upload-drag-area.component.md) | Adds a drag and drop area to upload files to Alfresco. | [Source](../lib/content-services/upload/components/upload-drag-area.component.ts) |
+| [Upload version button component](content-services/upload-version-button.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Activates a file version upload. | [Source](../lib/content-services/upload/components/upload-version-button.component.ts) |
 | [Version list component](content-services/version-list.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Displays the version history of a node in a Version Manager component | [Source](../lib/content-services/version-manager/version-list.component.ts) |
 | [Version manager component](content-services/version-manager.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Displays the version history of a node with the ability to upload a new version. | [Source](../lib/content-services/version-manager/version-manager.component.ts) |
 | [Webscript component](content-services/webscript.component.md) | Provides access to Webscript features. | [Source](../lib/content-services/webscript/webscript.component.ts) |
-| _Upload version button component_ | _Not currently documented_ | [Source](../lib/content-services/upload/components/upload-version-button.component.ts) |
 
 ## Directives
 
@@ -214,6 +215,7 @@ for more information about installing and using the source code.
 | [Node share directive](content-services/node-share.directive.md) | Create and manage public shared links for files | [Source](../lib/content-services/directives/node-share.directive.ts) |
 | [Folder create directive](content-services/folder-create.directive.md) | Allows folders to be created. | [Source](../lib/content-services/folder-directive/folder-create.directive.ts) |
 | [Folder edit directive](content-services/folder-edit.directive.md) | Allows folders to be edited. | [Source](../lib/content-services/folder-directive/folder-edit.directive.ts) |
+| [Inherited button directive](content-services/inherited-button.directive.md) | Update the current node by adding/removing the inherited permissions. | [Source](../lib/content-services/permission-manager/components/inherited-button.directive.ts) |
 | [File draggable directive](core/file-draggable.directive.md) | Provide drag-and-drop features for an element such as a `div`. | [Source](../lib/content-services/upload/directives/file-draggable.directive.ts) |
 
 ## Models
@@ -297,7 +299,7 @@ for more information about installing and using the source code.
 | [Process filter service](process-services/process-filter.service.md) | Manage Process Filters, which are pre-configured Process Instance queries.  | [Source](../lib/process-services/process-list/services/process-filter.service.ts) |
 | [Process service](process-services/process.service.md) | Manages Process Instances, Process Variables, and Process Audit Log.  | [Source](../lib/process-services/process-list/services/process.service.ts) |
 | [Task filter service](process-services/task-filter.service.md) | Manage Task Filters, which are pre-configured Task Instance queries.  | [Source](../lib/process-services/task-list/services/task-filter.service.ts) |
-| [Tasklist service](process-services/tasklist.service.md) | Manage Task Instances.  | [Source](../lib/process-services/task-list/services/tasklist.service.ts) |
+| [Tasklist service](process-services/tasklist.service.md) | Manages Task Instances. | [Source](../lib/process-services/task-list/services/tasklist.service.ts) |
 
 <!--process-services end-->
 
