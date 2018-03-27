@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { Injectable } from '@angular/core';
 import { AlfrescoApi } from 'alfresco-js-api';
 import * as alfrescoApi from 'alfresco-js-api';
 import { AppConfigService } from '../app-config/app-config.service';
@@ -22,6 +23,7 @@ import { StorageService } from '../services/storage.service';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 
 /* tslint:disable:adf-file-name */
+@Injectable()
 export class AlfrescoApiServiceMock extends AlfrescoApiService {
 
     constructor(protected appConfig: AppConfigService,
