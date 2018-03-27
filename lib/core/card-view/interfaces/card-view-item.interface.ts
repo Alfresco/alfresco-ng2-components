@@ -23,4 +23,5 @@ export interface CardViewItem {
     type: string;
     displayValue: any;
     editable?: boolean;
+    icon?: string;
 }

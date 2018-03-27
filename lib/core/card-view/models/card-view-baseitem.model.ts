@@ -24,6 +24,7 @@ export abstract class CardViewBaseItemModel {
     default: any;
     editable: boolean;
     clickable: boolean;
+    icon?: string;
     validators?: CardViewItemValidator[];
 
     constructor(obj: CardViewItemProperties) {
@@ -33,6 +34,7 @@ export abstract class CardViewBaseItemModel {
         this.default = obj.default;
         this.editable = !!obj.editable;
         this.clickable = !!obj.clickable;
+        this.icon = obj.icon || '';;
         this.validators = obj.validators || [];
     }
 
