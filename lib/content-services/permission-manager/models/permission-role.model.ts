@@ -15,7 +15,14 @@
  * limitations under the License.
  */
 
- export * from './components/permission-list/permission-list.component';
- export * from './components/inherited-button.directive';
- export * from './services/node-permission.service';
- export * from './models/permission.model';
+export class PermissionRoleModel {
+    id: string;
+    displayName: string;
+
+    constructor(obj?: any) {
+        if (obj) {
+            this.id = obj.id;
+            this.displayName = obj.displayName;
+        }
+    }
+}

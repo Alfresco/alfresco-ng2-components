@@ -19,6 +19,7 @@ import { Component, ViewEncapsulation, Input, OnInit } from '@angular/core';
 import { NodesApiService } from '@alfresco/adf-core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { PermissionDisplayModel } from '../../models/permission.model';
+import { NodePermissionService } from '../../services/node-permission.service';
 
 @Component({
     selector: 'adf-permission-list',
@@ -32,8 +33,10 @@ export class PermissionListComponent implements OnInit {
     nodeId: string = '';
 
     permissionList: PermissionDisplayModel[];
+    settableRoles: any[];
 
-    constructor(private nodeService: NodesApiService) {
+    constructor(private nodeService: NodesApiService,
+                private nodePermissionService: NodePermissionService) {
 
     }
 
@@ -48,6 +51,9 @@ export class PermissionListComponent implements OnInit {
     private fetchNodePermissions() {
         this.nodeService.getNode(this.nodeId).subscribe((node: MinimalNodeEntryEntity) => {
             this.permissionList = this.getPermissionList(node);
+            this.nodePermissionService.getNodeRoles(node).subscribe((settableList: string[])=>{
+                this.settableRoles =  settableList;
+            });
         });
     }
 

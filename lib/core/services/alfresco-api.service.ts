@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import {
     AlfrescoApi, ContentApi, FavoritesApi, NodesApi,
     PeopleApi, RenditionsApi, SharedlinksApi, SitesApi,
-    VersionsApi, ClassesApi, SearchApi
+    VersionsApi, ClassesApi, GroupsApi
 } from 'alfresco-js-api';
 import * as alfrescoApi from 'alfresco-js-api';
 import { AppConfigService } from '../app-config/app-config.service';
@@ -28,7 +28,7 @@ import { StorageService } from './storage.service';
 @Injectable()
 export class AlfrescoApiService {
 
-    protected alfrescoApi: AlfrescoApi;
+    private alfrescoApi: AlfrescoApi;
 
     getInstance(): AlfrescoApi {
         return this.alfrescoApi;
@@ -62,7 +62,7 @@ export class AlfrescoApiService {
         return this.getInstance().core.peopleApi;
     }
 
-    get searchApi(): SearchApi {
+    get searchApi() {
         return this.getInstance().search.searchApi;
     }
 
@@ -74,21 +74,17 @@ export class AlfrescoApiService {
         return this.getInstance().core.classesApi;
     }
 
-    constructor(protected appConfig: AppConfigService,
-                protected storage: StorageService) {
+    get groupsApi(): GroupsApi {
+        return this.getInstance().core.groupsApi;
     }
 
-    async load() {
-        await this.appConfig.load().then(() => {
-            this.initAlfrescoApi();
-        });
+    constructor(private appConfig: AppConfigService,
+                private storage: StorageService) {
+
+        this.reset();
     }
 
-    async reset() {
-        this.initAlfrescoApi();
-    }
-
-    protected initAlfrescoApi() {
+    reset() {
         this.alfrescoApi = <AlfrescoApi> new alfrescoApi({
             provider: this.storage.getItem('AUTH_TYPE'),
             ticketEcm: this.storage.getItem('ticket-ECM'),
@@ -98,7 +94,7 @@ export class AlfrescoApiService {
             contextRootBpm: this.appConfig.get<string>('contextRootBpm'),
             contextRoot: this.appConfig.get<string>('contextRootEcm'),
             disableCsrf: this.storage.getItem('DISABLE_CSRF') === 'true',
-            oauth2: this.appConfig.get<any>('oauth2')
+            oauth2 : this.appConfig.get<any>('oauth2')
         });
     }
 }

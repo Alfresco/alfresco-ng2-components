@@ -211,7 +211,7 @@
       "PERMISSION_DISPLAY": {
          "INHERITED" : "Inherited",
          "AUTHORITY_ID" : "Authority ID",
-         "NAME": "Name",
+         "ROLE": "Role",
          "LOCALLY_SET" : "Locally set"
       }
   }

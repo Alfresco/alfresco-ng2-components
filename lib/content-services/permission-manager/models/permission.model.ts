@@ -27,7 +27,7 @@ export class PermissionDisplayModel {
             this.accessStatus = obj.accessStatus;
             this.authorityId = obj.authorityId;
             this.name = obj.name;
-            this.isInherited = obj.isInherited;
+            this.isInherited = obj.isInherited !== null && obj.isInherited !== undefined ? obj.isInherited : false;
             this.icon = obj.icon ? obj.icon : 'lock_open';
         }
     }
