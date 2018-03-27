@@ -10,6 +10,10 @@
 
     .adf-toolbar {
 
+        &-title{
+            overflow: hidden;
+        }
+
         .mat-toolbar {
             min-height: $adf-toolbar-height;
             border: 1px solid mat-color($foreground, text, .07);

@@ -54,6 +54,7 @@ describe('AppConfigService', () => {
     beforeEach(
         inject([AppConfigService], (appConfig: AppConfigService) => {
             appConfigService = appConfig;
+            appConfigService.load();
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 'status': 200,

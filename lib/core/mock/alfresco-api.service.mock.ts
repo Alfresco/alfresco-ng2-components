@@ -15,73 +15,19 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
-import {
-    AlfrescoApi, ContentApi, FavoritesApi, NodesApi,
-    PeopleApi, RenditionsApi, SharedlinksApi, SitesApi,
-    VersionsApi, ClassesApi
-} from 'alfresco-js-api';
+import { AlfrescoApi } from 'alfresco-js-api';
 import * as alfrescoApi from 'alfresco-js-api';
 import { AppConfigService } from '../app-config/app-config.service';
-import { StorageService } from './storage.service';
+import { StorageService } from '../services/storage.service';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
 
-@Injectable()
-export class AlfrescoApiService {
-
-    protected alfrescoApi: AlfrescoApi;
-
-    getInstance(): AlfrescoApi {
-        return this.alfrescoApi;
-    }
-
-    get contentApi(): ContentApi {
-        return this.getInstance().content;
-    }
-
-    get nodesApi(): NodesApi {
-        return this.getInstance().nodes;
-    }
-
-    get renditionsApi(): RenditionsApi {
-        return this.getInstance().core.renditionsApi;
-    }
-
-    get sharedLinksApi(): SharedlinksApi {
-        return this.getInstance().core.sharedlinksApi;
-    }
-
-    get sitesApi(): SitesApi {
-        return this.getInstance().core.sitesApi;
-    }
-
-    get favoritesApi(): FavoritesApi {
-        return this.getInstance().core.favoritesApi;
-    }
-
-    get peopleApi(): PeopleApi {
-        return this.getInstance().core.peopleApi;
-    }
-
-    get searchApi() {
-        return this.getInstance().search.searchApi;
-    }
-
-    get versionsApi(): VersionsApi {
-        return this.getInstance().core.versionsApi;
-    }
-
-    get classesApi(): ClassesApi {
-        return this.getInstance().core.classesApi;
-    }
+/* tslint:disable:adf-file-name */
+export class AlfrescoApiServiceMock extends AlfrescoApiService {
 
     constructor(protected appConfig: AppConfigService,
                 protected storage: StorageService) {
-    }
-
-    async load() {
-        await this.appConfig.load().then(() => {
-            this.initAlfrescoApi();
-        });
+        super(appConfig, storage);
+        this.initAlfrescoApi();
     }
 
     async reset() {
