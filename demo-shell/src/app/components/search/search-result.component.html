@@ -1,3 +1,11 @@
+
+<adf-search [searchTerm]="searchedWord"
+            [maxResults]="maxItems"
+            [skipResults]="skipCount"
+            (resultLoaded)="onSearchResultLoaded($event)"
+            #search>
+</adf-search>
+
 <div class="adf-search-results__facets">
     <adf-search-chip-list [searchFilter]="searchFilter"></adf-search-chip-list>
 </div>
@@ -6,12 +14,17 @@
     <adf-search-filter #searchFilter></adf-search-filter>
 
     <div class="adf-search-results__content">
-        <adf-document-list
-            #documentList
-            [node]="data">
-        </adf-document-list>
-        <adf-pagination
-            [target]="documentList">
-        </adf-pagination>
+        <app-files-component
+                [currentFolderId]="null"
+                [nodeResult]="resultNodePageList"
+                [disableDragArea]="true"
+                [pagination]="pagination"
+                (changedPageSize)="onRefreshPagination($event)"
+                (changedPageNumber)="onRefreshPagination($event)"
+                (turnedNextPage)="onRefreshPagination($event)"
+                (loadNext)="onRefreshPagination($event)"
+                (turnedPreviousPage)="onRefreshPagination($event)"
+                (deleteElementSuccess)="onDeleteElementSuccess($event)">
+        </app-files-component>
     </div>
 </div>

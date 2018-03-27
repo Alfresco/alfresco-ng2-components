@@ -115,6 +115,10 @@ export class SearchComponent implements AfterContentInit, OnChanges {
                 this.loadSearchResults(searchedWord);
             });
 
+        searchService.dataLoaded.subscribe(
+            data => this.onSearchDataLoaded(data),
+            error => this.onSearchDataError(error)
+        );
     }
 
     ngAfterContentInit() {
@@ -153,28 +157,29 @@ export class SearchComponent implements AfterContentInit, OnChanges {
     private loadSearchResults(searchTerm?: string) {
         this.resetResults();
         if (searchTerm) {
-            let search$;
             if (this.queryBody) {
-                search$ = this.searchService.searchByQueryBody(this.queryBody);
+                this.searchService.searchByQueryBody(this.queryBody);
             } else {
-                search$ = this.searchService
-                    .search(searchTerm, this.maxResults, this.skipResults);
+                this.searchService.search(searchTerm, this.maxResults, this.skipResults);
             }
-            search$.subscribe(
-                    results => {
-                        this.results = <NodePaging> results;
-                        this.resultLoaded.emit(this.results);
-                        this.isOpen = true;
-                        this.setVisibility();
-                    },
-                    error => {
-                        if (error.status !== 400) {
-                            this.results = null;
-                            this.error.emit(error);
-                        }
-                    });
         } else {
             this.cleanResults();
+        }
+    }
+
+    onSearchDataLoaded(data: NodePaging) {
+        if (data) {
+            this.results = data;
+            this.resultLoaded.emit(this.results);
+            this.isOpen = true;
+            this.setVisibility();
+        }
+    }
+
+    onSearchDataError(error) {
+        if (error && error.status !== 400) {
+            this.results = null;
+            this.error.emit(error);
         }
     }
 

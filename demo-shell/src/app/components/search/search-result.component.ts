@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { NodePaging } from 'alfresco-js-api';
-import { SearchQueryBuilderService } from '@alfresco/adf-content-services';
+import { Component, OnInit, Optional, ViewChild } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import { NodePaging, Pagination } from 'alfresco-js-api';
+import { SearchComponent, SearchQueryBuilderService } from '@alfresco/adf-content-services';
+import { UserPreferencesService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'app-search-result-component',
@@ -27,29 +28,45 @@ import { SearchQueryBuilderService } from '@alfresco/adf-content-services';
 })
 export class SearchResultComponent implements OnInit {
 
-    data: NodePaging;
+    @ViewChild('search')
+    search: SearchComponent;
 
-    constructor(private route: ActivatedRoute,
-                private queryBuilder: SearchQueryBuilderService) {
+    queryParamName = 'q';
+    searchedWord = '';
+    resultNodePageList: NodePaging;
+    maxItems: number;
+    skipCount = 0;
+    pagination: Pagination;
 
-        this.queryBuilder.executed.subscribe(data => {
-            this.onDataLoaded(data);
-        });
+    constructor(public router: Router,
+                private preferences: UserPreferencesService,
+                private queryBuilder: SearchQueryBuilderService,
+                @Optional() private route: ActivatedRoute) {
+        this.maxItems = this.preferences.paginationSize;
     }
 
-    async ngOnInit() {
+    ngOnInit() {
         if (this.route) {
-            this.route.params.subscribe(params => {
-                const searchTerm = params['q'];
-                if (searchTerm) {
-                    this.queryBuilder.queryFragments['queryName'] = `cm:name:'${searchTerm}'`;
-                    this.queryBuilder.update();
-                }
+            this.route.params.forEach((params: Params) => {
+                this.searchedWord = params.hasOwnProperty(this.queryParamName) ? params[this.queryParamName] : null;
+                this.queryBuilder.queryFragments['queryName'] = `cm:name:'${this.searchedWord}'`;
+                this.queryBuilder.update();
             });
         }
+        this.maxItems = this.preferences.paginationSize;
     }
 
-    onDataLoaded(data: any) {
-        this.data = data;
+    onSearchResultLoaded(nodePaging: NodePaging) {
+        this.resultNodePageList = nodePaging;
+        this.pagination = nodePaging.list.pagination;
+    }
+
+    onRefreshPagination(pagination: Pagination) {
+        this.maxItems = pagination.maxItems;
+        this.skipCount = pagination.skipCount;
+    }
+
+    onDeleteElementSuccess(element: any) {
+        this.search.reload();
     }
 }

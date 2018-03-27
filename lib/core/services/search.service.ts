@@ -17,45 +17,41 @@
 
 import { Injectable } from '@angular/core';
 import { NodePaging, QueryBody } from 'alfresco-js-api';
-import { Observable } from 'rxjs/Observable';
-import { AlfrescoApiService } from './alfresco-api.service';
-import { AuthenticationService } from './authentication.service';
 import 'rxjs/add/observable/throw';
+import { Subject } from 'rxjs/Subject';
+
+import { AlfrescoApiService } from './alfresco-api.service';
 import { SearchConfigurationService } from './search-configuration.service';
 
 @Injectable()
 export class SearchService {
 
-    constructor(public authService: AuthenticationService,
-                private apiService: AlfrescoApiService,
+    dataLoaded: Subject<NodePaging> = new Subject();
+
+    constructor(private apiService: AlfrescoApiService,
                 private searchConfigurationService: SearchConfigurationService) {
     }
 
-    getNodeQueryResults(term: string, options?: SearchOptions): Observable<NodePaging> {
-        return Observable.fromPromise(this.apiService.getInstance().core.queriesApi.findNodes(term, options))
-            .map(res => <NodePaging> res)
-            .catch(err => this.handleError(err));
+    async getNodeQueryResults(term: string, options?: SearchOptions): Promise<NodePaging> {
+        const data = await this.apiService.getInstance().core.queriesApi.findNodes(term, options);
+
+        this.dataLoaded.next(data);
+        return data;
     }
 
-    search(searchTerm: string, maxResults: number, skipCount: number): Observable<NodePaging> {
-        const searchQuery = Object.assign(this.searchConfigurationService.generateQueryBody(searchTerm, maxResults, skipCount));
-        const promise = this.apiService.getInstance().search.searchApi.search(searchQuery);
+    async search(searchTerm: string, maxResults: number, skipCount: number): Promise<NodePaging> {
+        const searchQuery = this.searchConfigurationService.generateQueryBody(searchTerm, maxResults, skipCount);
+        const data = await this.apiService.searchApi.search(searchQuery);
 
-        return Observable
-            .fromPromise(promise)
-            .catch(err => this.handleError(err));
+        this.dataLoaded.next(data);
+        return data;
     }
 
-    searchByQueryBody(queryBody: QueryBody): Observable<NodePaging> {
-        const promise = this.apiService.getInstance().search.searchApi.search(queryBody);
+    async searchByQueryBody(queryBody: QueryBody): Promise<NodePaging> {
+        const data = await this.apiService.searchApi.search(queryBody);
 
-        return Observable
-            .fromPromise(promise)
-            .catch(err => this.handleError(err));
-    }
-
-    private handleError(error: any): Observable<any> {
-        return Observable.throw(error || 'Server error');
+        this.dataLoaded.next(data);
+        return data;
     }
 }
 

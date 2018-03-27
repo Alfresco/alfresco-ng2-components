@@ -17,6 +17,7 @@
 
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material';
+import { SearchService } from '@alfresco/adf-core';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
 import { FacetQuery } from '../../facet-query.interface';
 import { ResponseFacetField } from '../../response-facet-field.interface';
@@ -38,7 +39,7 @@ export class SearchFilterComponent implements OnInit {
     responseFacetQueries: FacetQuery[] = [];
     responseFacetFields: ResponseFacetField[] = [];
 
-    constructor(private queryBuilder: SearchQueryBuilderService) {
+    constructor(private queryBuilder: SearchQueryBuilderService, private search: SearchService) {
         this.queryBuilder.updated.subscribe(query => {
             this.queryBuilder.execute();
         });
@@ -48,6 +49,7 @@ export class SearchFilterComponent implements OnInit {
         if (this.queryBuilder) {
             this.queryBuilder.executed.subscribe(data => {
                 this.onDataLoaded(data);
+                this.search.dataLoaded.next(data);
             });
         }
     }
