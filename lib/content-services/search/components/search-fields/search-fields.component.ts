@@ -20,7 +20,7 @@ import { MatCheckboxChange } from '@angular/material';
 
 import { SearchWidget } from '../../search-widget.interface';
 import { SearchWidgetSettings } from '../../search-widget-settings.interface';
-import { SearchQueryBuilder } from '../../search-query-builder';
+import { SearchQueryBuilderService } from '../../search-query-builder.service';
 
 @Component({
     selector: 'adf-search-fields',
@@ -36,7 +36,7 @@ export class SearchFieldsComponent implements SearchWidget, OnInit {
 
     id: string;
     settings: SearchWidgetSettings;
-    context: SearchQueryBuilder;
+    context: SearchQueryBuilderService;
 
     ngOnInit() {
         const defaultOptions = (this.settings.options || [])

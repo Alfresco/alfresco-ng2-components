@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, Input, OnInit } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material';
-import { SearchQueryBuilder } from '../../search-query-builder';
+import { SearchQueryBuilderService } from '../../search-query-builder.service';
 import { FacetQuery } from '../../facet-query.interface';
 import { ResponseFacetField } from '../../response-facet-field.interface';
 import { FacetFieldBucket } from '../../facet-field-bucket.interface';
@@ -38,8 +38,11 @@ export class SearchFilterComponent implements OnInit {
     responseFacetQueries: FacetQuery[] = [];
     responseFacetFields: ResponseFacetField[] = [];
 
-    @Input()
-    queryBuilder: SearchQueryBuilder;
+    constructor(private queryBuilder: SearchQueryBuilderService) {
+        this.queryBuilder.updated.subscribe(query => {
+            this.queryBuilder.execute();
+        });
+    }
 
     ngOnInit() {
         if (this.queryBuilder) {

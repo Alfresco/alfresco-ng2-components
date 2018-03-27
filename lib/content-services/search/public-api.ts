@@ -25,7 +25,7 @@ export { SearchCategory } from './search-category.interface';
 export { SearchWidgetSettings } from './search-widget-settings.interface';
 export { SearchWidget } from './search-widget.interface';
 export { SearchConfiguration } from './search-configuration.interface';
-export { SearchQueryBuilder } from './search-query-builder';
+export { SearchQueryBuilderService } from './search-query-builder.service';
 export { SearchRange } from './search-range.interface';
 
 export * from './components/search.component';

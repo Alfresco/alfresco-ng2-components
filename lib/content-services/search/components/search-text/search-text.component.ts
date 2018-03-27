@@ -18,7 +18,7 @@
 import { Component, ViewEncapsulation, OnInit, Input } from '@angular/core';
 import { SearchWidget } from '../../search-widget.interface';
 import { SearchWidgetSettings } from '../../search-widget-settings.interface';
-import { SearchQueryBuilder } from '../../search-query-builder';
+import { SearchQueryBuilderService } from '../../search-query-builder.service';
 
 @Component({
     selector: 'adf-search-text',
@@ -33,7 +33,7 @@ export class SearchTextComponent implements SearchWidget, OnInit {
 
     id: string;
     settings: SearchWidgetSettings;
-    context: SearchQueryBuilder;
+    context: SearchQueryBuilderService;
 
     ngOnInit() {
         if (this.context && this.settings) {

@@ -17,7 +17,7 @@
 
 import { Component, Input, ViewChild, ViewContainerRef, OnInit, OnDestroy, Compiler, ModuleWithComponentFactories, ComponentRef } from '@angular/core';
 import { SearchWidgetsModule } from './search-widgets.module';
-import { SearchQueryBuilder } from '../../search-query-builder';
+import { SearchQueryBuilderService } from '../../search-query-builder.service';
 
 @Component({
     selector: 'adf-search-widget-container',
@@ -40,13 +40,10 @@ export class SearchWidgetContainerComponent implements OnInit, OnDestroy {
     @Input()
     config: any;
 
-    @Input()
-    context: SearchQueryBuilder;
-
     private module: ModuleWithComponentFactories<SearchWidgetsModule>;
     private componentRef: ComponentRef<any>;
 
-    constructor(compiler: Compiler) {
+    constructor(compiler: Compiler, private queryBuilder: SearchQueryBuilderService) {
         this.module = compiler.compileModuleAndAllComponentsSync(SearchWidgetsModule);
     }
 
@@ -63,7 +60,7 @@ export class SearchWidgetContainerComponent implements OnInit, OnDestroy {
         if (ref && ref.instance) {
             ref.instance.id = this.id;
             ref.instance.settings = { ...this.settings };
-            ref.instance.context = this.context;
+            ref.instance.context = this.queryBuilder;
         }
     }
 

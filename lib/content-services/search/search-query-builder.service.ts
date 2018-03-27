@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
+import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
 import { QueryBody } from 'alfresco-js-api';
 import { SearchCategory } from './search-category.interface';
 import { FilterQuery } from './filter-query.interface';
@@ -24,7 +25,8 @@ import { SearchRange } from './search-range.interface';
 import { SearchConfiguration } from './search-configuration.interface';
 import { FacetQuery } from './facet-query.interface';
 
-export class SearchQueryBuilder {
+@Injectable()
+export class SearchQueryBuilderService {
 
     updated: Subject<QueryBody> = new Subject();
     executed: Subject<any> = new Subject();
@@ -36,16 +38,19 @@ export class SearchQueryBuilder {
     filterQueries: FilterQuery[] = [];
     ranges: { [id: string]: SearchRange } = {};
 
-    constructor(public config: SearchConfiguration,  private api: AlfrescoApiService) {
-        if (!config) {
+    config: SearchConfiguration;
+
+    constructor(appConfig: AppConfigService,  private api: AlfrescoApiService) {
+        this.config = appConfig.get<SearchConfiguration>('search');
+        if (!this.config) {
             throw new Error('Search configuration not found.');
         }
 
-        if (config.query && config.query.categories) {
-            this.categories = config.query.categories.filter(f => f.enabled);
+        if (this.config.query && this.config.query.categories) {
+            this.categories = this.config.query.categories.filter(f => f.enabled);
         }
 
-        this.filterQueries = config.filterQueries || [];
+        this.filterQueries = this.config.filterQueries || [];
         this.scope = {
             locations: null
         };

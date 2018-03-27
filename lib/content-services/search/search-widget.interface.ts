@@ -16,10 +16,10 @@
  */
 
 import { SearchWidgetSettings } from './search-widget-settings.interface';
-import { SearchQueryBuilder } from './search-query-builder';
+import { SearchQueryBuilderService } from './search-query-builder.service';
 
 export interface SearchWidget {
     id: string;
     settings?: SearchWidgetSettings;
-    context?: SearchQueryBuilder;
+    context?: SearchQueryBuilderService;
 }

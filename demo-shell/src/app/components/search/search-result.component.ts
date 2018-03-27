@@ -18,8 +18,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NodePaging } from 'alfresco-js-api';
-import { AppConfigService, AlfrescoApiService } from '@alfresco/adf-core';
-import { SearchConfiguration, SearchQueryBuilder } from '@alfresco/adf-content-services';
+import { SearchQueryBuilderService } from '@alfresco/adf-content-services';
 
 @Component({
     selector: 'app-search-result-component',
@@ -29,17 +28,9 @@ import { SearchConfiguration, SearchQueryBuilder } from '@alfresco/adf-content-s
 export class SearchResultComponent implements OnInit {
 
     data: NodePaging;
-    queryBuilder: SearchQueryBuilder;
 
     constructor(private route: ActivatedRoute,
-                api: AlfrescoApiService,
-                appConfig: AppConfigService) {
-        const config = appConfig.get<SearchConfiguration>('search');
-
-        this.queryBuilder = new SearchQueryBuilder(config, api);
-        this.queryBuilder.updated.subscribe(query => {
-            this.queryBuilder.execute();
-        });
+                private queryBuilder: SearchQueryBuilderService) {
 
         this.queryBuilder.executed.subscribe(data => {
             this.onDataLoaded(data);
