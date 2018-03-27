@@ -217,6 +217,10 @@ export class ContentService {
             hasPermission = true;
         }
 
+        if (permission === PermissionsEnum.LOCK) {
+            hasPermission = node.isFile; // todo check ownership permission
+        }
+
         return hasPermission;
     }
 

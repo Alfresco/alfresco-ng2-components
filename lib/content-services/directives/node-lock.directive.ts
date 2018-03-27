@@ -21,15 +21,13 @@ import { Directive, ElementRef, Renderer2, HostListener, Input, Output, EventEmi
 import { MatDialog, MatDialogConfig } from '@angular/material';
 
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-
-import { NodeLockDialogComponent } from '../dialogs/node-lock.dialog';
-import { ContentService } from '@alfresco/adf-core';
+import { NodeActionsService } from "../document-list/services/node-actions.service";
+import { ContentService, PermissionsEnum } from "@alfresco/adf-core";
 
 @Directive({
     selector: '[adf-node-lock]'
 })
 export class NodeLockDirective implements AfterViewInit {
-    static DIALOG_WIDTH: number = 400;
 
     @Input('adf-node-lock')
     node: MinimalNodeEntryEntity;
@@ -41,43 +39,19 @@ export class NodeLockDirective implements AfterViewInit {
     onClick(event) {
         event.preventDefault();
         if (this.node) {
-            this.openDialog();
+            this.nodeActionsService.lockNode(this.node);
         }
     }
 
     constructor(
-        public dialogRef: MatDialog,
         public element: ElementRef,
-        public content: ContentService,
-        private renderer: Renderer2
+        private nodeActionsService: NodeActionsService,
+        private renderer: Renderer2,
+        private contentService?: ContentService
     ) {}
 
     ngAfterViewInit() {
-        this.renderer.setProperty(this.element.nativeElement, 'disabled', !this.node.isFile);
-    }
-
-    private get dialogConfig(): MatDialogConfig {
-        const { DIALOG_WIDTH: width } = NodeLockDirective;
-        const { node } = this;
-
-        return {
-            data: { node },
-            width: `${width}px`
-        };
-    }
-
-    private openDialog(): void {
-        const { dialogRef, dialogConfig, content } = this;
-        const dialogInstance = dialogRef.open(NodeLockDialogComponent, dialogConfig);
-
-        dialogInstance.componentInstance.error.subscribe((error) => {
-            this.error.emit(error);
-        });
-
-        dialogInstance.afterClosed().subscribe((node: MinimalNodeEntryEntity) => {
-            if (node) {
-                content.folderEdit.next(node);
-            }
-        });
+        const hasPermission = this.contentService.hasPermission(this.node, PermissionsEnum.LOCK);
+        this.renderer.setProperty(this.element.nativeElement, 'disabled', !hasPermission);
     }
 }

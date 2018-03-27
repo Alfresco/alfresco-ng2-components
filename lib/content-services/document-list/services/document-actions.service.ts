@@ -83,6 +83,11 @@ export class DocumentActionsService {
         this.handlers['move'] = this.moveNode.bind(this);
         this.handlers['delete'] = this.deleteNode.bind(this);
         this.handlers['download'] = this.downloadNode.bind(this);
+        this.handlers['lock'] = this.lockNode.bind(this);
+    }
+
+    private lockNode(node: MinimalNodeEntity, target?: any, permission?: string) {
+        this.nodeActionsService.lockNode(node.entry);
     }
 
     private downloadNode(obj: MinimalNodeEntity, target?: any, permission?: string) {
