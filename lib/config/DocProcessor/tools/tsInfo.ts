@@ -11,6 +11,8 @@ import {
     ProjectReflection,
     Reflection,
     DeclarationReflection,
+    SignatureReflection,
+    ParameterReflection,
     ReflectionKind,
     TraverseProperty,
     Decorator
@@ -25,9 +27,6 @@ let excludePatterns = [
     "**/*.spec.ts"
 ];
 
-let propTemp = `{% for prop in properties %}
-| {{prop.name}} | {{prop.type}} | {{prop.defaultValue}} | {{prop.docText}} |
-{% endfor %}`;
 
 let nameExceptions = {
     "datatable.component": "DataTableComponent",
@@ -61,55 +60,77 @@ class PropInfo {
             });
         }
 
-        if  (rawProp.comment && rawProp.comment.tags) {
-            rawProp.comment.tags.forEach(tag => {
-                if (tag.tagName === "deprecated")
-                    this.isDeprecated = true;
-            });
-        }
+        this.isDeprecated = rawProp.comment && rawProp.comment.hasTag("deprecated");
     }
 };
 
-class MethodInfo {
+
+class ParamInfo {
+    name: string;
+    type: string;
+    defaultValue: string;
+    docText: string;
+    combined: string;
+    isOptional: boolean;
+
+    constructor(rawParam: ParameterReflection) {
+        this.name = rawParam.name;
+        this.type = rawParam.type.toString();
+        this.defaultValue = rawParam.defaultValue;
+        this.docText = rawParam.comment ? rawParam.comment.text : "";
+        this.docText = this.docText.replace(/[\n\r]+/g, " ");
+        this.isOptional = rawParam.flags.isOptional;
+
+        this.combined = this.name;
+
+        if (this.isOptional)
+            this.combined += "?";
+
+        this.combined += `: ${this.type}`;
+        
+        if (this.defaultValue !== "")
+            this.combined += ` = ${this.defaultValue}`;
+    }
+}
+
+
+class MethodSigInfo {
     name: string;
     docText: string;
     returnType: string;
-    signatures: string[];
+    signature: string;
+    params: ParamInfo[];
+    isDeprecated: boolean;
 
-    constructor(rawMeth: DeclarationReflection) {
-        this.name = rawMeth.name;
-        this.docText = rawMeth.hasComment() ? rawMeth.comment.shortText + rawMeth.comment.text : "";
+    constructor(rawSig: SignatureReflection) {
+        this.name = rawSig.name;
+        this.docText = rawSig.hasComment() ? rawSig.comment.shortText + rawSig.comment.text : "";
         this.docText = this.docText.replace(/[\n\r]+/g, " ");
-        this.returnType = rawMeth.type ? rawMeth.type.toString() : "";
+        this.returnType = rawSig.type ? rawSig.type.toString() : "";
+        this.isDeprecated = rawSig.comment && rawSig.comment.hasTag("deprecated");
 
-        this.signatures = [];
+        this.params = [];
+        let paramStrings = [];
 
-        if (rawMeth.signatures){
-            rawMeth.signatures.forEach(item => {
-                let sigString = "(";
-
-                if (item.parameters) {
-                    let paramStrings = [];
-
-                    item.parameters.forEach(param => {
-                        paramStrings.push(`${param.name}: ${param.type.toString()}`);
-                    });
-
-                    sigString += paramStrings.join(", ");
-                }
-
-                sigString += ")";
-                this.signatures.push(sigString);
+        if (rawSig.parameters) {
+            rawSig.parameters.forEach(rawParam => {
+                let param = new ParamInfo(rawParam);
+                this.params.push(param);
+                paramStrings.push(param.combined);
             });
         }
-            //sigs && sigs.length > 0 ? sigs[0].toString() : "";
+
+        this.signature = "(" + paramStrings.join(", ") + ")";
     }
 }
 
 
 class ComponentInfo {
     properties: PropInfo[];
-    methods: MethodInfo[];
+    methods: MethodSigInfo[];
+    hasInputs: boolean;
+    hasOutputs: boolean;
+    hasMethods: boolean;
 
     constructor(classRef: DeclarationReflection) {
         let props = classRef.getChildrenByKind(ReflectionKind.Property);
@@ -120,9 +141,25 @@ class ComponentInfo {
 
         let methods = classRef.getChildrenByKind(ReflectionKind.Method);
 
-        this.methods = methods.map(item => {
-            return new MethodInfo(item);
-        })
+        this.methods = [];
+
+        methods.forEach(method =>{
+            if (!(method.flags.isPrivate || method.flags.isProtected)) {
+                method.signatures.forEach(sig => {
+                    this.methods.push(new MethodSigInfo(sig));
+                });
+            }
+        });
+        
+        this.properties.forEach(prop => {
+            if (prop.isInput)
+                this.hasInputs = true;
+            
+            if (prop.isOutput)
+                this.hasOutputs = true;
+        });
+
+        this.hasMethods = methods.length > 0;
     }
 }
 
@@ -153,28 +190,15 @@ export function updatePhase(tree, pathname, aggData) {
     let compName = angNameToClassName(path.basename(pathname, ".md"));
     let classRef = aggData.projData.findReflectionByName(compName);
     let compData = new ComponentInfo(classRef);
+    let classType = compName.match(/component|directive|service/i);
 
-    aggData.liq
-    .renderFile("propTable.md", compData)
-    .then(console.log);
-}
+    if (classType) {
+        let templateName = classType[0] + ".liquid";
 
-function hasDeprecatedTag(tags: CommentTag[]): string {
-    for (let i = 0; i < tags.length; i++) {
-        if (tags[i].tagName === "deprecated")
-            return tags[i].text.trim();
+        aggData.liq
+        .renderFile(templateName, compData)
+        .then(console.log);
     }
-
-    return "";
-}
-
-function hasInputDecorator(decs: Decorator[]) {
-    for (let i = 0; i < decs.length; i++) {
-        if (decs[i].name === "Input")
-            return true;
-    }
-
-    return false;
 }
 
 
