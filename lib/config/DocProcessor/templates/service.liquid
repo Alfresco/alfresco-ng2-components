@@ -1,10 +1,10 @@
 
 {% if hasMethods %}
-## Methods
+### Methods
 
-{% for meth in methods %}- {{meth.name}}{{meth.signature}}: {{meth.returnType}}
+{% for meth in methods %}- `{{meth.name}}{{meth.signature}}: {{meth.returnType}}`<br/>
   {{meth.docText}}
-{% for param in meth.params %}   - `{{param.combined}}` {% if param.isOptional %}(Optional){% endif %}{{param.docText}}
+  {% for param in meth.params %}   - `{{param.combined}}` - {% if param.isOptional %}(Optional){% endif %}{{param.docText}}
 {% endfor %}
 {% endfor %}
 {% endif %}

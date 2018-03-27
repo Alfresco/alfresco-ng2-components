@@ -1,8 +1,9 @@
 import * as fs from "fs";
 import * as path from "path";
 
-import * as heading from "mdast-util-heading-range";
+import * as replaceSection from "mdast-util-heading-range";
 import * as remark from "remark";
+import * as frontMatter from "remark-frontmatter";
 
 import * as liquid from "liquidjs";
 
@@ -47,7 +48,8 @@ class PropInfo {
         this.name = rawProp.name;
         this.docText = rawProp.comment ? rawProp.comment.shortText : "";
         this.docText = this.docText.replace(/[\n\r]+/g, " ");
-        this.defaultValue = rawProp.defaultValue;
+        this.defaultValue = rawProp.defaultValue || "";
+        this.defaultValue = this.defaultValue.replace(/\|/, "\\|");
         this.type = rawProp.type ? rawProp.type.toString() : "";
 
         if (rawProp.decorators) {
@@ -197,8 +199,19 @@ export function updatePhase(tree, pathname, aggData) {
 
         aggData.liq
         .renderFile(templateName, compData)
-        .then(console.log);
+        .then(mdText => {
+            let newSection = remark().parse(mdText).children;
+            replaceSection(tree, "Class members", (before, section, after) => {
+                newSection.unshift(before);
+                newSection.push(after);
+                return newSection;
+            });
+
+            fs.writeFileSync(pathname, remark().use(frontMatter, {type: 'yaml', fence: '---'}).data("settings", {paddedTable: false}).stringify(tree));
+        });
     }
+
+    return false;
 }
 
 
