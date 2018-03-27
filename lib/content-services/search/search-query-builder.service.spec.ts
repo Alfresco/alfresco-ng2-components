@@ -15,15 +15,24 @@
  * limitations under the License.
  */
 
-import { SearchQueryBuilder } from './search-query-builder';
+import { SearchQueryBuilderService } from './search-query-builder.service';
 import { SearchConfiguration } from './search-configuration.interface';
+import { AppConfigService } from '@alfresco/adf-core';
 
-describe('SearchQueryBuilder', () => {
+// tslint:disable-next-line:ban
+fdescribe('SearchQueryBuilder', () => {
+
+    const buildConfig = (searchSettings): AppConfigService => {
+        const config = new AppConfigService(null);
+        config.config.search = searchSettings;
+        return config;
+    };
 
     it('should throw error if configuration not provided', () => {
         expect(() => {
+            const appConfig = new AppConfigService(null);
             // tslint:disable-next-line:no-unused-expression
-            new SearchQueryBuilder(null, null);
+            new SearchQueryBuilderService(appConfig, null);
         }).toThrowError('Search configuration not found.');
     });
 
@@ -37,7 +46,7 @@ describe('SearchQueryBuilder', () => {
                 ]
             }
         };
-        const builder = new SearchQueryBuilder(config, null);
+        const builder = new SearchQueryBuilderService(buildConfig(config), null);
 
         expect(builder.categories.length).toBe(2);
         expect(builder.categories[0].id).toBe('cat1');
@@ -54,7 +63,7 @@ describe('SearchQueryBuilder', () => {
                 { query: 'query2' }
             ]
         };
-        const builder = new SearchQueryBuilder(config, null);
+        const builder = new SearchQueryBuilderService(buildConfig(config), null);
 
         expect(builder.filterQueries.length).toBe(2);
         expect(builder.filterQueries[0].query).toBe('query1');
@@ -62,14 +71,14 @@ describe('SearchQueryBuilder', () => {
     });
 
     it('should setup default location scope', () => {
-        const builder = new SearchQueryBuilder(<any> {}, null);
+        const builder = new SearchQueryBuilderService(buildConfig({}), null);
 
         expect(builder.scope).toBeDefined();
         expect(builder.scope.locations).toBeNull();
     });
 
     it('should add new filter query', () => {
-        const builder = new SearchQueryBuilder(<any> {}, null);
+        const builder = new SearchQueryBuilderService(buildConfig({}), null);
 
         builder.addFilterQuery('q1');
 
@@ -78,7 +87,7 @@ describe('SearchQueryBuilder', () => {
     });
 
     it('should not add empty filter query', () => {
-        const builder = new SearchQueryBuilder(<any> {}, null);
+        const builder = new SearchQueryBuilderService(buildConfig({}), null);
 
         builder.addFilterQuery(null);
         builder.addFilterQuery('');
@@ -87,7 +96,7 @@ describe('SearchQueryBuilder', () => {
     });
 
     it('should not add duplicate filter query', () => {
-        const builder = new SearchQueryBuilder(<any> {}, null);
+        const builder = new SearchQueryBuilderService(buildConfig({}), null);
 
         builder.addFilterQuery('q1');
         builder.addFilterQuery('q1');
@@ -98,7 +107,7 @@ describe('SearchQueryBuilder', () => {
     });
 
     it('should remove filter query', () => {
-        const builder = new SearchQueryBuilder(<any> {}, null);
+        const builder = new SearchQueryBuilderService(buildConfig({}), null);
 
         builder.addFilterQuery('q1');
         builder.addFilterQuery('q2');
@@ -110,7 +119,7 @@ describe('SearchQueryBuilder', () => {
     });
 
     it('should not remove empty query', () => {
-        const builder = new SearchQueryBuilder(<any> {}, null);
+        const builder = new SearchQueryBuilderService(buildConfig({}), null);
         builder.addFilterQuery('q1');
         builder.addFilterQuery('q2');
         expect(builder.filterQueries.length).toBe(2);
@@ -127,7 +136,7 @@ describe('SearchQueryBuilder', () => {
                 { query: 'q2', label: 'query2' }
             ]
         };
-        const builder = new SearchQueryBuilder(config, null);
+        const builder = new SearchQueryBuilderService(buildConfig(config), null);
         const query = builder.getFacetQuery('query2');
 
         expect(query.query).toBe('q2');
@@ -140,7 +149,7 @@ describe('SearchQueryBuilder', () => {
                 { query: 'q1', label: 'query1' }
             ]
         };
-        const builder = new SearchQueryBuilder(config, null);
+        const builder = new SearchQueryBuilderService(buildConfig(config), null);
 
         const query1 = builder.getFacetQuery('');
         expect(query1).toBeNull();
@@ -150,7 +159,7 @@ describe('SearchQueryBuilder', () => {
     });
 
     it('should build query and raise an event on update', async () => {
-        const builder = new SearchQueryBuilder(<any> {}, null);
+        const builder = new SearchQueryBuilderService(buildConfig({}), null);
         const query = {};
         spyOn(builder, 'buildQuery').and.returnValue(query);
 
@@ -166,7 +175,7 @@ describe('SearchQueryBuilder', () => {
         const api = jasmine.createSpyObj('api', ['search']);
         api.search.and.returnValue(data);
 
-        const builder = new SearchQueryBuilder(<any> {}, api);
+        const builder = new SearchQueryBuilderService(buildConfig({}), api);
         spyOn(builder, 'buildQuery').and.returnValue({});
 
         let eventArgs;
@@ -184,7 +193,7 @@ describe('SearchQueryBuilder', () => {
                 ]
             }
         };
-        const builder = new SearchQueryBuilder(config, null);
+        const builder = new SearchQueryBuilderService(buildConfig(config), null);
         builder.queryFragments['cat1'] = null;
 
         const compiled = builder.buildQuery();
@@ -199,7 +208,7 @@ describe('SearchQueryBuilder', () => {
                 ]
             }
         };
-        const builder = new SearchQueryBuilder(config, null);
+        const builder = new SearchQueryBuilderService(buildConfig(config), null);
 
         builder.queryFragments['cat1'] = 'cm:name:test';
 
@@ -216,7 +225,7 @@ describe('SearchQueryBuilder', () => {
                 ]
             }
         };
-        const builder = new SearchQueryBuilder(config, null);
+        const builder = new SearchQueryBuilderService(buildConfig(config), null);
 
         builder.queryFragments['cat1'] = 'cm:name:test';
         builder.queryFragments['cat2'] = 'NOT cm:creator:System';
@@ -236,7 +245,7 @@ describe('SearchQueryBuilder', () => {
                 ]
             }
         };
-        const builder = new SearchQueryBuilder(config, null);
+        const builder = new SearchQueryBuilderService(buildConfig(config), null);
 
         builder.queryFragments['cat1'] = 'cm:name:test';
         builder.fields['cat1'] = ['field1', 'field3'];
@@ -255,7 +264,7 @@ describe('SearchQueryBuilder', () => {
                 ]
             }
         };
-        const builder = new SearchQueryBuilder(config, null);
+        const builder = new SearchQueryBuilderService(buildConfig(config), null);
 
         builder.queryFragments['cat1'] = 'cm:name:test';
         builder.fields['cat1'] = [];
@@ -273,7 +282,7 @@ describe('SearchQueryBuilder', () => {
                 ]
             }
         };
-        const builder = new SearchQueryBuilder(config, null);
+        const builder = new SearchQueryBuilderService(buildConfig(config), null);
         builder.queryFragments['cat1'] = 'cm:name:test';
         builder.addFilterQuery('query1');
 
@@ -294,7 +303,7 @@ describe('SearchQueryBuilder', () => {
                 { query: 'q1', label: 'q2' }
             ]
         };
-        const builder = new SearchQueryBuilder(config, null);
+        const builder = new SearchQueryBuilderService(buildConfig(config), null);
         builder.queryFragments['cat1'] = 'cm:name:test';
 
         const compiled = builder.buildQuery();
@@ -315,7 +324,7 @@ describe('SearchQueryBuilder', () => {
                 ]
             }
         };
-        const builder = new SearchQueryBuilder(config, null);
+        const builder = new SearchQueryBuilderService(buildConfig(config), null);
         builder.queryFragments['cat1'] = 'cm:name:test';
 
         const compiled = builder.buildQuery();
@@ -334,7 +343,7 @@ describe('SearchQueryBuilder', () => {
                 permissionEvaluationTime: 100
             }
         };
-        const builder = new SearchQueryBuilder(config, null);
+        const builder = new SearchQueryBuilderService(buildConfig(config), null);
         builder.queryFragments['cat1'] = 'cm:name:test';
 
         const compiled = builder.buildQuery();
@@ -349,7 +358,7 @@ describe('SearchQueryBuilder', () => {
                 ]
             }
         };
-        const builder = new SearchQueryBuilder(config, null);
+        const builder = new SearchQueryBuilderService(buildConfig(config), null);
         builder.queryFragments['cat1'] = 'cm:name:test';
         builder.scope.locations = 'custom';
 

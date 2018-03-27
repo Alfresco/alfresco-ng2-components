@@ -16,23 +16,31 @@
  */
 
 import { SearchFilterComponent } from './search-filter.component';
-import { SearchQueryBuilder } from '../../search-query-builder';
+import { SearchQueryBuilderService } from '../../search-query-builder.service';
 import { SearchConfiguration } from '../../search-configuration.interface';
+import { AppConfigService } from '@alfresco/adf-core';
 
-describe('SearchSettingsComponent', () => {
+// tslint:disable-next-line:ban
+fdescribe('SearchSettingsComponent', () => {
 
     let component: SearchFilterComponent;
+    let queryBuilder: SearchQueryBuilderService;
+    let appConfig: AppConfigService;
 
     beforeEach(() => {
-        component = new SearchFilterComponent();
-        component.queryBuilder = new SearchQueryBuilder({}, null);
+        appConfig = new AppConfigService(null);
+        appConfig.config.search = {};
+
+        queryBuilder = new SearchQueryBuilderService(appConfig, null);
+
+        component = new SearchFilterComponent(queryBuilder, null);
         component.ngOnInit();
     });
 
     it('should subscribe to query builder executed event', () => {
         spyOn(component, 'onDataLoaded').and.stub();
         const data = {};
-        component.queryBuilder.executed.next(data);
+        queryBuilder.executed.next(data);
 
         expect(component.onDataLoaded).toHaveBeenCalledWith(data);
     });
@@ -70,8 +78,7 @@ describe('SearchSettingsComponent', () => {
     });
 
     it('should update bucket model and query builder on facet toggle', () => {
-        const builder = component.queryBuilder;
-        spyOn(builder, 'update').and.stub();
+        spyOn(queryBuilder, 'update').and.stub();
 
         const event: any = { checked: true };
         const field: any = {};
@@ -82,30 +89,29 @@ describe('SearchSettingsComponent', () => {
         expect(component.selectedBuckets.length).toBe(1);
         expect(component.selectedBuckets[0]).toEqual(bucket);
 
-        expect(builder.filterQueries.length).toBe(1);
-        expect(builder.filterQueries[0].query).toBe('q1');
+        expect(queryBuilder.filterQueries.length).toBe(1);
+        expect(queryBuilder.filterQueries[0].query).toBe('q1');
 
-        expect(builder.update).toHaveBeenCalled();
+        expect(queryBuilder.update).toHaveBeenCalled();
     });
 
     it('should update bucket model and query builder on facet un-toggle', () => {
-        const builder = component.queryBuilder;
-        spyOn(builder, 'update').and.stub();
+        spyOn(queryBuilder, 'update').and.stub();
 
         const event: any = { checked: false };
         const field: any = { label: 'f1' };
         const bucket: any = { $checked: true, filterQuery: 'q1', $field: 'f1', label: 'b1' };
 
         component.selectedBuckets.push(bucket);
-        builder.addFilterQuery(bucket.filterQuery);
+        queryBuilder.addFilterQuery(bucket.filterQuery);
 
         component.onFacetToggle(event, field, bucket);
 
         expect(bucket.$checked).toBeFalsy();
         expect(component.selectedBuckets.length).toBe(0);
-        expect(builder.filterQueries.length).toBe(0);
+        expect(queryBuilder.filterQueries.length).toBe(0);
 
-        expect(builder.update).toHaveBeenCalled();
+        expect(queryBuilder.update).toHaveBeenCalled();
     });
 
     it('should unselect facet query and update builder', () => {
@@ -114,32 +120,35 @@ describe('SearchSettingsComponent', () => {
                 { label: 'q1', query: 'query1' }
             ]
         };
-        component.queryBuilder = new SearchQueryBuilder(config, null);
-        spyOn(component.queryBuilder, 'update').and.stub();
-        component.queryBuilder.filterQueries = [{ query: 'query1' }];
+        appConfig.config.search = config;
+        queryBuilder = new SearchQueryBuilderService(appConfig, null);
+        component = new SearchFilterComponent(queryBuilder, null);
+
+        spyOn(queryBuilder, 'update').and.stub();
+        queryBuilder.filterQueries = [{ query: 'query1' }];
         component.selectedFacetQueries = ['q1'];
 
         component.unselectFacetQuery('q1');
 
         expect(component.selectedFacetQueries.length).toBe(0);
-        expect(component.queryBuilder.filterQueries.length).toBe(0);
+        expect(queryBuilder.filterQueries.length).toBe(0);
 
-        expect(component.queryBuilder.update).toHaveBeenCalled();
+        expect(queryBuilder.update).toHaveBeenCalled();
     });
 
     it('should unselect facet bucket and update builder', () => {
-        spyOn(component.queryBuilder, 'update').and.stub();
+        spyOn(queryBuilder, 'update').and.stub();
 
         const bucket: any = { $checked: true, filterQuery: 'q1', $field: 'f1', label: 'b1' };
         component.selectedBuckets.push(bucket);
-        component.queryBuilder.filterQueries.push({ query: 'q1' });
+        queryBuilder.filterQueries.push({ query: 'q1' });
 
         component.unselectFacetBucket(bucket);
 
         expect(component.selectedBuckets.length).toBe(0);
-        expect(component.queryBuilder.filterQueries.length).toBe(0);
+        expect(queryBuilder.filterQueries.length).toBe(0);
 
-        expect(component.queryBuilder.update).toHaveBeenCalled();
+        expect(queryBuilder.update).toHaveBeenCalled();
     });
 
     it('should fetch facet queries from response payload', () => {
