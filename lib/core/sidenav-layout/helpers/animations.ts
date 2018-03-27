@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { trigger, transition, animate, style, state } from '@angular/animations';
+import { trigger, transition, animate, style, state, AnimationTriggerMetadata } from '@angular/animations';
 
-export const sidenavAnimation = trigger('sidenavAnimation', [
+export const sidenavAnimation: AnimationTriggerMetadata = trigger('sidenavAnimation', [
     state('expanded', style({ width: '{{ width }}px' }), { params : { width: 0 } }),
     state('compact',  style({ width: '{{ width }}px' }), { params : { width: 0 } }),
     transition('compact <=> expanded', animate('0.4s cubic-bezier(0.25, 0.8, 0.25, 1)'))
 ]);
 
-export const contentAnimation = trigger('contentAnimation', [
+export const contentAnimation: AnimationTriggerMetadata = trigger('contentAnimation', [
     state('expanded', style({ 'margin-left': '{{ marginLeft }}px' }), { params : { marginLeft: 0 } }),
     state('compact',  style({'margin-left': '{{ marginLeft }}px' }), { params : { marginLeft: 0 } }),
     transition('expanded <=> compact', animate('400ms cubic-bezier(0.25, 0.8, 0.25, 1)'))
