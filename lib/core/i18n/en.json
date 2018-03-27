@@ -51,6 +51,17 @@
         "TITLE": "Adding files to zip, this could take a few minutes"
       }
     },
+    "FILE_DIALOG": {
+      "FILE_LOCK": "Lock file",
+      "FILE_LOCK_CHECKBOX": "Lock file",
+      "TIME_LOCK_CHECKBOX": "Time lock",
+      "SAVE_BUTTON": {
+        "LABEL": "Save"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "Cancel"
+      }
+    },
     "FOLDER_DIALOG": {
       "CREATE_FOLDER_TITLE": "Create new folder",
       "EDIT_FOLDER_TITLE": "Edit folder",

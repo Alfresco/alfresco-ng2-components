@@ -244,10 +244,12 @@
                     <data-column
                         class="desktop-only"
                         title="{{'DOCUMENT_LIST.COLUMNS.IS_LOCKED' | translate}}"
-                        key="isLocked">
+                        key="id">
                         <ng-template let-entry="$implicit">
-                            <mat-icon *ngIf="entry.data.getValue(entry.row, entry.col)">lock</mat-icon>
-                            <mat-icon *ngIf="!entry.data.getValue(entry.row, entry.col)">lock_open</mat-icon>
+                            <button mat-icon-button [adf-node-lock]="entry.row.node.entry">
+                                <mat-icon *ngIf="entry.row.getValue('isLocked')">lock</mat-icon>
+                                <mat-icon *ngIf="!entry.row.getValue('isLocked')">lock_open</mat-icon>
+                            </button>
                         </ng-template>
                     </data-column>
                     <data-column
@@ -324,6 +326,10 @@
                         permission="copy"
                         (error)="onContentActionError($event)"
                         (execute)="onPermissionRequested($event)">
+                    </content-action>
+                    <content-action
+                        icon="lock"
+                        title="Lock">
                     </content-action>
                 </content-actions>
             </adf-document-list>

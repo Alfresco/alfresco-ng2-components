@@ -21,6 +21,7 @@ import { MaterialModule } from '../material.module';
 
 import { NodeDownloadDirective } from './node-download.directive';
 import { NodeSharedDirective } from './node-share.directive';
+import { NodeLockDirective } from './node-lock.directive';
 
 @NgModule({
     imports: [
@@ -29,11 +30,13 @@ import { NodeSharedDirective } from './node-share.directive';
     ],
     declarations: [
         NodeDownloadDirective,
-        NodeSharedDirective
+        NodeSharedDirective,
+        NodeLockDirective
     ],
     exports: [
         NodeDownloadDirective,
-        NodeSharedDirective
+        NodeSharedDirective,
+        NodeLockDirective
     ]
 })
 export class ContentDirectiveModule {
