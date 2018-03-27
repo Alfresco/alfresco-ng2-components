@@ -237,4 +237,4 @@ describe('DocumentListService', () => {
 
         jasmine.Ajax.requests.mostRecent().respondWith({ status: 200, contentType: 'json' });
     });
-})
+});

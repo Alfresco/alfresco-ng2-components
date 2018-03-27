@@ -35,7 +35,6 @@ describe('NodeActionsService', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [],
             providers: [
                 NodeActionsService,
                 DocumentListService,

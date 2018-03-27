@@ -19,11 +19,9 @@ import { async, TestBed } from '@angular/core/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { CookieServiceMock } from './../mock/cookie.service.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { SettingsService } from './settings.service';
 import { AppConfigModule } from '../app-config/app-config.module';
 import { AuthenticationService } from './authentication.service';
 import { CookieService } from './cookie.service';
-import { LogService } from './log.service';
 import { StorageService } from './storage.service';
 import { TranslateLoaderService } from './translate-loader.service';
 import { UserPreferencesService } from './user-preferences.service';
@@ -49,13 +47,10 @@ describe('AuthenticationService', () => {
                 })
             ],
             providers: [
-                SettingsService,
-                AlfrescoApiService,
                 AuthenticationService,
                 StorageService,
                 UserPreferencesService,
-                { provide: CookieService, useClass: CookieServiceMock },
-                LogService
+                { provide: CookieService, useClass: CookieServiceMock }
             ]
         }).compileComponents();
     }));

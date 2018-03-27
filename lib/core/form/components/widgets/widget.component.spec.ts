@@ -31,7 +31,6 @@ describe('WidgetComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [],
             declarations: [WidgetComponent],
             providers: [
                 FormService,

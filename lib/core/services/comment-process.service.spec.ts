@@ -17,13 +17,9 @@
 
 import { async, TestBed } from '@angular/core/testing';
 import { CommentProcessModel } from '../models';
-import { AppConfigServiceMock } from '../mock/app-config.service.mock';
 import { fakeProcessComment, fakeTasksComment, fakeUser1 } from '../mock/comment-process-service.mock';
-import { AlfrescoApiService } from './alfresco-api.service';
-import { AppConfigService } from '../app-config/app-config.service';
 import { CommentProcessService } from './comment-process.service';
-import { LogService } from './log.service';
-import { StorageService } from './storage.service';
+import { AlfrescoApiService } from './alfresco-api.service';
 
 declare let jasmine: any;
 describe('Comment ProcessService Service', () => {
@@ -34,11 +30,7 @@ describe('Comment ProcessService Service', () => {
     beforeEach((() => {
         TestBed.configureTestingModule({
             providers: [
-                CommentProcessService,
-                AlfrescoApiService,
-                StorageService,
-                LogService,
-                {provide: AppConfigService, useClass: AppConfigServiceMock}
+                CommentProcessService
             ]
         }).compileComponents();
     }));

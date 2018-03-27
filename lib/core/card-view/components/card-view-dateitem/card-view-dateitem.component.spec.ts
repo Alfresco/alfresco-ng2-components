@@ -22,7 +22,6 @@ import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimep
 import { By } from '@angular/platform-browser';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import moment from 'moment-es6';
-import { AppConfigService } from '../../../index';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { TranslateLoaderService } from '../../../services/translate-loader.service';
@@ -54,8 +53,7 @@ describe('CardViewDateItemComponent', () => {
                 CardViewDateItemComponent
             ],
             providers: [
-                CardViewUpdateService,
-                AppConfigService
+                CardViewUpdateService
             ]
         }).compileComponents();
     }));

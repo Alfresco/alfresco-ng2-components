@@ -29,7 +29,6 @@ describe('Rating component', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-
             declarations: [
                 RatingComponent
             ],

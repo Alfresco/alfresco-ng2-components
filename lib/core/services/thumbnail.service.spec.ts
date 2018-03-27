@@ -21,17 +21,10 @@ import { MatIconRegistry } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { CookieServiceMock } from './../mock/cookie.service.mock';
-import { AlfrescoApiService } from './alfresco-api.service';
 import { ContentService } from './content.service';
-import { SettingsService } from './settings.service';
-import { AppConfigService } from '../app-config/app-config.service';
-import { AuthenticationService } from './authentication.service';
 import { CookieService } from './cookie.service';
-import { LogService } from './log.service';
-import { StorageService } from './storage.service';
 import { ThumbnailService } from './thumbnail.service';
 import { TranslateLoaderService } from './translate-loader.service';
-import { UserPreferencesService } from './user-preferences.service';
 
 describe('ThumbnailService', () => {
 
@@ -50,17 +43,9 @@ describe('ThumbnailService', () => {
                 })
             ],
             providers: [
-                UserPreferencesService,
-                AuthenticationService,
                 ContentService,
-                SettingsService,
-                AppConfigService,
                 { provide: CookieService, useClass: CookieServiceMock },
                 ThumbnailService,
-                AlfrescoApiService,
-                SettingsService,
-                StorageService,
-                LogService,
                 MatIconRegistry
             ]
         }).compileComponents();

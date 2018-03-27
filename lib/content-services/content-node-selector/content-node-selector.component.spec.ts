@@ -29,7 +29,7 @@ import {
         DocumentListComponent,
         DocumentListService
     } from '../document-list';
-import { AlfrescoApiService, ContentService } from '@alfresco/adf-core';
+import { ContentService } from '@alfresco/adf-core';
 
 describe('ContentNodeSelectorDialogComponent', () => {
 
@@ -51,7 +51,6 @@ describe('ContentNodeSelectorDialogComponent', () => {
                 ContentNodeSelectorService,
                 ContentNodeSelectorPanelComponent,
                 DocumentListService,
-                AlfrescoApiService,
                 ContentService,
                 DocumentListService,
                 ContentNodeSelectorService,

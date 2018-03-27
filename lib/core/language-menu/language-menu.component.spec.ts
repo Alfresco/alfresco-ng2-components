@@ -22,7 +22,6 @@ import { DirectiveModule } from '../directives/directive.module';
 import { MaterialModule } from '../material.module';
 import { AppConfigService } from '../app-config/app-config.service';
 import { TranslateLoaderService } from '../services/translate-loader.service';
-import { UserPreferencesService } from '../services/user-preferences.service';
 
 import { LanguageMenuComponent } from './language-menu.component';
 
@@ -49,8 +48,7 @@ describe('LanguageMenuComponent', () => {
                 LanguageMenuComponent
             ],
             providers: [
-                AppConfigService,
-                UserPreferencesService
+                AppConfigService
             ]
         }).compileComponents();
     }));

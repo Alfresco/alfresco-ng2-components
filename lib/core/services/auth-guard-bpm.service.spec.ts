@@ -19,17 +19,12 @@ import { async, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { CookieServiceMock } from './../mock/cookie.service.mock';
-import { AlfrescoApiService } from './alfresco-api.service';
-import { SettingsService } from './settings.service';
 import { AppConfigModule } from '../app-config/app-config.module';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AuthGuardBpm } from './auth-guard-bpm.service';
 import { AuthenticationService } from './authentication.service';
 import { CookieService } from './cookie.service';
-import { LogService } from './log.service';
-import { StorageService } from './storage.service';
 import { TranslateLoaderService } from './translate-loader.service';
-import { UserPreferencesService } from './user-preferences.service';
 import { RouterStateSnapshot, Router } from '@angular/router';
 
 describe('AuthGuardService BPM', () => {
@@ -53,13 +48,7 @@ describe('AuthGuardService BPM', () => {
             ],
             providers: [
                 AuthGuardBpm,
-                SettingsService,
-                AlfrescoApiService,
-                AuthenticationService,
-                StorageService,
-                UserPreferencesService,
-                { provide: CookieService, useClass: CookieServiceMock },
-                LogService
+                { provide: CookieService, useClass: CookieServiceMock }
             ]
         }).compileComponents();
     }));

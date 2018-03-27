@@ -22,8 +22,6 @@ import {
     FormFieldModel,
     FormModel,
     FormService,
-    AlfrescoApiService,
-    LogService,
     ThumbnailService,
     SitesService,
     NodesApiService
@@ -62,8 +60,6 @@ describe('AttachFolderWidgetComponent', () => {
             providers: [
                         FormService,
                         ThumbnailService,
-                        AlfrescoApiService,
-                        LogService,
                         SitesService,
                         DocumentListService,
                         ContentNodeDialogService,

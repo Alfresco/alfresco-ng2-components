@@ -17,16 +17,10 @@
 
 import { async, TestBed } from '@angular/core/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { AlfrescoApiService } from './alfresco-api.service';
-import { SettingsService } from './settings.service';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AppConfigModule } from '../app-config/app-config.module';
-import { AuthenticationService } from './authentication.service';
-import { LogService } from './log.service';
 import { SitesService } from './sites.service';
-import { StorageService } from './storage.service';
 import { TranslateLoaderService } from './translate-loader.service';
-import { UserPreferencesService } from './user-preferences.service';
 
 declare let jasmine: any;
 
@@ -46,13 +40,7 @@ describe('Sites service', () => {
                 })
             ],
             providers: [
-                SitesService,
-                AlfrescoApiService,
-                UserPreferencesService,
-                AuthenticationService,
-                SettingsService,
-                StorageService,
-                LogService
+                SitesService
             ]
         }).compileComponents();
     }));

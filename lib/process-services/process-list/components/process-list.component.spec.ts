@@ -538,8 +538,7 @@ describe('CustomProcessListComponent', () => {
             ],
             providers: [
                 ProcessService
-            ],
-            imports: []
+            ]
         }).compileComponents();
     }));
 

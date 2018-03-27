@@ -38,7 +38,6 @@ describe('ProcessInstanceTasksComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [],
             declarations: [
                 ProcessInstanceTasksComponent
             ],

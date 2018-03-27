@@ -127,7 +127,6 @@ describe('TaskListComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-
             declarations: [
                 TaskListComponent
             ],
@@ -659,8 +658,7 @@ describe('CustomTaskListComponent', () => {
             ],
             providers: [
                 TaskListService
-            ],
-            imports: []
+            ]
         }).compileComponents();
     }));
 

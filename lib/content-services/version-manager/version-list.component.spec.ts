@@ -32,10 +32,7 @@ describe('VersionListComponent', () => {
         TestBed.configureTestingModule({
             declarations: [
                 VersionListComponent
-            ],
-            providers: [
-                AlfrescoApiService
-            ],
+            ]
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         }).compileComponents();
     }));

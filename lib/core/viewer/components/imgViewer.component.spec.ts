@@ -17,10 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import { AuthenticationService } from '../../services/authentication.service';
 import { ContentService } from '../../services/content.service';
-import { SettingsService } from '../../services/settings.service';
 import { MaterialModule } from '../../material.module';
 import { ToolbarModule } from '../../toolbar/toolbar.module';
 
@@ -44,12 +41,7 @@ describe('Test Img viewer component ', () => {
                 MaterialModule,
                 ToolbarModule
             ],
-            declarations: [ImgViewerComponent],
-            providers: [
-                SettingsService,
-                AuthenticationService,
-                AlfrescoApiService
-            ]
+            declarations: [ImgViewerComponent]
         }).compileComponents();
         service = TestBed.get(ContentService);
     }));

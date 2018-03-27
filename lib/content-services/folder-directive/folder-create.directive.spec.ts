@@ -25,7 +25,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs/Observable';
 import { FolderDialogComponent } from '../dialogs/folder.dialog';
 
-import { AppConfigService, DirectiveModule, ContentService, TranslateLoaderService } from '@alfresco/adf-core';
+import { DirectiveModule, ContentService, TranslateLoaderService } from '@alfresco/adf-core';
 import { FolderCreateDirective } from './folder-create.directive';
 
 @Component({
@@ -64,8 +64,7 @@ describe('FolderCreateDirective', () => {
                 FolderCreateDirective
             ],
             providers: [
-                ContentService,
-                AppConfigService
+                ContentService
             ]
         });
 
