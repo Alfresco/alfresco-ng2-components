@@ -20,8 +20,7 @@ import { SearchQueryBuilderService } from '../../search-query-builder.service';
 import { SearchConfiguration } from '../../search-configuration.interface';
 import { AppConfigService } from '@alfresco/adf-core';
 
-// tslint:disable-next-line:ban
-fdescribe('SearchSettingsComponent', () => {
+describe('SearchSettingsComponent', () => {
 
     let component: SearchFilterComponent;
     let queryBuilder: SearchQueryBuilderService;
