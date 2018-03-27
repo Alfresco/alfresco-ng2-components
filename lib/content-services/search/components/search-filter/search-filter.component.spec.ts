@@ -324,12 +324,11 @@ describe('SearchSettingsComponent', () => {
     });
 
     it('should update query builder only when has bucket to unselect', () => {
-        const builder = component.queryBuilder;
-        spyOn(builder, 'update').and.stub();
+        spyOn(queryBuilder, 'update').and.stub();
 
         component.unselectFacetBucket(null);
 
-        expect(builder.update).not.toHaveBeenCalled();
+        expect(queryBuilder.update).not.toHaveBeenCalled();
     });
 
 });
