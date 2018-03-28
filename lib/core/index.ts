@@ -32,7 +32,7 @@ export * from './collapsable/collapsable.module';
 export * from './card-view/card-view.module';
 export * from './app-config/app-config.module';
 export * from './form/form.module';
-
+export * from './sidenav-layout/sidenav-layout.module';
 export * from './pipes/pipe.module';
 export * from './directives/directive.module';
 
@@ -52,6 +52,7 @@ export * from './collapsable';
 export * from './card-view';
 export * from './app-config';
 export * from './form';
+export * from './sidenav-layout';
 
 export * from './pipes';
 export * from './services';
