@@ -21,7 +21,7 @@ import {
 import { CommentTag } from "typedoc/dist/lib/models";
 
 
-let libFolders = ["content-services"];//["core", "content-services", "process-services", "insights"];
+let libFolders = ["core", "content-services", "process-services", "insights"];
 let templateFolder = path.resolve(".", "config", "DocProcessor", "templates");
 
 let excludePatterns = [
@@ -38,6 +38,7 @@ let nameExceptions = {
 class PropInfo {
     name: string;
     type: string;
+    typeLink: string;
     defaultValue: string;
     docText: string;
     isInput: boolean;
@@ -47,18 +48,26 @@ class PropInfo {
     constructor(rawProp: DeclarationReflection) {
         this.name = rawProp.name;
         this.docText = rawProp.comment ? rawProp.comment.shortText : "";
-        this.docText = this.docText.replace(/[\n\r]+/g, " ");
+        this.docText = this.docText.replace(/[\n\r]+/g, " ").trim();
         this.defaultValue = rawProp.defaultValue || "";
         this.defaultValue = this.defaultValue.replace(/\|/, "\\|");
         this.type = rawProp.type ? rawProp.type.toString() : "";
 
         if (rawProp.decorators) {
             rawProp.decorators.forEach(dec => {
-                if (dec.name === "Input")
+                if (dec.name === "Input") {
                     this.isInput = true;
-                
-                if (dec.name === "Output")
+
+                    if (!this.docText)
+                        console.log(`Warning: Input "${rawProp.getFullName()}" has no doc text.`);
+                }
+
+                if (dec.name === "Output") {
                     this.isOutput = true;
+
+                    if (!this.docText)
+                        console.log(`Warning: Output "${rawProp.getFullName()}" has no doc text.`);
+                }
             });
         }
 
@@ -80,7 +89,7 @@ class ParamInfo {
         this.type = rawParam.type.toString();
         this.defaultValue = rawParam.defaultValue;
         this.docText = rawParam.comment ? rawParam.comment.text : "";
-        this.docText = this.docText.replace(/[\n\r]+/g, " ");
+        this.docText = this.docText.replace(/[\n\r]+/g, " ").trim();
         this.isOptional = rawParam.flags.isOptional;
 
         this.combined = this.name;
@@ -100,22 +109,38 @@ class MethodSigInfo {
     name: string;
     docText: string;
     returnType: string;
+    returnDocText: string;
     signature: string;
     params: ParamInfo[];
     isDeprecated: boolean;
 
     constructor(rawSig: SignatureReflection) {
         this.name = rawSig.name;
-        this.docText = rawSig.hasComment() ? rawSig.comment.shortText + rawSig.comment.text : "";
-        this.docText = this.docText.replace(/[\n\r]+/g, " ");
         this.returnType = rawSig.type ? rawSig.type.toString() : "";
-        this.isDeprecated = rawSig.comment && rawSig.comment.hasTag("deprecated");
+
+        if (rawSig.hasComment()) {
+            this.docText = rawSig.comment.shortText + rawSig.comment.text;
+            this.docText = this.docText.replace(/[\n\r]+/g, " ").trim();
+            
+            if (!this.docText)
+                console.log(`Warning: method "${rawSig.name}" has no doc text.`);
+
+            this.returnDocText = rawSig.comment.returns;
+            this.returnDocText = this.returnDocText ? this.returnDocText.replace(/[\n\r]+/g, " ").trim() : "";
+            
+            if (!this.returnDocText)
+                console.log(`Warning: Return value of method "${rawSig.name}" has no doc text.`);
+            
+            this.isDeprecated = rawSig.comment.hasTag("deprecated");
+        }
 
         this.params = [];
         let paramStrings = [];
 
         if (rawSig.parameters) {
             rawSig.parameters.forEach(rawParam => {
+                if (!rawParam.comment || !rawParam.comment.text)
+                console.log(`Warning: parameter "${rawParam.name}" of method "${rawSig.name}" has no doc text.`);
                 let param = new ParamInfo(rawParam);
                 this.params.push(param);
                 paramStrings.push(param.combined);
