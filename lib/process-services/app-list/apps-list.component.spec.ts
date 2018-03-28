@@ -40,8 +40,6 @@ describe('AppsListComponent', () => {
             ],
             declarations: [
                 AppsListComponent
-            ],
-            providers: [
             ]
         }).compileComponents();
 

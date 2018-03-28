@@ -16,7 +16,6 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { AlfrescoApiService, LogService } from '../../services';
 import { BpmUserModel } from '../models/bpm-user.model';
 import { BpmUserService } from '../services/bpm-user.service';
 
@@ -29,7 +28,7 @@ describe('Bpm user service', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             providers: [
-                AlfrescoApiService, LogService, BpmUserService
+                BpmUserService
             ]
         }).compileComponents();
     }));

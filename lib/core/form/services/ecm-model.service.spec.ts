@@ -28,7 +28,6 @@ describe('EcmModelService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [],
             providers: [
                 EcmModelService
             ]

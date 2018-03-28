@@ -17,12 +17,7 @@
 
 import { TestBed } from '@angular/core/testing';
 import { UserProcessModel } from '../models';
-import { AppConfigServiceMock } from '../mock/app-config.service.mock';
-import { AlfrescoApiService } from './alfresco-api.service';
-import { AppConfigService } from '../app-config/app-config.service';
-import { LogService } from './log.service';
 import { PeopleProcessService } from './people-process.service';
-import { StorageService } from './storage.service';
 
 declare let jasmine: any;
 
@@ -49,11 +44,7 @@ describe('PeopleProcessService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             providers: [
-                PeopleProcessService,
-                AlfrescoApiService,
-                StorageService,
-                LogService,
-                { provide: AppConfigService, useClass: AppConfigServiceMock }
+                PeopleProcessService
             ]
         });
         service = TestBed.get(PeopleProcessService);

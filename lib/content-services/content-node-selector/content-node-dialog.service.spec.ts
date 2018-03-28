@@ -59,7 +59,6 @@ describe('ContentNodeDialogService', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [],
             providers: [
                 ContentNodeDialogService,
                 DocumentListService,

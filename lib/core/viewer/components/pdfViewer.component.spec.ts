@@ -17,11 +17,6 @@
 
 import { Component, SimpleChange, ViewChild } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import {
-    AlfrescoApiService,
-    AuthenticationService,
-    SettingsService
-} from '../../services';
 import { MaterialModule } from '../../material.module';
 import { ToolbarModule } from '../../toolbar/toolbar.module';
 import { EventMock } from '../../mock/event.mock';
@@ -152,9 +147,6 @@ describe('Test PdfViewer component', () => {
                     }
                 }
                 },
-                SettingsService,
-                AuthenticationService,
-                AlfrescoApiService,
                 RenderingQueueServices
             ]
         })

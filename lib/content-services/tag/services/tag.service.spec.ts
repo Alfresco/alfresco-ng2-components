@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService, AppConfigService, StorageService } from '@alfresco/adf-core';
+import { AlfrescoApiServiceMock, LogService, AppConfigService, StorageService } from '@alfresco/adf-core';
 import { TagService } from './tag.service';
 
 declare let jasmine: any;
@@ -25,7 +25,7 @@ describe('TagService', () => {
     let service: TagService;
 
     beforeEach(() => {
-        service = new TagService(new AlfrescoApiService(new AppConfigService(null), new StorageService()), new LogService(new AppConfigService(null)));
+        service = new TagService(new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService()), new LogService(new AppConfigService(null)));
     });
 
     beforeEach(() => {

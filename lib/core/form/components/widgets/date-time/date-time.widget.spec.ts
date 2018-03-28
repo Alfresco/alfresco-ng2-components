@@ -25,7 +25,6 @@ import { FormService } from './../../../services/form.service';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
 import { DateTimeWidgetComponent } from './date-time.widget';
-import { UserPreferencesService } from '../../../../services/user-preferences.service';
 
 describe('DateTimeWidgetComponent', () => {
 
@@ -44,7 +43,6 @@ describe('DateTimeWidgetComponent', () => {
             ],
             providers: [
                 FormService,
-                UserPreferencesService,
                 EcmModelService,
                 ActivitiContentService
             ]

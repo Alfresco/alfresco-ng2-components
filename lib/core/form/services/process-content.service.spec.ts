@@ -66,7 +66,6 @@ describe('ProcessContentService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [],
             providers: [
                 ProcessContentService
             ]

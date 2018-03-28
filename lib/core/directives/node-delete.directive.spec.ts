@@ -87,7 +87,6 @@ describe('NodeleteDirective', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-
             declarations: [
                 TestComponent,
                 TestWithPermissionsComponent,

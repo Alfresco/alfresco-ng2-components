@@ -41,8 +41,7 @@ describe('DiagramTooltipComponent', () => {
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-                declarations: [ DiagramTooltipComponent ],
-                providers: []
+                declarations: [ DiagramTooltipComponent ]
             }).compileComponents();
         }));
 

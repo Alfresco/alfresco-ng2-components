@@ -43,7 +43,6 @@ describe('NodeFavoriteDirective', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-
             declarations: [
                 TestComponent
             ]

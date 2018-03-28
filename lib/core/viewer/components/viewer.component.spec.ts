@@ -167,7 +167,6 @@ describe('ViewerComponent', () => {
                         return Observable.throw('throwed');
                     }
                 }},
-                AlfrescoApiService,
                 RenderingQueueServices,
                 { provide: Location, useClass: SpyLocation }
             ]

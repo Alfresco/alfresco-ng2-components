@@ -32,6 +32,7 @@ import { UploadBase } from './base-upload/upload-base';
     selector: 'adf-upload-drag-area',
     templateUrl: './upload-drag-area.component.html',
     styleUrls: ['./upload-drag-area.component.css'],
+    host: {'class': 'adf-upload-drag-area'},
     viewProviders: [
         { provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadDragAreaComponent) }
     ],

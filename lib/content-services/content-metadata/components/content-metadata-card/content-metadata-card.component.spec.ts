@@ -27,7 +27,6 @@ import { ContentMetadataService } from '../../services/content-metadata.service'
 import { BasicPropertiesService } from '../../services/basic-properties.service';
 import { PropertyGroupTranslatorService } from '../../services/property-groups-translator.service';
 import { PropertyDescriptorsService } from '../../services/property-descriptors.service';
-import { AlfrescoApiService } from '@alfresco/adf-core';
 import { ContentMetadataConfigFactory } from '../../services/config/content-metadata-config.factory';
 
 describe('ContentMetadataCardComponent', () => {
@@ -54,8 +53,7 @@ describe('ContentMetadataCardComponent', () => {
                 BasicPropertiesService,
                 PropertyGroupTranslatorService,
                 ContentMetadataConfigFactory,
-                PropertyDescriptorsService,
-                AlfrescoApiService
+                PropertyDescriptorsService
             ]
         }).compileComponents();
     }));

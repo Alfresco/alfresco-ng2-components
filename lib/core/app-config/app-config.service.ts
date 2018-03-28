@@ -31,7 +31,7 @@ export class AppConfigService {
         ecmHost: 'http://{hostname}{:port}/ecm',
         bpmHost: 'http://{hostname}{:port}/bpm',
         logLevel: 'silent',
-        alfrescoRepositoryName : 'alfresco-1'
+        alfrescoRepositoryName: 'alfresco-1'
     };
 
     constructor(private http: HttpClient) {
@@ -60,8 +60,8 @@ export class AppConfigService {
         return location.port ? prefix + location.port : '';
     }
 
-    async load(): Promise<any> {
-        await new Promise(resolve => {
+    load(): Promise<any> {
+        return new Promise(resolve => {
             this.http.get('app.config.json').subscribe(
                 (data: any) => {
                     this.config = Object.assign({}, this.config, data || {});

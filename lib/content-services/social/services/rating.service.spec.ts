@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, AppConfigService, StorageService } from '@alfresco/adf-core';
+import { AlfrescoApiServiceMock, AppConfigService, StorageService } from '@alfresco/adf-core';
 import { RatingService } from './rating.service';
 
 declare let jasmine: any;
@@ -25,7 +25,7 @@ describe('Rating service', () => {
     let service;
 
     beforeEach(() => {
-        service = new RatingService(new AlfrescoApiService(new AppConfigService(null), new StorageService()));
+        service = new RatingService(new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService()));
     });
 
     beforeEach(() => {
