@@ -1,5 +1,7 @@
 @mixin adf-app-layout-theme($theme) {
   $primary: map-get($theme, primary);
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
   $minimumAppWidth: 320px;
   $toolbarHeight: 64px;
 
@@ -22,7 +24,8 @@
    }
 
   .adf-app-layout {
-    display: block;
+    display: flex;
+    flex: 1;
     min-width: $minimumAppWidth;
     height: 100%;
 
@@ -32,10 +35,32 @@
       height: 100%;
     }
 
+    .adf-sidenav-linklist {
+      height: 100%;
+      overflow: auto;
+      padding-bottom: 8px;
+      box-sizing: border-box;
+    }
+
     .adf-sidenav-link {
+
       &.active {
         color: mat-color($primary);
       }
+
+      .sidenav-menu-icon {
+        margin-right: 20px;
+        font-size: 14px;
+      }
+
+      .sidenav-menu-label {
+        font-size: 14px;
+        white-space: nowrap;
+      }
+    }
+
+    .mat-nav-list .mat-list-item.adf-sidenav-link {
+      height: 40px;
     }
 
     &-user-profile {
