@@ -25,8 +25,8 @@ import { LogService, ObjectDataTableAdapter } from '@alfresco/adf-core';
 })
 export class LogComponent {
     logs: any[] = [];
-    show: boolean = false;
-    ctrlLKey: number = 12;
+    show = false;
+    ctrlLKey = 12;
     logsData: ObjectDataTableAdapter;
 
     constructor(public logService: LogService) {
