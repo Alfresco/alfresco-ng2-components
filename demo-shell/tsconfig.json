@@ -22,5 +22,5 @@
   },
   "exclude": [
     "node_modules"
-  ],
+  ]
 }
