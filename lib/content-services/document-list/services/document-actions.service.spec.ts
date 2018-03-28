@@ -16,7 +16,7 @@
  */
 
 import {
-    AlfrescoApiService,
+    AlfrescoApiServiceMock,
     AppConfigService,
     StorageService,
     ContentService
@@ -36,7 +36,7 @@ describe('DocumentActionsService', () => {
 
     beforeEach(() => {
         let contentService = new ContentService(null, null, null, null);
-        let alfrescoApiService = new AlfrescoApiService(new AppConfigService(null), new StorageService());
+        let alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
         documentListService = new DocumentListService(null, contentService, alfrescoApiService, null, null);
 
         service = new DocumentActionsService(null, documentListService, contentService);
