@@ -101,18 +101,4 @@ describe('SearchService', () => {
             }
         );
     });
-
-    it('should notify a general error if the API does not return a specific error', async () => {
-        spyOn(searchMockApi.core.queriesApi, 'findNodes').and.returnValue(Promise.reject(null));
-        let result = null;
-        try {
-            result = await service.getNodeQueryResults('');
-        } catch (err) {
-            expect(err).toBeDefined();
-            expect(err).toBe('Server error');
-        }
-
-        expect(result).toBeNull();
-    });
-
 });
