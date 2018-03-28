@@ -91,17 +91,23 @@ describe('SidenavLayoutComponent', () => {
             template: `
             <adf-sidenav-layout [sidenavMin]="70" [sidenavMax]="320" [stepOver]="600" [hideSidenav]="false">
 
-                <ng-template adf-sidenav-layout-header let-toggleMenu="toggleMenu">
-                    <div id="header-test" (click)="toggleMenu()"></div>
-                </ng-template>
+                <adf-sidenav-layout-header>
+                    <ng-template let-toggleMenu="toggleMenu">
+                        <div id="header-test" (click)="toggleMenu()"></div>
+                    </ng-template>
+                </adf-sidenav-layout-header>
 
-                <ng-template adf-sidenav-layout-navigation let-isMenuMinimized="isMenuMinimized">
-                    <div id="nav-test">{{ isMenuMinimized !== undefined ? 'variable-is-injected' : 'variable-is-not-injected' }}</div>
-                </ng-template>
+                <adf-sidenav-layout-navigation>
+                    <ng-template let-isMenuMinimized="isMenuMinimized">
+                        <div id="nav-test">{{ isMenuMinimized !== undefined ? 'variable-is-injected' : 'variable-is-not-injected' }}</div>
+                    </ng-template>
+                </adf-sidenav-layout-navigation>
 
-                <ng-template adf-sidenav-layout-content>
-                    <div id="content-test"></div>
-                </ng-template>
+                <adf-sidenav-layout-content>
+                    <ng-template>
+                        <div id="content-test"></div>
+                    </ng-template>
+                </adf-sidenav-layout-content>
             </adf-sidenav-layout>`
         })
         class SidenavLayoutTesterComponent {}

@@ -37,7 +37,7 @@ export class LayoutContainerComponent implements OnInit, OnDestroy {
     sidenavAnimationState: any;
     contentAnimationState: any;
 
-    SIDENAV_STATES = { EXPANDED: {}, COMPACT: {} };
+    SIDENAV_STATES = { MOBILE: {}, EXPANDED: {}, COMPACT: {} };
     CONTENT_STATES = { MOBILE: {}, EXPANDED: {}, COMPACT: {} };
 
     constructor() {
@@ -45,20 +45,25 @@ export class LayoutContainerComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.SIDENAV_STATES.MOBILE = { value: 'expanded', params: { width: this.sidenavMax } };
         this.SIDENAV_STATES.EXPANDED = { value: 'expanded', params: { width: this.sidenavMax } };
         this.SIDENAV_STATES.COMPACT = { value: 'compact', params: {width: this.sidenavMin } };
+
         this.CONTENT_STATES.MOBILE = { value: 'expanded', params: { marginLeft: 0 } };
         this.CONTENT_STATES.EXPANDED = { value: 'expanded', params: { marginLeft: this.sidenavMin } };
         this.CONTENT_STATES.COMPACT = { value: 'compact', params: { marginLeft: this.sidenavMax } };
 
         this.mediaQueryList.addListener(this.onMediaQueryChange);
 
-        if (this.expandedSidenav) {
+        if (this.isMobileScreenSize) {
+            this.sidenavAnimationState = this.SIDENAV_STATES.MOBILE;
+            this.contentAnimationState = this.CONTENT_STATES.MOBILE;
+        } else if (this.expandedSidenav) {
             this.sidenavAnimationState = this.SIDENAV_STATES.EXPANDED;
-            this.contentAnimationState = this.isMobileScreenSize ? this.CONTENT_STATES.MOBILE : this.CONTENT_STATES.COMPACT;
+            this.contentAnimationState = this.CONTENT_STATES.COMPACT;
         } else {
             this.sidenavAnimationState = this.SIDENAV_STATES.COMPACT;
-            this.contentAnimationState = this.isMobileScreenSize ? this.CONTENT_STATES.MOBILE : this.CONTENT_STATES.EXPANDED;
+            this.contentAnimationState = this.CONTENT_STATES.EXPANDED;
         }
     }
 

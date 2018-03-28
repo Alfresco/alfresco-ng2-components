@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ContentChild, Input, OnInit, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, ContentChild, Input, OnInit, AfterViewInit, ViewChild, OnDestroy, TemplateRef } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { SidenavLayoutContentDirective } from '../../directives/sidenav-layout-content.directive';
 import { SidenavLayoutHeaderDirective } from '../../directives/sidenav-layout-header.directive';
@@ -41,6 +41,7 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
     @ContentChild(SidenavLayoutContentDirective) contentDirective: SidenavLayoutContentDirective;
 
     @ViewChild('container') container: any;
+    @ViewChild('emptyTemplate') emptyTemplate: any;
 
     mediaQueryList: MediaQueryList;
     isMenuMinimized;
@@ -80,6 +81,18 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
 
     get isHeaderInside() {
         return this.mediaQueryList.matches;
+    }
+
+    get headerTemplate(): TemplateRef<any> {
+        return this.headerDirective && this.headerDirective.template || this.emptyTemplate;
+    }
+
+    get navigationTemplate(): TemplateRef<any> {
+        return this.navigationDirective && this.navigationDirective.template || this.emptyTemplate;
+    }
+
+    get contentTemplate(): TemplateRef<any> {
+        return this.contentDirective && this.contentDirective.template || this.emptyTemplate;
     }
 
     onMediaQueryChange() {
