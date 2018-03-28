@@ -25,21 +25,20 @@ import { Subject } from 'rxjs/Subject';
 @Injectable()
 export class LogService {
 
-    currentLogLevel: LogLevelsEnum = LogLevelsEnum.TRACE;
+    get currentLogLevel() {
+        let configLevel: string = this.appConfig.get<string>('logLevel');
+
+        if (configLevel) {
+            return this.getLogLevel(configLevel);
+        }
+
+        return LogLevelsEnum.TRACE;
+    }
 
     onMessage: Subject<any>;
 
-    constructor(appConfig: AppConfigService) {
-
+    constructor(private appConfig: AppConfigService) {
         this.onMessage = new Subject();
-
-        if (appConfig) {
-            let configLevel: string = appConfig.get<string>('logLevel');
-
-            if (configLevel) {
-                this.currentLogLevel = this.getCurrentLogLevel(configLevel);
-            }
-        }
     }
 
     error(message?: any, ...optionalParams: any[]) {
@@ -117,7 +116,7 @@ export class LogService {
         }
     }
 
-    getCurrentLogLevel(level: string): LogLevelsEnum {
+    getLogLevel(level: string): LogLevelsEnum {
         let referencedLevel = logLevels.find((currentLevel: any) => {
             return currentLevel.name.toLocaleLowerCase() === level.toLocaleLowerCase();
         });
