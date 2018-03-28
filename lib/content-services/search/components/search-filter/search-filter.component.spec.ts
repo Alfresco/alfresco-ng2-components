@@ -19,6 +19,7 @@ import { SearchFilterComponent } from './search-filter.component';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
 import { SearchConfiguration } from '../../search-configuration.interface';
 import { AppConfigService } from '@alfresco/adf-core';
+import { Subject } from 'rxjs/Subject';
 
 describe('SearchSettingsComponent', () => {
 
@@ -31,14 +32,15 @@ describe('SearchSettingsComponent', () => {
         appConfig.config.search = {};
 
         queryBuilder = new SearchQueryBuilderService(appConfig, null);
-
-        component = new SearchFilterComponent(queryBuilder, null);
+        const searchMock: any = {
+            dataLoaded: new Subject()
+        };
+        component = new SearchFilterComponent(queryBuilder, searchMock);
         component.ngOnInit();
     });
 
     it('should subscribe to query builder executed event', () => {
         spyOn(component, 'onDataLoaded').and.stub();
-        component.ngOnInit();
         const data = {};
         queryBuilder.executed.next(data);
 
