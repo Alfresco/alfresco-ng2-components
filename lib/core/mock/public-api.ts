@@ -27,6 +27,7 @@ export * from './event.mock';
 export * from './renditionsService.mock';
 export * from './search.service.mock';
 export * from './traslation.service.mock';
+export * from './alfresco-api.service.mock';
 
 export * from './form/form.component.mock';
 export * from './form/formDefinition.mock';

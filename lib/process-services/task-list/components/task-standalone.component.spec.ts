@@ -29,7 +29,6 @@ describe('TaskStandaloneComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-
             declarations: [
                 TaskStandaloneComponent
             ],

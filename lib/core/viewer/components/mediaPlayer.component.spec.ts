@@ -20,10 +20,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MediaPlayerComponent } from './mediaPlayer.component';
 
 import {
-    AlfrescoApiService,
-    AuthenticationService,
-    ContentService,
-    SettingsService
+    ContentService
 } from '../../services';
 
 describe('Test Media player component ', () => {
@@ -39,13 +36,7 @@ describe('Test Media player component ', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-
-            declarations: [MediaPlayerComponent],
-            providers: [
-                SettingsService,
-                AuthenticationService,
-                AlfrescoApiService
-            ]
+            declarations: [MediaPlayerComponent]
         }).compileComponents();
         service = TestBed.get(ContentService);
     }));

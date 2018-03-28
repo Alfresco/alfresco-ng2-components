@@ -1,8 +1,9 @@
 @mixin adf-file-component-theme($theme) {
     $minimumDocumentListWidth: 425px;
+    $foreground: map-get($theme, foreground);
 
     .container {
-        margin: 10px;
+        margin: 10px !important;
     }
 
     @media screen and ($mat-xsmall) {
@@ -62,14 +63,14 @@
     }
 
     .adf-manage-versions-sidebar {
-        width: 300px;
+        width: 300px !important;
         color: rgba(0, 0, 0, 0.87);
 
         .adf-manage-versions-empty,
         .adf-manage-versions-no-permission {
-            margin: 24px;
-            color: grey;
-            text-align: justify;
+            margin: 44px;
+            color: mat-color($foreground, text, 0.54);
+            text-align: center;
 
             &-icon {
                 display: block;
@@ -153,7 +154,7 @@
         }
 
         adf-file-uploading-dialog ::ng-deep .upload-dialog {
-        width: 80%;
+            width: 80%;
 
             & ::ng-deep adf-file-uploading-list ::ng-deep adf-file-uploading-list-row .adf-file-uploading-row__group {
                 min-width: 0;

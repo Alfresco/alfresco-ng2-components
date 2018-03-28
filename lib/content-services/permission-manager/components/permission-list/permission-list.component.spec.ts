@@ -19,7 +19,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PermissionListComponent } from './permission-list.component';
 import { NodesApiService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
-import { fakeNodeWithPermissions, fakeNodeInheritedOnly, fakeNodeWithOnlyLocally} from '../../../mock/permission-list.component.mock';
+import { fakeNodeWithPermissions, fakeNodeInheritedOnly, fakeNodeWithOnlyLocally } from '../../../mock/permission-list.component.mock';
 
 describe('PermissionDisplayComponent', () => {
 

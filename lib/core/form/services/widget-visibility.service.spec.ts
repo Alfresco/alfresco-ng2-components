@@ -37,7 +37,6 @@ describe('WidgetVisibilityService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [],
             providers: [
                 WidgetVisibilityService
             ]

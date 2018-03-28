@@ -50,7 +50,6 @@ describe('CommentListComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-
             declarations: [
                 CommentListComponent
             ],

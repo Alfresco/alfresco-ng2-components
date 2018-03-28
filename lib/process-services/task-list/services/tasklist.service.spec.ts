@@ -37,7 +37,7 @@ import {
 import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './tasklist.service';
-import { AlfrescoApiService, LogService, AppConfigService, StorageService } from '@alfresco/adf-core';
+import { AlfrescoApiServiceMock, LogService, AppConfigService, StorageService } from '@alfresco/adf-core';
 
 declare let jasmine: any;
 
@@ -46,7 +46,7 @@ describe('Activiti TaskList Service', () => {
     let service: TaskListService;
 
     beforeEach(async(() => {
-        service = new TaskListService(new AlfrescoApiService(new AppConfigService(null), new StorageService() ), new LogService(new AppConfigService(null)));
+        service = new TaskListService(new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService() ), new LogService(new AppConfigService(null)));
         jasmine.Ajax.install();
     }));
 

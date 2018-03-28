@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { AppConfigService } from './app-config.service';
+import { AlfrescoApiService } from './alfresco-api.service';
 
-export function startupServiceFactory(configService: AppConfigService): Function {
-    return () => configService.load();
+export function startupServiceFactory(alfrescoApiService: AlfrescoApiService): Function {
+    return () => alfrescoApiService.load();
 }

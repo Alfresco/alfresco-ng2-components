@@ -17,7 +17,7 @@
 
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { APP_INITIALIZER, NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 
@@ -75,6 +75,7 @@ import { TranslationService } from './services/translation.service';
 import { UploadService } from './services/upload.service';
 import { UserPreferencesService } from './services/user-preferences.service';
 import { SearchConfigurationService } from './services/search-configuration.service';
+import { startupServiceFactory } from './services/startup-service-factory';
 
 export function createTranslateLoader(http: HttpClient, logService: LogService) {
     return new TranslateLoaderService(http, logService);
@@ -241,7 +242,15 @@ export class CoreModuleLazy {
         TranslateModule
     ],
     providers: [
-        ...providers()
+        ...providers(),
+        {
+            provide: APP_INITIALIZER,
+            useFactory: startupServiceFactory,
+            deps: [
+                AlfrescoApiService
+            ],
+            multi: true
+        }
     ]
 })
 export class CoreModule {
@@ -249,7 +258,15 @@ export class CoreModule {
         return {
             ngModule: CoreModule,
             providers: [
-                ...providers()
+                ...providers(),
+                {
+                    provide: APP_INITIALIZER,
+                    useFactory: startupServiceFactory,
+                    deps: [
+                        AlfrescoApiService
+                    ],
+                    multi: true
+                }
             ]
         };
     }

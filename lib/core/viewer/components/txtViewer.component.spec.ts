@@ -17,11 +17,6 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import {
-    AlfrescoApiService,
-    AuthenticationService,
-    SettingsService
-} from '../../services';
 import { TxtViewerComponent } from './txtViewer.component';
 
 describe('Text View component', () => {
@@ -32,12 +27,7 @@ describe('Text View component', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [TxtViewerComponent],
-            providers: [
-                SettingsService,
-                AuthenticationService,
-                AlfrescoApiService
-            ]
+            declarations: [TxtViewerComponent]
         }).compileComponents();
     }));
 

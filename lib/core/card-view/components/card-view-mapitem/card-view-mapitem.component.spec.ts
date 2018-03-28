@@ -24,9 +24,7 @@ import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { CardViewMapItemModel } from '../../models/card-view-mapitem.model';
-import { AppConfigService } from '../../../app-config/app-config.service';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
-import { LogService } from '../../../services/log.service';
 import { TranslateLoaderService } from '../../../services/translate-loader.service';
 
 import { CardViewMapItemComponent } from './card-view-mapitem.component';
@@ -57,9 +55,7 @@ describe('CardViewMapItemComponent', () => {
                 CardViewMapItemComponent
             ],
             providers: [
-                AppConfigService,
-                CardViewUpdateService,
-                LogService
+                CardViewUpdateService
             ]
         }).compileComponents();
     }));
