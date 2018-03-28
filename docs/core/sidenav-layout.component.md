@@ -71,5 +71,8 @@ On mobile (below stepOver):
 
 Each template is given the context containing the following methods:
 
-1) toggleMenu(): void *// trigger menu toggle*
-2) isMenuMinimized(): boolean *// The expanded/compact (minimized) state of the navigation*
+### toggleMenu(): void
+
+Trigger menu toggling
+### isMenuMinimized(): boolean
+The expanded/compact (minimized) state of the navigation. This one only makes sense in case of desktop size, when the screen size is above the value of stepOver.
