@@ -37,6 +37,7 @@ import { ToolbarModule } from './toolbar/toolbar.module';
 import { UserInfoModule } from './userinfo/userinfo.module';
 import { ViewerModule } from './viewer/viewer.module';
 import { FormModule } from './form/form.module';
+import { SidenavLayoutModule } from './sidenav-layout/sidenav-layout.module';
 import { SideBarActionModule } from './sidebar/sidebar-action.module';
 
 import { DirectiveModule } from './directives/directive.module';
@@ -122,6 +123,7 @@ export function providers() {
 @NgModule({
     imports: [
         ViewerModule,
+        SidenavLayoutModule,
         SideBarActionModule,
         PipeModule,
         CommonModule,
@@ -155,6 +157,7 @@ export function providers() {
     exports: [
         ViewerModule,
         SideBarActionModule,
+        SidenavLayoutModule,
         PipeModule,
         CommonModule,
         DirectiveModule,
@@ -186,6 +189,7 @@ export class CoreModuleLazy {
     imports: [
         ViewerModule,
         SideBarActionModule,
+        SidenavLayoutModule,
         PipeModule,
         CommonModule,
         DirectiveModule,
@@ -218,6 +222,7 @@ export class CoreModuleLazy {
     exports: [
         ViewerModule,
         SideBarActionModule,
+        SidenavLayoutModule,
         PipeModule,
         CommonModule,
         DirectiveModule,
