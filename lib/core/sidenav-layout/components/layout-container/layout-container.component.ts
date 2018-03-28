@@ -98,7 +98,7 @@ export class LayoutContainerComponent implements OnInit, OnDestroy {
         }
     }
 
-    private get isMobileScreenSize(): boolean {
+    get isMobileScreenSize(): boolean {
         return this.mediaQueryList.matches;
     }
 
