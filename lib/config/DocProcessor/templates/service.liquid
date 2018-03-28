@@ -4,7 +4,7 @@
 
 {% for meth in methods %}- `{{meth.name}}{{meth.signature}}: {{meth.returnType}}`<br/>
   {{meth.docText}}
-  {% for param in meth.params %}   - `{{param.combined}}` - {% if param.isOptional %}(Optional){% endif %}{{param.docText}}
-{% endfor %}
+{% for param in meth.params %}   - `{{param.combined}}` - {% if param.isOptional %}(Optional){% endif %}{{param.docText}}
+{% endfor %}   - **Returns** `{{meth.returnType}}` - {{meth.returnDocText}}
 {% endfor %}
 {% endif %}
