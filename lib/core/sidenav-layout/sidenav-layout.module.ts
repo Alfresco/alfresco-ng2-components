@@ -21,7 +21,7 @@ import { MaterialModule } from '../material.module';
 import { SidenavLayoutContentDirective } from './directives/sidenav-layout-content.directive';
 import { SidenavLayoutHeaderDirective } from './directives/sidenav-layout-header.directive';
 import { SidenavLayoutNavigationDirective } from './directives/sidenav-layout-navigation.directive';
-import { SidenavLayoutComponent } from '.';
+import { SidenavLayoutComponent } from './components/sidenav-layout/sidenav-layout.component';
 import { LayoutContainerComponent } from './components/layout-container/layout-container.component';
 
 @NgModule({
