@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ContentChild, Input, OnInit, TemplateRef, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, ContentChild, Input, OnInit, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { SidenavLayoutContentDirective } from '../../directives/sidenav-layout-content.directive';
 import { SidenavLayoutHeaderDirective } from '../../directives/sidenav-layout-header.directive';
@@ -36,9 +36,9 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
     @Input() hideSidenav = false;
     @Input() expandedSidenav = true;
 
-    @ContentChild(SidenavLayoutHeaderDirective, {read: TemplateRef}) headerTemplate: TemplateRef<any>;
-    @ContentChild(SidenavLayoutNavigationDirective, {read: TemplateRef}) navigationTemplate: TemplateRef<any>;
-    @ContentChild(SidenavLayoutContentDirective, {read: TemplateRef}) contentTemplate: TemplateRef<any>;
+    @ContentChild(SidenavLayoutHeaderDirective) headerDirective: SidenavLayoutHeaderDirective;
+    @ContentChild(SidenavLayoutNavigationDirective) navigationDirective: SidenavLayoutNavigationDirective;
+    @ContentChild(SidenavLayoutContentDirective) contentDirective: SidenavLayoutContentDirective;
 
     @ViewChild('container') container: any;
 

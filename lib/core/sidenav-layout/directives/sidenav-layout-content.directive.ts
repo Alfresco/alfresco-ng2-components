@@ -15,9 +15,12 @@
  * limitations under the License.
  */
 
-import { Directive } from '@angular/core';
+import { ContentChild, Directive, TemplateRef } from '@angular/core';
 
 @Directive({
-    selector: '[adf-sidenav-layout-content]'
+    selector: 'adf-sidenav-layout-content'
 })
-export class SidenavLayoutContentDirective {}
+export class SidenavLayoutContentDirective {
+    @ContentChild(TemplateRef)
+    public template: TemplateRef<any>;
+}
