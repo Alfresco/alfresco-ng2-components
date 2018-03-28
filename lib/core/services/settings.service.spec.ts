@@ -16,10 +16,8 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { SettingsService } from './settings.service';
 import { AppConfigModule } from '../app-config/app-config.module';
-import { TranslateLoaderService } from './translate-loader.service';
 
 describe('SettingsService', () => {
 
@@ -28,13 +26,7 @@ describe('SettingsService', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                AppConfigModule,
-                TranslateModule.forRoot({
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: TranslateLoaderService
-                    }
-                })
+                AppConfigModule
             ],
             providers: [
                 SettingsService
