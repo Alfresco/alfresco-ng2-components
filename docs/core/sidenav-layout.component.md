@@ -13,11 +13,15 @@ A generalised component to help displayig the "ADF style" application frame. The
 The navigation (depending on the screensize) either uses the Angular Material Sidenav (on small breakpoint), or the ADF style Sidenav (on bigger breakpoint).
 
 - For Angular Material Sidenav see examples on the Angular Material project's site.
-- The ADF style Sidenav has 2 states: **expanded** and **compact***. Regardless of the state, it is always displayed on the screen, either in small width (compact) or in bigger width (expanded).
+- The ADF style Sidenav has 2 states: **expanded** and **compact**. Regardless of the state, it is always displayed on the screen, either in small width (compact) or in bigger width (expanded).
 
 The contents of the 3 regions can be injected through Angular's template transclusion. For more details see the usage example of the components.
 
+On desktop (above stepOver):
 <img src="../docassets/images/sidenav-layout.png" width="800">
+
+On mobile (below stepOver):
+<img src="../docassets/images/sidenav-layout-mobile.png" width="800">
 
 ## Basic Usage
 
@@ -29,17 +33,26 @@ The contents of the 3 regions can be injected through Angular's template transcl
     [hideSidenav]="false"
     [expandedSidenav]="true">
 
-    <ng-template adf-sidenav-layout-header let-toggleMenu="toggleMenu">
-        <div class="app-header"></div>
-    </ng-template>
+    <adf-sidenav-layout-header>
+        <ng-template let-toggleMenu="toggleMenu">
+            <div class="app-header">
+                <button (click)="toggleMenu()">toggle menu</button>
+            </div>
+        </ng-template>
+    </adf-sidenav-layout-header>
 
-    <ng-template adf-sidenav-layout-navigation let-isMenuMinimized="isMenuMinimized">
-        <div class="app-navigation"></div>
-    </ng-template>
+    <adf-sidenav-layout-navigation>
+        <ng-template let-isMenuMinimized="isMenuMinimized">
+            <div *ngIf="isMenuMinimized()" class="app-compact-navigation"></div>
+            <div *ngIf="!isMenuMinimized()" class="app-expanded-navigation"></div>
+        </ng-template>
+    </adf-sidenav-layout-navigation>
 
-    <ng-template adf-sidenav-layout-content>
-        <router-outlet></router-outlet>
-    </ng-template>
+    <adf-sidenav-layout-content>
+        <ng-template>
+            <router-outlet></router-outlet>
+        </ng-template>
+    </adf-sidenav-layout-content>
 
 </adf-sidenav-layout>
 ```
