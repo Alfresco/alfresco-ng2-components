@@ -38,6 +38,7 @@ describe('SearchSettingsComponent', () => {
 
     it('should subscribe to query builder executed event', () => {
         spyOn(component, 'onDataLoaded').and.stub();
+        component.ngOnInit();
         const data = {};
         queryBuilder.executed.next(data);
 
