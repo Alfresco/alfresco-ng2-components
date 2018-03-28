@@ -93,7 +93,7 @@ describe('SearchControlComponent', () => {
             fixture.detectChanges();
         }));
 
-        it('should update FAYT search when user inputs a valid term', async(() => {
+        fit('should update FAYT search when user inputs a valid term', async(() => {
             typeWordIntoSearchInput('customSearchTerm');
             spyOn(component, 'isSearchBarActive').and.returnValue(true);
             spyOn(searchService, 'search').and.returnValue(Promise.resolve(results));
