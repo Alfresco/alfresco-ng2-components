@@ -48,7 +48,8 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
 
     static DEFAULT_PAGINATION: Pagination = {
         skipCount: 0,
-        hasMoreItems: false
+        hasMoreItems: false,
+        merge: true
     };
 
     /** Pagination object. */

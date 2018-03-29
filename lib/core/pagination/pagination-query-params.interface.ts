@@ -27,21 +27,23 @@
 
 import { Pagination } from 'alfresco-js-api';
 
-export class PaginationQueryParams implements Pagination{
+export class PaginationQueryParams implements Pagination {
 
     count?: number;
     hasMoreItems?: boolean;
     totalItems?: number;
     skipCount?: number;
     maxItems?: number;
+    merge?: boolean = false;
 
     constructor(obj?: any) {
         if (obj) {
             this.count = obj.count;
-            this.hasMoreItems = obj.hasMoreItems ?  obj.hasMoreItems : false
+            this.hasMoreItems = obj.hasMoreItems ? obj.hasMoreItems : false
             this.totalItems = obj.totalItems;
             this.skipCount = obj.skipCount;
             this.maxItems = obj.maxItems;
+            this.merge = obj.merge;
         }
     }
 
