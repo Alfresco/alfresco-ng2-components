@@ -79,9 +79,9 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
 
     ngOnInit() {
         if (this.target) {
-            this.paginationSubscription = this.target.pagination.subscribe(page => {
-                this.pagination = page;
-                this.pageSize = page.maxItems;
+            this.paginationSubscription = this.target.pagination.subscribe(pagination => {
+                this.pagination = pagination;
+                this.pageSize = pagination.maxItems;
                 this.cdr.detectChanges();
             });
         }
@@ -93,6 +93,9 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
 
     onLoadMore() {
         this.pagination.skipCount += this.pageSize;
+        this.target.pagination.value.skipCount = this.pagination.skipCount;
+        this.target.pagination.value.merge = true;
+
         this.loadMore.next(this.pagination);
 
         if (this.target) {

@@ -185,7 +185,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     skipCount: number = 0;
 
-    /** @deprecated 2.3.0*/
+    /** @deprecated 2.3.0 */
     /** Set document list to work in infinite scrolling mode */
     @Input()
     enableInfiniteScrolling: boolean = false;
@@ -745,6 +745,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     private onDataReady(nodePaging: NodePaging) {
         this.ready.emit(nodePaging);
+
         this.pagination.next(nodePaging.list.pagination);
     }
 
