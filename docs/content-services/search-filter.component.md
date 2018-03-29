@@ -10,8 +10,7 @@ Represents a main container component for custom search and faceted search setti
 ## Usage example
 
 ```html
-<adf-search-filter #settings>
-</adf-search-settings>
+<adf-search-filter #settings></adf-search-filter>
 ```
 
 The component is based on dynamically created Widgets to modify the resulting query and options,
