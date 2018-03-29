@@ -22,9 +22,17 @@ import { DocumentListService } from './document-list.service';
 import { NodeActionsService } from './node-actions.service';
 import { ContentNodeDialogService } from '../../content-node-selector/content-node-dialog.service';
 import { Observable } from 'rxjs/Observable';
+import { MatDialogRef } from '@angular/material';
+import { NodeLockDialogComponent } from '../../dialogs/node-lock.dialog';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 
 const fakeNode: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
-        id: 'fake'
+    id: 'fake'
+};
+
+const fakeFileNode: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
+    id: 'fake',
+    isFile: true
 };
 
 describe('NodeActionsService', () => {
@@ -32,15 +40,28 @@ describe('NodeActionsService', () => {
     let service: NodeActionsService;
     let documentListService: DocumentListService;
     let contentDialogService: ContentNodeDialogService;
+    const dialogRef = {
+        open: jasmine.createSpy('open')
+    };
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
+            declarations: [
+                NodeLockDialogComponent
+            ],
+            imports: [],
             providers: [
                 NodeActionsService,
                 DocumentListService,
-                ContentNodeDialogService
+                ContentNodeDialogService,
+                { provide: MatDialogRef, useValue: dialogRef }
             ]
+        });
+
+        TestBed.overrideModule(BrowserDynamicTestingModule, {
+            set: { entryComponents: [ NodeLockDialogComponent ] }
         }).compileComponents();
+
     }));
 
     beforeEach(() => {
@@ -55,6 +76,14 @@ describe('NodeActionsService', () => {
     it('should be able to create the service', () => {
         expect(service).not.toBeNull();
     });
+
+    fit('should be able to open the lock node dialog', async(() => {
+        spyOn(service, 'openLockNodeDialog');
+
+        service.openLockNodeDialog(fakeFileNode).subscribe((response) => {
+            expect(response).toBe('OPERATION.SUCCES.NODE.LOCK_DIALOG_OPEN');
+        });
+    }));
 
     it('should be able to copy content', async(() => {
         spyOn(documentListService, 'copyNode').and.returnValue(Observable.of('FAKE-OK'));

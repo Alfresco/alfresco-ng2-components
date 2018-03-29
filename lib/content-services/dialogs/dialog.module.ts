@@ -29,7 +29,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { NodesApiService, NotificationService, TranslationService, FormModule } from '@alfresco/adf-core';
 import { MatDatetimepickerModule } from '@mat-datetimepicker/core';
-import { MatMomentDatetimeModule } from "@mat-datetimepicker/moment";
+import { MatMomentDatetimeModule } from '@mat-datetimepicker/moment';
 
 @NgModule({
     imports: [

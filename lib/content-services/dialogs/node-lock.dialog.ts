@@ -21,8 +21,8 @@ import { Component, Inject, OnInit, Optional, EventEmitter, Output } from '@angu
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { MinimalNodeEntryEntity, NodeEntry, NodeBodyLock } from 'alfresco-js-api';
+import { AlfrescoApiService, TranslationService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-node-lock',
@@ -40,8 +40,9 @@ export class NodeLockDialogComponent implements OnInit {
 
     constructor(
         private formBuilder: FormBuilder,
-        private dialog: MatDialogRef<NodeLockDialogComponent>,
+        public dialog: MatDialogRef<NodeLockDialogComponent>,
         private alfrescoApi: AlfrescoApiService,
+        private translation: TranslationService,
         @Optional()
         @Inject(MAT_DIALOG_DATA)
         public data: any
@@ -52,13 +53,14 @@ export class NodeLockDialogComponent implements OnInit {
         this.nodeName = node.name;
 
         this.form = this.formBuilder.group({
-            lockNode: node.isLocked || false,
+            isLocked: node.isLocked || false,
+            allowOwner: node.properties['cm:lockType'] === 'WRITE_LOCK',
             isTimeLock: !!node.properties['cm:expiryDate'],
             time: !!node.properties['cm:expiryDate'] ? moment(node.properties['cm:expiryDate']) : moment()
         });
     }
 
-    private get lockTimeInSeconds() {
+    private get lockTimeInSeconds(): number {
         if (this.form.value.isTimeLock) {
             let duration = moment.duration(moment(this.form.value.time).diff(moment()));
             return duration.asSeconds();
@@ -67,26 +69,35 @@ export class NodeLockDialogComponent implements OnInit {
         return 0;
     }
 
-    private get nodeBodyLock() {
+    private get nodeBodyLock(): object {
         return {
-            "timeToExpire": this.lockTimeInSeconds,
-            "type": "ALLOW_OWNER_CHANGES",
-            "lifetime": "PERSISTENT"
-        }
+            'timeToExpire': this.lockTimeInSeconds,
+            'type': this.form.value.allowOwner ? 'ALLOW_OWNER_CHANGES' : 'FULL',
+            'lifetime': 'PERSISTENT'
+        };
     }
 
-    private toggleLock() {
+    private toggleLock(): Promise<NodeEntry> {
         const { alfrescoApi: { nodesApi }, data: { node } } = this;
 
-        if (this.form.value.lockNode) {
+        if (this.form.value.isLocked) {
             return nodesApi.lockNode(node.id, this.nodeBodyLock);
         }
 
         return nodesApi.unlockNode(node.id);
     }
 
-    submit() {
-        const { dialog } = this;
-        this.toggleLock().then(node => dialog.close(node.entry));
+    submit(): void {
+        this.toggleLock()
+            .then(node => this.dialog.close(node.entry))
+            .catch(error => this.handleError(error));
+    }
+
+    handleError(error: any): any {
+        this.error.emit(
+            this.translation.instant('CORE.MESSAGES.ERRORS.GENERIC')
+        );
+
+        return error;
     }
 }

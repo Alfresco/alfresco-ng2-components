@@ -87,7 +87,7 @@ export class DocumentActionsService {
     }
 
     private lockNode(node: MinimalNodeEntity, target?: any, permission?: string) {
-        this.nodeActionsService.lockNode(node.entry);
+        return this.nodeActionsService.openLockNodeDialog(node.entry);
     }
 
     private downloadNode(obj: MinimalNodeEntity, target?: any, permission?: string) {

@@ -18,11 +18,9 @@
 /* tslint:disable:no-input-rename  */
 
 import { Directive, ElementRef, Renderer2, HostListener, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material';
-
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { NodeActionsService } from "../document-list/services/node-actions.service";
-import { ContentService, PermissionsEnum } from "@alfresco/adf-core";
+import { NodeActionsService } from '../document-list/services/node-actions.service';
+import { ContentService, PermissionsEnum } from '@alfresco/adf-core';
 
 @Directive({
     selector: '[adf-node-lock]'
@@ -38,9 +36,7 @@ export class NodeLockDirective implements AfterViewInit {
     @HostListener('click', [ '$event' ])
     onClick(event) {
         event.preventDefault();
-        if (this.node) {
-            this.nodeActionsService.lockNode(this.node);
-        }
+        this.nodeActionsService.openLockNodeDialog(this.node);
     }
 
     constructor(

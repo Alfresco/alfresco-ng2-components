@@ -5,13 +5,19 @@
 <mat-dialog-content>
     <br />
     <form [formGroup]="form" (submit)="submit()">
-        <mat-checkbox [formControl]="form.controls['lockNode']" ngDefaultControl>
+        <mat-checkbox [formControl]="form.controls['isLocked']" ngDefaultControl>
             {{ 'CORE.FILE_DIALOG.FILE_LOCK_CHECKBOX' | translate }} <strong>"{{ nodeName }}"</strong>
         </mat-checkbox>
 
         <br />
 
-        <div *ngIf="form.value.lockNode">
+        <div *ngIf="form.value.isLocked">
+            <mat-checkbox [formControl]="form.controls['allowOwner']" ngDefaultControl>
+                {{ 'CORE.FILE_DIALOG.ALLOW_OTHERS_CHECKBOX' | translate }}
+            </mat-checkbox>
+
+            <br />
+
             <mat-checkbox [formControl]="form.controls['isTimeLock']" ngDefaultControl>
                 {{ 'CORE.FILE_DIALOG.TIME_LOCK_CHECKBOX' | translate }}
             </mat-checkbox>

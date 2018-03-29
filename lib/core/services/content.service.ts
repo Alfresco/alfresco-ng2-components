@@ -202,9 +202,9 @@ export class ContentService {
 
         if (this.hasAllowableOperations(node)) {
             if (permission && permission.startsWith('!')) {
-                hasPermission = node.allowableOperations.find(currentPermission => currentPermission === permission.replace('!', '')) ? false : true;
+                hasPermission = !~node.allowableOperations.indexOf(permission.replace('!', ''));
             } else {
-                hasPermission = node.allowableOperations.find(currentPermission => currentPermission === permission) ? true : false;
+                hasPermission = !!~node.allowableOperations.indexOf(permission);
             }
 
         } else {
@@ -218,7 +218,11 @@ export class ContentService {
         }
 
         if (permission === PermissionsEnum.LOCK) {
-            hasPermission = node.isFile; // todo check ownership permission
+            hasPermission = node.isFile;
+
+            if (node.isLocked && this.hasAllowableOperations(node)) {
+                hasPermission = !!~node.allowableOperations.indexOf('updatePermissions');
+            }
         }
 
         return hasPermission;

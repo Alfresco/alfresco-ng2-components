@@ -18,13 +18,13 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { MinimalNodeEntryEntity, MinimalNodeEntity } from 'alfresco-js-api';
 import { Subject } from 'rxjs/Subject';
-import {AlfrescoApiService, ContentService, PermissionsEnum} from '@alfresco/adf-core';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import { AlfrescoApiService, ContentService, PermissionsEnum } from '@alfresco/adf-core';
+import { MatDialog } from '@angular/material';
 
 import { DocumentListService } from './document-list.service';
 import { ContentNodeDialogService } from '../../content-node-selector/content-node-dialog.service';
 import { NodeDownloadDirective } from '../../directives/node-download.directive';
-import {NodeLockDialogComponent} from "../../dialogs/node-lock.dialog";
+import { NodeLockDialogComponent } from '../../dialogs/node-lock.dialog';
 
 @Injectable()
 export class NodeActionsService {
@@ -46,17 +46,39 @@ export class NodeActionsService {
     }
 
     /**
-     * Lock node
+     * Open lock node dialog
      *
-     * @param node Node to lock
+     * @param contentEntry Node to lock
      */
-    public lockNode(node: MinimalNodeEntryEntity): void {
-        if (this.contentService.hasPermission(node, PermissionsEnum.LOCK)) {
-            this.openDialog({
-                data: { node },
-                width: '400px'
-            });
+    public openLockNodeDialog(contentEntry: MinimalNodeEntryEntity): Subject<string> {
+        const observable: Subject<string> = new Subject<string>();
+
+        if (!this.contentService.hasPermission(contentEntry, PermissionsEnum.LOCK)) {
+            observable.error('OPERATION.FAIL.NODE.NO_PERMISSION');
+            return observable;
         }
+
+        const dialogInstance = this.dialogRef.open(NodeLockDialogComponent, {
+            data: { node: contentEntry },
+            width: '400px'
+        });
+
+        dialogInstance.afterOpen().subscribe(() => {
+            observable.next('OPERATION.SUCCES.NODE.LOCK_DIALOG_OPEN');
+        });
+
+        dialogInstance.componentInstance.error.subscribe((error) => {
+            this.error.emit(error);
+            observable.error(error);
+        });
+
+        dialogInstance.afterClosed().subscribe((node: MinimalNodeEntryEntity) => {
+            if (node) {
+                this.content.folderEdit.next(node);
+            }
+        });
+
+        return observable;
     }
 
     /**
@@ -125,26 +147,5 @@ export class NodeActionsService {
                 return observable;
             });
         return observable;
-    }
-
-    /**
-     * Open lock-node dialog
-     *
-     * @param dialogConfig config object for dialog component
-     */
-    private openDialog(dialogConfig: MatDialogConfig): void {
-
-        const { dialogRef, content } = this;
-        const dialogInstance = dialogRef.open(NodeLockDialogComponent, dialogConfig);
-
-        dialogInstance.componentInstance.error.subscribe((error) => {
-            this.error.emit(error);
-        });
-
-        dialogInstance.afterClosed().subscribe((node: MinimalNodeEntryEntity) => {
-            if (node) {
-                content.folderEdit.next(node);
-            }
-        });
     }
 }

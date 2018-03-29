@@ -60,7 +60,7 @@ describe('ContentAction', () => {
 
     beforeEach(() => {
         contentService = TestBed.get(ContentService);
-        nodeActionsService = new NodeActionsService(null, null);
+        nodeActionsService = new NodeActionsService(null, null, null);
         documentActions = new DocumentActionsService(nodeActionsService);
         folderActions = new FolderActionsService(nodeActionsService, null, contentService);
 

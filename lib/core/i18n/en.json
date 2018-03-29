@@ -53,6 +53,7 @@
     },
     "FILE_DIALOG": {
       "FILE_LOCK": "Lock file",
+      "ALLOW_OTHERS_CHECKBOX": "Allow the owner to modify this file",
       "FILE_LOCK_CHECKBOX": "Lock file",
       "TIME_LOCK_CHECKBOX": "Time lock",
       "SAVE_BUTTON": {

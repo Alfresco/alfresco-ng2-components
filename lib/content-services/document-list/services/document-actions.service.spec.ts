@@ -46,6 +46,10 @@ describe('DocumentActionsService', () => {
         expect(service.getHandler('download')).not.toBeNull();
     });
 
+    it('should register lock action', () => {
+        expect(service.getHandler('lock')).toBeDefined();
+    });
+
     it('should register custom action handler', () => {
         let handler: ContentActionHandler = function (obj: any) {};
         service.setHandler('<key>', handler);
