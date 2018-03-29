@@ -64,10 +64,12 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
     @Input()
     pageSize: number = InfinitePaginationComponent.DEFAULT_PAGE_SIZE;
 
+    /** @deprecated 2.3.0 use the paginated component interface to use it. */
     /** Is a new page loading? */
     @Input('loading')
     isLoading: boolean = false;
 
+    /** @deprecated 2.3.0 use the paginated component interface to use it. */
     /** Emitted when the "Load More" button is clicked. */
     @Output()
     loadMore: EventEmitter<Pagination> = new EventEmitter<Pagination>();
@@ -80,6 +82,7 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
     ngOnInit() {
         if (this.target) {
             this.paginationSubscription = this.target.pagination.subscribe(pagination => {
+                this.isLoading = false;
                 this.pagination = pagination;
                 this.pageSize = pagination.maxItems;
                 this.cdr.detectChanges();
@@ -99,6 +102,7 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
         this.loadMore.next(this.pagination);
 
         if (this.target) {
+            this.isLoading = true;
             this.target.updatePagination(<PaginationQueryParams> this.pagination);
         }
     }
