@@ -22,6 +22,7 @@ import { Pagination } from 'alfresco-js-api';
 import { PaginatedComponent } from './paginated-component.interface';
 import { PaginationComponentInterface } from './pagination-component.interface';
 import { Subscription } from 'rxjs/Subscription';
+import { PaginationModel } from '../models/pagination.model';
 
 @Component({
     selector: 'adf-pagination',
@@ -56,27 +57,27 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
 
     /** Pagination object. */
     @Input()
-    pagination: Pagination = PaginationComponent.DEFAULT_PAGINATION;
+    pagination: PaginationModel = PaginationComponent.DEFAULT_PAGINATION;
 
     /** Emitted when pagination changes in any way. */
     @Output()
-    change: EventEmitter<Pagination> = new EventEmitter<Pagination>();
+    change: EventEmitter<PaginationModel> = new EventEmitter<PaginationModel>();
 
     /** Emitted when the page number changes. */
     @Output()
-    changePageNumber: EventEmitter<Pagination> = new EventEmitter<Pagination>();
+    changePageNumber: EventEmitter<PaginationModel> = new EventEmitter<PaginationModel>();
 
     /** Emitted when the page size changes. */
     @Output()
-    changePageSize: EventEmitter<Pagination> = new EventEmitter<Pagination>();
+    changePageSize: EventEmitter<PaginationModel> = new EventEmitter<PaginationModel>();
 
     /** Emitted when the next page is requested. */
     @Output()
-    nextPage: EventEmitter<Pagination> = new EventEmitter<Pagination>();
+    nextPage: EventEmitter<PaginationModel> = new EventEmitter<PaginationModel>();
 
     /** Emitted when the previous page is requested. */
     @Output()
-    prevPage: EventEmitter<Pagination> = new EventEmitter<Pagination>();
+    prevPage: EventEmitter<PaginationModel> = new EventEmitter<PaginationModel>();
 
     private paginationSubscription: Subscription;
 
@@ -85,7 +86,7 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
 
     ngOnInit() {
         if (this.target) {
-            this.paginationSubscription = this.target.pagination.subscribe((pagination: Pagination) => {
+            this.paginationSubscription = this.target.pagination.subscribe((pagination: PaginationModel) => {
                 this.pagination = pagination;
                 this.cdr.detectChanges();
             });
@@ -201,7 +202,7 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
         });
     }
 
-    handlePaginationEvent(action: string, params: Pagination) {
+    handlePaginationEvent(action: string, params: PaginationModel) {
         const {
             NEXT_PAGE,
             PREV_PAGE,

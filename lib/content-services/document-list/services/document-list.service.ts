@@ -16,19 +16,15 @@
  */
 
 import {
-    AlfrescoApiService,
-    AuthenticationService,
-    ContentService,
-    LogService,
-    PermissionsEnum,
-    ThumbnailService
+    AlfrescoApiService, AuthenticationService, ContentService, LogService,
+    PermissionsEnum, ThumbnailService
 } from '@alfresco/adf-core';
+
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
-import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, Pagination } from 'alfresco-js-api';
+import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
-import { CustomResourcesService } from './../services/custom-resources.service';
 
 @Injectable()
 export class DocumentListService {
@@ -39,8 +35,7 @@ export class DocumentListService {
                 private contentService: ContentService,
                 private apiService: AlfrescoApiService,
                 private logService: LogService,
-                private thumbnailService: ThumbnailService,
-                private customResourcesService: CustomResourcesService) {
+                private thumbnailService: ThumbnailService) {
     }
 
     private getNodesPromise(folder: string, opts?: any, includeFields: string[] = []): Promise<NodePaging> {
@@ -177,6 +172,7 @@ export class DocumentListService {
     }
 
     /**
+     * @Deprecated 2.3.0 use the one in the content service
      * Checks if a node has the specified permission.
      * @param node Target node
      * @param permission Permission level to query
@@ -185,25 +181,6 @@ export class DocumentListService {
     hasPermission(node: any, permission: PermissionsEnum | string): boolean {
         return this.contentService.hasPermission(node, permission);
     }
-
-    loadFolderByNodeId(nodeId: string, pagination: Pagination, includeFields: string[]): Observable<MinimalNodeEntity> {
-        if (nodeId === '-trashcan-') {
-            return this.customResourcesService.loadTrashcan(pagination, includeFields);
-        } else if (nodeId === '-sharedlinks-') {
-            return this.customResourcesService.loadSharedLinks(pagination, includeFields);
-        } else if (nodeId === '-sites-') {
-            return this.customResourcesService.loadSites(pagination);
-        } else if (nodeId === '-mysites-') {
-            return this.customResourcesService.loadMemberSites(pagination);
-        } else if (nodeId === '-favorites-') {
-            this.customResourcesService.loadFavorites(pagination, includeFields);
-        } else if (nodeId === '-recent-') {
-            return this.customResourcesService.loadRecent(pagination);
-        } else {
-            return this.getFolderNode(nodeId, includeFields);
-        }
-    }
-
 
     private handleError(error: Response) {
         // in a real world app, we may send the error to some remote logging infrastructure

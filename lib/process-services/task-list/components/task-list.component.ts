@@ -15,36 +15,17 @@
  * limitations under the License.
  */
 
+import { DataColumn, DataRowEvent, DataTableAdapter, ObjectDataColumn,
+    ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/adf-core';
 import {
-    DataColumn,
-    DataRowEvent,
-    DataTableAdapter,
-    ObjectDataColumn,
-    ObjectDataRow,
-    ObjectDataTableAdapter
-} from '@alfresco/adf-core';
+    AppConfigService, DataColumnListComponent, PaginationComponent, PaginatedComponent,
+    UserPreferencesService, UserPreferenceValues, PaginationModel } from '@alfresco/adf-core';
 import {
-    AppConfigService,
-    DataColumnListComponent,
-    PaginationComponent,
-    PaginatedComponent,
-    PaginationQueryParams,
-    UserPreferencesService,
-    UserPreferenceValues
-} from '@alfresco/adf-core';
-import {
-    AfterContentInit,
-    Component,
-    ContentChild,
-    EventEmitter,
-    Input,
-    OnChanges,
-    Output,
-    SimpleChanges
-} from '@angular/core';
+    AfterContentInit, Component, ContentChild, EventEmitter,
+    Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Pagination } from 'alfresco-js-api';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskListModel } from '../models/task-list.model';
 import { taskPresetsDefaultModel } from '../models/task-preset.model';
@@ -141,7 +122,7 @@ export class TaskListComponent implements OnChanges, AfterContentInit, Paginated
     currentInstanceId: string;
     selectedInstances: any[];
     layoutPresets = {};
-    pagination: BehaviorSubject<Pagination>;
+    pagination: BehaviorSubject<PaginationModel>;
 
     /** The page number of the tasks to fetch. */
     @Input()
@@ -170,7 +151,7 @@ export class TaskListComponent implements OnChanges, AfterContentInit, Paginated
             this.size = pageSize;
         });
 
-        this.pagination = new BehaviorSubject<Pagination>(<Pagination> {
+        this.pagination = new BehaviorSubject<PaginationModel>(<PaginationModel> {
             maxItems: this.size,
             skipCount: 0,
             totalItems: 0
@@ -428,7 +409,7 @@ export class TaskListComponent implements OnChanges, AfterContentInit, Paginated
         return (this.layoutPresets['default']).map(col => new ObjectDataColumn(col));
     }
 
-    updatePagination(params: PaginationQueryParams) {
+    updatePagination(params: PaginationModel) {
         const needsReload = params.maxItems || params.skipCount;
         this.size = params.maxItems;
         this.page = this.currentPage(params.skipCount, params.maxItems);

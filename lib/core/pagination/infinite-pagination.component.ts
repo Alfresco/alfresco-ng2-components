@@ -17,22 +17,14 @@
 
 /* tslint:disable:no-input-rename  */
 
-import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    EventEmitter,
-    Input,
-    OnInit,
-    Output,
-    OnDestroy,
-    ViewEncapsulation
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter,
+    Input, OnInit, Output, OnDestroy, ViewEncapsulation } from '@angular/core';
+
 import { PaginatedComponent } from './paginated-component.interface';
-import { PaginationQueryParams } from './pagination-query-params.interface';
 import { Pagination } from 'alfresco-js-api';
 import { Subscription } from 'rxjs/Subscription';
 import { PaginationComponentInterface } from './pagination-component.interface';
+import { PaginationModel } from '../models/pagination.model';
 
 @Component({
     selector: 'adf-infinite-pagination',
@@ -46,7 +38,7 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
 
     static DEFAULT_PAGE_SIZE: number = 25;
 
-    static DEFAULT_PAGINATION: Pagination = {
+    static DEFAULT_PAGINATION: PaginationModel = {
         skipCount: 0,
         hasMoreItems: false,
         merge: true
@@ -54,7 +46,7 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
 
     /** Pagination object. */
     @Input()
-    pagination: Pagination;
+    pagination: PaginationModel;
 
     /** Component that provides custom pagination support. */
     @Input()
@@ -103,7 +95,7 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
 
         if (this.target) {
             this.isLoading = true;
-            this.target.updatePagination(<PaginationQueryParams> this.pagination);
+            this.target.updatePagination(<PaginationModel> this.pagination);
         }
     }
 

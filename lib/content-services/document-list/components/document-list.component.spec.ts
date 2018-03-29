@@ -24,7 +24,6 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { FileNode, FolderNode } from '../../mock';
 import {
-    fakeNodeAnswerWithEntries,
     fakeNodeAnswerWithNOEntries,
     fakeNodeWithCreatePermission,
     fakeNodeWithNoPermission,
@@ -995,54 +994,7 @@ describe('DocumentList', () => {
         expect(documentList.noPermission).toBeFalsy();
     });
 
-    xit('should load previous page if there are no other elements in multi page table', (done) => {
-        documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
-        documentList.folderNode = new NodeMinimal();
-        documentList.folderNode.id = '1d26e465-dea3-42f3-b415-faa8364b9692';
-
-        documentList.reload();
-        fixture.detectChanges();
-
-        documentList.ready.subscribe(() => {
-            fixture.detectChanges();
-            let rowElement = element.querySelector('[data-automation-id="b_txt_file.rtf"]');
-            expect(rowElement).toBeDefined();
-            expect(rowElement).not.toBeNull();
-            done();
-        });
-
-        jasmine.Ajax.requests.at(0).respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fakeNodeAnswerWithNOEntries)
-        });
-
-        jasmine.Ajax.requests.at(1).respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fakeNodeAnswerWithEntries)
-        });
-    });
-
-    it('should return true if current folder node has create permission', (done) => {
-        documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
-        documentList.folderNode = new NodeMinimal();
-        documentList.folderNode.id = '1d26e465-dea3-42f3-b415-faa8364b9692';
-        spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.resolve(fakeNodeWithCreatePermission));
-        spyOn(documentListService, 'getFolder').and.returnValue(Promise.resolve(fakeNodeAnswerWithNOEntries));
-
-        let change = new SimpleChange(null, '1d26e465-dea3-42f3-b415-faa8364b9692', true);
-        documentList.ngOnChanges({ 'currentFolderId': change });
-        fixture.detectChanges();
-
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(documentList.hasCreatePermission()).toBeTruthy();
-            done();
-        });
-    });
-
-    it('should return false if navigate to a folder with no create permission', (done) => {
+    it('should return false if navigate to a folder with no  permission', (done) => {
         documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
         documentList.folderNode = new NodeMinimal();
         documentList.folderNode.id = '1d26e465-dea3-42f3-b415-faa8364b9692';
@@ -1056,7 +1008,7 @@ describe('DocumentList', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            expect(documentList.hasCreatePermission()).toBeFalsy();
+            expect(documentList.noPermission).toBeTruthy();
             done();
         });
     });

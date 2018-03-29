@@ -17,13 +17,13 @@
 
 import {
     AlfrescoApiService,
-    LogService
+    LogService,
+    PaginationModel
 } from '@alfresco/adf-core';
 
 import {
     NodePaging,
     PersonEntry,
-    Pagination,
     SitePaging,
     DeletedNodesPaging
 } from 'alfresco-js-api';
@@ -39,7 +39,7 @@ export class CustomResourcesService {
                 private logService: LogService) {
     }
 
-    getRecentFiles(personId: string, pagination: Pagination): Observable<NodePaging> {
+    getRecentFiles(personId: string, pagination: PaginationModel): Observable<NodePaging> {
         return new Observable(observer => {
             this.apiService.peopleApi.getPerson(personId)
                 .then((person: PersonEntry) => {
@@ -73,11 +73,11 @@ export class CustomResourcesService {
                     (err) => {
                         observer.error(err);
                         observer.complete();
-                    })
+                    });
         }).catch(err => this.handleError(err));
     }
 
-    loadFavorites(pagination: Pagination, includeFields: string[] = []): Observable<NodePaging> {
+    loadFavorites(pagination: PaginationModel, includeFields: string[] = []): Observable<NodePaging> {
         let includeFieldsRequest = this.getIncludesFields(includeFields);
 
         const options = {
@@ -117,7 +117,7 @@ export class CustomResourcesService {
         }).catch(err => this.handleError(err));
     }
 
-    loadMemberSites(pagination: Pagination): Observable<NodePaging> {
+    loadMemberSites(pagination: PaginationModel): Observable<NodePaging> {
         const options = {
             include: ['properties'],
             maxItems: pagination.maxItems,
@@ -151,7 +151,7 @@ export class CustomResourcesService {
         }).catch(err => this.handleError(err));
     }
 
-    loadSites(pagination: Pagination): Observable<NodePaging> {
+    loadSites(pagination: PaginationModel): Observable<NodePaging> {
         const options = {
             include: ['properties'],
             maxItems: pagination.maxItems,
@@ -173,11 +173,11 @@ export class CustomResourcesService {
                     (err) => {
                         observer.error(err);
                         observer.complete();
-                    })
+                    });
         }).catch(err => this.handleError(err));
     }
 
-    loadTrashcan(pagination: Pagination, includeFields: string[] = []): Observable<DeletedNodesPaging> {
+    loadTrashcan(pagination: PaginationModel, includeFields: string[] = []): Observable<DeletedNodesPaging> {
         let includeFieldsRequest = this.getIncludesFields(includeFields);
 
         const options = {
@@ -190,7 +190,7 @@ export class CustomResourcesService {
 
     }
 
-    loadSharedLinks(pagination: Pagination, includeFields: string[] = []): Observable<NodePaging> {
+    loadSharedLinks(pagination: PaginationModel, includeFields: string[] = []): Observable<NodePaging> {
         let includeFieldsRequest = this.getIncludesFields(includeFields);
 
         const options = {
@@ -202,12 +202,12 @@ export class CustomResourcesService {
         return Observable.fromPromise(this.apiService.sharedLinksApi.findSharedLinks(options)).catch(err => this.handleError(err));
     }
 
-    loadRecent(pagination: Pagination): Observable<NodePaging> {
+    loadRecent(pagination: PaginationModel): Observable<NodePaging> {
         return this.getRecentFiles('-me-', pagination);
     }
 
     isCustomSource(folderId: string): boolean {
-        var isCustomSources = false;
+        let isCustomSources = false;
         const sources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-'];
 
         if (sources.indexOf(folderId) > -1) {
@@ -217,37 +217,53 @@ export class CustomResourcesService {
         return isCustomSources;
     }
 
-    // TODO: remove it from here
-    getCorrespondingNodeIds(nodeId: string, pagination : Pagination): Observable<string[]> {
+    loadFolderByNodeId(nodeId: string, pagination: PaginationModel, includeFields: string[]): Observable<NodePaging> {
         if (nodeId === '-trashcan-') {
-            return Observable.of(this.apiService.nodesApi.getDeletedNodes()
+            return this.loadTrashcan(pagination, includeFields);
+        } else if (nodeId === '-sharedlinks-') {
+            return this.loadSharedLinks(pagination, includeFields);
+        } else if (nodeId === '-sites-') {
+            return this.loadSites(pagination);
+        } else if (nodeId === '-mysites-') {
+            return this.loadMemberSites(pagination);
+        } else if (nodeId === '-favorites-') {
+            return this.loadFavorites(pagination, includeFields);
+        } else if (nodeId === '-recent-') {
+            return this.loadRecent(pagination);
+        }
+    }
+
+    // TODO: remove it from here
+    getCorrespondingNodeIds(nodeId: string, pagination: PaginationModel): Observable<string[]> {
+        if (nodeId === '-trashcan-') {
+            return Observable.fromPromise(this.apiService.nodesApi.getDeletedNodes()
                 .then(result => result.list.entries.map(node => node.entry.id)));
 
         } else if (nodeId === '-sharedlinks-') {
-            return Observable.of(this.apiService.sharedLinksApi.findSharedLinks()
+            return Observable.fromPromise(this.apiService.sharedLinksApi.findSharedLinks()
                 .then(result => result.list.entries.map(node => node.entry.nodeId)));
 
         } else if (nodeId === '-sites-') {
-            return Observable.of(this.apiService.sitesApi.getSites()
+            return Observable.fromPromise(this.apiService.sitesApi.getSites()
                 .then(result => result.list.entries.map(node => node.entry.guid)));
 
         } else if (nodeId === '-mysites-') {
-            return Observable.of(this.apiService.peopleApi.getSiteMembership('-me-')
+            return Observable.fromPromise(this.apiService.peopleApi.getSiteMembership('-me-')
                 .then(result => result.list.entries.map(node => node.entry.guid)));
 
         } else if (nodeId === '-favorites-') {
-            return Observable.of(this.apiService.favoritesApi.getFavorites('-me-')
+            return Observable.fromPromise(this.apiService.favoritesApi.getFavorites('-me-')
                 .then(result => result.list.entries.map(node => node.entry.targetGuid)));
 
         } else if (nodeId === '-recent-') {
             return new Observable(observer => {
                 this.getRecentFiles('-me-', pagination)
                     .subscribe((recentFiles) => {
-                        let recentFilesIdS = recentFiles.list.entries.map(node => node.entry.id)
+                        let recentFilesIdS = recentFiles.list.entries.map(node => node.entry.id);
                         observer.next(recentFilesIdS);
                         observer.complete();
-                    })
-            })
+                    });
+            });
 
         }
 

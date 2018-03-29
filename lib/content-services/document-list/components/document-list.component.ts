@@ -22,11 +22,11 @@ import {
 
 import {
     ContentService, DataCellEvent, DataColumn, DataRowActionEvent, DataSorting, DataTableComponent,
-    DisplayMode, ObjectDataColumn, PaginatedComponent, PaginationQueryParams,
-    AppConfigService, DataColumnListComponent, UserPreferencesService
+    DisplayMode, ObjectDataColumn, PaginatedComponent, AppConfigService, DataColumnListComponent,
+    UserPreferencesService, PaginationModel
 } from '@alfresco/adf-core';
 
-import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, Pagination } from 'alfresco-js-api';
+import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
 
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -228,9 +228,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     noPermission: boolean = false;
     selection = new Array<MinimalNodeEntity>();
 
-    private _pagination: BehaviorSubject<Pagination>;
+    private _pagination: BehaviorSubject<PaginationModel>;
     private layoutPresets = {};
-    private currentNodeAllowableOperations: string[] = [];
 
     private contextActionHandlerSubscription: Subscription;
 
@@ -281,7 +280,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         return (this.layoutPresets[name] || this.layoutPresets['default']).map(col => new ObjectDataColumn(col));
     }
 
-    get pagination(): BehaviorSubject<Pagination> {
+    get pagination(): BehaviorSubject<PaginationModel> {
         let maxItems = this.preferences.paginationSize;
 
         if (!this._pagination) {
@@ -289,14 +288,14 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 maxItems = this.maxItems;
             }
 
-            let defaultPagination = <Pagination> {
+            let defaultPagination = <PaginationModel> {
                 maxItems: maxItems,
                 skipCount: 0,
                 totalItems: 0,
                 hasMoreItems: false
             };
 
-            this._pagination = new BehaviorSubject<Pagination>(defaultPagination);
+            this._pagination = new BehaviorSubject<PaginationModel>(defaultPagination);
         }
 
         return this._pagination;
@@ -480,7 +479,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     updateFolderData(node: MinimalNodeEntity): void {
         this.currentFolderId = node.entry.id;
         this.folderNode = node.entry;
-        this.currentNodeAllowableOperations = node.entry['allowableOperations'] ? node.entry['allowableOperations'] : [];
         this.loadFolder();
         this.folderChange.emit(new NodeEntryEvent(node.entry));
     }
@@ -531,17 +529,16 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     loadFolderByNodeId(nodeId: string) {
         if (this.customResourcesService.isCustomSource(nodeId)) {
             this.updateCustomSourceData(nodeId);
-            this.documentListService.loadFolderByNodeId(nodeId, this.pagination.getValue(), this.includeFields)
+            this.customResourcesService.loadFolderByNodeId(nodeId, this.pagination.getValue(), this.includeFields)
                 .subscribe((page: NodePaging) => {
                     this.onPageLoaded(page);
                 });
         } else {
             this.documentListService
-                .loadFolderByNodeId(nodeId, this.pagination.getValue(), this.includeFields)
-                .subscribe(node => {
+                .getFolderNode(nodeId, this.includeFields)
+                .subscribe((node: MinimalNodeEntryEntity) => {
                     this.folderNode = node;
                     this.currentFolderId = node.id;
-                    this.currentNodeAllowableOperations = node['allowableOperations'] ? node['allowableOperations'] : [];
                     return this.loadFolderNodesByFolderNodeId(node.id, this.pagination.getValue());
                 }, err => {
                     if (JSON.parse(err.message).error.statusCode === 403) {
@@ -553,7 +550,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
     }
 
-    loadFolderNodesByFolderNodeId(id: string, pagination: Pagination): Promise<any> {
+    loadFolderNodesByFolderNodeId(id: string, pagination: PaginationModel): Promise<any> {
         return new Promise((resolve, reject) => {
             this.resetSelection();
 
@@ -749,7 +746,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.pagination.next(nodePaging.list.pagination);
     }
 
-    updatePagination(pagination: PaginationQueryParams) {
+    updatePagination(pagination: PaginationModel) {
         this.reload();
     }
 
@@ -760,8 +757,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         } else if (nodeId) {
             return new Observable(observer => {
                 this.documentListService.getFolderNode(nodeId, this.includeFields)
-                    .subscribe((node) => {
-                        observer.next(node.id);
+                    .subscribe((node: MinimalNodeEntryEntity) => {
+                        observer.next([node.id]);
                         observer.complete();
                     });
             });

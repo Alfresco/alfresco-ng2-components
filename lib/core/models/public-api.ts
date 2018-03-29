@@ -23,3 +23,4 @@ export * from './comment.model';
 export * from './ecm-company.model';
 export * from './redirection.model';
 export * from './comment-process.model';
+export * from './pagination.model';
