@@ -13,7 +13,7 @@
                         class="adf-viewer-close-button"
                         data-automation-id="toolbar-back"
                         mat-icon-button
-                        matTooltip="{{ 'ADF_VIEWER.ACTIONS.CLOSE' | translate }}"
+                        title="{{ 'ADF_VIEWER.ACTIONS.CLOSE' | translate }}"
                         (click)="onBackButtonClick()">
                         <mat-icon>close</mat-icon>
                     </button>
@@ -24,7 +24,7 @@
                         *ngIf="allowNavigate && canNavigateBefore"
                         data-automation-id="toolbar-pref-file"
                         mat-icon-button
-                        matTooltip="{{ 'ADF_VIEWER.ACTIONS.PREV_FILE' | translate }}"
+                        title="{{ 'ADF_VIEWER.ACTIONS.PREV_FILE' | translate }}"
                         (click)="onNavigateBeforeClick()">
                         <mat-icon>navigate_before</mat-icon>
                     </button>
@@ -34,7 +34,7 @@
                         *ngIf="allowNavigate && canNavigateNext"
                         data-automation-id="toolbar-next-file"
                         mat-icon-button
-                        matTooltip="{{ 'ADF_VIEWER.ACTIONS.NEXT_FILE' | translate }}"
+                        title="{{ 'ADF_VIEWER.ACTIONS.NEXT_FILE' | translate }}"
                         (click)="onNavigateNextClick()">
                         <mat-icon>navigate_next</mat-icon>
                     </button>
@@ -60,7 +60,7 @@
                 <button
                     *ngIf="allowDownload"
                     mat-icon-button
-                    matTooltip="{{ 'ADF_VIEWER.ACTIONS.DOWNLOAD' | translate }}"
+                    title="{{ 'ADF_VIEWER.ACTIONS.DOWNLOAD' | translate }}"
                     data-automation-id="toolbar-download"
                     (click)="downloadContent()">
                     <mat-icon>file_download</mat-icon>
@@ -69,7 +69,7 @@
                 <button
                     *ngIf="allowPrint"
                     mat-icon-button
-                    matTooltip="{{ 'ADF_VIEWER.ACTIONS.PRINT' | translate }}"
+                    title="{{ 'ADF_VIEWER.ACTIONS.PRINT' | translate }}"
                     data-automation-id="toolbar-print"
                     (click)="printContent()">
                     <mat-icon>print</mat-icon>
@@ -78,7 +78,7 @@
                 <button
                     *ngIf="allowShare"
                     mat-icon-button
-                    matTooltip="{{ 'ADF_VIEWER.ACTIONS.SHARE' | translate }}"
+                    title="{{ 'ADF_VIEWER.ACTIONS.SHARE' | translate }}"
                     data-automation-id="toolbar-share"
                     (click)="shareContent()">
                     <mat-icon>share</mat-icon>
@@ -87,7 +87,7 @@
                 <button
                     *ngIf="viewerType !== 'media' && allowFullScreen"
                     mat-icon-button
-                    matTooltip="{{ 'ADF_VIEWER.ACTIONS.FULLSCREEN' | translate }}"
+                    title="{{ 'ADF_VIEWER.ACTIONS.FULLSCREEN' | translate }}"
                     data-automation-id="toolbar-fullscreen"
                     (click)="enterFullScreen()">
                     <mat-icon>fullscreen</mat-icon>
@@ -97,7 +97,7 @@
                     <button
                         mat-icon-button
                         [matMenuTriggerFor]="mnuMoreActions"
-                        matTooltip="{{ 'ADF_VIEWER.ACTIONS.MORE_ACTIONS' | translate }}"
+                        title="{{ 'ADF_VIEWER.ACTIONS.MORE_ACTIONS' | translate }}"
                         data-automation-id="toolbar-more-actions">
                         <mat-icon>more_vert</mat-icon>
                     </button>
@@ -111,7 +111,7 @@
 
                     <button
                         mat-icon-button
-                        matTooltip="{{ 'ADF_VIEWER.ACTIONS.INFO' | translate }}"
+                        title="{{ 'ADF_VIEWER.ACTIONS.INFO' | translate }}"
                         data-automation-id="toolbar-sidebar"
                         [color]="showSidebar ? 'accent' : 'default'"
                         (click)="toggleSidebar($event)">
