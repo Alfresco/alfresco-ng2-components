@@ -16,44 +16,32 @@
  */
 
 import {
-    DataCellEvent,
-    DataColumn,
-    DataRowActionEvent,
-    DataSorting,
-    DataTableComponent,
-    DisplayMode,
-    ObjectDataColumn,
-    PaginatedComponent,
-    PaginationQueryParams,
-    PermissionsEnum
-} from '@alfresco/adf-core';
-import {
-    AppConfigService,
-    DataColumnListComponent,
-    UserPreferencesService
-} from '@alfresco/adf-core';
-import {
     AfterContentInit, Component, ContentChild, ElementRef, EventEmitter, HostListener, Input, NgZone,
     OnChanges, OnDestroy, OnInit, Output, SimpleChanges, TemplateRef, ViewChild, ViewEncapsulation
 } from '@angular/core';
+
 import {
-    MinimalNodeEntity,
-    MinimalNodeEntryEntity,
-    NodePaging,
-    Pagination
-} from 'alfresco-js-api';
+    DataCellEvent, DataColumn, DataRowActionEvent, DataSorting, DataTableComponent,
+    DisplayMode, ObjectDataColumn, PaginatedComponent, PaginationQueryParams, PermissionsEnum,
+    AppConfigService, DataColumnListComponent, UserPreferencesService
+} from '@alfresco/adf-core';
+
+import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, Pagination } from 'alfresco-js-api';
+
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { presetsDefaultModel } from '../models/preset.model';
+import { Subscription } from 'rxjs/Subscription';
+
 import { ShareDataRow } from './../data/share-data-row.model';
 import { ShareDataTableAdapter } from './../data/share-datatable-adapter';
 
+import { presetsDefaultModel } from '../models/preset.model';
 import { ContentActionModel } from './../models/content-action.model';
 import { PermissionStyleModel } from './../models/permissions-style.model';
+
 import { DocumentListService } from './../services/document-list.service';
 import { NodeEntityEvent, NodeEntryEvent } from './node.event';
-import { Subscription } from 'rxjs/Subscription';
 import { CustomResourcesService } from './../services/custom-resources.service';
 
 export enum PaginationStrategy {
@@ -282,14 +270,51 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         return null;
     }
 
-    contextActionCallback(action) {
-        if (action) {
-            this.executeContentAction(action.node, action.model);
-        }
+    get supportedPageSizes(): number[] {
+        return this.preferences.getDefaultPageSizes();
     }
 
     get hasCustomLayout(): boolean {
         return this.columnList && this.columnList.columns && this.columnList.columns.length > 0;
+    }
+
+    private getDefaultSorting(): DataSorting {
+        let defaultSorting: DataSorting;
+        if (this.sorting) {
+            const [key, direction] = this.sorting;
+            defaultSorting = new DataSorting(key, direction);
+        }
+        return defaultSorting;
+    }
+
+    private getLayoutPreset(name: string = 'default'): DataColumn[] {
+        return (this.layoutPresets[name] || this.layoutPresets['default']).map(col => new ObjectDataColumn(col));
+    }
+
+    isEmptyTemplateDefined(): boolean {
+        if (this.dataTable) {
+            if (this.emptyFolderTemplate) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    isNoPermissionTemplateDefined(): boolean {
+        if (this.dataTable) {
+            if (this.noPermissionTemplate) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    isMobile(): boolean {
+        return !!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+
+    isEmpty() {
+        return !this.data || this.data.getRows().length === 0;
     }
 
     ngOnInit() {
@@ -366,6 +391,12 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
     }
 
+    contextActionCallback(action) {
+        if (action) {
+            this.executeContentAction(action.node, action.model);
+        }
+    }
+
     reload(merge: boolean = false) {
         this.ngZone.run(() => {
             this.resetSelection();
@@ -381,32 +412,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 this.onDataReady(this.node);
             }
         });
-    }
-
-    isEmptyTemplateDefined(): boolean {
-        if (this.dataTable) {
-            if (this.emptyFolderTemplate) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    isNoPermissionTemplateDefined(): boolean {
-        if (this.dataTable) {
-            if (this.noPermissionTemplate) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    isMobile(): boolean {
-        return !!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    }
-
-    isEmpty() {
-        return !this.data || this.data.getRows().length === 0;
     }
 
     getNodeActions(node: MinimalNodeEntity | any): ContentActionModel[] {
@@ -744,17 +749,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
     }
 
-    private getDefaultSorting(): DataSorting {
-        let defaultSorting: DataSorting;
-        if (this.sorting) {
-            const [key, direction] = this.sorting;
-            defaultSorting = new DataSorting(key, direction);
-        }
-        return defaultSorting;
-    }
-
     canNavigateFolder(node: MinimalNodeEntity): boolean {
-        let canNavigateFolder:boolean = false;
+        let canNavigateFolder: boolean = false;
 
         if (this.customResourcesService.isCustomSource(this.currentFolderId)) {
             canNavigateFolder = false;
@@ -784,10 +780,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
     }
 
-    private getLayoutPreset(name: string = 'default'): DataColumn[] {
-        return (this.layoutPresets[name] || this.layoutPresets['default']).map(col => new ObjectDataColumn(col));
-    }
-
     private onDataReady(page: NodePaging) {
         this.ready.emit(page);
 
@@ -814,17 +806,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
     }
 
-    get supportedPageSizes(): number[] {
-        return this.preferences.getDefaultPageSizes();
-    }
-
-    ngOnDestroy() {
-        if (this.contextActionHandlerSubscription) {
-            this.contextActionHandlerSubscription.unsubscribe();
-            this.contextActionHandlerSubscription = null;
-        }
-    }
-
     // TODO: remove it from here
     getCorrespondingNodeIds(nodeId: string): Observable<string[]> {
         if (this.customResourcesService.isCustomSource(nodeId)) {
@@ -839,6 +820,13 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             });
         }
 
+    }
+
+    ngOnDestroy() {
+        if (this.contextActionHandlerSubscription) {
+            this.contextActionHandlerSubscription.unsubscribe();
+            this.contextActionHandlerSubscription = null;
+        }
     }
 
 }
