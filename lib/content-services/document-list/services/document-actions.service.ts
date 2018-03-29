@@ -44,6 +44,7 @@ export class DocumentActionsService {
     /**
      * Gets the handler for an action.
      * @param key Identifier of the action
+     * @returns The handler for the action
      */
     getHandler(key: string): ContentActionHandler {
         if (key) {
@@ -57,6 +58,7 @@ export class DocumentActionsService {
      * Sets a new handler for an action.
      * @param key Identifier of the action
      * @param handler Handler for the action
+     * @returns False if the key was an empty/null string, true otherwise
      */
     setHandler(key: string, handler: ContentActionHandler): boolean {
         if (key) {
@@ -70,6 +72,7 @@ export class DocumentActionsService {
     /**
      * Checks if actions can be executed for an item.
      * @param obj Item to receive an action
+     * @returns True if the action can be executed on this item, false otherwise
      */
     canExecuteAction(obj: any): boolean {
         return this.documentListService && obj && obj.entry.isFile === true;

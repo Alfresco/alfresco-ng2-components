@@ -1,74 +1,74 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-03-13
+Last reviewed: 2018-03-29
 ---
 
 # Authentication Service
 
 Provides authentication to ACS and APS.
 
-## Methods
+## Class members
 
--   `isLoggedIn(): boolean`  
-    Checks if the user logged in.  
+### Methods
 
--   `login(username: string, password: string, rememberMe: boolean = false): Observable<{ type: string; ticket: any; }>`  
-    Logs the user in.  
-    -   `username` - Username for the login
-    -   `password` - Password for the login
-    -   `rememberMe` - Stores the user's login details if true
--   `isRememberMeSet(): boolean`  
-    Checks whether the "remember me" cookie was set or not.  
-
--   `logout(): any`  
-    Logs the user out.  
-
--   `removeTicket()`  
-    Removes the login ticket from Storage.  
-
--   `getTicketEcm(): string`  
-    Gets the ECM ticket stored in the Storage.  
-
--   `getTicketBpm(): string`  
-    Gets the BPM ticket stored in the Storage.  
-
--   `getTicketEcmBase64(): string`  
-    Gets the BPM ticket from the Storage in Base 64 format.   
-
--   `saveTickets()`  
-    Saves the ECM and BPM ticket in the Storage.  
-
--   `saveTicketEcm()`  
-    Saves the ECM ticket in the Storage.  
-
--   `saveTicketBpm()`  
-    Saves the BPM ticket in the Storage.  
-
--   `saveTicketAuth()`  
-    Saves the AUTH ticket in the Storage.  
-
--   `isEcmLoggedIn(): boolean`  
-    Checks if the user is logged in on an ECM provider.  
-
--   `isBpmLoggedIn(): boolean`  
-    Checks if the user is logged in on a BPM provider.  
-
--   `getEcmUsername(): string`  
-    Gets the ECM username.  
-
--   `getBpmUsername(): string`  
-    Gets the BPM username  
-
--   `setRedirectUrl(url: RedirectionModel)`  
-    Sets the URL to redirect to after login.  
-    -   `url` - URL to redirect to
--   `getRedirectUrl(provider: string): string`  
-    Gets the URL to redirect to after login.  
-    -   `provider` - Service provider. Can be "ECM", "BPM" or "ALL".
--   `handleError(error: any): Observable<any>`  
-    Prints an error message in the console browser  
-    -   `error` - Error message
+-   `getBpmUsername(): string`<br/>
+    Gets the BPM username
+    -   **Returns** `string` - The BPM username
+-   `getEcmUsername(): string`<br/>
+    Gets the ECM username.
+    -   **Returns** `string` - The ECM username
+-   `getRedirectUrl(provider: string = null): string`<br/>
+    Gets the URL to redirect to after login.
+    -   `provider: string = null` -  Service provider. Can be "ECM", "BPM" or "ALL".
+    -   **Returns** `string` - The redirect URL
+-   `getTicketBpm(): string | null`<br/>
+    Gets the BPM ticket stored in the Storage.
+    -   **Returns** `string | null` - The ticket or `null` if none was found
+-   `getTicketEcm(): string | null`<br/>
+    Gets the ECM ticket stored in the Storage.
+    -   **Returns** `string | null` - The ticket or `null` if none was found
+-   `getTicketEcmBase64(): string | null`<br/>
+    Gets the BPM ticket from the Storage in Base 64 format.
+    -   **Returns** `string | null` - The ticket or `null` if none was found
+-   `handleError(error: any = null): Observable<any>`<br/>
+    Prints an error message in the console browser
+    -   `error: any = null` -  Error message
+    -   **Returns** `Observable<any>` - Object representing the error message
+-   `isBpmLoggedIn(): boolean`<br/>
+    Checks if the user is logged in on a BPM provider.
+    -   **Returns** `boolean` - True if logged in, false otherwise
+-   `isEcmLoggedIn(): boolean`<br/>
+    Checks if the user is logged in on an ECM provider.
+    -   **Returns** `boolean` - True if logged in, false otherwise
+-   `isLoggedIn(): boolean`<br/>
+    Checks if the user logged in.
+    -   **Returns** `boolean` - True if logged in, false otherwise
+-   `isRememberMeSet(): boolean`<br/>
+    Checks whether the "remember me" cookie was set or not.
+    -   **Returns** `boolean` - True if set, false otherwise
+-   `login(username: string = null, password: string = null, rememberMe: boolean = false): Observable<object>`<br/>
+    Logs the user in.
+    -   `username: string = null` -  Username for the login
+    -   `password: string = null` -  Password for the login
+    -   `rememberMe: boolean = false` -  Stores the user's login details if true
+    -   **Returns** `Observable<object>` - Object with auth type ("ECM", "BPM" or "ALL") and auth ticket
+-   `logout(): any`<br/>
+    Logs the user out.
+    -   **Returns** `any` - Response event called when logout is complete
+-   `removeTicket()`<br/>
+    Removes the login ticket from Storage.
+-   `saveTicketAuth()`<br/>
+    Saves the AUTH ticket in the Storage.
+-   `saveTicketBpm()`<br/>
+    Saves the BPM ticket in the Storage.
+-   `saveTicketEcm()`<br/>
+    Saves the ECM ticket in the Storage.
+-   `saveTickets()`<br/>
+    Saves the ECM and BPM ticket in the Storage.
+-   `setRedirectUrl(url: RedirectionModel = null)`<br/>
+    Sets the URL to redirect to after login.
+-   `url: RedirectionModel = null` -  URL to redirect to
 
 ## Details
 

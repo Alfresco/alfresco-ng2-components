@@ -5,7 +5,7 @@ import * as replaceSection from "mdast-util-heading-range";
 import * as remark from "remark";
 import * as frontMatter from "remark-frontmatter";
 
-import * as liquid from "liquidjs";
+import * as combyne from "combyne";
 
 import {
     Application,
@@ -53,25 +53,40 @@ class PropInfo {
         this.defaultValue = this.defaultValue.replace(/\|/, "\\|");
         this.type = rawProp.type ? rawProp.type.toString() : "";
 
+        this.isDeprecated = rawProp.comment && rawProp.comment.hasTag("deprecated");
+
+        if (this.isDeprecated) {
+            this.docText = "**Deprecated:** " + rawProp.comment.getTag("deprecated").text.replace(/[\n\r]+/g, " ").trim();
+        }
+
         if (rawProp.decorators) {
             rawProp.decorators.forEach(dec => {
                 if (dec.name === "Input") {
                     this.isInput = true;
 
-                    if (!this.docText)
+                    /*
+                    if (dec.arguments) {
+                        let bindingName = dec.arguments["bindingPropertyName"];
+                        console.log(JSON.stringify(dec.arguments));
+                        
+                        if (bindingName && (bindingName !== ""))
+                            this.name = bindingName;
+                        
+                    }
+                    */
+                   
+                    if (!this.docText && !this.isDeprecated)
                         console.log(`Warning: Input "${rawProp.getFullName()}" has no doc text.`);
                 }
 
                 if (dec.name === "Output") {
                     this.isOutput = true;
 
-                    if (!this.docText)
+                    if (!this.docText && !this.isDeprecated)
                         console.log(`Warning: Output "${rawProp.getFullName()}" has no doc text.`);
                 }
             });
         }
-
-        this.isDeprecated = rawProp.comment && rawProp.comment.hasTag("deprecated");
     }
 };
 
@@ -110,6 +125,7 @@ class MethodSigInfo {
     docText: string;
     returnType: string;
     returnDocText: string;
+    returnsSomething: boolean;
     signature: string;
     params: ParamInfo[];
     isDeprecated: boolean;
@@ -117,6 +133,7 @@ class MethodSigInfo {
     constructor(rawSig: SignatureReflection) {
         this.name = rawSig.name;
         this.returnType = rawSig.type ? rawSig.type.toString() : "";
+        this.returnsSomething = this.returnType != "void";
 
         if (rawSig.hasComment()) {
             this.docText = rawSig.comment.shortText + rawSig.comment.text;
@@ -128,7 +145,10 @@ class MethodSigInfo {
             this.returnDocText = rawSig.comment.returns;
             this.returnDocText = this.returnDocText ? this.returnDocText.replace(/[\n\r]+/g, " ").trim() : "";
             
-            if (!this.returnDocText)
+            if (this.returnDocText.toLowerCase() === "nothing")
+                this.returnsSomething = false;
+
+            if (this.returnsSomething && !this.returnDocText)
                 console.log(`Warning: Return value of method "${rawSig.name}" has no doc text.`);
             
             this.isDeprecated = rawSig.comment.hasTag("deprecated");
@@ -199,9 +219,11 @@ export function initPhase(aggData) {
 
     let sources = app.expandInputFiles(libFolders);    
     aggData.projData = app.convert(sources);
+    /*
     aggData.liq = liquid({
         root: templateFolder
     });
+    */
 }
 
 
@@ -220,6 +242,19 @@ export function updatePhase(tree, pathname, aggData) {
     let classType = compName.match(/component|directive|service/i);
 
     if (classType) {
+        let templateName = path.resolve(templateFolder, classType + ".combyne");
+        let templateSource = fs.readFileSync(templateName, "utf8");
+        let template = combyne(templateSource);
+
+        let mdText = template.render(compData);
+        let newSection = remark().parse(mdText.trim()).children;
+
+        replaceSection(tree, "Class members", (before, section, after) => {
+            newSection.unshift(before);
+            newSection.push(after);
+            return newSection;
+        });
+        /*
         let templateName = classType[0] + ".liquid";
 
         aggData.liq
@@ -233,12 +268,24 @@ export function updatePhase(tree, pathname, aggData) {
             });
 
             fs.writeFileSync(pathname, remark().use(frontMatter, {type: 'yaml', fence: '---'}).data("settings", {paddedTable: false}).stringify(tree));
+        
         });
+        */
     }
 
-    return false;
+    return true;
 }
 
+
+function renderInputs(comp: ComponentInfo): string {
+    var result = "";
+
+    comp.properties.forEach(prop => {
+        result += `| ${prop.name} | \`${prop.type}\` | ${prop.defaultValue} | ${prop.docText} |\n`;
+    });
+
+    return result;
+}
 
 function initialCap(str: string) {
     return str[0].toUpperCase() + str.substr(1);
