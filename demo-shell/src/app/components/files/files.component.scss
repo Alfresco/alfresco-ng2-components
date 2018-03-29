@@ -1,5 +1,5 @@
 @mixin adf-file-component-theme($theme) {
-    $minimumDocumentListWidth: 425px;
+    $minimumDocumentListWidth: 900px;
     $foreground: map-get($theme, foreground);
 
     .container {
@@ -137,11 +137,19 @@
         }
     }
 
-    @media (max-width: $minimumDocumentListWidth) {
-        adf-document-list ::ng-deep adf-datatable {
-            & ::ng-deep .adf-data-table-cell--fileSize {
+    @media (max-device-width: $minimumDocumentListWidth) {
+        adf-document-list .adf-data-table {
+            .adf-data-table-cell,
+            .adf-datatable-table-cell-header {
                 display: none;
             }
+    
+            .adf-data-table-cell:first-child,
+            .adf-datatable-table-cell-header:first-child,
+            .adf-data-table-cell:nth-child(2),
+            .adf-datatable-table-cell-header:nth-child(2) {
+                display: table-cell;
+            }                 
         }
 
         .adf-site-container-style {
@@ -161,4 +169,14 @@
             }
         }
     }
+
+    @media (max-device-width: 1024px) {
+        adf-document-list .adf-data-table {
+    
+            .adf-data-table-cell:nth-child(4),
+            .adf-datatable-table-cell-header:nth-child(4) {
+                display: none;
+            }                 
+        }
+    }    
 }
