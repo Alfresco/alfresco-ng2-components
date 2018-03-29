@@ -50,20 +50,19 @@ import { ProcessAttachmentsComponent } from './components/process-service/proces
 import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 
-
 @NgModule({
     imports: [
+        BrowserModule,
         BrowserAnimationsModule,
         ReactiveFormsModule,
-        BrowserModule,
         routing,
         FormsModule,
-        AdfModule,
         MaterialModule,
         ThemePickerModule,
         FlexLayoutModule,
         ChartsModule,
-        HttpClientModule
+        HttpClientModule,
+        AdfModule
     ],
     declarations: [
         AppComponent,
@@ -98,7 +97,8 @@ import { DemoPermissionComponent } from './components/permissions/demo-permissio
         OverlayViewerComponent,
         SharedLinkViewComponent,
         FormLoadingComponent,
-        DemoPermissionComponent
+        DemoPermissionComponent,
+        FormLoadingComponent
     ],
     providers: [
         { provide: AppConfigService, useClass: DebugAppConfigService },

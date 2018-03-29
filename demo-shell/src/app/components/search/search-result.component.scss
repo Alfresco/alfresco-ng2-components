@@ -1,3 +1,20 @@
+.adf-search-results {
+    display: flex;
+
+    .adf-search-settings {
+        width: 260px;
+        border: 1px solid #eee;
+    }
+
+    &__facets {
+        margin: 5px;
+    }
+
+    &__content {
+        flex: 1;
+    }
+}
+
 div.search-results-container {
     padding: 0 20px 20px 20px;
 }

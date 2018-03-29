@@ -51,10 +51,8 @@ describe('ContentNodeSelectorComponent', () => {
     const debounceSearch = 200;
     let component: ContentNodeSelectorPanelComponent;
     let fixture: ComponentFixture<ContentNodeSelectorPanelComponent>;
-    let searchService: SearchService;
     let contentNodeSelectorService: ContentNodeSelectorService;
     let searchSpy: jasmine.Spy;
-    let cnSearchSpy: jasmine.Spy;
 
     let _observer: Observer<NodePaging>;
 
@@ -104,10 +102,8 @@ describe('ContentNodeSelectorComponent', () => {
             component = fixture.componentInstance;
             component.debounceSearch = 0;
 
-            searchService = TestBed.get(SearchService);
             contentNodeSelectorService = TestBed.get(ContentNodeSelectorService);
-            cnSearchSpy = spyOn(contentNodeSelectorService, 'search').and.callThrough();
-            searchSpy = spyOn(searchService, 'searchByQueryBody').and.callFake(() => {
+            searchSpy = spyOn(contentNodeSelectorService, 'search').and.callFake(() => {
                 return Observable.create((observer: Observer<NodePaging>) => {
                     _observer = observer;
                 });
@@ -283,32 +279,6 @@ describe('ContentNodeSelectorComponent', () => {
         describe('Search functionality', () => {
             let  getCorrespondingNodeIdsSpy;
 
-            function defaultSearchOptions(searchTerm, rootNodeId = undefined, skipCount = 0) {
-
-                const parentFiltering = rootNodeId ? [{ query: `ANCESTOR:'workspace://SpacesStore/${rootNodeId}'` }] : [];
-
-                let defaultSearchNode: any = {
-                    query: {
-                        query: searchTerm ? `${searchTerm}* OR name:${searchTerm}*` : searchTerm
-                    },
-                    include: ['path', 'allowableOperations'],
-                    paging: {
-                        maxItems: 25,
-                        skipCount: skipCount
-                    },
-                    filterQueries: [
-                        { query: "TYPE:'cm:folder'" },
-                        { query: 'NOT cm:creator:System' },
-                        ...parentFiltering
-                    ],
-                    scope: {
-                        locations: ['nodes']
-                    }
-                };
-
-                return defaultSearchNode;
-            }
-
             beforeEach(() => {
                 const documentListService = TestBed.get(DocumentListService);
                 const expectedDefaultFolderNode = <MinimalNodeEntryEntity> { path: { elements: [] } };
@@ -331,11 +301,11 @@ describe('ContentNodeSelectorComponent', () => {
                 fixture.detectChanges();
             });
 
-            it('should load the results by calling the search api on search change', (done) => {
+            it('should load the results on search change', (done) => {
                 typeToSearchBox('kakarot');
 
                 setTimeout(() => {
-                    expect(searchSpy).toHaveBeenCalledWith(defaultSearchOptions('kakarot'));
+                    expect(searchSpy).toHaveBeenCalledWith('kakarot', undefined, 0, 25);
                     done();
                 }, 300);
             });
@@ -350,7 +320,7 @@ describe('ContentNodeSelectorComponent', () => {
                 }, 300);
             });
 
-            it('should call the search api on changing the site selectbox\'s value', (done) => {
+            it('should search on changing the site selectbox value', (done) => {
                 typeToSearchBox('vegeta');
 
                 setTimeout(() => {
@@ -360,50 +330,50 @@ describe('ContentNodeSelectorComponent', () => {
 
                     fixture.whenStable().then(() => {
                         expect(searchSpy.calls.count()).toBe(2, 'Search count should be two after the site change');
-                        expect(searchSpy.calls.argsFor(1)).toEqual([defaultSearchOptions('vegeta', 'namek')] );
+                        expect(searchSpy.calls.argsFor(1)).toEqual([ 'vegeta', 'namek', 0, 25] );
                         done();
                     });
                 }, 300);
             });
 
-            it('should call the content node selector\'s search with the right parameters on changing the site selectbox\'s value', (done) => {
+            it('should call the content node selector search with the right parameters on changing the site selectbox value', (done) => {
                 typeToSearchBox('vegeta');
 
                 setTimeout(() => {
-                    expect(cnSearchSpy.calls.count()).toBe(1);
+                    expect(searchSpy.calls.count()).toBe(1);
 
                     component.siteChanged(<SiteEntry> { entry: { guid: '-sites-' } });
 
                     fixture.whenStable().then(() => {
-                        expect(cnSearchSpy).toHaveBeenCalled();
-                        expect(cnSearchSpy.calls.count()).toBe(2);
-                        expect(cnSearchSpy).toHaveBeenCalledWith('vegeta', '-sites-', 0, 25);
+                        expect(searchSpy).toHaveBeenCalled();
+                        expect(searchSpy.calls.count()).toBe(2);
+                        expect(searchSpy).toHaveBeenCalledWith('vegeta', '-sites-', 0, 25);
                         done();
                     });
                 }, 300);
             });
 
-            it('should call the content node selector\'s search with the right parameters on changing the site selectbox\'s value from a custom dropdown menu', (done) => {
+            it('should call the content node selector search with the right parameters on changing the site selectbox value from a custom dropdown menu', (done) => {
                 component.dropdownSiteList = <SitePaging> {list: {entries: [<SiteEntry> { entry: { guid: '-sites-' } }, <SiteEntry> { entry: { guid: 'namek' } }]}};
                 fixture.detectChanges();
 
                 typeToSearchBox('vegeta');
 
                 setTimeout(() => {
-                    expect(cnSearchSpy.calls.count()).toBe(1);
+                    expect(searchSpy.calls.count()).toBe(1);
 
                     component.siteChanged(<SiteEntry> { entry: { guid: '-sites-' } });
 
                     fixture.whenStable().then(() => {
-                        expect(cnSearchSpy).toHaveBeenCalled();
-                        expect(cnSearchSpy.calls.count()).toBe(2);
-                        expect(cnSearchSpy).toHaveBeenCalledWith('vegeta', '-sites-', 0, 25, ['123456testId', '09876543testId']);
+                        expect(searchSpy).toHaveBeenCalled();
+                        expect(searchSpy.calls.count()).toBe(2);
+                        expect(searchSpy).toHaveBeenCalledWith('vegeta', '-sites-', 0, 25, ['123456testId', '09876543testId']);
                         done();
                     });
                 }, 300);
             });
 
-            it('should get the corresponding node ids before the search call on changing the site selectbox\'s value from a custom dropdown menu', (done) => {
+            it('should get the corresponding node ids before the search call on changing the site selectbox value from a custom dropdown menu', (done) => {
                 component.dropdownSiteList = <SitePaging> {list: {entries: [<SiteEntry> { entry: { guid: '-sites-' } }, <SiteEntry> { entry: { guid: 'namek' } }]}};
                 fixture.detectChanges();
 
@@ -531,7 +501,7 @@ describe('ContentNodeSelectorComponent', () => {
                     component.siteChanged(<SiteEntry> { entry: { guid: 'namek' } });
 
                     expect(searchSpy.calls.count()).toBe(2);
-                    expect(searchSpy.calls.argsFor(1)).toEqual([defaultSearchOptions('piccolo', 'namek')]);
+                    expect(searchSpy.calls.argsFor(1)).toEqual([ 'piccolo', 'namek', 0, 25 ]);
 
                     component.clear();
 
@@ -682,14 +652,14 @@ describe('ContentNodeSelectorComponent', () => {
                     }, 300);
                 });
 
-                it('button\'s callback should load the next batch of results by calling the search api', async(() => {
+                it('button callback should load the next batch of results by calling the search api', async(() => {
                     const skipCount = 8;
                     component.searchTerm = 'kakarot';
 
                     component.getNextPageOfSearch({ skipCount });
 
                     fixture.whenStable().then(() => {
-                        expect(searchSpy).toHaveBeenCalledWith(defaultSearchOptions('kakarot', undefined, skipCount));
+                        expect(searchSpy).toHaveBeenCalledWith( 'kakarot', undefined, skipCount, 25);
                     });
                 }));
 
@@ -703,7 +673,7 @@ describe('ContentNodeSelectorComponent', () => {
                     expect(pagination).not.toBeNull();
                 });
 
-                it('button\'s callback should load the next batch of folder results when there is no searchTerm', () => {
+                it('button callback should load the next batch of folder results when there is no searchTerm', () => {
                     const skipCount = 5;
 
                     component.searchTerm = '';
