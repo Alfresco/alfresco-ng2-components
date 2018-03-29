@@ -1,21 +1,28 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-03-12
+Last reviewed: 2018-03-29
 ---
+
 # Content Node Selector component
 
 Allows a user to select items from a Content Services repository.
 
 ![Content Node Selector screenshot](../docassets/images/ContentNodeSelector.png)
 
-## Basic Usage
+## Class members
 
-### Events
+### Properties
 
-| Name | Description |
-| ---- | ----------- |
-| select | Emitted when the user has selected an item |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| currentFolderId | `string` | null | Deprecated: in 2.1.0 |
+| dropdownHideMyFiles | `boolean` | false | Deprecated: in 2.1.0 |
+| dropdownSiteList | `SitePaging` | null | Deprecated: in 2.1.0 |
+| imageResolver | `ImageResolver` | null | Deprecated: in 2.1.0 |
+| pageSize | `number` |  | Deprecated: in 2.1.0 |
+| rowFilter | `RowFilter` | null | Deprecated: in 2.1.0 |
+| title | `string` | null | Deprecated: in 2.1.0 |
 
 ## Details
 

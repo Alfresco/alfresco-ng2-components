@@ -22,6 +22,7 @@ export class CookieService {
 
     /**
      * Checks if cookies are enabled.
+     * @returns True if enabled, false otherwise
      */
     isEnabled(): boolean {
         // for certain scenarios Chrome may say 'true' but have cookies still disabled
@@ -36,6 +37,7 @@ export class CookieService {
     /**
      * Retrieves a cookie by its key.
      * @param key Key to identify the cookie
+     * @returns The cookie data or null if it is not found
      */
     getItem(key: string): string | null {
         const regexp = new RegExp('(?:' + key + '|;\s*' + key + ')=(.*?)(?:;|$)', 'g');
@@ -44,12 +46,11 @@ export class CookieService {
     }
 
     /**
-     * Set a cookie.
+     * Sets a cookie.
      * @param key Key to identify the cookie
      * @param data Data value to set for the cookie
      * @param expiration Expiration date of the data
      * @param path "Pathname" to store the cookie
-     *
      */
     setItem(key: string, data: string, expiration: Date | null, path: string | null): void {
         document.cookie = `${key}=${data}` +

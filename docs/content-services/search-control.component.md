@@ -3,6 +3,7 @@ Added: v2.0.0
 Status: Active
 Last reviewed: 2018-03-13
 ---
+
 # Search control component
 
 Displays a input text which shows find-as-you-type suggestions.
@@ -19,25 +20,27 @@ Displays a input text which shows find-as-you-type suggestions.
 </adf-search-control>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| expandable | `boolean` | `true` | Toggles whether to use an expanding search control. If false then a regular input is used. |
-| highlight | `boolean` | `false` | Toggles highlighting of the search term in the results.  |
-| inputType | `string` | `'text'` | Type of the input field to render, e.g. "search" or "text" (default).  |
-| autocomplete | `boolean` | `false` | Toggles auto-completion of the search input field.  |
-| liveSearchEnabled | `boolean` | `true` | Toggles "find-as-you-type" suggestions for possible matches.  |
-| liveSearchMaxResults | `number` | `5` | Maximum number of results to show in the live search.  |
-| customQueryBody | `QueryBody` |  | Deprecated in v2.1.0. |
+| autocomplete | `boolean` | false | Toggles auto-completion of the search input field. |
+| customQueryBody | `QueryBody` |  | **Deprecated:** in 2.1.0 |
+| expandable | `boolean` | true | Toggles whether to use an expanding search control. If false then a regular input is used. |
+| highlight | `boolean` | false | Toggles highlighting of the search term in the results. |
+| inputType | `string` | "text" | Type of the input field to render, e.g. "search" or "text" (default). |
+| liveSearchEnabled | `boolean` | true | Toggles "find-as-you-type" suggestions for possible matches. |
+| liveSearchMaxResults | `number` | 5 | Maximum number of results to show in the live search. |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| submit | `EventEmitter<any>` | Emitted when the search is submitted pressing ENTER button. The search term is provided as value of the event. |
-| searchChange | `EventEmitter<string>` | Emitted when the search term is changed. The search term is provided in the 'value' property of the returned object.  If the term is less than three characters in length then the term is truncated to an empty string. |
 | optionClicked | `EventEmitter<any>` | Emitted when a file item from the list of "find-as-you-type" results is selected. |
+| searchChange | `EventEmitter<string>` | Emitted when the search term is changed. The search term is provided in the 'value' property of the returned object.  If the term is less than three characters in length then the term is truncated to an empty string. |
+| submit | `EventEmitter<any>` | Emitted when the search is submitted pressing ENTER button. The search term is provided as value of the event. |
 
 ## Details
 

@@ -2,6 +2,7 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Search component
 
 Searches items for supplied search terms. 
@@ -15,23 +16,24 @@ Searches items for supplied search terms.
 </adf-search>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| displayWith | `(value: any) => string` | `null` | Function that maps an option's value to its display value in the trigger.  |
-| maxResults | `number` | `20` | Maximum number of results to show in the search.  |
-| skipResults | `number` | `0` | Number of results to skip from the results pagination.  |
-| queryBody | `QueryBody` |  |  |
-| searchTerm | `string` | `''` | Search term to use when executing the search. Updating this value will run a new search and update the results. |
-| classList | `string` |  | CSS class for display.  |
+| displayWith | `function | null` | null | Function that maps an option's value to its display value in the trigger. |
+| maxResults | `number` | 20 | Maximum number of results to show in the search. |
+| queryBody | `QueryBody` |  | **Deprecated:** in 2.1.0 |
+| searchTerm | `string` | "" | Search term to use when executing the search. Updating this value will run a new search and update the results. |
+| skipResults | `number` | 0 | Number of results to skip from the results pagination. |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| resultLoaded | `EventEmitter<NodePaging>` | Emitted when search results have fully loaded. |
 | error | `EventEmitter<any>` | Emitted when an error occurs. |
+| resultLoaded | `EventEmitter<NodePaging>` | Emitted when search results have fully loaded. |
 
 ## Details
 
