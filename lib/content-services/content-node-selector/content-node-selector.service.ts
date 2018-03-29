@@ -73,6 +73,8 @@ export class ContentNodeSelectorService {
             }
         };
 
-        return this.searchService.searchByQueryBody(defaultSearchNode);
+        return Observable.fromPromise(
+            this.searchService.searchByQueryBody(defaultSearchNode)
+        );
     }
 }
