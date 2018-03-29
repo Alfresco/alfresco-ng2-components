@@ -3,24 +3,21 @@ Added: v2.3.0
 Status: Active
 ---
 
-# Search Settings component
+# Search Settings Component
 
 Represents a main container component for custom search and faceted search settings.
-
-![Search Settings overview](../docassets/images/search-settings-overview.png)
 
 ## Usage example
 
 ```html
-<adf-search-settings #settings
-    [queryBuilder]="queryBuilder">
+<adf-search-filter #settings>
 </adf-search-settings>
 ```
 
 The component is based on dynamically created Widgets to modify the resulting query and options,
 and the `Query Builder` to build and execute the search queries.
 
-## Query Builder
+## Query Builder Service
 
 Stores information from all the custom search and faceted search widgets,
 compiles and runs the final Search query.
@@ -39,18 +36,16 @@ Allows custom widgets to populate and edit the following parts of the resulting 
 - range queries
 
 ```ts
-constructor(api: AlfrescoApiService, appConfig: AppConfigService) {
-    const config = appConfig.get<SearchConfiguration>('search');
+constructor(queryBuilder: QueryBuilderService) {
 
-    this.queryBuilder = new SearchQueryBuilder(config, api);
-
-    this.queryBuilder.updated.subscribe(query => {
+    queryBuilder.updated.subscribe(query => {
         this.queryBuilder.execute();
     });
 
-    this.queryBuilder.executed.subscribe(data => {
+    queryBuilder.executed.subscribe(data => {
         this.onDataLoaded(data);
     });
+
 }
 ```
 
