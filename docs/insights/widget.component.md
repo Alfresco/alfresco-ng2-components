@@ -1,7 +1,9 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-03-29
 ---
+
 # Widget component
 
 Base class for standard and custom widget classes.
@@ -21,12 +23,20 @@ import { WidgetComponent } from '@alfresco/adf-core';
 export class CustomEditorComponent extends WidgetComponent {}
 ```
 
+## Class members
+
 ### Properties
 
-| Name | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| readOnly | boolean | false | Does the widget show a read-only value? (ie, can't be edited) |
-| field | [FormFieldModel](../core/form-field.model.md) |  | Data to be displayed in the field |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| field | `FormFieldModel` |  | Data to be displayed in the field |
+| readOnly | `boolean` | false | Does the widget show a read-only value? (ie, can't be edited) |
+
+### Events
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| fieldChanged | `EventEmitter<FormFieldModel>` | **Deprecated:** Used only to trigger visibility engine; components should do that internally if needed |
 
 ## Details
 

@@ -55,7 +55,7 @@ export class WidgetComponent implements AfterViewInit {
     @Input()
     field: FormFieldModel;
 
-    /** @deprecated used only to trigger visibility engine, components should do that internally if needed */
+    /** @deprecated Used only to trigger visibility engine; components should do that internally if needed */
     @Output()
     fieldChanged: EventEmitter<FormFieldModel> = new EventEmitter<FormFieldModel>();
 
