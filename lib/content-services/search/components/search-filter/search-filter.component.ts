@@ -39,7 +39,7 @@ export class SearchFilterComponent implements OnInit {
     responseFacetQueries: FacetQuery[] = [];
     responseFacetFields: ResponseFacetField[] = [];
 
-    constructor(private queryBuilder: SearchQueryBuilderService, private search: SearchService) {
+    constructor(queryBuilder: SearchQueryBuilderService, private search: SearchService) {
         this.queryBuilder.updated.subscribe(query => {
             this.queryBuilder.execute();
         });
