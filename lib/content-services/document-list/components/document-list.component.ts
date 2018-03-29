@@ -243,6 +243,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     selection = new Array<MinimalNodeEntity>();
 
     pagination: BehaviorSubject<Pagination>;
+    isSkipCountChanged = false;
 
     private layoutPresets = {};
     private currentNodeAllowableOperations: string[] = [];
@@ -331,7 +332,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (this.isSkipCountChanged(changes) ||
+        this.updateSkipCountChanged(changes);
+        if (this.isSkipCountChanged ||
             this.isMaxItemsChanged(changes)) {
             this.reload(this.enableInfiniteScrolling);
         }
@@ -484,7 +486,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     updateCustomSourceData(nodeId: string, merge: boolean): void {
         this.folderNode = null;
         this.currentFolderId = nodeId;
-        if (!merge) {
+        if (!merge && !this.isSkipCountChanged) {
             this.skipCount = 0;
         }
     }
@@ -597,8 +599,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.noPermission = false;
     }
 
-    private isSkipCountChanged(changePage: SimpleChanges) {
-        return changePage.skipCount &&
+    private updateSkipCountChanged(changePage: SimpleChanges) {
+        this.isSkipCountChanged = changePage.skipCount &&
             !changePage.skipCount.isFirstChange() &&
             changePage.skipCount.currentValue &&
             changePage.skipCount.currentValue !== changePage.skipCount.previousValue;
@@ -935,10 +937,13 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         } else {
             this.pagination.next(null);
         }
+        this.isSkipCountChanged = false;
     }
 
     updatePagination(params: PaginationQueryParams) {
-        const needsReload = this.maxItems !== params.maxItems || this.skipCount !== params.skipCount;
+        this.isSkipCountChanged = this.skipCount !== params.skipCount;
+
+        const needsReload = this.maxItems !== params.maxItems || this.isSkipCountChanged;
 
         this.maxItems = params.maxItems;
         this.skipCount = params.skipCount;
