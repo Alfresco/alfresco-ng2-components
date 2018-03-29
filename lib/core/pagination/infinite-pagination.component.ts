@@ -32,16 +32,17 @@ import { PaginatedComponent } from './paginated-component.interface';
 import { PaginationQueryParams } from './pagination-query-params.interface';
 import { Pagination } from 'alfresco-js-api';
 import { Subscription } from 'rxjs/Subscription';
+import { PaginationComponentInterface } from './pagination-component.interface';
 
 @Component({
     selector: 'adf-infinite-pagination',
     host: { 'class': 'infinite-adf-pagination' },
     templateUrl: './infinite-pagination.component.html',
-    styleUrls: [ './infinite-pagination.component.scss' ],
+    styleUrls: ['./infinite-pagination.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
-export class InfinitePaginationComponent implements OnInit, OnDestroy {
+export class InfinitePaginationComponent implements OnInit, OnDestroy, PaginationComponentInterface {
 
     static DEFAULT_PAGE_SIZE: number = 25;
 
@@ -72,7 +73,8 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy {
 
     private paginationSubscription: Subscription;
 
-    constructor(private cdr: ChangeDetectorRef) {}
+    constructor(private cdr: ChangeDetectorRef) {
+    }
 
     ngOnInit() {
         if (this.target) {

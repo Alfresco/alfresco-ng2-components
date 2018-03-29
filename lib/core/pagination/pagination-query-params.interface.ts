@@ -25,7 +25,24 @@
  * @TODO Contribute this to AlfrescoJS API
  */
 
-export interface PaginationQueryParams {
-    skipCount: number;
-    maxItems: number;
+import { Pagination } from 'alfresco-js-api';
+
+export class PaginationQueryParams implements Pagination{
+
+    count?: number;
+    hasMoreItems?: boolean;
+    totalItems?: number;
+    skipCount?: number;
+    maxItems?: number;
+
+    constructor(obj?: any) {
+        if (obj) {
+            this.count = obj.count;
+            this.hasMoreItems = obj.hasMoreItems ?  obj.hasMoreItems : false
+            this.totalItems = obj.totalItems;
+            this.skipCount = obj.skipCount;
+            this.maxItems = obj.maxItems;
+        }
+    }
+
 }

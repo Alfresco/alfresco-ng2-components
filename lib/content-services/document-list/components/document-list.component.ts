@@ -175,10 +175,12 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     node: NodePaging = null;
 
+    /** @deprecated 2.3.0 define it in pagination */
     /** Default value is stored into user preference settings */
     @Input()
     maxItems: number;
 
+    /** @deprecated 2.3.0 define it in pagination */
     /** Number of elements to skip over for pagination purposes */
     @Input()
     skipCount: number = 0;

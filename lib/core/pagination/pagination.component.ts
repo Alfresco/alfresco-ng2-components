@@ -15,22 +15,12 @@
  * limitations under the License.
  */
 
-import {
-    ChangeDetectionStrategy,
-    Component,
-    EventEmitter,
-    Input,
-    OnInit,
-    Output,
-    ViewEncapsulation,
-    ChangeDetectorRef,
-    OnDestroy,
-    HostBinding
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation,
+    ChangeDetectorRef, OnDestroy, HostBinding } from '@angular/core';
 
 import { Pagination } from 'alfresco-js-api';
-import { PaginationQueryParams } from './pagination-query-params.interface';
 import { PaginatedComponent } from './paginated-component.interface';
+import { PaginationComponentInterface } from './pagination-component.interface';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
@@ -41,7 +31,7 @@ import { Subscription } from 'rxjs/Subscription';
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
-export class PaginationComponent implements OnInit, OnDestroy {
+export class PaginationComponent implements OnInit, OnDestroy, PaginationComponentInterface {
 
     static DEFAULT_PAGINATION: Pagination = {
         skipCount: 0,
@@ -66,11 +56,11 @@ export class PaginationComponent implements OnInit, OnDestroy {
 
     /** Pagination object. */
     @Input()
-    pagination: Pagination;
+    pagination: Pagination = PaginationComponent.DEFAULT_PAGINATION;
 
     /** Emitted when pagination changes in any way. */
     @Output()
-    change: EventEmitter<PaginationQueryParams> = new EventEmitter<PaginationQueryParams>();
+    change: EventEmitter<Pagination> = new EventEmitter<Pagination>();
 
     /** Emitted when the page number changes. */
     @Output()
@@ -95,7 +85,7 @@ export class PaginationComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         if (this.target) {
-            this.paginationSubscription = this.target.pagination.subscribe(page => {
+            this.paginationSubscription = this.target.pagination.subscribe((page: Pagination) => {
                 this.pagination = page;
                 this.cdr.detectChanges();
             });
@@ -211,7 +201,7 @@ export class PaginationComponent implements OnInit, OnDestroy {
         });
     }
 
-    handlePaginationEvent(action: string, params: PaginationQueryParams) {
+    handlePaginationEvent(action: string, params: Pagination) {
         const {
             NEXT_PAGE,
             PREV_PAGE,
