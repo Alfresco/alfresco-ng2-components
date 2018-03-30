@@ -27,6 +27,7 @@ import { DocumentListService } from '../document-list/services/document-list.ser
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
 import { ContentNodeSelectorComponentData } from './content-node-selector.component-data.interface';
 import { NodeLockDialogComponent } from '../dialogs/node-lock.dialog';
+import 'rxjs/operator/switchMap';
 
 @Injectable()
 export class ContentNodeDialogService {
