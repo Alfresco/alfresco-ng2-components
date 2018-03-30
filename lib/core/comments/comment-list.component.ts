@@ -15,9 +15,11 @@
  * limitations under the License.
  */
 
-import { CommentProcessModel, PeopleProcessService, UserProcessModel } from '@alfresco/adf-core';
-import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import { CommentModel } from '../models/comment.model';
+import { EcmUserService } from '../userinfo/services/ecm-user.service';
+import { PeopleProcessService } from '../services/people-process.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'adf-comment-list',
@@ -30,18 +32,19 @@ export class CommentListComponent {
 
     /** The comments data used to populate the list. */
     @Input()
-    comments: CommentProcessModel[];
+    comments: CommentModel[];
 
     /** Emitted when the user clicks on one of the comment rows. */
     @Output()
-    clickRow: EventEmitter<CommentProcessModel> = new EventEmitter<CommentProcessModel>();
+    clickRow: EventEmitter<CommentModel> = new EventEmitter<CommentModel>();
 
-    selectedComment: CommentProcessModel;
+    selectedComment: CommentModel;
 
-    constructor(private datePipe: DatePipe, public peopleProcessService: PeopleProcessService) {
+    constructor(private datePipe: DatePipe, public peopleProcessService: PeopleProcessService,
+                public ecmUserService: EcmUserService) {
     }
 
-    selectComment(comment: CommentProcessModel): void {
+    selectComment(comment: CommentModel): void {
         if (this.selectedComment) {
             this.selectedComment.isSelected = false;
         }
@@ -50,7 +53,7 @@ export class CommentListComponent {
         this.clickRow.emit(this.selectedComment);
     }
 
-    getUserShortName(user: UserProcessModel): string {
+    getUserShortName(user: any): string {
         let shortName = '';
         if (user) {
             if (user.firstName) {
@@ -61,6 +64,18 @@ export class CommentListComponent {
             }
         }
         return shortName;
+    }
+
+    isPictureDefined(user: any): boolean {
+        return user.pictureId || user.avatarId;
+    }
+
+    getUserImage(user: any): string {
+        if (this.isAContentUsers(user)) {
+            return this.ecmUserService.getUserProfileImage(user.avatarId);
+        } else {
+            return this.peopleProcessService.getUserImage(user);
+        }
     }
 
     transformDate(aDate: string): string {
@@ -78,5 +93,9 @@ export class CommentListComponent {
             }
         }
         return formattedDate;
+    }
+
+    private isAContentUsers(user: any): boolean {
+        return user.avatarId;
     }
 }

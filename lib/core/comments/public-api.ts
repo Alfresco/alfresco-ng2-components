@@ -15,6 +15,5 @@
  * limitations under the License.
  */
 
-export * from './process-comments.component';
 export * from './comment-list.component';
 export * from './comments.component';

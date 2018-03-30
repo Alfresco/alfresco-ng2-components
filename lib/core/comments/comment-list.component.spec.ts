@@ -15,11 +15,14 @@
  * limitations under the License.
  */
 
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CommentProcessModel, UserProcessModel } from '@alfresco/adf-core';
+import { CommentModel, UserProcessModel } from '../models';
 import { CommentListComponent } from './comment-list.component';
 import { By } from '@angular/platform-browser';
+import { EcmUserService } from '../userinfo/services/ecm-user.service';
+import { PeopleProcessService } from '../services/people-process.service';
 
 const testUser: UserProcessModel = new UserProcessModel({
     id: '1',
@@ -28,18 +31,74 @@ const testUser: UserProcessModel = new UserProcessModel({
     email: 'tu@domain.com'
 });
 const testDate = new Date();
-const testComment: CommentProcessModel = new CommentProcessModel({
+const processCommentOne: CommentModel = new CommentModel({
     id: 1,
     message: 'Test Comment',
     created: testDate.toDateString(),
     createdBy: testUser
 });
 
-const secondtestComment: CommentProcessModel = new CommentProcessModel({
+const processCommentTwo: CommentModel = new CommentModel({
     id: 2,
     message: '2nd Test Comment',
     created: new Date().toDateString(),
     createdBy: testUser
+});
+
+const contentCommentUserPictureDefined: CommentModel = new CommentModel({
+    id: 2,
+    message: '2nd Test Comment',
+    created: new Date().toDateString(),
+    createdBy: {
+        enabled: true,
+        firstName: 'some',
+        lastName: 'one',
+        email: 'some-one@somegroup.com',
+        emailNotificationsEnabled: true,
+        company: {},
+        id: 'fake-email@dom.com',
+        avatarId: '001-001-001'
+    }
+});
+
+const processCommentUserPictureDefined: CommentModel = new CommentModel({
+    id: 2,
+    message: '2nd Test Comment',
+    created: new Date().toDateString(),
+    createdBy: {
+        id: '1',
+        firstName: 'Test',
+        lastName: 'User',
+        email: 'tu@domain.com',
+        pictureId: '001-001-001'
+    }
+});
+
+const contentCommentUserNoPictureDefined: CommentModel = new CommentModel({
+    id: 2,
+    message: '2nd Test Comment',
+    created: new Date().toDateString(),
+    createdBy: {
+        enabled: true,
+        firstName: 'some',
+        lastName: 'one',
+        email: 'some-one@somegroup.com',
+        emailNotificationsEnabled: true,
+        company: {},
+        id: 'fake-email@dom.com'
+    }
+});
+
+const processCommentUserNoPictureDefined: CommentModel = new CommentModel({
+    id: 2,
+    message: '2nd Test Comment',
+    created: new Date().toDateString(),
+    createdBy: {
+        id: '1',
+        firstName: 'Test',
+        lastName: 'User',
+        email: 'tu@domain.com'
+    }
 });
 
 describe('CommentListComponent', () => {
@@ -47,26 +106,38 @@ describe('CommentListComponent', () => {
     let commentList: CommentListComponent;
     let fixture: ComponentFixture<CommentListComponent>;
     let element: HTMLElement;
+    let ecmUserService: EcmUserService;
+    let peopleProcessService: PeopleProcessService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
                 CommentListComponent
             ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             providers: [
-                DatePipe
+                DatePipe,
+                PeopleProcessService,
+                EcmUserService
             ]
         }).compileComponents().then(() => {
 
             fixture = TestBed.createComponent(CommentListComponent);
+            ecmUserService = TestBed.get(EcmUserService);
+            peopleProcessService = TestBed.get(PeopleProcessService);
             commentList = fixture.componentInstance;
             element = fixture.nativeElement;
             fixture.detectChanges();
         });
     }));
 
+    beforeEach(() => {
+        spyOn(ecmUserService, 'getUserProfileImage').and.returnValue('content-user-image');
+        spyOn(peopleProcessService, 'getUserImage').and.returnValue('process-user-image');
+    });
+
     it('should emit row click event', async(() => {
-        commentList.comments = [testComment];
+        commentList.comments = [processCommentOne];
 
         commentList.clickRow.subscribe(selectedComment => {
             expect(selectedComment.id).toEqual(1);
@@ -84,9 +155,9 @@ describe('CommentListComponent', () => {
     }));
 
     it('should deselect the previous selected comment when a new one is clicked', async(() => {
-        testComment.isSelected = true;
-        commentList.selectedComment = testComment;
-        commentList.comments = [testComment, secondtestComment];
+        processCommentOne.isSelected = true;
+        commentList.selectedComment = processCommentOne;
+        commentList.comments = [processCommentOne, processCommentTwo];
 
         commentList.clickRow.subscribe(selectedComment => {
             fixture.detectChanges();
@@ -111,31 +182,31 @@ describe('CommentListComponent', () => {
     }));
 
     it('should show comment message when input is given', async(() => {
-        commentList.comments = [testComment];
+        commentList.comments = [processCommentOne];
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
             let elements = fixture.nativeElement.querySelectorAll('#comment-message');
             expect(elements.length).toBe(1);
-            expect(elements[0].innerText).toBe(testComment.message);
+            expect(elements[0].innerText).toBe(processCommentOne.message);
             expect(fixture.nativeElement.querySelector('#comment-message:empty')).toBeNull();
         });
     }));
 
     it('should show comment user when input is given', async(() => {
-        commentList.comments = [testComment];
+        commentList.comments = [processCommentOne];
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
             let elements = fixture.nativeElement.querySelectorAll('#comment-user');
             expect(elements.length).toBe(1);
-            expect(elements[0].innerText).toBe(testComment.createdBy.firstName + ' ' + testComment.createdBy.lastName);
+            expect(elements[0].innerText).toBe(processCommentOne.createdBy.firstName + ' ' + processCommentOne.createdBy.lastName);
             expect(fixture.nativeElement.querySelector('#comment-user:empty')).toBeNull();
         });
     }));
 
     it('should show comment date time when input is given', async(() => {
-        commentList.comments = [testComment];
+        commentList.comments = [processCommentOne];
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
@@ -147,7 +218,7 @@ describe('CommentListComponent', () => {
     }));
 
     it('comment date time should start with Today when comment date is today', async(() => {
-        commentList.comments = [testComment];
+        commentList.comments = [processCommentOne];
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
@@ -157,8 +228,8 @@ describe('CommentListComponent', () => {
     }));
 
     it('comment date time should start with Yesterday when comment date is yesterday', async(() => {
-        testComment.created = new Date((Date.now() - 24 * 3600 * 1000));
-        commentList.comments = [testComment];
+        processCommentOne.created = new Date((Date.now() - 24 * 3600 * 1000));
+        commentList.comments = [processCommentOne];
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
@@ -168,8 +239,8 @@ describe('CommentListComponent', () => {
     }));
 
     it('comment date time should not start with Today/Yesterday when comment date is before yesterday', async(() => {
-        testComment.created = new Date((Date.now() - 24 * 3600 * 1000 * 2));
-        commentList.comments = [testComment];
+        processCommentOne.created = new Date((Date.now() - 24 * 3600 * 1000 * 2));
+        commentList.comments = [processCommentOne];
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
@@ -180,14 +251,56 @@ describe('CommentListComponent', () => {
     }));
 
     it('should show user icon when input is given', async(() => {
-        commentList.comments = [testComment];
+        commentList.comments = [processCommentOne];
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
             let elements = fixture.nativeElement.querySelectorAll('#comment-user-icon');
             expect(elements.length).toBe(1);
-            expect(elements[0].innerText).toContain(commentList.getUserShortName(testComment.createdBy));
+            expect(elements[0].innerText).toContain(commentList.getUserShortName(processCommentOne.createdBy));
             expect(fixture.nativeElement.querySelector('#comment-user-icon:empty')).toBeNull();
+        });
+    }));
+
+    it('should return content picture when is a content user with a picture', async(() => {
+        commentList.comments = [contentCommentUserPictureDefined];
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            let elements = fixture.nativeElement.querySelectorAll('.adf-people-img');
+            expect(elements.length).toBe(1);
+            expect(fixture.nativeElement.getElementsByClassName('adf-people-img')[0].src).toContain('content-user-image');
+        });
+    }));
+
+    it('should return process picture when is a process user with a picture', async(() => {
+        commentList.comments = [processCommentUserPictureDefined];
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            let elements = fixture.nativeElement.querySelectorAll('.adf-people-img');
+            expect(elements.length).toBe(1);
+            expect(fixture.nativeElement.getElementsByClassName('adf-people-img')[0].src).toContain('process-user-image');
+        });
+    }));
+
+    it('should return content short name when is a content user without a picture', async(() => {
+        commentList.comments = [contentCommentUserNoPictureDefined];
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            let elements = fixture.nativeElement.querySelectorAll('.adf-comment-user-icon');
+            expect(elements.length).toBe(1);
+        });
+    }));
+
+    it('should return process short name when  is a process user without a picture', async(() => {
+        commentList.comments = [processCommentUserNoPictureDefined];
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            let elements = fixture.nativeElement.querySelectorAll('.adf-comment-user-icon');
+            expect(elements.length).toBe(1);
         });
     }));
 });

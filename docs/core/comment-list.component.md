@@ -41,7 +41,7 @@ export class SomeComponent implements OnInit {
       },
     }
   ];
-    
+
   onClickCommentRow(comment: CommentProcessModel) {
     console.log('Clicked row: ', comment);
   }
@@ -50,10 +50,10 @@ export class SomeComponent implements OnInit {
 In the component template use the comment list component:
 
 ```html
-<adf-comment-list 
+<adf-comment-list
     [comments]="comments"
     (clickRow)="onClickCommentRow($event)">
-</adf-comment-list>        
+</adf-comment-list>
 ```
 
 ### Properties
