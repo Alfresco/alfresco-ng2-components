@@ -38,11 +38,11 @@ describe('Breadcrumb', () => {
             ],
             declarations: [
                 DocumentListComponent,
-                BreadcrumbComponent,
-                CustomResourcesService
+                BreadcrumbComponent
             ],
             providers: [
-                DocumentListService
+                DocumentListService,
+                CustomResourcesService
             ],
             schemas: [
                 CUSTOM_ELEMENTS_SCHEMA

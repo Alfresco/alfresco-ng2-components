@@ -36,6 +36,7 @@ import { ImageResolver } from './../data/image-resolver.model';
 import { RowFilter } from './../data/row-filter.model';
 
 import { DocumentListService } from './../services/document-list.service';
+import { CustomResourcesService } from './../services/custom-resources.service';
 import { DocumentListComponent } from './document-list.component';
 
 declare let jasmine: any;
@@ -61,6 +62,7 @@ describe('DocumentList', () => {
             ],
             providers: [
                 DocumentListService,
+                CustomResourcesService,
                 { provide: NgZone, useValue: zone }
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -254,17 +256,10 @@ describe('DocumentList', () => {
         expect(documentList.resetSelection).toHaveBeenCalled();
     });
 
-    it('should reset selection on loading folder by node id', () => {
-        spyOn(documentList, 'resetSelection').and.callThrough();
-
-        documentList.loadFolderByNodeId('-trashcan-');
-        expect(documentList.resetSelection).toHaveBeenCalled();
-    });
-
-    it('should reset selection in the datatable also', () => {
+    it('should reset when a prameter changes', () => {
         spyOn(documentList.dataTable, 'resetSelection').and.callThrough();
 
-        documentList.loadFolderByNodeId('-trashcan-');
+        documentList.ngOnChanges(null);
         expect(documentList.dataTable.resetSelection).toHaveBeenCalled();
     });
 

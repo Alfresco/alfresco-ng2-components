@@ -366,6 +366,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     ngOnChanges(changes: SimpleChanges) {
+        this.resetSelection();
+
         if (changes.folderNode && changes.folderNode.currentValue) {
             this.loadFolder();
         } else if (changes.currentFolderId && changes.currentFolderId.currentValue) {
@@ -377,11 +379,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             }
 
             this.loading = true;
-            this.resetSelection();
             this.loadFolderByNodeId(changes.currentFolderId.currentValue);
         } else if (this.data) {
             if (changes.node && changes.node.currentValue) {
-                this.resetSelection();
                 this.data.loadPage(changes.node.currentValue);
                 this.onDataReady(changes.node.currentValue);
             } else if (changes.rowFilter) {
@@ -395,12 +395,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
     }
 
-    contextActionCallback(action) {
-        if (action) {
-            this.executeContentAction(action.node, action.model);
-        }
-    }
-
     reload() {
         this.ngZone.run(() => {
             this.resetSelection();
@@ -409,13 +403,18 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 this.loadFolder();
             } else if (this.currentFolderId) {
                 this.loading = true;
-                this.resetSelection();
                 this.loadFolderByNodeId(this.currentFolderId);
             } else if (this.node) {
                 this.data.loadPage(this.node);
                 this.onDataReady(this.node);
             }
         });
+    }
+
+    contextActionCallback(action) {
+        if (action) {
+            this.executeContentAction(action.node, action.model);
+        }
     }
 
     getNodeActions(node: MinimalNodeEntity | any): ContentActionModel[] {
@@ -552,7 +551,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     loadFolderNodesByFolderNodeId(id: string, pagination: PaginationModel): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.resetSelection();
 
             this.documentListService
                 .getFolder(null, {
