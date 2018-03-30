@@ -35,6 +35,7 @@ export * from './services/folder-actions.service';
 export * from './services/document-actions.service';
 export * from './services/document-list.service';
 export * from './services/node-actions.service';
+export * from './services/custom-resources.service';
 
 // models
 export * from './models/content-action.model';
