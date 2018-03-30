@@ -38,6 +38,9 @@ export class VersionListComponent implements OnChanges {
     @Input()
     id: string;
 
+    @Input()
+    showComments: boolean = true;
+
     constructor(private alfrescoApi: AlfrescoApiService) {
         this.versionsApi = this.alfrescoApi.versionsApi;
     }

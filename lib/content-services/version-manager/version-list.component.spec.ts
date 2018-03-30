@@ -52,6 +52,10 @@ describe('VersionListComponent', () => {
     describe('Version history fetching', () => {
 
         it('should use loading bar', () => {
+            const alfrescoApiService = TestBed.get(AlfrescoApiService);
+            spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and
+                .callFake(() => Promise.resolve({ list: { entries: []}}));
+
             let loadingProgressBar = fixture.debugElement.query(By.css('[data-automation-id="version-history-loading-bar"]'));
             expect(loadingProgressBar).toBeNull();
 
@@ -64,7 +68,8 @@ describe('VersionListComponent', () => {
 
         it('should load the versions for a given id', () => {
             const alfrescoApiService = TestBed.get(AlfrescoApiService);
-            spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and.callThrough();
+            spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and
+                .callFake(() => Promise.resolve({ list: { entries: []}}));
 
             component.ngOnChanges();
             fixture.detectChanges();
@@ -72,15 +77,15 @@ describe('VersionListComponent', () => {
             expect(alfrescoApiService.versionsApi.listVersionHistory).toHaveBeenCalledWith(nodeId);
         });
 
-        it('should show the versions after loading', () => {
+        it('should show the versions after loading', async(() => {
             fixture.detectChanges();
             const alfrescoApiService = TestBed.get(AlfrescoApiService);
             spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and.callFake(() => {
-                return Promise.resolve([
+                return Promise.resolve({ list: { entries: [
                     {
                         entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' }
                     }
-                ]);
+                ]}});
             });
 
             component.ngOnChanges();
@@ -95,7 +100,35 @@ describe('VersionListComponent', () => {
                 expect(versionIdText).toBe('1.0');
                 expect(versionComment).toBe('test-version-comment');
             });
-        });
+        }));
+
+        it('should NOT show the versions comments if input property is set not to show them', async(() => {
+            const alfrescoApiService = TestBed.get(AlfrescoApiService);
+            spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and
+                .callFake(() => Promise.resolve(
+                    {
+                        list: {
+                            entries: [
+                                {
+                                    entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' }
+                                }
+                            ]
+                        }
+                    }
+                ));
+
+            component.showComments = false;
+            fixture.detectChanges();
+
+            component.ngOnChanges();
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                let versionCommentEl = fixture.debugElement.query(By.css('.adf-version-list-item-comment'));
+
+                expect(versionCommentEl).toBeNull();
+            });
+        }));
     });
 
     describe('Version restoring', () => {
@@ -103,24 +136,29 @@ describe('VersionListComponent', () => {
         it('should load the versions for a given id', () => {
             fixture.detectChanges();
             const alfrescoApiService = TestBed.get(AlfrescoApiService);
-            spyOn(alfrescoApiService.versionsApi, 'revertVersion').and.callThrough();
+            spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and
+                .callFake(() => Promise.resolve({ list: { entries: []}}));
+            const spyOnRevertVersion = spyOn(alfrescoApiService.versionsApi, 'revertVersion').and
+                .callFake(() => Promise.resolve(
+                    { entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' }}));
 
             component.restore(versionId);
 
-            expect(alfrescoApiService.versionsApi.revertVersion).toHaveBeenCalledWith(nodeId, versionId, { majorVersion: true, comment: ''});
+            expect(spyOnRevertVersion).toHaveBeenCalledWith(nodeId, versionId, { majorVersion: true, comment: ''});
         });
 
-        it('should reload the version list after a version restore', () => {
+        it('should reload the version list after a version restore', async(() => {
             fixture.detectChanges();
             const alfrescoApiService = TestBed.get(AlfrescoApiService);
-            spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and.callThrough();
+            const spyOnListVersionHistory = spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and
+                .callFake(() => Promise.resolve({ list: { entries: []}}));
             spyOn(alfrescoApiService.versionsApi, 'revertVersion').and.callFake(() => Promise.resolve());
 
             component.restore(versionId);
 
             fixture.whenStable().then(() => {
-                expect(alfrescoApiService.versionsApi.listVersionHistory).toHaveBeenCalledTimes(1);
+                expect(spyOnListVersionHistory).toHaveBeenCalledTimes(1);
             });
-        });
+        }));
     });
 });
