@@ -15,11 +15,4 @@
  * limitations under the License.
  */
 
-export * from './file.model';
-export * from './permissions.enum';
-export * from './product-version.model';
-export * from './user-process.model';
-export * from './comment.model';
-export * from './ecm-company.model';
-export * from './redirection.model';
-export * from './comment-process.model';
+export * from './public-api';

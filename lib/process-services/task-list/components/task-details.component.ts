@@ -22,7 +22,8 @@ import {
     ClickNotification,
     LogService,
     UpdateNotification,
-    FormRenderingService
+    FormRenderingService,
+    CommentsComponent
 } from '@alfresco/adf-core';
 import {
     Component,
@@ -42,7 +43,6 @@ import { ContentLinkModel, FormFieldValidator, FormModel, FormOutcomeEvent } fro
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
-import { CommentsComponent } from '../../comments';
 import { AttachFileWidgetComponent, AttachFolderWidgetComponent } from '../../content-widget';
 
 @Component({

@@ -16,8 +16,6 @@ for more information about installing and using the source code.
 | [Create task attachment component](create-task-attachment.component.md) | Displays Upload Component (Drag and Click) to upload the attachment to a specified task | [Source](../../lib/process-services/attachment/create-task-attachment.component.ts) |
 | [Process attachment list component](process-attachment-list.component.md) | Displays attached documents on a specified process instance | [Source](../../lib/process-services/attachment/process-attachment-list.component.ts) |
 | [Task attachment list component](task-attachment-list.component.md) | Displays attached documents on a specified task. | [Source](../../lib/process-services/attachment/task-attachment-list.component.ts) |
-| [Comment list component](comment-list.component.md) | Shows a list of comments. | [Source](../../lib/process-services/comments/comment-list.component.ts) |
-| [Comments component](comments.component.md) | Displays comments from users involved in a specified task and allows an involved user to add a comment to the task. | [Source](../../lib/process-services/comments/comments.component.ts) |
 | [Process comments component](process-comments.component.md) | Displays comments associated with a particular process instance and allows the user to add new comments. | [Source](../../lib/process-services/comments/process-comments.component.ts) |
 | [People component](people.component.md) | Displays users involved with a specified task | [Source](../../lib/process-services/people/components/people/people.component.ts) |
 | [People list component](people-list.component.md) | Shows a list of users (people). | [Source](../../lib/process-services/people/components/people-list/people-list.component.ts) |

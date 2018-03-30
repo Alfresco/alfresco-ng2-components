@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CommentProcessModel, CommentProcessService } from '@alfresco/adf-core';
+import { CommentModel, CommentProcessService } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
@@ -39,18 +39,18 @@ export class ProcessCommentsComponent implements OnChanges {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    comments: CommentProcessModel [] = [];
+    comments: CommentModel [] = [];
 
-    private commentObserver: Observer<CommentProcessModel>;
-    comment$: Observable<CommentProcessModel>;
+    private commentObserver: Observer<CommentModel>;
+    comment$: Observable<CommentModel>;
 
     message: string;
 
     beingAdded: boolean = false;
 
     constructor(private commentProcessService: CommentProcessService) {
-        this.comment$ = new Observable<CommentProcessModel>(observer =>  this.commentObserver = observer).share();
-        this.comment$.subscribe((comment: CommentProcessModel) => {
+        this.comment$ = new Observable<CommentModel>(observer =>  this.commentObserver = observer).share();
+        this.comment$.subscribe((comment: CommentModel) => {
             this.comments.push(comment);
         });
     }
@@ -70,8 +70,8 @@ export class ProcessCommentsComponent implements OnChanges {
         this.resetComments();
         if (processInstanceId) {
             this.commentProcessService.getProcessInstanceComments(processInstanceId).subscribe(
-                (res: CommentProcessModel[]) => {
-                    res = res.sort((comment1: CommentProcessModel, comment2: CommentProcessModel) => {
+                (res: CommentModel[]) => {
+                    res = res.sort((comment1: CommentModel, comment2: CommentModel) => {
                         let date1 = new Date(comment1.created);
                         let date2 = new Date(comment2.created);
                         return date1 > date2 ? -1 : date1 < date2 ? 1 : 0;
@@ -96,7 +96,7 @@ export class ProcessCommentsComponent implements OnChanges {
             this.beingAdded = true;
             this.commentProcessService.addProcessInstanceComment(this.processInstanceId, this.message)
                 .subscribe(
-                    (res: CommentProcessModel) => {
+                    (res: CommentModel) => {
                         this.comments.unshift(res);
                         this.message = '';
                         this.beingAdded = false;

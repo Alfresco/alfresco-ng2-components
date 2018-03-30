@@ -1,4 +1,4 @@
-<mat-list class="adf-comment-list">
+ <mat-list class="adf-comment-list">
     <mat-list-item *ngFor="let comment of comments"
                   (click)="selectComment(comment)"
                   class="adf-comment-list-item"
@@ -6,13 +6,14 @@
                   id="adf-comment-{{comment?.id}}">
         <div id="comment-user-icon" class="adf-comment-img-container">
             <div
-                *ngIf="!comment.createdBy.pictureId"
+                *ngIf="!isPictureDefined(comment.createdBy)"
                 class="adf-comment-user-icon">
-                {{getUserShortName(comment.createdBy)}}</div>
+                {{getUserShortName(comment.createdBy)}}
+            </div>
             <div>
-                <img *ngIf="comment.createdBy.pictureId"
+                <img *ngIf="isPictureDefined(comment.createdBy)"
                       class="adf-people-img"
-                      [src]="peopleProcessService.getUserImage(comment.createdBy)"
+                     [src]="getUserImage(comment.createdBy)"
                 />
             </div>
         </div>

@@ -20,11 +20,9 @@ import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DataColumnModule, DataTableModule } from '@alfresco/adf-core';
+import { DataColumnModule, DataTableModule, CommentsModule } from '@alfresco/adf-core';
 
 import { ProcessCommentsComponent } from './process-comments.component';
-import { CommentListComponent } from './comment-list.component';
-import { CommentsComponent } from './comments.component';
 
 @NgModule({
     imports: [
@@ -34,17 +32,15 @@ import { CommentsComponent } from './comments.component';
         ReactiveFormsModule,
         MaterialModule,
         CommonModule,
-        TranslateModule
+        TranslateModule,
+        CommentsModule
     ],
     declarations: [
-        ProcessCommentsComponent,
-        CommentListComponent,
-        CommentsComponent
+        ProcessCommentsComponent
     ],
     exports: [
-        ProcessCommentsComponent,
-        CommentListComponent,
-        CommentsComponent
+        ProcessCommentsComponent
     ]
 })
-export class CommentsModule {}
+export class ProcessCommentsModule {
+}

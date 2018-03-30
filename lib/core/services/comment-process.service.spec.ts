@@ -16,7 +16,7 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { CommentProcessModel } from '../models';
+import { CommentModel } from '../models/comment.model';
 import { fakeProcessComment, fakeTasksComment, fakeUser1 } from '../mock/comment-process-service.mock';
 import { CommentProcessService } from './comment-process.service';
 import { AlfrescoApiService } from './alfresco-api.service';
@@ -142,7 +142,7 @@ describe('Comment ProcessService Service', () => {
 
         it('should add a comment task ', (done) => {
             service.addTaskComment('999', 'fake-comment-message').subscribe(
-                (res: CommentProcessModel) => {
+                (res: CommentModel) => {
                     expect(res).toBeDefined();
                     expect(res.id).not.toEqual(null);
                     expect(res.message).toEqual('fake-comment-message');
@@ -167,7 +167,7 @@ describe('Comment ProcessService Service', () => {
 
         it('should return the tasks comments ', (done) => {
             service.getTaskComments('999').subscribe(
-                (res: CommentProcessModel[]) => {
+                (res: CommentModel[]) => {
                     expect(res).toBeDefined();
                     expect(res.length).toEqual(2);
                     expect(res[0].message).toEqual('fake-message-1');

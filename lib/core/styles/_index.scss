@@ -23,6 +23,8 @@
 @import '../viewer/components/imgViewer.component';
 @import '../form/components/form.component';
 @import '../sidebar/sidebar-action-menu.component';
+@import '../comments/comment-list.component';
+@import '../comments/comments.component';
 
 @mixin adf-core-theme($theme) {
     @include adf-colors-theme($theme);
@@ -48,6 +50,8 @@
     @include adf-text-viewer-theme($theme);
     @include adf-form-component-theme($theme);
     @include adf-sidebar-action-menu-theme($theme);
+    @include adf-task-list-comment-list-theme($theme);
+    @include adf-task-list-comment-theme($theme);
 }
 
 

@@ -32,7 +32,7 @@ describe('VersionListComponent', () => {
         TestBed.configureTestingModule({
             declarations: [
                 VersionListComponent
-            ]
+            ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         }).compileComponents();
     }));

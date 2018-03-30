@@ -19,14 +19,13 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
-import { FormModule } from '@alfresco/adf-core';
-
-import { CardViewModule, DataColumnModule,  DataTableModule, DirectiveModule, InfoDrawerModule } from '@alfresco/adf-core';
+import { FormModule, CommentsModule } from '@alfresco/adf-core';
+import { ProcessCommentsModule } from '../process-comments/process-comments.module';
+import { CardViewModule, DataColumnModule, DataTableModule, DirectiveModule, InfoDrawerModule } from '@alfresco/adf-core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MaterialModule } from '../material.module';
 import { PeopleModule } from '../people/people.module';
-import { CommentsModule } from '../comments/comments.module';
 import { ContentWidgetModule } from '../content-widget/content-widget.module';
 import { TaskUploadService } from './services/task-upload.service';
 import { ProcessUploadService } from './services/process-upload.service';
@@ -59,6 +58,7 @@ import { TaskStandaloneComponent } from './components/task-standalone.component'
         ReactiveFormsModule,
         PeopleModule,
         CommentsModule,
+        ProcessCommentsModule,
         ContentWidgetModule
     ],
     declarations: [
@@ -91,4 +91,5 @@ import { TaskStandaloneComponent } from './components/task-standalone.component'
         TaskStandaloneComponent
     ]
 })
-export class TaskListModule {}
+export class TaskListModule {
+}

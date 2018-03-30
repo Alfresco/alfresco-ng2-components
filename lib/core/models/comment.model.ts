@@ -15,18 +15,11 @@
  * limitations under the License.
  */
 
-import { CommentRepresentation, LightUserRepresentation } from 'alfresco-js-api';
-
-/**
- * @deprecated
- * CommentProcessModel
- * (this model is deprecated in 2.3.0 in favour of CommentModel and will be removed in future revisions)
- */
-export class CommentProcessModel implements CommentRepresentation {
+export class CommentModel {
     id: number;
     message: string;
     created: Date;
-    createdBy: LightUserRepresentation;
+    createdBy: any;
     isSelected: boolean;
 
     constructor(obj?: any) {
@@ -35,7 +28,7 @@ export class CommentProcessModel implements CommentRepresentation {
             this.message = obj.message;
             this.created = obj.created;
             this.createdBy = obj.createdBy;
-            this.isSelected = obj.isSelected ?  obj.isSelected : false;
+            this.isSelected = obj.isSelected ? obj.isSelected : false;
         }
     }
 }
