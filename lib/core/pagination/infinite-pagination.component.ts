@@ -17,8 +17,10 @@
 
 /* tslint:disable:no-input-rename  */
 
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter,
-    Input, OnInit, Output, OnDestroy, ViewEncapsulation } from '@angular/core';
+import {
+    ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter,
+    Input, OnInit, Output, OnDestroy, ViewEncapsulation
+} from '@angular/core';
 
 import { PaginatedComponent } from './paginated-component.interface';
 import { Pagination } from 'alfresco-js-api';
@@ -88,12 +90,13 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
 
     onLoadMore() {
         this.pagination.skipCount += this.pageSize;
-        this.target.pagination.value.skipCount = this.pagination.skipCount;
-        this.target.pagination.value.merge = true;
-
+        this.pagination.skipCount = this.pagination.skipCount;
+        this.pagination.merge = true;
         this.loadMore.next(this.pagination);
 
         if (this.target) {
+            this.target.pagination.value.merge = this.pagination.merge;
+            this.target.pagination.value.skipCount = this.pagination.skipCount;
             this.isLoading = true;
             this.target.updatePagination(<PaginationModel> this.pagination);
         }

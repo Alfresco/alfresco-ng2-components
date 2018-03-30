@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { PaginationModel } from '@alfresco/adf-core';
+import { PaginationModel } from '../models/pagination.model';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 export interface PaginatedComponent {

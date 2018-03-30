@@ -23,7 +23,7 @@ import { SearchService, SitesService } from '@alfresco/adf-core';
 import { DataTableModule } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
-import { EmptyFolderContentDirective, DocumentListComponent, DocumentListService } from '../document-list';
+import { CustomResourcesService, EmptyFolderContentDirective, DocumentListComponent, DocumentListService } from '../document-list';
 import { DropdownSitesComponent } from '../site-dropdown';
 import { DropdownBreadcrumbComponent } from '../breadcrumb';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
@@ -87,6 +87,7 @@ describe('ContentNodeSelectorComponent', () => {
                     ContentNodeSelectorPanelComponent
                 ],
                 providers: [
+                    CustomResourcesService,
                     SearchService,
                     DocumentListService,
                     SitesService,

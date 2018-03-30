@@ -379,6 +379,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             }
 
             this.loading = true;
+
             this.loadFolderByNodeId(changes.currentFolderId.currentValue);
         } else if (this.data) {
             if (changes.node && changes.node.currentValue) {
