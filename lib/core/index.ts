@@ -35,6 +35,7 @@ export * from './form/form.module';
 export * from './sidenav-layout/sidenav-layout.module';
 export * from './pipes/pipe.module';
 export * from './directives/directive.module';
+export * from './comments/comments.module';
 
 export * from './viewer';
 export * from './userinfo';
@@ -53,6 +54,7 @@ export * from './card-view';
 export * from './app-config';
 export * from './form';
 export * from './sidenav-layout';
+export * from './comments';
 
 export * from './pipes';
 export * from './services';

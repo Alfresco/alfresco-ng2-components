@@ -30,6 +30,7 @@ import { noDataMock, taskDetailsMock, taskFormMock, tasksMock, taskDetailsWithOu
 import { TaskListService } from './../services/tasklist.service';
 import { PeopleSearchComponent } from '../../people';
 import { TaskDetailsComponent } from './task-details.component';
+import { DatePipe } from '@angular/common';
 
 declare let jasmine: any;
 
@@ -68,7 +69,8 @@ describe('TaskDetailsComponent', () => {
                 TaskListService,
                 PeopleProcessService,
                 CommentProcessService,
-                AuthenticationService
+                AuthenticationService,
+                DatePipe
             ],
             schemas: [NO_ERRORS_SCHEMA]
         }).compileComponents();
@@ -83,7 +85,6 @@ describe('TaskDetailsComponent', () => {
         component = fixture.componentInstance;
         service = fixture.debugElement.injector.get(TaskListService);
         formService = fixture.debugElement.injector.get(FormService);
-        commentProcessService = TestBed.get(CommentProcessService);
 
         getTaskDetailsSpy = spyOn(service, 'getTaskDetails').and.returnValue(Observable.of(taskDetailsMock));
         spyOn(formService, 'getTaskForm').and.returnValue(Observable.of(taskFormMock));
@@ -93,9 +94,14 @@ describe('TaskDetailsComponent', () => {
         getTasksSpy = spyOn(service, 'getTasks').and.returnValue(Observable.of(tasksMock));
         assignTaskSpy = spyOn(service, 'assignTask').and.returnValue(Observable.of(fakeUser));
         completeTaskSpy = spyOn(service, 'completeTask').and.returnValue(Observable.of({}));
-        spyOn(commentProcessService, 'getTaskComments').and.returnValue(Observable.of(noDataMock));
         spyOn(service, 'getTaskChecklist').and.returnValue(Observable.of(noDataMock));
+        commentProcessService = fixture.debugElement.injector.get(CommentProcessService);
 
+        spyOn(commentProcessService, 'getTaskComments').and.returnValue(Observable.of([
+            {message: 'Test1', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}},
+            {message: 'Test2', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}},
+            {message: 'Test3', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}}
+        ]));
     });
 
     it('should load task details when taskId specified', () => {
@@ -336,7 +342,7 @@ describe('TaskDetailsComponent', () => {
             component.taskDetails.endDate = new Date('2017-10-03T17:03:57.311+0000');
 
             fixture.detectChanges();
-            expect((component.activiticomments as any).nativeElement.readOnly).toBe(true);
+            expect((component.activiticomments as any).readOnly).toBe(true);
         });
 
         it('should comments be readonly if the task is complete and user are NOT involved', () => {
@@ -348,7 +354,7 @@ describe('TaskDetailsComponent', () => {
             component.taskDetails.endDate = new Date('2017-10-03T17:03:57.311+0000');
 
             fixture.detectChanges();
-            expect((component.activiticomments as any).nativeElement.readOnly).toBe(true);
+            expect((component.activiticomments as any).readOnly).toBe(true);
         });
 
         it('should comments NOT be readonly if the task is NOT complete and user are NOT involved', () => {
@@ -360,7 +366,7 @@ describe('TaskDetailsComponent', () => {
             component.taskDetails.endDate = null;
 
             fixture.detectChanges();
-            expect((component.activiticomments as any).nativeElement.readOnly).toBe(false);
+            expect((component.activiticomments as any).readOnly).toBe(false);
         });
 
         it('should comments NOT be readonly if the task is complete and user are involved', () => {
@@ -372,7 +378,7 @@ describe('TaskDetailsComponent', () => {
             component.taskDetails.endDate = new Date('2017-10-03T17:03:57.311+0000');
 
             fixture.detectChanges();
-            expect((component.activiticomments as any).nativeElement.readOnly).toBe(false);
+            expect((component.activiticomments as any).readOnly).toBe(false);
         });
 
         it('should comments be present if showComments is true', () => {

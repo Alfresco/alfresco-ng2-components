@@ -34,6 +34,8 @@ for more information about installing and using the source code.
 | [Toolbar component](toolbar.component.md) | Simple container for headers, titles, actions and breadcrumbs. | [Source](../../lib/core/toolbar/toolbar.component.ts) |
 | [User info component](user-info.component.md) | Shows user information. | [Source](../../lib/core/userinfo/components/user-info.component.ts) |
 | [Viewer component](viewer.component.md) | Displays content from an ACS repository. | [Source](../../lib/core/viewer/components/viewer.component.ts) |
+| [Comment list component](comment-list.component.md) | Shows a list of comments. | [Source](../../lib/core/comments/comment-list.component.ts) |
+| [Comments component](comments.component.md) | Displays comments from users involved in a specified task and allows an involved user to add a comment to the task. | [Source](../../lib/core/comments/comments.component.ts) |
 
 ## Directives
 

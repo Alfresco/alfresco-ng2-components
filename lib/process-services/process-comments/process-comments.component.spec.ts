@@ -21,7 +21,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatInputModule } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 
-import { CommentListComponent, CommentsComponent } from '../index';
 import { CommentProcessService, PeopleProcessService } from '@alfresco/adf-core';
 
 import { ProcessService } from '../process-list/services/process.service';
@@ -40,9 +39,7 @@ describe('ActivitiProcessInstanceComments', () => {
                 MatInputModule
             ],
             declarations: [
-                ProcessCommentsComponent,
-                CommentsComponent,
-                CommentListComponent
+                ProcessCommentsComponent
             ],
             providers: [
                 ProcessService,

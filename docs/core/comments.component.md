@@ -4,15 +4,24 @@ Status: Active
 ---
 # Comments Component
 
-Displays comments from users involved in a specified task and allows an involved user to add a comment to the task.
+Displays comments from users involved in a specified task or content and allows an involved user to add a comment to a task or a content.
 
 ![adf-comments](../docassets/images/adf-comments.png)
 
-## Basic Usage
+## Basic Usage Task
 
 ```html
 <adf-comments
     [taskId]="YOUR_TASK_ID"
+    [readOnly]="YOUR_READ_ONLY_FLAG">
+</adf-comments>
+```
+
+## Basic Usage Content
+
+```html
+<adf-comments
+    [nodeId]="YOUR_NODE_ID"
     [readOnly]="YOUR_READ_ONLY_FLAG">
 </adf-comments>
 ```
@@ -22,6 +31,7 @@ Displays comments from users involved in a specified task and allows an involved
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | taskId | `string` |  | The numeric ID of the task.  |
+| nodeId | `string` |  | The ID of the node.  |
 | readOnly | `boolean` | `false` | Are the comments read only?  |
 
 ### Events

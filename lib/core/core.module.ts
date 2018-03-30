@@ -39,6 +39,7 @@ import { ViewerModule } from './viewer/viewer.module';
 import { FormModule } from './form/form.module';
 import { SidenavLayoutModule } from './sidenav-layout/sidenav-layout.module';
 import { SideBarActionModule } from './sidebar/sidebar-action.module';
+import { CommentsModule } from './comments/comments.module';
 
 import { DirectiveModule } from './directives/directive.module';
 import { PipeModule } from './pipes/pipe.module';
@@ -52,6 +53,7 @@ import { AuthenticationService } from './services/authentication.service';
 import { CardItemTypeService } from './card-view/services/card-item-types.service';
 import { CardViewUpdateService } from './card-view/services/card-view-update.service';
 import { CommentProcessService } from './services/comment-process.service';
+import { CommentContentService } from './services/comment-content.service';
 import { ContentService } from './services/content.service';
 import { CookieService } from './services/cookie.service';
 import { DeletedNodesApiService } from './services/deleted-nodes-api.service';
@@ -116,6 +118,7 @@ export function providers() {
         SitesService,
         DiscoveryApiService,
         CommentProcessService,
+        CommentContentService,
         SearchConfigurationService
     ];
 }
@@ -141,6 +144,7 @@ export function providers() {
         CardViewModule,
         CollapsableModule,
         FormModule,
+        CommentsModule,
         LoginModule,
         LanguageMenuModule,
         InfoDrawerModule,
@@ -174,6 +178,7 @@ export function providers() {
         CardViewModule,
         CollapsableModule,
         FormModule,
+        CommentsModule,
         LoginModule,
         LanguageMenuModule,
         InfoDrawerModule,
@@ -206,6 +211,7 @@ export class CoreModuleLazy {
         CardViewModule,
         CollapsableModule,
         FormModule,
+        CommentsModule,
         LoginModule,
         LanguageMenuModule,
         InfoDrawerModule,
@@ -239,6 +245,7 @@ export class CoreModuleLazy {
         CardViewModule,
         CollapsableModule,
         FormModule,
+        CommentsModule,
         LoginModule,
         LanguageMenuModule,
         InfoDrawerModule,
