@@ -24,6 +24,7 @@ import { ContentActionHandler } from '../models/content-action.model';
 import { PermissionModel } from '../models/permissions.model';
 import { DocumentListService } from './document-list.service';
 import { NodeActionsService } from './node-actions.service';
+import { ContentNodeDialogService } from '../../content-node-selector/content-node-dialog.service';
 import 'rxjs/add/observable/throw';
 
 @Injectable()
@@ -36,7 +37,8 @@ export class DocumentActionsService {
     private handlers: { [id: string]: ContentActionHandler; } = {};
 
     constructor(private nodeActionsService: NodeActionsService,
-                private documentListService?: DocumentListService,
+                private documentListService: DocumentListService,
+                private contentNodeDialogService: ContentNodeDialogService,
                 private contentService?: ContentService) {
         this.setupActionHandlers();
     }
@@ -87,7 +89,7 @@ export class DocumentActionsService {
     }
 
     private lockNode(node: MinimalNodeEntity, target?: any, permission?: string) {
-        return this.nodeActionsService.openLockNodeDialog(node.entry);
+        return this.contentNodeDialogService.openLockNodeDialog(node.entry);
     }
 
     private downloadNode(obj: MinimalNodeEntity, target?: any, permission?: string) {

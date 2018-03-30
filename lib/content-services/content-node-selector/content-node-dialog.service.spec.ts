@@ -81,6 +81,28 @@ describe('ContentNodeDialogService', () => {
 
     });
 
+    it('should be able to open the lock node dialog', (() => {
+        const testNode: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
+            id: 'fake',
+            isFile: true
+        };
+
+        service.openLockNodeDialog(testNode).subscribe((value) => {
+            expect(value).toBe('OPERATION.SUCCES.NODE.LOCK_DIALOG_OPEN');
+        });
+    });
+
+    it('should not open the lock node dialog if have no permission', (() => {
+        const testNode: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
+            id: 'fake',
+            isFile: false
+        };
+
+        service.openLockNodeDialog(testNode).subscribe(() => {}, (error) => {
+            expect(error).toBe('OPERATION.FAIL.NODE.NO_PERMISSION');
+        });
+    });
+
     it('should be able to create the service', () => {
         expect(service).not.toBeNull();
     });

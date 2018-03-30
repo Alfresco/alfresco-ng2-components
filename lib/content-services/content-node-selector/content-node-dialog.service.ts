@@ -16,19 +16,23 @@
  */
 
 import { MatDialog } from '@angular/material';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import { ContentService } from '@alfresco/adf-core';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import { ShareDataRow } from '../document-list/data/share-data-row.model';
 import { MinimalNodeEntryEntity, SitePaging } from 'alfresco-js-api';
-import { DataColumn, SitesService, TranslationService } from '@alfresco/adf-core';
+import { DataColumn, SitesService, TranslationService, PermissionsEnum } from '@alfresco/adf-core';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
 import { ContentNodeSelectorComponentData } from './content-node-selector.component-data.interface';
+import { NodeLockDialogComponent } from '../dialogs/node-lock.dialog';
 
 @Injectable()
 export class ContentNodeDialogService {
+
+    @Output()
+    error: EventEmitter<any> = new EventEmitter<any>();
 
     constructor(private dialog: MatDialog,
                 private contentService: ContentService,
@@ -43,6 +47,41 @@ export class ContentNodeDialogService {
             .switchMap((node: MinimalNodeEntryEntity) => {
                 return this.openUploadFileDialog('Choose', node);
         });
+    }
+
+    /**
+     * Opens a lock node dialog
+     *
+     * @param contentEntry Node to lock
+     */
+    public openLockNodeDialog(contentEntry: MinimalNodeEntryEntity): Subject<string> {
+        const observable: Subject<string> = new Subject<string>();
+
+        if (this.contentService.hasPermission(contentEntry, PermissionsEnum.LOCK)) {
+            const dialogInstance = this.dialog.open(NodeLockDialogComponent, {
+                data: { node: contentEntry },
+                width: '400px'
+            });
+
+            dialogInstance.afterOpen().subscribe(() => {
+                observable.next('OPERATION.SUCCES.NODE.LOCK_DIALOG_OPEN');
+            });
+
+            dialogInstance.componentInstance.error.subscribe((error) => {
+                this.error.emit(error);
+                observable.error(error);
+            });
+
+            dialogInstance.afterClosed().subscribe((node: MinimalNodeEntryEntity) => {
+                if (node) {
+                    this.contentService.folderEdit.next(node);
+                }
+            });
+        } else {
+            observable.error('OPERATION.FAIL.NODE.NO_PERMISSION');
+        }
+
+        return observable;
     }
 
     /** Opens a file browser at a chosen site location. */

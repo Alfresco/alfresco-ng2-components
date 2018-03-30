@@ -30,11 +30,6 @@ const fakeNode: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
     id: 'fake'
 };
 
-const fakeFileNode: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
-    id: 'fake',
-    isFile: true
-};
-
 describe('NodeActionsService', () => {
 
     let service: NodeActionsService;
@@ -76,14 +71,6 @@ describe('NodeActionsService', () => {
     it('should be able to create the service', () => {
         expect(service).not.toBeNull();
     });
-
-    fit('should be able to open the lock node dialog', async(() => {
-        spyOn(service, 'openLockNodeDialog');
-
-        service.openLockNodeDialog(fakeFileNode).subscribe((response) => {
-            expect(response).toBe('OPERATION.SUCCES.NODE.LOCK_DIALOG_OPEN');
-        });
-    }));
 
     it('should be able to copy content', async(() => {
         spyOn(documentListService, 'copyNode').and.returnValue(Observable.of('FAKE-OK'));

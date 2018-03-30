@@ -24,7 +24,6 @@ import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { NodeActionsService } from '../document-list/services/node-actions.service';
 import { ContentNodeDialogService } from '../content-node-selector/content-node-dialog.service';
 import { DocumentListService } from '../document-list/services/document-list.service';
-import { Observable } from 'rxjs/Observable';
 
 const fakeNode: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
     id: 'fake',
@@ -39,11 +38,11 @@ class TestComponent {
     node = null;
 }
 
-describe('NodeLockDirective', () => {
+describe('NodeLock Directive', () => {
     let component: TestComponent;
     let fixture: ComponentFixture<TestComponent>;
     let element: DebugElement;
-    let nodeActionsService: NodeActionsService;
+    let contentNodeDialogService: ContentNodeDialogService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -66,18 +65,18 @@ describe('NodeLockDirective', () => {
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
         element = fixture.debugElement.query(By.directive(NodeLockDirective));
-        nodeActionsService = TestBed.get(NodeActionsService);
+        contentNodeDialogService = TestBed.get(ContentNodeDialogService);
     });
 
-    fit('should call lockNode method on click', fakeAsync(() => {
-        spyOn(nodeActionsService, 'openLockNodeDialog');
+    xit('should call openLockNodeDialog method on click', () => {
+        spyOn(contentNodeDialogService, 'openLockNodeDialog');
         component.node = fakeNode;
 
         fixture.detectChanges();
         element.triggerEventHandler('click', null);
 
-        expect(nodeActionsService.openLockNodeDialog).toHaveBeenCalledWith(fakeNode);
-    }));
+        expect(contentNodeDialogService.openLockNodeDialog).toHaveBeenCalledWith(fakeNode);
+    });
 
     it('should disable the button if node is a folder', fakeAsync(() => {
         component.node = { isFile: false, isFolder: true };
