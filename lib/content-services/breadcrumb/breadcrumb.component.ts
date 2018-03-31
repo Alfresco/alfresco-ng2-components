@@ -15,14 +15,16 @@
  * limitations under the License.
  */
 
-import { Component,
-         EventEmitter,
-         Input,
-         OnChanges,
-         Output,
-         SimpleChanges,
-         ViewEncapsulation,
-         OnInit } from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    Output,
+    SimpleChanges,
+    ViewEncapsulation,
+    OnInit
+} from '@angular/core';
 import { MinimalNodeEntryEntity, PathElementEntity } from 'alfresco-js-api';
 import { DocumentListComponent } from '../document-list';
 
@@ -79,13 +81,18 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     navigate: EventEmitter<PathElementEntity> = new EventEmitter<PathElementEntity>();
 
     ngOnInit() {
-        this.transform = this.transform ? this.transform : null ;
+        this.transform = this.transform ? this.transform : null;
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.folderNode) {
             let node: MinimalNodeEntryEntity = null;
             node = this.transform ? this.transform(changes.folderNode.currentValue) : changes.folderNode.currentValue;
+            this.route = this.parseRoute(node);
+        }
+
+        if (changes.transform) {
+            let node = this.transform ? this.transform(this.folderNode) : this.folderNode;
             this.route = this.parseRoute(node);
         }
     }

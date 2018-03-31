@@ -39,7 +39,6 @@ import { ShareDataTableAdapter } from './../data/share-datatable-adapter';
 import { presetsDefaultModel } from '../models/preset.model';
 import { ContentActionModel } from './../models/content-action.model';
 import { PermissionStyleModel } from './../models/permissions-style.model';
-
 import { DocumentListService } from './../services/document-list.service';
 import { NodeEntityEvent, NodeEntryEvent } from './node.event';
 import { CustomResourcesService } from './../services/custom-resources.service';
@@ -538,7 +537,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 .getFolderNode(nodeId, this.includeFields)
                 .subscribe((node: MinimalNodeEntryEntity) => {
                     this.folderNode = node;
-                    this.currentFolderId = node.id;
+
+                    if (node.id) {
+                        this.currentFolderId = node.id;
+                    }
                     return this.loadFolderNodesByFolderNodeId(node.id, this.pagination.getValue());
                 }, err => {
                     if (JSON.parse(err.message).error.statusCode === 403) {
