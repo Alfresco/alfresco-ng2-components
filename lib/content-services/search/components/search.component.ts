@@ -158,12 +158,12 @@ export class SearchComponent implements AfterContentInit, OnChanges {
         this.resetResults();
         if (searchTerm) {
             if (this.queryBody) {
-                this.searchService.searchByQueryBody(this.queryBody).then(
+                this.searchService.searchByQueryBody(this.queryBody).subscribe(
                     result => this.onSearchDataLoaded(result),
                     err => this.onSearchDataError(err)
                 );
             } else {
-                this.searchService.search(searchTerm, this.maxResults, this.skipResults).then(
+                this.searchService.search(searchTerm, this.maxResults, this.skipResults).subscribe(
                     result => this.onSearchDataLoaded(result),
                     err => this.onSearchDataError(err)
                 );
