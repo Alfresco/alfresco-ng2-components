@@ -19,6 +19,7 @@ import { async, TestBed } from '@angular/core/testing';
 import { MatProgressSpinnerModule } from '@angular/material';
 import { DataTableComponent, DataTableModule } from '@alfresco/adf-core';
 import { DocumentListService } from '../../services/document-list.service';
+import { CustomResourcesService } from '../../services/custom-resources.service';
 
 import { DocumentListComponent } from './../document-list.component';
 import { NoPermissionContentDirective } from './no-permission-content.directive';
@@ -38,7 +39,8 @@ describe('NoPermissionContentDirective', () => {
                 DocumentListComponent
             ],
             providers: [
-                DocumentListService
+                DocumentListService,
+                CustomResourcesService
             ]
         }).compileComponents();
     }));

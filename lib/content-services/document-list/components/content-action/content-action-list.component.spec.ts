@@ -19,6 +19,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
 import { DataTableModule } from '@alfresco/adf-core';
 import { DocumentListService } from '../../services/document-list.service';
+import { CustomResourcesService } from '../../services/custom-resources.service';
 import { ContentActionModel } from './../../models/content-action.model';
 import { DocumentListComponent } from './../document-list.component';
 import { ContentActionListComponent } from './content-action-list.component';
@@ -37,7 +38,8 @@ describe('ContentColumnList', () => {
                 DocumentListComponent
             ],
             providers: [
-                DocumentListService
+                DocumentListService,
+                CustomResourcesService
             ],
             schemas: [
                 CUSTOM_ELEMENTS_SCHEMA

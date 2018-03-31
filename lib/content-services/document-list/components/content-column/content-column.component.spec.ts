@@ -20,6 +20,7 @@ import { async, TestBed } from '@angular/core/testing';
 import { LogService } from '@alfresco/adf-core';
 import { DataTableModule } from '@alfresco/adf-core';
 import { DocumentListService } from '../../services/document-list.service';
+import { CustomResourcesService } from '../../services/custom-resources.service';
 import { DocumentListComponent } from './../document-list.component';
 import { ContentColumnListComponent } from './content-column-list.component';
 import { ContentColumnComponent } from './content-column.component';
@@ -39,6 +40,7 @@ describe('ContentColumn', () => {
                 DocumentListComponent
             ],
             providers: [
+                CustomResourcesService,
                 DocumentListService,
                 LogService
             ],

@@ -57,7 +57,9 @@ describe('ContentNodeSelectorComponent', () => {
     let component: ContentNodeSelectorPanelComponent;
     let fixture: ComponentFixture<ContentNodeSelectorPanelComponent>;
     let contentNodeSelectorService: ContentNodeSelectorService;
+    let searchService: SearchService;
     let searchSpy: jasmine.Spy;
+    let cnSearchSpy: jasmine.Spy;
 
     let _observer: Observer<NodePaging>;
 
@@ -108,8 +110,10 @@ describe('ContentNodeSelectorComponent', () => {
             component = fixture.componentInstance;
             component.debounceSearch = 0;
 
+            searchService = TestBed.get(SearchService);
             contentNodeSelectorService = TestBed.get(ContentNodeSelectorService);
-            searchSpy = spyOn(contentNodeSelectorService, 'search').and.callFake(() => {
+            cnSearchSpy = spyOn(contentNodeSelectorService, 'search').and.callThrough();
+            searchSpy = spyOn(searchService, 'searchByQueryBody').and.callFake(() => {
                 return Observable.create((observer: Observer<NodePaging>) => {
                     _observer = observer;
                 });
@@ -279,6 +283,32 @@ describe('ContentNodeSelectorComponent', () => {
         describe('Search functionality', () => {
             let getCorrespondingNodeIdsSpy;
 
+            let defaultSearchOptions = (searchTerm, rootNodeId = undefined, skipCount = 0) => {
+
+                const parentFiltering = rootNodeId ? [{ query: `ANCESTOR:'workspace://SpacesStore/${rootNodeId}'` }] : [];
+
+                let defaultSearchNode: any = {
+                    query: {
+                        query: searchTerm ? `${searchTerm}* OR name:${searchTerm}*` : searchTerm
+                    },
+                    include: ['path', 'allowableOperations'],
+                    paging: {
+                        maxItems: 25,
+                        skipCount: skipCount
+                    },
+                    filterQueries: [
+                        { query: "TYPE:'cm:folder'" },
+                        { query: 'NOT cm:creator:System' },
+                        ...parentFiltering
+                    ],
+                    scope: {
+                        locations: ['nodes']
+                    }
+                };
+
+                return defaultSearchNode;
+            };
+
             beforeEach(() => {
                 const documentListService = TestBed.get(DocumentListService);
                 const expectedDefaultFolderNode = <MinimalNodeEntryEntity> { path: { elements: [] } };
@@ -377,9 +407,9 @@ describe('ContentNodeSelectorComponent', () => {
 
                 expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(2, 'getCorrespondingNodeIdsSpy calls count should be two after the site change');
                 expect(getCorrespondingNodeIdsSpy.calls.allArgs()).toEqual([[undefined], ['namek']]);
-            }); );
+            }));
 
-        it('should NOT get the corresponding node ids before the search call on changing the site selectbox\'s value from default dropdown menu', fakeAsync(() => {
+            it('should NOT get the corresponding node ids before the search call on changing the site selectbox\'s value from default dropdown menu', fakeAsync(() => {
                 typeToSearchBox('vegeta');
                 tick(debounceSearch);
 
@@ -390,7 +420,7 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(getCorrespondingNodeIdsSpy).not.toHaveBeenCalled();
             }));
 
-        it('should show the search icon by default without the X (clear) icon', fakeAsync(() => {
+            it('should show the search icon by default without the X (clear) icon', fakeAsync(() => {
                 fixture.detectChanges();
                 tick(debounceSearch);
 
@@ -401,7 +431,7 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(clearIcon).toBeNull('Clear icon should NOT be in the DOM');
             }));
 
-        it('should show the X (clear) icon without the search icon when the search contains at least one character', fakeAsync(() => {
+            it('should show the X (clear) icon without the search icon when the search contains at least one character', fakeAsync(() => {
                 fixture.detectChanges();
                 typeToSearchBox('123');
                 tick(debounceSearch);
@@ -415,7 +445,7 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(clearIcon).not.toBeNull('Clear icon should be in the DOM');
             }));
 
-        it('should clear the search field, nodes and chosenNode when clicking on the X (clear) icon', () => {
+            it('should clear the search field, nodes and chosenNode when clicking on the X (clear) icon', () => {
                 component.chosenNode = <MinimalNodeEntryEntity> {};
                 component.nodes = {
                     list: {
@@ -433,7 +463,7 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(component.showingSearchResults).toBeFalsy();
             });
 
-        it('should clear the search field, nodes and chosenNode when deleting the search input', fakeAsync(() => {
+            it('should clear the search field, nodes and chosenNode when deleting the search input', fakeAsync(() => {
                 spyOn(component, 'clear').and.callThrough();
                 typeToSearchBox('a');
 
@@ -452,7 +482,7 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(component.folderIdToShow).toBe('cat-girl-nuku-nuku', 'back to the folder in which the search was performed');
             }));
 
-        it('should clear the search field, nodes and chosenNode on folder navigation in the results list', fakeAsync(() => {
+            it('should clear the search field, nodes and chosenNode on folder navigation in the results list', fakeAsync(() => {
                 spyOn(component, 'clearSearch').and.callThrough();
                 typeToSearchBox('a');
 
@@ -471,7 +501,7 @@ describe('ContentNodeSelectorComponent', () => {
 
             }));
 
-        it('should show nodes from the same folder as selected in the dropdown on clearing the search input', fakeAsync(() => {
+            it('should show nodes from the same folder as selected in the dropdown on clearing the search input', fakeAsync(() => {
                 typeToSearchBox('piccolo');
                 tick(debounceSearch);
 
@@ -488,13 +518,13 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(component.folderIdToShow).toBe('namek');
             });
 
-        it('should show the current folder\'s content instead of search results if search was not performed', () => {
+            it('should show the current folder\'s content instead of search results if search was not performed', () => {
                 let documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
                 expect(documentList).not.toBeNull('Document list should be shown');
                 expect(documentList.componentInstance.currentFolderId).toBe('cat-girl-nuku-nuku');
             });
 
-        it('should pass through the rowFilter to the documentList', () => {
+            it('should pass through the rowFilter to the documentList', () => {
                 const filter = () => {
                 };
                 component.rowFilter = filter;
@@ -506,7 +536,7 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(documentList.componentInstance.rowFilter).toBe(filter);
             });
 
-        it('should pass through the imageResolver to the documentList', () => {
+            it('should pass through the imageResolver to the documentList', () => {
                 const resolver = () => 'piccolo';
                 component.imageResolver = resolver;
 
@@ -517,7 +547,7 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(documentList.componentInstance.imageResolver).toBe(resolver);
             });
 
-        it('should show the result list when search was performed', fakeAsync(() => {
+            it('should show the result list when search was performed', fakeAsync(() => {
                 typeToSearchBox();
                 tick(debounceSearch);
 
@@ -529,7 +559,7 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(documentList.componentInstance.currentFolderId).toBeNull();
             }));
 
-        xit('should highlight the results when search was performed in the next timeframe', fakeAsync(() => {
+            xit('should highlight the results when search was performed in the next timeframe', fakeAsync(() => {
                 spyOn(component.highlighter, 'highlight');
                 typeToSearchBox('shenron');
 
@@ -545,7 +575,7 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(component.highlighter.highlight).toHaveBeenCalledWith('shenron');
             }));
 
-        it('should show the default text instead of result list if search was cleared', fakeAsync(() => {
+            it('should show the default text instead of result list if search was cleared', fakeAsync(() => {
                 typeToSearchBox();
 
                 tick(debounceSearch);
@@ -563,7 +593,7 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(documentList.componentInstance.currentFolderId).toBe('cat-girl-nuku-nuku');
             }));
 
-        xit('should reload the original documentlist when clearing the search input', fakeAsync(() => {
+            xit('should reload the original documentlist when clearing the search input', fakeAsync(() => {
                 typeToSearchBox('shenron');
 
                 tick(debounceSearch);
@@ -580,7 +610,7 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(documentList.componentInstance.currentFolderId).toBe('cat-girl-nuku-nuku');
             }));
 
-        it('should set the folderIdToShow to the default "currentFolderId" if siteId is undefined', (done) => {
+            it('should set the folderIdToShow to the default "currentFolderId" if siteId is undefined', (done) => {
                 component.siteChanged(<SiteEntry> { entry: { guid: 'Kame-Sennin Muten Roshi' } });
                 fixture.detectChanges();
 
@@ -596,7 +626,7 @@ describe('ContentNodeSelectorComponent', () => {
                 done();
             });
 
-        describe('Pagination "Load more" button', () => {
+            describe('Pagination "Load more" button', () => {
 
                 it('should NOT be shown by default', () => {
                     fixture.detectChanges();
@@ -623,7 +653,7 @@ describe('ContentNodeSelectorComponent', () => {
                     component.getNextPageOfSearch({ skipCount });
 
                     fixture.whenStable().then(() => {
-                        expect(searchSpy).toHaveBeenCalledWith( 'kakarot', undefined, skipCount, 25);
+                        expect(searchSpy).toHaveBeenCalledWith('kakarot', undefined, skipCount, 25);
                     });
                 }));
 
@@ -690,7 +720,7 @@ describe('ContentNodeSelectorComponent', () => {
             });
         });
 
-    describe('Chosen node', () => {
+        describe('Chosen node', () => {
 
             const entry: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {};
             const nodePage: NodePaging = <NodePaging> { list: {}, pagination: {} };
@@ -909,4 +939,4 @@ describe('ContentNodeSelectorComponent', () => {
             });
         });
     });
-})
+});

@@ -19,6 +19,7 @@ import { async, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { MinimalNodeEntryEntity, SitePaging } from 'alfresco-js-api';
 import { AppConfigService, SitesService } from '@alfresco/adf-core';
 import { DocumentListService } from '../document-list/services/document-list.service';
+import { CustomResourcesService } from '../document-list/services/custom-resources.service';
 import { ContentNodeDialogService } from './content-node-dialog.service';
 import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
@@ -64,6 +65,7 @@ describe('ContentNodeDialogService', () => {
             providers: [
                 ContentNodeDialogService,
                 DocumentListService,
+                CustomResourcesService,
                 SitesService,
                 MatDialog
             ]
