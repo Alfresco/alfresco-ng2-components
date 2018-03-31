@@ -548,7 +548,7 @@ describe('SearchControlComponent', () => {
     });
 });
 
-fdescribe('SearchControlComponent - No result custom', () => {
+describe('SearchControlComponent - No result custom', () => {
 
     let fixtureCustom: ComponentFixture<SimpleSearchTestCustomEmptyComponent>;
     let elementCustom: HTMLElement;
