@@ -41,7 +41,7 @@ export class SearchService {
 
         return Observable
             .fromPromise(promise)
-            .catch(err => this.handleError(err
+            .catch(err => this.handleError(err));
     }
 
     search(searchTerm: string, maxResults: number, skipCount: number): Observable<NodePaging> {
