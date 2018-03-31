@@ -387,7 +387,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             } else if (changes.rowFilter) {
                 this.data.setFilter(changes.rowFilter.currentValue);
                 if (this.currentFolderId) {
-                    this.loadFolderNodesByFolderNodeId(this.currentFolderId, this.pagination.getValue());
+                    this.loadFolderNodesByFolderNodeId(this.currentFolderId, this.pagination.getValue()).catch(err => this.error.emit(err));
                 }
             } else if (changes.imageResolver) {
                 this.data.setImageResolver(changes.imageResolver.currentValue);
@@ -447,7 +447,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     disableActionsWithNoPermissions(node: MinimalNodeEntity, action: ContentActionModel) {
-        if (action.permission && !this.contentService.hasPermission(node.entry, action.permission)) {
+        if (action.permission && node.entry.allowableOperations && !this.contentService.hasPermission(node.entry, action.permission)) {
             action.disabled = true;
         }
     }
@@ -521,7 +521,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.setupDefaultColumns(nodeId);
         }
         if (nodeId) {
-            this.loadFolderNodesByFolderNodeId(nodeId, this.pagination.getValue()).catch(err => this.error.emit(err));
+            this.loadFolderNodesByFolderNodeId(nodeId, this.pagination.getValue());
         }
     }
 
@@ -541,7 +541,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                     if (node.id) {
                         this.currentFolderId = node.id;
                     }
-                    return this.loadFolderNodesByFolderNodeId(node.id, this.pagination.getValue());
+                    return this.loadFolderNodesByFolderNodeId(node.id, this.pagination.getValue()).catch(err => this.error.emit(err));
                 }, err => {
                     if (JSON.parse(err.message).error.statusCode === 403) {
                         this.loading = false;
@@ -567,9 +567,12 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                         this.loading = false;
                         this.onDataReady(nodePaging);
                         resolve(true);
-                    },
-                    error => {
-                        reject(error);
+                    }, err => {
+                        if (JSON.parse(err.message).error.statusCode === 403) {
+                            this.loading = false;
+                            this.noPermission = true;
+                        }
+                        this.error.emit(err);
                     });
         });
     }

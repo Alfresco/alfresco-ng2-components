@@ -259,7 +259,7 @@ describe('DocumentList', () => {
     it('should reset when a prameter changes', () => {
         spyOn(documentList.dataTable, 'resetSelection').and.callThrough();
 
-        documentList.ngOnChanges(null);
+        documentList.ngOnChanges({});
         expect(documentList.dataTable.resetSelection).toHaveBeenCalled();
     });
 
@@ -384,7 +384,7 @@ describe('DocumentList', () => {
 
     });
 
-    it('should not disable the action if there is no permission for the file and disableWithNoPermission false', () => {
+    it('should disable the action if there is no permission for the file and disableWithNoPermission false', () => {
         let documentMenu = new ContentActionModel({
             disableWithNoPermission: false,
             permission: 'delete',
@@ -401,10 +401,10 @@ describe('DocumentList', () => {
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
         expect(actions[0].title).toEqual('FileAction');
-        expect(actions[0].disabled).toBeUndefined(true);
+        expect(actions[0].disabled).toBe(true);
     });
 
-    it('should not disable the action if there is no permission for the folder and disableWithNoPermission false', () => {
+    it('should disable the action if there is no permission for the folder and disableWithNoPermission false', () => {
         let documentMenu = new ContentActionModel({
             disableWithNoPermission: false,
             permission: 'delete',
@@ -421,7 +421,7 @@ describe('DocumentList', () => {
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
         expect(actions[0].title).toEqual('FolderAction');
-        expect(actions[0].disabled).toBeUndefined(true);
+        expect(actions[0].disabled).toBe(true);
     });
 
     it('should not disable the action if there is the right permission for the file', () => {
@@ -718,14 +718,6 @@ describe('DocumentList', () => {
         expect(documentList.loadFolderByNodeId).toHaveBeenCalled();
     });
 
-    it('should display folder content from loadFolderByNodeId on reload if node defined', () => {
-        documentList.node = new NodePaging();
-
-        spyOn(documentList.data, 'loadPage').and.callThrough();
-        documentList.reload();
-        expect(documentList.data.loadPage).toHaveBeenCalled();
-    });
-
     it('should require node to resolve context menu actions', () => {
         expect(documentList.getContextActions(null)).toBeNull();
 
@@ -921,7 +913,7 @@ describe('DocumentList', () => {
 
     it('should emit error when getFolderNode fails', (done) => {
         const error = { message: '{ "error": { "statusCode": 501 } }' };
-        spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.reject(error));
+        spyOn(documentListService, 'getFolderNode').and.returnValue(Observable.throw(error));
 
         documentList.error.subscribe(val => {
             expect(val).toBe(error);
@@ -946,7 +938,7 @@ describe('DocumentList', () => {
 
     it('should set no permision when getFolderNode fails with 403', (done) => {
         const error = { message: '{ "error": { "statusCode": 403 } }' };
-        spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.reject(error));
+        spyOn(documentListService, 'getFolderNode').and.returnValue(Observable.throw(error));
 
         documentList.error.subscribe(val => {
             expect(val).toBe(error);
@@ -955,16 +947,6 @@ describe('DocumentList', () => {
         });
 
         documentList.loadFolderByNodeId('123');
-    });
-
-    it('should reset noPermission on loading folder by node id', () => {
-        documentList.noPermission = true;
-        fixture.detectChanges();
-
-        documentList.loadFolderByNodeId('-trashcan-');
-        fixture.detectChanges();
-
-        expect(documentList.noPermission).toBeFalsy();
     });
 
     it('should reset noPermission upon reload', () => {
@@ -989,13 +971,15 @@ describe('DocumentList', () => {
         expect(documentList.noPermission).toBeFalsy();
     });
 
-    it('should return false if navigate to a folder with no  permission', (done) => {
+    it('should noPermission be true if navigate to a folder with no  permission', (done) => {
+        const error = { message: '{ "error": { "statusCode": 403 } }' };
+
         documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
         documentList.folderNode = new NodeMinimal();
         documentList.folderNode.id = '1d26e465-dea3-42f3-b415-faa8364b9692';
 
         spyOn(documentListService, 'getFolderNode').and.returnValue(Observable.of(fakeNodeWithNoPermission));
-        spyOn(documentListService, 'getFolder').and.returnValue(Promise.resolve(fakeNodeAnswerWithNOEntries));
+        spyOn(documentListService, 'getFolder').and.returnValue(Observable.throw(error));
 
         documentList.loadFolder();
         let clickedFolderNode = new FolderNode('fake-folder-node');
