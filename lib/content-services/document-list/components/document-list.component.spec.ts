@@ -46,6 +46,7 @@ describe('DocumentList', () => {
     let documentList: DocumentListComponent;
     let documentListService: DocumentListService;
     let apiService: AlfrescoApiService;
+    let customResourcesService: CustomResourcesService;
     let fixture: ComponentFixture<DocumentListComponent>;
     let element: HTMLElement;
     let eventMock: any;
@@ -86,6 +87,7 @@ describe('DocumentList', () => {
         documentList = fixture.componentInstance;
         documentListService = TestBed.get(DocumentListService);
         apiService = TestBed.get(AlfrescoApiService);
+        customResourcesService = TestBed.get(CustomResourcesService);
 
         fixture.detectChanges();
     });
@@ -1180,10 +1182,8 @@ describe('DocumentList', () => {
         documentList.loadFolderByNodeId('-recent-');
     });
 
-    xit('should emit error when fetch recent fails on search call', (done) => {
-        const person = { entry: { id: 'person ' } };
-        spyOn(apiService.peopleApi, 'getPerson').and.returnValue(Promise.resolve(person));
-        spyOn(apiService.searchApi, 'search').and.returnValue(Promise.reject('error'));
+    it('should emit error when fetch recent fails on search call', (done) => {
+        spyOn(customResourcesService, 'loadFolderByNodeId').and.returnValue(Observable.throw('error'));
 
         documentList.error.subscribe(val => {
             expect(val).toBe('error');
@@ -1222,21 +1222,6 @@ describe('DocumentList', () => {
         expect(documentList.currentFolderId).toBe('-mysites-');
     });
 
-    it('should update pagination settings', () => {
-        spyOn(documentList, 'reload').and.stub();
-
-        documentList.maxItems = 0;
-        documentList.skipCount = 0;
-
-        documentList.updatePagination({
-            maxItems: 10,
-            skipCount: 10
-        });
-
-        expect(documentList.maxItems).toBe(10);
-        expect(documentList.skipCount).toBe(10);
-    });
-
     it('should reload data upon changing pagination settings', () => {
         spyOn(documentList, 'reload').and.stub();
 
@@ -1251,20 +1236,6 @@ describe('DocumentList', () => {
         expect(documentList.reload).toHaveBeenCalled();
     });
 
-    it('should not reload data if pagination settings are same', () => {
-        spyOn(documentList, 'reload').and.stub();
-
-        documentList.maxItems = 10;
-        documentList.skipCount = 10;
-
-        documentList.updatePagination({
-            maxItems: 10,
-            skipCount: 10
-        });
-
-        expect(documentList.reload).not.toHaveBeenCalled();
-    });
-
     it('should NOT reload data on first call of ngOnChanges', () => {
         spyOn(documentList, 'reload').and.stub();
 
@@ -1272,15 +1243,6 @@ describe('DocumentList', () => {
         documentList.ngOnChanges({ skipCount: new SimpleChange(undefined, 10, firstChange) });
 
         expect(documentList.reload).not.toHaveBeenCalled();
-    });
-
-    it('should reload data on NON-first calls of ngOnChanges', () => {
-        spyOn(documentList, 'reload').and.stub();
-
-        const firstChange = true;
-        documentList.ngOnChanges({ skipCount: new SimpleChange(undefined, 10, !firstChange) });
-
-        expect(documentList.reload).toHaveBeenCalled();
     });
 
     it('should NOT reload data on ngOnChanges upon reset of skipCount to 0', () => {
@@ -1307,38 +1269,6 @@ describe('DocumentList', () => {
         });
 
         expect(documentList.reload).toHaveBeenCalled();
-    });
-
-    it('should reset skipCount from pagination settings on changing current folder id', () => {
-        spyOn(documentList, 'reload').and.stub();
-        const favoritesApi = apiService.getInstance().core.favoritesApi;
-        spyOn(favoritesApi, 'getFavorites').and.returnValue(Promise.resolve(null));
-
-        documentList.maxItems = 10;
-        documentList.skipCount = 10;
-
-        documentList.ngOnChanges({ currentFolderId: new SimpleChange('any-folder-node-id', '-favorites-', false) });
-
-        expect(documentList.reload).not.toHaveBeenCalled();
-        expect(favoritesApi.getFavorites).toHaveBeenCalled();
-        expect(documentList.skipCount).toBe(0, 'skipCount is reset');
-    });
-
-    it('should NOT reset skipCount upon skipCount pagination update', () => {
-        spyOn(documentList, 'reload').and.stub();
-        const favoritesApi = apiService.getInstance().core.favoritesApi;
-        spyOn(favoritesApi, 'getFavorites').and.returnValue(Promise.resolve(null));
-
-        documentList.maxItems = 0;
-        documentList.skipCount = 0;
-
-        documentList.updatePagination({
-            maxItems: 10,
-            skipCount: 10
-        });
-
-        documentList.loadFolderByNodeId('-favorites-');
-        expect(documentList.skipCount).toBe(10, 'skipCount is 10 - to be able to get the next page of data');
     });
 
     it('should add includeFields in the server request when present', () => {

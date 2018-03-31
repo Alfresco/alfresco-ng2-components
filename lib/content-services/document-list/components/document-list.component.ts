@@ -423,16 +423,13 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         if (node && node.entry) {
             if (node.entry.isFile) {
                 target = 'document';
-            }
-
-            if (node.entry.isFolder) {
+            } else if (node.entry.isFolder) {
                 target = 'folder';
             }
 
             if (target) {
-                let ltarget = target.toLowerCase();
                 let actionsByTarget = this.actions.filter(entry => {
-                    return entry.target.toLowerCase() === ltarget;
+                    return entry.target.toLowerCase() === target;
                 }).map(action => new ContentActionModel(action));
 
                 actionsByTarget.forEach((action) => {
@@ -531,6 +528,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.customResourcesService.loadFolderByNodeId(nodeId, this.pagination.getValue(), this.includeFields)
                 .subscribe((page: NodePaging) => {
                     this.onPageLoaded(page);
+                }, err => {
+                    this.error.emit(err);
                 });
         } else {
             this.documentListService
@@ -541,13 +540,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                     if (node.id) {
                         this.currentFolderId = node.id;
                     }
-                    return this.loadFolderNodesByFolderNodeId(node.id, this.pagination.getValue()).catch(err => this.error.emit(err));
+                    return this.loadFolderNodesByFolderNodeId(node.id, this.pagination.getValue())
+                        .catch(err => this.handleError(err));
                 }, err => {
-                    if (JSON.parse(err.message).error.statusCode === 403) {
-                        this.loading = false;
-                        this.noPermission = true;
-                    }
-                    this.error.emit(err);
+                    this.handleError(err);
                 });
         }
     }
@@ -568,11 +564,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                         this.onDataReady(nodePaging);
                         resolve(true);
                     }, err => {
-                        if (JSON.parse(err.message).error.statusCode === 403) {
-                            this.loading = false;
-                            this.noPermission = true;
-                        }
-                        this.error.emit(err);
+                        this.handleError(err);
                     });
         });
     }
@@ -775,6 +767,17 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.contextActionHandlerSubscription.unsubscribe();
             this.contextActionHandlerSubscription = null;
         }
+    }
+
+    private handleError(err: any) {
+        if (err.message) {
+            if (JSON.parse(err.message).error.statusCode === 403) {
+                this.loading = false;
+                this.noPermission = true;
+            }
+        }
+        this.error.emit(err);
+
     }
 
 }

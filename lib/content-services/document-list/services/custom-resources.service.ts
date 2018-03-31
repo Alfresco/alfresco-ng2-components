@@ -65,10 +65,15 @@ export class CustomResourcesService {
                                 skipCount: pagination.skipCount
                             }
                         };
-                        return this.apiService.searchApi.search(query).then((serachResult) => {
-                            observer.next(serachResult);
-                            observer.complete();
-                        });
+                        return this.apiService.searchApi.search(query)
+                            .then((serachResult) => {
+                                    observer.next(serachResult);
+                                    observer.complete();
+                                },
+                                (err) => {
+                                    observer.error(err);
+                                    observer.complete();
+                                });
                     },
                     (err) => {
                         observer.error(err);
@@ -202,10 +207,6 @@ export class CustomResourcesService {
         return Observable.fromPromise(this.apiService.sharedLinksApi.findSharedLinks(options)).catch(err => this.handleError(err));
     }
 
-    loadRecent(pagination: PaginationModel): Observable<NodePaging> {
-        return this.getRecentFiles('-me-', pagination);
-    }
-
     isCustomSource(folderId: string): boolean {
         let isCustomSources = false;
         const sources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-'];
@@ -229,7 +230,7 @@ export class CustomResourcesService {
         } else if (nodeId === '-favorites-') {
             return this.loadFavorites(pagination, includeFields);
         } else if (nodeId === '-recent-') {
-            return this.loadRecent(pagination);
+            return this.getRecentFiles('-me-', pagination);
         }
     }
 

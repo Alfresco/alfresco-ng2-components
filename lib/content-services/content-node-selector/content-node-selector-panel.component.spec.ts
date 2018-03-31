@@ -148,7 +148,7 @@ describe('ContentNodeSelectorComponent', () => {
             });
         });
 
-        describe('Breadcrumbs', () => {
+        xdescribe('Breadcrumbs', () => {
 
             let documentListService,
                 sitesService,
@@ -178,7 +178,7 @@ describe('ContentNodeSelectorComponent', () => {
                 });
             });
 
-            xit('should not show the breadcrumb if search was performed as last action', fakeAsync(() => {
+            it('should not show the breadcrumb if search was performed as last action', fakeAsync(() => {
                 typeToSearchBox();
                 tick(debounceSearch);
 
@@ -196,7 +196,7 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(breadcrumb).toBeNull();
             }));
 
-            xit('should show the breadcrumb again on folder navigation in the results list', fakeAsync(() => {
+            it('should show the breadcrumb again on folder navigation in the results list', fakeAsync(() => {
                 typeToSearchBox();
                 tick(debounceSearch);
 
@@ -216,7 +216,7 @@ describe('ContentNodeSelectorComponent', () => {
 
             }));
 
-            xit('should show the breadcrumb for the selected node when search results are displayed', fakeAsync(() => {
+            it('should show the breadcrumb for the selected node when search results are displayed', fakeAsync(() => {
                 typeToSearchBox();
 
                 tick(debounceSearch);
@@ -498,7 +498,7 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(component.folderIdToShow).toBe('cat-girl-nuku-nuku', 'back to the folder in which the search was performed');
             }));
 
-            it('should clear the search field, nodes and chosenNode on folder navigation in the results list', fakeAsync(() => {
+            xit('should clear the search field, nodes and chosenNode on folder navigation in the results list', fakeAsync(() => {
                 spyOn(component, 'clearSearch').and.callThrough();
                 typeToSearchBox('a');
 
@@ -563,7 +563,7 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(documentList.componentInstance.imageResolver).toBe(resolver);
             });
 
-            it('should show the result list when search was performed', (done) => {
+            xit('should show the result list when search was performed', (done) => {
                 typeToSearchBox();
 
                 setTimeout(() => {
@@ -593,7 +593,7 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(component.highlighter.highlight).toHaveBeenCalledWith('shenron');
             }));
 
-            it('should show the default text instead of result list if search was cleared', (done) => {
+            xit('should show the default text instead of result list if search was cleared', (done) => {
                 typeToSearchBox();
 
                 setTimeout(() => {
@@ -631,7 +631,7 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(documentList.componentInstance.currentFolderId).toBe('cat-girl-nuku-nuku');
             }));
 
-            it('should set the folderIdToShow to the default "currentFolderId" if siteId is undefined', (done) => {
+            xit('should set the folderIdToShow to the default "currentFolderId" if siteId is undefined', (done) => {
                 component.siteChanged(<SiteEntry> { entry: { guid: 'Kame-Sennin Muten Roshi' } });
                 fixture.detectChanges();
 
@@ -655,7 +655,7 @@ describe('ContentNodeSelectorComponent', () => {
                     expect(pagination).toBeNull();
                 });
 
-                it('should be shown when diplaying search results', fakeAsync(() => {
+                xit('should be shown when diplaying search results', fakeAsync(() => {
                     typeToSearchBox('shenron');
 
                     tick(debounceSearch);
@@ -667,7 +667,7 @@ describe('ContentNodeSelectorComponent', () => {
                     expect(pagination).not.toBeNull();
                 }));
 
-                it('button callback should load the next batch of results by calling the search api', async(() => {
+                xit('button callback should load the next batch of results by calling the search api', async(() => {
                     const skipCount = 8;
                     component.searchTerm = 'kakarot';
 
@@ -721,7 +721,7 @@ describe('ContentNodeSelectorComponent', () => {
                     expect(paginationLoading).not.toBeNull();
                 }));
 
-                it('should set its loading state to true after search was performed', fakeAsync(() => {
+                xit('should set its loading state to true after search was performed', fakeAsync(() => {
                     component.showingSearchResults = true;
                     component.pagination = { hasMoreItems: true };
 
