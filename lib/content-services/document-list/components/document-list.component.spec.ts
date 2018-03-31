@@ -933,7 +933,7 @@ describe('DocumentList', () => {
 
     it('should emit error when loadFolderNodesByFolderNodeId fails', (done) => {
         const error = { message: '{ "error": { "statusCode": 501 } }' };
-        spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.resolve(fakeNodeWithCreatePermission));
+        spyOn(documentListService, 'getFolderNode').and.returnValue(Observable.of(fakeNodeWithCreatePermission));
         spyOn(documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.reject(error));
 
         documentList.error.subscribe(val => {
@@ -994,7 +994,7 @@ describe('DocumentList', () => {
         documentList.folderNode = new NodeMinimal();
         documentList.folderNode.id = '1d26e465-dea3-42f3-b415-faa8364b9692';
 
-        spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.resolve(fakeNodeWithNoPermission));
+        spyOn(documentListService, 'getFolderNode').and.returnValue(Observable.of(fakeNodeWithNoPermission));
         spyOn(documentListService, 'getFolder').and.returnValue(Promise.resolve(fakeNodeAnswerWithNOEntries));
 
         documentList.loadFolder();
