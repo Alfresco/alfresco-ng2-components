@@ -64,7 +64,7 @@ export class ContentNodeDialogService {
             });
 
             dialogInstance.afterOpen().subscribe(() => {
-                observable.next('OPERATION.SUCCES.NODE.LOCK_DIALOG_OPEN');
+                observable.next('OPERATION.SUCCESS.NODE.LOCK_DIALOG_OPEN');
             });
 
             dialogInstance.componentInstance.error.subscribe((error) => {

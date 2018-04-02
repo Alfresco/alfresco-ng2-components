@@ -39,7 +39,7 @@ describe('DocumentActionsService', () => {
         let alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
         documentListService = new DocumentListService(null, contentService, alfrescoApiService, null, null);
 
-        service = new DocumentActionsService(null, documentListService, contentService);
+        service = new DocumentActionsService(null, null, documentListService, contentService);
     });
 
     it('should register default download action', () => {
@@ -75,7 +75,7 @@ describe('DocumentActionsService', () => {
         let file = new FileNode();
         expect(service.canExecuteAction(file)).toBeTruthy();
 
-        service = new DocumentActionsService(nodeActionsService);
+        service = new DocumentActionsService(nodeActionsService, null);
         expect(service.canExecuteAction(file)).toBeFalsy();
     });
 

@@ -37,8 +37,8 @@ export class DocumentActionsService {
     private handlers: { [id: string]: ContentActionHandler; } = {};
 
     constructor(private nodeActionsService: NodeActionsService,
-                private documentListService: DocumentListService,
                 private contentNodeDialogService: ContentNodeDialogService,
+                private documentListService?: DocumentListService,
                 private contentService?: ContentService) {
         this.setupActionHandlers();
     }

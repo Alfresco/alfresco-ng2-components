@@ -68,12 +68,15 @@ describe('NodeLock Directive', () => {
         contentNodeDialogService = TestBed.get(ContentNodeDialogService);
     });
 
-    xit('should call openLockNodeDialog method on click', () => {
+    it('should call openLockNodeDialog method on click', () => {
         spyOn(contentNodeDialogService, 'openLockNodeDialog');
         component.node = fakeNode;
 
         fixture.detectChanges();
-        element.triggerEventHandler('click', null);
+        element = fixture.debugElement.query(By.directive(NodeLockDirective));
+        element.triggerEventHandler('click', {
+            preventDefault: () => {}
+        });
 
         expect(contentNodeDialogService.openLockNodeDialog).toHaveBeenCalledWith(fakeNode);
     });

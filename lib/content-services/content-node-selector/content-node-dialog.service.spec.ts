@@ -22,6 +22,7 @@ import { DocumentListService } from '../document-list/services/document-list.ser
 import { ContentNodeDialogService } from './content-node-dialog.service';
 import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 
 const fakeNode: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
         id: 'fake',
@@ -56,6 +57,7 @@ describe('ContentNodeDialogService', () => {
     let sitesService: SitesService;
     let materialDialog: MatDialog;
     let spyOnDialogOpen: jasmine.Spy;
+    let afterOpenObservable: Subject<any>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -66,6 +68,7 @@ describe('ContentNodeDialogService', () => {
                 MatDialog
             ]
         }).compileComponents();
+
     }));
 
     beforeEach(() => {
@@ -75,24 +78,32 @@ describe('ContentNodeDialogService', () => {
         service = TestBed.get(ContentNodeDialogService);
         documentListService = TestBed.get(DocumentListService);
         materialDialog = TestBed.get(MatDialog);
-        sitesService =  TestBed.get(SitesService);
-        spyOnDialogOpen = spyOn(materialDialog, 'open').and.stub();
-        spyOn(materialDialog, 'closeAll').and.stub();
+        sitesService = TestBed.get(SitesService);
+        afterOpenObservable = new Subject<any>();
+        spyOnDialogOpen = spyOn(materialDialog, 'open').and.returnValue({
+            afterOpen: () => afterOpenObservable,
+            afterClosed: () => Observable.of({}),
+            componentInstance: {
+                error: new Subject<any>()
+            }
+        });
 
     });
 
-    it('should be able to open the lock node dialog', (() => {
+    it('should be able to open the lock node dialog', () => {
         const testNode: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
             id: 'fake',
             isFile: true
         };
 
-        service.openLockNodeDialog(testNode).subscribe((value) => {
-            expect(value).toBe('OPERATION.SUCCES.NODE.LOCK_DIALOG_OPEN');
+        service.openLockNodeDialog(testNode).subscribe(response => {
+            expect(response).toBe('OPERATION.SUCCESS.NODE.LOCK_DIALOG_OPEN');
         });
+
+        afterOpenObservable.next({});
     });
 
-    it('should not open the lock node dialog if have no permission', (() => {
+    it('should not open the lock node dialog if have no permission', () => {
         const testNode: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
             id: 'fake',
             isFile: false
@@ -145,6 +156,7 @@ describe('ContentNodeDialogService', () => {
     }));
 
     it('should be able to close the material dialog', () => {
+        spyOn(materialDialog, 'closeAll');
         service.close();
         expect(materialDialog.closeAll).toHaveBeenCalled();
     });
