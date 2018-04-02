@@ -41,6 +41,10 @@ export class VersionListComponent implements OnChanges {
     @Input()
     showComments: boolean = true;
 
+    /** Name of the node whose version history you want to display. */
+    @Input()
+    name: string;
+
     constructor(private alfrescoApi: AlfrescoApiService) {
         this.versionsApi = this.alfrescoApi.versionsApi;
     }
@@ -61,5 +65,29 @@ export class VersionListComponent implements OnChanges {
             this.versions = data.list.entries;
             this.isLoading = false;
         });
+    }
+
+    downloadVersion(versionId) {
+        const versionDownloadUrl = this.getVersionContentUrl(this.id, versionId, true);
+        this.downloadContent(versionDownloadUrl, this.name);
+    }
+
+    getVersionContentUrl(nodeId: string, versionId: string, attachment?: boolean) {
+        const nodeDownloadUrl = this.alfrescoApi.contentApi.getContentUrl(nodeId, attachment);
+        return nodeDownloadUrl.replace('/content', '/versions/' + versionId + '/content');
+    }
+
+    downloadContent(url, fileName) {
+        if (url && fileName) {
+            const link = document.createElement('a');
+
+            link.style.display = 'none';
+            link.download = fileName;
+            link.href = url;
+
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
     }
 }
