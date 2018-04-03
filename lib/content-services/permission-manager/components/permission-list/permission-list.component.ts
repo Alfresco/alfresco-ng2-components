@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, Input, OnInit } from '@angular/core';
+import { Component, ViewEncapsulation, Input, OnInit, EventEmitter, Output } from '@angular/core';
 import { NodesApiService } from '@alfresco/adf-core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { PermissionDisplayModel } from '../../models/permission.model';
+import { PermissionDisplayModel, LocallySetPermissionModel } from '../../models/permission.model';
 import { NodePermissionService } from '../../services/node-permission.service';
 
 @Component({
@@ -32,8 +32,12 @@ export class PermissionListComponent implements OnInit {
     @Input()
     nodeId: string = '';
 
+    @Output()
+    permissionUpdated: EventEmitter<LocallySetPermissionModel> = new EventEmitter();
+
     permissionList: PermissionDisplayModel[];
     settableRoles: any[];
+    actualNode: MinimalNodeEntryEntity;
 
     constructor(private nodeService: NodesApiService,
                 private nodePermissionService: NodePermissionService) {
@@ -50,6 +54,7 @@ export class PermissionListComponent implements OnInit {
 
     private fetchNodePermissions() {
         this.nodeService.getNode(this.nodeId).subscribe((node: MinimalNodeEntryEntity) => {
+            this.actualNode = node;
             this.permissionList = this.getPermissionList(node);
             this.nodePermissionService.getNodeRoles(node).subscribe((settableList: string[])=>{
                 this.settableRoles =  settableList;
@@ -73,6 +78,15 @@ export class PermissionListComponent implements OnInit {
             });
         }
         return allPermissions;
+    }
+
+    saveNewRole(event: any, permissionRow: LocallySetPermissionModel) {
+        let updatedPermissionRole: LocallySetPermissionModel = new LocallySetPermissionModel(permissionRow);
+        updatedPermissionRole.name = event.value;
+        this.nodePermissionService.updatePermissionRoles(this.actualNode, updatedPermissionRole)
+            .subscribe((node: MinimalNodeEntryEntity) => {
+                this.permissionUpdated.emit(updatedPermissionRole);
+            });
     }
 
 }

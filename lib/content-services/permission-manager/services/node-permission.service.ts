@@ -17,14 +17,16 @@
 
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { AlfrescoApiService, SearchService } from '@alfresco/adf-core';
-import { QueryBody, MinimalNodeEntryEntity, PathElement, GroupMemberPaging, GroupMemberEntry } from 'alfresco-js-api';
+import { AlfrescoApiService, SearchService, NodesApiService } from '@alfresco/adf-core';
+import { QueryBody, MinimalNodeEntryEntity, PathElement, GroupMemberEntry, GroupsPaging } from 'alfresco-js-api';
+import { LocallySetPermissionModel } from '../models/permission.model';
 
 @Injectable()
 export class NodePermissionService {
 
     constructor(private apiService: AlfrescoApiService,
-                private searchApiService: SearchService) {
+                private searchApiService: SearchService,
+                private nodeService: NodesApiService) {
     }
 
     getNodeRoles(node: MinimalNodeEntryEntity): Observable<any[]> {
@@ -40,14 +42,32 @@ export class NodePermissionService {
             })
     }
 
-    private getGroupMembersBySiteName(siteName: string): Observable<any> {
-        return Observable.fromPromise(this.apiService.groupsApi.getGroupMembers('GROUP_site_' + siteName))
-            .map((res) => {
-                let displayResult: any[] = [];
-                res.list.entries.forEach((entry) => {
+    updatePermissionRoles(node: MinimalNodeEntryEntity, updatedPermissionRole: LocallySetPermissionModel): Observable<MinimalNodeEntryEntity> {
+        let permissionBody = { permissions: { locallySet: []} };
+        const index = node.permissions.locallySet.map((permission) => permission.authorityId).indexOf(updatedPermissionRole.authorityId);
+        permissionBody.permissions.locallySet = permissionBody.permissions.locallySet.concat(node.permissions.locallySet);
+        if (index !== -1) {
+            permissionBody.permissions.locallySet[index] = updatedPermissionRole;
+        } else {
+            permissionBody.permissions.locallySet.push(updatedPermissionRole);
+        }
+        return this.nodeService.updateNode(node.id, permissionBody);
+    }
 
-                })
+    private getGroupMembersBySiteName(siteName: string): Observable<string[]> {
+        const groupName = 'GROUP_site_' + siteName;
+        return Observable.fromPromise(this.apiService.groupsApi.getGroupMembers(groupName))
+            .map((res: GroupsPaging) => {
+                let displayResult: string[] = [];
+                res.list.entries.forEach((member: GroupMemberEntry) => {
+                    displayResult.push(this.formattedRoleName(member.entry.displayName, 'site_'+siteName));
+                });
+                return displayResult;
             });
+    }
+
+    private formattedRoleName(displayName, siteName): string {
+        return displayName.replace(siteName+'_','');
     }
 
     private buildRetrieveSiteQueryBody(nodePath: PathElement[]): QueryBody {

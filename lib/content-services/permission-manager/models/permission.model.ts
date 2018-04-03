@@ -15,18 +15,27 @@
  * limitations under the License.
  */
 
-export class PermissionDisplayModel {
+export class LocallySetPermissionModel {
+
     accessStatus: string;
     authorityId: string;
     name: string;
+
+    constructor(obj?: any) {
+        this.accessStatus = obj.accessStatus;
+        this.authorityId = obj.authorityId;
+        this.name = obj.name;
+    }
+}
+
+export class PermissionDisplayModel extends LocallySetPermissionModel {
+
     isInherited: boolean = false;
     icon: string;
 
     constructor(obj?: any) {
+        super(obj);
         if (obj) {
-            this.accessStatus = obj.accessStatus;
-            this.authorityId = obj.authorityId;
-            this.name = obj.name;
             this.isInherited = obj.isInherited !== null && obj.isInherited !== undefined ? obj.isInherited : false;
             this.icon = obj.icon ? obj.icon : 'lock_open';
         }
