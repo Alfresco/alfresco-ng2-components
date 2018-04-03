@@ -363,7 +363,25 @@ describe('SearchQueryBuilder', () => {
 
         const compiled = builder.buildQuery();
         expect(compiled.scope.locations).toEqual('custom');
+    });
 
+    it('should use pagination settings', () => {
+        const config: SearchConfiguration = {
+            query: {
+                categories: [
+                    <any> { id: 'cat1', enabled: true }
+                ]
+            }
+        };
+        const builder = new SearchQueryBuilderService(buildConfig(config), null);
+        builder.queryFragments['cat1'] = 'cm:name:test';
+        builder.paging = { maxItems: 5, skipCount: 5 };
+
+        const compiled = builder.buildQuery();
+        expect(compiled.paging).toEqual({
+            maxItems: 5,
+            skipCount: 5
+        });
     });
 
 });
