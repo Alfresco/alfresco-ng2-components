@@ -37,6 +37,7 @@ export class SearchQueryBuilderService {
     scope: { locations?: string };
     filterQueries: FilterQuery[] = [];
     ranges: { [id: string]: SearchRange } = {};
+    paging: { maxItems?: number; skipCount?: number } = null;
 
     config: SearchConfiguration;
 
@@ -122,12 +123,7 @@ export class SearchQueryBuilderService {
                 },
                 include: ['path', 'allowableOperations'],
                 fields: fields,
-                /*
-                paging: {
-                    maxItems: maxResults,
-                    skipCount: skipCount
-                },
-                */
+                paging: this.paging,
                 filterQueries: this.filterQueries,
                 facetQueries: this.config.facetQueries,
                 facetFields: this.config.facetFields,
