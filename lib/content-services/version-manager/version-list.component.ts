@@ -45,6 +45,10 @@ export class VersionListComponent implements OnChanges {
     @Input()
     name: string;
 
+    /** Enable/disable possibility to download a version of the current node. */
+    @Input()
+    enableDownload: boolean = true;
+
     constructor(private alfrescoApi: AlfrescoApiService) {
         this.versionsApi = this.alfrescoApi.versionsApi;
     }
@@ -68,8 +72,10 @@ export class VersionListComponent implements OnChanges {
     }
 
     downloadVersion(versionId) {
-        const versionDownloadUrl = this.getVersionContentUrl(this.id, versionId, true);
-        this.downloadContent(versionDownloadUrl, this.name);
+        if (this.enableDownload) {
+            const versionDownloadUrl = this.getVersionContentUrl(this.id, versionId, true);
+            this.downloadContent(versionDownloadUrl, this.name);
+        }
     }
 
     getVersionContentUrl(nodeId: string, versionId: string, attachment?: boolean) {

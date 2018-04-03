@@ -2,5 +2,5 @@
     <adf-version-upload [node]="node" (success)="onUploadSuccess($event)" (error)="onUploadError($event)"></adf-version-upload>
 </div>
 <div class="adf-version-list-container">
-    <adf-version-list #versionList [id]="node.id" [showComments]="showComments"></adf-version-list>
+    <adf-version-list #versionList [id]="node.id" [showComments]="showComments" [enableDownload]="enableDownload"></adf-version-list>
 </div>
