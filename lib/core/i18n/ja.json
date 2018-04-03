@@ -138,7 +138,7 @@
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "必須",
-      "USERNAME-MIN": "ユーザー名は {{minLenght}} 文字以上でなければなりません。",
+      "USERNAME-MIN": "ユーザー名は {{minLength}} 文字以上でなければなりません。",
       "PASSWORD-REQUIRED": "サインイン用のパスワードを入力してください",
       "LOGIN-ERROR-CREDENTIALS": "入力したユーザー名またはパスワードが間違っています",
       "LOGIN-ERROR-PROVIDERS": "プロバイダは必ず定義する必要があります",

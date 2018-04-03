@@ -138,7 +138,7 @@
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "Обязательное поле",
-      "USERNAME-MIN": "Имя пользователя должно быть не меньше {{minLenght}} символов.",
+      "USERNAME-MIN": "Имя пользователя должно быть не меньше {{minLength}} символов.",
       "PASSWORD-REQUIRED": "Введите пароль для входа",
       "LOGIN-ERROR-CREDENTIALS": "Вы ввели неверное имя пользователя или пароль",
       "LOGIN-ERROR-PROVIDERS": "Поставщики не могут оставаться неопределенными",

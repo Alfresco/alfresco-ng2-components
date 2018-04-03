@@ -138,7 +138,7 @@
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "Requerido",
-      "USERNAME-MIN": "Su nombre de usuario debe tener al menos {{minLenght}} caracteres.",
+      "USERNAME-MIN": "Su nombre de usuario debe tener al menos {{minLength}} caracteres.",
       "PASSWORD-REQUIRED": "Introduzca su contraseña para iniciar sesión",
       "LOGIN-ERROR-CREDENTIALS": "Ha introducido un nombre de usuario o contraseña desconocidos",
       "LOGIN-ERROR-PROVIDERS": "Los proveedores no pueden estar no definidos",

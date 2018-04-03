@@ -138,7 +138,7 @@
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "Campo obbligatorio",
-      "USERNAME-MIN": "Il nome utente deve essere lungo almeno {{minLenght}} caratteri.",
+      "USERNAME-MIN": "Il nome utente deve essere lungo almeno {{minLength}} caratteri.",
       "PASSWORD-REQUIRED": "Immetti la password per accedere",
       "LOGIN-ERROR-CREDENTIALS": "Nome utente o password sconosciuti",
       "LOGIN-ERROR-PROVIDERS": "I provider non possono essere non definiti",

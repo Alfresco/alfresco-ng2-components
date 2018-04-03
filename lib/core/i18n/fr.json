@@ -138,7 +138,7 @@
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "Requis",
-      "USERNAME-MIN": "Votre nom d'utilisateur doit comporter au moins {{minLenght}} caractères.",
+      "USERNAME-MIN": "Votre nom d'utilisateur doit comporter au moins {{minLength}} caractères.",
       "PASSWORD-REQUIRED": "Entrez votre mot de passe pour vous connecter",
       "LOGIN-ERROR-CREDENTIALS": "Le nom d'utilisateur ou le mot de passe entré est inconnu",
       "LOGIN-ERROR-PROVIDERS": "Le fournisseur ne peut pas être non défini",
