@@ -147,7 +147,7 @@ describe('NodeLockDialogComponent', () => {
             expect(dialogRef.close).toHaveBeenCalledWith(node.entry);
         }));
 
-        fit('should call onError if submit fails', fakeAsync(() => {
+        it('should call onError if submit fails', fakeAsync(() => {
             spyOn(alfrescoApi.nodesApi, 'lockNode').and.returnValue(Promise.reject('error'));
             spyOn(component.data, 'onError');
 
