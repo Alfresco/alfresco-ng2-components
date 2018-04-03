@@ -39,7 +39,7 @@ import { NodePermissionService } from './services/node-permission.service';
         PermissionListComponent,
         InheritPermissionDirective
     ],
-    providers:[
+    providers: [
         NodePermissionService
     ],
     exports: [

@@ -56,7 +56,7 @@ export class PermissionListComponent implements OnInit {
         this.nodeService.getNode(this.nodeId).subscribe((node: MinimalNodeEntryEntity) => {
             this.actualNode = node;
             this.permissionList = this.getPermissionList(node);
-            this.nodePermissionService.getNodeRoles(node).subscribe((settableList: string[])=>{
+            this.nodePermissionService.getNodeRoles(node).subscribe((settableList: string[]) => {
                 this.settableRoles =  settableList;
             });
         });

@@ -31,15 +31,15 @@ export class NodePermissionService {
 
     getNodeRoles(node: MinimalNodeEntryEntity): Observable<any[]> {
         const retrieveSiteQueryBody: QueryBody = this.buildRetrieveSiteQueryBody(node.path.elements);
-        return this.searchApiService.searchByQueryBody(retrieveSiteQueryBody)
+        return Observable.fromPromise(this.searchApiService.searchByQueryBody(retrieveSiteQueryBody))
             .switchMap((siteNodeList: any) => {
-                if( siteNodeList.list.entries.length > 0 ){
+                if ( siteNodeList.list.entries.length > 0 ) {
                     let siteName = siteNodeList.list.entries[0].entry.name;
                     return this.getGroupMembersBySiteName(siteName);
-                }else {
+                } else {
                     return Observable.of(node.permissions.settable);
                 }
-            })
+            });
     }
 
     updatePermissionRoles(node: MinimalNodeEntryEntity, updatedPermissionRole: LocallySetPermissionModel): Observable<MinimalNodeEntryEntity> {
@@ -60,35 +60,35 @@ export class NodePermissionService {
             .map((res: GroupsPaging) => {
                 let displayResult: string[] = [];
                 res.list.entries.forEach((member: GroupMemberEntry) => {
-                    displayResult.push(this.formattedRoleName(member.entry.displayName, 'site_'+siteName));
+                    displayResult.push(this.formattedRoleName(member.entry.displayName, 'site_' + siteName));
                 });
                 return displayResult;
             });
     }
 
     private formattedRoleName(displayName, siteName): string {
-        return displayName.replace(siteName+'_','');
+        return displayName.replace(siteName + '_', '');
     }
 
     private buildRetrieveSiteQueryBody(nodePath: PathElement[]): QueryBody {
-        const pathNames = nodePath.map((node: PathElement) => 'name: "' + node.name +'"');
+        const pathNames = nodePath.map((node: PathElement) => 'name: "' + node.name + '"');
         const buildedPathNames = pathNames.join(' OR ');
         return {
-            "query": {
-                "query": buildedPathNames
+            'query': {
+                'query': buildedPathNames
             },
-            "paging": {
-                "maxItems": 100,
-                "skipCount": 0
+            'paging': {
+                'maxItems': 100,
+                'skipCount': 0
             },
-            "include": ["aspectNames", "properties"],
-            "filterQueries": [
+            'include': ['aspectNames', 'properties'],
+            'filterQueries': [
                 {
-                    "query":
+                    'query':
                         "TYPE:'st:site'"
                 }
             ]
-        }
+        };
     }
 
 }
