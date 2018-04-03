@@ -103,6 +103,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     versioning = false;
 
     @Input()
+    enableVersionDownload = true;
+
+    @Input()
     acceptedFilesType = '.jpg,.pdf,.js';
 
     @Input()
@@ -362,10 +365,11 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     onManageVersions(event) {
         const contentEntry = event.value.entry;
         const showComments = this.showVersionComments;
+        const enableDownload = this.enableVersionDownload;
 
         if (this.contentService.hasPermission(contentEntry, 'update')) {
             this.dialog.open(VersionManagerDialogAdapterComponent, {
-                data: { contentEntry, showComments },
+                data: { contentEntry, showComments, enableDownload },
                 panelClass: 'adf-version-manager-dialog',
                 width: '630px'
             });
