@@ -138,7 +138,7 @@
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "Vereist",
-      "USERNAME-MIN": "Uw gebruikersnaam moet uit minstens {{minLenght}} tekens bestaan.",
+      "USERNAME-MIN": "Uw gebruikersnaam moet uit minstens {{minLength}} tekens bestaan.",
       "PASSWORD-REQUIRED": "Voer uw wachtwoord in om u aan te melden",
       "LOGIN-ERROR-CREDENTIALS": "U hebt een onbekende gebruikersnaam of een onbekend wachtwoord ingevoerd",
       "LOGIN-ERROR-PROVIDERS": "De definitie van providers kan niet ongedaan worden gemaakt",

@@ -141,7 +141,7 @@
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "Required",
-      "USERNAME-MIN": "Your username needs to be at least {{minLenght}} characters.",
+      "USERNAME-MIN": "Your username needs to be at least {{ minLength }} characters.",
       "PASSWORD-REQUIRED": "Enter your password to sign in",
       "LOGIN-ERROR-CREDENTIALS": "You've entered an unknown username or password",
       "LOGIN-ERROR-PROVIDERS": "Providers cannot be undefined",
