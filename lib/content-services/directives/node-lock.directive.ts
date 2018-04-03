@@ -17,7 +17,7 @@
 
 /* tslint:disable:no-input-rename  */
 
-import { Directive, ElementRef, Renderer2, HostListener, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
+import { Directive, ElementRef, Renderer2, HostListener, Input, AfterViewInit } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { PermissionsEnum, ContentService } from '@alfresco/adf-core';
 import { ContentNodeDialogService } from '../content-node-selector/content-node-dialog.service';
@@ -29,9 +29,6 @@ export class NodeLockDirective implements AfterViewInit {
 
     @Input('adf-node-lock')
     node: MinimalNodeEntryEntity;
-
-    @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
 
     @HostListener('click', [ '$event' ])
     onClick(event) {

@@ -85,7 +85,8 @@ describe('NodeLockDialogComponent', () => {
                         ['cm:lockType']: 'WRITE_LOCK',
                         ['cm:expiryDate']: expiryDate
                     }
-                }
+                },
+                onError: () => {}
             };
             fixture.detectChanges();
         });
@@ -146,15 +147,15 @@ describe('NodeLockDialogComponent', () => {
             expect(dialogRef.close).toHaveBeenCalledWith(node.entry);
         }));
 
-        it('should handle error if submit fails', fakeAsync(() => {
+        fit('should call onError if submit fails', fakeAsync(() => {
             spyOn(alfrescoApi.nodesApi, 'lockNode').and.returnValue(Promise.reject('error'));
-            spyOn(component, 'handleError').and.callFake(val => val);
+            spyOn(component.data, 'onError');
 
             component.submit();
             tick();
             fixture.detectChanges();
 
-            expect(component.handleError).toHaveBeenCalled();
+            expect(component.data.onError).toHaveBeenCalled();
         }));
     });
 });

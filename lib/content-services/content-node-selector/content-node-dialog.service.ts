@@ -59,17 +59,18 @@ export class ContentNodeDialogService {
 
         if (this.contentService.hasPermission(contentEntry, PermissionsEnum.LOCK)) {
             const dialogInstance = this.dialog.open(NodeLockDialogComponent, {
-                data: { node: contentEntry },
+                data: {
+                    node: contentEntry,
+                    onError: (error) => {
+                        this.error.emit(error);
+                        observable.error(error);
+                    }
+                },
                 width: '400px'
             });
 
             dialogInstance.afterOpen().subscribe(() => {
                 observable.next('OPERATION.SUCCESS.NODE.LOCK_DIALOG_OPEN');
-            });
-
-            dialogInstance.componentInstance.error.subscribe((error) => {
-                this.error.emit(error);
-                observable.error(error);
             });
 
             dialogInstance.afterClosed().subscribe((node: MinimalNodeEntryEntity) => {

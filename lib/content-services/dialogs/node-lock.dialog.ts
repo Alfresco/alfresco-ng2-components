@@ -17,12 +17,12 @@
 
 import moment from 'moment-es6';
 
-import { Component, Inject, OnInit, Optional, EventEmitter, Output } from '@angular/core';
+import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { MinimalNodeEntryEntity, NodeEntry, NodeBodyLock } from 'alfresco-js-api';
-import { AlfrescoApiService, TranslationService } from '@alfresco/adf-core';
+import { MinimalNodeEntryEntity, NodeEntry } from 'alfresco-js-api';
+import { AlfrescoApiService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-node-lock',
@@ -35,14 +35,10 @@ export class NodeLockDialogComponent implements OnInit {
     node: MinimalNodeEntryEntity = null;
     nodeName: string;
 
-    @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
-
     constructor(
         private formBuilder: FormBuilder,
         public dialog: MatDialogRef<NodeLockDialogComponent>,
         private alfrescoApi: AlfrescoApiService,
-        private translation: TranslationService,
         @Optional()
         @Inject(MAT_DIALOG_DATA)
         public data: any
@@ -90,14 +86,6 @@ export class NodeLockDialogComponent implements OnInit {
     submit(): void {
         this.toggleLock()
             .then(node => this.dialog.close(node.entry))
-            .catch(error => this.handleError(error));
-    }
-
-    handleError(error: any): any {
-        this.error.emit(
-            this.translation.instant('CORE.MESSAGES.ERRORS.GENERIC')
-        );
-
-        return error;
+            .catch(error => this.data.onError(error));
     }
 }
