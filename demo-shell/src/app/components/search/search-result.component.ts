@@ -64,6 +64,12 @@ export class SearchResultComponent implements OnInit {
     onRefreshPagination(pagination: Pagination) {
         this.maxItems = pagination.maxItems;
         this.skipCount = pagination.skipCount;
+
+        this.queryBuilder.paging = {
+            maxItems: pagination.maxItems,
+            skipCount: pagination.skipCount
+        };
+        this.queryBuilder.update();
     }
 
     onDeleteElementSuccess(element: any) {
