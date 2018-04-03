@@ -138,7 +138,7 @@
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "Erforderlich",
-      "USERNAME-MIN": "Ihr Benutzername muss mindestens {{minLenght}} Zeichen lang sein.",
+      "USERNAME-MIN": "Ihr Benutzername muss mindestens {{minLength}} Zeichen lang sein.",
       "PASSWORD-REQUIRED": "Geben Sie Ihr Passwort ein, um sich anzumelden",
       "LOGIN-ERROR-CREDENTIALS": "Sie haben einen unbekannten Benutzernamen oder ein falsches Passwort eingegeben",
       "LOGIN-ERROR-PROVIDERS": "Provider müssen definiert werden",

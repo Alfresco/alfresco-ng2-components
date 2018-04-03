@@ -138,7 +138,7 @@
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "Påkrevd",
-      "USERNAME-MIN": "Brukernavnet må ha minst {{minLenght}} tegn.",
+      "USERNAME-MIN": "Brukernavnet må ha minst {{minLength}} tegn.",
       "PASSWORD-REQUIRED": "Angi passordet for å logge på",
       "LOGIN-ERROR-CREDENTIALS": "Du har angitt ukjent brukernavn eller passord",
       "LOGIN-ERROR-PROVIDERS": "Leverandører kan ikke være udefinert",

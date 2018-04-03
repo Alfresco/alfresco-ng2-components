@@ -138,7 +138,7 @@
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "必需",
-      "USERNAME-MIN": "您的用户名需要至少 {{minLenght}} 个字符。",
+      "USERNAME-MIN": "您的用户名需要至少 {{minLength}} 个字符。",
       "PASSWORD-REQUIRED": "输入登录密码",
       "LOGIN-ERROR-CREDENTIALS": "您已输入未知用户名或密码",
       "LOGIN-ERROR-PROVIDERS": "提供商未定义",
