@@ -21,7 +21,7 @@ import {
     MatChipsModule, MatDatepickerModule, MatDialogModule, MatGridListModule, MatIconModule,
     MatInputModule, MatListModule, MatNativeDateModule, MatOptionModule, MatProgressSpinnerModule, MatRadioModule,
     MatRippleModule, MatSelectModule, MatSlideToggleModule, MatTableModule, MatTabsModule,
-    MatTooltipModule, MatMenuItem, MatMenuModule
+    MatTooltipModule, MatMenuModule
 } from '@angular/material';
 
 export function modules() {
