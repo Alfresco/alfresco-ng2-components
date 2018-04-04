@@ -30,6 +30,9 @@ export class VersionManagerComponent {
     @Input()
     node: MinimalNodeEntryEntity;
 
+    @Input()
+    showComments: boolean = true;
+
     @Output()
     uploadSuccess: EventEmitter<any> = new EventEmitter();
 
