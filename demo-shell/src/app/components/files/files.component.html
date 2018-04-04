@@ -352,7 +352,8 @@
                 <ng-container *ngIf="hasOneFileSelected();else choose_document_template">
                     <ng-container *ngIf="userHasPermissionToManageVersions(); else no_permission_to_versions">
                         <adf-version-manager
-                            [node]="documentList.selection[0].entry">
+                            [node]="documentList.selection[0].entry"
+                            [showComments]="showVersionComments">
                         </adf-version-manager>
                     </ng-container>
                 </ng-container>
@@ -435,6 +436,12 @@
         <section>
             <mat-slide-toggle [color]="'primary'" [(ngModel)]="infiniteScrolling">
                 {{'DOCUMENT_LIST.ENABLE_INFINITE_SCROLL' | translate}}
+            </mat-slide-toggle>
+        </section>
+
+        <section>
+            <mat-slide-toggle [color]="'primary'" [(ngModel)]="showVersionComments">{{'DOCUMENT_LIST.SHOW_VERSION_COMMENTS' |
+                translate}}
             </mat-slide-toggle>
         </section>
 

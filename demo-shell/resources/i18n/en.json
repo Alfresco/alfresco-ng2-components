@@ -62,6 +62,7 @@
         "DESCRIPTION_UPLOAD" : "Enable upload",
         "ENABLE_INFINITE_SCROLL":"Enable Infinite Scrolling",
         "MULTISELECT_DESCRIPTION" : "Use Cmd (Mac) or Ctrl (Windows) to toggle selection of multiple items",
+        "SHOW_VERSION_COMMENTS" : "Show comments on versions",
         "RECENT" : {
           "EMPTY_STATE": {
             "TITLE": "Recent is empty"
