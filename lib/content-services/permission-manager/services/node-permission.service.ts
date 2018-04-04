@@ -18,8 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { AlfrescoApiService, SearchService, NodesApiService } from '@alfresco/adf-core';
-import { QueryBody, MinimalNodeEntryEntity, PathElement, GroupMemberEntry, GroupsPaging } from 'alfresco-js-api';
-import { LocallySetPermissionModel } from '../models/permission.model';
+import { QueryBody, MinimalNodeEntryEntity, PathElement, GroupMemberEntry, GroupsPaging, GroupMemberPaging, PermissionElement } from 'alfresco-js-api';
 
 @Injectable()
 export class NodePermissionService {
@@ -29,7 +28,7 @@ export class NodePermissionService {
                 private nodeService: NodesApiService) {
     }
 
-    getNodeRoles(node: MinimalNodeEntryEntity): Observable<any[]> {
+    getNodeRoles(node: MinimalNodeEntryEntity): Observable<string[]> {
         const retrieveSiteQueryBody: QueryBody = this.buildRetrieveSiteQueryBody(node.path.elements);
         return Observable.fromPromise(this.searchApiService.searchByQueryBody(retrieveSiteQueryBody))
             .switchMap((siteNodeList: any) => {
@@ -42,7 +41,7 @@ export class NodePermissionService {
             });
     }
 
-    updatePermissionRoles(node: MinimalNodeEntryEntity, updatedPermissionRole: LocallySetPermissionModel): Observable<MinimalNodeEntryEntity> {
+    updatePermissionRoles(node: MinimalNodeEntryEntity, updatedPermissionRole: PermissionElement): Observable<MinimalNodeEntryEntity> {
         let permissionBody = { permissions: { locallySet: []} };
         const index = node.permissions.locallySet.map((permission) => permission.authorityId).indexOf(updatedPermissionRole.authorityId);
         permissionBody.permissions.locallySet = permissionBody.permissions.locallySet.concat(node.permissions.locallySet);
@@ -56,7 +55,7 @@ export class NodePermissionService {
 
     private getGroupMembersBySiteName(siteName: string): Observable<string[]> {
         const groupName = 'GROUP_site_' + siteName;
-        return Observable.fromPromise(this.apiService.groupsApi.getGroupMembers(groupName))
+        return this.getGroupMemeberByGroupName(groupName)
             .map((res: GroupsPaging) => {
                 let displayResult: string[] = [];
                 res.list.entries.forEach((member: GroupMemberEntry) => {
@@ -64,6 +63,10 @@ export class NodePermissionService {
                 });
                 return displayResult;
             });
+    }
+
+    getGroupMemeberByGroupName(groupName: string): Observable<GroupMemberPaging> {
+        return Observable.fromPromise(this.apiService.groupsApi.getGroupMembers(groupName));
     }
 
     private formattedRoleName(displayName, siteName): string {

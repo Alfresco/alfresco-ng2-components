@@ -24,6 +24,28 @@ export const fakeNodeWithPermissions: any = {
         'app:uifacets'
     ],
     'createdAt': '2017-11-16T16:29:38.638+0000',
+    'path': {
+        'name': '/Company Home/Sites/testsite/documentLibrary',
+        'isComplete': true,
+        'elements': [
+          {
+            'id': '2be275a1-b00d-4e45-83d8-66af43ac2252',
+            'name': 'Company Home'
+          },
+          {
+            'id': '1be10a97-6eb9-4b60-b6c6-1673900e9631',
+            'name': 'Sites'
+          },
+          {
+            'id': 'e002c740-b8f9-482a-a554-8fff4e4c9dc0',
+            'name': 'testsite'
+          },
+          {
+            'id': '71626fae-0c04-4d0c-a129-20fa4c178716',
+            'name': 'documentLibrary'
+          }
+        ]
+    },
     'isFolder': true,
     'isFile': false,
     'createdByUser': {
@@ -87,6 +109,28 @@ export const fakeNodeInheritedOnly: any = {
         'app:uifacets'
     ],
     'createdAt': '2017-11-16T16:29:38.638+0000',
+    'path': {
+        'name': '/Company Home/Sites/testsite/documentLibrary',
+        'isComplete': true,
+        'elements': [
+          {
+            'id': '2be275a1-b00d-4e45-83d8-66af43ac2252',
+            'name': 'Company Home'
+          },
+          {
+            'id': '1be10a97-6eb9-4b60-b6c6-1673900e9631',
+            'name': 'Sites'
+          },
+          {
+            'id': 'e002c740-b8f9-482a-a554-8fff4e4c9dc0',
+            'name': 'testsite'
+          },
+          {
+            'id': '71626fae-0c04-4d0c-a129-20fa4c178716',
+            'name': 'documentLibrary'
+          }
+        ]
+    },
     'isFolder': true,
     'isFile': false,
     'createdByUser': {
@@ -133,6 +177,7 @@ export const fakeNodeInheritedOnly: any = {
         'app:icon': 'space-icon-default'
     }
 };
+
 export const fakeNodeWithOnlyLocally: any = {
     'aspectNames': [
         'cm:auditable',
@@ -142,6 +187,28 @@ export const fakeNodeWithOnlyLocally: any = {
         'app:uifacets'
     ],
     'createdAt': '2017-11-16T16:29:38.638+0000',
+    'path': {
+        'name': '/Company Home/Sites/testsite/documentLibrary',
+        'isComplete': true,
+        'elements': [
+          {
+            'id': '2be275a1-b00d-4e45-83d8-66af43ac2252',
+            'name': 'Company Home'
+          },
+          {
+            'id': '1be10a97-6eb9-4b60-b6c6-1673900e9631',
+            'name': 'Sites'
+          },
+          {
+            'id': 'e002c740-b8f9-482a-a554-8fff4e4c9dc0',
+            'name': 'testsite'
+          },
+          {
+            'id': '71626fae-0c04-4d0c-a129-20fa4c178716',
+            'name': 'documentLibrary'
+          }
+        ]
+    },
     'isFolder': true,
     'isFile': false,
     'createdByUser': {
@@ -181,5 +248,111 @@ export const fakeNodeWithOnlyLocally: any = {
         ],
         'cm:description': 'sleepery',
         'app:icon': 'space-icon-default'
+    }
+};
+
+export const fakeSiteNodeResponse: any = {
+    'list': {
+        'pagination': {
+            'count': 1,
+            'hasMoreItems': false,
+            'totalItems': 1,
+            'skipCount': 0,
+            'maxItems': 100
+        },
+        'context': {},
+        'entries': [
+            {
+                'entry': {
+                    'isLink': false,
+                    'isFile': false,
+                    'createdByUser': {
+                        'id': 'admin',
+                        'displayName': 'Administrator'
+                    },
+                    'modifiedAt': '2018-03-22T15:40:10.093+0000',
+                    'nodeType': 'st:site',
+                    'parentId': '1be10a97-6eb9-4b60-b6c6-1673900e9631',
+                    'aspectNames': [
+                        'cm:tagscope',
+                        'cm:titled',
+                        'cm:auditable'
+                    ],
+                    'createdAt': '2018-03-22T15:39:50.821+0000',
+                    'isFolder': true,
+                    'search': {
+                        'score': 10.292057
+                    },
+                    'modifiedByUser': {
+                        'id': 'admin',
+                        'displayName': 'Administrator'
+                    },
+                    'name': 'testsite',
+                    'location': 'nodes',
+                    'id': 'e002c740-b8f9-482a-a554-8fff4e4c9dc0',
+                    'properties': {
+                        'st:siteVisibility': 'PUBLIC',
+                        'cm:title': 'TEST_SITE',
+                        'st:sitePreset': 'site-dashboard'
+                    }
+                }
+            }
+        ]
+    }
+};
+
+export const fakeSiteRoles: any = {
+    'list': {
+        'pagination': {
+            'count': 4,
+            'hasMoreItems': false,
+            'totalItems': 4,
+            'skipCount': 0,
+            'maxItems': 100
+        },
+        'entries': [
+            {
+                'entry': {
+                    'displayName': 'site_testsite_SiteCollaborator',
+                    'id': 'GROUP_site_testsite_SiteCollaborator',
+                    'memberType': 'GROUP'
+                }
+            },
+            {
+                'entry': {
+                    'displayName': 'site_testsite_SiteConsumer',
+                    'id': 'GROUP_site_testsite_SiteConsumer',
+                    'memberType': 'GROUP'
+                }
+            },
+            {
+                'entry': {
+                    'displayName': 'site_testsite_SiteContributor',
+                    'id': 'GROUP_site_testsite_SiteContributor',
+                    'memberType': 'GROUP'
+                }
+            },
+            {
+                'entry': {
+                    'displayName': 'site_testsite_SiteManager',
+                    'id': 'GROUP_site_testsite_SiteManager',
+                    'memberType': 'GROUP'
+                }
+            }
+        ]
+    }
+};
+
+export const fakeEmptyResponse: any = {
+    'list': {
+        'pagination': {
+            'count': 0,
+            'hasMoreItems': false,
+            'totalItems': 0,
+            'skipCount': 0,
+            'maxItems': 100
+        },
+        'context': {},
+        'entries': []
     }
 };

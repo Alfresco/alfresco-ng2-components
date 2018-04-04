@@ -17,8 +17,8 @@
 
 import { Component, ViewEncapsulation, Input, OnInit, EventEmitter, Output } from '@angular/core';
 import { NodesApiService } from '@alfresco/adf-core';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { PermissionDisplayModel, LocallySetPermissionModel } from '../../models/permission.model';
+import { MinimalNodeEntryEntity, PermissionElement } from 'alfresco-js-api';
+import { PermissionDisplayModel } from '../../models/permission.model';
 import { NodePermissionService } from '../../services/node-permission.service';
 
 @Component({
@@ -33,7 +33,7 @@ export class PermissionListComponent implements OnInit {
     nodeId: string = '';
 
     @Output()
-    permissionUpdated: EventEmitter<LocallySetPermissionModel> = new EventEmitter();
+    update: EventEmitter<PermissionElement> = new EventEmitter();
 
     permissionList: PermissionDisplayModel[];
     settableRoles: any[];
@@ -80,12 +80,12 @@ export class PermissionListComponent implements OnInit {
         return allPermissions;
     }
 
-    saveNewRole(event: any, permissionRow: LocallySetPermissionModel) {
-        let updatedPermissionRole: LocallySetPermissionModel = new LocallySetPermissionModel(permissionRow);
+    saveNewRole(event: any, permissionRow: PermissionElement) {
+        let updatedPermissionRole: PermissionElement = new PermissionElement(permissionRow);
         updatedPermissionRole.name = event.value;
         this.nodePermissionService.updatePermissionRoles(this.actualNode, updatedPermissionRole)
             .subscribe((node: MinimalNodeEntryEntity) => {
-                this.permissionUpdated.emit(updatedPermissionRole);
+                this.update.emit(updatedPermissionRole);
             });
     }
 

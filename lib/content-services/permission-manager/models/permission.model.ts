@@ -15,20 +15,9 @@
  * limitations under the License.
  */
 
-export class LocallySetPermissionModel {
+import { PermissionElement } from 'alfresco-js-api';
 
-    accessStatus: string;
-    authorityId: string;
-    name: string;
-
-    constructor(obj?: any) {
-        this.accessStatus = obj.accessStatus;
-        this.authorityId = obj.authorityId;
-        this.name = obj.name;
-    }
-}
-
-export class PermissionDisplayModel extends LocallySetPermissionModel {
+export class PermissionDisplayModel extends PermissionElement {
 
     isInherited: boolean = false;
     icon: string;
