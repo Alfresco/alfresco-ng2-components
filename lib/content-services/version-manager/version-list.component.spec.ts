@@ -129,6 +129,34 @@ describe('VersionListComponent', () => {
                 expect(versionCommentEl).toBeNull();
             });
         }));
+
+        it('should be able to download a version', () => {
+            const versionEntry =  { entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' }};
+            const alfrescoApiService = TestBed.get(AlfrescoApiService);
+            spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and
+                .callFake(() => Promise.resolve({ list: { entries: [ versionEntry ] }}));
+            const spyOnDownload = spyOn(alfrescoApiService.contentApi, 'getContentUrl').and.returnValue('the/download/url');
+
+            fixture.detectChanges();
+
+            component.downloadVersion('1.0');
+            expect(spyOnDownload).toHaveBeenCalledWith(nodeId, true);
+        });
+
+        it('should NOT be able to download a version if configured so', () => {
+            const versionEntry =  { entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' }};
+            const alfrescoApiService = TestBed.get(AlfrescoApiService);
+            spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and
+                .callFake(() => Promise.resolve({ list: { entries: [ versionEntry ] }}));
+            const spyOnDownload = spyOn(alfrescoApiService.contentApi, 'getContentUrl').and.stub();
+
+            component.enableDownload = false;
+            fixture.detectChanges();
+
+            component.downloadVersion('1.0');
+            expect(spyOnDownload).not.toHaveBeenCalled();
+        });
+
     });
 
     describe('Version restoring', () => {
