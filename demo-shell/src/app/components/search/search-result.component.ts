@@ -43,6 +43,10 @@ export class SearchResultComponent implements OnInit {
                 private queryBuilder: SearchQueryBuilderService,
                 @Optional() private route: ActivatedRoute) {
         this.maxItems = this.preferences.paginationSize;
+        queryBuilder.paging = {
+            maxItems: this.maxItems,
+            skipCount: 0
+        };
     }
 
     ngOnInit() {
