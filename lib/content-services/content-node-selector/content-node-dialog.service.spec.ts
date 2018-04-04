@@ -90,19 +90,6 @@ describe('ContentNodeDialogService', () => {
 
     });
 
-    it('should be able to open the lock node dialog', () => {
-        const testNode: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
-            id: 'fake',
-            isFile: true
-        };
-
-        service.openLockNodeDialog(testNode).subscribe(response => {
-            expect(response).toBe('OPERATION.SUCCESS.NODE.LOCK_DIALOG_OPEN');
-        });
-
-        afterOpenObservable.next({});
-    });
-
     it('should not open the lock node dialog if have no permission', () => {
         const testNode: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
             id: 'fake',

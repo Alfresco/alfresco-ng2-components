@@ -58,7 +58,7 @@ export class ContentNodeDialogService {
         const observable: Subject<string> = new Subject<string>();
 
         if (this.contentService.hasPermission(contentEntry, PermissionsEnum.LOCK)) {
-            const dialogInstance = this.dialog.open(NodeLockDialogComponent, {
+            this.dialog.open(NodeLockDialogComponent, {
                 data: {
                     node: contentEntry,
                     onError: (error) => {
@@ -67,16 +67,6 @@ export class ContentNodeDialogService {
                     }
                 },
                 width: '400px'
-            });
-
-            dialogInstance.afterOpen().subscribe(() => {
-                observable.next('OPERATION.SUCCESS.NODE.LOCK_DIALOG_OPEN');
-            });
-
-            dialogInstance.afterClosed().subscribe((node: MinimalNodeEntryEntity) => {
-                if (node) {
-                    this.contentService.folderEdit.next(node);
-                }
             });
         } else {
             observable.error('OPERATION.FAIL.NODE.NO_PERMISSION');
