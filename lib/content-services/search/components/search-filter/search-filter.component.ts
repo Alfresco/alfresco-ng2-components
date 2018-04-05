@@ -44,7 +44,7 @@ export class SearchFilterComponent implements OnInit {
             this.queryBuilder.execute();
         });
     }
-    
+
     ngOnInit() {
         if (this.queryBuilder) {
             this.queryBuilder.executed.subscribe(data => {

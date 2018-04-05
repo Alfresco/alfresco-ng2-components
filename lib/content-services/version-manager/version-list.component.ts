@@ -41,10 +41,6 @@ export class VersionListComponent implements OnChanges {
     @Input()
     showComments: boolean = true;
 
-    /** Name of the node whose version history you want to display. */
-    @Input()
-    name: string;
-
     /** Enable/disable possibility to download a version of the current node. */
     @Input()
     enableDownload: boolean = true;
@@ -74,21 +70,20 @@ export class VersionListComponent implements OnChanges {
     downloadVersion(versionId) {
         if (this.enableDownload) {
             const versionDownloadUrl = this.getVersionContentUrl(this.id, versionId, true);
-            this.downloadContent(versionDownloadUrl, this.name);
+            this.downloadContent(versionDownloadUrl);
         }
     }
 
-    getVersionContentUrl(nodeId: string, versionId: string, attachment?: boolean) {
+    private getVersionContentUrl(nodeId: string, versionId: string, attachment?: boolean) {
         const nodeDownloadUrl = this.alfrescoApi.contentApi.getContentUrl(nodeId, attachment);
         return nodeDownloadUrl.replace('/content', '/versions/' + versionId + '/content');
     }
 
-    downloadContent(url, fileName) {
-        if (url && fileName) {
+    private downloadContent(url: string) {
+        if (url) {
             const link = document.createElement('a');
 
             link.style.display = 'none';
-            link.download = fileName;
             link.href = url;
 
             document.body.appendChild(link);
