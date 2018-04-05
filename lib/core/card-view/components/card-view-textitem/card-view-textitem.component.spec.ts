@@ -212,8 +212,7 @@ describe('CardViewTextItemComponent', () => {
             fixture.detectChanges();
 
             let value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.icon}"]`));
-            expect(value).not.toBeNull();
-            expect(value.nativeElement.innerText.trim()).toBe('');
+            expect(value).toBeNull('Edit icon should NOT be shown');
         });
 
         it('should not render the edit icon in case of clickable false and icon defined', () => {

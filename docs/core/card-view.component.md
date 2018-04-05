@@ -55,6 +55,7 @@ export interface CardViewItem {
     type: string;
     displayValue: string;
     editable?: boolean;
+    icon?: string;
 }
 ```
 
@@ -77,7 +78,8 @@ Each of them extends the abstract CardViewBaseItemModel class to add some custom
         value: 'Spock',
         key: 'name',
         default: 'default bar' ,
-        multiline: false
+        multiline: false,
+        icon: 'icon';
     }),
     new CardViewMapItemModel({
         label: 'My map',
@@ -141,6 +143,7 @@ const textItemProperty = new CardViewTextItemModel(options);
 | displayValue\* | string | --- | The value to render |
 | editable | boolean | false | Whether the property editable or not |
 | clickable | boolean | false | Whether the property clickable or not |
+| icon | string | The material icon to show against the clickable property |
 | multiline | string | false | Single or multiline text |
 | pipes | CardViewTextItemPipeProperty\[] | \[] | Pipes to be applied on the displayValue |
 
