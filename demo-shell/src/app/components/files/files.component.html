@@ -353,7 +353,8 @@
                     <ng-container *ngIf="userHasPermissionToManageVersions(); else no_permission_to_versions">
                         <adf-version-manager
                             [node]="documentList.selection[0].entry"
-                            [showComments]="showVersionComments">
+                            [showComments]="showVersionComments"
+                            [enableDownload]="enableVersionDownload">
                         </adf-version-manager>
                     </ng-container>
                 </ng-container>
@@ -440,8 +441,11 @@
         </section>
 
         <section>
-            <mat-slide-toggle [color]="'primary'" [(ngModel)]="showVersionComments">{{'DOCUMENT_LIST.SHOW_VERSION_COMMENTS' |
-                translate}}
+            <mat-slide-toggle [color]="'primary'" [(ngModel)]="showVersionComments">
+                {{'DOCUMENT_LIST.SHOW_VERSION_COMMENTS' | translate}}
+            </mat-slide-toggle>
+            <mat-slide-toggle [color]="'primary'" [(ngModel)]="enableVersionDownload">
+                {{'DOCUMENT_LIST.ENABLE_VERSION_DOWNLOAD' | translate}}
             </mat-slide-toggle>
         </section>
 
