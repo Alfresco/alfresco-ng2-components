@@ -185,6 +185,52 @@ describe('CardViewTextItemComponent', () => {
             expect(value.nativeElement.innerText.trim()).toBe('FAKE-DEFAULT-KEY');
         });
 
+        it('should render the edit icon in case of clickable true and icon defined', () => {
+            component.property = new CardViewTextItemModel ({
+                label: 'Text label',
+                value: '',
+                key: 'textkey',
+                default: 'FAKE-DEFAULT-KEY',
+                clickable: true,
+                icon: 'FAKE-ICON'
+            });
+            fixture.detectChanges();
+
+            let value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.icon}"]`));
+            expect(value).not.toBeNull();
+            expect(value.nativeElement.innerText.trim()).toBe('FAKE-ICON');
+        });
+
+        it('should not render the edit icon in case of clickable true and icon undefined', () => {
+            component.property = new CardViewTextItemModel ({
+                label: 'Text label',
+                value: '',
+                key: 'textkey',
+                default: 'FAKE-DEFAULT-KEY',
+                clickable: true
+            });
+            fixture.detectChanges();
+
+            let value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.icon}"]`));
+            expect(value).not.toBeNull();
+            expect(value.nativeElement.innerText.trim()).toBe('');
+        });
+
+        it('should not render the edit icon in case of clickable false and icon defined', () => {
+            component.property = new CardViewTextItemModel ({
+                label: 'Text label',
+                value: '',
+                key: 'textkey',
+                default: 'FAKE-DEFAULT-KEY',
+                clickable: false,
+                icon: 'FAKE-ICON'
+            });
+            fixture.detectChanges();
+
+            let value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.icon}"]`));
+            expect(value).toBeNull('Edit icon should NOT be shown');
+        });
+
         it('should render value when editable:true', () => {
             component.editable = true;
             component.property.editable = true;

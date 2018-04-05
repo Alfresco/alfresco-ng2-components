@@ -5,11 +5,11 @@
             <span *ngIf="showProperty()">{{ property.displayValue }}</span>
         </span>
         <ng-template #elseBlock>
-        <div class="adf-textitem-clickable" (click)="clicked()">
+        <div class="adf-textitem-clickable" (click)="clicked()" fxLayout="row" fxLayoutAlign="space-between center">
             <span class="adf-textitem-clickable-value" [attr.data-automation-id]="'card-textitem-value-' + property.key">
                 <span *ngIf="showProperty(); else elseEmptyValueBlock">{{ property.displayValue }}</span>
             </span>
-            <mat-icon fxFlex="0 0 auto" [attr.data-automation-id]="'card-textitem-edit-icon-' + property.icon" class="adf-textitem-icon">{{ property.icon }}</mat-icon>
+            <mat-icon *ngIf="hasIcon()" fxFlex="0 0 auto" [attr.data-automation-id]="'card-textitem-edit-icon-' + property.icon" class="adf-textitem-icon">{{ property.icon }}</mat-icon>
         </div>
         </ng-template>
     </span>

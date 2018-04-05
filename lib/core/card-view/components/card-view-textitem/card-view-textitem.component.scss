@@ -28,21 +28,12 @@
             &:hover mat-icon {
                 opacity: 1;
             }
-          &-value {
-                padding-right: 115px !important;
-                cursor: pointer;
-                color: mat-color($primary);
-                &:hover mat-icon {
-                    opacity: 1;
-                }
-            }
         }
 
-        // &-textitem-clickable-value {
-        //     width: 267px !important;
-        //     cursor: pointer;
-        //     color: mat-color($primary);
-        // }
+        &-textitem-clickable-value {
+            cursor: pointer;
+            color: mat-color($primary);
+        }
 
         &-textitem-editable {
 
