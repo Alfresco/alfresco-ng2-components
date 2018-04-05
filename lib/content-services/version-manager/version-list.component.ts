@@ -41,6 +41,10 @@ export class VersionListComponent implements OnChanges {
     @Input()
     showComments: boolean = true;
 
+    /** Enable/disable possibility to download a version of the current node. */
+    @Input()
+    enableDownload: boolean = true;
+
     constructor(private alfrescoApi: AlfrescoApiService) {
         this.versionsApi = this.alfrescoApi.versionsApi;
     }
@@ -61,5 +65,30 @@ export class VersionListComponent implements OnChanges {
             this.versions = data.list.entries;
             this.isLoading = false;
         });
+    }
+
+    downloadVersion(versionId) {
+        if (this.enableDownload) {
+            const versionDownloadUrl = this.getVersionContentUrl(this.id, versionId, true);
+            this.downloadContent(versionDownloadUrl);
+        }
+    }
+
+    private getVersionContentUrl(nodeId: string, versionId: string, attachment?: boolean) {
+        const nodeDownloadUrl = this.alfrescoApi.contentApi.getContentUrl(nodeId, attachment);
+        return nodeDownloadUrl.replace('/content', '/versions/' + versionId + '/content');
+    }
+
+    downloadContent(url: string) {
+        if (url) {
+            const link = document.createElement('a');
+
+            link.style.display = 'none';
+            link.href = url;
+
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
     }
 }

@@ -28,12 +28,14 @@ export class VersionManagerDialogAdapterComponent {
 
     public contentEntry: MinimalNodeEntryEntity;
     showComments = true;
+    enableDownload = true;
 
     constructor(@Inject(MAT_DIALOG_DATA) data: any,
                 private snackBar: MatSnackBar,
                 private containingDialog?: MatDialogRef<VersionManagerDialogAdapterComponent>) {
         this.contentEntry = data.contentEntry;
         this.showComments = data.hasOwnProperty('showComments') ? data.showComments : this.showComments;
+        this.enableDownload = data.hasOwnProperty('enableDownload') ? data.enableDownload : this.enableDownload;
     }
 
     uploadError(errorMessage: string) {

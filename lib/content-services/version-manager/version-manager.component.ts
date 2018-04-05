@@ -33,6 +33,9 @@ export class VersionManagerComponent {
     @Input()
     showComments: boolean = true;
 
+    @Input()
+    enableDownload: boolean = true;
+
     @Output()
     uploadSuccess: EventEmitter<any> = new EventEmitter();
 
