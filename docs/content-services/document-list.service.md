@@ -1,48 +1,63 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-04-05
 ---
+
 # Document List service
 
 Implements node operations used by the Document List component.
 
-## Methods
+## Class members
 
--   `deleteNode(nodeId: string): Observable<any>`  
-    Deletes a node.  
-    -   `nodeId` - ID of the node to delete
--   `copyNode(nodeId: string, targetParentId: string): any`  
-    Copy a node to destination node  
-    -   `nodeId` - The id of the node to be copied
-    -   `targetParentId` - The id of the folder where the node will be copied
--   `moveNode(nodeId: string, targetParentId: string): any`  
-    Move a node to destination node  
-    -   `nodeId` - The id of the node to be moved
-    -   `targetParentId` - The id of the folder where the node will be moved
--   `createFolder(name: string, parentId: string): Observable<MinimalNodeEntity>`  
-    Create a new folder in the path.  
-    -   `name` - Folder name
-    -   `parentId` - Parent folder ID
--   `getFolder(folder: string, opts?: any): any`  
-    Gets the folder node with the specified relative name path below the root node.  
-    -   `folder` - Path to folder.
-    -   `opts` - (Optional) Options.
--   `getFolderNode(nodeId: string): Promise<MinimalNodeEntryEntity>`  
-    Gets a folder node via its node ID.  
-    -   `nodeId` - ID of the folder node
--   `getDocumentThumbnailUrl(node: MinimalNodeEntity): any`  
-    Get thumbnail URL for the given document node.  
-    -   `node` - Node to get URL for.
--   `getMimeTypeIcon(mimeType: string): string`  
-    Gets the icon that represents a MIME type.  
-    -   `mimeType` - MIME type to get the icon for
--   `getDefaultMimeTypeIcon(): string`  
-    Gets a default icon for MIME types with no specific icon.  
+### Methods
 
--   `hasPermission(node: any, permission: PermissionsEnum|string): boolean`  
-    Checks if a node has the specified permission.  
-    -   `node` - Target node
-    -   `permission` - Permission level to query
+-   `copyNode(nodeId: string = null, targetParentId: string = null): any`<br/>
+    Copy a node to destination node
+    -   `nodeId: string = null` -  The id of the node to be copied
+    -   `targetParentId: string = null` -  The id of the folder where the node will be copied
+    -   **Returns** `any` - NodeEntry for the copied node
+-   `createFolder(name: string = null, parentId: string = null): Observable<MinimalNodeEntity>`<br/>
+    Create a new folder in the path.
+    -   `name: string = null` -  Folder name
+    -   `parentId: string = null` -  Parent folder ID
+    -   **Returns** `Observable<MinimalNodeEntity>` - Details of the created folder node
+-   `deleteNode(nodeId: string = null): Observable<any>`<br/>
+    Deletes a node.
+    -   `nodeId: string = null` -  ID of the node to delete
+    -   **Returns** `Observable<any>` - Empty response when the operation is complete
+-   `getDefaultMimeTypeIcon(): string`<br/>
+    Gets a default icon for MIME types with no specific icon.
+    -   **Returns** `string` - Path to the icon file
+-   `getDocumentThumbnailUrl(node: MinimalNodeEntity = null): string`<br/>
+    Get thumbnail URL for the given document node.
+    -   `node: MinimalNodeEntity = null` -  Node to get URL for.
+    -   **Returns** `string` - Thumbnail URL string
+-   `getFolder(folder: string = null, opts?: any = null, includeFields: string[] =  []): Observable<NodePaging>`<br/>
+    Gets the folder node with the specified relative name path below the root node.
+    -   `folder: string = null` -  Path to folder.
+    -   `opts?: any = null` - (Optional) Options.
+    -   `includeFields: string[] =  []` -  Extra information to include (available options are "aspectNames", "isLink" and "association")
+    -   **Returns** `Observable<NodePaging>` - Details of the folder
+-   `getFolderNode(nodeId: string = null, includeFields: string[] =  []): Promise<MinimalNodeEntryEntity>`<br/>
+    Gets a folder node via its node ID.
+    -   `nodeId: string = null` -  ID of the folder node
+    -   `includeFields: string[] =  []` -  Extra information to include (available options are "aspectNames", "isLink" and "association")
+    -   **Returns** `Promise<MinimalNodeEntryEntity>` - Details of the folder
+-   `getMimeTypeIcon(mimeType: string = null): string`<br/>
+    Gets the icon that represents a MIME type.
+    -   `mimeType: string = null` -  MIME type to get the icon for
+    -   **Returns** `string` - Path to the icon file
+-   `hasPermission(node: any = null, permission: PermissionsEnum | string = null): boolean`<br/>
+    Checks if a node has the specified permission.
+    -   `node: any = null` -  Target node
+    -   `permission: PermissionsEnum | string = null` -  Permission level to query
+    -   **Returns** `boolean` - True if the node has the permission, false otherwise
+-   `moveNode(nodeId: string = null, targetParentId: string = null): any`<br/>
+    Move a node to destination node
+    -   `nodeId: string = null` -  The id of the node to be moved
+    -   `targetParentId: string = null` -  The id of the folder where the node will be moved
+    -   **Returns** `any` - NodeEntry for the moved node
 
 ## Details
 

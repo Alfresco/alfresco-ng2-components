@@ -1,18 +1,23 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-04-05
 ---
+
 # Discovery Api service
 
 Gets version and license information for Process Services and Content Services.
 
-## Methods
+## Class members
 
--   `getEcmProductInfo(): any`  
-    Gets product information for Content Services.  
+### Methods
 
--   `getBpmProductInfo(): any`  
-    Gets product information for Process Services.  
+-   `getBpmProductInfo(): any`<br/>
+    Gets product information for Process Services.
+    -   **Returns** `any` - ProductVersionModel containing product details
+-   `getEcmProductInfo(): any`<br/>
+    Gets product information for Content Services.
+    -   **Returns** `any` - ProductVersionModel containing product details
 
 ## Details
 
