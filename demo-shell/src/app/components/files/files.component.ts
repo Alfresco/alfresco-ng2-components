@@ -97,6 +97,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     maxSizeShow = false;
 
     @Input()
+    showVersionComments = true;
+
+    @Input()
     versioning = false;
 
     @Input()
@@ -358,10 +361,11 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     onManageVersions(event) {
         const contentEntry = event.value.entry;
+        const showComments = this.showVersionComments;
 
         if (this.contentService.hasPermission(contentEntry, 'update')) {
             this.dialog.open(VersionManagerDialogAdapterComponent, {
-                data: { contentEntry },
+                data: { contentEntry, showComments },
                 panelClass: 'adf-version-manager-dialog',
                 width: '630px'
             });
