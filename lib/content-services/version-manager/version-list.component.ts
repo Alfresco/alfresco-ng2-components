@@ -79,7 +79,7 @@ export class VersionListComponent implements OnChanges {
         return nodeDownloadUrl.replace('/content', '/versions/' + versionId + '/content');
     }
 
-    private downloadContent(url: string) {
+    downloadContent(url: string) {
         if (url) {
             const link = document.createElement('a');
 

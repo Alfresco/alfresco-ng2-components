@@ -24,6 +24,7 @@ import { AlfrescoApiService } from '@alfresco/adf-core';
 describe('VersionListComponent', () => {
     let component: VersionListComponent;
     let fixture: ComponentFixture<VersionListComponent>;
+    let alfrescoApiService: AlfrescoApiService;
 
     const nodeId = 'test-id';
     const versionId = '1.0';
@@ -44,15 +45,17 @@ describe('VersionListComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(VersionListComponent);
+        alfrescoApiService = TestBed.get(AlfrescoApiService);
 
         component = fixture.componentInstance;
         component.id = nodeId;
+
+        spyOn(component, 'downloadContent').and.stub();
     });
 
     describe('Version history fetching', () => {
 
         it('should use loading bar', () => {
-            const alfrescoApiService = TestBed.get(AlfrescoApiService);
             spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and
                 .callFake(() => Promise.resolve({ list: { entries: []}}));
 
@@ -67,7 +70,6 @@ describe('VersionListComponent', () => {
         });
 
         it('should load the versions for a given id', () => {
-            const alfrescoApiService = TestBed.get(AlfrescoApiService);
             spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and
                 .callFake(() => Promise.resolve({ list: { entries: []}}));
 
@@ -77,9 +79,8 @@ describe('VersionListComponent', () => {
             expect(alfrescoApiService.versionsApi.listVersionHistory).toHaveBeenCalledWith(nodeId);
         });
 
-        it('should show the versions after loading', async(() => {
+        it('should show the versions after loading', (done) => {
             fixture.detectChanges();
-            const alfrescoApiService = TestBed.get(AlfrescoApiService);
             spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and.callFake(() => {
                 return Promise.resolve({ list: { entries: [
                     {
@@ -99,11 +100,11 @@ describe('VersionListComponent', () => {
                 expect(versionFileName).toBe('test-file-name');
                 expect(versionIdText).toBe('1.0');
                 expect(versionComment).toBe('test-version-comment');
+                done();
             });
-        }));
+        });
 
-        it('should NOT show the versions comments if input property is set not to show them', async(() => {
-            const alfrescoApiService = TestBed.get(AlfrescoApiService);
+        it('should NOT show the versions comments if input property is set not to show them', (done) => {
             spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and
                 .callFake(() => Promise.resolve(
                     {
@@ -127,25 +128,23 @@ describe('VersionListComponent', () => {
                 let versionCommentEl = fixture.debugElement.query(By.css('.adf-version-list-item-comment'));
 
                 expect(versionCommentEl).toBeNull();
+                done();
             });
-        }));
+        });
 
         it('should be able to download a version', () => {
             const versionEntry =  { entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' }};
-            const alfrescoApiService = TestBed.get(AlfrescoApiService);
-            spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and
-                .callFake(() => Promise.resolve({ list: { entries: [ versionEntry ] }}));
-            const spyOnDownload = spyOn(alfrescoApiService.contentApi, 'getContentUrl').and.returnValue('the/download/url');
+            spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and.returnValue(Promise.resolve({ list: { entries: [ versionEntry ] }}));
+            spyOn(alfrescoApiService.contentApi, 'getContentUrl').and.returnValue('the/download/url');
 
             fixture.detectChanges();
 
             component.downloadVersion('1.0');
-            expect(spyOnDownload).toHaveBeenCalledWith(nodeId, true);
+            expect(alfrescoApiService.contentApi.getContentUrl).toHaveBeenCalledWith(nodeId, true);
         });
 
         it('should NOT be able to download a version if configured so', () => {
             const versionEntry =  { entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' }};
-            const alfrescoApiService = TestBed.get(AlfrescoApiService);
             spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and
                 .callFake(() => Promise.resolve({ list: { entries: [ versionEntry ] }}));
             const spyOnDownload = spyOn(alfrescoApiService.contentApi, 'getContentUrl').and.stub();
@@ -163,7 +162,6 @@ describe('VersionListComponent', () => {
 
         it('should load the versions for a given id', () => {
             fixture.detectChanges();
-            const alfrescoApiService = TestBed.get(AlfrescoApiService);
             spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and
                 .callFake(() => Promise.resolve({ list: { entries: []}}));
             const spyOnRevertVersion = spyOn(alfrescoApiService.versionsApi, 'revertVersion').and
@@ -175,9 +173,8 @@ describe('VersionListComponent', () => {
             expect(spyOnRevertVersion).toHaveBeenCalledWith(nodeId, versionId, { majorVersion: true, comment: ''});
         });
 
-        it('should reload the version list after a version restore', async(() => {
+        it('should reload the version list after a version restore', (done) => {
             fixture.detectChanges();
-            const alfrescoApiService = TestBed.get(AlfrescoApiService);
             const spyOnListVersionHistory = spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and
                 .callFake(() => Promise.resolve({ list: { entries: []}}));
             spyOn(alfrescoApiService.versionsApi, 'revertVersion').and.callFake(() => Promise.resolve());
@@ -186,7 +183,8 @@ describe('VersionListComponent', () => {
 
             fixture.whenStable().then(() => {
                 expect(spyOnListVersionHistory).toHaveBeenCalledTimes(1);
+                done();
             });
-        }));
+        });
     });
 });
