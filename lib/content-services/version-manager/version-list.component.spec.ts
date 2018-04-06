@@ -149,7 +149,7 @@ describe('VersionListComponent', () => {
                 .callFake(() => Promise.resolve({ list: { entries: [ versionEntry ] }}));
             const spyOnDownload = spyOn(alfrescoApiService.contentApi, 'getContentUrl').and.stub();
 
-            component.enableDownload = false;
+            component.allowDownload = false;
             fixture.detectChanges();
 
             component.downloadVersion('1.0');

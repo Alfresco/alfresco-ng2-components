@@ -38,7 +38,7 @@ export class VersionManagerComponent {
     showComments = true;
 
     @Input()
-    enableDownload = true;
+    allowDownload = true;
 
     @Output()
     uploadSuccess = new EventEmitter();
@@ -52,7 +52,7 @@ export class VersionManagerComponent {
     constructor(config: AppConfigService) {
         this.allowDelete = config.get('adf-version-manager.allowDelete', true);
         this.showComments = config.get('adf-version-manager.allowComments', true);
-        this.enableDownload = config.get('adf-version-manager.allowDownload', true);
+        this.allowDownload = config.get('adf-version-manager.allowDownload', true);
     }
 
     onUploadSuccess(event): void {

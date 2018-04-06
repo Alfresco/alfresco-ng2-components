@@ -362,7 +362,7 @@
                         <adf-version-manager
                             [node]="documentList.selection[0].entry"
                             [showComments]="showVersionComments"
-                            [enableDownload]="enableVersionDownload"
+                            [allowDownload]="allowVersionDownload"
                             [allowDelete]="allowVersionDelete">
                         </adf-version-manager>
                     </ng-container>
@@ -456,7 +456,7 @@
         </section>
 
         <section>
-            <mat-slide-toggle color="primary" [(ngModel)]="enableVersionDownload">
+            <mat-slide-toggle color="primary" [(ngModel)]="allowVersionDownload">
                 {{'APP.ADF_VERSION_MANAGER.ENABLE_DOWNLOAD' | translate}}
             </mat-slide-toggle>
         </section>

@@ -45,7 +45,7 @@ export class VersionListComponent implements OnChanges {
 
     /** Enable/disable possibility to download a version of the current node. */
     @Input()
-    enableDownload = true;
+    allowDownload = true;
 
     /** Toggle version deletion feature.  */
     @Input()
@@ -74,7 +74,7 @@ export class VersionListComponent implements OnChanges {
     }
 
     downloadVersion(versionId: string) {
-        if (this.enableDownload) {
+        if (this.allowDownload) {
             const versionDownloadUrl = this.getVersionContentUrl(this.id, versionId, true);
             this.downloadContent(versionDownloadUrl);
         }

@@ -14,7 +14,7 @@
                 (click)="restore(version.entry.id)">
                 {{ 'ADF_VERSION_LIST.ACTIONS.RESTORE' | translate }}
             </button>
-            <button *ngIf="enableDownload"
+            <button *ngIf="allowDownload"
                 mat-menu-item
                 (click)="downloadVersion(version.entry.id)">
                 {{ 'ADF_VERSION_LIST.ACTIONS.DOWNLOAD' | translate }}
