@@ -65,8 +65,8 @@ export class NodePermissionService {
             });
     }
 
-    getGroupMemeberByGroupName(groupName: string): Observable<GroupMemberPaging> {
-        return Observable.fromPromise(this.apiService.groupsApi.getGroupMembers(groupName));
+    getGroupMemeberByGroupName(groupName: string, opts?: any): Observable<GroupMemberPaging> {
+        return Observable.fromPromise(this.apiService.groupsApi.getGroupMembers(groupName, opts));
     }
 
     private formattedRoleName(displayName, siteName): string {
