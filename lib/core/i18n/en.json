@@ -140,6 +140,12 @@
           "CREATED_DATE": "Created Date",
           "MODIFIER": "Modifier",
           "MODIFIED_DATE": "Modified Date"
+      },
+      "ACTIONS": {
+        "EDIT": "Edit",
+        "SAVE": "Save",
+        "CANCEL": "Cancel",
+        "TOGGLE": "Toggle value"
       }
     }
   },

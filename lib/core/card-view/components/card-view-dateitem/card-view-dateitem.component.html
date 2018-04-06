@@ -14,6 +14,7 @@
                 <span *ngIf="showProperty(); else elseEmptyValueBlock">{{ property.displayValue }}</span>
             </span>
             <mat-datetimepicker-toggle
+                [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                 [attr.data-automation-id]="'datepickertoggle-' + property.key"
                 [for]="datetimePicker">
             </mat-datetimepicker-toggle>
