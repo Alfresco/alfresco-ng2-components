@@ -59,6 +59,10 @@ export class CardViewTextItemComponent implements OnChanges {
         return this.property.clickable;
     }
 
+    hasIcon(): boolean {
+        return !!this.property.icon;
+    }
+
     hasErrors(): number {
         return this.errorMessages && this.errorMessages.length;
     }

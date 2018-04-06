@@ -24,6 +24,12 @@
             }
         }
 
+        &-textitem-clickable {
+            &:hover mat-icon {
+                opacity: 1;
+            }
+        }
+
         &-textitem-clickable-value {
             cursor: pointer;
             color: mat-color($primary);
