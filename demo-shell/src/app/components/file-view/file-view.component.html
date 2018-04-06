@@ -1,7 +1,7 @@
 <ng-container *ngIf="nodeId">
 
     <ng-template let-node="node" #sidebarTemplate>
-        <adf-info-drawer title="Details">
+        <adf-info-drawer [title]="'Details'">
             <adf-info-drawer-tab label="Comments">
                 <adf-comments [nodeId]="nodeId"></adf-comments>
             </adf-info-drawer-tab>
