@@ -10,6 +10,9 @@ Displays and manages dialogs for selecting content to open, copy or upload.
 
 ## Methods
 
+-   `openLockNodeDialog(nodeEntry: MinimalNodeEntryEntity): Observable<string>`
+    Opens a dialog to lock or unlock file
+    -   `nodeEntry` - Item to lock or unlock.
 -   `openFileBrowseDialogByFolderId(folderNodeId: string): Observable<MinimalNodeEntryEntity[]>`  
     Opens a file browser at a chosen folder location.   
     -   `folderNodeId` - ID of the folder to use 
