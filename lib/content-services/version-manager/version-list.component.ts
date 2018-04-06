@@ -71,10 +71,19 @@ export class VersionListComponent implements OnChanges {
         });
     }
 
-    downloadVersion(versionId) {
+    downloadVersion(versionId: string) {
         if (this.enableDownload) {
             const versionDownloadUrl = this.getVersionContentUrl(this.id, versionId, true);
             this.downloadContent(versionDownloadUrl);
+        }
+    }
+
+    async deleteVersion(versionId: string) {
+        if (this.allowDelete) {
+            try {
+                await this.alfrescoApi.versionsApi.deleteVersion(this.id, versionId);
+            } catch {}
+            this.loadVersionHistory();
         }
     }
 

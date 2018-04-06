@@ -20,6 +20,7 @@
                 {{ 'ADF_VERSION_LIST.ACTIONS.DOWNLOAD' | translate }}
             </button>
             <button *ngIf="allowDelete"
+                (click)="deleteVersion(version.entry.id)"
                 mat-menu-item>
                 {{ 'ADF_VERSION_LIST.ACTIONS.DELETE' | translate }}
             </button>
