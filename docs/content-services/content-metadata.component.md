@@ -31,12 +31,6 @@ The different aspects and their properties to be shown can be configured as appl
 | multi | boolean | false | multi parameter of the underlying material expansion panel |
 | preset | string | "*" | The name of the metadata preset, which defines aspects and their properties |
 
-### Events
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| nodeUpdated | `EventEmitter<MinimalNodeEntryEntity>` | Emitted when underlying node gets updated. |
-
 ## Details
 
 ### Application config presets
