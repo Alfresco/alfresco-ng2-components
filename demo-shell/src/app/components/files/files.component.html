@@ -362,7 +362,8 @@
                         <adf-version-manager
                             [node]="documentList.selection[0].entry"
                             [showComments]="showVersionComments"
-                            [enableDownload]="enableVersionDownload">
+                            [enableDownload]="enableVersionDownload"
+                            [allowDelete]="allowVersionDelete">
                         </adf-version-manager>
                     </ng-container>
                 </ng-container>
@@ -437,23 +438,32 @@
         </section>
 
         <section>
-            <mat-slide-toggle [color]="'primary'" [(ngModel)]="versioning">{{'DOCUMENT_LIST.ENABLE_VERSIONING' |
-                translate}}
+            <mat-slide-toggle [color]="'primary'" [(ngModel)]="versioning">
+                {{'DOCUMENT_LIST.ENABLE_VERSIONING' | translate}}
             </mat-slide-toggle>
         </section>
 
         <section>
-            <mat-slide-toggle [color]="'primary'" [(ngModel)]="infiniteScrolling">
+            <mat-slide-toggle color="primary" [(ngModel)]="infiniteScrolling">
                 {{'DOCUMENT_LIST.ENABLE_INFINITE_SCROLL' | translate}}
             </mat-slide-toggle>
         </section>
 
         <section>
-            <mat-slide-toggle [color]="'primary'" [(ngModel)]="showVersionComments">
-                {{'DOCUMENT_LIST.SHOW_VERSION_COMMENTS' | translate}}
+            <mat-slide-toggle color="primary" [(ngModel)]="showVersionComments">
+                {{'APP.ADF_VERSION_MANAGER.SHOW_COMMENTS' | translate}}
             </mat-slide-toggle>
-            <mat-slide-toggle [color]="'primary'" [(ngModel)]="enableVersionDownload">
-                {{'DOCUMENT_LIST.ENABLE_VERSION_DOWNLOAD' | translate}}
+        </section>
+
+        <section>
+            <mat-slide-toggle color="primary" [(ngModel)]="enableVersionDownload">
+                {{'APP.ADF_VERSION_MANAGER.ENABLE_DOWNLOAD' | translate}}
+            </mat-slide-toggle>
+        </section>
+
+        <section>
+            <mat-slide-toggle color="primary" [(ngModel)]="allowVersionDelete">
+                {{'APP.ADF_VERSION_MANAGER.ALLOW_DELETE' | translate}}
             </mat-slide-toggle>
         </section>
 
