@@ -1,46 +1,58 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-04-06
 ---
+
 # Nodes Api service
 
 Accesses and manipulates ACS document nodes using their node IDs.
 
-## Methods
+## Class members
 
--   `getNode(nodeId: string, options: any = {}): Observable<MinimalNodeEntryEntity>`  
-    Gets the stored information about a node.  
-    -   `nodeId` - ID of the target node
-    -   `options` - Optional parameters supported by JSAPI
--   `getNodeChildren(nodeId: string, options: any = {}): Observable<NodePaging>`  
-    Gets the items contained in a folder node.  
-    -   `nodeId` - ID of the target node
-    -   `options` - Optional parameters supported by JSAPI
--   `createNode(parentNodeId: string, nodeBody: any, options: any = {}): Observable<MinimalNodeEntryEntity>`  
-    Creates a new document node inside a folder.  
-    -   `parentNodeId` - ID of the parent folder node
-    -   `nodeBody` - Data for the new node
-    -   `options` - Optional parameters supported by JSAPI
--   `createFolder(parentNodeId: string, nodeBody: any, options: any = {}): Observable<MinimalNodeEntryEntity>`  
-    Creates a new folder node inside a parent folder.  
-    -   `parentNodeId` - ID of the parent folder node
-    -   `nodeBody` - Data for the new folder
-    -   `options` - Optional parameters supported by JSAPI
--   `updateNode(nodeId: string, nodeBody: any, options: any = {}): Observable<MinimalNodeEntryEntity>`  
-    Updates the information about a node.  
-    -   `nodeId` - ID of the target node
-    -   `nodeBody` - New data for the node
-    -   `options` - Optional parameters supported by JSAPI
--   `deleteNode(nodeId: string, options: any = {}): Observable<void>`  
-    Moves a node to the trashcan.  
-    -   `nodeId` - ID of the target node
-    -   `options` - Optional parameters supported by JSAPI
--   `restoreNode(nodeId: string): Observable<MinimalNodeEntryEntity>`  
-    Restores a node previously moved to the trashcan.  
-    -   `nodeId` - ID of the node to restore
--   `handleError(error: any): Observable<any>`  
-    Reports an error.  
-    -   `error` - Object representing the error
+### Methods
+
+-   `createFolder(parentNodeId: string = null, nodeBody: any = null, options: any =  {}): Observable<MinimalNodeEntryEntity>`<br/>
+    Creates a new folder node inside a parent folder.
+    -   `parentNodeId: string = null` -  ID of the parent folder node
+    -   `nodeBody: any = null` -  Data for the new folder
+    -   `options: any =  {}` -  Optional parameters supported by JSAPI
+    -   **Returns** `Observable<MinimalNodeEntryEntity>` - Details of the new folder
+-   `createNode(parentNodeId: string = null, nodeBody: any = null, options: any =  {}): Observable<MinimalNodeEntryEntity>`<br/>
+    Creates a new document node inside a folder.
+    -   `parentNodeId: string = null` -  ID of the parent folder node
+    -   `nodeBody: any = null` -  Data for the new node
+    -   `options: any =  {}` -  Optional parameters supported by JSAPI
+    -   **Returns** `Observable<MinimalNodeEntryEntity>` - Details of the new node
+-   `deleteNode(nodeId: string = null, options: any =  {}): Observable<void>`<br/>
+    Moves a node to the trashcan.
+    -   `nodeId: string = null` -  ID of the target node
+    -   `options: any =  {}` -  Optional parameters supported by JSAPI
+    -   **Returns** `Observable<void>` - Empty result that notifies when the deletion is complete
+-   `getNode(nodeId: string = null, options: any =  {}): Observable<MinimalNodeEntryEntity>`<br/>
+    Gets the stored information about a node.
+    -   `nodeId: string = null` -  ID of the target node
+    -   `options: any =  {}` -  Optional parameters supported by JSAPI
+    -   **Returns** `Observable<MinimalNodeEntryEntity>` - Node information
+-   `getNodeChildren(nodeId: string = null, options: any =  {}): Observable<NodePaging>`<br/>
+    Gets the items contained in a folder node.
+    -   `nodeId: string = null` -  ID of the target node
+    -   `options: any =  {}` -  Optional parameters supported by JSAPI
+    -   **Returns** `Observable<NodePaging>` - List of child items from the folder
+-   `handleError(error: any = null): Observable<any>`<br/>
+    Reports an error.
+    -   `error: any = null` -  Object representing the error
+    -   **Returns** `Observable<any>` - Error information
+-   `restoreNode(nodeId: string = null): Observable<MinimalNodeEntryEntity>`<br/>
+    Restores a node previously moved to the trashcan.
+    -   `nodeId: string = null` -  ID of the node to restore
+    -   **Returns** `Observable<MinimalNodeEntryEntity>` - Details of the restored node
+-   `updateNode(nodeId: string = null, nodeBody: any = null, options: any =  {}): Observable<MinimalNodeEntryEntity>`<br/>
+    Updates the information about a node.
+    -   `nodeId: string = null` -  ID of the target node
+    -   `nodeBody: any = null` -  New data for the node
+    -   `options: any =  {}` -  Optional parameters supported by JSAPI
+    -   **Returns** `Observable<MinimalNodeEntryEntity>` - Updated node information
 
 ## Details
 
