@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, OnInit, SimpleChanges, SimpleChange, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, SimpleChange, ViewEncapsulation, EventEmitter, Output } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { CardViewItem, NodesApiService, LogService, CardViewUpdateService } from '@alfresco/adf-core';
@@ -49,6 +49,9 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
     @Input()
     preset: string;
 
+    @Output()
+    nodeUpdated = new EventEmitter<MinimalNodeEntryEntity>();
+
     nodeHasBeenUpdated: boolean = false;
     basicProperties$: Observable<CardViewItem[]>;
     groupedProperties$: Observable<CardViewGroup[]>;
@@ -65,6 +68,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
                 (node) => {
                     this.nodeHasBeenUpdated = true;
                     this.node = node;
+                    this.nodeUpdated.next(node);
                 },
                 error => this.logService.error(error)
             );

@@ -29,7 +29,13 @@ The different aspects and their properties to be shown can be configured as appl
 | displayEmpty | boolean | false | Display empty values in card view or not |
 | readOnly | boolean | true | Whether the edit button to be shown or not |
 | multi | boolean | false | multi parameter of the underlying material expansion panel |
-| preset | string | "*" | The metadata preset's name, which defines aspects and their properties |
+| preset | string | "*" | The name of the metadata preset, which defines aspects and their properties |
+
+### Events
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| nodeUpdated | `EventEmitter<MinimalNodeEntryEntity>` | Emitted when underlying node gets updated. |
 
 ## Details
 
@@ -57,7 +63,7 @@ If you don't have any preset configured manually in you application config, this
 
 ### Aspect oriented config
 
-With this type of configuration you are able to "whitelist" aspects and properties for a preset, but everything will be grouped by aspects and there is no further way to group properties. If you want to group different properties in groups you define, scroll down a bit and have a look at on the layout oriented configruration.
+With this type of configuration you are able to "whitelist" aspects and properties for a preset, but everything will be grouped by aspects and there is no further way to group properties. If you want to group different properties in groups you define, scroll down a bit and have a look at on the layout oriented configuration.
 
 #### Whitelisting only a few aspects in the default preset
 
