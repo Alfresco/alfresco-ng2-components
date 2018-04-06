@@ -9,8 +9,21 @@
         <p mat-line class="adf-version-list-item-comment" *ngIf="showComments">{{version.entry.versionComment}}</p>
 
         <mat-menu #versionMenu="matMenu" yPosition="below" xPosition="before">
-            <button mat-menu-item (click)="restore(version.entry.id)"> Restore </button>
-            <button mat-menu-item (click)="downloadVersion(version.entry.id)" title="Download" *ngIf="enableDownload"> Download </button>
+            <button
+                mat-menu-item
+                (click)="restore(version.entry.id)">
+                {{ 'ADF_VERSION_LIST.ACTIONS.RESTORE' | translate }}
+            </button>
+            <button *ngIf="allowDownload"
+                mat-menu-item
+                (click)="downloadVersion(version.entry.id)">
+                {{ 'ADF_VERSION_LIST.ACTIONS.DOWNLOAD' | translate }}
+            </button>
+            <button *ngIf="allowDelete"
+                (click)="deleteVersion(version.entry.id)"
+                mat-menu-item>
+                {{ 'ADF_VERSION_LIST.ACTIONS.DELETE' | translate }}
+            </button>
         </mat-menu>
 
         <button mat-icon-button [matMenuTriggerFor]="versionMenu">

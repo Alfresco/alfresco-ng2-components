@@ -18,6 +18,7 @@
 import { Component, Input, ViewEncapsulation, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { VersionListComponent } from './version-list.component';
+import { AppConfigService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-version-manager',
@@ -31,19 +32,28 @@ export class VersionManagerComponent {
     node: MinimalNodeEntryEntity;
 
     @Input()
-    showComments: boolean = true;
+    allowDelete = true;
 
     @Input()
-    enableDownload: boolean = true;
+    showComments = true;
+
+    @Input()
+    allowDownload = true;
 
     @Output()
-    uploadSuccess: EventEmitter<any> = new EventEmitter();
+    uploadSuccess = new EventEmitter();
 
     @Output()
-    uploadError: EventEmitter<any> = new EventEmitter();
+    uploadError = new EventEmitter();
 
     @ViewChild('versionList')
     versionListComponent: VersionListComponent;
+
+    constructor(config: AppConfigService) {
+        this.allowDelete = config.get('adf-version-manager.allowDelete', true);
+        this.showComments = config.get('adf-version-manager.allowComments', true);
+        this.allowDownload = config.get('adf-version-manager.allowDownload', true);
+    }
 
     onUploadSuccess(event): void {
         this.versionListComponent.loadVersionHistory();

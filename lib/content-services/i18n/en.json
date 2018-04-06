@@ -1,4 +1,27 @@
 {
+  "ADF_VERSION_LIST": {
+    "ACTIONS": {
+      "RESTORE": "Restore",
+      "DELETE": "Delete",
+      "DOWNLOAD": "Download",
+      "UPLOAD": {
+        "TITLE": "Upload new version",
+        "TOOLTIP": "Restriction: upload file with the same name to create a new version of it"
+      }
+    },
+    "CONFIRM_DELETE": {
+      "TITLE": "Delete version",
+      "MESSAGE": "Deleted file versions can not be restored. Delete?",
+      "YES_LABEL": "Yes",
+      "NO_LABEL": "No"
+    }
+  },
+  "ADF_CONFIRM_DIALOG": {
+    "TITLE": "Confirm",
+    "ACTION": "Do you want to proceed?",
+    "YES_LABEL": "Yes",
+    "NO_LABEL": "No"
+  },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "This folder is empty"

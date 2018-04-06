@@ -23,6 +23,7 @@ import { DownloadZipDialogComponent } from './download-zip.dialog';
 import { FolderDialogComponent } from './folder.dialog';
 import { NodeLockDialogComponent } from './node-lock.dialog';
 import { ShareDialogComponent } from './share.dialog';
+import { ConfirmDialogComponent } from './confirm.dialog';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
@@ -46,19 +47,22 @@ import { MatMomentDatetimeModule } from '@mat-datetimepicker/moment';
         DownloadZipDialogComponent,
         FolderDialogComponent,
         NodeLockDialogComponent,
-        ShareDialogComponent
+        ShareDialogComponent,
+        ConfirmDialogComponent
     ],
     exports: [
         DownloadZipDialogComponent,
         FolderDialogComponent,
         NodeLockDialogComponent,
-        ShareDialogComponent
+        ShareDialogComponent,
+        ConfirmDialogComponent
     ],
     entryComponents: [
         DownloadZipDialogComponent,
         FolderDialogComponent,
         NodeLockDialogComponent,
-        ShareDialogComponent
+        ShareDialogComponent,
+        ConfirmDialogComponent
     ]
 })
 export class DialogModule {}
