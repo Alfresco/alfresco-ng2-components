@@ -1,7 +1,7 @@
 {
   "name": "alfresco-components",
   "description": "Alfresco Angular components",
-  "version": "2.3.0-beta5",
+  "version": "2.3.0-beta7",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "clean": "rimraf node_modules",
@@ -71,7 +71,7 @@
     "@mat-datetimepicker/core": "^1.0.1",
     "@mat-datetimepicker/moment": "^1.0.1",
     "@ngx-translate/core": "9.1.1",
-    "alfresco-js-api": "^2.3.0-7186e9787152f396d8c6c6dc191578ac486a1986",
+    "alfresco-js-api": "2.3.0-beta7",
     "chart.js": "2.5.0",
     "core-js": "2.4.1",
     "hammerjs": "2.0.8",
