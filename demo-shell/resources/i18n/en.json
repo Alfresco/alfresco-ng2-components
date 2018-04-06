@@ -9,7 +9,7 @@
     "ADF_VERSION_MANAGER": {
       "ALLOW_DELETE": "Allow delete",
       "SHOW_COMMENTS" : "Show comments on versions",
-      "ENABLE_DOWNLOAD" :"Enable version download"
+      "ALLOW_DOWNLOAD" :"Enable version download"
     }
   },
     "title": "Welcome",
