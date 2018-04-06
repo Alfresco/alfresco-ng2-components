@@ -165,6 +165,7 @@
         "NODE_LIST":"Tag list By Node ID"
     },
     "DEMO_PERMISSION": {
-      "INHERIT_PERMISSION_BUTTON" :"Inherit Permission"
+       "INHERIT_PERMISSION_BUTTON" :"Inherit Permission" ,
+       "INHERITED_PERMISSIONS_BUTTON" : "Permission Inherited"
     }
 }

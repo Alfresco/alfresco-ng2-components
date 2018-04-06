@@ -41,7 +41,7 @@ export class InheritPermissionDirective {
     onInheritPermissionClicked() {
         this.nodeService.getNode(this.nodeId).subscribe((node: MinimalNodeEntryEntity) => {
             const nodeBody = { permissions : {isInheritanceEnabled : !node.permissions.isInheritanceEnabled} };
-            this.nodeService.updateNode(this.nodeId, nodeBody).subscribe((nodeUpdated: MinimalNodeEntryEntity) => {
+            this.nodeService.updateNode(this.nodeId, nodeBody, {include: ['permissions'] }).subscribe((nodeUpdated: MinimalNodeEntryEntity) => {
                 this.updated.emit(nodeUpdated);
             });
         });
