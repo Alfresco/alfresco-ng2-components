@@ -32,18 +32,22 @@ export class VersionListComponent implements OnChanges {
 
     private versionsApi: VersionsApi;
     versions: any = [];
-    isLoading: boolean = true;
+    isLoading = true;
 
     /** ID of the node whose version history you want to display. */
     @Input()
     id: string;
 
     @Input()
-    showComments: boolean = true;
+    showComments = true;
 
     /** Enable/disable possibility to download a version of the current node. */
     @Input()
-    enableDownload: boolean = true;
+    enableDownload = true;
+
+    /** Toggle version deletion feature.  */
+    @Input()
+    allowDelete = true;
 
     constructor(private alfrescoApi: AlfrescoApiService) {
         this.versionsApi = this.alfrescoApi.versionsApi;

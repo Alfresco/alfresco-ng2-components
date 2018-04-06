@@ -1,4 +1,15 @@
 {
+  "ADF_VERSION_LIST": {
+    "ACTIONS": {
+      "RESTORE": "Restore",
+      "DELETE": "Delete",
+      "DOWNLOAD": "Download",
+      "UPLOAD": {
+        "TITLE": "Upload new version",
+        "TOOLTIP": "Restriction: upload file with the same name to create a new version of it"
+      }
+    }
+  },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "This folder is empty"
