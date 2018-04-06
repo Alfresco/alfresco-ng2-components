@@ -18,7 +18,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges, SimpleChange, ViewEncapsulation, EventEmitter, Output } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
-import { CardViewItem, NodesApiService, LogService, CardViewUpdateService } from '@alfresco/adf-core';
+import { CardViewItem, LogService, CardViewUpdateService, AlfrescoApiService } from '@alfresco/adf-core';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { CardViewGroup } from '../../interfaces/content-metadata.interfaces';
 
@@ -49,16 +49,13 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
     @Input()
     preset: string;
 
-    @Output()
-    nodeUpdated = new EventEmitter<MinimalNodeEntryEntity>();
-
     nodeHasBeenUpdated: boolean = false;
     basicProperties$: Observable<CardViewItem[]>;
     groupedProperties$: Observable<CardViewGroup[]>;
 
     constructor(private contentMetadataService: ContentMetadataService,
                 private cardViewUpdateService: CardViewUpdateService,
-                private nodesApi: NodesApiService,
+                private api: AlfrescoApiService,
                 private logService: LogService) {}
 
     ngOnInit() {
@@ -68,7 +65,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
                 (node) => {
                     this.nodeHasBeenUpdated = true;
                     this.node = node;
-                    this.nodeUpdated.next(node);
+                    this.api.nodeUpdated.next(node);
                 },
                 error => this.logService.error(error)
             );
@@ -86,6 +83,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
     }
 
     private saveNode({ changed: nodeBody }): Observable<MinimalNodeEntryEntity> {
-        return this.nodesApi.updateNode(this.node.id, nodeBody);
+        return Observable.fromPromise(
+            this.api.nodesApi
+                .updateNode(this.node.id, nodeBody)
+                .then(entity => entity.entry)
+        );
     }
 }
