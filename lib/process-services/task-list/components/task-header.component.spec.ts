@@ -90,8 +90,22 @@ describe('TaskHeaderComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            let formNameEl = fixture.debugElement.query(By.css('[data-automation-id="header-assignee"] .adf-property-value'));
+            let formNameEl = fixture.debugElement.query(By.css('[data-automation-id="header-assignee"] .adf-textitem-clickable-value'));
             expect(formNameEl.nativeElement.innerText).toBe('Wilbur Adams');
+        });
+    }));
+
+    it('should display clickable edit icon', async(() => {
+        component.refreshData();
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            let formNameEl = fixture.debugElement.query(By.css('[data-automation-id="header-assignee"] .adf-textitem-clickable-value'));
+            let iconE = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-create"]`));
+            expect(formNameEl).not.toBeNull();
+            expect(iconE).not.toBeNull();
+            expect(formNameEl.nativeElement.innerText).toBe('Wilbur Adams');
+            expect(iconE.nativeElement.innerText.trim()).toBe('create');
         });
     }));
 
@@ -101,7 +115,7 @@ describe('TaskHeaderComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-assignee"] .adf-property-value'));
+            let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-assignee"] .adf-textitem-clickable-value'));
             expect(valueEl.nativeElement.innerText).toBe('ADF_TASK_LIST.PROPERTIES.ASSIGNEE_DEFAULT');
         });
 
