@@ -16,15 +16,18 @@
  */
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { VersionListComponent } from './version-list.component';
 import { AlfrescoApiService } from '@alfresco/adf-core';
+import { MatDialog } from '@angular/material';
+import { Observable } from 'rxjs/Observable';
 
 describe('VersionListComponent', () => {
     let component: VersionListComponent;
     let fixture: ComponentFixture<VersionListComponent>;
     let alfrescoApiService: AlfrescoApiService;
+    let dialog: MatDialog;
 
     const nodeId = 'test-id';
     const versionId = '1.0';
@@ -46,12 +49,80 @@ describe('VersionListComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(VersionListComponent);
         alfrescoApiService = TestBed.get(AlfrescoApiService);
+        dialog = TestBed.get(MatDialog);
 
         component = fixture.componentInstance;
         component.id = nodeId;
 
         spyOn(component, 'downloadContent').and.stub();
     });
+
+    it('should raise confirmation dialog on delete', () => {
+        spyOn(dialog, 'open').and.returnValue({
+            afterClosed() {
+                return Observable.of(false)
+            }
+        });
+
+        component.allowDelete = true;
+        component.deleteVersion('1');
+
+        expect(dialog.open).toHaveBeenCalled();
+    });
+
+    it('should delete the version if user confirms', () => {
+        spyOn(dialog, 'open').and.returnValue({
+            afterClosed() {
+                return Observable.of(true)
+            }
+        });
+
+        spyOn(alfrescoApiService.versionsApi, 'deleteVersion').and.returnValue(Promise.resolve(true));
+
+        component.id = '0';
+        component.allowDelete = true;
+        component.deleteVersion('1');
+
+        expect(dialog.open).toHaveBeenCalled();
+        expect(alfrescoApiService.versionsApi.deleteVersion).toHaveBeenCalledWith('0', '1');
+    });
+
+    it('should not delete version if user rejects', () => {
+        spyOn(dialog, 'open').and.returnValue({
+            afterClosed() {
+                return Observable.of(false)
+            }
+        });
+
+        spyOn(alfrescoApiService.versionsApi, 'deleteVersion').and.returnValue(Promise.resolve(true));
+
+        component.id = '0';
+        component.allowDelete = true;
+        component.deleteVersion('1');
+
+        expect(dialog.open).toHaveBeenCalled();
+        expect(alfrescoApiService.versionsApi.deleteVersion).not.toHaveBeenCalled();
+    });
+
+    it('should reload list once a version is deleted', fakeAsync(() => {
+        spyOn(component, 'loadVersionHistory').and.stub();
+
+        spyOn(dialog, 'open').and.returnValue({
+            afterClosed() {
+                return Observable.of(true)
+            }
+        });
+
+        spyOn(alfrescoApiService.versionsApi, 'deleteVersion').and.returnValue(Promise.resolve(true));
+
+        component.id = '0';
+        component.allowDelete = true;
+        component.deleteVersion('1');
+
+        tick()
+
+        expect(component.loadVersionHistory).toHaveBeenCalled();
+    }));
 
     describe('Version history fetching', () => {
 
@@ -149,7 +220,7 @@ describe('VersionListComponent', () => {
                 .callFake(() => Promise.resolve({ list: { entries: [ versionEntry ] }}));
             const spyOnDownload = spyOn(alfrescoApiService.contentApi, 'getContentUrl').and.stub();
 
-            component.enableDownload = false;
+            component.allowDownload = false;
             fixture.detectChanges();
 
             component.downloadVersion('1.0');

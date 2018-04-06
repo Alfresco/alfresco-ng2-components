@@ -468,6 +468,15 @@
               "clientId": { "type": "string" },
               "secret": { "type": "string" }
           }
+        },
+        "adf-version-manager": {
+          "description": "Configuration parameters for Version Manager component",
+          "type": "object",
+          "properties": {
+            "allowComments": { "type": "boolean" },
+            "allowDownload": { "type": "boolean" },
+            "allowDelete": { "type": "boolean" }
+          }
         }
     }
 }

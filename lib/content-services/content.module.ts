@@ -54,19 +54,19 @@ import { SearchQueryBuilderService } from './search/search-query-builder.service
         WebScriptModule,
         FormsModule,
         ReactiveFormsModule,
+        DialogModule,
         SearchModule,
         DocumentListModule,
         UploadModule,
         MaterialModule,
         SitesDropdownModule,
         BreadcrumbModule,
-        VersionManagerModule,
         ContentNodeSelectorModule,
         ContentMetadataModule,
-        DialogModule,
         FolderDirectiveModule,
         ContentDirectiveModule,
-        PermissionManagerModule
+        PermissionManagerModule,
+        VersionManagerModule
     ],
     providers: [
         {
@@ -95,13 +95,13 @@ import { SearchQueryBuilderService } from './search/search-query-builder.service
         SearchModule,
         SitesDropdownModule,
         BreadcrumbModule,
-        VersionManagerModule,
         ContentNodeSelectorModule,
         ContentMetadataModule,
         DialogModule,
         FolderDirectiveModule,
         ContentDirectiveModule,
-        PermissionManagerModule
+        PermissionManagerModule,
+        VersionManagerModule
     ]
 })
 export class ContentModule {

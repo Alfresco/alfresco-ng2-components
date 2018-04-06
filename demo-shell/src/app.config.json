@@ -484,5 +484,10 @@
                 "exif:exif": "*"
             }
         }
+    },
+    "adf-version-manager": {
+      "allowComments": true,
+      "allowDownload": true,
+      "allowDelete": true
     }
 }
