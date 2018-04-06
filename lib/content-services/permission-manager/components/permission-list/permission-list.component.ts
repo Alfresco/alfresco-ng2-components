@@ -80,13 +80,20 @@ export class PermissionListComponent implements OnInit {
         return allPermissions;
     }
 
-    saveNewRole(event: any, permissionRow: PermissionElement) {
-        let updatedPermissionRole: PermissionElement = new PermissionElement(permissionRow);
-        updatedPermissionRole.name = event.value;
+    saveNewRole(event: any, permissionRow: PermissionDisplayModel) {
+        let updatedPermissionRole: PermissionElement = this.buildUpdatedPermission(event.value, permissionRow);
         this.nodePermissionService.updatePermissionRoles(this.actualNode, updatedPermissionRole)
             .subscribe((node: MinimalNodeEntryEntity) => {
                 this.update.emit(updatedPermissionRole);
             });
+    }
+
+    private buildUpdatedPermission(newRole: string, permissionRow: PermissionDisplayModel): PermissionElement {
+        let permissionRole: PermissionElement = {};
+        permissionRole.accessStatus = permissionRow.accessStatus;
+        permissionRole.name = newRole;
+        permissionRole.authorityId = permissionRow.authorityId;
+        return permissionRole;
     }
 
 }

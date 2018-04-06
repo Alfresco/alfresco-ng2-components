@@ -22,8 +22,7 @@ import { MinimalNodeEntryEntity, PermissionElement } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { fakeEmptyResponse, fakeNodeWithOnlyLocally, fakeSiteRoles, fakeSiteNodeResponse } from '../../mock/permission-list.component.mock';
 
-/*tslint:disable:ban*/
-fdescribe('Node Permission Service', () => {
+describe('NodePermissionService', () => {
 
     let service: NodePermissionService,
         nodeService: NodesApiService,
@@ -77,11 +76,13 @@ fdescribe('Node Permission Service', () => {
     }));
 
     it('should be able to update a locally set permission role', async(() => {
-        const fakePermission = {
+        const fakeAccessStatus: any = 'DENIED';
+        const fakePermission: PermissionElement = {
             'authorityId': 'GROUP_EVERYONE',
             'name': 'Contributor',
-            'accessStatus': PermissionElement.AccessStatusEnum.DENIED
+            'accessStatus' : fakeAccessStatus
         };
+
         spyOn(nodeService, 'updateNode').and.callFake((nodeId, permissionBody) => returnUpdatedNode(nodeId, permissionBody));
 
         service.updatePermissionRoles(fakeNodeWithOnlyLocally, fakePermission).subscribe((node: MinimalNodeEntryEntity) => {

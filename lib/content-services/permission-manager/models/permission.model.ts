@@ -17,14 +17,19 @@
 
 import { PermissionElement } from 'alfresco-js-api';
 
-export class PermissionDisplayModel extends PermissionElement {
+export class PermissionDisplayModel implements PermissionElement {
 
+    authorityId?: string;
+    name?: string;
+    accessStatus?: PermissionElement.AccessStatusEnum;
     isInherited: boolean = false;
     icon: string;
 
     constructor(obj?: any) {
-        super(obj);
         if (obj) {
+            this.authorityId = obj.authorityId;
+            this.name = obj.name;
+            this.accessStatus = obj.accessStatus;
             this.isInherited = obj.isInherited !== null && obj.isInherited !== undefined ? obj.isInherited : false;
             this.icon = obj.icon ? obj.icon : 'lock_open';
         }
