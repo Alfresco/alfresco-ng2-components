@@ -1,4 +1,12 @@
 {
+  "APP": {
+    "INFO_DRAWER": {
+      "TITLE": "Details",
+      "COMMENTS": "Comments",
+      "PROPERTIES": "Properties",
+      "VERSIONS": "Versions"
+    }
+  },
     "title": "Welcome",
     "VERSION": {
       "NO_PERMISSION": "You don't have permission to manage versions of this content",
