@@ -101,7 +101,7 @@ import { SearchQueryBuilderService } from './search/search-query-builder.service
         FolderDirectiveModule,
         ContentDirectiveModule,
         PermissionManagerModule,
-        VersionManagerModule,
+        VersionManagerModule
     ]
 })
 export class ContentModule {
