@@ -33,7 +33,7 @@ import {
     AuthenticationService, AppConfigService, ContentService, TranslationService,
     FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
     UploadService, DataColumn, DataRow, UserPreferencesService,
-    PaginationComponent, FormValues, DisplayMode, UserPreferenceValues
+    PaginationComponent, FormValues, DisplayMode, UserPreferenceValues, AlfrescoApiService
 } from '@alfresco/adf-core';
 
 import { DocumentListComponent, PermissionStyleModel } from '@alfresco/adf-content-services';
@@ -157,10 +157,10 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     infiniteScrolling: boolean;
     supportedPages: number[];
 
-    private onCreateFolder: Subscription;
-    private onEditFolder: Subscription;
+    private subscriptions: Subscription[] = [];
 
     constructor(private changeDetector: ChangeDetectorRef,
+                private api: AlfrescoApiService,
                 private notificationService: NotificationService,
                 private uploadService: UploadService,
                 private contentService: ContentService,
@@ -216,12 +216,16 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             });
         }
 
+        this.subscriptions = this.subscriptions.concat([
+            this.uploadService.fileUploadComplete.asObservable().debounceTime(300).subscribe(value => this.onFileUploadEvent(value)),
+            this.uploadService.fileUploadDeleted.subscribe((value) => this.onFileUploadEvent(value)),
+            this.contentService.folderCreated.subscribe(value => this.onFolderCreated(value)),
+            this.contentService.folderCreate.subscribe(value => this.onFolderAction(value)),
+            this.contentService.folderEdit.subscribe(value => this.onFolderAction(value)),
+            this.api.nodeUpdated.asObservable().debounceTime(300).subscribe(() => this.documentList.reload())
+        ]);
+
         // this.disableDragArea = false;
-        this.uploadService.fileUploadComplete.asObservable().debounceTime(300).subscribe(value => this.onFileUploadEvent(value));
-        this.uploadService.fileUploadDeleted.subscribe((value) => this.onFileUploadEvent(value));
-        this.contentService.folderCreated.subscribe(value => this.onFolderCreated(value));
-        this.onCreateFolder = this.contentService.folderCreate.subscribe(value => this.onFolderAction(value));
-        this.onEditFolder = this.contentService.folderEdit.subscribe(value => this.onFolderAction(value));
         this.supportedPages = this.supportedPages ? this.supportedPages : this.preference.getDefaultPageSizes();
 
         // this.permissionsStyle.push(new PermissionStyleModel('document-list__create', PermissionsEnum.CREATE));
@@ -229,8 +233,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.onCreateFolder.unsubscribe();
-        this.onEditFolder.unsubscribe();
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 
     ngOnChanges(changes: SimpleChanges) {
