@@ -18,6 +18,8 @@
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
 import { VersionsApi } from 'alfresco-js-api';
+import { MatDialog } from '@angular/material';
+import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
 
 @Component({
     selector: 'adf-version-list',
@@ -49,7 +51,7 @@ export class VersionListComponent implements OnChanges {
     @Input()
     allowDelete = true;
 
-    constructor(private alfrescoApi: AlfrescoApiService) {
+    constructor(private alfrescoApi: AlfrescoApiService, private dialog: MatDialog) {
         this.versionsApi = this.alfrescoApi.versionsApi;
     }
 
@@ -78,12 +80,27 @@ export class VersionListComponent implements OnChanges {
         }
     }
 
-    async deleteVersion(versionId: string) {
+    deleteVersion(versionId: string) {
         if (this.allowDelete) {
-            try {
-                await this.alfrescoApi.versionsApi.deleteVersion(this.id, versionId);
-            } catch {}
-            this.loadVersionHistory();
+            const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+                data: {
+                    title: 'ADF_VERSION_LIST.CONFIRM_DELETE.TITLE',
+                    message: 'ADF_VERSION_LIST.CONFIRM_DELETE.MESSAGE',
+                    yesLabel: 'ADF_VERSION_LIST.CONFIRM_DELETE.YES_LABEL',
+                    noLabel: 'ADF_VERSION_LIST.CONFIRM_DELETE.NO_LABEL'
+                },
+                minWidth: '250px'
+            });
+
+            dialogRef.afterClosed().subscribe(result => {
+                if (result === true) {
+                    this.alfrescoApi.versionsApi
+                        .deleteVersion(this.id, versionId)
+                        .then(() => {
+                            this.loadVersionHistory();
+                        });
+                }
+            });
         }
     }
 

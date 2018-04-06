@@ -19,3 +19,4 @@ export * from './download-zip.dialog';
 export * from './folder.dialog';
 export * from './node-lock.dialog';
 export * from './share.dialog';
+export * from './confirm.dialog';
