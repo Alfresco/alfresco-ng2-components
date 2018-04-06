@@ -1,7 +1,9 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-04-06
 ---
+
 # Infinite Pagination component
 
 Adds "infinite" pagination to the component it is used with.
@@ -18,7 +20,7 @@ Adds "infinite" pagination to the component it is used with.
 </adf-infinite-pagination>
 ```
 
-## Integrating with Document List
+### Integrating with Document List
 
 ```html
 <adf-document-list #documentList ...></adf-document-list>
@@ -29,14 +31,16 @@ Adds "infinite" pagination to the component it is used with.
 </adf-infinite-pagination>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| pagination | `Pagination` |  | Pagination object.  |
-| target | `PaginatedComponent` |  | Component that provides custom pagination support.  |
-| pageSize | `number` | `InfinitePaginationComponent.DEFAULT_PAGE_SIZE` | Number of items that are added with each "load more" event.  |
-| isLoading | `boolean` | `false` | Is a new page loading?  |
+| loading | `boolean` | false | Is a new page loading? |
+| pageSize | `number` | InfinitePaginationComponent.DEFAULT_PAGE_SIZE | Number of items that are added with each "load more" event. |
+| pagination | `Pagination` |  | Pagination object. |
+| target | `PaginatedComponent` |  | Component that provides custom pagination support. |
 
 ### Events
 

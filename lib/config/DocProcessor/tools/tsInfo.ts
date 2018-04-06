@@ -31,7 +31,8 @@ let excludePatterns = [
 
 let nameExceptions = {
     "datatable.component": "DataTableComponent",
-    "tasklist.service": "TaskListService"
+    "tasklist.service": "TaskListService",
+    "text-mask.component": "InputMaskDirective"
 }
 
 
@@ -61,20 +62,18 @@ class PropInfo {
 
         if (rawProp.decorators) {
             rawProp.decorators.forEach(dec => {
+                //console.log(dec);
                 if (dec.name === "Input") {
                     this.isInput = true;
-
-                    /*
+                    
                     if (dec.arguments) {
                         let bindingName = dec.arguments["bindingPropertyName"];
-                        console.log(JSON.stringify(dec.arguments));
+                        //console.log(JSON.stringify(dec.arguments));
                         
                         if (bindingName && (bindingName !== ""))
-                            this.name = bindingName;
-                        
+                            this.name = bindingName.replace(/['"]/g, "");
                     }
-                    */
-                   
+                    
                     if (!this.docText && !this.isDeprecated)
                         console.log(`Warning: Input "${rawProp.getFullName()}" has no doc text.`);
                 }
@@ -214,11 +213,14 @@ class ComponentInfo {
 export function initPhase(aggData) {
     let app = new Application({
         exclude: excludePatterns,
-        ignoreCompilerErrors: true
+        ignoreCompilerErrors: true,
+        experimentalDecorators: true,
+        tsconfig: "tsconfig.json"
     });
 
     let sources = app.expandInputFiles(libFolders);    
     aggData.projData = app.convert(sources);
+
     /*
     aggData.liq = liquid({
         root: templateFolder
