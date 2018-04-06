@@ -45,6 +45,7 @@ for more information about installing and using the source code.
 | [Folder edit directive](folder-edit.directive.md) | Allows folders to be edited. | [Source](../../lib/content-services/folder-directive/folder-edit.directive.ts) |
 | [Inherited button directive](inherited-button.directive.md) | Update the current node by adding/removing the inherited permissions. | [Source](../../lib/content-services/permission-manager/components/inherited-button.directive.ts) |
 | [File draggable directive](file-draggable.directive.md) | Provide drag-and-drop features for an element such as a `div`. | [Source](../../lib/content-services/upload/directives/file-draggable.directive.ts) |
+| [Node lock directive](node-lock.directive.md) | Open the node lock dialog on click. | [Source](../../lib/content-services/directives/node-lock.directive.ts) |
 
 ## Models
 

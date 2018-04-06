@@ -107,7 +107,7 @@ describe('NodeSharedDirective', () => {
         }));
 
         it('should enable the button if nodes is selected and is a file', fakeAsync(() => {
-            component.node = { entry: { id: '1', name: 'name1' isFolder: false, isFile: true } };
+            component.node = { entry: { id: '1', name: 'name1', isFolder: false, isFile: true } };
 
             fixture.detectChanges();
 

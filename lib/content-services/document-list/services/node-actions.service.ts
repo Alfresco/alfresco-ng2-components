@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import { MinimalNodeEntryEntity, MinimalNodeEntity } from 'alfresco-js-api';
 import { Subject } from 'rxjs/Subject';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService, ContentService } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material';
 
 import { DocumentListService } from './document-list.service';
@@ -28,7 +28,12 @@ import { NodeDownloadDirective } from '../../directives/node-download.directive'
 @Injectable()
 export class NodeActionsService {
 
+    @Output()
+    error: EventEmitter<any> = new EventEmitter<any>();
+
     constructor(private contentDialogService: ContentNodeDialogService,
+                public dialogRef: MatDialog,
+                public content: ContentService,
                 private documentListService?: DocumentListService,
                 private apiService?: AlfrescoApiService,
                 private dialog?: MatDialog) {}

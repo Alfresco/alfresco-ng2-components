@@ -22,9 +22,12 @@ import { DocumentListService } from './document-list.service';
 import { NodeActionsService } from './node-actions.service';
 import { ContentNodeDialogService } from '../../content-node-selector/content-node-dialog.service';
 import { Observable } from 'rxjs/Observable';
+import { MatDialogRef } from '@angular/material';
+import { NodeLockDialogComponent } from '../../dialogs/node-lock.dialog';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 
 const fakeNode: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
-        id: 'fake'
+    id: 'fake'
 };
 
 describe('NodeActionsService', () => {
@@ -32,15 +35,28 @@ describe('NodeActionsService', () => {
     let service: NodeActionsService;
     let documentListService: DocumentListService;
     let contentDialogService: ContentNodeDialogService;
+    const dialogRef = {
+        open: jasmine.createSpy('open')
+    };
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
+            declarations: [
+                NodeLockDialogComponent
+            ],
+            imports: [],
             providers: [
                 NodeActionsService,
                 DocumentListService,
-                ContentNodeDialogService
+                ContentNodeDialogService,
+                { provide: MatDialogRef, useValue: dialogRef }
             ]
+        });
+
+        TestBed.overrideModule(BrowserDynamicTestingModule, {
+            set: { entryComponents: [ NodeLockDialogComponent ] }
         }).compileComponents();
+
     }));
 
     beforeEach(() => {

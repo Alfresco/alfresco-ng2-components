@@ -25,7 +25,8 @@ import {
     ObjectDataColumn,
     PaginatedComponent,
     PaginationQueryParams,
-    PermissionsEnum
+    PermissionsEnum,
+    ContentService
 } from '@alfresco/adf-core';
 import {
     AlfrescoApiService,
@@ -255,7 +256,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 private elementRef: ElementRef,
                 private apiService: AlfrescoApiService,
                 private appConfig: AppConfigService,
-                private preferences: UserPreferencesService) {
+                private preferences: UserPreferencesService,
+                private contentService?: ContentService) {
         this.maxItems = this.preferences.paginationSize;
 
         this.pagination = new BehaviorSubject<Pagination>(<Pagination> {
@@ -433,7 +435,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     checkPermission(node: any, action: ContentActionModel): ContentActionModel {
-        if (action.permission && action.permission !== PermissionsEnum.COPY) {
+        if (action.permission && !~[PermissionsEnum.COPY, PermissionsEnum.LOCK].indexOf(action.permission)) {
             if (this.hasPermissions(node)) {
                 let permissions = node.entry.allowableOperations;
                 let findPermission = permissions.find(permission => permission === action.permission);
@@ -442,6 +444,11 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 }
             }
         }
+
+        if (action.permission === PermissionsEnum.LOCK) {
+            action.disabled = !this.contentService.hasPermission(node.entry, PermissionsEnum.LOCK);
+        }
+
         return action;
     }
 
