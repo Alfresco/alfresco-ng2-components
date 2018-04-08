@@ -19,6 +19,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { AlfrescoApiService, SearchService, NodesApiService } from '@alfresco/adf-core';
 import { QueryBody, MinimalNodeEntryEntity, PathElement, GroupMemberEntry, GroupsPaging, GroupMemberPaging, PermissionElement } from 'alfresco-js-api';
+import 'rxjs/add/operator/switchMap';
 
 @Injectable()
 export class NodePermissionService {
