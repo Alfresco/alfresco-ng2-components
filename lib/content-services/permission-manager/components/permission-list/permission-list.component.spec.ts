@@ -17,9 +17,16 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PermissionListComponent } from './permission-list.component';
-import { NodesApiService } from '@alfresco/adf-core';
+import { By } from '@angular/platform-browser';
+import { NodesApiService, SearchService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
-import { fakeNodeWithPermissions, fakeNodeInheritedOnly, fakeNodeWithOnlyLocally } from '../../../mock/permission-list.component.mock';
+import { NodePermissionService } from '../../services/node-permission.service';
+import { fakeNodeWithPermissions,
+         fakeNodeInheritedOnly,
+         fakeNodeWithOnlyLocally,
+         fakeSiteNodeResponse,
+         fakeSiteRoles,
+         fakeEmptyResponse } from '../../../mock/permission-list.component.mock';
 
 describe('PermissionDisplayComponent', () => {
 
@@ -27,18 +34,22 @@ describe('PermissionDisplayComponent', () => {
     let component: PermissionListComponent;
     let element: HTMLElement;
     let nodeService: NodesApiService;
+    let nodePermissionService: NodePermissionService;
+    let searchApiService: SearchService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
                 PermissionListComponent
             ],
-            providers: [NodesApiService]
+            providers: [NodesApiService, NodePermissionService]
         }).compileComponents().then(() => {
             fixture = TestBed.createComponent(PermissionListComponent);
             component = fixture.componentInstance;
             element = fixture.nativeElement;
             nodeService = TestBed.get(NodesApiService);
+            nodePermissionService = TestBed.get(NodePermissionService);
+            searchApiService = TestBed.get(SearchService);
         });
     }));
 
@@ -47,35 +58,126 @@ describe('PermissionDisplayComponent', () => {
         TestBed.resetTestingModule();
     }));
 
-    it('should be able to render the component', async() => {
+    it('should be able to render the component', () => {
         fixture.detectChanges();
         expect(element.querySelector('#adf-permission-display-container')).not.toBeNull();
     });
 
-    it('should show the node permissions', async() => {
+    it('should show the node permissions', () => {
         component.nodeId = 'fake-node-id';
         spyOn(nodeService, 'getNode').and.returnValue(Observable.of(fakeNodeWithPermissions));
+        spyOn(searchApiService, 'searchByQueryBody').and.returnValue(Promise.resolve(fakeEmptyResponse));
         fixture.detectChanges();
         expect(element.querySelector('#adf-permission-display-container')).not.toBeNull();
         expect(element.querySelectorAll('.adf-datatable-row').length).toBe(4);
     });
 
-    it('should show inherited label for inherited permissions', async() => {
+    it('should show inherited label for inherited permissions', () => {
         component.nodeId = 'fake-node-id';
         spyOn(nodeService, 'getNode').and.returnValue(Observable.of(fakeNodeInheritedOnly));
+        spyOn(searchApiService, 'searchByQueryBody').and.returnValue(Promise.resolve(fakeEmptyResponse));
         fixture.detectChanges();
         expect(element.querySelector('#adf-permission-display-container')).not.toBeNull();
         expect(element.querySelector('#adf-permission-inherited-label')).toBeDefined();
         expect(element.querySelector('#adf-permission-inherited-label')).not.toBeNull();
     });
 
-    it('should show locally set label for locally set permissions', async() => {
-        component.nodeId = 'fake-node-id';
-        spyOn(nodeService, 'getNode').and.returnValue(Observable.of(fakeNodeWithOnlyLocally));
-        fixture.detectChanges();
-        expect(element.querySelector('#adf-permission-display-container')).not.toBeNull();
-        expect(element.querySelector('#adf-permission-locallyset-label')).toBeDefined();
-        expect(element.querySelector('#adf-permission-locallyset-label')).not.toBeNull();
+    describe('when it is a locally set permission', () => {
+
+        it('should show locally set label for locally set permissions',  () => {
+            component.nodeId = 'fake-node-id';
+            spyOn(nodeService, 'getNode').and.returnValue(Observable.of(fakeNodeWithOnlyLocally));
+            spyOn(nodePermissionService, 'getGroupMemeberByGroupName').and.returnValue(Observable.of(fakeSiteRoles));
+            spyOn(searchApiService, 'searchByQueryBody').and.returnValue(Promise.resolve(fakeSiteNodeResponse));
+            fixture.detectChanges();
+            expect(element.querySelector('#adf-permission-display-container')).not.toBeNull();
+            expect(element.querySelector('#adf-permission-locallyset-label')).toBeDefined();
+            expect(element.querySelector('#adf-permission-locallyset-label')).not.toBeNull();
+        });
+
+        it('should show a dropdown with the possible roles',  async(() => {
+            component.nodeId = 'fake-node-id';
+            spyOn(nodeService, 'getNode').and.returnValue(Observable.of(fakeNodeWithOnlyLocally));
+            spyOn(nodePermissionService, 'getGroupMemeberByGroupName').and.returnValue(Observable.of(fakeSiteRoles));
+            spyOn(searchApiService, 'searchByQueryBody').and.returnValue(Promise.resolve(fakeSiteNodeResponse));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#adf-select-role-permission')).toBeDefined();
+                expect(element.querySelector('#adf-select-role-permission')).not.toBeNull();
+                const selectBox = fixture.debugElement.query(By.css(('#adf-select-role-permission .mat-select-trigger')));
+                selectBox.triggerEventHandler('click', null);
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    let options: any = fixture.debugElement.queryAll(By.css('mat-option'));
+                    expect(options).not.toBeNull();
+                    expect(options.length).toBe(4);
+                    expect(options[0].nativeElement.innerText).toContain('SiteCollaborator');
+                    expect(options[1].nativeElement.innerText).toContain('SiteConsumer');
+                    expect(options[2].nativeElement.innerText).toContain('SiteContributor');
+                    expect(options[3].nativeElement.innerText).toContain('SiteManager');
+                });
+            });
+        }));
+
+        it('should show the settable roles if the node is not in any site',  async(() => {
+            component.nodeId = 'fake-node-id';
+            spyOn(nodeService, 'getNode').and.returnValue(Observable.of(fakeNodeWithOnlyLocally));
+            spyOn(searchApiService, 'searchByQueryBody').and.returnValue(Promise.resolve(fakeEmptyResponse));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#adf-select-role-permission')).toBeDefined();
+                expect(element.querySelector('#adf-select-role-permission')).not.toBeNull();
+                const selectBox = fixture.debugElement.query(By.css(('#adf-select-role-permission .mat-select-trigger')));
+                selectBox.triggerEventHandler('click', null);
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    let options: any = fixture.debugElement.queryAll(By.css('mat-option'));
+                    expect(options).not.toBeNull();
+                    expect(options.length).toBe(5);
+                    expect(options[0].nativeElement.innerText).toContain('Contributor');
+                    expect(options[1].nativeElement.innerText).toContain('Collaborator');
+                    expect(options[2].nativeElement.innerText).toContain('Coordinator');
+                    expect(options[3].nativeElement.innerText).toContain('Editor');
+                    expect(options[4].nativeElement.innerText).toContain('Consumer');
+                });
+            });
+        }));
+
+        it('should update the role when another value is chosen',  async(() => {
+            component.nodeId = 'fake-node-id';
+            spyOn(nodeService, 'getNode').and.returnValue(Observable.of(fakeNodeWithOnlyLocally));
+            spyOn(nodeService, 'updateNode').and.returnValue(Observable.of({id: 'fake-updated-node'}));
+            spyOn(searchApiService, 'searchByQueryBody').and.returnValue(Promise.resolve(fakeEmptyResponse));
+            component.update.subscribe((updatedPermission) => {
+                expect(updatedPermission).not.toBeNull();
+                expect(updatedPermission.name).toBe('Editor');
+                expect(updatedPermission.authorityId).toBe('GROUP_EVERYONE');
+                expect(updatedPermission.accessStatus).toBe('ALLOWED');
+            });
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#adf-select-role-permission')).toBeDefined();
+                expect(element.querySelector('#adf-select-role-permission')).not.toBeNull();
+                const selectBox = fixture.debugElement.query(By.css(('#adf-select-role-permission .mat-select-trigger')));
+                selectBox.triggerEventHandler('click', null);
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    let options: any = fixture.debugElement.queryAll(By.css('mat-option'));
+                    expect(options).not.toBeNull();
+                    expect(options.length).toBe(5);
+                    options[3].triggerEventHandler('click', {});
+                    fixture.detectChanges();
+                    expect(nodeService.updateNode).toHaveBeenCalled();
+                });
+            });
+        }));
+
     });
 
 });

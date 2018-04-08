@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, Input, OnInit } from '@angular/core';
+import { Component, ViewEncapsulation, Input, OnInit, EventEmitter, Output } from '@angular/core';
 import { NodesApiService } from '@alfresco/adf-core';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity, PermissionElement } from 'alfresco-js-api';
 import { PermissionDisplayModel } from '../../models/permission.model';
+import { NodePermissionService } from '../../services/node-permission.service';
 
 @Component({
     selector: 'adf-permission-list',
@@ -31,9 +32,15 @@ export class PermissionListComponent implements OnInit {
     @Input()
     nodeId: string = '';
 
-    permissionList: PermissionDisplayModel[];
+    @Output()
+    update: EventEmitter<PermissionElement> = new EventEmitter();
 
-    constructor(private nodeService: NodesApiService) {
+    permissionList: PermissionDisplayModel[];
+    settableRoles: any[];
+    actualNode: MinimalNodeEntryEntity;
+
+    constructor(private nodeService: NodesApiService,
+                private nodePermissionService: NodePermissionService) {
 
     }
 
@@ -47,7 +54,11 @@ export class PermissionListComponent implements OnInit {
 
     private fetchNodePermissions() {
         this.nodeService.getNode(this.nodeId).subscribe((node: MinimalNodeEntryEntity) => {
+            this.actualNode = node;
             this.permissionList = this.getPermissionList(node);
+            this.nodePermissionService.getNodeRoles(node).subscribe((settableList: string[]) => {
+                this.settableRoles =  settableList;
+            });
         });
     }
 
@@ -67,6 +78,22 @@ export class PermissionListComponent implements OnInit {
             });
         }
         return allPermissions;
+    }
+
+    saveNewRole(event: any, permissionRow: PermissionDisplayModel) {
+        let updatedPermissionRole: PermissionElement = this.buildUpdatedPermission(event.value, permissionRow);
+        this.nodePermissionService.updatePermissionRoles(this.actualNode, updatedPermissionRole)
+            .subscribe((node: MinimalNodeEntryEntity) => {
+                this.update.emit(updatedPermissionRole);
+            });
+    }
+
+    private buildUpdatedPermission(newRole: string, permissionRow: PermissionDisplayModel): PermissionElement {
+        let permissionRole: PermissionElement = {};
+        permissionRole.accessStatus = permissionRow.accessStatus;
+        permissionRole.name = newRole;
+        permissionRole.authorityId = permissionRow.authorityId;
+        return permissionRole;
     }
 
 }

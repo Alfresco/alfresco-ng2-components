@@ -15,19 +15,22 @@
  * limitations under the License.
  */
 
-export class PermissionDisplayModel {
-    accessStatus: string;
-    authorityId: string;
-    name: string;
+import { PermissionElement } from 'alfresco-js-api';
+
+export class PermissionDisplayModel implements PermissionElement {
+
+    authorityId?: string;
+    name?: string;
+    accessStatus?: PermissionElement.AccessStatusEnum;
     isInherited: boolean = false;
     icon: string;
 
     constructor(obj?: any) {
         if (obj) {
-            this.accessStatus = obj.accessStatus;
             this.authorityId = obj.authorityId;
             this.name = obj.name;
-            this.isInherited = obj.isInherited;
+            this.accessStatus = obj.accessStatus;
+            this.isInherited = obj.isInherited !== null && obj.isInherited !== undefined ? obj.isInherited : false;
             this.icon = obj.icon ? obj.icon : 'lock_open';
         }
     }
