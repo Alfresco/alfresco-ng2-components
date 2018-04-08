@@ -44,6 +44,7 @@ export class FolderActionsService {
     /**
      * Gets the handler function for an action.
      * @param key Identifier for the action
+     * @returns The handler function
      */
     getHandler(key: string): ContentActionHandler {
         if (key) {
@@ -57,6 +58,7 @@ export class FolderActionsService {
      * Sets a new handler function for an action.
      * @param key Identifier for the action
      * @param handler The new handler function
+     * @returns True if the key was a valid action identifier, false otherwise
      */
     setHandler(key: string, handler: ContentActionHandler): boolean {
         if (key) {
@@ -70,6 +72,7 @@ export class FolderActionsService {
     /**
      * Checks if an action is available for a particular item.
      * @param obj Item to check
+     * @returns True if the action is available, false otherwise
      */
     canExecuteAction(obj: any): boolean {
         return this.documentListService && obj && obj.entry.isFolder === true;

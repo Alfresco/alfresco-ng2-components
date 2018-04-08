@@ -1,16 +1,21 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-04-05
 ---
+
 # Deleted Nodes Api service
 
 Gets a list of Content Services nodes currently in the trash.
 
-## Methods
+## Class members
 
--   `getDeletedNodes(options?: Object): Observable<NodePaging>`  
-    Gets a list of nodes in the trash.  
-    -   `options` - (Optional) Options for JSAPI call
+### Methods
+
+-   `getDeletedNodes(options?: Object = null): Observable<NodePaging>`<br/>
+    Gets a list of nodes in the trash.
+    -   `options?: Object = null` - (Optional) Options for JSAPI call
+    -   **Returns** `Observable<NodePaging>` - List of nodes in the trash
 
 ## Details
 

@@ -30,6 +30,7 @@ export class DiscoveryApiService {
 
     /**
      * Gets product information for Content Services.
+     * @returns ProductVersionModel containing product details
      */
     public getEcmProductInfo() {
         return Observable.fromPromise(
@@ -40,6 +41,7 @@ export class DiscoveryApiService {
 
     /**
      * Gets product information for Process Services.
+     * @returns ProductVersionModel containing product details
      */
     public getBpmProductInfo() {
         return Observable.fromPromise(

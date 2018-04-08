@@ -32,6 +32,7 @@ export class PeopleContentService {
     /**
      * Gets information about a user identified by their username.
      * @param personId ID of the target user
+     * @returns User information
      */
     getPerson(personId: string): Observable<any> {
         const { peopleApi, handleError } = this;
@@ -42,7 +43,10 @@ export class PeopleContentService {
             .catch(handleError);
     }
 
-    /** Gets information about the user who is currently logged-in. */
+    /**
+     * Gets information about the user who is currently logged in.
+     * @returns User information
+     */
     getCurrentPerson(): Observable<any> {
         return this.getPerson('-me-');
     }

@@ -2,27 +2,80 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Process Content Service
 
 Manipulates content related to a Process Instance or Task Instance in APS.
 
-Related content can be uploaded to APS via for example a file upload dialog. 
+## Class members
 
-## Importing
+### Methods
 
-```ts
-import { RelatedContentRepresentation } from 'alfresco-js-api';
-import { ProcessContentService } from '@alfresco/adf-core';
-
-export class SomePageComponent implements OnInit {
-
-  constructor(private contentService: ProcessContentService) {
-  }
-```
+-   `createProcessRelatedContent(processInstanceId: string = null, content: any = null, opts?: any = null): Observable<any>`<br/>
+    Associates an uploaded file with a process instance.
+    -   `processInstanceId: string = null` -  ID of the target process instance
+    -   `content: any = null` -  File to associate
+    -   `opts?: any = null` - (Optional) Options supported by JSAPI
+    -   **Returns** `Observable<any>` - Details of created content
+-   `createTaskRelatedContent(taskId: string = null, file: any = null, opts?: any = null): any`<br/>
+    Associates an uploaded file with a task instance.
+    -   `taskId: string = null` -  ID of the target task
+    -   `file: any = null` -  File to associate
+    -   `opts?: any = null` - (Optional) Options supported by JSAPI
+    -   **Returns** `any` - Details of created content
+-   `createTemporaryRawRelatedContent(file: any = null): Observable<RelatedContentRepresentation>`<br/>
+    Create temporary related content from an uploaded file.
+    -   `file: any = null` -  File to use for content
+    -   **Returns** `Observable<RelatedContentRepresentation>` - The created content data
+-   `deleteRelatedContent(contentId: number = null): Observable<any>`<br/>
+    Deletes related content.
+    -   `contentId: number = null` -  Identifier of the content to delete
+    -   **Returns** `Observable<any>` - Null response that notifies when the deletion is complete
+-   `getContentPreview(contentId: number = null): Observable<Blob>`<br/>
+    Gets the preview for a related content file.
+    -   `contentId: number = null` -  ID of the related content
+    -   **Returns** `Observable<Blob>` - Binary data of the content preview
+-   `getContentThumbnail(contentId: number = null): Observable<Blob>`<br/>
+    Gets the thumbnail for a related content file.
+    -   `contentId: number = null` -  ID of the related content
+    -   **Returns** `Observable<Blob>` - Binary data of the thumbnail image
+-   `getFileContent(contentId: number = null): Observable<RelatedContentRepresentation>`<br/>
+    Gets the metadata for a related content item.
+    -   `contentId: number = null` -  ID of the content item
+    -   **Returns** `Observable<RelatedContentRepresentation>` - Metadata for the content
+-   `getFileRawContent(contentId: number = null): Observable<Blob>`<br/>
+    Gets raw binary content data for a related content file.
+    -   `contentId: number = null` -  ID of the related content
+    -   **Returns** `Observable<Blob>` - Binary data of the related content
+-   `getFileRawContentUrl(contentId: number = null): string`<br/>
+    Gets a URL for direct access to a related content file.
+    -   `contentId: number = null` -  ID of the related content
+    -   **Returns** `string` - URL to access the content
+-   `getProcessRelatedContent(processId: string = null): Observable<any>`<br/>
+    Gets related content items for a process instance.
+    -   `processId: string = null` -  ID of the target process
+    -   **Returns** `Observable<any>` - Metadata for the content
+-   `getTaskRelatedContent(taskId: string = null): Observable<any>`<br/>
+    Gets related content items for a task instance.
+    -   `taskId: string = null` -  ID of the target task
+    -   **Returns** `Observable<any>` - Metadata for the content
+-   `handleError(error: any = null): Observable<any>`<br/>
+    Reports an error message.
+    -   `error: any = null` -  Data object with optional `message` and `status` fields for the error
+    -   **Returns** `Observable<any>` - Callback when an error occurs
+-   `toJson(res: any = null): any`<br/>
+    Creates a JSON representation of data.
+    -   `res: any = null` -  Object representing data
+    -   **Returns** `any` - JSON object
+-   `toJsonArray(res: any = null): any`<br/>
+    Creates a JSON array representation of data.
+    -   `res: any = null` -  Object representing data
+    -   **Returns** `any` - JSON array object
 
 ## Methods
 
 #### createProcessRelatedContent(processInstanceId: string, content: any, opts?: any): Observable`<any>`
+
 Associate an uploaded file with a Process Instance.
 
 Let's say we have an upload button as follows: 
@@ -67,26 +120,26 @@ In the above sample code the `file` is uploaded via an HTML input element.
 The `processInstanceId` refers to a process instance ID for a running process in APS.  
 The returned `relContent` object looks like in this sample:
 
-```
-Related content:     
-    contentAvailable: true
-    created: Wed Nov 08 2017 10:50:30 GMT+0000 (GMT) {}
-    createdBy: {id: 1, firstName: null, lastName: "Administrator", email: "admin@app.activiti.com"}
-    id: 6007
-    link: false
-    mimeType: "application/pdf"
-    name: "simple.pdf"
-    previewStatus: "queued"
-    relatedContent: true
-    simpleType: "pdf"
-    thumbnailStatus: "queued"
-```
+    Related content:     
+        contentAvailable: true
+        created: Wed Nov 08 2017 10:50:30 GMT+0000 (GMT) {}
+        createdBy: {id: 1, firstName: null, lastName: "Administrator", email: "admin@app.activiti.com"}
+        id: 6007
+        link: false
+        mimeType: "application/pdf"
+        name: "simple.pdf"
+        previewStatus: "queued"
+        relatedContent: true
+        simpleType: "pdf"
+        thumbnailStatus: "queued"
+
 The related content `id` can be used by other methods in this service to get to the content and to 
 delete it. It is referred to as the `contentId`.
 
 If you look at attachments for the process instance it should now display the new file.
 
-#### createTaskRelatedContent(taskId: string, file: any, opts?: any) 
+#### createTaskRelatedContent(taskId: string, file: any, opts?: any)
+
 Associate an uploaded file with a Task Instance. This is in effect very similar 
 to the `createProcessRelatedContent` call. Just use `taskInstanceId` instead of `processInstanceId`.
 
@@ -110,8 +163,9 @@ onUploadFile() {
 ```
 
 For more information see the docs for `createProcessRelatedContent`. 
- 
-#### createTemporaryRawRelatedContent(file: any): Observable`<RelatedContentRepresentation>` 
+
+#### createTemporaryRawRelatedContent(file: any): Observable`<RelatedContentRepresentation>`
+
 Create temporary related content from an uploaded file. This means that the related content
 is not yet associated with a process instance or a task instance.
 
@@ -132,7 +186,8 @@ is not yet associated with a process instance or a task instance.
 
 For more information see the docs for `createProcessRelatedContent`. 
 
-#### deleteRelatedContent(contentId: number): Observable`<any>` 
+#### deleteRelatedContent(contentId: number): Observable`<any>`
+
 Delete related content via the content identifier: 
 
 ```ts
@@ -144,11 +199,13 @@ Delete related content via the content identifier:
          console.log('Error: ', error);
     });
 ```
+
 The response is going to be `null` if the delete was successful.
 
 See `getProcessRelatedContent` and `getTaskRelatedContent` for how to get to the `contentId`.
 
 #### getFileContent(contentId: number): Observable`<RelatedContentRepresentation>`
+
 Get the metadata for a related content item in the format of a `RelatedContentRepresentation` object: 
 
 ```ts
@@ -163,23 +220,22 @@ this.contentService.getFileContent(contentId).subscribe(
 
 The metadata response looks like in this example:
 
-```
-contentAvailable: true
-created: Wed Nov 08 2017 11:26:14 GMT+0000 (GMT) {}
-createdBy: {id: 1, firstName: null, lastName: "Administrator", email: "admin@app.activiti.com"}
-id: 6008
-link: false
-mimeType: "application/pdf"
-name: "simple.pdf"
-previewStatus: "created"
-relatedContent: true
-simpleType: "pdf"
-thumbnailStatus: "created"
-```
+    contentAvailable: true
+    created: Wed Nov 08 2017 11:26:14 GMT+0000 (GMT) {}
+    createdBy: {id: 1, firstName: null, lastName: "Administrator", email: "admin@app.activiti.com"}
+    id: 6008
+    link: false
+    mimeType: "application/pdf"
+    name: "simple.pdf"
+    previewStatus: "created"
+    relatedContent: true
+    simpleType: "pdf"
+    thumbnailStatus: "created"
 
 See `getProcessRelatedContent` and `getTaskRelatedContent` for how to get to the `contentId`.
 
 #### getFileRawContentUrl(contentId: number): string
+
 Get the URL for direct access to a related content file: 
 
 ```ts
@@ -197,6 +253,7 @@ This URL can be used to directly access the content file, such as from a browser
 See `getProcessRelatedContent` and `getTaskRelatedContent` for how to get to the `contentId`.
 
 #### getFileRawContent(contentId: number): Observable`<Blob>`
+
 Get the raw content bytes as a BLOB for a related content file:
 
 ```ts
@@ -216,6 +273,7 @@ The BLOB response looks something like this:
 See `getProcessRelatedContent` and `getTaskRelatedContent` for how to get to the `contentId`.
 
 #### getContentPreview(contentId: number): Observable`<Blob>`
+
 Get the preview file for a related content file. A content file might be for example a  
 MS Word document. This method would give you the PDF preview for this document, 
 if it has been generated:
@@ -237,10 +295,10 @@ The preview BLOB response looks something like this:
 See `getProcessRelatedContent` and `getTaskRelatedContent` for how to get to the `contentId`.
 
 #### getContentThumbnail(contentId: number): Observable`<Blob>`
+
 Get the thumbnail file for a related content file. A content file might be for example a  
 MS Word document. This method would give you the image thumbnail for this document, 
 if it has been generated:
-
 
 ```ts
  const contentId = 5006;
@@ -255,10 +313,11 @@ if it has been generated:
 The response looks like in this sample:
 
 `Blob(13780) {size: 13780, type: "image/png"}`
- 
+
 See `getProcessRelatedContent` and `getTaskRelatedContent` for how to get to the `contentId`.
 
 #### getProcessRelatedContent(processId: string): Observable`<any>`
+
 Get related content items for passed in Process Instance ID, only metadata for related content is returned: 
 
 ```ts
@@ -273,35 +332,34 @@ this.contentService.getProcessRelatedContent(processId).subscribe(
 
 The response looks like in the following sample:
 
-```
-size: 2
-start:0
-total:2
-data:
-    0:
-        contentAvailable: true
-        created: "2017-10-29T07:28:15.546+0000"
-        createdBy: {id: 1, firstName: null, lastName: "Administrator", email: "admin@app.activiti.com"}
-        id: 5006
-        link: false
-        mimeType: "application/msword"
-        name: "More info for Invoice.doc"
-        previewStatus: "created"
-        relatedContent: true
-        simpleType: "word"
-        thumbnailStatus: "created"
-    1:
-        id: 6008, 
-        name: "simple.pdf", 
-        created: "2017-11-08T11:26:14.162+0000", 
-        createdBy: {…}, 
-        relatedContent: true, 
-        …}
-```
+    size: 2
+    start:0
+    total:2
+    data:
+        0:
+            contentAvailable: true
+            created: "2017-10-29T07:28:15.546+0000"
+            createdBy: {id: 1, firstName: null, lastName: "Administrator", email: "admin@app.activiti.com"}
+            id: 5006
+            link: false
+            mimeType: "application/msword"
+            name: "More info for Invoice.doc"
+            previewStatus: "created"
+            relatedContent: true
+            simpleType: "word"
+            thumbnailStatus: "created"
+        1:
+            id: 6008, 
+            name: "simple.pdf", 
+            created: "2017-11-08T11:26:14.162+0000", 
+            createdBy: {…}, 
+            relatedContent: true, 
+            …}
 
 The `id` property corresponds to the `contentId` property used in many of the other methods of this service.
 
-#### getTaskRelatedContent(taskId: string): Observable`<any>` 
+#### getTaskRelatedContent(taskId: string): Observable`<any>`
+
 Get related content items for passed in Task Instance ID, only metadata for related content is returned: 
 
 ```ts
@@ -316,6 +374,16 @@ this.contentService.getTaskRelatedContent(taskId).subscribe(
 
 The response format is the same as for the `getProcessRelatedContent` method, see its docs. 
 
-<!-- seealso start -->
+## Details
 
-<!-- seealso end -->
+## Importing
+
+```ts
+import { RelatedContentRepresentation } from 'alfresco-js-api';
+import { ProcessContentService } from '@alfresco/adf-core';
+
+export class SomePageComponent implements OnInit {
+
+  constructor(private contentService: ProcessContentService) {
+  }
+```

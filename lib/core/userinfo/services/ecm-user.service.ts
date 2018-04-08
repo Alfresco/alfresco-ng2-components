@@ -35,6 +35,7 @@ export class EcmUserService {
     /**
      * Gets information about a user identified by their username.
      * @param userName Target username
+     * @returns User information
      */
     getUserInfo(userName: string): Observable<EcmUserModel> {
         return Observable.fromPromise(this.apiService.getInstance().core.peopleApi.getPerson(userName))
@@ -44,6 +45,7 @@ export class EcmUserService {
 
     /**
      * Gets information about the user who is currently logged-in.
+     * @returns User information as for getUserInfo
      */
     getCurrentUserInfo() {
         return this.getUserInfo('-me-');
@@ -52,6 +54,7 @@ export class EcmUserService {
     /**
      * Returns a profile image as a URL.
      * @param avatarId Target avatar
+     * @returns Image URL
      */
     getUserProfileImage(avatarId: string) {
         if (avatarId) {

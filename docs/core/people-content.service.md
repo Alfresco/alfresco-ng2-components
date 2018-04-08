@@ -1,19 +1,24 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-04-06
 ---
+
 # People Content service
 
-Gets information about a Content Services user.
+Gets information about a Content Services user.  
 
-## Methods
+## Class members
 
--   `getPerson(personId: string): Observable<any>`  
-    Gets information about a user identified by their username.  
-    -   `personId` - ID of the target user
--   `getCurrentPerson(): Observable<any>`  
-    Gets information about the user who is currently logged-in.   
+### Methods
 
+-   `getCurrentPerson(): Observable<any>`<br/>
+    Gets information about the user who is currently logged in.
+    -   **Returns** `Observable<any>` - User information
+-   `getPerson(personId: string = null): Observable<any>`<br/>
+    Gets information about a user identified by their username.
+    -   `personId: string = null` -  ID of the target user
+    -   **Returns** `Observable<any>` - User information
 
 ## Details
 
