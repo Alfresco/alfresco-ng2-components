@@ -41,8 +41,7 @@ describe('ContentColumnList', () => {
             ],
             providers: [
                 CustomResourcesService,
-                DocumentListService,
-                LogService
+                DocumentListService
             ],
             schemas: [
                 CUSTOM_ELEMENTS_SCHEMA
