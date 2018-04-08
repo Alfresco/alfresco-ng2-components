@@ -37,7 +37,7 @@ export class SearchService {
 
         promise.then((data: any) => {
             this.dataLoaded.next(data);
-        })
+        });
 
         return Observable
             .fromPromise(promise)
@@ -50,7 +50,7 @@ export class SearchService {
 
         promise.then((data: any) => {
             this.dataLoaded.next(data);
-        })
+        });
 
         return Observable
             .fromPromise(promise)
@@ -62,7 +62,7 @@ export class SearchService {
 
         promise.then((data: any) => {
             this.dataLoaded.next(data);
-        })
+        });
 
         return Observable
             .fromPromise(promise)
