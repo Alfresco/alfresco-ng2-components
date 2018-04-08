@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import {
     AlfrescoApi, ContentApi, FavoritesApi, NodesApi,
     PeopleApi, RenditionsApi, SharedlinksApi, SitesApi,
-    VersionsApi, ClassesApi, SearchApi
+    VersionsApi, ClassesApi, SearchApi, GroupsApi
 } from 'alfresco-js-api';
 import * as alfrescoApi from 'alfresco-js-api';
 import { AppConfigService } from '../app-config/app-config.service';
@@ -72,6 +72,10 @@ export class AlfrescoApiService {
 
     get classesApi(): ClassesApi {
         return this.getInstance().core.classesApi;
+    }
+
+    get groupsApi(): GroupsApi {
+        return this.getInstance().core.groupsApi;
     }
 
     constructor(protected appConfig: AppConfigService,

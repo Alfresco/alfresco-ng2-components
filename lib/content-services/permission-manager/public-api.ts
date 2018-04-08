@@ -17,5 +17,5 @@
 
  export * from './components/permission-list/permission-list.component';
  export * from './components/inherited-button.directive';
-
+ export * from './services/node-permission.service';
  export * from './models/permission.model';
