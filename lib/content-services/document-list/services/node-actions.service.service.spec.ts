@@ -19,7 +19,6 @@ import { async, TestBed } from '@angular/core/testing';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AppConfigService } from '@alfresco/adf-core';
 import { DocumentListService } from './document-list.service';
-import { CustomResourcesService } from './custom-resources.service';
 import { NodeActionsService } from './node-actions.service';
 import { ContentNodeDialogService } from '../../content-node-selector/content-node-dialog.service';
 import { Observable } from 'rxjs/Observable';

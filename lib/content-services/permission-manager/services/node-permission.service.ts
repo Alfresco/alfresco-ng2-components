@@ -30,7 +30,7 @@ export class NodePermissionService {
 
     getNodeRoles(node: MinimalNodeEntryEntity): Observable<string[]> {
         const retrieveSiteQueryBody: QueryBody = this.buildRetrieveSiteQueryBody(node.path.elements);
-        return Observable.fromPromise(this.searchApiService.searchByQueryBody(retrieveSiteQueryBody))
+        return this.searchApiService.searchByQueryBody(retrieveSiteQueryBody)
             .switchMap((siteNodeList: any) => {
                 if ( siteNodeList.list.entries.length > 0 ) {
                     let siteName = siteNodeList.list.entries[0].entry.name;

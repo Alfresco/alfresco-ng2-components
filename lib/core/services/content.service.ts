@@ -202,9 +202,9 @@ export class ContentService {
 
         if (this.hasAllowableOperations(node)) {
             if (permission && permission.startsWith('!')) {
-                hasPermission = !~node.allowableOperations.indexOf(permission.replace('!', ''));
+                hasPermission = node.allowableOperations.find(currentPermission => currentPermission === permission.replace('!', '')) ? false : true;
             } else {
-                hasPermission = !!~node.allowableOperations.indexOf(permission);
+                hasPermission = node.allowableOperations.find(currentPermission => currentPermission === permission) ? true : false;
             }
 
         } else {
