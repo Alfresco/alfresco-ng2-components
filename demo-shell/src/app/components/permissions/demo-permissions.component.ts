@@ -18,6 +18,8 @@
 import { Component, Optional, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params} from '@angular/router';
 import { PermissionListComponent } from '@alfresco/adf-content-services';
+import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { NodesApiService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'app-permissions',
@@ -30,8 +32,10 @@ export class DemoPermissionComponent implements OnInit {
     displayPermissionComponent: PermissionListComponent;
 
     nodeId: string;
+    toggleStatus = false;
 
-    constructor(@Optional() private route: ActivatedRoute) {
+    constructor(@Optional() private route: ActivatedRoute,
+                private nodeService: NodesApiService) {
     }
 
     ngOnInit() {
@@ -42,9 +46,13 @@ export class DemoPermissionComponent implements OnInit {
                 }
             });
         }
+        this.nodeService.getNode(this.nodeId, {include: ['permissions'] }).subscribe( (currentNode: MinimalNodeEntryEntity) => {
+            this.toggleStatus = currentNode.permissions.isInheritanceEnabled;
+        });
     }
 
-    onUpdatedPermissions() {
+    onUpdatedPermissions(node: MinimalNodeEntryEntity) {
+        this.toggleStatus = node.permissions.isInheritanceEnabled;
         this.displayPermissionComponent.reload();
     }
 

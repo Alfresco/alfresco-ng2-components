@@ -1,8 +1,9 @@
 <div class="inherit_permission_button">
     <button mat-raised-button
-            color="primary"
+            [color]="toggleStatus?'accent':'primary'"
             adf-inherit-permission [nodeId]="nodeId"
-            (updated)="onUpdatedPermissions()">{{'DEMO_PERMISSION.INHERIT_PERMISSION_BUTTON' | translate}}</button>
+            (updated)="onUpdatedPermissions($event)">
+            {{ (toggleStatus?'DEMO_PERMISSION.INHERITED_PERMISSIONS_BUTTON':'DEMO_PERMISSION.INHERIT_PERMISSION_BUTTON') | translate}}</button>
 </div>
 <div>
 	<adf-permission-list #permissionList [nodeId]="nodeId">
