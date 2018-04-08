@@ -1,22 +1,28 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-04-05
 ---
+
 # Ecm User service
 
 Gets information about a Content Services user.
 
-## Methods
+## Class members
 
--   `getUserInfo(userName: string): Observable<EcmUserModel>`  
-    Gets information about a user identified by their username.  
-    -   `userName` - Target username
--   `getCurrentUserInfo(): Observable<EcmUserModel>`  
-    Gets information about the user who is currently logged-in.  
+### Methods
 
--   `getUserProfileImage(avatarId: string): string`  
-    Returns a profile image as a URL.  
-    -   `avatarId` - Target avatar
+-   `getCurrentUserInfo(): any`<br/>
+    Gets information about the user who is currently logged-in.
+    -   **Returns** `any` - User information as for getUserInfo
+-   `getUserInfo(userName: string = null): Observable<EcmUserModel>`<br/>
+    Gets information about a user identified by their username.
+    -   `userName: string = null` -  Target username
+    -   **Returns** `Observable<EcmUserModel>` - User information
+-   `getUserProfileImage(avatarId: string = null): string`<br/>
+    Returns a profile image as a URL.
+    -   `avatarId: string = null` -  Target avatar
+    -   **Returns** `string` - Image URL
 
 ## Details
 

@@ -32,6 +32,12 @@ export class CommentProcessService {
                 private logService: LogService) {
     }
 
+    /**
+     * Adds a comment to a task.
+     * @param taskId ID of the target task
+     * @param message Text for the comment
+     * @returns Details about the comment
+     */
     addTaskComment(taskId: string, message: string): Observable<CommentModel> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.addTaskComment({message: message}, taskId))
             .map(res => res)
@@ -46,6 +52,11 @@ export class CommentProcessService {
 
     }
 
+    /**
+     * Gets all comments that have been added to a task.
+     * @param taskId ID of the target task
+     * @returns Details for each comment
+     */
     getTaskComments(taskId: string): Observable<CommentModel[]> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.getTaskComments(taskId))
             .map(res => res)
@@ -59,6 +70,11 @@ export class CommentProcessService {
             }).catch(err => this.handleError(err));
     }
 
+    /**
+     * Gets all comments that have been added to a process instance.
+     * @param processInstanceId ID of the target process instance
+     * @returns Details for each comment
+     */
     getProcessInstanceComments(processInstanceId: string): Observable<CommentModel[]> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.commentsApi.getProcessInstanceComments(processInstanceId))
             .map(res => res)
@@ -72,6 +88,12 @@ export class CommentProcessService {
             }).catch(err => this.handleError(err));
     }
 
+    /**
+     * Adds a comment to a process instance.
+     * @param processInstanceId ID of the target process instance
+     * @param message Text for the comment
+     * @returns Details of the comment added
+     */
     addProcessInstanceComment(processInstanceId: string, message: string): Observable<CommentModel> {
         return Observable.fromPromise(
             this.apiService.getInstance().activiti.commentsApi.addProcessInstanceComment({message: message}, processInstanceId)

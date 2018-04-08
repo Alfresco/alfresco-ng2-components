@@ -1,28 +1,36 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-04-05
 ---
+
 # People Process service
 
 Gets information about Process Services users.
 
-## Methods
+## Class members
 
--   `getWorkflowUsers(taskId?: string, searchWord?: string): Observable<UserProcessModel[]>`  
-    Gets information about users across all tasks.  
-    -   `taskId` - (Optional) ID of the task
-    -   `searchWord` - (Optional) Filter text to search for
--   `getUserImage(user: UserProcessModel): string`  
-    Gets the profile picture URL for the specified user.  
-    -   `user` - The target user
--   `involveUserWithTask(taskId: string, idToInvolve: string): Observable<UserProcessModel[]>`  
-    Sets a user to be involved with a task.  
-    -   `taskId` - ID of the target task
-    -   `idToInvolve` - ID of the user to involve
--   `removeInvolvedUser(taskId: string, idToRemove: string): Observable<UserProcessModel[]>`  
-    Removes a user who is currently involved with a task.  
-    -   `taskId` - ID of the target task
-    -   `idToRemove` - ID of the user to remove
+### Methods
+
+-   `getUserImage(user: UserProcessModel = null): string`<br/>
+    Gets the profile picture URL for the specified user.
+    -   `user: UserProcessModel = null` -  The target user
+    -   **Returns** `string` - Profile picture URL
+-   `getWorkflowUsers(taskId?: string = null, searchWord?: string = null): Observable<UserProcessModel[]>`<br/>
+    Gets information about users across all tasks.
+    -   `taskId?: string = null` - (Optional) ID of the task
+    -   `searchWord?: string = null` - (Optional) Filter text to search for
+    -   **Returns** `Observable<UserProcessModel[]>` - Array of user information objects
+-   `involveUserWithTask(taskId: string = null, idToInvolve: string = null): Observable<UserProcessModel[]>`<br/>
+    Sets a user to be involved with a task.
+    -   `taskId: string = null` -  ID of the target task
+    -   `idToInvolve: string = null` -  ID of the user to involve
+    -   **Returns** `Observable<UserProcessModel[]>` - Empty response when the update completes
+-   `removeInvolvedUser(taskId: string = null, idToRemove: string = null): Observable<UserProcessModel[]>`<br/>
+    Removes a user who is currently involved with a task.
+    -   `taskId: string = null` -  ID of the target task
+    -   `idToRemove: string = null` -  ID of the user to remove
+    -   **Returns** `Observable<UserProcessModel[]>` - Empty response when the update completes
 
 ## Details
 

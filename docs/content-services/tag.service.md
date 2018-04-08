@@ -1,27 +1,34 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-04-05
 ---
+
 # Tag service
 
 Manages tags in Content Services.
 
-## Methods
+## Class members
 
--   `getTagsByNodeId(nodeId: string): any`  
-    Gets a list of tags added to a node.  
-    -   `nodeId` - ID of the target node
--   `getAllTheTags(): any`  
-    Gets a list of all the tags already defined in the repository.   
+### Methods
 
--   `addTag(nodeId: string, tagName: string): any`  
-    Adds a tag to a node.  
-    -   `nodeId` - ID of the target node
-    -   `tagName` - Name of the tag to add
--   `removeTag(nodeId: string, tag: string): any`  
-    Removes a tag from a node.  
-    -   `nodeId` - ID of the target node
-    -   `tag` - Name of the tag to remove
+-   `addTag(nodeId: string = null, tagName: string = null): any`<br/>
+    Adds a tag to a node.
+    -   `nodeId: string = null` -  ID of the target node
+    -   `tagName: string = null` -  Name of the tag to add
+    -   **Returns** `any` - TagEntry object (defined in JSAPI) with details of the new tag
+-   `getAllTheTags(): any`<br/>
+    Gets a list of all the tags already defined in the repository.
+    -   **Returns** `any` - TagPaging object (defined in JSAPI) containing the tags
+-   `getTagsByNodeId(nodeId: string = null): any`<br/>
+    Gets a list of tags added to a node.
+    -   `nodeId: string = null` -  ID of the target node
+    -   **Returns** `any` - TagPaging object (defined in JSAPI) containing the tags
+-   `removeTag(nodeId: string = null, tag: string = null): any`<br/>
+    Removes a tag from a node.
+    -   `nodeId: string = null` -  ID of the target node
+    -   `tag: string = null` -  Name of the tag to remove
+    -   **Returns** `any` - Null object when the operation completes
 
 ## Details
 

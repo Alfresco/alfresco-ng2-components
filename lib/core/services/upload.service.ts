@@ -60,14 +60,15 @@ export class UploadService {
 
     /**
      * Checks whether the service is uploading a file.
-     * @memberof UploadService
+     * @returns True if a file is uploading, false otherwise
      */
     isUploading(): boolean {
         return this.activeTask ? true : false;
     }
 
     /**
-     * Returns the file Queue
+     * Gets the file Queue
+     * @returns Array of files that form the queue
      */
     getQueue(): FileModel[] {
         return this.queue;
@@ -76,6 +77,7 @@ export class UploadService {
     /**
      * Adds files to the uploading queue to be uploaded
      * @param files One or more separate parameters or an array of files to queue
+     * @returns Array of files that were not blocked from upload by the ignore list
      */
     addToQueue(...files: FileModel[]): FileModel[] {
         const allowedFiles = files.filter(f => this.filterElement(f));
@@ -95,10 +97,7 @@ export class UploadService {
 
     /**
      * Finds all the files in the queue that are not yet uploaded and uploads them into the directory folder.
-     *
      * @param emitter (Deprecated) Emitter to invoke on file status change
-     *
-     * @memberof UploadService
      */
     uploadFilesInTheQueue(emitter: EventEmitter<any>): void {
         if (!this.activeTask) {
@@ -127,7 +126,7 @@ export class UploadService {
 
     /**
      * Cancels uploading of files.
-     * @param files One or more separate parameters or an array of files
+     * @param files One or more separate parameters or an array of files specifying uploads to cancel
      */
     cancelUpload(...files: FileModel[]) {
         files.forEach(file => {
@@ -154,6 +153,7 @@ export class UploadService {
     /**
      * Gets an upload promise for a file.
      * @param file The target file
+     * @returns Promise that is resolved if the upload is successful or error otherwise
      */
     getUploadPromise(file: FileModel) {
         let opts: any = {
