@@ -234,6 +234,50 @@ describe('DataTable', () => {
         expect(rows[1].isSelected).toBeTruthy();
     });
 
+    it('should select only one row with [single] selection mode pressing enter key', () => {
+        dataTable.selectionMode = 'single';
+        dataTable.data = new ObjectDataTableAdapter(
+            [
+                { name: '1' },
+                { name: '2' }
+            ],
+            [ new ObjectDataColumn({ key: 'name'}) ]
+        );
+        const rows = dataTable.data.getRows();
+
+        dataTable.ngOnChanges({});
+        dataTable.onEnterKeyPressed(rows[0], null);
+        expect(rows[0].isSelected).toBeTruthy();
+        expect(rows[1].isSelected).toBeFalsy();
+
+        dataTable.onEnterKeyPressed(rows[1], null);
+        expect(rows[0].isSelected).toBeFalsy();
+        expect(rows[1].isSelected).toBeTruthy();
+    });
+
+    it('should select multiple rows with [multiple] selection mode pressing enter key', () => {
+        dataTable.selectionMode = 'multiple';
+        dataTable.data = new ObjectDataTableAdapter(
+            [
+                { name: '1' },
+                { name: '2' }
+            ],
+            [ new ObjectDataColumn({ key: 'name'}) ]
+        );
+        const rows = dataTable.data.getRows();
+
+        const event = new KeyboardEvent('enter', {
+            metaKey: true
+        });
+
+        dataTable.ngOnChanges({});
+        dataTable.onEnterKeyPressed(rows[0], event);
+        dataTable.onEnterKeyPressed(rows[1], event);
+
+        expect(rows[0].isSelected).toBeTruthy();
+        expect(rows[1].isSelected).toBeTruthy();
+    });
+
     it('should not unselect the row with [single] selection mode', () => {
         dataTable.selectionMode = 'single';
         dataTable.data = new ObjectDataTableAdapter(

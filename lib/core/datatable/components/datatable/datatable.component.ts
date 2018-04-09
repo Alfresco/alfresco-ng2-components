@@ -292,28 +292,37 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
         }
 
         if (row) {
-            if (this.data) {
-                if (this.isSingleSelectionMode()) {
-                    this.resetSelection();
-                    this.selectRow(row, true);
-                    this.emitRowSelectionEvent('row-select', row);
-                }
-
-                if (this.isMultiSelectionMode()) {
-                    const modifier = e && (e.metaKey || e.ctrlKey);
-                    const newValue = modifier ? !row.isSelected : true;
-                    const domEventName = newValue ? 'row-select' : 'row-unselect';
-
-                    if (!modifier) {
-                        this.resetSelection();
-                    }
-                    this.selectRow(row, newValue);
-                    this.emitRowSelectionEvent(domEventName, row);
-                }
-            }
-
+            this.handleRowSelection(row, e);
             const dataRowEvent = new DataRowEvent(row, e, this);
             this.clickObserver.next(dataRowEvent);
+        }
+    }
+
+    onEnterKeyPressed(row: DataRow, e: KeyboardEvent) {
+        if (row) {
+            this.handleRowSelection(row, e);
+        }
+    }
+
+    private handleRowSelection(row: DataRow, e: KeyboardEvent | MouseEvent) {
+        if (this.data) {
+            if (this.isSingleSelectionMode()) {
+                this.resetSelection();
+                this.selectRow(row, true);
+                this.emitRowSelectionEvent('row-select', row);
+            }
+
+            if (this.isMultiSelectionMode()) {
+                const modifier = e && (e.metaKey || e.ctrlKey);
+                const newValue = modifier ? !row.isSelected : true;
+                const domEventName = newValue ? 'row-select' : 'row-unselect';
+
+                if (!modifier) {
+                    this.resetSelection();
+                }
+                this.selectRow(row, newValue);
+                this.emitRowSelectionEvent(domEventName, row);
+            }
         }
     }
 
