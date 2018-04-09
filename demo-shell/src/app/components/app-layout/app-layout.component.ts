@@ -43,7 +43,7 @@ export class AppLayoutComponent {
         { href: '/webscript', icon: 'extension', title: 'APP_LAYOUT.WEBSCRIPT' },
         { href: '/tag', icon: 'local_offer', title: 'APP_LAYOUT.TAG' },
         { href: '/social', icon: 'thumb_up', title: 'APP_LAYOUT.SOCIAL' },
-        { href: '/settings', icon: 'settings', title: 'APP_LAYOUT.SETTINGS' },
+        { href: '/settings-layout', icon: 'settings', title: 'APP_LAYOUT.SETTINGS' },
         { href: '/extendedSearch', icon: 'search', title: 'APP_LAYOUT.SEARCH' },
         { href: '/overlay-viewer', icon: 'pageview', title: 'APP_LAYOUT.OVERLAY_VIEWER' },
         { href: '/about', icon: 'info_outline', title: 'APP_LAYOUT.ABOUT' }

@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ContentApi, MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { ContentApi, MinimalNodeEntryEntity, Node } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { FolderCreatedEvent } from '../events/folder-created.event';
@@ -197,14 +197,14 @@ export class ContentService {
      * @param permission Create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions
      *
      */
-    hasPermission(node: any, permission: PermissionsEnum | string): boolean {
+    hasPermission(node: Node, permission: PermissionsEnum | string): boolean {
         let hasPermission = false;
 
         if (this.hasAllowableOperations(node)) {
             if (permission && permission.startsWith('!')) {
-                hasPermission = !~node.allowableOperations.indexOf(permission.replace('!', ''));
+                hasPermission = node.allowableOperations.find(currentPermission => currentPermission === permission.replace('!', '')) ? false : true;
             } else {
-                hasPermission = !!~node.allowableOperations.indexOf(permission);
+                hasPermission = node.allowableOperations.find(currentPermission => currentPermission === permission) ? true : false;
             }
 
         } else {

@@ -57,7 +57,7 @@ describe('SearchService', () => {
     it('should call search API with no additional options', (done) => {
         let searchTerm = 'searchTerm63688';
         spyOn(searchMockApi.core.queriesApi, 'findNodes').and.returnValue(Promise.resolve(fakeSearch));
-        service.getNodeQueryResults(searchTerm).then(
+        service.getNodeQueryResults(searchTerm).subscribe(
             () => {
                 expect(searchMockApi.core.queriesApi.findNodes).toHaveBeenCalledWith(searchTerm, undefined);
                 done();
@@ -72,7 +72,7 @@ describe('SearchService', () => {
             nodeType: 'cm:content'
         };
         spyOn(searchMockApi.core.queriesApi, 'findNodes').and.returnValue(Promise.resolve(fakeSearch));
-        service.getNodeQueryResults(searchTerm, options).then(
+        service.getNodeQueryResults(searchTerm, options).subscribe(
             () => {
                 expect(searchMockApi.core.queriesApi.findNodes).toHaveBeenCalledWith(searchTerm, options);
                 done();
@@ -81,7 +81,7 @@ describe('SearchService', () => {
     });
 
     it('should return search results returned from the API', (done) => {
-        service.getNodeQueryResults('').then(
+        service.getNodeQueryResults('').subscribe(
             (res: any) => {
                 expect(res).toBeDefined();
                 expect(res).toEqual(fakeSearch);
@@ -92,7 +92,7 @@ describe('SearchService', () => {
 
     it('should notify errors returned from the API', (done) => {
         spyOn(searchMockApi.core.queriesApi, 'findNodes').and.returnValue(Promise.reject(mockError));
-        service.getNodeQueryResults('').then(
+        service.getNodeQueryResults('').subscribe(
             () => {},
             (res: any) => {
                 expect(res).toBeDefined();

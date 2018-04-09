@@ -26,7 +26,7 @@ import {
     SitesService,
     NodesApiService
 } from '@alfresco/adf-core';
-import { ContentNodeDialogService, DocumentListService } from '@alfresco/adf-content-services';
+import { ContentNodeDialogService, DocumentListService, CustomResourcesService } from '@alfresco/adf-content-services';
 import { Observable } from 'rxjs/Observable';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 
@@ -62,6 +62,7 @@ describe('AttachFolderWidgetComponent', () => {
                         ThumbnailService,
                         SitesService,
                         DocumentListService,
+                        CustomResourcesService,
                         ContentNodeDialogService,
                         NodesApiService
                     ]

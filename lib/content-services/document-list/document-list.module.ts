@@ -37,6 +37,7 @@ import { DocumentActionsService } from './services/document-actions.service';
 import { DocumentListService } from './services/document-list.service';
 import { FolderActionsService } from './services/folder-actions.service';
 import { NodeActionsService } from './services/node-actions.service';
+import { CustomResourcesService } from './services/custom-resources.service';
 
 @NgModule({
     imports: [
@@ -62,7 +63,8 @@ import { NodeActionsService } from './services/node-actions.service';
         DocumentListService,
         FolderActionsService,
         DocumentActionsService,
-        NodeActionsService
+        NodeActionsService,
+        CustomResourcesService
     ],
     exports: [
         DocumentListComponent,

@@ -60,7 +60,7 @@ describe('VersionListComponent', () => {
     it('should raise confirmation dialog on delete', () => {
         spyOn(dialog, 'open').and.returnValue({
             afterClosed() {
-                return Observable.of(false)
+                return Observable.of(false);
             }
         });
 
@@ -73,7 +73,7 @@ describe('VersionListComponent', () => {
     it('should delete the version if user confirms', () => {
         spyOn(dialog, 'open').and.returnValue({
             afterClosed() {
-                return Observable.of(true)
+                return Observable.of(true);
             }
         });
 
@@ -90,7 +90,7 @@ describe('VersionListComponent', () => {
     it('should not delete version if user rejects', () => {
         spyOn(dialog, 'open').and.returnValue({
             afterClosed() {
-                return Observable.of(false)
+                return Observable.of(false);
             }
         });
 
@@ -109,7 +109,7 @@ describe('VersionListComponent', () => {
 
         spyOn(dialog, 'open').and.returnValue({
             afterClosed() {
-                return Observable.of(true)
+                return Observable.of(true);
             }
         });
 
@@ -119,7 +119,7 @@ describe('VersionListComponent', () => {
         component.allowDelete = true;
         component.deleteVersion('1');
 
-        tick()
+        tick();
 
         expect(component.loadVersionHistory).toHaveBeenCalled();
     }));

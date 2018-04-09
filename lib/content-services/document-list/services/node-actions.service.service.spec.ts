@@ -44,7 +44,6 @@ describe('NodeActionsService', () => {
             declarations: [
                 NodeLockDialogComponent
             ],
-            imports: [],
             providers: [
                 NodeActionsService,
                 DocumentListService,

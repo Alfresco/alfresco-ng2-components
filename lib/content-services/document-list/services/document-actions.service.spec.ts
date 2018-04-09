@@ -15,12 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    AlfrescoApiServiceMock,
-    AppConfigService,
-    StorageService,
-    ContentService
-} from '@alfresco/adf-core';
+import { AlfrescoApiServiceMock, AppConfigService, StorageService, ContentService } from '@alfresco/adf-core';
 import { FileNode, FolderNode } from '../../mock';
 import { ContentActionHandler } from '../models/content-action.model';
 import { DocumentActionsService } from './document-actions.service';
@@ -37,6 +32,7 @@ describe('DocumentActionsService', () => {
     beforeEach(() => {
         let contentService = new ContentService(null, null, null, null);
         let alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
+
         documentListService = new DocumentListService(null, contentService, alfrescoApiService, null, null);
 
         service = new DocumentActionsService(null, null, documentListService, contentService);

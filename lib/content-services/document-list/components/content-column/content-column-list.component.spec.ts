@@ -21,6 +21,7 @@ import { DataColumn, DataTableModule } from '@alfresco/adf-core';
 
 import { LogService } from '@alfresco/adf-core';
 import { DocumentListService } from '../../services/document-list.service';
+import { CustomResourcesService } from '../../services/custom-resources.service';
 import { DocumentListComponent } from './../document-list.component';
 import { ContentColumnListComponent } from './content-column-list.component';
 
@@ -39,8 +40,8 @@ describe('ContentColumnList', () => {
                 DocumentListComponent
             ],
             providers: [
-                DocumentListService,
-                LogService
+                CustomResourcesService,
+                DocumentListService
             ],
             schemas: [
                 CUSTOM_ELEMENTS_SCHEMA

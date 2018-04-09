@@ -17,7 +17,7 @@
 
 import { async, TestBed } from '@angular/core/testing';
 import { NodePermissionService } from './node-permission.service';
-import { AlfrescoApiService, SearchService, NodesApiService } from '@alfresco/adf-core';
+import { SearchService, NodesApiService } from '@alfresco/adf-core';
 import { MinimalNodeEntryEntity, PermissionElement } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { fakeEmptyResponse, fakeNodeWithOnlyLocally, fakeSiteRoles, fakeSiteNodeResponse } from '../../mock/permission-list.component.mock';
@@ -31,8 +31,7 @@ describe('NodePermissionService', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             providers: [
-                AlfrescoApiService,
-                NodePermissionService, SearchService, NodesApiService
+                NodePermissionService
             ]
         }).compileComponents();
     }));
@@ -55,7 +54,7 @@ describe('NodePermissionService', () => {
     }
 
     it('should return a list of roles taken from the site groups', async(() => {
-        spyOn(searchApiService, 'searchByQueryBody').and.returnValue(Promise.resolve(fakeSiteNodeResponse));
+        spyOn(searchApiService, 'searchByQueryBody').and.returnValue(Observable.of(fakeSiteNodeResponse));
         spyOn(service, 'getGroupMemeberByGroupName').and.returnValue(Observable.of(fakeSiteRoles));
 
         service.getNodeRoles(fakeNodeWithOnlyLocally).subscribe((roleArray: string[]) => {
@@ -66,7 +65,7 @@ describe('NodePermissionService', () => {
     }));
 
     it('should return a list of settable if node has no site', async(() => {
-        spyOn(searchApiService, 'searchByQueryBody').and.returnValue(Promise.resolve(fakeEmptyResponse));
+        spyOn(searchApiService, 'searchByQueryBody').and.returnValue(Observable.of(fakeEmptyResponse));
 
         service.getNodeRoles(fakeNodeWithOnlyLocally).subscribe((roleArray: string[]) => {
             expect(roleArray).not.toBeNull();

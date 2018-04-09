@@ -19,6 +19,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { AlfrescoApiService, SearchService, NodesApiService } from '@alfresco/adf-core';
 import { QueryBody, MinimalNodeEntryEntity, PathElement, GroupMemberEntry, GroupsPaging, GroupMemberPaging, PermissionElement } from 'alfresco-js-api';
+import 'rxjs/add/operator/switchMap';
 
 @Injectable()
 export class NodePermissionService {
@@ -30,7 +31,7 @@ export class NodePermissionService {
 
     getNodeRoles(node: MinimalNodeEntryEntity): Observable<string[]> {
         const retrieveSiteQueryBody: QueryBody = this.buildRetrieveSiteQueryBody(node.path.elements);
-        return Observable.fromPromise(this.searchApiService.searchByQueryBody(retrieveSiteQueryBody))
+        return this.searchApiService.searchByQueryBody(retrieveSiteQueryBody)
             .switchMap((siteNodeList: any) => {
                 if ( siteNodeList.list.entries.length > 0 ) {
                     let siteName = siteNodeList.list.entries[0].entry.name;

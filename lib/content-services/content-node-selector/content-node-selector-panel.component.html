@@ -59,7 +59,6 @@
             [node]="nodes"
             [maxItems]="pageSize"
             [skipCount]="skipCount"
-            [enableInfiniteScrolling]="infiniteScroll"
             [rowFilter]="rowFilter"
             [imageResolver]="imageResolver"
             [currentFolderId]="folderIdToShow"
@@ -92,6 +91,7 @@
         </adf-document-list>
 
         <adf-infinite-pagination
+            [target]="documentList"
             [pagination]="pagination"
             [pageSize]="pageSize"
             [loading]="loadingSearchResults"
