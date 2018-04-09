@@ -53,7 +53,7 @@ else
 fi
 
 git add .
-git commit -m "Update generator to use packages version $VERSION"
+git commit -m "Update ADF packages version $VERSION"
 git push -u origin $BRANCH
 
 curl -H "Authorization: token $TOKEN" -X POST -d '{"body":"Update ADF packages version '$VERSION'","head":"'$BRANCH'","base":"development","title":"Update ADF packages version '$VERSION'"}' https://api.github.com/repos/alfresco/$NAME_REPO/pulls
