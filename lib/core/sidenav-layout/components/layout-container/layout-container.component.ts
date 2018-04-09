@@ -28,7 +28,10 @@ import { sidenavAnimation, contentAnimation } from '../../helpers/animations';
 export class LayoutContainerComponent implements OnInit, OnDestroy {
     @Input() sidenavMin: number;
     @Input() sidenavMax: number;
-    @Input() mediaQueryList: MediaQueryList;
+
+    // " | any", because Safari throws an error otherwise...
+    @Input() mediaQueryList: MediaQueryList | any;
+
     @Input() hideSidenav = false;
     @Input() expandedSidenav = true;
 
