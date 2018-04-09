@@ -47,7 +47,7 @@ import 'rxjs/add/observable/throw';
     selector: 'adf-viewer-container-toolbar',
     template: `
         <adf-viewer>
-            <adf-viewer-toolbar>
+            <adf-viewer-toolbar #viewerToolbar>
                 <div class="custom-toolbar-element"></div>
             </adf-viewer-toolbar>
         </adf-viewer>
@@ -73,7 +73,7 @@ class ViewerWithCustomToolbarActionsComponent {}
     selector: 'adf-viewer-container-sidebar',
     template: `
         <adf-viewer>
-            <adf-viewer-sidebar>
+            <adf-viewer-sidebar #viewerSidebar>
                 <div class="custom-sidebar"></div>
             </adf-viewer-sidebar>
         </adf-viewer>
@@ -85,7 +85,7 @@ class ViewerWithCustomSidebarComponent {}
     selector: 'adf-viewer-container-open-with',
     template: `
         <adf-viewer>
-            <adf-viewer-open-with>
+            <adf-viewer-open-with #viewerOpenWith>
                 <button mat-menu-item>
                     <mat-icon>dialpad</mat-icon>
                     <span>Option 1</span>
@@ -108,7 +108,7 @@ class ViewerWithCustomOpenWithComponent {}
     selector: 'adf-viewer-container-more-actions',
     template: `
         <adf-viewer>
-            <adf-viewer-more-actions>
+            <adf-viewer-more-actions #viewerMoreActions>
                 <button mat-menu-item>
                     <mat-icon>dialpad</mat-icon>
                     <span>Action One</span>

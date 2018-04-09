@@ -305,7 +305,7 @@ describe('ProcessAttachmentListComponent', () => {
 @Component({
     template: `
     <adf-process-attachment-list>
-        <adf-empty-list>
+        <adf-empty-list #emptyList>
             <div adf-empty-list-header class="adf-empty-list-header">Custom header</div>
         </adf-empty-list>
     </adf-process-attachment-list>

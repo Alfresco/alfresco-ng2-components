@@ -76,9 +76,9 @@ describe('InfoDrawerComponent', () => {
     template: `
     <adf-info-drawer [selectedIndex]="tabIndex">
         <div info-drawer-title>Fake Title Custom</div>
-        <adf-info-drawer-tab label="Tab1">
+        <adf-info-drawer-tab #infoDrawerTab label="Tab1">
         </adf-info-drawer-tab>
-        <adf-info-drawer-tab label="Tab2">
+        <adf-info-drawer-tab #infoDrawerTab label="Tab2">
         </adf-info-drawer-tab>
     </adf-info-drawer>
        `
