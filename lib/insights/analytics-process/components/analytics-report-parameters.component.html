@@ -24,8 +24,8 @@
                             <mat-icon class="adf-report-icon" >mode_edit</mat-icon>
                             <h4>{{reportParameters.name}}</h4>
                         </div>
-                    </adf-toolbar-title>
-                    <div *ngIf="!isEditable" class="adf-edit-buttons">
+                    </adf-toolbar-title> 
+                    <div *ngIf="!isEditable" fxShow fxHide.xs="true">
                         <button mat-button matTooltip="{{'ANALYTICS.MESSAGES.ICON-SETTING' | translate}}"
                                 (click)="toggleParameters()">
                             <mat-icon>settings</mat-icon>
@@ -45,7 +45,7 @@
                             </button>
                         </span>
                     </div>
-                    <div *ngIf="!isEditable" class="adf-edit-buttons-mobile">
+                    <div *ngIf="!isEditable" fxHide fxShow.xs="true">
                         <button mat-icon-button [matMenuTriggerFor]="editReportMenu">
                             <mat-icon>more_vert</mat-icon>
                         </button>

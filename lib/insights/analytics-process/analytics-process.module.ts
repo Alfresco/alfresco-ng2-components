@@ -38,6 +38,7 @@ import { DurationWidgetComponent } from './components/widgets/duration/duration.
 import { NumberWidgetAanlyticsComponent } from './components/widgets/number/number.widget';
 
 import { AnalyticsService } from './services/analytics.service';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 @NgModule({
     imports: [
@@ -48,7 +49,8 @@ import { AnalyticsService } from './services/analytics.service';
         DiagramsModule,
         MaterialModule,
         TranslateModule,
-        ToolbarModule
+        ToolbarModule,
+        FlexLayoutModule
     ],
     declarations: [
         AnalyticsComponent,
