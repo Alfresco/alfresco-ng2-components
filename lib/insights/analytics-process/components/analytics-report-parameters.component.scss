@@ -102,18 +102,4 @@
             justify-content: flex-end;
         }
     }
-
-    .adf-edit-buttons-mobile {
-        display: none;
-    }
-
-    @media screen and  ($mat-xsmall) {
-        .adf-edit-buttons {
-            display: none;
-        }
-
-        .adf-edit-buttons-mobile {
-            display: inline;
-        }
-    }
 }
