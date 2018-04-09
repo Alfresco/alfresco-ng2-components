@@ -19,14 +19,20 @@ import { Injectable } from '@angular/core';
 import {
     AlfrescoApi, ContentApi, FavoritesApi, NodesApi,
     PeopleApi, RenditionsApi, SharedlinksApi, SitesApi,
-    VersionsApi, ClassesApi, SearchApi, GroupsApi
+    VersionsApi, ClassesApi, SearchApi, GroupsApi, MinimalNodeEntryEntity
 } from 'alfresco-js-api';
 import * as alfrescoApi from 'alfresco-js-api';
 import { AppConfigService } from '../app-config/app-config.service';
 import { StorageService } from './storage.service';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class AlfrescoApiService {
+
+    /**
+     * Publish/subscribe to events related to node updates.
+     */
+    nodeUpdated = new Subject<MinimalNodeEntryEntity>();
 
     protected alfrescoApi: AlfrescoApi;
 

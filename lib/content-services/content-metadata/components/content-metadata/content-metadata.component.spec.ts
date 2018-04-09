@@ -31,8 +31,8 @@ import {
     CardViewBaseItemModel,
     CardViewComponent,
     CardViewUpdateService,
-    NodesApiService,
-    LogService
+    LogService,
+    AlfrescoApiService
 } from '@alfresco/adf-core';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { Observable } from 'rxjs/Observable';
@@ -45,6 +45,7 @@ describe('ContentMetadataComponent', () => {
         node: MinimalNodeEntryEntity,
         folderNode: MinimalNodeEntryEntity,
         preset = 'custom-preset';
+    let apiService: AlfrescoApiService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -62,13 +63,13 @@ describe('ContentMetadataComponent', () => {
                 PropertyGroupTranslatorService,
                 PropertyDescriptorsService,
                 ContentMetadataConfigFactory,
-                NodesApiService,
                 { provide: LogService, useValue: { error: jasmine.createSpy('error') } }
             ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
+        apiService = TestBed.get(AlfrescoApiService);
         fixture = TestBed.createComponent(ContentMetadataComponent);
         component = fixture.componentInstance;
         node = <MinimalNodeEntryEntity> {
@@ -133,14 +134,14 @@ describe('ContentMetadataComponent', () => {
     describe('Saving', () => {
 
         it('should save the node on itemUpdate', () => {
-            const property = <CardViewBaseItemModel> { key: 'property-key', value: 'original-value' },
-                updateService: CardViewUpdateService = fixture.debugElement.injector.get(CardViewUpdateService),
-                nodesApiService: NodesApiService = TestBed.get(NodesApiService);
-            spyOn(nodesApiService, 'updateNode');
+            const property = <CardViewBaseItemModel> { key: 'property-key', value: 'original-value' };
+            const updateService: CardViewUpdateService = fixture.debugElement.injector.get(CardViewUpdateService);
+
+            spyOn(apiService.nodesApi, 'updateNode');
 
             updateService.update(property, 'updated-value');
 
-            expect(nodesApiService.updateNode).toHaveBeenCalledWith('node-id', {
+            expect(apiService.nodesApi.updateNode).toHaveBeenCalledWith('node-id', {
                 'property-key': 'updated-value'
             });
         });
@@ -148,10 +149,9 @@ describe('ContentMetadataComponent', () => {
         it('should update the node on successful save', async(() => {
             const property = <CardViewBaseItemModel> { key: 'property-key', value: 'original-value' },
                 updateService: CardViewUpdateService = fixture.debugElement.injector.get(CardViewUpdateService),
-                nodesApiService: NodesApiService = TestBed.get(NodesApiService),
                 expectedNode = Object.assign({}, node, { name: 'some-modified-value' });
 
-            spyOn(nodesApiService, 'updateNode').and.callFake(() => {
+            spyOn(apiService.nodesApi, 'updateNode').and.callFake(() => {
                 return Observable.of(expectedNode);
             });
 
@@ -165,10 +165,9 @@ describe('ContentMetadataComponent', () => {
         it('should throw error on unsuccessful save', () => {
             const property = <CardViewBaseItemModel> { key: 'property-key', value: 'original-value' },
                 updateService: CardViewUpdateService = fixture.debugElement.injector.get(CardViewUpdateService),
-                nodesApiService: NodesApiService = TestBed.get(NodesApiService),
                 logService: LogService = TestBed.get(LogService);
 
-            spyOn(nodesApiService, 'updateNode').and.callFake(() => {
+            spyOn(apiService.nodesApi, 'updateNode').and.callFake(() => {
                 return ErrorObservable.create(new Error('My bad'));
             });
 
@@ -270,10 +269,9 @@ describe('ContentMetadataComponent', () => {
 
         it('should be performed again if property updating occured, since the originally passed node has changed, so the previously calculated properties', () => {
             const property = <CardViewBaseItemModel> { key: 'property-key', value: 'original-value' },
-                updateService = fixture.debugElement.injector.get(CardViewUpdateService),
-                nodesApiService = TestBed.get(NodesApiService);
+                updateService = fixture.debugElement.injector.get(CardViewUpdateService);
 
-            spyOn(nodesApiService, 'updateNode').and.callFake(() => Observable.of(node));
+            spyOn(apiService.nodesApi, 'updateNode').and.callFake(() => Observable.of(node));
             spyOn(contentMetadataService, 'getBasicProperties');
             component.ngOnChanges({ node: new SimpleChange(null, node, true) });
             updateService.update(property, 'updated-value');
