@@ -97,7 +97,7 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
 
     set isMenuMinimized(menuState: boolean) {
         this._isMenuMinimized = menuState;
-        this.menuOpenStateSubject.next(menuState);
+        this.menuOpenStateSubject.next(!menuState);
     }
 
     get isHeaderInside() {

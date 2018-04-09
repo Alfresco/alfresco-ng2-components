@@ -294,21 +294,21 @@ describe('SidenavLayoutComponent', () => {
             component = fixture.componentInstance;
         });
 
-        it('should be false by default', (done) => {
-            fixture.detectChanges();
-
-            component.menuOpenState$.subscribe((value) => {
-                expect(value).toBe(false);
-                done();
-            });
-        });
-
-        it('should be the opposite as the expandedSidenav\'s value by default', (done) => {
-            component.expandedSidenav = false;
+        it('should be true by default', (done) => {
             fixture.detectChanges();
 
             component.menuOpenState$.subscribe((value) => {
                 expect(value).toBe(true);
+                done();
+            });
+        });
+
+        it('should be the same as the expandedSidenav\'s value by default', (done) => {
+            component.expandedSidenav = false;
+            fixture.detectChanges();
+
+            component.menuOpenState$.subscribe((value) => {
+                expect(value).toBe(false);
                 done();
             });
         });
@@ -320,7 +320,7 @@ describe('SidenavLayoutComponent', () => {
             component.toggleMenu();
 
             component.menuOpenState$.subscribe((value) => {
-                expect(value).toBe(false);
+                expect(value).toBe(true);
                 done();
             });
         });
