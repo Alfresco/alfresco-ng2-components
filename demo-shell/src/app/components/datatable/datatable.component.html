@@ -11,12 +11,12 @@
         (row-dblclick)="onRowDblClick($event)">
         <!-- HTML column definition demo -->
         <!--
-        <data-columns>
-            <data-column type="image" key="icon" [sortable]="false"></data-column>
-            <data-column key="id" title="Id"></data-column>
-            <data-column key="createdOn" title="Created"></data-column>
-            <data-column key="name" title="Name" class="full-width name-column"></data-column>
-            <data-column key="createdBy.name" title="Created By"></data-column>
+        <data-columns #dataColumnList>
+            <data-column #dataColumn type="image" key="icon" [sortable]="false"></data-column>
+            <data-column #dataColumn key="id" title="Id"></data-column>
+            <data-column #dataColumn key="createdOn" title="Created"></data-column>
+            <data-column #dataColumn key="name" title="Name" class="full-width name-column"></data-column>
+            <data-column #dataColumn key="createdBy.name" title="Created By"></data-column>
         </data-columns>
         -->
     </adf-datatable>

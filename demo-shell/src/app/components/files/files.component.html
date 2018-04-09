@@ -202,14 +202,14 @@
                         </div>
                     </ng-template>
                 </empty-folder-content>
-                <data-columns>
-                    <data-column
+                <data-columns #dataColumnList>
+                    <data-column #dataColumn
                         key="$thumbnail"
                         type="image"
                         [sortable]="false"
                         class="image-table-cell">
                     </data-column>
-                    <data-column
+                    <data-column #dataColumn
                         key="name"
                         title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
                         [formatTooltip]="getNodeNameTooltip"
@@ -217,21 +217,21 @@
                     </data-column>
                     <!-- Location column demo -->
                     <!--
-                    <data-column
+                    <data-column #dataColumn
                         key="path"
                         type="location"
                         format="/files"
                         title="Location">
                     </data-column>
                     -->
-                    <data-column
+                    <data-column #dataColumn
                         key="content.sizeInBytes"
                         title="{{'DOCUMENT_LIST.COLUMNS.SIZE' | translate}}"
                         type="fileSize">
                     </data-column>
                     <!-- Notes: has performance overhead due to multiple files/folders causing separate HTTP calls to get tags -->
                     <!--
-                    <data-column
+                    <data-column #dataColumn
                         title="{{'DOCUMENT_LIST.COLUMNS.TAG' | translate}}"
                         key="id"
                         class="full-width ellipsis-cell">
@@ -240,7 +240,7 @@
                         </ng-template>
                     </data-column>
                     -->
-                    <data-column
+                    <data-column #dataColumn
                         class="desktop-only"
                         title="{{'DOCUMENT_LIST.COLUMNS.IS_LOCKED' | translate}}"
                         key="id">
@@ -251,12 +251,12 @@
                             </button>
                         </ng-template>
                     </data-column>
-                    <data-column
+                    <data-column #dataColumn
                         title="{{'DOCUMENT_LIST.COLUMNS.CREATED_BY' | translate}}"
                         key="createdByUser.displayName"
                         class="desktop-only">
                     </data-column>
-                    <data-column
+                    <data-column #dataColumn
                         title="{{'DOCUMENT_LIST.COLUMNS.CREATED' | translate}}"
                         key="createdAt"
                         type="date"

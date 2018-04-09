@@ -60,7 +60,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
     static DEFAULT_PAGE_SIZE: number = 20;
 
-    @ContentChild(DataColumnListComponent)
+    @ContentChild('dataColumnList')
     columnList: DataColumnListComponent;
 
     /** Include additional information about the node in the server request.for example: association, isLink, isLocked and others. */

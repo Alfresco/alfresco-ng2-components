@@ -51,7 +51,7 @@ export enum DisplayMode {
 })
 export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck {
 
-    @ContentChild(DataColumnListComponent)
+    @ContentChild('dataColumnList')
     columnList: DataColumnListComponent;
 
     /** Data source for the table */

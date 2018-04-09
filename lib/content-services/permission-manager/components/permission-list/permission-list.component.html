@@ -1,10 +1,10 @@
 <div id="adf-permission-display-container" class="adf-display-permission-container">
     <adf-datatable [rows]="permissionList" class="adf-datatable-permission">
-        <data-columns>
-            <data-column key="icon" type="icon" [sortable]="false">
+        <data-columns #dataColumnList>
+            <data-column #dataColumn key="icon" type="icon" [sortable]="false">
             </data-column>
-            <data-column title="{{'PERMISSION_MANAGER.PERMISSION_DISPLAY.AUTHORITY_ID' | translate}}" key="authorityId"></data-column>
-            <data-column title="{{'PERMISSION_MANAGER.PERMISSION_DISPLAY.ROLE' | translate}}" key="name">
+            <data-column #dataColumn title="{{'PERMISSION_MANAGER.PERMISSION_DISPLAY.AUTHORITY_ID' | translate}}" key="authorityId"></data-column>
+            <data-column #dataColumn title="{{'PERMISSION_MANAGER.PERMISSION_DISPLAY.ROLE' | translate}}" key="name">
                 <ng-template let-entry="$implicit">
                     <mat-form-field *ngIf="!entry.row.getValue('isInherited') else show_only_label">
                         <mat-select id="adf-select-role-permission"
@@ -20,7 +20,7 @@
                       </ng-template>
                 </ng-template>
             </data-column>
-            <data-column title="{{'PERMISSION_MANAGER.PERMISSION_DISPLAY.INHERITED' | translate}}" key="isInherited">
+            <data-column #dataColumn title="{{'PERMISSION_MANAGER.PERMISSION_DISPLAY.INHERITED' | translate}}" key="isInherited">
                 <ng-template let-entry="$implicit">
                     <mat-chip-list>
                         <mat-chip *ngIf="!!entry.data.getValue(entry.row, entry.col) else locally_set_chip"

@@ -50,16 +50,16 @@
                 </ng-template>
             </empty-folder-content>
 
-            <data-columns>
+            <data-columns #dataColumnList>
 
-                <data-column
+                <data-column #dataColumn
                     key="$thumbnail"
                     type="image"
                     [sortable]="false"
                     class="image-table-cell">
                 </data-column>
 
-                <data-column
+                <data-column #dataColumn
                     class="adf-data-table-cell--ellipsis__name"
                     key="name"
                     title="DOCUMENT_LIST.COLUMNS.DISPLAY_NAME">
@@ -68,13 +68,13 @@
                     </ng-template>
                 </data-column>
 
-                <data-column
+                <data-column #dataColumn
                     key="content.sizeInBytes"
                     title="DOCUMENT_LIST.COLUMNS.SIZE"
                     type="fileSize">
                 </data-column>
 
-                <data-column
+                <data-column #dataColumn
                     key="archivedAt"
                     title="DOCUMENT_LIST.COLUMNS.DELETED_ON">
                     <ng-template let-value="value">
@@ -82,7 +82,7 @@
                     </ng-template>
                 </data-column>
 
-                <data-column
+                <data-column #dataColumn
                     class="adf-data-table-cell--ellipsis"
                     key="archivedByUser.displayName"
                     title="DOCUMENT_LIST.COLUMNS.DELETED_BY">

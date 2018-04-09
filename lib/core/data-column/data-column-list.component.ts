@@ -26,6 +26,6 @@ import { DataColumnComponent } from './data-column.component';
 })
 export class DataColumnListComponent {
 
-    @ContentChildren(DataColumnComponent) columns: QueryList<DataColumnComponent>;
+    @ContentChildren('dataColumn') columns: QueryList<DataColumnComponent>;
 
 }
