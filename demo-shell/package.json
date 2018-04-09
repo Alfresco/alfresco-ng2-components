@@ -82,7 +82,7 @@
     "@mat-datetimepicker/core": "1.0.4",
     "@mat-datetimepicker/moment": "1.0.4",
     "@ngx-translate/core": "9.1.1",
-    "alfresco-js-api": "^2.3.0-3f1a4cec6a79f4bb71ae7c0ef962539739662f09",
+    "alfresco-js-api": "2.3.0-beta7",
     "chart.js": "2.5.0",
     "classlist.js": "1.1.20150312",
     "core-js": "2.4.1",
