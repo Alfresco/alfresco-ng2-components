@@ -55,7 +55,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
 
     constructor(private contentMetadataService: ContentMetadataService,
                 private cardViewUpdateService: CardViewUpdateService,
-                private api: AlfrescoApiService,
+                private alfrescoApiService: AlfrescoApiService,
                 private logService: LogService) {}
 
     ngOnInit() {
@@ -65,7 +65,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
                 (node) => {
                     this.nodeHasBeenUpdated = true;
                     this.node = node;
-                    this.api.nodeUpdated.next(node);
+                    this.alfrescoApiService.nodeUpdated.next(node);
                 },
                 error => this.logService.error(error)
             );
@@ -84,7 +84,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
 
     private saveNode({ changed: nodeBody }): Observable<MinimalNodeEntryEntity> {
         return Observable.fromPromise(
-            this.api.nodesApi
+            this.alfrescoApiService.nodesApi
                 .updateNode(this.node.id, nodeBody)
                 .then(entity => entity.entry)
         );
