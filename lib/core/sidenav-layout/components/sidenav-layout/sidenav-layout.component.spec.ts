@@ -277,4 +277,52 @@ describe('SidenavLayoutComponent', () => {
             expect(component.isMenuMinimized).toBe(false);
         });
     });
+
+    describe('menuOpenState', () => {
+
+        let component;
+
+        beforeEach(async(() => {
+            TestBed.compileComponents();
+        }));
+
+        beforeEach(() => {
+            mediaMatcher = TestBed.get(MediaMatcher);
+            spyOn(mediaMatcher, 'matchMedia').and.returnValue(mediaQueryList);
+
+            fixture = TestBed.createComponent(SidenavLayoutComponent);
+            component = fixture.componentInstance;
+        });
+
+        it('should be false by default', (done) => {
+            fixture.detectChanges();
+
+            component.menuOpenState$.subscribe((value) => {
+                expect(value).toBe(false);
+                done();
+            });
+        });
+
+        it('should be the opposite as the expandedSidenav\'s value by default', (done) => {
+            component.expandedSidenav = false;
+            fixture.detectChanges();
+
+            component.menuOpenState$.subscribe((value) => {
+                expect(value).toBe(true);
+                done();
+            });
+        });
+
+        it('should emit value on toggleMenu action', (done) => {
+            component.expandedSidenav = false;
+            fixture.detectChanges();
+
+            component.toggleMenu();
+
+            component.menuOpenState$.subscribe((value) => {
+                expect(value).toBe(false);
+                done();
+            });
+        });
+    });
 });
