@@ -8,7 +8,7 @@
                 [disabled]="isCompletedTask()"
                 [taskId]="taskId"
                 (attachmentClick)="onAttachmentClick($event)">
-                <adf-empty-list>
+                <adf-empty-list #emptyList>
                     <div adf-empty-list-header class="adf-empty-list-header">{{'ADF_TASK_LIST.ATTACHMENT.EMPTY.HEADER' | translate}}
                     </div>
                     <div adf-empty-list-body>

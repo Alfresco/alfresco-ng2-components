@@ -10,7 +10,7 @@
                 [disabled]="isCompletedProcess()"
                 [processInstanceId]="processInstanceId"
                 (attachmentClick)="onAttachmentClick($event)">
-                    <adf-empty-list>
+                    <adf-empty-list #emptyList>
                       <div adf-empty-list-header class="adf-empty-list-header">
                           {{'ADF_PROCESS_LIST.PROCESS-ATTACHMENT.EMPTY.HEADER' | translate}} 
                        </div>
