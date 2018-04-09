@@ -20,16 +20,17 @@ import { SearchService } from '@alfresco/adf-core';
 import { QueryBody } from 'alfresco-js-api';
 import { SearchModule } from '../../index';
 import { differentResult, folderResult, result, SimpleSearchTestComponent } from '../../mock';
+import { Observable } from 'rxjs/Observable';
 
-function fakeNodeResultSearch(searchNode: QueryBody): Promise<any> {
+function fakeNodeResultSearch(searchNode: QueryBody): Observable<any> {
     if (searchNode && searchNode.query.query === 'FAKE_SEARCH_EXMPL') {
-        return Promise.resolve(differentResult);
+        return Observable.of(differentResult);
     }
     if (searchNode && searchNode.filterQueries.length === 1 &&
         searchNode.filterQueries[0].query === "TYPE:'cm:folder'") {
-        return Promise.resolve(folderResult);
+        return Observable.of(folderResult);
     }
-    return Promise.resolve(result);
+    return Observable.of(result);
 }
 
 describe('SearchComponent', () => {
@@ -60,8 +61,8 @@ describe('SearchComponent', () => {
 
         it('should clear results straight away when a new search term is entered', (done) => {
             spyOn(searchService, 'search').and.returnValues(
-                Promise.resolve(result),
-                Promise.resolve(differentResult)
+                Observable.of(result),
+                Observable.of(differentResult)
             );
 
             component.setSearchWordTo('searchTerm');
@@ -83,7 +84,7 @@ describe('SearchComponent', () => {
 
         it('should display the returned search results', (done) => {
             spyOn(searchService, 'search')
-                .and.returnValue(Promise.resolve(result));
+                .and.returnValue(Observable.of(result));
 
             component.setSearchWordTo('searchTerm');
             fixture.detectChanges();
@@ -97,7 +98,7 @@ describe('SearchComponent', () => {
 
         it('should emit error event when search call fail', (done) => {
             spyOn(searchService, 'search')
-                .and.returnValue(Promise.reject({ status: 402 }));
+                .and.returnValue(Observable.throw({ status: 402 }));
             component.setSearchWordTo('searchTerm');
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -110,8 +111,8 @@ describe('SearchComponent', () => {
 
         it('should be able to hide the result panel', (done) => {
             spyOn(searchService, 'search').and.returnValues(
-                Promise.resolve(result),
-                Promise.resolve(differentResult)
+                Observable.of(result),
+                Observable.of(differentResult)
             );
 
             component.setSearchWordTo('searchTerm');
@@ -163,7 +164,7 @@ describe('SearchComponent', () => {
         });
 
         it('should perform a search with a defaultNode if no searchnode is given', (done) => {
-            spyOn(searchService, 'search').and.returnValue(Promise.resolve(result));
+            spyOn(searchService, 'search').and.returnValue(Observable.of(result));
             component.setSearchWordTo('searchTerm');
             fixture.detectChanges();
             fixture.whenStable().then(() => {

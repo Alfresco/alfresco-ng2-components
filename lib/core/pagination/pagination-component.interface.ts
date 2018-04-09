@@ -15,15 +15,10 @@
  * limitations under the License.
  */
 
-import { PaginationModel } from '../models/pagination.model';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { PaginatedComponent } from './paginated-component.interface';
+import { Pagination } from 'alfresco-js-api';
 
-export interface PaginatedComponent {
-    pagination: BehaviorSubject<PaginationModel>;
-    /**
-     * @deprecated 2.3.0 : the supported page size should be retrieved via the user preferences
-     * and given to the pagination component, and not retrieved by the paginated object
-     */
-    supportedPageSizes: number[];
-    updatePagination(params: PaginationModel);
+export interface PaginationComponentInterface {
+    target: PaginatedComponent;
+    pagination: Pagination;
 }

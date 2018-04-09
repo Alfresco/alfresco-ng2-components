@@ -16,12 +16,8 @@
  */
 
 import {
-    AlfrescoApiService,
-    AuthenticationService,
-    ContentService,
-    SettingsService,
-    LogService,
-    ThumbnailService
+    AlfrescoApiService, AuthenticationService, ContentService,
+    SettingsService, LogService, ThumbnailService
 } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { NodePaging, DocumentListService } from '../document-list';
@@ -33,14 +29,12 @@ export class DocumentListServiceMock extends DocumentListService {
     getFolderReject: boolean = false;
     getFolderRejectError: string = 'Error';
 
-    constructor(
-        settings?: SettingsService,
-        authService?: AuthenticationService,
-        contentService?: ContentService,
-        apiService?: AlfrescoApiService,
-        logService?: LogService,
-        thumbnailService?: ThumbnailService
-    ) {
+    constructor(settings?: SettingsService,
+                authService?: AuthenticationService,
+                contentService?: ContentService,
+                apiService?: AlfrescoApiService,
+                logService?: LogService,
+                thumbnailService?: ThumbnailService) {
         super(authService, contentService, apiService, logService, thumbnailService);
     }
 

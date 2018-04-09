@@ -27,6 +27,7 @@ import { DocumentListService } from '../document-list/services/document-list.ser
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
 import { ContentNodeSelectorComponentData } from './content-node-selector.component-data.interface';
 import { NodeLockDialogComponent } from '../dialogs/node-lock.dialog';
+import 'rxjs/operator/switchMap';
 
 @Injectable()
 export class ContentNodeDialogService {
@@ -38,14 +39,14 @@ export class ContentNodeDialogService {
                 private contentService: ContentService,
                 private documentListService: DocumentListService,
                 private siteService: SitesService,
-                private translation: TranslationService) { }
+                private translation: TranslationService) {
+    }
 
     /** Opens a file browser at a chosen folder location. */
     /** @param folderNodeId ID of the folder to use */
     openFileBrowseDialogByFolderId(folderNodeId: string): Observable<MinimalNodeEntryEntity[]> {
-        return Observable.fromPromise(this.documentListService.getFolderNode(folderNodeId))
-            .switchMap((node: MinimalNodeEntryEntity) => {
-                return this.openUploadFileDialog('Choose', node);
+        return this.documentListService.getFolderNode(folderNodeId).switchMap((node: MinimalNodeEntryEntity) => {
+            return this.openUploadFileDialog('Choose', node);
         });
     }
 
@@ -77,7 +78,7 @@ export class ContentNodeDialogService {
 
     /** Opens a file browser at a chosen site location. */
     openFileBrowseDialogBySite(): Observable<MinimalNodeEntryEntity[]> {
-       return this.siteService.getSites().switchMap((response: SitePaging) => {
+        return this.siteService.getSites().switchMap((response: SitePaging) => {
             return this.openFileBrowseDialogByFolderId(response.list.entries[0].entry.guid);
         });
     }
@@ -85,21 +86,21 @@ export class ContentNodeDialogService {
     /** Opens a folder browser at a chosen site location. */
     openFolderBrowseDialogBySite(): Observable<MinimalNodeEntryEntity[]> {
         return this.siteService.getSites().switchMap((response: SitePaging) => {
-             return this.openFolderBrowseDialogByFolderId(response.list.entries[0].entry.guid);
-         });
-     }
+            return this.openFolderBrowseDialogByFolderId(response.list.entries[0].entry.guid);
+        });
+    }
 
     /** Opens a folder browser at a chosen folder location. */
     /** @param folderNodeId ID of the folder to use */
     openFolderBrowseDialogByFolderId(folderNodeId: string): Observable<MinimalNodeEntryEntity[]> {
-        return Observable.fromPromise(this.documentListService.getFolderNode(folderNodeId))
-            .switchMap((node: MinimalNodeEntryEntity) => {
-                return this.openUploadFolderDialog('Choose', node);
+        return this.documentListService.getFolderNode(folderNodeId).switchMap((node: MinimalNodeEntryEntity) => {
+            return this.openUploadFolderDialog('Choose', node);
         });
     }
 
     /** Opens a dialog to copy or move an item to a new location. */
     /** @param action Name of the action (eg, "Copy" or "Move") to show in the title */
+
     /** @param contentEntry Item to be copied or moved */
     /** @param permission Permission for the operation */
     openCopyMoveDialog(action: string, contentEntry: MinimalNodeEntryEntity, permission?: string): Observable<MinimalNodeEntryEntity[]> {
@@ -117,7 +118,7 @@ export class ContentNodeDialogService {
                 actionName: action,
                 currentFolderId: contentEntry.parentId,
                 imageResolver: this.imageResolver.bind(this),
-                rowFilter : this.rowFilter.bind(this, contentEntry.id),
+                rowFilter: this.rowFilter.bind(this, contentEntry.id),
                 isSelectionValid: this.isCopyMoveSelectionValid.bind(this),
                 select: select
             };
@@ -126,19 +127,21 @@ export class ContentNodeDialogService {
 
             return select;
         } else {
-            let errors = new Error(JSON.stringify({ error: { statusCode: 403 } } ));
+            let errors = new Error(JSON.stringify({ error: { statusCode: 403 } }));
             return Observable.throw(errors);
         }
     }
 
     /** Gets the translation of the dialog title. */
+
     /** @param action Name of the action to display in the dialog title */
     /** @param name Name of the item on which the action is being performed */
     getTitleTranslation(action: string, name: string): string {
-        return this.translation.instant(`NODE_SELECTOR.${action.toUpperCase()}_ITEM`, {name});
+        return this.translation.instant(`NODE_SELECTOR.${action.toUpperCase()}_ITEM`, { name });
     }
 
     /** Opens a dialog to choose a folder to upload. */
+
     /** @param action Name of the action to show in the title */
     /** @param contentEntry  Item to upload */
     openUploadFolderDialog(action: string, contentEntry: MinimalNodeEntryEntity): Observable<MinimalNodeEntryEntity[]> {
@@ -153,7 +156,7 @@ export class ContentNodeDialogService {
             currentFolderId: contentEntry.id,
             imageResolver: this.imageResolver.bind(this),
             isSelectionValid: this.hasPermissionOnNodeFolder.bind(this),
-            rowFilter : this.rowFilter.bind(this, contentEntry.id),
+            rowFilter: this.rowFilter.bind(this, contentEntry.id),
             select: select
         };
 
@@ -162,25 +165,26 @@ export class ContentNodeDialogService {
     }
 
     /** Opens a dialog to choose a file to upload. */
+
     /** @param action Name of the action to show in the title */
     /** @param contentEntry Item to upload */
     openUploadFileDialog(action: string, contentEntry: MinimalNodeEntryEntity): Observable<MinimalNodeEntryEntity[]> {
-            const select = new Subject<MinimalNodeEntryEntity[]>();
-            select.subscribe({
-                complete: this.close.bind(this)
-            });
+        const select = new Subject<MinimalNodeEntryEntity[]>();
+        select.subscribe({
+            complete: this.close.bind(this)
+        });
 
-            const data: ContentNodeSelectorComponentData = {
-                title: `${action} '${contentEntry.name}' to ...`,
-                actionName: action,
-                currentFolderId: contentEntry.id,
-                imageResolver: this.imageResolver.bind(this),
-                isSelectionValid: this.isNodeFile.bind(this),
-                select: select
-            };
+        const data: ContentNodeSelectorComponentData = {
+            title: `${action} '${contentEntry.name}' to ...`,
+            actionName: action,
+            currentFolderId: contentEntry.id,
+            imageResolver: this.imageResolver.bind(this),
+            isSelectionValid: this.isNodeFile.bind(this),
+            select: select
+        };
 
-            this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');
-            return select;
+        this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');
+        return select;
     }
 
     private openContentNodeDialog(data: ContentNodeSelectorComponentData, currentPanelClass: string, chosenWidth: string) {

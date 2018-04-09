@@ -70,6 +70,10 @@ export const appRoutes: Routes = [
                 component: HomeComponent
             },
             {
+                path: 'settings-layout',
+                component: SettingsComponent
+            },
+            {
                 path: 'trashcan',
                 component: TrashcanComponent,
                 canActivate: [AuthGuardEcm]

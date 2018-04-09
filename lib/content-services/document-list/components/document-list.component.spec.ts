@@ -24,7 +24,6 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { FileNode, FolderNode } from '../../mock';
 import {
-    fakeNodeAnswerWithEntries,
     fakeNodeAnswerWithNOEntries,
     fakeNodeWithCreatePermission,
     fakeNodeWithNoPermission,
@@ -37,6 +36,7 @@ import { ImageResolver } from './../data/image-resolver.model';
 import { RowFilter } from './../data/row-filter.model';
 
 import { DocumentListService } from './../services/document-list.service';
+import { CustomResourcesService } from './../services/custom-resources.service';
 import { DocumentListComponent } from './document-list.component';
 
 declare let jasmine: any;
@@ -46,6 +46,7 @@ describe('DocumentList', () => {
     let documentList: DocumentListComponent;
     let documentListService: DocumentListService;
     let apiService: AlfrescoApiService;
+    let customResourcesService: CustomResourcesService;
     let fixture: ComponentFixture<DocumentListComponent>;
     let element: HTMLElement;
     let eventMock: any;
@@ -62,6 +63,7 @@ describe('DocumentList', () => {
             ],
             providers: [
                 DocumentListService,
+                CustomResourcesService,
                 { provide: NgZone, useValue: zone }
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -85,6 +87,7 @@ describe('DocumentList', () => {
         documentList = fixture.componentInstance;
         documentListService = TestBed.get(DocumentListService);
         apiService = TestBed.get(AlfrescoApiService);
+        customResourcesService = TestBed.get(CustomResourcesService);
 
         fixture.detectChanges();
     });
@@ -255,17 +258,10 @@ describe('DocumentList', () => {
         expect(documentList.resetSelection).toHaveBeenCalled();
     });
 
-    it('should reset selection on loading folder by node id', () => {
-        spyOn(documentList, 'resetSelection').and.callThrough();
-
-        documentList.loadFolderByNodeId('-trashcan-');
-        expect(documentList.resetSelection).toHaveBeenCalled();
-    });
-
-    it('should reset selection in the datatable also', () => {
+    it('should reset when a prameter changes', () => {
         spyOn(documentList.dataTable, 'resetSelection').and.callThrough();
 
-        documentList.loadFolderByNodeId('-trashcan-');
+        documentList.ngOnChanges({});
         expect(documentList.dataTable.resetSelection).toHaveBeenCalled();
     });
 
@@ -390,7 +386,7 @@ describe('DocumentList', () => {
 
     });
 
-    it('should not disable the action if there is no permission for the file and disableWithNoPermission false', () => {
+    it('should disable the action if there is no permission for the file and disableWithNoPermission false', () => {
         let documentMenu = new ContentActionModel({
             disableWithNoPermission: false,
             permission: 'delete',
@@ -407,10 +403,10 @@ describe('DocumentList', () => {
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
         expect(actions[0].title).toEqual('FileAction');
-        expect(actions[0].disabled).toBeUndefined(true);
+        expect(actions[0].disabled).toBe(true);
     });
 
-    it('should not disable the action if there is no permission for the folder and disableWithNoPermission false', () => {
+    it('should disable the action if there is no permission for the folder and disableWithNoPermission false', () => {
         let documentMenu = new ContentActionModel({
             disableWithNoPermission: false,
             permission: 'delete',
@@ -427,7 +423,7 @@ describe('DocumentList', () => {
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
         expect(actions[0].title).toEqual('FolderAction');
-        expect(actions[0].disabled).toBeUndefined(true);
+        expect(actions[0].disabled).toBe(true);
     });
 
     it('should not disable the action if there is the right permission for the file', () => {
@@ -724,14 +720,6 @@ describe('DocumentList', () => {
         expect(documentList.loadFolderByNodeId).toHaveBeenCalled();
     });
 
-    it('should display folder content from loadFolderByNodeId on reload if node defined', () => {
-        documentList.node = new NodePaging();
-
-        spyOn(documentList.data, 'loadPage').and.callThrough();
-        documentList.reload();
-        expect(documentList.data.loadPage).toHaveBeenCalled();
-    });
-
     it('should require node to resolve context menu actions', () => {
         expect(documentList.getContextActions(null)).toBeNull();
 
@@ -927,7 +915,7 @@ describe('DocumentList', () => {
 
     it('should emit error when getFolderNode fails', (done) => {
         const error = { message: '{ "error": { "statusCode": 501 } }' };
-        spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.reject(error));
+        spyOn(documentListService, 'getFolderNode').and.returnValue(Observable.throw(error));
 
         documentList.error.subscribe(val => {
             expect(val).toBe(error);
@@ -939,7 +927,7 @@ describe('DocumentList', () => {
 
     it('should emit error when loadFolderNodesByFolderNodeId fails', (done) => {
         const error = { message: '{ "error": { "statusCode": 501 } }' };
-        spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.resolve(fakeNodeWithCreatePermission));
+        spyOn(documentListService, 'getFolderNode').and.returnValue(Observable.of(fakeNodeWithCreatePermission));
         spyOn(documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.reject(error));
 
         documentList.error.subscribe(val => {
@@ -952,7 +940,7 @@ describe('DocumentList', () => {
 
     it('should set no permision when getFolderNode fails with 403', (done) => {
         const error = { message: '{ "error": { "statusCode": 403 } }' };
-        spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.reject(error));
+        spyOn(documentListService, 'getFolderNode').and.returnValue(Observable.throw(error));
 
         documentList.error.subscribe(val => {
             expect(val).toBe(error);
@@ -961,16 +949,6 @@ describe('DocumentList', () => {
         });
 
         documentList.loadFolderByNodeId('123');
-    });
-
-    it('should reset noPermission on loading folder by node id', () => {
-        documentList.noPermission = true;
-        fixture.detectChanges();
-
-        documentList.loadFolderByNodeId('-trashcan-');
-        fixture.detectChanges();
-
-        expect(documentList.noPermission).toBeFalsy();
     });
 
     it('should reset noPermission upon reload', () => {
@@ -995,60 +973,15 @@ describe('DocumentList', () => {
         expect(documentList.noPermission).toBeFalsy();
     });
 
-    xit('should load previous page if there are no other elements in multi page table', (done) => {
+    it('should noPermission be true if navigate to a folder with no  permission', (done) => {
+        const error = { message: '{ "error": { "statusCode": 403 } }' };
+
         documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
         documentList.folderNode = new NodeMinimal();
         documentList.folderNode.id = '1d26e465-dea3-42f3-b415-faa8364b9692';
 
-        documentList.reload();
-        fixture.detectChanges();
-
-        documentList.ready.subscribe(() => {
-            fixture.detectChanges();
-            let rowElement = element.querySelector('[data-automation-id="b_txt_file.rtf"]');
-            expect(rowElement).toBeDefined();
-            expect(rowElement).not.toBeNull();
-            done();
-        });
-
-        jasmine.Ajax.requests.at(0).respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fakeNodeAnswerWithNOEntries)
-        });
-
-        jasmine.Ajax.requests.at(1).respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fakeNodeAnswerWithEntries)
-        });
-    });
-
-    it('should return true if current folder node has create permission', (done) => {
-        documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
-        documentList.folderNode = new NodeMinimal();
-        documentList.folderNode.id = '1d26e465-dea3-42f3-b415-faa8364b9692';
-        spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.resolve(fakeNodeWithCreatePermission));
-        spyOn(documentListService, 'getFolder').and.returnValue(Promise.resolve(fakeNodeAnswerWithNOEntries));
-
-        let change = new SimpleChange(null, '1d26e465-dea3-42f3-b415-faa8364b9692', true);
-        documentList.ngOnChanges({ 'currentFolderId': change });
-        fixture.detectChanges();
-
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(documentList.hasCreatePermission()).toBeTruthy();
-            done();
-        });
-    });
-
-    it('should return false if navigate to a folder with no create permission', (done) => {
-        documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
-        documentList.folderNode = new NodeMinimal();
-        documentList.folderNode.id = '1d26e465-dea3-42f3-b415-faa8364b9692';
-
-        spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.resolve(fakeNodeWithNoPermission));
-        spyOn(documentListService, 'getFolder').and.returnValue(Promise.resolve(fakeNodeAnswerWithNOEntries));
+        spyOn(documentListService, 'getFolderNode').and.returnValue(Observable.of(fakeNodeWithNoPermission));
+        spyOn(documentListService, 'getFolder').and.returnValue(Observable.throw(error));
 
         documentList.loadFolder();
         let clickedFolderNode = new FolderNode('fake-folder-node');
@@ -1056,7 +989,7 @@ describe('DocumentList', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            expect(documentList.hasCreatePermission()).toBeFalsy();
+            expect(documentList.noPermission).toBeTruthy();
             done();
         });
     });
@@ -1249,10 +1182,8 @@ describe('DocumentList', () => {
         documentList.loadFolderByNodeId('-recent-');
     });
 
-    xit('should emit error when fetch recent fails on search call', (done) => {
-        const person = { entry: { id: 'person ' } };
-        spyOn(apiService.peopleApi, 'getPerson').and.returnValue(Promise.resolve(person));
-        spyOn(apiService.searchApi, 'search').and.returnValue(Promise.reject('error'));
+    it('should emit error when fetch recent fails on search call', (done) => {
+        spyOn(customResourcesService, 'loadFolderByNodeId').and.returnValue(Observable.throw('error'));
 
         documentList.error.subscribe(val => {
             expect(val).toBe('error');
@@ -1291,21 +1222,6 @@ describe('DocumentList', () => {
         expect(documentList.currentFolderId).toBe('-mysites-');
     });
 
-    it('should update pagination settings', () => {
-        spyOn(documentList, 'reload').and.stub();
-
-        documentList.maxItems = 0;
-        documentList.skipCount = 0;
-
-        documentList.updatePagination({
-            maxItems: 10,
-            skipCount: 10
-        });
-
-        expect(documentList.maxItems).toBe(10);
-        expect(documentList.skipCount).toBe(10);
-    });
-
     it('should reload data upon changing pagination settings', () => {
         spyOn(documentList, 'reload').and.stub();
 
@@ -1320,21 +1236,7 @@ describe('DocumentList', () => {
         expect(documentList.reload).toHaveBeenCalled();
     });
 
-    it('should not reload data if pagination settings are same', () => {
-        spyOn(documentList, 'reload').and.stub();
-
-        documentList.maxItems = 10;
-        documentList.skipCount = 10;
-
-        documentList.updatePagination({
-            maxItems: 10,
-            skipCount: 10
-        });
-
-        expect(documentList.reload).not.toHaveBeenCalled();
-    });
-
-    it('should NOT reload data on first call of onNgChanges', () => {
+    it('should NOT reload data on first call of ngOnChanges', () => {
         spyOn(documentList, 'reload').and.stub();
 
         const firstChange = true;
@@ -1343,16 +1245,7 @@ describe('DocumentList', () => {
         expect(documentList.reload).not.toHaveBeenCalled();
     });
 
-    it('should reload data on NON-first calls of onNgChanges', () => {
-        spyOn(documentList, 'reload').and.stub();
-
-        const firstChange = true;
-        documentList.ngOnChanges({ skipCount: new SimpleChange(undefined, 10, !firstChange) });
-
-        expect(documentList.reload).toHaveBeenCalled();
-    });
-
-    it('should NOT reload data on onNgChanges upon reset of skipCount to 0', () => {
+    it('should NOT reload data on ngOnChanges upon reset of skipCount to 0', () => {
         spyOn(documentList, 'reload').and.stub();
 
         documentList.maxItems = 10;
@@ -1376,23 +1269,6 @@ describe('DocumentList', () => {
         });
 
         expect(documentList.reload).toHaveBeenCalled();
-    });
-
-    it('should reset skipCount from  pagination settings on loading folder by node id', () => {
-        spyOn(documentList, 'reload').and.stub();
-        const favoritesApi = apiService.getInstance().core.favoritesApi;
-        spyOn(favoritesApi, 'getFavorites').and.returnValue(Promise.resolve(null));
-
-        documentList.maxItems = 0;
-        documentList.skipCount = 0;
-
-        documentList.updatePagination({
-            maxItems: 10,
-            skipCount: 10
-        });
-
-        documentList.loadFolderByNodeId('-favorites-');
-        expect(documentList.skipCount).toBe(0, 'skipCount is reset');
     });
 
     it('should add includeFields in the server request when present', () => {

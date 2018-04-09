@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiServiceMock, AlfrescoApiService, AppConfigService, StorageService, ContentService } from '@alfresco/adf-core';
+import { AlfrescoApiServiceMock, AlfrescoApiService,
+    AppConfigService, StorageService, ContentService } from '@alfresco/adf-core';
 import { DocumentListService } from './document-list.service';
 
 declare let jasmine: any;

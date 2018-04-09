@@ -27,7 +27,8 @@ import { By } from '@angular/platform-browser';
 import {
         EmptyFolderContentDirective,
         DocumentListComponent,
-        DocumentListService
+        DocumentListService,
+        CustomResourcesService
     } from '../document-list';
 import { ContentService } from '@alfresco/adf-core';
 
@@ -48,6 +49,7 @@ describe('ContentNodeSelectorDialogComponent', () => {
                 EmptyFolderContentDirective
             ],
             providers: [
+                CustomResourcesService,
                 ContentNodeSelectorService,
                 ContentNodeSelectorPanelComponent,
                 DocumentListService,

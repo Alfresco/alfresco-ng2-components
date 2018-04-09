@@ -30,7 +30,7 @@ import {
     DataColumnListComponent,
     PaginatedComponent,
     PaginationComponent,
-    PaginationQueryParams,
+    PaginationModel,
     UserPreferencesService
 } from '@alfresco/adf-core';
 import { DatePipe } from '@angular/common';
@@ -49,7 +49,6 @@ import { ProcessFilterParamRepresentationModel } from '../models/filter-process.
 import { processPresetsDefaultModel } from '../models/process-preset.model';
 import { ProcessService } from '../services/process.service';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Pagination } from 'alfresco-js-api';
 import { ProcessListModel } from '../models/process-list.model';
 
 @Component({
@@ -133,14 +132,14 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     isLoading: boolean = true;
     layoutPresets = {};
 
-    pagination: BehaviorSubject<Pagination>;
+    pagination: BehaviorSubject<PaginationModel>;
 
     constructor(private processService: ProcessService,
                 private userPreferences: UserPreferencesService,
                 private appConfig: AppConfigService) {
         this.size = this.userPreferences.paginationSize;
 
-        this.pagination = new BehaviorSubject<Pagination>(<Pagination> {
+        this.pagination = new BehaviorSubject<PaginationModel>(<PaginationModel> {
             maxItems: this.size,
             skipCount: 0,
             totalItems: 0
@@ -404,7 +403,7 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
         return (this.layoutPresets['default']).map(col => new ObjectDataColumn(col));
     }
 
-    updatePagination(params: PaginationQueryParams) {
+    updatePagination(params: PaginationModel) {
         const needsReload = params.maxItems || params.skipCount;
         this.size = params.maxItems;
         this.page = this.currentPage(params.skipCount, params.maxItems);

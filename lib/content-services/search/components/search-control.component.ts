@@ -25,6 +25,7 @@ import { Subject } from 'rxjs/Subject';
 import { SearchComponent } from './search.component';
 import { MatListItem } from '@angular/material';
 import { EmptySearchResultComponent } from './empty-search-result.component';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-search-control',
@@ -116,7 +117,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     constructor(public authService: AuthenticationService,
                 private thumbnailService: ThumbnailService) {
 
-        this.toggleSearch.asObservable().debounceTime(100).subscribe(() => {
+        this.toggleSearch.asObservable().pipe(debounceTime(200)).subscribe(() => {
             if (this.expandable) {
                 this.subscriptAnimationState = this.subscriptAnimationState === 'inactive' ? 'active' : 'inactive';
 

@@ -15,17 +15,24 @@
  * limitations under the License.
  */
 
-/**
- * PaginationQueryParams object is used to emit events regarding pagination having two
- * properties from the Pagination interface found in AlfrescoJS API
- *
- * The two properties are "skipCount" and "maxItems" that are sent as query parameters
- * to server to paginate results
- *
- * @TODO Contribute this to AlfrescoJS API
- */
+import { Pagination } from 'alfresco-js-api';
 
-export interface PaginationQueryParams {
-    skipCount: number;
-    maxItems: number;
+export class PaginationModel implements Pagination {
+    count?: number;
+    hasMoreItems?: boolean;
+    merge?: boolean;
+    totalItems?: number;
+    skipCount?: number;
+    maxItems?: number;
+
+    constructor(obj?: any) {
+        if (obj) {
+            this.count = obj.count;
+            this.hasMoreItems = obj.hasMoreItems ? obj.hasMoreItems : false;
+            this.merge = obj.merge ? obj.merge : false;
+            this.totalItems = obj.totalItems;
+            this.skipCount = obj.skipCount;
+            this.maxItems = obj.maxItems;
+        }
+    }
 }

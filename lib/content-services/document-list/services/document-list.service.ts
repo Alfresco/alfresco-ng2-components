@@ -16,13 +16,10 @@
  */
 
 import {
-    AlfrescoApiService,
-    AuthenticationService,
-    ContentService,
-    LogService,
-    PermissionsEnum,
-    ThumbnailService
+    AlfrescoApiService, AuthenticationService, ContentService, LogService,
+    PermissionsEnum, ThumbnailService
 } from '@alfresco/adf-core';
+
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
@@ -135,7 +132,7 @@ export class DocumentListService {
      * @param includeFields Extra information to include (available options are "aspectNames", "isLink" and "association")
      * @returns Details of the folder
      */
-    getFolderNode(nodeId: string, includeFields: string[] = []): Promise<MinimalNodeEntryEntity> {
+    getFolderNode(nodeId: string, includeFields: string[] = []): Observable<MinimalNodeEntryEntity> {
 
         let includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', ...includeFields]
             .filter((element, index, array) => index === array.indexOf(element));
@@ -145,8 +142,7 @@ export class DocumentListService {
             include: includeFieldsRequest
         };
 
-        let nodes: any = this.apiService.getInstance().nodes;
-        return nodes.getNodeInfo(nodeId, opts);
+        return Observable.fromPromise(this.apiService.getInstance().nodes.getNodeInfo(nodeId, opts));
     }
 
     /**
@@ -176,6 +172,7 @@ export class DocumentListService {
     }
 
     /**
+     * @Deprecated 2.3.0 use the one in the content service
      * Checks if a node has the specified permission.
      * @param node Target node
      * @param permission Permission level to query

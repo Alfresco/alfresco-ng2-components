@@ -155,7 +155,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
         this.folderIdToShow = this.currentFolderId;
         this.paginationStrategy = PaginationStrategy.Infinite;
 
-        this.breadcrumbTransform = this.breadcrumbTransform ? this.breadcrumbTransform : null ;
+        this.breadcrumbTransform = this.breadcrumbTransform ? this.breadcrumbTransform : null;
         this.isSelectionValid = this.isSelectionValid ? this.isSelectionValid : defaultValidation;
     }
 
@@ -267,13 +267,13 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
 
         if (this.dropdownSiteList) {
             this.documentList.getCorrespondingNodeIds(this.siteId)
-                .then(nodeIds => {
-                    this.contentNodeSelectorService.search(this.searchTerm, this.siteId, this.skipCount, this.pageSize, nodeIds)
-                        .subscribe(this.showSearchResults.bind(this));
-                })
-                .catch(() => {
-                    this.showSearchResults({list: {entries: []}});
-                });
+                .subscribe(nodeIds => {
+                        this.contentNodeSelectorService.search(this.searchTerm, this.siteId, this.skipCount, this.pageSize, nodeIds)
+                            .subscribe(this.showSearchResults.bind(this));
+                    },
+                    () => {
+                        this.showSearchResults({ list: { entries: [] } });
+                    });
         } else {
             this.contentNodeSelectorService.search(this.searchTerm, this.siteId, this.skipCount, this.pageSize)
                 .subscribe(this.showSearchResults.bind(this));
