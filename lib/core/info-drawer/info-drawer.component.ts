@@ -46,7 +46,7 @@ export class InfoDrawerComponent {
     @Output()
     currentTab: EventEmitter<number> = new EventEmitter<number>();
 
-    @ContentChildren(InfoDrawerTabComponent)
+    @ContentChildren('infoDrawerTab')
     contentBlocks: QueryList<InfoDrawerTabComponent>;
 
     showTabLayout(): boolean {
