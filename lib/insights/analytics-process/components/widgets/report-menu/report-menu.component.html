@@ -1,0 +1,41 @@
+<div fxShow fxHide.xs="true">
+    <button mat-button matTooltip="{{'ANALYTICS.MESSAGES.ICON-SETTING' | translate}}"
+            (click)="toggleParameters()">
+        <mat-icon>settings</mat-icon>
+    </button>
+    <button mat-button id="delete-button" (click)="deleteReport(reportId)"
+            matTooltip="{{'ANALYTICS.MESSAGES.ICON-DELETE' | translate}}">
+        <mat-icon>delete</mat-icon>
+    </button>
+    <span *ngIf="validForm">
+        <button mat-button id="export-button" (click)="showDialog('Export')"
+                matTooltip="{{'ANALYTICS.MESSAGES.ICON-EXPORT-CSV' | translate}}">
+            <mat-icon>file_download</mat-icon>
+        </button>
+        <button mat-button id="save-button" (click)="showDialog('Save')"
+                matTooltip="{{'ANALYTICS.MESSAGES.ICON-SAVE' | translate}}">
+            <mat-icon>save</mat-icon>
+        </button>
+    </span>
+</div>
+<div fxHide fxShow.xs="true">
+    <button mat-icon-button [matMenuTriggerFor]="editReportMenu">
+        <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #editReportMenu="matMenu">
+        <button mat-menu-item (click)="toggleParameters()">
+            <mat-icon>settings</mat-icon><span>{{'ANALYTICS.MESSAGES.ICON-SETTING' | translate}}</span>
+        </button>
+        <button mat-menu-item id="delete-button" (click)="deleteReport(reportId)">
+            <mat-icon>delete</mat-icon><span>{{'ANALYTICS.MESSAGES.ICON-DELETE' | translate}}</span>
+        </button>
+        <span *ngIf="validForm">
+            <button mat-menu-item id="export-button" (click)="showDialog('Export')">
+                <mat-icon>file_download</mat-icon><span>{{'ANALYTICS.MESSAGES.ICON-EXPORT-CSV' | translate}}</span>
+            </button>
+            <button mat-menu-item id="save-button" (click)="showDialog('Save')">
+                <mat-icon>save</mat-icon><span>{{'ANALYTICS.MESSAGES.ICON-SAVE' | translate}}</span>
+            </button>
+        </span>
+    </mat-menu>
+</div>
