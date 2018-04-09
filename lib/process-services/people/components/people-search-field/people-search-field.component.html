@@ -11,7 +11,7 @@
 <ng-container *ngIf="users$ | async; let users">
     <div class="search-list-container" id="search-people-list" *ngIf="users.length > 0">
         <adf-people-list [users]="users" (clickRow)="onRowClick($event)">
-            <data-columns>
+            <data-columns #dataColumnList>
                 <data-column key="firstName">
                     <ng-template let-entry="$implicit">
                             <div *ngIf="!entry.row.obj.pictureId" class="people-pic">

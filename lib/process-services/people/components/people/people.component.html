@@ -27,7 +27,7 @@
                 [users]="people"
                 [actions]="isEditMode()"
                 (clickAction)="onClickAction($event)">
-                    <data-columns>
+                    <data-columns #dataColumnList>
                         <data-column key="firstName">
                             <ng-template let-entry="$implicit">
                                 <div *ngIf="!entry.row.obj.pictureId" class="adf-people-search-people-pic">
