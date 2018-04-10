@@ -40,7 +40,7 @@ import { CustomResourcesService } from './../services/custom-resources.service';
 import { DocumentListComponent } from './document-list.component';
 
 declare let jasmine: any;
-
+/*tslint:disable:ban*/
 describe('DocumentList', () => {
 
     let documentList: DocumentListComponent;
@@ -506,7 +506,7 @@ describe('DocumentList', () => {
         expect(actions[0].disabled).toBeUndefined();
     });
 
-    it('should not disable the action if there are no permissions for the file and disable with no permission is true', () => {
+    it('should disable the action if there are no permissions for the file and disable with no permission is true', () => {
         let documentMenu = new ContentActionModel({
             permission: 'delete',
             target: 'document',
@@ -524,9 +524,10 @@ describe('DocumentList', () => {
         expect(actions.length).toBe(1);
         expect(actions[0].title).toEqual('FileAction');
         expect(actions[0].disabled).toBeDefined();
+        expect(actions[0].disabled).toBeTruthy();
     });
 
-    it('should not disable the action if there are no permissions for the folder and disable with no permission is true', () => {
+    it('should disable the action if there are no permissions for the folder and disable with no permission is true', () => {
         let documentMenu = new ContentActionModel({
             permission: 'delete',
             target: 'folder',
@@ -544,6 +545,7 @@ describe('DocumentList', () => {
         expect(actions.length).toBe(1);
         expect(actions[0].title).toEqual('FolderAction');
         expect(actions[0].disabled).toBeDefined();
+        expect(actions[0].disabled).toBeTruthy();
     });
 
     it('should find no content actions', () => {
