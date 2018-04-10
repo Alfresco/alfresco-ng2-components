@@ -11,9 +11,9 @@
     },
     "CONFIRM_DELETE": {
       "TITLE": "Delete version",
-      "MESSAGE": "Deleted file versions can not be restored. Delete?",
-      "YES_LABEL": "Yes",
-      "NO_LABEL": "No"
+      "MESSAGE": "Deleted file versions can not be restored.",
+      "YES_LABEL": "DELETE",
+      "NO_LABEL": "KEEP"
     }
   },
   "ADF_CONFIRM_DIALOG": {
