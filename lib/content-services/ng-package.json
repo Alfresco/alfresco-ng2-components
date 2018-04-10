@@ -1,5 +1,6 @@
 {
   "$schema": "./node_modules/ng-packagr/ng-package.schema.json",
+  "whitelistedNonPeerDependencies": [ "." ],
   "workingDirectory" : "./ng_work",
   "src": "../content-services/",
   "dest": "../dist/content-services/",
@@ -14,6 +15,8 @@
       "minimatch": "minimatch",
       "@angular/platform-browser/animations": "@angular/platform-browser/animations",
       "@angular/material": "@angular/material",
+      "@mat-datetimepicker/core": "@mat-datetimepicker/core",
+      "@mat-datetimepicker/moment": "@mat-datetimepicker/moment",
       "@angular/flex-layout": "@angular/flex-layout",
       "@alfresco/adf-core": "@alfresco/adf-core",
       "@angular/material-moment-adapter": "@angular/material-moment-adapter",

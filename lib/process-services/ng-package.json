@@ -1,5 +1,6 @@
 {
   "$schema": "./node_modules/ng-packagr/ng-package.schema.json",
+  "whitelistedNonPeerDependencies": [ "." ],
   "workingDirectory": "./ng_work",
   "src": "../process-services/",
   "dest": "../dist/process-services/",
