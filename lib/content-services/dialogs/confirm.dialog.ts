@@ -28,7 +28,7 @@ import { MAT_DIALOG_DATA } from '@angular/material';
         <mat-dialog-actions>
             <span class="spacer"></span>
             <button mat-button [mat-dialog-close]="true">{{ yesLabel | translate }}</button>
-            <button mat-button [mat-dialog-close]="false" cdkFocusInitial>{{ noLabel | translate }}</button>
+            <button mat-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>{{ noLabel | translate }}</button>
         </mat-dialog-actions>
     `,
     styles: [`
