@@ -75,10 +75,6 @@
 
         .mat-focused {
 
-            .mat-input-placeholder-wrapper {
-                display: none;
-            }
-
             label {
                 transform: scaleX(1);
                 transition: transform 150ms linear,

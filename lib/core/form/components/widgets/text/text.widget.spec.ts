@@ -150,6 +150,14 @@ describe('TextWidgetComponent', () => {
                 expect(inputElement.placeholder).toBe('simple palceholder');
             });
 
+            it('should show the field placeholder when clicked', () => {
+                inputElement.click();
+                fixture.detectChanges();
+                expect(inputElement).toBeDefined();
+                expect(inputElement).not.toBeNull();
+                expect(inputElement.placeholder).toBe('simple palceholder');
+            });
+
             it('should prevent text to be written if is not allowed by the mask on keyUp event', async(() => {
                 expect(element.querySelector('#text-id')).not.toBeNull();
 
@@ -257,6 +265,8 @@ describe('TextWidgetComponent', () => {
 
         describe('and a mask placeholder is configured', () => {
 
+            let inputElement: HTMLInputElement;
+
             beforeEach(() => {
                 widget.field = new FormFieldModel(new FormModel({taskId: 'fake-task-id'}), {
                     id: 'text-id',
@@ -269,10 +279,18 @@ describe('TextWidgetComponent', () => {
                 });
 
                 fixture.detectChanges();
+                inputElement = <HTMLInputElement> element.querySelector('#text-id');
             });
 
             it('should show the input mask placeholder', () => {
-                const inputElement: HTMLInputElement = <HTMLInputElement> element.querySelector('#text-id');
+                expect(inputElement).toBeDefined();
+                expect(inputElement).not.toBeNull();
+                expect(inputElement.placeholder).toBe('Phone : (__) ___-___');
+            });
+
+            it('should show the input mask placeholder when clicked', () => {
+                inputElement.click();
+                fixture.detectChanges();
                 expect(inputElement).toBeDefined();
                 expect(inputElement).not.toBeNull();
                 expect(inputElement.placeholder).toBe('Phone : (__) ___-___');
