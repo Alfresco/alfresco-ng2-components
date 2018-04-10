@@ -739,6 +739,17 @@ describe('DataTable', () => {
         expect(event.target.src).toBe(originalSrc);
     });
 
+    it('should replace image source with icon if fallback is not available and mimeType is provided', () => {
+        let event = <any> {
+            target: {
+                src: 'missing-image'
+            }
+        };
+
+        dataTable.onImageLoadingError(event, 'image/png');
+        expect(event.target.src).toBe('./assets/images/ft_ic_raster_image.svg');
+    });
+
     it('should not get cell tooltip when row is not provided', () => {
         const col = <DataColumn> { key: 'name', type: 'text' };
         expect(dataTable.getCellTooltip(null, col)).toBeNull();

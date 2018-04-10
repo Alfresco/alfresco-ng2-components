@@ -29,7 +29,7 @@ import { DataRowEvent } from '../../data/data-row-event.model';
 import { DataRow } from '../../data/data-row.model';
 import { DataSorting } from '../../data/data-sorting.model';
 import { DataTableAdapter } from '../../data/datatable-adapter';
-import { ThumbnailService } from "../../../services";
+import { ThumbnailService } from '../../../services';
 
 import { ObjectDataRow } from '../../data/object-datarow.model';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
@@ -38,7 +38,6 @@ import { DataRowActionEvent } from './data-row-action.event';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/buffer';
 import 'rxjs/add/operator/filter';
-
 
 export enum DisplayMode {
     List = 'list',
@@ -166,7 +165,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     constructor(
         private elementRef: ElementRef,
         differs: IterableDiffers,
-        private thumbnailService: ThumbnailService
+        private thumbnailService?: ThumbnailService
     ) {
         if (differs) {
             this.differ = differs.find([]).create(null);
@@ -427,7 +426,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
         this.emitRowSelectionEvent(domEventName, row);
     }
 
-    onImageLoadingError(event: Event, mimeType: string) {
+    onImageLoadingError(event: Event, mimeType?: string) {
         if (mimeType && !this.fallbackThumbnail) {
             this.fallbackThumbnail = this.thumbnailService.getMimeTypeIcon(mimeType);
         }
