@@ -3,6 +3,7 @@ import * as path from "path";
 
 import * as replaceSection from "mdast-util-heading-range";
 import * as remark from "remark";
+import * as stringify from "remark-stringify";
 import * as frontMatter from "remark-frontmatter";
 
 import * as combyne from "combyne";
@@ -180,8 +181,9 @@ class ComponentInfo {
 
     constructor(classRef: DeclarationReflection) {
         let props = classRef.getChildrenByKind(ReflectionKind.Property);
-    
-        this.properties = props.map(item => {
+        let accessors = classRef.getChildrenByKind(ReflectionKind.Accessor);
+        
+        this.properties = [...props, ...accessors].map(item => {
             return new PropInfo(item);
         });
 
@@ -249,7 +251,9 @@ export function updatePhase(tree, pathname, aggData) {
         let template = combyne(templateSource);
 
         let mdText = template.render(compData);
-        let newSection = remark().parse(mdText.trim()).children;
+        mdText = mdText.replace(/^ +\|/mg, "|");
+
+        let newSection = remark().data("settings", {paddedTable: false, gfm: false}).parse(mdText.trim()).children;
 
         replaceSection(tree, "Class members", (before, section, after) => {
             newSection.unshift(before);
@@ -278,7 +282,7 @@ export function updatePhase(tree, pathname, aggData) {
     return true;
 }
 
-
+/*
 function renderInputs(comp: ComponentInfo): string {
     var result = "";
 
@@ -288,6 +292,7 @@ function renderInputs(comp: ComponentInfo): string {
 
     return result;
 }
+*/
 
 function initialCap(str: string) {
     return str[0].toUpperCase() + str.substr(1);
