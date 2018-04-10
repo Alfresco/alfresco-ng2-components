@@ -444,7 +444,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     disableActionsWithNoPermissions(node: MinimalNodeEntity, action: ContentActionModel) {
-        if (action.permission && !this.contentService.hasPermission(node.entry, action.permission)) {
+        if (action.permission && action.disableWithNoPermission && !this.contentService.hasPermission(node.entry, action.permission)) {
             action.disabled = true;
         }
     }
