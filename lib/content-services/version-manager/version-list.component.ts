@@ -16,7 +16,7 @@
  */
 
 import { AlfrescoApiService } from '@alfresco/adf-core';
-import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, ViewEncapsulation, ElementRef } from '@angular/core';
 import { VersionsApi } from 'alfresco-js-api';
 import { MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
@@ -57,7 +57,10 @@ export class VersionListComponent implements OnChanges {
     @Input()
     allowRestore = true;
 
-    constructor(private alfrescoApi: AlfrescoApiService, private dialog: MatDialog) {
+    constructor(
+        private alfrescoApi: AlfrescoApiService,
+        private dialog: MatDialog,
+        private el: ElementRef) {
         this.versionsApi = this.alfrescoApi.versionsApi;
     }
 
@@ -69,7 +72,7 @@ export class VersionListComponent implements OnChanges {
         if (this.allowRestore) {
             this.versionsApi
                 .revertVersion(this.id, versionId, { majorVersion: true, comment: ''})
-                .then(this.loadVersionHistory.bind(this));
+                .then(() => this.onVersionRestored());
         }
     }
 
@@ -104,12 +107,24 @@ export class VersionListComponent implements OnChanges {
                 if (result === true) {
                     this.alfrescoApi.versionsApi
                         .deleteVersion(this.id, versionId)
-                        .then(() => {
-                            this.loadVersionHistory();
-                        });
+                        .then(() => this.onVersionDeleted());
                 }
             });
         }
+    }
+
+    onVersionDeleted() {
+        this.loadVersionHistory();
+
+        const event = new CustomEvent('version-deleted', { bubbles: true });
+        this.el.nativeElement.dispatchEvent(event);
+    }
+
+    onVersionRestored() {
+        this.loadVersionHistory();
+
+        const event = new CustomEvent('version-restored', { bubbles: true });
+        this.el.nativeElement.dispatchEvent(event);
     }
 
     private getVersionContentUrl(nodeId: string, versionId: string, attachment?: boolean) {

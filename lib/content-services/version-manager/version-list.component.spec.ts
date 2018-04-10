@@ -124,6 +124,17 @@ describe('VersionListComponent', () => {
         expect(component.loadVersionHistory).toHaveBeenCalled();
     }));
 
+    it('should reload and raise version-deleted DOM event', (done) => {
+        spyOn(component, 'loadVersionHistory').and.stub();
+        fixture.nativeElement.addEventListener('version-deleted', () => {
+            expect(component.loadVersionHistory).toHaveBeenCalled();
+            done();
+        });
+        fixture.detectChanges();
+        component.onVersionDeleted();
+    });
+
+
     describe('Version history fetching', () => {
 
         it('should use loading bar', () => {
@@ -230,6 +241,23 @@ describe('VersionListComponent', () => {
     });
 
     describe('Version restoring', () => {
+
+        it('should reload and raise version-restored DOM event', (done) => {
+            spyOn(component, 'loadVersionHistory').and.stub();
+            fixture.nativeElement.addEventListener('version-restored', () => {
+                expect(component.loadVersionHistory).toHaveBeenCalled();
+                done();
+            });
+            fixture.detectChanges();
+            component.onVersionRestored();
+        });
+
+        it('should restore version only when restore allowed', () => {
+            component.allowRestore = false;
+            spyOn(alfrescoApiService.versionsApi, 'revertVersion').and.stub();
+            component.restore('1');
+            expect(alfrescoApiService.versionsApi.revertVersion).not.toHaveBeenCalled();
+        });
 
         it('should load the versions for a given id', () => {
             fixture.detectChanges();
