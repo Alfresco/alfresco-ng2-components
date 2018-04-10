@@ -29,6 +29,7 @@ import { DataRowEvent } from '../../data/data-row-event.model';
 import { DataRow } from '../../data/data-row.model';
 import { DataSorting } from '../../data/data-sorting.model';
 import { DataTableAdapter } from '../../data/datatable-adapter';
+import { ThumbnailService } from '../../../services';
 
 import { ObjectDataRow } from '../../data/object-datarow.model';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
@@ -161,7 +162,11 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     private singleClickStreamSub: Subscription;
     private multiClickStreamSub: Subscription;
 
-    constructor(private elementRef: ElementRef, differs: IterableDiffers) {
+    constructor(
+        private elementRef: ElementRef,
+        differs: IterableDiffers,
+        private thumbnailService?: ThumbnailService
+    ) {
         if (differs) {
             this.differ = differs.find([]).create(null);
         }
@@ -421,7 +426,11 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
         this.emitRowSelectionEvent(domEventName, row);
     }
 
-    onImageLoadingError(event: Event) {
+    onImageLoadingError(event: Event, mimeType?: string) {
+        if (mimeType && !this.fallbackThumbnail) {
+            this.fallbackThumbnail = this.thumbnailService.getMimeTypeIcon(mimeType);
+        }
+
         if (event && this.fallbackThumbnail) {
             let element = <any> event.target;
             element.src = this.fallbackThumbnail;

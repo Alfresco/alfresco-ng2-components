@@ -99,7 +99,7 @@
                                 <img *ngIf="!isIconValue(row, col) && !row.isSelected"
                                      alt="{{ iconAltTextKey(data.getValue(row, col)) | translate }}"
                                      src="{{ data.getValue(row, col) }}"
-                                     (error)="onImageLoadingError($event)">
+                                     (error)="onImageLoadingError($event, row.obj.entry.content.mimeType)">
                             </div>
                             <div *ngSwitchCase="'icon'" class="cell-value">
                                 <span class="sr-only">{{ iconAltTextKey(data.getValue(row, col)) | translate }}</span>
