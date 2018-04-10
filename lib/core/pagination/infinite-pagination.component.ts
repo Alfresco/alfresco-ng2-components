@@ -58,7 +58,6 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
     @Input()
     pageSize: number = InfinitePaginationComponent.DEFAULT_PAGE_SIZE;
 
-    /** @deprecated 2.3.0 use the paginated component interface to use it. */
     /** Is a new page loading? */
     @Input('loading')
     isLoading: boolean = false;

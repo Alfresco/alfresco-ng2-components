@@ -311,8 +311,17 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
     /**
      * Attempts to set the currently loaded node
      */
-    onFolderLoaded(nodePage: NodePaging): void {
-        this.attemptNodeSelection(this.documentList.folderNode);
+    onFolderLoaded(nodePaging: NodePaging): void {
+        if (!this.showingSearchResults) {
+            this.attemptNodeSelection(this.documentList.folderNode);
+        }
+    }
+
+    /**
+     * Returns whether breadcrumb has to be shown or not
+     */
+    showBreadcrumbs() {
+        return !this.showingSearchResults || this.chosenNode;
     }
 
     /**

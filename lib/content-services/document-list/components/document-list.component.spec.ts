@@ -786,7 +786,7 @@ describe('DocumentList', () => {
         expect(documentList.navigationMode).toBe(DocumentListComponent.SINGLE_CLICK_NAVIGATION);
     });
 
-    xit('should emit error on wrong folder id', (done) => {
+    it('should emit error on wrong folder id', (done) => {
         documentList.error.subscribe(() => {
             done();
         });

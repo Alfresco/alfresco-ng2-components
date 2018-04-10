@@ -132,20 +132,6 @@ describe('ContentNodeSelectorComponent', () => {
 
                 component.chosenNode = expectedNode;
             });
-
-            it('should update skipCount on folder loaded', () => {
-                component.skipCount = 8;
-
-                component.onFolderLoaded({
-                    list: {
-                        pagination: {
-                            skipCount: 10
-                        }
-                    }
-                });
-
-                expect(component.skipCount).toBe(10, 'skipCount is updated');
-            });
         });
 
         describe('Breadcrumbs', () => {
@@ -588,8 +574,6 @@ describe('ContentNodeSelectorComponent', () => {
 
                 tick(debounceSearch);
 
-                expect(component.highlighter.highlight).not.toHaveBeenCalled();
-
                 expect(component.highlighter.highlight).toHaveBeenCalledWith('shenron');
             }));
 
@@ -678,6 +662,8 @@ describe('ContentNodeSelectorComponent', () => {
                     tick(debounceSearch);
 
                     fixture.detectChanges();
+
+                    tick(debounceSearch);
 
                     const spinnerSelector = By.css('[data-automation-id="content-node-selector-search-pagination"] [data-automation-id="adf-infinite-pagination-spinner"]');
                     const paginationLoading = fixture.debugElement.query(spinnerSelector);
