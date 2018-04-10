@@ -24,6 +24,12 @@ export class MyComponent implements OnInit {
 }
 ```
 
+## Events
+
+| Name | Type | Description |
+| --- | --- | --- |
+| nodeUpdated | `Subject<MinimalNodeEntryEntity>` | Publish/subscribe to events related to node updates. |
+
 ## Details
 
 **Note for developers**: _the TypeScript declaration files for Alfresco JS API
