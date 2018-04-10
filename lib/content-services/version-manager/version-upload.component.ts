@@ -29,6 +29,9 @@ import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 export class VersionUploadComponent {
 
     @Input()
+    allowUpload = true;
+
+    @Input()
     node: MinimalNodeEntryEntity;
 
     @Output()

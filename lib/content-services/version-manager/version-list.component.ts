@@ -51,6 +51,12 @@ export class VersionListComponent implements OnChanges {
     @Input()
     allowDelete = true;
 
+    /**
+     * Toggle restore feature.
+     */
+    @Input()
+    allowRestore = true;
+
     constructor(private alfrescoApi: AlfrescoApiService, private dialog: MatDialog) {
         this.versionsApi = this.alfrescoApi.versionsApi;
     }
@@ -60,9 +66,11 @@ export class VersionListComponent implements OnChanges {
     }
 
     restore(versionId) {
-        this.versionsApi
-            .revertVersion(this.id, versionId, { majorVersion: true, comment: ''})
-            .then(this.loadVersionHistory.bind(this));
+        if (this.allowRestore) {
+            this.versionsApi
+                .revertVersion(this.id, versionId, { majorVersion: true, comment: ''})
+                .then(this.loadVersionHistory.bind(this));
+        }
     }
 
     loadVersionHistory() {

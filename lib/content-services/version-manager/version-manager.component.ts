@@ -40,6 +40,12 @@ export class VersionManagerComponent {
     @Input()
     allowDownload = true;
 
+    @Input()
+    allowUpload = true;
+
+    @Input()
+    allowRestore = true;
+
     @Output()
     uploadSuccess = new EventEmitter();
 
@@ -53,6 +59,8 @@ export class VersionManagerComponent {
         this.allowDelete = config.get('adf-version-manager.allowDelete', true);
         this.showComments = config.get('adf-version-manager.allowComments', true);
         this.allowDownload = config.get('adf-version-manager.allowDownload', true);
+        this.allowUpload = config.get('adf-version-manager.allowUpload', true);
+        this.allowRestore = config.get('adf-version-manager.allowRestore', true);
     }
 
     onUploadSuccess(event): void {

@@ -1,11 +1,17 @@
 <div class="adf-new-version-uploader-container" fxLayout="row" fxLayoutAlign="end center">
-    <adf-version-upload [node]="node" (success)="onUploadSuccess($event)" (error)="onUploadError($event)"></adf-version-upload>
+    <adf-version-upload
+        [allowUpload]="allowUpload"
+        [node]="node"
+        (success)="onUploadSuccess($event)"
+        (error)="onUploadError($event)">
+    </adf-version-upload>
 </div>
 <div class="adf-version-list-container">
     <adf-version-list
         #versionList [id]="node.id"
         [allowDownload]="allowDownload"
         [showComments]="showComments"
-        [allowDelete]="allowDelete">
+        [allowDelete]="allowDelete"
+        [allowRestore]="allowRestore">
     </adf-version-list>
 </div>

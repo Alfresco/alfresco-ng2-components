@@ -475,7 +475,9 @@
           "properties": {
             "allowComments": { "type": "boolean" },
             "allowDownload": { "type": "boolean" },
-            "allowDelete": { "type": "boolean" }
+            "allowDelete": { "type": "boolean" },
+            "allowUpload": { "type": "boolean" },
+            "allowRestore": { "type": "boolean" }
           }
         }
     }

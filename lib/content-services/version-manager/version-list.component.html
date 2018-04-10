@@ -9,7 +9,7 @@
         <p mat-line class="adf-version-list-item-comment" *ngIf="showComments">{{version.entry.versionComment}}</p>
 
         <mat-menu #versionMenu="matMenu" yPosition="below" xPosition="before">
-            <button
+            <button *ngIf="allowRestore"
                 mat-menu-item
                 (click)="restore(version.entry.id)">
                 {{ 'ADF_VERSION_LIST.ACTIONS.RESTORE' | translate }}

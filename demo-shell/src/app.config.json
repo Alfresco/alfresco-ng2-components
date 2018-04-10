@@ -488,6 +488,8 @@
     "adf-version-manager": {
       "allowComments": true,
       "allowDownload": true,
-      "allowDelete": true
+      "allowDelete": true,
+      "allowRestore": true,
+      "allowUpload": true
     }
 }
