@@ -3,6 +3,7 @@ import * as path from "path";
 
 import * as replaceSection from "mdast-util-heading-range";
 import * as remark from "remark";
+import * as stringify from "remark-stringify";
 import * as frontMatter from "remark-frontmatter";
 
 import * as combyne from "combyne";
@@ -31,7 +32,8 @@ let excludePatterns = [
 
 let nameExceptions = {
     "datatable.component": "DataTableComponent",
-    "tasklist.service": "TaskListService"
+    "tasklist.service": "TaskListService",
+    "text-mask.component": "InputMaskDirective"
 }
 
 
@@ -61,20 +63,18 @@ class PropInfo {
 
         if (rawProp.decorators) {
             rawProp.decorators.forEach(dec => {
+                //console.log(dec);
                 if (dec.name === "Input") {
                     this.isInput = true;
-
-                    /*
+                    
                     if (dec.arguments) {
                         let bindingName = dec.arguments["bindingPropertyName"];
-                        console.log(JSON.stringify(dec.arguments));
+                        //console.log(JSON.stringify(dec.arguments));
                         
                         if (bindingName && (bindingName !== ""))
-                            this.name = bindingName;
-                        
+                            this.name = bindingName.replace(/['"]/g, "");
                     }
-                    */
-                   
+                    
                     if (!this.docText && !this.isDeprecated)
                         console.log(`Warning: Input "${rawProp.getFullName()}" has no doc text.`);
                 }
@@ -181,8 +181,9 @@ class ComponentInfo {
 
     constructor(classRef: DeclarationReflection) {
         let props = classRef.getChildrenByKind(ReflectionKind.Property);
-    
-        this.properties = props.map(item => {
+        let accessors = classRef.getChildrenByKind(ReflectionKind.Accessor);
+        
+        this.properties = [...props, ...accessors].map(item => {
             return new PropInfo(item);
         });
 
@@ -214,11 +215,14 @@ class ComponentInfo {
 export function initPhase(aggData) {
     let app = new Application({
         exclude: excludePatterns,
-        ignoreCompilerErrors: true
+        ignoreCompilerErrors: true,
+        experimentalDecorators: true,
+        tsconfig: "tsconfig.json"
     });
 
     let sources = app.expandInputFiles(libFolders);    
     aggData.projData = app.convert(sources);
+
     /*
     aggData.liq = liquid({
         root: templateFolder
@@ -247,7 +251,9 @@ export function updatePhase(tree, pathname, aggData) {
         let template = combyne(templateSource);
 
         let mdText = template.render(compData);
-        let newSection = remark().parse(mdText.trim()).children;
+        mdText = mdText.replace(/^ +\|/mg, "|");
+
+        let newSection = remark().data("settings", {paddedTable: false, gfm: false}).parse(mdText.trim()).children;
 
         replaceSection(tree, "Class members", (before, section, after) => {
             newSection.unshift(before);
@@ -276,7 +282,7 @@ export function updatePhase(tree, pathname, aggData) {
     return true;
 }
 
-
+/*
 function renderInputs(comp: ComponentInfo): string {
     var result = "";
 
@@ -286,6 +292,7 @@ function renderInputs(comp: ComponentInfo): string {
 
     return result;
 }
+*/
 
 function initialCap(str: string) {
     return str[0].toUpperCase() + str.substr(1);

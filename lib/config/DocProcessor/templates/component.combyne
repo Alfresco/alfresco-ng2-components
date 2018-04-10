@@ -5,7 +5,7 @@
 | -- | -- | -- | -- |
 {% each properties as prop %}
 {% if prop.isInput %}
-| {{prop.name}} | `{{{prop.type}}}` | {{{prop.defaultValue}}} | {{{prop.docText}}} |
+| {{{prop.name}}} | `{{{prop.type}}}` | {{{prop.defaultValue}}} | {{{prop.docText}}} |
 {% endif %}
 {% endeach %}
 {% endif %}

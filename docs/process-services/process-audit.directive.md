@@ -2,9 +2,10 @@
 Added: v2.0.0
 Status: Active
 ---
+
 # Process Audit Directive
 
-Fetches the Process Audit information in the pdf or json format.
+Fetches the Process Audit information the PDF or JSON format.
 
 ![adf-process-audit-directive](../docassets/images/adf-process-audit-directive.png)
 
@@ -21,18 +22,20 @@ Fetches the Process Audit information in the pdf or json format.
 </button>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| processId | `string` |  | ID of the process.  |
-| fileName | `string` | `'Audit'` | Name of the file to download (for PDF downloads).  |
-| format | `string` | `'pdf'` | Format for the audit information (can be "pdf" or "json").  |
-| download | `boolean` | `true` | Enables downloading of the audit file on clicking.  |
+| -- | -- | -- | -- |
+| download | `boolean` | true | Enables downloading of the audit file on clicking. |
+| fileName | `string` | "Audit" | Name of the file to download (for PDF downloads). |
+| format | `string` | "pdf" | Format for the audit information (can be "pdf" or "json"). |
+| process-id | `string` |  | ID of the process. |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| clicked | `EventEmitter<any>` | Emitted when the decorated element is clicked.  |
-| error | `EventEmitter<any>` | Emitted when an error occurs.  |
+| -- | -- | -- |
+| clicked | `EventEmitter<any>` | Emitted when the decorated element is clicked. |
+| error | `EventEmitter<any>` | Emitted when an error occurs. |

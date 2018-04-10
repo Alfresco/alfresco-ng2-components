@@ -2,13 +2,16 @@
 Added: v2.0.0
 Status: Active
 ---
-# DataColumn Component
+
+# Data Column Component
 
 Defines column properties for DataTable, Tasklist, Document List and other components.
 
 ## Contents
 
 -   [Basic Usage](#basic-usage)
+
+-   [Class members](#class-members)
 
     -   [Properties](#properties)
 
@@ -35,18 +38,20 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
 </adf-datatable>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| key | `string` |  | Data source key. Can be either a column/property key like `title` or a property path like `createdBy.name`. |
-| type | `string` | `'text'` | Value type for the column. Possible settings are 'text', 'image', 'date', 'fileSize' and 'location'. |
-| format | `string` |  | Value format (if supported by the parent component), for example format of the date.  |
-| sortable | `boolean` | `true` | Toggles ability to sort by this column, for example by clicking the column header.  |
-| title | `string` | `''` | Display title of the column, typically used for column headers. You can use the i18n resource key to get it translated automatically. |
-| formatTooltip | `Function` |  | Custom tooltip formatter function.  |
-| srTitle | `string` |  | Title to be used for screen readers.  |
-| cssClass | `string` |  | Additional CSS class to be applied to column (header and cells).  |
+| -- | -- | -- | -- |
+| class | `string` |  | Additional CSS class to be applied to column (header and cells). |
+| format | `string` |  | Value format (if supported by the parent component), for example format of the date. |
+| formatTooltip | `Function` |  | Custom tooltip formatter function. |
+| key | `string` |  | Data source key. Can be either a column/property key like `title`  or a property path like `createdBy.name`. |
+| sortable | `boolean` | true | Toggles ability to sort by this column, for example by clicking the column header. |
+| sr-title | `string` |  | Title to be used for screen readers. |
+| title | `string` | "" | Display title of the column, typically used for column headers. You can use the i18n resource key to get it translated automatically. |
+| type | `string` | "text" | Value type for the column. Possible settings are 'text', 'image', 'date', 'fileSize' and 'location'. |
 
 ## Details
 

@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-03-21
+Last reviewed: 2018-04-10
 ---
 
 # Node Delete directive
@@ -23,18 +23,20 @@ Deletes multiple files and folders.
 </adf-document-list>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| selection | `MinimalNodeEntity[] | DeletedNodeEntity[]` |  | Array of nodes to delete.  |
-| permanent | `boolean` | `false` | If true then the nodes are deleted immediately rather than being put in the trash. |
+| -- | -- | -- | -- |
+| permanent | `boolean` | false | If true then the nodes are deleted immediately rather than being put in the trash |
+| adf-delete | `MinimalNodeEntity[] | DeletedNodeEntity[]` |  | Array of nodes to delete. |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| delete | `EventEmitter<any>` | Emitted when the nodes have been deleted.  |
+| -- | -- | -- |
+| delete | `EventEmitter<any>` | Emitted when the nodes have been deleted. |
 
 ## Details
 
