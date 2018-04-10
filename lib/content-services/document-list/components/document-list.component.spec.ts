@@ -786,15 +786,6 @@ describe('DocumentList', () => {
         expect(documentList.navigationMode).toBe(DocumentListComponent.SINGLE_CLICK_NAVIGATION);
     });
 
-    it('should emit error on wrong folder id', (done) => {
-        documentList.error.subscribe(() => {
-            done();
-        });
-
-        documentList.currentFolderId = 'wrong-id';
-        documentList.ngOnChanges({ currentFolderId: new SimpleChange(null, documentList.currentFolderId, true) });
-    });
-
     it('should require dataTable to check empty template', () => {
         documentList.dataTable = null;
         expect(documentList.isEmptyTemplateDefined()).toBeFalsy();
