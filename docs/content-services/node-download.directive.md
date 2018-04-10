@@ -1,10 +1,12 @@
 ---
 Added: v2.2.0
 Status: Active
+Last reviewed: 2018-04-10
 ---
+
 # Node Download directive
 
-Allows folders and/or files to be downloaded. Multiple nodes are packed as a '.ZIP' archive.
+Allows folders and/or files to be downloaded, with multiple nodes packed as a '.ZIP' archive.
 
 ## Basic Usage
 
@@ -21,8 +23,10 @@ Allows folders and/or files to be downloaded. Multiple nodes are packed as a '.Z
 </adf-document-list>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| nodes | `MinimalNodeEntity[]` |  | Nodes to download.  |
+| -- | -- | -- | -- |
+| adfNodeDownload | `MinimalNodeEntity[]` |  | Nodes to download. |

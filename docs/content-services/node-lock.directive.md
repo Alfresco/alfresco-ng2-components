@@ -1,11 +1,12 @@
 ---
 Added: v2.2.0
 Status: Active
+Last reviewed: 2018-04-10
 ---
+
 # Node Lock directive
 
-Call [`ContentNodeDialogService.openLockNodeDialog(nodeEntry)`](./content-node-dialog.service.md) method on click event,
-and disable target button if provided node is not a file or user don't have permissions.
+Locks a node.
 
 ## Basic Usage
 
@@ -19,4 +20,11 @@ and disable target button if provided node is not a file or user don't have perm
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| node | `MinimalNodeEntryEntity` |  | Node to lock.  |
+| adf-node-lock | `MinimalNodeEntryEntity` |  | Node to lock.  |
+
+## Details
+
+This calls the `openLockNodeDialog` method from the
+[Content Node Dialog service](content-node-dialog.service.md) method when clicked,
+and disables the target button if the provided node is not a file or the user doesn't
+have permissions.

@@ -1,7 +1,9 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-04-10
 ---
+
 # Node Restore directive
 
 Restores deleted nodes to their original location.
@@ -24,25 +26,29 @@ Restores deleted nodes to their original location.
 </adf-document-list>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| selection | `DeletedNodeEntry[]` |  | Array of deleted nodes to restore.  |
-| location | `string` | `''` | Path to restored node.  |
+| -- | -- | -- | -- |
+| location | `string` | "" | Path to restored node. |
+| adf-restore | `DeletedNodeEntry[]` |  | Array of deleted nodes to restore. |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| restore | `EventEmitter<any>` | Emitted when restoration is complete.  |
+| -- | -- | -- |
+| restore | `EventEmitter<any>` | Emitted when restoration is complete. |
 
 ## Details
 
-'NodeRestoreDirective' directive takes a selection of `DeletedNodeEntry[]` and restores them in their original location.
-If the original location doesn't exist anymore, then they remain in the trash list.
+The directive takes a selection of `DeletedNodeEntry` instances and restores them to
+their original locations. If the original location doesn't exist anymore then they remain
+in the trash list.
 
-For single node restore, there is action to jump to the location where the node has been restored and for this `location` is used to specify the route path where the list of nodes are rendered
+When you restore a single node, you can use the `location` property to show where the node has
+been restored. The property specifies the route path where the list of nodes are rendered.
 
 ## See Also
 

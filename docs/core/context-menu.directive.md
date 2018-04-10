@@ -1,7 +1,9 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-04-10
 ---
+
 # Context Menu directive
 
 Adds a context menu to a component.
@@ -40,11 +42,14 @@ export class MyComponent implements OnInit {
 }
 ```
 
+## Class members
+
 ### Properties
 
-| Name | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| showIcons | boolean | false | Render defined icons |
+| Name | Type | Default value | Description |
+| -- | -- | -- | -- |
+| context-menu-enabled | `boolean` | false |  |
+| context-menu | `any[]` |  |  |
 
 ## Details
 
