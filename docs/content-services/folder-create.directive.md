@@ -1,10 +1,12 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-04-10
 ---
+
 # Folder Create directive
 
-Allows folders to be created.
+Creates folders.
 
 ## Basic Usage
 
@@ -21,19 +23,23 @@ Allows folders to be created.
 </adf-document-list>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| parentNodeId | `string` | `DEFAULT_FOLDER_PARENT_ID` | Parent folder where the new folder will be located after creation.  |
+| -- | -- | -- | -- |
+| adf-create-folder | `string` |  DEFAULT_FOLDER_PARENT_ID | Parent folder where the new folder will be located after creation. |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| error | `EventEmitter<any>` | Emitted when an error occurs. |
+| -- | -- | -- |
+| error | `EventEmitter<any>` | Emitted when an error occurs (for example a folder with same name already exists) |
 
 ## Details
 
-'FolderCreateDirective' directive needs the id of the parent folder where we want the new folder node to be created. If no value is provided, the '-my-' alias is used.
-It opens the FolderDialogComponent to receive data for the new folder. If data is valid, on dialog close, it emits folderCreate event.
+Pass this directive the id of the parent folder where you want the new folder node to be created.
+If no value is provided, the '-my-' alias is used.
+This will open a Folder Dialog component to receive data for the new folder. If the data is valid
+then the dialog will emit a `folderCreate` event when it closes.

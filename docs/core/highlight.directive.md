@@ -1,7 +1,9 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-04-10
 ---
+
 # Highlight directive
 
 Adds highlighting to selected sections of an HTML element's content.
@@ -18,13 +20,15 @@ Adds highlighting to selected sections of an HTML element's content.
 </div>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| selector | `string` | `''` | Class selector for highlightable elements.  |
-| search | `string` | `''` | Text to highlight.  |
-| classToApply | `string` | `'adf-highlight'` | CSS class used to apply highlighting.  |
+| -- | -- | -- | -- |
+| adf-highlight-class | `string` | "adf-highlight" | CSS class used to apply highlighting. |
+| adf-highlight | `string` | "" | Text to highlight. |
+| adf-highlight-selector | `string` | "" | Class selector for highlightable elements. |
 
 ## Details
 

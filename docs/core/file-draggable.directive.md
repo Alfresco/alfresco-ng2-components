@@ -1,10 +1,12 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-04-10
 ---
+
 # File Draggable directive
 
-Provide drag-and-drop features for an element such as a `div`.
+Provides drag-and-drop features for an element such as a `div`.
 
 ## Basic Usage
 
@@ -32,19 +34,21 @@ Some sample CSS to show the drag and drop area:
 }
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| enabled | `boolean` | `true` | Enables/disables drag-and-drop functionality.  |
+| -- | -- | -- | -- |
+| file-draggable | `boolean` | true | Enables/disables drag-and-drop functionality. |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| filesDropped | `EventEmitter<File[]>` | Emitted when one or more files are dragged and dropped onto the draggable element.  |
-| filesEntityDropped | `EventEmitter<any>` | Emitted when one or more files are dragged and dropped onto the draggable element.  |
-| folderEntityDropped | `EventEmitter<any>` | Emitted when a directory is dragged and dropped onto the draggable element.  |
+| -- | -- | -- |
+| filesDropped | `EventEmitter<File[]>` | Emitted when one or more files are dragged and dropped onto the draggable element. |
+| filesEntityDropped | `EventEmitter<any>` | Emitted when one or more files are dragged and dropped onto the draggable element. |
+| folderEntityDropped | `EventEmitter<any>` | Emitted when a directory is dragged and dropped onto the draggable element. |
 
 ## Details
 

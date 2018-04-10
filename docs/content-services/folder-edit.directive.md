@@ -1,7 +1,9 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-04-10
 ---
+
 # Folder Edit directive
 
 Allows folders to be edited.
@@ -21,19 +23,21 @@ Allows folders to be edited.
 </adf-document-list>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| folder | `MinimalNodeEntryEntity` |  | Folder node to edit.  |
+| -- | -- | -- | -- |
+| adf-edit-folder | `MinimalNodeEntryEntity` |  | Folder node to edit. |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| error | `EventEmitter<any>` | Emitted when an error occurs. |
+| -- | -- | -- |
+| error | `EventEmitter<any>` | Emitted when an error occurs (for example a folder with same name already exists) |
 
 ## Details
 
-'FolderEditDirective' directive needs a selection folder entry of #documentList to open the folder dialog component to edit the name and description properties of that selected folder.
-If data is valid, on dialog close, it emits folderEdit event.
+Pass this directive a folder to edit its name and description using a Folder Dialog component.
+If the data is valid then the dialog emits a `folderEdit` event when it closes.
