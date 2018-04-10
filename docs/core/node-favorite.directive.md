@@ -1,10 +1,12 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-04-10
 ---
+
 # Node Favorite directive
 
-Selectively toggles nodes as favorite
+Selectively toggles nodes as favorites.
 
 ## Basic Usage
 
@@ -34,22 +36,24 @@ export class MyComponent {
 }
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| selection | `MinimalNodeEntity[]` | `[]` | Array of nodes to toggle as favorites.  |
+| -- | -- | -- | -- |
+| adf-node-favorite | `MinimalNodeEntity[]` |  \[] | Array of nodes to toggle as favorites. |
 
 ### Events
 
 | Name | Type | Description |
-| ---- | ---- | ----------- |
-| toggle | `EventEmitter<any>` | Emitted when the favorite setting is complete.  |
+| -- | -- | -- |
+| toggle | `EventEmitter<any>` | Emitted when the favorite setting is complete. |
 
 ## Details
 
-The `NodeFavoriteDirective` instance can be bound to a template variable through **adfFavorite** reference,
-which provides a method to help further style the element.
+You can bind the directive instance to a template variable through the **adfFavorite** reference,
+which also lets you add extra styling to the element:
 
 <!-- {% raw %} -->
 
@@ -67,11 +71,11 @@ which provides a method to help further style the element.
 
 <!-- {% endraw %} -->
 
-The directive performs as follows:
+The directive behaves as follows:
 
--   if there are no favorite nodes in the selection, then all are marked as favorites
--   if there is at least one favorite node in the selection, then only those who are not
-    are being marked
--   if all nodes in the selection are favorites, then they are removed from favorites
+-   If there are no favorite nodes in the selection, then all are marked as favorites
+-   If there are one or more favorite node in the selection, then only those that are not
+    favorites are marked
+-   If all nodes in the selection are favorites, then they all have their favorite status removed
 
-See **Demo Shell**
+See the **Demo Shell** for examples of usage.
