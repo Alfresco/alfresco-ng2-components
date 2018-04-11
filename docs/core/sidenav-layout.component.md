@@ -1,27 +1,14 @@
 ---
 Added: v2.3.0
 Status: Active
+Last reviewed: 2018-04-11
 ---
-# Sidenav layout component
 
-A generalised component to help displayig the "ADF style" application frame. The layout consists of 3 regions:
+# Sidenav Layout component
 
-- header
-- navigation
-- content
+Displays the standard three-region ADF application layout.
 
-The navigation (depending on the screensize) either uses the Angular Material Sidenav (on small breakpoint), or the ADF style Sidenav (on bigger breakpoint).
-
-- For Angular Material Sidenav see examples on the Angular Material project's site.
-- The ADF style Sidenav has 2 states: **expanded** and **compact**. Regardless of the state, it is always displayed on the screen, either in small width (compact) or in bigger width (expanded).
-
-The contents of the 3 regions can be injected through Angular's template transclusion. For more details see the usage example of the components.
-
-On desktop (above stepOver):
-<img src="../docassets/images/sidenav-layout.png" width="800">
-
-On mobile (below stepOver):
-<img src="../docassets/images/sidenav-layout-mobile.png" width="800">
+![Sidenav on desktop](../docassets/images/sidenav-layout.png)
 
 ## Basic Usage
 
@@ -57,22 +44,51 @@ On mobile (below stepOver):
 </adf-sidenav-layout>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| sidenavMin | number | - | (**required**) the compact width in pixels |
-| sidenavMax | number | - | (**required**) the expanded width in pixels |
-| stepOver | number | - | (**required**) The breakpoint in pixels, where to step over to mobile/desktop |
-| hideSidenav | boolean | false | Hide the navigation or not |
-| expandedSidenav | boolean | true | The initial (expanded/compact) state of the navigation |
+| sidenavMin | `number` |  | (**required**) Width in pixels when compacted |
+| sidenavMax | `number` |  | (**required**) Width in pixels when expanded |
+| stepOver | `number` |  | (**required**) "Breakpoint" size (ie, number of pixels for selecting between mobile and desktop layouts) |
+| hideSidenav | `boolean` | false | Toggles showing/hiding the navigation region |
+| expandedSidenav | `boolean` | true | Should the navigation region be expanded initially? |
 
-## Template context
+## Details
 
-Each template is given the context containing the following methods:
+This component displays the familiar ADF layout consisting of three regions: header, navigation
+and content.
 
-### toggleMenu(): void
+The layout will select between a small screen (ie, mobile) configuration and a large screen
+configuration according to the screen size in pixels (the `stepOver` property sets the
+number of pixels at which the switch will occur).
 
-Trigger menu toggling
-### isMenuMinimized(): boolean
-The expanded/compact (minimized) state of the navigation. This one only makes sense in case of desktop size, when the screen size is above the value of stepOver.
+The small screen layout uses the Angular Material
+[Sidenav component](https://material.angularjs.org/latest/api/directive/mdSidenav) which is
+described in detail on their website.
+
+The ADF-style (ie, large screen) Sidenav has two states: **expanded** and **compact**.
+The navigation is always displayed regardless of the state but it will have a reduced width
+when compacted. Set the widths for the expanded and compact states with the `sidenavMin` and
+`sidenavMax` properties.
+
+The contents of the 3 regions can be injected through Angular's template transclusion as shown
+in the usage example above.
+
+Desktop layout (screen width greater than the `stepOver` value):
+![Sidenav on desktop](../docassets/images/sidenav-layout.png)
+
+Mobile layout (screen width less than the `stepOver` value):
+![Sidenav on mobile](../docassets/images/sidenav-layout-mobile.png)
+
+### Template context
+
+Each template is given a context containing the following methods:
+
+-   `toggleMenu(): void`
+    Triggers menu toggling.
+
+-   `isMenuMinimized(): boolean`
+    Is the menu in minimized/compacted state? Only works for large screen layouts.

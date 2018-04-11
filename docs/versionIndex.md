@@ -8,13 +8,25 @@ ADF version in which they were introduced. See the
 
 ## Versions
 
+-   [v2.3.0](#v230)
 -   [v2.2.0](#v220)
 -   [v2.1.0](#v210)
 -   [v2.0.0](#v200)
 
+## v2.3.0
+
+-   [Inherited button directive](content-services/inherited-button.directive.md)
+-   [Node share directive](content-services/node-share.directive.md)
+-   [Permission list component](content-services/permission-list.component.md)
+-   [Search chip list component](content-services/search-chip-list.component.md)
+-   [Search filter component](content-services/search-filter.component.md)
+-   [Sidenav layout component](core/sidenav-layout.component.md)
+-   [Upload version button component](content-services/upload-version-button.component.md)
+
 ## v2.2.0
 
 -   [Node download directive](content-services/node-download.directive.md)
+-   [Node lock directive](content-services/node-lock.directive.md)
 
 ## v2.1.0
 
@@ -36,7 +48,7 @@ ADF version in which they were introduced. See the
 -   [Analytics component](insights/analytics.component.md)
 -   [App config service](core/app-config.service.md)
 -   [Apps list component](process-services/apps-list.component.md)
--   [Apps process service](process-services/apps-process.service.md)
+-   [Apps process service](core/apps-process.service.md)
 -   [Auth guard bpm service](core/auth-guard-bpm.service.md)
 -   [Auth guard ecm service](core/auth-guard-ecm.service.md)
 -   [Auth guard service](core/auth-guard.service.md)
@@ -47,10 +59,10 @@ ADF version in which they were introduced. See the
 -   [Card view update service](core/card-view-update.service.md)
 -   [Card view component](core/card-view.component.md)
 -   [Checklist component](process-services/checklist.component.md)
--   [Comment list component](process-services/comment-list.component.md)
+-   [Comment list component](core/comment-list.component.md)
 -   [Comment process model](core/comment-process.model.md)
 -   [Comment process service](core/comment-process.service.md)
--   [Comments component](process-services/comments.component.md)
+-   [Comments component](core/comments.component.md)
 -   [Content action component](content-services/content-action.component.md)
 -   [Content node selector component](content-services/content-node-selector.component.md)
 -   [Content service](core/content.service.md)
@@ -101,6 +113,7 @@ ADF version in which they were introduced. See the
 -   [Node favorite directive](core/node-favorite.directive.md)
 -   [Node name tooltip pipe](core/node-name-tooltip.pipe.md)
 -   [Node permission directive](core/node-permission.directive.md)
+-   [Node permission service](content-services/node-permission.service.md)
 -   [Node restore directive](core/node-restore.directive.md)
 -   [Node service](core/node.service.md)
 -   [Nodes api service](core/nodes-api.service.md)
@@ -116,7 +129,7 @@ ADF version in which they were introduced. See the
 -   [Process attachment list component](process-services/process-attachment-list.component.md)
 -   [Process audit directive](process-services/process-audit.directive.md)
 -   [Process comments component](process-services/process-comments.component.md)
--   [Process content service](process-services/process-content.service.md)
+-   [Process content service](core/process-content.service.md)
 -   [Process filter service](process-services/process-filter.service.md)
 -   [Process filters component](process-services/process-filters.component.md)
 -   [Process instance details component](process-services/process-instance-details.component.md)
@@ -152,6 +165,7 @@ ADF version in which they were introduced. See the
 -   [Task filters component](process-services/task-filters.component.md)
 -   [Task header component](process-services/task-header.component.md)
 -   [Task list component](process-services/task-list.component.md)
+-   [Task standalone component](process-services/task-standalone.component.md)
 -   [Tasklist service](process-services/tasklist.service.md)
 -   [Text highlight pipe](core/text-highlight.pipe.md)
 -   [Text mask component](core/text-mask.component.md)

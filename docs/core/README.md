@@ -14,6 +14,8 @@ for more information about installing and using the source code.
 | [Card view component](card-view.component.md) | Displays a configurable property list renderer. | [Source](../../lib/core/card-view/components/card-view/card-view.component.ts) |
 | [Accordion group component](accordion-group.component.md) | Adds a collapsible panel to an accordion menu. | [Source](../../lib/core/collapsable/accordion-group.component.ts) |
 | [Accordion component](accordion.component.md) | Creates a collapsible accordion menu. | [Source](../../lib/core/collapsable/accordion.component.ts) |
+| [Comment list component](comment-list.component.md) | Shows a list of comments. | [Source](../../lib/core/comments/comment-list.component.ts) |
+| [Comments component](comments.component.md) | Displays comments from users involved in a specified task or content and allows an involved user to add a comment to a task or a content. | [Source](../../lib/core/comments/comments.component.ts) |
 | [Data column component](data-column.component.md) | Defines column properties for DataTable, Tasklist, Document List and other components. | [Source](../../lib/core/data-column/data-column.component.ts) |
 | [Datatable component](datatable.component.md) | Displays data as a table with customizable columns and presentation. | [Source](../../lib/core/datatable/components/datatable/datatable.component.ts) |
 | [Form field component](form-field.component.md) | A form field in an APS form. | [Source](../../lib/core/form/components/form-field/form-field.component.ts) |
@@ -29,13 +31,12 @@ for more information about installing and using the source code.
 | [Pagination component](pagination.component.md) | Adds pagination to the component it is used with. | [Source](../../lib/core/pagination/pagination.component.ts) |
 | [Host settings component](host-settings.component.md) | Validates the URLs for ACS and APS and saves them in the user's local storage | [Source](../../lib/core/settings/host-settings.component.ts) |
 | [Sidebar action menu component](sidebar-action-menu.component.md) | Displays a sidebar-action menu information panel. | [Source](../../lib/core/sidebar/sidebar-action-menu.component.ts) |
+| [Sidenav layout component](sidenav-layout.component.md) | Displays the standard three-region ADF application layout. | [Source](../../lib/core/sidenav-layout/components/sidenav-layout/sidenav-layout.component.ts) |
 | [Toolbar divider component](toolbar-divider.component.md) | Divides groups of elements in a Toolbar with a visual separator. | [Source](../../lib/core/toolbar/toolbar-divider.component.ts) |
 | [Toolbar title component](toolbar-title.component.md) | Supplies custom HTML to be included in a Toolbar component title. | [Source](../../lib/core/toolbar/toolbar-title.component.ts) |
 | [Toolbar component](toolbar.component.md) | Simple container for headers, titles, actions and breadcrumbs. | [Source](../../lib/core/toolbar/toolbar.component.ts) |
 | [User info component](user-info.component.md) | Shows user information. | [Source](../../lib/core/userinfo/components/user-info.component.ts) |
 | [Viewer component](viewer.component.md) | Displays content from an ACS repository. | [Source](../../lib/core/viewer/components/viewer.component.ts) |
-| [Comment list component](comment-list.component.md) | Shows a list of comments. | [Source](../../lib/core/comments/comment-list.component.ts) |
-| [Comments component](comments.component.md) | Displays comments from users involved in a specified task and allows an involved user to add a comment to the task. | [Source](../../lib/core/comments/comments.component.ts) |
 
 ## Directives
 
@@ -99,7 +100,7 @@ for more information about installing and using the source code.
 | [Nodes api service](nodes-api.service.md) | Accesses and manipulates ACS document nodes using their node IDs. | [Source](../../lib/core/services/nodes-api.service.ts) |
 | [Notification service](notification.service.md) | Shows a notification message with optional feedback. | [Source](../../lib/core/services/notification.service.ts) |
 | [Page title service](page-title.service.md) | Sets the page title. | [Source](../../lib/core/services/page-title.service.ts) |
-| [People content service](people-content.service.md) | Gets information about a Content Services user. | [Source](../../lib/core/services/people-content.service.ts) |
+| [People content service](people-content.service.md) | Gets information about a Content Services user.   | [Source](../../lib/core/services/people-content.service.ts) |
 | [People process service](people-process.service.md) | Gets information about Process Services users. | [Source](../../lib/core/services/people-process.service.ts) |
 | [Renditions service](renditions.service.md) ![Deprecated](../docassets/images/DeprecatedIcon.png) | Manages prearranged conversions of content to different formats. | [Source](../../lib/core/services/renditions.service.ts) |
 | [Search configuration service](search-configuration.service.md) | Provides fine control of parameters to a search. | [Source](../../lib/core/services/search-configuration.service.ts) |
@@ -112,6 +113,7 @@ for more information about installing and using the source code.
 | [User preferences service](user-preferences.service.md) | Stores preferences for components. | [Source](../../lib/core/services/user-preferences.service.ts) |
 | [Bpm user service](bpm-user.service.md) | Gets information about the current Process Services user. | [Source](../../lib/core/userinfo/services/bpm-user.service.ts) |
 | [Ecm user service](ecm-user.service.md) | Gets information about a Content Services user. | [Source](../../lib/core/userinfo/services/ecm-user.service.ts) |
+| _Comment content service_ | _Not currently documented_ | [Source](../../lib/core/services/comment-content.service.ts) |
 
 ## Widgets
 
