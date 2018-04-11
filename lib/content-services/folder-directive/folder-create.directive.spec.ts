@@ -31,7 +31,7 @@ import { Subject } from 'rxjs/Subject';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 
 @Component({
-    template: '<div [adf-create-folder]="parentNode" (success)="success($event)"></div>'
+    template: '<div [adf-create-folder]="parentNode" (success)="success($event)" title="create-title"></div>'
 })
 class TestComponent {
     parentNode = '';
@@ -139,6 +139,19 @@ describe('FolderCreateDirective', () => {
 
         fixture.whenStable().then(() => {
             expect(fixture.componentInstance.successParameter).toBe(testNode);
+        });
+    }));
+
+    it('should open the dialog with the proper title', async(() => {
+        fixture.detectChanges();
+        element.triggerEventHandler('click', event);
+
+        expect(dialog.open).toHaveBeenCalledWith(jasmine.any(Function), {
+            data: {
+                parentNodeId: jasmine.any(String),
+                createTitle: 'create-title'
+            },
+            width: jasmine.any(String)
         });
     }));
 });

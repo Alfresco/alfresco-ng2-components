@@ -31,7 +31,7 @@ import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { Subject } from 'rxjs/Subject';
 
 @Component({
-    template: '<div [adf-edit-folder]="folder" (success)="success($event)"></div>'
+    template: '<div [adf-edit-folder]="folder" (success)="success($event)" title="edit-title"></div>'
 })
 class TestComponent {
     folder = {};
@@ -135,6 +135,19 @@ describe('FolderEditDirective', () => {
 
         fixture.whenStable().then(() => {
             expect(fixture.componentInstance.successParameter).toBe(testNode);
+        });
+    }));
+
+    it('should open the dialog with the proper title', async(() => {
+        fixture.detectChanges();
+        element.triggerEventHandler('click', event);
+
+        expect(dialog.open).toHaveBeenCalledWith(jasmine.any(Function), {
+            data: {
+                folder: jasmine.any(Object),
+                editTitle: 'edit-title'
+            },
+            width: jasmine.any(String)
         });
     }));
 });

@@ -39,6 +39,9 @@ export class FolderEditDirective {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
+    @Input()
+    title: string = null;
+
     @Output()
     success: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter<MinimalNodeEntryEntity>();
 
@@ -61,7 +64,10 @@ export class FolderEditDirective {
         const { folder } = this;
 
         return {
-            data: { folder },
+            data: {
+                folder,
+                editTitle: this.title
+            },
             width: `${width}px`
         };
     }
