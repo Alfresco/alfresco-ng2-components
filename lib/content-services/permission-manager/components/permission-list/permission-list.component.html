@@ -1,5 +1,5 @@
 <div id="adf-permission-display-container" class="adf-display-permission-container">
-    <div *ngIf="!permissionList || !permissionList.length">
+    <div *ngIf="!permissionList || !permissionList.length" id="adf-no-permissions-template">
         <p>{{ 'PERMISSION_MANAGER.PERMISSION_DISPLAY.NO_PERMISSIONS' | translate }}</p>
     </div>
 
