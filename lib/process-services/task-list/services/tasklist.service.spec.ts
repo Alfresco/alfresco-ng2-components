@@ -20,7 +20,6 @@ import { UserProcessModel } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import {
     fakeCompletedTaskList,
-    mockErrorTaskList,
     fakeFilter,
     fakeFormList,
     fakeOpenTaskList,
@@ -95,21 +94,6 @@ describe('Activiti TaskList Service', () => {
                 'status': 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify(fakeTaskListDifferentProcessDefinitionKey)
-            });
-        });
-
-        it('should throw an exception when the response is wrong', (done) => {
-            service.getTasks(<TaskQueryRequestRepresentationModel> fakeFilter).subscribe((res) => {
-                },
-                (err: any) => {
-                    expect(err).toBeDefined();
-                    done();
-                });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 404,
-                contentType: 'application/json',
-                responseText: JSON.stringify(mockErrorTaskList)
             });
         });
 
@@ -244,7 +228,7 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        xit('should return the task details ', (done) => {
+        it('should return the task details ', (done) => {
             service.getTaskDetails('999').subscribe((res: TaskDetailsModel) => {
                 expect(res).toBeDefined();
                 expect(res.id).toEqual('999');
@@ -264,7 +248,7 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        xit('should return the tasks checklists ', (done) => {
+        it('should return the tasks checklists ', (done) => {
             service.getTaskChecklist('999').subscribe((res: TaskDetailsModel[]) => {
                 expect(res).toBeDefined();
                 expect(res.length).toEqual(2);
@@ -286,7 +270,7 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        xit('should add a task ', (done) => {
+        it('should add a task ', (done) => {
             let taskFake = new TaskDetailsModel({
                 id: 123,
                 parentTaskId: 456,
@@ -316,7 +300,7 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        xit('should remove a checklist task ', (done) => {
+        it('should remove a checklist task ', (done) => {
             service.deleteTask('999').subscribe(() => {
                 done();
             });
@@ -327,7 +311,7 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        xit('should complete the task', (done) => {
+        it('should complete the task', (done) => {
             service.completeTask('999').subscribe((res: any) => {
                 expect(res).toBeDefined();
                 done();
@@ -340,7 +324,7 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        xit('should return the total number of tasks', (done) => {
+        it('should return the total number of tasks', (done) => {
             service.getTotalTasks(<TaskQueryRequestRepresentationModel> fakeFilter).subscribe((res: any) => {
                 expect(res).toBeDefined();
                 expect(res.size).toEqual(1);
@@ -355,7 +339,7 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        xit('should create a new standalone task ', (done) => {
+        it('should create a new standalone task ', (done) => {
             let taskFake = new TaskDetailsModel({
                 name: 'FakeNameTask',
                 description: 'FakeDescription',
@@ -386,7 +370,7 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        xit('should assign task to a user', (done) => {
+        it('should assign task to a user', (done) => {
             let testTaskId = '8888';
             service.assignTask(testTaskId, fakeUser2).subscribe((res: TaskDetailsModel) => {
                 expect(res).toBeDefined();
@@ -420,7 +404,7 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        xit('should assign task to a userId', (done) => {
+        it('should assign task to a userId', (done) => {
             let testTaskId = '8888';
             service.assignTaskByUserId(testTaskId, fakeUser2.id).subscribe((res: TaskDetailsModel) => {
                 expect(res).toBeDefined();
@@ -452,7 +436,7 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        xit('should claim a task', (done) => {
+        it('should claim a task', (done) => {
             let taskId = '111';
 
             service.claimTask(taskId).subscribe(() => {
@@ -466,7 +450,7 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        xit('should unclaim a task', (done) => {
+        it('should unclaim a task', (done) => {
             let taskId = '111';
 
             service.unclaimTask(taskId).subscribe(() => {
@@ -480,7 +464,7 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        xit('should update a task', (done) => {
+        it('should update a task', (done) => {
             let taskId = '111';
 
             service.updateTask(taskId, { property: 'value' }).subscribe(() => {
@@ -494,7 +478,7 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        xit('should return the filter if it contains task id', (done) => {
+        it('should return the filter if it contains task id', (done) => {
             let taskId = '1';
             let filterFake = new FilterRepresentationModel({
                 name: 'FakeNameFilter',
@@ -520,7 +504,7 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        xit('should return the filters if it contains task id', (done) => {
+        it('should return the filters if it contains task id', (done) => {
             let taskId = '1';
 
             let fakeFilterList: FilterRepresentationModel[] = [];
@@ -549,7 +533,7 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        xit('should get possible form list', (done) => {
+        it('should get possible form list', (done) => {
             service.getFormList().subscribe((res: any) => {
                 expect(res).toBeDefined();
                 expect(res.length).toBe(2);
