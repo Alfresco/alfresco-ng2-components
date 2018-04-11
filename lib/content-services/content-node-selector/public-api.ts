@@ -21,3 +21,5 @@ export * from './content-node-selector-panel.component';
 export * from './content-node-selector.component';
 export * from './content-node-selector.service';
 export * from './content-node-dialog.service';
+
+export * from './content-node-selector.module';

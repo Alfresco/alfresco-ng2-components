@@ -16,3 +16,5 @@
  */
 
 export * from './components/sidenav-layout/sidenav-layout.component';
+
+export * from './sidenav-layout.module';

@@ -17,3 +17,5 @@
 
 export * from './node-download.directive';
 export * from './node-share.directive';
+
+export * from './content-directive.module';

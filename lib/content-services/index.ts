@@ -15,36 +15,20 @@
  * limitations under the License.
  */
 
-export * from './content.module';
-
-export * from './social/social.module';
-export * from './tag/tag.module';
-export * from './webscript/webscript.module';
-export * from './document-list/document-list.module';
-export * from './upload/upload.module';
-export * from './search/search.module';
-export * from './site-dropdown/sites-dropdown.module';
-export * from './breadcrumb/breadcrumb.module';
-export * from './version-manager/version-manager.module';
-export * from './content-node-selector/content-node-selector.module';
-export * from './dialogs/dialog.module';
-export * from './folder-directive/folder-directive.module';
-export * from './content-metadata/content-metadata.module';
-export * from './directives/content-directive.module';
-export * from './permission-manager/permission-manager.module';
-
-export * from './directives';
-export * from './social';
-export * from './tag';
-export * from './webscript';
-export * from './document-list';
-export * from './upload';
-export * from './search';
-export * from './site-dropdown';
-export * from './breadcrumb';
-export * from './version-manager';
-export * from './content-node-selector';
-export * from './dialogs';
-export * from './folder-directive';
-export * from './content-metadata';
+export * from './directives/index';
+export * from './social/index';
+export * from './tag/index';
+export * from './webscript/index';
+export * from './document-list/index';
+export * from './upload/index';
+export * from './search/index';
+export * from './site-dropdown/index';
+export * from './breadcrumb/index';
+export * from './version-manager/index';
+export * from './content-node-selector/index';
+export * from './dialogs/index';
+export * from './folder-directive/index';
+export * from './content-metadata/index';
 export * from './permission-manager';
+
+export * from './content.module';
