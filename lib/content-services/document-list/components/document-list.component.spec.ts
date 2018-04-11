@@ -40,7 +40,7 @@ import { CustomResourcesService } from './../services/custom-resources.service';
 import { DocumentListComponent } from './document-list.component';
 
 declare let jasmine: any;
-/*tslint:disable:ban*/
+
 describe('DocumentList', () => {
 
     let documentList: DocumentListComponent;
