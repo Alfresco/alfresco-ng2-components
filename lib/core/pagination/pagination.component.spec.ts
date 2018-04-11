@@ -15,17 +15,16 @@
  * limitations under the License.
  */
 
-import { HttpClientModule } from '@angular/common/http';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { Pagination } from 'alfresco-js-api';
-import { MaterialModule } from '../material.module';
-import { TranslateLoaderService } from '../services/translate-loader.service';
 import { TranslationService } from '../services/translation.service';
 import { PaginationComponent } from './pagination.component';
 import { PaginatedComponent } from './public-api';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { TranslationMock } from '../mock/translation.service.mock';
+import { MatMenuModule } from '@angular/material';
 
 class FakePaginationInput implements Pagination {
     count: number = 25;
@@ -45,47 +44,26 @@ describe('PaginationComponent', () => {
     let fixture: ComponentFixture<PaginationComponent>;
     let component: PaginationComponent;
 
-    let changePageNumberSpy: jasmine.Spy;
-    let changePageSizeSpy: jasmine.Spy;
-    let nextPageSpy: jasmine.Spy;
-    let prevPageSpy: jasmine.Spy;
-
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                HttpClientModule,
-                MaterialModule,
-                TranslateModule.forRoot({
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: TranslateLoaderService
-                    }
-                })
+                TranslateModule.forRoot(),
+                MatMenuModule
             ],
             declarations: [
                 PaginationComponent
             ],
             providers: [
-                TranslationService
+                { provide: TranslationService, useClass: TranslationMock },
             ],
             schemas: [ NO_ERRORS_SCHEMA ]
-        }).compileComponents()
-            .then(() => {
-                fixture = TestBed.createComponent(PaginationComponent);
-                component = fixture.componentInstance;
-
-                (<any> component).ngAfterViewInit = jasmine
-                    .createSpy('ngAfterViewInit').and
-                    .callThrough();
-
-                changePageNumberSpy = spyOn(component.changePageNumber, 'emit');
-                changePageSizeSpy = spyOn(component.changePageSize, 'emit');
-                nextPageSpy = spyOn(component.nextPage, 'emit');
-                prevPageSpy = spyOn(component.prevPage, 'emit');
-
-                fixture.detectChanges();
-            });
+        });
     }));
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(PaginationComponent);
+        component = fixture.componentInstance;
+    });
 
     it('should have an "empty" class if no items present', () => {
         fixture.detectChanges();
@@ -165,6 +143,7 @@ describe('PaginationComponent', () => {
         });
 
         it('goes next', () => {
+            const nextPageSpy = spyOn(component.nextPage, 'emit');
             expect(component.current).toBe(3);
             component.goNext();
 
@@ -175,6 +154,7 @@ describe('PaginationComponent', () => {
         });
 
         it('goes previous', () => {
+            const prevPageSpy = spyOn(component.prevPage, 'emit');
             expect(component.current).toBe(3);
             component.goPrevious();
 
@@ -185,6 +165,7 @@ describe('PaginationComponent', () => {
         });
 
         it('changes page size', () => {
+            const changePageSizeSpy = spyOn(component.changePageSize, 'emit');
             expect(component.current).toBe(3);
             component.onChangePageSize(50);
 
@@ -195,6 +176,7 @@ describe('PaginationComponent', () => {
         });
 
         it('changes page number', () => {
+            const changePageNumberSpy = spyOn(component.changePageNumber, 'emit');
             expect(component.current).toBe(3);
             component.onChangePageNumber(5);
 
