@@ -16,7 +16,7 @@ Displays the version history of a node in a Version Manager component
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| id | `string` |  | ID of the node whose version history you want to display.  |
+| nodeId | `string` |  | ID of the node whose version history you want to display.  |
 | showComments | `boolean` | true |  Set this to false if version comments should not be displayed.  |
 | allowDownload | `boolean` | true |  Toggles downloads of previous versions. Set this to false to not show the menu item for version download.  |
 | allowDelete | `boolean` | true | Toggles the version delete feature. |

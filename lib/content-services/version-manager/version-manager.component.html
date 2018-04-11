@@ -8,7 +8,8 @@
 </div>
 <div class="adf-version-list-container">
     <adf-version-list
-        #versionList [id]="node.id"
+        #versionList
+        [nodeId]="node.id"
         [allowDownload]="allowDownload"
         [showComments]="showComments"
         [allowDelete]="allowDelete"

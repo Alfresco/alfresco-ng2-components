@@ -38,7 +38,7 @@ export class VersionListComponent implements OnChanges {
 
     /** ID of the node whose version history you want to display. */
     @Input()
-    id: string;
+    nodeId: string;
 
     @Input()
     showComments = true;
@@ -71,14 +71,14 @@ export class VersionListComponent implements OnChanges {
     restore(versionId) {
         if (this.allowRestore) {
             this.versionsApi
-                .revertVersion(this.id, versionId, { majorVersion: true, comment: ''})
+                .revertVersion(this.nodeId, versionId, { majorVersion: true, comment: ''})
                 .then(() => this.onVersionRestored());
         }
     }
 
     loadVersionHistory() {
         this.isLoading = true;
-        this.versionsApi.listVersionHistory(this.id).then((data) => {
+        this.versionsApi.listVersionHistory(this.nodeId).then((data) => {
             this.versions = data.list.entries;
             this.isLoading = false;
         });
@@ -86,7 +86,7 @@ export class VersionListComponent implements OnChanges {
 
     downloadVersion(versionId: string) {
         if (this.allowDownload) {
-            const versionDownloadUrl = this.getVersionContentUrl(this.id, versionId, true);
+            const versionDownloadUrl = this.getVersionContentUrl(this.nodeId, versionId, true);
             this.downloadContent(versionDownloadUrl);
         }
     }
@@ -106,7 +106,7 @@ export class VersionListComponent implements OnChanges {
             dialogRef.afterClosed().subscribe(result => {
                 if (result === true) {
                     this.alfrescoApi.versionsApi
-                        .deleteVersion(this.id, versionId)
+                        .deleteVersion(this.nodeId, versionId)
                         .then(() => this.onVersionDeleted());
                 }
             });

@@ -52,7 +52,7 @@ describe('VersionListComponent', () => {
         dialog = TestBed.get(MatDialog);
 
         component = fixture.componentInstance;
-        component.id = nodeId;
+        component.nodeId = nodeId;
 
         spyOn(component, 'downloadContent').and.stub();
     });
@@ -79,7 +79,7 @@ describe('VersionListComponent', () => {
 
         spyOn(alfrescoApiService.versionsApi, 'deleteVersion').and.returnValue(Promise.resolve(true));
 
-        component.id = '0';
+        component.nodeId = '0';
         component.allowDelete = true;
         component.deleteVersion('1');
 
@@ -96,7 +96,7 @@ describe('VersionListComponent', () => {
 
         spyOn(alfrescoApiService.versionsApi, 'deleteVersion').and.returnValue(Promise.resolve(true));
 
-        component.id = '0';
+        component.nodeId = '0';
         component.allowDelete = true;
         component.deleteVersion('1');
 
@@ -115,7 +115,7 @@ describe('VersionListComponent', () => {
 
         spyOn(alfrescoApiService.versionsApi, 'deleteVersion').and.returnValue(Promise.resolve(true));
 
-        component.id = '0';
+        component.nodeId = '0';
         component.allowDelete = true;
         component.deleteVersion('1');
 
