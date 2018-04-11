@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService } from '@alfresco/adf-core';
-import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
-import { VersionsApi } from 'alfresco-js-api';
+import { AlfrescoApiService, ContentService } from '@alfresco/adf-core';
+import { Component, Input, OnChanges, ViewEncapsulation, ElementRef } from '@angular/core';
+import { VersionsApi, MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
 
@@ -36,9 +36,12 @@ export class VersionListComponent implements OnChanges {
     versions: any = [];
     isLoading = true;
 
-    /** ID of the node whose version history you want to display. */
+    /** @deprecated in 2.3.0 */
     @Input()
     id: string;
+
+    @Input()
+    node: MinimalNodeEntryEntity;
 
     @Input()
     showComments = true;
@@ -47,11 +50,11 @@ export class VersionListComponent implements OnChanges {
     @Input()
     allowDownload = true;
 
-    /** Toggle version deletion feature.  */
-    @Input()
-    allowDelete = true;
-
-    constructor(private alfrescoApi: AlfrescoApiService, private dialog: MatDialog) {
+    constructor(
+        private alfrescoApi: AlfrescoApiService,
+        private contentService: ContentService,
+        private dialog: MatDialog,
+        private el: ElementRef) {
         this.versionsApi = this.alfrescoApi.versionsApi;
     }
 
@@ -59,15 +62,21 @@ export class VersionListComponent implements OnChanges {
         this.loadVersionHistory();
     }
 
+    canUpdate(): boolean {
+        return this.contentService.hasPermission(this.node, 'update');
+    }
+
     restore(versionId) {
-        this.versionsApi
-            .revertVersion(this.id, versionId, { majorVersion: true, comment: ''})
-            .then(this.loadVersionHistory.bind(this));
+        if (this.canUpdate()) {
+            this.versionsApi
+                .revertVersion(this.node.id, versionId, { majorVersion: true, comment: ''})
+                .then(() => this.onVersionRestored());
+        }
     }
 
     loadVersionHistory() {
         this.isLoading = true;
-        this.versionsApi.listVersionHistory(this.id).then((data) => {
+        this.versionsApi.listVersionHistory(this.node.id).then((data) => {
             this.versions = data.list.entries;
             this.isLoading = false;
         });
@@ -75,13 +84,13 @@ export class VersionListComponent implements OnChanges {
 
     downloadVersion(versionId: string) {
         if (this.allowDownload) {
-            const versionDownloadUrl = this.getVersionContentUrl(this.id, versionId, true);
+            const versionDownloadUrl = this.getVersionContentUrl(this.node.id, versionId, true);
             this.downloadContent(versionDownloadUrl);
         }
     }
 
     deleteVersion(versionId: string) {
-        if (this.allowDelete) {
+        if (this.canUpdate()) {
             const dialogRef = this.dialog.open(ConfirmDialogComponent, {
                 data: {
                     title: 'ADF_VERSION_LIST.CONFIRM_DELETE.TITLE',
@@ -95,13 +104,25 @@ export class VersionListComponent implements OnChanges {
             dialogRef.afterClosed().subscribe(result => {
                 if (result === true) {
                     this.alfrescoApi.versionsApi
-                        .deleteVersion(this.id, versionId)
-                        .then(() => {
-                            this.loadVersionHistory();
-                        });
+                        .deleteVersion(this.node.id, versionId)
+                        .then(() => this.onVersionDeleted());
                 }
             });
         }
+    }
+
+    onVersionDeleted() {
+        this.loadVersionHistory();
+
+        const event = new CustomEvent('version-deleted', { bubbles: true });
+        this.el.nativeElement.dispatchEvent(event);
+    }
+
+    onVersionRestored() {
+        this.loadVersionHistory();
+
+        const event = new CustomEvent('version-restored', { bubbles: true });
+        this.el.nativeElement.dispatchEvent(event);
     }
 
     private getVersionContentUrl(nodeId: string, versionId: string, attachment?: boolean) {

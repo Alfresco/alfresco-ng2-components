@@ -98,14 +98,4 @@ describe('VersionManagerComponent', () => {
         });
         component.onUploadSuccess(emittedData);
     });
-
-    it('should emit error event upon failure to upload a new version', () => {
-        fixture.detectChanges();
-
-        const errorEvent = new CustomEvent('error');
-        component.uploadError.subscribe(event => {
-            expect(event).toBe(errorEvent);
-        });
-        component.onUploadError(errorEvent);
-    });
 });

@@ -474,8 +474,7 @@
           "type": "object",
           "properties": {
             "allowComments": { "type": "boolean" },
-            "allowDownload": { "type": "boolean" },
-            "allowDelete": { "type": "boolean" }
+            "allowDownload": { "type": "boolean" }
           }
         }
     }
