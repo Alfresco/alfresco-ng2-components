@@ -374,7 +374,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     toggleSidebar() {
         this.showSidebar = !this.showSidebar;
         if (this.showSidebar && this.fileNodeId) {
-            this.apiService.getInstance().nodes.getNodeInfo(this.fileNodeId)
+            this.apiService.getInstance().nodes.getNodeInfo(this.fileNodeId, {include: ['allowableOperations']})
                 .then((data: MinimalNodeEntryEntity) => {
                     this.sidebarTemplateContext.node = data;
                 });

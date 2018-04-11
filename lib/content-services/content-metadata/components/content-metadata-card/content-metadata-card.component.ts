@@ -17,6 +17,7 @@
 
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { ContentService, PermissionsEnum } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-content-metadata-card',
@@ -44,11 +45,18 @@ export class ContentMetadataCardComponent {
     editable: boolean = false;
     expanded: boolean = false;
 
+    constructor(private contentService: ContentService) {
+    }
+
     toggleEdit(): void {
         this.editable = !this.editable;
     }
 
     toggleExpanded(): void {
         this.expanded = !this.expanded;
+    }
+
+    hasPermission() {
+        return this.contentService.hasPermission(this.node, PermissionsEnum.UPDATE);
     }
 }
