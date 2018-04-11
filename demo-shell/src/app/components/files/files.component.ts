@@ -159,10 +159,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 private preference: UserPreferencesService,
                 private appConfig: AppConfigService,
                 public authenticationService: AuthenticationService) {
-        this.preference.select(UserPreferenceValues.SupportedPageSizes)
-            .subscribe((pages) => {
-                this.supportedPages = pages;
-            });
+        this.supportedPages = this.appConfig.get('pagination.supportedPageSizes');
     }
 
     showFile(event) {
