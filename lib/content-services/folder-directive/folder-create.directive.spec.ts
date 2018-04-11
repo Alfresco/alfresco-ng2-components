@@ -17,7 +17,7 @@
 
 import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
@@ -27,12 +27,19 @@ import { FolderDialogComponent } from '../dialogs/folder.dialog';
 
 import { DirectiveModule, ContentService, TranslateLoaderService } from '@alfresco/adf-core';
 import { FolderCreateDirective } from './folder-create.directive';
+import { Subject } from 'rxjs/Subject';
+import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 
 @Component({
-    template: '<div [adf-create-folder]="parentNode"></div>'
+    template: '<div [adf-create-folder]="parentNode" (success)="success($event)"></div>'
 })
 class TestComponent {
     parentNode = '';
+    public successParameter: MinimalNodeEntryEntity = null;
+
+    success(node: MinimalNodeEntryEntity) {
+        this.successParameter = node;
+    }
 }
 
 describe('FolderCreateDirective', () => {
@@ -42,6 +49,11 @@ describe('FolderCreateDirective', () => {
     let dialog: MatDialog;
     let contentService: ContentService;
     let dialogRefMock;
+
+    const event = {
+        type: 'click',
+        preventDefault: () => null
+    };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -80,7 +92,11 @@ describe('FolderCreateDirective', () => {
         node = { entry: { id: 'nodeId' } };
 
         dialogRefMock = {
-            afterClosed: val =>  Observable.of(val)
+            afterClosed: val =>  Observable.of(val),
+            componentInstance: {
+                error: new Subject<any>(),
+                success: new Subject<MinimalNodeEntryEntity>()
+            }
         };
 
         spyOn(dialog, 'open').and.returnValue(dialogRefMock);
@@ -113,4 +129,16 @@ describe('FolderCreateDirective', () => {
             expect(contentService.folderCreate.next).not.toHaveBeenCalled();
         });
     });
+
+    it('should emit success event with node if the folder creation was successful', async(() => {
+        const testNode = <MinimalNodeEntryEntity> {};
+        fixture.detectChanges();
+
+        element.triggerEventHandler('click', event);
+        dialogRefMock.componentInstance.success.next(testNode);
+
+        fixture.whenStable().then(() => {
+            expect(fixture.componentInstance.successParameter).toBe(testNode);
+        });
+    }));
 });

@@ -39,6 +39,9 @@ export class FolderEditDirective {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
+    @Output()
+    success: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter<MinimalNodeEntryEntity>();
+
     @HostListener('click', [ '$event' ])
     onClick(event) {
         event.preventDefault();
@@ -69,6 +72,10 @@ export class FolderEditDirective {
 
         dialogInstance.componentInstance.error.subscribe((error) => {
             this.error.emit(error);
+        });
+
+        dialogInstance.componentInstance.success.subscribe((node: MinimalNodeEntryEntity) => {
+            this.success.emit(node);
         });
 
         dialogInstance.afterClosed().subscribe((node: MinimalNodeEntryEntity) => {

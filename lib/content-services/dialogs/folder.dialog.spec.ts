@@ -131,6 +131,20 @@ describe('FolderDialogComponent', () => {
             expect(dialogRef.close).toHaveBeenCalledWith(folder);
         });
 
+        it('should emit success output event with folder when submit is succesfull', async(() => {
+            const folder = { data: 'folder-data' };
+            let expectedNode = null;
+
+            spyOn(nodesApi, 'updateNode').and.returnValue(Observable.of(folder));
+
+            component.success.subscribe((node) => { expectedNode = node; });
+            component.submit();
+
+            fixture.whenStable().then(() => {
+                expect(expectedNode).toBe(folder);
+            });
+        }));
+
         it('should not submit if form is invalid', () => {
             spyOn(nodesApi, 'updateNode');
 
@@ -210,6 +224,22 @@ describe('FolderDialogComponent', () => {
 
             expect(dialogRef.close).toHaveBeenCalledWith(folder);
         });
+
+        it('should emit success output event with folder when submit is succesfull', async(() => {
+            const folder = { data: 'folder-data' };
+            let expectedNode = null;
+
+            component.form.controls['name'].setValue('name');
+            component.form.controls['description'].setValue('description');
+            spyOn(nodesApi, 'createFolder').and.returnValue(Observable.of(folder));
+
+            component.success.subscribe((node) => { expectedNode = node; });
+            component.submit();
+
+            fixture.whenStable().then(() => {
+                expect(expectedNode).toBe(folder);
+            });
+        }));
 
         it('should not submit if form is invalid', () => {
             spyOn(nodesApi, 'createFolder');

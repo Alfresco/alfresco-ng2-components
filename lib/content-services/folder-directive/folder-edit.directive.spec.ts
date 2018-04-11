@@ -17,7 +17,7 @@
 
 import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { MatDialog, MatDialogModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 
@@ -27,12 +27,19 @@ import { Observable } from 'rxjs/Observable';
 
 import { ContentService, TranslateLoaderService, DirectiveModule } from '@alfresco/adf-core';
 import { FolderEditDirective } from './folder-edit.directive';
+import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
-    template: '<div [adf-edit-folder]="folder"></div>'
+    template: '<div [adf-edit-folder]="folder" (success)="success($event)"></div>'
 })
 class TestComponent {
     folder = {};
+    public successParameter: MinimalNodeEntryEntity = null;
+
+    success(node: MinimalNodeEntryEntity) {
+        this.successParameter = node;
+    }
 }
 
 describe('FolderEditDirective', () => {
@@ -85,7 +92,11 @@ describe('FolderEditDirective', () => {
         node = { entry: { id: 'folderId' } };
 
         dialogRefMock = {
-            afterClosed: val =>  Observable.of(val)
+            afterClosed: val =>  Observable.of(val),
+            componentInstance: {
+                error: new Subject<any>(),
+                success: new Subject<MinimalNodeEntryEntity>()
+            }
         };
 
         spyOn(dialog, 'open').and.returnValue(dialogRefMock);
@@ -114,4 +125,16 @@ describe('FolderEditDirective', () => {
             expect(contentService.folderEdit.next).not.toHaveBeenCalled();
         });
     });
+
+    it('should emit success event with node if the folder creation was successful', async(() => {
+        const testNode = <MinimalNodeEntryEntity> {};
+        fixture.detectChanges();
+
+        element.triggerEventHandler('click', event);
+        dialogRefMock.componentInstance.success.next(testNode);
+
+        fixture.whenStable().then(() => {
+            expect(fixture.componentInstance.successParameter).toBe(testNode);
+        });
+    }));
 });

@@ -42,6 +42,9 @@ export class FolderDialogComponent implements OnInit {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
+    @Output()
+    success: EventEmitter<any> = new EventEmitter<MinimalNodeEntryEntity>();
+
     constructor(
         private formBuilder: FormBuilder,
         private dialog: MatDialogRef<FolderDialogComponent>,
@@ -121,7 +124,10 @@ export class FolderDialogComponent implements OnInit {
 
         (editing ? this.edit() : this.create())
             .subscribe(
-                (folder: MinimalNodeEntryEntity) => dialog.close(folder),
+                (folder: MinimalNodeEntryEntity) => {
+                    this.success.emit(folder);
+                    dialog.close(folder);
+                },
                 (error) => this.handleError(error)
             );
     }
