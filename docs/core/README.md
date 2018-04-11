@@ -31,7 +31,7 @@ for more information about installing and using the source code.
 | [Pagination component](pagination.component.md) | Adds pagination to the component it is used with. | [Source](../../lib/core/pagination/pagination.component.ts) |
 | [Host settings component](host-settings.component.md) | Validates the URLs for ACS and APS and saves them in the user's local storage | [Source](../../lib/core/settings/host-settings.component.ts) |
 | [Sidebar action menu component](sidebar-action-menu.component.md) | Displays a sidebar-action menu information panel. | [Source](../../lib/core/sidebar/sidebar-action-menu.component.ts) |
-| [Sidenav layout component](sidenav-layout.component.md) | A generalised component to help displayig the "ADF style" application frame. The layout consists of 3 regions: | [Source](../../lib/core/sidenav-layout/components/sidenav-layout/sidenav-layout.component.ts) |
+| [Sidenav layout component](sidenav-layout.component.md) | Displays the standard three-region ADF application layout. | [Source](../../lib/core/sidenav-layout/components/sidenav-layout/sidenav-layout.component.ts) |
 | [Toolbar divider component](toolbar-divider.component.md) | Divides groups of elements in a Toolbar with a visual separator. | [Source](../../lib/core/toolbar/toolbar-divider.component.ts) |
 | [Toolbar title component](toolbar-title.component.md) | Supplies custom HTML to be included in a Toolbar component title. | [Source](../../lib/core/toolbar/toolbar-title.component.ts) |
 | [Toolbar component](toolbar.component.md) | Simple container for headers, titles, actions and breadcrumbs. | [Source](../../lib/core/toolbar/toolbar.component.ts) |
