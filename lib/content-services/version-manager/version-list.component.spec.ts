@@ -127,7 +127,6 @@ describe('VersionListComponent', () => {
         component.onVersionDeleted();
     });
 
-
     describe('Version history fetching', () => {
 
         it('should use loading bar', () => {
