@@ -3,10 +3,10 @@
     class="adf-new-version-file-upload"
     staticTitle="{{ 'ADF_VERSION_LIST.ACTIONS.UPLOAD.TITLE' | translate }}"
     [node]="node"
-    [disabled]="!allowUpload"
+    [disabled]="!canUpload()"
     [rootFolderId]="node.parentId"
     tooltip="{{ 'ADF_VERSION_LIST.ACTIONS.UPLOAD.TOOLTIP' | translate }}"
     [versioning]="true"
-    (success)="onUploadSuccess($event)"
-    (error)="onUploadError($event)">
+    (success)="success.emit($event)"
+    (error)="error.emit($event)">
 </adf-upload-version-button>

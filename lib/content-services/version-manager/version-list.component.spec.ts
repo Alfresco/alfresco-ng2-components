@@ -52,7 +52,7 @@ describe('VersionListComponent', () => {
         dialog = TestBed.get(MatDialog);
 
         component = fixture.componentInstance;
-        component.nodeId = nodeId;
+        component.node = { id: nodeId, allowableOperations: [ 'update' ] };
 
         spyOn(component, 'downloadContent').and.stub();
     });
@@ -64,7 +64,6 @@ describe('VersionListComponent', () => {
             }
         });
 
-        component.allowDelete = true;
         component.deleteVersion('1');
 
         expect(dialog.open).toHaveBeenCalled();
@@ -79,12 +78,10 @@ describe('VersionListComponent', () => {
 
         spyOn(alfrescoApiService.versionsApi, 'deleteVersion').and.returnValue(Promise.resolve(true));
 
-        component.nodeId = '0';
-        component.allowDelete = true;
-        component.deleteVersion('1');
+        component.deleteVersion(versionId);
 
         expect(dialog.open).toHaveBeenCalled();
-        expect(alfrescoApiService.versionsApi.deleteVersion).toHaveBeenCalledWith('0', '1');
+        expect(alfrescoApiService.versionsApi.deleteVersion).toHaveBeenCalledWith(nodeId, versionId);
     });
 
     it('should not delete version if user rejects', () => {
@@ -96,9 +93,7 @@ describe('VersionListComponent', () => {
 
         spyOn(alfrescoApiService.versionsApi, 'deleteVersion').and.returnValue(Promise.resolve(true));
 
-        component.nodeId = '0';
-        component.allowDelete = true;
-        component.deleteVersion('1');
+        component.deleteVersion(versionId);
 
         expect(dialog.open).toHaveBeenCalled();
         expect(alfrescoApiService.versionsApi.deleteVersion).not.toHaveBeenCalled();
@@ -115,9 +110,7 @@ describe('VersionListComponent', () => {
 
         spyOn(alfrescoApiService.versionsApi, 'deleteVersion').and.returnValue(Promise.resolve(true));
 
-        component.nodeId = '0';
-        component.allowDelete = true;
-        component.deleteVersion('1');
+        component.deleteVersion(versionId);
 
         tick();
 
@@ -253,7 +246,7 @@ describe('VersionListComponent', () => {
         });
 
         it('should restore version only when restore allowed', () => {
-            component.allowRestore = false;
+            component.node.allowableOperations = [];
             spyOn(alfrescoApiService.versionsApi, 'revertVersion').and.stub();
             component.restore('1');
             expect(alfrescoApiService.versionsApi.revertVersion).not.toHaveBeenCalled();

@@ -487,9 +487,6 @@
     },
     "adf-version-manager": {
       "allowComments": true,
-      "allowDownload": true,
-      "allowDelete": true,
-      "allowRestore": true,
-      "allowUpload": true
+      "allowDownload": true
     }
 }

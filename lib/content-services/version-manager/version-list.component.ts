@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService, ContentService } from '@alfresco/adf-core';
 import { Component, Input, OnChanges, ViewEncapsulation, ElementRef } from '@angular/core';
-import { VersionsApi } from 'alfresco-js-api';
+import { VersionsApi, MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
 
@@ -36,9 +36,8 @@ export class VersionListComponent implements OnChanges {
     versions: any = [];
     isLoading = true;
 
-    /** ID of the node whose version history you want to display. */
     @Input()
-    nodeId: string;
+    node: MinimalNodeEntryEntity;
 
     @Input()
     showComments = true;
@@ -47,18 +46,9 @@ export class VersionListComponent implements OnChanges {
     @Input()
     allowDownload = true;
 
-    /** Toggle version deletion feature.  */
-    @Input()
-    allowDelete = true;
-
-    /**
-     * Toggle restore feature.
-     */
-    @Input()
-    allowRestore = true;
-
     constructor(
         private alfrescoApi: AlfrescoApiService,
+        private contentService: ContentService,
         private dialog: MatDialog,
         private el: ElementRef) {
         this.versionsApi = this.alfrescoApi.versionsApi;
@@ -68,17 +58,21 @@ export class VersionListComponent implements OnChanges {
         this.loadVersionHistory();
     }
 
+    canUpdate(): boolean {
+        return this.contentService.hasPermission(this.node, 'update');
+    }
+
     restore(versionId) {
-        if (this.allowRestore) {
+        if (this.canUpdate()) {
             this.versionsApi
-                .revertVersion(this.nodeId, versionId, { majorVersion: true, comment: ''})
+                .revertVersion(this.node.id, versionId, { majorVersion: true, comment: ''})
                 .then(() => this.onVersionRestored());
         }
     }
 
     loadVersionHistory() {
         this.isLoading = true;
-        this.versionsApi.listVersionHistory(this.nodeId).then((data) => {
+        this.versionsApi.listVersionHistory(this.node.id).then((data) => {
             this.versions = data.list.entries;
             this.isLoading = false;
         });
@@ -86,13 +80,13 @@ export class VersionListComponent implements OnChanges {
 
     downloadVersion(versionId: string) {
         if (this.allowDownload) {
-            const versionDownloadUrl = this.getVersionContentUrl(this.nodeId, versionId, true);
+            const versionDownloadUrl = this.getVersionContentUrl(this.node.id, versionId, true);
             this.downloadContent(versionDownloadUrl);
         }
     }
 
     deleteVersion(versionId: string) {
-        if (this.allowDelete) {
+        if (this.canUpdate()) {
             const dialogRef = this.dialog.open(ConfirmDialogComponent, {
                 data: {
                     title: 'ADF_VERSION_LIST.CONFIRM_DELETE.TITLE',
@@ -106,7 +100,7 @@ export class VersionListComponent implements OnChanges {
             dialogRef.afterClosed().subscribe(result => {
                 if (result === true) {
                     this.alfrescoApi.versionsApi
-                        .deleteVersion(this.nodeId, versionId)
+                        .deleteVersion(this.node.id, versionId)
                         .then(() => this.onVersionDeleted());
                 }
             });

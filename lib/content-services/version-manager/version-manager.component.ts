@@ -18,7 +18,7 @@
 import { Component, Input, ViewEncapsulation, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { VersionListComponent } from './version-list.component';
-import { AppConfigService } from '@alfresco/adf-core';
+import { AppConfigService, ContentService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-version-manager',
@@ -32,19 +32,10 @@ export class VersionManagerComponent {
     node: MinimalNodeEntryEntity;
 
     @Input()
-    allowDelete = true;
-
-    @Input()
     showComments = true;
 
     @Input()
     allowDownload = true;
-
-    @Input()
-    allowUpload = true;
-
-    @Input()
-    allowRestore = true;
 
     @Output()
     uploadSuccess = new EventEmitter();
@@ -55,12 +46,11 @@ export class VersionManagerComponent {
     @ViewChild('versionList')
     versionListComponent: VersionListComponent;
 
-    constructor(config: AppConfigService) {
-        this.allowDelete = config.get('adf-version-manager.allowDelete', true);
+    constructor(
+        config: AppConfigService,
+        private contentService: ContentService) {
         this.showComments = config.get('adf-version-manager.allowComments', true);
         this.allowDownload = config.get('adf-version-manager.allowDownload', true);
-        this.allowUpload = config.get('adf-version-manager.allowUpload', true);
-        this.allowRestore = config.get('adf-version-manager.allowRestore', true);
     }
 
     onUploadSuccess(event): void {
@@ -68,7 +58,7 @@ export class VersionManagerComponent {
         this.uploadSuccess.emit(event);
     }
 
-    onUploadError(event): any {
-        this.uploadError.emit(event);
+    canUpdate(): boolean {
+        return this.contentService.hasPermission(this.node, 'update');
     }
 }

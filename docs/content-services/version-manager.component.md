@@ -27,9 +27,6 @@ Displays the version history of a node with the ability to upload a new version.
 | node | [MinimalNodeEntryEntity](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md) | |The node you want to manage the version history of. |
 | showComments | `boolean` | true | Set this to false if version comments should not be displayed. |
 | allowDownload | `boolean` | true |  Toggles downloads of previous versions. Set this to false to not show the menu item for version download.  |
-| allowDelete | `boolean` | true | Toggles the version delete feature. |
-| allowUpload | `boolean` | true | Toggles the uploading of new versions. |
-| allowRestore | `boolean` | true | Toggles the restore feature. |
 
 ### Events
 
