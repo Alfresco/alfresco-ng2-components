@@ -141,7 +141,7 @@ describe('ContentMetadataCardComponent', () => {
 
     it('should toggle editable by clicking on the button', () => {
         component.editable = true;
-        component.node.allowableOperations = ['update'];
+        component.node.allowableOperations = [PermissionsEnum.UPDATE];
         fixture.detectChanges();
 
         const button = fixture.debugElement.query(By.css('[data-automation-id="mata-data-card-toggle-edit"]'));
@@ -199,7 +199,7 @@ describe('ContentMetadataCardComponent', () => {
 
     it('should show the edit button if node does has `update` permissions', () => {
         component.readOnly = false;
-        component.node.allowableOperations = ['update'];
+        component.node.allowableOperations = [PermissionsEnum.UPDATE];
         fixture.detectChanges();
 
         const button = fixture.debugElement.query(By.css('[data-automation-id="mata-data-card-toggle-edit"]'));
