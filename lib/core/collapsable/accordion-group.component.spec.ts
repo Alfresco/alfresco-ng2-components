@@ -46,6 +46,25 @@ describe('AccordionGroupComponent', () => {
 
     });
 
+    it('should define mat-accordion ', async(() => {
+        component.isSelected = true;
+        component.heading = 'Fake Header';
+        component.headingIcon = 'fake-icon';
+        component.contentWrapper.nativeElement.innerHTML = '<a>Test</a>';
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            let accordin = element.querySelector('mat-accordion');
+            let expansionPanel = element.querySelector('mat-expansion-panel');
+            let accordinHeader = element.querySelector('mat-expansion-panel-header');
+            let content = element.querySelector('#adf-expansion-panel-content-id').innerHTML;
+            expect(accordin).toBeDefined();
+            expect(expansionPanel).toBeDefined();
+            expect(accordinHeader).toBeDefined();
+            expect(content).toEqual('<a>Test</a>');
+        });
+    }));
+
     it('should be closed by default', async(() => {
         component.heading = 'Fake Header';
         component.headingIcon = 'fake-icon';
@@ -53,52 +72,26 @@ describe('AccordionGroupComponent', () => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             let headerText = element.querySelector('#heading-text');
+            let headerIcon = element.querySelector('#adf-expansion-panel-id .material-icons');
             expect(headerText.innerText).toEqual('Fake Header');
-            let headerIcon = element.querySelector('#heading-icon .material-icons');
             expect(headerIcon.innerText).toEqual('fake-icon');
-            let headerToggle = element.querySelector('#accordion-button .material-icons');
-            expect(headerToggle.innerText).toEqual('expand_more');
         });
     }));
 
-    it('should be open when click', async(() => {
+    it('should be display accordion title', async(() => {
         component.isSelected = true;
         component.heading = 'Fake Header';
         component.headingIcon = 'fake-icon';
         component.contentWrapper.nativeElement.innerHTML = '<a>Test</a>';
         fixture.detectChanges();
-        element.querySelector('#accordion-button').click();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             let headerText = element.querySelector('#heading-text');
-            expect(headerText.innerText).toEqual('Fake Header');
             let headerIcon = element.querySelector('#heading-icon .material-icons');
+            let content = element.querySelector('#adf-expansion-panel-content-id').innerHTML;
+            expect(headerText.innerText).toEqual('Fake Header');
             expect(headerIcon.innerText).toEqual('fake-icon');
-            let headerToggle = element.querySelector('#accordion-button .material-icons');
-            expect(headerToggle.innerText).toEqual('expand_less');
-        });
-    }));
-
-    it('should show expand icon by default', async(() => {
-        component.heading = 'Fake Header';
-        component.headingIcon = 'fake-icon';
-        component.contentWrapper.nativeElement.innerHTML = '<a>Test</a>';
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            let headerIcon = element.querySelector('#accordion-button');
-            expect(headerIcon).toBeDefined();
-        });
-    }));
-
-    it('should hide expand icon', async(() => {
-        component.heading = 'Fake Header';
-        component.headingIcon = 'fake-icon';
-        component.hasAccordionIcon = false;
-        component.contentWrapper.nativeElement.innerHTML = '<a>Test</a>';
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            let headerIcon = element.querySelector('#accordion-button');
-            expect(headerIcon).toBeNull();
+            expect(content).toEqual('<a>Test</a>');
         });
     }));
 
