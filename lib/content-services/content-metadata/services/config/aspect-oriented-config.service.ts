@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { ContentMetadataConfig, OrganisedPropertyGroup } from '../../interfaces/content-metadata.interfaces';
+import { ContentMetadataConfig, OrganisedPropertyGroup, PropertyGroupContainer } from '../../interfaces/content-metadata.interfaces';
 import { getGroup, getProperty } from './property-group-reader';
 
 @Injectable()
@@ -29,7 +29,7 @@ export class AspectOrientedConfigService implements ContentMetadataConfig {
         return groupNames.indexOf(groupName) !== -1;
     }
 
-    public reorganiseByConfig(propertyGroups: any): OrganisedPropertyGroup[] {
+    public reorganiseByConfig(propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[] {
         const aspects = this.config,
             aspectNames = Object.keys(aspects);
 
