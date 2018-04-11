@@ -54,7 +54,7 @@ describe('PaginationComponent', () => {
                 PaginationComponent
             ],
             providers: [
-                { provide: TranslationService, useClass: TranslationMock },
+                { provide: TranslationService, useClass: TranslationMock }
             ],
             schemas: [ NO_ERRORS_SCHEMA ]
         });
