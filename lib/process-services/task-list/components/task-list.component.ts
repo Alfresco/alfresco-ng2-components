@@ -40,7 +40,8 @@ export class TaskListComponent implements OnChanges, AfterContentInit, Paginated
 
     requestNode: TaskQueryRequestRepresentationModel;
 
-    @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
+    @ContentChild('dataColumnList')
+    columnList: DataColumnListComponent;
 
     /** The id of the app. */
     @Input()

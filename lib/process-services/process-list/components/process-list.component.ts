@@ -58,7 +58,8 @@ import { ProcessListModel } from '../models/process-list.model';
 })
 export class ProcessInstanceListComponent implements OnChanges, AfterContentInit, PaginatedComponent {
 
-    @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
+    @ContentChild('dataColumnList')
+    columnList: DataColumnListComponent;
 
     @ViewChild('dataTable') dataTable: DataTableComponent;
 

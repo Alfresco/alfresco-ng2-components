@@ -306,7 +306,7 @@ describe('TaskAttachmentList', () => {
 @Component({
     template: `
     <adf-task-attachment-list>
-        <adf-empty-list>
+        <adf-empty-list #emptyList>
             <div adf-empty-list-header class="adf-empty-list-header">Custom header</div>
         </adf-empty-list>
     </adf-task-attachment-list>

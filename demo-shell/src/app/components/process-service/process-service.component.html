@@ -48,9 +48,9 @@
                         #taskList>
                         <!-- Custom column definition demo -->
 
-                        <!-- <data-columns>
-                            <data-column key="name" title="{{'ADF_TASK_LIST.PROPERTIES.NAME' | translate}}" class="full-width name-column"></data-column>
-                            <data-column key="created" title="{{'ADF_TASK_LIST.PROPERTIES.CREATED' | translate}}" class="hidden"></data-column>
+                        <!-- <data-columns #dataColumnList>
+                            <data-column #dataColumn key="name" title="{{'ADF_TASK_LIST.PROPERTIES.NAME' | translate}}" class="full-width name-column"></data-column>
+                            <data-column #dataColumn key="created" title="{{'ADF_TASK_LIST.PROPERTIES.CREATED' | translate}}" class="hidden"></data-column>
                         </data-columns> -->
 
                     </adf-tasklist>
@@ -148,9 +148,9 @@
                         (success)="onSuccessProcessList($event)">
                         <!-- Custom column definition demo -->
 
-                        <!-- <data-columns>
-                            <data-column key="name" title="ADF_PROCESS_LIST.PROPERTIES.NAME" class="full-width name-column"></data-column>
-                            <data-column key="created" title="ADF_PROCESS_LIST.PROPERTIES.CREATED" class="hidden"></data-column>
+                        <!-- <data-columns #dataColumnList>
+                            <data-column #dataColumn key="name" title="ADF_PROCESS_LIST.PROPERTIES.NAME" class="full-width name-column"></data-column>
+                            <data-column #dataColumn key="created" title="ADF_PROCESS_LIST.PROPERTIES.CREATED" class="hidden"></data-column>
                         </data-columns> -->
 
                     </adf-process-instance-list>

@@ -40,16 +40,16 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
-    @ContentChild(ViewerToolbarComponent)
+    @ContentChild('viewerToolbar')
     toolbar: ViewerToolbarComponent;
 
-    @ContentChild(ViewerSidebarComponent)
+    @ContentChild('viewerSidebar')
     sidebar: ViewerSidebarComponent;
 
-    @ContentChild(ViewerOpenWithComponent)
+    @ContentChild('viewerOpenWith')
     mnuOpenWith: ViewerOpenWithComponent;
 
-    @ContentChild(ViewerMoreActionsComponent)
+    @ContentChild('viewerMoreActions')
     mnuMoreActions: ViewerMoreActionsComponent;
 
     /** If you want to load an external file that does not come from ACS you

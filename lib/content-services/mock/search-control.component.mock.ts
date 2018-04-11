@@ -20,7 +20,7 @@ import { Component } from '@angular/core';
 @Component({
     template: `
         <adf-search-control [highlight]="true">
-                <adf-empty-search-result>
+                <adf-empty-search-result #emptySearchResult>
                     <span id="custom-no-result">{{customMessage}}</span>
                 </adf-empty-search-result>
         </adf-search-control>

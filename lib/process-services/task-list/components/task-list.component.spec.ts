@@ -628,10 +628,10 @@ describe('TaskListComponent', () => {
 @Component({
     template: `
     <adf-tasklist #taskList>
-        <data-columns>
-            <data-column key="name" title="ADF_TASK_LIST.PROPERTIES.NAME" class="full-width name-column"></data-column>
-            <data-column key="created" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="hidden"></data-column>
-            <data-column key="startedBy" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="desktop-only dw-dt-col-3 ellipsis-cell">
+        <data-columns #dataColumnList>
+            <data-column #dataColumn key="name" title="ADF_TASK_LIST.PROPERTIES.NAME" class="full-width name-column"></data-column>
+            <data-column #dataColumn key="created" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="hidden"></data-column>
+            <data-column #dataColumn key="startedBy" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="desktop-only dw-dt-col-3 ellipsis-cell">
                 <ng-template let-entry="$implicit">
                     <div>{{getFullName(entry.row.obj.startedBy)}}</div>
                 </ng-template>

@@ -75,16 +75,16 @@
                 </ng-template>
             </empty-folder-content>
 
-            <data-columns>
-                <data-column key="$thumbnail" type="image"></data-column>
-                <data-column key="name" type="text" class="full-width ellipsis-cell">
+            <data-columns #dataColumnList>
+                <data-column #dataColumn key="$thumbnail" type="image"></data-column>
+                <data-column #dataColumn key="name" type="text" class="full-width ellipsis-cell">
                     <ng-template let-context>
                         <adf-name-location-cell [row]="context.row"></adf-name-location-cell>
                     </ng-template>
                 </data-column>
-                <data-column key="modifiedAt" type="date" format="timeAgo" class="adf-content-selector-modified-cell"></data-column>
-                <data-column key="modifiedByUser.displayName" type="text" class="adf-content-selector-modifier-cell"></data-column>
-                <data-column key="visibility" type="text"></data-column>
+                <data-column #dataColumn key="modifiedAt" type="date" format="timeAgo" class="adf-content-selector-modified-cell"></data-column>
+                <data-column #dataColumn key="modifiedByUser.displayName" type="text" class="adf-content-selector-modifier-cell"></data-column>
+                <data-column #dataColumn key="visibility" type="text"></data-column>
             </data-columns>
 
         </adf-document-list>

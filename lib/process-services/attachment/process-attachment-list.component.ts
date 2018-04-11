@@ -27,7 +27,7 @@ import { ProcessContentService } from '@alfresco/adf-core';
 })
 export class ProcessAttachmentListComponent implements OnChanges, AfterContentInit {
 
-    @ContentChild(EmptyListComponent)
+    @ContentChild('emptyList')
     emptyTemplate: EmptyListComponent;
 
     /** (**required**) The ID of the process instance to display. */

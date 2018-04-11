@@ -104,7 +104,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     @ViewChildren(MatListItem)
     private listResultElement: QueryList<MatListItem>;
 
-    @ContentChild(EmptySearchResultComponent)
+    @ContentChild('emptySearchResult')
     emptySearchTemplate: EmptySearchResultComponent;
 
     searchTerm: string = '';

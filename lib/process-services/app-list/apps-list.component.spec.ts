@@ -251,7 +251,7 @@ describe('AppsListComponent', () => {
 @Component({
     template: `
     <adf-apps>
-        <adf-empty-list>
+        <adf-empty-list #emptyList>
             <div adf-empty-list-header class="adf-empty-list-header">No Apps</div>
         </adf-empty-list>
     </adf-apps>
