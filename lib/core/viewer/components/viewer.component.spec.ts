@@ -430,7 +430,7 @@ describe('ViewerComponent', () => {
 
         });
 
-        xdescribe('View', () => {
+        describe('View', () => {
 
             describe('Overlay mode true', () => {
 
