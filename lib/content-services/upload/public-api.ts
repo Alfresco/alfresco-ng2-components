@@ -25,3 +25,5 @@ export * from './components/file-uploading-list-row.component';
 export * from './directives/file-draggable.directive';
 
 export * from './components/base-upload/upload-base';
+
+export * from './upload.module';

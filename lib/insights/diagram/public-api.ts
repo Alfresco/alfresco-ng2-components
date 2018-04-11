@@ -45,3 +45,5 @@ export * from './models/report/reportDefinition.model';
 export * from './models/report/reportParameterDetails.model';
 export * from './models/report/reportParameters.model';
 export * from './models/report/reportQuery.model';
+
+export * from './diagram.module';

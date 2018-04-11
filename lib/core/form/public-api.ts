@@ -30,3 +30,5 @@ export * from './services/process-content.service';
 export * from './services/activiti-alfresco.service';
 
 export * from './events/index';
+
+export * from './form.module';

@@ -16,3 +16,5 @@
  */
 
 export * from './process-comments.component';
+
+export * from './process-comments.module';

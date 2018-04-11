@@ -16,17 +16,14 @@
  */
 
 import { Injectable } from '@angular/core';
-import {
-    ContentMetadataConfig,
-    InDifferentConfig,
-    OrganisedPropertyGroup,
+import { ContentMetadataConfig, OrganisedPropertyGroup,
     PropertyGroupContainer
 } from '../../interfaces/content-metadata.interfaces';
 
 @Injectable()
 export class IndifferentConfigService implements ContentMetadataConfig {
 
-    constructor(config: InDifferentConfig) {}
+    constructor(config: any) {}
 
     public isGroupAllowed(groupName: string): boolean {
         return true;
