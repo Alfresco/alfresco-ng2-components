@@ -132,23 +132,9 @@ describe('ContentNodeSelectorComponent', () => {
 
                 component.chosenNode = expectedNode;
             });
-
-            it('should update skipCount on folder loaded', () => {
-                component.skipCount = 8;
-
-                component.onFolderLoaded({
-                    list: {
-                        pagination: {
-                            skipCount: 10
-                        }
-                    }
-                });
-
-                expect(component.skipCount).toBe(10, 'skipCount is updated');
-            });
         });
 
-        xdescribe('Breadcrumbs', () => {
+        describe('Breadcrumbs', () => {
 
             let documentListService,
                 sitesService,
@@ -498,7 +484,7 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(component.folderIdToShow).toBe('cat-girl-nuku-nuku', 'back to the folder in which the search was performed');
             }));
 
-            xit('should clear the search field, nodes and chosenNode on folder navigation in the results list', fakeAsync(() => {
+            it('should clear the search field, nodes and chosenNode on folder navigation in the results list', fakeAsync(() => {
                 spyOn(component, 'clearSearch').and.callThrough();
                 typeToSearchBox('a');
 
@@ -563,7 +549,7 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(documentList.componentInstance.imageResolver).toBe(resolver);
             });
 
-            xit('should show the result list when search was performed', (done) => {
+            it('should show the result list when search was performed', (done) => {
                 typeToSearchBox();
 
                 setTimeout(() => {
@@ -577,7 +563,7 @@ describe('ContentNodeSelectorComponent', () => {
                 }, 300);
             });
 
-            xit('should highlight the results when search was performed in the next timeframe', fakeAsync(() => {
+            it('should highlight the results when search was performed in the next timeframe', fakeAsync(() => {
                 spyOn(component.highlighter, 'highlight');
                 typeToSearchBox('shenron');
 
@@ -588,12 +574,10 @@ describe('ContentNodeSelectorComponent', () => {
 
                 tick(debounceSearch);
 
-                expect(component.highlighter.highlight).not.toHaveBeenCalled();
-
                 expect(component.highlighter.highlight).toHaveBeenCalledWith('shenron');
             }));
 
-            xit('should show the default text instead of result list if search was cleared', (done) => {
+            it('should show the default text instead of result list if search was cleared', (done) => {
                 typeToSearchBox();
 
                 setTimeout(() => {
@@ -614,7 +598,7 @@ describe('ContentNodeSelectorComponent', () => {
                 }, 300);
             });
 
-            xit('should reload the original documentlist when clearing the search input', fakeAsync(() => {
+            it('should reload the original documentlist when clearing the search input', fakeAsync(() => {
                 typeToSearchBox('shenron');
 
                 tick(debounceSearch);
@@ -631,7 +615,7 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(documentList.componentInstance.currentFolderId).toBe('cat-girl-nuku-nuku');
             }));
 
-            xit('should set the folderIdToShow to the default "currentFolderId" if siteId is undefined', (done) => {
+            it('should set the folderIdToShow to the default "currentFolderId" if siteId is undefined', (done) => {
                 component.siteChanged(<SiteEntry> { entry: { guid: 'Kame-Sennin Muten Roshi' } });
                 fixture.detectChanges();
 
@@ -655,49 +639,13 @@ describe('ContentNodeSelectorComponent', () => {
                     expect(pagination).toBeNull();
                 });
 
-                xit('should be shown when diplaying search results', fakeAsync(() => {
-                    typeToSearchBox('shenron');
-
-                    tick(debounceSearch);
-
-                    respondWithSearchResults(ONE_FOLDER_RESULT);
-
-                    fixture.detectChanges();
-                    const pagination = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-pagination"]'));
-                    expect(pagination).not.toBeNull();
-                }));
-
-                xit('button callback should load the next batch of results by calling the search api', async(() => {
-                    const skipCount = 8;
-                    component.searchTerm = 'kakarot';
-
-                    component.getNextPageOfSearch({ skipCount });
-
-                    fixture.whenStable().then(() => {
-                        expect(searchSpy).toHaveBeenCalledWith('kakarot', undefined, skipCount, 25);
-                    });
-                }));
-
-                it('should be shown when pagination\'s hasMoreItems is true', () => {
-                    component.pagination = {
-                        hasMoreItems: true
-                    };
-                    fixture.detectChanges();
-
-                    const pagination = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-pagination"]'));
-                    expect(pagination).not.toBeNull();
-                });
-
                 it('button callback should load the next batch of folder results when there is no searchTerm', () => {
                     const skipCount = 5;
 
                     component.searchTerm = '';
-                    component.pagination = {
-                        hasMoreItems: true
-                    };
                     fixture.detectChanges();
 
-                    component.getNextPageOfSearch({ skipCount });
+                    component.updatePagination({ skipCount });
                     fixture.detectChanges();
                     expect(component.searchTerm).toBe('');
 
@@ -708,35 +656,18 @@ describe('ContentNodeSelectorComponent', () => {
 
                 it('should set its loading state to true after search was started', fakeAsync(() => {
                     component.showingSearchResults = true;
-                    component.pagination = { hasMoreItems: true };
 
                     typeToSearchBox('shenron');
 
                     tick(debounceSearch);
 
                     fixture.detectChanges();
+
+                    tick(debounceSearch);
 
                     const spinnerSelector = By.css('[data-automation-id="content-node-selector-search-pagination"] [data-automation-id="adf-infinite-pagination-spinner"]');
                     const paginationLoading = fixture.debugElement.query(spinnerSelector);
                     expect(paginationLoading).not.toBeNull();
-                }));
-
-                xit('should set its loading state to true after search was performed', fakeAsync(() => {
-                    component.showingSearchResults = true;
-                    component.pagination = { hasMoreItems: true };
-
-                    typeToSearchBox('shenron');
-
-                    tick(debounceSearch);
-
-                    fixture.detectChanges();
-
-                    respondWithSearchResults(ONE_FOLDER_RESULT);
-
-                    fixture.detectChanges();
-                    const spinnerSelector = By.css('[data-automation-id="content-node-selector-search-pagination"] [data-automation-id="adf-infinite-pagination-spinner"]');
-                    const paginationLoading = fixture.debugElement.query(spinnerSelector);
-                    expect(paginationLoading).toBeNull();
                 }));
             });
         });

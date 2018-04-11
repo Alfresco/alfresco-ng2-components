@@ -15,19 +15,10 @@
  * limitations under the License.
  */
 
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
-    Component,
-    EventEmitter,
-    Input,
-    OnInit,
-    Output,
-    ViewChild,
-    ViewEncapsulation
-} from '@angular/core';
-import {
-    AlfrescoApiService,
-    HighlightDirective,
-    UserPreferencesService
+    AlfrescoApiService, HighlightDirective, UserPreferencesService,
+    PaginatedComponent, PaginationModel
 } from '@alfresco/adf-core';
 import { FormControl } from '@angular/forms';
 import { MinimalNodeEntryEntity, NodePaging, Pagination, SiteEntry, SitePaging } from 'alfresco-js-api';
@@ -36,6 +27,7 @@ import { RowFilter } from '../document-list/data/row-filter.model';
 import { ImageResolver } from '../document-list/data/image-resolver.model';
 import { ContentNodeSelectorService } from './content-node-selector.service';
 import { debounceTime } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 export type ValidationFunction = (entry: MinimalNodeEntryEntity) => boolean;
 
@@ -48,7 +40,7 @@ const defaultValidation = () => true;
     encapsulation: ViewEncapsulation.None,
     host: { 'class': 'adf-content-node-selector-panel' }
 })
-export class ContentNodeSelectorPanelComponent implements OnInit {
+export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedComponent {
 
     /** Node ID of the folder currently listed. */
     @Input()
@@ -118,8 +110,9 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     inDialog: boolean = false;
     _chosenNode: MinimalNodeEntryEntity = null;
     folderIdToShow: string | null = null;
-    paginationStrategy: PaginationStrategy;
-    pagination: Pagination;
+    paginationStrategy: PaginationStrategy = PaginationStrategy.Infinite;
+    pagination: BehaviorSubject<PaginationModel>;
+
     skipCount: number = 0;
     infiniteScroll: boolean = false;
     debounceSearch: number = 200;
@@ -136,6 +129,14 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
                 this.search(searchValue);
             });
         this.pageSize = this.preferences.paginationSize;
+
+        let defaultPagination = <PaginationModel> {
+            maxItems: this.pageSize,
+            skipCount: 0,
+            totalItems: 0,
+            hasMoreItems: false
+        };
+        this.pagination = new BehaviorSubject<PaginationModel>(defaultPagination);
     }
 
     set chosenNode(value: MinimalNodeEntryEntity) {
@@ -153,7 +154,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
 
     ngOnInit() {
         this.folderIdToShow = this.currentFolderId;
-        this.paginationStrategy = PaginationStrategy.Infinite;
 
         this.breadcrumbTransform = this.breadcrumbTransform ? this.breadcrumbTransform : null;
         this.isSelectionValid = this.isSelectionValid ? this.isSelectionValid : defaultValidation;
@@ -177,16 +177,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     search(searchTerm: string): void {
         this.searchTerm = searchTerm;
         this.updateResults();
-    }
-
-    /**
-     * Returns whether breadcrumb has to be shown or not
-     */
-    needBreadcrumbs() {
-        const whenInFolderNavigation = !this.showingSearchResults,
-            whenInSelectingSearchResult = this.showingSearchResults && this.chosenNode;
-
-        return whenInFolderNavigation || whenInSelectingSearchResult;
     }
 
     /**
@@ -250,9 +240,9 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
      *
      * @param event Pagination object
      */
-    getNextPageOfSearch(event: Pagination): void {
+    updatePagination(pagination: Pagination): void {
         this.infiniteScroll = true;
-        this.skipCount = event.skipCount;
+        this.skipCount = pagination.skipCount;
 
         if (this.searchTerm.length > 0) {
             this.querySearch();
@@ -285,18 +275,18 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
      *
      * @param results Search results
      */
-    private showSearchResults(results: NodePaging): void {
+    private showSearchResults(nodePaging: NodePaging): void {
         this.showingSearchResults = true;
         this.loadingSearchResults = false;
 
         // Documentlist hack, since data displaying for preloaded nodes is a little bit messy there
         if (!this.nodes) {
-            this.nodes = results;
+            this.nodes = nodePaging;
         } else {
-            this.documentList.data.loadPage(results, true);
+            this.documentList.data.loadPage(nodePaging, true);
         }
 
-        this.pagination = results.list.pagination;
+        this.pagination.next(nodePaging.list.pagination);
         this.highlight();
     }
 
@@ -313,6 +303,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
      * Sets showingSearchResults state to be able to differentiate between search results or folder results
      */
     onFolderChange(): void {
+        this.showingSearchResults = false;
         this.infiniteScroll = false;
         this.clearSearch();
     }
@@ -320,10 +311,17 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     /**
      * Attempts to set the currently loaded node
      */
-    onFolderLoaded(nodePage: NodePaging): void {
-        this.attemptNodeSelection(this.documentList.folderNode);
-        this.pagination = nodePage.list.pagination;
-        this.skipCount = nodePage.list.pagination.skipCount;
+    onFolderLoaded(nodePaging: NodePaging): void {
+        if (!this.showingSearchResults) {
+            this.attemptNodeSelection(this.documentList.folderNode);
+        }
+    }
+
+    /**
+     * Returns whether breadcrumb has to be shown or not
+     */
+    showBreadcrumbs() {
+        return !this.showingSearchResults || this.chosenNode;
     }
 
     /**

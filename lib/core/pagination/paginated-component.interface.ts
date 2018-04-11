@@ -24,6 +24,6 @@ export interface PaginatedComponent {
      * @deprecated 2.3.0 : the supported page size should be retrieved via the user preferences
      * and given to the pagination component, and not retrieved by the paginated object
      */
-    supportedPageSizes: number[];
-    updatePagination(params: PaginationModel);
+    supportedPageSizes?: number[];
+    updatePagination(pagination: PaginationModel);
 }

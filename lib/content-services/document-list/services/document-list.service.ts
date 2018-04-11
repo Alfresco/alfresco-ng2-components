@@ -21,7 +21,6 @@ import {
 } from '@alfresco/adf-core';
 
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
 import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
@@ -109,8 +108,9 @@ export class DocumentListService {
      * @returns Details of the created folder node
      */
     createFolder(name: string, parentId: string): Observable<MinimalNodeEntity> {
-        return Observable.fromPromise(this.apiService.getInstance().nodes.createFolder(name, '/', parentId))
-            .catch(err => this.handleError(err));
+        let observable = Observable.fromPromise(this.apiService.getInstance().nodes.createFolder(name, '/', parentId));
+        observable.catch(err => this.handleError(err));
+        return observable;
     }
 
     /**
@@ -182,7 +182,7 @@ export class DocumentListService {
         return this.contentService.hasPermission(node, permission);
     }
 
-    private handleError(error: Response) {
+    private handleError(error: any) {
         // in a real world app, we may send the error to some remote logging infrastructure
         // instead of just logging it to the console
         this.logService.error(error);
