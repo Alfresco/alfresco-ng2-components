@@ -21,3 +21,5 @@ export * from './components/analytics-report-list.component';
 export * from './components/analytics-report-parameters.component';
 
 export * from './services/analytics.service';
+
+export * from './analytics-process.module';

@@ -18,7 +18,6 @@
 import { Injectable } from '@angular/core';
 import {
     ContentMetadataConfig,
-    LayoutOrientedConfig,
     LayoutOrientedConfigItem,
     OrganisedPropertyGroup,
     PropertyGroupContainer
@@ -28,7 +27,7 @@ import { getProperty } from './property-group-reader';
 @Injectable()
 export class LayoutOrientedConfigService implements ContentMetadataConfig {
 
-    constructor(private config: LayoutOrientedConfig) {}
+    constructor(private config: any) {}
 
     public isGroupAllowed(groupName: string): boolean {
         return this.getMatchingGroups(groupName).length > 0;

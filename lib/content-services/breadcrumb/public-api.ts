@@ -17,3 +17,5 @@
 
 export * from './breadcrumb.component';
 export * from './dropdown-breadcrumb.component';
+
+export * from './breadcrumb.module';

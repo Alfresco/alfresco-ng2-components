@@ -25,3 +25,5 @@ export * from './interfaces/perform-search-callback.interface';
 
 export * from './directives/people-search-action-label.directive';
 export * from './directives/people-search-title.directive';
+
+export * from './people.module';

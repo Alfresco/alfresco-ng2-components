@@ -16,20 +16,20 @@
  */
 
 import { Injectable } from '@angular/core';
-import { ContentMetadataConfig, AspectOrientedConfig, OrganisedPropertyGroup, PropertyGroupContainer } from '../../interfaces/content-metadata.interfaces';
+import { ContentMetadataConfig, OrganisedPropertyGroup, PropertyGroupContainer } from '../../interfaces/content-metadata.interfaces';
 import { getGroup, getProperty } from './property-group-reader';
 
 @Injectable()
 export class AspectOrientedConfigService implements ContentMetadataConfig {
 
-    constructor(private config: AspectOrientedConfig) {}
+    constructor(private config: any) {}
 
     public isGroupAllowed(groupName: string): boolean {
         const groupNames = Object.keys(this.config);
         return groupNames.indexOf(groupName) !== -1;
     }
 
-    public reorganiseByConfig(propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[] {
+    public reorganiseByConfig(propertyGroups: any): OrganisedPropertyGroup[] {
         const aspects = this.config,
             aspectNames = Object.keys(aspects);
 
