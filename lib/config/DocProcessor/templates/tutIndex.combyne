@@ -1,0 +1,3 @@
+{% each tuts as tut %}
+1. [**{{tut.title}}**]({{tut.link}}) ({{tut.level}}): {{tut.briefDesc}}
+{% endeach %}
