@@ -18,7 +18,7 @@
 import { Component, Input, ViewEncapsulation, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { VersionListComponent } from './version-list.component';
-import { AppConfigService } from '@alfresco/adf-core';
+import { AppConfigService, ContentService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-version-manager',
@@ -30,9 +30,6 @@ export class VersionManagerComponent {
 
     @Input()
     node: MinimalNodeEntryEntity;
-
-    @Input()
-    allowDelete = true;
 
     @Input()
     showComments = true;
@@ -49,8 +46,9 @@ export class VersionManagerComponent {
     @ViewChild('versionList')
     versionListComponent: VersionListComponent;
 
-    constructor(config: AppConfigService) {
-        this.allowDelete = config.get('adf-version-manager.allowDelete', true);
+    constructor(
+        config: AppConfigService,
+        private contentService: ContentService) {
         this.showComments = config.get('adf-version-manager.allowComments', true);
         this.allowDownload = config.get('adf-version-manager.allowDownload', true);
     }
@@ -60,7 +58,7 @@ export class VersionManagerComponent {
         this.uploadSuccess.emit(event);
     }
 
-    onUploadError(event): any {
-        this.uploadError.emit(event);
+    canUpdate(): boolean {
+        return this.contentService.hasPermission(this.node, 'update');
     }
 }

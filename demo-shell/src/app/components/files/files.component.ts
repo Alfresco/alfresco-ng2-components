@@ -106,9 +106,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     allowVersionDownload = true;
 
     @Input()
-    allowVersionDelete = true;
-
-    @Input()
     acceptedFilesType = '.jpg,.pdf,.js';
 
     @Input()

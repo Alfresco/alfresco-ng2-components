@@ -52,7 +52,7 @@ describe('VersionListComponent', () => {
         dialog = TestBed.get(MatDialog);
 
         component = fixture.componentInstance;
-        component.id = nodeId;
+        component.node = { id: nodeId, allowableOperations: [ 'update' ] };
 
         spyOn(component, 'downloadContent').and.stub();
     });
@@ -64,7 +64,6 @@ describe('VersionListComponent', () => {
             }
         });
 
-        component.allowDelete = true;
         component.deleteVersion('1');
 
         expect(dialog.open).toHaveBeenCalled();
@@ -79,12 +78,10 @@ describe('VersionListComponent', () => {
 
         spyOn(alfrescoApiService.versionsApi, 'deleteVersion').and.returnValue(Promise.resolve(true));
 
-        component.id = '0';
-        component.allowDelete = true;
-        component.deleteVersion('1');
+        component.deleteVersion(versionId);
 
         expect(dialog.open).toHaveBeenCalled();
-        expect(alfrescoApiService.versionsApi.deleteVersion).toHaveBeenCalledWith('0', '1');
+        expect(alfrescoApiService.versionsApi.deleteVersion).toHaveBeenCalledWith(nodeId, versionId);
     });
 
     it('should not delete version if user rejects', () => {
@@ -96,9 +93,7 @@ describe('VersionListComponent', () => {
 
         spyOn(alfrescoApiService.versionsApi, 'deleteVersion').and.returnValue(Promise.resolve(true));
 
-        component.id = '0';
-        component.allowDelete = true;
-        component.deleteVersion('1');
+        component.deleteVersion(versionId);
 
         expect(dialog.open).toHaveBeenCalled();
         expect(alfrescoApiService.versionsApi.deleteVersion).not.toHaveBeenCalled();
@@ -115,14 +110,22 @@ describe('VersionListComponent', () => {
 
         spyOn(alfrescoApiService.versionsApi, 'deleteVersion').and.returnValue(Promise.resolve(true));
 
-        component.id = '0';
-        component.allowDelete = true;
-        component.deleteVersion('1');
+        component.deleteVersion(versionId);
 
         tick();
 
         expect(component.loadVersionHistory).toHaveBeenCalled();
     }));
+
+    it('should reload and raise version-deleted DOM event', (done) => {
+        spyOn(component, 'loadVersionHistory').and.stub();
+        fixture.nativeElement.addEventListener('version-deleted', () => {
+            expect(component.loadVersionHistory).toHaveBeenCalled();
+            done();
+        });
+        fixture.detectChanges();
+        component.onVersionDeleted();
+    });
 
     describe('Version history fetching', () => {
 
@@ -230,6 +233,23 @@ describe('VersionListComponent', () => {
     });
 
     describe('Version restoring', () => {
+
+        it('should reload and raise version-restored DOM event', (done) => {
+            spyOn(component, 'loadVersionHistory').and.stub();
+            fixture.nativeElement.addEventListener('version-restored', () => {
+                expect(component.loadVersionHistory).toHaveBeenCalled();
+                done();
+            });
+            fixture.detectChanges();
+            component.onVersionRestored();
+        });
+
+        it('should restore version only when restore allowed', () => {
+            component.node.allowableOperations = [];
+            spyOn(alfrescoApiService.versionsApi, 'revertVersion').and.stub();
+            component.restore('1');
+            expect(alfrescoApiService.versionsApi.revertVersion).not.toHaveBeenCalled();
+        });
 
         it('should load the versions for a given id', () => {
             fixture.detectChanges();

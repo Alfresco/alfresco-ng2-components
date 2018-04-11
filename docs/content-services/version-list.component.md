@@ -16,10 +16,18 @@ Displays the version history of a node in a Version Manager component
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| id | `string` |  | ID of the node whose version history you want to display.  |
+| node | `MinimalNodeEntryEntity` |  | Node whose version history you want to display.  |
 | showComments | `boolean` | true |  Set this to false if version comments should not be displayed.  |
 | allowDownload | `boolean` | true |  Toggles downloads of previous versions. Set this to false to not show the menu item for version download.  |
-| allowDelete | `boolean` | true | Toggles the version delete feature. |
+
+### DOM events
+
+All DOM events are bubbling and can be handled in the parent components up to the root application component.
+
+| Name | Description |
+| --- | --- |
+| version-deleted | Raised after a version is deleted. |
+| version-restored | Raised after a version is restored. |
 
 ## Details
 
