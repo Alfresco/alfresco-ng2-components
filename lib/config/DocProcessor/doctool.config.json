@@ -1,5 +1,6 @@
 {
     "enabledTools": [
-        "index"
+        "index",
+        "versionIndex"
     ]
 }
