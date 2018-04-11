@@ -18,26 +18,31 @@
         color: mat-color($primary);
     }
 
-    .adf-panel-heading-icon {
-        float: left;
-    }
-
-    .adf-panel-body {
-        display: inline-block;
-    }
-
     .adf-panel-heading-text {
         float: left;
         padding-left: 20px;
         padding-top: 4px;
     }
+}
 
-    .adf-panel-heading-toggle {
-        float: right;
-        cursor: pointer;
-    }
+adf-accordion-group .mat-expansion-panel {
+    transition: none !important;
+    box-shadow: none !important;
+    background: none !important;
+}
 
-    .adf-panel-heading-toggle:hover {
-        opacity: 0.4;
-    }
+adf-accordion-group .mat-expansion-panel-body {
+    padding: 0px !important;
+}
+
+mat-expansion-panel .mat-expansion-panel-header {
+    padding: 0px !important;
+}
+
+adf-accordion-group .mat-expansion-panel-header-title {
+    margin-right: 0px !important;
+}
+
+adf-accordion-group .mat-expansion-indicator {
+        margin-right: 25px !important;
 }

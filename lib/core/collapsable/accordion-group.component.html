@@ -1,9 +1,7 @@
-<div class="adf-panel adf-panel-default" [ngClass]="{'adf-panel-open': isOpen}">
+<!-- <div class="adf-panel adf-panel-default" [ngClass]="{'adf-panel-open': isOpen}">
     <div class="adf-panel-heading" [ngClass]="{'adf-panel-heading-selected': isSelected}" (click)="toggleOpen($event)">
         <div id="heading-icon" *ngIf="hasHeadingIcon()" class="adf-panel-heading-icon">
-            <mat-icon class="material-icons"
-               [matTooltip]="headingIconTooltip"
-               [matTooltipDisabled]="!headingIconTooltip">
+            <mat-icon class="material-icons" [matTooltip]="headingIconTooltip" [matTooltipDisabled]="!headingIconTooltip">
                 {{headingIcon}}
             </mat-icon>
         </div>
@@ -17,4 +15,24 @@
             <ng-content></ng-content>
         </div>
     </div>
-</div>
+</div> -->
+
+<mat-accordion class="adf-panel">
+    <mat-expansion-panel [expanded]="isOpen" (opened)="toggleOpen()" [hideToggle]="!hasAccordionIcon">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <div class="adf-panel-heading" [ngClass]="{'adf-panel-heading-selected': isSelected}">
+                    <div id="heading-icon" *ngIf="hasHeadingIcon()" class="adf-panel-heading-icon">
+                        <mat-icon class="material-icons" [matTooltip]="headingIconTooltip" [matTooltipDisabled]="!headingIconTooltip">
+                            {{headingIcon}}
+                        </mat-icon>
+                    </div>
+                    <div id="heading-text" class="adf-panel-heading-text">{{heading}}</div>
+                </div>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+            <div #contentWrapper>
+                <ng-content></ng-content>
+            </div>
+    </mat-expansion-panel>
+</mat-accordion>

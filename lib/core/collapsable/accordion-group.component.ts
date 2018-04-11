@@ -17,6 +17,7 @@
 
 import { Component, EventEmitter, Input, OnDestroy, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { AccordionComponent } from './accordion.component';
+// import { MatExpansionPanel } from '@angular/material/expansion';
 
 @Component({
     selector: 'adf-accordion-group',
@@ -46,6 +47,9 @@ export class AccordionGroupComponent implements OnDestroy {
     /** Should the (expanded) accordion icon be shown? */
     @Input()
     hasAccordionIcon: boolean = true;
+
+    @Input()
+    hasChiled: boolean = true;
 
     /** Emitted when the heading is clicked. */
     @Output()
@@ -86,14 +90,8 @@ export class AccordionGroupComponent implements OnDestroy {
         return this.headingIcon ? true : false;
     }
 
-    toggleOpen(event: MouseEvent): void {
-        event.preventDefault();
+    toggleOpen(): void {
         this.isOpen = !this.isOpen;
         this.headingClick.emit(this.heading);
     }
-
-    getAccordionIcon(): string {
-        return this.isOpen ? 'expand_less' : 'expand_more';
-    }
-
 }
