@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { ContentMetadataConfig, OrganisedPropertyGroup, PropertyGroupContainer } from '../../interfaces/content-metadata.interfaces';
+import { ContentMetadataConfig, OrganisedPropertyGroup } from '../../interfaces/content-metadata.interfaces';
 import { getGroup, getProperty } from './property-group-reader';
 
 @Injectable()
