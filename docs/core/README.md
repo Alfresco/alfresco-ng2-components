@@ -46,10 +46,10 @@ for more information about installing and using the source code.
 | [Highlight directive](highlight.directive.md) | Adds highlighting to selected sections of an HTML element's content. | [Source](../../lib/core/directives/highlight.directive.ts) |
 | [Logout directive](logout.directive.md) | Logs the user out when the decorated element is clicked. | [Source](../../lib/core/directives/logout.directive.ts) |
 | [Node delete directive](node-delete.directive.md) | Deletes multiple files and folders. | [Source](../../lib/core/directives/node-delete.directive.ts) |
-| [Node favorite directive](node-favorite.directive.md) | Selectively toggles nodes as favorite | [Source](../../lib/core/directives/node-favorite.directive.ts) |
+| [Node favorite directive](node-favorite.directive.md) | Selectively toggles nodes as favorites. | [Source](../../lib/core/directives/node-favorite.directive.ts) |
 | [Node permission directive](node-permission.directive.md) | Selectively disables an HTML element or Angular component | [Source](../../lib/core/directives/node-permission.directive.ts) |
 | [Node restore directive](node-restore.directive.md) | Restores deleted nodes to their original location. | [Source](../../lib/core/directives/node-restore.directive.ts) |
-| [Upload directive](upload.directive.md) | Allows your components or common HTML elements reacting on File drag and drop in order to upload content. | [Source](../../lib/core/directives/upload.directive.ts) |
+| [Upload directive](upload.directive.md) | Uploads content in response to file drag and drop. | [Source](../../lib/core/directives/upload.directive.ts) |
 
 ## Models
 
@@ -89,6 +89,7 @@ for more information about installing and using the source code.
 | [Auth guard ecm service](auth-guard-ecm.service.md) | Adds authentication with Content Services to a route within the app. | [Source](../../lib/core/services/auth-guard-ecm.service.ts) |
 | [Auth guard service](auth-guard.service.md) | Adds authentication to a route within the app. | [Source](../../lib/core/services/auth-guard.service.ts) |
 | [Authentication service](authentication.service.md) | Provides authentication to ACS and APS. | [Source](../../lib/core/services/authentication.service.ts) |
+| [Comment content service](comment-content.service.md) | Adds and retrieves comments for nodes in Content Services. | [Source](../../lib/core/services/comment-content.service.ts) |
 | [Comment process service](comment-process.service.md) | Adds and retrieves comments for task and process instances in Process Services. | [Source](../../lib/core/services/comment-process.service.ts) |
 | [Content service](content.service.md) | Accesses app-generated data objects via URLs and file downloads. | [Source](../../lib/core/services/content.service.ts) |
 | [Cookie service](cookie.service.md) | Stores key-value data items as browser cookies. | [Source](../../lib/core/services/cookie.service.ts) |
@@ -113,7 +114,6 @@ for more information about installing and using the source code.
 | [User preferences service](user-preferences.service.md) | Stores preferences for components. | [Source](../../lib/core/services/user-preferences.service.ts) |
 | [Bpm user service](bpm-user.service.md) | Gets information about the current Process Services user. | [Source](../../lib/core/userinfo/services/bpm-user.service.ts) |
 | [Ecm user service](ecm-user.service.md) | Gets information about a Content Services user. | [Source](../../lib/core/userinfo/services/ecm-user.service.ts) |
-| _Comment content service_ | _Not currently documented_ | [Source](../../lib/core/services/comment-content.service.ts) |
 
 ## Widgets
 

@@ -38,8 +38,8 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Process audit directive](process-audit.directive.md) | Fetches the Process Audit information in the pdf or json format. | [Source](../../lib/process-services/process-list/components/process-audit.directive.ts) |
-| [Task audit directive](task-audit.directive.md) | Fetches the Task Audit information in the pdf or json format. | [Source](../../lib/process-services/task-list/components/task-audit.directive.ts) |
+| [Process audit directive](process-audit.directive.md) | Fetches the Process Audit information the PDF or JSON format. | [Source](../../lib/process-services/process-list/components/process-audit.directive.ts) |
+| [Task audit directive](task-audit.directive.md) | Fetches the Task Audit information in PDF or JSON format. | [Source](../../lib/process-services/task-list/components/task-audit.directive.ts) |
 
 ## Models
 

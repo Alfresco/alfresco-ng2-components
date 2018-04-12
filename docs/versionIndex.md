@@ -15,6 +15,8 @@ ADF version in which they were introduced. See the
 
 ## v2.3.0
 
+-   [Comment content service](core/comment-content.service.md)
+-   [Custom resources service](content-services/custom-resources.service.md)
 -   [Inherited button directive](content-services/inherited-button.directive.md)
 -   [Node share directive](content-services/node-share.directive.md)
 -   [Permission list component](content-services/permission-list.component.md)

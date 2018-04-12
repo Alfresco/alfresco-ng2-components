@@ -87,10 +87,10 @@ for more information about installing and using the source code.
 | [Highlight directive](core/highlight.directive.md) | Adds highlighting to selected sections of an HTML element's content. | [Source](../lib/core/directives/highlight.directive.ts) |
 | [Logout directive](core/logout.directive.md) | Logs the user out when the decorated element is clicked. | [Source](../lib/core/directives/logout.directive.ts) |
 | [Node delete directive](core/node-delete.directive.md) | Deletes multiple files and folders. | [Source](../lib/core/directives/node-delete.directive.ts) |
-| [Node favorite directive](core/node-favorite.directive.md) | Selectively toggles nodes as favorite | [Source](../lib/core/directives/node-favorite.directive.ts) |
+| [Node favorite directive](core/node-favorite.directive.md) | Selectively toggles nodes as favorites. | [Source](../lib/core/directives/node-favorite.directive.ts) |
 | [Node permission directive](core/node-permission.directive.md) | Selectively disables an HTML element or Angular component | [Source](../lib/core/directives/node-permission.directive.ts) |
 | [Node restore directive](core/node-restore.directive.md) | Restores deleted nodes to their original location. | [Source](../lib/core/directives/node-restore.directive.ts) |
-| [Upload directive](core/upload.directive.md) | Allows your components or common HTML elements reacting on File drag and drop in order to upload content. | [Source](../lib/core/directives/upload.directive.ts) |
+| [Upload directive](core/upload.directive.md) | Uploads content in response to file drag and drop. | [Source](../lib/core/directives/upload.directive.ts) |
 
 ## Models
 
@@ -130,6 +130,7 @@ for more information about installing and using the source code.
 | [Auth guard ecm service](core/auth-guard-ecm.service.md) | Adds authentication with Content Services to a route within the app. | [Source](../lib/core/services/auth-guard-ecm.service.ts) |
 | [Auth guard service](core/auth-guard.service.md) | Adds authentication to a route within the app. | [Source](../lib/core/services/auth-guard.service.ts) |
 | [Authentication service](core/authentication.service.md) | Provides authentication to ACS and APS. | [Source](../lib/core/services/authentication.service.ts) |
+| [Comment content service](core/comment-content.service.md) | Adds and retrieves comments for nodes in Content Services. | [Source](../lib/core/services/comment-content.service.ts) |
 | [Comment process service](core/comment-process.service.md) | Adds and retrieves comments for task and process instances in Process Services. | [Source](../lib/core/services/comment-process.service.ts) |
 | [Content service](core/content.service.md) | Accesses app-generated data objects via URLs and file downloads. | [Source](../lib/core/services/content.service.ts) |
 | [Cookie service](core/cookie.service.md) | Stores key-value data items as browser cookies. | [Source](../lib/core/services/cookie.service.ts) |
@@ -154,7 +155,6 @@ for more information about installing and using the source code.
 | [User preferences service](core/user-preferences.service.md) | Stores preferences for components. | [Source](../lib/core/services/user-preferences.service.ts) |
 | [Bpm user service](core/bpm-user.service.md) | Gets information about the current Process Services user. | [Source](../lib/core/userinfo/services/bpm-user.service.ts) |
 | [Ecm user service](core/ecm-user.service.md) | Gets information about a Content Services user. | [Source](../lib/core/userinfo/services/ecm-user.service.ts) |
-| _Comment content service_ | _Not currently documented_ | [Source](../lib/core/services/comment-content.service.ts) |
 
 ## Widgets
 
@@ -222,14 +222,13 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Node download directive](content-services/node-download.directive.md) | Allows folders and/or files to be downloaded. Multiple nodes are packed as a '.ZIP' archive. | [Source](../lib/content-services/directives/node-download.directive.ts) |
-| [Node lock directive](content-services/node-lock.directive.md) | Call [`ContentNodeDialogService.openLockNodeDialog(nodeEntry)`](./content-node-dialog.service.md) method on click event,
-and disable target button if provided node is not a file or user don't have permissions. | [Source](../lib/content-services/directives/node-lock.directive.ts) |
-| [Node share directive](content-services/node-share.directive.md) | Create and manage public shared links for files | [Source](../lib/content-services/directives/node-share.directive.ts) |
-| [Folder create directive](content-services/folder-create.directive.md) | Allows folders to be created. | [Source](../lib/content-services/folder-directive/folder-create.directive.ts) |
+| [Node download directive](content-services/node-download.directive.md) | Allows folders and/or files to be downloaded, with multiple nodes packed as a '.ZIP' archive. | [Source](../lib/content-services/directives/node-download.directive.ts) |
+| [Node lock directive](content-services/node-lock.directive.md) | Locks a node. | [Source](../lib/content-services/directives/node-lock.directive.ts) |
+| [Node share directive](content-services/node-share.directive.md) | Creates and manages public shared links for files. | [Source](../lib/content-services/directives/node-share.directive.ts) |
+| [Folder create directive](content-services/folder-create.directive.md) | Creates folders. | [Source](../lib/content-services/folder-directive/folder-create.directive.ts) |
 | [Folder edit directive](content-services/folder-edit.directive.md) | Allows folders to be edited. | [Source](../lib/content-services/folder-directive/folder-edit.directive.ts) |
 | [Inherited button directive](content-services/inherited-button.directive.md) | Update the current node by adding/removing the inherited permissions. | [Source](../lib/content-services/permission-manager/components/inherited-button.directive.ts) |
-| [File draggable directive](core/file-draggable.directive.md) | Provide drag-and-drop features for an element such as a `div`. | [Source](../lib/content-services/upload/directives/file-draggable.directive.ts) |
+| [File draggable directive](core/file-draggable.directive.md) | Provides drag-and-drop features for an element such as a `div`. | [Source](../lib/content-services/upload/directives/file-draggable.directive.ts) |
 
 ## Models
 
@@ -243,13 +242,13 @@ and disable target button if provided node is not a file or user don't have perm
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Content node dialog service](content-services/content-node-dialog.service.md) | Displays and manages dialogs for selecting content to open, copy or upload. | [Source](../lib/content-services/content-node-selector/content-node-dialog.service.ts) |
+| [Custom resources service](content-services/custom-resources.service.md) | Manages Document List information that is specific to a user. | [Source](../lib/content-services/document-list/services/custom-resources.service.ts) |
 | [Document actions service](content-services/document-actions.service.md) | Implements the document menu actions for the Document List component. | [Source](../lib/content-services/document-list/services/document-actions.service.ts) |
 | [Document list service](content-services/document-list.service.md) | Implements node operations used by the Document List component. | [Source](../lib/content-services/document-list/services/document-list.service.ts) |
 | [Folder actions service](content-services/folder-actions.service.md) | Implements the folder menu actions for the Document List component. | [Source](../lib/content-services/document-list/services/folder-actions.service.ts) |
 | [Node permission service](content-services/node-permission.service.md) | Manages the role permissions for the content nodes | [Source](../lib/content-services/permission-manager/services/node-permission.service.ts) |
 | [Rating service](content-services/rating.service.md) | Manages ratings for items in Content Services. | [Source](../lib/content-services/social/services/rating.service.ts) |
 | [Tag service](content-services/tag.service.md) | Manages tags in Content Services. | [Source](../lib/content-services/tag/services/tag.service.ts) |
-| _Custom resources service_ | _Not currently documented_ | [Source](../lib/content-services/document-list/services/custom-resources.service.ts) |
 | _Search query builder service_ | _Not currently documented_ | [Source](../lib/content-services/search/search-query-builder.service.ts) |
 
 <!--content-services end-->
@@ -296,8 +295,8 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Process audit directive](process-services/process-audit.directive.md) | Fetches the Process Audit information in the pdf or json format. | [Source](../lib/process-services/process-list/components/process-audit.directive.ts) |
-| [Task audit directive](process-services/task-audit.directive.md) | Fetches the Task Audit information in the pdf or json format. | [Source](../lib/process-services/task-list/components/task-audit.directive.ts) |
+| [Process audit directive](process-services/process-audit.directive.md) | Fetches the Process Audit information the PDF or JSON format. | [Source](../lib/process-services/process-list/components/process-audit.directive.ts) |
+| [Task audit directive](process-services/task-audit.directive.md) | Fetches the Task Audit information in PDF or JSON format. | [Source](../lib/process-services/task-list/components/task-audit.directive.ts) |
 
 ## Models
 
