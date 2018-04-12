@@ -25,7 +25,7 @@ import {
     AuthenticationService, AppConfigService, ContentService, TranslationService,
     FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
     UploadService, DataColumn, DataRow, UserPreferencesService,
-    PaginationComponent, FormValues, DisplayMode
+    PaginationComponent, FormValues, DisplayMode, UserPreferenceValues
 } from '@alfresco/adf-core';
 
 import { DocumentListComponent, PermissionStyleModel } from '@alfresco/adf-content-services';
@@ -159,7 +159,10 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 private preference: UserPreferencesService,
                 private appConfig: AppConfigService,
                 public authenticationService: AuthenticationService) {
-        this.supportedPages = this.appConfig.get('pagination.supportedPageSizes');
+        this.preference.select(UserPreferenceValues.SupportedPageSizes)
+            .subscribe((pages) => {
+                this.supportedPages = pages;
+            });
     }
 
     showFile(event) {
