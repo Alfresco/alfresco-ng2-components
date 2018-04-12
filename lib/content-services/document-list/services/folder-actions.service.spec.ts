@@ -23,7 +23,7 @@ import { ContentActionHandler } from '../models/content-action.model';
 import { DocumentListService } from './document-list.service';
 import { FolderActionsService } from './folder-actions.service';
 
-fdescribe('FolderActionsService', () => {
+describe('FolderActionsService', () => {
 
     let service: FolderActionsService;
     let documentListService: DocumentListService;
