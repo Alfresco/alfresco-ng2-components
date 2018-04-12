@@ -1,4 +1,27 @@
 {
+  "ADF_VERSION_LIST": {
+    "ACTIONS": {
+      "RESTORE": "恢复",
+      "DELETE": "删除",
+      "DOWNLOAD": "下载",
+      "UPLOAD": {
+        "TITLE": "上传新版本",
+        "TOOLTIP": "限制：您必须上传同名文件才能创建该文件的新版本"
+      }
+    },
+    "CONFIRM_DELETE": {
+      "TITLE": "删除版本",
+      "MESSAGE": "已删除的文件版本无法恢复。是否继续？",
+      "YES_LABEL": "是",
+      "NO_LABEL": "否"
+    }
+  },
+  "ADF_CONFIRM_DIALOG": {
+    "TITLE": "确认",
+    "ACTION": "是否继续？",
+    "YES_LABEL": "是",
+    "NO_LABEL": "否"
+  },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "此文件夹为空"
@@ -45,6 +68,7 @@
     "MOVE_ITEM": "将 '{{ name }}' 移动到...",
     "NO_RESULTS": "未找到结果",
     "SEARCH": "搜索",
+    "SEARCH_RESULTS": "搜索结果",
     "SELECT_LOCATION": "选择位置"
   },
   "OPERATION": {
@@ -102,6 +126,12 @@
     "BUTTON": {
       "UPLOAD_FILE": "上传文件",
       "UPLOAD_FOLDER": "上传文件夹"
+    },
+    "VERSION": {
+      "MESSAGES": {
+        "NO_ACCEPTED_FILE_TYPES": "请注意，\"acceptedFilesType\"的设置对于新版本上传没有影响。文件类型将与原始文件的类型相同。",
+        "INCOMPATIBLE_VERSION": "只有同一类型的文件可以作为新版本上传。"
+      }
     },
     "MESSAGES": {
       "UPLOAD_CANCELED": "取消上传",
@@ -164,7 +194,8 @@
           "DOWNLOAD": "下载",
           "DELETE": "删除",
           "MOVE": "移动",
-          "COPY": "复制"
+          "COPY": "复制",
+          "PROCESS_ACTION": "启动流程"
         }
       }
     }
@@ -185,6 +216,26 @@
       "CREATED_DATE": "创建日期",
       "MODIFIER": "修改者",
       "MODIFIED_DATE": "修改日期"
+    }
+  },
+  "SHARE": {
+    "TITLE": "共享",
+    "PUBLIC-LINK": "公共链接",
+    "UNSHARED": "文件未共享",
+    "DESCRIPTION": "这是您的文件的链接",
+    "ALERT": "任何人都可访问此链接",
+    "ACTIONS": {
+      "SHARE": "共享",
+      "CLOSE": "关闭",
+      "COPY-LINK": "复制链接"
+    }
+  },
+  "PERMISSION_MANAGER": {
+    "PERMISSION_DISPLAY": {
+      "INHERITED": "已继承",
+      "AUTHORITY_ID": "权限 ID",
+      "ROLE": "角色",
+      "LOCALLY_SET": "本地设置"
     }
   }
 }

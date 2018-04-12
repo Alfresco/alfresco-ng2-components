@@ -1,4 +1,27 @@
 {
+  "ADF_VERSION_LIST": {
+    "ACTIONS": {
+      "RESTORE": "Ripristina",
+      "DELETE": "Elimina",
+      "DOWNLOAD": "Download",
+      "UPLOAD": {
+        "TITLE": "Utilizza nuova versione",
+        "TOOLTIP": "Limite: è necessario caricare un file con lo stesso nome per crearne una nuova versione."
+      }
+    },
+    "CONFIRM_DELETE": {
+      "TITLE": "Elimina versione",
+      "MESSAGE": "Le versioni eliminate del file non possono essere ripristinate. Continuare?",
+      "YES_LABEL": "Sì",
+      "NO_LABEL": "No"
+    }
+  },
+  "ADF_CONFIRM_DIALOG": {
+    "TITLE": "Conferma",
+    "ACTION": "Procedere?",
+    "YES_LABEL": "Sì",
+    "NO_LABEL": "No"
+  },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "Questa cartella è vuota"
@@ -45,6 +68,7 @@
     "MOVE_ITEM": "Sposta '{{ name }}' in...",
     "NO_RESULTS": "Nessun risultato trovato",
     "SEARCH": "Ricerca",
+    "SEARCH_RESULTS": "Risultati della ricerca",
     "SELECT_LOCATION": "Seleziona località"
   },
   "OPERATION": {
@@ -102,6 +126,12 @@
     "BUTTON": {
       "UPLOAD_FILE": "Carica file",
       "UPLOAD_FOLDER": "Carica cartella"
+    },
+    "VERSION": {
+      "MESSAGES": {
+        "NO_ACCEPTED_FILE_TYPES": "L'impostazione \"acceptedFilesType\" non influisce sui caricamenti di nuove versioni. Il tipo di file sarà identifico al file originale.",
+        "INCOMPATIBLE_VERSION": "È possibile caricare solo un file dello stesso tipo come nuova versione."
+      }
     },
     "MESSAGES": {
       "UPLOAD_CANCELED": "Caricamento annullato",
@@ -164,7 +194,8 @@
           "DOWNLOAD": "Download",
           "DELETE": "Elimina",
           "MOVE": "Sposta",
-          "COPY": "Copia"
+          "COPY": "Copia",
+          "PROCESS_ACTION": "Avvia processo"
         }
       }
     }
@@ -185,6 +216,26 @@
       "CREATED_DATE": "Data di creazione",
       "MODIFIER": "Modificatore",
       "MODIFIED_DATE": "Data di modifica"
+    }
+  },
+  "SHARE": {
+    "TITLE": "Condividi",
+    "PUBLIC-LINK": "Link pubblico",
+    "UNSHARED": "File non condiviso",
+    "DESCRIPTION": "Link al file",
+    "ALERT": "Tutti possono accedere a questo link",
+    "ACTIONS": {
+      "SHARE": "Condividi",
+      "CLOSE": "Chiudi",
+      "COPY-LINK": "Copia link"
+    }
+  },
+  "PERMISSION_MANAGER": {
+    "PERMISSION_DISPLAY": {
+      "INHERITED": "Ereditato",
+      "AUTHORITY_ID": "ID autorità",
+      "ROLE": "Ruolo",
+      "LOCALLY_SET": "Impostato localmente"
     }
   }
 }

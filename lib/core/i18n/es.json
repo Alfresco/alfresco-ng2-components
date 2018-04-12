@@ -9,6 +9,9 @@
     "FIELD": {
       "LOCALSTORAGE": "Almacenamiento local",
       "SOURCE": "Seleccionar origen de ",
+      "SHOW_FILE": "Mostrar",
+      "DOWNLOAD_FILE": "Descargar",
+      "REMOVE_FILE": "Eliminar",
       "UPLOAD": "Cargar",
       "REQUIRED": "*Obligatorio",
       "VALIDATOR": {
@@ -46,6 +49,18 @@
           "CANCEL": "Cancelar"
         },
         "TITLE": "Añadiendo ficheros al zip; esto puede tardar unos minutos"
+      }
+    },
+    "FILE_DIALOG": {
+      "FILE_LOCK": "Bloquear fichero",
+      "ALLOW_OTHERS_CHECKBOX": "Permitir al propietario que modifique este fichero",
+      "FILE_LOCK_CHECKBOX": "Bloquear fichero",
+      "TIME_LOCK_CHECKBOX": "Duración del bloqueo",
+      "SAVE_BUTTON": {
+        "LABEL": "Guardar"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "Cancelar"
       }
     },
     "FOLDER_DIALOG": {
@@ -125,6 +140,12 @@
         "CREATED_DATE": "Fecha de creación",
         "MODIFIER": "Modificador",
         "MODIFIED_DATE": "Fecha de modificación"
+      },
+      "ACTIONS": {
+        "EDIT": "Editar",
+        "SAVE": "Guardar",
+        "CANCEL": "Cancelar",
+        "TOGGLE": "Alternar valor"
       }
     }
   },
@@ -138,7 +159,7 @@
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "Requerido",
-      "USERNAME-MIN": "Su nombre de usuario debe tener al menos {{minLength}} caracteres.",
+      "USERNAME-MIN": "Su nombre de usuario debe tener al menos {{ minLenght }} caracteres.",
       "PASSWORD-REQUIRED": "Introduzca su contraseña para iniciar sesión",
       "LOGIN-ERROR-CREDENTIALS": "Ha introducido un nombre de usuario o contraseña desconocidos",
       "LOGIN-ERROR-PROVIDERS": "Los proveedores no pueden estar no definidos",
@@ -210,10 +231,19 @@
     "LOADING": "Cargando",
     "UNKNOWN_FORMAT": "No se ha podido cargar la vista previa",
     "SIDEBAR": {
+      "THUMBNAILS": {
+        "PAGE": "Página {{ pageNum }}"
+      },
       "METADATA": {
         "MORE_INFORMATION": "Más información",
         "LESS_INFORMATION": "Menos información"
       }
+    },
+    "PDF_DIALOG": {
+      "SUBMIT": "Enviar",
+      "CLOSE": "Cerrar",
+      "PLACEHOLDER": "Contraseña",
+      "ERROR": "La contraseña es incorrecta"
     }
   }
 }

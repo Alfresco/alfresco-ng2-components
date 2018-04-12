@@ -6,14 +6,14 @@
       "DOWNLOAD": "Download",
       "UPLOAD": {
         "TITLE": "Upload new version",
-        "TOOLTIP": "Restriction: upload file with the same name to create a new version of it"
+        "TOOLTIP": "Restriction: you must upload a file with the same name to create a new version of it"
       }
     },
     "CONFIRM_DELETE": {
       "TITLE": "Delete version",
-      "MESSAGE": "Deleted file versions can not be restored.",
-      "YES_LABEL": "DELETE",
-      "NO_LABEL": "KEEP"
+      "MESSAGE": "Deleted file versions cannot be restored. Continue?",
+      "YES_LABEL": "Yes",
+      "NO_LABEL": "No"
     }
   },
   "ADF_CONFIRM_DIALOG": {
@@ -129,8 +129,8 @@
     },
     "VERSION": {
       "MESSAGES": {
-        "NO_ACCEPTED_FILE_TYPES": "Please note that setting of acceptedFilesType has no effect for new version upload. File type will be the same as the original file's.",
-        "INCOMPATIBLE_VERSION": "Only files from the same type are allowed to be uploaded as a new version."
+        "NO_ACCEPTED_FILE_TYPES": "Please note that the setting of \"acceptedFilesType\" has no effect for new version uploads. The file type will be the same as the original file's.",
+        "INCOMPATIBLE_VERSION": "Only a file of the same type may be uploaded as a new version."
       }
     },
     "MESSAGES": {
@@ -223,7 +223,7 @@
     "PUBLIC-LINK": "Public link",
     "UNSHARED": "File not shared",
     "DESCRIPTION": "This is a link to your file",
-    "ALERT": "Anyone with this link can acces to it",
+    "ALERT": "Anyone can access this link",
     "ACTIONS": {
       "SHARE": "SHARE",
       "CLOSE": "CLOSE",

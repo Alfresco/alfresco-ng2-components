@@ -1,4 +1,27 @@
 {
+  "ADF_VERSION_LIST": {
+    "ACTIONS": {
+      "RESTORE": "Restaurer",
+      "DELETE": "Supprimer",
+      "DOWNLOAD": "Télécharger",
+      "UPLOAD": {
+        "TITLE": "Importer une nouvelle version",
+        "TOOLTIP": "Restriction : pour créer une nouvelle version d'un fichier vous devez importer un fichier du même nom"
+      }
+    },
+    "CONFIRM_DELETE": {
+      "TITLE": "Supprimer la version",
+      "MESSAGE": "Les versions supprimées ne pourront pas être restaurées. Continuer ?",
+      "YES_LABEL": "Oui",
+      "NO_LABEL": "Non"
+    }
+  },
+  "ADF_CONFIRM_DIALOG": {
+    "TITLE": "Confirmer",
+    "ACTION": "Voulez-vous continuer ?",
+    "YES_LABEL": "Oui",
+    "NO_LABEL": "Non"
+  },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "Ce dossier est vide"
@@ -45,6 +68,7 @@
     "MOVE_ITEM": "Déplacer '{{ name }}' vers...",
     "NO_RESULTS": "Aucun résultat trouvé",
     "SEARCH": "Rechercher",
+    "SEARCH_RESULTS": "Résultats de la recherche",
     "SELECT_LOCATION": "Sélectionner l'emplacement"
   },
   "OPERATION": {
@@ -102,6 +126,12 @@
     "BUTTON": {
       "UPLOAD_FILE": "Importer le fichier",
       "UPLOAD_FOLDER": "Importer le dossier"
+    },
+    "VERSION": {
+      "MESSAGES": {
+        "NO_ACCEPTED_FILE_TYPES": "Le paramètre \"acceptedFilesType\" n'a aucun effet sur les nouvelles versions importées. Le type de fichier sera le même que celui du fichier d'origine.",
+        "INCOMPATIBLE_VERSION": "Seul un fichier du même type peut être importé comme nouvelle version."
+      }
     },
     "MESSAGES": {
       "UPLOAD_CANCELED": "Importation annulée",
@@ -164,7 +194,8 @@
           "DOWNLOAD": "Télécharger",
           "DELETE": "Supprimer",
           "MOVE": "Déplacer",
-          "COPY": "Copier"
+          "COPY": "Copier",
+          "PROCESS_ACTION": "Démarrer le processus"
         }
       }
     }
@@ -185,6 +216,26 @@
       "CREATED_DATE": "Date de création",
       "MODIFIER": "Modificateur",
       "MODIFIED_DATE": "Date de Modification"
+    }
+  },
+  "SHARE": {
+    "TITLE": "Partager",
+    "PUBLIC-LINK": "Lien public",
+    "UNSHARED": "Fichier non partagé",
+    "DESCRIPTION": "Lien vers votre fichier",
+    "ALERT": "Tout le monde peut accéder à ce lien",
+    "ACTIONS": {
+      "SHARE": "Partager",
+      "CLOSE": "Fermer",
+      "COPY-LINK": "Copier le lien"
+    }
+  },
+  "PERMISSION_MANAGER": {
+    "PERMISSION_DISPLAY": {
+      "INHERITED": "Hérité",
+      "AUTHORITY_ID": "ID de l'autorité",
+      "ROLE": "Rôle",
+      "LOCALLY_SET": "Défini localement"
     }
   }
 }

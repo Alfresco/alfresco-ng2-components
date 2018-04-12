@@ -9,6 +9,9 @@
     "FIELD": {
       "LOCALSTORAGE": "Archivio locale",
       "SOURCE": "Seleziona origine da ",
+      "SHOW_FILE": "Mostra",
+      "DOWNLOAD_FILE": "Download",
+      "REMOVE_FILE": "Rimuovi",
       "UPLOAD": "Carica",
       "REQUIRED": "*Obbligatorio",
       "VALIDATOR": {
@@ -46,6 +49,18 @@
           "CANCEL": "Annulla"
         },
         "TITLE": "Aggiunta dei file allo zip in corso. Questa operazione potrebbe richiedere alcuni minuti"
+      }
+    },
+    "FILE_DIALOG": {
+      "FILE_LOCK": "Blocca file",
+      "ALLOW_OTHERS_CHECKBOX": "Consenti al proprietario di modificare questo file",
+      "FILE_LOCK_CHECKBOX": "Blocca file",
+      "TIME_LOCK_CHECKBOX": "Durata blocco",
+      "SAVE_BUTTON": {
+        "LABEL": "Salva"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "Annulla"
       }
     },
     "FOLDER_DIALOG": {
@@ -125,6 +140,12 @@
         "CREATED_DATE": "Data di creazione",
         "MODIFIER": "Modificatore",
         "MODIFIED_DATE": "Data di modifica"
+      },
+      "ACTIONS": {
+        "EDIT": "Modifica",
+        "SAVE": "Salva",
+        "CANCEL": "Annulla",
+        "TOGGLE": "Cambiare valore"
       }
     }
   },
@@ -138,7 +159,7 @@
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "Campo obbligatorio",
-      "USERNAME-MIN": "Il nome utente deve essere lungo almeno {{minLength}} caratteri.",
+      "USERNAME-MIN": "Il nome utente deve essere lungo almeno {{minLenght}} caratteri.",
       "PASSWORD-REQUIRED": "Immetti la password per accedere",
       "LOGIN-ERROR-CREDENTIALS": "Nome utente o password sconosciuti",
       "LOGIN-ERROR-PROVIDERS": "I provider non possono essere non definiti",
@@ -210,10 +231,19 @@
     "LOADING": "Caricamento in corso",
     "UNKNOWN_FORMAT": "Impossibile caricare l'anteprima",
     "SIDEBAR": {
+      "THUMBNAILS": {
+        "PAGE": "Pagina {{ pageNum }}"
+      },
       "METADATA": {
         "MORE_INFORMATION": "Più informazioni",
         "LESS_INFORMATION": "Meno informazioni"
       }
+    },
+    "PDF_DIALOG": {
+      "SUBMIT": "Invia",
+      "CLOSE": "Chiudi",
+      "PLACEHOLDER": "Password",
+      "ERROR": "Password errata"
     }
   }
 }
