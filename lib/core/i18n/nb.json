@@ -9,6 +9,9 @@
     "FIELD": {
       "LOCALSTORAGE": "Lokal lagring",
       "SOURCE": "Velg kilde fra ",
+      "SHOW_FILE": "Vis",
+      "DOWNLOAD_FILE": "Last ned",
+      "REMOVE_FILE": "Fjern",
       "UPLOAD": "Laster opp",
       "REQUIRED": "*Påkrevd",
       "VALIDATOR": {
@@ -46,6 +49,18 @@
           "CANCEL": "Avbryt"
         },
         "TITLE": "Legger til filer som skal komprimeres, dette kan ta noen minutter"
+      }
+    },
+    "FILE_DIALOG": {
+      "FILE_LOCK": "Lås fil",
+      "ALLOW_OTHERS_CHECKBOX": "Tillat eieren å endre denne filen",
+      "FILE_LOCK_CHECKBOX": "Lås fil",
+      "TIME_LOCK_CHECKBOX": "Tidslås",
+      "SAVE_BUTTON": {
+        "LABEL": "Lagre"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "Avbryt"
       }
     },
     "FOLDER_DIALOG": {
@@ -125,6 +140,12 @@
         "CREATED_DATE": "Opprettelsesdato",
         "MODIFIER": "Modifikator",
         "MODIFIED_DATE": "Endringsdato"
+      },
+      "ACTIONS": {
+        "EDIT": "Rediger",
+        "SAVE": "Lagre",
+        "CANCEL": "Avbryt",
+        "TOGGLE": "Bytt verdi"
       }
     }
   },
@@ -138,7 +159,7 @@
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "Påkrevd",
-      "USERNAME-MIN": "Brukernavnet må ha minst {{minLength}} tegn.",
+      "USERNAME-MIN": "Brukernavnet må ha minst {{ minLength }} tegn.",
       "PASSWORD-REQUIRED": "Angi passordet for å logge på",
       "LOGIN-ERROR-CREDENTIALS": "Du har angitt ukjent brukernavn eller passord",
       "LOGIN-ERROR-PROVIDERS": "Leverandører kan ikke være udefinert",
@@ -210,10 +231,19 @@
     "LOADING": "Laster",
     "UNKNOWN_FORMAT": "Kan ikke laste forhåndsvisning",
     "SIDEBAR": {
+      "THUMBNAILS": {
+        "PAGE": "Side {{ pageNum }}"
+      },
       "METADATA": {
         "MORE_INFORMATION": "Mer informasjon",
         "LESS_INFORMATION": "Mindre informasjon"
       }
+    },
+    "PDF_DIALOG": {
+      "SUBMIT": "Send inn",
+      "CLOSE": "Lukk",
+      "PLACEHOLDER": "Passord",
+      "ERROR": "Passordet er feil"
     }
   }
 }

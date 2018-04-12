@@ -56,7 +56,7 @@
     },
     "TRASHCAN" :{
       "ACTIONS":{
-        "DELETE_PERMANENT":"Delete permanent",
+        "DELETE_PERMANENT":"Delete permanently",
         "RESTORE":"Restore"
       },
       "EMPTY_STATE": {
@@ -77,7 +77,7 @@
         "MULTISELECT_DESCRIPTION" : "Use Cmd (Mac) or Ctrl (Windows) to toggle selection of multiple items",
         "RECENT" : {
           "EMPTY_STATE": {
-            "TITLE": "Recent is empty"
+            "TITLE": "Recent Files list is empty"
           },
           "TITLE":"Recent Files"
         },
@@ -144,7 +144,7 @@
     },
     "FORM-LOADING": {
       "FORM_DATA" : "Form Data",
-      "FORM_DATA_MESSAGE": "Type values to populate the form",
+      "FORM_DATA_MESSAGE": "Enter values to populate the form",
       "TYPEAHEAD_PLACEHOLDER": "Typeahead",
       "RADIO_PLACEHOLDER": "Radio Button",
       "SELECT_PLACEHOLDER": "DropDown"

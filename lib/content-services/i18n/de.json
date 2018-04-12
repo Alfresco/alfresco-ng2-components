@@ -1,4 +1,27 @@
 {
+  "ADF_VERSION_LIST": {
+    "ACTIONS": {
+      "RESTORE": "Wiederherstellen",
+      "DELETE": "Löschen",
+      "DOWNLOAD": "Herunterladen",
+      "UPLOAD": {
+        "TITLE": "Neue Version hochladen",
+        "TOOLTIP": "Einschränkung: Sie müssen eine Datei mit dem gleichen Namen hochladen, wenn Sie eine neue Version der Datei erstellen möchten."
+      }
+    },
+    "CONFIRM_DELETE": {
+      "TITLE": "Version löschen",
+      "MESSAGE": "Gelöschte Dateiversionen können nicht wiederhergestellt werden. Fortfahren?",
+      "YES_LABEL": "Ja",
+      "NO_LABEL": "Nein"
+    }
+  },
+  "ADF_CONFIRM_DIALOG": {
+    "TITLE": "Bestätigen",
+    "ACTION": "Möchten Sie fortfahren?",
+    "YES_LABEL": "Ja",
+    "NO_LABEL": "Nein"
+  },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "Dieser Ordner ist leer"
@@ -45,6 +68,7 @@
     "MOVE_ITEM": "'{{ name }}' verschieben nach...",
     "NO_RESULTS": "Keine Ergebnisse gefunden",
     "SEARCH": "Suchen",
+    "SEARCH_RESULTS": "Ergebnisse durchsuchen",
     "SELECT_LOCATION": "Speicherort auswählen"
   },
   "OPERATION": {
@@ -102,6 +126,12 @@
     "BUTTON": {
       "UPLOAD_FILE": "Datei hochladen",
       "UPLOAD_FOLDER": "Ordner hochladen"
+    },
+    "VERSION": {
+      "MESSAGES": {
+        "NO_ACCEPTED_FILE_TYPES": "Bitte beachten Sie, dass sich die Einstellung von „acceptedFilesType“ nicht auf neu hochgeladene Versionen auswirkt. Der Dateityp ist derselbe wie der der ursprünglichen Datei.",
+        "INCOMPATIBLE_VERSION": "Als neue Version kann nur eine Datei des gleichen Dateityps hochgeladen werden."
+      }
     },
     "MESSAGES": {
       "UPLOAD_CANCELED": "Hochladen abgebrochen",
@@ -164,7 +194,8 @@
           "DOWNLOAD": "Herunterladen",
           "DELETE": "Löschen",
           "MOVE": "Verschieben",
-          "COPY": "Kopieren"
+          "COPY": "Kopieren",
+          "PROCESS_ACTION": "Prozess starten"
         }
       }
     }
@@ -185,6 +216,26 @@
       "CREATED_DATE": "Datum der Erstellung",
       "MODIFIER": "Bearbeiter",
       "MODIFIED_DATE": "Datum der Änderung"
+    }
+  },
+  "SHARE": {
+    "TITLE": "Freigeben",
+    "PUBLIC-LINK": "Öffentlicher Link",
+    "UNSHARED": "Datei nicht freigegeben",
+    "DESCRIPTION": "Dies ist ein Link zu Ihrer Datei",
+    "ALERT": "Auf diesen Link hat jeder Zugriff",
+    "ACTIONS": {
+      "SHARE": "Freigeben",
+      "CLOSE": "Schließen",
+      "COPY-LINK": "Link kopieren"
+    }
+  },
+  "PERMISSION_MANAGER": {
+    "PERMISSION_DISPLAY": {
+      "INHERITED": "Geerbt",
+      "AUTHORITY_ID": "Autoritäts-ID",
+      "ROLE": "Rolle",
+      "LOCALLY_SET": "Lokal festgelegt"
     }
   }
 }

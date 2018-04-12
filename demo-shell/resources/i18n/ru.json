@@ -1,4 +1,17 @@
 {
+  "APP": {
+    "INFO_DRAWER": {
+      "TITLE": "Сведения",
+      "COMMENTS": "Комментарии",
+      "PROPERTIES": "Свойства",
+      "VERSIONS": "Версии"
+    },
+    "ADF_VERSION_MANAGER": {
+      "ALLOW_DELETE": "Разрешить удаление",
+      "SHOW_COMMENTS": "Показать комментарии к версиям",
+      "ALLOW_DOWNLOAD": "Разрешить загрузку версии"
+    }
+  },
   "title": "Добро пожаловать",
   "VERSION": {
     "NO_PERMISSION": "У вас нет разрешения на управление версиями этого контента",
@@ -7,6 +20,12 @@
     "DIALOG": {
       "CLOSE": "Закрыть",
       "TITLE": "Управление версиями"
+    }
+  },
+  "METADATA": {
+    "DIALOG": {
+      "CLOSE": "Закрыть",
+      "TITLE": "Метаданные"
     }
   },
   "APP_LAYOUT": {
@@ -20,9 +39,11 @@
     "DATATABLE_LAZY": "Таблица данных (частичная загрузка)",
     "FORM": "Форма",
     "FORM_LIST": "Список форм",
+    "FORM_LOADING": "Загрузка формы",
     "UPLOADER": "Загрузчик",
     "WEBSCRIPT": "Webscript",
     "TAG": "Метка",
+    "TRASHCAN": "Корзина",
     "SOCIAL": "Социальный",
     "SETTINGS": "Параметры",
     "OVERLAY_VIEWER": "Просмотр наложения",
@@ -32,6 +53,17 @@
     "WORD_TO_SEARCH": "Искать слово",
     "SEARCH_CREATED_BY": "Создано пользователем",
     "SEARCH_SERVICE_APPROACH": "Установите флажок, чтобы отключить свойство ввода и настроить, используя службу."
+  },
+  "TRASHCAN": {
+    "ACTIONS": {
+      "DELETE_PERMANENT": "Удалить навсегда",
+      "RESTORE": "Восстановить"
+    },
+    "EMPTY_STATE": {
+      "TITLE": "Корзина пуста",
+      "FIRST_TEXT": "Элементы, которые вы удаляете, перемещаются в корзину.",
+      "SECOND_TEXT": "Очистите корзину, чтобы удалить элементы навсегда."
+    }
   },
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Выбор нескольких вариантов (с флажками)",
@@ -43,13 +75,22 @@
     "DESCRIPTION_UPLOAD": "Включить загрузку",
     "ENABLE_INFINITE_SCROLL": "Включить бесконечную прокрутку",
     "MULTISELECT_DESCRIPTION": "Использовать кнопку Cmd (Mac) или Ctrl (Windows) для переключения выбора нескольких элементов",
-    "RECENT": "Недавние файлы",
+    "RECENT": {
+      "EMPTY_STATE": {
+        "TITLE": "Список последних файлов пуст"
+      },
+      "TITLE": "Последние файлы"
+    },
     "COLUMNS": {
       "DISPLAY_NAME": "Отображаемое имя",
+      "IS_LOCKED": "Блокировка",
       "TAG": "Метка",
       "CREATED_BY": "Создано пользователем",
       "CREATED_ON": "Дата создания",
-      "CREATED": "Создано"
+      "CREATED": "Создано",
+      "SIZE": "Размер",
+      "DELETED_ON": "Удаленные",
+      "DELETED_BY": "Удалено пользователем"
     },
     "TOOLBAR": {
       "CARDVIEW": "Режим просмотра карты",
@@ -59,7 +100,10 @@
       "DELETE": "Удалить"
     },
     "ACTIONS": {
+      "VERSIONS": "Управление версиями",
+      "METADATA": "Информация",
       "DOWNLOAD": "Скачать",
+      "PERMISSION": "Право",
       "FOLDER": {
         "COPY": "Копировать",
         "MOVE": "Переместить",
@@ -98,6 +142,13 @@
     "STORE": "Хранилище",
     "RESTORE": "Восстановить"
   },
+  "FORM-LOADING": {
+    "FORM_DATA": "Данные формы",
+    "FORM_DATA_MESSAGE": "Введите значения для заполнения формы",
+    "TYPEAHEAD_PLACEHOLDER": "Буфер клавиатуры",
+    "RADIO_PLACEHOLDER": "Селективная кнопка",
+    "SELECT_PLACEHOLDER": "Раскрывающееся меню"
+  },
   "LOGIN": {
     "CONTENT_SERVICES": "Content Services",
     "PROCESS_SERVICES": "Process Services",
@@ -115,5 +166,9 @@
     "LIST": "Список меток Content Services",
     "INSERT": "Вставить идентификатор узла",
     "NODE_LIST": "Список меток по идентификатору узла"
+  },
+  "DEMO_PERMISSION": {
+    "INHERIT_PERMISSION_BUTTON": "Наследовать разрешение",
+    "INHERITED_PERMISSIONS_BUTTON": "Разрешение унаследовано"
   }
 }

@@ -9,6 +9,9 @@
     "FIELD": {
       "LOCALSTORAGE": "Armazenamento local",
       "SOURCE": "Selecionar origem de ",
+      "SHOW_FILE": "Exibir",
+      "DOWNLOAD_FILE": "Download",
+      "REMOVE_FILE": "Remover",
       "UPLOAD": "Carregar",
       "REQUIRED": "*Obrigatório",
       "VALIDATOR": {
@@ -46,6 +49,18 @@
           "CANCEL": "Cancelar"
         },
         "TITLE": "Adicionando arquivos ao zip, isso pode levar alguns minutos"
+      }
+    },
+    "FILE_DIALOG": {
+      "FILE_LOCK": "Bloquear arquivo",
+      "ALLOW_OTHERS_CHECKBOX": "Permitir que o proprietário modifique este arquivo",
+      "FILE_LOCK_CHECKBOX": "Bloquear arquivo",
+      "TIME_LOCK_CHECKBOX": "Tempo de bloqueio",
+      "SAVE_BUTTON": {
+        "LABEL": "Salvar"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "Cancelar"
       }
     },
     "FOLDER_DIALOG": {
@@ -125,6 +140,12 @@
         "CREATED_DATE": "Data de criação",
         "MODIFIER": "Modificador",
         "MODIFIED_DATE": "Data de modificação"
+      },
+      "ACTIONS": {
+        "EDIT": "Editar",
+        "SAVE": "Salvar",
+        "CANCEL": "Cancelar",
+        "TOGGLE": "Alternar valor"
       }
     }
   },
@@ -138,7 +159,7 @@
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "Obrigatório",
-      "USERNAME-MIN": "Seu nome de usuário deve ter no mínimo {{minLength}} caracteres.",
+      "USERNAME-MIN": "Seu nome de usuário deve ter no mínimo {{ minLength }} caracteres.",
       "PASSWORD-REQUIRED": "Insira a senha para entrar",
       "LOGIN-ERROR-CREDENTIALS": "Você inseriu um nome de usuário ou senha desconhecida",
       "LOGIN-ERROR-PROVIDERS": "Provedores não podem ficar indefinidos",
@@ -210,10 +231,19 @@
     "LOADING": "Carregando",
     "UNKNOWN_FORMAT": "Não foi possível carregar pré-visualização",
     "SIDEBAR": {
+      "THUMBNAILS": {
+        "PAGE": "Página {{ pageNum }}"
+      },
       "METADATA": {
         "MORE_INFORMATION": "Mais informação",
         "LESS_INFORMATION": "Menos informação"
       }
+    },
+    "PDF_DIALOG": {
+      "SUBMIT": "Enviar",
+      "CLOSE": "Fechar",
+      "PLACEHOLDER": "Senha",
+      "ERROR": "A senha está errada"
     }
   }
 }

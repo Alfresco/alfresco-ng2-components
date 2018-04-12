@@ -161,6 +161,11 @@
       "EMPTY-LIST": {
         "HEADER": "No hay ficheros disponibles"
       }
+    },
+    "STANDALONE_TASK": {
+      "NO_FORM_MESSAGE": "No se han adjuntado formularios",
+      "COMPLETE_TASK_MESSAGE": "Tarea {{taskName}} finalizada",
+      "COMPLETE_TASK_SUB_MESSAGE": "No se han añadido formularios"
     }
   },
   "ADF_PROCESS_LIST": {
