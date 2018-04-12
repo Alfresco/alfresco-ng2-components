@@ -1,4 +1,27 @@
 {
+  "ADF_VERSION_LIST": {
+    "ACTIONS": {
+      "RESTORE": "Herstellen",
+      "DELETE": "Verwijderen",
+      "DOWNLOAD": "Downloaden",
+      "UPLOAD": {
+        "TITLE": "Nieuwe versie uploaden",
+        "TOOLTIP": "Beperking: u moet een bestand met dezelfde naam uploaden om een nieuwe versie van het bestand te maken"
+      }
+    },
+    "CONFIRM_DELETE": {
+      "TITLE": "Versie verwijderen",
+      "MESSAGE": "Verwijderde bestandsversies kunnen niet worden hersteld. Doorgaan?",
+      "YES_LABEL": "Ja",
+      "NO_LABEL": "Nee"
+    }
+  },
+  "ADF_CONFIRM_DIALOG": {
+    "TITLE": "Bevestigen",
+    "ACTION": "Wilt u doorgaan?",
+    "YES_LABEL": "Ja",
+    "NO_LABEL": "Nee"
+  },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "Deze map is leeg"
@@ -45,6 +68,7 @@
     "MOVE_ITEM": "'{{ name }}' verplaatsen naar...",
     "NO_RESULTS": "Geen resultaten gevonden",
     "SEARCH": "Zoeken",
+    "SEARCH_RESULTS": "Zoekresultaten",
     "SELECT_LOCATION": "Locatie selecteren"
   },
   "OPERATION": {
@@ -102,6 +126,12 @@
     "BUTTON": {
       "UPLOAD_FILE": "Bestand uploaden",
       "UPLOAD_FOLDER": "Map uploaden"
+    },
+    "VERSION": {
+      "MESSAGES": {
+        "NO_ACCEPTED_FILE_TYPES": "De instelling \"Geaccepteerd bestandstype\" heeft geen gevolgen voor nieuwe versie-uploads. Het bestandstype is gelijk aan dat van het originele bestand.",
+        "INCOMPATIBLE_VERSION": "Alleen een bestand van hetzelfde type kan worden geüpload als een nieuwe versie."
+      }
     },
     "MESSAGES": {
       "UPLOAD_CANCELED": "Uploaden geannuleerd",
@@ -164,7 +194,8 @@
           "DOWNLOAD": "Downloaden",
           "DELETE": "Verwijderen",
           "MOVE": "Verplaatsen",
-          "COPY": "Kopiëren"
+          "COPY": "Kopiëren",
+          "PROCESS_ACTION": "Proces starten"
         }
       }
     }
@@ -185,6 +216,26 @@
       "CREATED_DATE": "Datum gemaakt",
       "MODIFIER": "Gewijzigd door",
       "MODIFIED_DATE": "Datum gewijzigd"
+    }
+  },
+  "SHARE": {
+    "TITLE": "Delen",
+    "PUBLIC-LINK": "Openbare koppeling",
+    "UNSHARED": "Bestand niet gedeeld",
+    "DESCRIPTION": "Dit is een koppeling naar uw bestand",
+    "ALERT": "Iedereen heeft toegang tot deze koppeling",
+    "ACTIONS": {
+      "SHARE": "Delen",
+      "CLOSE": "Sluiten",
+      "COPY-LINK": "Koppeling kopiëren"
+    }
+  },
+  "PERMISSION_MANAGER": {
+    "PERMISSION_DISPLAY": {
+      "INHERITED": "Overgenomen",
+      "AUTHORITY_ID": "Autoriteits-id",
+      "ROLE": "Rol",
+      "LOCALLY_SET": "Lokaal ingesteld"
     }
   }
 }

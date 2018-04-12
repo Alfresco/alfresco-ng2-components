@@ -161,6 +161,11 @@
       "EMPTY-LIST": {
         "HEADER": "使用できるファイルがありません"
       }
+    },
+    "STANDALONE_TASK": {
+      "NO_FORM_MESSAGE": "フォームが添付されていません",
+      "COMPLETE_TASK_MESSAGE": "タスク {{taskName}} が完了しました",
+      "COMPLETE_TASK_SUB_MESSAGE": "フォームは追加されません"
     }
   },
   "ADF_PROCESS_LIST": {

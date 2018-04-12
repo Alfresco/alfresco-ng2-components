@@ -1,4 +1,27 @@
 {
+  "ADF_VERSION_LIST": {
+    "ACTIONS": {
+      "RESTORE": "Gjenopprett",
+      "DELETE": "Slett",
+      "DOWNLOAD": "Last ned",
+      "UPLOAD": {
+        "TITLE": "Last opp ny versjon",
+        "TOOLTIP": "Begrensning: Du må laste opp en fil med samme navn for å opprette en ny versjon av den"
+      }
+    },
+    "CONFIRM_DELETE": {
+      "TITLE": "Slett versjon",
+      "MESSAGE": "Slettede filversjoner kan ikke gjenopprettes. Vil du fortsette?",
+      "YES_LABEL": "Ja",
+      "NO_LABEL": "Nei"
+    }
+  },
+  "ADF_CONFIRM_DIALOG": {
+    "TITLE": "Bekreft",
+    "ACTION": "Vil du fortsette?",
+    "YES_LABEL": "Ja",
+    "NO_LABEL": "Nei"
+  },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "Denne mappen er tom"
@@ -45,6 +68,7 @@
     "MOVE_ITEM": "Flytt {{ name }}'til ...",
     "NO_RESULTS": "Ingen resultater funnet",
     "SEARCH": "Søk",
+    "SEARCH_RESULTS": "Søkeresultater",
     "SELECT_LOCATION": "Velg plassering"
   },
   "OPERATION": {
@@ -102,6 +126,12 @@
     "BUTTON": {
       "UPLOAD_FILE": "Last opp fil",
       "UPLOAD_FOLDER": "Last opp mappe"
+    },
+    "VERSION": {
+      "MESSAGES": {
+        "NO_ACCEPTED_FILE_TYPES": "Merk at innstillingen for \"acceptedFilesType\" ikke har innvirkning på nye versjonsopplastinger. Filtypen vil være den samme som for den originale filen.",
+        "INCOMPATIBLE_VERSION": "Bare en fil av samme type kan lastes opp som en ny versjon."
+      }
     },
     "MESSAGES": {
       "UPLOAD_CANCELED": "Opplasting avbrutt",
@@ -164,7 +194,8 @@
           "DOWNLOAD": "Last ned",
           "DELETE": "Slett",
           "MOVE": "Flytt",
-          "COPY": "Kopier"
+          "COPY": "Kopier",
+          "PROCESS_ACTION": "Start prosess"
         }
       }
     }
@@ -185,6 +216,26 @@
       "CREATED_DATE": "Opprettelsesdato",
       "MODIFIER": "Modifikator",
       "MODIFIED_DATE": "Endringsdato"
+    }
+  },
+  "SHARE": {
+    "TITLE": "Del",
+    "PUBLIC-LINK": "Offentlig lenke",
+    "UNSHARED": "Filen er ikke delt",
+    "DESCRIPTION": "Dette er en lenke til filen din",
+    "ALERT": "Hvem som helst har tilgang til denne lenken",
+    "ACTIONS": {
+      "SHARE": "Del",
+      "CLOSE": "Lukk",
+      "COPY-LINK": "Kopier lenke"
+    }
+  },
+  "PERMISSION_MANAGER": {
+    "PERMISSION_DISPLAY": {
+      "INHERITED": "Arvet",
+      "AUTHORITY_ID": "Autoritets-ID",
+      "ROLE": "Rolle",
+      "LOCALLY_SET": "Angitt lokalt"
     }
   }
 }

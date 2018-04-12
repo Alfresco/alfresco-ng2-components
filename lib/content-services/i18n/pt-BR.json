@@ -1,4 +1,27 @@
 {
+  "ADF_VERSION_LIST": {
+    "ACTIONS": {
+      "RESTORE": "Restaurar",
+      "DELETE": "Excluir",
+      "DOWNLOAD": "Download",
+      "UPLOAD": {
+        "TITLE": "Carregar nova versão",
+        "TOOLTIP": "Restrição: você deve carregar um arquivo com o mesmo nome para criar uma versão dele"
+      }
+    },
+    "CONFIRM_DELETE": {
+      "TITLE": "Apagar versão",
+      "MESSAGE": "Não é possível restaurar a ação de apagar versões de arquivo. Continuar?",
+      "YES_LABEL": "Sim",
+      "NO_LABEL": "Não"
+    }
+  },
+  "ADF_CONFIRM_DIALOG": {
+    "TITLE": "Confirmar",
+    "ACTION": "Deseja continuar?",
+    "YES_LABEL": "Sim",
+    "NO_LABEL": "Não"
+  },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "Esta pasta está vazia"
@@ -45,6 +68,7 @@
     "MOVE_ITEM": "Mover '{{ name }}' para...",
     "NO_RESULTS": "Nenhum resultado encontrado",
     "SEARCH": "Pesquisar",
+    "SEARCH_RESULTS": "Resultados da pesquisa",
     "SELECT_LOCATION": "Selecionar localização"
   },
   "OPERATION": {
@@ -102,6 +126,12 @@
     "BUTTON": {
       "UPLOAD_FILE": "Carregar arquivo",
       "UPLOAD_FOLDER": "Carregar pasta"
+    },
+    "VERSION": {
+      "MESSAGES": {
+        "NO_ACCEPTED_FILE_TYPES": "Observe que a configuração de \"acceptedFilesType\" não tem efeito para uploads de nova versão. O tipo de arquivo será o mesmo que o do arquivo original.",
+        "INCOMPATIBLE_VERSION": "É possível carregar somente um arquivo do mesmo tipo como nova versão."
+      }
     },
     "MESSAGES": {
       "UPLOAD_CANCELED": "Upload cancelado",
@@ -164,7 +194,8 @@
           "DOWNLOAD": "Download",
           "DELETE": "Excluir",
           "MOVE": "Mover",
-          "COPY": "Copiar"
+          "COPY": "Copiar",
+          "PROCESS_ACTION": "Iniciar processo"
         }
       }
     }
@@ -185,6 +216,26 @@
       "CREATED_DATE": "Data de criação",
       "MODIFIER": "Modificador",
       "MODIFIED_DATE": "Data de modificação"
+    }
+  },
+  "SHARE": {
+    "TITLE": "Compartilhar",
+    "PUBLIC-LINK": "Link público",
+    "UNSHARED": "Arquivo não compartilhado",
+    "DESCRIPTION": "Este é um link para o seu arquivo",
+    "ALERT": "Qualquer pessoa pode acessar este link",
+    "ACTIONS": {
+      "SHARE": "Compartilhar",
+      "CLOSE": "Fechar",
+      "COPY-LINK": "Copiar link"
+    }
+  },
+  "PERMISSION_MANAGER": {
+    "PERMISSION_DISPLAY": {
+      "INHERITED": "Herdado",
+      "AUTHORITY_ID": "ID de autoridade",
+      "ROLE": "Papel",
+      "LOCALLY_SET": "Definido localmente"
     }
   }
 }

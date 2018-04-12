@@ -1,4 +1,17 @@
 {
+  "APP": {
+    "INFO_DRAWER": {
+      "TITLE": "詳細",
+      "COMMENTS": "コメント",
+      "PROPERTIES": "プロパティ",
+      "VERSIONS": "バージョン"
+    },
+    "ADF_VERSION_MANAGER": {
+      "ALLOW_DELETE": "削除を許可する",
+      "SHOW_COMMENTS": "バージョンに関するコメントを表示",
+      "ALLOW_DOWNLOAD": "バージョンのダウンロードを許可する"
+    }
+  },
   "title": "ようこそ",
   "VERSION": {
     "NO_PERMISSION": "このコンテンツのバージョンを管理する権限がありません",
@@ -7,6 +20,12 @@
     "DIALOG": {
       "CLOSE": "閉じる",
       "TITLE": "バージョンの管理"
+    }
+  },
+  "METADATA": {
+    "DIALOG": {
+      "CLOSE": "閉じる",
+      "TITLE": "メタデータ"
     }
   },
   "APP_LAYOUT": {
@@ -20,9 +39,11 @@
     "DATATABLE_LAZY": "Datatable (遅延読み込み)",
     "FORM": "フォーム",
     "FORM_LIST": "フォームリスト",
+    "FORM_LOADING": "フォームを読み込んでいます",
     "UPLOADER": "アップローダー",
     "WEBSCRIPT": "Webscript",
     "TAG": "タグ",
+    "TRASHCAN": "ごみ箱",
     "SOCIAL": "ソーシャル",
     "SETTINGS": "設定",
     "OVERLAY_VIEWER": "オーバーレイビューア",
@@ -32,6 +53,17 @@
     "WORD_TO_SEARCH": "語句の検索",
     "SEARCH_CREATED_BY": "作成者",
     "SEARCH_SERVICE_APPROACH": "入力プロパティを無効にし、サービスを使って設定する場合は、このチェックボックスをオンにします"
+  },
+  "TRASHCAN": {
+    "ACTIONS": {
+      "DELETE_PERMANENT": "完全に削除する",
+      "RESTORE": "復元"
+    },
+    "EMPTY_STATE": {
+      "TITLE": "ごみ箱は空です",
+      "FIRST_TEXT": "削除するアイテムはごみ箱に移動されます。",
+      "SECOND_TEXT": "ごみ箱を空にするとアイテムが完全に削除されます。"
+    }
   },
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "複数選択 (チェックボックスを使用)",
@@ -43,13 +75,22 @@
     "DESCRIPTION_UPLOAD": "アップロードを有効にします",
     "ENABLE_INFINITE_SCROLL": "無限スクロールを有効にする",
     "MULTISELECT_DESCRIPTION": "複数選択の切り替えを行うには、Cmd (Mac) キーまたは Ctrl (Windows) キーを押します",
-    "RECENT": "最近使ったファイル",
+    "RECENT": {
+      "EMPTY_STATE": {
+        "TITLE": "[最近使ったファイル] 一覧は空です"
+      },
+      "TITLE": "最近使ったファイル"
+    },
     "COLUMNS": {
       "DISPLAY_NAME": "表示名",
+      "IS_LOCKED": "ロック",
       "TAG": "タグ",
       "CREATED_BY": "作成者",
       "CREATED_ON": "作成日",
-      "CREATED": "作成日"
+      "CREATED": "作成日",
+      "SIZE": "サイズ",
+      "DELETED_ON": "削除済み",
+      "DELETED_BY": "削除者"
     },
     "TOOLBAR": {
       "CARDVIEW": "カード表示モード",
@@ -59,7 +100,10 @@
       "DELETE": "削除"
     },
     "ACTIONS": {
+      "VERSIONS": "バージョンの管理",
+      "METADATA": "情報",
       "DOWNLOAD": "ダウンロード",
+      "PERMISSION": "権限",
       "FOLDER": {
         "COPY": "コピー",
         "MOVE": "移動",
@@ -98,6 +142,13 @@
     "STORE": "保存",
     "RESTORE": "復元"
   },
+  "FORM-LOADING": {
+    "FORM_DATA": "フォーム データ",
+    "FORM_DATA_MESSAGE": "フォームに入力する値を入力してください",
+    "TYPEAHEAD_PLACEHOLDER": "先行入力",
+    "RADIO_PLACEHOLDER": "ラジオ ボタン",
+    "SELECT_PLACEHOLDER": "ドロップダウン"
+  },
   "LOGIN": {
     "CONTENT_SERVICES": "Content Services",
     "PROCESS_SERVICES": "Process Services",
@@ -115,5 +166,9 @@
     "LIST": "Content Services のタグリスト",
     "INSERT": "ノード ID の挿入",
     "NODE_LIST": "ノード ID 別タグリスト"
+  },
+  "DEMO_PERMISSION": {
+    "INHERIT_PERMISSION_BUTTON": "権限の継承",
+    "INHERITED_PERMISSIONS_BUTTON": "継承された権限"
   }
 }

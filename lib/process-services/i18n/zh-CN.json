@@ -161,6 +161,11 @@
       "EMPTY-LIST": {
         "HEADER": "没有可用的文件"
       }
+    },
+    "STANDALONE_TASK": {
+      "NO_FORM_MESSAGE": "未附加表单",
+      "COMPLETE_TASK_MESSAGE": "已完成任务 {{taskName}}",
+      "COMPLETE_TASK_SUB_MESSAGE": "没有要添加的表单"
     }
   },
   "ADF_PROCESS_LIST": {

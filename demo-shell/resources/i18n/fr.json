@@ -1,4 +1,17 @@
 {
+  "APP": {
+    "INFO_DRAWER": {
+      "TITLE": "Détails",
+      "COMMENTS": "Commentaires",
+      "PROPERTIES": "Propriétés",
+      "VERSIONS": "Versions"
+    },
+    "ADF_VERSION_MANAGER": {
+      "ALLOW_DELETE": "Autoriser la suppression",
+      "SHOW_COMMENTS": "Afficher les commentaires sur les versions",
+      "ALLOW_DOWNLOAD": "Autoriser le téléchargement de la version"
+    }
+  },
   "title": "Bienvenue",
   "VERSION": {
     "NO_PERMISSION": "Vous n'avez pas les droits d'accès pour gérer les versions de ce contenu",
@@ -7,6 +20,12 @@
     "DIALOG": {
       "CLOSE": "Fermer",
       "TITLE": "Gérer les versions"
+    }
+  },
+  "METADATA": {
+    "DIALOG": {
+      "CLOSE": "Fermer",
+      "TITLE": "Métadonnées"
     }
   },
   "APP_LAYOUT": {
@@ -20,9 +39,11 @@
     "DATATABLE_LAZY": "Table de données (différé)",
     "FORM": "Formulaire",
     "FORM_LIST": "Liste de formulaires",
+    "FORM_LOADING": "Chargement du formulaire",
     "UPLOADER": "Chargeur",
     "WEBSCRIPT": "Script Web",
     "TAG": "Tag",
+    "TRASHCAN": "Corbeille",
     "SOCIAL": "Réseaux sociaux",
     "SETTINGS": "Paramètres",
     "OVERLAY_VIEWER": "Visualisation de la superposition",
@@ -32,6 +53,17 @@
     "WORD_TO_SEARCH": "Mot recherché",
     "SEARCH_CREATED_BY": "Créé par",
     "SEARCH_SERVICE_APPROACH": "Cochez cette option pour désactiver la propriété d'entrée et configurer à partir du service"
+  },
+  "TRASHCAN": {
+    "ACTIONS": {
+      "DELETE_PERMANENT": "Supprimer définitivement",
+      "RESTORE": "Restaurer"
+    },
+    "EMPTY_STATE": {
+      "TITLE": "La corbeille est vide",
+      "FIRST_TEXT": "Les éléments supprimés sont placés dans la corbeille.",
+      "SECOND_TEXT": "Videz la corbeille pour supprimer définitivement les éléments."
+    }
   },
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Sélection multiple (avec cases à cocher)",
@@ -43,13 +75,22 @@
     "DESCRIPTION_UPLOAD": "Activer l'importation",
     "ENABLE_INFINITE_SCROLL": "Activer le défilement illimité",
     "MULTISELECT_DESCRIPTION": "Utiliser Cmd (Mac) ou Ctrl (Windows) pour activer/désactiver la sélection d'éléments multiples",
-    "RECENT": "Fichiers récents",
+    "RECENT": {
+      "EMPTY_STATE": {
+        "TITLE": "La liste des fichiers récents est vide"
+      },
+      "TITLE": "Fichiers récents"
+    },
     "COLUMNS": {
       "DISPLAY_NAME": "Nom affiché",
+      "IS_LOCKED": "Verrouiller",
       "TAG": "Tag",
       "CREATED_BY": "Créé par",
       "CREATED_ON": "Créé le",
-      "CREATED": "Créé"
+      "CREATED": "Créé",
+      "SIZE": "Taille",
+      "DELETED_ON": "Supprimé",
+      "DELETED_BY": "Supprimé par"
     },
     "TOOLBAR": {
       "CARDVIEW": "Mode d'affichage Carte",
@@ -59,7 +100,10 @@
       "DELETE": "Supprimer"
     },
     "ACTIONS": {
+      "VERSIONS": "Gérer les versions",
+      "METADATA": "Informations",
       "DOWNLOAD": "Télécharger",
+      "PERMISSION": "Droit d'accès",
       "FOLDER": {
         "COPY": "Copier",
         "MOVE": "Déplacer",
@@ -98,6 +142,13 @@
     "STORE": "Stocker",
     "RESTORE": "Restaurer"
   },
+  "FORM-LOADING": {
+    "FORM_DATA": "Données du formulaire",
+    "FORM_DATA_MESSAGE": "Entrez les valeurs pour remplir le formulaire",
+    "TYPEAHEAD_PLACEHOLDER": "Saisie semi-automatique",
+    "RADIO_PLACEHOLDER": "Case d'option",
+    "SELECT_PLACEHOLDER": "Liste déroulante"
+  },
   "LOGIN": {
     "CONTENT_SERVICES": "Content Services",
     "PROCESS_SERVICES": "Process Services",
@@ -115,5 +166,9 @@
     "LIST": "Liste de tags Content Services",
     "INSERT": "Insérer l'ID du nœud",
     "NODE_LIST": "Liste de tags par ID de nœud"
+  },
+  "DEMO_PERMISSION": {
+    "INHERIT_PERMISSION_BUTTON": "Hériter les droits d'accès",
+    "INHERITED_PERMISSIONS_BUTTON": "Droits d'accès hérités"
   }
 }

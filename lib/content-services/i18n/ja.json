@@ -1,4 +1,27 @@
 {
+  "ADF_VERSION_LIST": {
+    "ACTIONS": {
+      "RESTORE": "復元",
+      "DELETE": "削除",
+      "DOWNLOAD": "ダウンロード",
+      "UPLOAD": {
+        "TITLE": "新しいバージョンのアップロード",
+        "TOOLTIP": "制限事項: 作成する新しいバージョンのファイルと同じ名前のファイルをアップロードする必要があります"
+      }
+    },
+    "CONFIRM_DELETE": {
+      "TITLE": "バージョンの削除",
+      "MESSAGE": "削除したバージョンは復元できません。削除しますか?",
+      "YES_LABEL": "はい",
+      "NO_LABEL": "いいえ"
+    }
+  },
+  "ADF_CONFIRM_DIALOG": {
+    "TITLE": "確定",
+    "ACTION": "作業を続けますか?",
+    "YES_LABEL": "はい",
+    "NO_LABEL": "いいえ"
+  },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "このフォルダは空です"
@@ -45,6 +68,7 @@
     "MOVE_ITEM": "'{{ name }}' の移動先...",
     "NO_RESULTS": "一致するアイテムはありません",
     "SEARCH": "検索",
+    "SEARCH_RESULTS": "検索結果",
     "SELECT_LOCATION": "場所の選択"
   },
   "OPERATION": {
@@ -102,6 +126,12 @@
     "BUTTON": {
       "UPLOAD_FILE": "ファイルのアップロード",
       "UPLOAD_FOLDER": "フォルダのアップロード"
+    },
+    "VERSION": {
+      "MESSAGES": {
+        "NO_ACCEPTED_FILE_TYPES": "\"acceptedFilesType\" の設定は新しいバージョンのアップロードにまったく影響しません。ファイルの種類は、元のファイルと同じになります。",
+        "INCOMPATIBLE_VERSION": "同じ種類のファイルだけが、新しいバージョンとしてアップロードされます。"
+      }
     },
     "MESSAGES": {
       "UPLOAD_CANCELED": "アップロードがキャンセルされました",
@@ -164,7 +194,8 @@
           "DOWNLOAD": "ダウンロード",
           "DELETE": "削除",
           "MOVE": "移動",
-          "COPY": "コピー"
+          "COPY": "コピー",
+          "PROCESS_ACTION": "プロセスの開始"
         }
       }
     }
@@ -185,6 +216,26 @@
       "CREATED_DATE": "作成日",
       "MODIFIER": "変更者",
       "MODIFIED_DATE": "変更日"
+    }
+  },
+  "SHARE": {
+    "TITLE": "共有",
+    "PUBLIC-LINK": "公開リンク",
+    "UNSHARED": "ファイルは共有されていません",
+    "DESCRIPTION": "これはあなたのファイルへのリンクです",
+    "ALERT": "誰でもこのリンクにアクセスできます",
+    "ACTIONS": {
+      "SHARE": "共有",
+      "CLOSE": "閉じる",
+      "COPY-LINK": "リンクをコピー"
+    }
+  },
+  "PERMISSION_MANAGER": {
+    "PERMISSION_DISPLAY": {
+      "INHERITED": "継承された権限",
+      "AUTHORITY_ID": "権限 ID",
+      "ROLE": "ロール",
+      "LOCALLY_SET": "ローカルで設定された権限"
     }
   }
 }
