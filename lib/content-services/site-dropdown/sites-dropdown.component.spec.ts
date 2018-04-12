@@ -19,8 +19,9 @@ import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DropdownSitesComponent, Relations } from './sites-dropdown.component';
-import { SitesService, LogService } from '@alfresco/adf-core';
+import { SitesService, setupTestBed, CoreModule, AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 declare let jasmine: any;
 
@@ -34,15 +35,18 @@ describe('DropdownSitesComponent', () => {
     let siteListWitMembers: any;
     let siteService: SitesService;
 
-    beforeEach(async(() => {
-
-        TestBed.configureTestingModule({
-            declarations: [
-                DropdownSitesComponent
-            ],
-            providers: [SitesService, LogService]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ],
+        declarations: [
+            DropdownSitesComponent
+        ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(DropdownSitesComponent);
@@ -222,7 +226,6 @@ describe('DropdownSitesComponent', () => {
         afterEach(() => {
             jasmine.Ajax.uninstall();
             fixture.destroy();
-            TestBed.resetTestingModule();
         });
 
         it('Dropdown sites should be rendered', async(() => {

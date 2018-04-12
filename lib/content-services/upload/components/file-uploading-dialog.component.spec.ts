@@ -16,10 +16,11 @@
  */
 
 import { EventEmitter } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FileModel, FileUploadCompleteEvent, FileUploadErrorEvent, UploadService } from '@alfresco/adf-core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FileModel, FileUploadCompleteEvent, FileUploadErrorEvent, UploadService, setupTestBed, CoreModule, AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-core';
 import { UploadModule } from '../upload.module';
 import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('FileUploadingDialogComponent', () => {
     let fixture: ComponentFixture<FileUploadingDialogComponent>;
@@ -28,18 +29,24 @@ describe('FileUploadingDialogComponent', () => {
     let emitter: EventEmitter<any>;
     let filelist: FileModel[];
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                UploadModule
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot(),
+            UploadModule
+        ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(FileUploadingDialogComponent);
         component = fixture.componentInstance;
+
         uploadService = TestBed.get(UploadService);
+        uploadService.clearQueue();
+
         emitter = new EventEmitter();
         filelist = [
             new FileModel(<File> { name: 'fake-name', size: 10 }),
@@ -47,11 +54,6 @@ describe('FileUploadingDialogComponent', () => {
         ];
 
         fixture.detectChanges();
-    });
-
-    afterEach(() => {
-        fixture.destroy();
-        TestBed.resetTestingModule();
     });
 
     describe('upload service subscribers', () => {
@@ -150,7 +152,7 @@ describe('FileUploadingDialogComponent', () => {
     });
 
     describe('toggleMinimized()', () => {
-        it('should minimze the dialog', () => {
+        it('should minimize the dialog', () => {
             component.isDialogMinimized = true;
             component.toggleMinimized();
 

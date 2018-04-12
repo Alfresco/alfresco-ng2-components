@@ -15,9 +15,11 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RatingComponent } from './rating.component';
 import { RatingService } from './services/rating.service';
+import { setupTestBed } from '../../core/testing';
+import { CoreModule, AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-core';
 
 declare let jasmine: any;
 
@@ -27,16 +29,18 @@ describe('Rating component', () => {
     let fixture: ComponentFixture<RatingComponent>;
     let element: HTMLElement;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                RatingComponent
-            ],
-            providers: [
-                RatingService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ],
+        declarations: [
+            RatingComponent
+        ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+            RatingService
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(RatingComponent);

@@ -15,12 +15,14 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService } from '@alfresco/adf-core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AppConfigService, setupTestBed, CoreModule, AlfrescoApiService,
+    AlfrescoApiServiceMock, AppConfigServiceMock, TranslationService, TranslationMock
+} from '@alfresco/adf-core';
 import { TagService } from './services/tag.service';
 import { TagListComponent } from '././tag-list.component';
-
-declare let jasmine: any;
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { Observable } from 'rxjs/Observable';
 
 describe('TagList', () => {
 
@@ -44,21 +46,30 @@ describe('TagList', () => {
     let component: any;
     let fixture: ComponentFixture<TagListComponent>;
     let element: HTMLElement;
+    let tagService: TagService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                TagListComponent
-            ],
-            providers: [
-                TagService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ],
+        declarations: [
+            TagListComponent
+        ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+            { provide: AppConfigService, useClass: AppConfigServiceMock },
+            { provide: TranslationService, useClass: TranslationMock },
+            TagService
+        ]
+    });
 
     beforeEach(() => {
         let appConfig: AppConfigService = TestBed.get(AppConfigService);
         appConfig.config.ecmHost = 'http://localhost:9876/ecm';
+
+        tagService = TestBed.get(TagService);
+        spyOn(tagService, 'getAllTheTags').and.returnValue(Observable.of(dataTag));
 
         fixture = TestBed.createComponent(TagListComponent);
 
@@ -68,15 +79,6 @@ describe('TagList', () => {
     });
 
     describe('Rendering tests', () => {
-
-        beforeEach(() => {
-            jasmine.Ajax.install();
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
-
         it('Tag list relative a single node should be rendered', (done) => {
             component.result.subscribe(() => {
                 fixture.detectChanges();
@@ -89,12 +91,6 @@ describe('TagList', () => {
             });
 
             component.ngOnInit();
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: dataTag
-            });
         });
     });
 });

@@ -18,6 +18,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LikeComponent } from './like.component';
 import { RatingService } from './services/rating.service';
+import { setupTestBed } from '../../core/testing';
+import { CoreModule, AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-core';
 
 declare let jasmine: any;
 
@@ -27,12 +29,16 @@ describe('Like component', () => {
     let fixture: ComponentFixture<LikeComponent>;
     let element: HTMLElement;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [ LikeComponent ],
-            providers: [ RatingService ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ],
+        declarations: [ LikeComponent ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+            RatingService
+        ]
+    });
 
     beforeEach(() => {
         jasmine.Ajax.install();

@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService } from '@alfresco/adf-core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AppConfigService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { TagNodeListComponent } from './tag-node-list.component';
 import { TagService } from './services/tag.service';
-
-declare let jasmine: any;
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { Observable } from 'rxjs/Observable';
 
 describe('TagNodeList', () => {
 
@@ -44,17 +44,20 @@ describe('TagNodeList', () => {
     let component: any;
     let fixture: ComponentFixture<TagNodeListComponent>;
     let element: HTMLElement;
+    let tagService: TagService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                TagNodeListComponent
-            ],
-            providers: [
-                TagService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ],
+        declarations: [
+            TagNodeListComponent
+        ],
+        providers: [
+            TagService
+        ]
+    });
 
     beforeEach(() => {
         let appConfig: AppConfigService = TestBed.get(AppConfigService);
@@ -62,20 +65,15 @@ describe('TagNodeList', () => {
 
         fixture = TestBed.createComponent(TagNodeListComponent);
 
+        tagService = TestBed.get(TagService);
+        spyOn(tagService, 'getTagsByNodeId').and.returnValue(Observable.of(dataTag));
+
         element = fixture.nativeElement;
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
 
     describe('Rendering tests', () => {
-
-        beforeEach(() => {
-            jasmine.Ajax.install();
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
 
         it('Tag list relative a single node should be rendered', (done) => {
             component.nodeId = 'fake-node-id';
@@ -95,16 +93,12 @@ describe('TagNodeList', () => {
             });
 
             component.ngOnChanges();
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: dataTag
-            });
         });
 
         it('Tag list click on delete button should delete the tag', (done) => {
             component.nodeId = 'fake-node-id';
+
+            spyOn(tagService, 'removeTag').and.returnValue(Observable.of(true));
 
             component.results.subscribe(() => {
                 fixture.detectChanges();
@@ -112,25 +106,11 @@ describe('TagNodeList', () => {
                 let deleteButton: any = element.querySelector('#tag_delete_0');
                 deleteButton.click();
 
-                expect(jasmine.Ajax.requests.mostRecent().url).
-                toContain('0ee933fa-57fc-4587-8a77-b787e814f1d2');
-                expect(jasmine.Ajax.requests.mostRecent().method).toBe('DELETE');
-
-                jasmine.Ajax.requests.mostRecent().respondWith({
-                    status: 200,
-                    contentType: 'json'
-                });
-
+                expect(tagService.removeTag).toHaveBeenCalledWith('fake-node-id', '0ee933fa-57fc-4587-8a77-b787e814f1d2');
                 done();
             });
 
             component.ngOnChanges();
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: dataTag
-            });
         });
     });
 });
