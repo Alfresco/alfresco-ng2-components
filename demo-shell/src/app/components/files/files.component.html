@@ -50,7 +50,6 @@
                     <adf-breadcrumb fxShow fxHide.lt-sm="true"
                                     class="files-breadcrumb"
                                     root="Personal Files"
-                                    (navigate)="onBreadcrumbNavigate($event)"
                                     [target]="documentList"
                                     [folderNode]="documentList.folderNode">
                     </adf-breadcrumb>
@@ -193,7 +192,6 @@
                 (success)="resetError()"
                 (ready)="emitReadyEvent($event)"
                 (preview)="showFile($event)"
-                (folderChange)="onFolderChange($event)"
                 (permissionError)="handlePermissionError($event)">
                 <empty-folder-content *ngIf="disableDragArea">
                     <ng-template>

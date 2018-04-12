@@ -15,20 +15,12 @@
  * limitations under the License.
  */
 
-import {
-    Component, Input, OnInit, OnChanges, OnDestroy, ChangeDetectorRef,
-    EventEmitter, Optional, ViewChild, SimpleChanges, Output
+import { Component, Input, OnInit, OnChanges, OnDestroy,
+    EventEmitter, ViewChild, SimpleChanges, Output
 } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import {
-    MinimalNodeEntity,
-    NodePaging,
-    Pagination,
-    PathElementEntity,
-    MinimalNodeEntryEntity,
-    SiteEntry
-} from 'alfresco-js-api';
+import { Router } from '@angular/router';
+import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity, SiteEntry  } from 'alfresco-js-api';
 import {
     AuthenticationService, AppConfigService, ContentService, TranslationService,
     FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
@@ -70,8 +62,8 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         { value: 'multiple', viewValue: 'Multiple' }
     ];
 
+    // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
     @Input()
-        // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
     currentFolderId: string = DEFAULT_FOLDER_TO_SHOW;
 
     formValues: FormValues = {};
@@ -157,8 +149,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     private onCreateFolder: Subscription;
     private onEditFolder: Subscription;
 
-    constructor(private changeDetector: ChangeDetectorRef,
-                private notificationService: NotificationService,
+    constructor(private notificationService: NotificationService,
                 private uploadService: UploadService,
                 private contentService: ContentService,
                 private dialog: MatDialog,
@@ -166,7 +157,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 private router: Router,
                 private logService: LogService,
                 private preference: UserPreferencesService,
-                @Optional() private route: ActivatedRoute,
                 private appConfig: AppConfigService,
                 public authenticationService: AuthenticationService) {
         this.preference.select(UserPreferenceValues.SupportedPageSizes)
@@ -182,15 +172,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    onFolderChange($event) {
-        this.currentFolderId = $event.value.id;
-        this.router.navigate(['/files', $event.value.id]);
-    }
-
-    onBreadcrumbNavigate(route: PathElementEntity) {
-        this.router.navigate(['/files', route.id]);
-    }
-
     toggleFolder() {
         this.multipleFileUpload = false;
         this.folderUpload = !this.folderUpload;
@@ -203,14 +184,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 maxItems: this.preference.paginationSize,
                 skipCount: 0
             };
-        }
-        if (this.route) {
-            this.route.params.forEach((params: Params) => {
-                if (params['id']) {
-                    this.currentFolderId = params['id'];
-                    this.changeDetector.detectChanges();
-                }
-            });
         }
 
         // this.disableDragArea = false;
@@ -294,10 +267,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             action: event.action,
             type: event.type
         }).subscribe((message) => {
-            this.notificationService.openSnackMessage(
-                message,
-                4000
-            );
+            this.openSnackMessage(message);
         });
     }
 
@@ -308,13 +278,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         );
     }
 
-    emitReadyEvent(event: any) {
-        if (this.standardPagination && this.pageIsEmpty(event)) {
-            this.standardPagination.goPrevious();
-        } else {
-            this.documentListReady.emit(event);
-            this.pagination = event.list.pagination;
-        }
+    emitReadyEvent(event: NodePaging) {
+        this.documentListReady.emit(event);
+        this.router.navigate(['/files', event.list.source.id]);
     }
 
     pageIsEmpty(node: NodePaging) {
@@ -336,12 +302,12 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 translatedErrorMessage = this.translateService.get('OPERATION.ERROR.UNKNOWN');
         }
 
-        this.notificationService.openSnackMessage(translatedErrorMessage.value, 4000);
+        this.openSnackMessage(translatedErrorMessage.value);
     }
 
     onContentActionSuccess(message) {
         const translatedMessage: any = this.translateService.get(message);
-        this.notificationService.openSnackMessage(translatedMessage.value, 4000);
+        this.openSnackMessage(translatedMessage.value);
         this.reloadForInfiniteScrolling();
     }
 
@@ -349,7 +315,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.uploadService.fileDeleted.next(message);
         this.deleteElementSuccess.emit();
         this.reloadForInfiniteScrolling();
-        this.notificationService.openSnackMessage(message, 4000);
+        this.openSnackMessage(message);
     }
 
     onPermissionRequested(node) {
@@ -376,7 +342,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             });
         } else {
             const translatedErrorMessage: any = this.translateService.get('OPERATION.ERROR.PERMISSION');
-            this.notificationService.openSnackMessage(translatedErrorMessage.value, 4000);
+            this.openSnackMessage(translatedErrorMessage.value);
         }
     }
 
@@ -391,7 +357,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             });
         } else {
             const translatedErrorMessage: any = this.translateService.get('OPERATION.ERROR.PERMISSION');
-            this.notificationService.openSnackMessage(translatedErrorMessage.value, 4000);
+            this.openSnackMessage(translatedErrorMessage.value);
         }
     }
 
