@@ -29,6 +29,8 @@ let stoplist = new Stoplist(stoplistFilePath);
 
 let docsFolderPath = path.resolve("..", "docs");
 
+let libFolders = ["core", "content-services", "process-services", "insights"];
+
 libsearch(srcData, path.resolve(rootFolder));
 
 /*
@@ -64,7 +66,7 @@ const query = `query commitHistory($path: String) {
   }
 }`;
 
-let docFiles = getDocFileNames(docsFolderPath);
+let docFiles = getDocFilePaths(docsFolderPath);
 
 let docNames = Observable.from(docFiles);
 
@@ -83,7 +85,7 @@ docNames.subscribe(x => {
   client.request(query, vars).then(data => {
       let nodes = data["repository"].ref.target.history.nodes;
 
-      let lastReviewDate = getDocReviewDate(key + ".md");
+      let lastReviewDate = getDocReviewDate(x);//(key + ".md");
 
       let numUsefulCommits = extractCommitInfo(nodes, lastReviewDate, stoplist);
       let dateString = lastReviewDate.format("YYYY-MM-DD");
@@ -139,14 +141,24 @@ function extractCommitInfo(commitNodes, cutOffDate, stoplist) {
 }
 
 
-function getDocFileNames(folderPath) {
-  let files = fs.readdirSync(folderPath);
+function getDocFilePaths(folderPath) {
+  let result = [];
 
-  files = files.filter(filename => 
-    (path.extname(filename) === ".md") &&
-    (filename !== "README.md") &&
-    (filename.match(angFilePattern))
-  );
+  libFolders.forEach(element => {
+    let libPath = path.resolve(folderPath, element);
+    let files = fs.readdirSync(libPath);
 
-  return files;
+    files = files.filter(filename => 
+      (path.extname(filename) === ".md") &&
+      (filename !== "README.md") &&
+      (filename.match(angFilePattern))
+    );
+
+    files.forEach(element => {
+      result.push(path.join(libPath, element));
+    });
+  });
+  
+
+  return result;
 }

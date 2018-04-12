@@ -95,13 +95,15 @@ name is _alfresco_ then you would set the `alfrescoRepositoryName` property in`a
 to _alfresco-1002_ as follows:
 
 ```json
-        {
-            name: 'Alfresco ADF Application'
-        },
-        ecmHost: 'http://{hostname}{:port}/ecm',
-        bpmHost: 'http://{hostname}{:port}/bpm',
-        logLevel: 'silent',
-        alfrescoRepositoryName : 'alfresco-1002'
+{
+    application: {
+        name: 'Alfresco ADF Application'
+    },
+    ecmHost: 'http://{hostname}{:port}/ecm',
+    bpmHost: 'http://{hostname}{:port}/bpm',
+    logLevel: 'silent',
+    alfrescoRepositoryName : 'alfresco-1002'
+}       
 ```
 
 You then need to pass the node as the input `values` object with the other properties:

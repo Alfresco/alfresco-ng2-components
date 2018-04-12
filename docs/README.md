@@ -212,11 +212,6 @@ for more information about installing and using the source code.
 | [Version list component](content-services/version-list.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Displays the version history of a node in a Version Manager component | [Source](../lib/content-services/version-manager/version-list.component.ts) |
 | [Version manager component](content-services/version-manager.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Displays the version history of a node with the ability to upload a new version. | [Source](../lib/content-services/version-manager/version-manager.component.ts) |
 | [Webscript component](content-services/webscript.component.md) | Provides access to Webscript features. | [Source](../lib/content-services/webscript/webscript.component.ts) |
-| _Search fields component_ | _Not currently documented_ | [Source](../lib/content-services/search/components/search-fields/search-fields.component.ts) |
-| _Search radio component_ | _Not currently documented_ | [Source](../lib/content-services/search/components/search-radio/search-radio.component.ts) |
-| _Search scope locations component_ | _Not currently documented_ | [Source](../lib/content-services/search/components/search-scope-locations/search-scope-locations.component.ts) |
-| _Search text component_ | _Not currently documented_ | [Source](../lib/content-services/search/components/search-text/search-text.component.ts) |
-| _Search widget container component_ | _Not currently documented_ | [Source](../lib/content-services/search/components/search-widget-container/search-widget-container.component.ts) |
 
 ## Directives
 
@@ -249,7 +244,6 @@ for more information about installing and using the source code.
 | [Node permission service](content-services/node-permission.service.md) | Manages the role permissions for the content nodes | [Source](../lib/content-services/permission-manager/services/node-permission.service.ts) |
 | [Rating service](content-services/rating.service.md) | Manages ratings for items in Content Services. | [Source](../lib/content-services/social/services/rating.service.ts) |
 | [Tag service](content-services/tag.service.md) | Manages tags in Content Services. | [Source](../lib/content-services/tag/services/tag.service.ts) |
-| _Search query builder service_ | _Not currently documented_ | [Source](../lib/content-services/search/search-query-builder.service.ts) |
 
 <!--content-services end-->
 
