@@ -61,7 +61,7 @@ export class UserPreferencesService {
         private storage: StorageService,
         private apiService: AlfrescoApiService
     ) {
-        this.initUserPreferenceStatus();
+        this.appConfig.load().then(this.initUserPreferenceStatus.bind(this));
         this.localeSubject = new BehaviorSubject(this.defaults.locale);
         this.locale$ = this.localeSubject.asObservable();
         this.onChangeSubject = new BehaviorSubject(this.userPreferenceStatus);
@@ -69,13 +69,10 @@ export class UserPreferencesService {
     }
 
     private initUserPreferenceStatus() {
-        this.appConfig.load()
-            .then(() => {
-                this.userPreferenceStatus[UserPreferenceValues.Locale] = this.locale || this.getDefaultLocale();
-                this.userPreferenceStatus[UserPreferenceValues.PaginationSize] = this.appConfig.get('pagination.size', this.defaults.paginationSize);
-                this.userPreferenceStatus[UserPreferenceValues.SupportedPageSizes] = this.appConfig.get('pagination.supportedPageSizes', this.defaults.supportedPageSizes);
-                this.userPreferenceStatus[UserPreferenceValues.DisableCSRF] = this.disableCSRF;
-            });
+        this.userPreferenceStatus[UserPreferenceValues.Locale] = this.locale || this.getDefaultLocale();
+        this.userPreferenceStatus[UserPreferenceValues.PaginationSize] = this.appConfig.get('pagination.size', this.defaults.paginationSize);
+        this.userPreferenceStatus[UserPreferenceValues.SupportedPageSizes] = this.appConfig.get('pagination.supportedPageSizes', this.defaults.supportedPageSizes);
+        this.userPreferenceStatus[UserPreferenceValues.DisableCSRF] = this.disableCSRF;
     }
 
     select(property: string): Observable<any> {
