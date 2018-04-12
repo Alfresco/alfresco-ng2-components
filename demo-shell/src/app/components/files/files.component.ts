@@ -349,6 +349,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.uploadService.fileDeleted.next(message);
         this.deleteElementSuccess.emit();
         this.reloadForInfiniteScrolling();
+        this.notificationService.openSnackMessage(message, 4000);
     }
 
     onPermissionRequested(node) {
