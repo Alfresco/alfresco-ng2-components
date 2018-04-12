@@ -66,26 +66,9 @@
                             </span>
                         </mat-menu>
                     </div> -->
-                    <adf-report-action-menu *ngIf="!isEditable" 
-                        (onToggleClicked)="toggleParameters()"
-                        (OnDeleteClicked)="deleteReport(reportId)"
-                        (onShowDialogClicked)="showDialog($event)"
-                        [validForm]="isFormValid()">
-                        <button  (click)="toggleParameters()">
-                                <mat-icon>settings</mat-icon><span>{{'ANALYTICS.MESSAGES.ICON-SETTING' | translate}}</span>
-                            </button>
-                            <button  id="delete-button" (click)="deleteReport(reportId)">
-                                <mat-icon>delete</mat-icon><span>{{'ANALYTICS.MESSAGES.ICON-DELETE' | translate}}</span>
-                            </button>
-                            <span *ngIf="validForm">
-                                <button  id="export-button" (click)="showDialog('Export')">
-                                    <mat-icon>file_download</mat-icon><span>{{'ANALYTICS.MESSAGES.ICON-EXPORT-CSV' | translate}}</span>
-                                </button>
-                                <button  id="save-button" (click)="showDialog('Save')">
-                                    <mat-icon>save</mat-icon><span>{{'ANALYTICS.MESSAGES.ICON-SAVE' | translate}}</span>
-                                </button>
-                            </span>                        
-                    </adf-report-action-menu>   
+                    <adf-buttons-action-menu *ngIf="!isEditable"
+                        [buttons]="buttons">
+                    </adf-buttons-action-menu>   
                 </adf-toolbar>
                 <div *ngFor="let field of reportParameters.definition.parameters"
                         [class.is-hide]="isParametersHide()">

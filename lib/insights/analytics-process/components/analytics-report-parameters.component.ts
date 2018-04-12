@@ -37,6 +37,7 @@ import { ReportParameterDetailsModel } from '../../diagram/models/report/reportP
 import { ReportParametersModel } from '../../diagram/models/report/reportParameters.model';
 import { ReportQuery } from '../../diagram/models/report/reportQuery.model';
 import { AnalyticsService } from '../services/analytics.service';
+import { MenuButton } from './widgets/buttons-menu/menu-button.model';
 
 // @deprecated 2.3.0 analytics-report-parameters tag removed
 @Component({
@@ -95,6 +96,10 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
 
     reportName: string;
 
+    buttons: MenuButton[];
+
+    optionalButtonsShown: boolean;
+
     private dropDownSub;
     private reportParamsSub;
     private paramOpts;
@@ -107,6 +112,8 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                 private logService: LogService,
                 private contentService: ContentService,
                 private dialog: MatDialog) {
+
+        
     }
 
     ngOnInit() {
@@ -123,12 +130,15 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                 this.generateFormGroupFromParameter(report.definition.parameters);
             }
         });
+
+        this.setButtons();
     }
 
     ngOnChanges(changes: SimpleChanges) {
         this.isEditable = false;
         if (this.reportForm) {
             this.reportForm.reset();
+            this.setButtons();
         }
         let reportId = changes['reportId'];
         if (reportId && reportId.currentValue) {
@@ -139,6 +149,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         if (appId && (appId.currentValue || appId.currentValue === null)) {
             this.getReportParams(this.reportId);
         }
+
     }
 
     private generateFormGroupFromParameter(parameters: ReportParameterDetailsModel[]) {
@@ -207,6 +218,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                 this.error.emit(err);
             }
         );
+        
     }
 
     private retrieveParameterOptions(parameters: ReportParameterDetailsModel[], appId: number, reportId?: string, processDefinitionId?: string) {
@@ -221,6 +233,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                 }
             );
         });
+        
     }
 
     onProcessDefinitionChanges(field: any) {
@@ -244,6 +257,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     onStatusChanged(status: any) {
         if (this.reportForm && !this.reportForm.pending && this.reportForm.dirty) {
             this.formValidState = this.reportForm.valid;
+            this.isFormValid();
         }
     }
 
@@ -349,7 +363,23 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     }
 
     isFormValid() {
-        return this.reportForm && this.reportForm.dirty && this.reportForm.valid;
+        // return this.reportForm && this.reportForm.dirty && this.reportForm.valid;
+
+        // if(this.reportForm && this.reportForm.dirty && this.reportForm.valid){
+        //     this.optionalButtonsShown = true;
+        //     this.buttons.push(
+        //         new MenuButton({label: 'ANALYTICS.MESSAGES.ICON-EXPORT-CSV', icon: 'file_download', handler: this.showDialog.bind(this, 'Export'), styles: [], id: 'export-button'}),
+        //         new MenuButton({label: 'ANALYTICS.MESSAGES.ICON-SAVE', icon: 'save', handler: this.showDialog.bind(this, 'Save'), styles: [], id: 'save-button'})
+        //     );
+        // }
+
+
+        if(this.reportForm && this.reportForm.dirty && this.reportForm.valid){
+            this.buttons.forEach(function (button : MenuButton) {
+                button.hidden = false;
+            });
+        }
+        
     }
 
     doExport(paramQuery: ReportQuery) {
@@ -385,4 +415,20 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     isParametersHide() {
         return this.hideParameters;
     }
+
+    setButtons(){
+        this.buttons = [
+            new MenuButton({label: 'ANALYTICS.MESSAGES.ICON-SETTING', icon: 'settings', handler: this.toggleParameters.bind(this), styles: [], id: null, hidden: false}), 
+            new MenuButton({label: 'ANALYTICS.MESSAGES.ICON-DELETE', icon: 'delete', handler: this.deleteReport.bind(this, this.reportId), styles: [], id: 'delete-button', hidden: false}),
+            new MenuButton({label: 'ANALYTICS.MESSAGES.ICON-EXPORT-CSV', icon: 'file_download', handler: this.showDialog.bind(this, 'Export'), styles: [], id: 'export-button', hidden: true}),
+            new MenuButton({label: 'ANALYTICS.MESSAGES.ICON-SAVE', icon: 'save', handler: this.showDialog.bind(this, 'Save'), styles: [], id: 'save-button', hidden: true}) 
+        ];
+
+        // this.optionalButtonsShown = false;
+
+        // this.buttons.forEach(function (button : MenuButton) {
+        //     button.hidden = true;
+        // });
+    }
 }
+
