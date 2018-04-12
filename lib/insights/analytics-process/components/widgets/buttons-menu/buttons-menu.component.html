@@ -1,0 +1,27 @@
+<div fxShow fxHide.xs="true">
+    <ng-container *ngFor="let button of buttons">
+        <ng-container *ngTemplateOutlet="bandylove; context: button"></ng-container>
+     </ng-container>
+</div>
+<div fxHide fxShow.xs="true">
+    <button mat-icon-button [matMenuTriggerFor]="editReportMenu">
+        <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #editReportMenu="matMenu">
+        <ng-container *ngFor="let button of buttons">
+           <ng-container *ngTemplateOutlet="bandyloveMenu; context:button"></ng-container>
+        </ng-container>
+    </mat-menu>
+</div>
+
+<ng-template #bandylove let-handler="handler" let-icon="icon" let-label="label" let-styles="styles" let-id="id" let-hidden="hidden">
+    <button mat-button (click)="handler()" id="{{id}}" *ngIf="!hidden">
+        <mat-icon>{{icon}}</mat-icon>
+    </button>
+</ng-template>
+
+<ng-template #bandyloveMenu let-handler="handler" let-icon="icon" let-label="label" let-styles="styles" let-id="id" let-hidden="hidden">
+    <button mat-menu-item (click)="handler()" id="{{id}}" *ngIf="!hidden">
+        <mat-icon>{{icon}}</mat-icon><span>{{label | translate}}</span>
+    </button>
+</ng-template>
