@@ -16,10 +16,10 @@
  */
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { VersionListComponent } from './version-list.component';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService, setupTestBed, CoreModule, AlfrescoApiServiceMock } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 
@@ -32,18 +32,17 @@ describe('VersionListComponent', () => {
     const nodeId = 'test-id';
     const versionId = '1.0';
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                VersionListComponent
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
-        }).compileComponents();
-    }));
-
-    afterEach(() => {
-        fixture.destroy();
-        TestBed.resetTestingModule();
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ],
+        declarations: [
+            VersionListComponent
+        ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+        ],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 
     beforeEach(() => {
@@ -55,6 +54,10 @@ describe('VersionListComponent', () => {
         component.node = { id: nodeId, allowableOperations: [ 'update' ] };
 
         spyOn(component, 'downloadContent').and.stub();
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it('should raise confirmation dialog on delete', () => {

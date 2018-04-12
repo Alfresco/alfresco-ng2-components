@@ -17,7 +17,7 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange, TemplateRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AlfrescoApiService, CoreModule } from '@alfresco/adf-core';
+import { AlfrescoApiService, CoreModule, AlfrescoApiServiceMock } from '@alfresco/adf-core';
 import { DataColumn, DataTableComponent } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -57,6 +57,7 @@ describe('DocumentList', () => {
             DocumentListComponent
         ],
         providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
             DocumentListService,
             CustomResourcesService
         ],

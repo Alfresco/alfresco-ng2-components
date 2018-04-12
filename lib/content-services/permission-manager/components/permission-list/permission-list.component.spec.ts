@@ -18,7 +18,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PermissionListComponent } from './permission-list.component';
 import { By } from '@angular/platform-browser';
-import { NodesApiService, SearchService } from '@alfresco/adf-core';
+import { NodesApiService, SearchService, setupTestBed, CoreModule,
+    AlfrescoApiService, AlfrescoApiServiceMock, TranslationService,
+    TranslationMock, AppConfigService, AppConfigServiceMock
+} from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { NodePermissionService } from '../../services/node-permission.service';
 import { fakeNodeWithPermissions,
@@ -28,6 +31,7 @@ import { fakeNodeWithPermissions,
          fakeSiteRoles,
          fakeNodeWithoutPermissions,
          fakeEmptyResponse } from '../../../mock/permission-list.component.mock';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('PermissionDisplayComponent', () => {
 
@@ -38,28 +42,38 @@ describe('PermissionDisplayComponent', () => {
     let nodePermissionService: NodePermissionService;
     let searchApiService: SearchService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                PermissionListComponent
-            ],
-            providers: [NodePermissionService]
-        }).compileComponents().then(() => {
-            fixture = TestBed.createComponent(PermissionListComponent);
-            component = fixture.componentInstance;
-            element = fixture.nativeElement;
-            nodeService = TestBed.get(NodesApiService);
-            nodePermissionService = TestBed.get(NodePermissionService);
-            searchApiService = TestBed.get(SearchService);
-        });
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ],
+        declarations: [
+            PermissionListComponent
+        ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+            { provide: TranslationService, useClass: TranslationMock },
+            { provide: AppConfigService, useClass: AppConfigServiceMock },
+            NodePermissionService
+        ]
+    });
 
-    afterEach(async(() => {
+    beforeEach(() => {
+        fixture = TestBed.createComponent(PermissionListComponent);
+        component = fixture.componentInstance;
+        element = fixture.nativeElement;
+        nodeService = TestBed.get(NodesApiService);
+        nodePermissionService = TestBed.get(NodePermissionService);
+        searchApiService = TestBed.get(SearchService);
+    });
+
+    afterEach(() => {
         fixture.destroy();
-        TestBed.resetTestingModule();
-    }));
+    });
 
     it('should be able to render the component', () => {
+        spyOn(nodeService, 'getNode').and.returnValue(Observable.of(fakeNodeWithOnlyLocally));
+        spyOn(nodePermissionService, 'getNodeRoles').and.returnValue(Observable.of([]));
         fixture.detectChanges();
         expect(element.querySelector('#adf-permission-display-container')).not.toBeNull();
     });

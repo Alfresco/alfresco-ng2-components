@@ -590,30 +590,29 @@ describe('SearchControlComponent - No result custom', () => {
     let authServiceCustom: AuthenticationService;
     let searchServiceCustom: SearchService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                SearchModule
-            ],
-            declarations: [
-                SimpleSearchTestCustomEmptyComponent
-            ]
-        }).compileComponents().then(() => {
-            fixtureCustom = TestBed.createComponent(SimpleSearchTestCustomEmptyComponent);
-            componentCustom = fixtureCustom.componentInstance;
-            elementCustom = fixtureCustom.nativeElement;
-            authServiceCustom = TestBed.get(AuthenticationService);
-            searchServiceCustom = TestBed.get(SearchService);
-        });
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot(),
+            SearchModule
+        ],
+        declarations: [
+            SimpleSearchTestCustomEmptyComponent
+        ]
+    });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
+        fixtureCustom = TestBed.createComponent(SimpleSearchTestCustomEmptyComponent);
+        componentCustom = fixtureCustom.componentInstance;
+        elementCustom = fixtureCustom.nativeElement;
+        authServiceCustom = TestBed.get(AuthenticationService);
+        searchServiceCustom = TestBed.get(SearchService);
+
         spyOn(authServiceCustom, 'isEcmLoggedIn').and.returnValue(true);
-    }));
+    });
 
     afterEach(async(() => {
         fixtureCustom.destroy();
-        TestBed.resetTestingModule();
     }));
 
     it('should display the custom no results when it is configured', async(() => {
