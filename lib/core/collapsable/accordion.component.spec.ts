@@ -16,16 +16,12 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AccordionGroupComponent } from './accordion-group.component';
 import { AccordionComponent } from './accordion.component';
 
 describe('AccordionComponent', () => {
 
     let fixture: ComponentFixture<AccordionComponent>;
     let component: AccordionComponent;
-    let componentGroup1: AccordionGroupComponent;
-    let componentGroup2: AccordionGroupComponent;
-    let componentGroup3: AccordionGroupComponent;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -40,42 +36,7 @@ describe('AccordionComponent', () => {
         component = fixture.componentInstance;
     });
 
-    afterEach(() => {
-        component.groups = [];
-    });
-
     it('should create the component', () => {
         expect(component).toBeTruthy();
     });
-
-    it('should add the AccordionGroup', () => {
-        component.addGroup(componentGroup1);
-        expect(component.groups.length).toBe(1);
-    });
-
-    it('should close all the other group', () => {
-        componentGroup1 = new AccordionGroupComponent(component);
-        componentGroup2 = new AccordionGroupComponent(component);
-        componentGroup3 = new AccordionGroupComponent(component);
-        componentGroup1.isOpen = false;
-        componentGroup2.isOpen = true;
-        componentGroup3.isOpen = false;
-
-        expect(component.groups[0].isOpen).toBeFalsy();
-        expect(component.groups[1].isOpen).toBeTruthy();
-        expect(component.groups[2].isOpen).toBeFalsy();
-
-        componentGroup1.isOpen = true;
-
-        expect(component.groups[0].isOpen).toBeTruthy();
-        expect(component.groups[1].isOpen).toBeFalsy();
-        expect(component.groups[2].isOpen).toBeFalsy();
-    });
-
-    it('should remove the AccordionGroup', () => {
-        component.addGroup(componentGroup1);
-        component.removeGroup(componentGroup1);
-        expect(component.groups.length).toBe(0);
-    });
-
 });

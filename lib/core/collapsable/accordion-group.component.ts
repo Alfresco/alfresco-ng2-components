@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnDestroy, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import { AccordionComponent } from './accordion.component';
+import { Component, EventEmitter, Input, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { MatExpansionPanel } from '@angular/material';
 
 @Component({
     selector: 'adf-accordion-group',
@@ -24,12 +24,14 @@ import { AccordionComponent } from './accordion.component';
     styleUrls: ['./accordion-group.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class AccordionGroupComponent implements OnDestroy {
+export class AccordionGroupComponent {
     private _isOpen: boolean = false;
     private _isSelected: boolean = false;
 
     @ViewChild('contentWrapper')
     contentWrapper: any;
+
+    @ViewChild('expansionPanel') expansionPanel: MatExpansionPanel;
 
     /** Title heading for the group. */
     @Input()
@@ -43,9 +45,8 @@ export class AccordionGroupComponent implements OnDestroy {
     @Input()
     headingIconTooltip: string;
 
-    /** Should the (expanded) accordion icon be shown? */
     @Input()
-    hasAccordionIcon: boolean = true;
+    showExpansionIndicator: boolean = true;
 
     /** Emitted when the heading is clicked. */
     @Output()
@@ -55,9 +56,6 @@ export class AccordionGroupComponent implements OnDestroy {
     @Input()
     set isOpen(value: boolean) {
         this._isOpen = value;
-        if (value) {
-            this.accordion.closeOthers(this);
-        }
     }
 
     get isOpen() {
@@ -74,20 +72,25 @@ export class AccordionGroupComponent implements OnDestroy {
         return this._isSelected;
     }
 
-    constructor(private accordion: AccordionComponent) {
-        this.accordion.addGroup(this);
-    }
-
-    ngOnDestroy() {
-        this.accordion.removeGroup(this);
-    }
+    constructor() { }
 
     hasHeadingIcon() {
         return this.headingIcon ? true : false;
     }
 
-    toggleOpen(): void {
-        this.isOpen = !this.isOpen;
+    onHeaderClick(): void {
         this.headingClick.emit(this.heading);
+    }
+
+    toggleExpansion(event: any) {
+        this.isOpen && this.showExpansionIndicator ? this.expansionPanel.expanded : this.expandPannel() ;
+    }
+
+    expandPannel() {
+        this.expansionPanel.expanded = !this.expansionPanel.expanded;
+    }
+
+    isExpanded(): boolean {
+        return this.isOpen && this.isSelected;
     }
 }

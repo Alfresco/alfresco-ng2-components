@@ -1,10 +1,17 @@
 <mat-accordion class="adf-panel">
-    <mat-expansion-panel id="adf-expansion-panel-id" [expanded]="isOpen" (opened)="toggleOpen()" [hideToggle]="!hasAccordionIcon">
+    <mat-expansion-panel #expansionPanel 
+        id="adf-expansion-panel-id"
+        (click)="toggleExpansion($event)"
+        [expanded]="isExpanded()"
+        (opened)="onHeaderClick()"
+        [hideToggle]="!showExpansionIndicator">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 <div class="adf-panel-heading" [ngClass]="{'adf-panel-heading-selected': isSelected}">
                     <div id="heading-icon" *ngIf="hasHeadingIcon()" class="adf-panel-heading-icon">
-                        <mat-icon class="material-icons" [matTooltip]="headingIconTooltip" [matTooltipDisabled]="!headingIconTooltip">
+                        <mat-icon class="material-icons"
+                            [matTooltip]="headingIconTooltip"
+                            [matTooltipDisabled]="!headingIconTooltip">
                             {{headingIcon}}
                         </mat-icon>
                     </div>
