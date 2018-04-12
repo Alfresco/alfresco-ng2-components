@@ -1,6 +1,13 @@
 <div id="adf-permission-display-container" class="adf-display-permission-container">
+
     <div *ngIf="!permissionList || !permissionList.length" id="adf-no-permissions-template">
-        <p>{{ 'PERMISSION_MANAGER.PERMISSION_DISPLAY.NO_PERMISSIONS' | translate }}</p>
+        <div #ref>
+            <ng-content select=".adf-custom-no-permission-template"></ng-content>
+        </div>
+
+        <p *ngIf="ref.children.length == 0">
+            {{ 'PERMISSION_MANAGER.PERMISSION_DISPLAY.NO_PERMISSIONS' | translate }}
+        </p>
     </div>
 
     <adf-datatable [rows]="permissionList" class="adf-datatable-permission" *ngIf="permissionList && permissionList.length">
