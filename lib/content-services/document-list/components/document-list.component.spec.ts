@@ -16,8 +16,8 @@
  */
 
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange, TemplateRef } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AlfrescoApiService, CoreModule } from '@alfresco/adf-core';
 import { DataColumn, DataTableComponent } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -37,6 +37,7 @@ import { RowFilter } from './../data/row-filter.model';
 import { DocumentListService } from './../services/document-list.service';
 import { CustomResourcesService } from './../services/custom-resources.service';
 import { DocumentListComponent } from './document-list.component';
+import { setupTestBed } from '@alfresco/adf-core';
 
 describe('DocumentList', () => {
 
@@ -48,20 +49,19 @@ describe('DocumentList', () => {
     let element: HTMLElement;
     let eventMock: any;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-            ],
-            declarations: [
-                DocumentListComponent
-            ],
-            providers: [
-                DocumentListService,
-                CustomResourcesService
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
-        });
-    }));
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ],
+        declarations: [
+            DocumentListComponent
+        ],
+        providers: [
+            DocumentListService,
+            CustomResourcesService
+        ],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    });
 
     beforeEach(() => {
         eventMock = {

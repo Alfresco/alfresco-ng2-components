@@ -18,10 +18,11 @@
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { DataTableModule } from '@alfresco/adf-core';
+import { CoreModule, setupTestBed, TranslationService, TranslationMock } from '@alfresco/adf-core';
 import { fakeNodeWithCreatePermission } from '../mock';
 import { CustomResourcesService, DocumentListComponent, DocumentListService } from '../document-list';
 import { DropdownBreadcrumbComponent } from './dropdown-breadcrumb.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('DropdownBreadcrumb', () => {
 
@@ -29,24 +30,24 @@ describe('DropdownBreadcrumb', () => {
     let fixture: ComponentFixture<DropdownBreadcrumbComponent>;
     let documentList: DocumentListComponent;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                DataTableModule
-            ],
-            declarations: [
-                DocumentListComponent,
-                DropdownBreadcrumbComponent
-            ],
-            providers: [
-                DocumentListService,
-                CustomResourcesService
-            ],
-            schemas: [
-                CUSTOM_ELEMENTS_SCHEMA
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ],
+        declarations: [
+            DocumentListComponent,
+            DropdownBreadcrumbComponent
+        ],
+        providers: [
+            {provide: TranslationService, useClass: TranslationMock },
+            DocumentListService,
+            CustomResourcesService
+        ],
+        schemas: [
+            CUSTOM_ELEMENTS_SCHEMA
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(DropdownBreadcrumbComponent);
