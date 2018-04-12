@@ -121,7 +121,7 @@ export class DropdownSitesComponent implements OnInit {
     private isCurrentUserMember(site, loggedUserName): boolean {
         return site.entry.visibility === 'PUBLIC' ||
             !!site.relations.members.list.entries.find((member) => {
-                return member.entry.id === loggedUserName;
+                return member.entry.id.toLowerCase() === loggedUserName.toLowerCase();
             });
     }
 
