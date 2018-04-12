@@ -25,7 +25,7 @@ import {
     AuthenticationService, AppConfigService, ContentService, TranslationService,
     FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
     UploadService, DataColumn, DataRow, UserPreferencesService,
-    PaginationComponent, FormValues, DisplayMode, UserPreferenceValues
+    PaginationComponent, FormValues, DisplayMode
 } from '@alfresco/adf-core';
 
 import { DocumentListComponent, PermissionStyleModel } from '@alfresco/adf-content-services';
