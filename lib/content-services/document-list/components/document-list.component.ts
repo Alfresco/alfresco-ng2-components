@@ -523,6 +523,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     loadFolderByNodeId(nodeId: string) {
+        this.resetNewFolderPagination();
+
         if (this.customResourcesService.isCustomSource(nodeId)) {
             this.updateCustomSourceData(nodeId);
             this.customResourcesService.loadFolderByNodeId(nodeId, this.pagination.getValue(), this.includeFields)
@@ -744,6 +746,12 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     updatePagination(pagination: PaginationModel) {
         this.reload();
+    }
+
+    private resetNewFolderPagination(){
+        var paginationReset = this.pagination.getValue();
+        paginationReset.skipCount = 0;
+        this.pagination.next(paginationReset);
     }
 
     // TODO: remove it from here
