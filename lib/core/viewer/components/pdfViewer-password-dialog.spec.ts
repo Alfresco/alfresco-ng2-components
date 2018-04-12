@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { MaterialModule } from '../../material.module';
 import { PdfPasswordDialogComponent } from './pdfViewer-password-dialog';
+import { setupTestBed } from '../../testing/setupTestBed';
+import { CoreModule } from '../../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 declare let PDFJS: any;
 
@@ -27,30 +29,26 @@ describe('PdfPasswordDialogComponent', () => {
     let fixture: ComponentFixture<PdfPasswordDialogComponent>;
     let dialogRef: MatDialogRef<PdfPasswordDialogComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                MaterialModule
-            ],
-            declarations: [
-                PdfPasswordDialogComponent
-            ],
-
-            providers: [
-                {
-                    provide: MAT_DIALOG_DATA, useValue: {
-                        reason: null
-                    }
-                },
-                {
-                    provide: MatDialogRef, useValue: {
-                        close: jasmine.createSpy('open')
-                    }
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ],
+        providers: [
+            {
+                provide: MAT_DIALOG_DATA,
+                useValue: {
+                    reason: null
                 }
-            ]
-        })
-        .compileComponents();
-    }));
+            },
+            {
+                provide: MatDialogRef,
+                useValue: {
+                    close: jasmine.createSpy('open')
+                }
+            }
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(PdfPasswordDialogComponent);

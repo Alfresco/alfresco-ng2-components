@@ -18,6 +18,8 @@
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MediaPlayerComponent } from './mediaPlayer.component';
+import { setupTestBed } from '../../testing/setupTestBed';
+import { CoreModule } from '../../core.module';
 
 import {
     ContentService
@@ -34,10 +36,11 @@ describe('Test Media player component ', () => {
         return new Blob([data], {type: 'image/png'});
     }
 
+    setupTestBed({
+        imports: [CoreModule.forRoot()]
+    });
+
     beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [MediaPlayerComponent]
-        }).compileComponents();
         service = TestBed.get(ContentService);
     }));
 
