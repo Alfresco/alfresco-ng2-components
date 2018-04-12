@@ -46,14 +46,13 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Node download directive](node-download.directive.md) | Allows folders and/or files to be downloaded. Multiple nodes are packed as a '.ZIP' archive. | [Source](../../lib/content-services/directives/node-download.directive.ts) |
-| [Node lock directive](node-lock.directive.md) | Call [`ContentNodeDialogService.openLockNodeDialog(nodeEntry)`](./content-node-dialog.service.md) method on click event,
-and disable target button if provided node is not a file or user don't have permissions. | [Source](../../lib/content-services/directives/node-lock.directive.ts) |
-| [Node share directive](node-share.directive.md) | Create and manage public shared links for files | [Source](../../lib/content-services/directives/node-share.directive.ts) |
-| [Folder create directive](folder-create.directive.md) | Allows folders to be created. | [Source](../../lib/content-services/folder-directive/folder-create.directive.ts) |
+| [Node download directive](node-download.directive.md) | Allows folders and/or files to be downloaded, with multiple nodes packed as a '.ZIP' archive. | [Source](../../lib/content-services/directives/node-download.directive.ts) |
+| [Node lock directive](node-lock.directive.md) | Locks a node. | [Source](../../lib/content-services/directives/node-lock.directive.ts) |
+| [Node share directive](node-share.directive.md) | Creates and manages public shared links for files. | [Source](../../lib/content-services/directives/node-share.directive.ts) |
+| [Folder create directive](folder-create.directive.md) | Creates folders. | [Source](../../lib/content-services/folder-directive/folder-create.directive.ts) |
 | [Folder edit directive](folder-edit.directive.md) | Allows folders to be edited. | [Source](../../lib/content-services/folder-directive/folder-edit.directive.ts) |
 | [Inherited button directive](inherited-button.directive.md) | Update the current node by adding/removing the inherited permissions. | [Source](../../lib/content-services/permission-manager/components/inherited-button.directive.ts) |
-| [File draggable directive](file-draggable.directive.md) | Provide drag-and-drop features for an element such as a `div`. | [Source](../../lib/content-services/upload/directives/file-draggable.directive.ts) |
+| [File draggable directive](file-draggable.directive.md) | Provides drag-and-drop features for an element such as a `div`. | [Source](../../lib/content-services/upload/directives/file-draggable.directive.ts) |
 
 ## Models
 
@@ -67,13 +66,13 @@ and disable target button if provided node is not a file or user don't have perm
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Content node dialog service](content-node-dialog.service.md) | Displays and manages dialogs for selecting content to open, copy or upload. | [Source](../../lib/content-services/content-node-selector/content-node-dialog.service.ts) |
+| [Custom resources service](custom-resources.service.md) | Manages Document List information that is specific to a user. | [Source](../../lib/content-services/document-list/services/custom-resources.service.ts) |
 | [Document actions service](document-actions.service.md) | Implements the document menu actions for the Document List component. | [Source](../../lib/content-services/document-list/services/document-actions.service.ts) |
 | [Document list service](document-list.service.md) | Implements node operations used by the Document List component. | [Source](../../lib/content-services/document-list/services/document-list.service.ts) |
 | [Folder actions service](folder-actions.service.md) | Implements the folder menu actions for the Document List component. | [Source](../../lib/content-services/document-list/services/folder-actions.service.ts) |
 | [Node permission service](node-permission.service.md) | Manages the role permissions for the content nodes | [Source](../../lib/content-services/permission-manager/services/node-permission.service.ts) |
 | [Rating service](rating.service.md) | Manages ratings for items in Content Services. | [Source](../../lib/content-services/social/services/rating.service.ts) |
 | [Tag service](tag.service.md) | Manages tags in Content Services. | [Source](../../lib/content-services/tag/services/tag.service.ts) |
-| _Custom resources service_ | _Not currently documented_ | [Source](../../lib/content-services/document-list/services/custom-resources.service.ts) |
 | _Search query builder service_ | _Not currently documented_ | [Source](../../lib/content-services/search/search-query-builder.service.ts) |
 
 <!--content-services end-->
