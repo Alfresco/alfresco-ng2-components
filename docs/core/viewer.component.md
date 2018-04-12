@@ -3,6 +3,7 @@ Added: v2.0.0
 Status: Active
 Last reviewed: 2018-03-07
 ---
+
 # Viewer component
 
 Displays content from an ACS repository.
@@ -54,6 +55,19 @@ Using with file url:
     [urlFile]="'filename.pdf'">
 </adf-viewer>
 ```
+
+Using with shared link:
+
+```html
+<adf-viewer
+    [overlayMode]="true" 
+    [sharedLinkId]="'WWDg_afiTU6lHEgr4fAbQA'">
+</adf-viewer>
+```
+
+Note that if you have a URL which contains a shared link ID, you should extract the
+ID portion and use it with the `sharedLinkId` property rather than using the whole
+URL with `urlFile`.
 
 ### Properties
 
