@@ -32,7 +32,7 @@ describe('FolderActionsService', () => {
         imports: [
             CoreModule.forRoot()
         ]
-    })
+    });
 
     beforeEach(() => {
         let appConfig: AppConfigService = TestBed.get(AppConfigService);

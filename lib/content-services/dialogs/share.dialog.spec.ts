@@ -15,55 +15,41 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { ComponentFixture } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { Observable } from 'rxjs/Observable';
 
 import { ShareDialogComponent } from './share.dialog';
+import { setupTestBed } from '../../core/testing';
+import { CoreModule } from '@alfresco/adf-core';
+import { DialogModule } from './dialog.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('ShareDialogComponent', () => {
 
     let fixture: ComponentFixture<ShareDialogComponent>;
     let component: ShareDialogComponent;
-    let dialogRef;
+    const dialogRef = {
+        close: jasmine.createSpy('close')
+    };
 
     let data: any = {
-        node: { entry: { properties: { 'qshare:sharedId': 'example-link' }, name: 'example-name' } }
+        node: { entry: { properties: { 'qshare:sharedId': 'example-link' }, name: 'example-name' } },
         baseShareUrl: 'baseShareUrl-example'
     };
 
-    beforeEach(async(() => {
-        dialogRef = {
-            close: jasmine.createSpy('close')
-        };
-
-        TestBed.configureTestingModule({
-            imports: [
-                FormsModule,
-                ReactiveFormsModule,
-                BrowserDynamicTestingModule
-            ],
-            declarations: [
-                ShareDialogComponent
-            ],
-            providers: [
-                { provide: MatDialogRef, useValue: dialogRef },
-                {
-                    provide: MAT_DIALOG_DATA,
-                    useValue: data
-                }
-            ]
-        });
-
-        TestBed.overrideModule(BrowserDynamicTestingModule, {
-            set: { entryComponents: [ShareDialogComponent] }
-        });
-
-        TestBed.compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot(),
+            DialogModule
+        ],
+        providers: [
+            { provide: MatDialogRef, useValue: dialogRef },
+            { provide: MAT_DIALOG_DATA, useValue: data }
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(ShareDialogComponent);
@@ -79,7 +65,7 @@ describe('ShareDialogComponent', () => {
 
     describe('public link creation', () => {
 
-        it('should not create the public link if it alredy present in the node', () => {
+        it('should not create the public link if it already present in the node', () => {
             let spyCreate = spyOn(component, 'createSharedLinks').and.returnValue(Observable.of(''));
 
             component.ngOnInit();
@@ -87,16 +73,16 @@ describe('ShareDialogComponent', () => {
             expect(spyCreate).not.toHaveBeenCalled();
         });
 
-        it('should not create the public link if it alredy present in the node', () => {
+        it('should not create the public link if it already present in the node', () => {
             component.data = {
-                node: { entry: { name: 'example-name' } }
+                node: { entry: { name: 'example-name' } },
                 baseShareUrl: 'baseShareUrl-example'
             };
 
             let spyCreate = spyOn(component, 'createSharedLinks').and.returnValue(Observable.of(''));
 
             data = {
-                node: { entry: { name: 'example-name' } }
+                node: { entry: { name: 'example-name' } },
                 baseShareUrl: 'baseShareUrl-example'
             };
 

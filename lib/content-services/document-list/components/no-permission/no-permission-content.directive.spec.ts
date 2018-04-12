@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { MatProgressSpinnerModule } from '@angular/material';
-import { DataTableComponent, DataTableModule } from '@alfresco/adf-core';
+import { DataTableComponent, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { DocumentListService } from '../../services/document-list.service';
 import { CustomResourcesService } from '../../services/custom-resources.service';
 
@@ -29,21 +29,19 @@ describe('NoPermissionContentDirective', () => {
     let noPermissionContent: NoPermissionContentDirective;
     let documentList: DocumentListComponent;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                DataTableModule,
-                MatProgressSpinnerModule
-            ],
-            declarations: [
-                DocumentListComponent
-            ],
-            providers: [
-                DocumentListService,
-                CustomResourcesService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot(),
+            MatProgressSpinnerModule
+        ],
+        declarations: [
+            DocumentListComponent
+        ],
+        providers: [
+            DocumentListService,
+            CustomResourcesService
+        ]
+    });
 
     beforeEach(() => {
         documentList = (TestBed.createComponent(DocumentListComponent).componentInstance as DocumentListComponent);

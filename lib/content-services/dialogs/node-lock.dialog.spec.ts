@@ -17,15 +17,15 @@
 
 import moment from 'moment-es6';
 
-import { async, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { ComponentFixture } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
-import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { Observable } from 'rxjs/Observable';
 
-import { AlfrescoApiService, TranslationService } from '@alfresco/adf-core';
+import { AlfrescoApiService, TranslationService, setupTestBed, CoreModule, AlfrescoApiServiceMock } from '@alfresco/adf-core';
 import { NodeLockDialogComponent } from './node-lock.dialog';
+import { DialogModule } from './dialog.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('NodeLockDialogComponent', () => {
 
@@ -38,27 +38,17 @@ describe('NodeLockDialogComponent', () => {
         close: jasmine.createSpy('close')
     };
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                FormsModule,
-                ReactiveFormsModule,
-                BrowserDynamicTestingModule
-            ],
-            declarations: [
-                NodeLockDialogComponent
-            ],
-            providers: [
-                { provide: MatDialogRef, useValue: dialogRef }
-            ]
-        });
-
-        TestBed.overrideModule(BrowserDynamicTestingModule, {
-            set: { entryComponents: [NodeLockDialogComponent] }
-        });
-
-        TestBed.compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot(),
+            DialogModule
+        ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+            { provide: MatDialogRef, useValue: dialogRef }
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(NodeLockDialogComponent);

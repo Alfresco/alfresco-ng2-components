@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { TestBed, ComponentFixture, async, fakeAsync } from '@angular/core/testing';
+import { TestBed, ComponentFixture, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Component, DebugElement } from '@angular/core';
 
@@ -24,6 +24,8 @@ import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { NodeActionsService } from '../document-list/services/node-actions.service';
 import { ContentNodeDialogService } from '../content-node-selector/content-node-dialog.service';
 import { DocumentListService } from '../document-list/services/document-list.service';
+import { setupTestBed } from '../../core/testing';
+import { CoreModule } from '@alfresco/adf-core';
 
 const fakeNode: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
     id: 'fake',
@@ -44,22 +46,20 @@ describe('NodeLock Directive', () => {
     let element: DebugElement;
     let contentNodeDialogService: ContentNodeDialogService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [],
-            providers: [
-                NodeActionsService,
-                ContentNodeDialogService,
-                DocumentListService
-            ],
-            declarations: [
-                TestComponent,
-                NodeLockDirective
-            ]
-        });
-
-        TestBed.compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ],
+        providers: [
+            NodeActionsService,
+            ContentNodeDialogService,
+            DocumentListService
+        ],
+        declarations: [
+            TestComponent,
+            NodeLockDirective
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(TestComponent);
