@@ -15,19 +15,17 @@
  * limitations under the License.
  */
 
-import { HttpClientModule } from '@angular/common/http';
 import { DebugElement } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
-import { MaterialModule } from '../../../material.module';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { CardViewMapItemModel } from '../../models/card-view-mapitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
-import { TranslateLoaderService } from '../../../services/translate-loader.service';
-
 import { CardViewMapItemComponent } from './card-view-mapitem.component';
+import { setupTestBed } from '../../../testing/setupTestBed';
+import { CoreModule } from '../../../core.module';
+import { TranslationService } from '../../../services/translation.service';
+import { TranslationMock } from '../../../mock/translation.service.mock';
 
 describe('CardViewMapItemComponent', () => {
     let service: CardViewUpdateService;
@@ -37,28 +35,15 @@ describe('CardViewMapItemComponent', () => {
     let debug: DebugElement;
     let element: HTMLElement;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                HttpClientModule,
-                FormsModule,
-                NoopAnimationsModule,
-                MaterialModule,
-                TranslateModule.forRoot({
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: TranslateLoaderService
-                    }
-                })
-            ],
-            declarations: [
-                CardViewMapItemComponent
-            ],
-            providers: [
-                CardViewUpdateService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ],
+        providers: [
+            { provide: TranslationService, useClass: TranslationMock }
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(CardViewMapItemComponent);
@@ -70,7 +55,6 @@ describe('CardViewMapItemComponent', () => {
 
     afterEach(() => {
         fixture.destroy();
-        TestBed.resetTestingModule();
     });
 
     it('should render the default if the value is empty and displayEmpty is true', () => {

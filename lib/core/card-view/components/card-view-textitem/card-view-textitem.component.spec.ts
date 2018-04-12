@@ -15,49 +15,31 @@
  * limitations under the License.
  */
 
-import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
-import { MatDatepickerModule, MatIconModule, MatInputModule, MatNativeDateModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
-import { TranslateLoaderService } from '../../../services/translate-loader.service';
-
 import { CardViewTextItemComponent } from './card-view-textitem.component';
+import { setupTestBed } from '../../../testing/setupTestBed';
+import { CoreModule } from '../../../core.module';
+import { TranslationService } from '../../../services/translation.service';
+import { TranslationMock } from '../../../mock/translation.service.mock';
 
 describe('CardViewTextItemComponent', () => {
 
     let fixture: ComponentFixture<CardViewTextItemComponent>;
     let component: CardViewTextItemComponent;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                HttpClientModule,
-                FormsModule,
-                NoopAnimationsModule,
-                MatDatepickerModule,
-                MatIconModule,
-                MatInputModule,
-                MatNativeDateModule,
-                TranslateModule.forRoot({
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: TranslateLoaderService
-                    }
-                })
-            ],
-            declarations: [
-                CardViewTextItemComponent
-            ],
-            providers: [
-                CardViewUpdateService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ],
+        providers: [
+            { provide: TranslationService, useClass: TranslationMock }
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(CardViewTextItemComponent);
@@ -73,7 +55,6 @@ describe('CardViewTextItemComponent', () => {
 
     afterEach(() => {
         fixture.destroy();
-        TestBed.resetTestingModule();
     });
 
     describe('Rendering', () => {

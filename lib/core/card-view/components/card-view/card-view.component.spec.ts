@@ -16,72 +16,32 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
-import { MatDatepickerModule, MatIconModule, MatInputModule, MatNativeDateModule } from '@angular/material';
-import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
 import { By } from '@angular/platform-browser';
-import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { setupTestBed } from '../../../testing/setupTestBed';
+import { CoreModule } from '../../../core.module';
 
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
-import { CardViewUpdateService } from '../../services/card-view-update.service';
-
-import { TranslateLoaderService } from '../../../services/translate-loader.service';
-import { CardViewContentProxyDirective } from '../../directives/card-view-content-proxy.directive';
-import { CardViewDateItemComponent } from '../card-view-dateitem/card-view-dateitem.component';
-import { CardItemTypeService } from '../../services/card-item-types.service';
-import { CardViewItemDispatcherComponent } from '../card-view-item-dispatcher/card-view-item-dispatcher.component';
-import { CardViewTextItemComponent } from '../card-view-textitem/card-view-textitem.component';
 import { CardViewComponent } from './card-view.component';
+import { TranslationService } from '../../../services/translation.service';
+import { TranslationMock } from '../../../mock/translation.service.mock';
 
 describe('CardViewComponent', () => {
 
     let fixture: ComponentFixture<CardViewComponent>;
     let component: CardViewComponent;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                HttpClientModule,
-                MatDatepickerModule,
-                MatIconModule,
-                MatInputModule,
-                MatNativeDateModule,
-                MatDatetimepickerModule,
-                MatNativeDatetimeModule,
-                FormsModule,
-                TranslateModule.forRoot({
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: TranslateLoaderService
-                    }
-                })
-            ],
-            declarations: [
-                CardViewComponent,
-                CardViewItemDispatcherComponent,
-                CardViewContentProxyDirective,
-                CardViewTextItemComponent,
-                CardViewDateItemComponent
-            ],
-            providers: [
-                CardItemTypeService,
-                CardViewUpdateService
-            ]
-        });
-
-        // entryComponents are not supported yet on TestBed, that is why this ugly workaround:
-        // https://github.com/angular/angular/issues/10760
-        TestBed.overrideModule(BrowserDynamicTestingModule, {
-            set: { entryComponents: [ CardViewTextItemComponent, CardViewDateItemComponent ] }
-        });
-
-        TestBed.compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ],
+        providers: [
+            { provide: TranslationService, useClass: TranslationMock }
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(CardViewComponent);

@@ -19,22 +19,19 @@ import { Component } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MaterialModule } from '../material.module';
 import { SidebarActionMenuComponent } from './sidebar-action-menu.component';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreModule } from '../core.module';
 
 describe('SidebarActionMenuComponent', () => {
     let element: HTMLElement;
     let component: SidebarActionMenuComponent;
     let fixture: ComponentFixture<SidebarActionMenuComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                SidebarActionMenuComponent
-            ],
-            imports: [
-                MaterialModule
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(SidebarActionMenuComponent);

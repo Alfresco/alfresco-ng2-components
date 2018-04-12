@@ -15,47 +15,34 @@
  * limitations under the License.
  */
 
-import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
-import { MaterialModule } from '../../../material.module';
-import { MatCheckboxChange, MatCheckbox } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { MatCheckbox, MatCheckboxChange } from '@angular/material';
+
+import { setupTestBed } from '../../../testing/setupTestBed';
+import { CoreModule } from '../../../core.module';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
-import { TranslateLoaderService } from '../../../services/translate-loader.service';
 
 import { CardViewBoolItemComponent } from './card-view-boolitem.component';
 import { CardViewBoolItemModel } from '../../models/card-view-boolitem.model';
+import { TranslationMock } from '../../../mock/translation.service.mock';
+import { TranslationService } from '../../../services/translation.service';
 
 describe('CardViewBoolItemComponent', () => {
 
     let fixture: ComponentFixture<CardViewBoolItemComponent>;
     let component: CardViewBoolItemComponent;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                HttpClientModule,
-                FormsModule,
-                NoopAnimationsModule,
-                MaterialModule,
-                TranslateModule.forRoot({
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: TranslateLoaderService
-                    }
-                })
-            ],
-            declarations: [
-                CardViewBoolItemComponent
-            ],
-            providers: [
-                CardViewUpdateService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ],
+        providers: [
+            { provide: TranslationService, useClass: TranslationMock }
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(CardViewBoolItemComponent);
@@ -71,7 +58,6 @@ describe('CardViewBoolItemComponent', () => {
 
     afterEach(() => {
         fixture.destroy();
-        TestBed.resetTestingModule();
     });
 
     describe('Rendering', () => {
@@ -115,7 +101,7 @@ describe('CardViewBoolItemComponent', () => {
             expect(value).not.toBeNull();
         });
 
-        it('should render ticked checkbox if property\'s value is true', () => {
+        it('should render ticked checkbox if property value is true', () => {
             component.property.value = true;
             fixture.detectChanges();
 
@@ -124,7 +110,7 @@ describe('CardViewBoolItemComponent', () => {
             expect(value.nativeElement.checked).toBe(true);
         });
 
-        it('should render ticked checkbox if property\'s value is not set but default is true and editable', () => {
+        it('should render ticked checkbox if property value is not set but default is true and editable', () => {
             component.editable = true;
             component.property.editable = true;
             component.property.value = undefined;
@@ -136,7 +122,7 @@ describe('CardViewBoolItemComponent', () => {
             expect(value.nativeElement.checked).toBe(true);
         });
 
-        it('should render unticked checkbox if property\'s value is false', () => {
+        it('should render unticked checkbox if property value is false', () => {
             component.property.value = false;
             fixture.detectChanges();
 
@@ -145,7 +131,7 @@ describe('CardViewBoolItemComponent', () => {
             expect(value.nativeElement.checked).toBe(false);
         });
 
-        it('should render unticked checkbox if property\'s value is not set but default is false and editable', () => {
+        it('should render unticked checkbox if property value is not set but default is false and editable', () => {
             component.editable = true;
             component.property.editable = true;
             component.property.value = undefined;
@@ -209,7 +195,7 @@ describe('CardViewBoolItemComponent', () => {
             expect(cardViewUpdateService.update).toHaveBeenCalledWith(component.property, true);
         });
 
-        it('should update the propery\'s value after a changed', async(() => {
+        it('should update the property value after a changed', async(() => {
             component.property.value = true;
 
             component.changed(<MatCheckboxChange> {checked: false});
