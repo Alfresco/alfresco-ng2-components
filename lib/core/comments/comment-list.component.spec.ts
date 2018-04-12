@@ -16,13 +16,16 @@
  */
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { DatePipe } from '@angular/common';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommentModel, UserProcessModel } from '../models';
 import { CommentListComponent } from './comment-list.component';
 import { By } from '@angular/platform-browser';
 import { EcmUserService } from '../userinfo/services/ecm-user.service';
 import { PeopleProcessService } from '../services/people-process.service';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreModule } from '../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { DatePipe } from '@angular/common';
 
 const testUser: UserProcessModel = new UserProcessModel({
     id: '1',
@@ -109,26 +112,24 @@ describe('CommentListComponent', () => {
     let ecmUserService: EcmUserService;
     let peopleProcessService: PeopleProcessService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                CommentListComponent
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA],
-            providers: [
-                DatePipe,
-                PeopleProcessService,
-                EcmUserService
-            ]
-        }).compileComponents().then(() => {
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ],
+        providers: [
+            DatePipe
+        ],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    });
 
-            fixture = TestBed.createComponent(CommentListComponent);
-            ecmUserService = TestBed.get(EcmUserService);
-            peopleProcessService = TestBed.get(PeopleProcessService);
-            commentList = fixture.componentInstance;
-            element = fixture.nativeElement;
-            fixture.detectChanges();
-        });
+    beforeEach(async(() => {
+        fixture = TestBed.createComponent(CommentListComponent);
+        ecmUserService = TestBed.get(EcmUserService);
+        peopleProcessService = TestBed.get(PeopleProcessService);
+        commentList = fixture.componentInstance;
+        element = fixture.nativeElement;
+        fixture.detectChanges();
     }));
 
     beforeEach(() => {

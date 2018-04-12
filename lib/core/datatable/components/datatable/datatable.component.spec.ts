@@ -16,14 +16,17 @@
  */
 
 import { SimpleChange, NO_ERRORS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatCheckboxChange, MatMenuModule } from '@angular/material';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatCheckboxChange } from '@angular/material';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRow } from '../../data/data-row.model';
 import { DataSorting } from '../../data/data-sorting.model';
 import { ObjectDataColumn } from '../../data/object-datacolumn.model';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 import { DataTableComponent } from './datatable.component';
+import { setupTestBed } from '../../../testing/setupTestBed';
+import { CoreModule } from '../../../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('DataTable', () => {
 
@@ -31,17 +34,13 @@ describe('DataTable', () => {
     let dataTable: DataTableComponent;
     let element: any;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                MatMenuModule
-            ],
-            declarations: [
-                DataTableComponent
-            ],
-            schemas: [ NO_ERRORS_SCHEMA ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ],
+        schemas: [ NO_ERRORS_SCHEMA ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(DataTableComponent);

@@ -20,6 +20,9 @@ import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core
 import { By } from '@angular/platform-browser';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { NodeFavoriteDirective } from './node-favorite.directive';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreModule } from '../core.module';
+import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 
 @Component({
     template: `
@@ -41,22 +44,26 @@ describe('NodeFavoriteDirective', () => {
     let apiService;
     let favoritesApi;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                TestComponent
-            ]
-        })
-        .compileComponents()
-        .then(() => {
-            fixture = TestBed.createComponent(TestComponent);
-            component = fixture.componentInstance;
-            element = fixture.debugElement.query(By.directive(NodeFavoriteDirective));
-            directiveInstance = element.injector.get(NodeFavoriteDirective);
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ],
+        declarations: [
+            TestComponent
+        ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+        ]
+    });
 
-            apiService = TestBed.get(AlfrescoApiService);
-            favoritesApi = apiService.getInstance().core.favoritesApi;
-        });
+    beforeEach(async(() => {
+        fixture = TestBed.createComponent(TestComponent);
+        component = fixture.componentInstance;
+        element = fixture.debugElement.query(By.directive(NodeFavoriteDirective));
+        directiveInstance = element.injector.get(NodeFavoriteDirective);
+
+        apiService = TestBed.get(AlfrescoApiService);
+        favoritesApi = apiService.getInstance().core.favoritesApi;
     }));
 
     describe('selection input change event', () => {

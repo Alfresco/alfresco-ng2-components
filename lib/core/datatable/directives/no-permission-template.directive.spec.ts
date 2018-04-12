@@ -15,37 +15,24 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { DataTableCellComponent } from '../components/datatable/datatable-cell.component';
 import { DataTableComponent } from '../components/datatable/datatable.component';
-import { DateCellComponent } from '../components/datatable/date-cell.component';
-import { FileSizeCellComponent } from '../components/datatable/filesize-cell.component';
-import { LocationCellComponent } from '../components/datatable/location-cell.component';
-import { MaterialModule } from '../../material.module';
 import { NoPermissionTemplateDirective } from './no-permission-template.directive';
+import { setupTestBed } from '../../testing/setupTestBed';
+import { CoreModule } from '../../core.module';
 
 describe('NoPermissionTemplateDirective', () => {
 
     let dataTable: DataTableComponent;
     let directive: NoPermissionTemplateDirective;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                RouterTestingModule,
-                MaterialModule
-            ],
-            declarations: [
-                DataTableComponent,
-                DataTableCellComponent,
-                DateCellComponent,
-                NoPermissionTemplateDirective,
-                LocationCellComponent,
-                FileSizeCellComponent
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot(),
+            RouterTestingModule
+        ]
+    });
 
     beforeEach(() => {
         let fixture = TestBed.createComponent(DataTableComponent);

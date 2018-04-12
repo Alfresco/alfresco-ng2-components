@@ -20,6 +20,9 @@ import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core
 import { By } from '@angular/platform-browser';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { NodeDeleteDirective } from './node-delete.directive';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreModule } from '../core.module';
+import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 
 @Component({
     template: `
@@ -72,7 +75,7 @@ class TestDeletePermanentComponent {
     onDelete = jasmine.createSpy('onDelete');
 }
 
-describe('NodeleteDirective', () => {
+describe('NodeDeleteDirective', () => {
     let fixture: ComponentFixture<TestComponent>;
     let fixtureWithPermissions: ComponentFixture<TestWithPermissionsComponent>;
     let fixtureWithPermanentComponent: ComponentFixture<TestDeletePermanentComponent>;
@@ -85,31 +88,35 @@ describe('NodeleteDirective', () => {
     let alfrescoApi: AlfrescoApiService;
     let nodeApi;
 
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ],
+        declarations: [
+            TestComponent,
+            TestWithPermissionsComponent,
+            TestDeletePermanentComponent
+        ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+        ]
+    });
+
     beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                TestComponent,
-                TestWithPermissionsComponent,
-                TestDeletePermanentComponent
-            ]
-        })
-            .compileComponents()
-            .then(() => {
-                fixture = TestBed.createComponent(TestComponent);
-                fixtureWithPermissions = TestBed.createComponent(TestWithPermissionsComponent);
-                fixtureWithPermanentComponent = TestBed.createComponent(TestDeletePermanentComponent);
+        fixture = TestBed.createComponent(TestComponent);
+        fixtureWithPermissions = TestBed.createComponent(TestWithPermissionsComponent);
+        fixtureWithPermanentComponent = TestBed.createComponent(TestDeletePermanentComponent);
 
-                component = fixture.componentInstance;
-                componentWithPermissions = fixtureWithPermissions.componentInstance;
-                componentWithPermanentDelete = fixtureWithPermanentComponent.componentInstance;
+        component = fixture.componentInstance;
+        componentWithPermissions = fixtureWithPermissions.componentInstance;
+        componentWithPermanentDelete = fixtureWithPermanentComponent.componentInstance;
 
-                element = fixture.debugElement.query(By.directive(NodeDeleteDirective));
-                elementWithPermissions = fixtureWithPermissions.debugElement.query(By.directive(NodeDeleteDirective));
-                elementWithPermanentDelete = fixtureWithPermanentComponent.debugElement.query(By.directive(NodeDeleteDirective));
+        element = fixture.debugElement.query(By.directive(NodeDeleteDirective));
+        elementWithPermissions = fixtureWithPermissions.debugElement.query(By.directive(NodeDeleteDirective));
+        elementWithPermanentDelete = fixtureWithPermanentComponent.debugElement.query(By.directive(NodeDeleteDirective));
 
-                alfrescoApi = TestBed.get(AlfrescoApiService);
-                nodeApi = alfrescoApi.getInstance().nodes;
-            });
+        alfrescoApi = TestBed.get(AlfrescoApiService);
+        nodeApi = alfrescoApi.getInstance().nodes;
     }));
 
     describe('Delete', () => {

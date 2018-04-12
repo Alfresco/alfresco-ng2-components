@@ -20,12 +20,12 @@ import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs/Observable';
 import { CommentProcessService } from '../services/comment-process.service';
-import { DatePipe } from '@angular/common';
-import { PeopleProcessService } from '../services/people-process.service';
-import { CommentListComponent } from './comment-list.component';
 import { CommentsComponent } from './comments.component';
 import { CommentContentService } from '../services/comment-content.service';
-import { EcmUserService } from '../userinfo/services/ecm-user.service';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreModule } from '../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { DatePipe } from '@angular/common';
 
 describe('CommentsComponent', () => {
 
@@ -38,25 +38,16 @@ describe('CommentsComponent', () => {
     let commentProcessService: CommentProcessService;
     let commentContentService: CommentContentService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-            ],
-            declarations: [
-                CommentsComponent,
-                CommentListComponent
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA],
-            providers: [
-                DatePipe,
-                PeopleProcessService,
-                CommentProcessService,
-                CommentContentService,
-                EcmUserService
-            ]
-        }).compileComponents();
-
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ],
+        providers: [
+            DatePipe
+        ],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(CommentsComponent);
