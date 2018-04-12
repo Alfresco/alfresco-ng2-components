@@ -17,7 +17,7 @@
 
 /*tslint:disable: ban*/
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { ContentMetadataCardComponent } from './content-metadata-card.component';
@@ -28,6 +28,8 @@ import { BasicPropertiesService } from '../../services/basic-properties.service'
 import { PropertyGroupTranslatorService } from '../../services/property-groups-translator.service';
 import { PropertyDescriptorsService } from '../../services/property-descriptors.service';
 import { ContentMetadataConfigFactory } from '../../services/config/content-metadata-config.factory';
+import { setupTestBed, TranslationService, TranslationMock, CoreModule, AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-core';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ContentService, PermissionsEnum } from '@alfresco/adf-core';
 
 describe('ContentMetadataCardComponent', () => {
@@ -37,28 +39,30 @@ describe('ContentMetadataCardComponent', () => {
         node: MinimalNodeEntryEntity,
         preset = 'custom-preset';
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                MatExpansionModule,
-                MatCardModule,
-                MatButtonModule,
-                MatIconModule
-            ],
-            declarations: [
-                ContentMetadataCardComponent,
-                ContentMetadataComponent
-            ],
-            providers: [
-                ContentMetadataService,
-                BasicPropertiesService,
-                PropertyGroupTranslatorService,
-                ContentMetadataConfigFactory,
-                PropertyDescriptorsService,
-                ContentService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot(),
+            MatExpansionModule,
+            MatCardModule,
+            MatButtonModule,
+            MatIconModule
+        ],
+        declarations: [
+            ContentMetadataCardComponent,
+            ContentMetadataComponent
+        ],
+        providers: [
+            {provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock},
+            {provide: TranslationService, useClass: TranslationMock },
+            ContentMetadataService,
+            BasicPropertiesService,
+            PropertyGroupTranslatorService,
+            ContentMetadataConfigFactory,
+            PropertyDescriptorsService,
+            ContentService
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(ContentMetadataCardComponent);

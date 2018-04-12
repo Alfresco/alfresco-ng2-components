@@ -22,7 +22,7 @@ import { SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { ContentMetadataComponent } from './content-metadata.component';
-import { MatExpansionModule, MatButtonModule, MatIconModule } from '@angular/material';
+import { MatExpansionModule } from '@angular/material';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { BasicPropertiesService } from '../../services/basic-properties.service';
 import { PropertyGroupTranslatorService } from '../../services/property-groups-translator.service';
@@ -32,11 +32,18 @@ import {
     CardViewComponent,
     CardViewUpdateService,
     NodesApiService,
-    LogService
+    LogService,
+    setupTestBed,
+    AlfrescoApiService,
+    AlfrescoApiServiceMock,
+    TranslationService,
+    TranslationMock,
+    CoreModule
 } from '@alfresco/adf-core';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { Observable } from 'rxjs/Observable';
 import { ContentMetadataConfigFactory } from '../../services/config/content-metadata-config.factory';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('ContentMetadataComponent', () => {
 
@@ -46,27 +53,27 @@ describe('ContentMetadataComponent', () => {
         folderNode: MinimalNodeEntryEntity,
         preset = 'custom-preset';
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                MatExpansionModule,
-                MatButtonModule,
-                MatIconModule
-            ],
-            declarations: [
-                ContentMetadataComponent
-            ],
-            providers: [
-                ContentMetadataService,
-                BasicPropertiesService,
-                PropertyGroupTranslatorService,
-                PropertyDescriptorsService,
-                ContentMetadataConfigFactory,
-                NodesApiService,
-                { provide: LogService, useValue: { error: jasmine.createSpy('error') } }
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            MatExpansionModule,
+            CoreModule.forRoot()
+        ],
+        declarations: [
+            ContentMetadataComponent
+        ],
+        providers: [
+            {provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock},
+            {provide: TranslationService, useClass: TranslationMock },
+            ContentMetadataService,
+            BasicPropertiesService,
+            PropertyGroupTranslatorService,
+            PropertyDescriptorsService,
+            ContentMetadataConfigFactory,
+            NodesApiService,
+            { provide: LogService, useValue: { error: jasmine.createSpy('error') } }
+        ]
+    })
 
     beforeEach(() => {
         fixture = TestBed.createComponent(ContentMetadataComponent);
@@ -96,7 +103,6 @@ describe('ContentMetadataComponent', () => {
 
     afterEach(() => {
         fixture.destroy();
-        TestBed.resetTestingModule();
     });
 
     describe('Default input param values', () => {

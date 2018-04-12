@@ -16,14 +16,13 @@
  */
 
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PathElementEntity } from 'alfresco-js-api';
-import { DataTableModule } from '@alfresco/adf-core';
+import { CoreModule, setupTestBed } from '@alfresco/adf-core';
 import { fakeNodeWithCreatePermission } from '../mock';
 import { CustomResourcesService, DocumentListService, DocumentListComponent } from '../document-list';
 import { BreadcrumbComponent } from './breadcrumb.component';
-
-declare let jasmine: any;
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('Breadcrumb', () => {
 
@@ -31,24 +30,23 @@ describe('Breadcrumb', () => {
     let fixture: ComponentFixture<BreadcrumbComponent>;
     let documentList: DocumentListComponent;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                DataTableModule
-            ],
-            declarations: [
-                DocumentListComponent,
-                BreadcrumbComponent
-            ],
-            providers: [
-                DocumentListService,
-                CustomResourcesService
-            ],
-            schemas: [
-                CUSTOM_ELEMENTS_SCHEMA
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ],
+        declarations: [
+            DocumentListComponent,
+            BreadcrumbComponent
+        ],
+        providers: [
+            DocumentListService,
+            CustomResourcesService
+        ],
+        schemas: [
+            CUSTOM_ELEMENTS_SCHEMA
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(BreadcrumbComponent);

@@ -17,6 +17,9 @@
 
 import { TestBed, TestModuleMetadata } from '@angular/core/testing';
 
+declare function beforeAll(action: (done: DoneFn) => void, timeout?: number): void;
+declare function afterAll(action: (done: DoneFn) => void, timeout?: number): void;
+
 const resetTestingModule = TestBed.resetTestingModule;
 const preventAngularFromResetting = () => (TestBed.resetTestingModule = () => TestBed);
 const allowAngularToReset = () => (TestBed.resetTestingModule = resetTestingModule);
