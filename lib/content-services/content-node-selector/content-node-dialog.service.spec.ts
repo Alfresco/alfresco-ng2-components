@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { async, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { MinimalNodeEntryEntity, SitePaging } from 'alfresco-js-api';
-import { AppConfigService, SitesService } from '@alfresco/adf-core';
+import { AppConfigService, SitesService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { CustomResourcesService } from '../document-list/services/custom-resources.service';
 import { ContentNodeDialogService } from './content-node-dialog.service';
@@ -60,18 +60,18 @@ describe('ContentNodeDialogService', () => {
     let spyOnDialogOpen: jasmine.Spy;
     let afterOpenObservable: Subject<any>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            providers: [
-                ContentNodeDialogService,
-                DocumentListService,
-                CustomResourcesService,
-                SitesService,
-                MatDialog
-            ]
-        }).compileComponents();
-
-    }));
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ],
+        providers: [
+            ContentNodeDialogService,
+            DocumentListService,
+            CustomResourcesService,
+            SitesService,
+            MatDialog
+        ]
+    });
 
     beforeEach(() => {
         let appConfig: AppConfigService = TestBed.get(AppConfigService);

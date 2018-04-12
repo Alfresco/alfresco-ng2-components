@@ -73,7 +73,7 @@ describe('ContentMetadataComponent', () => {
             NodesApiService,
             { provide: LogService, useValue: { error: jasmine.createSpy('error') } }
         ]
-    })
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(ContentMetadataComponent);

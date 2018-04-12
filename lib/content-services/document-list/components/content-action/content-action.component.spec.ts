@@ -18,8 +18,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
-import { ContentService } from '@alfresco/adf-core';
-import { DataTableModule } from '@alfresco/adf-core';
+import { ContentService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { FileNode } from '../../../mock';
 import { DocumentListService } from '../../services/document-list.service';
 import { CustomResourcesService } from '../../services/custom-resources.service';
@@ -42,23 +41,21 @@ describe('ContentAction', () => {
     let contentService: ContentService;
     let nodeActionsService: NodeActionsService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                DataTableModule
-            ],
-            providers: [
-                DocumentListService,
-                CustomResourcesService
-            ],
-            declarations: [
-                DocumentListComponent
-            ],
-            schemas: [
-                CUSTOM_ELEMENTS_SCHEMA
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ],
+        providers: [
+            DocumentListService,
+            CustomResourcesService
+        ],
+        declarations: [
+            DocumentListComponent
+        ],
+        schemas: [
+            CUSTOM_ELEMENTS_SCHEMA
+        ]
+    });
 
     beforeEach(() => {
         contentService = TestBed.get(ContentService);

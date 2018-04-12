@@ -15,34 +15,32 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { PropertyDescriptorsService } from './property-descriptors.service';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService, setupTestBed, CoreModule, AlfrescoApiServiceMock } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { ClassesApi } from 'alfresco-js-api';
 import { PropertyGroup } from '../interfaces/content-metadata.interfaces';
 
 describe('PropertyDescriptorLoaderService', () => {
 
-    let service: PropertyDescriptorsService,
-        classesApi: ClassesApi;
+    let service: PropertyDescriptorsService;
+    let classesApi: ClassesApi;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            providers: [
-                PropertyDescriptorsService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ],
+        providers: [
+            {provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock},
+            PropertyDescriptorsService
+        ]
+    });
 
     beforeEach(() => {
         service = TestBed.get(PropertyDescriptorsService);
         const alfrescoApiService = TestBed.get(AlfrescoApiService);
         classesApi = alfrescoApiService.classesApi;
-    });
-
-    afterEach(() => {
-        TestBed.resetTestingModule();
     });
 
     it('should load the groups passed by paramter', () => {

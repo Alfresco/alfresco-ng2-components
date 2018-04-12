@@ -17,6 +17,11 @@
 
 import { TestBed, TestModuleMetadata } from '@angular/core/testing';
 
+interface DoneFn extends Function {
+    (): void;
+    fail: (message?: Error | string) => void;
+}
+
 declare function beforeAll(action: (done: DoneFn) => void, timeout?: number): void;
 declare function afterAll(action: (done: DoneFn) => void, timeout?: number): void;
 

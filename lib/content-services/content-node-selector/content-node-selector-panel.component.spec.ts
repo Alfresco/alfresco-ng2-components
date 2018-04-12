@@ -19,8 +19,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity, SiteEntry, SitePaging } from 'alfresco-js-api';
-import { SearchService, SitesService } from '@alfresco/adf-core';
-import { DataTableModule } from '@alfresco/adf-core';
+import { SearchService, SitesService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import {
@@ -34,6 +33,7 @@ import { DropdownBreadcrumbComponent } from '../breadcrumb';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
 import { ContentNodeSelectorService } from './content-node-selector.service';
 import { NodePaging } from 'alfresco-js-api';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 const ONE_FOLDER_RESULT = {
     list: {
@@ -74,36 +74,29 @@ describe('ContentNodeSelectorComponent', () => {
         _observer.next(result);
     }
 
-    afterEach(() => {
-        fixture.destroy();
-        TestBed.resetTestingModule();
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ],
+        declarations: [
+            DocumentListComponent,
+            EmptyFolderContentDirective,
+            DropdownSitesComponent,
+            DropdownBreadcrumbComponent,
+            ContentNodeSelectorPanelComponent
+        ],
+        providers: [
+            CustomResourcesService,
+            SearchService,
+            DocumentListService,
+            SitesService,
+            ContentNodeSelectorService
+        ],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 
     describe('General component features', () => {
-
-        beforeEach(async(() => {
-            TestBed.configureTestingModule({
-                imports: [
-                    DataTableModule
-                ],
-                declarations: [
-                    DocumentListComponent,
-                    EmptyFolderContentDirective,
-                    DropdownSitesComponent,
-                    DropdownBreadcrumbComponent,
-                    ContentNodeSelectorPanelComponent
-                ],
-                providers: [
-                    CustomResourcesService,
-                    SearchService,
-                    DocumentListService,
-                    SitesService,
-                    ContentNodeSelectorService
-                ],
-                schemas: [CUSTOM_ELEMENTS_SCHEMA]
-            });
-            TestBed.compileComponents();
-        }));
 
         beforeEach(() => {
             fixture = TestBed.createComponent(ContentNodeSelectorPanelComponent);
