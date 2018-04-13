@@ -15,15 +15,14 @@
  * limitations under the License.
  */
 
-import { HttpClientModule } from '@angular/common/http';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { DirectiveModule } from '../directives/directive.module';
-import { MaterialModule } from '../material.module';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../app-config/app-config.service';
-import { TranslateLoaderService } from '../services/translate-loader.service';
-
 import { LanguageMenuComponent } from './language-menu.component';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreModule } from '../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslationService } from '../services/translation.service';
+import { TranslationMock } from '../mock/translation.service.mock';
 
 describe('LanguageMenuComponent', () => {
 
@@ -31,27 +30,15 @@ describe('LanguageMenuComponent', () => {
     let component: LanguageMenuComponent;
     let appConfig: AppConfigService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                MaterialModule,
-                HttpClientModule,
-                DirectiveModule,
-                TranslateModule.forRoot({
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: TranslateLoaderService
-                    }
-                })
-            ],
-            declarations: [
-                LanguageMenuComponent
-            ],
-            providers: [
-                AppConfigService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ],
+        providers: [
+            { provide: TranslationService, useClass: TranslationMock }
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(LanguageMenuComponent);

@@ -18,19 +18,25 @@
 import { TestBed } from '@angular/core/testing';
 import { fakeApps } from '../mock/apps-service.mock';
 import { AppsProcessService } from './apps-process.service';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreModule } from '../core.module';
+import { AlfrescoApiService } from './alfresco-api.service';
+import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 
 declare let jasmine: any;
-describe('Apps Service', () => {
+
+describe('AppsProcessService', () => {
 
     let service: AppsProcessService;
 
-    beforeEach((() => {
-        TestBed.configureTestingModule({
-            providers: [
-                AppsProcessService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+        ]
+    });
 
     beforeEach(() => {
         service = TestBed.get(AppsProcessService);

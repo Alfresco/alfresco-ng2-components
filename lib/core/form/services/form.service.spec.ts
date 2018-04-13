@@ -15,13 +15,15 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { Response, ResponseOptions } from '@angular/http';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { FormDefinitionModel } from '../models/form-definition.model';
-import { formModelTabs } from '../../mock';
-import { EcmModelService } from './ecm-model.service';
+import { formModelTabs, AlfrescoApiServiceMock } from '../../mock';
 import { FormService } from './form.service';
+import { setupTestBed } from '../../testing/setupTestBed';
+import { CoreModule } from '../../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 declare let jasmine: any;
 
@@ -55,21 +57,19 @@ describe('Form service', () => {
     let service: FormService;
     let apiService: AlfrescoApiService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            providers: [
-                EcmModelService,
-                FormService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+        ]
+    });
 
     beforeEach(() => {
         service = TestBed.get(FormService);
         apiService = TestBed.get(AlfrescoApiService);
-    });
-
-    beforeEach(() => {
         jasmine.Ajax.install();
     });
 

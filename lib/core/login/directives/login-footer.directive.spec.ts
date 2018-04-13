@@ -15,29 +15,25 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-
 import { LoginComponent } from '../components/login.component';
-import { MaterialModule } from '../../material.module';
 import { LoginFooterDirective } from './login-footer.directive';
+import { setupTestBed } from '../../testing/setupTestBed';
+import { CoreModule } from '../../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('LoginFooterDirective', () => {
     let component: LoginComponent;
     let directive: LoginFooterDirective;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                RouterTestingModule,
-                MaterialModule
-            ],
-            declarations: [
-                LoginFooterDirective,
-                LoginComponent
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            RouterTestingModule,
+            CoreModule.forRoot()
+        ]
+    });
 
     beforeEach(() => {
         let fixture = TestBed.createComponent(LoginComponent);
@@ -45,7 +41,7 @@ describe('LoginFooterDirective', () => {
         directive = new LoginFooterDirective(component);
     });
 
-    it('applies tempalate to Login component', () => {
+    it('applies template to Login component', () => {
         const template: any = '';
         directive.template = template;
         directive.ngAfterContentInit();

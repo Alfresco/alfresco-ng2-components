@@ -23,11 +23,18 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { UserPreferencesService } from '../../services/user-preferences.service';
 import { AuthenticationService } from '../../services/authentication.service';
 
-import { MaterialModule } from '../../material.module';
 import { LoginErrorEvent } from '../models/login-error.event';
 import { LoginSuccessEvent } from '../models/login-success.event';
 import { LoginComponent } from './login.component';
 import { Observable } from 'rxjs/Observable';
+
+import { setupTestBed } from '../../testing/setupTestBed';
+import { CoreModule } from '../../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { TranslationService } from '../../services/translation.service';
+import { TranslationMock } from '../../mock/translation.service.mock';
 
 describe('LoginComponent', () => {
     let component: LoginComponent;
@@ -54,20 +61,17 @@ describe('LoginComponent', () => {
         return errorMessage;
     };
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                RouterTestingModule,
-                MaterialModule
-            ],
-            declarations: [
-                LoginComponent
-            ],
-            providers: [
-                AuthenticationService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            RouterTestingModule,
+            CoreModule.forRoot()
+        ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+            { provide: TranslationService, useClass: TranslationMock }
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(LoginComponent);
@@ -100,7 +104,7 @@ describe('LoginComponent', () => {
         fixture.detectChanges();
     }
 
-    it('should be autocompelte off', () => {
+    it('should be autocompelete off', () => {
         expect(element.querySelector('#adf-login-form').getAttribute('autocomplete')).toBe('off');
     });
 
