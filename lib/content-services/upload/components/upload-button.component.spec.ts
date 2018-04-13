@@ -22,7 +22,7 @@ import { Observable } from 'rxjs/Observable';
 import { UploadButtonComponent } from './upload-button.component';
 import { TranslationMock } from '@alfresco/adf-core';
 
-fdescribe('UploadButtonComponent', () => {
+describe('UploadButtonComponent', () => {
 
     let file = { name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json' };
     let fakeEvent = {
