@@ -16,30 +16,32 @@
  */
 
 import { EventEmitter } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 import { FileModel, FileUploadOptions, FileUploadStatus } from '../models/file.model';
+import { AppConfigModule } from '../app-config/app-config.module';
 import { UploadService } from './upload.service';
 import { AppConfigService } from '../app-config/app-config.service';
-import { setupTestBed } from '../testing/setupTestBed';
-import { CoreModule } from '../core.module';
 import { AlfrescoApiService } from './alfresco-api.service';
+import { StorageService } from './storage.service';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
-import { AppConfigServiceMock } from '../mock/app-config.service.mock';
 
 declare let jasmine: any;
 
 describe('UploadService', () => {
     let service: UploadService;
 
-    setupTestBed({
-        imports: [
-            CoreModule.forRoot()
-        ],
-        providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-            { provide: AppConfigService, useClass: AppConfigServiceMock }
-        ]
-    });
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                AppConfigModule
+            ],
+            providers: [
+                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+                StorageService,
+                UploadService
+            ]
+        }).compileComponents();
+    }));
 
     beforeEach(() => {
         let appConfig: AppConfigService = TestBed.get(AppConfigService);
@@ -55,7 +57,6 @@ describe('UploadService', () => {
     });
 
     afterEach(() => {
-        service.clearQueue();
         jasmine.Ajax.uninstall();
     });
 

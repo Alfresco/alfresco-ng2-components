@@ -35,6 +35,7 @@ import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { TranslationService } from '../../services/translation.service';
 import { TranslationMock } from '../../mock/translation.service.mock';
+import { AuthenticationMock } from '../../mock/authentication.service.mock';
 
 describe('LoginComponent', () => {
     let component: LoginComponent;
@@ -69,7 +70,8 @@ describe('LoginComponent', () => {
         ],
         providers: [
             { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-            { provide: TranslationService, useClass: TranslationMock }
+            { provide: TranslationService, useClass: TranslationMock },
+            { provide: AuthenticationService, useClass: AuthenticationMock }
         ]
     });
 
@@ -459,10 +461,11 @@ describe('LoginComponent', () => {
 
         component.error.subscribe(() => {
             fixture.detectChanges();
-
-            expect(component.isError).toBe(true);
-            expect(getLoginErrorElement()).toBeDefined();
-            expect(getLoginErrorMessage()).toEqual('ERROR: the network is offline, Origin is not allowed by Access-Control-Allow-Origin');
+            fixture.whenStable().then(() => {
+                expect(component.isError).toBe(true);
+                expect(getLoginErrorElement()).toBeDefined();
+                expect(getLoginErrorMessage()).toEqual('ERROR: the network is offline, Origin is not allowed by Access-Control-Allow-Origin');
+            });
         });
 
         loginWithCredentials('fake-username-CORS-error', 'fake-password');
