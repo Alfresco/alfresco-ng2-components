@@ -374,15 +374,17 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.resetNewFolderPagination();
             this.loadFolder();
         } else if (changes.currentFolderId && changes.currentFolderId.currentValue) {
-                this.resetNewFolderPagination();
-                this.loadFolder();
+            this.resetNewFolderPagination();
+            this.loadFolder();
         } else if (this.data) {
             if (changes.node && changes.node.currentValue) {
                 this.data.loadPage(changes.node.currentValue);
                 this.onDataReady(changes.node.currentValue);
             } else if (changes.rowFilter) {
                 this.data.setFilter(changes.rowFilter.currentValue);
-                this.loadFolder();
+                if (this.currentFolderId) {
+                    this.loadFolderNodesByFolderNodeId(this.currentFolderId, this.pagination.getValue()).catch(err => this.error.emit(err));
+                }
             } else if (changes.imageResolver) {
                 this.data.setImageResolver(changes.imageResolver.currentValue);
             }
@@ -392,12 +394,11 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     reload() {
         this.ngZone.run(() => {
             this.resetSelection();
-
-            if (this.folderNode || this.currentFolderId) {
-                this.loadFolder();
-            } else if (this.node) {
+            if (this.node) {
                 this.data.loadPage(this.node);
                 this.onDataReady(this.node);
+            } else {
+                this.loadFolder();
             }
         });
     }
@@ -464,6 +465,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     updateFolderData(node: MinimalNodeEntity): void {
+        this.folderNode = null;
         this.currentFolderId = node.entry.id;
         this.reload();
         this.folderChange.emit(new NodeEntryEvent(node.entry));
@@ -506,7 +508,12 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.setupDefaultColumns(this.currentFolderId);
         }
 
-        this.loadFolderByNodeId(this.currentFolderId);
+        if (this.folderNode) {
+            return this.loadFolderNodesByFolderNodeId(this.folderNode.id, this.pagination.getValue())
+                .catch(err => this.handleError(err));
+        } else {
+            this.loadFolderByNodeId(this.currentFolderId);
+        }
     }
 
     loadFolderByNodeId(nodeId: string) {
@@ -736,6 +743,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     private resetNewFolderPagination() {
+        this.folderNode = null;
         this.pagination.value.skipCount = 0;
     }
 
