@@ -72,14 +72,14 @@ describe('AppConfigService', () => {
         expect(appConfigService).toBeDefined();
     });
 
-    fit('should stream only the selected attribute changes when using select', async(() => {
+    it('should stream only the selected attribute changes when using select', async(() => {
         appConfigService.config.testProp = true;
         appConfigService.select('testProp').subscribe((property) => {
             expect(property).toBeTruthy();
         });
     }));
 
-    fit('should stream the page size value when is set', async(() => {
+    it('should stream the page size value when is set', async(() => {
         appConfigService.config.testProp = true;
         appConfigService.onChange.subscribe((config) => {
             expect(config.testProp).toBeTruthy();
