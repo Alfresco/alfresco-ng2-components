@@ -15,24 +15,20 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { SettingsService } from './settings.service';
-import { AppConfigModule } from '../app-config/app-config.module';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreModule } from '../core.module';
 
 describe('SettingsService', () => {
 
     let service: SettingsService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                AppConfigModule
-            ],
-            providers: [
-                SettingsService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ]
+    });
 
     beforeEach(() => {
         service = TestBed.get(SettingsService);

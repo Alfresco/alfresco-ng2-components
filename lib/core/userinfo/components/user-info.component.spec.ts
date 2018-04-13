@@ -21,12 +21,14 @@ import { AuthenticationService, ContentService } from '../../services';
 import { InitialUsernamePipe } from '../../pipes';
 import { fakeBpmUser } from '../../mock/bpm-user.service.mock';
 import { fakeEcmEditedUser, fakeEcmUser, fakeEcmUserNoImage } from '../../mock/ecm-user.service.mock';
-import { MaterialModule } from '../../material.module';
 import { BpmUserService } from '../services/bpm-user.service';
 import { EcmUserService } from '../services/ecm-user.service';
 import { BpmUserModel } from './../models/bpm-user.model';
 import { UserInfoComponent } from './user-info.component';
 import { Observable } from 'rxjs/Observable';
+import { setupTestBed } from '../../testing/setupTestBed';
+import { CoreModule } from '../../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 class FakeSanitazer extends DomSanitizer {
 
@@ -76,29 +78,22 @@ describe('User info component', () => {
         fixture.detectChanges();
     }
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                MaterialModule
-            ],
-            declarations: [
-                UserInfoComponent
-            ],
-            providers: [
-                EcmUserService,
-                BpmUserService,
-                ContentService
-            ]
-        }).compileComponents().then(() => {
-            fixture = TestBed.createComponent(UserInfoComponent);
-            component = fixture.componentInstance;
-            element = fixture.nativeElement;
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ]
+    });
 
-            authService = TestBed.get(AuthenticationService);
-            ecmUserService = TestBed.get(EcmUserService);
-            bpmUserService = TestBed.get(BpmUserService);
-            contentService = TestBed.get(ContentService);
-        });
+    beforeEach(async(() => {
+        fixture = TestBed.createComponent(UserInfoComponent);
+        component = fixture.componentInstance;
+        element = fixture.nativeElement;
+
+        authService = TestBed.get(AuthenticationService);
+        ecmUserService = TestBed.get(EcmUserService);
+        bpmUserService = TestBed.get(BpmUserService);
+        contentService = TestBed.get(ContentService);
     }));
 
     afterEach(() => {

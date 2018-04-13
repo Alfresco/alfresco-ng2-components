@@ -19,21 +19,26 @@ import { async, TestBed } from '@angular/core/testing';
 import { CommentModel } from '../models/comment.model';
 import { fakeProcessComment, fakeTasksComment, fakeUser1 } from '../mock/comment-process-service.mock';
 import { CommentProcessService } from './comment-process.service';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreModule } from '../core.module';
 import { AlfrescoApiService } from './alfresco-api.service';
+import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 
 declare let jasmine: any;
+
 describe('Comment ProcessService Service', () => {
 
     let service: CommentProcessService;
     let alfrescoApi: any;
 
-    beforeEach((() => {
-        TestBed.configureTestingModule({
-            providers: [
-                CommentProcessService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+        ]
+    });
 
     beforeEach(() => {
         service = TestBed.get(CommentProcessService);

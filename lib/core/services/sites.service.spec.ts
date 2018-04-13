@@ -15,12 +15,15 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../app-config/app-config.service';
-import { AppConfigModule } from '../app-config/app-config.module';
 import { SitesService } from './sites.service';
-import { TranslateLoaderService } from './translate-loader.service';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreModule } from '../core.module';
+import { AlfrescoApiService } from './alfresco-api.service';
+import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
+import { TranslationService } from './translation.service';
+import { TranslationMock } from '../mock/translation.service.mock';
 
 declare let jasmine: any;
 
@@ -28,22 +31,15 @@ describe('Sites service', () => {
 
     let service;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                AppConfigModule,
-                TranslateModule.forRoot({
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: TranslateLoaderService
-                    }
-                })
-            ],
-            providers: [
-                SitesService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+            { provide: TranslationService, useClass: TranslationMock }
+        ]
+    });
 
     beforeEach(() => {
         let appConfig: AppConfigService = TestBed.get(AppConfigService);

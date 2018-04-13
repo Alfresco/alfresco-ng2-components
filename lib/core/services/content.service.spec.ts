@@ -15,18 +15,20 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TestBed } from '@angular/core/testing';
 import { CookieServiceMock } from '../mock/cookie.service.mock';
 import { ContentService } from './content.service';
 import { SettingsService } from './settings.service';
 import { AppConfigService } from '../app-config/app-config.service';
-import { AppConfigModule } from '../app-config/app-config.module';
 import { AuthenticationService } from './authentication.service';
 import { CookieService } from './cookie.service';
 import { StorageService } from './storage.service';
-import { TranslateLoaderService } from './translate-loader.service';
-import { UserPreferencesService } from './user-preferences.service';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreModule } from '../core.module';
+import { AlfrescoApiService } from './alfresco-api.service';
+import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
+import { TranslationService } from './translation.service';
+import { TranslationMock } from '../mock/translation.service.mock';
 
 declare let jasmine: any;
 
@@ -40,28 +42,16 @@ describe('ContentService', () => {
 
     const nodeId = 'fake-node-id';
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                AppConfigModule,
-                TranslateModule.forRoot({
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: TranslateLoaderService
-                    }
-                })
-            ],
-            declarations: [],
-            providers: [
-                ContentService,
-                AuthenticationService,
-                SettingsService,
-                StorageService,
-                UserPreferencesService,
-                {provide: CookieService, useClass: CookieServiceMock}
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+            { provide: TranslationService, useClass: TranslationMock },
+            { provide: CookieService, useClass: CookieServiceMock }
+        ]
+    });
 
     beforeEach(() => {
         authService = TestBed.get(AuthenticationService);

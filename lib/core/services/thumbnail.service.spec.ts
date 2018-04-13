@@ -15,42 +15,31 @@
  * limitations under the License.
  */
 
-import { HttpClientModule } from '@angular/common/http';
-import { async, TestBed } from '@angular/core/testing';
-import { MatIconRegistry } from '@angular/material';
-import { BrowserModule } from '@angular/platform-browser';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TestBed } from '@angular/core/testing';
 import { CookieServiceMock } from './../mock/cookie.service.mock';
-import { ContentService } from './content.service';
 import { CookieService } from './cookie.service';
 import { ThumbnailService } from './thumbnail.service';
-import { TranslateLoaderService } from './translate-loader.service';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreModule } from '../core.module';
+import { TranslationService } from './translation.service';
+import { TranslationMock } from '../mock/translation.service.mock';
+import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
+import { AlfrescoApiService } from './alfresco-api.service';
 
 describe('ThumbnailService', () => {
 
     let service: ThumbnailService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                BrowserModule,
-                HttpClientModule,
-                TranslateModule.forRoot({
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: TranslateLoaderService
-                    }
-                })
-            ],
-            providers: [
-                ContentService,
-                { provide: CookieService, useClass: CookieServiceMock },
-                ThumbnailService,
-                MatIconRegistry
-            ]
-        }).compileComponents();
-
-    }));
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+            { provide: TranslationService, useClass: TranslationMock },
+            { provide: CookieService, useClass: CookieServiceMock }
+        ]
+    });
 
     beforeEach(() => {
         service = TestBed.get(ThumbnailService);
