@@ -142,7 +142,7 @@ export class DocumentListService {
             include: includeFieldsRequest
         };
 
-        return this.contentService.getNode(nodeId,opts);
+        return this.contentService.getNode(nodeId, opts);
     }
 
     /**

@@ -201,7 +201,6 @@ export class ContentService {
         return Observable.fromPromise(this.apiService.getInstance().nodes.getNode(nodeId, opts));
     }
 
-
     /**
      * Check if the user has permissions on that node
      * @param node Node to check allowableOperations
