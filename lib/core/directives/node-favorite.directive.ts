@@ -29,7 +29,7 @@ import 'rxjs/observable/forkJoin';
     exportAs: 'adfFavorite'
 })
 export class NodeFavoriteDirective implements OnChanges {
-    private favorites: any[] = [];
+    favorites: any[] = [];
 
     /** Array of nodes to toggle as favorites. */
     @Input('adf-node-favorite')
@@ -68,7 +68,7 @@ export class NodeFavoriteDirective implements OnChanges {
                 // shared files have nodeId
                 const id = selected.entry.nodeId || selected.entry.id;
 
-                return Observable.fromPromise(this.alfrescoApiService.getInstance().core.favoritesApi.removeFavoriteSite('-me-', id));
+                return Observable.fromPromise(this.alfrescoApiService.favoritesApi.removeFavoriteSite('-me-', id));
             });
 
             Observable.forkJoin(batch).subscribe(() => {
@@ -81,7 +81,7 @@ export class NodeFavoriteDirective implements OnChanges {
             const notFavorite = this.favorites.filter((node) => !node.entry.isFavorite);
             const body: FavoriteBody[] = notFavorite.map((node) => this.createFavoriteBody(node));
 
-            Observable.fromPromise(this.alfrescoApiService.getInstance().core.favoritesApi.addFavorite('-me-', <any> body))
+            Observable.fromPromise(this.alfrescoApiService.favoritesApi.addFavorite('-me-', <any> body))
                 .subscribe(() => {
                     notFavorite.map(selected => selected.entry.isFavorite = true);
                     this.toggle.emit();
@@ -98,7 +98,9 @@ export class NodeFavoriteDirective implements OnChanges {
         const result = this.diff(selection, this.favorites);
         const batch = this.getProcessBatch(result);
 
-        Observable.forkJoin(batch).subscribe((data) => this.favorites.push(...data));
+        Observable.forkJoin(batch).subscribe((data) => {
+            this.favorites.push(...data);
+        });
     }
 
     hasFavorites(): boolean {
@@ -118,8 +120,7 @@ export class NodeFavoriteDirective implements OnChanges {
         // shared files have nodeId
         const id = (<any> selected).entry.nodeId || selected.entry.id;
 
-        const promise = this.alfrescoApiService.getInstance()
-            .core.favoritesApi.getFavorite('-me-', id);
+        const promise = this.alfrescoApiService.favoritesApi.getFavorite('-me-', id);
 
         return Observable.from(promise)
             .map(() => ({

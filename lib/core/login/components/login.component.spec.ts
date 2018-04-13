@@ -438,10 +438,11 @@ describe('LoginComponent', () => {
 
         component.error.subscribe(() => {
             fixture.detectChanges();
-
-            expect(component.isError).toBe(true);
-            expect(getLoginErrorElement()).toBeDefined();
-            expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+            fixture.whenStable().then(() => {
+                expect(component.isError).toBe(true);
+                expect(getLoginErrorElement()).toBeDefined();
+                expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+            });
         });
 
         loginWithCredentials('fake-wrong-username', 'fake-wrong-password');

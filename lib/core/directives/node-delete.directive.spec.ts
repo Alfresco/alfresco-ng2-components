@@ -23,6 +23,8 @@ import { NodeDeleteDirective } from './node-delete.directive';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreModule } from '../core.module';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
+import { TranslationService } from '../services/translation.service';
+import { TranslationMock } from '../mock/translation.service.mock';
 
 @Component({
     template: `
@@ -34,9 +36,9 @@ class TestComponent {
     selection = [];
 
     @ViewChild(NodeDeleteDirective)
-    deleteDirective;
+    deleteDirective: NodeDeleteDirective;
 
-    onDelete = jasmine.createSpy('onDelete');
+    onDelete(event) {}
 }
 
 @Component({
@@ -50,7 +52,7 @@ class TestWithPermissionsComponent {
     selection = [];
 
     @ViewChild(NodeDeleteDirective)
-    deleteDirective;
+    deleteDirective: NodeDeleteDirective;
 
     onDelete = jasmine.createSpy('onDelete');
 }
@@ -68,7 +70,7 @@ class TestDeletePermanentComponent {
     selection = [];
 
     @ViewChild(NodeDeleteDirective)
-    deleteDirective;
+    deleteDirective: NodeDeleteDirective;
 
     permanent = true;
 
@@ -98,7 +100,8 @@ describe('NodeDeleteDirective', () => {
             TestDeletePermanentComponent
         ],
         providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+            { provide: TranslationService, useClass: TranslationMock }
         ]
     });
 
@@ -118,6 +121,10 @@ describe('NodeDeleteDirective', () => {
         alfrescoApi = TestBed.get(AlfrescoApiService);
         nodeApi = alfrescoApi.getInstance().nodes;
     }));
+
+    afterEach(() => {
+        fixture.destroy();
+    });
 
     describe('Delete', () => {
 
@@ -276,18 +283,19 @@ describe('NodeDeleteDirective', () => {
             });
         });
 
-        it('should emit event when delete is done', fakeAsync(() => {
-            component.onDelete.calls.reset();
-            spyOn(nodeApi, 'deleteNode').and.returnValue(Promise.resolve());
+        it('should emit event when delete is done', (done) => {
+            spyOn(alfrescoApi.nodesApi, 'deleteNode').and.returnValue(Promise.resolve());
 
             component.selection = <any> [{ entry: { id: '1', name: 'name1' } }];
-
             fixture.detectChanges();
-            element.nativeElement.click();
-            tick();
 
-            expect(component.onDelete).toHaveBeenCalled();
-        }));
+            element.nativeElement.click();
+            fixture.detectChanges();
+
+            component.deleteDirective.delete.subscribe(() => {
+                done();
+            });
+        });
 
         it('should disable the button if no node are selected', fakeAsync(() => {
             component.selection = [];

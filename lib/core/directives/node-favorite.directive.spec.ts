@@ -23,6 +23,8 @@ import { NodeFavoriteDirective } from './node-favorite.directive';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreModule } from '../core.module';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
+import { TranslationService } from '../services/translation.service';
+import { TranslationMock } from '../mock/translation.service.mock';
 
 @Component({
     template: `
@@ -40,8 +42,8 @@ describe('NodeFavoriteDirective', () => {
     let component: TestComponent;
     let fixture: ComponentFixture<TestComponent>;
     let element: DebugElement;
-    let directiveInstance;
-    let apiService;
+    let directiveInstance: NodeFavoriteDirective;
+    let apiService: AlfrescoApiService;
     let favoritesApi;
 
     setupTestBed({
@@ -52,7 +54,8 @@ describe('NodeFavoriteDirective', () => {
             TestComponent
         ],
         providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+            { provide: TranslationService, useClass: TranslationMock }
         ]
     });
 
@@ -96,35 +99,30 @@ describe('NodeFavoriteDirective', () => {
             expect(directiveInstance.markFavoritesNodes).toHaveBeenCalledWith(component.selection);
         });
 
-        it('should reset favorites if selection is empty', fakeAsync(() => {
-            spyOn(favoritesApi, 'getFavorite').and.returnValue(Promise.resolve());
+        it('should reset favorites if selection is empty', async(() => {
+            spyOn(apiService.favoritesApi, 'getFavorite').and.returnValue(Promise.resolve(true));
 
             component.selection = [
                 { entry: { id: '1', name: 'name1' } }
             ];
 
             fixture.detectChanges();
-            tick();
 
-            expect(directiveInstance.hasFavorites()).toBe(true);
+            fixture.whenStable().then(() => {
+                expect(directiveInstance.hasFavorites()).toBe(true);
 
-            component.selection = [];
-            fixture.detectChanges();
-            tick();
+                component.selection = [];
+                fixture.detectChanges();
 
-            expect(directiveInstance.hasFavorites()).toBe(false);
+                expect(directiveInstance.hasFavorites()).toBe(false);
+            });
         }));
     });
 
     describe('markFavoritesNodes()', () => {
-        let favoritesApiSpy;
-
-        beforeEach(() => {
-            favoritesApiSpy = spyOn(favoritesApi, 'getFavorite');
-        });
 
         it('should check each selected node if it is a favorite', fakeAsync(() => {
-            favoritesApiSpy.and.returnValue(Promise.resolve());
+            spyOn(apiService.favoritesApi, 'getFavorite').and.returnValue(Promise.resolve(true));
 
             component.selection = [
                 { entry: { id: '1', name: 'name1' } },
@@ -134,11 +132,11 @@ describe('NodeFavoriteDirective', () => {
             fixture.detectChanges();
             tick();
 
-            expect(favoritesApiSpy.calls.count()).toBe(2);
+            expect(apiService.favoritesApi.getFavorite).toHaveBeenCalledTimes(2);
         }));
 
-        it('should not check processed node when another is unselected', fakeAsync(() => {
-            favoritesApiSpy.and.returnValue(Promise.resolve());
+        it('should not check processed node when another is unselected', async(() => {
+            const favoritesApiSpy = spyOn(apiService.favoritesApi, 'getFavorite').and.returnValue(Promise.resolve(true));
 
             component.selection = [
                 { entry: { id: '1', name: 'name1' } },
@@ -146,26 +144,25 @@ describe('NodeFavoriteDirective', () => {
             ];
 
             fixture.detectChanges();
-            tick();
+            fixture.whenStable().then(() => {
+                expect(directiveInstance.favorites.length).toBe(2);
+                expect(favoritesApiSpy.calls.count()).toBe(2);
 
-            expect(directiveInstance.favorites.length).toBe(2);
-            expect(favoritesApiSpy.calls.count()).toBe(2);
+                favoritesApiSpy.calls.reset();
 
-            favoritesApiSpy.calls.reset();
+                component.selection = [
+                    { entry: { id: '2', name: 'name2' } }
+                ];
 
-            component.selection = [
-                { entry: { id: '2', name: 'name2' } }
-            ];
+                fixture.detectChanges();
 
-            fixture.detectChanges();
-            tick();
-
-            expect(directiveInstance.favorites.length).toBe(1);
-            expect(favoritesApiSpy).not.toHaveBeenCalled();
+                expect(directiveInstance.favorites.length).toBe(1);
+                expect(favoritesApiSpy).not.toHaveBeenCalled();
+            });
         }));
 
-        it('should not check processed nodes when another is selected', fakeAsync(() => {
-            favoritesApiSpy.and.returnValue(Promise.resolve());
+        it('should not check processed nodes when another is selected', async(() => {
+            const favoritesApiSpy = spyOn(apiService.favoritesApi, 'getFavorite').and.returnValue(Promise.resolve(true));
 
             component.selection = [
                 { entry: { id: '1', name: 'name1' } },
@@ -173,24 +170,24 @@ describe('NodeFavoriteDirective', () => {
             ];
 
             fixture.detectChanges();
-            tick();
+            fixture.whenStable().then(() => {
+                expect(directiveInstance.favorites.length).toBe(2);
+                expect(favoritesApiSpy.calls.count()).toBe(2);
 
-            expect(directiveInstance.favorites.length).toBe(2);
-            expect(favoritesApiSpy.calls.count()).toBe(2);
+                favoritesApiSpy.calls.reset();
 
-            favoritesApiSpy.calls.reset();
+                component.selection = [
+                    { entry: { id: '1', name: 'name1' } },
+                    { entry: { id: '2', name: 'name2' } },
+                    { entry: { id: '3', name: 'name3' } }
+                ];
 
-            component.selection = [
-                { entry: { id: '1', name: 'name1' } },
-                { entry: { id: '2', name: 'name2' } },
-                { entry: { id: '3', name: 'name3' } }
-            ];
-
-            fixture.detectChanges();
-            tick();
-
-            expect(directiveInstance.favorites.length).toBe(3);
-            expect(favoritesApiSpy.calls.count()).toBe(1);
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(directiveInstance.favorites.length).toBe(3);
+                    expect(favoritesApiSpy.calls.count()).toBe(1);
+                });
+            });
         }));
     });
 
@@ -318,7 +315,7 @@ describe('NodeFavoriteDirective', () => {
     });
 
     describe('getFavorite()', () => {
-        it('should process node as favorite', fakeAsync(() => {
+        it('should process node as favorite', async(() => {
             spyOn(favoritesApi, 'getFavorite').and.returnValue(Promise.resolve());
 
             component.selection = [
@@ -326,12 +323,12 @@ describe('NodeFavoriteDirective', () => {
             ];
 
             fixture.detectChanges();
-            tick();
-
-            expect(directiveInstance.favorites[0].entry.isFavorite).toBe(true);
+            fixture.whenStable().then(() => {
+                expect(directiveInstance.favorites[0].entry.isFavorite).toBe(true);
+            });
         }));
 
-        it('should not process node as favorite', fakeAsync(() => {
+        it('should not process node as favorite', async(() => {
             spyOn(favoritesApi, 'getFavorite').and.returnValue(Promise.reject(null));
 
             component.selection = [
@@ -339,9 +336,9 @@ describe('NodeFavoriteDirective', () => {
             ];
 
             fixture.detectChanges();
-            tick();
-
-            expect(directiveInstance.favorites[0].entry.isFavorite).toBe(false);
+            fixture.whenStable().then(() => {
+                expect(directiveInstance.favorites[0].entry.isFavorite).toBe(false);
+            });
         }));
     });
 
