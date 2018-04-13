@@ -44,8 +44,8 @@ export class AppConfigService {
         this.onChange = this.onChangeSubject.asObservable();
     }
 
-    onLoad(): Observable<any> {
-        return this.onChange.map((config) => config).distinctUntilChanged();
+    select(property: string): Observable<any> {
+        return this.onChange.map((config) => config[property]).distinctUntilChanged();
     }
 
     get<T>(key: string, defaultValue?: T): T {
