@@ -146,7 +146,7 @@ fi
 
 if $EXEC_BUILD == true; then
     echo "====== Build ADF ===== "
-    npm run new-build
+    npm run build
 fi
 
 for PACKAGE in ${projects[@]}
