@@ -144,7 +144,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
             this.navigate.emit(route);
 
             if (this.target) {
-                this.target.loadFolderByNodeId(route.id);
+                this.target.navigateTo(route.id);
             }
         }
     }

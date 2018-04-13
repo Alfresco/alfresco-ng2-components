@@ -80,8 +80,7 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'files',
-                component: FilesComponent,
-                canActivate: [AuthGuardEcm]
+                redirectTo: 'files/-my-'
             },
             {
                 path: 'files/:id',
