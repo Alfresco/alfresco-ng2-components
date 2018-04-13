@@ -78,6 +78,19 @@ describe('AccordionGroupComponent', () => {
         });
     }));
 
+    it('should be display only accordion title', async(() => {
+        component.heading = 'Fake Header';
+        component.headingIcon = '';
+        component.contentWrapper.nativeElement.innerHTML = '<a>Test</a>';
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            let headerText = element.querySelector('#heading-text');
+            let headerIcon = element.querySelector('#adf-expansion-panel-id .material-icons');
+            expect(headerText.innerText).toEqual('Fake Header');
+            expect(headerIcon).toBeNull();
+        });
+    }));
+
     it('should be display accordion title and content', async(() => {
         component.isSelected = true;
         component.heading = 'Fake Header';

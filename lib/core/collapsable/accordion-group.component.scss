@@ -27,9 +27,6 @@
         padding-left: 20px;
         padding-top: 4px;
     }
-}
-
-adf-accordion-group {
 
     .mat-expansion-panel {
         transition: none !important;
@@ -38,18 +35,18 @@ adf-accordion-group {
     }
 
     .mat-expansion-panel-body {
-        padding: 0px;
+        padding: 1px !important;
     }
 
     .mat-expansion-panel-header {
-        padding: 0px;
+        padding: 0px !important;
     }
 
     .mat-expansion-panel-header-title {
-        margin-right: 0px;
+        margin-right: 0px !important;
     }
 
     .mat-expansion-indicator {
-            margin-right: 25px;
+            margin-right: 25px !important;
     }
 }
