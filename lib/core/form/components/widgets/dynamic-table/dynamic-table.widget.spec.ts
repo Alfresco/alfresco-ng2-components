@@ -17,23 +17,15 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LogService } from '../../../../services';
-import { ActivitiContentService } from '../../../services/activiti-alfresco.service';
-import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
-import { MaterialModule } from '../../../../material.module';
-import { ErrorWidgetComponent } from '../error/error.component';
-import { EcmModelService } from './../../../services/ecm-model.service';
 import { FormService } from './../../../services/form.service';
 import { FormFieldModel, FormFieldTypes, FormModel } from './../core/index';
 import { DynamicTableColumn  } from './dynamic-table-column.model';
 import { DynamicTableRow  } from './dynamic-table-row.model';
 import { DynamicTableWidgetComponent } from './dynamic-table.widget';
 import { DynamicTableModel } from './dynamic-table.widget.model';
-
-import { BooleanEditorComponent } from './editors/boolean/boolean.editor';
-import { DateEditorComponent } from './editors/date/date.editor';
-import { DropdownEditorComponent } from './editors/dropdown/dropdown.editor';
-import { RowEditorComponent } from './editors/row.editor';
-import { TextEditorComponent } from './editors/text/text.editor';
+import { setupTestBed } from '../../../../testing/setupTestBed';
+import { CoreModule } from '../../../../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 let fakeFormField = {
     id: 'fake-dynamic-table',
@@ -85,23 +77,12 @@ describe('DynamicTableWidgetComponent', () => {
     let logService: LogService;
     let formService: FormService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                MaterialModule
-            ],
-            declarations: [DynamicTableWidgetComponent, RowEditorComponent,
-                DropdownEditorComponent, DateEditorComponent, BooleanEditorComponent,
-                TextEditorComponent, ErrorWidgetComponent],
-            providers: [
-                FormService,
-                LogService,
-                ActivitiContentService,
-                EcmModelService,
-                WidgetVisibilityService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ]
+    });
 
     beforeEach(() => {
         const field = new FormFieldModel(new FormModel());

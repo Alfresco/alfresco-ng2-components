@@ -16,20 +16,29 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { fakeFormJson } from '../../../../mock';
-import { MaterialModule } from '../../../../material.module';
+import { fakeFormJson, TranslationMock } from '../../../../mock';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { TabModel } from '../core/tab.model';
-import { WIDGET_DIRECTIVES } from '../index';
-import { MASK_DIRECTIVE } from '../index';
-import { FormFieldComponent } from './../../form-field/form-field.component';
-import { ContentWidgetComponent } from './../content/content.widget';
 import { TabsWidgetComponent } from './tabs.widget';
+import { setupTestBed } from '../../../../testing/setupTestBed';
+import { CoreModule } from '../../../../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslationService } from '../../../../services/translation.service';
 
 describe('TabsWidgetComponent', () => {
 
     let widget: TabsWidgetComponent;
+
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ],
+        providers: [
+            { provide: TranslationService, useClass: TranslationMock }
+        ]
+    });
 
     beforeEach(() => {
         widget = new TabsWidgetComponent();
@@ -84,27 +93,22 @@ describe('TabsWidgetComponent', () => {
         let fakeTabInvisible: TabModel;
 
         beforeEach(async(() => {
-            TestBed.configureTestingModule({
-                imports: [ MaterialModule ],
-                declarations: [FormFieldComponent, ContentWidgetComponent, WIDGET_DIRECTIVES, MASK_DIRECTIVE]
-            }).compileComponents().then(() => {
-                fixture = TestBed.createComponent(TabsWidgetComponent);
-                tabWidgetComponent = fixture.componentInstance;
-                element = fixture.nativeElement;
+            fixture = TestBed.createComponent(TabsWidgetComponent);
+            tabWidgetComponent = fixture.componentInstance;
+            element = fixture.nativeElement;
 
-                fakeTabVisible = new TabModel(new FormModel(fakeFormJson), {
-                    id: 'tab-id-visible',
-                    title: 'tab-title-visible'
-                });
-                fakeTabVisible.isVisible = true;
-                fakeTabInvisible = new TabModel(new FormModel(fakeFormJson), {
-                    id: 'tab-id-invisible',
-                    title: 'tab-title-invisible'
-                });
-                fakeTabInvisible.isVisible = false;
-                tabWidgetComponent.tabs.push(fakeTabVisible);
-                tabWidgetComponent.tabs.push(fakeTabInvisible);
+            fakeTabVisible = new TabModel(new FormModel(fakeFormJson), {
+                id: 'tab-id-visible',
+                title: 'tab-title-visible'
             });
+            fakeTabVisible.isVisible = true;
+            fakeTabInvisible = new TabModel(new FormModel(fakeFormJson), {
+                id: 'tab-id-invisible',
+                title: 'tab-title-invisible'
+            });
+            fakeTabInvisible.isVisible = false;
+            tabWidgetComponent.tabs.push(fakeTabVisible);
+            tabWidgetComponent.tabs.push(fakeTabInvisible);
         }));
 
         it('should show only visible tabs', () => {

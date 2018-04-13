@@ -18,16 +18,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
-import { EcmModelService } from '../../../../../services/ecm-model.service';
-import { MaterialModule } from '../../../../../../material.module';
 import { FormService } from './../../../../../services/form.service';
 import { FormFieldModel, FormModel } from './../../../core/index';
 import { DynamicTableColumnOption  } from './../../dynamic-table-column-option.model';
 import { DynamicTableColumn  } from './../../dynamic-table-column.model';
 import { DynamicTableRow  } from './../../dynamic-table-row.model';
 import { DynamicTableModel } from './../../dynamic-table.widget.model';
-
 import { DropdownEditorComponent } from './dropdown.editor';
+import { setupTestBed } from '../../../../../../testing/setupTestBed';
+import { CoreModule } from '../../../../../../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('DropdownEditorComponent', () => {
 
@@ -37,6 +37,13 @@ describe('DropdownEditorComponent', () => {
     let table: DynamicTableModel;
     let column: DynamicTableColumn;
     let row: DynamicTableRow;
+
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ]
+    });
 
     beforeEach(() => {
         formService = new FormService(null, null, null);
@@ -190,20 +197,13 @@ describe('DropdownEditorComponent', () => {
         let dynamicTable: DynamicTableModel;
 
         beforeEach(async(() => {
-            TestBed.configureTestingModule({
-                imports: [MaterialModule],
-                declarations: [DropdownEditorComponent],
-                providers: [FormService, EcmModelService]
-            }).compileComponents().then(() => {
-                fixture = TestBed.createComponent(DropdownEditorComponent);
-                dropDownEditorComponent = fixture.componentInstance;
-                element = fixture.nativeElement;
-            });
+            fixture = TestBed.createComponent(DropdownEditorComponent);
+            dropDownEditorComponent = fixture.componentInstance;
+            element = fixture.nativeElement;
         }));
 
         afterEach(() => {
             fixture.destroy();
-            TestBed.resetTestingModule();
         });
 
         describe('and dropdown is populated via taskId', () => {

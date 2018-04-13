@@ -17,14 +17,12 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import moment from 'moment-es6';
-import { ActivitiContentService } from '../../../services/activiti-alfresco.service';
-import { MaterialModule } from '../../../../material.module';
-import { ErrorWidgetComponent } from '../error/error.component';
-import { EcmModelService } from './../../../services/ecm-model.service';
-import { FormService } from './../../../services/form.service';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
 import { DateWidgetComponent } from './date.widget';
+import { setupTestBed } from '../../../../testing/setupTestBed';
+import { CoreModule } from '../../../../core.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('DateWidgetComponent', () => {
 
@@ -32,22 +30,12 @@ describe('DateWidgetComponent', () => {
     let fixture: ComponentFixture<DateWidgetComponent>;
     let element: HTMLElement;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                MaterialModule
-            ],
-            declarations: [
-                DateWidgetComponent,
-                ErrorWidgetComponent
-            ],
-            providers: [
-                FormService,
-                ActivitiContentService,
-                EcmModelService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(DateWidgetComponent);

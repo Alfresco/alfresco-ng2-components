@@ -336,13 +336,13 @@ describe('NodeDeleteDirective', () => {
 
         describe('Permanent', () => {
 
-            it('should call the api with permamnet delete option if permanent directive input is true', fakeAsync(() => {
+            it('should call the api with permanent delete option if permanent directive input is true', fakeAsync(() => {
                 let deleteApi = spyOn(nodeApi, 'deleteNode').and.returnValue(Promise.resolve());
 
                 fixtureWithPermanentComponent.detectChanges();
 
                 componentWithPermanentDelete.selection = [
-                    { entry: { id: '1', name: 'name1' }
+                    { entry: { id: '1', name: 'name1' } }
                 ];
 
                 fixtureWithPermanentComponent.detectChanges();
@@ -353,7 +353,7 @@ describe('NodeDeleteDirective', () => {
                 expect(deleteApi).toHaveBeenCalledWith('1', { permanent: true });
             }));
 
-            it('should call the traschan api if permanent directive input is true and the file is already in the trashcan ', fakeAsync(() => {
+            it('should call the trashcan api if permanent directive input is true and the file is already in the trashcan ', fakeAsync(() => {
                 let deleteApi = spyOn(nodeApi, 'purgeDeletedNode').and.returnValue(Promise.resolve());
 
                 fixtureWithPermanentComponent.detectChanges();
