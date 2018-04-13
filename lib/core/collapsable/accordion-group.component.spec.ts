@@ -65,7 +65,7 @@ describe('AccordionGroupComponent', () => {
         });
     }));
 
-    it('should be closed by default', async(() => {
+    it('should be display accordion title and icon', async(() => {
         component.heading = 'Fake Header';
         component.headingIcon = 'fake-icon';
         component.contentWrapper.nativeElement.innerHTML = '<a>Test</a>';
@@ -78,7 +78,7 @@ describe('AccordionGroupComponent', () => {
         });
     }));
 
-    it('should be display accordion title', async(() => {
+    it('should be display accordion title and content', async(() => {
         component.isSelected = true;
         component.heading = 'Fake Header';
         component.headingIcon = 'fake-icon';

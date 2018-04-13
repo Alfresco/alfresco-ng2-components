@@ -1,10 +1,10 @@
 <mat-accordion class="adf-panel">
     <mat-expansion-panel #expansionPanel 
         id="adf-expansion-panel-id"
-        (click)="toggleExpansion($event)"
-        [expanded]="isExpanded()"
+        (click)="isExpandable($event)"
+        [expanded]="toggleExpansion()"
         (opened)="onHeaderClick()"
-        [hideToggle]="!showExpansionIndicator">
+        [hideToggle]="!hasAccordionIcon">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 <div class="adf-panel-heading" [ngClass]="{'adf-panel-heading-selected': isSelected}">

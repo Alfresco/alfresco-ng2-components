@@ -29,24 +29,27 @@
     }
 }
 
-adf-accordion-group .mat-expansion-panel {
-    transition: none !important;
-    box-shadow: none !important;
-    background: none !important;
-}
+adf-accordion-group {
 
-adf-accordion-group .mat-expansion-panel-body {
-    padding: 0px;
-}
+    .mat-expansion-panel {
+        transition: none !important;
+        box-shadow: none !important;
+        background: none !important;
+    }
 
-mat-expansion-panel .mat-expansion-panel-header {
-    padding: 0px;
-}
+    .mat-expansion-panel-body {
+        padding: 0px;
+    }
 
-adf-accordion-group .mat-expansion-panel-header-title {
-    margin-right: 0px;
-}
+    .mat-expansion-panel-header {
+        padding: 0px;
+    }
 
-adf-accordion-group .mat-expansion-indicator {
-        margin-right: 25px;
+    .mat-expansion-panel-header-title {
+        margin-right: 0px;
+    }
+
+    .mat-expansion-indicator {
+            margin-right: 25px;
+    }
 }

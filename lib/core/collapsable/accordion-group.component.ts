@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit , Component, ElementRef, EventEmitter, Input, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatExpansionPanel } from '@angular/material';
 
 @Component({
@@ -24,12 +24,12 @@ import { MatExpansionPanel } from '@angular/material';
     styleUrls: ['./accordion-group.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class AccordionGroupComponent {
+export class AccordionGroupComponent implements AfterViewInit {
     private _isOpen: boolean = false;
     private _isSelected: boolean = false;
 
     @ViewChild('contentWrapper')
-    contentWrapper: any;
+    contentWrapper: ElementRef;
 
     @ViewChild('expansionPanel') expansionPanel: MatExpansionPanel;
 
@@ -45,8 +45,9 @@ export class AccordionGroupComponent {
     @Input()
     headingIconTooltip: string;
 
+   /** Should the (expanded) accordion icon be shown? */
     @Input()
-    showExpansionIndicator: boolean = true;
+    hasAccordionIcon: boolean = true;
 
     /** Emitted when the heading is clicked. */
     @Output()
@@ -72,7 +73,13 @@ export class AccordionGroupComponent {
         return this._isSelected;
     }
 
+    hasContent: boolean;
+
     constructor() { }
+
+    ngAfterViewInit() {
+        this.hasContent = this.contentWrapper.nativeElement && this.contentWrapper.nativeElement.children.length > 0;
+    }
 
     hasHeadingIcon() {
         return this.headingIcon ? true : false;
@@ -82,15 +89,17 @@ export class AccordionGroupComponent {
         this.headingClick.emit(this.heading);
     }
 
-    toggleExpansion(event: any) {
-        this.isOpen && this.showExpansionIndicator ? this.expansionPanel.expanded : this.expandPannel() ;
+    isExpandable(event: any) {
+        if (!this.hasContent || !this.isOpen) {
+            this.expandPanel();
+        }
     }
 
-    expandPannel() {
+    expandPanel() {
         this.expansionPanel.expanded = !this.expansionPanel.expanded;
     }
 
-    isExpanded(): boolean {
+    toggleExpansion(): boolean {
         return this.isOpen && this.isSelected;
     }
 }
