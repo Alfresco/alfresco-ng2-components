@@ -61,7 +61,7 @@ export class UserPreferencesService {
         private storage: StorageService,
         private apiService: AlfrescoApiService
     ) {
-        this.appConfig.load().then(this.initUserPreferenceStatus.bind(this));
+        this.appConfig.onLoad().subscribe(this.initUserPreferenceStatus.bind(this));
         this.localeSubject = new BehaviorSubject(this.defaults.locale);
         this.locale$ = this.localeSubject.asObservable();
         this.onChangeSubject = new BehaviorSubject(this.userPreferenceStatus);

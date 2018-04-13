@@ -18,6 +18,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ObjectUtils } from '../utils/object-utils';
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class AppConfigService {
@@ -34,7 +36,16 @@ export class AppConfigService {
         alfrescoRepositoryName: 'alfresco-1'
     };
 
+    private onChangeSubject: BehaviorSubject<any>;
+    onChange: Observable<any>;
+
     constructor(private http: HttpClient) {
+        this.onChangeSubject = new BehaviorSubject(this.config);
+        this.onChange = this.onChangeSubject.asObservable();
+    }
+
+    onLoad(): Observable<any> {
+        return this.onChange.map((config) => config).distinctUntilChanged();
     }
 
     get<T>(key: string, defaultValue?: T): T {
@@ -65,6 +76,7 @@ export class AppConfigService {
             this.http.get('app.config.json').subscribe(
                 (data: any) => {
                     this.config = Object.assign({}, this.config, data || {});
+                    this.onChangeSubject.next(this.config);
                     resolve(this.config);
                 },
                 () => {
