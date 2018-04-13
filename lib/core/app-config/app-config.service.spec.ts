@@ -81,7 +81,7 @@ describe('AppConfigService', () => {
 
     it('should stream the page size value when is set', async(() => {
         appConfigService.config.testProp = true;
-        appConfigService.onChange.subscribe((config) => {
+        appConfigService.onLoad.subscribe((config) => {
             expect(config.testProp).toBeTruthy();
         });
     }));
