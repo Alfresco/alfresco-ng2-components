@@ -23,4 +23,4 @@ import { Component} from '@angular/core';
     selector: 'adf-no-permission-template',
     template: '<ng-content></ng-content>'
 })
-export class NoPermissionTemplate {}
+export class NoPermissionTemplateComponent {}
