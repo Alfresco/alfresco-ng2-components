@@ -18,11 +18,18 @@
 import moment from 'moment-es6';
 
 import { Pipe, PipeTransform } from '@angular/core';
+import { UserPreferencesService, UserPreferenceValues } from '../services/user-preferences.service';
 
 @Pipe({
     name: 'adfTimeAgo'
 })
 export class TimeAgoPipe implements PipeTransform {
+
+    constructor(private userPreference: UserPreferencesService) {
+        this.userPreference.select(UserPreferenceValues.Locale).subscribe((locale) => {
+            moment().lang(locale);
+        });
+    }
 
     transform(value: Date) {
         if (value !== null && value !== undefined ) {

@@ -16,13 +16,18 @@
  */
 
 import { TimeAgoPipe } from './time-ago.pipe';
+import { UserPreferencesService, StorageService } from '..';
 
 describe('TimeAgoPipe', () => {
 
     let pipe: TimeAgoPipe;
+    let userService: UserPreferencesService;
+    let storageService: StorageService;
 
     beforeEach(() => {
-        pipe = new TimeAgoPipe();
+        storageService = new StorageService();
+        userService = new UserPreferencesService(null, null, storageService, null);
+        pipe = new TimeAgoPipe(userService);
     });
 
     it('should return time difference for a given date', () => {
@@ -38,5 +43,12 @@ describe('TimeAgoPipe', () => {
     it('should return empty string if given date is empty', () => {
         expect(pipe.transform(null)).toBe('');
         expect(pipe.transform(undefined)).toBe('');
+    });
+
+    it('should return a localised message', () => {
+        spyOn(storageService, 'setItem').and.stub();
+        userService.locale = 'jp';
+        let date = new Date();
+        expect(pipe.transform(date)).toBe('a few seconds ago');
     });
 });
