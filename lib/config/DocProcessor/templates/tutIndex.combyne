@@ -1,3 +1,5 @@
+| Name | Level | Abstract |
+| -- | -- | -- |
 {% each tuts as tut %}
-1. [**{{tut.title}}**]({{tut.link}}) ({{tut.level}}): {{tut.briefDesc}}
+| [**{{tut.title}}**]({{tut.link}}) | {{tut.level}} | {{tut.briefDesc}} |
 {% endeach %}
