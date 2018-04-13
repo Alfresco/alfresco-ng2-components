@@ -26,7 +26,7 @@ import {
     UserPreferencesService, PaginationModel
 } from '@alfresco/adf-core';
 
-import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
+import { MinimalNodeEntity, MinimalNodeEntryEntity, NodeEntry, NodePaging } from 'alfresco-js-api';
 
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -527,9 +527,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 });
         } else {
             this.documentListService
-                .getFolderNode(nodeId, this.includeFields)
-                .subscribe((node: MinimalNodeEntryEntity) => {
-                    this.folderNode = node;
+                .getNode(nodeId, this.includeFields)
+                .subscribe((node: NodeEntry) => {
+                    this.folderNode = node.entry;
                     return this.loadFolderNodesByFolderNodeId(node.id, this.pagination.getValue())
                         .catch(err => this.handleError(err));
                 }, err => {
@@ -753,9 +753,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             return this.customResourcesService.getCorrespondingNodeIds(nodeId, this.pagination.getValue());
         } else if (nodeId) {
             return new Observable(observer => {
-                this.documentListService.getFolderNode(nodeId, this.includeFields)
-                    .subscribe((node: MinimalNodeEntryEntity) => {
-                        observer.next([node.id]);
+                this.documentListService.getNode(nodeId, this.includeFields)
+                    .subscribe((node: NodeEntry) => {
+                        observer.next([node.entry.id]);
                         observer.complete();
                     });
             });

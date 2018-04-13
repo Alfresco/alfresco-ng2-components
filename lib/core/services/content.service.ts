@@ -192,6 +192,17 @@ export class ContentService {
     }
 
     /**
+     * Gets a Node via its node ID.
+     * @param nodeId
+     * @param opts
+     * @returns Details of the folder
+     */
+    getNode(nodeId: string, opts?: any): Observable<NodeEntry> {
+        return Observable.fromPromise(this.apiService.getInstance().nodes.getNode(nodeId, opts));
+    }
+
+
+    /**
      * Check if the user has permissions on that node
      * @param node Node to check allowableOperations
      * @param permission Create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions

@@ -17,6 +17,7 @@
 
 import {
     AlfrescoApiService,
+    ContentService,
     EXTENDIBLE_COMPONENT,
     FileModel,
     FileUtils,
@@ -112,6 +113,7 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
 
     constructor(private uploadService: UploadService,
                 private apiService: AlfrescoApiService,
+                private contentService: ContentService,
                 protected translateService: TranslationService,
                 protected logService: LogService
             ) {
@@ -221,22 +223,16 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
 
     checkPermission() {
         if (this.rootFolderId) {
-            this.getFolderNode(this.rootFolderId).subscribe(
-                res => this.permissionValue.next(this.hasCreatePermission(res)),
+            let opts: any = {
+                includeSource: true,
+                include: ['allowableOperations']
+            };
+
+            this.contentService.getNode(this.rootFolderId, opts).subscribe(
+                res => this.permissionValue.next(this.hasCreatePermission(res.entry)),
                 error => this.error.emit(error)
             );
         }
-    }
-
-    // TODO: move to ContentService
-    getFolderNode(nodeId: string): Observable<MinimalNodeEntryEntity> {
-        let opts: any = {
-            includeSource: true,
-            include: ['allowableOperations']
-        };
-
-        return Observable.fromPromise(this.apiService.getInstance().nodes.getNodeInfo(nodeId, opts))
-            .catch(err => this.handleError(err));
     }
 
     private handleError(error: Response) {

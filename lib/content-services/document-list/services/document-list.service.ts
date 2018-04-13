@@ -21,7 +21,7 @@ import {
 } from '@alfresco/adf-core';
 
 import { Injectable } from '@angular/core';
-import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
+import { MinimalNodeEntity, NodeEntry, NodePaging } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 
@@ -127,12 +127,12 @@ export class DocumentListService {
     }
 
     /**
-     * Gets a folder node via its node ID.
-     * @param nodeId ID of the folder node
+     * Gets a node via its node ID.
+     * @param nodeId
      * @param includeFields Extra information to include (available options are "aspectNames", "isLink" and "association")
      * @returns Details of the folder
      */
-    getFolderNode(nodeId: string, includeFields: string[] = []): Observable<MinimalNodeEntryEntity> {
+    getNode(nodeId: string, includeFields: string[] = []): Observable<NodeEntry> {
 
         let includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', ...includeFields]
             .filter((element, index, array) => index === array.indexOf(element));
@@ -142,7 +142,7 @@ export class DocumentListService {
             include: includeFieldsRequest
         };
 
-        return Observable.fromPromise(this.apiService.getInstance().nodes.getNodeInfo(nodeId, opts));
+        return this.contentService.getNode(nodeId,opts);
     }
 
     /**
