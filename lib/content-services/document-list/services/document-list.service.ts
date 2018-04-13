@@ -21,7 +21,7 @@ import {
 } from '@alfresco/adf-core';
 
 import { Injectable } from '@angular/core';
-import { MinimalNodeEntity, NodeEntry, NodePaging } from 'alfresco-js-api';
+import { MinimalNodeEntity, MinimalNodeEntryEntity,  NodeEntry, NodePaging } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 
@@ -162,7 +162,7 @@ export class DocumentListService {
             include: includeFieldsRequest
         };
 
-        return this.contentService.getFolderNode(nodeId, opts);
+        return Observable.fromPromise(this.apiService.getInstance().nodes.getNodeInfo(nodeId, opts));
     }
     /**
      * Get thumbnail URL for the given document node.

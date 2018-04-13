@@ -15,30 +15,11 @@
  * limitations under the License.
  */
 
-import {
-    AlfrescoApiService,
-    ContentService,
-    EXTENDIBLE_COMPONENT,
-    FileModel,
-    FileUtils,
-    LogService,
-    NodePermissionSubject,
-    TranslationService,
-    UploadService
+import { ContentService, EXTENDIBLE_COMPONENT, FileModel, FileUtils,
+    LogService, NodePermissionSubject, TranslationService, UploadService
 } from '@alfresco/adf-core';
-import {
-    Component,
-    EventEmitter,
-    forwardRef,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewEncapsulation
-} from '@angular/core';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { Observable } from 'rxjs/Observable';
+import { Component, EventEmitter, forwardRef, Input,
+    OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { PermissionModel } from '../../document-list/models/permissions.model';
 import 'rxjs/add/observable/throw';
@@ -112,7 +93,6 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
     private permissionValue: Subject<boolean> = new Subject<boolean>();
 
     constructor(private uploadService: UploadService,
-                private apiService: AlfrescoApiService,
                 private contentService: ContentService,
                 protected translateService: TranslationService,
                 protected logService: LogService
@@ -233,13 +213,6 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
                 error => this.error.emit(error)
             );
         }
-    }
-
-    private handleError(error: Response) {
-        // in a real world app, we may send the error to some remote logging infrastructure
-        // instead of just logging it to the console
-        this.logService.error(error);
-        return Observable.throw(error || 'Server error');
     }
 
     private hasCreatePermission(node: any): boolean {
