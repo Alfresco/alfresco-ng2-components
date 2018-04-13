@@ -79,7 +79,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     @ViewChild('activitifilter')
     activitifilter: TaskFiltersComponent;
 
-    @ViewChild('processListPagination')
+    @ViewChild('banano')
     processListPagination: PaginationComponent;
 
     @ViewChild('taskListPagination')
@@ -243,6 +243,12 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     onTabChange(event: any): void {
         this.showProcessPagination = event.index === 1;
         this.paginationPageSize = this.preferenceService.paginationSize;
+        if (this.processList) {
+            this.processList.reload();
+        }
+        if (this.taskList) {
+            this.taskList.reload();
+        }
     }
 
     onChangePageSize(event: Pagination): void {
@@ -367,7 +373,9 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     onFormCompleted(form): void {
         this.currentTaskId = null;
-        this.taskPage = this.taskListPagination.current - 1;
+        if (this.taskListPagination) {
+            this.taskPage = this.taskListPagination.current - 1;
+        }
         if (this.taskList) {
             this.taskList.reload();
         } else {
