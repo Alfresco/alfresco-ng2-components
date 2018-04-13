@@ -146,6 +146,25 @@ export class DocumentListService {
     }
 
     /**
+     * @deprecated 2.3.0
+     * Gets a folder node via its node ID.
+     * @param nodeId ID of the folder node
+     * @param includeFields Extra information to include (available options are "aspectNames", "isLink" and "association")
+     * @returns Details of the folder
+     */
+    getFolderNode(nodeId: string, includeFields: string[] = []): Observable<MinimalNodeEntryEntity> {
+
+        let includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', ...includeFields]
+            .filter((element, index, array) => index === array.indexOf(element));
+
+        let opts: any = {
+            includeSource: true,
+            include: includeFieldsRequest
+        };
+
+        return this.contentService.getFolderNode(nodeId, opts);
+    }
+    /**
      * Get thumbnail URL for the given document node.
      * @param node Node to get URL for.
      * @returns Thumbnail URL string
