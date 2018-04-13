@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-03-09
+Last reviewed: 2018-04-13
 ---
 
 # Document List component
