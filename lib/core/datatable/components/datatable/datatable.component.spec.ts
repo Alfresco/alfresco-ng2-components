@@ -28,7 +28,7 @@ import { ObjectDataColumn } from '../../data/object-datacolumn.model';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 
 import { DataTableComponent } from './datatable.component';
-
+/*tslint:disable:ban*/
 describe('DataTable', () => {
 
     let fixture: ComponentFixture<DataTableComponent>;
@@ -312,6 +312,9 @@ describe('DataTable', () => {
         expect(rows[0].isSelected).toBeTruthy();
 
         dataTable.onRowClick(rows[0], null);
+        expect(rows[0].isSelected).toBeFalsy();
+
+        dataTable.onRowClick(rows[0], <any> { metaKey: true, preventDefault() {} });
         expect(rows[0].isSelected).toBeTruthy();
 
         dataTable.onRowClick(rows[0], <any> { metaKey: true, preventDefault() {} });
