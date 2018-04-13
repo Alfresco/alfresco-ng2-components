@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 
-export * from './components/permission-list/permission-list.component';
-export * from './components/permission-list/no-permission.component';
-export * from './components/inherited-button.directive';
-export * from './services/node-permission.service';
-export * from './models/permission.model';
+/* tslint:disable:no-input-rename  */
 
-export * from './permission-manager.module';
+import { Component} from '@angular/core';
+
+@Component({
+    selector: 'adf-no-permission-template',
+    template: '<ng-content></ng-content>'
+})
+export class NoPermissionTemplate {}

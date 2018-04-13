@@ -18,13 +18,13 @@ Shows node permissions as a table.
 ```
 
 If permissions list is empty, `No permissions` text is displayed, 
-or custom template can be added:
+or custom template can be added: 
 
 ```html
 <adf-permission-list [nodeId]="nodeId">
-  <div class="adf-custom-no-permission-template">
+  <adf-no-permission-template>
     Custom no permission template!
-  </div>
+  </adf-no-permission-template>
 </adf-permission-list>
 ```
 

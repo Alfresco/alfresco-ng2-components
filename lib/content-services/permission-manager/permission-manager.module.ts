@@ -24,6 +24,7 @@ import { PermissionListComponent } from './components/permission-list/permission
 import { DataTableModule, DataColumnModule } from '@alfresco/adf-core';
 import { InheritPermissionDirective } from './components/inherited-button.directive';
 import { NodePermissionService } from './services/node-permission.service';
+import { NoPermissionTemplate } from "./components/permission-list/no-permission.component";
 
 @NgModule({
     imports: [
@@ -37,6 +38,7 @@ import { NodePermissionService } from './services/node-permission.service';
     ],
     declarations: [
         PermissionListComponent,
+        NoPermissionTemplate,
         InheritPermissionDirective
     ],
     providers: [
@@ -44,6 +46,7 @@ import { NodePermissionService } from './services/node-permission.service';
     ],
     exports: [
         PermissionListComponent,
+        NoPermissionTemplate,
         InheritPermissionDirective
     ]
 })
