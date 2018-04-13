@@ -42,6 +42,7 @@ import { PermissionStyleModel } from './../models/permissions-style.model';
 import { DocumentListService } from './../services/document-list.service';
 import { NodeEntityEvent, NodeEntryEvent } from './node.event';
 import { CustomResourcesService } from './../services/custom-resources.service';
+import { NavigableComponentInterface } from '../../breadcrumb/navigable-component.interface';
 
 export enum PaginationStrategy {
     Finite,
@@ -54,7 +55,7 @@ export enum PaginationStrategy {
     templateUrl: './document-list.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, AfterContentInit, PaginatedComponent {
+export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, AfterContentInit, PaginatedComponent, NavigableComponentInterface {
 
     static SINGLE_CLICK_NAVIGATION: string = 'click';
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
@@ -167,6 +168,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     currentFolderId: string = null;
 
+    /** @deprecated 2.3.0 use currentFolderId or node */
     /** Currently displayed folder node */
     @Input()
     folderNode: MinimalNodeEntryEntity = null;
@@ -368,18 +370,12 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.resetSelection();
 
         if (changes.folderNode && changes.folderNode.currentValue) {
+            this.currentFolderId = changes.folderNode.currentValue.id;
+            this.resetNewFolderPagination();
             this.loadFolder();
         } else if (changes.currentFolderId && changes.currentFolderId.currentValue) {
-            if (changes.currentFolderId.previousValue !== changes.currentFolderId.currentValue) {
-                this.folderNode = null;
-            }
-            if (!this.hasCustomLayout) {
-                this.setupDefaultColumns(changes.currentFolderId.currentValue);
-            }
-
-            this.loading = true;
-
-            this.loadFolderByNodeId(changes.currentFolderId.currentValue);
+            this.resetNewFolderPagination();
+            this.loadFolder();
         } else if (this.data) {
             if (changes.node && changes.node.currentValue) {
                 this.data.loadPage(changes.node.currentValue);
@@ -398,15 +394,11 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     reload() {
         this.ngZone.run(() => {
             this.resetSelection();
-
-            if (this.folderNode) {
-                this.loadFolder();
-            } else if (this.currentFolderId) {
-                this.loading = true;
-                this.loadFolderByNodeId(this.currentFolderId);
-            } else if (this.node) {
+            if (this.node) {
                 this.data.loadPage(this.node);
                 this.onDataReady(this.node);
+            } else {
+                this.loadFolder();
             }
         });
     }
@@ -473,9 +465,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     updateFolderData(node: MinimalNodeEntity): void {
+        this.folderNode = null;
         this.currentFolderId = node.entry.id;
-        this.folderNode = node.entry;
-        this.loadFolder();
+        this.reload();
         this.folderChange.emit(new NodeEntryEvent(node.entry));
     }
 
@@ -512,13 +504,15 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.loading = true;
         }
 
-        let nodeId = this.folderNode ? this.folderNode.id : this.currentFolderId;
-
         if (!this.hasCustomLayout) {
-            this.setupDefaultColumns(nodeId);
+            this.setupDefaultColumns(this.currentFolderId);
         }
-        if (nodeId) {
-            this.loadFolderNodesByFolderNodeId(nodeId, this.pagination.getValue());
+
+        if (this.folderNode) {
+            return this.loadFolderNodesByFolderNodeId(this.folderNode.id, this.pagination.getValue())
+                .catch(err => this.handleError(err));
+        } else {
+            this.loadFolderByNodeId(this.currentFolderId);
         }
     }
 
@@ -536,10 +530,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 .getFolderNode(nodeId, this.includeFields)
                 .subscribe((node: MinimalNodeEntryEntity) => {
                     this.folderNode = node;
-
-                    if (node.id) {
-                        this.currentFolderId = node.id;
-                    }
                     return this.loadFolderNodesByFolderNodeId(node.id, this.pagination.getValue())
                         .catch(err => this.handleError(err));
                 }, err => {
@@ -744,6 +734,17 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     updatePagination(pagination: PaginationModel) {
         this.reload();
+    }
+
+    navigateTo(nodeId: string) {
+        this.currentFolderId = nodeId;
+        this.resetNewFolderPagination();
+        this.loadFolder();
+    }
+
+    private resetNewFolderPagination() {
+        this.folderNode = null;
+        this.pagination.value.skipCount = 0;
     }
 
     // TODO: remove it from here
