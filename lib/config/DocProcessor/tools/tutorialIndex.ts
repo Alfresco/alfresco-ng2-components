@@ -12,6 +12,7 @@ import * as unist from "../unistHelpers";
 
 const tutFolder = path.resolve("..", "docs", "tutorials");
 const templateFolder = path.resolve(".", "config", "DocProcessor", "templates");
+const userGuideFolder = path.resolve("..", "docs", "user-guide");
 
 
 export function initPhase(aggData) {}
@@ -51,17 +52,24 @@ export function updatePhase(tree, pathname, aggData) {
 
 
 function getIndexDocData() {
-    let indexFile = path.resolve(tutFolder, "index.json");
-    let indexArray = JSON.parse(fs.readFileSync(indexFile, "utf8"));
-    
+    let indexFile = path.resolve(userGuideFolder, "summary.json");
+    let summaryArray = JSON.parse(fs.readFileSync(indexFile, "utf8"));
+    let indexArray = [];
+
+    summaryArray.forEach(element => {
+        if (element["title"] === "Tutorials") {
+            indexArray = element["children"];
+        }
+    });
+
     let result = {
         tuts: []
     };
 
     indexArray.forEach(element => {
-        let tutData = { link: element };
+        let tutData = { link: element["file"] };
 
-        let tutFile = path.resolve(tutFolder, element);
+        let tutFile = path.resolve(tutFolder, element["file"]);
         let tutFileText = fs.readFileSync(tutFile, "utf8");
         let tutMD = remark().use(frontMatter, ["yaml"]).parse(tutFileText);
 
