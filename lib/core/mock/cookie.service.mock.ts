@@ -19,11 +19,27 @@ import { CookieService } from '../services/cookie.service';
 
 export class CookieServiceMock extends CookieService {
 
+    /** @override */
+    isEnabled(): boolean {
+        return true;
+    }
+
+    /** @override */
     getItem(key: string): string | null {
         return this[key] && this[key].data || null;
     }
 
+    /** @override */
     setItem(key: string, data: string, expiration: Date | null, path: string | null): void {
         this[key] = {data, expiration, path};
+    }
+
+    /** @override */
+    clear() {
+        Object.keys(this).forEach(key => {
+            if (this.hasOwnProperty(key) && typeof(this[key]) !== 'function') {
+                this[key] = undefined;
+            }
+        });
     }
 }

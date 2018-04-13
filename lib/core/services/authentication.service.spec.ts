@@ -55,7 +55,10 @@ describe('AuthenticationService', () => {
         apiService = TestBed.get(AlfrescoApiService);
         authService = TestBed.get(AuthenticationService);
         preferences = TestBed.get(UserPreferencesService);
+
         cookie = TestBed.get(CookieService);
+        cookie.clear();
+
         storage = TestBed.get(StorageService);
         storage.clear();
 
@@ -63,6 +66,8 @@ describe('AuthenticationService', () => {
     });
 
     afterEach(() => {
+        cookie.clear();
+        storage.clear();
         jasmine.Ajax.uninstall();
     });
 
