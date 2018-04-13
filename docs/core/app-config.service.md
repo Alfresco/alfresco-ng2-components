@@ -99,12 +99,12 @@ The supported variables are:
 | hostname | `location.hostname` |
 | port | `location.port` |
 
-## App Config onChange Stream
+## App Config onLoad Stream
 When the app config is loaded correctly an onChange event is sent with the whole set app config properties. This comes in handy when a component wants to react to some property change or interact with the app config when it's correctly loaded.
 
 ```ts
 
-    appConfig.onChange.subscribe((appConfig) => {
+    appConfig.onLoad.subscribe((appConfig) => {
         console.log(appConfig); //this is the representation of the app-config
     });
 ```

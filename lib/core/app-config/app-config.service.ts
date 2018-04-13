@@ -36,16 +36,16 @@ export class AppConfigService {
         alfrescoRepositoryName: 'alfresco-1'
     };
 
-    private onChangeSubject: BehaviorSubject<any>;
-    onChange: Observable<any>;
+    private onLoadSubject: BehaviorSubject<any>;
+    onLoad: Observable<any>;
 
     constructor(private http: HttpClient) {
-        this.onChangeSubject = new BehaviorSubject(this.config);
-        this.onChange = this.onChangeSubject.asObservable();
+        this.onLoadSubject = new BehaviorSubject(this.config);
+        this.onLoad = this.onLoadSubject.asObservable();
     }
 
     select(property: string): Observable<any> {
-        return this.onChange.map((config) => config[property]).distinctUntilChanged();
+        return this.onLoadSubject.map((config) => config[property]).distinctUntilChanged();
     }
 
     get<T>(key: string, defaultValue?: T): T {
@@ -76,7 +76,7 @@ export class AppConfigService {
             this.http.get('app.config.json').subscribe(
                 (data: any) => {
                     this.config = Object.assign({}, this.config, data || {});
-                    this.onChangeSubject.next(this.config);
+                    this.onLoadSubject.next(this.config);
                     resolve(this.config);
                 },
                 () => {
