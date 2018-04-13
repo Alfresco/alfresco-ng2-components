@@ -376,13 +376,8 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         if (this.taskListPagination) {
             this.taskPage = this.taskListPagination.current - 1;
         }
-        if (this.taskList) {
-            this.taskList.reload();
-        } else {
+        if (!this.taskList) {
             this.navigateToProcess();
-        }
-        if (this.processList) {
-            this.processList.reload();
         }
     }
 
