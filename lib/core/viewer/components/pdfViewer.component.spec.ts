@@ -16,7 +16,7 @@
  */
 
 import { Component, SimpleChange, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { EventMock } from '../../mock/event.mock';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { PdfViewerComponent } from './pdfViewer.component';
@@ -256,25 +256,23 @@ describe('Test PdfViewer component', () => {
             });
         });
 
-        it('should Canvas be present', (done) => {
+        it('should Canvas be present', async(() => {
             fixtureBlobTestComponent.detectChanges();
 
             fixtureBlobTestComponent.whenStable().then(() => {
                 expect(elementBlobTestComponent.querySelector('.pdfViewer')).not.toBeNull();
                 expect(elementBlobTestComponent.querySelector('.viewer-pdf-viewer')).not.toBeNull();
-                done();
             });
-        }, 5000);
+        }));
 
-        it('should Next an Previous Buttons be present', (done) => {
+        it('should Next an Previous Buttons be present', async(() => {
             fixtureBlobTestComponent.detectChanges();
 
             fixtureBlobTestComponent.whenStable().then(() => {
                 expect(elementBlobTestComponent.querySelector('#viewer-previous-page-button')).not.toBeNull();
                 expect(elementBlobTestComponent.querySelector('#viewer-next-page-button')).not.toBeNull();
-                done();
             });
-        }, 5000);
+        }));
 
         it('should Input Page elements be present', (done) => {
             fixtureBlobTestComponent.detectChanges();
