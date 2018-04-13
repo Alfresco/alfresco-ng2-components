@@ -16,6 +16,9 @@ that the component is complete and suitable for normal use. The other status lev
 -   **Experimental** ![](docassets/images/ExperimentalIcon.png) - The component is available for
     experimentation but not fully complete and tested for production code.
 
+There is also a set of ADF tutorials that describe how to accomplish tasks step-by-step.
+See the [Tutorials index](tutorials/README.md) for the full list.
+
 ## Contents
 
 -   [User Guide](#user-guide)
