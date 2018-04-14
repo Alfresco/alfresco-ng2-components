@@ -22,6 +22,8 @@ import { MaterialModule } from '../material.module';
 import { AccordionGroupComponent } from './accordion-group.component';
 import { AccordionComponent } from './accordion.component';
 
+// @deprecated 2.3.0 use the material accodrdion
+
 @NgModule({
     imports: [
         MaterialModule,
