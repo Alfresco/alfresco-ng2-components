@@ -18,7 +18,7 @@ npm install alfresco-js-api@alpha
 
 echo "====== Build ADF ===== "
 
-npm run new-build
+npm run build
 
 echo "====== COPY new build in demo shell node_modules ===== "
 

@@ -21,7 +21,7 @@ import {
 } from '@alfresco/adf-core';
 
 import { Injectable } from '@angular/core';
-import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
+import { MinimalNodeEntity, MinimalNodeEntryEntity,  NodeEntry, NodePaging } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 
@@ -127,6 +127,26 @@ export class DocumentListService {
     }
 
     /**
+     * Gets a node via its node ID.
+     * @param nodeId
+     * @param includeFields Extra information to include (available options are "aspectNames", "isLink" and "association")
+     * @returns Details of the folder
+     */
+    getNode(nodeId: string, includeFields: string[] = []): Observable<NodeEntry> {
+
+        let includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', ...includeFields]
+            .filter((element, index, array) => index === array.indexOf(element));
+
+        let opts: any = {
+            includeSource: true,
+            include: includeFieldsRequest
+        };
+
+        return this.contentService.getNode(nodeId, opts);
+    }
+
+    /**
+     * @deprecated 2.3.0
      * Gets a folder node via its node ID.
      * @param nodeId ID of the folder node
      * @param includeFields Extra information to include (available options are "aspectNames", "isLink" and "association")
@@ -144,7 +164,6 @@ export class DocumentListService {
 
         return Observable.fromPromise(this.apiService.getInstance().nodes.getNodeInfo(nodeId, opts));
     }
-
     /**
      * Get thumbnail URL for the given document node.
      * @param node Node to get URL for.

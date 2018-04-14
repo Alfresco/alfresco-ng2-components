@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ContentApi, MinimalNodeEntryEntity, Node } from 'alfresco-js-api';
+import { ContentApi, MinimalNodeEntryEntity, Node, NodeEntry } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { FolderCreatedEvent } from '../events/folder-created.event';
@@ -189,6 +189,16 @@ export class ContentService {
                 });
             })
             .catch(err => this.handleError(err));
+    }
+
+    /**
+     * Gets a Node via its node ID.
+     * @param nodeId
+     * @param opts
+     * @returns Details of the folder
+     */
+    getNode(nodeId: string, opts?: any): Observable<NodeEntry> {
+        return Observable.fromPromise(this.apiService.getInstance().nodes.getNode(nodeId, opts));
     }
 
     /**
