@@ -1,7 +1,7 @@
 {
   "name": "Alfresco-ADF-Angular-Demo",
   "description": "Demo shell for Alfresco Angular components",
-  "version": "2.3.0-beta7",
+  "version": "2.3.0-beta10",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "ng": "ng",
@@ -62,10 +62,10 @@
   ],
   "private": true,
   "dependencies": {
-    "@alfresco/adf-content-services": "2.3.0-beta8",
-    "@alfresco/adf-core": "2.3.0-beta8",
-    "@alfresco/adf-insights": "2.3.0-beta8",
-    "@alfresco/adf-process-services": "2.3.0-beta8",
+    "@alfresco/adf-content-services": "2.3.0-beta10",
+    "@alfresco/adf-core": "2.3.0-beta10",
+    "@alfresco/adf-insights": "2.3.0-beta10",
+    "@alfresco/adf-process-services": "2.3.0-beta10",
     "@angular/animations": "5.1.1",
     "@angular/cdk": "5.0.1",
     "@angular/common": "5.1.1",
@@ -81,7 +81,7 @@
     "@mat-datetimepicker/core": "1.0.4",
     "@mat-datetimepicker/moment": "1.0.4",
     "@ngx-translate/core": "9.1.1",
-    "alfresco-js-api": "2.3.0-beta8",
+    "alfresco-js-api": "2.3.0-beta10",
     "chart.js": "2.5.0",
     "classlist.js": "1.1.20150312",
     "core-js": "2.4.1",
