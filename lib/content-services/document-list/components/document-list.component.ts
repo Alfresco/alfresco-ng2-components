@@ -26,7 +26,7 @@ import {
     UserPreferencesService, PaginationModel
 } from '@alfresco/adf-core';
 
-import { MinimalNodeEntity, MinimalNodeEntryEntity, NodeEntry, NodePaging } from 'alfresco-js-api';
+import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
 
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -465,7 +465,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     updateFolderData(node: MinimalNodeEntity): void {
-        this.resetNewFolderPagination();
+        this.folderNode = null;
         this.currentFolderId = node.entry.id;
         this.reload();
         this.folderChange.emit(new NodeEntryEvent(node.entry));
@@ -527,10 +527,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 });
         } else {
             this.documentListService
-                .getNode(nodeId, this.includeFields)
-                .subscribe((node: NodeEntry) => {
-                    this.folderNode = node.entry;
-                    return this.loadFolderNodesByFolderNodeId(node.entry.id, this.pagination.getValue())
+                .getFolderNode(nodeId, this.includeFields)
+                .subscribe((node: MinimalNodeEntryEntity) => {
+                    this.folderNode = node;
+                    return this.loadFolderNodesByFolderNodeId(node.id, this.pagination.getValue())
                         .catch(err => this.handleError(err));
                 }, err => {
                     this.handleError(err);
@@ -753,9 +753,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             return this.customResourcesService.getCorrespondingNodeIds(nodeId, this.pagination.getValue());
         } else if (nodeId) {
             return new Observable(observer => {
-                this.documentListService.getNode(nodeId, this.includeFields)
-                    .subscribe((node: NodeEntry) => {
-                        observer.next([node.entry.id]);
+                this.documentListService.getFolderNode(nodeId, this.includeFields)
+                    .subscribe((node: MinimalNodeEntryEntity) => {
+                        observer.next([node.id]);
                         observer.complete();
                     });
             });

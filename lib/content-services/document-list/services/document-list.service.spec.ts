@@ -181,7 +181,7 @@ describe('DocumentListService', () => {
     it('should add the includeTypes in the request getFolderNode if required', () => {
         let spyGetNodeInfo = spyOn(alfrescoApiService.getInstance().nodes, 'getNodeInfo');
 
-        service.getFolder('test-id', ['isLocked']);
+        service.getFolderNode('test-id', ['isLocked']);
 
         expect(spyGetNodeInfo).toHaveBeenCalledWith('test-id', {
             includeSource: true,
@@ -192,7 +192,7 @@ describe('DocumentListService', () => {
     it('should not add the includeTypes in the request getFolderNode if is duplicated', () => {
         let spyGetNodeInfo = spyOn(alfrescoApiService.getInstance().nodes, 'getNodeInfo');
 
-        service.getFolder('test-id', ['allowableOperations']);
+        service.getFolderNode('test-id', ['allowableOperations']);
 
         expect(spyGetNodeInfo).toHaveBeenCalledWith('test-id', {
                 includeSource: true,

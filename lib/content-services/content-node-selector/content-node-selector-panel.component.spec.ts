@@ -152,7 +152,7 @@ describe('ContentNodeSelectorComponent', () => {
                 fixture.detectChanges();
             });
 
-            fit('should show the breadcrumb for the currentFolderId by default', (done) => {
+            it('should show the breadcrumb for the currentFolderId by default', (done) => {
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
