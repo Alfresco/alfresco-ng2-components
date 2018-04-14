@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, OnChanges, OnDestroy,
+import {
+    Component, Input, OnInit, OnChanges, OnDestroy,
     EventEmitter, ViewChild, SimpleChanges, Output
 } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
-import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity, SiteEntry  } from 'alfresco-js-api';
+import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity, SiteEntry } from 'alfresco-js-api';
 import {
     AuthenticationService, AppConfigService, ContentService, TranslationService,
     FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
@@ -336,7 +337,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
         if (this.contentService.hasPermission(contentEntry, 'update')) {
             this.dialog.open(VersionManagerDialogAdapterComponent, {
-                data: { contentEntry:contentEntry, showComments:showComments, allowDownload :allowDownload},
+                data: { contentEntry: contentEntry, showComments: showComments, allowDownload: allowDownload },
                 panelClass: 'adf-version-manager-dialog',
                 width: '630px'
             });
