@@ -20,7 +20,7 @@ import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core
 import { Observable } from 'rxjs/Observable';
 import { ProcessInstanceListComponent } from './process-list.component';
 
-import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
+import { AppConfigService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { DataRowEvent, DataSorting, ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/adf-core';
 
 import { fakeProcessInstance, fakeProcessInstancesWithNoName } from '../../mock';
@@ -522,17 +522,11 @@ describe('CustomProcessListComponent', () => {
     let fixture: ComponentFixture<CustomProcessListComponent>;
     let component: CustomProcessListComponent;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                ProcessInstanceListComponent,
-                CustomProcessListComponent
-            ],
-            providers: [
-                ProcessService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [CoreModule.forRoot()],
+        declarations: [ProcessInstanceListComponent, CustomProcessListComponent],
+        providers: [ProcessService]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(CustomProcessListComponent);

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SimpleChange, Component } from '@angular/core';
+import { SimpleChange, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ProcessContentService, setupTestBed } from '@alfresco/adf-core';
@@ -299,16 +299,11 @@ class CustomEmptyTemplateComponent {
 describe('Custom CustomEmptyTemplateComponent', () => {
     let fixture: ComponentFixture<CustomEmptyTemplateComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                ProcessAttachmentListComponent,
-                CustomEmptyTemplateComponent
-            ],
-            imports: [
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [ProcessTestingModule],
+        declarations: [CustomEmptyTemplateComponent],
+        schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(CustomEmptyTemplateComponent);

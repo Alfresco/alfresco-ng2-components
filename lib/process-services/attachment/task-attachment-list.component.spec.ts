@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SimpleChange, Component } from '@angular/core';
+import { SimpleChange, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
@@ -311,14 +311,11 @@ class CustomEmptyTemplateComponent {
 describe('Custom CustomEmptyTemplateComponent', () => {
     let fixture: ComponentFixture<CustomEmptyTemplateComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                TaskAttachmentListComponent,
-                CustomEmptyTemplateComponent
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [ProcessTestingModule],
+        declarations: [CustomEmptyTemplateComponent],
+        schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(CustomEmptyTemplateComponent);

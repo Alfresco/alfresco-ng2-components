@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DebugElement, Component } from '@angular/core';
+import { DebugElement, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AppsProcessService, setupTestBed } from '@alfresco/adf-core';
@@ -255,23 +255,23 @@ class CustomEmptyAppListTemplateComponent {
 describe('Custom CustomEmptyAppListTemplateComponent', () => {
     let fixture: ComponentFixture<CustomEmptyAppListTemplateComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                AppsListComponent,
-                CustomEmptyAppListTemplateComponent
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [ProcessTestingModule],
+        declarations: [CustomEmptyAppListTemplateComponent],
+        schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(CustomEmptyAppListTemplateComponent);
-        fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it('should render the custom no-apps template', async(() => {
+        fixture.detectChanges();
         fixture.whenStable().then(() => {
-            fixture.detectChanges();
             let title: any = fixture.debugElement.queryAll(By.css('[adf-empty-list-header]'));
             expect(title.length).toBe(1);
             expect(title[0].nativeElement.innerText).toBe('No Apps');

@@ -15,40 +15,25 @@
  * limitations under the License.
  */
 
-import { DatePipe } from '@angular/common';
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatInputModule } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 
-import { CommentProcessService, PeopleProcessService } from '@alfresco/adf-core';
+import { CommentProcessService, setupTestBed } from '@alfresco/adf-core';
 
-import { ProcessService } from '../process-list/services/process.service';
 import { ProcessCommentsComponent } from './process-comments.component';
+import { ProcessTestingModule } from '../testing/process.testing.module';
 
-describe('ActivitiProcessInstanceComments', () => {
+describe('ProcessCommentsComponent', () => {
 
     let component: ProcessCommentsComponent;
     let fixture: ComponentFixture<ProcessCommentsComponent>;
     let getCommentsSpy: jasmine.Spy;
     let commentProcessService: CommentProcessService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                MatInputModule
-            ],
-            declarations: [
-                ProcessCommentsComponent
-            ],
-            providers: [
-                ProcessService,
-                DatePipe,
-                PeopleProcessService,
-                CommentProcessService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [ProcessTestingModule]
+    });
 
     beforeEach(() => {
 
