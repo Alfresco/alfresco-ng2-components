@@ -22,7 +22,7 @@ import { FilterProcessRepresentationModel } from '../models/filter-process.model
 import { ProcessFilterService } from '../services/process-filter.service';
 import { ProcessFiltersComponent } from './process-filters.component';
 
-describe('ActivitiFilters', () => {
+describe('ProcessFiltersComponent', () => {
 
     let filterList: ProcessFiltersComponent;
     let processFilterService: ProcessFilterService;

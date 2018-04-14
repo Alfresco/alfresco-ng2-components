@@ -17,7 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { CardViewUpdateService, AppConfigService } from '@alfresco/adf-core';
+import { CardViewUpdateService, AppConfigService, setupTestBed } from '@alfresco/adf-core';
 import { BpmUserService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import {
@@ -32,6 +32,7 @@ import {
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 import { TaskHeaderComponent } from './task-header.component';
+import { ProcessTestingModule } from '../../testing/process.testing.module';
 
 describe('TaskHeaderComponent', () => {
 
@@ -55,19 +56,11 @@ describe('TaskHeaderComponent', () => {
         groups: []
     };
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                TaskHeaderComponent
-            ],
-            providers: [
-                TaskListService,
-                BpmUserService,
-                CardViewUpdateService,
-                AppConfigService
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            ProcessTestingModule
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(TaskHeaderComponent);

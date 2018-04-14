@@ -15,14 +15,11 @@
  * limitations under the License.
  */
 
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatButtonModule, MatInputModule } from '@angular/material';
-import { LogService } from '@alfresco/adf-core';
-import { PeopleProcessService, UserProcessModel } from '@alfresco/adf-core';
-import { PeopleListComponent } from '../people-list/people-list.component';
-import { PeopleSearchComponent } from '../people-search/people-search.component';
+import { LogService, setupTestBed } from '@alfresco/adf-core';
+import { UserProcessModel } from '@alfresco/adf-core';
 import { PeopleComponent } from './people.component';
+import { ProcessTestingModule } from '../../../testing/process.testing.module';
 
 declare let jasmine: any;
 
@@ -48,32 +45,21 @@ describe('PeopleComponent', () => {
     let userArray = [fakeUser, fakeSecondUser];
     let logService: LogService;
 
+    setupTestBed({
+        imports: [
+            ProcessTestingModule
+        ]
+    });
+
     beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                MatButtonModule,
-                MatInputModule
-            ],
-            declarations: [
-                PeopleSearchComponent,
-                PeopleListComponent,
-                PeopleComponent
-            ],
-            providers: [
-                PeopleProcessService
-            ],
-            schemas: [ NO_ERRORS_SCHEMA ]
-        }).compileComponents().then(() => {
+        logService = TestBed.get(LogService);
+        fixture = TestBed.createComponent(PeopleComponent);
+        activitiPeopleComponent = fixture.componentInstance;
+        element = fixture.nativeElement;
 
-            logService = TestBed.get(LogService);
-            fixture = TestBed.createComponent(PeopleComponent);
-            activitiPeopleComponent = fixture.componentInstance;
-            element = fixture.nativeElement;
-
-            activitiPeopleComponent.people = [];
-            activitiPeopleComponent.readOnly = true;
-            fixture.detectChanges();
-        });
+        activitiPeopleComponent.people = [];
+        activitiPeopleComponent.readOnly = true;
+        fixture.detectChanges();
     }));
 
     it('should show people component title', async(() => {

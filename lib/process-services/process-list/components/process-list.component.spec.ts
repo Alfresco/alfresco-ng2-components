@@ -17,15 +17,15 @@
 
 import { Component, SimpleChange, ViewChild } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { MatProgressSpinnerModule } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { ProcessInstanceListComponent } from './process-list.component';
 
-import { AppConfigService } from '@alfresco/adf-core';
+import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
 import { DataRowEvent, DataSorting, ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/adf-core';
 
 import { fakeProcessInstance, fakeProcessInstancesWithNoName } from '../../mock';
 import { ProcessService } from '../services/process.service';
+import { ProcessTestingModule } from '../../testing/process.testing.module';
 
 describe('ProcessInstanceListComponent', () => {
 
@@ -68,45 +68,37 @@ describe('ProcessInstanceListComponent', () => {
             ]
         , fakeCutomSchema };
 
+    setupTestBed({
+        imports: [
+            ProcessTestingModule
+        ]
+    });
+
     beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                MatProgressSpinnerModule
-            ],
-            declarations: [ ProcessInstanceListComponent ],
-            providers: [
-                ProcessService
-            ]
-        }).compileComponents().then(() => {
-            fixture = TestBed.createComponent(ProcessInstanceListComponent);
-            component = fixture.componentInstance;
-            appConfig = TestBed.get(AppConfigService);
-            service = fixture.debugElement.injector.get(ProcessService);
+        fixture = TestBed.createComponent(ProcessInstanceListComponent);
+        component = fixture.componentInstance;
+        appConfig = TestBed.get(AppConfigService);
+        service = TestBed.get(ProcessService);
 
-            getProcessInstancesSpy = spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeProcessInstance));
-            appConfig.config = Object.assign(appConfig.config, {
-                'adf-process-list': {
-                    'presets': {
-                        'fakeCutomSchema': [
-                            {
-                                'key': 'fakeName',
-                                'type': 'text',
-                                'title': 'ADF_PROCESS_LIST.PROPERTIES.FAKE',
-                                'sortable': true
-                            },
-                            {
-                                'key': 'fakeProcessName',
-                                'type': 'text',
-                                'title': 'ADF_PROCESS_LIST.PROPERTIES.PROCESS_FAKE',
-                                'sortable': true
-                            }
-                        ]
+        getProcessInstancesSpy = spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeProcessInstance));
+        appConfig.config['adf-process-list'] = {
+            'presets': {
+                'fakeCutomSchema': [
+                    {
+                        'key': 'fakeName',
+                        'type': 'text',
+                        'title': 'ADF_PROCESS_LIST.PROPERTIES.FAKE',
+                        'sortable': true
+                    },
+                    {
+                        'key': 'fakeProcessName',
+                        'type': 'text',
+                        'title': 'ADF_PROCESS_LIST.PROPERTIES.PROCESS_FAKE',
+                        'sortable': true
                     }
-                }
+                ]
             }
-        );
-
-        });
+        };
     }));
 
     it('should use the default schemaColumn as default', () => {

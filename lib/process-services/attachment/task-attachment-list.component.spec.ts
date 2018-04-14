@@ -20,7 +20,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
 import { TaskAttachmentListComponent } from './task-attachment-list.component';
-import { ProcessContentService } from '@alfresco/adf-core';
+import { ProcessContentService, setupTestBed } from '@alfresco/adf-core';
+import { ProcessTestingModule } from '../testing/process.testing.module';
 
 describe('TaskAttachmentList', () => {
 
@@ -32,17 +33,9 @@ describe('TaskAttachmentList', () => {
     let deleteContentSpy: jasmine.Spy;
     let getFileRawContentSpy: jasmine.Spy;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                TaskAttachmentListComponent
-            ],
-            providers: [
-                ProcessContentService
-            ]
-        }).compileComponents();
-
-    }));
+    setupTestBed({
+        imports: [ProcessTestingModule]
+    });
 
     beforeEach(() => {
 

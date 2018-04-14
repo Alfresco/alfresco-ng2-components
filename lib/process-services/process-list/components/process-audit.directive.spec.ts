@@ -16,12 +16,38 @@
  */
 
 import { Component } from '@angular/core';
-import { async, ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs/Observable';
 import { ProcessService } from './../services/process.service';
 import { ProcessAuditDirective } from './process-audit.directive';
+import { setupTestBed, CoreModule } from '@alfresco/adf-core';
 
 declare let jasmine: any;
+
+@Component({
+    selector: 'adf-basic-button',
+    template: `
+    <button id="auditButton"
+        adf-process-audit
+        [process-id]="currentProcessId"
+        [download]="download"
+        [fileName]="fileName"
+        [format]="format"
+        (clicked)="onAuditClick($event)">My button
+    </button>`
+})
+class BasicButtonComponent {
+
+    download: boolean = false;
+    fileName: string;
+    format: string;
+    constructor() {
+
+    }
+
+    onAuditClick(event: any) {
+    }
+}
 
 describe('ProcessAuditDirective', () => {
 
@@ -47,20 +73,24 @@ describe('ProcessAuditDirective', () => {
         return new Blob([pdfData], {type: 'application/pdf'});
     }
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [BasicButtonComponent, ProcessAuditDirective],
-            providers: [ProcessService]
-        });
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot()
+        ],
+        declarations: [
+            BasicButtonComponent,
+            ProcessAuditDirective
+        ],
+        providers: [ProcessService]
+    });
 
-        TestBed.compileComponents();
-
+    beforeEach(() => {
         fixture = TestBed.createComponent(BasicButtonComponent);
         component = fixture.componentInstance;
         service = TestBed.get(ProcessService);
 
         jasmine.Ajax.install();
-    }));
+    });
 
     afterEach(() => {
         jasmine.Ajax.uninstall();
@@ -143,28 +173,3 @@ describe('ProcessAuditDirective', () => {
     }));
 
 });
-
-@Component({
-    selector: 'adf-basic-button',
-    template: `
-    <button id="auditButton"
-        adf-process-audit
-        [process-id]="currentProcessId"
-        [download]="download"
-        [fileName]="fileName"
-        [format]="format"
-        (clicked)="onAuditClick($event)">My button
-    </button>`
-})
-class BasicButtonComponent {
-
-    download: boolean = false;
-    fileName: string;
-    format: string;
-    constructor() {
-
-    }
-
-    onAuditClick(event: any) {
-    }
-}

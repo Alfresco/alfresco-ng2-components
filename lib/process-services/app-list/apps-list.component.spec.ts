@@ -18,12 +18,12 @@
 import { DebugElement, Component } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppsProcessService } from '@alfresco/adf-core';
+import { AppsProcessService, setupTestBed } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 
 import { defaultApp, deployedApps, nonDeployedApps } from '../mock/apps-list.mock';
 import { AppsListComponent } from './apps-list.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { ProcessTestingModule } from '../testing/process.testing.module';
 
 describe('AppsListComponent', () => {
 
@@ -33,17 +33,9 @@ describe('AppsListComponent', () => {
     let service: AppsProcessService;
     let getAppsSpy: jasmine.Spy;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                TranslateModule
-            ],
-            declarations: [
-                AppsListComponent
-            ]
-        }).compileComponents();
-
-    }));
+    setupTestBed({
+        imports: [ProcessTestingModule]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(AppsListComponent);

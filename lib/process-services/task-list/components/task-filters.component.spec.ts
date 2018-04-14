@@ -17,12 +17,13 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService, AppsProcessService } from '@alfresco/adf-core';
+import { AppConfigService, AppsProcessService, setupTestBed } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
 import { TaskListService } from '../services/tasklist.service';
 import { TaskFilterService } from '../services/task-filter.service';
 import { TaskFiltersComponent } from './task-filters.component';
+import { ProcessTestingModule } from '../../testing/process.testing.module';
 
 describe('TaskFiltersComponent', () => {
 
@@ -62,18 +63,11 @@ describe('TaskFiltersComponent', () => {
     let component: TaskFiltersComponent;
     let fixture: ComponentFixture<TaskFiltersComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                TaskFiltersComponent
-            ],
-            providers: [
-                TaskListService,
-                TaskFilterService
-            ]
-        }).compileComponents();
-
-    }));
+    setupTestBed({
+        imports: [
+            ProcessTestingModule
+        ]
+    });
 
     beforeEach(() => {
         let appConfig: AppConfigService = TestBed.get(AppConfigService);

@@ -17,31 +17,25 @@
 
 import { TaskStandaloneComponent } from './task-standalone.component';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import {
-    MatButtonModule,
-    MatCardModule
-} from '@angular/material';
+import { setupTestBed } from '@alfresco/adf-core';
+import { ProcessTestingModule } from '../../testing/process.testing.module';
 
 describe('TaskStandaloneComponent', () => {
     let component: TaskStandaloneComponent;
     let fixture: ComponentFixture<TaskStandaloneComponent>;
     let element: HTMLElement;
 
+    setupTestBed({
+        imports: [
+            ProcessTestingModule
+        ]
+    });
+
     beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                TaskStandaloneComponent
-            ],
-            imports: [
-                MatButtonModule,
-                MatCardModule
-            ]
-        }).compileComponents().then(() => {
-            fixture = TestBed.createComponent(TaskStandaloneComponent);
-            component = fixture.componentInstance;
-            element = fixture.nativeElement;
-            fixture.detectChanges();
-        });
+        fixture = TestBed.createComponent(TaskStandaloneComponent);
+        component = fixture.componentInstance;
+        element = fixture.nativeElement;
+        fixture.detectChanges();
     }));
 
     it('should show Completed message if isCompleted is true', async(() => {
