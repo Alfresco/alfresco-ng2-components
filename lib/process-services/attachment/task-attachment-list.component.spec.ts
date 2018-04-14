@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SimpleChange, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { SimpleChange, Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
@@ -34,7 +34,8 @@ describe('TaskAttachmentList', () => {
     let getFileRawContentSpy: jasmine.Spy;
 
     setupTestBed({
-        imports: [ProcessTestingModule]
+        imports: [ProcessTestingModule],
+        schemas: [NO_ERRORS_SCHEMA]
     });
 
     beforeEach(() => {
@@ -250,8 +251,13 @@ describe('TaskAttachmentList', () => {
 
     describe('change detection', () => {
 
-        let change = new SimpleChange('123', '456', true);
-        let nullChange = new SimpleChange('123', null, true);
+        let change;
+        let nullChange;
+
+        beforeEach(() => {
+            change = new SimpleChange('123', '456', true);
+            nullChange = new SimpleChange('123', null, true);
+        });
 
         beforeEach(async(() => {
             component.taskId = '123';
@@ -260,10 +266,13 @@ describe('TaskAttachmentList', () => {
             });
         }));
 
-        it('should fetch new attachments when taskId changed', () => {
-            component.ngOnChanges({ 'taskId': change });
-            expect(getTaskRelatedContentSpy).toHaveBeenCalledWith('456');
-        });
+        it('should fetch new attachments when taskId changed', async(() => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                component.ngOnChanges({ 'taskId': change });
+                expect(getTaskRelatedContentSpy).toHaveBeenCalledWith('456');
+            });
+        }));
 
         it('should NOT fetch new attachments when empty change set made', () => {
             component.ngOnChanges({});
