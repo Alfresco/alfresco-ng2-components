@@ -336,7 +336,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
         if (this.contentService.hasPermission(contentEntry, 'update')) {
             this.dialog.open(VersionManagerDialogAdapterComponent, {
-                data: { contentEntry, showComments, allowDownload },
+                data: { contentEntry:contentEntry, showComments:showComments, allowDownload :allowDownload},
                 panelClass: 'adf-version-manager-dialog',
                 width: '630px'
             });
