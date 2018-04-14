@@ -21,13 +21,10 @@ import { AttachFolderWidgetComponent } from './attach-folder-widget.component';
 import {
     FormFieldModel,
     FormModel,
-    FormService,
-    ThumbnailService,
-    SitesService,
     NodesApiService,
     setupTestBed
 } from '@alfresco/adf-core';
-import { ContentNodeDialogService, DocumentListService, CustomResourcesService } from '@alfresco/adf-content-services';
+import { ContentNodeDialogService } from '@alfresco/adf-content-services';
 import { Observable } from 'rxjs/Observable';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { ProcessTestingModule } from '../testing/process.testing.module';
