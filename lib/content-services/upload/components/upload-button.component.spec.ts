@@ -33,13 +33,15 @@ describe('UploadButtonComponent', () => {
     };
 
     let fakeFolderNodeWithPermission = {
-        allowableOperations: [
-            'create',
-            'update'
-        ],
-        isFolder: true,
-        name: 'Folder Fake Name',
-        nodeType: 'cm:folder'
+        entry: {
+            allowableOperations: [
+                'create',
+                'update'
+            ],
+            isFolder: true,
+            name: 'Folder Fake Name',
+            nodeType: 'cm:folder'
+        }
     };
 
     let component: UploadButtonComponent;
@@ -54,6 +56,7 @@ describe('UploadButtonComponent', () => {
             ],
             providers: [
                 UploadService,
+                ContentService,
                 { provide: TranslationService, useClass: TranslationMock }
             ]
         }).compileComponents();
@@ -98,7 +101,7 @@ describe('UploadButtonComponent', () => {
         component.rootFolderId = '-root-';
         component.success = null;
 
-        spyOn(component, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
+        spyOn(contentService, 'getNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
 
         component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
         uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
@@ -113,7 +116,7 @@ describe('UploadButtonComponent', () => {
         component.rootFolderId = '-my-';
         component.success = null;
 
-        spyOn(component, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
+        spyOn(contentService, 'getNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
         component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
 
         uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
@@ -128,7 +131,7 @@ describe('UploadButtonComponent', () => {
         component.rootFolderId = '-my-';
 
         spyOn(contentService, 'createFolder').and.returnValue(Observable.of(true));
-        spyOn(component, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
+        spyOn(contentService, 'getNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
 
         component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
         fixture.detectChanges();

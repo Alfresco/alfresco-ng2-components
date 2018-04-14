@@ -20,7 +20,6 @@
     "baseUrl" :  "./",
     "paths": {
       "@alfresco/adf-process-services": ["../process-services"],
-      "@alfresco/adf-content-services": ["../content-services"],
       "@alfresco/adf-core": ["../core"],
       "@angular/*": ["../node_modules/@angular/*"]
     },
