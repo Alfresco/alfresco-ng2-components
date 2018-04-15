@@ -17,9 +17,8 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RatingComponent } from './rating.component';
-import { RatingService } from './services/rating.service';
 import { setupTestBed } from '../../core/testing';
-import { CoreModule, AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-core';
+import { ContentTestingModule } from '../testing/content.testing.module';
 
 declare let jasmine: any;
 
@@ -30,16 +29,7 @@ describe('Rating component', () => {
     let element: HTMLElement;
 
     setupTestBed({
-        imports: [
-            CoreModule.forRoot()
-        ],
-        declarations: [
-            RatingComponent
-        ],
-        providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-            RatingService
-        ]
+        imports: [ContentTestingModule]
     });
 
     beforeEach(() => {
@@ -50,6 +40,10 @@ describe('Rating component', () => {
         component.nodeId = 'test-id';
 
         fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     describe('Rendering tests', () => {

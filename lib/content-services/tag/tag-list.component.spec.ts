@@ -16,13 +16,11 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService, setupTestBed, CoreModule, AlfrescoApiService,
-    AlfrescoApiServiceMock, AppConfigServiceMock, TranslationService, TranslationMock
-} from '@alfresco/adf-core';
+import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
 import { TagService } from './services/tag.service';
 import { TagListComponent } from '././tag-list.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Observable } from 'rxjs/Observable';
+import { ContentTestingModule } from '../testing/content.testing.module';
 
 describe('TagList', () => {
 
@@ -49,19 +47,7 @@ describe('TagList', () => {
     let tagService: TagService;
 
     setupTestBed({
-        imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
-        ],
-        declarations: [
-            TagListComponent
-        ],
-        providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-            { provide: AppConfigService, useClass: AppConfigServiceMock },
-            { provide: TranslationService, useClass: TranslationMock },
-            TagService
-        ]
+        imports: [ContentTestingModule]
     });
 
     beforeEach(() => {
@@ -76,6 +62,10 @@ describe('TagList', () => {
         element = fixture.nativeElement;
         component = fixture.componentInstance;
         fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     describe('Rendering tests', () => {

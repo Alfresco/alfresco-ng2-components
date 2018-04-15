@@ -16,11 +16,11 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService, setupTestBed, CoreModule } from '@alfresco/adf-core';
+import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
 import { TagNodeListComponent } from './tag-node-list.component';
 import { TagService } from './services/tag.service';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Observable } from 'rxjs/Observable';
+import { ContentTestingModule } from '../testing/content.testing.module';
 
 describe('TagNodeList', () => {
 
@@ -47,16 +47,7 @@ describe('TagNodeList', () => {
     let tagService: TagService;
 
     setupTestBed({
-        imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
-        ],
-        declarations: [
-            TagNodeListComponent
-        ],
-        providers: [
-            TagService
-        ]
+        imports: [ContentTestingModule]
     });
 
     beforeEach(() => {

@@ -16,10 +16,9 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService, setupTestBed, CoreModule, AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-core';
+import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
 import { TagActionsComponent } from './tag-actions.component';
-import { TagService } from './services/tag.service';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ContentTestingModule } from '../testing/content.testing.module';
 
 declare let jasmine: any;
 
@@ -30,17 +29,7 @@ describe('TagActionsComponent', () => {
     let element: HTMLElement;
 
     setupTestBed({
-        imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
-        ],
-        declarations: [
-            TagActionsComponent
-        ],
-        providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-            TagService
-        ]
+        imports: [ContentTestingModule]
     });
 
     beforeEach(() => {
@@ -52,6 +41,10 @@ describe('TagActionsComponent', () => {
         element = fixture.nativeElement;
         component = fixture.componentInstance;
         fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     let dataTag = {
