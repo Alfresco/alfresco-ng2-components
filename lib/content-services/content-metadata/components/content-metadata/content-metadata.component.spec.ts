@@ -22,55 +22,30 @@ import { SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { ContentMetadataComponent } from './content-metadata.component';
-import { MatExpansionModule } from '@angular/material';
 import { ContentMetadataService } from '../../services/content-metadata.service';
-import { BasicPropertiesService } from '../../services/basic-properties.service';
-import { PropertyGroupTranslatorService } from '../../services/property-groups-translator.service';
-import { PropertyDescriptorsService } from '../../services/property-descriptors.service';
 import {
     CardViewBaseItemModel,
     CardViewComponent,
     CardViewUpdateService,
     NodesApiService,
     LogService,
-    setupTestBed,
-    AlfrescoApiService,
-    AlfrescoApiServiceMock,
-    TranslationService,
-    TranslationMock,
-    CoreModule
-} from '@alfresco/adf-core';
+    setupTestBed
+    } from '@alfresco/adf-core';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { Observable } from 'rxjs/Observable';
-import { ContentMetadataConfigFactory } from '../../services/config/content-metadata-config.factory';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 describe('ContentMetadataComponent', () => {
 
-    let component: ContentMetadataComponent,
-        fixture: ComponentFixture<ContentMetadataComponent>,
-        node: MinimalNodeEntryEntity,
-        folderNode: MinimalNodeEntryEntity,
-        preset = 'custom-preset';
+    let component: ContentMetadataComponent;
+    let fixture: ComponentFixture<ContentMetadataComponent>;
+    let node: MinimalNodeEntryEntity;
+    let folderNode: MinimalNodeEntryEntity;
+    let preset = 'custom-preset';
 
     setupTestBed({
-        imports: [
-            NoopAnimationsModule,
-            MatExpansionModule,
-            CoreModule.forRoot()
-        ],
-        declarations: [
-            ContentMetadataComponent
-        ],
+        imports: [ContentTestingModule],
         providers: [
-            {provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock},
-            {provide: TranslationService, useClass: TranslationMock },
-            ContentMetadataService,
-            BasicPropertiesService,
-            PropertyGroupTranslatorService,
-            PropertyDescriptorsService,
-            ContentMetadataConfigFactory,
-            NodesApiService,
             { provide: LogService, useValue: { error: jasmine.createSpy('error') } }
         ]
     });

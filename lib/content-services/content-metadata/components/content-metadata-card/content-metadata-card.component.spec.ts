@@ -22,46 +22,18 @@ import { By } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { ContentMetadataCardComponent } from './content-metadata-card.component';
 import { ContentMetadataComponent } from '../content-metadata/content-metadata.component';
-import { MatExpansionModule, MatCardModule, MatButtonModule, MatIconModule } from '@angular/material';
-import { ContentMetadataService } from '../../services/content-metadata.service';
-import { BasicPropertiesService } from '../../services/basic-properties.service';
-import { PropertyGroupTranslatorService } from '../../services/property-groups-translator.service';
-import { PropertyDescriptorsService } from '../../services/property-descriptors.service';
-import { ContentMetadataConfigFactory } from '../../services/config/content-metadata-config.factory';
-import { setupTestBed, TranslationService, TranslationMock, CoreModule, AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-core';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { ContentService, PermissionsEnum } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
+import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 describe('ContentMetadataCardComponent', () => {
 
-    let component: ContentMetadataCardComponent,
-        fixture: ComponentFixture<ContentMetadataCardComponent>,
-        node: MinimalNodeEntryEntity,
-        preset = 'custom-preset';
+    let component: ContentMetadataCardComponent;
+    let fixture: ComponentFixture<ContentMetadataCardComponent>;
+    let node: MinimalNodeEntryEntity;
+    let preset = 'custom-preset';
 
     setupTestBed({
-        imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot(),
-            MatExpansionModule,
-            MatCardModule,
-            MatButtonModule,
-            MatIconModule
-        ],
-        declarations: [
-            ContentMetadataCardComponent,
-            ContentMetadataComponent
-        ],
-        providers: [
-            {provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock},
-            {provide: TranslationService, useClass: TranslationMock },
-            ContentMetadataService,
-            BasicPropertiesService,
-            PropertyGroupTranslatorService,
-            ContentMetadataConfigFactory,
-            PropertyDescriptorsService,
-            ContentService
-        ]
+        imports: [ContentTestingModule]
     });
 
     beforeEach(() => {
