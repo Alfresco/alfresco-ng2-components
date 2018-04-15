@@ -18,8 +18,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import * as diagramsActivitiesMock from '../../mock/diagram/diagramActivities.mock';
-import { DiagramsModule } from '../diagram.module';
 import { DiagramComponent } from './diagram.component';
+import { setupTestBed } from '@alfresco/adf-core';
+import { InsightsTestingModule } from '../../testing/insights.testing.module';
 
 declare let jasmine: any;
 
@@ -29,11 +30,9 @@ describe('Diagrams activities', () => {
     let fixture: ComponentFixture<DiagramComponent>;
     let element: HTMLElement;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [DiagramsModule]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [InsightsTestingModule]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(DiagramComponent);
@@ -51,6 +50,7 @@ describe('Diagrams activities', () => {
 
     afterEach(() => {
         component.success.unsubscribe();
+        fixture.destroy();
         jasmine.Ajax.uninstall();
     });
 
