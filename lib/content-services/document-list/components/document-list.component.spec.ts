@@ -40,8 +40,7 @@ import { DocumentListComponent } from './document-list.component';
 import { setupTestBed } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 
-/* tslint:disable */
-fdescribe('DocumentList', () => {
+describe('DocumentList', () => {
 
     let documentList: DocumentListComponent;
     let documentListService: DocumentListService;
@@ -50,21 +49,6 @@ fdescribe('DocumentList', () => {
     let fixture: ComponentFixture<DocumentListComponent>;
     let element: HTMLElement;
     let eventMock: any;
-
-    // setupTestBed({
-    //     imports: [
-    //         CoreModule.forRoot()
-    //     ],
-    //     declarations: [
-    //         DocumentListComponent
-    //     ],
-    //     providers: [
-    //         { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-    //         DocumentListService,
-    //         CustomResourcesService
-    //     ],
-    //     schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    // });
 
     setupTestBed({
         imports: [ContentTestingModule],

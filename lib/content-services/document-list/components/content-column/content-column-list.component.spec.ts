@@ -23,28 +23,11 @@ import { DocumentListComponent } from './../document-list.component';
 import { ContentColumnListComponent } from './content-column-list.component';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 
-/* tslint:disable */
-fdescribe('ContentColumnList', () => {
+describe('ContentColumnList', () => {
 
     let documentList: DocumentListComponent;
     let columnList: ContentColumnListComponent;
     let logService: LogService;
-
-    // setupTestBed({
-    //     imports: [
-    //         CoreModule.forRoot()
-    //     ],
-    //     declarations: [
-    //         DocumentListComponent
-    //     ],
-    //     providers: [
-    //         CustomResourcesService,
-    //         DocumentListService
-    //     ],
-    //     schemas: [
-    //         CUSTOM_ELEMENTS_SCHEMA
-    //     ]
-    // });
 
     setupTestBed({
         imports: [ContentTestingModule],
