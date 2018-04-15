@@ -17,21 +17,25 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { EmptyListComponent } from './empty-list.component';
+import { setupTestBed } from '../../../testing/setupTestBed';
+import { CoreTestingModule } from '../../../testing/core.testing.module';
 
 describe('EmptyListComponentComponent', () => {
     let component: EmptyListComponent;
     let fixture: ComponentFixture<EmptyListComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                EmptyListComponent
-            ]
-        }).compileComponents();
+    setupTestBed({
+        imports: [CoreTestingModule]
+    });
 
+    beforeEach(() => {
         fixture = TestBed.createComponent(EmptyListComponent);
         component = fixture.componentInstance;
-    }));
+    });
+
+    afterEach(() => {
+        fixture.destroy();
+    });
 
     it('should be defined', () => {
         expect(component).toBeDefined();

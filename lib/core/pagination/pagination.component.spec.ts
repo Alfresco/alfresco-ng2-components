@@ -16,15 +16,13 @@
  */
 
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Pagination } from 'alfresco-js-api';
-import { TranslationService } from '../services/translation.service';
 import { PaginationComponent } from './pagination.component';
 import { PaginatedComponent } from './public-api';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { TranslationMock } from '../mock/translation.service.mock';
-import { MatMenuModule } from '@angular/material';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 class FakePaginationInput implements Pagination {
     count: number = 25;
@@ -44,25 +42,18 @@ describe('PaginationComponent', () => {
     let fixture: ComponentFixture<PaginationComponent>;
     let component: PaginationComponent;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                MatMenuModule
-            ],
-            declarations: [
-                PaginationComponent
-            ],
-            providers: [
-                { provide: TranslationService, useClass: TranslationMock }
-            ],
-            schemas: [ NO_ERRORS_SCHEMA ]
-        });
-    }));
+    setupTestBed({
+        imports: [CoreTestingModule],
+        schemas: [ NO_ERRORS_SCHEMA ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(PaginationComponent);
         component = fixture.componentInstance;
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it('should have an "empty" class if no items present', () => {

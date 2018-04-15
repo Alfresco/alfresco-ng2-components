@@ -18,8 +18,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HostSettingsComponent } from './host-settings.component';
 import { setupTestBed } from '../testing/setupTestBed';
-import { CoreModule } from '../core.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('HostSettingsComponent', () => {
 
@@ -27,10 +26,7 @@ describe('HostSettingsComponent', () => {
     let component: HostSettingsComponent;
 
     setupTestBed({
-        imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
-        ]
+        imports: [CoreTestingModule]
     });
 
     beforeEach(() => {

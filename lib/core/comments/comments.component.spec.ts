@@ -23,9 +23,7 @@ import { CommentProcessService } from '../services/comment-process.service';
 import { CommentsComponent } from './comments.component';
 import { CommentContentService } from '../services/comment-content.service';
 import { setupTestBed } from '../testing/setupTestBed';
-import { CoreModule } from '../core.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { DatePipe } from '@angular/common';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('CommentsComponent', () => {
 
@@ -39,13 +37,7 @@ describe('CommentsComponent', () => {
     let commentContentService: CommentContentService;
 
     setupTestBed({
-        imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
-        ],
-        providers: [
-            DatePipe
-        ],
+        imports: [CoreTestingModule],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 
@@ -78,7 +70,10 @@ describe('CommentsComponent', () => {
             message: 'Test Comment',
             createdBy: {id: '999'}
         }));
+    });
 
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it('should load comments when taskId specified', () => {

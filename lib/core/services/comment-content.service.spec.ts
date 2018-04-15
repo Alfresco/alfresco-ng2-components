@@ -20,9 +20,7 @@ import { CommentModel } from '../models/comment.model';
 import { fakeContentComment, fakeContentComments } from '../mock/comment-content-service.mock';
 import { CommentContentService } from './comment-content.service';
 import { setupTestBed } from '../testing/setupTestBed';
-import { CoreModule } from '../core.module';
-import { AlfrescoApiService } from './alfresco-api.service';
-import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 declare let jasmine: any;
 
@@ -31,12 +29,7 @@ describe('Comment Content Service', () => {
     let service: CommentContentService;
 
     setupTestBed({
-        imports: [
-            CoreModule.forRoot()
-        ],
-        providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
-        ]
+        imports: [CoreTestingModule]
     });
 
     beforeEach(() => {

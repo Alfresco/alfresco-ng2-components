@@ -16,7 +16,7 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentService, UploadService, TranslationService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { UploadButtonComponent } from './upload-button.component';

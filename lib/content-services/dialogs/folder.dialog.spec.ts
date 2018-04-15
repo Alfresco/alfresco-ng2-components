@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { ComponentFixture } from '@angular/core/testing';
+import { async, ComponentFixture } from '@angular/core/testing';
 import { MatDialogRef } from '@angular/material';
 
 import { NodesApiService, TranslationService, setupTestBed, CoreModule, TranslationMock } from '@alfresco/adf-core';
@@ -24,6 +24,7 @@ import { FolderDialogComponent } from './folder.dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogModule } from './dialog.module';
 import { Observable } from 'rxjs/Observable';
+import { By } from '@angular/platform-browser';
 
 describe('FolderDialogComponent', () => {
 
@@ -79,7 +80,7 @@ describe('FolderDialogComponent', () => {
                 expect(title.nativeElement.innerText.trim()).toBe('CORE.FOLDER_DIALOG.EDIT_FOLDER_TITLE');
             });
 
-            
+
         it('should update form input', () => {
             component.form.controls['name'].setValue('folder-name-update');
             component.form.controls['description'].setValue('folder-description-update');
@@ -133,7 +134,7 @@ describe('FolderDialogComponent', () => {
                     expect(expectedNode).toBe(folder);
                 });
             }));
-            
+
         it('should not submit if form is invalid', () => {
             spyOn(nodesApi, 'updateNode');
 
@@ -171,7 +172,7 @@ describe('FolderDialogComponent', () => {
             expect(title === null).toBe(false);
             expect(title.nativeElement.innerText.trim()).toBe('CORE.FOLDER_DIALOG.CREATE_FOLDER_TITLE');
          });
-            
+
         it('should init form with empty inputs', () => {
             expect(component.name).toBe('');
             expect(component.description).toBe('');
@@ -227,7 +228,7 @@ describe('FolderDialogComponent', () => {
                     }
                 );
          });
-            
+
         it('should call dialog to close with form data when submit is successfully', () => {
             const folder = {
                 data: 'folder-data'

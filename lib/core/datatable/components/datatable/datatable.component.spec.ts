@@ -25,8 +25,7 @@ import { ObjectDataColumn } from '../../data/object-datacolumn.model';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 import { DataTableComponent } from './datatable.component';
 import { setupTestBed } from '../../../testing/setupTestBed';
-import { CoreModule } from '../../../core.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CoreTestingModule } from '../../../testing/core.testing.module';
 
 describe('DataTable', () => {
 
@@ -36,8 +35,7 @@ describe('DataTable', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
+            CoreTestingModule
         ],
         schemas: [ NO_ERRORS_SCHEMA ]
     });
@@ -46,6 +44,10 @@ describe('DataTable', () => {
         fixture = TestBed.createComponent(DataTableComponent);
         dataTable = fixture.componentInstance;
         element = fixture.debugElement.nativeElement;
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it('should use the cardview style if cardview is true', () => {

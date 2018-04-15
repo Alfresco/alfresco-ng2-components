@@ -15,26 +15,25 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AccordionComponent } from './accordion.component';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('AccordionComponent', () => {
 
     let fixture: ComponentFixture<AccordionComponent>;
     let component: AccordionComponent;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                AccordionComponent
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [CoreTestingModule]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(AccordionComponent);
         component = fixture.componentInstance;
     });
+
 
     it('should create the component', () => {
         expect(component).toBeTruthy();

@@ -19,23 +19,15 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Validators } from '@angular/forms';
 
 import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
 import { UserPreferencesService } from '../../services/user-preferences.service';
 import { AuthenticationService } from '../../services/authentication.service';
-
 import { LoginErrorEvent } from '../models/login-error.event';
 import { LoginSuccessEvent } from '../models/login-success.event';
 import { LoginComponent } from './login.component';
 import { Observable } from 'rxjs/Observable';
 
 import { setupTestBed } from '../../testing/setupTestBed';
-import { CoreModule } from '../../core.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import { TranslationService } from '../../services/translation.service';
-import { TranslationMock } from '../../mock/translation.service.mock';
-import { AuthenticationMock } from '../../mock/authentication.service.mock';
+import { CoreTestingModule } from '../../testing/core.testing.module';
 
 describe('LoginComponent', () => {
     let component: LoginComponent;
@@ -63,16 +55,7 @@ describe('LoginComponent', () => {
     };
 
     setupTestBed({
-        imports: [
-            NoopAnimationsModule,
-            RouterTestingModule,
-            CoreModule.forRoot()
-        ],
-        providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-            { provide: TranslationService, useClass: TranslationMock },
-            { provide: AuthenticationService, useClass: AuthenticationMock }
-        ]
+        imports: [CoreTestingModule]
     });
 
     beforeEach(() => {
@@ -91,6 +74,10 @@ describe('LoginComponent', () => {
         userPreferences = TestBed.get(UserPreferencesService);
 
         fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     function loginWithCredentials(username, password, providers: string = 'ECM') {
@@ -400,8 +387,9 @@ describe('LoginComponent', () => {
 
         component.success.subscribe(() => {
             fixture.detectChanges();
-
-            expect(component.isError).toBe(false);
+            fixture.whenStable().then(() => {
+                expect(component.isError).toBe(false);
+            });
         });
 
         loginWithCredentials('fake-username', 'fake-password');
@@ -413,9 +401,10 @@ describe('LoginComponent', () => {
 
         component.error.subscribe(() => {
             fixture.detectChanges();
-
-            expect(getLoginErrorElement()).toBeDefined();
-            expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+            fixture.whenStable().then(() => {
+                expect(getLoginErrorElement()).toBeDefined();
+                expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+            });
         });
 
         loginWithCredentials('fake-wrong-username', 'fake-password');
@@ -426,10 +415,11 @@ describe('LoginComponent', () => {
 
         component.error.subscribe(() => {
             fixture.detectChanges();
-
-            expect(component.isError).toBe(true);
-            expect(getLoginErrorElement()).toBeDefined();
-            expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+            fixture.whenStable().then(() => {
+                expect(component.isError).toBe(true);
+                expect(getLoginErrorElement()).toBeDefined();
+                expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+            });
         });
 
         loginWithCredentials('fake-username', 'fake-wrong-password');

@@ -20,7 +20,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MaterialModule } from '../material.module';
 import { SidebarActionMenuComponent } from './sidebar-action-menu.component';
 import { setupTestBed } from '../testing/setupTestBed';
-import { CoreModule } from '../core.module';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('SidebarActionMenuComponent', () => {
     let element: HTMLElement;
@@ -28,15 +28,17 @@ describe('SidebarActionMenuComponent', () => {
     let fixture: ComponentFixture<SidebarActionMenuComponent>;
 
     setupTestBed({
-        imports: [
-            CoreModule.forRoot()
-        ]
+        imports: [CoreTestingModule]
     });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(SidebarActionMenuComponent);
         element = fixture.nativeElement;
         component = fixture.componentInstance;
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it('should create instance of SidebarActionMenuComponent', () => {

@@ -19,10 +19,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../app-config/app-config.service';
 import { LanguageMenuComponent } from './language-menu.component';
 import { setupTestBed } from '../testing/setupTestBed';
-import { CoreModule } from '../core.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TranslationService } from '../services/translation.service';
-import { TranslationMock } from '../mock/translation.service.mock';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('LanguageMenuComponent', () => {
 
@@ -31,19 +28,17 @@ describe('LanguageMenuComponent', () => {
     let appConfig: AppConfigService;
 
     setupTestBed({
-        imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
-        ],
-        providers: [
-            { provide: TranslationService, useClass: TranslationMock }
-        ]
+        imports: [CoreTestingModule]
     });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(LanguageMenuComponent);
         component = fixture.componentInstance;
         appConfig = TestBed.get(AppConfigService);
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it('should have the default language', () => {

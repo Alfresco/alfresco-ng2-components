@@ -27,8 +27,7 @@ import { BpmUserModel } from './../models/bpm-user.model';
 import { UserInfoComponent } from './user-info.component';
 import { Observable } from 'rxjs/Observable';
 import { setupTestBed } from '../../testing/setupTestBed';
-import { CoreModule } from '../../core.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CoreTestingModule } from '../../testing/core.testing.module';
 
 class FakeSanitazer extends DomSanitizer {
 
@@ -79,10 +78,7 @@ describe('User info component', () => {
     }
 
     setupTestBed({
-        imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
-        ]
+        imports: [CoreTestingModule]
     });
 
     beforeEach(async(() => {

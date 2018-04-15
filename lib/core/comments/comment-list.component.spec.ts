@@ -23,9 +23,7 @@ import { By } from '@angular/platform-browser';
 import { EcmUserService } from '../userinfo/services/ecm-user.service';
 import { PeopleProcessService } from '../services/people-process.service';
 import { setupTestBed } from '../testing/setupTestBed';
-import { CoreModule } from '../core.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { DatePipe } from '@angular/common';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 const testUser: UserProcessModel = new UserProcessModel({
     id: '1',
@@ -113,28 +111,25 @@ describe('CommentListComponent', () => {
     let peopleProcessService: PeopleProcessService;
 
     setupTestBed({
-        imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
-        ],
-        providers: [
-            DatePipe
-        ],
+        imports: [CoreTestingModule],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 
     beforeEach(async(() => {
-        fixture = TestBed.createComponent(CommentListComponent);
         ecmUserService = TestBed.get(EcmUserService);
+        spyOn(ecmUserService, 'getUserProfileImage').and.returnValue('content-user-image');
+
         peopleProcessService = TestBed.get(PeopleProcessService);
+        spyOn(peopleProcessService, 'getUserImage').and.returnValue('process-user-image');
+
+        fixture = TestBed.createComponent(CommentListComponent);
         commentList = fixture.componentInstance;
         element = fixture.nativeElement;
         fixture.detectChanges();
     }));
 
-    beforeEach(() => {
-        spyOn(ecmUserService, 'getUserProfileImage').and.returnValue('content-user-image');
-        spyOn(peopleProcessService, 'getUserImage').and.returnValue('process-user-image');
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it('should emit row click event', async(() => {

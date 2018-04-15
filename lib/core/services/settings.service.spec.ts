@@ -18,16 +18,14 @@
 import { TestBed } from '@angular/core/testing';
 import { SettingsService } from './settings.service';
 import { setupTestBed } from '../testing/setupTestBed';
-import { CoreModule } from '../core.module';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('SettingsService', () => {
 
     let service: SettingsService;
 
     setupTestBed({
-        imports: [
-            CoreModule.forRoot()
-        ]
+        imports: [CoreTestingModule]
     });
 
     beforeEach(() => {

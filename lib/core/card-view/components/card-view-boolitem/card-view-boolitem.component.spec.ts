@@ -17,17 +17,12 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCheckbox, MatCheckboxChange } from '@angular/material';
-
 import { setupTestBed } from '../../../testing/setupTestBed';
-import { CoreModule } from '../../../core.module';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
-
 import { CardViewBoolItemComponent } from './card-view-boolitem.component';
 import { CardViewBoolItemModel } from '../../models/card-view-boolitem.model';
-import { TranslationMock } from '../../../mock/translation.service.mock';
-import { TranslationService } from '../../../services/translation.service';
+import { CoreTestingModule } from '../../../testing/core.testing.module';
 
 describe('CardViewBoolItemComponent', () => {
 
@@ -35,13 +30,7 @@ describe('CardViewBoolItemComponent', () => {
     let component: CardViewBoolItemComponent;
 
     setupTestBed({
-        imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
-        ],
-        providers: [
-            { provide: TranslationService, useClass: TranslationMock }
-        ]
+        imports: [CoreTestingModule]
     });
 
     beforeEach(() => {

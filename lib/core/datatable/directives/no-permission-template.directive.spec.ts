@@ -15,29 +15,30 @@
  * limitations under the License.
  */
 
-import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { DataTableComponent } from '../components/datatable/datatable.component';
 import { NoPermissionTemplateDirective } from './no-permission-template.directive';
 import { setupTestBed } from '../../testing/setupTestBed';
-import { CoreModule } from '../../core.module';
+import { CoreTestingModule } from '../../testing/core.testing.module';
 
 describe('NoPermissionTemplateDirective', () => {
 
+    let fixture: ComponentFixture<DataTableComponent>;
     let dataTable: DataTableComponent;
     let directive: NoPermissionTemplateDirective;
 
     setupTestBed({
-        imports: [
-            CoreModule.forRoot(),
-            RouterTestingModule
-        ]
+        imports: [CoreTestingModule]
     });
 
     beforeEach(() => {
-        let fixture = TestBed.createComponent(DataTableComponent);
+        fixture = TestBed.createComponent(DataTableComponent);
         dataTable = fixture.componentInstance;
         directive = new NoPermissionTemplateDirective(dataTable);
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it('should apply template to the datatable', () => {

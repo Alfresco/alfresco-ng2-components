@@ -16,17 +16,12 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { CookieServiceMock } from './../mock/cookie.service.mock';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AuthGuardBpm } from './auth-guard-bpm.service';
 import { AuthenticationService } from './authentication.service';
-import { CookieService } from './cookie.service';
 import { RouterStateSnapshot, Router } from '@angular/router';
 import { setupTestBed } from '../testing/setupTestBed';
-import { CoreModule } from '../core.module';
-import { TranslationService } from './translation.service';
-import { TranslationMock } from '../mock/translation.service.mock';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('AuthGuardService BPM', () => {
 
@@ -36,14 +31,7 @@ describe('AuthGuardService BPM', () => {
     let appConfigService: AppConfigService;
 
     setupTestBed({
-        imports: [
-            RouterTestingModule,
-            CoreModule.forRoot()
-        ],
-        providers: [
-            { provide: TranslationService, useClass: TranslationMock },
-            { provide: CookieService, useClass: CookieServiceMock }
-        ]
+        imports: [CoreTestingModule]
     });
 
     beforeEach(() => {

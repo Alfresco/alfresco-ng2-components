@@ -20,10 +20,7 @@ import { BpmProductVersionModel, EcmProductVersionModel } from '../models/produc
 import { AppConfigService } from '../app-config/app-config.service';
 import { DiscoveryApiService } from './discovery-api.service';
 import { setupTestBed } from '../testing/setupTestBed';
-import { CoreModule } from '../core.module';
-import { AlfrescoApiService } from './alfresco-api.service';
-import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
-import { AppConfigServiceMock } from '../mock/app-config.service.mock';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 declare let jasmine: any;
 
@@ -95,13 +92,7 @@ describe('Discovery Api Service', () => {
     let service;
 
     setupTestBed({
-        imports: [
-            CoreModule.forRoot()
-        ],
-        providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-            { provide: AppConfigService, useClass: AppConfigServiceMock }
-        ]
+        imports: [CoreTestingModule]
     });
 
     beforeEach(() => {

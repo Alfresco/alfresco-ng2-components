@@ -17,16 +17,11 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-
 import { setupTestBed } from '../../../testing/setupTestBed';
-import { CoreModule } from '../../../core.module';
-
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { CardViewComponent } from './card-view.component';
-import { TranslationService } from '../../../services/translation.service';
-import { TranslationMock } from '../../../mock/translation.service.mock';
+import { CoreTestingModule } from '../../../testing/core.testing.module';
 
 describe('CardViewComponent', () => {
 
@@ -34,18 +29,16 @@ describe('CardViewComponent', () => {
     let component: CardViewComponent;
 
     setupTestBed({
-        imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
-        ],
-        providers: [
-            { provide: TranslationService, useClass: TranslationMock }
-        ]
+        imports: [CoreTestingModule]
     });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(CardViewComponent);
         component = fixture.componentInstance;
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it('should render the label and value', async(() => {

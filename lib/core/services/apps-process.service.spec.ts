@@ -19,9 +19,7 @@ import { TestBed } from '@angular/core/testing';
 import { fakeApps } from '../mock/apps-service.mock';
 import { AppsProcessService } from './apps-process.service';
 import { setupTestBed } from '../testing/setupTestBed';
-import { CoreModule } from '../core.module';
-import { AlfrescoApiService } from './alfresco-api.service';
-import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 declare let jasmine: any;
 
@@ -30,12 +28,7 @@ describe('AppsProcessService', () => {
     let service: AppsProcessService;
 
     setupTestBed({
-        imports: [
-            CoreModule.forRoot()
-        ],
-        providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
-        ]
+        imports: [CoreTestingModule]
     });
 
     beforeEach(() => {

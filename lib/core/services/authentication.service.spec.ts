@@ -16,19 +16,13 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { CookieServiceMock } from './../mock/cookie.service.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AuthenticationService } from './authentication.service';
 import { CookieService } from './cookie.service';
 import { StorageService } from './storage.service';
 import { UserPreferencesService } from './user-preferences.service';
 import { setupTestBed } from '../testing/setupTestBed';
-import { CoreModule } from '../core.module';
-import { TranslationService } from './translation.service';
-import { TranslationMock } from '../mock/translation.service.mock';
-import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
-import { AppConfigService } from '../app-config/app-config.service';
-import { AppConfigServiceMock } from '../mock/app-config.service.mock';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 declare let jasmine: any;
 
@@ -40,15 +34,7 @@ describe('AuthenticationService', () => {
     let cookie: CookieService;
 
     setupTestBed({
-        imports: [
-            CoreModule.forRoot()
-        ],
-        providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-            { provide: AppConfigService, useClass: AppConfigServiceMock },
-            { provide: TranslationService, useClass: TranslationMock },
-            { provide: CookieService, useClass: CookieServiceMock }
-        ]
+        imports: [CoreTestingModule]
     });
 
     beforeEach(() => {

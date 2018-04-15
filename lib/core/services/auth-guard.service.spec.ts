@@ -17,18 +17,11 @@
 
 import { async, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
-import { CookieServiceMock } from './../mock/cookie.service.mock';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AuthGuard } from './auth-guard.service';
 import { AuthenticationService } from './authentication.service';
-import { CookieService } from './cookie.service';
 import { setupTestBed } from '../testing/setupTestBed';
-import { CoreModule } from '../core.module';
-import { TranslationService } from './translation.service';
-import { TranslationMock } from '../mock/translation.service.mock';
-import { AlfrescoApiService } from './alfresco-api.service';
-import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('AuthGuardService', () => {
     let state;
@@ -38,15 +31,7 @@ describe('AuthGuardService', () => {
     let appConfigService: AppConfigService;
 
     setupTestBed({
-        imports: [
-            RouterTestingModule,
-            CoreModule.forRoot()
-        ],
-        providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-            { provide: TranslationService, useClass: TranslationMock },
-            { provide: CookieService, useClass: CookieServiceMock }
-        ]
+        imports: [CoreTestingModule]
     });
 
     beforeEach(() => {

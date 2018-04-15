@@ -18,15 +18,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { setupTestBed } from '../../../testing/setupTestBed';
-import { CoreModule } from '../../../core.module';
 import moment from 'moment-es6';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
-
 import { CardViewDateItemComponent } from './card-view-dateitem.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TranslationService } from '../../../services/translation.service';
-import { TranslationMock } from '../../../mock/translation.service.mock';
+import { CoreTestingModule } from '../../../testing/core.testing.module';
 
 describe('CardViewDateItemComponent', () => {
 
@@ -34,13 +30,7 @@ describe('CardViewDateItemComponent', () => {
     let component: CardViewDateItemComponent;
 
     setupTestBed({
-        imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
-        ],
-        providers: [
-            { provide: TranslationService, useClass: TranslationMock }
-        ]
+        imports: [CoreTestingModule]
     });
 
     beforeEach(() => {

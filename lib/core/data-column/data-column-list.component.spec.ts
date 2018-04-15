@@ -15,18 +15,16 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { DataColumnListComponent } from './data-column-list.component';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('DataColumnListComponent', () => {
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                DataColumnListComponent
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [CoreTestingModule]
+    });
 
     it('should create the component', () => {
         const fixture = TestBed.createComponent(DataColumnListComponent);

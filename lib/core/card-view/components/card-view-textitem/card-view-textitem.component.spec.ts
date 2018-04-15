@@ -17,14 +17,11 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewTextItemComponent } from './card-view-textitem.component';
 import { setupTestBed } from '../../../testing/setupTestBed';
-import { CoreModule } from '../../../core.module';
-import { TranslationService } from '../../../services/translation.service';
-import { TranslationMock } from '../../../mock/translation.service.mock';
+import { CoreTestingModule } from '../../../testing/core.testing.module';
 
 describe('CardViewTextItemComponent', () => {
 
@@ -32,13 +29,7 @@ describe('CardViewTextItemComponent', () => {
     let component: CardViewTextItemComponent;
 
     setupTestBed({
-        imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
-        ],
-        providers: [
-            { provide: TranslationService, useClass: TranslationMock }
-        ]
+        imports: [CoreTestingModule]
     });
 
     beforeEach(() => {

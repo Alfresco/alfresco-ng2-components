@@ -18,14 +18,11 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CardViewMapItemModel } from '../../models/card-view-mapitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewMapItemComponent } from './card-view-mapitem.component';
 import { setupTestBed } from '../../../testing/setupTestBed';
-import { CoreModule } from '../../../core.module';
-import { TranslationService } from '../../../services/translation.service';
-import { TranslationMock } from '../../../mock/translation.service.mock';
+import { CoreTestingModule } from '../../../testing/core.testing.module';
 
 describe('CardViewMapItemComponent', () => {
     let service: CardViewUpdateService;
@@ -36,13 +33,7 @@ describe('CardViewMapItemComponent', () => {
     let element: HTMLElement;
 
     setupTestBed({
-        imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
-        ],
-        providers: [
-            { provide: TranslationService, useClass: TranslationMock }
-        ]
+        imports: [CoreTestingModule]
     });
 
     beforeEach(() => {

@@ -16,7 +16,7 @@
  */
 
 import { Component } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';

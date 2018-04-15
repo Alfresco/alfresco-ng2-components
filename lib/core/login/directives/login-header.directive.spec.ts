@@ -15,30 +15,29 @@
  * limitations under the License.
  */
 
-import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { LoginComponent } from '../components/login.component';
 import { LoginHeaderDirective } from './login-header.directive';
 import { setupTestBed } from '../../testing/setupTestBed';
-import { CoreModule } from '../../core.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CoreTestingModule } from '../../testing/core.testing.module';
 
 describe('LoginHeaderDirective', () => {
+    let fixture: ComponentFixture<LoginComponent>;
     let component: LoginComponent;
     let directive: LoginHeaderDirective;
 
     setupTestBed({
-        imports: [
-            NoopAnimationsModule,
-            RouterTestingModule,
-            CoreModule.forRoot()
-        ]
+        imports: [CoreTestingModule]
     });
 
     beforeEach(() => {
-        let fixture = TestBed.createComponent(LoginComponent);
+        fixture = TestBed.createComponent(LoginComponent);
         component = fixture.componentInstance;
         directive = new LoginHeaderDirective(component);
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it('applies template to Login component', () => {
