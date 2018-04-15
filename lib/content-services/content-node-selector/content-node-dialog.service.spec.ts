@@ -17,13 +17,13 @@
 
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { MinimalNodeEntryEntity, SitePaging } from 'alfresco-js-api';
-import { AppConfigService, SitesService, setupTestBed, CoreModule } from '@alfresco/adf-core';
+import { AppConfigService, SitesService, setupTestBed } from '@alfresco/adf-core';
 import { DocumentListService } from '../document-list/services/document-list.service';
-import { CustomResourcesService } from '../document-list/services/custom-resources.service';
 import { ContentNodeDialogService } from './content-node-dialog.service';
 import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import { ContentTestingModule } from '../testing/content.testing.module';
 
 const fakeNode: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
         id: 'fake',
@@ -61,16 +61,7 @@ describe('ContentNodeDialogService', () => {
     let afterOpenObservable: Subject<any>;
 
     setupTestBed({
-        imports: [
-            CoreModule.forRoot()
-        ],
-        providers: [
-            ContentNodeDialogService,
-            DocumentListService,
-            CustomResourcesService,
-            SitesService,
-            MatDialog
-        ]
+        imports: [ContentTestingModule]
     });
 
     beforeEach(() => {
@@ -89,7 +80,6 @@ describe('ContentNodeDialogService', () => {
                 error: new Subject<any>()
             }
         });
-
     });
 
     it('should not open the lock node dialog if have no permission', () => {

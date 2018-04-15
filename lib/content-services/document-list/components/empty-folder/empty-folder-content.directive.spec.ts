@@ -17,12 +17,10 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { DataTableComponent, setupTestBed, CoreModule } from '@alfresco/adf-core';
-import { DocumentListService } from '../../services/document-list.service';
-import { CustomResourcesService } from '../../services/custom-resources.service';
-
+import { DataTableComponent, setupTestBed } from '@alfresco/adf-core';
 import { DocumentListComponent } from './../document-list.component';
 import { EmptyFolderContentDirective } from './empty-folder-content.directive';
+import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 describe('EmptyFolderContent', () => {
 
@@ -30,19 +28,8 @@ describe('EmptyFolderContent', () => {
     let documentList: DocumentListComponent;
 
     setupTestBed({
-        imports: [
-            CoreModule.forRoot()
-        ],
-        declarations: [
-            DocumentListComponent
-        ],
-        providers: [
-            DocumentListService,
-            CustomResourcesService
-        ],
-        schemas: [
-            CUSTOM_ELEMENTS_SCHEMA
-        ]
+        imports: [ContentTestingModule],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 
     beforeEach(() => {

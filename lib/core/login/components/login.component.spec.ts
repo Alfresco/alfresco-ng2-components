@@ -29,7 +29,8 @@ import { Observable } from 'rxjs/Observable';
 import { setupTestBed } from '../../testing/setupTestBed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 
-describe('LoginComponent', () => {
+/* tslint:disable */
+fdescribe('LoginComponent', () => {
     let component: LoginComponent;
     let fixture: ComponentFixture<LoginComponent>;
     let element: any;

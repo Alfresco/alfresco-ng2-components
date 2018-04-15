@@ -17,10 +17,11 @@
 
 import { TestBed } from '@angular/core/testing';
 import { PropertyDescriptorsService } from './property-descriptors.service';
-import { AlfrescoApiService, setupTestBed, CoreModule, AlfrescoApiServiceMock } from '@alfresco/adf-core';
+import { AlfrescoApiService, setupTestBed } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { ClassesApi } from 'alfresco-js-api';
 import { PropertyGroup } from '../interfaces/content-metadata.interfaces';
+import { ContentTestingModule } from '../../testing/content.testing.module';
 
 describe('PropertyDescriptorLoaderService', () => {
 
@@ -28,13 +29,7 @@ describe('PropertyDescriptorLoaderService', () => {
     let classesApi: ClassesApi;
 
     setupTestBed({
-        imports: [
-            CoreModule.forRoot()
-        ],
-        providers: [
-            {provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock},
-            PropertyDescriptorsService
-        ]
+        imports: [ContentTestingModule]
     });
 
     beforeEach(() => {

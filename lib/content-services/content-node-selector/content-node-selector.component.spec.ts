@@ -17,27 +17,16 @@
 
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
-import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
-import { ContentNodeSelectorService } from './content-node-selector.service';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { By } from '@angular/platform-browser';
-import {
-        EmptyFolderContentDirective,
-        DocumentListComponent,
-        DocumentListService,
-        CustomResourcesService
-    } from '../document-list';
-import {
-    ContentService, CoreModule, setupTestBed, AlfrescoApiService,
-    AlfrescoApiServiceMock, TranslationService, TranslationMock,
-    AppConfigService, AppConfigServiceMock
-} from '@alfresco/adf-core';
-import { CommonModule } from '@angular/common';
+import { setupTestBed } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
+import { ContentTestingModule } from '../testing/content.testing.module';
+import { DocumentListService } from '../document-list/services/document-list.service';
+import { DocumentListComponent } from '../document-list/components/document-list.component';
 
 describe('ContentNodeSelectorDialogComponent', () => {
 
@@ -53,28 +42,8 @@ describe('ContentNodeSelectorDialogComponent', () => {
     };
 
     setupTestBed({
-        imports: [
-            NoopAnimationsModule,
-            CommonModule,
-            CoreModule.forRoot()
-        ],
-        declarations: [
-            ContentNodeSelectorComponent,
-            ContentNodeSelectorPanelComponent,
-            DocumentListComponent,
-            EmptyFolderContentDirective
-        ],
+        imports: [ContentTestingModule],
         providers: [
-            {provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock},
-            {provide: TranslationService, useClass: TranslationMock },
-            {provide: AppConfigService, useClass: AppConfigServiceMock},
-            CustomResourcesService,
-            ContentNodeSelectorService,
-            ContentNodeSelectorPanelComponent,
-            DocumentListService,
-            ContentService,
-            DocumentListService,
-            ContentNodeSelectorService,
             { provide: MAT_DIALOG_DATA, useValue: data }
         ],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -89,6 +58,10 @@ describe('ContentNodeSelectorDialogComponent', () => {
         component = fixture.componentInstance;
 
         fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     describe('Data injecting with the "Material dialog way"', () => {

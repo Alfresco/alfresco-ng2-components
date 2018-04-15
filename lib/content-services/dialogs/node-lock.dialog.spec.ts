@@ -20,18 +20,14 @@ import moment from 'moment-es6';
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { ComponentFixture } from '@angular/core/testing';
 import { MatDialogRef } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
-
-import { AlfrescoApiService, TranslationService, setupTestBed, CoreModule, AlfrescoApiServiceMock } from '@alfresco/adf-core';
+import { AlfrescoApiService, setupTestBed } from '@alfresco/adf-core';
 import { NodeLockDialogComponent } from './node-lock.dialog';
-import { DialogModule } from './dialog.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ContentTestingModule } from '../testing/content.testing.module';
 
 describe('NodeLockDialogComponent', () => {
 
     let fixture: ComponentFixture<NodeLockDialogComponent>;
     let component: NodeLockDialogComponent;
-    let translationService: TranslationService;
     let alfrescoApi: AlfrescoApiService;
     let expiryDate;
     const dialogRef = {
@@ -39,13 +35,8 @@ describe('NodeLockDialogComponent', () => {
     };
 
     setupTestBed({
-        imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot(),
-            DialogModule
-        ],
+        imports: [ContentTestingModule],
         providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
             { provide: MatDialogRef, useValue: dialogRef }
         ]
     });
@@ -53,11 +44,11 @@ describe('NodeLockDialogComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(NodeLockDialogComponent);
         component = fixture.componentInstance;
-
         alfrescoApi = TestBed.get(AlfrescoApiService);
+    });
 
-        translationService = TestBed.get(TranslationService);
-        spyOn(translationService, 'get').and.returnValue(Observable.of('message'));
+    afterEach(() => {
+        fixture.destroy();
     });
 
     describe('Node lock dialog component', () => {

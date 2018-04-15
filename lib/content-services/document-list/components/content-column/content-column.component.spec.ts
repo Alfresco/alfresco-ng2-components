@@ -17,34 +17,39 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { LogService, setupTestBed, CoreModule } from '@alfresco/adf-core';
-import { DocumentListService } from '../../services/document-list.service';
-import { CustomResourcesService } from '../../services/custom-resources.service';
+import { LogService, setupTestBed } from '@alfresco/adf-core';
 import { DocumentListComponent } from './../document-list.component';
 import { ContentColumnListComponent } from './content-column-list.component';
 import { ContentColumnComponent } from './content-column.component';
+import { ContentTestingModule } from '../../../testing/content.testing.module';
 
-describe('ContentColumn', () => {
+/* tslint:disable */
+fdescribe('ContentColumn', () => {
 
     let documentList: DocumentListComponent;
     let columnList: ContentColumnListComponent;
     let logService: LogService;
 
+    // setupTestBed({
+    //     imports: [
+    //         CoreModule.forRoot()
+    //     ],
+    //     declarations: [
+    //         DocumentListComponent
+    //     ],
+    //     providers: [
+    //         CustomResourcesService,
+    //         DocumentListService,
+    //         LogService
+    //     ],
+    //     schemas: [
+    //         CUSTOM_ELEMENTS_SCHEMA
+    //     ]
+    // });
+
     setupTestBed({
-        imports: [
-            CoreModule.forRoot()
-        ],
-        declarations: [
-            DocumentListComponent
-        ],
-        providers: [
-            CustomResourcesService,
-            DocumentListService,
-            LogService
-        ],
-        schemas: [
-            CUSTOM_ELEMENTS_SCHEMA
-        ]
+        imports: [ContentTestingModule],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 
     beforeEach(() => {

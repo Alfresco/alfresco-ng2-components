@@ -17,12 +17,11 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { setupTestBed, CoreModule } from '@alfresco/adf-core';
-import { DocumentListService } from '../../services/document-list.service';
-import { CustomResourcesService } from '../../services/custom-resources.service';
+import { setupTestBed } from '@alfresco/adf-core';
 import { ContentActionModel } from './../../models/content-action.model';
 import { DocumentListComponent } from './../document-list.component';
 import { ContentActionListComponent } from './content-action-list.component';
+import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 describe('ContentColumnList', () => {
 
@@ -30,19 +29,8 @@ describe('ContentColumnList', () => {
     let actionList: ContentActionListComponent;
 
     setupTestBed({
-        imports: [
-            CoreModule.forRoot()
-        ],
-        declarations: [
-            DocumentListComponent
-        ],
-        providers: [
-            DocumentListService,
-            CustomResourcesService
-        ],
-        schemas: [
-            CUSTOM_ELEMENTS_SCHEMA
-        ]
+        imports: [ContentTestingModule],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 
     beforeEach(() => {

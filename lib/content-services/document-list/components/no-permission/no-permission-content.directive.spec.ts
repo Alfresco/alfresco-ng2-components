@@ -16,13 +16,10 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { MatProgressSpinnerModule } from '@angular/material';
-import { DataTableComponent, setupTestBed, CoreModule } from '@alfresco/adf-core';
-import { DocumentListService } from '../../services/document-list.service';
-import { CustomResourcesService } from '../../services/custom-resources.service';
-
+import { DataTableComponent, setupTestBed } from '@alfresco/adf-core';
 import { DocumentListComponent } from './../document-list.component';
 import { NoPermissionContentDirective } from './no-permission-content.directive';
+import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 describe('NoPermissionContentDirective', () => {
 
@@ -30,17 +27,7 @@ describe('NoPermissionContentDirective', () => {
     let documentList: DocumentListComponent;
 
     setupTestBed({
-        imports: [
-            CoreModule.forRoot(),
-            MatProgressSpinnerModule
-        ],
-        declarations: [
-            DocumentListComponent
-        ],
-        providers: [
-            DocumentListService,
-            CustomResourcesService
-        ]
+        imports: [ContentTestingModule]
     });
 
     beforeEach(() => {

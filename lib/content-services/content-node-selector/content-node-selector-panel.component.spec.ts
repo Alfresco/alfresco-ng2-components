@@ -19,21 +19,16 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity, SiteEntry, SitePaging } from 'alfresco-js-api';
-import { SearchService, SitesService, setupTestBed, CoreModule } from '@alfresco/adf-core';
+import { SearchService, SitesService, setupTestBed } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
-import {
-    CustomResourcesService,
-    EmptyFolderContentDirective,
-    DocumentListComponent,
-    DocumentListService
-} from '../document-list';
-import { DropdownSitesComponent } from '../site-dropdown';
 import { DropdownBreadcrumbComponent } from '../breadcrumb';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
 import { ContentNodeSelectorService } from './content-node-selector.service';
 import { NodePaging } from 'alfresco-js-api';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ContentTestingModule } from '../testing/content.testing.module';
+import { DocumentListService } from '../document-list/services/document-list.service';
+import { DocumentListComponent } from '../document-list/components/document-list.component';
 
 const ONE_FOLDER_RESULT = {
     list: {
@@ -75,24 +70,7 @@ describe('ContentNodeSelectorComponent', () => {
     }
 
     setupTestBed({
-        imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
-        ],
-        declarations: [
-            DocumentListComponent,
-            EmptyFolderContentDirective,
-            DropdownSitesComponent,
-            DropdownBreadcrumbComponent,
-            ContentNodeSelectorPanelComponent
-        ],
-        providers: [
-            CustomResourcesService,
-            SearchService,
-            DocumentListService,
-            SitesService,
-            ContentNodeSelectorService
-        ],
+        imports: [ContentTestingModule],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 
@@ -111,6 +89,10 @@ describe('ContentNodeSelectorComponent', () => {
                     _observer = observer;
                 });
             });
+        });
+
+        afterEach(() => {
+            fixture.destroy();
         });
 
         describe('Parameters', () => {
@@ -511,7 +493,7 @@ describe('ContentNodeSelectorComponent', () => {
 
                 expect(component.searchTerm).toBe('');
                 expect(component.folderIdToShow).toBe('namek');
-            });
+            }));
 
             it('should show the current folder\'s content instead of search results if search was not performed', () => {
                 let documentList = fixture.debugElement.query(By.directive(DocumentListComponent));

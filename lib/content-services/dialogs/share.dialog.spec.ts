@@ -19,12 +19,9 @@ import { TestBed } from '@angular/core/testing';
 import { ComponentFixture } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
-
 import { ShareDialogComponent } from './share.dialog';
-import { setupTestBed } from '../../core/testing';
-import { CoreModule } from '@alfresco/adf-core';
-import { DialogModule } from './dialog.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ContentTestingModule } from '../testing/content.testing.module';
+import { setupTestBed } from '@alfresco/adf-core';
 
 describe('ShareDialogComponent', () => {
 
@@ -40,11 +37,7 @@ describe('ShareDialogComponent', () => {
     };
 
     setupTestBed({
-        imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot(),
-            DialogModule
-        ],
+        imports: [ContentTestingModule],
         providers: [
             { provide: MatDialogRef, useValue: dialogRef },
             { provide: MAT_DIALOG_DATA, useValue: data }

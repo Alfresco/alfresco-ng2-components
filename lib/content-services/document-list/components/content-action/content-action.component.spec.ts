@@ -18,10 +18,8 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
-import { ContentService, setupTestBed, CoreModule } from '@alfresco/adf-core';
+import { ContentService, setupTestBed } from '@alfresco/adf-core';
 import { FileNode } from '../../../mock';
-import { DocumentListService } from '../../services/document-list.service';
-import { CustomResourcesService } from '../../services/custom-resources.service';
 import { ContentActionHandler } from './../../models/content-action.model';
 import { DocumentActionsService } from './../../services/document-actions.service';
 import { FolderActionsService } from './../../services/folder-actions.service';
@@ -30,6 +28,7 @@ import { DocumentListComponent } from './../document-list.component';
 import { ContentActionListComponent } from './content-action-list.component';
 import { ContentActionComponent } from './content-action.component';
 import { ContentActionModel } from './../../models/content-action.model';
+import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 describe('ContentAction', () => {
 
@@ -42,19 +41,8 @@ describe('ContentAction', () => {
     let nodeActionsService: NodeActionsService;
 
     setupTestBed({
-        imports: [
-            CoreModule.forRoot()
-        ],
-        providers: [
-            DocumentListService,
-            CustomResourcesService
-        ],
-        declarations: [
-            DocumentListComponent
-        ],
-        schemas: [
-            CUSTOM_ELEMENTS_SCHEMA
-        ]
+        imports: [ContentTestingModule],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 
     beforeEach(() => {
