@@ -16,7 +16,8 @@
  */
 
 import { TimeAgoPipe } from './time-ago.pipe';
-import { UserPreferencesService, StorageService } from '..';
+import { UserPreferencesService, StorageService, AppConfigService } from '..';
+import { async } from '@angular/core/testing';
 
 describe('TimeAgoPipe', () => {
 
@@ -24,11 +25,12 @@ describe('TimeAgoPipe', () => {
     let userService: UserPreferencesService;
     let storageService: StorageService;
 
-    beforeEach(() => {
+    beforeEach(async(() => {
         storageService = new StorageService();
-        userService = new UserPreferencesService(null, null, storageService, null);
+        let fakeTranslate = jasmine.createSpyObj('TranslateService', ['getBrowserLang']);
+        userService = new UserPreferencesService(fakeTranslate, new AppConfigService(null), storageService, null);
         pipe = new TimeAgoPipe(userService);
-    });
+    }));
 
     it('should return time difference for a given date', () => {
         let date = new Date();
@@ -45,10 +47,18 @@ describe('TimeAgoPipe', () => {
         expect(pipe.transform(undefined)).toBe('');
     });
 
-    it('should return a localised message', () => {
-        spyOn(storageService, 'setItem').and.stub();
-        userService.locale = 'jp';
-        let date = new Date();
-        expect(pipe.transform(date)).toBe('a few seconds ago');
+    describe('When changing locale', () => {
+
+        beforeEach(async(() => {
+            spyOn(storageService, 'setItem').and.stub();
+            userService.locale = 'de';
+
+        }));
+
+        it('should return a localised message', async(() => {
+            let date = new Date();
+            const transformedDate  = pipe.transform(date);
+            expect(transformedDate).toBe('vor ein paar Sekunden');
+        }));
     });
 });

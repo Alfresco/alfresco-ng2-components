@@ -127,7 +127,7 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
         if (col.type === 'date') {
             const format = col.format || 'medium';
             if (format === 'timeAgo') {
-                const timeAgoPipe = new TimeAgoPipe();
+                const timeAgoPipe = new TimeAgoPipe(null);
                 return timeAgoPipe.transform(value);
             } else {
                 const datePipe = new DatePipe('en-US');
