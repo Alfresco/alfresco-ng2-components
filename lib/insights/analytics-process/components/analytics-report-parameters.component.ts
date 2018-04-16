@@ -96,9 +96,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
 
     reportName: string;
 
-    buttons: MenuButton[];
-
-    optionalButtonsShown: boolean;
+    buttons: MenuButton[] = [];
 
     private dropDownSub;
     private reportParamsSub;
@@ -113,7 +111,6 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                 private contentService: ContentService,
                 private dialog: MatDialog) {
 
-        
     }
 
     ngOnInit() {
@@ -130,33 +127,32 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                 this.generateFormGroupFromParameter(report.definition.parameters);
             }
         });
-
-        this.setButtons();
     }
 
     ngOnChanges(changes: SimpleChanges) {
         this.isEditable = false;
         if (this.reportForm) {
             this.reportForm.reset();
-            this.setButtons();
         }
+
         let reportId = changes['reportId'];
         if (reportId && reportId.currentValue) {
+            this.reportId = reportId.currentValue;
             this.getReportParams(reportId.currentValue);
+            this.setButtons();
         }
 
         let appId = changes['appId'];
         if (appId && (appId.currentValue || appId.currentValue === null)) {
             this.getReportParams(this.reportId);
         }
-
     }
 
     private generateFormGroupFromParameter(parameters: ReportParameterDetailsModel[]) {
         let formBuilderGroup: any = {};
         parameters.forEach((param: ReportParameterDetailsModel) => {
             switch (param.type) {
-                case 'dateRange' :
+                case 'dateRange':
                     formBuilderGroup.dateRange = new FormGroup({}, Validators.required);
                     break;
                 case 'processDefinition':
@@ -218,7 +214,6 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                 this.error.emit(err);
             }
         );
-        
     }
 
     private retrieveParameterOptions(parameters: ReportParameterDetailsModel[], appId: number, reportId?: string, processDefinitionId?: string) {
@@ -233,7 +228,6 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                 }
             );
         });
-        
     }
 
     onProcessDefinitionChanges(field: any) {
@@ -257,7 +251,6 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     onStatusChanged(status: any) {
         if (this.reportForm && !this.reportForm.pending && this.reportForm.dirty) {
             this.formValidState = this.reportForm.valid;
-            this.isFormValid();
         }
     }
 
@@ -362,26 +355,6 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         return this.action === 'Save';
     }
 
-    isFormValid() {
-        // return this.reportForm && this.reportForm.dirty && this.reportForm.valid;
-
-        // if(this.reportForm && this.reportForm.dirty && this.reportForm.valid){
-        //     this.optionalButtonsShown = true;
-        //     this.buttons.push(
-        //         new MenuButton({label: 'ANALYTICS.MESSAGES.ICON-EXPORT-CSV', icon: 'file_download', handler: this.showDialog.bind(this, 'Export'), styles: [], id: 'export-button'}),
-        //         new MenuButton({label: 'ANALYTICS.MESSAGES.ICON-SAVE', icon: 'save', handler: this.showDialog.bind(this, 'Save'), styles: [], id: 'save-button'})
-        //     );
-        // }
-
-
-        if(this.reportForm && this.reportForm.dirty && this.reportForm.valid){
-            this.buttons.forEach(function (button : MenuButton) {
-                button.hidden = false;
-            });
-        }
-        
-    }
-
     doExport(paramQuery: ReportQuery) {
         this.analyticsService.exportReportToCsv(this.reportId, paramQuery).subscribe(
             (data: any) => {
@@ -416,19 +389,37 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         return this.hideParameters;
     }
 
-    setButtons(){
+    isFormValid() {
+        return this.reportForm && this.reportForm.dirty && this.reportForm.valid;
+    }
+
+    setButtons() {
         this.buttons = [
-            new MenuButton({label: 'ANALYTICS.MESSAGES.ICON-SETTING', icon: 'settings', handler: this.toggleParameters.bind(this), styles: [], id: null, hidden: false}), 
-            new MenuButton({label: 'ANALYTICS.MESSAGES.ICON-DELETE', icon: 'delete', handler: this.deleteReport.bind(this, this.reportId), styles: [], id: 'delete-button', hidden: false}),
-            new MenuButton({label: 'ANALYTICS.MESSAGES.ICON-EXPORT-CSV', icon: 'file_download', handler: this.showDialog.bind(this, 'Export'), styles: [], id: 'export-button', hidden: true}),
-            new MenuButton({label: 'ANALYTICS.MESSAGES.ICON-SAVE', icon: 'save', handler: this.showDialog.bind(this, 'Save'), styles: [], id: 'save-button', hidden: true}) 
+            new MenuButton({
+                label: 'ANALYTICS.MESSAGES.ICON-SETTING',
+                icon: 'settings',
+                handler: this.toggleParameters.bind(this)
+            }),
+            new MenuButton({
+                label: 'ANALYTICS.MESSAGES.ICON-DELETE',
+                icon: 'delete',
+                handler: this.deleteReport.bind(this, this.reportId),
+                id: 'delete-button'
+            }),
+            new MenuButton({
+                label: 'ANALYTICS.MESSAGES.ICON-EXPORT-CSV',
+                icon: 'file_download',
+                handler: this.showDialog.bind(this, 'Export'),
+                id: 'export-button',
+                isVisible: this.isFormValid.bind(this)
+            }),
+            new MenuButton({
+                label: 'ANALYTICS.MESSAGES.ICON-SAVE',
+                icon: 'save',
+                handler: this.showDialog.bind(this, 'Save'),
+                id: 'save-button',
+                isVisible: this.isFormValid.bind(this)
+            })
         ];
-
-        // this.optionalButtonsShown = false;
-
-        // this.buttons.forEach(function (button : MenuButton) {
-        //     button.hidden = true;
-        // });
     }
 }
-
