@@ -192,6 +192,7 @@
                 (success)="resetError()"
                 (ready)="emitReadyEvent($event)"
                 (preview)="showFile($event)"
+                (folderChange)="onFolderChange($event)"
                 (permissionError)="handlePermissionError($event)">
                 <empty-folder-content *ngIf="disableDragArea">
                     <ng-template>
