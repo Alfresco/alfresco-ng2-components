@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ContentService } from '@alfresco/adf-core';
+import { ContentService, TranslationService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
@@ -37,7 +37,8 @@ export class FolderActionsService {
 
     constructor(private nodeActionsService: NodeActionsService,
                 private documentListService: DocumentListService,
-                private contentService: ContentService) {
+                private contentService: ContentService,
+                private translation: TranslationService) {
         this.setupActionHandlers();
     }
 
@@ -113,18 +114,24 @@ export class FolderActionsService {
         );
     }
 
-    private deleteNode(obj: any, target?: any, permission?: string): Observable<any> {
+    private deleteNode(node: MinimalNodeEntity, target?: any, permission?: string): Observable<any> {
         let handlerObservable: Observable<any>;
 
-        if (this.canExecuteAction(obj)) {
-            if (this.contentService.hasPermission(obj.entry, permission)) {
-                handlerObservable = this.documentListService.deleteNode(obj.entry.id);
+        if (this.canExecuteAction(node)) {
+            if (this.contentService.hasPermission(node.entry, permission)) {
+                handlerObservable = this.documentListService.deleteNode(node.entry.id);
                 handlerObservable.subscribe(() => {
                     if (target && typeof target.reload === 'function') {
                         target.reload();
                     }
-                    this.success.next(obj.entry.id);
+
+                    let message = this.translation.instant('CORE.DELETE_NODE.SINGULAR', { name: node.entry.name });
+                    this.success.next(message);
+                }, () => {
+                    let message = this.translation.instant('CORE.DELETE_NODE.ERROR_SINGULAR', { name: node.entry.name });
+                    this.error.next(message);
                 });
+
                 return handlerObservable;
             } else {
                 this.permissionEvent.next(new PermissionModel({type: 'folder', action: 'delete', permission: permission}));

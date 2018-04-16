@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { AlfrescoApiServiceMock, AppConfigService, StorageService, ContentService } from '@alfresco/adf-core';
+import { AlfrescoApiServiceMock, AppConfigService, StorageService, ContentService, TranslationMock } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { FileNode, FolderNode } from '../../mock';
 import { ContentActionHandler } from '../models/content-action.model';
@@ -35,7 +35,7 @@ describe('FolderActionsService', () => {
         let contentService = new ContentService(null, null, null, null);
         let alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
         documentListService = new DocumentListService(null, contentService, alfrescoApiService, null, null);
-        service = new FolderActionsService(null, documentListService, contentService);
+        service = new FolderActionsService(null, documentListService, contentService,  new TranslationMock());
     });
 
     it('should register custom action handler', () => {

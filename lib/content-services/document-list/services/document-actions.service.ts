@@ -118,7 +118,7 @@ export class DocumentActionsService {
         );
     }
 
-    private deleteNode(node: any, target?: any, permission?: string): Observable<any> {
+    private deleteNode(node: MinimalNodeEntity, target?: any, permission?: string): Observable<any> {
         let handlerObservable;
 
         if (this.canExecuteAction(node)) {
