@@ -2,6 +2,8 @@
 Level: Beginner
 ---
 # Using components
+In this tutorial you will learn the common basics on using ADF components and Angular components in general.
+
 The best option you should consider when you plan to use an ADF component and want to learn the details of its usage, is always to check the documentation for the component you are looking to use. More in general, there are three different ways to use, extend and configure an ADF component:
 1. Configuration properties.
 2. Event listeners.
@@ -12,7 +14,7 @@ In this tutorial you are going to see a practical example for each approach. As 
 ## Configuration properties
 Angular components can easily be configured via properties in the HTML template. In this example we will act on the "Remember me" check and "Need Help?" + "Register" links in the footer of the Login component.
 
-To prepare the task, be sure you have and ADF application up and running by executing `npm start` in a terminal, from the root folder of the project. Access to the login page using your browser and edit the `login.component.html` file stored into the `src/app/.../login` folder. The content of the `login.component.html` file should look like the following source code.
+To prepare the task, be sure you have an ADF application up and running by executing `npm start` in a terminal, from the root folder of the project. Access to the login page using your browser and edit the `login.component.html` file stored into the `src/app/.../login` folder. The content of the `login.component.html` file should look like the following source code.
 
 	<adf-login
 	  copyrightText="&#169; 2017 - 2018 Alfresco Software, Inc. All rights reserved."
@@ -21,7 +23,7 @@ To prepare the task, be sure you have and ADF application up and running by exec
 	  >
 	</adf-login>
 	
-When reviewing the documentation you can see that the `<adf-login/>` component has a lot of different properties. As an example we will toggle `showRememberMe` and `showLoginActions` (all set to `true` by default). If not already specified, add both the properties both with the false value, suing the syntax described below in the example. If the properties are defined in the HTML template, toggle the value according to what you see in the source code (set them to `true` if they have the `false` value and viceversa).
+When reviewing the documentation you can see that the `<adf-login/>` component has a lot of different properties. As an example we will toggle `showRememberMe` and `showLoginActions` (all set to `true` by default). If not already specified, add both the properties both with the false value, using the syntax described below in the example. If the properties are defined in the HTML template, toggle the value according to what you see in the source code (set them to `true` if they have the `false` value and viceversa).
 
 	<adf-login
 	  copyrightText="&#169; 2017 - 2018 Alfresco Software, Inc. All rights reserved."
