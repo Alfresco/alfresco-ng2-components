@@ -38,7 +38,7 @@ export class TrashcanComponent {
 
     supportedPages = [];
 
-    constructor(private preference: UserPreferencesService){
+    constructor(private preference: UserPreferencesService) {
         this.preference.select(UserPreferenceValues.SupportedPageSizes)
         .subscribe((pages) => {
             this.supportedPages = pages;
