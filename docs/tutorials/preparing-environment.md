@@ -1,9 +1,7 @@
 ---
 Level: Beginner
 ---
-
-# Preparing the development environment
-
+## Preparing the development environment
 In this content is shared all the prerequisites valid for all the tutorials and descriptions of the entire documentation. This content contains the development environment description, along with the details of the suggested versions for each tools, library or module.
 
 ## Node.js
@@ -13,7 +11,7 @@ In this content is shared all the prerequisites valid for all the tutorials and 
 You need the latest `node.js` of either the `8.x` or `9.x` branch.
 To check the version, run the following command in a terminal. 
 
-    node -v
+	node -v
 
 ## Angular CLI
 
@@ -23,11 +21,11 @@ Earlier and later versions have issues around `@angular/devkit-core`. 1.6.6 seem
 
 If you already have `Angular CLI` installed check the version by running:
 
-    ng --version
+	ng --version
 
 To globally install `Angular CLI` version globally 1.6.6 run:
 
-    sudo npm install -g @angular/cli@1.6.6
+	sudo npm install -g @angular/cli@1.6.6
 
 ## Code Editor
 
@@ -37,17 +35,16 @@ We recommend [Visual Studio Code](http://code.visualstudio.com) - it's a free, l
 
 You might want to ensure that you have `Yeoman` installed by running `yo --version`. If this is not in your system make sure you run:
 
-    sudo npm install -g yo
+	sudo npm install -g yo
 
 If you have installed it previously, you might want to make sure you uninstall them before. In ADF 2.0 we renamed the generator packages and the update is highly suggested.
 
 Uninstall previous versions with:
 
-    sudo npm uninstall generator-alfresco-adf-app
-    sudo npm uninstall generator-ng2-alfresco-app
-    
+	sudo npm uninstall generator-alfresco-adf-app
+	sudo npm uninstall generator-ng2-alfresco-app
+	
 Install the latest version of the `generator-alfresco-adf-app` using the following command.
 
-    sudo npm install -g generator-alfresco-adf-app
-
+	sudo npm install -g generator-alfresco-adf-app
 
