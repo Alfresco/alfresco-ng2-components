@@ -87,23 +87,6 @@
       "PEOPLE": {
         "NONE": "Aucune personne impliquée"
       },
-      "COMMENTS": {
-        "NONE": "Pas de commentaire",
-        "ADD": "Ajouter un commentaire",
-        "HEADER": "Commentaires ({{ count }})",
-        "CREATED_BY_HEADER": "Créé par",
-        "MESSAGE_HEADER": "Message",
-        "DIALOG": {
-          "TITLE": "Nouveau commentaire",
-          "LABELS": {
-            "MESSAGE": "Message"
-          },
-          "BUTTON": {
-            "ADD": "Ajouter un commentaire",
-            "CANCEL": "Annuler"
-          }
-        }
-      },
       "CHECKLIST": {
         "NONE": "Aucune liste de contrôle"
       },

@@ -149,6 +149,23 @@
       }
     }
   },
+  "COMMENTS": {
+    "NONE": "Нет комментариев",
+    "ADD": "Добавить комментарий",
+    "HEADER": "Комментарии ({{ count }})",
+    "CREATED_BY_HEADER": "Создано пользователем",
+    "MESSAGE_HEADER": "Сообщение",
+    "DIALOG": {
+      "TITLE": "Новый комментарий",
+      "LABELS": {
+        "MESSAGE": "Сообщение"
+      },
+      "BUTTON": {
+        "ADD": "Добавить комментарий",
+        "CANCEL": "Отмена"
+      }
+    }
+  },
   "LOGIN": {
     "LOGO": "Alfresco",
     "LABEL": {
