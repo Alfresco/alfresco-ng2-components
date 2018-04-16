@@ -465,7 +465,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     updateFolderData(node: MinimalNodeEntity): void {
-        this.folderNode = null;
+        this.resetNewFolderPagination();
         this.currentFolderId = node.entry.id;
         this.reload();
         this.folderChange.emit(new NodeEntryEvent(node.entry));
