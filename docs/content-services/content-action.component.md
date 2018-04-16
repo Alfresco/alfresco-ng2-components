@@ -17,9 +17,9 @@ Adds options to a Document List actions menu for a particular content type.
 
 -   [Details](#details)
 
-    -   [Built-in action examples](#built-in-action-examples)
-    -   [Error, Permission and Success callbacks](#error-permission-and-success-callbacks)
+    -   [Examples](#examples)
     -   [Customizing built-in actions](#customizing-built-in-actions)
+    -   [Error, Permission and Success callbacks](#error-permission-and-success-callbacks)
 
 -   [See also](#see-also)
 
@@ -100,11 +100,12 @@ export class MyView {
 ## Details
 
 The document actions are rendered on a dropdown menu for each items of content. You can use the
-`target` property to choose whether the action applies to folders or documents. 
+`target` property to choose whether the action applies to folders , documents or both. (By default the actions arre applied to both)
 
 A number of built-in actions are defined to handle common use cases:
 
 -   **Download** (document)
+-   **lock** (document)
 -   **Copy** (document, folder)
 -   **Move** (document, folder)
 -   **Delete** (document, folder)
@@ -152,14 +153,63 @@ type and other details of the item just deleted:
 
 ![Custom delete message screenshot](../docassets/images/ContentActSnackMessage.png)
 
-### Built-in action examples
+### Examples
 
-#### Delete - System handler combined with custom handler
+#### System handler
+   
+This action simply execute one of the built-in actions described above:
 
-If you specify both `handler="delete"` and your own custom handler with
-`(execute)="myCustomActionAfterDelete($event)"`, your handler will run after a delete completes
-successfully. A delete operation is considered successful if there are no permission or
-network-related errors for the delete request. You can avoid permission errors simply by disabling
+   ```html
+   <adf-document-list [contentActions]="true"...>
+       <content-actions>
+   
+           <content-action
+               target="document"
+               title="Download"
+               handler="download">
+           </content-action>
+   
+       </content-actions>
+   </adf-document-list>
+   ```
+
+![Download document action](../docassets/images/document-action-download.png)
+
+#### Custom handler
+
+If you specify a custom handler it will be executed at any click of the action:
+
+
+```html
+<adf-document-list [contentActions]="true"...>
+   <content-actions>
+
+       <content-action
+           title="custom-action"
+           (execute)="myCustomAction($event)">
+       </content-action>
+
+   </content-actions>
+</adf-document-list>
+```
+
+
+```ts
+export class MyComponent {
+
+    myCustomAction(event: any) {
+        //Your cusrtom logic
+    }
+
+}
+```
+
+#### System handler combined with custom handler
+
+If you specify both system handler and your own custom handler with
+`(execute)="myCustomActionAfterDelete($event)"`, your handler will run after a system handler completes 
+successfully. A system operation is considered successful if there are no permission or
+network-related errors for the system request. You can avoid permission errors simply by disabling
 an item for users who don't have permission to use it (set `disableWithNoPermission="true"`). 
 
 ```html
@@ -171,6 +221,7 @@ an item for users who don't have permission to use it (set `disableWithNoPermiss
             title="Delete"
             permission="delete"
             disableWithNoPermission="true"
+            (execute)="myCustomActionAfterDelete($event)"
             handler="delete">
         </content-action>
 
@@ -178,7 +229,19 @@ an item for users who don't have permission to use it (set `disableWithNoPermiss
 </adf-document-list>
 ```
 
+```ts
+export class MyComponent {
+
+    myCustomActionAfterDelete(event: any) {
+        //Your cusrtom logic
+    }
+
+}
+```
+
 ![Delete disable action button](../docassets/images/content-action-disable-delete-button.png)
+
+#### Permission check
 
 You can also implement the `permissionEvent` to handle permission errors
 (to show the user a notification, for example). Subscribe to this event from your component
@@ -192,6 +255,7 @@ and use the [Notification service](../core/notification.service.md) to show a me
             target="document"
             title="Delete"
             permission="delete"
+            (execute)="myCustomActionAfterDelete($event)"
             (permissionEvent)="onPermissionsFailed($event)"
             handler="delete">
         </content-action>
@@ -212,25 +276,6 @@ export class MyComponent {
 
 ![Delete show notification message](../docassets/images/content-action-notification-message.png)
 
-#### Download
-
-This action simply starts a download of the corresponding document file.
-
-```html
-<adf-document-list [contentActions]="true"...>
-    <content-actions>
-
-        <content-action
-            target="document"
-            title="Download"
-            handler="download">
-        </content-action>
-
-    </content-actions>
-</adf-document-list>
-```
-
-![Download document action](../docassets/images/document-action-download.png)
 
 #### Copy and move
 
@@ -272,6 +317,14 @@ allow the item being copied/moved to be the destination if it is itself a folder
 </adf-document-list>
 ```
 
+### Customizing built-in actions
+
+The built-in actions are defined in the [Document Actions service](document-actions.service.md) and
+[Folder Actions service](folder-actions.service.md) but you can register new actions with these services
+and override the default implementations. See the doc pages for
+[Document Actions service](document-actions.service.md) and [Folder Actions service](folder-actions.service.md)
+for details and examples.
+
 ### Error, Permission and Success callbacks
 
 Defining error, permission and success callbacks are pretty much the same as doing it for the delete permission handling.
@@ -281,14 +334,6 @@ Defining error, permission and success callbacks are pretty much the same as doi
 -   The permissionEvent callback is the same as described above with the delete action
 
 ![Copy/move document action](../docassets/images/document-action-copymove.png)
-
-### Customizing built-in actions
-
-The built-in actions are defined in the [Document Actions service](document-actions.service.md) and
-[Folder Actions service](folder-actions.service.md) but you can register new actions with these services
-and override the default implementations. See the doc pages for
-[Document Actions service](document-actions.service.md) and [Folder Actions service](folder-actions.service.md)
-for details and examples.
 
 <!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
 
