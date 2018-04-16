@@ -162,7 +162,7 @@ From the documentation we can see that the Data Column component has a few prope
 
 ## Content projection
 
-Some times it's not enough to simply render a text string or an image. For this, the Data Column supports Content projection to allow you to take control over what is being rendered in the column.
+Sometimes it's not enough to simply render a text string or an image. For this, the Data Column supports Content projection to allow you to take control over what is being rendered in the column.
 
 Let's change the example above and introduce a status field. In the data we define a new status field that can have the values `green` or `red`. Then we will use content projection to render the column with the color instead of the text.
 
