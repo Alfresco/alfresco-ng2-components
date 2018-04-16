@@ -165,8 +165,8 @@
       }
     },
     "pagination": {
-        "size": 25,
-        "supportedPageSizes": [ 5, 10, 15, 20 ]
+        "size": 20,
+        "supportedPageSizes": [ 20, 30, 40, 50 ]
     },
     "files": {
         "excluded": [".DS_Store", "desktop.ini", ".git"]
