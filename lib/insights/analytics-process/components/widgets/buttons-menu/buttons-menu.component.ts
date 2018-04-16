@@ -30,6 +30,9 @@ export class ButtonsMenuComponent implements OnChanges {
 
     ngOnChanges(changes: SimpleChanges) {
         this.buttons = changes['buttons'].currentValue;
-        console.log(this.buttons);
+    }
+
+    hasButtons() {
+        return this.buttons.length > 0 ? true : false;
     }
 }

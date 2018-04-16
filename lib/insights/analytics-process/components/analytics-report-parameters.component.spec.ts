@@ -30,6 +30,7 @@ describe('AnalyticsReportParametersComponent', () => {
     let component: AnalyticsReportParametersComponent;
     let fixture: ComponentFixture<AnalyticsReportParametersComponent>;
     let element: HTMLElement;
+    let validForm = false;
 
     setupTestBed({
         imports: [InsightsTestingModule]
@@ -39,6 +40,9 @@ describe('AnalyticsReportParametersComponent', () => {
         fixture = TestBed.createComponent(AnalyticsReportParametersComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
+        spyOn(component, 'isFormValid').and.callFake(() => {
+            return validForm;
+        });
         fixture.detectChanges();
     });
 
@@ -393,7 +397,7 @@ describe('AnalyticsReportParametersComponent', () => {
         });
 
         describe('When the form is rendered correctly', () => {
-            let validForm: boolean = true;
+
             let values: any = {
                 dateRange: {
                     startDate: '2016-09-01', endDate: '2016-10-05'
@@ -435,17 +439,9 @@ describe('AnalyticsReportParametersComponent', () => {
 
                 fixture.whenStable().then(() => {
                     component.toggleParameters();
-                    component.reportId = '1';
-                    spyOn(component, 'isFormValid').and.callFake(() => {
-                        return validForm;
-                    });
                     fixture.detectChanges();
                 });
             }));
-
-            afterEach(() => {
-                validForm = true;
-            });
 
             it('Should be able to change the report title', (done) => {
 
@@ -546,50 +542,77 @@ describe('AnalyticsReportParametersComponent', () => {
                 });
             }));
 
-            it('Should raise an event for report deleted', async(() => {
-                let deleteButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#delete-button');
-                expect(deleteButton).toBeDefined();
-                expect(deleteButton).not.toBeNull();
-
-                component.deleteReportSuccess.subscribe((reportId) => {
-                    expect(reportId).not.toBeNull();
+            it('should render adf-buttons-menu component', async(() => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    const buttonsMenuComponent = element.querySelector('adf-buttons-action-menu');
+                    expect(buttonsMenuComponent).not.toBeNull();
+                    expect(buttonsMenuComponent).toBeDefined();
                 });
+            }));
 
-                deleteButton.click();
+            it('should render delete button', async(() => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    const buttonsMenuComponent = element.querySelector('#delete-button');
+                    expect(buttonsMenuComponent).not.toBeNull();
+                    expect(buttonsMenuComponent).toBeDefined();
+                });
+            }));
 
-                jasmine.Ajax.requests.mostRecent().respondWith({
-                    status: 200,
-                    contentType: 'json'
+            it('Should raise an event for report deleted', async(() => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    let deleteButton = fixture.debugElement.nativeElement.querySelector('#delete-button');
+                    expect(deleteButton).toBeDefined();
+                    expect(deleteButton).not.toBeNull();
+                    component.deleteReportSuccess.subscribe((reportId) => {
+                        expect(reportId).not.toBeNull();
+                    });
+                    deleteButton.click();
+                    jasmine.Ajax.requests.mostRecent().respondWith({
+                        status: 200,
+                        contentType: 'json'
+                    });
                 });
             }));
 
             it('Should hide export button if the form is not valid', async(() => {
-                let exportButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#export-button');
-                expect(exportButton).toBeDefined();
-                expect(exportButton).not.toBeNull();
-                validForm = false;
-
+                validForm = true;
                 fixture.detectChanges();
-
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    exportButton = <HTMLButtonElement> element.querySelector('#export-button');
-                    expect(exportButton).toBeNull();
+                    let exportButton = fixture.debugElement.nativeElement.querySelector('#export-button');
+                    expect(exportButton).toBeDefined();
+                    expect(exportButton).not.toBeNull();
+
+                    validForm = false;
+                    fixture.detectChanges();
+                    fixture.whenStable().then(() => {
+                        fixture.detectChanges();
+                        exportButton = fixture.debugElement.nativeElement.querySelector('#export-button');
+                        expect(exportButton).toBeNull();
+                    });
                 });
+
             }));
 
             it('Should hide save button if the form is not valid', async(() => {
-                let saveButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#save-button');
-                expect(saveButton).toBeDefined();
-                expect(saveButton).not.toBeNull();
-                validForm = false;
-
+                validForm = true;
                 fixture.detectChanges();
-
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    saveButton = <HTMLButtonElement> element.querySelector('#save-button');
-                    expect(saveButton).toBeNull();
+                    let saveButton = fixture.debugElement.nativeElement.querySelector('#save-button');
+                    expect(saveButton).toBeDefined();
+                    expect(saveButton).not.toBeNull();
+
+                    validForm = false;
+                    fixture.detectChanges();
+                    fixture.whenStable().then(() => {
+                        fixture.detectChanges();
+                        saveButton = fixture.debugElement.nativeElement.querySelector('#save-button');
+                        expect(saveButton).toBeNull();
+                    });
                 });
             }));
 
@@ -615,6 +638,5 @@ describe('AnalyticsReportParametersComponent', () => {
                 });
             }));
         });
-
     });
 });
