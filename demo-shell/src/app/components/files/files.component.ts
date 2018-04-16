@@ -377,7 +377,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     onSiteChange(site: SiteEntry) {
         this.currentFolderId = site.entry.guid;
-        // this.currentSiteid = site.entry.guid;
     }
 
     getDocumentListCurrentFolderId() {
