@@ -373,7 +373,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.currentFolderId = changes.folderNode.currentValue.id;
             this.resetNewFolderPagination();
             this.loadFolder();
-        } else if (changes.currentFolderId && changes.currentFolderId.currentValue) {
+        } else if (changes.currentFolderId &&
+                   changes.currentFolderId.currentValue !== changes.currentFolderId.previousValue) {
             this.resetNewFolderPagination();
             this.loadFolder();
         } else if (this.data) {
@@ -740,6 +741,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.currentFolderId = nodeId;
         this.resetNewFolderPagination();
         this.loadFolder();
+        this.folderChange.emit(new NodeEntryEvent({id: nodeId}));
     }
 
     private resetNewFolderPagination() {
