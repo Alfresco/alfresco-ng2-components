@@ -92,6 +92,7 @@
 
         </adf-document-list>
         <adf-pagination [ngClass]="{ 'no-border' : documentList.isEmpty()}"
+                        [supportedPageSizes]="supportedPages"
                         [target]="documentList">
         </adf-pagination>
     </div>
