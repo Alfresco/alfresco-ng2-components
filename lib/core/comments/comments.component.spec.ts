@@ -136,7 +136,7 @@ describe('CommentsComponent', () => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             let element = fixture.nativeElement.querySelector('#comment-header');
-            expect(element.innerText).toBe('ADF_TASK_LIST.DETAILS.COMMENTS.HEADER');
+            expect(element.innerText).toBe('COMMENTS.HEADER');
         });
     }));
 

@@ -149,6 +149,23 @@
       }
     }
   },
+  "COMMENTS": {
+    "NONE": "Sem comentários",
+    "ADD": "Adicionar comentário",
+    "HEADER": "({{ count }}) comentários",
+    "CREATED_BY_HEADER": "Criado por",
+    "MESSAGE_HEADER": "Mensagem",
+    "DIALOG": {
+      "TITLE": "Novo comentário",
+      "LABELS": {
+        "MESSAGE": "Mensagem"
+      },
+      "BUTTON": {
+        "ADD": "Adicionar comentário",
+        "CANCEL": "Cancelar"
+      }
+    }
+  },
   "LOGIN": {
     "LOGO": "Alfresco",
     "LABEL": {

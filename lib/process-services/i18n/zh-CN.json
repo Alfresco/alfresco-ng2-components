@@ -87,23 +87,6 @@
       "PEOPLE": {
         "NONE": "未包含任何人"
       },
-      "COMMENTS": {
-        "NONE": "无注释",
-        "ADD": "添加注释",
-        "HEADER": "评论 ({{ count }})",
-        "CREATED_BY_HEADER": "创建者",
-        "MESSAGE_HEADER": "消息",
-        "DIALOG": {
-          "TITLE": "新增评论",
-          "LABELS": {
-            "MESSAGE": "消息"
-          },
-          "BUTTON": {
-            "ADD": "添加注释",
-            "CANCEL": "取消"
-          }
-        }
-      },
       "CHECKLIST": {
         "NONE": "没有检查表"
       },
