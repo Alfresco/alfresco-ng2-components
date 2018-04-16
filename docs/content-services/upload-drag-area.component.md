@@ -1,10 +1,12 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-04-16
 ---
+
 # Upload Drag Area Component
 
-Adds a drag and drop area to upload files to Alfresco.
+Adds a drag and drop area to upload files to ACS.
 
 ## Basic Usage
 
@@ -27,18 +29,20 @@ export class AppComponent {
 }
 ```
 
+## Class members
+
 ### Properties
 
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| disabled | boolean | false | Toggle component disabled state |
-| parentId | string | '-root-' | The ID of the folder in which the files will be uploaded. |
-| versioning | boolean | false |  Versioning false is the default uploader behaviour and it renames the file using an integer suffix if there is a name clash. Versioning true to indicate that a major version should be created  | 
-| acceptedFilesType | `string` | `'*'` | List of allowed file extensions, for example: ".jpg,.gif,.png,.svg".  |
+| Name | Type | Default value | Description |
+| -- | -- | -- | -- |
+| acceptedFilesType | `string` | "\*" | Filter for accepted file types. |
+| disabled | `boolean` | false | Toggle component disabled state. |
+| parentId | `string` |  | ID of parent folder node. |
+| versioning | `boolean` | false | When false, renames the file using an integer suffix if there is a name clash. Set to true to indicate that a major version should be created instead. |
 
 ### Events
 
-| Name | Description |
-| --- | --- |
-| success | Raised when the file is uploaded |
-| error | Raised when the file upload goes in error |
+| Name | Type | Description |
+| -- | -- | -- |
+| error | `EventEmitter<Object>` | Raised when the file upload goes in error. |
+| success | `EventEmitter<Object>` | Emitted when the file is uploaded. |

@@ -1,54 +1,40 @@
 ---
 Added: v2.3.0
 Status: Active
+Last reviewed: 2018-04-16
 ---
 
-# Search Settings Component
+# Search Filter component
 
 Represents a main container component for custom search and faceted search settings.
 
-## Usage example
+## Basic usage
 
 ```html
 <adf-search-filter #settings></adf-search-filter>
 ```
 
-The component is based on dynamically created Widgets to modify the resulting query and options,
-and the `Query Builder` to build and execute the search queries.
+## Class members
 
-## Query Builder Service
+### Properties
 
-Stores information from all the custom search and faceted search widgets,
-compiles and runs the final Search query.
+For the property types please refer to the [Search Category interface](#categories).
 
-The Query Builder is UI agnostic and does not rely on Angular components.
-It is possible to reuse it with multiple component implementations.
+| Property | Description |
+| --- | --- |
+| id | Unique identifier of the category. Also used to access QueryBuilder customizations for a particular widget. |
+| name | Public display name for the category.  |
+| enabled | Toggles category availability. Set to `false` if you want to exclude a category from processing. |
+| expanded | Toggles the expanded state of the category  |
+| component.selector | The id of the Angular component selector to render the Category |
+| component.settings | An object containing component specific settings. Put any properties needed for the target component here. |
 
-Allows custom widgets to populate and edit the following parts of the resulting query:
+## Details
 
-- categories
-- query fragments that form query expression
-- include fields
-- scope settings
-- filter queries
-- facet fields
-- range queries
+The component is based on dynamically created widgets to modify the resulting query and options,
+and the [Search Query Builder service](search-query-builder.service.md)` to build and execute the search queries.
 
-```ts
-constructor(queryBuilder: QueryBuilderService) {
-
-    queryBuilder.updated.subscribe(query => {
-        this.queryBuilder.execute();
-    });
-
-    queryBuilder.executed.subscribe(data => {
-        this.onDataLoaded(data);
-    });
-
-}
-```
-
-## Configuration
+### Configuration
 
 The configuration should be provided via the `search` entry in the `app.config.json` file.
 
@@ -105,11 +91,12 @@ Below is an example configuration:
 }
 ```
 
-## Categories
+### Categories
 
-The Search Settings component and Query Builder require `categories` section provided within the configuration.
+The Search Settings component and Query Builder require a `categories` section provided within the configuration.
 
-Categories are needed to build Widgets so that users can modify the search query at runtime. Every Category can be represented by a single Angular component, either simple or composite one.
+Categories are needed to build widgets so that users can modify the search query at runtime. Every Category can be represented by a single Angular component, which can be either a simple one or a
+composite one.
 
 ```ts
 export interface SearchCategory {
@@ -124,27 +111,17 @@ export interface SearchCategory {
 }
 ```
 
-The interface above also describes entries in the `search.query.categories` section for the `app.config.json`.
+The interface above also describes entries in the `search.query.categories` section for the `app.config.json` file.
 
 ![Search Categories](../docassets/images/search-categories-01.png)
 
-### Properties
+### Settings
 
-For the property types please refer to the `SearchCategory` interface.
-
-| Property | Description |
-| --- | --- |
-| id | Unique identifier of the category. Also used to access QueryBuilder customisations for a particular widget. |
-| name | Public display name for the category.  |
-| enabled | Toggles category availability. Set to `false` if you want to exclude a category from processing. |
-| expanded | Toggles the expanded state of the category. Use it  |
-| component.selector | The id of the Angular component selector to render the Category |
-| component.settings | An object containing component specific settings. Put any properties needed for the target component. |
-
-Every component can expect different set of settings.
+Every use case will have a different set of settings.
 For example Number editors may parse minimum and maximum values, while Text editors can support value formats or length constraints.
 
-You can use `component.settings` to pass any information to your custom Widget using the following interface:
+You can use `component.settings` to pass any information to your custom widget using the 
+`SearchWidgetSettings` interface:
 
 ```ts
 export interface SearchWidgetSettings {
@@ -152,3 +129,7 @@ export interface SearchWidgetSettings {
     [indexer: string]: any;
 }
 ```
+
+## See also
+
+- [Search Query Builder service](search-query-builder.service.md)

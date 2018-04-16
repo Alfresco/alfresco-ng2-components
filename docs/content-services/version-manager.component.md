@@ -1,14 +1,16 @@
 ---
 Added: v2.0.0
 Status: Experimental
+Last reviewed: 2018-04-13
 ---
+
 # Version Manager Component
 
 Displays the version history of a node with the ability to upload a new version.
 
-![\#f03c15](https://placehold.it/15/f03c15/000000?text=+) `This component is still in experimental phase, it has several limitations which will be resolved soon.`
-
 ![Version Manager](../docassets/images/version-manager.png)
+
+![\#f03c15](https://placehold.it/15/f03c15/000000?text=+) `This component is still in experimental phase. It has several limitations which will be resolved soon.`
 
 ## Basic Usage
 
