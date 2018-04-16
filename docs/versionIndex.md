@@ -22,6 +22,7 @@ ADF version in which they were introduced. See the
 -   [Permission list component](content-services/permission-list.component.md)
 -   [Search chip list component](content-services/search-chip-list.component.md)
 -   [Search filter component](content-services/search-filter.component.md)
+-   [Search query builder service](content-services/search-query-builder.service.md)
 -   [Sidenav layout component](core/sidenav-layout.component.md)
 -   [Upload version button component](content-services/upload-version-button.component.md)
 

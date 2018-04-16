@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-03-12
+Last reviewed: 2018-04-16
 ---
 
 # Task List component
@@ -49,7 +49,7 @@ Renders a list containing all the tasks matched by the parameters specified.
 ## Details
 
 This component displays lists of process instances both active and completed, using any defined process filter, and
-render details of any chosen instance.
+renders details of any chosen instance.
 
 ### Setting the column schema
 
