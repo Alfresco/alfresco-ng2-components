@@ -83,7 +83,7 @@ for more information about installing and using the source code.
 | [Form service](form.service.md) | Implements Process Services form methods | [Source](../../lib/core/form/services/form.service.ts) |
 | [Node service](node.service.md) | Gets Alfresco Repository node metadata and creates nodes with metadata.  | [Source](../../lib/core/form/services/node.service.ts) |
 | [Process content service](process-content.service.md) | Manipulates content related to a Process Instance or Task Instance in APS. | [Source](../../lib/core/form/services/process-content.service.ts) |
-| [Alfresco api service](alfresco-api.service.md) | Provides access to initialized **AlfrescoJSApi** instance. | [Source](../../lib/core/services/alfresco-api.service.ts) |
+| [Alfresco api service](alfresco-api.service.md) | Provides access to an initialized **AlfrescoJSApi** instance. | [Source](../../lib/core/services/alfresco-api.service.ts) |
 | [Apps process service](apps-process.service.md) | Gets details of the Process Services apps that are deployed for the user. | [Source](../../lib/core/services/apps-process.service.ts) |
 | [Auth guard bpm service](auth-guard-bpm.service.md) | Adds authentication with Process Services to a route within the app. | [Source](../../lib/core/services/auth-guard-bpm.service.ts) |
 | [Auth guard ecm service](auth-guard-ecm.service.md) | Adds authentication with Content Services to a route within the app. | [Source](../../lib/core/services/auth-guard-ecm.service.ts) |

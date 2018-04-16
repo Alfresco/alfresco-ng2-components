@@ -13,7 +13,7 @@ for more information about installing and using the source code.
 | ---- | ----------- | ----------- |
 | [Breadcrumb component](breadcrumb.component.md) | Indicates the current position within a navigation hierarchy. | [Source](../../lib/content-services/breadcrumb/breadcrumb.component.ts) |
 | [Dropdown breadcrumb component](dropdown-breadcrumb.component.md) | Indicates the current position within a navigation hierarchy using a dropdown menu. | [Source](../../lib/content-services/breadcrumb/dropdown-breadcrumb.component.ts) |
-| [Content metadata component](content-metadata.component.md) | Allows a user to display and edit metadata related to a node. | [Source](../../lib/content-services/content-metadata/components/content-metadata/content-metadata.component.ts) |
+| [Content metadata component](content-metadata.component.md) | Displays and edits metadata related to a node. | [Source](../../lib/content-services/content-metadata/components/content-metadata/content-metadata.component.ts) |
 | [Content node selector panel component](content-node-selector-panel.component.md) | Opens a Content Node Selector in its own dialog window. | [Source](../../lib/content-services/content-node-selector/content-node-selector-panel.component.ts) |
 | [Content node selector component](content-node-selector.component.md) | Allows a user to select items from a Content Services repository. | [Source](../../lib/content-services/content-node-selector/content-node-selector.component.ts) |
 | [Content action component](content-action.component.md) | Adds options to a Document List actions menu for a particular content type. | [Source](../../lib/content-services/document-list/components/content-action/content-action.component.ts) |
@@ -31,7 +31,7 @@ for more information about installing and using the source code.
 | [Tag node list component](tag-node-list.component.md) | Shows tags for a node. | [Source](../../lib/content-services/tag/tag-node-list.component.ts) |
 | [File uploading dialog component](file-uploading-dialog.component.md) | Shows a dialog listing all the files uploaded with the Upload Button or Drag Area components. | [Source](../../lib/content-services/upload/components/file-uploading-dialog.component.ts) |
 | [Upload button component](upload-button.component.md) | Activates a file upload. | [Source](../../lib/content-services/upload/components/upload-button.component.ts) |
-| [Upload drag area component](upload-drag-area.component.md) | Adds a drag and drop area to upload files to Alfresco. | [Source](../../lib/content-services/upload/components/upload-drag-area.component.ts) |
+| [Upload drag area component](upload-drag-area.component.md) | Adds a drag and drop area to upload files to ACS. | [Source](../../lib/content-services/upload/components/upload-drag-area.component.ts) |
 | [Upload version button component](upload-version-button.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Activates a file version upload. | [Source](../../lib/content-services/upload/components/upload-version-button.component.ts) |
 | [Version list component](version-list.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Displays the version history of a node in a Version Manager component | [Source](../../lib/content-services/version-manager/version-list.component.ts) |
 | [Version manager component](version-manager.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Displays the version history of a node with the ability to upload a new version. | [Source](../../lib/content-services/version-manager/version-manager.component.ts) |
@@ -66,6 +66,7 @@ for more information about installing and using the source code.
 | [Document list service](document-list.service.md) | Implements node operations used by the Document List component. | [Source](../../lib/content-services/document-list/services/document-list.service.ts) |
 | [Folder actions service](folder-actions.service.md) | Implements the folder menu actions for the Document List component. | [Source](../../lib/content-services/document-list/services/folder-actions.service.ts) |
 | [Node permission service](node-permission.service.md) | Manages the role permissions for the content nodes | [Source](../../lib/content-services/permission-manager/services/node-permission.service.ts) |
+| [Search query builder service](search-query-builder.service.md) | Stores information from all the custom search and faceted search widgets, compiles and runs the final Search query. | [Source](../../lib/content-services/search/search-query-builder.service.ts) |
 | [Rating service](rating.service.md) | Manages ratings for items in Content Services. | [Source](../../lib/content-services/social/services/rating.service.ts) |
 | [Tag service](tag.service.md) | Manages tags in Content Services. | [Source](../../lib/content-services/tag/services/tag.service.ts) |
 

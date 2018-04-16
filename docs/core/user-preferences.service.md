@@ -1,7 +1,9 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-04-16
 ---
+
 # User Preferences Service
 
 Stores preferences for components.
@@ -31,15 +33,16 @@ Stores preferences for components.
 -   `getDefaultLocale(): string`  
     Gets the default locale.   
 
--   `select : Observable`
-    Return the value for the user status property changed 
+-   `select(property: string) : Observable`
+    Return the value for the user status property changed
+    -   `property` - The property name to query
 
 
 ## Details
 
 The preferences are bound to a particular `prefix` so the application can switch between different profiles on demand.
 
-For example upon login you can set the `prefix` as current username:
+For example, upon login you can set the `prefix` to the current username:
 
 ```ts
 import { UserPreferencesService, AuthenticationService } from '@alfresco/adf-core';
@@ -58,9 +61,9 @@ class AppComponent {
 }
 ```
 
-As soon as you assign the storage prefix all settings that you get or set via the `UserPreferencesService` will be saved to dedicated profile.
+As soon as you assign the storage prefix, all settings that you get or set via the `UserPreferencesService` will be saved to a dedicated profile.
 
-You can import the service in your controller and use its APIs like below:
+You can import the service into your controller and use its APIs as shown below:
 
 ```ts
 @Component({...})
@@ -87,7 +90,9 @@ The service also provides quick access to a set of the "known" properties used a
 | locale | `string` | Current locale setting. |
 
 ## User Preference onChange Stream
-Whenever a property is set to the user preference service an onChange event is sent with the whole set of user properties. This comes in handy when a component wants to react to some property change.
+
+Whenever a property is set with the user preference service, an `onChange` event is sent with the
+whole set of user properties. This is useful when a component needs to react to a property change:
 
 ```ts
     userPreferences.paginationSize = 10;
@@ -96,7 +101,7 @@ Whenever a property is set to the user preference service an onChange event is s
     });
 ```
 
-We have added also the `select` method where the user can give the property name which wants to be notified the changes and get the updated value.
+You can also use the `select` method to get notification when a particular property is changed.
 A set of basic properties is added into the enumeration `UserPreferenceValues` which gives you the key value to access the standard user preference service properties : **PaginationSize**, **DisableCSRF**, **Locale** and **SupportedPageSizes**.
 
 ```ts

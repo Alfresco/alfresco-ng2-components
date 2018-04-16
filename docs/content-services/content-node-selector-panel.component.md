@@ -1,7 +1,7 @@
 ---
 Added: v2.1.0
 Status: Active
-Last reviewed: 2018-03-12
+Last reviewed: 2018-04-16
 ---
 
 # Content Node Selector Panel component
