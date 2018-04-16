@@ -7,7 +7,9 @@
         <ng-content sidenav select="[app-layout-navigation]"></ng-content>
     </mat-sidenav>
 
-    <mat-sidenav-content [@contentAnimation]="contentAnimationState">
-        <ng-content select="[app-layout-content]"></ng-content>
-    </mat-sidenav-content>
+    <div>
+        <div [@contentAnimation]="contentAnimationState" style="margin-left: 0 !important">
+            <ng-content select="[app-layout-content]"></ng-content>
+        </div>
+    </div>
 </mat-sidenav-container>
