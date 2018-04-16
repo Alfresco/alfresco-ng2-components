@@ -157,7 +157,7 @@ type and other details of the item just deleted:
 
 #### System handler
    
-This action simply execute one of the f built-in actions described above:
+This action simply execute one of the built-in actions described above:
 
    ```html
    <adf-document-list [contentActions]="true"...>
@@ -207,7 +207,7 @@ export class MyComponent {
 #### System handler combined with custom handler
 
 If you specify both system handler and your own custom handler with
-`(execute)="myCustomActionAfterDelete($event)"`, your handler will run after a system completes
+`(execute)="myCustomActionAfterDelete($event)"`, your handler will run after a system handler completes 
 successfully. A system operation is considered successful if there are no permission or
 network-related errors for the system request. You can avoid permission errors simply by disabling
 an item for users who don't have permission to use it (set `disableWithNoPermission="true"`). 
