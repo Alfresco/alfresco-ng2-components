@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-03-21
+Last reviewed: 2018-04-16
 ---
 
 # Process Instance List
@@ -38,11 +38,11 @@ Renders a list containing all the process instances matched by the parameters sp
 
 ### Events
 
-| Name | Description |
-| ---- | ----------- |
-| rowClick | Emitted when a row in the process list is clicked |
-| success | Emitted when the list of process instances has been loaded successfully from the server |
-| error | Emitted when an error is encountered loading the list of process instances from the server |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| rowClick | `EventEmitter<string>` | Emitted when a row in the process list is clicked |
+| success | `EventEmitter<ProcessListModel>` | Emitted when the list of process instances has been loaded successfully from the server |
+| error | `EventEmitter<any>` | Emitted when an error is encountered loading the list of process instances from the server |
 
 ## Details
 
