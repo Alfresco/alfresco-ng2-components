@@ -30,6 +30,11 @@ ng-content {
     overflow: hidden;
 }
 
+
+:host ::ng-deep mat-sidenav-content{
+    margin-left:0px !important;
+}
+
 .mat-sidenav-content,
 .mat-drawer-transition .mat-drawer-content {
     transform: unset !important;
