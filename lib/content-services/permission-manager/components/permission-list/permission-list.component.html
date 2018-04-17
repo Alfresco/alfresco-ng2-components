@@ -1,5 +1,16 @@
 <div id="adf-permission-display-container" class="adf-display-permission-container">
-    <adf-datatable [rows]="permissionList" class="adf-datatable-permission">
+
+    <div *ngIf="!permissionList || !permissionList.length" id="adf-no-permissions-template">
+        <div #ref>
+            <ng-content select="adf-no-permission-template"></ng-content>
+        </div>
+
+        <p *ngIf="ref.children.length == 0">
+            {{ 'PERMISSION_MANAGER.PERMISSION_DISPLAY.NO_PERMISSIONS' | translate }}
+        </p>
+    </div>
+
+    <adf-datatable [rows]="permissionList" class="adf-datatable-permission" *ngIf="permissionList && permissionList.length">
         <data-columns>
             <data-column key="icon" type="icon" [sortable]="false">
             </data-column>
