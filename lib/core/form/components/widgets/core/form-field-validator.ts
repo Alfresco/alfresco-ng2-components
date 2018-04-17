@@ -34,6 +34,7 @@ export class RequiredFieldValidator implements FormFieldValidator {
         FormFieldTypes.TEXT,
         FormFieldTypes.MULTILINE_TEXT,
         FormFieldTypes.NUMBER,
+        FormFieldTypes.BOOLEAN,
         FormFieldTypes.TYPEAHEAD,
         FormFieldTypes.DROPDOWN,
         FormFieldTypes.PEOPLE,
@@ -74,6 +75,10 @@ export class RequiredFieldValidator implements FormFieldValidator {
 
             if (field.type === FormFieldTypes.DYNAMIC_TABLE) {
                 return field.value && field.value instanceof Array && field.value.length > 0;
+            }
+
+            if (field.type === FormFieldTypes.BOOLEAN) {
+                return field.value ? true : false;
             }
 
             if (field.value === null || field.value === undefined || field.value === '') {

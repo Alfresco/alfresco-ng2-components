@@ -131,7 +131,8 @@ describe('TextWidgetComponent', () => {
                     value: '',
                     params: {inputMask: '##-##0,00%'},
                     type: FormFieldTypes.TEXT,
-                    readOnly: false
+                    readOnly: false,
+                    placeholder: 'simple palceholder'
                 });
 
                 fixture.detectChanges();
@@ -142,6 +143,23 @@ describe('TextWidgetComponent', () => {
                 expect(element.querySelector('#text-id')).toBeDefined();
                 expect(element.querySelector('#text-id')).not.toBeNull();
             });
+
+            it('should show the field placeholder', () => {
+                expect(inputElement).toBeDefined();
+                expect(inputElement).not.toBeNull();
+                expect(inputElement.placeholder).toBe('simple palceholder');
+            });
+
+            it('should show the field placeholder when clicked', async(() => {
+                inputElement.click();
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    expect(inputElement).toBeDefined();
+                    expect(inputElement).not.toBeNull();
+                    expect(inputElement.placeholder).toBe('simple palceholder');
+                });
+            }));
 
             it('should prevent text to be written if is not allowed by the mask on keyUp event', async(() => {
                 expect(element.querySelector('#text-id')).not.toBeNull();
@@ -244,6 +262,43 @@ describe('TextWidgetComponent', () => {
                     fixture.detectChanges();
                     let textEle: HTMLInputElement = <HTMLInputElement> element.querySelector('#text-id');
                     expect(textEle.value).toBe('12,34%');
+                });
+            }));
+        });
+
+        describe('and a mask placeholder is configured', () => {
+
+            let inputElement: HTMLInputElement;
+
+            beforeEach(() => {
+                widget.field = new FormFieldModel(new FormModel({taskId: 'fake-task-id'}), {
+                    id: 'text-id',
+                    name: 'text-name',
+                    value: '',
+                    params: {inputMask: '##-##0,00%', inputMaskPlaceholder: 'Phone : (__) ___-___'},
+                    type: FormFieldTypes.TEXT,
+                    readOnly: false,
+                    placeholder: 'simple palceholder'
+                });
+
+                fixture.detectChanges();
+                inputElement = <HTMLInputElement> element.querySelector('#text-id');
+            });
+
+            it('should show the input mask placeholder', () => {
+                expect(inputElement).toBeDefined();
+                expect(inputElement).not.toBeNull();
+                expect(inputElement.placeholder).toBe('Phone : (__) ___-___');
+            });
+
+            it('should show the input mask placeholder when clicked', async(() => {
+                inputElement.click();
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    expect(inputElement).toBeDefined();
+                    expect(inputElement).not.toBeNull();
+                    expect(inputElement.placeholder).toBe('Phone : (__) ___-___');
                 });
             }));
         });

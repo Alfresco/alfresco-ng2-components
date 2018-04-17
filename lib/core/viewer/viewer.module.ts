@@ -19,6 +19,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MaterialModule } from '../material.module';
 import { ToolbarModule } from '../toolbar/toolbar.module';
@@ -26,6 +27,7 @@ import { PipeModule } from '../pipes/pipe.module';
 import { ImgViewerComponent } from './components/imgViewer.component';
 import { MediaPlayerComponent } from './components/mediaPlayer.component';
 import { PdfViewerComponent } from './components/pdfViewer.component';
+import { PdfPasswordDialogComponent } from './components/pdfViewer-password-dialog';
 import { PdfThumbComponent } from './components/pdfViewer-thumb.component';
 import { PdfThumbListComponent } from './components/pdfViewer-thumbnails.component';
 import { TxtViewerComponent } from './components/txtViewer.component';
@@ -43,11 +45,14 @@ import { ViewerToolbarActionsComponent } from './components/viewer-toolbar-actio
         CommonModule,
         MaterialModule,
         TranslateModule,
+        FormsModule,
+        ReactiveFormsModule,
         ToolbarModule,
         PipeModule,
         FlexLayoutModule
     ],
     declarations: [
+        PdfPasswordDialogComponent,
         ViewerComponent,
         ImgViewerComponent,
         TxtViewerComponent,
@@ -63,12 +68,16 @@ import { ViewerToolbarActionsComponent } from './components/viewer-toolbar-actio
         ViewerMoreActionsComponent,
         ViewerToolbarActionsComponent
     ],
+    entryComponents: [
+        PdfPasswordDialogComponent
+    ],
     exports: [
         ViewerComponent,
         ImgViewerComponent,
         TxtViewerComponent,
         MediaPlayerComponent,
         PdfViewerComponent,
+        PdfPasswordDialogComponent,
         PdfThumbComponent,
         PdfThumbListComponent,
         ViewerExtensionDirective,

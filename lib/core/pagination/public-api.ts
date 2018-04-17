@@ -18,4 +18,6 @@
 export * from './pagination.component';
 export * from './infinite-pagination.component';
 export * from './paginated-component.interface';
-export * from './pagination-query-params.interface';
+export * from './pagination-component.interface';
+
+export * from './pagination.module';

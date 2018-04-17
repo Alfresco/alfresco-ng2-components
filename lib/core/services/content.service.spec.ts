@@ -18,14 +18,12 @@
 import { async, TestBed } from '@angular/core/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { CookieServiceMock } from '../mock/cookie.service.mock';
-import { AlfrescoApiService } from './alfresco-api.service';
 import { ContentService } from './content.service';
 import { SettingsService } from './settings.service';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AppConfigModule } from '../app-config/app-config.module';
 import { AuthenticationService } from './authentication.service';
 import { CookieService } from './cookie.service';
-import { LogService } from './log.service';
 import { StorageService } from './storage.service';
 import { TranslateLoaderService } from './translate-loader.service';
 import { UserPreferencesService } from './user-preferences.service';
@@ -55,14 +53,12 @@ describe('ContentService', () => {
             ],
             declarations: [],
             providers: [
-                AlfrescoApiService,
                 ContentService,
                 AuthenticationService,
                 SettingsService,
                 StorageService,
                 UserPreferencesService,
-                {provide: CookieService, useClass: CookieServiceMock},
-                LogService
+                {provide: CookieService, useClass: CookieServiceMock}
             ]
         }).compileComponents();
     }));
@@ -149,6 +145,11 @@ describe('ContentService', () => {
     it('should havePermission return false id no permission parameter are passed', () => {
         let permissionNode = {allowableOperations: ['delete', 'update', 'updatePermissions']};
         expect(contentService.hasPermission(permissionNode, null)).toBeFalsy();
+    });
+
+    it('should havePermission return true if permission parameter is copy', () => {
+        let permissionNode = null;
+        expect(contentService.hasPermission(permissionNode, 'copy')).toBeTruthy();
     });
 
     describe('Download blob', () => {

@@ -25,6 +25,7 @@
 
 import { Component, ViewChild } from '@angular/core';
 import { DocumentListComponent } from '@alfresco/adf-content-services';
+import { UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 
 @Component({
     templateUrl: './trashcan.component.html',
@@ -32,11 +33,20 @@ import { DocumentListComponent } from '@alfresco/adf-content-services';
 })
 export class TrashcanComponent {
 
-    @ViewChild(DocumentListComponent)
-    documentList;
+    @ViewChild('documentList')
+    documentList: DocumentListComponent;
+
+    supportedPages = [];
+
+    constructor(private preference: UserPreferencesService) {
+        this.preference.select(UserPreferenceValues.SupportedPageSizes)
+        .subscribe((pages) => {
+            this.supportedPages = pages;
+        });
+    }
 
     refresh() {
-        this.documentList.loadTrashcan();
+        this.documentList.reload();
         this.documentList.resetSelection();
     }
 

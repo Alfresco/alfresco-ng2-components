@@ -46,7 +46,6 @@ describe('CardViewItemDispatcherComponent', () => {
         cardItemTypeService.setComponentTypeResolver('shiny-custom-element', () => CardViewShinyCustomElementItemComponent);
 
         TestBed.configureTestingModule({
-            imports: [],
             declarations: [
                 CardViewItemDispatcherComponent,
                 CardViewShinyCustomElementItemComponent,

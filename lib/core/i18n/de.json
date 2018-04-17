@@ -9,6 +9,9 @@
     "FIELD": {
       "LOCALSTORAGE": "Lokaler Speicherort",
       "SOURCE": "Quelle auswählen aus ",
+      "SHOW_FILE": "Anzeigen",
+      "DOWNLOAD_FILE": "Herunterladen",
+      "REMOVE_FILE": "Entfernen",
       "UPLOAD": "Hochladen",
       "REQUIRED": "*Erforderlich",
       "VALIDATOR": {
@@ -46,6 +49,18 @@
           "CANCEL": "Abbrechen"
         },
         "TITLE": "Dateien werden zu ZIP-Ordner hinzugefügt. Dies kann ein paar Minuten dauern"
+      }
+    },
+    "FILE_DIALOG": {
+      "FILE_LOCK": "Datei sperren",
+      "ALLOW_OTHERS_CHECKBOX": "Bearbeitung dieser Datei durch den Besitzer zulassen",
+      "FILE_LOCK_CHECKBOX": "Datei sperren",
+      "TIME_LOCK_CHECKBOX": "Sperrdauer",
+      "SAVE_BUTTON": {
+        "LABEL": "Speichern"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "Abbrechen"
       }
     },
     "FOLDER_DIALOG": {
@@ -125,6 +140,29 @@
         "CREATED_DATE": "Datum der Erstellung",
         "MODIFIER": "Bearbeiter",
         "MODIFIED_DATE": "Datum der Änderung"
+      },
+      "ACTIONS": {
+        "EDIT": "Bearbeiten",
+        "SAVE": "Speichern",
+        "CANCEL": "Abbrechen",
+        "TOGGLE": "Umschaltwert"
+      }
+    }
+  },
+  "COMMENTS": {
+    "NONE": "Keine Kommentare vorhanden",
+    "ADD": "Kommentar hinzufügen",
+    "HEADER": "Kommentare ({{ count }})",
+    "CREATED_BY_HEADER": "Erstellt von",
+    "MESSAGE_HEADER": "Fehlermeldung",
+    "DIALOG": {
+      "TITLE": "Neuer Kommentar",
+      "LABELS": {
+        "MESSAGE": "Fehlermeldung"
+      },
+      "BUTTON": {
+        "ADD": "Kommentar hinzufügen",
+        "CANCEL": "Abbrechen"
       }
     }
   },
@@ -138,7 +176,7 @@
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "Erforderlich",
-      "USERNAME-MIN": "Ihr Benutzername muss mindestens {{minLenght}} Zeichen lang sein.",
+      "USERNAME-MIN": "Ihr Benutzername muss mindestens {{ minLength }} Zeichen lang sein.",
       "PASSWORD-REQUIRED": "Geben Sie Ihr Passwort ein, um sich anzumelden",
       "LOGIN-ERROR-CREDENTIALS": "Sie haben einen unbekannten Benutzernamen oder ein falsches Passwort eingegeben",
       "LOGIN-ERROR-PROVIDERS": "Provider müssen definiert werden",
@@ -210,10 +248,19 @@
     "LOADING": "Laden",
     "UNKNOWN_FORMAT": "Vorschau konnte nicht geladen werden",
     "SIDEBAR": {
+      "THUMBNAILS": {
+        "PAGE": "Seite {{ pageNum }}"
+      },
       "METADATA": {
         "MORE_INFORMATION": "Mehr Informationen",
         "LESS_INFORMATION": "Weniger Informationen"
       }
+    },
+    "PDF_DIALOG": {
+      "SUBMIT": "Absenden",
+      "CLOSE": "Schließen",
+      "PLACEHOLDER": "Passwort",
+      "ERROR": "Passwort ist falsch"
     }
   }
 }

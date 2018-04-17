@@ -19,6 +19,8 @@ export class PermissionsEnum extends String {
     static DELETE: string = 'delete';
     static UPDATE: string = 'update';
     static CREATE: string = 'create';
+    static COPY: string = 'copy';
+    static LOCK: string = 'lock';
     static UPDATEPERMISSIONS: string = 'updatePermissions';
     static NOT_DELETE: string = '!delete';
     static NOT_UPDATE: string = '!update';

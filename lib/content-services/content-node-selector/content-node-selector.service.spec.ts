@@ -69,15 +69,15 @@ describe('ContentNodeSelectorService', () => {
     it('should set the maxItems and paging properly by parameters', () => {
         service.search('nuka cola quantum', null, 10, 100);
 
-        expect(search.query.paging.maxItems).toEqual('100');
-        expect(search.query.paging.skipCount).toEqual('10');
+        expect(search.query.paging.maxItems).toEqual(100);
+        expect(search.query.paging.skipCount).toEqual(10);
     });
 
     it('should set the maxItems and paging properly by default', () => {
         service.search('nuka cola quantum');
 
-        expect(search.query.paging.maxItems).toEqual('25');
-        expect(search.query.paging.skipCount).toEqual('0');
+        expect(search.query.paging.maxItems).toEqual(25);
+        expect(search.query.paging.skipCount).toEqual(0);
     });
 
     it('should filter the search only for folders', () => {

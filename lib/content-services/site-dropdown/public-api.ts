@@ -16,3 +16,5 @@
  */
 
 export * from './sites-dropdown.component';
+
+export * from './sites-dropdown.module';

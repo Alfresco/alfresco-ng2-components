@@ -1,0 +1,27 @@
+.log-list-type {
+    float: left;
+}
+
+.log-list-text {
+    float: left;
+}
+
+.log-card {
+    min-width: 200px;
+    z-index: 1;
+    height: 20%;
+    width: 40%;
+    position: fixed;
+    top: 1em;
+    right: 1em;
+    opacity: 0.9;
+    overflow: scroll;
+}
+
+.log-ERROR {
+    color: red;
+}
+
+.log-WARN {
+    color: yellow;
+}

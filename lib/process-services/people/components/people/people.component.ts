@@ -42,7 +42,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
     @Input()
     readOnly: boolean = false;
 
-    @ViewChild(PeopleSearchComponent)
+    @ViewChild('peopleSearch')
     peopleSearch: PeopleSearchComponent;
 
     showAssignment: boolean = false;

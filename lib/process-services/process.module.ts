@@ -18,14 +18,14 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CoreModule, TRANSLATION_PROVIDER } from '@alfresco/adf-core';
+import { CoreModule, TRANSLATION_PROVIDER, CommentsModule } from '@alfresco/adf-core';
 
 import { MaterialModule } from './material.module';
 
 import { ProcessListModule } from './process-list/process-list.module';
 import { TaskListModule } from './task-list/task-list.module';
 import { AppsListModule } from './app-list/apps-list.module';
-import { CommentsModule } from './comments/comments.module';
+import { ProcessCommentsModule } from './process-comments/process-comments.module';
 import { AttachmentModule } from './attachment/attachment.module';
 import { PeopleModule } from './people/people.module';
 
@@ -34,6 +34,7 @@ import { PeopleModule } from './people/people.module';
         CoreModule,
         CommonModule,
         CommentsModule,
+        ProcessCommentsModule,
         FormsModule,
         ReactiveFormsModule,
         MaterialModule,
@@ -56,6 +57,7 @@ import { PeopleModule } from './people/people.module';
     exports: [
         CommonModule,
         CommentsModule,
+        ProcessCommentsModule,
         FormsModule,
         ReactiveFormsModule,
         ProcessListModule,

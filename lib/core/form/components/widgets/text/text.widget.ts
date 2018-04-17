@@ -31,6 +31,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
 export class TextWidgetComponent extends WidgetComponent implements OnInit {
 
     mask: string;
+    placeholder: string;
     isMaskReversed: boolean;
 
     constructor(public formService: FormService) {
@@ -38,8 +39,9 @@ export class TextWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.field.params && this.field.params['inputMask']) {
+        if (this.field.params) {
             this.mask = this.field.params['inputMask'];
+            this.placeholder = this.field.params['inputMask'] && this.field.params['inputMaskPlaceholder'] ? this.field.params['inputMaskPlaceholder'] : this.field.placeholder;
             this.isMaskReversed = this.field.params['inputMaskReversed'] ? this.field.params['inputMaskReversed'] : false;
         }
     }

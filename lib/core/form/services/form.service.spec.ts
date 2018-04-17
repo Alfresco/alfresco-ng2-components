@@ -57,7 +57,6 @@ describe('Form service', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [],
             providers: [
                 EcmModelService,
                 FormService

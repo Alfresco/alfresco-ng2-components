@@ -82,9 +82,9 @@ describe('FormFieldValidator', () => {
             let field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.RADIO_BUTTONS,
                 required: true,
-                value: 'one',
                 options: [{ id: 'two', name: 'two' }]
             });
+            field.value = 'one';
 
             expect(validator.validate(field)).toBeFalsy();
         });
@@ -170,6 +170,29 @@ describe('FormFieldValidator', () => {
             });
 
             expect(validator.validate(field)).toBeTruthy();
+        });
+
+        it('should succeed for check box', () => {
+            let field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.BOOLEAN,
+                required: true,
+                value: true,
+                options: [{ id: 'two', name: 'two' }]
+            });
+
+            expect(validator.validate(field)).toBeTruthy();
+        });
+
+        it('should fail for check box', () => {
+            let field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.BOOLEAN,
+                required: true,
+                value: false,
+                options: [{ id: 'two', name: 'two' }]
+            });
+            field.value = false;
+
+            expect(validator.validate(field)).toBeFalsy();
         });
 
     });

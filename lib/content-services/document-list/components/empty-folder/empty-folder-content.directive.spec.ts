@@ -19,6 +19,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
 import { DataTableComponent, DataTableModule } from '@alfresco/adf-core';
 import { DocumentListService } from '../../services/document-list.service';
+import { CustomResourcesService } from '../../services/custom-resources.service';
 
 import { DocumentListComponent } from './../document-list.component';
 import { EmptyFolderContentDirective } from './empty-folder-content.directive';
@@ -37,7 +38,8 @@ describe('EmptyFolderContent', () => {
                 DocumentListComponent
             ],
             providers: [
-                DocumentListService
+                DocumentListService,
+                CustomResourcesService
             ],
             schemas: [
                 CUSTOM_ELEMENTS_SCHEMA

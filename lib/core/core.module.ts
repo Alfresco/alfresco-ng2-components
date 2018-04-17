@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { APP_INITIALIZER, NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 
@@ -37,7 +37,9 @@ import { ToolbarModule } from './toolbar/toolbar.module';
 import { UserInfoModule } from './userinfo/userinfo.module';
 import { ViewerModule } from './viewer/viewer.module';
 import { FormModule } from './form/form.module';
+import { SidenavLayoutModule } from './sidenav-layout/sidenav-layout.module';
 import { SideBarActionModule } from './sidebar/sidebar-action.module';
+import { CommentsModule } from './comments/comments.module';
 
 import { DirectiveModule } from './directives/directive.module';
 import { PipeModule } from './pipes/pipe.module';
@@ -51,6 +53,7 @@ import { AuthenticationService } from './services/authentication.service';
 import { CardItemTypeService } from './card-view/services/card-item-types.service';
 import { CardViewUpdateService } from './card-view/services/card-view-update.service';
 import { CommentProcessService } from './services/comment-process.service';
+import { CommentContentService } from './services/comment-content.service';
 import { ContentService } from './services/content.service';
 import { CookieService } from './services/cookie.service';
 import { DeletedNodesApiService } from './services/deleted-nodes-api.service';
@@ -71,10 +74,11 @@ import { SitesService } from './services/sites.service';
 import { StorageService } from './services/storage.service';
 import { ThumbnailService } from './services/thumbnail.service';
 import { TranslateLoaderService } from './services/translate-loader.service';
-import { TRANSLATION_PROVIDER, TranslationService } from './services/translation.service';
+import { TranslationService } from './services/translation.service';
 import { UploadService } from './services/upload.service';
 import { UserPreferencesService } from './services/user-preferences.service';
 import { SearchConfigurationService } from './services/search-configuration.service';
+import { startupServiceFactory } from './services/startup-service-factory';
 
 export function createTranslateLoader(http: HttpClient, logService: LogService) {
     return new TranslateLoaderService(http, logService);
@@ -114,13 +118,16 @@ export function providers() {
         SitesService,
         DiscoveryApiService,
         CommentProcessService,
-        SearchConfigurationService
+        CommentContentService,
+        SearchConfigurationService,
+        DatePipe
     ];
 }
 
 @NgModule({
     imports: [
         ViewerModule,
+        SidenavLayoutModule,
         SideBarActionModule,
         PipeModule,
         CommonModule,
@@ -138,6 +145,7 @@ export function providers() {
         CardViewModule,
         CollapsableModule,
         FormModule,
+        CommentsModule,
         LoginModule,
         LanguageMenuModule,
         InfoDrawerModule,
@@ -154,6 +162,7 @@ export function providers() {
     exports: [
         ViewerModule,
         SideBarActionModule,
+        SidenavLayoutModule,
         PipeModule,
         CommonModule,
         DirectiveModule,
@@ -170,6 +179,7 @@ export function providers() {
         CardViewModule,
         CollapsableModule,
         FormModule,
+        CommentsModule,
         LoginModule,
         LanguageMenuModule,
         InfoDrawerModule,
@@ -185,6 +195,7 @@ export class CoreModuleLazy {
     imports: [
         ViewerModule,
         SideBarActionModule,
+        SidenavLayoutModule,
         PipeModule,
         CommonModule,
         DirectiveModule,
@@ -201,6 +212,7 @@ export class CoreModuleLazy {
         CardViewModule,
         CollapsableModule,
         FormModule,
+        CommentsModule,
         LoginModule,
         LanguageMenuModule,
         InfoDrawerModule,
@@ -217,6 +229,7 @@ export class CoreModuleLazy {
     exports: [
         ViewerModule,
         SideBarActionModule,
+        SidenavLayoutModule,
         PipeModule,
         CommonModule,
         DirectiveModule,
@@ -233,6 +246,7 @@ export class CoreModuleLazy {
         CardViewModule,
         CollapsableModule,
         FormModule,
+        CommentsModule,
         LoginModule,
         LanguageMenuModule,
         InfoDrawerModule,
@@ -241,15 +255,15 @@ export class CoreModuleLazy {
         TranslateModule
     ],
     providers: [
+        ...providers(),
         {
-            provide: TRANSLATION_PROVIDER,
-            multi: true,
-            useValue: {
-                name: 'adf-core',
-                source: 'assets/adf-core'
-            }
-        },
-        ...providers()
+            provide: APP_INITIALIZER,
+            useFactory: startupServiceFactory,
+            deps: [
+                AlfrescoApiService
+            ],
+            multi: true
+        }
     ]
 })
 export class CoreModule {
@@ -257,15 +271,15 @@ export class CoreModule {
         return {
             ngModule: CoreModule,
             providers: [
+                ...providers(),
                 {
-                    provide: TRANSLATION_PROVIDER,
-                    multi: true,
-                    useValue: {
-                        name: 'adf-core',
-                        source: 'assets/adf-core'
-                    }
-                },
-                ...providers()
+                    provide: APP_INITIALIZER,
+                    useFactory: startupServiceFactory,
+                    deps: [
+                        AlfrescoApiService
+                    ],
+                    multi: true
+                }
             ]
         };
     }
@@ -274,5 +288,9 @@ export class CoreModule {
         return {
             ngModule: CoreModuleLazy
         };
+    }
+
+    constructor(translation: TranslationService) {
+        translation.addTranslationFolder('adf-core', 'assets/adf-core');
     }
 }

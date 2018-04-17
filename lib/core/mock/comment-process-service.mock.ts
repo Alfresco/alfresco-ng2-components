@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CommentProcessModel } from '../models/comment-process.model';
+import { CommentModel } from '../models/comment.model';
 import { UserProcessModel } from '../models/user-process.model';
 
 export let fakeUser1 = { id: 1, email: 'fake-email@dom.com', firstName: 'firstName', lastName: 'lastName' };
@@ -34,7 +34,7 @@ export let fakeTasksComment = {
     ]
 };
 
-export let fakeProcessComment = new CommentProcessModel({id: 1, message: 'Test', created: new Date('2016-11-10T03:37:30.010+0000'), createdBy: new UserProcessModel({
+export let fakeProcessComment = new CommentModel({id: 1, message: 'Test', created: new Date('2016-11-10T03:37:30.010+0000'), createdBy: new UserProcessModel({
     id: 13,
     firstName: 'Wilbur',
     lastName: 'Adams',

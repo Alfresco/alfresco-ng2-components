@@ -17,7 +17,7 @@
 
 /* tslint:disable:no-input-rename  */
 
-import { Directive, HostListener, Input } from '@angular/core';
+import { Directive, HostListener, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { FolderDialogComponent } from '../dialogs/folder.dialog';
@@ -34,6 +34,10 @@ export class FolderCreateDirective {
     /** Parent folder where the new folder will be located after creation. */
     @Input('adf-create-folder')
     parentNodeId: string = DEFAULT_FOLDER_PARENT_ID;
+
+    /** Emitted when the create folder give error for example a folder with same name already exist */
+    @Output()
+    error: EventEmitter<any> = new EventEmitter<any>();
 
     @HostListener('click', [ '$event' ])
     onClick(event) {
@@ -59,6 +63,10 @@ export class FolderCreateDirective {
     private openDialog(): void {
         const { dialogRef, dialogConfig, content } = this;
         const dialogInstance = dialogRef.open(FolderDialogComponent, dialogConfig);
+
+        dialogInstance.componentInstance.error.subscribe((error) => {
+            this.error.emit(error);
+        });
 
         dialogInstance.afterClosed().subscribe((node: MinimalNodeEntryEntity) => {
             if (node) {

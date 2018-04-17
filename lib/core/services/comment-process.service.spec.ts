@@ -16,14 +16,10 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { CommentProcessModel } from '../models';
-import { AppConfigServiceMock } from '../mock/app-config.service.mock';
+import { CommentModel } from '../models/comment.model';
 import { fakeProcessComment, fakeTasksComment, fakeUser1 } from '../mock/comment-process-service.mock';
-import { AlfrescoApiService } from './alfresco-api.service';
-import { AppConfigService } from '../app-config/app-config.service';
 import { CommentProcessService } from './comment-process.service';
-import { LogService } from './log.service';
-import { StorageService } from './storage.service';
+import { AlfrescoApiService } from './alfresco-api.service';
 
 declare let jasmine: any;
 describe('Comment ProcessService Service', () => {
@@ -34,11 +30,7 @@ describe('Comment ProcessService Service', () => {
     beforeEach((() => {
         TestBed.configureTestingModule({
             providers: [
-                CommentProcessService,
-                AlfrescoApiService,
-                StorageService,
-                LogService,
-                {provide: AppConfigService, useClass: AppConfigServiceMock}
+                CommentProcessService
             ]
         }).compileComponents();
     }));
@@ -150,7 +142,7 @@ describe('Comment ProcessService Service', () => {
 
         it('should add a comment task ', (done) => {
             service.addTaskComment('999', 'fake-comment-message').subscribe(
-                (res: CommentProcessModel) => {
+                (res: CommentModel) => {
                     expect(res).toBeDefined();
                     expect(res.id).not.toEqual(null);
                     expect(res.message).toEqual('fake-comment-message');
@@ -175,7 +167,7 @@ describe('Comment ProcessService Service', () => {
 
         it('should return the tasks comments ', (done) => {
             service.getTaskComments('999').subscribe(
-                (res: CommentProcessModel[]) => {
+                (res: CommentModel[]) => {
                     expect(res).toBeDefined();
                     expect(res.length).toEqual(2);
                     expect(res[0].message).toEqual('fake-message-1');

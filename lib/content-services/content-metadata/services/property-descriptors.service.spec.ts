@@ -30,8 +30,7 @@ describe('PropertyDescriptorLoaderService', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             providers: [
-                PropertyDescriptorsService,
-                AlfrescoApiService
+                PropertyDescriptorsService
             ]
         }).compileComponents();
     }));

@@ -15,23 +15,14 @@
  * limitations under the License.
  */
 
-import {
-    ChangeDetectionStrategy,
-    Component,
-    EventEmitter,
-    Input,
-    OnInit,
-    Output,
-    ViewEncapsulation,
-    ChangeDetectorRef,
-    OnDestroy,
-    HostBinding
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation,
+    ChangeDetectorRef, OnDestroy, HostBinding } from '@angular/core';
 
 import { Pagination } from 'alfresco-js-api';
-import { PaginationQueryParams } from './pagination-query-params.interface';
 import { PaginatedComponent } from './paginated-component.interface';
+import { PaginationComponentInterface } from './pagination-component.interface';
 import { Subscription } from 'rxjs/Subscription';
+import { PaginationModel } from '../models/pagination.model';
 
 @Component({
     selector: 'adf-pagination',
@@ -41,7 +32,7 @@ import { Subscription } from 'rxjs/Subscription';
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
-export class PaginationComponent implements OnInit, OnDestroy {
+export class PaginationComponent implements OnInit, OnDestroy, PaginationComponentInterface {
 
     static DEFAULT_PAGINATION: Pagination = {
         skipCount: 0,
@@ -66,27 +57,27 @@ export class PaginationComponent implements OnInit, OnDestroy {
 
     /** Pagination object. */
     @Input()
-    pagination: Pagination;
+    pagination: PaginationModel = PaginationComponent.DEFAULT_PAGINATION;
 
-    /** Emitted when paginaton changes in any way. */
+    /** Emitted when pagination changes in any way. */
     @Output()
-    change: EventEmitter<PaginationQueryParams> = new EventEmitter<PaginationQueryParams>();
+    change: EventEmitter<PaginationModel> = new EventEmitter<PaginationModel>();
 
     /** Emitted when the page number changes. */
     @Output()
-    changePageNumber: EventEmitter<Pagination> = new EventEmitter<Pagination>();
+    changePageNumber: EventEmitter<PaginationModel> = new EventEmitter<PaginationModel>();
 
     /** Emitted when the page size changes. */
     @Output()
-    changePageSize: EventEmitter<Pagination> = new EventEmitter<Pagination>();
+    changePageSize: EventEmitter<PaginationModel> = new EventEmitter<PaginationModel>();
 
     /** Emitted when the next page is requested. */
     @Output()
-    nextPage: EventEmitter<Pagination> = new EventEmitter<Pagination>();
+    nextPage: EventEmitter<PaginationModel> = new EventEmitter<PaginationModel>();
 
     /** Emitted when the previous page is requested. */
     @Output()
-    prevPage: EventEmitter<Pagination> = new EventEmitter<Pagination>();
+    prevPage: EventEmitter<PaginationModel> = new EventEmitter<PaginationModel>();
 
     private paginationSubscription: Subscription;
 
@@ -95,9 +86,8 @@ export class PaginationComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         if (this.target) {
-            this.supportedPageSizes = this.target.supportedPageSizes;
-            this.paginationSubscription = this.target.pagination.subscribe(page => {
-                this.pagination = page;
+            this.paginationSubscription = this.target.pagination.subscribe((pagination: PaginationModel) => {
+                this.pagination = pagination;
                 this.cdr.detectChanges();
             });
         }
@@ -212,7 +202,7 @@ export class PaginationComponent implements OnInit, OnDestroy {
         });
     }
 
-    handlePaginationEvent(action: string, params: PaginationQueryParams) {
+    handlePaginationEvent(action: string, params: PaginationModel) {
         const {
             NEXT_PAGE,
             PREV_PAGE,

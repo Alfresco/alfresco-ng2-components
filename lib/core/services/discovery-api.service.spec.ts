@@ -17,14 +17,9 @@
 
 import { async, TestBed } from '@angular/core/testing';
 import { BpmProductVersionModel, EcmProductVersionModel } from '../models/product-version.model';
-import { AlfrescoApiService } from './alfresco-api.service';
-import { SettingsService } from './settings.service';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AppConfigModule } from '../app-config/app-config.module';
-import { AuthenticationService } from './authentication.service';
 import { DiscoveryApiService } from './discovery-api.service';
-import { StorageService } from './storage.service';
-import { UserPreferencesService } from './user-preferences.service';
 
 declare let jasmine: any;
 
@@ -101,12 +96,7 @@ describe('Discovery Api Service', () => {
                 AppConfigModule
             ],
             providers: [
-                DiscoveryApiService,
-                AlfrescoApiService,
-                UserPreferencesService,
-                AuthenticationService,
-                SettingsService,
-                StorageService
+                DiscoveryApiService
             ]
         }).compileComponents();
     }));

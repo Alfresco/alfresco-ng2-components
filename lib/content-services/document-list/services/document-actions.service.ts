@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ContentService } from '@alfresco/adf-core';
+import { ContentService, TranslationService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
@@ -24,6 +24,7 @@ import { ContentActionHandler } from '../models/content-action.model';
 import { PermissionModel } from '../models/permissions.model';
 import { DocumentListService } from './document-list.service';
 import { NodeActionsService } from './node-actions.service';
+import { ContentNodeDialogService } from '../../content-node-selector/content-node-dialog.service';
 import 'rxjs/add/observable/throw';
 
 @Injectable()
@@ -36,6 +37,8 @@ export class DocumentActionsService {
     private handlers: { [id: string]: ContentActionHandler; } = {};
 
     constructor(private nodeActionsService: NodeActionsService,
+                private contentNodeDialogService: ContentNodeDialogService,
+                private translation: TranslationService,
                 private documentListService?: DocumentListService,
                 private contentService?: ContentService) {
         this.setupActionHandlers();
@@ -44,6 +47,7 @@ export class DocumentActionsService {
     /**
      * Gets the handler for an action.
      * @param key Identifier of the action
+     * @returns The handler for the action
      */
     getHandler(key: string): ContentActionHandler {
         if (key) {
@@ -57,6 +61,7 @@ export class DocumentActionsService {
      * Sets a new handler for an action.
      * @param key Identifier of the action
      * @param handler Handler for the action
+     * @returns False if the key was an empty/null string, true otherwise
      */
     setHandler(key: string, handler: ContentActionHandler): boolean {
         if (key) {
@@ -70,6 +75,7 @@ export class DocumentActionsService {
     /**
      * Checks if actions can be executed for an item.
      * @param obj Item to receive an action
+     * @returns True if the action can be executed on this item, false otherwise
      */
     canExecuteAction(obj: any): boolean {
         return this.documentListService && obj && obj.entry.isFile === true;
@@ -80,6 +86,11 @@ export class DocumentActionsService {
         this.handlers['move'] = this.moveNode.bind(this);
         this.handlers['delete'] = this.deleteNode.bind(this);
         this.handlers['download'] = this.downloadNode.bind(this);
+        this.handlers['lock'] = this.lockNode.bind(this);
+    }
+
+    private lockNode(node: MinimalNodeEntity, target?: any, permission?: string) {
+        return this.contentNodeDialogService.openLockNodeDialog(node.entry);
     }
 
     private downloadNode(obj: MinimalNodeEntity, target?: any, permission?: string) {
@@ -101,30 +112,32 @@ export class DocumentActionsService {
     private prepareHandlers(actionObservable, type: string, action: string, target?: any, permission?: string): void {
         actionObservable.subscribe(
             (fileOperationMessage) => {
-                if (target && typeof target.reload === 'function') {
-                    target.reload();
-                }
                 this.success.next(fileOperationMessage);
             },
             this.error.next.bind(this.error)
         );
     }
 
-    private deleteNode(node: any, target?: any, permission?: string): Observable<any> {
+    private deleteNode(node: MinimalNodeEntity, target?: any, permission?: string): Observable<any> {
         let handlerObservable;
 
         if (this.canExecuteAction(node)) {
             if (this.contentService.hasPermission(node.entry, permission)) {
                 handlerObservable = this.documentListService.deleteNode(node.entry.id);
                 handlerObservable.subscribe(() => {
-                    if (target && typeof target.reload === 'function') {
-                        target.reload();
-                    }
-                    this.success.next(node.entry.id);
+                    let message = this.translation.instant('CORE.DELETE_NODE.SINGULAR', { name: node.entry.name });
+                    this.success.next(message);
+                }, () => {
+                    let message = this.translation.instant('CORE.DELETE_NODE.ERROR_SINGULAR', { name: node.entry.name });
+                    this.error.next(message);
                 });
                 return handlerObservable;
             } else {
-                this.permissionEvent.next(new PermissionModel({type: 'content', action: 'delete', permission: permission}));
+                this.permissionEvent.next(new PermissionModel({
+                    type: 'content',
+                    action: 'delete',
+                    permission: permission
+                }));
                 return Observable.throw(new Error('No permission to delete'));
             }
         }

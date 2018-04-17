@@ -21,6 +21,7 @@ import { Observer } from 'rxjs/Observer';
 import { ReportParametersModel } from '../../diagram/models/report/reportParameters.model';
 import { AnalyticsService } from '../services/analytics.service';
 
+// @deprecated 2.3.0 analytics-report-list tag removed
 @Component({
     selector: 'adf-analytics-report-list, analytics-report-list',
     templateUrl: './analytics-report-list.component.html',

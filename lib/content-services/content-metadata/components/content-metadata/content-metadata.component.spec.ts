@@ -27,7 +27,6 @@ import { ContentMetadataService } from '../../services/content-metadata.service'
 import { BasicPropertiesService } from '../../services/basic-properties.service';
 import { PropertyGroupTranslatorService } from '../../services/property-groups-translator.service';
 import { PropertyDescriptorsService } from '../../services/property-descriptors.service';
-import { AlfrescoApiService } from '@alfresco/adf-core';
 import {
     CardViewBaseItemModel,
     CardViewComponent,
@@ -63,7 +62,6 @@ describe('ContentMetadataComponent', () => {
                 PropertyGroupTranslatorService,
                 PropertyDescriptorsService,
                 ContentMetadataConfigFactory,
-                AlfrescoApiService,
                 NodesApiService,
                 { provide: LogService, useValue: { error: jasmine.createSpy('error') } }
             ]

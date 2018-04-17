@@ -19,7 +19,7 @@ import { Location } from '@angular/common';
 import {
     Component, ContentChild, EventEmitter, HostListener, ElementRef,
     Input, OnChanges, Output, SimpleChanges, TemplateRef,
-    ViewEncapsulation
+    ViewEncapsulation, OnInit, OnDestroy
 } from '@angular/core';
 import { MinimalNodeEntryEntity, RenditionEntry } from 'alfresco-js-api';
 import { BaseEvent } from '../../events';
@@ -29,6 +29,7 @@ import { ViewerMoreActionsComponent } from './viewer-more-actions.component';
 import { ViewerOpenWithComponent } from './viewer-open-with.component';
 import { ViewerSidebarComponent } from './viewer-sidebar.component';
 import { ViewerToolbarComponent } from './viewer-toolbar.component';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
     selector: 'adf-viewer',
@@ -37,7 +38,7 @@ import { ViewerToolbarComponent } from './viewer-toolbar.component';
     host: { 'class': 'adf-viewer' },
     encapsulation: ViewEncapsulation.None
 })
-export class ViewerComponent implements OnChanges {
+export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     @ContentChild(ViewerToolbarComponent)
     toolbar: ViewerToolbarComponent;
@@ -213,6 +214,8 @@ export class ViewerComponent implements OnChanges {
     extension: string;
     sidebarTemplateContext: { node: MinimalNodeEntryEntity } = { node: null };
 
+    private subscriptions: Subscription[] = [];
+
     // Extensions that are supported by the Viewer without conversion
     private extensions = {
         image: ['png', 'jpg', 'jpeg', 'gif', 'bpm', 'svg'],
@@ -237,6 +240,23 @@ export class ViewerComponent implements OnChanges {
 
     isSourceDefined(): boolean {
         return (this.urlFile || this.blobFile || this.fileNodeId || this.sharedLinkId) ? true : false;
+    }
+
+    ngOnInit() {
+        this.subscriptions = this.subscriptions.concat([
+            this.apiService.nodeUpdated.subscribe(node => this.onNodeUpdated(node))
+        ]);
+    }
+
+    ngOnDestroy() {
+        this.subscriptions.forEach(subscription => subscription.unsubscribe());
+        this.subscriptions = [];
+    }
+
+    private onNodeUpdated(node: MinimalNodeEntryEntity) {
+        if (node && node.id === this.fileNodeId) {
+            this.setUpNodeFile(node);
+        }
     }
 
     ngOnChanges(changes: SimpleChanges) {

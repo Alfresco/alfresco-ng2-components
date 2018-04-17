@@ -26,17 +26,19 @@ import {
     UploadService
 } from '@alfresco/adf-core';
 import { Component, EventEmitter, forwardRef, Input, Output, ViewEncapsulation } from '@angular/core';
+import { UploadBase } from './base-upload/upload-base';
 
 @Component({
     selector: 'adf-upload-drag-area',
     templateUrl: './upload-drag-area.component.html',
     styleUrls: ['./upload-drag-area.component.css'],
+    host: {'class': 'adf-upload-drag-area'},
     viewProviders: [
-        { provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadDragAreaComponent)}
+        { provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadDragAreaComponent) }
     ],
     encapsulation: ViewEncapsulation.None
 })
-export class UploadDragAreaComponent implements NodePermissionSubject {
+export class UploadDragAreaComponent extends UploadBase implements NodePermissionSubject {
 
     /** Toggle component disabled state. */
     @Input()
@@ -56,9 +58,14 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
     @Output()
     success = new EventEmitter();
 
+    /** Raised when the file upload goes in error. */
+    @Output()
+    error = new EventEmitter();
+
     constructor(private uploadService: UploadService,
                 private translateService: TranslationService,
                 private notificationService: NotificationService) {
+                    super();
     }
 
     /**
@@ -72,9 +79,8 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
                 newVersion: this.versioning,
                 path: '/',
                 parentId: this.parentId
-            }));
-            this.uploadService.addToQueue(...fileModels);
-            this.uploadService.uploadFilesInTheQueue(this.success);
+            })).filter(this.isFileAcceptable.bind(this));
+            this.addNodeInUploadQueue(fileModels);
         }
     }
 
@@ -91,8 +97,9 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
                     parentId: this.parentId,
                     path: item.fullPath.replace(item.name, '')
                 });
-                this.uploadService.addToQueue(fileModel);
-                this.uploadService.uploadFilesInTheQueue(this.success);
+                if (this.isFileAcceptable(fileModel)) {
+                    this.addNodeInUploadQueue([fileModel]);
+                }
             });
         }
     }
@@ -111,10 +118,19 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
                         parentId: this.parentId,
                         path: entry.relativeFolder
                     });
-                });
-                this.uploadService.addToQueue(...files);
-                this.uploadService.uploadFilesInTheQueue(this.success);
+                }).filter(this.isFileAcceptable.bind(this));
+                this.addNodeInUploadQueue(files);
             });
+        }
+    }
+
+    private addNodeInUploadQueue(files: FileModel[]) {
+        if (files.length) {
+            this.uploadService.addToQueue(...files);
+            this.uploadService.uploadFilesInTheQueue(this.success);
+            this.uploadService.fileUploadError.subscribe((error) => {
+                this.error.emit(error);
+                });
         }
     }
 
@@ -131,15 +147,6 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
         this.notificationService.openSnackMessageAction(messageTranslate.value, actionTranslate.value, 3000).onAction().subscribe(() => {
             this.uploadService.cancelUpload(...latestFilesAdded);
         });
-    }
-
-    /**
-     * Show the error inside Notification bar
-     *
-     * @param Error message
-     */
-    showErrorNotificationBar(errorMessage: string) {
-        this.notificationService.openSnackMessage(errorMessage, 3000);
     }
 
     /** Returns true or false considering the component options and node permissions */
@@ -167,21 +174,9 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
                     newVersion: this.versioning,
                     path: fileInfo.relativeFolder,
                     parentId: parentId
-                }));
-                this.uploadFiles(fileModels);
+                })).filter(this.isFileAcceptable.bind(this));
+                this.addNodeInUploadQueue(fileModels);
             }
-        }
-    }
-
-    /**
-     * Does the actual file uploading and show the notification
-     *
-     * @param files
-     */
-    private uploadFiles(files: FileModel[]): void {
-        if (files.length) {
-            this.uploadService.addToQueue(...files);
-            this.uploadService.uploadFilesInTheQueue(this.success);
         }
     }
 

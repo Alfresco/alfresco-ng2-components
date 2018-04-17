@@ -24,12 +24,13 @@ import { Observable } from 'rxjs/Observable';
 import { FormModule, FormModel, FormOutcomeEvent, FormOutcomeModel, FormService } from '@alfresco/adf-core';
 import { CommentProcessService, LogService } from '@alfresco/adf-core';
 
-import { PeopleProcessService, UserProcessModel } from '@alfresco/adf-core';
+import { PeopleProcessService, UserProcessModel, AuthenticationService } from '@alfresco/adf-core';
 import { TaskDetailsModel } from '../models/task-details.model';
-import { noDataMock, taskDetailsMock, taskFormMock, tasksMock } from '../../mock';
+import { noDataMock, taskDetailsMock, taskFormMock, tasksMock, taskDetailsWithOutAssigneeMock } from '../../mock';
 import { TaskListService } from './../services/tasklist.service';
 import { PeopleSearchComponent } from '../../people';
 import { TaskDetailsComponent } from './task-details.component';
+import { DatePipe } from '@angular/common';
 
 declare let jasmine: any;
 
@@ -67,7 +68,9 @@ describe('TaskDetailsComponent', () => {
             providers: [
                 TaskListService,
                 PeopleProcessService,
-                CommentProcessService
+                CommentProcessService,
+                AuthenticationService,
+                DatePipe
             ],
             schemas: [NO_ERRORS_SCHEMA]
         }).compileComponents();
@@ -82,7 +85,6 @@ describe('TaskDetailsComponent', () => {
         component = fixture.componentInstance;
         service = fixture.debugElement.injector.get(TaskListService);
         formService = fixture.debugElement.injector.get(FormService);
-        commentProcessService = TestBed.get(CommentProcessService);
 
         getTaskDetailsSpy = spyOn(service, 'getTaskDetails').and.returnValue(Observable.of(taskDetailsMock));
         spyOn(formService, 'getTaskForm').and.returnValue(Observable.of(taskFormMock));
@@ -92,9 +94,14 @@ describe('TaskDetailsComponent', () => {
         getTasksSpy = spyOn(service, 'getTasks').and.returnValue(Observable.of(tasksMock));
         assignTaskSpy = spyOn(service, 'assignTask').and.returnValue(Observable.of(fakeUser));
         completeTaskSpy = spyOn(service, 'completeTask').and.returnValue(Observable.of({}));
-        spyOn(commentProcessService, 'getTaskComments').and.returnValue(Observable.of(noDataMock));
         spyOn(service, 'getTaskChecklist').and.returnValue(Observable.of(noDataMock));
+        commentProcessService = fixture.debugElement.injector.get(CommentProcessService);
 
+        spyOn(commentProcessService, 'getTaskComments').and.returnValue(Observable.of([
+            {message: 'Test1', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}},
+            {message: 'Test2', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}},
+            {message: 'Test3', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}}
+        ]));
     });
 
     it('should load task details when taskId specified', () => {
@@ -107,6 +114,20 @@ describe('TaskDetailsComponent', () => {
         fixture.detectChanges();
         expect(getTaskDetailsSpy).not.toHaveBeenCalled();
     });
+
+    it('should send a claim task event when a task is claimed', async(() => {
+        component.claimedTask.subscribe((taskId) => {
+            expect(taskId).toBe('FAKE-TASK-CLAIM');
+        });
+        component.onClaimAction('FAKE-TASK-CLAIM');
+    }));
+
+    it('should send a unclaim task event when a task is unclaimed', async(() => {
+        component.claimedTask.subscribe((taskId) => {
+            expect(taskId).toBe('FAKE-TASK-UNCLAIM');
+        });
+        component.onUnclaimAction('FAKE-TASK-UNCLAIM');
+    }));
 
     it('should set a placeholder message when taskId not initialised', () => {
         fixture.detectChanges();
@@ -129,6 +150,42 @@ describe('TaskDetailsComponent', () => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(fixture.debugElement.query(By.css('adf-form'))).toBeNull();
+        });
+    }));
+
+    it('should display task standalone component when the task does not have an associated form', async(() => {
+        component.taskId = '123';
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(fixture.debugElement.query(By.css('adf-task-standalone'))).not.toBeNull();
+        });
+    }));
+
+    it('should not display task standalone component when the task have an associated form', async(() => {
+        component.taskId = '123';
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(fixture.debugElement.query(By.css('adf-task-standalone'))).not.toBeNull();
+        });
+    }));
+
+    it('should display the claim message when the task is not assigned', async(() => {
+        component.taskDetails = taskDetailsWithOutAssigneeMock;
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            const claimMessage = fixture.nativeElement.querySelector('#claim-message-id');
+            expect(claimMessage).toBeDefined();
+            expect(claimMessage.innerText).toBe('ADF_TASK_LIST.DETAILS.MESSAGES.CLAIM');
+        });
+    }));
+
+    it('should not display the claim message when the task is assigned', async(() => {
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            const claimMessage = fixture.nativeElement.querySelector('#claim-message-id');
+            expect(claimMessage).toBeNull();
         });
     }));
 
@@ -285,7 +342,7 @@ describe('TaskDetailsComponent', () => {
             component.taskDetails.endDate = new Date('2017-10-03T17:03:57.311+0000');
 
             fixture.detectChanges();
-            expect((component.activiticomments as any).nativeElement.readOnly).toBe(true);
+            expect((component.activiticomments as any).readOnly).toBe(true);
         });
 
         it('should comments be readonly if the task is complete and user are NOT involved', () => {
@@ -297,7 +354,7 @@ describe('TaskDetailsComponent', () => {
             component.taskDetails.endDate = new Date('2017-10-03T17:03:57.311+0000');
 
             fixture.detectChanges();
-            expect((component.activiticomments as any).nativeElement.readOnly).toBe(true);
+            expect((component.activiticomments as any).readOnly).toBe(true);
         });
 
         it('should comments NOT be readonly if the task is NOT complete and user are NOT involved', () => {
@@ -309,7 +366,7 @@ describe('TaskDetailsComponent', () => {
             component.taskDetails.endDate = null;
 
             fixture.detectChanges();
-            expect((component.activiticomments as any).nativeElement.readOnly).toBe(false);
+            expect((component.activiticomments as any).readOnly).toBe(false);
         });
 
         it('should comments NOT be readonly if the task is complete and user are involved', () => {
@@ -321,7 +378,7 @@ describe('TaskDetailsComponent', () => {
             component.taskDetails.endDate = new Date('2017-10-03T17:03:57.311+0000');
 
             fixture.detectChanges();
-            expect((component.activiticomments as any).nativeElement.readOnly).toBe(false);
+            expect((component.activiticomments as any).readOnly).toBe(false);
         });
 
         it('should comments be present if showComments is true', () => {

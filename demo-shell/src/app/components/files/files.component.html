@@ -29,7 +29,7 @@
     </mat-accordion>
 
     <div class="adf-site-container-style" id="site-container">
-        <adf-sites-dropdown (change)="onSiteChange($event)" [hideMyFiles]="false" >
+        <adf-sites-dropdown (change)="onSiteChange($event)" [hideMyFiles]="false" [relations]="'members'">
         </adf-sites-dropdown>
     </div>
     <div class="document-list-container" fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="16px">
@@ -50,7 +50,6 @@
                     <adf-breadcrumb fxShow fxHide.lt-sm="true"
                                     class="files-breadcrumb"
                                     root="Personal Files"
-                                    (navigate)="onBreadcrumbNavigate($event)"
                                     [target]="documentList"
                                     [folderNode]="documentList.folderNode">
                     </adf-breadcrumb>
@@ -75,12 +74,14 @@
                         mat-icon-button
                         [disabled]="!canCreateContent(documentList.folderNode)"
                         title="{{ 'DOCUMENT_LIST.TOOLBAR.NEW_FOLDER' | translate }}"
+                        (error)="openSnackMessage($event)"
                         [adf-create-folder]="getDocumentListCurrentFolderId()">
                         <mat-icon>create_new_folder</mat-icon>
                     </button>
                     <button mat-icon-button
                             [disabled]="!canEditFolder(documentList.selection)"
                             title="{{ 'DOCUMENT_LIST.TOOLBAR.EDIT_FOLDER' | translate }}"
+                            (error)="openSnackMessage($event)"
                             [adf-edit-folder]="documentList.selection[0]?.entry">
                         <mat-icon>create</mat-icon>
                     </button>
@@ -94,7 +95,7 @@
                             adf-node-permission="delete"
                             [adf-nodes]="documentList.selection"
                             title="{{ 'DOCUMENT_LIST.TOOLBAR.DELETE' | translate }}"
-                            (delete)="documentList.reload()"
+                            (delete)="onDeleteActionSuccess($event)"
                             [adf-delete]="documentList.selection">
                         <mat-icon>delete</mat-icon>
                     </button>
@@ -104,6 +105,14 @@
                             [adf-node-favorite]="documentList.selection">
                         <mat-icon>
                             {{ favorite.hasFavorites() ? 'star' :'star_border' }}
+                        </mat-icon>
+                    </button>
+                    <button mat-icon-button
+                            [disabled]="!documentList.selection.length"
+                            [baseShareUrl]="baseShareUrl"
+                            [adf-share]="documentList.selection[0]">
+                        <mat-icon>
+                            share
                         </mat-icon>
                     </button>
                 </div>
@@ -119,7 +128,7 @@
                     <button mat-menu-item (click)="toolbarColor = 'warn'">Warn</button>
                 </mat-menu>
 
-                <button mat-icon-button (click)="showVersions = !showVersions">
+                <button mat-icon-button (click)="showVersions = !showVersions" class="adf-show-versions-button">
                     <mat-icon *ngIf="!showVersions">chevron_left</mat-icon>
                     <mat-icon *ngIf="showVersions">chevron_right</mat-icon>
                 </button>
@@ -137,12 +146,14 @@
                         <span>{{ 'DOCUMENT_LIST.TOOLBAR.CARDVIEW' | translate }}</span>
                     </button>
                     <button mat-menu-item
+                            (error)="openSnackMessage($event)"
                             [adf-create-folder]="getDocumentListCurrentFolderId()">
                         <mat-icon>create_new_folder</mat-icon>
                         <span>{{ 'DOCUMENT_LIST.TOOLBAR.NEW_FOLDER' | translate }}</span>
                     </button>
                     <button mat-menu-item
                             [disabled]="!canEditFolder(documentList.selection)"
+                            (error)="openSnackMessage($event)"
                             [adf-edit-folder]="documentList.selection[0]?.entry">
                         <mat-icon>create</mat-icon>
                         <span>{{ 'DOCUMENT_LIST.TOOLBAR.EDIT_FOLDER' | translate }}</span>
@@ -156,7 +167,9 @@
                     </button>
                     <button mat-menu-item
                             adf-node-permission="delete"
-                            [adf-nodes]="documentList.selection">
+                            [adf-nodes]="documentList.selection"
+                            (delete)="onDeleteActionSuccess($event)"
+                            [adf-delete]="documentList.selection">
                         <mat-icon>delete</mat-icon>
                         <span>{{ 'DOCUMENT_LIST.TOOLBAR.DELETE' | translate }}</span>
                     </button>
@@ -165,7 +178,6 @@
 
             <adf-document-list
                 #documentList
-                [enableInfiniteScrolling]="infiniteScrolling"
                 [permissionsStyle]="permissionsStyle"
                 [currentFolderId]="currentFolderId"
                 [contextMenuActions]="true"
@@ -175,6 +187,7 @@
                 [multiselect]="multiselect"
                 [display]="displayMode"
                 [node]="nodeResult"
+                [includeFields]="includeFields"
                 (error)="onNavigationError($event)"
                 (success)="resetError()"
                 (ready)="emitReadyEvent($event)"
@@ -227,6 +240,17 @@
                     </data-column>
                     -->
                     <data-column
+                        class="desktop-only"
+                        title="{{'DOCUMENT_LIST.COLUMNS.IS_LOCKED' | translate}}"
+                        key="id">
+                        <ng-template let-entry="$implicit">
+                            <button mat-icon-button [adf-node-lock]="entry.row.node.entry">
+                                <mat-icon *ngIf="entry.row.getValue('isLocked')">lock</mat-icon>
+                                <mat-icon *ngIf="!entry.row.getValue('isLocked')">lock_open</mat-icon>
+                            </button>
+                        </ng-template>
+                    </data-column>
+                    <data-column
                         title="{{'DOCUMENT_LIST.COLUMNS.CREATED_BY' | translate}}"
                         key="createdByUser.displayName"
                         class="desktop-only">
@@ -245,13 +269,13 @@
                     <!-- common actions -->
                     <content-action
                         icon="get_app"
-                        title="{{'DOCUMENT_LIST.ACTIONS.DOWNLOAD' | translate}}"
+                        title="DOCUMENT_LIST.ACTIONS.DOWNLOAD"
                         handler="download">
                     </content-action>
                     <content-action
                         icon="content_copy"
-                        title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.COPY' | translate}}"
-                        permission="update"
+                        title="DOCUMENT_LIST.ACTIONS.FOLDER.COPY"
+                        permission="copy"
                         [disableWithNoPermission]="true"
                         (error)="onContentActionError($event)"
                         (success)="onContentActionSuccess($event)"
@@ -259,7 +283,7 @@
                     </content-action>
                     <content-action
                         icon="redo"
-                        title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.MOVE' | translate}}"
+                        title="DOCUMENT_LIST.ACTIONS.FOLDER.MOVE"
                         permission="update"
                         [disableWithNoPermission]="true"
                         (error)="onContentActionError($event)"
@@ -270,29 +294,42 @@
                         icon="delete"
                         permission="delete"
                         [disableWithNoPermission]="true"
-                        title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.DELETE' | translate}}"
+                        title="DOCUMENT_LIST.ACTIONS.FOLDER.DELETE"
                         (permissionEvent)="handlePermissionError($event)"
                         (success)="onDeleteActionSuccess($event)"
                         handler="delete">
                     </content-action>
                     <content-action
                         icon="info"
-                        title="{{'DOCUMENT_LIST.ACTIONS.METADATA' | translate}}"
+                        title="DOCUMENT_LIST.ACTIONS.METADATA"
                         (execute)="onManageMetadata($event)">
                     </content-action>
                     <!-- document actions -->
                     <content-action
                         icon="storage"
                         target="document"
-                        title="{{'DOCUMENT_LIST.ACTIONS.VERSIONS' | translate}}"
+                        title="DOCUMENT_LIST.ACTIONS.VERSIONS"
                         (execute)="onManageVersions($event)">
                     </content-action>
                     <content-action
                         *ngIf="authenticationService.isBpmLoggedIn()"
                         icon="play_arrow"
                         target="document" 
-                        title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.PROCESS_ACTION' | translate}}"
+                        title="DOCUMENT_LIST.ACTIONS.DOCUMENT.PROCESS_ACTION"
                         (execute)="startProcesAction($event)">
+                    </content-action>
+                    <content-action
+                        icon="settings_input_component"
+                        title="{{'DOCUMENT_LIST.ACTIONS.PERMISSION' | translate}}"
+                        permission="copy"
+                        (error)="onContentActionError($event)"
+                        (execute)="onPermissionRequested($event)">
+                    </content-action>
+                    <content-action
+                        icon="lock"
+                        permission="lock"
+                        handler="lock"
+                        title="Lock">
                     </content-action>
                 </content-actions>
             </adf-document-list>
@@ -321,7 +358,9 @@
                 <ng-container *ngIf="hasOneFileSelected();else choose_document_template">
                     <ng-container *ngIf="userHasPermissionToManageVersions(); else no_permission_to_versions">
                         <adf-version-manager
-                            [node]="documentList.selection[0].entry">
+                            [node]="documentList.selection[0].entry"
+                            [showComments]="showVersionComments"
+                            [allowDownload]="allowVersionDownload">
                         </adf-version-manager>
                     </ng-container>
                 </ng-container>
@@ -342,7 +381,7 @@
     </div>
 </div>
 
-<context-menu-holder></context-menu-holder>
+<adf-context-menu-holder></adf-context-menu-holder>
 
 <div *ngIf="processId">
     <adf-start-process
@@ -396,14 +435,26 @@
         </section>
 
         <section>
-            <mat-slide-toggle [color]="'primary'" [(ngModel)]="versioning">{{'DOCUMENT_LIST.ENABLE_VERSIONING' |
-                translate}}
+            <mat-slide-toggle [color]="'primary'" [(ngModel)]="versioning">
+                {{'DOCUMENT_LIST.ENABLE_VERSIONING' | translate}}
             </mat-slide-toggle>
         </section>
 
         <section>
-            <mat-slide-toggle [color]="'primary'" [(ngModel)]="infiniteScrolling">
+            <mat-slide-toggle color="primary" [(ngModel)]="infiniteScrolling">
                 {{'DOCUMENT_LIST.ENABLE_INFINITE_SCROLL' | translate}}
+            </mat-slide-toggle>
+        </section>
+
+        <section>
+            <mat-slide-toggle color="primary" [(ngModel)]="showVersionComments">
+                {{'APP.ADF_VERSION_MANAGER.SHOW_COMMENTS' | translate}}
+            </mat-slide-toggle>
+        </section>
+
+        <section>
+            <mat-slide-toggle color="primary" [(ngModel)]="allowVersionDownload">
+                {{'APP.ADF_VERSION_MANAGER.ALLOW_DOWNLOAD' | translate}}
             </mat-slide-toggle>
         </section>
 
@@ -432,7 +483,7 @@
                 [multipleFiles]="multipleFileUpload"
                 [uploadFolders]="folderUpload"
                 [maxFilesSize]="maxSizeShow ? maxFilesSize : null"
-                (error)="handleUploadError($event)"
+                (error)="openSnackMessage($event)"
                 [versioning]="versioning"
                 [adf-node-permission]="'create'"
                 [adf-nodes]="enableUpload ? getCurrentDocumentListNode() : []"
@@ -450,7 +501,7 @@
                 [multipleFiles]="multipleFileUpload"
                 [uploadFolders]="folderUpload"
                 [versioning]="versioning"
-                (error)="handleUploadError($event)"
+                (error)="openSnackMessage($event)"
                 [adf-node-permission]="'create'"
                 [adf-nodes]="enableUpload ? getCurrentDocumentListNode() : []"
                 (permissionEvent)="handlePermissionError($event)">
@@ -477,4 +528,4 @@
     </div>
 </div>
 
-<file-uploading-dialog #fileDialog></file-uploading-dialog>
+<adf-file-uploading-dialog #fileDialog (error)="openSnackMessage($event)" ></adf-file-uploading-dialog>

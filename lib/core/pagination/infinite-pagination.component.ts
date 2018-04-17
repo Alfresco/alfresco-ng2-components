@@ -18,41 +18,37 @@
 /* tslint:disable:no-input-rename  */
 
 import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    EventEmitter,
-    Input,
-    OnInit,
-    Output,
-    OnDestroy,
-    ViewEncapsulation
+    ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter,
+    Input, OnInit, Output, OnDestroy, ViewEncapsulation
 } from '@angular/core';
+
 import { PaginatedComponent } from './paginated-component.interface';
-import { PaginationQueryParams } from './pagination-query-params.interface';
 import { Pagination } from 'alfresco-js-api';
 import { Subscription } from 'rxjs/Subscription';
+import { PaginationComponentInterface } from './pagination-component.interface';
+import { PaginationModel } from '../models/pagination.model';
 
 @Component({
     selector: 'adf-infinite-pagination',
     host: { 'class': 'infinite-adf-pagination' },
     templateUrl: './infinite-pagination.component.html',
-    styleUrls: [ './infinite-pagination.component.scss' ],
+    styleUrls: ['./infinite-pagination.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
-export class InfinitePaginationComponent implements OnInit, OnDestroy {
+export class InfinitePaginationComponent implements OnInit, OnDestroy, PaginationComponentInterface {
 
     static DEFAULT_PAGE_SIZE: number = 25;
 
-    static DEFAULT_PAGINATION: Pagination = {
+    static DEFAULT_PAGINATION: PaginationModel = {
         skipCount: 0,
-        hasMoreItems: false
+        hasMoreItems: false,
+        merge: true
     };
 
-    /** Pagination object. */
+    /**  @deprecated 2.3.0  Pagination object. */
     @Input()
-    pagination: Pagination;
+    pagination: PaginationModel;
 
     /** Component that provides custom pagination support. */
     @Input()
@@ -72,13 +68,15 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy {
 
     private paginationSubscription: Subscription;
 
-    constructor(private cdr: ChangeDetectorRef) {}
+    constructor(private cdr: ChangeDetectorRef) {
+    }
 
     ngOnInit() {
         if (this.target) {
-            this.paginationSubscription = this.target.pagination.subscribe(page => {
-                this.pagination = page;
-                this.pageSize = page.maxItems;
+            this.paginationSubscription = this.target.pagination.subscribe(pagination => {
+                this.isLoading = false;
+                this.pagination = pagination;
+                this.pageSize = pagination.maxItems;
                 this.cdr.detectChanges();
             });
         }
@@ -90,10 +88,19 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy {
 
     onLoadMore() {
         this.pagination.skipCount += this.pageSize;
+        this.pagination.skipCount = this.pagination.skipCount;
+        this.pagination.merge = true;
         this.loadMore.next(this.pagination);
 
+        if ((this.pagination.skipCount + this.pageSize) > this.pagination.totalItems) {
+            this.pagination.hasMoreItems = false;
+        }
+
         if (this.target) {
-            this.target.updatePagination(<PaginationQueryParams> this.pagination);
+            this.target.pagination.value.merge = this.pagination.merge;
+            this.target.pagination.value.skipCount = this.pagination.skipCount;
+            this.isLoading = true;
+            this.target.updatePagination(<PaginationModel> this.pagination);
         }
     }
 

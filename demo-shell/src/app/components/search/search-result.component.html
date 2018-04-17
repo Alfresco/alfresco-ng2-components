@@ -1,3 +1,4 @@
+
 <adf-search [searchTerm]="searchedWord"
             [maxResults]="maxItems"
             [skipResults]="skipCount"
@@ -5,15 +6,25 @@
             #search>
 </adf-search>
 
-<app-files-component
-        [currentFolderId]="null"
-        [nodeResult]="resultNodePageList"
-        [disableDragArea]="true"
-        [pagination]="pagination"
-        (changedPageSize)="onRefreshPagination($event)"
-        (changedPageNumber)="onRefreshPagination($event)"
-        (turnedNextPage)="onRefreshPagination($event)"
-        (loadNext)="onRefreshPagination($event)"
-        (turnedPreviousPage)="onRefreshPagination($event)"
-        (deleteElementSuccess)="onDeleteElementSuccess($event)">
-</app-files-component>
+<div class="adf-search-results__facets">
+    <adf-search-chip-list [searchFilter]="searchFilter"></adf-search-chip-list>
+</div>
+
+<div class="adf-search-results">
+    <adf-search-filter #searchFilter></adf-search-filter>
+
+    <div class="adf-search-results__content">
+        <app-files-component
+                [currentFolderId]="null"
+                [nodeResult]="resultNodePageList"
+                [disableDragArea]="true"
+                [pagination]="pagination"
+                (changedPageSize)="onRefreshPagination($event)"
+                (changedPageNumber)="onRefreshPagination($event)"
+                (turnedNextPage)="onRefreshPagination($event)"
+                (loadNext)="onRefreshPagination($event)"
+                (turnedPreviousPage)="onRefreshPagination($event)"
+                (deleteElementSuccess)="onDeleteElementSuccess($event)">
+        </app-files-component>
+    </div>
+</div>

@@ -36,7 +36,6 @@ import { DropdownSitesComponent } from './sites-dropdown.component';
     ],
     declarations: [
         DropdownSitesComponent
-    ],
-    providers: []
+    ]
 })
 export class SitesDropdownModule {}

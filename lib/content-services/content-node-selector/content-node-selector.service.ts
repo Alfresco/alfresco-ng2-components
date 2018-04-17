@@ -26,7 +26,8 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class ContentNodeSelectorService {
 
-    constructor(private searchService: SearchService) {}
+    constructor(private searchService: SearchService) {
+    }
 
     /**
      * Performs a search for content node selection
@@ -47,11 +48,11 @@ export class ContentNodeSelectorService {
             extraNodeIds
                 .filter(id => id !== rootNodeId)
                 .forEach(extraId => {
-                extraParentFiltering += ` OR ANCESTOR:'workspace://SpacesStore/${extraId}'`;
-            });
+                    extraParentFiltering += ` OR ANCESTOR:'workspace://SpacesStore/${extraId}'`;
+                });
         }
 
-        const parentFiltering = rootNodeId ? [ { query: `ANCESTOR:'workspace://SpacesStore/${rootNodeId}'${extraParentFiltering}` } ] : [];
+        const parentFiltering = rootNodeId ? [{ query: `ANCESTOR:'workspace://SpacesStore/${rootNodeId}'${extraParentFiltering}` }] : [];
 
         let defaultSearchNode: any = {
             query: {
@@ -59,8 +60,8 @@ export class ContentNodeSelectorService {
             },
             include: ['path', 'allowableOperations'],
             paging: {
-                maxItems: `${maxItems}`,
-                skipCount: `${skipCount}`
+                maxItems: maxItems,
+                skipCount: skipCount
             },
             filterQueries: [
                 { query: "TYPE:'cm:folder'" },

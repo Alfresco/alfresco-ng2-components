@@ -18,6 +18,7 @@
 import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
     templateUrl: './version-manager-dialog-adapter.component.html',
@@ -27,9 +28,19 @@ export class VersionManagerDialogAdapterComponent {
 
     public contentEntry: MinimalNodeEntryEntity;
 
+    showComments = true;
+    allowDownload = true;
+
     constructor(@Inject(MAT_DIALOG_DATA) data: any,
+                private snackBar: MatSnackBar,
                 private containingDialog?: MatDialogRef<VersionManagerDialogAdapterComponent>) {
         this.contentEntry = data.contentEntry;
+        this.showComments = data.hasOwnProperty('showComments') ? data.showComments : this.showComments;
+        this.allowDownload = data.hasOwnProperty('allowDownload') ? data.allowDownload : this.allowDownload;
+    }
+
+    uploadError(errorMessage: string) {
+        this.snackBar.open(errorMessage, '', { duration: 4000 });
     }
 
     close() {

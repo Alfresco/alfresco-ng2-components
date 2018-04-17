@@ -1,4 +1,27 @@
 {
+  "ADF_VERSION_LIST": {
+    "ACTIONS": {
+      "RESTORE": "Restore",
+      "DELETE": "Delete",
+      "DOWNLOAD": "Download",
+      "UPLOAD": {
+        "TITLE": "Upload new version",
+        "TOOLTIP": "Restriction: you must upload a file with the same name to create a new version of it"
+      }
+    },
+    "CONFIRM_DELETE": {
+      "TITLE": "Delete version",
+      "MESSAGE": "Deleted file versions cannot be restored. Continue?",
+      "YES_LABEL": "Yes",
+      "NO_LABEL": "No"
+    }
+  },
+  "ADF_CONFIRM_DIALOG": {
+    "TITLE": "Confirm",
+    "ACTION": "Do you want to proceed?",
+    "YES_LABEL": "Yes",
+    "NO_LABEL": "No"
+  },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "This folder is empty"
@@ -104,6 +127,12 @@
       "UPLOAD_FILE": "Upload file",
       "UPLOAD_FOLDER": "Upload folder"
     },
+    "VERSION": {
+      "MESSAGES": {
+        "NO_ACCEPTED_FILE_TYPES": "Please note that the setting of \"acceptedFilesType\" has no effect for new version uploads. The file type will be the same as the original file's.",
+        "INCOMPATIBLE_VERSION": "Only a file of the same type may be uploaded as a new version."
+      }
+    },
     "MESSAGES": {
       "UPLOAD_CANCELED": "Upload canceled",
       "UPLOAD_COMPLETED": "Uploaded {{ completed }} / {{ total }}",
@@ -176,17 +205,37 @@
   },
   "METADATA": {
     "BASIC": {
-        "HEADER": "Properties",
-        "NAME": "Name",
-        "TITLE": "Title",
-        "DESCRIPTION": "Description",
-        "AUTHOR": "Author",
-        "MIMETYPE": "Mimetype",
-        "SIZE": "Size",
-        "CREATOR": "Creator",
-        "CREATED_DATE": "Created Date",
-        "MODIFIER": "Modifier",
-        "MODIFIED_DATE": "Modified Date"
+      "HEADER": "Properties",
+      "NAME": "Name",
+      "TITLE": "Title",
+      "DESCRIPTION": "Description",
+      "AUTHOR": "Author",
+      "MIMETYPE": "Mimetype",
+      "SIZE": "Size",
+      "CREATOR": "Creator",
+      "CREATED_DATE": "Created Date",
+      "MODIFIER": "Modifier",
+      "MODIFIED_DATE": "Modified Date"
     }
+  },
+  "SHARE": {
+    "TITLE": "Share",
+    "PUBLIC-LINK": "Public link",
+    "UNSHARED": "File not shared",
+    "DESCRIPTION": "This is a link to your file",
+    "ALERT": "Anyone can access this link",
+    "ACTIONS": {
+      "SHARE": "SHARE",
+      "CLOSE": "CLOSE",
+      "COPY-LINK": "COPY LINK"
+    }
+  },
+  "PERMISSION_MANAGER": {
+      "PERMISSION_DISPLAY": {
+         "INHERITED" : "Inherited",
+         "AUTHORITY_ID" : "Authority ID",
+         "ROLE": "Role",
+         "LOCALLY_SET" : "Locally set"
+      }
   }
 }

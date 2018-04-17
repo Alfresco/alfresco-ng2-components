@@ -1,4 +1,17 @@
 {
+  "APP": {
+    "INFO_DRAWER": {
+      "TITLE": "Detalles",
+      "COMMENTS": "Comentarios",
+      "PROPERTIES": "Propiedades",
+      "VERSIONS": "Versiones"
+    },
+    "ADF_VERSION_MANAGER": {
+      "ALLOW_DELETE": "Permitir eliminar",
+      "SHOW_COMMENTS": "Mostrar comentarios en las versiones",
+      "ALLOW_DOWNLOAD": "Permitir descarga de la versión"
+    }
+  },
   "title": "Bienvenido",
   "VERSION": {
     "NO_PERMISSION": "No tiene permiso para administrar versiones de este contenido",
@@ -7,6 +20,12 @@
     "DIALOG": {
       "CLOSE": "Cerrar",
       "TITLE": "Gestionar versiones"
+    }
+  },
+  "METADATA": {
+    "DIALOG": {
+      "CLOSE": "Cerrar",
+      "TITLE": "Metadatos"
     }
   },
   "APP_LAYOUT": {
@@ -20,9 +39,11 @@
     "DATATABLE_LAZY": "Tabla de datos (diferida)",
     "FORM": "Formulario",
     "FORM_LIST": "Lista de formularios",
+    "FORM_LOADING": "Carga de formulario",
     "UPLOADER": "Cargador",
     "WEBSCRIPT": "Webscript",
     "TAG": "Etiqueta",
+    "TRASHCAN": "Papelera",
     "SOCIAL": "Social",
     "SETTINGS": "Configuración",
     "OVERLAY_VIEWER": "Visor de superposición",
@@ -32,6 +53,17 @@
     "WORD_TO_SEARCH": "Buscar palabra",
     "SEARCH_CREATED_BY": "Creado por",
     "SEARCH_SERVICE_APPROACH": "Marque esto para desactivar la propiedad de entrada y configurar el uso del servicio"
+  },
+  "TRASHCAN": {
+    "ACTIONS": {
+      "DELETE_PERMANENT": "Eliminar permanentemente",
+      "RESTORE": "Restaurar"
+    },
+    "EMPTY_STATE": {
+      "TITLE": "La papelera está vacía",
+      "FIRST_TEXT": "Los elementos que elimine se trasladan a la papelera.",
+      "SECOND_TEXT": "Vacíe la papelera para eliminar los elementos permanentemente."
+    }
   },
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Selección múltiple (con casillas)",
@@ -43,13 +75,22 @@
     "DESCRIPTION_UPLOAD": "Habilitar carga",
     "ENABLE_INFINITE_SCROLL": "Habilitar desplazamiento infinito",
     "MULTISELECT_DESCRIPTION": "Utilice Cmd (Mac) o Ctrl (Windows) para cambiar la selección de varios elementos",
-    "RECENT": "Ficheros recientes",
+    "RECENT": {
+      "EMPTY_STATE": {
+        "TITLE": "La lista de ficheros recientes está vacía"
+      },
+      "TITLE": "Ficheros recientes"
+    },
     "COLUMNS": {
       "DISPLAY_NAME": "Nombre a mostrar",
+      "IS_LOCKED": "Bloquear",
       "TAG": "Etiqueta",
       "CREATED_BY": "Creado por",
       "CREATED_ON": "Creado",
-      "CREATED": "Creado"
+      "CREATED": "Creado",
+      "SIZE": "Tamaño",
+      "DELETED_ON": "Eliminado",
+      "DELETED_BY": "Eliminado por"
     },
     "TOOLBAR": {
       "CARDVIEW": "Modo de vista de tarjeta",
@@ -59,14 +100,16 @@
       "DELETE": "Eliminar"
     },
     "ACTIONS": {
+      "VERSIONS": "Gestionar versiones",
+      "METADATA": "Información",
       "DOWNLOAD": "Descargar",
+      "PERMISSION": "Permiso",
       "FOLDER": {
         "COPY": "Copiar",
         "MOVE": "Mover",
         "DELETE": "Eliminar"
       },
       "DOCUMENT": {
-        "DOWNLOAD": "Descargar",
         "COPY": "Copiar",
         "MOVE": "Mover",
         "DELETE": "Eliminar",
@@ -99,6 +142,13 @@
     "STORE": "Almacenar",
     "RESTORE": "Restaurar"
   },
+  "FORM-LOADING": {
+    "FORM_DATA": "Datos del formulario",
+    "FORM_DATA_MESSAGE": "Introduzca valores para rellenar el formulario",
+    "TYPEAHEAD_PLACEHOLDER": "Predictivo",
+    "RADIO_PLACEHOLDER": "Botón de opción",
+    "SELECT_PLACEHOLDER": "Desplegable"
+  },
   "LOGIN": {
     "CONTENT_SERVICES": "Content Services",
     "PROCESS_SERVICES": "Process Services",
@@ -116,5 +166,9 @@
     "LIST": "Lista de etiquetas de Content Services",
     "INSERT": "Insertar ID del nodo",
     "NODE_LIST": "Lista de etiquetas por ID de nodo"
+  },
+  "DEMO_PERMISSION": {
+    "INHERIT_PERMISSION_BUTTON": "Heredar permiso",
+    "INHERITED_PERMISSIONS_BUTTON": "Permiso heredado"
   }
 }

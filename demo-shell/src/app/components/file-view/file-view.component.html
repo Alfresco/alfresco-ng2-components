@@ -1,15 +1,19 @@
 <ng-container *ngIf="nodeId">
 
     <ng-template let-node="node" #sidebarTemplate>
-        <adf-info-drawer title="Details">
-            <adf-info-drawer-tab label="Properties">
+        <adf-info-drawer [title]="'APP.INFO_DRAWER.TITLE' | translate">
+            <adf-info-drawer-tab [label]="'APP.INFO_DRAWER.COMMENTS' | translate">
+                <adf-comments [nodeId]="nodeId"></adf-comments>
+            </adf-info-drawer-tab>
+
+            <adf-info-drawer-tab [label]="'APP.INFO_DRAWER.PROPERTIES' | translate">
                 <adf-content-metadata-card [node]="node"></adf-content-metadata-card>
             </adf-info-drawer-tab>
 
-            <adf-info-drawer-tab label="Versions">
+            <adf-info-drawer-tab [label]="'APP.INFO_DRAWER.VERSIONS' | translate">
                 <mat-card>
                     <mat-card-content>
-                        <adf-version-manager [node]="node">
+                        <adf-version-manager [node]="node" (uploadError)="uploadError($event)">
                         </adf-version-manager>
                     </mat-card-content>
                 </mat-card>

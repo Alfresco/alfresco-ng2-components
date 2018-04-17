@@ -87,23 +87,6 @@
       "PEOPLE": {
         "NONE": "Niemand beteiligt"
       },
-      "COMMENTS": {
-        "NONE": "Keine Kommentare vorhanden",
-        "ADD": "Kommentar hinzufügen",
-        "HEADER": "Kommentare ({{ count }})",
-        "CREATED_BY_HEADER": "Erstellt von",
-        "MESSAGE_HEADER": "Fehlermeldung",
-        "DIALOG": {
-          "TITLE": "Neuer Kommentar",
-          "LABELS": {
-            "MESSAGE": "Fehlermeldung"
-          },
-          "BUTTON": {
-            "ADD": "Kommentar hinzufügen",
-            "CANCEL": "Abbrechen"
-          }
-        }
-      },
       "CHECKLIST": {
         "NONE": "Keine Prüfliste"
       },
@@ -161,6 +144,11 @@
       "EMPTY-LIST": {
         "HEADER": "Keine Dateien verfügbar"
       }
+    },
+    "STANDALONE_TASK": {
+      "NO_FORM_MESSAGE": "Keine Formulare angehängt",
+      "COMPLETE_TASK_MESSAGE": "Aufgabe {{taskName}} abgeschlossen",
+      "COMPLETE_TASK_SUB_MESSAGE": "Keine Formulare, die hinzugefügt werden können"
     }
   },
   "ADF_PROCESS_LIST": {

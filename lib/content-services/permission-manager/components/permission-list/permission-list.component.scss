@@ -1,0 +1,15 @@
+@mixin adf-permission-list-theme($theme) {
+
+    .adf{
+
+        &-display-permission-container {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        &-datatable-permission {
+            display: flex;
+            flex-basis: 38%;
+        }
+    }
+}

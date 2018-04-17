@@ -19,27 +19,38 @@ import { Injectable } from '@angular/core';
 import { NodePaging, QueryBody } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { AuthenticationService } from './authentication.service';
 import 'rxjs/add/observable/throw';
 import { SearchConfigurationService } from './search-configuration.service';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class SearchService {
 
-    constructor(public authService: AuthenticationService,
-                private apiService: AlfrescoApiService,
+    dataLoaded: Subject<NodePaging> = new Subject();
+
+    constructor(private apiService: AlfrescoApiService,
                 private searchConfigurationService: SearchConfigurationService) {
     }
 
     getNodeQueryResults(term: string, options?: SearchOptions): Observable<NodePaging> {
-        return Observable.fromPromise(this.apiService.getInstance().core.queriesApi.findNodes(term, options))
-            .map(res => <NodePaging> res)
+        const promise = this.apiService.getInstance().core.queriesApi.findNodes(term, options);
+
+        promise.then((data: any) => {
+            this.dataLoaded.next(data);
+        });
+
+        return Observable
+            .fromPromise(promise)
             .catch(err => this.handleError(err));
     }
 
-    search(searchTerm: string, maxResults: string, skipCount: string): Observable<NodePaging> {
+    search(searchTerm: string, maxResults: number, skipCount: number): Observable<NodePaging> {
         const searchQuery = Object.assign(this.searchConfigurationService.generateQueryBody(searchTerm, maxResults, skipCount));
         const promise = this.apiService.getInstance().search.searchApi.search(searchQuery);
+
+        promise.then((data: any) => {
+            this.dataLoaded.next(data);
+        });
 
         return Observable
             .fromPromise(promise)
@@ -48,6 +59,10 @@ export class SearchService {
 
     searchByQueryBody(queryBody: QueryBody): Observable<NodePaging> {
         const promise = this.apiService.getInstance().search.searchApi.search(queryBody);
+
+        promise.then((data: any) => {
+            this.dataLoaded.next(data);
+        });
 
         return Observable
             .fromPromise(promise)

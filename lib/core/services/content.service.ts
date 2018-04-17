@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ContentApi, MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { ContentApi, MinimalNodeEntryEntity, Node, NodeEntry } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { FolderCreatedEvent } from '../events/folder-created.event';
@@ -192,12 +192,22 @@ export class ContentService {
     }
 
     /**
+     * Gets a Node via its node ID.
+     * @param nodeId
+     * @param opts
+     * @returns Details of the folder
+     */
+    getNode(nodeId: string, opts?: any): Observable<NodeEntry> {
+        return Observable.fromPromise(this.apiService.getInstance().nodes.getNode(nodeId, opts));
+    }
+
+    /**
      * Check if the user has permissions on that node
      * @param node Node to check allowableOperations
      * @param permission Create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions
      *
      */
-    hasPermission(node: any, permission: PermissionsEnum | string): boolean {
+    hasPermission(node: Node, permission: PermissionsEnum | string): boolean {
         let hasPermission = false;
 
         if (this.hasAllowableOperations(node)) {
@@ -210,6 +220,18 @@ export class ContentService {
         } else {
             if (permission && permission.startsWith('!')) {
                 hasPermission = true;
+            }
+        }
+
+        if (permission === PermissionsEnum.COPY) {
+            hasPermission = true;
+        }
+
+        if (permission === PermissionsEnum.LOCK) {
+            hasPermission = node.isFile;
+
+            if (node.isLocked && this.hasAllowableOperations(node)) {
+                hasPermission = !!~node.allowableOperations.indexOf('updatePermissions');
             }
         }
 

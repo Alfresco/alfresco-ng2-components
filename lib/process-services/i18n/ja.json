@@ -87,23 +87,6 @@
       "PEOPLE": {
         "NONE": "関わっているメンバーなし"
       },
-      "COMMENTS": {
-        "NONE": "コメントなし",
-        "ADD": "コメントの追加",
-        "HEADER": "コメント ({{ count }} 件)",
-        "CREATED_BY_HEADER": "作成者",
-        "MESSAGE_HEADER": "メッセージ",
-        "DIALOG": {
-          "TITLE": "新しいコメント",
-          "LABELS": {
-            "MESSAGE": "メッセージ"
-          },
-          "BUTTON": {
-            "ADD": "コメントの追加",
-            "CANCEL": "キャンセル"
-          }
-        }
-      },
       "CHECKLIST": {
         "NONE": "チェックリストなし"
       },
@@ -161,6 +144,11 @@
       "EMPTY-LIST": {
         "HEADER": "使用できるファイルがありません"
       }
+    },
+    "STANDALONE_TASK": {
+      "NO_FORM_MESSAGE": "フォームが添付されていません",
+      "COMPLETE_TASK_MESSAGE": "タスク {{taskName}} が完了しました",
+      "COMPLETE_TASK_SUB_MESSAGE": "フォームは追加されません"
     }
   },
   "ADF_PROCESS_LIST": {

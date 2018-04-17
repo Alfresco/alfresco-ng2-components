@@ -18,13 +18,9 @@
 import { EventEmitter } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
 import { FileModel, FileUploadOptions, FileUploadStatus } from '../models/file.model';
-import { AlfrescoApiService } from './alfresco-api.service';
-import { SettingsService } from './settings.service';
-import { AppConfigService } from '../app-config/app-config.service';
 import { AppConfigModule } from '../app-config/app-config.module';
-import { AuthenticationService } from './authentication.service';
-import { StorageService } from './storage.service';
 import { UploadService } from './upload.service';
+import { AppConfigService } from '../app-config/app-config.service';
 
 declare let jasmine: any;
 
@@ -37,11 +33,7 @@ describe('UploadService', () => {
                 AppConfigModule
             ],
             providers: [
-                UploadService,
-                AlfrescoApiService,
-                SettingsService,
-                AuthenticationService,
-                StorageService
+                UploadService
             ]
         }).compileComponents();
     }));
@@ -162,6 +154,20 @@ describe('UploadService', () => {
 
         expect(jasmine.Ajax.requests.mostRecent().url.endsWith('autoRename=true')).toBe(false);
         expect(jasmine.Ajax.requests.mostRecent().params.has('majorVersion')).toBe(true);
+    });
+
+    it('If newVersionBaseName is set, name should be a param', () => {
+        let emitter = new EventEmitter();
+
+        const filesFake = new FileModel(<File> { name: 'fake-name', size: 10 }, {
+            newVersion: true,
+            newVersionBaseName: 'name-under-test'
+        });
+        service.addToQueue(filesFake);
+        service.uploadFilesInTheQueue(emitter);
+
+        expect(jasmine.Ajax.requests.mostRecent().params.has('name')).toBe(true);
+        expect(jasmine.Ajax.requests.mostRecent().params.get('name')).toBe('name-under-test');
     });
 
     it('should use custom root folder ID given to the service', (done) => {

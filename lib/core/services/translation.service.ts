@@ -43,7 +43,7 @@ export class TranslationService {
     customLoader: TranslateLoaderService;
 
     constructor(public translate: TranslateService,
-                private userPreference: UserPreferencesService,
+                userPreference: UserPreferencesService,
                 @Optional() @Inject(TRANSLATION_PROVIDER) providers: TranslationProvider[]) {
         this.customLoader = <TranslateLoaderService> this.translate.currentLoader;
 
@@ -56,7 +56,7 @@ export class TranslationService {
             }
         }
 
-        this.userPreference.locale$.subscribe( (locale) => {
+        userPreference.locale$.subscribe( (locale) => {
             this.userLang = locale;
             this.use(this.userLang);
         });
@@ -90,7 +90,7 @@ export class TranslationService {
         }
     }
 
-    private onTranslationChanged(lang: string): void {
+    onTranslationChanged(lang: string): void {
         this.translate.onTranslationChange.next({
             lang: lang,
             translations: this.customLoader.getFullTranslationJSON(lang)

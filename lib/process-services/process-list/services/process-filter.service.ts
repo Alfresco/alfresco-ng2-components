@@ -27,6 +27,10 @@ export class ProcessFilterService {
     constructor(private alfrescoApiService: AlfrescoApiService) {
     }
 
+    /**
+     * Gets all filters defined for a Process App.
+     * @param appId ID of the target app
+     */
     getProcessFilters(appId: number): Observable<FilterProcessRepresentationModel[]> {
         return Observable.fromPromise(this.callApiProcessFilters(appId))
             .map((response: any) => {
@@ -41,9 +45,9 @@ export class ProcessFilterService {
     }
 
     /**
-     * Retrieve the process filter by id
-     * @param filterId - number - The id of the filter
-     * @param appId - string - optional - The id of app
+     * Retrieves the process filter by ID.
+     * @param filterId ID of the filter
+     * @param appId ID of the target app
      */
     getProcessFilterById(filterId: number, appId?: number): Observable<FilterProcessRepresentationModel> {
         return Observable.fromPromise(this.callApiProcessFilters(appId))
@@ -53,9 +57,9 @@ export class ProcessFilterService {
     }
 
     /**
-     * Retrieve the process filter by name
-     * @param filterName - string - The name of the filter
-     * @param appId - string - optional - The id of app
+     * Retrieves the process filter by name.
+     * @param filterName Name of the filter
+     * @param appId ID of the target app
      */
     getProcessFilterByName(filterName: string, appId?: number): Observable<FilterProcessRepresentationModel> {
         return Observable.fromPromise(this.callApiProcessFilters(appId))
@@ -65,8 +69,8 @@ export class ProcessFilterService {
     }
 
     /**
-     * Create and return the default filters
-     * @param appId
+     * Creates and returns the default filters for an app.
+     * @param appId ID of the target app
      */
     public createDefaultFilters(appId: number): Observable<FilterProcessRepresentationModel[]> {
         let runningFilter = this.getRunningFilterInstance(appId);
@@ -107,6 +111,10 @@ export class ProcessFilterService {
         });
     }
 
+    /**
+     * Creates and returns a filter that matches "running" process instances.
+     * @param appId ID of the target app
+     */
     public getRunningFilterInstance(appId: number): FilterProcessRepresentationModel {
         return new FilterProcessRepresentationModel({
             'name': 'Running',
@@ -118,8 +126,8 @@ export class ProcessFilterService {
     }
 
     /**
-     * Return a static Completed filter instance
-     * @param appId
+     * Returns a static Completed filter instance.
+     * @param appId ID of the target app
      */
     private getCompletedFilterInstance(appId: number): FilterProcessRepresentationModel {
         return new FilterProcessRepresentationModel({
@@ -132,8 +140,8 @@ export class ProcessFilterService {
     }
 
     /**
-     * Return a static All filter instance
-     * @param appId
+     * Returns a static All filter instance.
+     * @param appId ID of the target app
      */
     private getAllFilterInstance(appId: number): FilterProcessRepresentationModel {
         return new FilterProcessRepresentationModel({
@@ -146,8 +154,8 @@ export class ProcessFilterService {
     }
 
     /**
-     * Add a filter
-     * @param filter - FilterProcessRepresentationModel
+     * Adds a filter.
+     * @param filter The filter to add
      */
     addProcessFilter(filter: FilterProcessRepresentationModel): Observable<FilterProcessRepresentationModel> {
         return Observable.fromPromise(this.alfrescoApiService.getInstance().activiti.userFiltersApi.createUserProcessInstanceFilter(filter))
@@ -157,6 +165,10 @@ export class ProcessFilterService {
             }).catch(err => this.handleProcessError(err));
     }
 
+    /**
+     * Calls `getUserProcessInstanceFilters` from the Alfresco JS API.
+     * @param appId ID of the target app
+     */
     callApiProcessFilters(appId?: number) {
         if (appId) {
             return this.alfrescoApiService.getInstance().activiti.userFiltersApi.getUserProcessInstanceFilters({ appId: appId });

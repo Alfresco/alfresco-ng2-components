@@ -86,7 +86,7 @@ export class StartProcessInstanceComponent implements OnChanges {
     @Output()
     error: EventEmitter<ProcessInstance> = new EventEmitter<ProcessInstance>();
 
-    @ViewChild(StartFormComponent)
+    @ViewChild('startForm')
     startForm: StartFormComponent;
 
     processDefinitions: ProcessDefinitionRepresentation[] = [];

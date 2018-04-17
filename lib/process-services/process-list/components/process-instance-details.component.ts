@@ -36,10 +36,10 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
     @Input()
     processInstanceId: string;
 
-    @ViewChild(ProcessInstanceHeaderComponent)
+    @ViewChild('processInstanceHeader')
     processInstanceHeader: ProcessInstanceHeaderComponent;
 
-    @ViewChild(ProcessInstanceTasksComponent)
+    @ViewChild('processInstanceTasks')
     tasksList: ProcessInstanceTasksComponent;
 
     /** Toggles whether to show or hide the title. */
@@ -90,7 +90,7 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
     }
 
     /**
-     * Reset the task detail to undefined
+     * Reset the task detail
      */
     reset() {
         this.processInstanceDetails = null;

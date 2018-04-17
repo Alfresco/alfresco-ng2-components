@@ -22,6 +22,7 @@ import { ContentService } from '@alfresco/adf-core';
 import { DataTableModule } from '@alfresco/adf-core';
 import { FileNode } from '../../../mock';
 import { DocumentListService } from '../../services/document-list.service';
+import { CustomResourcesService } from '../../services/custom-resources.service';
 import { ContentActionHandler } from './../../models/content-action.model';
 import { DocumentActionsService } from './../../services/document-actions.service';
 import { FolderActionsService } from './../../services/folder-actions.service';
@@ -47,7 +48,8 @@ describe('ContentAction', () => {
                 DataTableModule
             ],
             providers: [
-                DocumentListService
+                DocumentListService,
+                CustomResourcesService
             ],
             declarations: [
                 DocumentListComponent
@@ -60,9 +62,9 @@ describe('ContentAction', () => {
 
     beforeEach(() => {
         contentService = TestBed.get(ContentService);
-        nodeActionsService = new NodeActionsService(null, null);
-        documentActions = new DocumentActionsService(nodeActionsService);
-        folderActions = new FolderActionsService(nodeActionsService, null, contentService);
+        nodeActionsService = new NodeActionsService(null, null, null);
+        documentActions = new DocumentActionsService(nodeActionsService, null, null, null);
+        folderActions = new FolderActionsService(nodeActionsService, null, contentService, null);
 
         documentList = (TestBed.createComponent(DocumentListComponent).componentInstance as DocumentListComponent);
         actionList = new ContentActionListComponent(documentList);

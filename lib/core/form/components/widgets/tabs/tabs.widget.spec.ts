@@ -111,18 +111,18 @@ describe('TabsWidgetComponent', () => {
             fixture.detectChanges();
             fixture.whenStable()
                 .then(() => {
-                    expect(element.querySelector('#title-tab-id-visible').innerHTML).toContain('tab-title-visible');
+                    expect(element.innerText).toContain('tab-title-visible');
                 });
         });
 
-        xit('should show tab when it became visible', async(() => {
+        it('should show tab when it became visible', async(() => {
             fixture.detectChanges();
             tabWidgetComponent.formTabChanged.subscribe((res) => {
                 tabWidgetComponent.tabs[1].isVisible = true;
                 fixture.detectChanges();
                 fixture.whenStable()
                     .then(() => {
-                        expect(element.querySelector('#title-tab-id-invisible').innerHTML).toContain('tab-title-invisible');
+                        expect(element.innerText).toContain('tab-title-invisible');
                     });
             });
             tabWidgetComponent.tabChanged(null);
@@ -135,8 +135,7 @@ describe('TabsWidgetComponent', () => {
                 fixture.detectChanges();
                 fixture.whenStable()
                     .then(() => {
-                        expect(element.querySelector('#tab-id-visible')).toBeNull();
-                        expect(element.querySelector('#title-tab-id-visible')).toBeNull();
+                        expect(element.querySelector('innerText')).not.toContain('tab-title-visible');
                     });
             });
             tabWidgetComponent.tabChanged(null);

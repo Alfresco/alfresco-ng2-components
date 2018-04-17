@@ -15,20 +15,19 @@
  * limitations under the License.
  */
 
+/** @deprecated in 2.3.0, part of the module moved in the core */
+export { CommentsModule } from '@alfresco/adf-core';
+/** @deprecated in 2.3.0, component moved in the core */
+export { CommentListComponent } from '@alfresco/adf-core';
+/** @deprecated in 2.3.0, component moved in the core */
+export { CommentsComponent } from '@alfresco/adf-core';
+
+export * from './process-list/index';
+export * from './task-list/index';
+export * from './app-list/index';
+export * from './attachment/index';
+export * from './process-comments/index';
+export * from './people/index';
+export * from './content-widget/index';
+
 export * from './process.module';
-
-export * from './process-list/process-list.module';
-export * from './task-list/task-list.module';
-export * from './app-list/apps-list.module';
-export * from './attachment/attachment.module';
-export * from './comments/comments.module';
-export * from './people/people.module';
-export * from './content-widget/content-widget.module';
-
-export * from './process-list';
-export * from './task-list';
-export * from './app-list';
-export * from './attachment';
-export * from './comments';
-export * from './people';
-export * from './content-widget';

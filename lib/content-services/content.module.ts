@@ -32,10 +32,18 @@ import { SitesDropdownModule } from './site-dropdown/sites-dropdown.module';
 import { BreadcrumbModule } from './breadcrumb/breadcrumb.module';
 import { VersionManagerModule } from './version-manager/version-manager.module';
 import { ContentNodeSelectorModule } from './content-node-selector/content-node-selector.module';
+import { ContentDirectiveModule } from './directives/content-directive.module';
 import { DialogModule } from './dialogs/dialog.module';
 import { FolderDirectiveModule } from './folder-directive/folder-directive.module';
 import { ContentMetadataModule } from './content-metadata/content-metadata.module';
-import { NodeDownloadDirective } from './directives/node-download.directive';
+import { PermissionManagerModule } from './permission-manager/permission-manager.module';
+import { RatingService } from './social/services/rating.service';
+import { ContentMetadataService } from './content-metadata/services/content-metadata.service';
+import { PropertyDescriptorsService } from './content-metadata/services/property-descriptors.service';
+import { ContentMetadataConfigFactory } from './content-metadata/services/config/content-metadata-config.factory';
+import { BasicPropertiesService } from './content-metadata/services/basic-properties.service';
+import { PropertyGroupTranslatorService } from './content-metadata/services/property-groups-translator.service';
+import { SearchQueryBuilderService } from './search/search-query-builder.service';
 
 @NgModule({
     imports: [
@@ -46,20 +54,19 @@ import { NodeDownloadDirective } from './directives/node-download.directive';
         WebScriptModule,
         FormsModule,
         ReactiveFormsModule,
+        DialogModule,
         SearchModule,
         DocumentListModule,
         UploadModule,
         MaterialModule,
         SitesDropdownModule,
         BreadcrumbModule,
-        VersionManagerModule,
         ContentNodeSelectorModule,
         ContentMetadataModule,
-        DialogModule,
-        FolderDirectiveModule
-    ],
-    declarations: [
-        NodeDownloadDirective
+        FolderDirectiveModule,
+        ContentDirectiveModule,
+        PermissionManagerModule,
+        VersionManagerModule
     ],
     providers: [
         {
@@ -69,7 +76,14 @@ import { NodeDownloadDirective } from './directives/node-download.directive';
                 name: 'adf-content-services',
                 source: 'assets/adf-content-services'
             }
-        }
+        },
+        RatingService,
+        ContentMetadataService,
+        PropertyDescriptorsService,
+        ContentMetadataConfigFactory,
+        BasicPropertiesService,
+        PropertyGroupTranslatorService,
+        SearchQueryBuilderService
     ],
     exports: [
         CoreModule,
@@ -81,12 +95,13 @@ import { NodeDownloadDirective } from './directives/node-download.directive';
         SearchModule,
         SitesDropdownModule,
         BreadcrumbModule,
-        VersionManagerModule,
         ContentNodeSelectorModule,
         ContentMetadataModule,
         DialogModule,
         FolderDirectiveModule,
-        NodeDownloadDirective
+        ContentDirectiveModule,
+        PermissionManagerModule,
+        VersionManagerModule
     ]
 })
 export class ContentModule {

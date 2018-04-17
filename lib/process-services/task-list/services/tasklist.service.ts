@@ -27,6 +27,7 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/forkJoin';
 import 'rxjs/add/observable/fromPromise';
 import 'rxjs/operator/switchMap';
+import 'rxjs/add/observable/from';
 
 @Injectable()
 export class TaskListService {
@@ -40,9 +41,9 @@ export class TaskListService {
     }
 
     /**
-     * Return all the filters in the list where the task id belong
-     * @param taskId - string
-     * @param filter - FilterRepresentationModel []
+     * Gets all the filters in the list that belong to a task.
+     * @param taskId ID of the target task
+     * @param filterList List of filters to search through
      */
     getFilterForTaskById(taskId: string, filterList: FilterRepresentationModel[]): Observable<FilterRepresentationModel> {
         return Observable.from(filterList)
@@ -51,8 +52,8 @@ export class TaskListService {
     }
 
     /**
-     * Return the search node for query task based on the given filter
-     * @param filter - FilterRepresentationModel
+     * Gets the search query for a task based on the supplied filter.
+     * @param filter The filter to use
      */
     private generateTaskRequestNodeFromFilter(filter: FilterRepresentationModel): TaskQueryRequestRepresentationModel {
         let requestNode = {
@@ -65,9 +66,9 @@ export class TaskListService {
     }
 
     /**
-     * Check if a taskId is filtered with the given filter
-     * @param taskId - string
-     * @param filter - FilterRepresentationModel
+     * Checks if a taskId is filtered with the given filter.
+     * @param taskId ID of the target task
+     * @param filter The filter you want to check
      */
      isTaskRelatedToFilter(taskId: string, filter: FilterRepresentationModel): Observable<FilterRepresentationModel> {
         let requestNodeForFilter = this.generateTaskRequestNodeFromFilter(filter);
@@ -78,8 +79,8 @@ export class TaskListService {
     }
 
     /**
-     * Retrieve all the tasks filtered by filterModel
-     * @param filter - TaskFilterRepresentationModel
+     * Gets all the tasks matching the supplied query.
+     * @param requestNode Query to search for tasks
      */
     getTasks(requestNode: TaskQueryRequestRepresentationModel): Observable<TaskListModel> {
         return Observable.fromPromise(this.callApiTasksFiltered(requestNode))
@@ -90,8 +91,9 @@ export class TaskListService {
     }
 
     /**
-     * Retrieve tasks filtered by filterModel and state
-     * @param filter - TaskFilterRepresentationModel
+     * Gets tasks matching a query and state value.
+     * @param requestNode Query to search for tasks
+     * @param state Task state. Can be "open" or "completed".
      */
     findTasksByState(requestNode: TaskQueryRequestRepresentationModel, state?: string): Observable<TaskListModel> {
         if (state) {
@@ -101,8 +103,9 @@ export class TaskListService {
     }
 
     /**
-     * Retrieve all tasks filtered by filterModel and state
-     * @param filter - TaskFilterRepresentationModel
+     * Gets all tasks matching a query and state value.
+     * @param requestNode Query to search for tasks.
+     * @param state Task state. Can be "open" or "completed".
      */
     findAllTaskByState(requestNode: TaskQueryRequestRepresentationModel, state?: string): Observable<TaskListModel> {
         if (state) {
@@ -115,8 +118,8 @@ export class TaskListService {
     }
 
     /**
-     * Retrieve all tasks filtered by filterModel irrespective of state
-     * @param filter - TaskFilterRepresentationModel
+     * Get all tasks matching the supplied query but ignoring the task state.
+     * @param requestNode Query to search for tasks
      */
     findAllTasksWithoutState(requestNode: TaskQueryRequestRepresentationModel): Observable<TaskListModel> {
         return Observable.forkJoin(
@@ -133,8 +136,8 @@ export class TaskListService {
     }
 
     /**
-     * Retrieve all the task details
-     * @param id - taskId
+     * Gets details for a task.
+     * @param taskId ID of the target task.
      */
     getTaskDetails(taskId: string): Observable<TaskDetailsModel> {
         return Observable.fromPromise(this.callApiTaskDetails(taskId))
@@ -145,8 +148,8 @@ export class TaskListService {
     }
 
     /**
-     * Retrieve all the task's checklist
-     * @param id - taskId
+     * Gets the checklist for a task.
+     * @param id ID of the target task
      */
     getTaskChecklist(id: string): Observable<TaskDetailsModel[]> {
         return Observable.fromPromise(this.callApiTaskChecklist(id))
@@ -161,7 +164,7 @@ export class TaskListService {
     }
 
     /**
-     * Retrieve all the form shared with this user
+     * Gets all available reusable forms.
      */
     getFormList(): Observable<Form []> {
         let opts = {
@@ -180,13 +183,18 @@ export class TaskListService {
             }).catch(err => this.handleError(err));
     }
 
+    /**
+     * Attaches a form to a task.
+     * @param taskId ID of the target task
+     * @param formId ID of the form to add
+     */
     attachFormToATask(taskId: string, formId: number): Observable<any> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.attachForm(taskId, {'formId': formId})).catch(err => this.handleError(err));
     }
 
     /**
-     * Add a task
-     * @param task - TaskDetailsModel
+     * Adds a subtask (ie, a checklist task) to a parent task.
+     * @param task The task to add
      */
     addTask(task: TaskDetailsModel): Observable<TaskDetailsModel> {
         return Observable.fromPromise(this.callApiAddTask(task))
@@ -197,8 +205,8 @@ export class TaskListService {
     }
 
     /**
-     * Delete a task
-     * @param taskId - string
+     * Deletes a subtask (ie, a checklist task) from a parent task.
+     * @param taskId The task to delete
      */
     deleteTask(taskId: string): Observable<TaskDetailsModel> {
         return Observable.fromPromise(this.callApiDeleteTask(taskId))
@@ -206,8 +214,8 @@ export class TaskListService {
     }
 
     /**
-     * Make the task completed
-     * @param id - taskId
+     * Gives completed status to a task.
+     * @param taskId ID of the target task
      */
     completeTask(taskId: string) {
         return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.completeTask(taskId))
@@ -216,8 +224,8 @@ export class TaskListService {
     }
 
     /**
-     * Return the total number of the tasks by filter
-     * @param requestNode - TaskFilterRepresentationModel
+     * Gets the total number of the tasks found by a query.
+     * @param requestNode Query to search for tasks
      */
     public getTotalTasks(requestNode: TaskQueryRequestRepresentationModel): Observable<any> {
         requestNode.size = 0;
@@ -228,8 +236,8 @@ export class TaskListService {
     }
 
     /**
-     * Create a new standalone task
-     * @param task - TaskDetailsModel
+     * Creates a new standalone task.
+     * @param task Details of the new task
      */
     createNewTask(task: TaskDetailsModel): Observable<TaskDetailsModel> {
         return Observable.fromPromise(this.callApiCreateTask(task))
@@ -240,9 +248,9 @@ export class TaskListService {
     }
 
     /**
-     * Assign task to user/group
-     * @param taskId - string
-     * @param requestNode - any
+     * Assigns a task to a user or group.
+     * @param taskId The task to assign
+     * @param requestNode User or group to assign the task to
      */
     assignTask(taskId: string, requestNode: any): Observable<TaskDetailsModel> {
         let assignee = {assignee: requestNode.id};
@@ -253,6 +261,11 @@ export class TaskListService {
             }).catch(err => this.handleError(err));
     }
 
+    /**
+     * Assigns a task to a user.
+     * @param taskId ID of the task to assign
+     * @param userId ID of the user to assign the task to
+     */
     assignTaskByUserId(taskId: string, userId: number): Observable<TaskDetailsModel> {
         let assignee = {assignee: userId};
         return Observable.fromPromise(this.callApiAssignTask(taskId, assignee))
@@ -263,8 +276,8 @@ export class TaskListService {
     }
 
     /**
-     * Claim a task
-     * @param id - taskId
+     * Claims a task for the current user.
+     * @param taskId ID of the task to claim
      */
     claimTask(taskId: string): Observable<TaskDetailsModel> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.claimTask(taskId))
@@ -272,8 +285,8 @@ export class TaskListService {
     }
 
     /**
-     * Unclaim a task
-     * @param id - taskId
+     * Unclaims a task for the current user.
+     * @param taskId ID of the task to unclaim
      */
     unclaimTask(taskId: string): Observable<TaskDetailsModel> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.unclaimTask(taskId))
@@ -281,8 +294,9 @@ export class TaskListService {
     }
 
     /**
-     * Update due date
-     * @param dueDate - the new due date
+     * Updates the details (name, description, due date) for a task.
+     * @param taskId ID of the task to update
+     * @param updated Data to update the task (as a `TaskUpdateRepresentation` instance).
      */
     updateTask(taskId: any, updated): Observable<TaskDetailsModel> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.updateTask(taskId, updated))
@@ -290,8 +304,8 @@ export class TaskListService {
     }
 
     /**
-     * fetch the Task Audit information as a pdf
-     * @param taskId - the task id
+     * Fetches the Task Audit information in PDF format.
+     * @param taskId ID of the target task
      */
     fetchTaskAuditPdfById(taskId: string): Observable<Blob> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.getTaskAuditPdf(taskId))
@@ -299,8 +313,8 @@ export class TaskListService {
     }
 
     /**
-     * fetch the Task Audit information in a json format
-     * @param taskId - the task id
+     * Fetch the Task Audit information in JSON format
+     * @param taskId ID of the target task
      */
     fetchTaskAuditJsonById(taskId: string): Observable<any> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.getTaskAuditJson(taskId))

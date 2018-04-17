@@ -19,16 +19,22 @@ import { Injectable } from '@angular/core';
 import {
     AlfrescoApi, ContentApi, FavoritesApi, NodesApi,
     PeopleApi, RenditionsApi, SharedlinksApi, SitesApi,
-    VersionsApi, ClassesApi
+    VersionsApi, ClassesApi, SearchApi, GroupsApi, MinimalNodeEntryEntity
 } from 'alfresco-js-api';
 import * as alfrescoApi from 'alfresco-js-api';
 import { AppConfigService } from '../app-config/app-config.service';
 import { StorageService } from './storage.service';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class AlfrescoApiService {
 
-    private alfrescoApi: AlfrescoApi;
+    /**
+     * Publish/subscribe to events related to node updates.
+     */
+    nodeUpdated = new Subject<MinimalNodeEntryEntity>();
+
+    protected alfrescoApi: AlfrescoApi;
 
     getInstance(): AlfrescoApi {
         return this.alfrescoApi;
@@ -62,7 +68,7 @@ export class AlfrescoApiService {
         return this.getInstance().core.peopleApi;
     }
 
-    get searchApi() {
+    get searchApi(): SearchApi {
         return this.getInstance().search.searchApi;
     }
 
@@ -74,22 +80,35 @@ export class AlfrescoApiService {
         return this.getInstance().core.classesApi;
     }
 
-    constructor(private appConfig: AppConfigService,
-                private storage: StorageService) {
-
-        this.reset();
+    get groupsApi(): GroupsApi {
+        return this.getInstance().core.groupsApi;
     }
 
-    reset() {
+    constructor(protected appConfig: AppConfigService,
+                protected storage: StorageService) {
+    }
+
+    async load() {
+        await this.appConfig.load().then(() => {
+            this.initAlfrescoApi();
+        });
+    }
+
+    async reset() {
+        this.initAlfrescoApi();
+    }
+
+    protected initAlfrescoApi() {
         this.alfrescoApi = <AlfrescoApi> new alfrescoApi({
             provider: this.storage.getItem('AUTH_TYPE'),
             ticketEcm: this.storage.getItem('ticket-ECM'),
             ticketBpm: this.storage.getItem('ticket-BPM'),
             hostEcm: this.appConfig.get<string>('ecmHost'),
             hostBpm: this.appConfig.get<string>('bpmHost'),
-            contextRoot: 'alfresco',
+            contextRootBpm: this.appConfig.get<string>('contextRootBpm'),
+            contextRoot: this.appConfig.get<string>('contextRootEcm'),
             disableCsrf: this.storage.getItem('DISABLE_CSRF') === 'true',
-            oauth2 : this.appConfig.get<any>('oauth2')
+            oauth2: this.appConfig.get<any>('oauth2')
         });
     }
 }

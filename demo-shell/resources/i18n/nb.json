@@ -1,4 +1,17 @@
 {
+  "APP": {
+    "INFO_DRAWER": {
+      "TITLE": "Detaljer",
+      "COMMENTS": "Kommentarer",
+      "PROPERTIES": "Egenskaper",
+      "VERSIONS": "Versjoner"
+    },
+    "ADF_VERSION_MANAGER": {
+      "ALLOW_DELETE": "Tillat sletting",
+      "SHOW_COMMENTS": "Vis kommentarer om versjoner",
+      "ALLOW_DOWNLOAD": "Tillat versjonsnedlasting"
+    }
+  },
   "title": "Velkommen",
   "VERSION": {
     "NO_PERMISSION": "Du har ikke tillatelse til å håndtere versjoner av dette innholdet",
@@ -7,6 +20,12 @@
     "DIALOG": {
       "CLOSE": "Lukk",
       "TITLE": "Håndtere versjoner"
+    }
+  },
+  "METADATA": {
+    "DIALOG": {
+      "CLOSE": "Lukk",
+      "TITLE": "Metadata"
     }
   },
   "APP_LAYOUT": {
@@ -20,9 +39,11 @@
     "DATATABLE_LAZY": "Datatabell (avventende)",
     "FORM": "Skjema",
     "FORM_LIST": "Skjemaliste",
+    "FORM_LOADING": "Skjema lastes inn",
     "UPLOADER": "Opplaster",
     "WEBSCRIPT": "Webscript",
     "TAG": "Tagg",
+    "TRASHCAN": "Søppelkurv",
     "SOCIAL": "Sosial",
     "SETTINGS": "Innstillinger",
     "OVERLAY_VIEWER": "Overleggsfremviser",
@@ -32,6 +53,17 @@
     "WORD_TO_SEARCH": "Søkeord",
     "SEARCH_CREATED_BY": "Opprettet av",
     "SEARCH_SERVICE_APPROACH": "Velg dette for å deaktivere inndataegenskapen og konfigurere ved hjelp av tjenesten"
+  },
+  "TRASHCAN": {
+    "ACTIONS": {
+      "DELETE_PERMANENT": "Slett for godt",
+      "RESTORE": "Gjenopprett"
+    },
+    "EMPTY_STATE": {
+      "TITLE": "Søppelkurven er tom",
+      "FIRST_TEXT": "Elementer du sletter, flyttes til søppelkurven.",
+      "SECOND_TEXT": "Tøm søppelkurven for å slette elementer for godt."
+    }
   },
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Multivalg (med avskrysningsbokser)",
@@ -43,13 +75,22 @@
     "DESCRIPTION_UPLOAD": "Aktiver opplasting",
     "ENABLE_INFINITE_SCROLL": "Aktiver uendelig rulling",
     "MULTISELECT_DESCRIPTION": "Bruk Cmd (Mac) eller Ctrl (Windows) for å veksle mellom valg av flere elementer",
-    "RECENT": "Nylig brukte filer",
+    "RECENT": {
+      "EMPTY_STATE": {
+        "TITLE": "Nylige filer-listen er tom"
+      },
+      "TITLE": "Nylige filer"
+    },
     "COLUMNS": {
       "DISPLAY_NAME": "Vis navn",
+      "IS_LOCKED": "Lås",
       "TAG": "Tagg",
       "CREATED_BY": "Opprettet av",
       "CREATED_ON": "Opprettet",
-      "CREATED": "Opprettet"
+      "CREATED": "Opprettet",
+      "SIZE": "Størrelse",
+      "DELETED_ON": "Slettet",
+      "DELETED_BY": "Slettet av"
     },
     "TOOLBAR": {
       "CARDVIEW": "Kortvisningsmodus",
@@ -59,7 +100,10 @@
       "DELETE": "Slett"
     },
     "ACTIONS": {
+      "VERSIONS": "Administrer versjoner",
+      "METADATA": "Info",
       "DOWNLOAD": "Last ned",
+      "PERMISSION": "Tillatelse",
       "FOLDER": {
         "COPY": "Kopier",
         "MOVE": "Flytt",
@@ -98,6 +142,13 @@
     "STORE": "Lagre",
     "RESTORE": "Gjenopprett"
   },
+  "FORM-LOADING": {
+    "FORM_DATA": "Skjemadata",
+    "FORM_DATA_MESSAGE": "Skriv inn verdier for å fylle ut skjemaet",
+    "TYPEAHEAD_PLACEHOLDER": "Type-ahead",
+    "RADIO_PLACEHOLDER": "Alternativknapp",
+    "SELECT_PLACEHOLDER": "Nedtrekk"
+  },
   "LOGIN": {
     "CONTENT_SERVICES": "Content Services",
     "PROCESS_SERVICES": "Process Services",
@@ -115,5 +166,9 @@
     "LIST": "Liste med tagger Innholdstjenester",
     "INSERT": "Sett inn node-ID",
     "NODE_LIST": "Tagg listen etter node-ID"
+  },
+  "DEMO_PERMISSION": {
+    "INHERIT_PERMISSION_BUTTON": "Arv tillatelse",
+    "INHERITED_PERMISSIONS_BUTTON": "Tillatelse arvet"
   }
 }

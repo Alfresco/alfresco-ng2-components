@@ -21,7 +21,9 @@ import { Component, HostListener, Input, OnDestroy, OnInit, Renderer2, ViewChild
 import { MatMenuTrigger } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
 import { ContextMenuService } from './context-menu.service';
-
+/**
+ * @deprecated: context-menu-holder is deprecated, use adf-context-menu-holder instead.
+ */
 @Component({
     selector: 'adf-context-menu-holder, context-menu-holder',
     template: `
@@ -35,7 +37,7 @@ import { ContextMenuService } from './context-menu.service';
                 <mat-icon *ngIf="showIcons && link.model?.icon">
                     {{ link.model?.icon }}
                 </mat-icon>
-                    {{link.title || link.model?.title}}
+                    {{ (link.title || link.model?.title) | translate}}
             </button>
         </mat-menu>
     `

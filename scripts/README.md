@@ -52,6 +52,7 @@ All the commands before can be used in combination
 | -u or --update  | run the update of the node_modules packages on the demo shell  |
 | -c or --clean   | clean the demo shell folder before starting it  |
 | -t or --test    | run the tests on the demo-shell  |
+| --e2e   | execute e2e test   |
 | -r or --registry    |  Start the demo using an alternative npm registry  |
 | -v or --version    | Use the version defined in the pacakge.json . Download from npm and Install a different version of the lib (this option is not compatible with -dev)  |
 | -si or --skipinstall    | skip the install of the node_modules  |
@@ -338,4 +339,58 @@ This script test that the update from 2.0.0 to 2.x.x is still smooth
 
 ```sh
 ./test-e2e-bc
+```
+
+***update-project.sh*** 
+
+Update an external project and create a PR with last beta of ADF
+
+## Options
+
+| Option | Description |
+| --- | --- |
+| -n or --name  | name of the project  |
+| -gnu  | for linux machine |
+| -t or --token  | GITHUB token |
+
+## Examples
+
+```sh
+./update-project.sh -t YOUR_GITHUB_TOKEN -n NAME_PROJECT
+```
+
+# test-e2e-bc.sh
+
+***test-e2e-bc.sh*** 
+
+This script test that the update from 2.0.0 to 2.x.x is still smooth 
+
+## Examples
+
+```sh
+./test-e2e-bc
+```
+
+# simulate-publish.sh
+
+***simulate-publish.sh*** 
+
+This script run a verdaccio server and simulate a publish on it 
+
+## Examples
+
+```sh
+./simulate-publish
+```
+
+# test-dist.sh
+
+***test-dist.sh*** 
+
+This script test the distribution of ADF against the demo shell 
+
+## Examples
+
+```sh
+./test-dist
 ```

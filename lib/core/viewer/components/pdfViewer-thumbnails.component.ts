@@ -35,7 +35,8 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
     renderItems = [];
 
     private items = [];
-    private itemHeight: number = 114;
+    private margin: number = 15;
+    private itemHeight: number = 114 + this.margin;
 
     @ContentChild(TemplateRef)
     template: any;
@@ -87,7 +88,7 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
                 return;
             }
 
-            this.element.nativeElement.scrollTop = Math.floor(index  - 1 ) * this.itemHeight;
+            this.element.nativeElement.scrollTop = index * this.itemHeight;
 
             this.calculateItems();
         }
@@ -132,6 +133,10 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
 
         if (index < 0) {
             this.scrollInto(event.pageNumber);
+        }
+
+        if (index >= this.renderItems.length - 1) {
+            this.element.nativeElement.scrollTop += this.itemHeight;
         }
     }
 }

@@ -78,8 +78,6 @@ describe('TagList', () => {
         });
 
         it('Tag list relative a single node should be rendered', (done) => {
-            component.nodeId = 'fake-node-id';
-
             component.result.subscribe(() => {
                 fixture.detectChanges();
 

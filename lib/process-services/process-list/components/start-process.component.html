@@ -20,7 +20,9 @@
             </mat-form-field>
         </div>
 
-        <adf-start-form *ngIf="hasStartForm()"
+        <adf-start-form
+            #startForm
+            *ngIf="hasStartForm()"
                         [data]="values"
             [disableStartProcessButton]="!hasProcessName()"
 			[processDefinitionId]="selectedProcessDef.id"

@@ -17,7 +17,7 @@
                        (keypress)="cleanErrorMsg()"
                        [(ngModel)]="newTagName"
                        id="new-tag-text"/>
-                <mat-hint *ngIf="error" [ngStyle]="{'color': 'red'}" align="start">{{errorMsg}}</mat-hint>
+                <mat-hint data-automation-id="errorMessage" *ngIf="error" [ngStyle]="{'color': 'red'}" align="start">{{errorMsg}}</mat-hint>
             </mat-form-field>
         </td>
         <td>

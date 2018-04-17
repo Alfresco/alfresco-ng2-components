@@ -51,7 +51,7 @@ describe('NotificationService', () => {
         fixture.detectChanges();
     });
 
-    xit('should open a message notification bar', (done) => {
+    it('should open a message notification bar', (done) => {
         let promise = fixture.componentInstance.sendMessage();
         promise.afterDismissed().subscribe(() => {
             done();
@@ -62,7 +62,7 @@ describe('NotificationService', () => {
         expect(document.querySelector('snack-bar-container')).not.toBeNull();
     });
 
-    xit('should open a message notification bar with action', (done) => {
+    it('should open a message notification bar with action', (done) => {
         let promise = fixture.componentInstance.sendMessageAction();
         promise.afterDismissed().subscribe(() => {
             done();

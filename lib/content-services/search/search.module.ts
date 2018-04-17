@@ -21,23 +21,24 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
 
-import { PipeModule, SearchService } from '@alfresco/adf-core';
+import { PipeModule } from '@alfresco/adf-core';
 
 import { SearchTriggerDirective } from './components/search-trigger.directive';
 
 import { SearchControlComponent } from './components/search-control.component';
 import { SearchComponent } from './components/search.component';
 import { EmptySearchResultComponent } from './components/empty-search-result.component';
+import { SearchWidgetContainerComponent } from './components/search-widget-container/search-widget-container.component';
+import { SearchFilterComponent } from './components/search-filter/search-filter.component';
+import { SearchChipListComponent } from './components/search-chip-list/search-chip-list.component';
 
-export const ALFRESCO_SEARCH_DIRECTIVES: [any] = [
+export const ALFRESCO_SEARCH_DIRECTIVES: any[] = [
     SearchComponent,
     SearchControlComponent,
     SearchTriggerDirective,
-    EmptySearchResultComponent
-];
-
-export const ALFRESCO_SEARCH_PROVIDERS: [any] = [
-    SearchService
+    EmptySearchResultComponent,
+    SearchFilterComponent,
+    SearchChipListComponent
 ];
 
 @NgModule({
@@ -50,13 +51,15 @@ export const ALFRESCO_SEARCH_PROVIDERS: [any] = [
         TranslateModule
     ],
     declarations: [
-        ...ALFRESCO_SEARCH_DIRECTIVES
-    ],
-    providers: [
-        ...ALFRESCO_SEARCH_PROVIDERS
+        ...ALFRESCO_SEARCH_DIRECTIVES,
+        SearchWidgetContainerComponent
     ],
     exports: [
-        ...ALFRESCO_SEARCH_DIRECTIVES
+        ...ALFRESCO_SEARCH_DIRECTIVES,
+        SearchWidgetContainerComponent
+    ],
+    entryComponents: [
+        SearchWidgetContainerComponent
     ]
 })
 export class SearchModule {}

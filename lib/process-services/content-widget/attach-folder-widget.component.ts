@@ -19,7 +19,6 @@
 
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import {
-    baseHost,
     WidgetComponent,
     FormService,
     NodesApiService
@@ -31,7 +30,17 @@ import { MinimalNodeEntryEntity } from 'alfresco-js-api';
     selector: 'attach-folder-widget',
     templateUrl: './attach-folder-widget.component.html',
     styleUrls: ['./attach-folder-widget.component.scss'],
-    host: baseHost,
+    host: {
+        '(click)': 'event($event)',
+        '(blur)': 'event($event)',
+        '(change)': 'event($event)',
+        '(focus)': 'event($event)',
+        '(focusin)': 'event($event)',
+        '(focusout)': 'event($event)',
+        '(input)': 'event($event)',
+        '(invalid)': 'event($event)',
+        '(select)': 'event($event)'
+    },
     encapsulation: ViewEncapsulation.None
 })
 export class AttachFolderWidgetComponent extends WidgetComponent implements OnInit {

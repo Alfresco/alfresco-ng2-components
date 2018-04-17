@@ -35,11 +35,8 @@ describe('PeopleListComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-
             declarations: [
                 PeopleListComponent
-            ],
-            providers: [
             ]
         }).compileComponents().then(() => {
 

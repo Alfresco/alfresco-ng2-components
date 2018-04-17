@@ -79,7 +79,8 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
                  value: this.taskDetails.getFullName(),
                  key: 'assignee',
                  default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.ASSIGNEE_DEFAULT'),
-                 clickable: !this.isCompleted()
+                 clickable: !this.isCompleted(),
+                 icon: 'create'
                 }
             ),
             new CardViewTextItemModel(

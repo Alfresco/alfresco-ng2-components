@@ -15,50 +15,33 @@
  * limitations under the License.
  */
 
+export * from './viewer/index';
+export * from './userinfo/index';
+export * from './toolbar/index';
+export * from './settings/index';
+export * from './pagination/index';
+export * from './login/index';
+export * from './language-menu/index';
+export * from './info-drawer/index';
+export * from './sidebar/index';
+export * from './data-column/index';
+export * from './datatable/index';
+export * from './context-menu/index';
+export * from './collapsable/index';
+export * from './card-view/index';
+export * from './app-config/index';
+export * from './form/index';
+export * from './sidenav-layout/index';
+export * from './comments/index';
+
+export * from './pipes/index';
+export * from './services/index';
+export * from './directives/index';
+
+export * from './utils/index';
+export * from './interface/index';
+export * from './models/index';
+export * from './events/index';
+export * from './mock/index';
+
 export * from './core.module';
-
-export * from './viewer/viewer.module';
-export * from './userinfo/userinfo.module';
-export * from './toolbar/toolbar.module';
-export * from './settings/host-settings.module';
-export * from './pagination/pagination.module';
-export * from './login/login.module';
-export * from './language-menu/language-menu.module';
-export * from './info-drawer/info-drawer.module';
-export * from './data-column/data-column.module';
-export * from './datatable/datatable.module';
-export * from './context-menu/context-menu.module';
-export * from './collapsable/collapsable.module';
-export * from './card-view/card-view.module';
-export * from './app-config/app-config.module';
-export * from './form/form.module';
-
-export * from './pipes/pipe.module';
-export * from './directives/directive.module';
-
-export * from './viewer';
-export * from './userinfo';
-export * from './toolbar';
-export * from './settings';
-export * from './pagination';
-export * from './login';
-export * from './language-menu';
-export * from './info-drawer';
-export * from './sidebar';
-export * from './data-column';
-export * from './datatable';
-export * from './context-menu';
-export * from './collapsable';
-export * from './card-view';
-export * from './app-config';
-export * from './form';
-
-export * from './pipes';
-export * from './services';
-export * from './directives';
-
-export * from './utils';
-export * from './interface';
-export * from './models';
-export * from './events';
-export * from './mock';
