@@ -385,7 +385,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     onContentClick(content: any): void {
         this.blobPreview.content = content.contentBlob;
         this.blobPreview.name = content.name;
-        this.router.navigate([{ outlets: { overlay: ['preview/blob'] } }]);
+        this.router.navigate([{ outlets: { overlay: ['blob-preview'] } }]);
     }
 
     onAuditClick(event: any) {

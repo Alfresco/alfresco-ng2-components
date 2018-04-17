@@ -52,8 +52,8 @@ export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'settings', component: SettingsComponent },
     { path: 'files/:nodeId/view', component: FileViewComponent, canActivate: [ AuthGuardEcm ] },
+    { path: 'blob-preview', component: BlobPreviewComponent, outlet: 'overlay', pathMatch: 'full' },
     { path: 'preview/s/:id', component: SharedLinkViewComponent },
-    { path: 'preview/blob', component: BlobPreviewComponent, outlet: 'overlay' },
     {
         path: '',
         component: AppLayoutComponent,
