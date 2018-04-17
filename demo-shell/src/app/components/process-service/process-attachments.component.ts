@@ -21,6 +21,7 @@ import { ProcessInstance, ProcessService ,
 import { UploadService } from '@alfresco/adf-core';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { AppConfigService } from '@alfresco/adf-core';
+import { BlobPreviewService } from '../../services/blob-preview.service';
 
 export function processUploadServiceFactory(api: AlfrescoApiService, config: AppConfigService) {
     return new ProcessUploadService(api, config);
@@ -47,14 +48,13 @@ export class ProcessAttachmentsComponent implements OnInit, OnChanges {
     @Input()
     processInstanceId: string;
 
-    fileShowed = false;
-    content: Blob;
-    contentName: string;
-
     processInstance: ProcessInstance;
 
-    constructor(private uploadService: UploadService, private processService: ProcessService) {
-    }
+    constructor(
+        private uploadService: UploadService,
+        private processService: ProcessService,
+        private blobPreview: BlobPreviewService
+    ) {}
 
     ngOnInit() {
         this.uploadService.fileUploadComplete.subscribe(value => this.onFileUploadComplete(value.data));
@@ -74,9 +74,7 @@ export class ProcessAttachmentsComponent implements OnInit, OnChanges {
     }
 
     onAttachmentClick(content: any): void {
-        this.fileShowed = true;
-        this.content = content.contentBlob;
-        this.contentName = content.name;
+        this.blobPreview.show(content.name, content.contentBlob);
     }
 
     isCompletedProcess(): boolean {
