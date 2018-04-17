@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
@@ -76,8 +76,7 @@ import { TaskStandaloneComponent } from './components/task-standalone.component'
         TaskListService,
         TaskFilterService,
         TaskUploadService,
-        ProcessUploadService,
-        DatePipe
+        ProcessUploadService
     ],
     exports: [
         NoTaskDetailsTemplateDirective,

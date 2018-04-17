@@ -235,7 +235,8 @@
          "INHERITED" : "Inherited",
          "AUTHORITY_ID" : "Authority ID",
          "ROLE": "Role",
-         "LOCALLY_SET" : "Locally set"
+         "LOCALLY_SET" : "Locally set",
+         "NO_PERMISSIONS" : "No permissions"
       }
   }
 }

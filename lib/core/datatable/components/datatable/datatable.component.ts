@@ -162,11 +162,9 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     private singleClickStreamSub: Subscription;
     private multiClickStreamSub: Subscription;
 
-    constructor(
-        private elementRef: ElementRef,
-        differs: IterableDiffers,
-        private thumbnailService?: ThumbnailService
-    ) {
+    constructor(private elementRef: ElementRef,
+                differs: IterableDiffers,
+                private thumbnailService?: ThumbnailService) {
         if (differs) {
             this.differ = differs.find([]).create(null);
         }
@@ -319,7 +317,12 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
 
             if (this.isMultiSelectionMode()) {
                 const modifier = e && (e.metaKey || e.ctrlKey);
-                const newValue = modifier ? !row.isSelected : true;
+                let newValue: boolean;
+                if (this.selection.length === 1) {
+                    newValue = !row.isSelected;
+                } else {
+                    newValue = modifier ? !row.isSelected : true;
+                }
                 const domEventName = newValue ? 'row-select' : 'row-unselect';
 
                 if (!modifier) {
@@ -427,13 +430,15 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     }
 
     onImageLoadingError(event: Event, mimeType?: string) {
-        if (mimeType && !this.fallbackThumbnail) {
-            this.fallbackThumbnail = this.thumbnailService.getMimeTypeIcon(mimeType);
-        }
 
-        if (event && this.fallbackThumbnail) {
+        if (event) {
             let element = <any> event.target;
-            element.src = this.fallbackThumbnail;
+
+            if (this.fallbackThumbnail) {
+                element.src = this.fallbackThumbnail;
+            } else {
+                element.src = this.thumbnailService.getMimeTypeIcon(mimeType);
+            }
         }
     }
 

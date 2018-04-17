@@ -63,8 +63,8 @@ describe('ContentAction', () => {
     beforeEach(() => {
         contentService = TestBed.get(ContentService);
         nodeActionsService = new NodeActionsService(null, null, null);
-        documentActions = new DocumentActionsService(nodeActionsService, null);
-        folderActions = new FolderActionsService(nodeActionsService, null, contentService);
+        documentActions = new DocumentActionsService(nodeActionsService, null, null, null);
+        folderActions = new FolderActionsService(nodeActionsService, null, contentService, null);
 
         documentList = (TestBed.createComponent(DocumentListComponent).componentInstance as DocumentListComponent);
         actionList = new ContentActionListComponent(documentList);

@@ -312,6 +312,9 @@ describe('DataTable', () => {
         expect(rows[0].isSelected).toBeTruthy();
 
         dataTable.onRowClick(rows[0], null);
+        expect(rows[0].isSelected).toBeFalsy();
+
+        dataTable.onRowClick(rows[0], <any> { metaKey: true, preventDefault() {} });
         expect(rows[0].isSelected).toBeTruthy();
 
         dataTable.onRowClick(rows[0], <any> { metaKey: true, preventDefault() {} });
@@ -726,7 +729,7 @@ describe('DataTable', () => {
         expect(event.target.src).toBe(dataTable.fallbackThumbnail);
     });
 
-    it('should replace image source only when fallback available', () => {
+    it('should replace image source with miscellaneous icon when fallback is not available', () => {
         const originalSrc = 'missing-image';
         let event = <any> {
             target: {
@@ -736,7 +739,7 @@ describe('DataTable', () => {
 
         dataTable.fallbackThumbnail = null;
         dataTable.onImageLoadingError(event);
-        expect(event.target.src).toBe(originalSrc);
+        expect(event.target.src).toBe('./assets/images/ft_ic_miscellaneous.svg' );
     });
 
     it('should replace image source with icon if fallback is not available and mimeType is provided', () => {

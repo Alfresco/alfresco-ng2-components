@@ -62,7 +62,6 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
     @Input('loading')
     isLoading: boolean = false;
 
-    /** @deprecated 2.3.0 use the paginated component interface to use it. */
     /** Emitted when the "Load More" button is clicked. */
     @Output()
     loadMore: EventEmitter<Pagination> = new EventEmitter<Pagination>();
@@ -92,6 +91,10 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
         this.pagination.skipCount = this.pagination.skipCount;
         this.pagination.merge = true;
         this.loadMore.next(this.pagination);
+
+        if ((this.pagination.skipCount + this.pageSize) > this.pagination.totalItems) {
+            this.pagination.hasMoreItems = false;
+        }
 
         if (this.target) {
             this.target.pagination.value.merge = this.pagination.merge;

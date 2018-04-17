@@ -35,9 +35,15 @@ export class FolderCreateDirective {
     @Input('adf-create-folder')
     parentNodeId: string = DEFAULT_FOLDER_PARENT_ID;
 
+    @Input()
+    title: string = null;
+
     /** Emitted when the create folder give error for example a folder with same name already exist */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
+
+    @Output()
+    success: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter<MinimalNodeEntryEntity>();
 
     @HostListener('click', [ '$event' ])
     onClick(event) {
@@ -55,7 +61,10 @@ export class FolderCreateDirective {
         const { parentNodeId } = this;
 
         return {
-            data: { parentNodeId },
+            data: {
+                parentNodeId,
+                createTitle: this.title
+            },
             width: `${width}px`
         };
     }
@@ -66,6 +75,10 @@ export class FolderCreateDirective {
 
         dialogInstance.componentInstance.error.subscribe((error) => {
             this.error.emit(error);
+        });
+
+        dialogInstance.componentInstance.success.subscribe((node: MinimalNodeEntryEntity) => {
+            this.success.emit(node);
         });
 
         dialogInstance.afterClosed().subscribe((node: MinimalNodeEntryEntity) => {

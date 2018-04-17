@@ -29,7 +29,7 @@ install:
         if ([ "$TRAVIS_BRANCH" = "master" ]); then
             (./scripts/npm-build-all.sh  || exit 1;);
         else
-            (./scripts/npm-build-all.sh  -vjsapi alpha || exit 1;);
+            (./scripts/npm-build-all.sh  -vjsapi alpha -sb || exit 1;);
         fi
       fi
 
@@ -51,7 +51,7 @@ script:
       fi
 
     - if ([ "$MODULE" == "packaging" ]); then
-            (cd lib && npm run new-build || exit 1;);
+            (cd lib && npm run build || exit 1;);
       fi
 
     - if ([ "$MODULE" == "demo-shell" ]); then

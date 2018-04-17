@@ -1,6 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-04-13
 ---
 
 # Search component
@@ -40,7 +41,7 @@ Searches items for supplied search terms.
 
 ### Customise Search Results
 
-You have to add a template that will be shown when the results are loaded.
+You can add a custom template to show the search results when once they are loaded:
 
 <!-- {% raw %} -->
 
@@ -58,11 +59,11 @@ You have to add a template that will be shown when the results are loaded.
 
 <!-- {% endraw %} -->
 
-The results are provided via the [$implicit variable of angular2](https://angular.io/api/common/NgTemplateOutlet) and can be accessed via the sugar sintax 'let-yourChosenName'. As per example above the result will be something like : 
+The results are provided via the [$implicit variable of angular2](https://angular.io/api/common/NgTemplateOutlet) and can be accessed via the sugar syntax 'let-yourChosenName'. The example above will give results like the following: 
 
 ![adf-search-control](../docassets/images/search-component-simple-template.png)
 
-But you can define even a more complex template : 
+However, you can use a more complex template if necessary: 
 
 <!-- {% raw %} -->
 
@@ -108,14 +109,14 @@ But you can define even a more complex template :
 
 <!-- {% endraw %} -->
 
-Which will look like :
-
 ![adf-search-control](../docassets/images/search-component-complex-template.png)
 
 ### Attach an input field to the search
 
-You can also attach your input field to the adf-search component via the trigger [searchAutocomplete]
-Yuo can do this by exporting the adf-search panel instance into a local template variable (here we called it "search"), and binding that variable to the input's searchAutocomplete property.
+You can also attach an input field to the search component via the `searchAutocomplete` property.
+Export the search panel instance into a local template variable and bind that variable to the
+input's `searchAutocomplete` property. The example below demonstrates this with an
+instance called "search":
 
 <!-- {% raw %} -->
 
@@ -133,7 +134,7 @@ Yuo can do this by exporting the adf-search panel instance into a local template
 
 <!-- {% endraw %} -->
 
-In this way it is possible to fetch the results from the word typed into the input text straight into the adf-search component via the custom template variable.
+By doing this, you can get the results as the user types into the input text.
 
 ### Custom search configuration
 

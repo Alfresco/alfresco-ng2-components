@@ -325,6 +325,20 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
     }
 
     /**
+     * Loads the next batch of search results
+     *
+     * @param event Pagination object
+     */
+    getNextPageOfSearch(event: Pagination): void {
+        this.infiniteScroll = true;
+        this.skipCount = event.skipCount;
+
+        if (this.searchTerm.length > 0) {
+            this.querySearch();
+        }
+    }
+
+    /**
      * Selects node as chosen if it has the right permission, clears the selection otherwise
      *
      * @param entry

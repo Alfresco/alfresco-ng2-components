@@ -15,7 +15,13 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiServiceMock, AppConfigService, StorageService, ContentService } from '@alfresco/adf-core';
+import {
+    AlfrescoApiServiceMock,
+    AppConfigService,
+    ContentService,
+    StorageService,
+    TranslationMock
+} from '@alfresco/adf-core';
 import { FileNode, FolderNode } from '../../mock';
 import { ContentActionHandler } from '../models/content-action.model';
 import { DocumentActionsService } from './document-actions.service';
@@ -34,8 +40,7 @@ describe('DocumentActionsService', () => {
         let alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
 
         documentListService = new DocumentListService(null, contentService, alfrescoApiService, null, null);
-
-        service = new DocumentActionsService(null, null, documentListService, contentService);
+        service = new DocumentActionsService(null, null, new TranslationMock(), documentListService, contentService);
     });
 
     it('should register default download action', () => {
@@ -47,7 +52,8 @@ describe('DocumentActionsService', () => {
     });
 
     it('should register custom action handler', () => {
-        let handler: ContentActionHandler = function (obj: any) {};
+        let handler: ContentActionHandler = function (obj: any) {
+        };
         service.setHandler('<key>', handler);
         expect(service.getHandler('<key>')).toBe(handler);
     });
@@ -57,7 +63,8 @@ describe('DocumentActionsService', () => {
     });
 
     it('should be case insensitive for keys', () => {
-        let handler: ContentActionHandler = function (obj: any) {};
+        let handler: ContentActionHandler = function (obj: any) {
+        };
         service.setHandler('<key>', handler);
         expect(service.getHandler('<KEY>')).toBe(handler);
     });
@@ -71,7 +78,7 @@ describe('DocumentActionsService', () => {
         let file = new FileNode();
         expect(service.canExecuteAction(file)).toBeTruthy();
 
-        service = new DocumentActionsService(nodeActionsService, null);
+        service = new DocumentActionsService(nodeActionsService, null, null);
         expect(service.canExecuteAction(file)).toBeFalsy();
     });
 
@@ -82,7 +89,8 @@ describe('DocumentActionsService', () => {
     });
 
     it('should set new handler only by key', () => {
-        let handler: ContentActionHandler = function (obj: any) {};
+        let handler: ContentActionHandler = function (obj: any) {
+        };
         expect(service.setHandler(null, handler)).toBeFalsy();
         expect(service.setHandler('', handler)).toBeFalsy();
         expect(service.setHandler('my-handler', handler)).toBeTruthy();
@@ -205,8 +213,8 @@ describe('DocumentActionsService', () => {
     });
 
     it('should emit success event upon node deletion', (done) => {
-        service.success.subscribe((nodeId) => {
-            expect(nodeId).not.toBeNull();
+        service.success.subscribe((message) => {
+            expect(message).toEqual('CORE.DELETE_NODE.SINGULAR');
             done();
         });
         spyOn(documentListService, 'deleteNode').and.returnValue(Observable.of(true));

@@ -19,8 +19,9 @@
    }
 
    .adf-app-layout-toolbar {
-     position: relative;
-     overflow: visible !important;
+       z-index: 1001;
+       position: relative;
+       overflow: visible !important;
    }
 
   .adf-app-layout {

@@ -87,23 +87,6 @@
       "PEOPLE": {
         "NONE": "関わっているメンバーなし"
       },
-      "COMMENTS": {
-        "NONE": "コメントなし",
-        "ADD": "コメントの追加",
-        "HEADER": "コメント ({{ count }} 件)",
-        "CREATED_BY_HEADER": "作成者",
-        "MESSAGE_HEADER": "メッセージ",
-        "DIALOG": {
-          "TITLE": "新しいコメント",
-          "LABELS": {
-            "MESSAGE": "メッセージ"
-          },
-          "BUTTON": {
-            "ADD": "コメントの追加",
-            "CANCEL": "キャンセル"
-          }
-        }
-      },
       "CHECKLIST": {
         "NONE": "チェックリストなし"
       },

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -119,7 +119,8 @@ export function providers() {
         DiscoveryApiService,
         CommentProcessService,
         CommentContentService,
-        SearchConfigurationService
+        SearchConfigurationService,
+        DatePipe
     ];
 }
 

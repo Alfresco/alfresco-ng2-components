@@ -87,23 +87,6 @@
       "PEOPLE": {
         "NONE": "Ingen involvert"
       },
-      "COMMENTS": {
-        "NONE": "Ingen kommentarer",
-        "ADD": "Legg til kommentar",
-        "HEADER": "Kommentarer ({{ count }})",
-        "CREATED_BY_HEADER": "Opprettet av",
-        "MESSAGE_HEADER": "Melding",
-        "DIALOG": {
-          "TITLE": "Nytt kommentar",
-          "LABELS": {
-            "MESSAGE": "Melding"
-          },
-          "BUTTON": {
-            "ADD": "Legg til kommentar",
-            "CANCEL": "Avbryt"
-          }
-        }
-      },
       "CHECKLIST": {
         "NONE": "Ingen sjekkliste"
       },

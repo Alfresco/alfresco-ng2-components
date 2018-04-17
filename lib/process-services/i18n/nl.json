@@ -87,23 +87,6 @@
       "PEOPLE": {
         "NONE": "Niemand betrokken"
       },
-      "COMMENTS": {
-        "NONE": "Geen opmerkingen",
-        "ADD": "Opmerking toevoegen",
-        "HEADER": "Opmerkingen ({{ count }})",
-        "CREATED_BY_HEADER": "Gemaakt door",
-        "MESSAGE_HEADER": "Bericht",
-        "DIALOG": {
-          "TITLE": "Nieuwe opmerking",
-          "LABELS": {
-            "MESSAGE": "Bericht"
-          },
-          "BUTTON": {
-            "ADD": "Opmerking toevoegen",
-            "CANCEL": "Annuleren"
-          }
-        }
-      },
       "CHECKLIST": {
         "NONE": "Geen controlelijst"
       },

@@ -17,6 +17,10 @@
             background: transparent;
         }
 
+        &-dropdown-breadcrumb-item-chevron {
+            margin-top: 5px;
+        }
+
         &-dropdown-breadcumb-trigger.isRoot {
             cursor: not-allowed;
         }
@@ -35,8 +39,8 @@
 
         &-current-folder {
             text-align: left;
+            line-height: 33px;
             margin-left: $dropdownHorizontalOffset;
-            line-height: 26px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;

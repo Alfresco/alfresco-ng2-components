@@ -1,17 +1,16 @@
 ---
 Added: v2.1.0
 Status: Active
+Last reviewed: 2018-04-16
 ---
+
 # Content Metadata Card component
 
-Allows a user to display and edit metadata related to a node.
+Displays and edits metadata related to a node.
 
-<img src="../docassets/images/ContentMetadata.png" width="325">
+![Content metadata screenshot](../docassets/images/ContentMetadata.png)
 
 ## Basic Usage
-
-The component shows metadata related to the given node. The component uses the card view component to render the properties of metadata aspects.
-The different aspects and their properties to be shown can be configured as application config preset, for details about it see the related section below. By default the component only shows the basic properties of the node. Clicking on the pencil icon at the bottom, renders the underlying card view component in edit mode enabling to edit and update the metadata properties.
 
 ```html
 <adf-content-metadata-card
@@ -21,29 +20,40 @@ The different aspects and their properties to be shown can be configured as appl
 </adf-content-metadata-card>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | node | MinimalNodeEntryEntity | - | (**required**) The node entity to fetch metadata about |
-| displayEmpty | boolean | false | Display empty values in card view or not |
-| readOnly | boolean | true | Whether the edit button to be shown or not |
-| multi | boolean | false | multi parameter of the underlying material expansion panel |
-| preset | string | "*" | The metadata preset's name, which defines aspects and their properties |
+| displayEmpty | boolean | false | Toggles whether to display empty values in the card view |
+| readOnly | boolean | true | Toggles whether the edit button should be shown |
+| multi | boolean | false | The multi parameter of the underlying material expansion panel |
+| preset | string | "*" | Name of the metadata preset, which defines aspects and their properties |
 
 ## Details
 
+The component shows metadata related to a given node. It uses the
+[Card View component](../core/card-view.component.md) to render the properties of metadata aspects.
+The different aspects and their properties to be shown can be configured as application config
+presets (see below). By default the component only shows the basic properties of the node.
+The user can click on the pencil icon at the bottom of the component to edit the metadata
+properties.
+
 ### Application config presets
 
-In the application config file you can define different presets for the metadata component or override the default preset. The **default** preset is "*" if not set, meaning the component will display every aspects and properties of the nodes without filtering. 
+You can define different presets for the metadata component or override the default presets in
+the `app.config.json` file. The **default** preset is "*" if not set, meaning the component
+will display every aspect and property of a node without filtering. 
 
-Beside the default preset you can define as many presets as you want, if you'd like to use different metadata components with different presets.
+You can define as many extra presets as you need for your components.
 
-To understand presets better, you can have a look at on the following different example configurations.
+The example configurations below show the options in detail.
 
-### Indifferent config
+#### Indifferent config
 
-If you don't have any preset configured manually in you application config, this would be equivalent as if you had the application config as defined below:
+The default configuration behaves like the following:
 
 ```json
 ...
@@ -55,13 +65,15 @@ If you don't have any preset configured manually in you application config, this
 ...
 ```
 
-### Aspect oriented config
+#### Aspect oriented config
 
-With this type of configuration you are able to "whitelist" aspects and properties for a preset, but everything will be grouped by aspects and there is no further way to group properties. If you want to group different properties in groups you define, scroll down a bit and have a look at on the layout oriented configruration.
+With this type of configuration you can "whitelist" aspects and properties for a preset, but everything will be grouped by aspects and there is no further way to group properties. Use a
+[layout oriented configuration](#layout-oriented-config) if you want to define your own
+custom groups.
 
-#### Whitelisting only a few aspects in the default preset
-
-If you want to restrict to only a few aspects (e.g.: exif, your-custom-aspect), you have to use the name of that particular aspect to be able to whitelist it. In case of exif aspect this is "exif:exif".
+The default configuration shows every aspect but you can restrict it to just a small selection
+of aspects by "whitelisting" the ones you want in the `default` section. In the example below,
+just the `exif:exif` and `custom:aspect` aspects are whitelisted:
 
 ```json
 ...
@@ -76,9 +88,8 @@ If you want to restrict to only a few aspects (e.g.: exif, your-custom-aspect), 
 ...
 ```
 
-#### Whitelisting only a few properties of a few aspects in the default preset
-
-If you want to filter more, you can do this on property level also. For this, you have to list the names of whitelisted aspect properties in an array of strings. Again, for identifying a property, you have to use its name.
+You can further restrict the whitelist to specific properties of one or more aspects by using
+an array of property names in place of the "*" filter:
 
 ```json
 ...
@@ -93,9 +104,7 @@ If you want to filter more, you can do this on property level also. For this, yo
 ...
 ```
 
-#### Whitelisting only a few properties of a few aspects in a custom preset
-
-And finally, you can create any custom aspect following the same rules.
+A final example shows the same process applied to a custom preset called "kitten-images":
 
 ```json
 ...
@@ -113,11 +122,15 @@ And finally, you can create any custom aspect following the same rules.
 
 ### Layout oriented config
 
-Beside the aspect oriented configuration, it is possible to configure the groups and properties in a more detailed way. With this type of configuration any property of any aspect / type can be "cherry picked"-ed and grouped into and accordion drawer, with defining a translatable title in the preset configuration.
+You can also go beyond the aspect oriented configuration if you need to configure the groups and properties in a more detailed way. With this type of configuration any property of any aspect/type
+can be "cherry picked" and grouped into an accordion drawer, along wwith a translatable title
+defined in the preset configuration.
 
 #### Basic elements
 
-The following config will result in one accordion group named "TRANSLATABLE_TITLE_FOR_GROUP_1", with all the properties from the custom:aspect followed by the two properties (exif:pixelXDimension, exif:pixelYDimension) from the exif:exif aspect followed by one property (custom:myPropertyName) from custom:type.
+The following config will produce one accordion group named "TRANSLATABLE_TITLE_FOR_GROUP_1",
+with all the properties from `custom:aspect` followed by the two properties (`exif:pixelXDimension`
+and `exif:pixelYDimension`) from the `exif:exif` aspect and then one property (`custom:myPropertyName`) from `custom:type`:
 
 ```json
 ...
@@ -138,7 +151,7 @@ The following config will result in one accordion group named "TRANSLATABLE_TITL
 
 #### More complex example
 
-As a more complex config, you can study the one below:
+A more complex config is shown in the example below:
 
 ```json
   "content-metadata": {
@@ -177,7 +190,7 @@ As a more complex config, you can study the one below:
     ]
   }
 ```
-The end result of this config would be two accordion groups with the properties like this:
+The result of this config would be two accordion groups with the following properties:
 
 |GROUP-TITLE1-TRANSLATION-KEY|
 |---|
@@ -198,4 +211,5 @@ The end result of this config would be two accordion groups with the properties 
 
 ## What happens when there is a whitelisted aspect in the config but the given node doesn't relate to that aspect
 
-Nothing, this aspect (as it is not related to the node) will be simply ignored and not be displayed. The aspects to be displayed are calculated as an intersection of the preset's aspects and the aspects related to the node.
+Nothing - since this aspect is not related to the node, it will simply be ignored and not
+displayed. The aspects to be displayed are calculated as an intersection of the preset's aspects and the aspects related to the node.

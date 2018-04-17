@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ContentService } from '@alfresco/adf-core';
+import { ContentService, TranslationService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
@@ -38,6 +38,7 @@ export class DocumentActionsService {
 
     constructor(private nodeActionsService: NodeActionsService,
                 private contentNodeDialogService: ContentNodeDialogService,
+                private translation: TranslationService,
                 private documentListService?: DocumentListService,
                 private contentService?: ContentService) {
         this.setupActionHandlers();
@@ -111,24 +112,32 @@ export class DocumentActionsService {
     private prepareHandlers(actionObservable, type: string, action: string, target?: any, permission?: string): void {
         actionObservable.subscribe(
             (fileOperationMessage) => {
-                  this.success.next(fileOperationMessage);
+                this.success.next(fileOperationMessage);
             },
             this.error.next.bind(this.error)
         );
     }
 
-    private deleteNode(node: any, target?: any, permission?: string): Observable<any> {
+    private deleteNode(node: MinimalNodeEntity, target?: any, permission?: string): Observable<any> {
         let handlerObservable;
 
         if (this.canExecuteAction(node)) {
             if (this.contentService.hasPermission(node.entry, permission)) {
                 handlerObservable = this.documentListService.deleteNode(node.entry.id);
                 handlerObservable.subscribe(() => {
-                    this.success.next(node.entry.id);
+                    let message = this.translation.instant('CORE.DELETE_NODE.SINGULAR', { name: node.entry.name });
+                    this.success.next(message);
+                }, () => {
+                    let message = this.translation.instant('CORE.DELETE_NODE.ERROR_SINGULAR', { name: node.entry.name });
+                    this.error.next(message);
                 });
                 return handlerObservable;
             } else {
-                this.permissionEvent.next(new PermissionModel({type: 'content', action: 'delete', permission: permission}));
+                this.permissionEvent.next(new PermissionModel({
+                    type: 'content',
+                    action: 'delete',
+                    permission: permission
+                }));
                 return Observable.throw(new Error('No permission to delete'));
             }
         }

@@ -65,8 +65,7 @@ The layout will select between a small screen (ie, mobile) configuration and a l
 configuration according to the screen size in pixels (the `stepOver` property sets the
 number of pixels at which the switch will occur).
 
-The small screen layout uses the Angular Material
-[Sidenav component](https://material.angularjs.org/latest/api/directive/mdSidenav) which is
+The small screen layout uses the Angular Material [Sidenav component](https://material.angularjs.org/latest/api/directive/mdSidenav) which is
 described in detail on their website.
 
 The ADF-style (ie, large screen) Sidenav has two states: **expanded** and **compact**.
@@ -83,6 +82,12 @@ Desktop layout (screen width greater than the `stepOver` value):
 Mobile layout (screen width less than the `stepOver` value):
 ![Sidenav on mobile](../docassets/images/sidenav-layout-mobile.png)
 
+### Public attributes
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| menuOpenState$ | Observable&lt;boolean&gt; | true | Another way to listen to menu open/closed state |
+
 ### Template context
 
 Each template is given a context containing the following methods:
@@ -91,4 +96,13 @@ Each template is given a context containing the following methods:
     Triggers menu toggling.
 
 -   `isMenuMinimized(): boolean`
-    Is the menu in minimized/compacted state? Only works for large screen layouts.
+    The expanded/compact (minimized) state of the navigation. This one only makes sense in case of desktop size, when the screen size is above the value of stepOver.
+
+### menuOpenState$
+
+Beside the template context's **isMenuMinimized** variable, another way to listen to the component's menu's open/closed state is the menuOpenState$ observable, which is driven by a BehaviorSubject at the background. The value emitted on this observable is the opposite of the isMenuMinimized template variable.
+
+Every time the menu state is changed, the following values are emitted:
+
+- true, if the menu got into opened state
+- false, if the menu git into closed state

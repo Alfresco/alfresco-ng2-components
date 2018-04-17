@@ -26,6 +26,7 @@ import { fakeNodeWithPermissions,
          fakeNodeWithOnlyLocally,
          fakeSiteNodeResponse,
          fakeSiteRoles,
+         fakeNodeWithoutPermissions,
          fakeEmptyResponse } from '../../../mock/permission-list.component.mock';
 
 describe('PermissionDisplayComponent', () => {
@@ -61,6 +62,16 @@ describe('PermissionDisplayComponent', () => {
     it('should be able to render the component', () => {
         fixture.detectChanges();
         expect(element.querySelector('#adf-permission-display-container')).not.toBeNull();
+    });
+
+    it('should render default empty template when no permissions', () => {
+        component.nodeId = 'fake-node-id';
+        spyOn(nodeService, 'getNode').and.returnValue(Observable.of(fakeNodeWithoutPermissions));
+        spyOn(searchApiService, 'searchByQueryBody').and.returnValue(Observable.of(fakeEmptyResponse));
+        fixture.detectChanges();
+
+        expect(element.querySelector('#adf-no-permissions-template')).not.toBeNull();
+        expect(element.querySelector('#adf-permission-display-container .adf-datatable-permission')).toBeNull();
     });
 
     it('should show the node permissions', () => {

@@ -15,12 +15,15 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, OnChanges, OnDestroy,
+import {
+    Component, Input, OnInit, OnChanges, OnDestroy, Optional,
     EventEmitter, ViewChild, SimpleChanges, Output
 } from '@angular/core';
+import { Location } from '@angular/common';
+
 import { MatDialog } from '@angular/material';
-import { Router } from '@angular/router';
-import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity, SiteEntry  } from 'alfresco-js-api';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity, SiteEntry } from 'alfresco-js-api';
 import {
     AuthenticationService, AppConfigService, ContentService, TranslationService,
     FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
@@ -35,6 +38,7 @@ import { SelectAppsDialogComponent } from '@alfresco/adf-process-services';
 import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-adapter.component';
 import { MetadataDialogAdapterComponent } from './metadata-dialog-adapter.component';
 import { Subscription } from 'rxjs/Subscription';
+import { PreviewService } from '../../services/preview.service';
 
 const DEFAULT_FOLDER_TO_SHOW = '-my-';
 
@@ -145,6 +149,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     permissionsStyle: PermissionStyleModel[] = [];
     infiniteScrolling: boolean;
     supportedPages: number[];
+    currentSiteid = '';
 
     private onCreateFolder: Subscription;
     private onEditFolder: Subscription;
@@ -153,11 +158,14 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 private uploadService: UploadService,
                 private contentService: ContentService,
                 private dialog: MatDialog,
+                private location: Location,
                 private translateService: TranslationService,
                 private router: Router,
                 private logService: LogService,
                 private preference: UserPreferencesService,
                 private appConfig: AppConfigService,
+                private preview: PreviewService,
+                @Optional() private route: ActivatedRoute,
                 public authenticationService: AuthenticationService) {
         this.preference.select(UserPreferenceValues.SupportedPageSizes)
             .subscribe((pages) => {
@@ -168,7 +176,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     showFile(event) {
         const entry = event.value.entry;
         if (entry && entry.isFile) {
-            this.router.navigate(['/files', entry.id, 'view']);
+            this.preview.showResource(entry.id);
         }
     }
 
@@ -184,6 +192,18 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 maxItems: this.preference.paginationSize,
                 skipCount: 0
             };
+        }
+
+        if (this.route) {
+            this.route.params.forEach((params: Params) => {
+                if (params['id'] && this.currentFolderId !== params['id']) {
+                    this.currentFolderId = params['id'];
+                }
+
+                if (params['mode']) {
+                    this.displayMode = DisplayMode.Gallery;
+                }
+            });
         }
 
         // this.disableDragArea = false;
@@ -261,6 +281,10 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
+    onFolderChange($event) {
+        this.router.navigate(['/files', $event.value.id]);
+    }
+
     handlePermissionError(event: any) {
         this.translateService.get('PERMISSON.LACKOF', {
             permission: event.permission,
@@ -280,7 +304,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     emitReadyEvent(event: NodePaging) {
         this.documentListReady.emit(event);
-        this.router.navigate(['/files', event.list.source.id]);
     }
 
     pageIsEmpty(node: NodePaging) {
@@ -336,7 +359,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
         if (this.contentService.hasPermission(contentEntry, 'update')) {
             this.dialog.open(VersionManagerDialogAdapterComponent, {
-                data: { contentEntry, showComments, allowDownload },
+                data: { contentEntry: contentEntry, showComments: showComments, allowDownload: allowDownload },
                 panelClass: 'adf-version-manager-dialog',
                 width: '630px'
             });
@@ -445,10 +468,17 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     toogleGalleryView(): void {
+        const url = this
+            .router
+            .createUrlTree(['/files', this.currentFolderId, 'display', this.displayMode])
+            .toString();
+
         if (this.displayMode === DisplayMode.List) {
             this.displayMode = DisplayMode.Gallery;
+            this.location.go(url);
         } else {
             this.displayMode = DisplayMode.List;
+            this.location.go(url);
         }
     }
 }
