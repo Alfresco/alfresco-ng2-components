@@ -1,10 +1,5 @@
 <h2 mat-dialog-title>
-    {{
-    (editing
-    ? 'CORE.FOLDER_DIALOG.EDIT_FOLDER_TITLE'
-    : 'CORE.FOLDER_DIALOG.CREATE_FOLDER_TITLE'
-    ) | translate
-    }}
+    {{ (editing ? editTitle : createTitle) | translate }}
 </h2>
 
 <mat-dialog-content>
