@@ -39,6 +39,7 @@ import { TagComponent } from './components/tag/tag.component';
 import { SocialComponent } from './components/social/social.component';
 import { VersionManagerDialogAdapterComponent } from './components/files/version-manager-dialog-adapter.component';
 import { MetadataDialogAdapterComponent } from './components/files/metadata-dialog-adapter.component';
+import { BlobPreviewComponent } from './components/blob-preview/blob-preview.component';
 
 import { ThemePickerModule } from './components/theme-picker/theme-picker';
 import { DebugAppConfigService } from './services/debug-app-config.service';
@@ -49,6 +50,7 @@ import { TaskAttachmentsComponent } from './components/process-service/task-atta
 import { ProcessAttachmentsComponent } from './components/process-service/process-attachments.component';
 import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
+import { BlobPreviewService } from './services/blob-preview.service';
 
 @NgModule({
     imports: [
@@ -98,7 +100,8 @@ import { DemoPermissionComponent } from './components/permissions/demo-permissio
         SharedLinkViewComponent,
         FormLoadingComponent,
         DemoPermissionComponent,
-        FormLoadingComponent
+        FormLoadingComponent,
+        BlobPreviewComponent
     ],
     providers: [
         { provide: AppConfigService, useClass: DebugAppConfigService },
@@ -117,7 +120,8 @@ import { DemoPermissionComponent } from './components/permissions/demo-permissio
                 name: 'lazy-loading',
                 source: 'resources/lazy-loading'
             }
-        }
+        },
+        BlobPreviewService
     ],
     entryComponents: [
         VersionManagerDialogAdapterComponent,
