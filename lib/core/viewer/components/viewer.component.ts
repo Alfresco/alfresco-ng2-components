@@ -688,4 +688,9 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     private wait(ms: number): Promise<any> {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
+
+    getSideBarStyle(): string {
+        return this.sidebarPosition === 'left' ? 'adf-viewer__sidebar__left' : 'adf-viewer__sidebar__right';
+    }
+
 }
