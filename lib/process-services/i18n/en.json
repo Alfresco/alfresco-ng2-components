@@ -87,23 +87,6 @@
       "PEOPLE": {
         "NONE": "Nobody involved"
       },
-      "COMMENTS": {
-        "NONE": "No comments",
-        "ADD": "Add a comment",
-        "HEADER": "Comments ({{ count }})",
-        "CREATED_BY_HEADER": "Created by",
-        "MESSAGE_HEADER": "Message",
-        "DIALOG": {
-          "TITLE": "New comment",
-          "LABELS": {
-            "MESSAGE": "Message"
-          },
-          "BUTTON": {
-            "ADD": "Add Comment",
-            "CANCEL": "Cancel"
-          }
-        }
-      },
       "CHECKLIST": {
         "NONE": "No checklist"
       },
@@ -161,6 +144,11 @@
       "EMPTY-LIST": {
         "HEADER": "No files are available"
       }
+    },
+    "STANDALONE_TASK":{
+      "NO_FORM_MESSAGE": "No forms attached",
+      "COMPLETE_TASK_MESSAGE": "Task {{taskName}} completed",
+      "COMPLETE_TASK_SUB_MESSAGE": "No forms to be added"
     }
   },
   "ADF_PROCESS_LIST": {

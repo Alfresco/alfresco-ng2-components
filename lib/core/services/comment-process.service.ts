@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { CommentProcessModel } from '../models/comment-process.model';
+import { CommentModel } from '../models/comment.model';
 import { UserProcessModel } from '../models/user-process.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { LogService } from './log.service';
@@ -32,47 +32,79 @@ export class CommentProcessService {
                 private logService: LogService) {
     }
 
-    addTaskComment(taskId: string, message: string): Observable<CommentProcessModel> {
+    /**
+     * Adds a comment to a task.
+     * @param taskId ID of the target task
+     * @param message Text for the comment
+     * @returns Details about the comment
+     */
+    addTaskComment(taskId: string, message: string): Observable<CommentModel> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.addTaskComment({message: message}, taskId))
             .map(res => res)
-            .map((response: CommentProcessModel) => {
-                return new CommentProcessModel({id: response.id, message: response.message, created: response.created, createdBy: response.createdBy});
+            .map((response: CommentModel) => {
+                return new CommentModel({
+                    id: response.id,
+                    message: response.message,
+                    created: response.created,
+                    createdBy: response.createdBy
+                });
             }).catch(err => this.handleError(err));
 
     }
 
-    getTaskComments(taskId: string): Observable<CommentProcessModel[]> {
+    /**
+     * Gets all comments that have been added to a task.
+     * @param taskId ID of the target task
+     * @returns Details for each comment
+     */
+    getTaskComments(taskId: string): Observable<CommentModel[]> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.getTaskComments(taskId))
             .map(res => res)
             .map((response: any) => {
-                let comments: CommentProcessModel[] = [];
-                response.data.forEach((comment: CommentProcessModel) => {
+                let comments: CommentModel[] = [];
+                response.data.forEach((comment: CommentModel) => {
                     let user = new UserProcessModel(comment.createdBy);
-                    comments.push(new CommentProcessModel({id: comment.id, message: comment.message, created: comment.created, createdBy: user}));
+                    comments.push(new CommentModel({id: comment.id, message: comment.message, created: comment.created, createdBy: user}));
                 });
                 return comments;
             }).catch(err => this.handleError(err));
     }
 
-    getProcessInstanceComments(processInstanceId: string): Observable<CommentProcessModel[]> {
+    /**
+     * Gets all comments that have been added to a process instance.
+     * @param processInstanceId ID of the target process instance
+     * @returns Details for each comment
+     */
+    getProcessInstanceComments(processInstanceId: string): Observable<CommentModel[]> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.commentsApi.getProcessInstanceComments(processInstanceId))
             .map(res => res)
             .map((response: any) => {
-                let comments: CommentProcessModel[] = [];
-                response.data.forEach((comment: CommentProcessModel) => {
+                let comments: CommentModel[] = [];
+                response.data.forEach((comment: CommentModel) => {
                     let user = new UserProcessModel(comment.createdBy);
-                    comments.push(new CommentProcessModel({id: comment.id, message: comment.message, created: comment.created, createdBy: user}));
+                    comments.push(new CommentModel({id: comment.id, message: comment.message, created: comment.created, createdBy: user}));
                 });
                 return comments;
             }).catch(err => this.handleError(err));
     }
 
-    addProcessInstanceComment(processInstanceId: string, message: string): Observable<CommentProcessModel> {
+    /**
+     * Adds a comment to a process instance.
+     * @param processInstanceId ID of the target process instance
+     * @param message Text for the comment
+     * @returns Details of the comment added
+     */
+    addProcessInstanceComment(processInstanceId: string, message: string): Observable<CommentModel> {
         return Observable.fromPromise(
-            this.apiService.getInstance().activiti.commentsApi.addProcessInstanceComment({ message: message }, processInstanceId)
+            this.apiService.getInstance().activiti.commentsApi.addProcessInstanceComment({message: message}, processInstanceId)
         )
-            .map((response: CommentProcessModel) => {
-                return new CommentProcessModel({id: response.id, message: response.message, created: response.created, createdBy: response.createdBy});
+            .map((response: CommentModel) => {
+                return new CommentModel({
+                    id: response.id,
+                    message: response.message,
+                    created: response.created,
+                    createdBy: response.createdBy
+                });
             }).catch(err => this.handleError(err));
 
     }

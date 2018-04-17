@@ -1,4 +1,17 @@
 {
+  "APP": {
+    "INFO_DRAWER": {
+      "TITLE": "Details",
+      "COMMENTS": "Opmerkingen",
+      "PROPERTIES": "Eigenschappen",
+      "VERSIONS": "Versies"
+    },
+    "ADF_VERSION_MANAGER": {
+      "ALLOW_DELETE": "Verwijderen toestaan",
+      "SHOW_COMMENTS": "Opmerkingen over versies tonen",
+      "ALLOW_DOWNLOAD": "Downloaden van versies toestaan"
+    }
+  },
   "title": "Welkom",
   "VERSION": {
     "NO_PERMISSION": "U hebt geen rechten voor het beheren van versies van deze content",
@@ -7,6 +20,12 @@
     "DIALOG": {
       "CLOSE": "Sluiten",
       "TITLE": "Versies beheren"
+    }
+  },
+  "METADATA": {
+    "DIALOG": {
+      "CLOSE": "Sluiten",
+      "TITLE": "Metagegevens"
     }
   },
   "APP_LAYOUT": {
@@ -20,9 +39,11 @@
     "DATATABLE_LAZY": "Datatable (vertraagd)",
     "FORM": "Formulier",
     "FORM_LIST": "Formulierlijst",
+    "FORM_LOADING": "Formulier laden",
     "UPLOADER": "Uploader",
     "WEBSCRIPT": "Webscript",
     "TAG": "Tag",
+    "TRASHCAN": "Prullenbak",
     "SOCIAL": "Sociaal",
     "SETTINGS": "Instellingen",
     "OVERLAY_VIEWER": "Overlay-viewer",
@@ -32,6 +53,17 @@
     "WORD_TO_SEARCH": "Zoekterm",
     "SEARCH_CREATED_BY": "Gemaakt door",
     "SEARCH_SERVICE_APPROACH": "Schakel dit in om de invoereigenschap uit te schakelen en om te configureren via de service"
+  },
+  "TRASHCAN": {
+    "ACTIONS": {
+      "DELETE_PERMANENT": "Definitief verwijderen",
+      "RESTORE": "Herstellen"
+    },
+    "EMPTY_STATE": {
+      "TITLE": "Prullenbak is leeg",
+      "FIRST_TEXT": "Items die u verwijdert, worden verplaatst naar de prullenbak.",
+      "SECOND_TEXT": "Leeg de prullenmand om items definitief te verwijderen."
+    }
   },
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Multiselect (met selectievakjes)",
@@ -43,13 +75,22 @@
     "DESCRIPTION_UPLOAD": "Uploaden inschakelen",
     "ENABLE_INFINITE_SCROLL": "Oneindig scrollen inschakelen",
     "MULTISELECT_DESCRIPTION": "Cmd (Mac) of Ctrl (Windows) gebruiken om de selectie van meerdere items in of uit te schakelen",
-    "RECENT": "Recente bestanden",
+    "RECENT": {
+      "EMPTY_STATE": {
+        "TITLE": "Lijst met recente bestanden is leeg"
+      },
+      "TITLE": "Recente bestanden"
+    },
     "COLUMNS": {
       "DISPLAY_NAME": "Getoonde naam",
+      "IS_LOCKED": "Vergrendeling",
       "TAG": "Tag",
       "CREATED_BY": "Gemaakt door",
       "CREATED_ON": "Gemaakt op",
-      "CREATED": "Gemaakt"
+      "CREATED": "Gemaakt",
+      "SIZE": "Grootte",
+      "DELETED_ON": "Verwijderd",
+      "DELETED_BY": "Verwijderd door"
     },
     "TOOLBAR": {
       "CARDVIEW": "Kaartweergavemodus",
@@ -59,7 +100,10 @@
       "DELETE": "Verwijderen"
     },
     "ACTIONS": {
+      "VERSIONS": "Versies beheren",
+      "METADATA": "Info",
       "DOWNLOAD": "Downloaden",
+      "PERMISSION": "Machtiging",
       "FOLDER": {
         "COPY": "Kopiëren",
         "MOVE": "Verplaatsen",
@@ -98,6 +142,13 @@
     "STORE": "Opslaan",
     "RESTORE": "Herstellen"
   },
+  "FORM-LOADING": {
+    "FORM_DATA": "Formuliergegevens",
+    "FORM_DATA_MESSAGE": "Voer waarden in om het formulier in te vullen",
+    "TYPEAHEAD_PLACEHOLDER": "Automatische voltooiing",
+    "RADIO_PLACEHOLDER": "Keuzerondje",
+    "SELECT_PLACEHOLDER": "Dropdown"
+  },
   "LOGIN": {
     "CONTENT_SERVICES": "Content Services",
     "PROCESS_SERVICES": "Process Services",
@@ -115,5 +166,9 @@
     "LIST": "Taglijst Content Services",
     "INSERT": "Node-id invoegen",
     "NODE_LIST": "Taglijst per node-id"
+  },
+  "DEMO_PERMISSION": {
+    "INHERIT_PERMISSION_BUTTON": "Machtiging overnemen",
+    "INHERITED_PERMISSIONS_BUTTON": "Machtiging overgenomen"
   }
 }

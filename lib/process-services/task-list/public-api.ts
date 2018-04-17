@@ -23,6 +23,7 @@ export * from './components/task-filters.component';
 export * from './components/task-details.component';
 export * from './components/task-audit.directive';
 export * from './components/start-task.component';
+export * from './components/task-standalone.component';
 
 export * from './services/tasklist.service';
 export * from './services/process-upload.service';
@@ -37,3 +38,5 @@ export * from './models/task-details.model';
 export * from './models/task-list.model';
 export * from './models/user-event.model';
 export * from './models/user-group.model';
+
+export * from './task-list.module';

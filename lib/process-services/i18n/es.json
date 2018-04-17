@@ -87,23 +87,6 @@
       "PEOPLE": {
         "NONE": "Ningún participante"
       },
-      "COMMENTS": {
-        "NONE": "No hay comentarios",
-        "ADD": "Añadir comentario",
-        "HEADER": "Comentarios ({{ count }})",
-        "CREATED_BY_HEADER": "Creado por",
-        "MESSAGE_HEADER": "Mensaje",
-        "DIALOG": {
-          "TITLE": "Nuevo comentario",
-          "LABELS": {
-            "MESSAGE": "Mensaje"
-          },
-          "BUTTON": {
-            "ADD": "Añadir comentario",
-            "CANCEL": "Cancelar"
-          }
-        }
-      },
       "CHECKLIST": {
         "NONE": "No hay lista de comprobación"
       },
@@ -161,6 +144,11 @@
       "EMPTY-LIST": {
         "HEADER": "No hay ficheros disponibles"
       }
+    },
+    "STANDALONE_TASK": {
+      "NO_FORM_MESSAGE": "No se han adjuntado formularios",
+      "COMPLETE_TASK_MESSAGE": "Tarea {{taskName}} finalizada",
+      "COMPLETE_TASK_SUB_MESSAGE": "No se han añadido formularios"
     }
   },
   "ADF_PROCESS_LIST": {

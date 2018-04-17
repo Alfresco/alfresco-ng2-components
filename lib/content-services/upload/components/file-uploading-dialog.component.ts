@@ -15,26 +15,33 @@
  * limitations under the License.
  */
 
-import { FileModel, FileUploadCompleteEvent, FileUploadDeleteEvent,
-         FileUploadErrorEvent, FileUploadStatus, UploadService } from '@alfresco/adf-core';
-import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+    FileModel, FileUploadCompleteEvent, FileUploadDeleteEvent,
+    FileUploadErrorEvent, FileUploadStatus, UploadService
+} from '@alfresco/adf-core';
+import { ChangeDetectorRef, Component, Input, Output, EventEmitter, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { FileUploadingListComponent } from './file-uploading-list.component';
 import 'rxjs/add/observable/merge';
 
+// @deprecated file-uploading-dialog TODO remove in 3.0.0
 @Component({
     selector: 'adf-file-uploading-dialog, file-uploading-dialog',
     templateUrl: './file-uploading-dialog.component.html',
     styleUrls: ['./file-uploading-dialog.component.scss']
 })
 export class FileUploadingDialogComponent implements OnInit, OnDestroy {
-    @ViewChild(FileUploadingListComponent)
+    @ViewChild('uploadList')
     uploadList: FileUploadingListComponent;
 
     /** Dialog position. Can be 'left' or 'right'. */
     @Input()
     position: string = 'right';
+
+    /** Emitted when a file in the list has an error. */
+    @Output()
+    error: EventEmitter<any> = new EventEmitter();
 
     filesUploadingList: FileModel[] = [];
     isDialogActive: boolean = false;
@@ -48,9 +55,9 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     private fileUploadSubscription: Subscription;
     private errorSubscription: Subscription;
 
-    constructor(
-        private uploadService: UploadService,
-        private changeDetecor: ChangeDetectorRef) {}
+    constructor(private uploadService: UploadService,
+                private changeDetecor: ChangeDetectorRef) {
+    }
 
     ngOnInit() {
         this.listSubscription = this.uploadService
@@ -60,14 +67,14 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
                 if (this.filesUploadingList.length) {
                     this.isDialogActive = true;
                 }
-        });
+            });
 
         this.counterSubscription = Observable
             .merge(
                 this.uploadService.fileUploadComplete,
                 this.uploadService.fileUploadDeleted
             )
-            .subscribe((event: (FileUploadDeleteEvent|FileUploadCompleteEvent)) => {
+            .subscribe((event: (FileUploadDeleteEvent | FileUploadCompleteEvent)) => {
                 this.totalCompleted = event.totalComplete;
                 this.changeDetecor.detectChanges();
             });

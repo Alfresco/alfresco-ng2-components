@@ -1,4 +1,17 @@
 {
+  "APP": {
+    "INFO_DRAWER": {
+      "TITLE": "Details",
+      "COMMENTS": "Comments",
+      "PROPERTIES": "Properties",
+      "VERSIONS": "Versions"
+    },
+    "ADF_VERSION_MANAGER": {
+      "ALLOW_DELETE": "Allow delete",
+      "SHOW_COMMENTS" : "Show comments on versions",
+      "ALLOW_DOWNLOAD" :"Enable version download"
+    }
+  },
     "title": "Welcome",
     "VERSION": {
       "NO_PERMISSION": "You don't have permission to manage versions of this content",
@@ -26,6 +39,7 @@
         "DATATABLE_LAZY": "Datatable (Lazy)",
         "FORM": "Form",
         "FORM_LIST": "Form List",
+        "FORM_LOADING": "Form Loading",
         "UPLOADER": "Uploader",
         "WEBSCRIPT": "Webscript",
         "TAG": "Tag",
@@ -42,7 +56,7 @@
     },
     "TRASHCAN" :{
       "ACTIONS":{
-        "DELETE_PERMANENT":"Delete permanent",
+        "DELETE_PERMANENT":"Delete permanently",
         "RESTORE":"Restore"
       },
       "EMPTY_STATE": {
@@ -63,12 +77,13 @@
         "MULTISELECT_DESCRIPTION" : "Use Cmd (Mac) or Ctrl (Windows) to toggle selection of multiple items",
         "RECENT" : {
           "EMPTY_STATE": {
-            "TITLE": "Recent is empty"
+            "TITLE": "Recent Files list is empty"
           },
           "TITLE":"Recent Files"
         },
         "COLUMNS": {
             "DISPLAY_NAME": "Display name",
+            "IS_LOCKED": "Lock",
             "TAG": "Tag",
             "CREATED_BY": "Created by",
             "CREATED_ON": "Created on",
@@ -88,6 +103,7 @@
             "VERSIONS": "Manage versions",
             "METADATA": "Info",
             "DOWNLOAD": "Download",
+            "PERMISSION": "Permission",
             "FOLDER": {
                 "COPY": "Copy",
                 "MOVE": "Move",
@@ -126,6 +142,13 @@
         "STORE": "Store",
         "RESTORE": "Restore"
     },
+    "FORM-LOADING": {
+      "FORM_DATA" : "Form Data",
+      "FORM_DATA_MESSAGE": "Enter values to populate the form",
+      "TYPEAHEAD_PLACEHOLDER": "Typeahead",
+      "RADIO_PLACEHOLDER": "Radio Button",
+      "SELECT_PLACEHOLDER": "DropDown"
+    },
     "LOGIN": {
         "CONTENT_SERVICES": "Content Services",
         "PROCESS_SERVICES": "Process Services",
@@ -143,5 +166,9 @@
         "LIST":"List Tags Content Services",
         "INSERT":"Insert Node ID",
         "NODE_LIST":"Tag list By Node ID"
+    },
+    "DEMO_PERMISSION": {
+       "INHERIT_PERMISSION_BUTTON" :"Inherit Permission" ,
+       "INHERITED_PERMISSIONS_BUTTON" : "Permission Inherited"
     }
 }

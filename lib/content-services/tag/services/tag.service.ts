@@ -33,13 +33,17 @@ export class TagService {
     /**
      * Gets a list of tags added to a node.
      * @param nodeId ID of the target node
+     * @returns TagPaging object (defined in JSAPI) containing the tags
      */
     getTagsByNodeId(nodeId: string): any {
         return Observable.fromPromise(this.apiService.getInstance().core.tagsApi.getNodeTags(nodeId))
             .catch(err => this.handleError(err));
     }
 
-    /** Gets a list of all the tags already defined in the repository. */
+    /**
+     * Gets a list of all the tags already defined in the repository.
+     * @returns TagPaging object (defined in JSAPI) containing the tags
+     */
     getAllTheTags() {
         return Observable.fromPromise(this.apiService.getInstance().core.tagsApi.getTags())
             .catch(err => this.handleError(err));
@@ -49,6 +53,7 @@ export class TagService {
      * Adds a tag to a node.
      * @param nodeId ID of the target node
      * @param tagName Name of the tag to add
+     * @returns TagEntry object (defined in JSAPI) with details of the new tag
      */
     addTag(nodeId: string, tagName: string): any {
         let alfrescoApi: any = this.apiService.getInstance();
@@ -70,6 +75,7 @@ export class TagService {
      * Removes a tag from a node.
      * @param nodeId ID of the target node
      * @param tag Name of the tag to remove
+     * @returns Null object when the operation completes
      */
     removeTag(nodeId: string, tag: string): any {
         let promiseRemove = Observable.fromPromise(this.apiService.getInstance().core.tagsApi.removeTag(nodeId, tag));

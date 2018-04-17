@@ -5,12 +5,17 @@
             [displayEmpty]="displayEmpty"
             [editable]="editable"
             [expanded]="expanded"
+            [multi]="multi"
             [preset]="preset">
         </adf-content-metadata>
     </mat-card-content>
     <mat-card-footer class="adf-content-metadata-card-footer" fxLayout="row" fxLayoutAlign="space-between stretch">
         <div>
-            <button mat-icon-button (click)="toggleEdit()" data-automation-id="mata-data-card-toggle-edit">
+            <button *ngIf="!readOnly"
+                mat-icon-button
+                (click)="toggleEdit()"
+                [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
+                data-automation-id="mata-data-card-toggle-edit">
                 <mat-icon>mode_edit</mat-icon>
             </button>
         </div>

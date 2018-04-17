@@ -16,24 +16,19 @@
  */
 
 import {
-    Component, Input, OnInit, OnChanges, OnDestroy, ChangeDetectorRef,
-    EventEmitter, Optional, ViewChild, SimpleChanges, Output
+    Component, Input, OnInit, OnChanges, OnDestroy, Optional,
+    EventEmitter, ViewChild, SimpleChanges, Output
 } from '@angular/core';
+import { Location } from '@angular/common';
+
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity, SiteEntry } from 'alfresco-js-api';
 import {
-    MinimalNodeEntity,
-    NodePaging,
-    Pagination,
-    PathElementEntity,
-    MinimalNodeEntryEntity,
-    SiteEntry
-} from 'alfresco-js-api';
-import {
-    AuthenticationService, ContentService, TranslationService,
+    AuthenticationService, AppConfigService, ContentService, TranslationService,
     FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
     UploadService, DataColumn, DataRow, UserPreferencesService,
-    PaginationComponent, FormValues, DisplayMode
+    PaginationComponent, FormValues, DisplayMode, UserPreferenceValues
 } from '@alfresco/adf-core';
 
 import { DocumentListComponent, PermissionStyleModel } from '@alfresco/adf-content-services';
@@ -43,6 +38,7 @@ import { SelectAppsDialogComponent } from '@alfresco/adf-process-services';
 import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-adapter.component';
 import { MetadataDialogAdapterComponent } from './metadata-dialog-adapter.component';
 import { Subscription } from 'rxjs/Subscription';
+import { PreviewService } from '../../services/preview.service';
 
 const DEFAULT_FOLDER_TO_SHOW = '-my-';
 
@@ -58,6 +54,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     showViewer = false;
     showVersions = false;
     displayMode = DisplayMode.List;
+    includeFields = ['isLocked', 'aspectNames'];
+
+    baseShareUrl = this.appConfig.get<string>('ecmHost') + '/preview/s/';
 
     toolbarColor = 'default';
 
@@ -67,8 +66,8 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         { value: 'multiple', viewValue: 'Multiple' }
     ];
 
+    // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
     @Input()
-        // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
     currentFolderId: string = DEFAULT_FOLDER_TO_SHOW;
 
     formValues: FormValues = {};
@@ -94,7 +93,13 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     maxSizeShow = false;
 
     @Input()
+    showVersionComments = true;
+
+    @Input()
     versioning = false;
+
+    @Input()
+    allowVersionDownload = true;
 
     @Input()
     acceptedFilesType = '.jpg,.pdf,.js';
@@ -138,43 +143,41 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     @ViewChild('documentList')
     documentList: DocumentListComponent;
 
-    @ViewChild(PaginationComponent)
+    @ViewChild('standardPagination')
     standardPagination: PaginationComponent;
 
     permissionsStyle: PermissionStyleModel[] = [];
     infiniteScrolling: boolean;
     supportedPages: number[];
+    currentSiteid = '';
 
     private onCreateFolder: Subscription;
     private onEditFolder: Subscription;
 
-    constructor(private changeDetector: ChangeDetectorRef,
-                private notificationService: NotificationService,
+    constructor(private notificationService: NotificationService,
                 private uploadService: UploadService,
                 private contentService: ContentService,
                 private dialog: MatDialog,
+                private location: Location,
                 private translateService: TranslationService,
                 private router: Router,
                 private logService: LogService,
                 private preference: UserPreferencesService,
+                private appConfig: AppConfigService,
+                private preview: PreviewService,
                 @Optional() private route: ActivatedRoute,
                 public authenticationService: AuthenticationService) {
+        this.preference.select(UserPreferenceValues.SupportedPageSizes)
+            .subscribe((pages) => {
+                this.supportedPages = pages;
+            });
     }
 
     showFile(event) {
         const entry = event.value.entry;
         if (entry && entry.isFile) {
-            this.router.navigate(['/files', entry.id, 'view']);
+            this.preview.showResource(entry.id);
         }
-    }
-
-    onFolderChange($event) {
-        this.currentFolderId = $event.value.id;
-        this.router.navigate(['/files', $event.value.id]);
-    }
-
-    onBreadcrumbNavigate(route: PathElementEntity) {
-        this.router.navigate(['/files', route.id]);
     }
 
     toggleFolder() {
@@ -190,11 +193,15 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 skipCount: 0
             };
         }
+
         if (this.route) {
             this.route.params.forEach((params: Params) => {
-                if (params['id']) {
+                if (params['id'] && this.currentFolderId !== params['id']) {
                     this.currentFolderId = params['id'];
-                    this.changeDetector.detectChanges();
+                }
+
+                if (params['mode']) {
+                    this.displayMode = DisplayMode.Gallery;
                 }
             });
         }
@@ -205,7 +212,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.contentService.folderCreated.subscribe(value => this.onFolderCreated(value));
         this.onCreateFolder = this.contentService.folderCreate.subscribe(value => this.onFolderAction(value));
         this.onEditFolder = this.contentService.folderEdit.subscribe(value => this.onFolderAction(value));
-        this.supportedPages = this.preference.getDifferentPageSizes();
+        this.supportedPages = this.supportedPages ? this.supportedPages : this.preference.getDefaultPageSizes();
 
         // this.permissionsStyle.push(new PermissionStyleModel('document-list__create', PermissionsEnum.CREATE));
         // this.permissionsStyle.push(new PermissionStyleModel('document-list__disable', PermissionsEnum.NOT_CREATE, false, true));
@@ -274,33 +281,29 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
+    onFolderChange($event) {
+        this.router.navigate(['/files', $event.value.id]);
+    }
+
     handlePermissionError(event: any) {
         this.translateService.get('PERMISSON.LACKOF', {
             permission: event.permission,
             action: event.action,
             type: event.type
         }).subscribe((message) => {
-            this.notificationService.openSnackMessage(
-                message,
-                4000
-            );
+            this.openSnackMessage(message);
         });
     }
 
-    handleUploadError(event: any) {
+    openSnackMessage(event: any) {
         this.notificationService.openSnackMessage(
             event,
             4000
         );
     }
 
-    emitReadyEvent(event: any) {
-        if (this.pageIsEmpty(event)) {
-            this.standardPagination.goPrevious();
-        } else {
-            this.documentListReady.emit(event);
-            this.pagination = event.list.pagination;
-        }
+    emitReadyEvent(event: NodePaging) {
+        this.documentListReady.emit(event);
     }
 
     pageIsEmpty(node: NodePaging) {
@@ -322,31 +325,47 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 translatedErrorMessage = this.translateService.get('OPERATION.ERROR.UNKNOWN');
         }
 
-        this.notificationService.openSnackMessage(translatedErrorMessage.value, 4000);
+        this.openSnackMessage(translatedErrorMessage.value);
     }
 
     onContentActionSuccess(message) {
         const translatedMessage: any = this.translateService.get(message);
-        this.notificationService.openSnackMessage(translatedMessage.value, 4000);
+        this.openSnackMessage(translatedMessage.value);
+        this.reloadForInfiniteScrolling();
     }
 
     onDeleteActionSuccess(message) {
         this.uploadService.fileDeleted.next(message);
         this.deleteElementSuccess.emit();
+        this.reloadForInfiniteScrolling();
+        this.openSnackMessage(message);
+    }
+
+    onPermissionRequested(node) {
+        this.router.navigate(['/permissions', node.value.entry.id]);
+    }
+
+    private reloadForInfiniteScrolling() {
+        if (this.infiniteScrolling) {
+            this.documentList.skipCount = 0;
+        }
+        this.documentList.reload();
     }
 
     onManageVersions(event) {
         const contentEntry = event.value.entry;
+        const showComments = this.showVersionComments;
+        const allowDownload = this.allowVersionDownload;
 
         if (this.contentService.hasPermission(contentEntry, 'update')) {
             this.dialog.open(VersionManagerDialogAdapterComponent, {
-                data: { contentEntry },
+                data: { contentEntry: contentEntry, showComments: showComments, allowDownload: allowDownload },
                 panelClass: 'adf-version-manager-dialog',
                 width: '630px'
             });
         } else {
             const translatedErrorMessage: any = this.translateService.get('OPERATION.ERROR.PERMISSION');
-            this.notificationService.openSnackMessage(translatedErrorMessage.value, 4000);
+            this.openSnackMessage(translatedErrorMessage.value);
         }
     }
 
@@ -361,7 +380,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             });
         } else {
             const translatedErrorMessage: any = this.translateService.get('OPERATION.ERROR.PERMISSION');
-            this.notificationService.openSnackMessage(translatedErrorMessage.value, 4000);
+            this.openSnackMessage(translatedErrorMessage.value);
         }
     }
 
@@ -449,10 +468,17 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     toogleGalleryView(): void {
+        const url = this
+            .router
+            .createUrlTree(['/files', this.currentFolderId, 'display', this.displayMode])
+            .toString();
+
         if (this.displayMode === DisplayMode.List) {
             this.displayMode = DisplayMode.Gallery;
+            this.location.go(url);
         } else {
             this.displayMode = DisplayMode.List;
+            this.location.go(url);
         }
     }
 }

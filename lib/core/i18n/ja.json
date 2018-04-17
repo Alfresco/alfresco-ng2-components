@@ -9,6 +9,9 @@
     "FIELD": {
       "LOCALSTORAGE": "ローカルストレージ",
       "SOURCE": "ソースの選択先 ",
+      "SHOW_FILE": "表示",
+      "DOWNLOAD_FILE": "ダウンロード",
+      "REMOVE_FILE": "削除",
       "UPLOAD": "アップロード",
       "REQUIRED": "*必須",
       "VALIDATOR": {
@@ -46,6 +49,18 @@
           "CANCEL": "キャンセル"
         },
         "TITLE": "ファイルを圧縮 (zip) します。この処理には数分かかります"
+      }
+    },
+    "FILE_DIALOG": {
+      "FILE_LOCK": "ファイルのロック",
+      "ALLOW_OTHERS_CHECKBOX": "所有者にこのファイルの変更を許可する",
+      "FILE_LOCK_CHECKBOX": "ファイルのロック",
+      "TIME_LOCK_CHECKBOX": "ロックされていた時間",
+      "SAVE_BUTTON": {
+        "LABEL": "保存"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "キャンセル"
       }
     },
     "FOLDER_DIALOG": {
@@ -125,6 +140,29 @@
         "CREATED_DATE": "作成日",
         "MODIFIER": "変更者",
         "MODIFIED_DATE": "変更日"
+      },
+      "ACTIONS": {
+        "EDIT": "編集",
+        "SAVE": "保存",
+        "CANCEL": "キャンセル",
+        "TOGGLE": "値の切り替え"
+      }
+    }
+  },
+  "COMMENTS": {
+    "NONE": "コメントなし",
+    "ADD": "コメントの追加",
+    "HEADER": "コメント ({{ count }} 件)",
+    "CREATED_BY_HEADER": "作成者",
+    "MESSAGE_HEADER": "メッセージ",
+    "DIALOG": {
+      "TITLE": "新しいコメント",
+      "LABELS": {
+        "MESSAGE": "メッセージ"
+      },
+      "BUTTON": {
+        "ADD": "コメントの追加",
+        "CANCEL": "キャンセル"
       }
     }
   },
@@ -138,7 +176,7 @@
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "必須",
-      "USERNAME-MIN": "ユーザー名は {{minLenght}} 文字以上でなければなりません。",
+      "USERNAME-MIN": "ユーザー名は {{ minLenght }} 文字以上でなければなりません。",
       "PASSWORD-REQUIRED": "サインイン用のパスワードを入力してください",
       "LOGIN-ERROR-CREDENTIALS": "入力したユーザー名またはパスワードが間違っています",
       "LOGIN-ERROR-PROVIDERS": "プロバイダは必ず定義する必要があります",
@@ -210,10 +248,19 @@
     "LOADING": "読み込み中",
     "UNKNOWN_FORMAT": "プレビューを読み込めませんでした",
     "SIDEBAR": {
+      "THUMBNAILS": {
+        "PAGE": "{{ pageNum }} ページ"
+      },
       "METADATA": {
         "MORE_INFORMATION": "詳細",
         "LESS_INFORMATION": "概要"
       }
+    },
+    "PDF_DIALOG": {
+      "SUBMIT": "送信",
+      "CLOSE": "閉じる",
+      "PLACEHOLDER": "パスワード",
+      "ERROR": "パスワードが間違っています"
     }
   }
 }

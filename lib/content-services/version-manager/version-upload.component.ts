@@ -17,14 +17,13 @@
 
 import { Component, Input, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { ContentService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-version-upload',
     templateUrl: './version-upload.component.html',
     encapsulation: ViewEncapsulation.None,
-    host: {
-        'class': 'adf-version-upload'
-    }
+    host: { 'class': 'adf-version-upload' }
 })
 export class VersionUploadComponent {
 
@@ -32,18 +31,16 @@ export class VersionUploadComponent {
     node: MinimalNodeEntryEntity;
 
     @Output()
-    success: EventEmitter<any> = new EventEmitter();
+    success = new EventEmitter();
 
     @Output()
-    error: EventEmitter<any> = new EventEmitter();
+    error = new EventEmitter();
 
-    onUploadSuccess(event): void {
-        this.success.emit(event);
+    constructor(private contentService: ContentService) {
     }
 
-    onUploadError(event): void {
-        this.error.emit(event);
+    canUpload(): boolean {
+        return this.contentService.hasPermission(this.node, 'update');
     }
 
 }
-

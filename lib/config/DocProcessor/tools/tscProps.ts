@@ -1,13 +1,22 @@
 import * as ts from "typescript";
 import * as fs from "fs";
 import * as path from "path";
-import * as program from "commander";
 
 import * as heading from "mdast-util-heading-range";
 import * as remark from "remark";
 
 import * as unist from "../unistHelpers";
 import { JsxEmit, isClassDeclaration, PropertyDeclaration } from "typescript";
+
+
+// Max number of characters in the text for the default value column.
+const maxDefaultTextLength = 20;
+
+let nameExceptions = {
+    "datatable.component": "DataTableComponent",
+    "tasklist.service": "TaskListService"
+}
+
 
 export function initPhase(aggData) {
 }
@@ -298,6 +307,9 @@ function initialCap(str: string) {
 
 
 function fixAngularFilename(rawName: string) {
+    if (nameExceptions[rawName])
+        return nameExceptions[rawName];
+
 	var name = rawName.replace(/\]|\(|\)/g, '');
 	
     var fileNameSections = name.split('.');
@@ -397,7 +409,6 @@ function buildPropsTable(props: PropData[], includeInitializer: boolean = true) 
     for (var i = 0; i < props.length; i++) {
         var pName = props[i].name;
         var pType = props[i].type;
-        var pDefault = props[i].initializer || "";
         var pDesc = props[i].docText || "";
 
         if (pDesc) {
@@ -406,10 +417,16 @@ function buildPropsTable(props: PropData[], includeInitializer: boolean = true) 
 
         var descCellContent = remark().parse(pDesc).children;
 
+        var pDefault = props[i].initializer || "";
+
         var defaultCellContent;
 
         if (pDefault) {
-            defaultCellContent = unist.makeInlineCode(pDefault);
+            if (pDefault.length > maxDefaultTextLength) {
+                defaultCellContent = unist.makeText("See description");
+                console.log(`Warning: property "${pName}" default value substituted (> ${maxDefaultTextLength} chars)`);
+            } else
+                defaultCellContent = unist.makeInlineCode(pDefault);
         } else {
             defaultCellContent = unist.makeText("");
         }

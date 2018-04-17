@@ -15,9 +15,21 @@
  * limitations under the License.
  */
 
-import { Component, TemplateRef, HostListener, Input, OnChanges, OnDestroy, ViewEncapsulation } from '@angular/core';
+import {
+    Component,
+    TemplateRef,
+    HostListener,
+    Output,
+    Input,
+    OnChanges,
+    OnDestroy,
+    ViewEncapsulation,
+    EventEmitter
+} from '@angular/core';
 import { LogService } from '../../services/log.service';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
+import { PdfPasswordDialogComponent } from './pdfViewer-password-dialog';
+import { MatDialog } from '@angular/material';
 
 declare let PDFJS: any;
 
@@ -52,6 +64,13 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     @Input()
     thumbnailsTemplate: TemplateRef<any> = null;
 
+    @Output()
+    rendered = new EventEmitter<any>();
+
+    @Output()
+    error = new EventEmitter<any>();
+
+    loadingTask: any;
     currentPdfDocument: any;
     page: number;
     displayPage: number;
@@ -67,6 +86,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     MIN_SCALE: number = 0.25;
     MAX_SCALE: number = 10.0;
 
+    isPanelDisabled = true;
     showThumbnails: boolean = false;
     pdfThumbnailsContext: { viewer: any } = { viewer: null };
 
@@ -74,41 +94,50 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         return Math.round(this.currentScale * 100) + '%';
     }
 
-    constructor(private renderingQueueServices: RenderingQueueServices,
-                private logService: LogService) {
+    constructor(
+        private dialog: MatDialog,
+        private renderingQueueServices: RenderingQueueServices,
+        private logService: LogService) {
         // needed to preserve "this" context
         this.onPageChange = this.onPageChange.bind(this);
+        this.onPagesLoaded = this.onPagesLoaded.bind(this);
+        this.onPagerendered = this.onPagerendered.bind(this);
     }
 
     ngOnChanges(changes) {
+        let blobFile = changes['blobFile'];
+
+        if (blobFile && blobFile.currentValue) {
+            let reader = new FileReader();
+            reader.onload = () => {
+                this.executePdf(reader.result);
+            };
+            reader.readAsArrayBuffer(blobFile.currentValue);
+        }
+
+        let urlFile = changes['urlFile'];
+        if (urlFile && urlFile.currentValue) {
+            this.executePdf(urlFile.currentValue);
+        }
+
         if (!this.urlFile && !this.blobFile) {
             throw new Error('Attribute urlFile or blobFile is required');
         }
-
-        if (this.urlFile) {
-            return new Promise((resolve, reject) => {
-                this.executePdf(this.urlFile, resolve, reject);
-            });
-        } else {
-            return new Promise((resolve, reject) => {
-                let reader = new FileReader();
-                reader.onload = () => {
-                    this.executePdf(reader.result, resolve, reject);
-                };
-                reader.readAsArrayBuffer(this.blobFile);
-            });
-        }
     }
 
-    executePdf(src, resolve, reject) {
-        let loadingTask = this.getPDFJS().getDocument(src);
+    executePdf(src) {
+        this.loadingTask = this.getPDFJS().getDocument(src);
 
-        loadingTask.onProgress = (progressData) => {
+        this.loadingTask.onPassword = (callback, reason) => {
+            this.onPdfPassword(callback, reason);
+        };
+
+        this.loadingTask.onProgress = (progressData) => {
             let level = progressData.loaded / progressData.total;
             this.loadingPercent = Math.round(level * 100);
         };
 
-        loadingTask.then((pdfDocument) => {
+        this.loadingTask.then((pdfDocument) => {
             this.currentPdfDocument = pdfDocument;
             this.totalPages = pdfDocument.numPages;
             this.page = 1;
@@ -117,13 +146,12 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
             this.currentPdfDocument.getPage(1).then(() => {
                 this.scalePage('auto');
-                resolve();
             }, (error) => {
-                reject(error);
+                this.error.emit();
             });
 
         }, (error) => {
-            reject(error);
+            this.error.emit();
         });
     }
 
@@ -142,6 +170,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
         this.documentContainer = document.getElementById('viewer-pdf-viewer');
         this.documentContainer.addEventListener('pagechange', this.onPageChange, true);
+        this.documentContainer.addEventListener('pagesloaded', this.onPagesLoaded, true);
+        this.documentContainer.addEventListener('textlayerrendered', this.onPagerendered, true);
 
         this.pdfViewer = new PDFJS.PDFViewer({
             container: this.documentContainer,
@@ -159,6 +189,12 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     ngOnDestroy() {
         if (this.documentContainer) {
             this.documentContainer.removeEventListener('pagechange', this.onPageChange, true);
+            this.documentContainer.removeEventListener('pagesloaded', this.onPagesLoaded, true);
+            this.documentContainer.removeEventListener('textlayerrendered', this.onPagerendered, true);
+        }
+
+        if (this.loadingTask) {
+            this.loadingTask.destroy();
         }
     }
 
@@ -367,6 +403,36 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     onPageChange(event) {
         this.page = event.pageNumber;
         this.displayPage = event.pageNumber;
+    }
+
+    onPdfPassword(callback, reason) {
+        this.dialog
+            .open(PdfPasswordDialogComponent, {
+                width: '400px',
+                disableClose: true,
+                data: { reason }
+            })
+            .afterClosed().subscribe(password => {
+                if (password) {
+                    callback(password);
+                }
+            });
+    }
+
+    /**
+     * Page Rendered Event
+     */
+    onPagerendered() {
+        this.rendered.emit();
+    }
+
+    /**
+     * Pages Loaded Event
+     *
+     * @param event
+     */
+    onPagesLoaded(event) {
+        this.isPanelDisabled = false;
     }
 
     /**

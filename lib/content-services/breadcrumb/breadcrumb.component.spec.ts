@@ -20,7 +20,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PathElementEntity } from 'alfresco-js-api';
 import { DataTableModule } from '@alfresco/adf-core';
 import { fakeNodeWithCreatePermission } from '../mock';
-import { DocumentListService, DocumentListComponent } from '../document-list';
+import { CustomResourcesService, DocumentListService, DocumentListComponent } from '../document-list';
 import { BreadcrumbComponent } from './breadcrumb.component';
 
 declare let jasmine: any;
@@ -41,7 +41,8 @@ describe('Breadcrumb', () => {
                 BreadcrumbComponent
             ],
             providers: [
-                DocumentListService
+                DocumentListService,
+                CustomResourcesService
             ],
             schemas: [
                 CUSTOM_ELEMENTS_SCHEMA
@@ -67,13 +68,13 @@ describe('Breadcrumb', () => {
         let change = new SimpleChange(null, fakeNodeWithCreatePermission, true);
 
         component.root = 'default';
-        component.ngOnChanges({'folderNode': change});
+        component.ngOnChanges({ 'folderNode': change });
 
         expect(component.route[0].name).toBe('default');
     });
 
     it('should emit navigation event', (done) => {
-        let node = <PathElementEntity> {id: '-id-', name: 'name'};
+        let node = <PathElementEntity> { id: '-id-', name: 'name' };
         component.navigate.subscribe(val => {
             expect(val).toBe(node);
             done();
@@ -85,7 +86,7 @@ describe('Breadcrumb', () => {
     it('should update document list on click', (done) => {
         spyOn(documentList, 'loadFolderByNodeId').and.stub();
 
-        let node = <PathElementEntity> {id: '-id-', name: 'name'};
+        let node = <PathElementEntity> { id: '-id-', name: 'name' };
         component.target = documentList;
 
         component.onRoutePathClick(node, null);
@@ -204,5 +205,29 @@ describe('Breadcrumb', () => {
         expect(route.length).toBe(4);
         expect(route[0].id).toBe('custom-id');
         expect(route[0].name).toBe('custom-name');
+    });
+
+    it('should apply the transformation function when there is one', () => {
+        const node: any = {
+            id: null,
+            name: null,
+            path: {
+                elements: [
+                    { id: 'element-1-id', name: 'element-1-name' },
+                    { id: 'element-2-id', name: 'element-2-name' },
+                    { id: 'element-3-id', name: 'element-3-name' }
+                ]
+            }
+        };
+        component.transform = ((transformNode) => {
+            transformNode.id = 'test-id';
+            transformNode.name = 'test-name';
+            return transformNode;
+        });
+        let change = new SimpleChange(null, node, true);
+        component.ngOnChanges({ 'folderNode': change });
+        expect(component.route.length).toBe(4);
+        expect(component.route[3].id).toBe('test-id');
+        expect(component.route[3].name).toBe('test-name');
     });
 });

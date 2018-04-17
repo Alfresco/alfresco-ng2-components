@@ -9,6 +9,9 @@
     "FIELD": {
       "LOCALSTORAGE": "本地存储",
       "SOURCE": "来源选自 ",
+      "SHOW_FILE": "显示",
+      "DOWNLOAD_FILE": "下载",
+      "REMOVE_FILE": "删除",
       "UPLOAD": "上传",
       "REQUIRED": "*必需",
       "VALIDATOR": {
@@ -46,6 +49,18 @@
           "CANCEL": "取消"
         },
         "TITLE": "添加文件至 zip，此操作需要数分钟时间"
+      }
+    },
+    "FILE_DIALOG": {
+      "FILE_LOCK": "锁定文件",
+      "ALLOW_OTHERS_CHECKBOX": "允许所有者修改此文件",
+      "FILE_LOCK_CHECKBOX": "锁定文件",
+      "TIME_LOCK_CHECKBOX": "锁定时间",
+      "SAVE_BUTTON": {
+        "LABEL": "保存"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "取消"
       }
     },
     "FOLDER_DIALOG": {
@@ -125,6 +140,29 @@
         "CREATED_DATE": "创建日期",
         "MODIFIER": "修改者",
         "MODIFIED_DATE": "修改日期"
+      },
+      "ACTIONS": {
+        "EDIT": "编辑",
+        "SAVE": "保存",
+        "CANCEL": "取消",
+        "TOGGLE": "切换值"
+      }
+    }
+  },
+  "COMMENTS": {
+    "NONE": "无注释",
+    "ADD": "添加注释",
+    "HEADER": "评论 ({{ count }})",
+    "CREATED_BY_HEADER": "创建者",
+    "MESSAGE_HEADER": "消息",
+    "DIALOG": {
+      "TITLE": "新增评论",
+      "LABELS": {
+        "MESSAGE": "消息"
+      },
+      "BUTTON": {
+        "ADD": "添加注释",
+        "CANCEL": "取消"
       }
     }
   },
@@ -210,10 +248,19 @@
     "LOADING": "正在加载",
     "UNKNOWN_FORMAT": "无法加载预览",
     "SIDEBAR": {
+      "THUMBNAILS": {
+        "PAGE": "第 {{ pageNum }} 页"
+      },
       "METADATA": {
         "MORE_INFORMATION": "更多信息",
         "LESS_INFORMATION": "更少信息"
       }
+    },
+    "PDF_DIALOG": {
+      "SUBMIT": "提交",
+      "CLOSE": "关闭",
+      "PLACEHOLDER": "密码",
+      "ERROR": "密码错误"
     }
   }
 }

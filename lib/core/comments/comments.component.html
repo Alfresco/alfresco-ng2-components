@@ -1,0 +1,15 @@
+<div class="adf-comments-container">
+    <div id="comment-header" class="adf-comments-header">
+        {{'COMMENTS.HEADER' | translate: { count: comments?.length} }}
+    </div>
+    <div class="adf-comments-input-container" *ngIf="!isReadOnly()">
+            <mat-form-field class="adf-full-width">
+                <input matInput id="comment-input" placeholder="{{'COMMENTS.ADD' | translate}}" [(ngModel)]="message" (keyup.enter)="add()" (keyup.esc)="clear()">
+            </mat-form-field>
+    </div>
+
+    <div *ngIf="comments.length > 0">
+        <adf-comment-list [comments]="comments">
+        </adf-comment-list>
+    </div>
+</div>

@@ -2,6 +2,7 @@
     <div class="adf-property-label">{{ property.label | translate }}</div>
     <div class="adf-property-value">
         <mat-checkbox
+            [attr.title]="'CORE.METADATA.ACTIONS.TOGGLE' | translate"
             [checked]="property.displayValue"
             [disabled]="!isEditable()"
             (change)="changed($event)">

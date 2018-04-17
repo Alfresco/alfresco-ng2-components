@@ -1,4 +1,17 @@
 {
+  "APP": {
+    "INFO_DRAWER": {
+      "TITLE": "Dettagli",
+      "COMMENTS": "Commenti",
+      "PROPERTIES": "Proprietà",
+      "VERSIONS": "Versione"
+    },
+    "ADF_VERSION_MANAGER": {
+      "ALLOW_DELETE": "Consenti eliminazione",
+      "SHOW_COMMENTS": "Mostra commenti sulle versioni",
+      "ALLOW_DOWNLOAD": "Abilita download versioni"
+    }
+  },
   "title": "Benvenuto",
   "VERSION": {
     "NO_PERMISSION": "Non hai il permesso di gestire versioni di questo contenuto",
@@ -7,6 +20,12 @@
     "DIALOG": {
       "CLOSE": "Chiudi",
       "TITLE": "Gestione versioni"
+    }
+  },
+  "METADATA": {
+    "DIALOG": {
+      "CLOSE": "Chiudi",
+      "TITLE": "Metadati"
     }
   },
   "APP_LAYOUT": {
@@ -20,9 +39,11 @@
     "DATATABLE_LAZY": "Caricamento dati (ottimizzato)",
     "FORM": "Modulo",
     "FORM_LIST": "Elenco moduli",
+    "FORM_LOADING": "Caricamento modulo",
     "UPLOADER": "Uploader",
     "WEBSCRIPT": "Webscript",
     "TAG": "Tag",
+    "TRASHCAN": "Cestino",
     "SOCIAL": "Social",
     "SETTINGS": "Impostazioni",
     "OVERLAY_VIEWER": "Visualizzatore overlay",
@@ -32,6 +53,17 @@
     "WORD_TO_SEARCH": "Termine di ricerca",
     "SEARCH_CREATED_BY": "Creato da",
     "SEARCH_SERVICE_APPROACH": "Selezionare per disattivare la proprietà di input ed eseguire la configurazione utilizzando il servizio"
+  },
+  "TRASHCAN": {
+    "ACTIONS": {
+      "DELETE_PERMANENT": "Elimina definitivamente",
+      "RESTORE": "Ripristina"
+    },
+    "EMPTY_STATE": {
+      "TITLE": "Il cestino è vuoto",
+      "FIRST_TEXT": "Gli elementi eliminati vengono spostati nel cestino.",
+      "SECOND_TEXT": "Svuotare il cestino per eliminare definitivamente gli elementi."
+    }
   },
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Selezione multipla (con caselle di spunta)",
@@ -43,13 +75,22 @@
     "DESCRIPTION_UPLOAD": "Abilita caricamento",
     "ENABLE_INFINITE_SCROLL": "Abilita scorrimento infinito",
     "MULTISELECT_DESCRIPTION": "Usa Cmd (Mac) o Ctrl (Windows) per attivare/disattivare la selezione di più elementi",
-    "RECENT": "File recenti",
+    "RECENT": {
+      "EMPTY_STATE": {
+        "TITLE": "L'elenco File recenti è vuoto"
+      },
+      "TITLE": "File recenti"
+    },
     "COLUMNS": {
       "DISPLAY_NAME": "Nome visualizzato",
+      "IS_LOCKED": "Blocca",
       "TAG": "Tag",
       "CREATED_BY": "Creato da",
       "CREATED_ON": "Creato il",
-      "CREATED": "Creato"
+      "CREATED": "Creato",
+      "SIZE": "Dimensione",
+      "DELETED_ON": "Eliminato",
+      "DELETED_BY": "Eliminato da"
     },
     "TOOLBAR": {
       "CARDVIEW": "Modalità di visualizzazione scheda",
@@ -59,7 +100,10 @@
       "DELETE": "Elimina"
     },
     "ACTIONS": {
+      "VERSIONS": "Gestione versioni",
+      "METADATA": "Informazioni",
       "DOWNLOAD": "Download",
+      "PERMISSION": "Permesso",
       "FOLDER": {
         "COPY": "Copia",
         "MOVE": "Sposta",
@@ -98,6 +142,13 @@
     "STORE": "Memorizza",
     "RESTORE": "Ripristina"
   },
+  "FORM-LOADING": {
+    "FORM_DATA": "Dati modulo",
+    "FORM_DATA_MESSAGE": "Inserire i dati per compilare il modulo",
+    "TYPEAHEAD_PLACEHOLDER": "Typeahead",
+    "RADIO_PLACEHOLDER": "Pulsante di opzione",
+    "SELECT_PLACEHOLDER": "Elenco a discesa"
+  },
   "LOGIN": {
     "CONTENT_SERVICES": "Content Services",
     "PROCESS_SERVICES": "Process Services",
@@ -115,5 +166,9 @@
     "LIST": "Elenco tag Content Services",
     "INSERT": "Inserisci ID nodo",
     "NODE_LIST": "Elenco tag per ID nodo"
+  },
+  "DEMO_PERMISSION": {
+    "INHERIT_PERMISSION_BUTTON": "Eredita permessi",
+    "INHERITED_PERMISSIONS_BUTTON": "Permesso ereditato"
   }
 }

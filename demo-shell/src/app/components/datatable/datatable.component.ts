@@ -178,7 +178,7 @@ export class DataTableComponent {
     getRowForNode() {
         const opts: any = {
             includeSource: true,
-            include: ['path', 'properties', 'allowableOperations']
+            include: ['path', 'properties', 'allowableOperations', 'permissions']
         };
 
         Observable.fromPromise(this.apiService.getInstance().nodes

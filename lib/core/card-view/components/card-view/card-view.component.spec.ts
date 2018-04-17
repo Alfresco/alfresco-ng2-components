@@ -25,7 +25,6 @@ import { By } from '@angular/platform-browser';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { AppConfigService } from '../../../app-config/app-config.service';
 
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
@@ -71,8 +70,7 @@ describe('CardViewComponent', () => {
             ],
             providers: [
                 CardItemTypeService,
-                CardViewUpdateService,
-                AppConfigService
+                CardViewUpdateService
             ]
         });
 

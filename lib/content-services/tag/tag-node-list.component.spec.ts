@@ -47,7 +47,6 @@ describe('TagNodeList', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-
             declarations: [
                 TagNodeListComponent
             ],

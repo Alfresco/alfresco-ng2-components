@@ -1,6 +1,12 @@
+adf-upload-drag-area {
+    overflow: hidden;
+}
+
 .upload-border {
     vertical-align: middle;
     text-align: center;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .file-draggable__input-focus {

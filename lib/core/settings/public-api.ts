@@ -16,3 +16,5 @@
  */
 
 export * from './host-settings.component';
+
+export * from './host-settings.module';

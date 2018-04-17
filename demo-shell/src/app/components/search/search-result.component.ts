@@ -18,7 +18,7 @@
 import { Component, OnInit, Optional, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { NodePaging, Pagination } from 'alfresco-js-api';
-import { SearchComponent } from '@alfresco/adf-content-services';
+import { SearchComponent, SearchQueryBuilderService } from '@alfresco/adf-content-services';
 import { UserPreferencesService } from '@alfresco/adf-core';
 
 @Component({
@@ -40,14 +40,21 @@ export class SearchResultComponent implements OnInit {
 
     constructor(public router: Router,
                 private preferences: UserPreferencesService,
+                private queryBuilder: SearchQueryBuilderService,
                 @Optional() private route: ActivatedRoute) {
         this.maxItems = this.preferences.paginationSize;
+        queryBuilder.paging = {
+            maxItems: this.maxItems,
+            skipCount: 0
+        };
     }
 
     ngOnInit() {
         if (this.route) {
             this.route.params.forEach((params: Params) => {
                 this.searchedWord = params.hasOwnProperty(this.queryParamName) ? params[this.queryParamName] : null;
+                this.queryBuilder.queryFragments['queryName'] = `cm:name:'${this.searchedWord}'`;
+                this.queryBuilder.update();
             });
         }
         this.maxItems = this.preferences.paginationSize;
@@ -59,8 +66,14 @@ export class SearchResultComponent implements OnInit {
     }
 
     onRefreshPagination(pagination: Pagination) {
-         this.maxItems = pagination.maxItems;
-         this.skipCount = pagination.skipCount;
+        this.maxItems = pagination.maxItems;
+        this.skipCount = pagination.skipCount;
+
+        this.queryBuilder.paging = {
+            maxItems: pagination.maxItems,
+            skipCount: pagination.skipCount
+        };
+        this.queryBuilder.update();
     }
 
     onDeleteElementSuccess(element: any) {

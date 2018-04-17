@@ -25,7 +25,7 @@ import { FormComponent, FormModel, FormService, LogService } from '@alfresco/adf
 })
 export class FormListComponent {
 
-    @ViewChild(FormComponent)
+    @ViewChild('adfForm')
     activitiForm: FormComponent;
 
     formList: any [] = [];

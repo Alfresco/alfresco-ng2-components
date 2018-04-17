@@ -16,14 +16,8 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { AlfrescoApiService } from './alfresco-api.service';
 import { SettingsService } from './settings.service';
 import { AppConfigModule } from '../app-config/app-config.module';
-import { LogService } from './log.service';
-import { StorageService } from './storage.service';
-import { TranslateLoaderService } from './translate-loader.service';
-import { UserPreferencesService } from './user-preferences.service';
 
 describe('SettingsService', () => {
 
@@ -32,20 +26,10 @@ describe('SettingsService', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                AppConfigModule,
-                TranslateModule.forRoot({
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: TranslateLoaderService
-                    }
-                })
+                AppConfigModule
             ],
             providers: [
-                AlfrescoApiService,
-                SettingsService,
-                UserPreferencesService,
-                StorageService,
-                LogService
+                SettingsService
             ]
         }).compileComponents();
     }));

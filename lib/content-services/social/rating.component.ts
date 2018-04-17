@@ -22,7 +22,6 @@ import { RatingService } from './services/rating.service';
     selector: 'adf-rating',
     styleUrls: ['./rating.component.scss'],
     templateUrl: './rating.component.html',
-    providers: [RatingService],
     encapsulation: ViewEncapsulation.None
 })
 export class RatingComponent implements OnChanges {

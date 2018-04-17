@@ -15,7 +15,16 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    Output,
+    SimpleChanges,
+    ViewEncapsulation,
+    OnInit
+} from '@angular/core';
 import { MinimalNodeEntryEntity, PathElementEntity } from 'alfresco-js-api';
 import { DocumentListComponent } from '../document-list';
 
@@ -28,7 +37,7 @@ import { DocumentListComponent } from '../document-list';
         'class': 'adf-breadcrumb'
     }
 })
-export class BreadcrumbComponent implements OnChanges {
+export class BreadcrumbComponent implements OnInit, OnChanges {
 
     /** Active node, builds UI based on folderNode.path.elements collection. */
     @Input()
@@ -53,6 +62,14 @@ export class BreadcrumbComponent implements OnChanges {
     @Input()
     target: DocumentListComponent;
 
+    /** Transformation to be performed on the chosen/folder node before building
+     * the breadcrumb UI. Can be useful when custom formatting is needed for the
+     * breadcrumb. You can change the path elements from the node that are used to
+     * build the breadcrumb using this function.
+     */
+    @Input()
+    transform: (node) => any;
+
     route: PathElementEntity[] = [];
 
     get hasRoot(): boolean {
@@ -63,9 +80,19 @@ export class BreadcrumbComponent implements OnChanges {
     @Output()
     navigate: EventEmitter<PathElementEntity> = new EventEmitter<PathElementEntity>();
 
+    ngOnInit() {
+        this.transform = this.transform ? this.transform : null;
+    }
+
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.folderNode) {
-            const node: MinimalNodeEntryEntity = changes.folderNode.currentValue;
+            let node: MinimalNodeEntryEntity = null;
+            node = this.transform ? this.transform(changes.folderNode.currentValue) : changes.folderNode.currentValue;
+            this.route = this.parseRoute(node);
+        }
+
+        if (changes.transform) {
+            let node = this.transform ? this.transform(this.folderNode) : this.folderNode;
             this.route = this.parseRoute(node);
         }
     }
@@ -117,7 +144,7 @@ export class BreadcrumbComponent implements OnChanges {
             this.navigate.emit(route);
 
             if (this.target) {
-                this.target.loadFolderByNodeId(route.id);
+                this.target.navigateTo(route.id);
             }
         }
     }

@@ -17,7 +17,7 @@
 
 /* tslint:disable:no-input-rename  */
 
-import { Directive, ElementRef, HostListener, Input } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
@@ -34,6 +34,10 @@ export class FolderEditDirective {
     /** Folder node to edit. */
     @Input('adf-edit-folder')
     folder: MinimalNodeEntryEntity;
+
+    /** Emitted when the edit/create folder give error for example a folder with same name already exist */
+    @Output()
+    error: EventEmitter<any> = new EventEmitter<any>();
 
     @HostListener('click', [ '$event' ])
     onClick(event) {
@@ -62,6 +66,10 @@ export class FolderEditDirective {
     private openDialog(): void {
         const { dialogRef, dialogConfig, content } = this;
         const dialogInstance = dialogRef.open(FolderDialogComponent, dialogConfig);
+
+        dialogInstance.componentInstance.error.subscribe((error) => {
+            this.error.emit(error);
+        });
 
         dialogInstance.afterClosed().subscribe((node: MinimalNodeEntryEntity) => {
             if (node) {

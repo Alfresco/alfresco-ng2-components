@@ -234,6 +234,50 @@ describe('DataTable', () => {
         expect(rows[1].isSelected).toBeTruthy();
     });
 
+    it('should select only one row with [single] selection mode pressing enter key', () => {
+        dataTable.selectionMode = 'single';
+        dataTable.data = new ObjectDataTableAdapter(
+            [
+                { name: '1' },
+                { name: '2' }
+            ],
+            [ new ObjectDataColumn({ key: 'name'}) ]
+        );
+        const rows = dataTable.data.getRows();
+
+        dataTable.ngOnChanges({});
+        dataTable.onEnterKeyPressed(rows[0], null);
+        expect(rows[0].isSelected).toBeTruthy();
+        expect(rows[1].isSelected).toBeFalsy();
+
+        dataTable.onEnterKeyPressed(rows[1], null);
+        expect(rows[0].isSelected).toBeFalsy();
+        expect(rows[1].isSelected).toBeTruthy();
+    });
+
+    it('should select multiple rows with [multiple] selection mode pressing enter key', () => {
+        dataTable.selectionMode = 'multiple';
+        dataTable.data = new ObjectDataTableAdapter(
+            [
+                { name: '1' },
+                { name: '2' }
+            ],
+            [ new ObjectDataColumn({ key: 'name'}) ]
+        );
+        const rows = dataTable.data.getRows();
+
+        const event = new KeyboardEvent('enter', {
+            metaKey: true
+        });
+
+        dataTable.ngOnChanges({});
+        dataTable.onEnterKeyPressed(rows[0], event);
+        dataTable.onEnterKeyPressed(rows[1], event);
+
+        expect(rows[0].isSelected).toBeTruthy();
+        expect(rows[1].isSelected).toBeTruthy();
+    });
+
     it('should not unselect the row with [single] selection mode', () => {
         dataTable.selectionMode = 'single';
         dataTable.data = new ObjectDataTableAdapter(
@@ -682,7 +726,7 @@ describe('DataTable', () => {
         expect(event.target.src).toBe(dataTable.fallbackThumbnail);
     });
 
-    it('should replace image source only when fallback available', () => {
+    it('should replace image source with miscellaneous icon when fallback is not available', () => {
         const originalSrc = 'missing-image';
         let event = <any> {
             target: {
@@ -692,7 +736,18 @@ describe('DataTable', () => {
 
         dataTable.fallbackThumbnail = null;
         dataTable.onImageLoadingError(event);
-        expect(event.target.src).toBe(originalSrc);
+        expect(event.target.src).toBe('./assets/images/ft_ic_miscellaneous.svg' );
+    });
+
+    it('should replace image source with icon if fallback is not available and mimeType is provided', () => {
+        let event = <any> {
+            target: {
+                src: 'missing-image'
+            }
+        };
+
+        dataTable.onImageLoadingError(event, 'image/png');
+        expect(event.target.src).toBe('./assets/images/ft_ic_raster_image.svg');
     });
 
     it('should not get cell tooltip when row is not provided', () => {

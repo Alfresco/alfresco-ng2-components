@@ -15,18 +15,17 @@
  * limitations under the License.
  */
 
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
-import { FormModule } from '@alfresco/adf-core';
-
-import { CardViewModule, DataColumnModule,  DataTableModule, DirectiveModule, InfoDrawerModule } from '@alfresco/adf-core';
+import { FormModule, CommentsModule } from '@alfresco/adf-core';
+import { ProcessCommentsModule } from '../process-comments/process-comments.module';
+import { CardViewModule, DataColumnModule, DataTableModule, DirectiveModule, InfoDrawerModule } from '@alfresco/adf-core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MaterialModule } from '../material.module';
 import { PeopleModule } from '../people/people.module';
-import { CommentsModule } from '../comments/comments.module';
 import { ContentWidgetModule } from '../content-widget/content-widget.module';
 import { TaskUploadService } from './services/task-upload.service';
 import { ProcessUploadService } from './services/process-upload.service';
@@ -41,6 +40,7 @@ import { TaskDetailsComponent } from './components/task-details.component';
 import { TaskFiltersComponent } from './components/task-filters.component';
 import { TaskHeaderComponent } from './components/task-header.component';
 import { TaskListComponent } from './components/task-list.component';
+import { TaskStandaloneComponent } from './components/task-standalone.component';
 
 @NgModule({
     imports: [
@@ -58,6 +58,7 @@ import { TaskListComponent } from './components/task-list.component';
         ReactiveFormsModule,
         PeopleModule,
         CommentsModule,
+        ProcessCommentsModule,
         ContentWidgetModule
     ],
     declarations: [
@@ -68,14 +69,14 @@ import { TaskListComponent } from './components/task-list.component';
         TaskAuditDirective,
         ChecklistComponent,
         TaskHeaderComponent,
-        StartTaskComponent
+        StartTaskComponent,
+        TaskStandaloneComponent
     ],
     providers: [
         TaskListService,
         TaskFilterService,
         TaskUploadService,
-        ProcessUploadService,
-        DatePipe
+        ProcessUploadService
     ],
     exports: [
         NoTaskDetailsTemplateDirective,
@@ -85,7 +86,9 @@ import { TaskListComponent } from './components/task-list.component';
         TaskAuditDirective,
         ChecklistComponent,
         TaskHeaderComponent,
-        StartTaskComponent
+        StartTaskComponent,
+        TaskStandaloneComponent
     ]
 })
-export class TaskListModule {}
+export class TaskListModule {
+}

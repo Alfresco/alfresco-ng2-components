@@ -51,6 +51,18 @@
         "TITLE": "Adding files to zip, this could take a few minutes"
       }
     },
+    "FILE_DIALOG": {
+      "FILE_LOCK": "Lock file",
+      "ALLOW_OTHERS_CHECKBOX": "Allow the owner to modify this file",
+      "FILE_LOCK_CHECKBOX": "Lock file",
+      "TIME_LOCK_CHECKBOX": "Time lock",
+      "SAVE_BUTTON": {
+        "LABEL": "Save"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "Cancel"
+      }
+    },
     "FOLDER_DIALOG": {
       "CREATE_FOLDER_TITLE": "Create new folder",
       "EDIT_FOLDER_TITLE": "Edit folder",
@@ -128,6 +140,29 @@
           "CREATED_DATE": "Created Date",
           "MODIFIER": "Modifier",
           "MODIFIED_DATE": "Modified Date"
+      },
+      "ACTIONS": {
+        "EDIT": "Edit",
+        "SAVE": "Save",
+        "CANCEL": "Cancel",
+        "TOGGLE": "Toggle value"
+      }
+    }
+  },
+  "COMMENTS": {
+    "NONE": "No comments",
+    "ADD": "Add a comment",
+    "HEADER": "Comments ({{ count }})",
+    "CREATED_BY_HEADER": "Created by",
+    "MESSAGE_HEADER": "Message",
+    "DIALOG": {
+      "TITLE": "New comment",
+      "LABELS": {
+        "MESSAGE": "Message"
+      },
+      "BUTTON": {
+        "ADD": "Add Comment",
+        "CANCEL": "Cancel"
       }
     }
   },
@@ -141,7 +176,7 @@
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "Required",
-      "USERNAME-MIN": "Your username needs to be at least {{minLenght}} characters.",
+      "USERNAME-MIN": "Your username needs to be at least {{ minLength }} characters.",
       "PASSWORD-REQUIRED": "Enter your password to sign in",
       "LOGIN-ERROR-CREDENTIALS": "You've entered an unknown username or password",
       "LOGIN-ERROR-PROVIDERS": "Providers cannot be undefined",
@@ -220,6 +255,12 @@
           "MORE_INFORMATION": "More information",
           "LESS_INFORMATION": "Less information"
       }
+    },
+    "PDF_DIALOG": {
+      "SUBMIT": "Submit",
+      "CLOSE": "Close",
+      "PLACEHOLDER": "Password",
+      "ERROR": "Password is wrong"
     }
   }
 }

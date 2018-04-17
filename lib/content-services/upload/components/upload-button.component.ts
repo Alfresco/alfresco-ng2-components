@@ -15,32 +15,15 @@
  * limitations under the License.
  */
 
-import {
-    AlfrescoApiService,
-    EXTENDIBLE_COMPONENT,
-    FileModel,
-    FileUtils,
-    LogService,
-    NodePermissionSubject,
-    TranslationService,
-    UploadService
+import { ContentService, EXTENDIBLE_COMPONENT, FileModel, FileUtils,
+    LogService, NodePermissionSubject, TranslationService, UploadService
 } from '@alfresco/adf-core';
-import {
-    Component,
-    EventEmitter,
-    forwardRef,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewEncapsulation
-} from '@angular/core';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { Observable } from 'rxjs/Observable';
+import { Component, EventEmitter, forwardRef, Input,
+    OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { PermissionModel } from '../../document-list/models/permissions.model';
 import 'rxjs/add/observable/throw';
+import { UploadBase } from './base-upload/upload-base';
 
 @Component({
     selector: 'adf-upload-button',
@@ -51,7 +34,7 @@ import 'rxjs/add/observable/throw';
     ],
     encapsulation: ViewEncapsulation.None
 })
-export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionSubject {
+export class UploadButtonComponent extends UploadBase implements OnInit, OnChanges, NodePermissionSubject {
 
     /** Toggles component disabled state (if there is no node permission checking). */
     @Input()
@@ -68,10 +51,6 @@ export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionS
     /** Toggles versioning. */
     @Input()
     versioning: boolean = false;
-
-    /** List of allowed file extensions, for example: ".jpg,.gif,.png,.svg". */
-    @Input()
-    acceptedFilesType: string = '*';
 
     /** Sets a limit on the maximum size (in bytes) of a file to be uploaded.
      * Has no effect if undefined.
@@ -114,9 +93,11 @@ export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionS
     private permissionValue: Subject<boolean> = new Subject<boolean>();
 
     constructor(private uploadService: UploadService,
-                private translateService: TranslationService,
-                private logService: LogService,
-                private apiService: AlfrescoApiService) {
+                private contentService: ContentService,
+                protected translateService: TranslationService,
+                protected logService: LogService
+            ) {
+                super();
     }
 
     ngOnInit() {
@@ -181,33 +162,12 @@ export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionS
      *
      * @param file
      */
-    private createFileModel(file: File): FileModel {
+    protected createFileModel(file: File): FileModel {
         return new FileModel(file, {
             newVersion: this.versioning,
             parentId: this.rootFolderId,
             path: (file.webkitRelativePath || '').replace(/\/[^\/]*$/, '')
         });
-    }
-
-    /**
-     * Checks if the given file is allowed by the extension filters
-     *
-     * @param file FileModel
-     */
-    private isFileAcceptable(file: FileModel): boolean {
-        if (this.acceptedFilesType === '*') {
-            return true;
-        }
-
-        const allowedExtensions = this.acceptedFilesType
-            .split(',')
-            .map(ext => ext.replace(/^\./, ''));
-
-        if (allowedExtensions.indexOf(file.extension) !== -1) {
-            return true;
-        }
-
-        return false;
     }
 
     /**
@@ -243,29 +203,16 @@ export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionS
 
     checkPermission() {
         if (this.rootFolderId) {
-            this.getFolderNode(this.rootFolderId).subscribe(
-                res => this.permissionValue.next(this.hasCreatePermission(res)),
+            let opts: any = {
+                includeSource: true,
+                include: ['allowableOperations']
+            };
+
+            this.contentService.getNode(this.rootFolderId, opts).subscribe(
+                res => this.permissionValue.next(this.hasCreatePermission(res.entry)),
                 error => this.error.emit(error)
             );
         }
-    }
-
-    // TODO: move to ContentService
-    getFolderNode(nodeId: string): Observable<MinimalNodeEntryEntity> {
-        let opts: any = {
-            includeSource: true,
-            include: ['allowableOperations']
-        };
-
-        return Observable.fromPromise(this.apiService.getInstance().nodes.getNodeInfo(nodeId, opts))
-            .catch(err => this.handleError(err));
-    }
-
-    private handleError(error: Response) {
-        // in a real world app, we may send the error to some remote logging infrastructure
-        // instead of just logging it to the console
-        this.logService.error(error);
-        return Observable.throw(error || 'Server error');
     }
 
     private hasCreatePermission(node: any): boolean {

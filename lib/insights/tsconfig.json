@@ -16,17 +16,16 @@
     "noFallthroughCasesInSwitch": true,
     "removeComments": true,
     "declaration": true,
-    "outDir": "./",
+    "outDir": "../dist/insights/",
     "baseUrl" :  "./",
     "paths": {
       "@alfresco/adf-process-services": ["../process-services"],
       "@alfresco/adf-content-services": ["../content-services"],
       "@alfresco/adf-core": ["../core"],
-      "@alfresco/adf-insights": ["../analytics"],
       "@angular/*": ["../node_modules/@angular/*"]
     },
     "lib": [
-      "es2015",
+      "es2016",
       "dom"
     ],
     "suppressImplicitAnyIndexErrors": true,

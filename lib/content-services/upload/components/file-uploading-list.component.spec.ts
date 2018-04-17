@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslationService, FileUploadStatus, NodesApiService, NotificationService, UploadService } from '@alfresco/adf-core';
+import { TranslationService, FileUploadStatus, NodesApiService, UploadService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs/Observable';
 import { UploadModule } from '../upload.module';
 import { FileUploadingListComponent } from './file-uploading-list.component';
@@ -26,7 +26,6 @@ describe('FileUploadingListComponent', () => {
     let component: FileUploadingListComponent;
     let uploadService: UploadService;
     let nodesApiService: NodesApiService;
-    let notificationService: NotificationService;
     let translateService: TranslationService;
     let file: any;
 
@@ -45,13 +44,11 @@ describe('FileUploadingListComponent', () => {
     beforeEach(() => {
         nodesApiService = TestBed.get(NodesApiService);
         uploadService = TestBed.get(UploadService);
-        notificationService = TestBed.get(NotificationService);
         translateService = TestBed.get(TranslationService);
         fixture = TestBed.createComponent(FileUploadingListComponent);
         component = fixture.componentInstance;
 
         spyOn(translateService, 'get').and.returnValue(Observable.of('some error message'));
-        spyOn(notificationService, 'openSnackMessage');
         spyOn(uploadService, 'cancelUpload');
     });
 
@@ -82,15 +79,6 @@ describe('FileUploadingListComponent', () => {
             expect(file.status).toBe(FileUploadStatus.Error);
         });
 
-        it('should notify fail when api returns error', () => {
-            spyOn(nodesApiService, 'deleteNode').and.returnValue(Observable.throw(file));
-
-            component.removeFile(file);
-            fixture.detectChanges();
-
-            expect(notificationService.openSnackMessage).toHaveBeenCalled();
-        });
-
         it('should call uploadService on error', () => {
             spyOn(nodesApiService, 'deleteNode').and.returnValue(Observable.throw(file));
 
@@ -107,6 +95,19 @@ describe('FileUploadingListComponent', () => {
             fixture.detectChanges();
 
             expect(uploadService.cancelUpload).toHaveBeenCalled();
+        });
+
+        describe('Events', () => {
+
+            it('should throw an error event if delete file goes wrong', (done) => {
+                spyOn(nodesApiService, 'deleteNode').and.returnValue(Observable.throw(file));
+
+                component.error.subscribe(() => {
+                    done();
+                });
+
+                component.removeFile(file);
+            });
         });
     });
 
@@ -158,15 +159,6 @@ describe('FileUploadingListComponent', () => {
             component.cancelAllFiles();
 
             expect(uploadService.cancelUpload).toHaveBeenCalled();
-        });
-
-        it('should notify on deleting file error', () => {
-            spyOn(nodesApiService, 'deleteNode').and.returnValue(Observable.throw({}));
-
-            component.files[0].status = FileUploadStatus.Complete;
-            component.cancelAllFiles();
-
-            expect(notificationService.openSnackMessage).toHaveBeenCalled();
         });
     });
 

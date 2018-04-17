@@ -22,7 +22,7 @@ import { MatDialogRef } from '@angular/material';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { Observable } from 'rxjs/Observable';
 
-import { NodesApiService, NotificationService, TranslationService } from '@alfresco/adf-core';
+import { NodesApiService, TranslationService } from '@alfresco/adf-core';
 import { FolderDialogComponent } from './folder.dialog';
 
 describe('FolderDialogComponent', () => {
@@ -31,7 +31,6 @@ describe('FolderDialogComponent', () => {
     let component: FolderDialogComponent;
     let translationService: TranslationService;
     let nodesApi: NodesApiService;
-    let notificationService: NotificationService;
     let dialogRef;
 
     beforeEach(async(() => {
@@ -56,7 +55,7 @@ describe('FolderDialogComponent', () => {
         // entryComponents are not supported yet on TestBed, that is why this ugly workaround:
         // https://github.com/angular/angular/issues/10760
         TestBed.overrideModule(BrowserDynamicTestingModule, {
-            set: {entryComponents: [ FolderDialogComponent ]}
+            set: { entryComponents: [FolderDialogComponent] }
         });
 
         TestBed.compileComponents();
@@ -67,7 +66,6 @@ describe('FolderDialogComponent', () => {
         component = fixture.componentInstance;
 
         nodesApi = TestBed.get(NodesApiService);
-        notificationService = TestBed.get(NotificationService);
 
         translationService = TestBed.get(TranslationService);
         spyOn(translationService, 'get').and.returnValue(Observable.of('message'));
@@ -237,33 +235,45 @@ describe('FolderDialogComponent', () => {
             expect(component.handleError).toHaveBeenCalled();
             expect(dialogRef.close).not.toHaveBeenCalled();
         });
-    });
 
-    describe('handleError()', () => {
-        it('should raise error for 409', () => {
-            spyOn(notificationService, 'openSnackMessage').and.stub();
+        describe('Error events ', () => {
+            it('should raise error for 409', (done) => {
+                const error = {
+                    message: '{ "error": {  "statusCode" : 409 } }'
+                };
 
-            const error = {
-                message: '{ "error": {  "statusCode" : 409 } }'
-            };
+                component.error.subscribe((message) => {
+                    expect(message).toBe('CORE.MESSAGES.ERRORS.EXISTENT_FOLDER');
+                    done();
+                });
 
-            component.handleError(error);
+                spyOn(nodesApi, 'createFolder').and.returnValue(Observable.throw(error));
 
-            expect(notificationService.openSnackMessage).toHaveBeenCalled();
-            expect(translationService.get).toHaveBeenCalledWith('CORE.MESSAGES.ERRORS.EXISTENT_FOLDER');
+                component.form.controls['name'].setValue('name');
+                component.form.controls['description'].setValue('description');
+
+                component.submit();
+            });
+
+            it('should raise generic error', (done) => {
+                const error = {
+                    message: '{ "error": {  "statusCode" : 123 } }'
+                };
+
+                component.error.subscribe((message) => {
+                    expect(message).toBe('CORE.MESSAGES.ERRORS.GENERIC');
+                    done();
+                });
+
+                spyOn(nodesApi, 'createFolder').and.returnValue(Observable.throw(error));
+
+                component.form.controls['name'].setValue('name');
+                component.form.controls['description'].setValue('description');
+
+                component.submit();
+            });
         });
 
-        it('should raise generic error', () => {
-            spyOn(notificationService, 'openSnackMessage').and.stub();
-
-            const error = {
-                message: '{ "error": {  "statusCode" : 123 } }'
-            };
-
-            component.handleError(error);
-
-            expect(notificationService.openSnackMessage).toHaveBeenCalled();
-            expect(translationService.get).toHaveBeenCalledWith('CORE.MESSAGES.ERRORS.GENERIC');
-        });
     });
+
 });

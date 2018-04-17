@@ -9,6 +9,9 @@
     "FIELD": {
       "LOCALSTORAGE": "Stockage local",
       "SOURCE": "Sélectionner la source dans ",
+      "SHOW_FILE": "Afficher",
+      "DOWNLOAD_FILE": "Télécharger",
+      "REMOVE_FILE": "Supprimer",
       "UPLOAD": "Importer",
       "REQUIRED": "*Obligatoire",
       "VALIDATOR": {
@@ -46,6 +49,18 @@
           "CANCEL": "Annuler"
         },
         "TITLE": "Ajout de fichiers au zip, veuillez patienter quelques minutes"
+      }
+    },
+    "FILE_DIALOG": {
+      "FILE_LOCK": "Verrouiller le fichier",
+      "ALLOW_OTHERS_CHECKBOX": "Autoriser le propriétaire à modifier ce fichier",
+      "FILE_LOCK_CHECKBOX": "Verrouiller le fichier",
+      "TIME_LOCK_CHECKBOX": "Durée du verrouillage",
+      "SAVE_BUTTON": {
+        "LABEL": "Enregistrer"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "Annuler"
       }
     },
     "FOLDER_DIALOG": {
@@ -125,6 +140,29 @@
         "CREATED_DATE": "Date de création",
         "MODIFIER": "Modificateur",
         "MODIFIED_DATE": "Date de Modification"
+      },
+      "ACTIONS": {
+        "EDIT": "Modifier",
+        "SAVE": "Enregistrer",
+        "CANCEL": "Annuler",
+        "TOGGLE": "Basculer la valeur"
+      }
+    }
+  },
+  "COMMENTS": {
+    "NONE": "Pas de commentaire",
+    "ADD": "Ajouter un commentaire",
+    "HEADER": "Commentaires ({{ count }})",
+    "CREATED_BY_HEADER": "Créé par",
+    "MESSAGE_HEADER": "Message",
+    "DIALOG": {
+      "TITLE": "Nouveau commentaire",
+      "LABELS": {
+        "MESSAGE": "Message"
+      },
+      "BUTTON": {
+        "ADD": "Ajouter un commentaire",
+        "CANCEL": "Annuler"
       }
     }
   },
@@ -210,10 +248,19 @@
     "LOADING": "Chargement en cours",
     "UNKNOWN_FORMAT": "Impossible de charger l'aperçu",
     "SIDEBAR": {
+      "THUMBNAILS": {
+        "PAGE": "Page {{ pageNum }}"
+      },
       "METADATA": {
         "MORE_INFORMATION": "Plus d'informations",
         "LESS_INFORMATION": "Moins d'informations"
       }
+    },
+    "PDF_DIALOG": {
+      "SUBMIT": "Envoyer",
+      "CLOSE": "Fermer",
+      "PLACEHOLDER": "Mot de passe",
+      "ERROR": "Mot de passe erroné"
     }
   }
 }

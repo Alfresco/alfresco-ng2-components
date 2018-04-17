@@ -148,7 +148,7 @@ describe('InfinitePaginationComponent', () => {
 
             component.onLoadMore();
 
-            expect(testTarget.updatePagination).toHaveBeenCalledWith({ maxItems: 444, skipCount: 444, totalItems: 888, hasMoreItems: true });
+            expect(testTarget.updatePagination).toHaveBeenCalledWith({ maxItems: 444, skipCount: 444, totalItems: 888, hasMoreItems: true, merge: true });
         });
 
         it('should unsubscribe from the target\'s pagination on onDestroy', () => {

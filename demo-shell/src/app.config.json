@@ -2,6 +2,7 @@
     "$schema": "../../lib/core/app-config/schema.json",
     "ecmHost": "http://{hostname}:{port}",
     "bpmHost": "http://{hostname}:{port}",
+    "contextRootBpm": "activiti-app",
     "application": {
         "name": "Alfresco ADF Application"
     },
@@ -51,6 +52,118 @@
             "label": "Simplified Chinese"
         }
     ],
+    "search": {
+      "limits": {
+        "permissionEvaluationTime": null,
+        "permissionEvaluationCount": null
+      },
+      "filterQueries": [
+        { "query": "TYPE:'cm:folder' OR TYPE:'cm:content'" },
+        { "query": "NOT cm:creator:System" }
+      ],
+      "facetFields": {
+        "facets": [
+          { "field": "content.mimetype", "mincount": 1, "label": "Type" },
+          { "field": "content.size", "mincount": 1, "label": "Size" },
+          { "field": "creator", "mincount": 1, "label": "Creator" },
+          { "field": "modifier", "mincount": 1, "label": "Modifier" }
+        ]
+      },
+      "facetQueries": [
+        { "query": "created:2018", "label": "Created This Year" },
+        { "query": "content.mimetype", "label": "Type" },
+        { "query": "content.size:[0 TO 10240]", "label": "Size: xtra small"},
+        { "query": "content.size:[10240 TO 102400]", "label": "Size: small"},
+        { "query": "content.size:[102400 TO 1048576]", "label": "Size: medium" },
+        { "query": "content.size:[1048576 TO 16777216]", "label": "Size: large" },
+        { "query": "content.size:[16777216 TO 134217728]", "label": "Size: xtra large" },
+        { "query": "content.size:[134217728 TO MAX]", "label": "Size: XX large" }
+      ],
+      "query": {
+        "categories": [
+          {
+          "id": "broken",
+          "name": "Broken Facet",
+          "enabled": false,
+          "expanded": false,
+          "component": {
+            "selector": "adf-search-text",
+            "settings": {
+              "field": "fieldname"
+            }
+          }
+        },
+        {
+          "id": "queryName",
+          "name": "Name",
+          "enabled": true,
+          "expanded": true,
+          "component": {
+            "selector": "adf-search-text",
+            "settings": {
+              "pattern": "cm:name:'(.*?)'",
+              "field": "cm:name",
+              "placeholder": "Enter the name"
+            }
+          }
+        },
+        {
+          "id": "queryFields",
+          "name": "Fields",
+          "enabled": true,
+          "expanded": false,
+          "component": {
+            "selector": "adf-search-fields",
+            "settings": {
+              "field": null,
+              "options": [
+                { "name": "Name", "value": "name", "fields": ["name"], "default": true },
+                { "name": "File Size", "value": "content.sizeInBytes", "fields": ["content"], "default": true },
+                { "name": "Modified On", "value": "modifiedAt", "fields": ["modifiedAt"], "default": true },
+                { "name": "Modified By", "value": "modifiedByUser.displayName", "fields": ["modifiedByUser"], "default": true }
+              ]
+            }
+          }
+        },
+        {
+          "id": "queryType",
+          "name": "Type",
+          "enabled": true,
+          "expanded": false,
+          "component": {
+            "selector": "adf-search-radio",
+            "settings": {
+              "field": null,
+              "options": [
+                { "name": "None", "value": "", "default": true },
+                { "name": "All", "value": "TYPE:'cm:folder' OR TYPE:'cm:content'" },
+                { "name": "Folder", "value": "TYPE:'cm:folder'" },
+                { "name": "Document", "value": "TYPE:'cm:content'" }
+              ]
+            }
+          }
+        },
+        {
+          "id": "queryLocations",
+          "name": "Locations",
+          "enabled": true,
+          "expanded": false,
+          "component": {
+            "selector": "adf-search-scope-locations",
+            "settings": {
+              "field": null,
+              "options": [
+                { "name": "Default", "value": "nodes", "default": true },
+                { "name": "Nodes", "value": "nodes" },
+                { "name": "Deleted Nodes", "value": "deleted-nodes" },
+                { "name": "Versions", "value": "versions" }
+              ]
+            }
+          }
+        }
+        ]
+      }
+    },
     "pagination": {
         "size": 25,
         "supportedPageSizes": [ 5, 10, 15, 20 ]
@@ -371,5 +484,9 @@
                 "exif:exif": "*"
             }
         }
+    },
+    "adf-version-manager": {
+      "allowComments": true,
+      "allowDownload": true
     }
 }

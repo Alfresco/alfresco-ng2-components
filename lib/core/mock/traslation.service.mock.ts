@@ -25,17 +25,31 @@ export interface LangChangeEvent {
 
 export class TranslationMock {
 
+    defaultLang: string = 'en';
+    userLang: string;
+    customLoader: any;
+    translate: any;
+
     onLangChange: EventEmitter<LangChangeEvent> = new EventEmitter<LangChangeEvent>();
 
     addTranslationFolder() {
 
     }
 
-    get(key: string|Array<string>, interpolateParams?: Object): Observable<string|any> {
+    onTranslationChanged() {
+
+    }
+
+    use(): any {
+
+    }
+
+    get(key: string | Array<string>, interpolateParams?: Object): Observable<string | any> {
         return Observable.of(key);
     }
 
     instant(key: string | Array<string>, interpolateParams?: Object): string | any {
         return key;
     }
+
 }

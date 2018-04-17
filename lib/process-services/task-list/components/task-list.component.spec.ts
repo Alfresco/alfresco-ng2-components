@@ -77,10 +77,6 @@ describe('TaskListComponent', () => {
         ]
     };
 
-    let mockErrorTaskList = {
-        error: 'wrong request'
-    };
-
     let fakeCutomSchema = [
             {
                 'key': 'fakeName',
@@ -127,7 +123,6 @@ describe('TaskListComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-
             declarations: [
                 TaskListComponent
             ],
@@ -361,27 +356,6 @@ describe('TaskListComponent', () => {
         expect(dataRow[0].isSelected).toEqual(false);
         expect(dataRow[1].getValue('id')).toEqual('888');
         expect(dataRow[1].isSelected).toEqual(true);
-    });
-
-    xit('should throw an exception when the response is wrong', (done) => {
-        let state = new SimpleChange(null, 'open', true);
-        let assignment = new SimpleChange(null, 'fake-assignee', true);
-
-        component.error.subscribe((err) => {
-            expect(err).toBeDefined();
-            expect(err.error).toBe('wrong request');
-            done();
-        });
-
-        component.ngAfterContentInit();
-        fixture.detectChanges();
-        component.ngOnChanges({'state': state, 'assignment': assignment});
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 404,
-            contentType: 'application/json',
-            responseText: JSON.stringify(mockErrorTaskList)
-        });
     });
 
     it('should reload tasks when reload() is called', (done) => {
@@ -659,8 +633,7 @@ describe('CustomTaskListComponent', () => {
             ],
             providers: [
                 TaskListService
-            ],
-            imports: []
+            ]
         }).compileComponents();
     }));
 

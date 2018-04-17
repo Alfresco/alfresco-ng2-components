@@ -22,7 +22,6 @@ import { RatingService } from './services/rating.service';
     selector: 'adf-like',
     styleUrls: ['./like.component.scss'],
     templateUrl: './like.component.html',
-    providers: [RatingService],
     encapsulation: ViewEncapsulation.None
 })
 export class LikeComponent implements OnChanges {

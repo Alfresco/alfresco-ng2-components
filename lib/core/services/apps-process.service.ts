@@ -30,6 +30,10 @@ export class AppsProcessService {
                 private logService: LogService) {
     }
 
+    /**
+     * Gets a list of deployed apps for this user.
+     * @returns The list of deployed apps
+     */
     getDeployedApplications(): Observable<AppDefinitionRepresentation[]> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.appsApi.getAppDefinitions())
             .map((response: any) => {
@@ -38,6 +42,11 @@ export class AppsProcessService {
             .catch(err => this.handleError(err));
     }
 
+    /**
+     * Gets a list of deployed apps for this user, where the app name is `name`.
+     * @param name Name of the app
+     * @returns The list of deployed apps
+     */
     getDeployedApplicationsByName(name: string): Observable<AppDefinitionRepresentation> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.appsApi.getAppDefinitions())
             .map((response: any) => {
@@ -46,6 +55,11 @@ export class AppsProcessService {
             .catch(err => this.handleError(err));
     }
 
+    /**
+     * Gets the details for a specific app ID number.
+     * @param appId ID of the target app
+     * @returns Details of the app
+     */
     getApplicationDetailsById(appId: number): Observable<AppDefinitionRepresentation> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.appsApi.getAppDefinitions())
             .map((response: any) => {

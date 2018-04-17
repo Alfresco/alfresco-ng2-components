@@ -54,4 +54,4 @@ install:
 # Don't actually build.
 build: off
 matrix:
-  fast_finish: false
+  fast_finish: true

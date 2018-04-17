@@ -22,7 +22,8 @@ import {
     ClickNotification,
     LogService,
     UpdateNotification,
-    FormRenderingService
+    FormRenderingService,
+    CommentsComponent
 } from '@alfresco/adf-core';
 import {
     Component,
@@ -42,16 +43,12 @@ import { ContentLinkModel, FormFieldValidator, FormModel, FormOutcomeEvent } fro
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
-import { CommentsComponent } from '../../comments';
 import { AttachFileWidgetComponent, AttachFolderWidgetComponent } from '../../content-widget';
 
 @Component({
     selector: 'adf-task-details',
     templateUrl: './task-details.component.html',
-    styleUrls: ['./task-details.component.scss'],
-    providers: [
-        CardViewUpdateService
-    ]
+    styleUrls: ['./task-details.component.scss']
 })
 export class TaskDetailsComponent implements OnInit, OnChanges {
 
@@ -159,6 +156,14 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     /** Emitted when a task is assigned. */
     @Output()
     assignTask: EventEmitter<void> = new EventEmitter<void>();
+
+    /** Emitted when a task is claimed. */
+    @Output()
+    claimedTask: EventEmitter<string> = new EventEmitter<string>();
+
+    /** Emitted when a task is unclaimed. */
+    @Output()
+    unClaimedTask: EventEmitter<string> = new EventEmitter<string>();
 
     taskDetails: TaskDetailsModel;
     taskFormName: string = null;
@@ -281,11 +286,15 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     }
 
     isAssignedToMe(): boolean {
-        return this.taskDetails.assignee.email === this.authService.getBpmUsername();
+        return this.isAssigned() ? this.taskDetails.assignee.email === this.authService.getBpmUsername() : false;
+    }
+
+    isCompleteButtonEnabled(): boolean {
+        return this.isAssignedToMe() || this.canInitiatorComplete();
     }
 
     isCompleteButtonVisible(): boolean {
-        return this.isAssignedToMe() || this.canInitiatorComplete();
+        return !this.hasFormKey() && this.isTaskActive() && this.isCompleteButtonEnabled();
     }
 
     canInitiatorComplete(): boolean {
@@ -375,6 +384,12 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     }
 
     onClaimAction(taskId: string): void {
+        this.claimedTask.emit(taskId);
+        this.loadDetails(taskId);
+    }
+
+    onUnclaimAction(taskId: string): void {
+        this.unClaimedTask.emit(taskId);
         this.loadDetails(taskId);
     }
 

@@ -39,21 +39,21 @@ import { SocialComponent } from './components/social/social.component';
 import { FilesComponent } from './components/files/files.component';
 import { FormComponent } from './components/form/form.component';
 
-import { UploadButtonComponent } from '@alfresco/adf-content-services';
 import { FileViewComponent } from './components/file-view/file-view.component';
 import { CustomSourcesComponent } from './components/files/custom-sources.component';
 import { FormListComponent } from './components/form/form-list.component';
 import { OverlayViewerComponent } from './components/overlay-viewer/overlay-viewer.component';
 import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
+import { FormLoadingComponent } from './components/form/form-loading.component';
+import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
+import { BlobPreviewComponent } from './components/blob-preview/blob-preview.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'settings', component: SettingsComponent },
-    { path: 'files/:nodeId/view', component: FileViewComponent, canActivate: [ AuthGuardEcm ] },
-    {
-        path: 'preview/s/:id',
-        component: SharedLinkViewComponent
-    },
+    { path: 'files/:nodeId/view', component: FileViewComponent, canActivate: [ AuthGuardEcm ], outlet: 'overlay' },
+    { path: 'preview/blob', component: BlobPreviewComponent, outlet: 'overlay', pathMatch: 'full' },
+    { path: 'preview/s/:id', component: SharedLinkViewComponent },
     {
         path: '',
         component: AppLayoutComponent,
@@ -66,6 +66,10 @@ export const appRoutes: Routes = [
             {
                 path: 'home',
                 component: HomeComponent
+            },
+            {
+                path: 'settings-layout',
+                component: SettingsComponent
             },
             {
                 path: 'trashcan',
@@ -83,6 +87,11 @@ export const appRoutes: Routes = [
                 canActivate: [AuthGuardEcm]
             },
             {
+                path: 'files/:id/display/:mode',
+                component: FilesComponent,
+                canActivate: [AuthGuardEcm]
+            },
+            {
                 path: 'dl-custom-sources',
                 component: CustomSourcesComponent,
                 canActivate: [AuthGuardEcm]
@@ -90,11 +99,6 @@ export const appRoutes: Routes = [
             {
                 path: 'datatable',
                 component: DataTableComponent
-            },
-            {
-                path: 'uploader',
-                component: UploadButtonComponent,
-                canActivate: [AuthGuardEcm]
             },
             {
                 path: 'search',
@@ -164,9 +168,15 @@ export const appRoutes: Routes = [
                 component: SocialComponent,
                 canActivate: [AuthGuardEcm]
             },
+            {
+                path: 'permissions/:id',
+                component: DemoPermissionComponent,
+                canActivate: [AuthGuardEcm]
+            },
             { path: 'about', component: AboutComponent },
             { path: 'form', component: FormComponent },
             { path: 'form-list', component: FormListComponent },
+            { path: 'form-loading', component: FormLoadingComponent },
             {
                 path: 'overlay-viewer',
                 component: OverlayViewerComponent,

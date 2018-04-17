@@ -214,7 +214,7 @@
                                                 "type": "array"
                                             }
                                         }
-                                    },                                 
+                                    },
                                     {
                                         "type": "object",
                                         "required": [
@@ -249,14 +249,14 @@
                                                 "type": "array"
                                             }
                                         }
-                                    }                                    
+                                    }
                                 ]
                             }
-                        }                        
+                        }
                     }
                 }
             ]
-        }        
+        }
     },
 
     "type": "object",
@@ -265,8 +265,16 @@
             "description": "ECM host",
             "type": "string"
         },
+        "contextRootEcm": {
+          "description": "The context root of the ECM host",
+          "type": "string"
+      },
         "bpmHost": {
             "description": "BPM host",
+            "type": "string"
+        },
+        "contextRootBpm": {
+            "description": "The context root of the BPM host",
             "type": "string"
         },
         "application": {
@@ -459,6 +467,14 @@
               "authPath": { "type": "string" },
               "clientId": { "type": "string" },
               "secret": { "type": "string" }
+          }
+        },
+        "adf-version-manager": {
+          "description": "Configuration parameters for Version Manager component",
+          "type": "object",
+          "properties": {
+            "allowComments": { "type": "boolean" },
+            "allowDownload": { "type": "boolean" }
           }
         }
     }

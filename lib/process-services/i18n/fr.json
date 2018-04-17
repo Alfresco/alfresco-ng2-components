@@ -87,23 +87,6 @@
       "PEOPLE": {
         "NONE": "Aucune personne impliquée"
       },
-      "COMMENTS": {
-        "NONE": "Pas de commentaire",
-        "ADD": "Ajouter un commentaire",
-        "HEADER": "Commentaires ({{ count }})",
-        "CREATED_BY_HEADER": "Créé par",
-        "MESSAGE_HEADER": "Message",
-        "DIALOG": {
-          "TITLE": "Nouveau commentaire",
-          "LABELS": {
-            "MESSAGE": "Message"
-          },
-          "BUTTON": {
-            "ADD": "Ajouter un commentaire",
-            "CANCEL": "Annuler"
-          }
-        }
-      },
       "CHECKLIST": {
         "NONE": "Aucune liste de contrôle"
       },
@@ -161,6 +144,11 @@
       "EMPTY-LIST": {
         "HEADER": "Aucun fichier disponible"
       }
+    },
+    "STANDALONE_TASK": {
+      "NO_FORM_MESSAGE": "Aucun formulaire joint",
+      "COMPLETE_TASK_MESSAGE": "La tâche {{taskName}} est terminée",
+      "COMPLETE_TASK_SUB_MESSAGE": "Aucun formulaire à ajouter"
     }
   },
   "ADF_PROCESS_LIST": {

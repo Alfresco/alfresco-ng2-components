@@ -1,0 +1,16 @@
+[
+    { "title": "Angular Material Design", "file": "angular-material-design.md" },
+    { "title": "Form Extensibility and Customisation", "file": "extensibility.md" },
+    { "title": "Internationalization in ADF", "file": "internationalization.md" },
+    { "title": "Theming", "file": "theming.md" },
+    { "title": "Typography", "file": "typography.md" },
+    { "title": "Walkthrough - adding indicators to highlight information about a node", "file": "metadata-indicators.md" },
+    { "title": "Tutorials", "file": "tutorialIndex.md",
+        "children": [
+            { "title": "Preparing the development environment", "file": "preparing-environment.md"},
+            { "title": "Adding a new component", "file": "new-component.md"},
+            { "title": "Adding a new view", "file": "new-view.md"},
+            { "title": "Using components", "file": "using-components.md"}
+        ]
+    }
+]

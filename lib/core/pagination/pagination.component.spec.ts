@@ -21,8 +21,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { Pagination } from 'alfresco-js-api';
 import { MaterialModule } from '../material.module';
-import { AppConfigService } from '../app-config/app-config.service';
-import { LogService } from '../services/log.service';
 import { TranslateLoaderService } from '../services/translate-loader.service';
 import { TranslationService } from '../services/translation.service';
 import { PaginationComponent } from './pagination.component';
@@ -68,9 +66,7 @@ describe('PaginationComponent', () => {
                 PaginationComponent
             ],
             providers: [
-                TranslationService,
-                LogService,
-                AppConfigService
+                TranslationService
             ],
             schemas: [ NO_ERRORS_SCHEMA ]
         }).compileComponents()

@@ -20,3 +20,5 @@ export * from './tag-list.component';
 export * from './tag-node-list.component';
 
 export * from './services/tag.service';
+
+export * from './tag.module';

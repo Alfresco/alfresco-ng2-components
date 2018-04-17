@@ -20,15 +20,10 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { searchMockApi, mockError, fakeSearch } from '../mock/search.service.mock';
 import { CookieServiceMock } from './../mock/cookie.service.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { SettingsService } from './settings.service';
 import { AppConfigModule } from '../app-config/app-config.module';
-import { AuthenticationService } from './authentication.service';
 import { CookieService } from './cookie.service';
-import { LogService } from './log.service';
 import { SearchService } from './search.service';
-import { StorageService } from './storage.service';
 import { TranslateLoaderService } from './translate-loader.service';
-import { UserPreferencesService } from './user-preferences.service';
 
 describe('SearchService', () => {
 
@@ -48,14 +43,7 @@ describe('SearchService', () => {
             ],
             providers: [
                 SearchService,
-                AuthenticationService,
-                AlfrescoApiService,
-                SettingsService,
-                AuthenticationService,
-                StorageService,
-                UserPreferencesService,
-                { provide: CookieService, useClass: CookieServiceMock },
-                LogService
+                { provide: CookieService, useClass: CookieServiceMock }
             ]
         }).compileComponents();
     }));
@@ -113,17 +101,4 @@ describe('SearchService', () => {
             }
         );
     });
-
-    it('should notify a general error if the API does not return a specific error', (done) => {
-        spyOn(searchMockApi.core.queriesApi, 'findNodes').and.returnValue(Promise.reject(null));
-        service.getNodeQueryResults('').subscribe(
-            () => {},
-            (res: any) => {
-                expect(res).toBeDefined();
-                expect(res).toEqual('Server error');
-                done();
-            }
-        );
-    });
-
 });

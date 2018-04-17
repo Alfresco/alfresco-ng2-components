@@ -50,6 +50,12 @@
             padding-left: 1%;
             padding-right: 1%;
         }
+        
+        @media screen and ($mat-small) {
+            .grid-list-item {
+                flex: 1 0 100%;
+            }
+        }
 
         .mat-form-field {
             width: 100%;
@@ -69,10 +75,6 @@
 
         .mat-focused {
 
-            .mat-input-placeholder-wrapper {
-                display: none;
-            }
-
             label {
                 transform: scaleX(1);
                 transition: transform 150ms linear,
@@ -91,4 +93,3 @@
 
     }
 }
-

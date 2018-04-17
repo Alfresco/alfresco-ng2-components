@@ -27,7 +27,6 @@ import { ContentMetadataService } from '../../services/content-metadata.service'
 import { BasicPropertiesService } from '../../services/basic-properties.service';
 import { PropertyGroupTranslatorService } from '../../services/property-groups-translator.service';
 import { PropertyDescriptorsService } from '../../services/property-descriptors.service';
-import { AlfrescoApiService } from '@alfresco/adf-core';
 import { ContentMetadataConfigFactory } from '../../services/config/content-metadata-config.factory';
 
 describe('ContentMetadataCardComponent', () => {
@@ -54,8 +53,7 @@ describe('ContentMetadataCardComponent', () => {
                 BasicPropertiesService,
                 PropertyGroupTranslatorService,
                 ContentMetadataConfigFactory,
-                PropertyDescriptorsService,
-                AlfrescoApiService
+                PropertyDescriptorsService
             ]
         }).compileComponents();
     }));
@@ -114,6 +112,14 @@ describe('ContentMetadataCardComponent', () => {
         expect(contentMetadataComponent.editable).toBe(true);
     });
 
+    it('should pass through the multi to the underlying component', () => {
+        component.multi = true;
+        fixture.detectChanges();
+        const contentMetadataComponent = fixture.debugElement.query(By.directive(ContentMetadataComponent)).componentInstance;
+
+        expect(contentMetadataComponent.multi).toBe(true);
+    });
+
     it('should pass through the expanded to the underlying component', () => {
         component.expanded = true;
         fixture.detectChanges();
@@ -169,5 +175,18 @@ describe('ContentMetadataCardComponent', () => {
         const buttonLabel = fixture.debugElement.query(By.css('[data-automation-id="mata-data-card-toggle-expand-label"]'));
 
         expect(buttonLabel.nativeElement.innerText.trim()).toBe('ADF_VIEWER.SIDEBAR.METADATA.LESS_INFORMATION');
+    });
+
+    it('should show the edit button by default', () => {
+        const button = fixture.debugElement.query(By.css('[data-automation-id="mata-data-card-toggle-edit"]'));
+        expect(button).not.toBeNull();
+    });
+
+    it('should hode the edit button in readOnly is true', () => {
+        component.readOnly = true;
+        fixture.detectChanges();
+
+        const button = fixture.debugElement.query(By.css('[data-automation-id="mata-data-card-toggle-edit"]'));
+        expect(button).toBeNull();
     });
 });

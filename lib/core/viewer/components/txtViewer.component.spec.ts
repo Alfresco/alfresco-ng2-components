@@ -17,14 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import {
-    AlfrescoApiService,
-    AuthenticationService,
-    SettingsService
-} from '../../services';
 import { TxtViewerComponent } from './txtViewer.component';
-
-declare var require: any;
 
 describe('Text View component', () => {
 
@@ -34,12 +27,7 @@ describe('Text View component', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [TxtViewerComponent],
-            providers: [
-                SettingsService,
-                AuthenticationService,
-                AlfrescoApiService
-            ]
+            declarations: [TxtViewerComponent]
         }).compileComponents();
     }));
 
@@ -54,7 +42,7 @@ describe('Text View component', () => {
 
         it('Should text container be present with urlfile', (done) => {
             fixture.detectChanges();
-            let urlFile = require('../assets/fake-test-file.txt');
+            let urlFile = './fake-test-file.txt';
             let change = new SimpleChange(null, urlFile, true);
 
             component.ngOnChanges({ 'urlFile': change }).then(() => {

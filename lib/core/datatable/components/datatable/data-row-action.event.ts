@@ -18,6 +18,17 @@
 import { BaseEvent } from '../../../events';
 import { DataRow } from '../../data/data-row.model';
 
+export class DataRowActionModel {
+
+    row: DataRow;
+    action: any;
+
+    constructor(row: DataRow, action: any) {
+        this.row = row;
+        this.action = action;
+    }
+}
+
 export class DataRowActionEvent extends BaseEvent<DataRowActionModel> {
 
     // backwards compatibility with 1.2.0 and earlier
@@ -30,15 +41,4 @@ export class DataRowActionEvent extends BaseEvent<DataRowActionModel> {
         this.value = new DataRowActionModel(row, action);
     }
 
-}
-
-export class DataRowActionModel {
-
-    row: DataRow;
-    action: any;
-
-    constructor(row: DataRow, action: any) {
-        this.row = row;
-        this.action = action;
-    }
 }

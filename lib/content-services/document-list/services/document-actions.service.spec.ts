@@ -16,10 +16,11 @@
  */
 
 import {
-    AlfrescoApiService,
+    AlfrescoApiServiceMock,
     AppConfigService,
+    ContentService,
     StorageService,
-    ContentService
+    TranslationMock
 } from '@alfresco/adf-core';
 import { FileNode, FolderNode } from '../../mock';
 import { ContentActionHandler } from '../models/content-action.model';
@@ -36,18 +37,23 @@ describe('DocumentActionsService', () => {
 
     beforeEach(() => {
         let contentService = new ContentService(null, null, null, null);
-        let alfrescoApiService = new AlfrescoApiService(new AppConfigService(null), new StorageService());
-        documentListService = new DocumentListService(null, contentService, alfrescoApiService, null, null);
+        let alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
 
-        service = new DocumentActionsService(null, documentListService, contentService);
+        documentListService = new DocumentListService(null, contentService, alfrescoApiService, null, null);
+        service = new DocumentActionsService(null, null, new TranslationMock(), documentListService, contentService);
     });
 
     it('should register default download action', () => {
         expect(service.getHandler('download')).not.toBeNull();
     });
 
+    it('should register lock action', () => {
+        expect(service.getHandler('lock')).toBeDefined();
+    });
+
     it('should register custom action handler', () => {
-        let handler: ContentActionHandler = function (obj: any) {};
+        let handler: ContentActionHandler = function (obj: any) {
+        };
         service.setHandler('<key>', handler);
         expect(service.getHandler('<key>')).toBe(handler);
     });
@@ -57,7 +63,8 @@ describe('DocumentActionsService', () => {
     });
 
     it('should be case insensitive for keys', () => {
-        let handler: ContentActionHandler = function (obj: any) {};
+        let handler: ContentActionHandler = function (obj: any) {
+        };
         service.setHandler('<key>', handler);
         expect(service.getHandler('<KEY>')).toBe(handler);
     });
@@ -71,7 +78,7 @@ describe('DocumentActionsService', () => {
         let file = new FileNode();
         expect(service.canExecuteAction(file)).toBeTruthy();
 
-        service = new DocumentActionsService(nodeActionsService);
+        service = new DocumentActionsService(nodeActionsService, null, null);
         expect(service.canExecuteAction(file)).toBeFalsy();
     });
 
@@ -82,7 +89,8 @@ describe('DocumentActionsService', () => {
     });
 
     it('should set new handler only by key', () => {
-        let handler: ContentActionHandler = function (obj: any) {};
+        let handler: ContentActionHandler = function (obj: any) {
+        };
         expect(service.setHandler(null, handler)).toBeFalsy();
         expect(service.setHandler('', handler)).toBeFalsy();
         expect(service.setHandler('my-handler', handler)).toBeTruthy();
@@ -204,22 +212,9 @@ describe('DocumentActionsService', () => {
         expect(documentListService.deleteNode).not.toHaveBeenCalled();
     });
 
-    it('should reload target upon node deletion', () => {
-        spyOn(documentListService, 'deleteNode').and.returnValue(Observable.of(true));
-
-        let target = jasmine.createSpyObj('obj', ['reload']);
-        let permission = 'delete';
-        let file: any = new FileNode();
-        file.entry.allowableOperations = ['delete'];
-        service.getHandler('delete')(file, target, permission);
-
-        expect(documentListService.deleteNode).toHaveBeenCalled();
-        expect(target.reload).toHaveBeenCalled();
-    });
-
     it('should emit success event upon node deletion', (done) => {
-        service.success.subscribe((nodeId) => {
-            expect(nodeId).not.toBeNull();
+        service.success.subscribe((message) => {
+            expect(message).toEqual('CORE.DELETE_NODE.SINGULAR');
             done();
         });
         spyOn(documentListService, 'deleteNode').and.returnValue(Observable.of(true));

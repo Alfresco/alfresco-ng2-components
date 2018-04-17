@@ -9,6 +9,9 @@
     "FIELD": {
       "LOCALSTORAGE": "Локальное хранение",
       "SOURCE": "Выберите источник из ",
+      "SHOW_FILE": "Показать",
+      "DOWNLOAD_FILE": "Скачать",
+      "REMOVE_FILE": "Удалить",
       "UPLOAD": "Загрузить",
       "REQUIRED": "*Обязательное поле",
       "VALIDATOR": {
@@ -46,6 +49,18 @@
           "CANCEL": "Отмена"
         },
         "TITLE": "Добавление файлов в архив, это может занять несколько минут"
+      }
+    },
+    "FILE_DIALOG": {
+      "FILE_LOCK": "Заблокировать файл",
+      "ALLOW_OTHERS_CHECKBOX": "Разрешить владельцу вносить изменения в этот файл",
+      "FILE_LOCK_CHECKBOX": "Заблокировать файл",
+      "TIME_LOCK_CHECKBOX": "Время блокировки",
+      "SAVE_BUTTON": {
+        "LABEL": "Сохранить"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "Отмена"
       }
     },
     "FOLDER_DIALOG": {
@@ -125,6 +140,29 @@
         "CREATED_DATE": "Дата создания",
         "MODIFIER": "Редактор",
         "MODIFIED_DATE": "Дата изменения"
+      },
+      "ACTIONS": {
+        "EDIT": "Редактировать",
+        "SAVE": "Сохранить",
+        "CANCEL": "Отмена",
+        "TOGGLE": "Переключить значение"
+      }
+    }
+  },
+  "COMMENTS": {
+    "NONE": "Нет комментариев",
+    "ADD": "Добавить комментарий",
+    "HEADER": "Комментарии ({{ count }})",
+    "CREATED_BY_HEADER": "Создано пользователем",
+    "MESSAGE_HEADER": "Сообщение",
+    "DIALOG": {
+      "TITLE": "Новый комментарий",
+      "LABELS": {
+        "MESSAGE": "Сообщение"
+      },
+      "BUTTON": {
+        "ADD": "Добавить комментарий",
+        "CANCEL": "Отмена"
       }
     }
   },
@@ -210,10 +248,19 @@
     "LOADING": "Загружается",
     "UNKNOWN_FORMAT": "Не удалось загрузить предварительный просмотр",
     "SIDEBAR": {
+      "THUMBNAILS": {
+        "PAGE": "Страница {{ pageNum }}"
+      },
       "METADATA": {
         "MORE_INFORMATION": "Дополнительные сведения",
         "LESS_INFORMATION": "Краткие сведения"
       }
+    },
+    "PDF_DIALOG": {
+      "SUBMIT": "Передать",
+      "CLOSE": "Закрыть",
+      "PLACEHOLDER": "Пароль",
+      "ERROR": "Неверный пароль"
     }
   }
 }

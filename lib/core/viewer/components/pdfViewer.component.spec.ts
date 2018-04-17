@@ -15,12 +15,8 @@
  * limitations under the License.
  */
 
+import { Component, SimpleChange, ViewChild } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import {
-    AlfrescoApiService,
-    AuthenticationService,
-    SettingsService
-} from '../../services';
 import { MaterialModule } from '../../material.module';
 import { ToolbarModule } from '../../toolbar/toolbar.module';
 import { EventMock } from '../../mock/event.mock';
@@ -28,36 +24,80 @@ import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { PdfViewerComponent } from './pdfViewer.component';
 import { PdfThumbListComponent } from './pdfViewer-thumbnails.component';
 import { PdfThumbComponent } from './pdfViewer-thumb.component';
+import { RIGHT_ARROW, LEFT_ARROW } from '@angular/cdk/keycodes';
+import { MatDialog } from '@angular/material';
+import { Observable } from 'rxjs/Observable';
+import { ViewerModule } from '../viewer.module';
 
-declare var require: any;
+declare let PDFJS: any;
 
-describe('Test PdfViewer component', () => {
+@Component({
+    selector: 'adf-test-dialog-component',
+    template: ''
+})
+class TestDialogComponent {
+}
 
-    let component: PdfViewerComponent;
-    let fixture: ComponentFixture<PdfViewerComponent>;
-    let element: HTMLElement;
+@Component({
+    template: `
+        <adf-pdf-viewer [allowThumbnails]="true"
+                        [showToolbar]="true"
+                        [urlFile]="urlFile">
+        </adf-pdf-viewer>
+    `
+})
+class UrlTestComponent {
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                ToolbarModule,
-                MaterialModule
-            ],
-            declarations: [
-                PdfViewerComponent,
-                PdfThumbListComponent,
-                PdfThumbComponent
-            ],
-            providers: [
-                SettingsService,
-                AuthenticationService,
-                AlfrescoApiService,
-                RenderingQueueServices
-            ]
-        }).compileComponents();
-    }));
+    @ViewChild(PdfViewerComponent)
+    pdfViewerComponent: PdfViewerComponent;
 
-    function createFakeBlob(): Blob {
+    urlFile: any;
+
+    constructor() {
+        this.urlFile = './fake-test-file.pdf';
+    }
+}
+
+@Component({
+    template: `
+        <adf-pdf-viewer [allowThumbnails]="true"
+                        [showToolbar]="true"
+                        [urlFile]="urlFile">
+        </adf-pdf-viewer>
+    `
+})
+class UrlTestPasswordComponent {
+
+    @ViewChild(PdfViewerComponent)
+    pdfViewerComponent: PdfViewerComponent;
+
+    urlFile: any;
+
+    constructor() {
+        this.urlFile = './fake-test-password-file.pdf';
+    }
+}
+
+@Component({
+    template: `
+        <adf-pdf-viewer [allowThumbnails]="true"
+                        [showToolbar]="true"
+                        [blobFile]="blobFile">
+        </adf-pdf-viewer>
+    `
+})
+class BlobTestComponent {
+
+    @ViewChild(PdfViewerComponent)
+    pdfViewerComponent: PdfViewerComponent;
+
+    blobFile: any;
+
+    constructor() {
+        this.blobFile = this.createFakeBlob();
+    }
+
+    createFakeBlob(): Blob {
         let pdfData = atob(
             'JVBERi0xLjcKCjEgMCBvYmogICUgZW50cnkgcG9pbnQKPDwKICAvVHlwZSAvQ2F0YWxvZwog' +
             'IC9QYWdlcyAyIDAgUgo+PgplbmRvYmoKCjIgMCBvYmoKPDwKICAvVHlwZSAvUGFnZXMKICAv' +
@@ -75,365 +115,484 @@ describe('Test PdfViewer component', () => {
         return new Blob([pdfData], { type: 'application/pdf' });
     }
 
-    beforeEach(() => {
+}
+
+describe('Test PdfViewer component', () => {
+
+    let component: PdfViewerComponent;
+    let fixture: ComponentFixture<PdfViewerComponent>;
+    let element: HTMLElement;
+    let change: any;
+    let dialog: MatDialog;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                ToolbarModule,
+                MaterialModule
+            ],
+            declarations: [
+                TestDialogComponent,
+                PdfViewerComponent,
+                PdfThumbListComponent,
+                PdfThumbComponent,
+                UrlTestComponent,
+                UrlTestPasswordComponent,
+                BlobTestComponent
+            ],
+            providers: [
+                {
+                    provide: MatDialog, useValue: {
+                    open: () => {
+                    }
+                }
+                },
+                RenderingQueueServices
+            ]
+        })
+            .overrideModule(ViewerModule, {
+                set: {
+                    entryComponents: [TestDialogComponent]
+                }
+            })
+            .compileComponents();
+    }));
+
+    beforeEach((done) => {
         fixture = TestBed.createComponent(PdfViewerComponent);
+        dialog = TestBed.get(MatDialog);
 
         element = fixture.nativeElement;
         component = fixture.componentInstance;
 
         component.showToolbar = true;
+        component.inputPage('1');
+        component.currentScale = 1;
+
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            done();
+        });
+    });
+
+    it('should Loader be present', () => {
+        expect(element.querySelector('.loader-container')).not.toBeNull();
+    });
+
+    describe('Required values', () => {
+        it('should thrown an error If urlfile is not present', () => {
+            change = new SimpleChange(null, null, true);
+
+            expect(() => {
+                component.ngOnChanges({ 'urlFile': change });
+            }).toThrow(new Error('Attribute urlFile or blobFile is required'));
+        });
+
+        it('should If blobFile is not present thrown an error ', () => {
+            change = new SimpleChange(null, null, true);
+
+            expect(() => {
+                component.ngOnChanges({ 'blobFile': change });
+            }).toThrow(new Error('Attribute urlFile or blobFile is required'));
+        });
 
     });
 
     describe('View with url file', () => {
-        beforeEach(() => {
-            component.urlFile = require('../assets/fake-test-file.pdf');
-            fixture.detectChanges();
+
+        let fixtureUrlTestComponent: ComponentFixture<UrlTestComponent>;
+        let elementUrlTestComponent: HTMLElement;
+
+        beforeEach((done) => {
+            fixtureUrlTestComponent = TestBed.createComponent(UrlTestComponent);
+            elementUrlTestComponent = fixtureUrlTestComponent.nativeElement;
+
+            fixtureUrlTestComponent.detectChanges();
+
+            fixtureUrlTestComponent.whenStable().then(() => {
+                done();
+            });
         });
 
-        it('should thrown an error If urlfile is not present', () => {
-            component.urlFile = undefined;
+        it('should Canvas be present', (done) => {
+            fixtureUrlTestComponent.detectChanges();
+            fixtureUrlTestComponent.whenStable().then(() => {
+                expect(elementUrlTestComponent.querySelector('.pdfViewer')).not.toBeNull();
+                expect(elementUrlTestComponent.querySelector('.viewer-pdf-viewer')).not.toBeNull();
+                done();
+            });
+        }, 5000);
 
-            fixture.detectChanges();
+        it('should Next an Previous Buttons be present', (done) => {
+            fixtureUrlTestComponent.detectChanges();
+            fixtureUrlTestComponent.whenStable().then(() => {
+                expect(elementUrlTestComponent.querySelector('#viewer-previous-page-button')).not.toBeNull();
+                expect(elementUrlTestComponent.querySelector('#viewer-next-page-button')).not.toBeNull();
+                done();
+            });
+        }, 5000);
 
-            expect(() => {
-                component.ngOnChanges(null);
-            }).toThrow(new Error('Attribute urlFile or blobFile is required'));
-        });
+        it('should Input Page elements be present', (done) => {
 
-        it('should Canvas be present', () => {
-            expect(element.querySelector('.pdfViewer')).not.toBeNull();
-            expect(element.querySelector('.viewer-pdf-viewer')).not.toBeNull();
-        });
+            fixtureUrlTestComponent.detectChanges();
+            fixtureUrlTestComponent.whenStable().then(() => {
+                expect(elementUrlTestComponent.querySelector('.viewer-pagenumber-input')).toBeDefined();
+                expect(elementUrlTestComponent.querySelector('.viewer-total-pages')).toBeDefined();
 
-        it('should Loader be present', () => {
-            expect(element.querySelector('.loader-container')).not.toBeNull();
-        });
+                expect(elementUrlTestComponent.querySelector('#viewer-previous-page-button')).not.toBeNull();
+                expect(elementUrlTestComponent.querySelector('#viewer-next-page-button')).not.toBeNull();
+                done();
+            });
+        }, 5000);
 
-        it('should Next an Previous Buttons be present', () => {
-            expect(element.querySelector('#viewer-previous-page-button')).not.toBeNull();
-            expect(element.querySelector('#viewer-next-page-button')).not.toBeNull();
-        });
-
-        it('should Input Page elements be present', () => {
-            expect(element.querySelector('.viewer-pagenumber-input')).toBeDefined();
-            expect(element.querySelector('.viewer-total-pages')).toBeDefined();
-
-            expect(element.querySelector('#viewer-previous-page-button')).not.toBeNull();
-            expect(element.querySelector('#viewer-next-page-button')).not.toBeNull();
-        });
-
-        it('should Toolbar be hide if showToolbar is false', () => {
+        it('should Toolbar be hide if showToolbar is false', (done) => {
             component.showToolbar = false;
 
-            fixture.detectChanges();
-
-            expect(element.querySelector('.viewer-toolbar-command')).toBeNull();
-            expect(element.querySelector('.viewer-toolbar-pagination')).toBeNull();
-        });
+            fixtureUrlTestComponent.detectChanges();
+            fixtureUrlTestComponent.whenStable().then(() => {
+                expect(elementUrlTestComponent.querySelector('.viewer-toolbar-command')).toBeNull();
+                expect(elementUrlTestComponent.querySelector('.viewer-toolbar-pagination')).toBeNull();
+                done();
+            });
+        }, 5000);
     });
 
     describe('View with blob file', () => {
 
-        beforeEach(() => {
-            component.urlFile = undefined;
-            component.blobFile = createFakeBlob();
+        let fixtureBlobTestComponent: ComponentFixture<BlobTestComponent>;
+        let componentBlobTestComponent: BlobTestComponent;
+        let elementBlobTestComponent: HTMLElement;
 
-            fixture.detectChanges();
+        beforeEach((done) => {
+            fixtureBlobTestComponent = TestBed.createComponent(BlobTestComponent);
+            componentBlobTestComponent = fixtureBlobTestComponent.componentInstance;
+            elementBlobTestComponent = fixtureBlobTestComponent.nativeElement;
+
+            fixtureBlobTestComponent.detectChanges();
+
+            componentBlobTestComponent.pdfViewerComponent.rendered.subscribe(() => {
+                done();
+            });
         });
 
-        it('should If blobFile is not present thrown an error ', () => {
-            component.blobFile = undefined;
-            expect(() => {
-                component.ngOnChanges(null);
-            }).toThrow(new Error('Attribute urlFile or blobFile is required'));
-        });
+        it('should Canvas be present', (done) => {
+            fixtureBlobTestComponent.detectChanges();
 
-        it('should Canvas be present', () => {
-            expect(element.querySelector('.pdfViewer')).not.toBeNull();
-            expect(element.querySelector('.viewer-pdf-viewer')).not.toBeNull();
-        });
+            fixtureBlobTestComponent.whenStable().then(() => {
+                expect(elementBlobTestComponent.querySelector('.pdfViewer')).not.toBeNull();
+                expect(elementBlobTestComponent.querySelector('.viewer-pdf-viewer')).not.toBeNull();
+                done();
+            };
+        }, 5000);
 
-        it('should Loader be present', () => {
-            expect(element.querySelector('.loader-container')).not.toBeNull();
-        });
+        it('should Next an Previous Buttons be present', (done) => {
+            fixtureBlobTestComponent.detectChanges();
 
-        it('should Next an Previous Buttons be present', () => {
-            expect(element.querySelector('#viewer-previous-page-button')).not.toBeNull();
-            expect(element.querySelector('#viewer-next-page-button')).not.toBeNull();
-        });
+            fixtureBlobTestComponent.whenStable().then(() => {
+                expect(elementBlobTestComponent.querySelector('#viewer-previous-page-button')).not.toBeNull();
+                expect(elementBlobTestComponent.querySelector('#viewer-next-page-button')).not.toBeNull();
+                done();
+            };
+        }, 5000);
 
-        it('should Input Page elements be present', () => {
-            expect(element.querySelector('.viewer-pagenumber-input')).toBeDefined();
-            expect(element.querySelector('.viewer-total-pages')).toBeDefined();
+        it('should Input Page elements be present', (done) => {
+            fixtureBlobTestComponent.detectChanges();
 
-            expect(element.querySelector('#viewer-previous-page-button')).not.toBeNull();
-            expect(element.querySelector('#viewer-next-page-button')).not.toBeNull();
-        });
+            fixtureBlobTestComponent.whenStable().then(() => {
+                expect(elementBlobTestComponent.querySelector('.viewer-pagenumber-input')).toBeDefined();
+                expect(elementBlobTestComponent.querySelector('.viewer-total-pages')).toBeDefined();
 
-        it('should Toolbar be hide if showToolbar is false', () => {
-            component.showToolbar = false;
+                expect(elementBlobTestComponent.querySelector('#viewer-previous-page-button')).not.toBeNull();
+                expect(elementBlobTestComponent.querySelector('#viewer-next-page-button')).not.toBeNull();
+                done();
+            };
+        }, 5000);
 
-            fixture.detectChanges();
+        it('should Toolbar be hide if showToolbar is false', (done) => {
+            componentBlobTestComponent.pdfViewerComponent.showToolbar = false;
 
-            expect(element.querySelector('.viewer-toolbar-command')).toBeNull();
-            expect(element.querySelector('.viewer-toolbar-pagination')).toBeNull();
-        });
+            fixtureBlobTestComponent.detectChanges();
+
+            fixtureBlobTestComponent.whenStable().then(() => {
+                expect(elementBlobTestComponent.querySelector('.viewer-toolbar-command')).toBeNull();
+                expect(elementBlobTestComponent.querySelector('.viewer-toolbar-pagination')).toBeNull();
+                done();
+            };
+        }, 5000);
     });
 
     describe('User interaction', () => {
 
-        beforeEach(async(() => {
-            component.urlFile = require('../assets/fake-test-file.pdf');
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                component.inputPage('1');
+        let fixtureUrlTestComponent: ComponentFixture<UrlTestComponent>;
+        let componentUrlTestComponent: UrlTestComponent;
+        let elementUrlTestComponent: HTMLElement;
+
+        beforeEach((done) => {
+            fixtureUrlTestComponent = TestBed.createComponent(UrlTestComponent);
+            componentUrlTestComponent = fixtureUrlTestComponent.componentInstance;
+            elementUrlTestComponent = fixtureUrlTestComponent.nativeElement;
+
+            fixtureUrlTestComponent.detectChanges();
+
+            componentUrlTestComponent.pdfViewerComponent.rendered.subscribe(() => {
+                done();
             });
-        }));
+        });
 
         it('should Total number of pages be loaded', (done) => {
-            component.ngOnChanges(null).then(() => {
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    expect(component.totalPages).toEqual(6);
-                    done();
-                });
-            });
-        });
+            fixtureUrlTestComponent.detectChanges();
 
-        it('should right arrow move to the next page', (done) => {
-            component.ngOnChanges(null).then(() => {
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    expect(component.displayPage).toBe(1);
-                    EventMock.keyDown(39);
-                    fixture.detectChanges();
-                    expect(component.displayPage).toBe(2);
-                    done();
-                });
+            fixtureUrlTestComponent.whenStable().then(() => {
+                expect(componentUrlTestComponent.pdfViewerComponent.totalPages).toBe(6);
+                done();
             });
-        });
+        }, 5000);
 
         it('should nextPage move to the next page', (done) => {
-            let nextPageButton: any = element.querySelector('#viewer-next-page-button');
+            let nextPageButton: any = elementUrlTestComponent.querySelector('#viewer-next-page-button');
+            nextPageButton.click();
 
-            component.ngOnChanges(null).then(() => {
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
+            fixtureUrlTestComponent.detectChanges();
 
-                    expect(component.displayPage).toBe(1);
-                    nextPageButton.click();
-                    fixture.detectChanges();
-                    expect(component.displayPage).toBe(2);
+            fixtureUrlTestComponent.whenStable().then(() => {
+                expect(componentUrlTestComponent.pdfViewerComponent.displayPage).toBe(2);
+                done();
+            });
+        }, 5000);
+
+        it('should event RIGHT_ARROW keyboard change pages', (done) => {
+            EventMock.keyDown(RIGHT_ARROW);
+
+            fixtureUrlTestComponent.detectChanges();
+
+            fixtureUrlTestComponent.whenStable().then(() => {
+                expect(componentUrlTestComponent.pdfViewerComponent.displayPage).toBe(2);
+                done();
+            });
+        }, 5000);
+
+        it('should event LEFT_ARROW keyboard change pages', (done) => {
+            component.inputPage('2');
+
+            fixtureUrlTestComponent.detectChanges();
+
+            fixtureUrlTestComponent.whenStable().then(() => {
+                EventMock.keyDown(LEFT_ARROW);
+
+                fixtureUrlTestComponent.detectChanges();
+
+                fixtureUrlTestComponent.whenStable().then(() => {
+                    expect(componentUrlTestComponent.pdfViewerComponent.displayPage).toBe(1);
                     done();
                 });
             });
-        });
-
-        it('should event keyboard change pages', (done) => {
-            component.ngOnChanges(null).then(() => {
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-
-                    expect(component.displayPage).toBe(1);
-                    EventMock.keyDown(39);
-                    EventMock.keyDown(39);
-                    EventMock.keyDown(37);
-                    fixture.detectChanges();
-                    expect(component.displayPage).toBe(2);
-                    done();
-                });
-            });
-        });
+        }, 5000);
 
         it('should previous page move to the previous page', (done) => {
-            let previousPageButton: any = element.querySelector('#viewer-previous-page-button');
-            let nextPageButton: any = element.querySelector('#viewer-next-page-button');
+            let previousPageButton: any = elementUrlTestComponent.querySelector('#viewer-previous-page-button');
+            let nextPageButton: any = elementUrlTestComponent.querySelector('#viewer-next-page-button');
 
-            component.ngOnChanges(null).then(() => {
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
+            nextPageButton.click();
+            nextPageButton.click();
+            previousPageButton.click();
+            fixtureUrlTestComponent.detectChanges();
 
-                    expect(component.displayPage).toBe(1);
-                    nextPageButton.click();
-                    nextPageButton.click();
-                    previousPageButton.click();
-                    fixture.detectChanges();
-                    expect(component.displayPage).toBe(2);
-                    done();
-                });
+            fixtureUrlTestComponent.whenStable().then(() => {
+                expect(componentUrlTestComponent.pdfViewerComponent.displayPage).toBe(2);
+                done();
             });
-        });
+        }, 5000);
 
         it('should previous page not move to the previous page if is page 1', (done) => {
-            component.ngOnChanges(null).then(() => {
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
+            component.previousPage();
+            fixtureUrlTestComponent.detectChanges();
 
-                    expect(component.displayPage).toBe(1);
-                    component.previousPage();
-                    fixture.detectChanges();
-                    expect(component.displayPage).toBe(1);
-                    done();
-                });
+            fixtureUrlTestComponent.whenStable().then(() => {
+                expect(componentUrlTestComponent.pdfViewerComponent.displayPage).toBe(1);
+                done();
             });
-        });
+        }, 5000);
 
         it('should Input page move to the inserted page', (done) => {
-            component.ngOnChanges(null).then(() => {
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
+            componentUrlTestComponent.pdfViewerComponent.inputPage('2');
+            fixtureUrlTestComponent.detectChanges();
 
-                    expect(component.displayPage).toBe(1);
-                    component.inputPage('2');
-                    fixture.detectChanges();
-                    expect(component.displayPage).toBe(2);
-                    done();
-                });
+            fixtureUrlTestComponent.whenStable().then(() => {
+                expect(componentUrlTestComponent.pdfViewerComponent.displayPage).toBe(2);
+                done();
             });
-        });
-    });
+        }, 5000);
 
-    describe('Zoom', () => {
+        describe('Zoom', () => {
 
-        beforeEach(async(() => {
-            component.urlFile = require('../assets/fake-test-file.pdf');
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                component.inputPage('1');
-                component.currentScale = 1;
-            });
-        }));
+            it('should zoom in increment the scale value', () => {
+                let zoomInButton: any = elementUrlTestComponent.querySelector('#viewer-zoom-in-button');
 
-        it('should zoom in increment the scale value', (done) => {
-            let zoomInButton: any = element.querySelector('#viewer-zoom-in-button');
-
-            component.ngOnChanges(null).then(() => {
-                let zoomBefore = component.currentScale;
+                let zoomBefore = componentUrlTestComponent.pdfViewerComponent.currentScale;
                 zoomInButton.click();
-                expect(component.currentScaleMode).toBe('auto');
-                let currentZoom = component.currentScale;
+                expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
+                let currentZoom = componentUrlTestComponent.pdfViewerComponent.currentScale;
                 expect(zoomBefore < currentZoom).toBe(true);
-                done();
-            });
-        });
+            }, 5000);
 
-        it('should zoom out decrement the scale value', (done) => {
-            let zoomOutButton: any = element.querySelector('#viewer-zoom-out-button');
+            it('should zoom out decrement the scale value', () => {
+                let zoomOutButton: any = elementUrlTestComponent.querySelector('#viewer-zoom-out-button');
 
-            component.ngOnChanges(null).then(() => {
-                let zoomBefore = component.currentScale;
+                let zoomBefore = componentUrlTestComponent.pdfViewerComponent.currentScale;
                 zoomOutButton.click();
-                expect(component.currentScaleMode).toBe('auto');
-                let currentZoom = component.currentScale;
+                expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
+                let currentZoom = componentUrlTestComponent.pdfViewerComponent.currentScale;
                 expect(zoomBefore > currentZoom).toBe(true);
+            }, 5000);
+
+            it('should it-in button toggle page-fit and auto scale mode', () => {
+                let itPage: any = elementUrlTestComponent.querySelector('#viewer-scale-page-button');
+
+                expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
+                itPage.click();
+                expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('page-fit');
+                itPage.click();
+                expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
+            }, 5000);
+        });
+
+        describe('Resize interaction', () => {
+
+            it('should resize event trigger setScaleUpdatePages', () => {
+                spyOn(componentUrlTestComponent.pdfViewerComponent, 'onResize');
+                EventMock.resizeMobileView();
+                expect(componentUrlTestComponent.pdfViewerComponent.onResize).toHaveBeenCalled();
+            }, 5000);
+        });
+
+        describe('Thumbnails', () => {
+
+            it('should have own context', () => {
+                expect(componentUrlTestComponent.pdfViewerComponent.pdfThumbnailsContext.viewer).not.toBeNull();
+            }, 5000);
+
+            it('should open thumbnails panel', (done) => {
+                expect(elementUrlTestComponent.querySelector('.adf-pdf-viewer__thumbnails')).toBeNull();
+
+                componentUrlTestComponent.pdfViewerComponent.toggleThumbnails();
+                fixtureUrlTestComponent.detectChanges();
+
+                fixtureUrlTestComponent.whenStable().then(() => {
+                    expect(elementUrlTestComponent.querySelector('.adf-pdf-viewer__thumbnails')).not.toBeNull();
+                    done();
+                });
+            }, 5000);
+        });
+
+        describe('Viewer events', () => {
+
+            it('should react on the emit of pagechange event', (done) => {
+                fixtureUrlTestComponent.detectChanges();
+                fixtureUrlTestComponent.whenStable().then(() => {
+                    const args = {
+                        pageNumber: 6,
+                        source: {
+                            container: componentUrlTestComponent.pdfViewerComponent.documentContainer
+                        }
+                    };
+
+                    componentUrlTestComponent.pdfViewerComponent.pdfViewer.eventBus.dispatch('pagechange', args);
+                    fixtureUrlTestComponent.detectChanges();
+
+                    fixtureUrlTestComponent.whenStable().then(() => {
+                        expect(componentUrlTestComponent.pdfViewerComponent.displayPage).toBe(6);
+                        expect(componentUrlTestComponent.pdfViewerComponent.page).toBe(6);
+                        done();
+                    });
+                });
+            }, 5000);
+
+            it('should react on the emit of pagesloaded event', (done) => {
+                fixtureUrlTestComponent.detectChanges();
+                fixtureUrlTestComponent.whenStable().then(() => {
+                    expect(componentUrlTestComponent.pdfViewerComponent.isPanelDisabled = false;
+
+                    const args = {
+                        pagesCount: 10,
+                        source: {
+                            container: componentUrlTestComponent.pdfViewerComponent.documentContainer
+                        }
+                    };
+
+                    componentUrlTestComponent.pdfViewerComponent.pdfViewer.eventBus.dispatch('pagesloaded', args);
+                    fixtureUrlTestComponent.detectChanges();
+
+                    fixtureUrlTestComponent.whenStable().then(() => {
+                        expect(componentUrlTestComponent.pdfViewerComponent.isPanelDisabled).toBe(false);
+                        done();
+                    });
+                });
+            }, 5000);
+
+        });
+
+    });
+
+    describe('Password protection dialog', () => {
+
+        let fixtureUrlTestPasswordComponent: ComponentFixture<UrlTestPasswordComponent>;
+        let componentUrlTestPasswordComponent: UrlTestPasswordComponent;
+
+        beforeEach((done) => {
+            fixtureUrlTestPasswordComponent = TestBed.createComponent(UrlTestPasswordComponent);
+            componentUrlTestPasswordComponent = fixtureUrlTestPasswordComponent.componentInstance;
+
+            spyOn(dialog, 'open').and.callFake((comp, context) => {
+                if (context.data.reason === PDFJS.PasswordResponses.NEED_PASSWORD) {
+                    return {
+                        afterClosed: () => Observable.of('wrong_password')
+                    };
+                }
+
+                if (context.data.reason === PDFJS.PasswordResponses.INCORRECT_PASSWORD) {
+                    return {
+                        afterClosed: () => Observable.of('password')
+                    };
+                }
+            });
+
+            fixtureUrlTestPasswordComponent.detectChanges();
+
+            componentUrlTestPasswordComponent.pdfViewerComponent.rendered.subscribe(() => {
                 done();
             });
         });
 
-        it('should fit-in button toggle page-fit and auto scale mode', (done) => {
-            let fitPage: any = element.querySelector('#viewer-scale-page-button');
+        it('should try to access protected pdf', (done) => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
 
-            component.ngOnChanges(null).then(() => {
-                expect(component.currentScaleMode).toBe('auto');
-                fitPage.click();
-                expect(component.currentScaleMode).toBe('page-fit');
-                fitPage.click();
-                expect(component.currentScaleMode).toBe('auto');
+                expect(dialog.open).toHaveBeenCalledTimes(2);
                 done();
             });
         });
-    });
 
-    describe('Resize interaction', () => {
-
-        beforeEach(async(() => {
-            component.urlFile = require('../assets/fake-test-file.pdf');
+        it('should raise dialog asking for password', (done) => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                component.inputPage('1');
-                component.currentScale = 1;
-            });
-        }));
-
-        it('should resize event trigger setScaleUpdatePages', (done) => {
-            component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
-                fixture.whenStable().then(() => {
-
-                    spyOn(component, 'onResize');
-                    EventMock.resizeMobileView();
-                    expect(component.onResize).toHaveBeenCalled();
-                    done();
+                expect(dialog.open['calls'].all()[0].args[1].data).toEqual({
+                    reason: PDFJS.PasswordResponses.NEED_PASSWORD
                 });
+                done();
             });
         });
-    });
 
-    describe('scroll interaction', () => {
-
-        beforeEach(async(() => {
-            component.urlFile = require('../assets/fake-test-file.pdf');
+        it('it should raise dialog with incorrect password', (done) => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                component.inputPage('1');
-                component.currentScale = 1;
-            });
-        }));
-
-        it('should scroll page return the current page', (done) => {
-            component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
-                fixture.whenStable().then(() => {
-
-                    expect(component.displayPage).toBe(1);
-
-                    component.inputPage('2');
-                    fixture.detectChanges();
-                    expect(component.displayPage).toBe(2);
-
-                    component.pdfViewer.currentPageNumber = 6;
-                    fixture.detectChanges();
-                    expect(component.displayPage).toBe(6);
-                    expect(component.page).toBe(6);
-                    done();
+                expect(dialog.open['calls'].all()[1].args[1].data).toEqual({
+                    reason: PDFJS.PasswordResponses.INCORRECT_PASSWORD
                 });
-            });
-        });
-    });
-
-    describe('Thumbnails', () => {
-        beforeEach(async () => {
-            component.urlFile = require('../assets/fake-test-file.pdf');
-            component.showThumbnails = false;
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                component.inputPage('1');
-            });
-        });
-
-        it('should have own context', (done) => {
-            component.ngOnChanges(null).then(() => {
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    expect(component.pdfThumbnailsContext.viewer).not.toBeNull();
-                    done();
-                });
-            });
-        });
-
-        it('should open thumbnails panel', (done) => {
-            expect(element.querySelector('.adf-pdf-viewer__thumbnails')).toBeNull();
-
-            component.ngOnChanges(null).then(() => {
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    component.toggleThumbnails();
-                    fixture.detectChanges();
-
-                    expect(element.querySelector('.adf-pdf-viewer__thumbnails')).not.toBeNull();
-                    done();
-                });
+                done();
             });
         });
     });

@@ -16,16 +16,12 @@
  */
 
 import {
-    AlfrescoApiService,
-    AuthenticationService,
-    ContentService,
-    LogService,
-    PermissionsEnum,
-    ThumbnailService
+    AlfrescoApiService, AuthenticationService, ContentService, LogService,
+    PermissionsEnum, ThumbnailService
 } from '@alfresco/adf-core';
+
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
-import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
+import { MinimalNodeEntity, MinimalNodeEntryEntity,  NodeEntry, NodePaging } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 
@@ -41,16 +37,19 @@ export class DocumentListService {
                 private thumbnailService: ThumbnailService) {
     }
 
-    private getNodesPromise(folder: string, opts?: any): Promise<NodePaging> {
+    private getNodesPromise(folder: string, opts?: any, includeFields: string[] = []): Promise<NodePaging> {
 
         let rootNodeId = DocumentListService.ROOT_ID;
         if (opts && opts.rootFolderId) {
             rootNodeId = opts.rootFolderId;
         }
 
+        let includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', ...includeFields]
+            .filter((element, index, array) => index === array.indexOf(element));
+
         let params: any = {
             includeSource: true,
-            include: ['path', 'properties', 'allowableOperations']
+            include: includeFieldsRequest
         };
 
         if (folder) {
@@ -72,6 +71,7 @@ export class DocumentListService {
     /**
      * Deletes a node.
      * @param nodeId ID of the node to delete
+     * @returns Empty response when the operation is complete
      */
     deleteNode(nodeId: string): Observable<any> {
         return Observable.fromPromise(this.apiService.getInstance().nodes.deleteNode(nodeId));
@@ -82,6 +82,7 @@ export class DocumentListService {
      *
      * @param nodeId The id of the node to be copied
      * @param targetParentId The id of the folder where the node will be copied
+     * @returns NodeEntry for the copied node
      */
     copyNode(nodeId: string, targetParentId: string) {
         return Observable.fromPromise(this.apiService.getInstance().nodes.copyNode(nodeId, { targetParentId }))
@@ -93,6 +94,7 @@ export class DocumentListService {
      *
      * @param nodeId The id of the node to be moved
      * @param targetParentId The id of the folder where the node will be moved
+     * @returns NodeEntry for the moved node
      */
     moveNode(nodeId: string, targetParentId: string) {
         return Observable.fromPromise(this.apiService.getInstance().nodes.moveNode(nodeId, { targetParentId }))
@@ -103,40 +105,69 @@ export class DocumentListService {
      * Create a new folder in the path.
      * @param name Folder name
      * @param parentId Parent folder ID
+     * @returns Details of the created folder node
      */
     createFolder(name: string, parentId: string): Observable<MinimalNodeEntity> {
-        return Observable.fromPromise(this.apiService.getInstance().nodes.createFolder(name, '/', parentId))
-            .catch(err => this.handleError(err));
+        let observable = Observable.fromPromise(this.apiService.getInstance().nodes.createFolder(name, '/', parentId));
+        observable.catch(err => this.handleError(err));
+        return observable;
     }
 
     /**
      * Gets the folder node with the specified relative name path below the root node.
      * @param folder Path to folder.
      * @param opts Options.
+     * @param includeFields Extra information to include (available options are "aspectNames", "isLink" and "association")
+     * @returns Details of the folder
      */
-    getFolder(folder: string, opts?: any): Observable<NodePaging> {
-        return Observable.fromPromise(this.getNodesPromise(folder, opts))
+    getFolder(folder: string, opts?: any, includeFields: string[] = []): Observable<NodePaging> {
+        return Observable.fromPromise(this.getNodesPromise(folder, opts, includeFields))
             .map(res => <NodePaging> res)
             .catch(err => this.handleError(err));
     }
 
     /**
-     * Gets a folder node via its node ID.
-     * @param nodeId ID of the folder node
+     * Gets a node via its node ID.
+     * @param nodeId
+     * @param includeFields Extra information to include (available options are "aspectNames", "isLink" and "association")
+     * @returns Details of the folder
      */
-    getFolderNode(nodeId: string): Promise<MinimalNodeEntryEntity> {
+    getNode(nodeId: string, includeFields: string[] = []): Observable<NodeEntry> {
+
+        let includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', ...includeFields]
+            .filter((element, index, array) => index === array.indexOf(element));
+
         let opts: any = {
             includeSource: true,
-            include: ['path', 'properties', 'allowableOperations']
+            include: includeFieldsRequest
         };
 
-        let nodes: any = this.apiService.getInstance().nodes;
-        return nodes.getNodeInfo(nodeId, opts);
+        return this.contentService.getNode(nodeId, opts);
     }
 
     /**
+     * @deprecated 2.3.0
+     * Gets a folder node via its node ID.
+     * @param nodeId ID of the folder node
+     * @param includeFields Extra information to include (available options are "aspectNames", "isLink" and "association")
+     * @returns Details of the folder
+     */
+    getFolderNode(nodeId: string, includeFields: string[] = []): Observable<MinimalNodeEntryEntity> {
+
+        let includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', ...includeFields]
+            .filter((element, index, array) => index === array.indexOf(element));
+
+        let opts: any = {
+            includeSource: true,
+            include: includeFieldsRequest
+        };
+
+        return Observable.fromPromise(this.apiService.getInstance().nodes.getNodeInfo(nodeId, opts));
+    }
+    /**
      * Get thumbnail URL for the given document node.
      * @param node Node to get URL for.
+     * @returns Thumbnail URL string
      */
     getDocumentThumbnailUrl(node: MinimalNodeEntity): string {
         return this.thumbnailService.getDocumentThumbnailUrl(node);
@@ -145,6 +176,7 @@ export class DocumentListService {
     /**
      * Gets the icon that represents a MIME type.
      * @param mimeType MIME type to get the icon for
+     * @returns Path to the icon file
      */
     getMimeTypeIcon(mimeType: string): string {
         return this.thumbnailService.getMimeTypeIcon(mimeType);
@@ -152,21 +184,24 @@ export class DocumentListService {
 
     /**
      * Gets a default icon for MIME types with no specific icon.
+     * @returns Path to the icon file
      */
     getDefaultMimeTypeIcon(): string {
         return this.thumbnailService.getDefaultMimeTypeIcon();
     }
 
     /**
+     * @Deprecated 2.3.0 use the one in the content service
      * Checks if a node has the specified permission.
      * @param node Target node
      * @param permission Permission level to query
+     * @returns True if the node has the permission, false otherwise
      */
     hasPermission(node: any, permission: PermissionsEnum | string): boolean {
         return this.contentService.hasPermission(node, permission);
     }
 
-    private handleError(error: Response) {
+    private handleError(error: any) {
         // in a real world app, we may send the error to some remote logging infrastructure
         // instead of just logging it to the console
         this.logService.error(error);

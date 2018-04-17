@@ -9,6 +9,9 @@
     "FIELD": {
       "LOCALSTORAGE": "Lokale opslag",
       "SOURCE": "Selecteer bron uit ",
+      "SHOW_FILE": "Weergeven",
+      "DOWNLOAD_FILE": "Downloaden",
+      "REMOVE_FILE": "Verwijderen",
       "UPLOAD": "Uploaden",
       "REQUIRED": "*Vereist",
       "VALIDATOR": {
@@ -46,6 +49,18 @@
           "CANCEL": "Annuleren"
         },
         "TITLE": "Bestanden toevoegen aan .zip-bestand, dit kan een paar minuten duren"
+      }
+    },
+    "FILE_DIALOG": {
+      "FILE_LOCK": "Bestand vergrendelen",
+      "ALLOW_OTHERS_CHECKBOX": "De eigenaar toestaan dit bestand te wijzigen",
+      "FILE_LOCK_CHECKBOX": "Bestand vergrendelen",
+      "TIME_LOCK_CHECKBOX": "Vergrendelingsduur",
+      "SAVE_BUTTON": {
+        "LABEL": "Opslaan"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "Annuleren"
       }
     },
     "FOLDER_DIALOG": {
@@ -125,6 +140,29 @@
         "CREATED_DATE": "Datum gemaakt",
         "MODIFIER": "Gewijzigd door",
         "MODIFIED_DATE": "Datum gewijzigd"
+      },
+      "ACTIONS": {
+        "EDIT": "Bewerken",
+        "SAVE": "Opslaan",
+        "CANCEL": "Annuleren",
+        "TOGGLE": "Waarde in-/uitschakelen"
+      }
+    }
+  },
+  "COMMENTS": {
+    "NONE": "Geen opmerkingen",
+    "ADD": "Opmerking toevoegen",
+    "HEADER": "Opmerkingen ({{ count }})",
+    "CREATED_BY_HEADER": "Gemaakt door",
+    "MESSAGE_HEADER": "Bericht",
+    "DIALOG": {
+      "TITLE": "Nieuwe opmerking",
+      "LABELS": {
+        "MESSAGE": "Bericht"
+      },
+      "BUTTON": {
+        "ADD": "Opmerking toevoegen",
+        "CANCEL": "Annuleren"
       }
     }
   },
@@ -138,7 +176,7 @@
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "Vereist",
-      "USERNAME-MIN": "Uw gebruikersnaam moet uit minstens {{minLenght}} tekens bestaan.",
+      "USERNAME-MIN": "Uw gebruikersnaam moet uit minstens {{ minLenght }} tekens bestaan.",
       "PASSWORD-REQUIRED": "Voer uw wachtwoord in om u aan te melden",
       "LOGIN-ERROR-CREDENTIALS": "U hebt een onbekende gebruikersnaam of een onbekend wachtwoord ingevoerd",
       "LOGIN-ERROR-PROVIDERS": "De definitie van providers kan niet ongedaan worden gemaakt",
@@ -210,10 +248,19 @@
     "LOADING": "Wordt geladen",
     "UNKNOWN_FORMAT": "Kan voorbeeld niet laden",
     "SIDEBAR": {
+      "THUMBNAILS": {
+        "PAGE": "Pagina {{ pageNum }}"
+      },
       "METADATA": {
         "MORE_INFORMATION": "Meer informatie",
         "LESS_INFORMATION": "Minder informatie"
       }
+    },
+    "PDF_DIALOG": {
+      "SUBMIT": "Verzenden",
+      "CLOSE": "Sluiten",
+      "PLACEHOLDER": "Wachtwoord",
+      "ERROR": "Wachtwoord is verkeerd"
     }
   }
 }

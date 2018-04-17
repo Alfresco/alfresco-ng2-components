@@ -42,11 +42,12 @@ export class NodesApiService {
      * Gets the stored information about a node.
      * @param nodeId ID of the target node
      * @param options Optional parameters supported by JSAPI
+     * @returns Node information
      */
     getNode(nodeId: string, options: any = {}): Observable<MinimalNodeEntryEntity> {
         const { nodesApi, handleError, getEntryFromEntity } = this;
         const defaults = {
-            include: [ 'path', 'properties', 'allowableOperations' ]
+            include: [ 'path', 'properties', 'allowableOperations', 'permissions' ]
         };
         const queryOptions = Object.assign(defaults, options);
         const promise = nodesApi
@@ -62,13 +63,14 @@ export class NodesApiService {
      * Gets the items contained in a folder node.
      * @param nodeId ID of the target node
      * @param options Optional parameters supported by JSAPI
+     * @returns List of child items from the folder
      */
     getNodeChildren(nodeId: string, options: any = {}): Observable<NodePaging> {
         const { nodesApi, handleError } = this;
         const defaults = {
             maxItems: this.preferences.paginationSize,
             skipCount: 0,
-            include: [ 'path', 'properties', 'allowableOperations' ]
+            include: [ 'path', 'properties', 'allowableOperations', 'permissions' ]
         };
         const queryOptions = Object.assign(defaults, options);
         const promise = nodesApi
@@ -84,6 +86,7 @@ export class NodesApiService {
      * @param parentNodeId ID of the parent folder node
      * @param nodeBody Data for the new node
      * @param options Optional parameters supported by JSAPI
+     * @returns Details of the new node
      */
     createNode(parentNodeId: string, nodeBody: any, options: any = {}): Observable<MinimalNodeEntryEntity> {
         const { nodesApi, handleError, getEntryFromEntity } = this;
@@ -99,6 +102,7 @@ export class NodesApiService {
      * @param parentNodeId ID of the parent folder node
      * @param nodeBody Data for the new folder
      * @param options Optional parameters supported by JSAPI
+     * @returns Details of the new folder
      */
     createFolder(parentNodeId: string, nodeBody: any, options: any = {}): Observable<MinimalNodeEntryEntity> {
         const body = Object.assign({ nodeType: 'cm:folder' }, nodeBody);
@@ -110,6 +114,7 @@ export class NodesApiService {
      * @param nodeId ID of the target node
      * @param nodeBody New data for the node
      * @param options Optional parameters supported by JSAPI
+     * @returns Updated node information
      */
     updateNode(nodeId: string, nodeBody: any, options: any = {}): Observable<MinimalNodeEntryEntity> {
         const { nodesApi, handleError, getEntryFromEntity } = this;
@@ -124,6 +129,7 @@ export class NodesApiService {
      * Moves a node to the trashcan.
      * @param nodeId ID of the target node
      * @param options Optional parameters supported by JSAPI
+     * @returns Empty result that notifies when the deletion is complete
      */
     deleteNode(nodeId: string, options: any = {}): Observable<void> {
         const { nodesApi, handleError } = this;
@@ -138,6 +144,7 @@ export class NodesApiService {
     /**
      * Restores a node previously moved to the trashcan.
      * @param nodeId ID of the node to restore
+     * @returns Details of the restored node
      */
     restoreNode(nodeId: string): Observable<MinimalNodeEntryEntity> {
         const { nodesApi, handleError, getEntryFromEntity } = this;
@@ -153,6 +160,7 @@ export class NodesApiService {
     /**
      * Reports an error.
      * @param error Object representing the error
+     * @returns Error information
      */
     handleError(error: any): Observable<any> {
         return Observable.throw(error);

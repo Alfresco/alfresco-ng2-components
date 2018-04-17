@@ -16,42 +16,33 @@
  */
 
 import {
-    DataCellEvent,
-    DataColumn,
-    DataRowActionEvent,
-    DataSorting,
-    DataTableComponent,
-    DisplayMode,
-    ObjectDataColumn,
-    PaginatedComponent,
-    PaginationQueryParams
-} from '@alfresco/adf-core';
-import { AlfrescoApiService, AppConfigService, DataColumnListComponent, UserPreferencesService } from '@alfresco/adf-core';
-import {
     AfterContentInit, Component, ContentChild, ElementRef, EventEmitter, HostListener, Input, NgZone,
     OnChanges, OnDestroy, OnInit, Output, SimpleChanges, TemplateRef, ViewChild, ViewEncapsulation
 } from '@angular/core';
+
 import {
-    DeletedNodesPaging,
-    MinimalNodeEntity,
-    MinimalNodeEntryEntity,
-    NodePaging,
-    PersonEntry,
-    SitePaging,
-    Pagination
-} from 'alfresco-js-api';
+    ContentService, DataCellEvent, DataColumn, DataRowActionEvent, DataSorting, DataTableComponent,
+    DisplayMode, ObjectDataColumn, PaginatedComponent, AppConfigService, DataColumnListComponent,
+    UserPreferencesService, PaginationModel
+} from '@alfresco/adf-core';
+
+import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
+
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { presetsDefaultModel } from '../models/preset.model';
+import { Subscription } from 'rxjs/Subscription';
+
 import { ShareDataRow } from './../data/share-data-row.model';
 import { ShareDataTableAdapter } from './../data/share-datatable-adapter';
 
+import { presetsDefaultModel } from '../models/preset.model';
 import { ContentActionModel } from './../models/content-action.model';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { DocumentListService } from './../services/document-list.service';
 import { NodeEntityEvent, NodeEntryEvent } from './node.event';
-import { Subscription } from 'rxjs/Subscription';
+import { CustomResourcesService } from './../services/custom-resources.service';
+import { NavigableComponentInterface } from '../../breadcrumb/navigable-component.interface';
 
 export enum PaginationStrategy {
     Finite,
@@ -64,15 +55,20 @@ export enum PaginationStrategy {
     templateUrl: './document-list.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, AfterContentInit, PaginatedComponent {
+export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, AfterContentInit, PaginatedComponent, NavigableComponentInterface {
 
     static SINGLE_CLICK_NAVIGATION: string = 'click';
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
     static DEFAULT_PAGE_SIZE: number = 20;
 
-    @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
+    @ContentChild(DataColumnListComponent)
+    columnList: DataColumnListComponent;
 
-    /* change the display mode of the table list or gallery */
+    /** Include additional information about the node in the server request.for example: association, isLink, isLocked and others. */
+    @Input()
+    includeFields: string[];
+
+    /** Change the display mode of the table. Can be "list" or "gallery". */
     @Input()
     display: string = DisplayMode.List;
 
@@ -95,7 +91,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     showHeader: boolean = true;
 
-    /** User interaction for folder navigation or file preview. Valid values are "click" and "dblclick". */
+    /** User interaction for folder navigation or file preview.
+     * Valid values are "click" and "dblclick". Default value: "dblclick"
+     */
     @Input()
     navigationMode: string = DocumentListComponent.DOUBLE_CLICK_NAVIGATION; // click|dblclick
 
@@ -125,7 +123,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     contextMenuActions: boolean = false;
 
-    /** Custom image for empty folder */
+    /** Custom image for empty folder. Default value: './assets/images/empty_doc_lib.svg' */
     @Input()
     emptyFolderImageUrl: string = './assets/images/empty_doc_lib.svg';
 
@@ -170,6 +168,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     currentFolderId: string = null;
 
+    /** @deprecated 2.3.0 use currentFolderId or node */
     /** Currently displayed folder node */
     @Input()
     folderNode: MinimalNodeEntryEntity = null;
@@ -178,14 +177,16 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     node: NodePaging = null;
 
-    /** Default value is stored into user preference settings */
+    /** Default value is stored into user preference settings use it only if you are not using the pagination */
     @Input()
     maxItems: number;
 
+    /** @deprecated 2.3.0 define it in pagination */
     /** Number of elements to skip over for pagination purposes */
     @Input()
     skipCount: number = 0;
 
+    /** @deprecated 2.3.0 */
     /** Set document list to work in infinite scrolling mode */
     @Input()
     enableInfiniteScrolling: boolean = false;
@@ -217,41 +218,29 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Output()
     error: EventEmitter<any> = new EventEmitter();
 
-    @ViewChild(DataTableComponent)
+    @ViewChild('dataTable')
     dataTable: DataTableComponent;
 
-    errorMessage;
     actions: ContentActionModel[] = [];
     emptyFolderTemplate: TemplateRef<any>;
     noPermissionTemplate: TemplateRef<any>;
     contextActionHandler: Subject<any> = new Subject();
     data: ShareDataTableAdapter;
-    infiniteLoading: boolean = false;
     noPermission: boolean = false;
     selection = new Array<MinimalNodeEntity>();
 
-    pagination: BehaviorSubject<Pagination>;
-
+    private _pagination: BehaviorSubject<PaginationModel>;
     private layoutPresets = {};
-    private currentNodeAllowableOperations: string[] = [];
-    private CREATE_PERMISSION = 'create';
 
     private contextActionHandlerSubscription: Subscription;
 
     constructor(private documentListService: DocumentListService,
                 private ngZone: NgZone,
                 private elementRef: ElementRef,
-                private apiService: AlfrescoApiService,
                 private appConfig: AppConfigService,
-                private preferences: UserPreferencesService) {
-        this.maxItems = this.preferences.paginationSize;
-
-        this.pagination = new BehaviorSubject<Pagination>(<Pagination> {
-            maxItems: this.preferences.paginationSize,
-            skipCount: 0,
-            totalItems: 0,
-            hasMoreItems: false
-        });
+                private preferences: UserPreferencesService,
+                private customResourcesService: CustomResourcesService,
+                private contentService: ContentService) {
     }
 
     getContextActions(node: MinimalNodeEntity) {
@@ -270,14 +259,73 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         return null;
     }
 
-    contextActionCallback(action) {
-        if (action) {
-            this.executeContentAction(action.node, action.model);
-        }
+    /** @deprecated 2.3.0 define it in pagination */
+    get supportedPageSizes(): number[] {
+        return this.preferences.getDefaultPageSizes();
     }
 
     get hasCustomLayout(): boolean {
         return this.columnList && this.columnList.columns && this.columnList.columns.length > 0;
+    }
+
+    private getDefaultSorting(): DataSorting {
+        let defaultSorting: DataSorting;
+        if (this.sorting) {
+            const [key, direction] = this.sorting;
+            defaultSorting = new DataSorting(key, direction);
+        }
+        return defaultSorting;
+    }
+
+    private getLayoutPreset(name: string = 'default'): DataColumn[] {
+        return (this.layoutPresets[name] || this.layoutPresets['default']).map(col => new ObjectDataColumn(col));
+    }
+
+    get pagination(): BehaviorSubject<PaginationModel> {
+        let maxItems = this.preferences.paginationSize;
+
+        if (!this._pagination) {
+            if (this.maxItems) {
+                maxItems = this.maxItems;
+            }
+
+            let defaultPagination = <PaginationModel> {
+                maxItems: maxItems,
+                skipCount: 0,
+                totalItems: 0,
+                hasMoreItems: false
+            };
+
+            this._pagination = new BehaviorSubject<PaginationModel>(defaultPagination);
+        }
+
+        return this._pagination;
+    }
+
+    isEmptyTemplateDefined(): boolean {
+        if (this.dataTable) {
+            if (this.emptyFolderTemplate) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    isNoPermissionTemplateDefined(): boolean {
+        if (this.dataTable) {
+            if (this.noPermissionTemplate) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    isMobile(): boolean {
+        return !!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+
+    isEmpty() {
+        return !this.data || this.data.getRows().length === 0;
     }
 
     ngOnInit() {
@@ -319,29 +367,28 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (this.isSkipCountChanged(changes) ||
-            this.isMaxItemsChanged(changes)) {
-            this.reload(this.enableInfiniteScrolling);
-        }
+        this.resetSelection();
+
         if (changes.folderNode && changes.folderNode.currentValue) {
+            this.currentFolderId = changes.folderNode.currentValue.id;
+            this.resetNewFolderPagination();
             this.loadFolder();
-        } else if (changes.currentFolderId && changes.currentFolderId.currentValue) {
-            if (changes.currentFolderId.previousValue !== changes.currentFolderId.currentValue) {
-                this.folderNode = null;
-            }
-            if (!this.hasCustomLayout) {
-                this.setupDefaultColumns(changes.currentFolderId.currentValue);
-            }
-            this.loadFolderByNodeId(changes.currentFolderId.currentValue);
+        } else if (changes.currentFolderId &&
+            changes.currentFolderId.currentValue &&
+            changes.currentFolderId.currentValue !== changes.currentFolderId.previousValue) {
+            this.resetNewFolderPagination();
+            this.loadFolder();
         } else if (this.data) {
             if (changes.node && changes.node.currentValue) {
-                this.resetSelection();
+                if (changes.node.currentValue.list.pagination) {
+                    changes.node.currentValue.list.pagination.skipCount = 0;
+                }
                 this.data.loadPage(changes.node.currentValue);
-                this.pagination.next(changes.node.currentValue.list.pagination);
+                this.onDataReady(changes.node.currentValue);
             } else if (changes.rowFilter) {
                 this.data.setFilter(changes.rowFilter.currentValue);
                 if (this.currentFolderId) {
-                    this.loadFolderNodesByFolderNodeId(this.currentFolderId, this.maxItems, this.skipCount);
+                    this.loadFolderNodesByFolderNodeId(this.currentFolderId, this.pagination.getValue()).catch(err => this.error.emit(err));
                 }
             } else if (changes.imageResolver) {
                 this.data.setImageResolver(changes.imageResolver.currentValue);
@@ -349,45 +396,22 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
     }
 
-    reload(merge: boolean = false) {
+    reload() {
         this.ngZone.run(() => {
             this.resetSelection();
-
-            if (this.folderNode) {
-                this.loadFolder(merge);
-            } else if (this.currentFolderId) {
-                this.loadFolderByNodeId(this.currentFolderId, merge);
-            } else if (this.node) {
+            if (this.node) {
                 this.data.loadPage(this.node);
                 this.onDataReady(this.node);
+            } else {
+                this.loadFolder();
             }
         });
     }
 
-    isEmptyTemplateDefined(): boolean {
-        if (this.dataTable) {
-            if (this.emptyFolderTemplate) {
-                return true;
-            }
+    contextActionCallback(action) {
+        if (action) {
+            this.executeContentAction(action.node, action.model);
         }
-        return false;
-    }
-
-    isNoPermissionTemplateDefined(): boolean {
-        if (this.dataTable) {
-            if (this.noPermissionTemplate) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    isMobile(): boolean {
-        return !!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    }
-
-    isEmpty() {
-        return !this.data || this.data.getRows().length === 0;
     }
 
     getNodeActions(node: MinimalNodeEntity | any): ContentActionModel[] {
@@ -396,20 +420,17 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         if (node && node.entry) {
             if (node.entry.isFile) {
                 target = 'document';
-            }
-
-            if (node.entry.isFolder) {
+            } else if (node.entry.isFolder) {
                 target = 'folder';
             }
 
             if (target) {
-                let ltarget = target.toLowerCase();
                 let actionsByTarget = this.actions.filter(entry => {
-                    return entry.target.toLowerCase() === ltarget;
+                    return entry.target.toLowerCase() === target;
                 }).map(action => new ContentActionModel(action));
 
                 actionsByTarget.forEach((action) => {
-                    this.checkPermission(node, action);
+                    this.disableActionsWithNoPermissions(node, action);
                 });
 
                 return actionsByTarget;
@@ -419,21 +440,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         return [];
     }
 
-    checkPermission(node: any, action: ContentActionModel): ContentActionModel {
-        if (action.permission) {
-            if (this.hasPermissions(node)) {
-                let permissions = node.entry.allowableOperations;
-                let findPermission = permissions.find(permission => permission === action.permission);
-                if (!findPermission && action.disableWithNoPermission === true) {
-                    action.disabled = true;
-                }
-            }
+    disableActionsWithNoPermissions(node: MinimalNodeEntity, action: ContentActionModel) {
+        if (action.permission && node.entry.allowableOperations && !this.contentService.hasPermission(node.entry, action.permission)) {
+            action.disabled = true;
         }
-        return action;
-    }
-
-    private hasPermissions(node: any): boolean {
-        return node.entry.allowableOperations ? true : false;
     }
 
     @HostListener('contextmenu', ['$event'])
@@ -452,7 +462,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     performCustomSourceNavigation(node: MinimalNodeEntity): boolean {
-        if (this.isCustomSource(this.currentFolderId)) {
+        if (this.customResourcesService.isCustomSource(this.currentFolderId)) {
             this.updateFolderData(node);
             return true;
         }
@@ -460,12 +470,15 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     updateFolderData(node: MinimalNodeEntity): void {
+        this.resetNewFolderPagination();
         this.currentFolderId = node.entry.id;
-        this.folderNode = node.entry;
-        this.skipCount = 0;
-        this.currentNodeAllowableOperations = node.entry['allowableOperations'] ? node.entry['allowableOperations'] : [];
-        this.loadFolder();
+        this.reload();
         this.folderChange.emit(new NodeEntryEvent(node.entry));
+    }
+
+    updateCustomSourceData(nodeId: string): void {
+        this.folderNode = null;
+        this.currentFolderId = nodeId;
     }
 
     /**
@@ -491,216 +504,77 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
     }
 
-    loadFolder(merge: boolean = false) {
-        if (merge) {
-            this.infiniteLoading = true;
-        } else {
+    loadFolder() {
+        if (!this.pagination.getValue().merge) {
             this.loading = true;
         }
 
-        let nodeId = this.folderNode ? this.folderNode.id : this.currentFolderId;
-
         if (!this.hasCustomLayout) {
-            this.setupDefaultColumns(nodeId);
+            this.setupDefaultColumns(this.currentFolderId);
         }
-        if (nodeId) {
-            this.loadFolderNodesByFolderNodeId(nodeId, this.maxItems, this.skipCount, merge).catch(err => this.error.emit(err));
+
+        if (this.folderNode) {
+            return this.loadFolderNodesByFolderNodeId(this.folderNode.id, this.pagination.getValue())
+                .catch(err => this.handleError(err));
+        } else {
+            this.loadFolderByNodeId(this.currentFolderId);
         }
     }
 
-    // gets folder node and its content
-    loadFolderByNodeId(nodeId: string, merge: boolean = false) {
-        this.loading = true;
-        this.resetSelection();
-
-        if (nodeId === '-trashcan-') {
-            this.loadTrashcan(merge);
-        } else if (nodeId === '-sharedlinks-') {
-            this.loadSharedLinks(merge);
-        } else if (nodeId === '-sites-') {
-            this.loadSites(merge);
-        } else if (nodeId === '-mysites-') {
-            this.loadMemberSites(merge);
-        } else if (nodeId === '-favorites-') {
-            this.loadFavorites(merge);
-        } else if (nodeId === '-recent-') {
-            this.loadRecent(merge);
-        } else {
-            this.documentListService
-                .getFolderNode(nodeId)
-                .then(node => {
-                    this.folderNode = node;
-                    this.currentFolderId = node.id;
-                    this.skipCount = 0;
-                    this.currentNodeAllowableOperations = node['allowableOperations'] ? node['allowableOperations'] : [];
-                    return this.loadFolderNodesByFolderNodeId(node.id, this.maxItems, this.skipCount, merge);
-                })
-                .catch(err => {
-                    if (JSON.parse(err.message).error.statusCode === 403) {
-                        this.loading = false;
-                        this.noPermission = true;
-                    }
+    loadFolderByNodeId(nodeId: string) {
+        if (this.customResourcesService.isCustomSource(nodeId)) {
+            this.updateCustomSourceData(nodeId);
+            this.customResourcesService.loadFolderByNodeId(nodeId, this.pagination.getValue(), this.includeFields)
+                .subscribe((page: NodePaging) => {
+                    this.onPageLoaded(page);
+                }, err => {
                     this.error.emit(err);
                 });
+        } else {
+            this.documentListService
+                .getFolderNode(nodeId, this.includeFields)
+                .subscribe((node: MinimalNodeEntryEntity) => {
+                    this.folderNode = node;
+                    return this.loadFolderNodesByFolderNodeId(node.id, this.pagination.getValue())
+                        .catch(err => this.handleError(err));
+                }, err => {
+                    this.handleError(err);
+                });
         }
     }
 
-    loadFolderNodesByFolderNodeId(id: string, maxItems: number, skipCount: number, merge: boolean = false): Promise<any> {
+    loadFolderNodesByFolderNodeId(id: string, pagination: PaginationModel): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.resetSelection();
+
             this.documentListService
                 .getFolder(null, {
-                    maxItems: maxItems,
-                    skipCount: skipCount,
+                    maxItems: pagination.maxItems,
+                    skipCount: pagination.skipCount,
                     rootFolderId: id
-                })
+                }, this.includeFields)
                 .subscribe(
-                val => {
-                    this.data.loadPage(<NodePaging> val, merge);
-                    this.loading = false;
-                    this.infiniteLoading = false;
-                    this.onDataReady(val);
-                    resolve(true);
-                },
-                error => {
-                    reject(error);
-                });
+                    nodePaging => {
+                        this.data.loadPage(<NodePaging> nodePaging, this.pagination.getValue().merge);
+                        this.loading = false;
+                        this.onDataReady(nodePaging);
+                        resolve(true);
+                    }, err => {
+                        this.handleError(err);
+                    });
         });
-
     }
 
     resetSelection() {
         this.dataTable.resetSelection();
         this.selection = [];
+        this.noPermission = false;
     }
 
-    private isSkipCountChanged(changePage: SimpleChanges) {
-        return changePage.skipCount &&
-            !changePage.skipCount.isFirstChange() &&
-            changePage.skipCount.currentValue !== null &&
-            changePage.skipCount.currentValue !== undefined &&
-            changePage.skipCount.currentValue !== changePage.skipCount.previousValue;
-    }
-
-    private isMaxItemsChanged(changePage: SimpleChanges) {
-        return changePage.maxItems &&
-            !changePage.maxItems.isFirstChange() &&
-            changePage.maxItems.currentValue &&
-            changePage.maxItems.currentValue !== changePage.maxItems.previousValue;
-    }
-
-    private loadTrashcan(merge: boolean = false): void {
-        const options = {
-            include: ['path', 'properties'],
-            maxItems: this.maxItems,
-            skipCount: this.skipCount
-        };
-        this.apiService.nodesApi.getDeletedNodes(options)
-            .then((page: DeletedNodesPaging) => this.onPageLoaded(page, merge))
-            .catch(error => this.error.emit(error));
-    }
-
-    private loadSharedLinks(merge: boolean = false): void {
-        const options = {
-            include: ['properties', 'allowableOperations', 'path'],
-            maxItems: this.maxItems,
-            skipCount: this.skipCount
-        };
-        this.apiService.sharedLinksApi.findSharedLinks(options)
-            .then((page: NodePaging) => this.onPageLoaded(page, merge))
-            .catch(error => this.error.emit(error));
-    }
-
-    private loadSites(merge: boolean = false): void {
-        const options = {
-            include: ['properties'],
-            maxItems: this.maxItems,
-            skipCount: this.skipCount
-        };
-
-        this.apiService.sitesApi.getSites(options)
-            .then((page: NodePaging) => {
-                page.list.entries.map(
-                    ({entry}: any) => {
-                        entry.name = entry.name || entry.title;
-                        return {entry};
-                    }
-                );
-                this.onPageLoaded(page, merge);
-        })
-            .catch(error => this.error.emit(error));
-    }
-
-    private loadMemberSites(merge: boolean = false): void {
-        const options = {
-            include: ['properties'],
-            maxItems: this.maxItems,
-            skipCount: this.skipCount
-        };
-
-        this.apiService.peopleApi.getSiteMembership('-me-', options)
-            .then((result: SitePaging) => {
-                let page: NodePaging = {
-                    list: {
-                        entries: result.list.entries
-                            .map(({entry: {site}}: any) => {
-                                site.allowableOperations = site.allowableOperations ? site.allowableOperations : [this.CREATE_PERMISSION];
-                                site.name = site.name || site.title;
-                                return {
-                                    entry: site
-                                };
-                            }),
-                        pagination: result.list.pagination
-                    }
-                };
-
-                this.onPageLoaded(page, merge);
-            })
-            .catch(error => this.error.emit(error));
-    }
-
-    private loadFavorites(merge: boolean = false): void {
-        const options = {
-            maxItems: this.maxItems,
-            skipCount: this.skipCount,
-            where: '(EXISTS(target/file) OR EXISTS(target/folder))',
-            include: ['properties', 'allowableOperations', 'path']
-        };
-
-        this.apiService.favoritesApi.getFavorites('-me-', options)
-            .then((result: NodePaging) => {
-                let page: NodePaging = {
-                    list: {
-                        entries: result.list.entries
-                            .map(({ entry: { target } }: any) => ({
-                                entry: target.file || target.folder
-                            }))
-                            .map(({ entry }: any) => {
-                                entry.properties = {
-                                    'cm:title': entry.title,
-                                    'cm:description': entry.description
-                                };
-                                return { entry };
-                            }),
-                        pagination: result.list.pagination
-                    }
-                };
-                this.onPageLoaded(page, merge);
-            })
-            .catch(error => this.error.emit(error));
-    }
-
-    private loadRecent(merge: boolean = false): void {
-        this.getRecentFiles('-me-')
-            .then((page: NodePaging) => this.onPageLoaded(page, merge))
-            .catch(error => this.error.emit(error));
-    }
-
-    private onPageLoaded(page: NodePaging, merge: boolean = false) {
-        if (page) {
-            this.data.loadPage(page, merge);
+    private onPageLoaded(nodePaging: NodePaging) {
+        if (nodePaging) {
+            this.data.loadPage(nodePaging, this.pagination.getValue().merge);
             this.loading = false;
-            this.onDataReady(page);
+            this.onDataReady(nodePaging);
         }
     }
 
@@ -835,48 +709,16 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
     }
 
-    private getDefaultSorting(): DataSorting {
-        let defaultSorting: DataSorting;
-        if (this.sorting) {
-            const [key, direction] = this.sorting;
-            defaultSorting = new DataSorting(key, direction);
-        }
-        return defaultSorting;
-    }
-
     canNavigateFolder(node: MinimalNodeEntity): boolean {
-        if (this.isCustomSource(this.currentFolderId)) {
-            return false;
+        let canNavigateFolder: boolean = false;
+
+        if (this.customResourcesService.isCustomSource(this.currentFolderId)) {
+            canNavigateFolder = false;
+        } else if (node && node.entry && node.entry.isFolder) {
+            canNavigateFolder = true;
         }
 
-        if (node && node.entry && node.entry.isFolder) {
-            return true;
-        }
-
-        return false;
-    }
-
-    isCustomSource(folderId: string): boolean {
-        const sources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-'];
-
-        if (sources.indexOf(folderId) > -1) {
-            return true;
-        }
-
-        return false;
-    }
-
-    hasCurrentNodePermission(permission: string): boolean {
-        let hasPermission: boolean = false;
-        if (this.currentNodeAllowableOperations.length > 0) {
-            let permFound = this.currentNodeAllowableOperations.find(element => element === permission);
-            hasPermission = permFound ? true : false;
-        }
-        return hasPermission;
-    }
-
-    hasCreatePermission() {
-        return this.hasCurrentNodePermission(this.CREATE_PERMISSION);
+        return canNavigateFolder;
     }
 
     private loadLayoutPresets(): void {
@@ -889,33 +731,42 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
     }
 
-    private getLayoutPreset(name: string = 'default'): DataColumn[] {
-        return (this.layoutPresets[name] || this.layoutPresets['default']).map(col => new ObjectDataColumn(col));
+    private onDataReady(nodePaging: NodePaging) {
+        this.ready.emit(nodePaging);
+
+        this.pagination.next(nodePaging.list.pagination);
     }
 
-    private onDataReady(page: NodePaging) {
-        this.ready.emit(page);
+    updatePagination(pagination: PaginationModel) {
+        this.reload();
+    }
 
-        if (page && page.list && page.list.pagination) {
-            this.pagination.next(page.list.pagination);
-        } else {
-            this.pagination.next(null);
+    navigateTo(nodeId: string) {
+        this.currentFolderId = nodeId;
+        this.resetNewFolderPagination();
+        this.loadFolder();
+        this.folderChange.emit(new NodeEntryEvent({ id: nodeId }));
+    }
+
+    private resetNewFolderPagination() {
+        this.folderNode = null;
+        this.pagination.value.skipCount = 0;
+    }
+
+    // TODO: remove it from here
+    getCorrespondingNodeIds(nodeId: string): Observable<string[]> {
+        if (this.customResourcesService.isCustomSource(nodeId)) {
+            return this.customResourcesService.getCorrespondingNodeIds(nodeId, this.pagination.getValue());
+        } else if (nodeId) {
+            return new Observable(observer => {
+                this.documentListService.getFolderNode(nodeId, this.includeFields)
+                    .subscribe((node: MinimalNodeEntryEntity) => {
+                        observer.next([node.id]);
+                        observer.complete();
+                    });
+            });
         }
-    }
 
-    updatePagination(params: PaginationQueryParams) {
-        const needsReload = this.maxItems !== params.maxItems || this.skipCount !== params.skipCount;
-
-        this.maxItems = params.maxItems;
-        this.skipCount = params.skipCount;
-
-        if (needsReload) {
-            this.reload(this.enableInfiniteScrolling);
-        }
-    }
-
-    get supportedPageSizes(): number[] {
-        return this.preferences.getDifferentPageSizes();
     }
 
     ngOnDestroy() {
@@ -925,67 +776,15 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
     }
 
-    getCorrespondingNodeIds(nodeId: string): Promise<string[]> {
-        if (nodeId === '-trashcan-') {
-            return this.apiService.nodesApi.getDeletedNodes()
-                .then(result => result.list.entries.map(node => node.entry.id));
-
-        } else if (nodeId === '-sharedlinks-') {
-            return this.apiService.sharedLinksApi.findSharedLinks()
-                .then(result => result.list.entries.map(node => node.entry.nodeId));
-
-        } else if (nodeId === '-sites-') {
-            return this.apiService.sitesApi.getSites()
-                .then(result => result.list.entries.map(node => node.entry.guid));
-
-        } else if (nodeId === '-mysites-') {
-            return this.apiService.peopleApi.getSiteMembership('-me-')
-                .then(result => result.list.entries.map(node => node.entry.guid));
-
-        } else if (nodeId === '-favorites-') {
-            return this.apiService.favoritesApi.getFavorites('-me-')
-                .then(result => result.list.entries.map(node => node.entry.targetGuid));
-
-        } else if (nodeId === '-recent-') {
-            return this.getRecentFiles('-me-')
-                .then(result => result.list.entries.map(node => node.entry.id));
-
-        } else if (nodeId) {
-            return this.documentListService.getFolderNode(nodeId)
-                .then(node => [ node.id ]);
+    private handleError(err: any) {
+        if (err.message) {
+            if (JSON.parse(err.message).error.statusCode === 403) {
+                this.loading = false;
+                this.noPermission = true;
+            }
         }
+        this.error.emit(err);
 
-        return new Promise((resolve) => {
-            resolve([]);
-        });
     }
 
-    getRecentFiles(personId: string): Promise<NodePaging> {
-        return this.apiService.peopleApi.getPerson(personId)
-            .then((person: PersonEntry) => {
-                const username = person.entry.id;
-                const query = {
-                    query: {
-                        query: '*',
-                        language: 'afts'
-                    },
-                    filterQueries: [
-                        { query: `cm:modified:[NOW/DAY-30DAYS TO NOW/DAY+1DAY]` },
-                        { query: `cm:modifier:${username} OR cm:creator:${username}` },
-                        { query: `TYPE:"content" AND -TYPE:"app:filelink" AND -TYPE:"fm:post"` }
-                    ],
-                    include: ['path', 'properties', 'allowableOperations'],
-                    sort: [{
-                        type: 'FIELD',
-                        field: 'cm:modified',
-                        ascending: false
-                    }],
-                    paging: {
-                        maxItems: this.maxItems,
-                        skipCount: this.skipCount
-                    }
-                };
-                return this.apiService.searchApi.search(query);
-            });
-    }
 }

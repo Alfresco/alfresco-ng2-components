@@ -1,4 +1,17 @@
 {
+  "APP": {
+    "INFO_DRAWER": {
+      "TITLE": "Details",
+      "COMMENTS": "Kommentare",
+      "PROPERTIES": "Eigenschaften",
+      "VERSIONS": "Versionen"
+    },
+    "ADF_VERSION_MANAGER": {
+      "ALLOW_DELETE": "Löschen zulassen",
+      "SHOW_COMMENTS": "Anmerkungen zu Versionen einblenden",
+      "ALLOW_DOWNLOAD": "Versions-Download zulassen"
+    }
+  },
   "title": "Willkommen",
   "VERSION": {
     "NO_PERMISSION": "Sie verfügen nicht über die nötige Berechtigung, um Versionen dieses Inhalts zu verwalten",
@@ -7,6 +20,12 @@
     "DIALOG": {
       "CLOSE": "Schließen",
       "TITLE": "Versionen verwalten"
+    }
+  },
+  "METADATA": {
+    "DIALOG": {
+      "CLOSE": "Schließen",
+      "TITLE": "Metadaten"
     }
   },
   "APP_LAYOUT": {
@@ -20,9 +39,11 @@
     "DATATABLE_LAZY": "DataTable (Lazy)",
     "FORM": "Formular",
     "FORM_LIST": "Formularliste",
+    "FORM_LOADING": "Formular laden",
     "UPLOADER": "Uploader",
     "WEBSCRIPT": "Webscript",
     "TAG": "Tag",
+    "TRASHCAN": "Papierkorb",
     "SOCIAL": "Soziale Funktionen",
     "SETTINGS": "Einstellungen",
     "OVERLAY_VIEWER": "Overlay-Viewer",
@@ -32,6 +53,17 @@
     "WORD_TO_SEARCH": "Suchbegriff",
     "SEARCH_CREATED_BY": "Erstellt von",
     "SEARCH_SERVICE_APPROACH": "Aktivieren Sie diese Option, um die Eingabeeigenschaft zu deaktivieren und die Nutzung des Services zu konfigurieren"
+  },
+  "TRASHCAN": {
+    "ACTIONS": {
+      "DELETE_PERMANENT": "Endgültig löschen",
+      "RESTORE": "Wiederherstellen"
+    },
+    "EMPTY_STATE": {
+      "TITLE": "Papierkorb ist leer",
+      "FIRST_TEXT": "Gelöschte Elemente werden in den Papierkorb verschoben.",
+      "SECOND_TEXT": "Leeren Sie den Papierkorb, um die Elemente endgültig zu löschen."
+    }
   },
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Mehrfachauswahl (mit Kontrollkästchen)",
@@ -43,13 +75,22 @@
     "DESCRIPTION_UPLOAD": "Hochladen aktivieren",
     "ENABLE_INFINITE_SCROLL": "Unendlich Scrollen aktivieren",
     "MULTISELECT_DESCRIPTION": "Mit der Befehls- (Mac) oder der Steuerungstaste (Windows) können Sie die Auswahl mehrerer Elemente umschalten",
-    "RECENT": "Zuletzt verwendete Dateien",
+    "RECENT": {
+      "EMPTY_STATE": {
+        "TITLE": "Die Liste der zuletzt verwendeten Dateien ist leer"
+      },
+      "TITLE": "Zuletzt verwendete Dateien"
+    },
     "COLUMNS": {
       "DISPLAY_NAME": "Namen anzeigen",
+      "IS_LOCKED": "Sperren",
       "TAG": "Tag",
       "CREATED_BY": "Erstellt von",
       "CREATED_ON": "Erstellt am",
-      "CREATED": "Erstellt"
+      "CREATED": "Erstellt",
+      "SIZE": "Größe",
+      "DELETED_ON": "Gelöscht",
+      "DELETED_BY": "Gelöscht von"
     },
     "TOOLBAR": {
       "CARDVIEW": "Kartenansichtsmodus",
@@ -59,7 +100,10 @@
       "DELETE": "Löschen"
     },
     "ACTIONS": {
+      "VERSIONS": "Versionen verwalten",
+      "METADATA": "Info",
       "DOWNLOAD": "Herunterladen",
+      "PERMISSION": "Berechtigung",
       "FOLDER": {
         "COPY": "Kopieren",
         "MOVE": "Verschieben",
@@ -98,6 +142,13 @@
     "STORE": "Speichern",
     "RESTORE": "Wiederherstellen"
   },
+  "FORM-LOADING": {
+    "FORM_DATA": "Formulardaten",
+    "FORM_DATA_MESSAGE": "Geben Sie Werte ein, um das Formular auszufüllen",
+    "TYPEAHEAD_PLACEHOLDER": "Automatische Vervollständigung",
+    "RADIO_PLACEHOLDER": "Optionsschaltfläche",
+    "SELECT_PLACEHOLDER": "Dropdown"
+  },
   "LOGIN": {
     "CONTENT_SERVICES": "Content Services",
     "PROCESS_SERVICES": "Process Services",
@@ -115,5 +166,9 @@
     "LIST": "Content Services-Tagliste",
     "INSERT": "Node-ID einfügen",
     "NODE_LIST": "Tagliste nach Node-ID"
+  },
+  "DEMO_PERMISSION": {
+    "INHERIT_PERMISSION_BUTTON": "Berechtigungen erben",
+    "INHERITED_PERMISSIONS_BUTTON": "Berechtigungen geerbt"
   }
 }

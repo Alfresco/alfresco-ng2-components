@@ -25,14 +25,12 @@ import {
     FormService,
     ProcessContentService,
     ActivitiContentService,
-    AlfrescoApiService,
-    LogService,
     ThumbnailService,
     SitesService,
     FormFieldMetadata,
     ContentService
 } from '@alfresco/adf-core';
-import { ContentNodeDialogService, DocumentListService } from '@alfresco/adf-content-services';
+import { ContentNodeDialogService, DocumentListService, CustomResourcesService } from '@alfresco/adf-content-services';
 import { Observable } from 'rxjs/Observable';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 
@@ -110,10 +108,9 @@ describe('AttachFileWidgetComponent', () => {
                         ProcessContentService,
                         ThumbnailService,
                         ActivitiContentService,
-                        AlfrescoApiService,
-                        LogService,
                         SitesService,
                         DocumentListService,
+                        CustomResourcesService,
                         ContentNodeDialogService,
                         ContentService
                     ]

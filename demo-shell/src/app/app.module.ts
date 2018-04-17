@@ -18,8 +18,10 @@ import { SearchBarComponent } from './components/search/search-bar.component';
 import { SearchResultComponent } from './components/search/search-result.component';
 import { SearchExtendedComponent } from './components/search/search-extended.component';
 import { AboutComponent } from './components/about/about.component';
+import { LogComponent } from './components/log/log.component';
 import { FormComponent } from './components/form/form.component';
 import { FormListComponent } from './components/form/form-list.component';
+import { FormLoadingComponent } from './components/form/form-loading.component';
 import { CustomSourcesComponent } from './components/files/custom-sources.component';
 import { OverlayViewerComponent } from './components/overlay-viewer/overlay-viewer.component';
 
@@ -37,6 +39,7 @@ import { TagComponent } from './components/tag/tag.component';
 import { SocialComponent } from './components/social/social.component';
 import { VersionManagerDialogAdapterComponent } from './components/files/version-manager-dialog-adapter.component';
 import { MetadataDialogAdapterComponent } from './components/files/metadata-dialog-adapter.component';
+import { BlobPreviewComponent } from './components/blob-preview/blob-preview.component';
 
 import { ThemePickerModule } from './components/theme-picker/theme-picker';
 import { DebugAppConfigService } from './services/debug-app-config.service';
@@ -46,21 +49,22 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TaskAttachmentsComponent } from './components/process-service/task-attachments.component';
 import { ProcessAttachmentsComponent } from './components/process-service/process-attachments.component';
 import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
-
+import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
+import { PreviewService } from './services/preview.service';
 
 @NgModule({
     imports: [
+        BrowserModule,
         BrowserAnimationsModule,
         ReactiveFormsModule,
-        BrowserModule,
         routing,
         FormsModule,
-        AdfModule,
         MaterialModule,
         ThemePickerModule,
         FlexLayoutModule,
         ChartsModule,
-        HttpClientModule
+        HttpClientModule,
+        AdfModule
     ],
     declarations: [
         AppComponent,
@@ -72,6 +76,7 @@ import { SharedLinkViewComponent } from './components/shared-link-view/shared-li
         SearchResultComponent,
         SearchExtendedComponent,
         AboutComponent,
+        LogComponent,
         ProcessServiceComponent,
         ShowDiagramComponent,
         FormViewerComponent,
@@ -92,7 +97,11 @@ import { SharedLinkViewComponent } from './components/shared-link-view/shared-li
         TaskAttachmentsComponent,
         ProcessAttachmentsComponent,
         OverlayViewerComponent,
-        SharedLinkViewComponent
+        SharedLinkViewComponent,
+        FormLoadingComponent,
+        DemoPermissionComponent,
+        FormLoadingComponent,
+        BlobPreviewComponent
     ],
     providers: [
         { provide: AppConfigService, useClass: DebugAppConfigService },
@@ -111,7 +120,8 @@ import { SharedLinkViewComponent } from './components/shared-link-view/shared-li
                 name: 'lazy-loading',
                 source: 'resources/lazy-loading'
             }
-        }
+        },
+        PreviewService
     ],
     entryComponents: [
         VersionManagerDialogAdapterComponent,

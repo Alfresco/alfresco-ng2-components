@@ -45,7 +45,6 @@
     "no-bitwise": true,
     "no-console": [
       true,
-      "log",
       "debug",
       "info",
       "time",
@@ -99,7 +98,6 @@
         "variable-declaration": "nospace"
       }
     ],
-    "typeof-compare": true,
     "unified-signatures": true,
     "variable-name": false,
     "whitespace": [

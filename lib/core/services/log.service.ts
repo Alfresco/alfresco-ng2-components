@@ -15,108 +15,116 @@
  * limitations under the License.
  */
 
+/* tslint:disable:no-console  */
+
 import { Injectable } from '@angular/core';
 import { AppConfigService } from '../app-config/app-config.service';
 import { logLevels, LogLevelsEnum } from '../models/log-levels.model';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class LogService {
 
-    currentLogLevel: LogLevelsEnum = LogLevelsEnum.TRACE;
+    get currentLogLevel() {
+        let configLevel: string = this.appConfig.get<string>('logLevel');
 
-    constructor(appConfig: AppConfigService) {
-        if (appConfig) {
-            let configLevel: string = appConfig.get<string>('logLevel');
-
-            if (configLevel) {
-                this.currentLogLevel = this.getCurrentLogLevel(configLevel);
-            }
+        if (configLevel) {
+            return this.getLogLevel(configLevel);
         }
+
+        return LogLevelsEnum.TRACE;
     }
 
-    get error(): (message?: any, ...optionalParams: any[]) => any {
+    onMessage: Subject<any>;
+
+    constructor(private appConfig: AppConfigService) {
+        this.onMessage = new Subject();
+    }
+
+    error(message?: any, ...optionalParams: any[]) {
         if (this.currentLogLevel >= LogLevelsEnum.ERROR) {
-            return console.error.bind(console);
+
+            this.messageBus(message, 'ERROR');
+
+            console.error(message, ...optionalParams);
         }
-        return (message?: any, ...optionalParams: any[]) => {
-        };
     }
 
-    get debug(): (message?: any, ...optionalParams: any[]) => any {
+    debug(message?: any, ...optionalParams: any[]) {
         if (this.currentLogLevel >= LogLevelsEnum.DEBUG) {
-            return console.debug.bind(console);
+
+            this.messageBus(message, 'DEBUG');
+
+            console.debug(message, ...optionalParams);
         }
-        return (message?: any, ...optionalParams: any[]) => {
-        };
     }
 
-    get info(): (message?: any, ...optionalParams: any[]) => any {
+    info(message?: any, ...optionalParams: any[]) {
         if (this.currentLogLevel >= LogLevelsEnum.INFO) {
-            return console.info.bind(console);
+
+            this.messageBus(message, 'INFO');
+
+            console.info(message, ...optionalParams);
         }
-        return (message?: any, ...optionalParams: any[]) => {
-        };
     }
 
-    get log(): (message?: any, ...optionalParams: any[]) => any {
+    log(message?: any, ...optionalParams: any[]) {
         if (this.currentLogLevel >= LogLevelsEnum.TRACE) {
-            return console.log.bind(console);
-        }
 
-        return (message?: any, ...optionalParams: any[]) => {
-        };
+            this.messageBus(message, 'LOG');
+
+            console.log(message, ...optionalParams);
+        }
     }
 
-    get trace(): (message?: any, ...optionalParams: any[]) => any {
+    trace(message?: any, ...optionalParams: any[]) {
         if (this.currentLogLevel >= LogLevelsEnum.TRACE) {
-            return console.trace.bind(console);
-        }
-        return (message?: any, ...optionalParams: any[]) => {
-        };
 
+            this.messageBus(message, 'TRACE');
+
+            console.trace(message, ...optionalParams);
+        }
     }
 
-    get warn(): (message?: any, ...optionalParams: any[]) => any {
+    warn(message?: any, ...optionalParams: any[]) {
         if (this.currentLogLevel >= LogLevelsEnum.WARN) {
-            return console.warn.bind(console);
-        }
-        return (message?: any, ...optionalParams: any[]) => {
-        };
 
+            this.messageBus(message, 'WARN');
+
+            console.warn(message, ...optionalParams);
+        }
     }
 
-    get assert(): (message?: any, ...optionalParams: any[]) => any {
+    assert(test?: boolean, message?: string, ...optionalParams: any[]) {
         if (this.currentLogLevel !== LogLevelsEnum.SILENT) {
-            return console.assert.bind(console);
-        }
-        return (message?: any, ...optionalParams: any[]) => {
-        };
 
+            this.messageBus(message, 'ASSERT');
+
+            console.assert(test, message, ...optionalParams);
+        }
     }
 
-    get group(): (message?: any, ...optionalParams: any[]) => any {
+    group(groupTitle?: string, ...optionalParams: any[]) {
         if (this.currentLogLevel !== LogLevelsEnum.SILENT) {
-            return console.group.bind(console);
+            console.group(groupTitle, ...optionalParams);
         }
-        return (message?: any, ...optionalParams: any[]) => {
-        };
-
     }
 
-    get groupEnd(): (message?: any, ...optionalParams: any[]) => any {
+    groupEnd() {
         if (this.currentLogLevel !== LogLevelsEnum.SILENT) {
-            return console.groupEnd.bind(console);
+            console.groupEnd();
         }
-        return (message?: any, ...optionalParams: any[]) => {
-        };
-
     }
 
-    getCurrentLogLevel(level: string): LogLevelsEnum {
+    getLogLevel(level: string): LogLevelsEnum {
         let referencedLevel = logLevels.find((currentLevel: any) => {
             return currentLevel.name.toLocaleLowerCase() === level.toLocaleLowerCase();
         });
 
         return referencedLevel ? referencedLevel.level : 5;
+    }
+
+    messageBus(text: string, logLevel: string) {
+        this.onMessage.next({ text: text, type: logLevel });
     }
 }

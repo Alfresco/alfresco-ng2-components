@@ -9,7 +9,6 @@
         "**/.happypack": true
     },
     "editor.renderIndentGuides": true,
-    "tslint.configFile": "ng2-components/tslint.json",
     "markdownlint.config": {
         "MD032": false,
         "MD004": false,
