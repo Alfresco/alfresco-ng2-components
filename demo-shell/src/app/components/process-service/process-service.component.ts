@@ -63,6 +63,7 @@ import {
 import { Subscription } from 'rxjs/Subscription';
 import { /*CustomEditorComponent*/ CustomStencil01 } from './custom-editor/custom-editor.component';
 import { DemoFieldValidator } from './demo-field-validator';
+import { PreviewService } from '../../services/preview.service';
 
 const currentProcessIdNew = '__NEW__';
 const currentTaskIdNew = '__NEW__';
@@ -111,13 +112,9 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     @Output()
     changePageSize: EventEmitter<Pagination> = new EventEmitter();
 
-    fileShowed = false;
     selectFirstReport = false;
 
     private tabs = { tasks: 0, processes: 1, reports: 2 };
-
-    content: Blob;
-    contentName: string;
 
     layoutType: string;
     currentTaskId: string;
@@ -161,6 +158,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
                 private apiService: AlfrescoApiService,
                 private logService: LogService,
                 private appConfig: AppConfigService,
+                private preview: PreviewService,
                 formRenderingService: FormRenderingService,
                 formService: FormService,
                 private preferenceService: UserPreferencesService) {
@@ -385,9 +383,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     onContentClick(content: any): void {
-        this.fileShowed = true;
-        this.content = content.contentBlob;
-        this.contentName = content.name;
+        this.preview.showBlob(content.name, content.contentBlob);
     }
 
     onAuditClick(event: any) {

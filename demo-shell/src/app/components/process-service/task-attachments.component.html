@@ -33,12 +33,3 @@
 
     </div>
 </div>
-
-<div *ngIf="fileShowed">
-    <adf-viewer
-        [(showViewer)]="fileShowed"
-        [blobFile]="content"
-        [displayName]="contentName"
-        [overlayMode]="true">
-    </adf-viewer>
-</div>
