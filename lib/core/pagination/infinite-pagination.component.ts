@@ -62,7 +62,6 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
     @Input('loading')
     isLoading: boolean = false;
 
-    /** @deprecated 2.3.0 use the paginated component interface to use it. */
     /** Emitted when the "Load More" button is clicked. */
     @Output()
     loadMore: EventEmitter<Pagination> = new EventEmitter<Pagination>();
