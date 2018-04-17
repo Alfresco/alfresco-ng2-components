@@ -46,15 +46,14 @@ import { OverlayViewerComponent } from './components/overlay-viewer/overlay-view
 import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
 import { FormLoadingComponent } from './components/form/form-loading.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
+import { BlobPreviewComponent } from './components/blob-preview/blob-preview.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'settings', component: SettingsComponent },
-    { path: 'files/:nodeId/view', component: FileViewComponent, canActivate: [ AuthGuardEcm ] },
-    {
-        path: 'preview/s/:id',
-        component: SharedLinkViewComponent
-    },
+    { path: 'files/:nodeId/view', component: FileViewComponent, canActivate: [ AuthGuardEcm ], outlet: 'overlay' },
+    { path: 'preview/blob', component: BlobPreviewComponent, outlet: 'overlay', pathMatch: 'full' },
+    { path: 'preview/s/:id', component: SharedLinkViewComponent },
     {
         path: '',
         component: AppLayoutComponent,
