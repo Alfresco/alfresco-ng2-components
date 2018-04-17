@@ -39,7 +39,6 @@ import { SocialComponent } from './components/social/social.component';
 import { FilesComponent } from './components/files/files.component';
 import { FormComponent } from './components/form/form.component';
 
-import { UploadButtonComponent } from '@alfresco/adf-content-services';
 import { FileViewComponent } from './components/file-view/file-view.component';
 import { CustomSourcesComponent } from './components/files/custom-sources.component';
 import { FormListComponent } from './components/form/form-list.component';
@@ -80,10 +79,16 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'files',
-                redirectTo: 'files/-my-'
+                component: FilesComponent,
+                canActivate: [AuthGuardEcm]
             },
             {
                 path: 'files/:id',
+                component: FilesComponent,
+                canActivate: [AuthGuardEcm]
+            },
+            {
+                path: 'files/:id/display/:mode',
                 component: FilesComponent,
                 canActivate: [AuthGuardEcm]
             },
@@ -95,11 +100,6 @@ export const appRoutes: Routes = [
             {
                 path: 'datatable',
                 component: DataTableComponent
-            },
-            {
-                path: 'uploader',
-                component: UploadButtonComponent,
-                canActivate: [AuthGuardEcm]
             },
             {
                 path: 'search',
