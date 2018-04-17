@@ -19,6 +19,8 @@ import {
     Component, Input, OnInit, OnChanges, OnDestroy, Optional,
     EventEmitter, ViewChild, SimpleChanges, Output
 } from '@angular/core';
+import { Location } from '@angular/common';
+
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity, SiteEntry } from 'alfresco-js-api';
@@ -155,6 +157,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 private uploadService: UploadService,
                 private contentService: ContentService,
                 private dialog: MatDialog,
+                private location: Location,
                 private translateService: TranslationService,
                 private router: Router,
                 private logService: LogService,
@@ -193,6 +196,10 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             this.route.params.forEach((params: Params) => {
                 if (params['id'] && this.currentFolderId !== params['id']) {
                     this.currentFolderId = params['id'];
+                }
+
+                if (params['mode']) {
+                    this.displayMode = DisplayMode.Gallery;
                 }
             });
         }
@@ -273,7 +280,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onFolderChange($event) {
-       this.router.navigate(['/files', $event.value.id]);
+        this.router.navigate(['/files', $event.value.id]);
     }
 
     handlePermissionError(event: any) {
@@ -459,10 +466,17 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     toogleGalleryView(): void {
+        const url = this
+            .router
+            .createUrlTree(['/files', this.currentFolderId, 'display', this.displayMode])
+            .toString();
+
         if (this.displayMode === DisplayMode.List) {
             this.displayMode = DisplayMode.Gallery;
+            this.location.go(url);
         } else {
             this.displayMode = DisplayMode.List;
+            this.location.go(url);
         }
     }
 }
