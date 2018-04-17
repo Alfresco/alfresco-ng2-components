@@ -38,6 +38,7 @@ import { SelectAppsDialogComponent } from '@alfresco/adf-process-services';
 import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-adapter.component';
 import { MetadataDialogAdapterComponent } from './metadata-dialog-adapter.component';
 import { Subscription } from 'rxjs/Subscription';
+import { PreviewService } from '../../services/preview.service';
 
 const DEFAULT_FOLDER_TO_SHOW = '-my-';
 
@@ -163,6 +164,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 private logService: LogService,
                 private preference: UserPreferencesService,
                 private appConfig: AppConfigService,
+                private preview: PreviewService,
                 @Optional() private route: ActivatedRoute,
                 public authenticationService: AuthenticationService) {
         this.preference.select(UserPreferenceValues.SupportedPageSizes)
@@ -174,7 +176,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     showFile(event) {
         const entry = event.value.entry;
         if (entry && entry.isFile) {
-            this.router.navigate(['/files', entry.id, 'view']);
+            this.preview.showResource(entry.id);
         }
     }
 

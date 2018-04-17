@@ -18,7 +18,7 @@
 import { Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { TaskListService, TaskAttachmentListComponent, TaskDetailsModel, TaskUploadService } from '@alfresco/adf-process-services';
 import { UploadService, AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
-import { BlobPreviewService } from '../../services/blob-preview.service';
+import { PreviewService } from '../../services/preview.service';
 
 export function taskUploadServiceFactory(api: AlfrescoApiService, config: AppConfigService) {
     return new TaskUploadService(api, config);
@@ -50,7 +50,7 @@ export class TaskAttachmentsComponent implements OnInit, OnChanges {
     constructor(
         private uploadService: UploadService,
         private activitiTaskList: TaskListService,
-        private blobPreview: BlobPreviewService) {}
+        private preview: PreviewService) {}
 
     ngOnInit() {
         this.uploadService.fileUploadComplete.subscribe(value => this.onFileUploadComplete(value.data));
@@ -70,7 +70,7 @@ export class TaskAttachmentsComponent implements OnInit, OnChanges {
     }
 
     onAttachmentClick(content: any): void {
-        this.blobPreview.show(content.name, content.contentBlob);
+        this.preview.showBlob(content.name, content.contentBlob);
     }
 
     isCompletedTask(): boolean {

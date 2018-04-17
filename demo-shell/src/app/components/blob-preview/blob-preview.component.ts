@@ -1,24 +1,21 @@
-import { Component, ViewEncapsulation } from '@angular/core';
-import { BlobPreviewService } from '../../services/blob-preview.service';
+import { Component } from '@angular/core';
+import { PreviewService } from '../../services/preview.service';
 import { Router } from '@angular/router';
 
 @Component({
-    templateUrl: 'bob-preview.component.html',
-    styleUrls: [ 'bob-preview.component.scss' ],
-    encapsulation: ViewEncapsulation.None,
-    host: { 'class': 'blob-preview' }
+    templateUrl: 'bob-preview.component.html'
 })
 export class BlobPreviewComponent {
     content: Blob;
     name: string;
 
-    constructor(blobPreview: BlobPreviewService, router: Router) {
-        if (blobPreview.content === null || blobPreview.name === null) {
+    constructor(preview: PreviewService, router: Router) {
+        if (preview.content === null || preview.name === null) {
             router.navigate([{ outlets: { overlay: null } }]);
             return;
         }
 
-        this.content = blobPreview.content;
-        this.name = blobPreview.name;
+        this.content = preview.content;
+        this.name = preview.name;
     }
 }

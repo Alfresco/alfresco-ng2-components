@@ -19,16 +19,20 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Injectable()
-export class BlobPreviewService {
+export class PreviewService {
 
     public content: Blob = null;
     public name: string = null;
 
     constructor(private router: Router) {}
 
-    show(name: string, content: Blob): void {
+    showResource(resourceId): void {
+        this.router.navigate([{ outlets: { overlay: ['files', resourceId, 'view'] } }]);
+    }
+
+    showBlob(name: string, content: Blob): void {
         this.name = name;
         this.content = content;
-        this.router.navigate([{ outlets: { overlay: ['blob-preview'] } }]);
+        this.router.navigate([{ outlets: { overlay: ['preview', 'blob'] } }]);
     }
 }

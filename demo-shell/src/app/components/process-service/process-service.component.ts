@@ -63,7 +63,7 @@ import {
 import { Subscription } from 'rxjs/Subscription';
 import { /*CustomEditorComponent*/ CustomStencil01 } from './custom-editor/custom-editor.component';
 import { DemoFieldValidator } from './demo-field-validator';
-import { BlobPreviewService } from '../../services/blob-preview.service';
+import { PreviewService } from '../../services/preview.service';
 
 const currentProcessIdNew = '__NEW__';
 const currentTaskIdNew = '__NEW__';
@@ -158,7 +158,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
                 private apiService: AlfrescoApiService,
                 private logService: LogService,
                 private appConfig: AppConfigService,
-                private blobPreview: BlobPreviewService,
+                private preview: PreviewService,
                 formRenderingService: FormRenderingService,
                 formService: FormService,
                 private preferenceService: UserPreferencesService) {
@@ -383,7 +383,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     onContentClick(content: any): void {
-        this.blobPreview.show(content.name, content.contentBlob);
+        this.preview.showBlob(content.name, content.contentBlob);
     }
 
     onAuditClick(event: any) {

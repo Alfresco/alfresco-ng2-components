@@ -51,8 +51,8 @@ import { BlobPreviewComponent } from './components/blob-preview/blob-preview.com
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'settings', component: SettingsComponent },
-    { path: 'files/:nodeId/view', component: FileViewComponent, canActivate: [ AuthGuardEcm ] },
-    { path: 'blob-preview', component: BlobPreviewComponent, outlet: 'overlay', pathMatch: 'full' },
+    { path: 'files/:nodeId/view', component: FileViewComponent, canActivate: [ AuthGuardEcm ], outlet: 'overlay' },
+    { path: 'preview/blob', component: BlobPreviewComponent, outlet: 'overlay', pathMatch: 'full' },
     { path: 'preview/s/:id', component: SharedLinkViewComponent },
     {
         path: '',

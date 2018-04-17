@@ -50,7 +50,7 @@ import { TaskAttachmentsComponent } from './components/process-service/task-atta
 import { ProcessAttachmentsComponent } from './components/process-service/process-attachments.component';
 import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
-import { BlobPreviewService } from './services/blob-preview.service';
+import { PreviewService } from './services/preview.service';
 
 @NgModule({
     imports: [
@@ -121,7 +121,7 @@ import { BlobPreviewService } from './services/blob-preview.service';
                 source: 'resources/lazy-loading'
             }
         },
-        BlobPreviewService
+        PreviewService
     ],
     entryComponents: [
         VersionManagerDialogAdapterComponent,
