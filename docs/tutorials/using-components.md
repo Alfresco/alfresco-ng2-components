@@ -2,12 +2,13 @@
 Level: Beginner
 ---
 # Using components
+
+There are three different ways to use, extend and configure an ADF component: configuration properties, event listeners, content projection / HTML extensions. In this tutorial you are going to see a practical example for each approach. As an example, the Login component will be used.
+
 The best option you should consider when you plan to use an ADF component and want to learn the details of its usage, is always to check the documentation for the component you are looking to use. More in general, there are three different ways to use, extend and configure an ADF component:
 1. Configuration properties.
 2. Event listeners.
 3. Content projection / HTML extensions.
-
-In this tutorial you are going to see a practical example for each approach. As an example, the [Login component](https://alfresco.github.io/adf-component-catalog/components/LoginComponent.html) will be used.
 
 ## Configuration properties
 Angular components can easily be configured via properties in the HTML template. In this example we will act on the "Remember me" check and "Need Help?" + "Register" links in the footer of the Login component.

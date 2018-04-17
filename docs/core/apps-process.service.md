@@ -28,7 +28,8 @@ Gets details of the Process Services apps that are deployed for the user.
 
 This service can be used to access the Process Services apps that are available
 to the current user. You can find more information about the
-returned `AppDefinitionRepresentation` class in the [Filter model page](filter.model.md)
+returned `AppDefinitionRepresentation` class in the
+[Filter model page](../process-services/filter.model.md)
 and in the
 [Process Services Apps API](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/AppsApi.md#getAppDefinitions).
 The methods of this service make use of the
@@ -37,4 +38,4 @@ method, also from the Apps API.
 
 ## See also
 
--   [Filter model](filter.model.md)
+-   [Filter model](../process-services/filter.model.md)
