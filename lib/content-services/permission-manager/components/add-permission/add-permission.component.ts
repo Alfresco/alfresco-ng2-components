@@ -15,50 +15,47 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, EventEmitter, Input, Output } from '@angular/core';
-import { MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { NodePermissionService } from '../../services/node-permission.service';
+import { Component, ViewEncapsulation, OnInit, EventEmitter, Output } from '@angular/core';
+import { SearchPermissionConfigurationService } from './search-config-permission.service';
+import { SearchService, SearchConfigurationService } from '@alfresco/adf-core';
+// import { NodesApiService } from '@alfresco/adf-core';
+// import { MinimalNodeEntryEntity, PermissionElement } from 'alfresco-js-api';
+// import { PermissionDisplayModel } from '../../models/permission.model';
 
 @Component({
     selector: 'adf-add-permission',
     templateUrl: './add-permission.component.html',
     styleUrls: ['./add-permission.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    providers: [
+        { provide: SearchConfigurationService, useClass: SearchPermissionConfigurationService },
+        SearchService
+    ]
 })
-export class AddPermissionComponent {
+export class AddPermissionComponent implements OnInit {
 
-    /** ID of the target node. */
-    @Input()
-    nodeId: string;
 
-    /** Emitted when the node is updated successfully. */
     @Output()
-    success: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter();
+    success: EventEmitter<any> = new EventEmitter();
 
-    /** Emitted when an error occurs during the update. */
     @Output()
     error: EventEmitter<any> = new EventEmitter();
 
-    selectedItems: MinimalNodeEntity[] = [];
-    currentNode: MinimalNodeEntryEntity;
-    currentNodeRoles: string[];
 
-    constructor(private nodePermissionService: NodePermissionService) {
+    searchedWord = '';
+
+    // constructor(private nodeService: NodesApiService,
+    //             private nodePermissionService: NodePermissionService) {
+
+    // }
+
+    ngOnInit() {
+        // this.fetchNodePermissions();
     }
 
-    onSelect(selection: MinimalNodeEntity[]) {
-        this.selectedItems = selection;
+    elementClicked(event: Event) {
+        event.preventDefault();
     }
 
-    applySelection() {
-        this.nodePermissionService.updateNodePermissions(this.nodeId, this.selectedItems)
-            .subscribe(
-                (node) => {
-                    this.success.emit(node);
-                },
-                (error) => {
-                    this.error.emit(error);
-                });
-    }
 
 }
