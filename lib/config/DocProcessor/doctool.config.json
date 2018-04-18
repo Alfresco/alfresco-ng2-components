@@ -1,7 +1,13 @@
 {
-    "enabledTools": [
-        "index",
-        "versionIndex",
-        "tutorialIndex"
-    ]
+    "profiles": {
+        "index": [
+            "index",
+            "versionIndex",
+            "tutorialIndex"
+        ],
+        "enhance": [
+            "tsInfo",
+            "toc"
+        ]
+    }
 }
