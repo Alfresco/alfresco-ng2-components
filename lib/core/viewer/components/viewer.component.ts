@@ -374,7 +374,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     toggleSidebar() {
         this.showSidebar = !this.showSidebar;
         if (this.showSidebar && this.fileNodeId) {
-            this.apiService.getInstance().nodes.getNodeInfo(this.fileNodeId)
+            this.apiService.getInstance().nodes.getNodeInfo(this.fileNodeId, {include: ['allowableOperations']})
                 .then((data: MinimalNodeEntryEntity) => {
                     this.sidebarTemplateContext.node = data;
                 });
@@ -688,4 +688,9 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     private wait(ms: number): Promise<any> {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
+
+    getSideBarStyle(): string {
+        return this.sidebarPosition === 'left' ? 'adf-viewer__sidebar__left' : 'adf-viewer__sidebar__right';
+    }
+
 }

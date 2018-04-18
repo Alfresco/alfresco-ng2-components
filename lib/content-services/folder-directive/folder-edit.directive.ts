@@ -39,6 +39,12 @@ export class FolderEditDirective {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
+    @Input()
+    title: string = null;
+
+    @Output()
+    success: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter<MinimalNodeEntryEntity>();
+
     @HostListener('click', [ '$event' ])
     onClick(event) {
         event.preventDefault();
@@ -58,7 +64,10 @@ export class FolderEditDirective {
         const { folder } = this;
 
         return {
-            data: { folder },
+            data: {
+                folder,
+                editTitle: this.title
+            },
             width: `${width}px`
         };
     }
@@ -69,6 +78,10 @@ export class FolderEditDirective {
 
         dialogInstance.componentInstance.error.subscribe((error) => {
             this.error.emit(error);
+        });
+
+        dialogInstance.componentInstance.success.subscribe((node: MinimalNodeEntryEntity) => {
+            this.success.emit(node);
         });
 
         dialogInstance.afterClosed().subscribe((node: MinimalNodeEntryEntity) => {

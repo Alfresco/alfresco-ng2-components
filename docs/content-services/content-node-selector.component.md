@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-03-29
+Last reviewed: 2018-04-18
 ---
 
 # Content Node Selector component
@@ -33,6 +33,8 @@ repository rather than the filesystem. For example, the
 of Copy/Move actions (see the [Content Action component](content-action.component.md) for
 more information).
 
+### Showing the dialog
+
 Unlike most components, the Content Node Selector is typically shown in a dialog box
 rather than the main page and you are responsible for opening the dialog yourself. You can use the
 [Angular Material Dialog](https://material.angular.io/components/dialog/overview) for this,
@@ -55,6 +57,22 @@ interface ContentNodeSelectorComponentData {
 }
 ```
 
+The properties are described in the table below:
+
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| title | `string`| "" | Dialog title |
+| actionName | `string` | "" | Text to appear on the dialog's main action button ("Move", "Copy", etc) |
+| currentFolderId | `string` | `null` | Node ID of the folder currently listed.  |
+| dropdownHideMyFiles | `boolean` | `false` | Hide the "My Files" option added to the site list by default. See the [Sites Dropdown component](sites-dropdown.component.md) for more information. |
+| dropdownSiteList | `SitePaging` | `null` | Custom site for site dropdown same as siteList. See the [Sites Dropdown component](sites-dropdown.component.md) for more information. |
+| rowFilter | `RowFilter` | `null` | Custom row filter function. See the [Document List component](document-list.component.md#custom-row-filter) for more information. |
+| imageResolver | `ImageResolver` | `null` | Custom image resolver function. See the [Document List component](document-list.component.md#custom-row-filter) for more information.  |
+| pageSize | `number` |  | Number of items shown per page in the list.  |
+| isSelectionValid | `ValidationFunction` | `defaultValidation` | Function used to decide if the selected node has permission to be selected. Default value is a function that always returns true. |
+| breadcrumbTransform | `(node: any) => any` |  | Transformation to be performed on the chosen/folder node before building the breadcrumb UI. Can be useful when custom formatting is needed for the breadcrumb. You can change the path elements from the node that are used to build the breadcrumb using this function. |
+| select | `EventEmitter<MinimalNodeEntryEntity[]>` | | Event emitted with the current node selection when the dialog closes |
+
 If you don't want to manage the dialog yourself then it is easier to use the
 [Content Node Selector Panel component](content-node-selector-panel.component.md), or the
 methods of the [Content Node Dialog service](content-node-dialog.service.md), which create
@@ -73,6 +91,7 @@ constructor(dialog: MatDialog ... ) {}
 openSelectorDialog() {
     data: ContentNodeSelectorComponentData = {
         title: "Choose an item",
+        actionName: "Choose",
         currentFolderId: someFolderId,
         select: new Subject<MinimalNodeEntryEntity[]>()
     };

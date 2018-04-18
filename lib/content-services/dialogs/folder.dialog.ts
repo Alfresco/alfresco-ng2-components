@@ -42,6 +42,12 @@ export class FolderDialogComponent implements OnInit {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
+    @Output()
+    success: EventEmitter<any> = new EventEmitter<MinimalNodeEntryEntity>();
+
+    editTitle = 'CORE.FOLDER_DIALOG.EDIT_FOLDER_TITLE';
+    createTitle = 'CORE.FOLDER_DIALOG.CREATE_FOLDER_TITLE';
+
     constructor(
         private formBuilder: FormBuilder,
         private dialog: MatDialogRef<FolderDialogComponent>,
@@ -50,7 +56,12 @@ export class FolderDialogComponent implements OnInit {
         @Optional()
         @Inject(MAT_DIALOG_DATA)
         public data: any
-    ) {}
+    ) {
+        if (data) {
+            this.editTitle = data.editTitle || this.editTitle;
+            this.createTitle = data.createTitle || this.createTitle;
+        }
+    }
 
     get editing(): boolean {
         return !!this.data.folder;
@@ -121,7 +132,10 @@ export class FolderDialogComponent implements OnInit {
 
         (editing ? this.edit() : this.create())
             .subscribe(
-                (folder: MinimalNodeEntryEntity) => dialog.close(folder),
+                (folder: MinimalNodeEntryEntity) => {
+                    this.success.emit(folder);
+                    dialog.close(folder);
+                },
                 (error) => this.handleError(error)
             );
     }

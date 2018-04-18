@@ -19,6 +19,8 @@ import {
     Component, Input, OnInit, OnChanges, OnDestroy, Optional,
     EventEmitter, ViewChild, SimpleChanges, Output
 } from '@angular/core';
+import { Location } from '@angular/common';
+
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity, SiteEntry } from 'alfresco-js-api';
@@ -36,6 +38,7 @@ import { SelectAppsDialogComponent } from '@alfresco/adf-process-services';
 import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-adapter.component';
 import { MetadataDialogAdapterComponent } from './metadata-dialog-adapter.component';
 import { Subscription } from 'rxjs/Subscription';
+import { PreviewService } from '../../services/preview.service';
 
 const DEFAULT_FOLDER_TO_SHOW = '-my-';
 
@@ -155,11 +158,13 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 private uploadService: UploadService,
                 private contentService: ContentService,
                 private dialog: MatDialog,
+                private location: Location,
                 private translateService: TranslationService,
                 private router: Router,
                 private logService: LogService,
                 private preference: UserPreferencesService,
                 private appConfig: AppConfigService,
+                private preview: PreviewService,
                 @Optional() private route: ActivatedRoute,
                 public authenticationService: AuthenticationService) {
         this.preference.select(UserPreferenceValues.SupportedPageSizes)
@@ -171,7 +176,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     showFile(event) {
         const entry = event.value.entry;
         if (entry && entry.isFile) {
-            this.router.navigate(['/files', entry.id, 'view']);
+            this.preview.showResource(entry.id);
         }
     }
 
@@ -193,6 +198,10 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             this.route.params.forEach((params: Params) => {
                 if (params['id'] && this.currentFolderId !== params['id']) {
                     this.currentFolderId = params['id'];
+                }
+
+                if (params['mode']) {
+                    this.displayMode = DisplayMode.Gallery;
                 }
             });
         }
@@ -273,7 +282,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onFolderChange($event) {
-       this.router.navigate(['/files', $event.value.id]);
+        this.router.navigate(['/files', $event.value.id]);
     }
 
     handlePermissionError(event: any) {
@@ -459,10 +468,17 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     toogleGalleryView(): void {
+        const url = this
+            .router
+            .createUrlTree(['/files', this.currentFolderId, 'display', this.displayMode])
+            .toString();
+
         if (this.displayMode === DisplayMode.List) {
             this.displayMode = DisplayMode.Gallery;
+            this.location.go(url);
         } else {
             this.displayMode = DisplayMode.List;
+            this.location.go(url);
         }
     }
 }

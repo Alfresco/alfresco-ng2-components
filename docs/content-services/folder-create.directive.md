@@ -13,7 +13,9 @@ Creates folders.
 ```html
 <adf-toolbar>
     <button mat-icon-button
-            [adf-create-folder]="documentList.currentFolderId">
+            [adf-create-folder]="documentList.currentFolderId"
+            title="Title of the dialog"
+            (success)="doSomething($event)">
             <mat-icon>create_new_folder</mat-icon>
     </button>
 </adf-toolbar>
@@ -30,12 +32,14 @@ Creates folders.
 | Name | Type | Default value | Description |
 | -- | -- | -- | -- |
 | adf-create-folder | `string` |  DEFAULT_FOLDER_PARENT_ID | Parent folder where the new folder will be located after creation. |
+| title | `string` |  null | The title of the opened dialog. |
 
 ### Events
 
 | Name | Type | Description |
 | -- | -- | -- |
 | error | `EventEmitter<any>` | Emitted when an error occurs (for example a folder with same name already exists) |
+| success | `EventEmitter<MinimalNodeEntryEntity>` | Emitted when the creation successfully happened |
 
 ## Details
 

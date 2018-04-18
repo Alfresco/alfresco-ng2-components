@@ -39,7 +39,6 @@ export class AppLayoutComponent {
         { href: '/form', icon: 'poll', title: 'APP_LAYOUT.FORM' },
         { href: '/form-list', icon: 'library_books', title: 'APP_LAYOUT.FORM_LIST' },
         { href: '/form-loading', icon: 'cached', title: 'APP_LAYOUT.FORM_LOADING' },
-        { href: '/uploader', icon: 'file_upload', title: 'APP_LAYOUT.UPLOADER' },
         { href: '/webscript', icon: 'extension', title: 'APP_LAYOUT.WEBSCRIPT' },
         { href: '/tag', icon: 'local_offer', title: 'APP_LAYOUT.TAG' },
         { href: '/social', icon: 'thumb_up', title: 'APP_LAYOUT.SOCIAL' },

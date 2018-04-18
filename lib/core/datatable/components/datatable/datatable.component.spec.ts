@@ -312,6 +312,9 @@ describe('DataTable', () => {
         expect(rows[0].isSelected).toBeTruthy();
 
         dataTable.onRowClick(rows[0], null);
+        expect(rows[0].isSelected).toBeFalsy();
+
+        dataTable.onRowClick(rows[0], <any> { metaKey: true, preventDefault() {} });
         expect(rows[0].isSelected).toBeTruthy();
 
         dataTable.onRowClick(rows[0], <any> { metaKey: true, preventDefault() {} });
