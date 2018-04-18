@@ -1,0 +1,12 @@
+.git
+.github
+.vscode
+coverage
+docs
+e2e
+node_modules
+scripts
+src
+lib
+integration
+/demo-shell/config/
