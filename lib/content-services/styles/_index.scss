@@ -15,6 +15,7 @@
 @import '../content-node-selector/content-node-selector.component';
 @import '../content-metadata/content-metadata.module';
 @import '../permission-manager/components/permission-list/permission-list.component';
+@import '../permission-manager/components/add-permission/add-permission.component';
 
 @mixin adf-content-services-theme($theme) {
     @include adf-breadcrumb-theme($theme);
@@ -30,4 +31,5 @@
     @include adf-content-node-selector-dialog-theme($theme) ;
     @include adf-content-metadata-module-theme($theme);
     @include adf-permission-list-theme($theme);
+    @include adf-add-permission-theme($theme);
 }
