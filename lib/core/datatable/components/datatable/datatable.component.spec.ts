@@ -28,7 +28,7 @@ import { ObjectDataColumn } from '../../data/object-datacolumn.model';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 
 import { DataTableComponent } from './datatable.component';
-/*tslint:disable:ban*/
+
 describe('DataTable', () => {
 
     let fixture: ComponentFixture<DataTableComponent>;
