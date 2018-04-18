@@ -79,7 +79,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     @ViewChild('activitifilter')
     activitifilter: TaskFiltersComponent;
 
-    @ViewChild('banano')
+    @ViewChild('processListPagination')
     processListPagination: PaginationComponent;
 
     @ViewChild('taskListPagination')
