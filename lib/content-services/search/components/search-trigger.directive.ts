@@ -201,7 +201,7 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
     }
 
     private setValueAndClose(event: any | null): void {
-        if (this.isPanelOptionClicked(event)) {
+        if (this.isPanelOptionClicked(event) && !event.defaultPrevented) {
             this.setTriggerValue(event.target.textContent.trim());
             this.onChange(event.target.textContent.trim());
             this.element.nativeElement.focus();

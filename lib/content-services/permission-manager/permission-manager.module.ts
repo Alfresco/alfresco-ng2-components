@@ -21,10 +21,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
 import { PermissionListComponent } from './components/permission-list/permission-list.component';
+import { AddPermissionComponent } from './components/add-permission/add-permission.component';
 import { DataTableModule, DataColumnModule } from '@alfresco/adf-core';
 import { InheritPermissionDirective } from './components/inherited-button.directive';
 import { NodePermissionService } from './services/node-permission.service';
 import { NoPermissionTemplateComponent } from './components/permission-list/no-permission.component';
+import { SearchModule } from '..';
 
 @NgModule({
     imports: [
@@ -34,12 +36,14 @@ import { NoPermissionTemplateComponent } from './components/permission-list/no-p
         MaterialModule,
         TranslateModule,
         DataTableModule,
-        DataColumnModule
+        DataColumnModule,
+        SearchModule
     ],
     declarations: [
         PermissionListComponent,
         NoPermissionTemplateComponent,
-        InheritPermissionDirective
+        InheritPermissionDirective,
+        AddPermissionComponent
     ],
     providers: [
         NodePermissionService
@@ -47,7 +51,8 @@ import { NoPermissionTemplateComponent } from './components/permission-list/no-p
     exports: [
         PermissionListComponent,
         NoPermissionTemplateComponent,
-        InheritPermissionDirective
+        InheritPermissionDirective,
+        AddPermissionComponent
     ]
 })
 export class PermissionManagerModule {}
