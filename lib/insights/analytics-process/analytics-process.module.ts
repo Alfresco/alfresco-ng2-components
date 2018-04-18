@@ -36,10 +36,11 @@ import { DateRangeWidgetComponent } from './components/widgets/date-range/date-r
 import { DropdownWidgetAanalyticsComponent } from './components/widgets/dropdown/dropdown.widget';
 import { DurationWidgetComponent } from './components/widgets/duration/duration.widget';
 import { NumberWidgetAanlyticsComponent } from './components/widgets/number/number.widget';
-import { ButtonsMenuComponent } from './components/widgets/buttons-menu/buttons-menu.component';
+
 
 import { AnalyticsService } from './services/analytics.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ButtonsMenuModule } from '../../core/buttons-menu/buttons-menu.module';
 
 @NgModule({
     imports: [
@@ -51,7 +52,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         MaterialModule,
         TranslateModule,
         ToolbarModule,
-        FlexLayoutModule
+        FlexLayoutModule,
+        ButtonsMenuModule
     ],
     declarations: [
         AnalyticsComponent,
@@ -63,8 +65,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         NumberWidgetAanlyticsComponent,
         DurationWidgetComponent,
         CheckboxWidgetAanalyticsComponent,
-        DateRangeWidgetComponent,
-        ButtonsMenuComponent
+        DateRangeWidgetComponent
     ],
     providers: [
         AnalyticsService
@@ -79,8 +80,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         NumberWidgetAanlyticsComponent,
         DurationWidgetComponent,
         CheckboxWidgetAanalyticsComponent,
-        DateRangeWidgetComponent,
-        ButtonsMenuComponent
+        DateRangeWidgetComponent
     ]
 })
 export class AnalyticsProcessModule {}

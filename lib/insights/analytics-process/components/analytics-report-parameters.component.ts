@@ -37,7 +37,8 @@ import { ReportParameterDetailsModel } from '../../diagram/models/report/reportP
 import { ReportParametersModel } from '../../diagram/models/report/reportParameters.model';
 import { ReportQuery } from '../../diagram/models/report/reportQuery.model';
 import { AnalyticsService } from '../services/analytics.service';
-import { MenuButton } from './widgets/buttons-menu/menu-button.model';
+import { MenuButton } from '../../../core/buttons-menu/menu-button.model';
+
 
 // @deprecated 2.3.0 analytics-report-parameters tag removed
 @Component({
