@@ -38,6 +38,9 @@ export class FolderCreateDirective {
     @Input()
     title: string = null;
 
+    @Input()
+    nodeType = 'cm:folder';
+
     /** Emitted when the create folder give error for example a folder with same name already exist */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
@@ -58,13 +61,10 @@ export class FolderCreateDirective {
 
     private get dialogConfig(): MatDialogConfig {
         const { DIALOG_WIDTH: width } = FolderCreateDirective;
-        const { parentNodeId } = this;
+        const { parentNodeId, title: createTitle, nodeType } = this;
 
         return {
-            data: {
-                parentNodeId,
-                createTitle: this.title
-            },
+            data: { parentNodeId, createTitle, nodeType },
             width: `${width}px`
         };
     }

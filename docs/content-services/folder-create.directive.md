@@ -33,6 +33,7 @@ Creates folders.
 | -- | -- | -- | -- |
 | adf-create-folder | `string` |  DEFAULT_FOLDER_PARENT_ID | Parent folder where the new folder will be located after creation. |
 | title | `string` |  null | The title of the opened dialog. |
+| nodeType | `string` |  'cm:folder' | The type of the node to be created. |
 
 ### Events
 
